@@ -1,0 +1,24 @@
+[Event "?"]
+[Site "?"]
+[Date "2022.05.02"]
+[Round "?"]
+[White "Chess Inspector"]
+[Black "Test"]
+[Result "1-0"]
+[ECO "B56"]
+[Annotator "Rozycki,Robert"]
+[PlyCount "30"]
+[EventDate "2022.??.??"]
+
+{[%evp 0,30,19,31,100,50,44,16,32,39,31,47,73,-4,8,-11,12,-32,40,-109,-102,
+-167,-165,-1689,-1771,-1848,-702,-2086,-933,-1733,-709,-2065,-752] [%evp 58]} 
+1. e4 (1. d4 Nf6 2. c4 e6 (2... g6 3. Nf3 d6 (3... Bg7 4. e4) 4. e3) 3. g3 b6
+4. Bg2 Be7 5. Nf3 O-O 6. b3 Bb4+ 7.O-O) 1... c5 (1... e6 2. d4 c6 3. e5 d5 4. exd6
+Bxd6 5. Nf3 Nf6 6. Nbd2 Nbd7 7. Ng5 h6 8. Nde4 Be7 9. Ng3 a5 10. N5e4 a4 11. b4
+axb3 12. a4 b2 13. Bd2 bxa1=Q 14. Bd3 Ng4 15. h3 Ne3 16. f4 (16. Nf5 Qxd1#)) 2.
+Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 (4... e5 5. f4 d6 6. h4 g6 7. Kf2 Qb6 (7... g5
+8. h5 Nh6) (7... h5 8. Rh3) (7... Nh6 8. Rh3) 8. b3 (8. h5) 8... a5 9. Ba6 Rxa6
+10. f5 g5 11. h5) 5. Nc3 d6 6. f4 e5 7. Nf3 {Some comment} Be7 8. Bc4 $16 exf4
+9. g3 fxg3 10. a4 (10. Kf1 g2+ 11. Ke2 gxh1=N) 10... g2 11. a5 gxh1=R+ 12. Kf2
+Nd4 13. b3 Ne2 14. b4 Nf4 15. b5 N4h5 1-0
+

@@ -1,0 +1,408 @@
+﻿<Window x:Name="ChessForgeMain" x:Class="ChessForge.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+        Title="Chess Forge" Height="900" Width="1676" Loaded="Window_Loaded" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" Closing="ChessForgeMain_Closing">
+
+
+    <Grid x:Name="_gridMain" ShowGridLines="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="682"/>
+            <RowDefinition />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="682"/>
+            <ColumnDefinition Width="270"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="_lblGameInProgress" Grid.Column="1" Content="Game in Progress" HorizontalAlignment="Left" Margin="75,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="159" FontWeight="Bold" FontSize="14"/>
+        <Viewbox x:Name="MainBoard" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682">
+            <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682">
+                <Canvas.ContextMenu>
+                    <ContextMenu  x:Name="menuContext">
+                        <MenuItem x:Name="menuEvalPos" Header="Evaluate Position" Click="MenuItem_EvaluatePosition" />
+                        <MenuItem x:Name="menuEvalLine" Header="Evaluate Line" Click="MenuItem_EvaluateLine" />
+                        <Separator />
+                        <MenuItem Header="Replay" />
+                        <Separator />
+                        <MenuItem x:Name="_menuPlayComputer" Header="Play Against Computer " Click="_menuPlayComputer_Click" />
+                    </ContextMenu>
+                </Canvas.ContextMenu>
+                <Canvas.Background>
+                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                </Canvas.Background>
+                <Image x:Name="imgChessBoard" Margin="20,20,0,0" Source="Resources/Images/ChessBoardBlue.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+            </Canvas>
+        </Viewbox>
+
+        <Menu VerticalAlignment="Top" Background="#334B4B4B" BorderBrush="#993C3C3C" BorderThickness="1" Height="29" Grid.ColumnSpan="3">
+            <!-- Game menu -->
+            <MenuItem x:Name ="MenuFile"  Header="File" Margin="0,0,0,0" >
+                <MenuItem Header="Open Workbook" Click="Menu_LoadPgn"/>
+                <Separator />
+            </MenuItem>
+            <MenuItem Header="Training" Margin="0,0,0,0">
+                <MenuItem Header="Start New Session" Click="MenuItem_StartTraining"/>
+                <MenuItem Header="Resume Last Session"/>
+                <MenuItem Header="Clear All Progress"/>
+                <MenuItem Header="Stop Training" Click="MenuItem_StopTraining"/>
+            </MenuItem>
+        </Menu>
+        <DataGrid x:Name="_dgEngineGame" Grid.Column="1" HorizontalAlignment="Left" Height="608" Margin="25,70,0,0" VerticalAlignment="Top" Width="260"  
+                  SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" CanUserSortColumns="False"
+                  GridLinesVisibility="None" Grid.Row="1" Background="White"   >
+            <DataGrid.Resources>
+                <Style x:Key="DisableSelection" TargetType="{x:Type DataGridCell}">
+                    <Setter Property="Focusable" Value="False"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}"/>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="#" Width="30" Binding="{Binding Number}" CellStyle="{StaticResource DisableSelection}" CanUserReorder="False" />
+                <DataGridTextColumn Header="White" Width="60" Binding="{Binding WhitePly}" CanUserReorder="False" />
+                <DataGridTextColumn Header="Ev" Width="50" Binding="{Binding WhiteEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
+                <DataGridTextColumn Header="Black" Width="60" Binding="{Binding BlackPly}" CanUserReorder="False"/>
+                <DataGridTextColumn Header="Ev" Width="50" Binding="{Binding BlackEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TabControl x:Name="_tabTrainingControl" Grid.Column="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" 
+                    VerticalAlignment="Top" Grid.RowSpan="2" Visibility="Hidden">
+            <TabItem x:Name="_tabItemTrainingProgress"  Header="Progress">
+                <Grid Background="#FFE5E5E5">
+                    <RichTextBox x:Name="_rtbTrainingProgress" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                 IsReadOnly="True" >
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="0" />
+                            </Style>
+                        </RichTextBox.Resources>
+                        <FlowDocument>
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="_tabItemTrainingBrowse"  Header="Browse">
+                <Grid Background="#FFE5E5E5">
+                    <RichTextBox x:Name="_rtbTrainingBrowse" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                 IsReadOnly="True" >
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="0" />
+                            </Style>
+                        </RichTextBox.Resources>
+                        <FlowDocument>
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <TabControl x:Name="_tabMainControl" Grid.Column="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="2" SelectionChanged="tabControl_SelectionChanged">
+            <TabItem x:Name="TabItemWorkbook"  Header="Workbook">
+                <Grid Background="#FFE5E5E5">
+                    <RichTextBox x:Name="_rtbWorkbookView" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                 IsReadOnly="True" PreviewKeyDown="_rtbWorkbookFull_PreviewKeyDown">
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="0" />
+                            </Style>
+                            <SolidColorBrush x:Key="WorkbookBackgroundBrush" Color="White"/>
+                            <SolidColorBrush x:Key="WorkbookHighlightBrush" Color="LightSkyBlue"/>
+                            <SolidColorBrush x:Key="WorkbookLineHighlightBrush" Color="Yellow"/>
+                        </RichTextBox.Resources>
+                        <FlowDocument>
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="TabItemTable" Header="Table">
+                <DockPanel >
+                    <TextBox x:Name="_tbWorkbookTable" DockPanel.Dock="Top" BorderThickness="0,0,0,0" IsEnabled="False" Height="30" Margin="5,5,0,0" TextAlignment="Center" Text="" HorizontalAlignment="Left" FontSize="14" FontWeight="Bold"/>
+                    <ScrollViewer x:Name="_scvWorkbookTable" DockPanel.Dock="Bottom" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" PreviewMouseWheel="_scvWorkbookTable_PreviewMouseWheel" >
+                        <StackPanel>
+                            <ListView x:Name="_lvWorkbookTable" SelectionMode="Multiple" ItemsSource="{Binding}" Margin="0,0,0,0" 
+                                      SelectionChanged="_lvWorkbookTable_SelectionChanged" PreviewMouseDown="_lvWorkbookTable_PreviewMouseDown" 
+                                      GotFocus="_lvWorkbookTable_GotFocus" DataContextChanged="_lvWorkbookTable_DataContextChanged" 
+                                       >
+                                <ListView.Resources>
+                                    <DataTemplate x:Key="WorkbookTable" x:Name="WorkbookTableTemplate">
+                                        <Border BorderBrush="#FF000000" BorderThickness="0,0,0.5,0" Margin="-1,-1,-10,-1">
+                                            <StackPanel Margin="1,1,8,1">
+                                                <TextBlock Text="{Binding Moves[0]}" TextAlignment="Left">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding GrayOut}" Value="1">
+                                                                    <Setter Property="Opacity" Value="0.4"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding HasToolTip}" Value="1">
+                                                                    <Setter Property="ToolTip">
+                                                                        <Setter.Value>
+                                                                            <UniformGrid Columns="1">
+                                                                                <TextBlock Text="{Binding ToolTip}"/>
+                                                                            </UniformGrid>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                    <SolidColorBrush x:Key="OddMoveBkg" Color="#EBEFF3" Opacity="100" />
+                                    <SolidColorBrush x:Key="EvenMoveBkg"  Color="#D2DDEC" Opacity="100"  />
+                                    <ControlTemplate x:Key="EvenWhiteMove" TargetType='{x:Type ListViewItem}'>
+                                        <StackPanel Background="{DynamicResource EvenMoveBkg}" >
+                                            <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
+                                            <Border BorderThickness="0" BorderBrush="Black" />
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                    <ControlTemplate x:Key="EvenBlackMove" TargetType='{x:Type ListViewItem}'>
+                                        <StackPanel Background="{DynamicResource EvenMoveBkg}" >
+                                            <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
+                                            <Border BorderThickness="0.5" BorderBrush="Black" />
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                    <ControlTemplate x:Key="OddWhiteMove" TargetType='{x:Type ListViewItem}'>
+                                        <StackPanel Background="{DynamicResource OddMoveBkg}" >
+                                            <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
+                                            <Border BorderThickness="0.5" BorderBrush="LightGray" />
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                    <ControlTemplate x:Key="OddBlackMove" TargetType='{x:Type ListViewItem}'>
+                                        <StackPanel Background="{DynamicResource OddMoveBkg}" >
+                                            <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
+                                            <Border BorderThickness="0.5" BorderBrush="Black" />
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                    <ControlTemplate x:Key="CustomBorder" TargetType='{x:Type ListViewItem}'/>
+                                </ListView.Resources>
+                                <ListView.View>
+                                    <GridView x:Name="_gvWorkbookTable">
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Setter Property="Background" Value="White" />
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                    </GridView>
+                                </ListView.View>
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}"  >
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="true" >
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                            </Trigger>
+                                            <DataTrigger Binding="{Binding RowType}" Value="0">
+                                                <Setter Property="Template" Value="{StaticResource EvenWhiteMove}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RowType}" Value="1">
+                                                <Setter Property="Template" Value="{StaticResource EvenBlackMove}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RowType}" Value="2">
+                                                <Setter Property="Template" Value="{StaticResource OddWhiteMove}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RowType}" Value="3">
+                                                <Setter Property="Template" Value="{StaticResource OddBlackMove}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                            </ListView>
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Bookmarks">
+                <Grid Background="#FFE5E5E5">
+                    <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="270*"/>
+                            <RowDefinition Height="270*"/>
+                            <RowDefinition Height="270*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="220*"/>
+                            <ColumnDefinition Width="220*"/>
+                            <ColumnDefinition Width="220*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Viewbox x:Name="_vbLblBookmark_1" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                            <Label x:Name="_lblBookmark_1" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbBookmark_1" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="10,50,10,10" VerticalAlignment="Top" >
+                            <Canvas x:Name="_cnvBookmark_1" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682">
+                                <Canvas.Background>
+                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                </Canvas.Background>
+                                <Image x:Name="_imgBookmark_1" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                            </Canvas>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbLblBookmark_2" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                            <Label x:Name="_lblBookmark_2" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbBookmark_2" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="10,50,10,10" VerticalAlignment="Top" >
+                            <Canvas x:Name="_cnvBookmark_2" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682">
+                                <Canvas.Background>
+                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                </Canvas.Background>
+                                <Image x:Name="_imgBookmark_2" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                            </Canvas>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbLblBookmark_3" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                            <Label x:Name="_lblBookmark_3" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbBookmark_3" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" Margin="10,50,10,10" VerticalAlignment="Top">
+                            <Canvas x:Name="_cnvBookmark_3" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682">
+                                <Canvas.Background>
+                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                </Canvas.Background>
+                                <Image x:Name="_imgBookmark_3" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                            </Canvas>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbLblBookmark_4" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                            <Label x:Name="_lblBookmark_4" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbBookmark_4" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Margin="10,50,10,10" VerticalAlignment="Top">
+                            <Canvas x:Name="_cnvBookmark_4" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682">
+                                <Canvas.Background>
+                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                </Canvas.Background>
+                                <Image x:Name="_imgBookmark_4" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                            </Canvas>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbLblBookmark_5" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                            <Label x:Name="_lblBookmark_5" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbBookmark_5" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="10,50,10,10" VerticalAlignment="Top" >
+                            <Canvas x:Name="_cnvBookmark_5" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682">
+                                <Canvas.Background>
+                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                </Canvas.Background>
+                                <Image x:Name="_imgBookmark_5" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                            </Canvas>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbLblBookmark_6" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                            <Label x:Name="_lblBookmark_6" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbBookmark_6" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Margin="10,50,10,10" VerticalAlignment="Top" >
+                            <Canvas x:Name="_cnvBookmark_6" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682">
+                                <Canvas.Background>
+                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                </Canvas.Background>
+                                <Image x:Name="_imgBookmark_6" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                            </Canvas>
+                        </Viewbox>
+
+                        <Viewbox x:Name="_vbLblBookmark_7" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                            <Label x:Name="_lblBookmark_7" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbBookmark_7" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left"  Margin="10,50,10,10" VerticalAlignment="Top" >
+                            <Canvas x:Name="_cnvBookmark_7" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682">
+                                <Canvas.Background>
+                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                </Canvas.Background>
+                                <Image x:Name="_imgBookmark_7" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                            </Canvas>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbLblBookmark_8" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                            <Label x:Name="_lblBookmark_8" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbBookmark_8" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="10,50,10,10" VerticalAlignment="Top" >
+                            <Canvas x:Name="_cnvBookmark_8" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682">
+                                <Canvas.Background>
+                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                </Canvas.Background>
+                                <Image x:Name="_imgBookmark_8" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                            </Canvas>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbLblBookmark_9" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                            <Label x:Name="_lblBookmark_9" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                        </Viewbox>
+                        <Viewbox x:Name="_vbBookmark_9" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left"  Margin="10,50,10,10" VerticalAlignment="Top" >
+                            <Canvas x:Name="_cnvBookmark_9" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682">
+                                <Canvas.Background>
+                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                </Canvas.Background>
+                                <Image x:Name="_imgBookmark_9" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                            </Canvas>
+                        </Viewbox>
+
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <DataGrid x:Name="_dgActiveLine" Grid.Column="1" HorizontalAlignment="Left" Height="671" Margin="10,7,0,0" VerticalAlignment="Top" Width="260"  
+                  SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" 
+                  CanUserSortColumns="False" GridLinesVisibility="None" Grid.Row="1" 
+                  MouseDoubleClick="ViewActiveLine_MouseDoubleClick" PreviewMouseDown="ViewActiveLine_PreviewMouseDown" 
+                  PreviewKeyDown="ViewActiveLine_PreviewKeyDown"   >
+            <DataGrid.Resources>
+                <Style x:Key="DisableSelection" TargetType="{x:Type DataGridCell}">
+                    <Setter Property="Focusable" Value="False"/>
+                </Style>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}"/>
+            </DataGrid.RowStyle>
+            <DataGrid.Background>
+                <SolidColorBrush Color="White"/>
+            </DataGrid.Background>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="#" Width="30" Binding="{Binding Number}" CellStyle="{StaticResource DisableSelection}" CanUserReorder="False" />
+                <DataGridTextColumn Header="White" Width="60" Binding="{Binding WhitePly}" CanUserReorder="False" />
+                <DataGridTextColumn Header="Ev" Width="50" Binding="{Binding WhiteEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
+                <DataGridTextColumn Header="Black" Width="60" Binding="{Binding BlackPly}" CanUserReorder="False"/>
+                <DataGridTextColumn Header="Ev" Width="50" Binding="{Binding BlackEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Slider x:Name="sliderReplaySpeed" HorizontalAlignment="Left" Margin="71,50,0,0" Grid.Row="2" VerticalAlignment="Top" 
+                Height="36" Width="170" ValueChanged="sliderReplaySpeed_ValueChanged"
+                Maximum="2000" TickFrequency="600" IsSnapToTickEnabled="True" Grid.Column="1" Minimum="200" TickPlacement="BottomRight" Value="400" IsDirectionReversed="True" AutoToolTipPlacement="TopLeft" LargeChange="500" SmallChange="100" />
+        <RichTextBox x:Name="rtbBoardComment" HorizontalAlignment="Left" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+            </RichTextBox.Resources>
+            <FlowDocument PageWidth="670">
+                <Paragraph FontSize="20" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,0"></Paragraph>
+                <Paragraph FontSize="20" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,0">
+                    <Run>Welcome to</Run>
+                </Paragraph>
+                <Paragraph FontSize="36" FontWeight="Bold" TextAlignment="Center">
+                    <Image Source="Resources/Images/ChessForge2.ico" Margin="0,0,100,0" Height="48" Width="48"></Image>
+                    <Run>Chess Forge</Run>
+                    <Image Source="Resources/Images/ChessForge2.ico" Margin="100,0,0,0" Height="48" Width="48"></Image>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <TextBox x:Name="_tbEngineLines" TextWrapping="NoWrap" Text="" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
+        <ProgressBar x:Name="progEvaluation" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="11" Margin="46,113,0,0" Grid.Row="2" VerticalAlignment="Top" Width="190"/>
+        <Button x:Name="btnStopEvaluation" Grid.Column="1" Content="Stop" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Height="27" Width="50" Margin="130,71,0,0"/>
+        <TextBox x:Name="tbLastMove" Grid.Column="1" HorizontalAlignment="Left" Margin="143,17,0,0" Grid.Row="2" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="26"/>
+        <Label x:Name="lblLastMove" Grid.Column="1" Content="Last move: " HorizontalAlignment="Left" Margin="45,22,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+
+
+    </Grid>
+
+
+</Window>

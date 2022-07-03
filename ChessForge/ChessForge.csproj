@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FEC392A5-8944-4AE8-867D-260E72E8150B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ChessForge</RootNamespace>
+    <AssemblyName>ChessForge</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ChessForge2.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="AnimationState.cs" />
+    <Compile Include="AppLog.cs" />
+    <Compile Include="AppState.cs" />
+    <Compile Include="BookmarkView.cs" />
+    <Compile Include="EngineMessage.cs" />
+    <Compile Include="EngineMessageProcessor.cs" />
+    <Compile Include="GameReplay.cs" />
+    <Compile Include="ChessBoard.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="DraggedPiece.cs" />
+    <Compile Include="EngineGame.cs" />
+    <Compile Include="EvaluationState.cs" />
+    <Compile Include="ListViewHelper.cs" />
+    <Compile Include="MainWindow\MainWindowBoardComment.cs" />
+    <Compile Include="MainWindow\MainWindowEngineGame.cs" />
+    <Compile Include="MainWindow\MainWindowEngineEvals.cs" />
+    <Compile Include="MainWindow\MainWindowWorkbookTable.cs" />
+    <Compile Include="MainWindow\MainWindowUtils.cs" />
+    <Compile Include="MainWindow\MainWindowActiveLine.cs" />
+    <Compile Include="MoveEvaluation.cs" />
+    <Compile Include="Resources\ChessBoards.cs" />
+    <Compile Include="Resources\Colors.cs" />
+    <Compile Include="Resources\Pieces.cs" />
+    <Compile Include="Resources\Strings.cs" />
+    <Compile Include="RichTextBuilder.cs" />
+    <Compile Include="TrainingProgressRichTextBuilder.cs" />
+    <Compile Include="TrainingState.cs" />
+    <Compile Include="TreeRichTextBuilder.cs" />
+    <Compile Include="TreeTableCell.cs" />
+    <Compile Include="TreeTableRow.cs" />
+    <Compile Include="TreeTextBuilder.cs" />
+    <Compile Include="VariationLine.cs" />
+    <Compile Include="WorkbookTableState.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChessPosition\ChessPosition.csproj">
+      <Project>{cc1fec02-2e5b-47b0-81ed-c21017fe00f5}</Project>
+      <Name>ChessPosition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EngineService\EngineService.csproj">
+      <Project>{689b24e1-c24b-4e56-9e91-f32388f1dc33}</Project>
+      <Name>EngineService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\BlackBishop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ChessBoardBlue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\BlackKing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\BlackKnight.png" />
+    <Resource Include="Resources\Images\BlackPawn.png" />
+    <Resource Include="Resources\Images\BlackQueen.png" />
+    <Resource Include="Resources\Images\BlackRook.png" />
+    <Resource Include="Resources\Images\WhiteBishop.png" />
+    <Resource Include="Resources\Images\WhiteKing.png" />
+    <Resource Include="Resources\Images\WhiteKnight.png" />
+    <Resource Include="Resources\Images\WhitePawn.png" />
+    <Resource Include="Resources\Images\WhiteQueen.png" />
+    <Resource Include="Resources\Images\WhiteRook.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ChessBoardGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ChessBoardBrown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ChessForge.ico" />
+    <Resource Include="Resources\Images\ChessForge2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChessForge2.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
