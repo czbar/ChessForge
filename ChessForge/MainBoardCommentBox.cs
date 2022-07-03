@@ -19,16 +19,30 @@ namespace ChessForge
     /// This includes e.g. prompts to make a move or wait for the engine's move when
     /// playing against the computer.
     /// </summary>
-    public partial class MainWindow : Window
+    public class MainboardCommentBox
     {
+        /// <summary>
+        /// RichTextBox control managed by this object
+        /// </summary>
+        private RichTextBox _rtbCommentBox;
+
+        /// <summary>
+        /// Initializez the object and sets the reference to the UI element.
+        /// </summary>
+        /// <param name="rtb"></param>
+        public MainboardCommentBox(RichTextBox rtb)
+        {
+            _rtbCommentBox = rtb;
+        }
+
         /// <summary>
         /// The main message when a new workbook was loaded or when nothing
         /// more relevant is to be shown.
         /// </summary>
         /// <param name="title"></param>
-        public void rtbBoardComment_ShowWorkbookTitle(string title)
+        public void ShowWorkbookTitle(string title)
         {
-            rtbBoardComment.Document.Blocks.Clear();
+            _rtbCommentBox.Document.Blocks.Clear();
 
             Paragraph para = new Paragraph();
             para.FontSize = 24;
@@ -38,30 +52,30 @@ namespace ChessForge
 
             string titleToShow = string.IsNullOrWhiteSpace(title) ? "Untitled Workbook" : title;
             para.Inlines.Add(new Run(titleToShow));
-            rtbBoardComment.Document.Blocks.Add(para);
+            _rtbCommentBox.Document.Blocks.Add(para);
 
-            rtbBoardComment.Document.Blocks.Add(CreateTextParagraph("Some available actions are:", FontWeights.Bold, 14, 5));
+            _rtbCommentBox.Document.Blocks.Add(CreateTextParagraph("Some available actions are:", FontWeights.Bold, 14, 5));
 
             string strInstruction = Strings.QUICK_INSTRUCTION;
-            rtbBoardComment.Document.Blocks.Add(CreateTextParagraph(strInstruction, FontWeights.Normal));
+            _rtbCommentBox.Document.Blocks.Add(CreateTextParagraph(strInstruction, FontWeights.Normal));
         }
 
         /// <summary>
         /// Invoked when the game replay stops to revert to showing
         /// the workbook title message.
         /// </summary>
-        public void rtbBoardComment_GameReplayStop()
+        public void GameReplayStop()
         {
-            rtbBoardComment_ShowWorkbookTitle(Workbook.Title);
+            ShowWorkbookTitle(AppState.MainWin.Workbook.Title);
         }
 
-        public void rtbBoardComment_GameReplayStart()
+        public void GameReplayStart()
         {
-            rtbBoardComment.Document.Blocks.Clear();
+            _rtbCommentBox.Document.Blocks.Clear();
 
             Paragraph dummyPara = new Paragraph();
             dummyPara.Margin = new Thickness(0, 0, 0, 16);
-            rtbBoardComment.Document.Blocks.Add(dummyPara);
+            _rtbCommentBox.Document.Blocks.Add(dummyPara);
 
             Paragraph line_1 = new Paragraph();
             line_1.TextAlignment = TextAlignment.Center;
@@ -73,7 +87,7 @@ namespace ChessForge
             r.FontWeight = FontWeights.Bold;
 
             line_1.Inlines.Add(r);
-            rtbBoardComment.Document.Blocks.Add(line_1);
+            _rtbCommentBox.Document.Blocks.Add(line_1);
 
             Paragraph line_2 = new Paragraph();
             line_2.TextAlignment = TextAlignment.Center;
@@ -85,16 +99,16 @@ namespace ChessForge
             r.FontWeight = FontWeights.Regular;
 
             line_2.Inlines.Add(r);
-            rtbBoardComment.Document.Blocks.Add(line_2);
+            _rtbCommentBox.Document.Blocks.Add(line_2);
         }
 
-        public void rtbBoardComment_TrainingSessionStart()
+        public void TrainingSessionStart()
         {
-            rtbBoardComment.Document.Blocks.Clear();
+            _rtbCommentBox.Document.Blocks.Clear();
 
             Paragraph dummyPara = new Paragraph();
             dummyPara.Margin = new Thickness(0, 0, 0, 10);
-            rtbBoardComment.Document.Blocks.Add(dummyPara);
+            _rtbCommentBox.Document.Blocks.Add(dummyPara);
 
             Paragraph line_1 = new Paragraph();
             line_1.TextAlignment = TextAlignment.Center;
@@ -106,7 +120,7 @@ namespace ChessForge
             r.FontWeight = FontWeights.Regular;
 
             line_1.Inlines.Add(r);
-            rtbBoardComment.Document.Blocks.Add(line_1);
+            _rtbCommentBox.Document.Blocks.Add(line_1);
 
             Paragraph line_2 = new Paragraph();
             line_2.TextAlignment = TextAlignment.Center;
@@ -118,7 +132,7 @@ namespace ChessForge
             r.FontWeight = FontWeights.Bold;
 
             line_2.Inlines.Add(r);
-            rtbBoardComment.Document.Blocks.Add(line_2);
+            _rtbCommentBox.Document.Blocks.Add(line_2);
         }
 
         /// <summary>
@@ -139,7 +153,7 @@ namespace ChessForge
             para.Margin = new Thickness(0, 0, 0, bottomMargin);
 
             para.Inlines.Add(new Run(text));
-            rtbBoardComment.Document.Blocks.Add(para);
+            _rtbCommentBox.Document.Blocks.Add(para);
 
             return para;
         }

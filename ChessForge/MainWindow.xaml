@@ -377,7 +377,7 @@
         <Slider x:Name="sliderReplaySpeed" HorizontalAlignment="Left" Margin="71,50,0,0" Grid.Row="2" VerticalAlignment="Top" 
                 Height="36" Width="170" ValueChanged="sliderReplaySpeed_ValueChanged"
                 Maximum="2000" TickFrequency="600" IsSnapToTickEnabled="True" Grid.Column="1" Minimum="200" TickPlacement="BottomRight" Value="400" IsDirectionReversed="True" AutoToolTipPlacement="TopLeft" LargeChange="500" SmallChange="100" />
-        <RichTextBox x:Name="rtbBoardComment" HorizontalAlignment="Left" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
+        <RichTextBox x:Name="_rtbBoardComment" HorizontalAlignment="Left" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0" />
