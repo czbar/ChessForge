@@ -10,26 +10,43 @@ namespace ChessForge
 {
     /// <summary>
     /// Combines the Bookmark's content
-    /// and its GUI visualization
+    /// and its GUI visualization.
     /// </summary>
     public class BookmarkView
     {
         public BookmarkView(ChessBoard board)
         {
-            GuiBoard = board;
+            _guiBoard = board;
         }
 
-        public ChessBoard GuiBoard;
+        /// <summary>
+        /// The Bookmark object shown in this view.
+        /// </summary>
         public Bookmark BookmarkData;
 
+        /// <summary>
+        /// The chessboard object for the bookmark.
+        /// </summary>
+        private ChessBoard _guiBoard;
+
+        /// <summary>
+        /// Sets opacity (in order to "gray out" 
+        /// or "activate" the board).
+        /// </summary>
+        /// <param name="opacity"></param>
         public void SetOpacity(double opacity)
         {
-            GuiBoard.SetBoardOpacity(opacity);
+            _guiBoard.SetBoardOpacity(opacity);
         }
+
+        /// <summary>
+        /// Activates the bookmark board by setting up the position,
+        /// the title (lable) and full opacity.
+        /// </summary>
         public void Activate()
         {
-            GuiBoard.DisplayPosition(BookmarkData.Node.Position);
-            GuiBoard.SetLabelText(BookmarkData.Node.GetPlyText(true));
+            _guiBoard.DisplayPosition(BookmarkData.Node.Position);
+            _guiBoard.SetLabelText(BookmarkData.Node.GetPlyText(true));
             SetOpacity(1);
         }
     }

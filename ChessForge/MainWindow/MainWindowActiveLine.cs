@@ -130,14 +130,14 @@ namespace ChessForge
             if (gameReplay.IsReplayActive)
             {
                 StopAnimation();
-                rtbBoardComment_GameReplayStop();            
+                _mainboardCommentBox.GameReplayStop();            
             }
 
             if (row >= 0)
             {
                 int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
                 gameReplay.SetupTreeLineToDisplay(ActiveLine.NodeList, moveIndex + 1);
-                rtbBoardComment_GameReplayStart();
+                _mainboardCommentBox.GameReplayStart();
             }
         }
 
@@ -171,7 +171,7 @@ namespace ChessForge
                         // was part of a double click (in which case the double click
                         // handler will override this).
                         gameReplay.ShowPositionAndStop(nd);
-                        rtbBoardComment_GameReplayStop();
+                        _mainboardCommentBox.GameReplayStop();
 
                         //StopAnimation();
                         //gameReplay.Stop();

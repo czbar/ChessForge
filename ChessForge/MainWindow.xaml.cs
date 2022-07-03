@@ -34,13 +34,12 @@ namespace ChessForge
         private const int squareSize = 80;
 
         DispatcherTimer dispatcherTimer;
-
         EvaluationState Evaluation = new EvaluationState();
         AnimationState MoveAnimation = new AnimationState();
         ScoreSheet ActiveLine = new ScoreSheet();
         ChessBoard MainChessBoard;
 
-
+        MainboardCommentBox _mainboardCommentBox;
         public GameReplay gameReplay;
 
         /// <summary>
@@ -61,6 +60,8 @@ namespace ChessForge
 
             InitializeComponent();
 
+            _mainboardCommentBox = new MainboardCommentBox(_rtbBoardComment);
+
             _menuPlayComputer.Header = Strings.MENU_ENGINE_GAME_START;
 
             Configuration.Initialize(this);
@@ -73,7 +74,7 @@ namespace ChessForge
 
             Configuration.ReadConfigurationFile();
             MoveAnimation.MoveDuration = Configuration.MoveSpeed;
-            gameReplay = new GameReplay(this, MainChessBoard);
+            gameReplay = new GameReplay(this, MainChessBoard, _mainboardCommentBox);
 
             if (Configuration.MainWinPos.IsValid)
             {
@@ -636,7 +637,7 @@ namespace ChessForge
                 Workbook = new Tree();
                 _rtbWorkbookView.Document.Blocks.Clear();
                 PgnGameParser pgnGame = new PgnGameParser(gameText, Workbook, true);
-                rtbBoardComment_ShowWorkbookTitle(Workbook.Title);
+                _mainboardCommentBox.ShowWorkbookTitle(Workbook.Title);
 
                 _workbookRichTextBuilder = new TreeRichTextBuilder(_rtbWorkbookView.Document);
                 _trainingBrowseRichTextBuilder = new TreeRichTextBuilder(_rtbTrainingBrowse.Document);
@@ -915,7 +916,7 @@ namespace ChessForge
             {
                 if (isLineStart)
                 {
-                    rtbBoardComment.Visibility = visible ? Visibility.Hidden : Visibility.Visible;
+                    _rtbBoardComment.Visibility = visible ? Visibility.Hidden : Visibility.Visible;
                     btnStopEvaluation.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
                     _tbEngineLines.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
                     sliderReplaySpeed.Visibility = Visibility.Hidden;
@@ -925,9 +926,9 @@ namespace ChessForge
                 }
                 else
                 {
-                    rtbBoardComment.Dispatcher.Invoke(() =>
+                    _rtbBoardComment.Dispatcher.Invoke(() =>
                     {
-                        rtbBoardComment.Visibility = Visibility.Hidden;
+                        _rtbBoardComment.Visibility = Visibility.Hidden;
                     });
 
                     btnStopEvaluation.Dispatcher.Invoke(() =>
@@ -953,9 +954,9 @@ namespace ChessForge
             }
             else
             {
-                rtbBoardComment.Dispatcher.Invoke(() =>
+                _rtbBoardComment.Dispatcher.Invoke(() =>
                 {
-                    rtbBoardComment.Visibility = Visibility.Visible;
+                    _rtbBoardComment.Visibility = Visibility.Visible;
                 });
 
                 btnStopEvaluation.Dispatcher.Invoke(() =>
@@ -1237,7 +1238,7 @@ namespace ChessForge
             EnterGuiTrainingMode();
             TrainingState.IsTrainingInProgress = true;
 
-            rtbBoardComment_TrainingSessionStart();
+            _mainboardCommentBox.TrainingSessionStart();
 
             //TODO check if there conditions where there is no point in user making a move.
             TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_MOVE;

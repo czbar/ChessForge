@@ -65,6 +65,8 @@ namespace ChessForge
 
         private ChessBoard _chessBoard;
 
+        private MainboardCommentBox _commentBox;
+
         /// <summary>
         /// Sets reference to the hosting window.
         /// This constructors is only called once
@@ -72,10 +74,11 @@ namespace ChessForge
         /// and the object persists across the entire session.
         /// </summary>
         /// <param name="win"></param>
-        public GameReplay(MainWindow win, ChessBoard chessBoard)
+        public GameReplay(MainWindow win, ChessBoard chessBoard, MainboardCommentBox commentBox)
         {
             _MainWin = win;
             _chessBoard = chessBoard;
+            _commentBox = commentBox;
         }
 
         /// <summary>
@@ -219,7 +222,7 @@ namespace ChessForge
             _MainWin.SelectPlyInTextViews(-1, PieceColor.White);
             // Indicate that we are not replaying anything right now.
             IsReplayActive = false;
-            _MainWin.rtbBoardComment_GameReplayStop();
+            _commentBox.GameReplayStop();
         }
 
         /// <summary>
