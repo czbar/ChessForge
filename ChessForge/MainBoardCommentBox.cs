@@ -14,26 +14,30 @@ using GameTree;
 namespace ChessForge
 {
     /// <summary>
-    /// Manages the RichTextBox that displays hints to the user next to (below) the 
+    /// Manages the RichTextBox's FlowDocument that displays hints to the user next to (below) the 
     /// main chess board.
     /// This includes e.g. prompts to make a move or wait for the engine's move when
     /// playing against the computer.
     /// </summary>
-    public class MainboardCommentBox
+    public class MainboardCommentBox : RichTextBuilder
     {
-        /// <summary>
-        /// RichTextBox control managed by this object
-        /// </summary>
-        private RichTextBox _rtbCommentBox;
+        public MainboardCommentBox(FlowDocument doc) : base(doc)
+        {
+        }
+
+        override internal Dictionary<string, RichTextPara> RichTextParas { get { return _richTextParas; } }
 
         /// <summary>
-        /// Initializez the object and sets the reference to the UI element.
+        /// Layout definitions for paragraphs at different levels.
         /// </summary>
-        /// <param name="rtb"></param>
-        public MainboardCommentBox(RichTextBox rtb)
+        internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
-            _rtbCommentBox = rtb;
-        }
+            ["intro"] = new RichTextPara(0, 0, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0))),
+            ["prefix_line"] = new RichTextPara(0, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191))),
+            ["eval_results"] = new RichTextPara(30, 5, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(51, 159, 141))),
+            ["normal"] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172))),
+            ["default"] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63))),
+        };
 
         /// <summary>
         /// The main message when a new workbook was loaded or when nothing
@@ -42,7 +46,7 @@ namespace ChessForge
         /// <param name="title"></param>
         public void ShowWorkbookTitle(string title)
         {
-            _rtbCommentBox.Document.Blocks.Clear();
+            Document.Blocks.Clear();
 
             Paragraph para = new Paragraph();
             para.FontSize = 24;
@@ -52,12 +56,12 @@ namespace ChessForge
 
             string titleToShow = string.IsNullOrWhiteSpace(title) ? "Untitled Workbook" : title;
             para.Inlines.Add(new Run(titleToShow));
-            _rtbCommentBox.Document.Blocks.Add(para);
+            Document.Blocks.Add(para);
 
-            _rtbCommentBox.Document.Blocks.Add(CreateTextParagraph("Some available actions are:", FontWeights.Bold, 14, 5));
+            Document.Blocks.Add(CreateTextParagraph("Some available actions are:", FontWeights.Bold, 14, 5));
 
             string strInstruction = Strings.QUICK_INSTRUCTION;
-            _rtbCommentBox.Document.Blocks.Add(CreateTextParagraph(strInstruction, FontWeights.Normal));
+            Document.Blocks.Add(CreateTextParagraph(strInstruction, FontWeights.Normal));
         }
 
         /// <summary>
@@ -71,11 +75,11 @@ namespace ChessForge
 
         public void GameReplayStart()
         {
-            _rtbCommentBox.Document.Blocks.Clear();
+            Document.Blocks.Clear();
 
             Paragraph dummyPara = new Paragraph();
             dummyPara.Margin = new Thickness(0, 0, 0, 16);
-            _rtbCommentBox.Document.Blocks.Add(dummyPara);
+            Document.Blocks.Add(dummyPara);
 
             Paragraph line_1 = new Paragraph();
             line_1.TextAlignment = TextAlignment.Center;
@@ -87,7 +91,7 @@ namespace ChessForge
             r.FontWeight = FontWeights.Bold;
 
             line_1.Inlines.Add(r);
-            _rtbCommentBox.Document.Blocks.Add(line_1);
+            Document.Blocks.Add(line_1);
 
             Paragraph line_2 = new Paragraph();
             line_2.TextAlignment = TextAlignment.Center;
@@ -99,16 +103,16 @@ namespace ChessForge
             r.FontWeight = FontWeights.Regular;
 
             line_2.Inlines.Add(r);
-            _rtbCommentBox.Document.Blocks.Add(line_2);
+            Document.Blocks.Add(line_2);
         }
 
         public void TrainingSessionStart()
         {
-            _rtbCommentBox.Document.Blocks.Clear();
+            Document.Blocks.Clear();
 
             Paragraph dummyPara = new Paragraph();
             dummyPara.Margin = new Thickness(0, 0, 0, 10);
-            _rtbCommentBox.Document.Blocks.Add(dummyPara);
+            Document.Blocks.Add(dummyPara);
 
             Paragraph line_1 = new Paragraph();
             line_1.TextAlignment = TextAlignment.Center;
@@ -120,19 +124,19 @@ namespace ChessForge
             r.FontWeight = FontWeights.Regular;
 
             line_1.Inlines.Add(r);
-            _rtbCommentBox.Document.Blocks.Add(line_1);
+            Document.Blocks.Add(line_1);
 
             Paragraph line_2 = new Paragraph();
             line_2.TextAlignment = TextAlignment.Center;
             line_2.Margin = new Thickness(0, 0, 0, 0);
 
-            r = new Run("Your move!");
+            r = new Run("Make your move and watch the comments in the Workbook view to the right of this chessboard.");
             r.FontStyle = FontStyles.Normal;
             r.FontSize = 20;
             r.FontWeight = FontWeights.Bold;
 
             line_2.Inlines.Add(r);
-            _rtbCommentBox.Document.Blocks.Add(line_2);
+            Document.Blocks.Add(line_2);
         }
 
         /// <summary>
@@ -153,10 +157,9 @@ namespace ChessForge
             para.Margin = new Thickness(0, 0, 0, bottomMargin);
 
             para.Inlines.Add(new Run(text));
-            _rtbCommentBox.Document.Blocks.Add(para);
+            Document.Blocks.Add(para);
 
             return para;
         }
-
     }
 }

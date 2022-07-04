@@ -74,9 +74,9 @@
     <Compile Include="ListViewHelper.cs" />
     <Compile Include="MainBoardCommentBox.cs" />
     <Compile Include="MainWindow\MainWindowEngineGame.cs" />
-    <Compile Include="MainWindow\MainWindowEngineEvals.cs" />
+    <Compile Include="EngineEvaluationGUI.cs" />
     <Compile Include="MainWindow\MainWindowWorkbookTable.cs" />
-    <Compile Include="MainWindow\MainWindowUtils.cs" />
+    <Compile Include="GuiUtilities.cs" />
     <Compile Include="MainWindow\MainWindowActiveLine.cs" />
     <Compile Include="MoveEvaluation.cs" />
     <Compile Include="Resources\ChessBoards.cs" />
