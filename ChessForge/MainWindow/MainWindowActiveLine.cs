@@ -124,7 +124,7 @@ namespace ChessForge
             int column = -1;
             int row = -1;
 
-            GetColumnRowFromMouseClick(e, out row, out column);
+            GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out row, out column);
 
             // if there is replay happening now, stop it
             if (gameReplay.IsReplayActive)
@@ -154,7 +154,7 @@ namespace ChessForge
             int column;
             int row;
 
-            GetColumnRowFromMouseClick(e, out row, out column);
+            GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out row, out column);
 
             if (ViewActiveLine_IsSelectableCell(row, column))
             {

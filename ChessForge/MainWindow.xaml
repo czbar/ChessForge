@@ -396,7 +396,7 @@
             </FlowDocument>
         </RichTextBox>
         <TextBox x:Name="_tbEngineLines" TextWrapping="NoWrap" Text="" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
-        <ProgressBar x:Name="progEvaluation" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="11" Margin="46,113,0,0" Grid.Row="2" VerticalAlignment="Top" Width="190"/>
+        <ProgressBar x:Name="_progEvaluation" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="11" Margin="46,113,0,0" Grid.Row="2" VerticalAlignment="Top" Width="190"/>
         <Button x:Name="btnStopEvaluation" Grid.Column="1" Content="Stop" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Height="27" Width="50" Margin="130,71,0,0"/>
         <TextBox x:Name="tbLastMove" Grid.Column="1" HorizontalAlignment="Left" Margin="143,17,0,0" Grid.Row="2" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="26"/>
         <Label x:Name="lblLastMove" Grid.Column="1" Content="Last move: " HorizontalAlignment="Left" Margin="45,22,0,0" Grid.Row="2" VerticalAlignment="Top"/>

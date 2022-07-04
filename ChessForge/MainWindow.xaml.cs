@@ -35,6 +35,7 @@ namespace ChessForge
 
         DispatcherTimer dispatcherTimer;
         EvaluationState Evaluation = new EvaluationState();
+        EngineEvaluationGUI _engineEvaluationGUI;
         AnimationState MoveAnimation = new AnimationState();
         ScoreSheet ActiveLine = new ScoreSheet();
         ChessBoard MainChessBoard;
@@ -60,9 +61,11 @@ namespace ChessForge
 
             InitializeComponent();
 
-            _mainboardCommentBox = new MainboardCommentBox(_rtbBoardComment);
+            _mainboardCommentBox = new MainboardCommentBox(_rtbBoardComment.Document);
 
             _menuPlayComputer.Header = Strings.MENU_ENGINE_GAME_START;
+
+            _engineEvaluationGUI = new EngineEvaluationGUI(_tbEngineLines, _progEvaluation, Evaluation);
 
             Configuration.Initialize(this);
             Configuration.StartDirectory = Directory.GetCurrentDirectory();
@@ -180,7 +183,7 @@ namespace ChessForge
 
         private void CreateEngineInfoDispayTimer()
         {
-            EngineInfoDisplayTimer.Elapsed += new ElapsedEventHandler(tbMoveEvaluation_ShowEngineLines);
+            EngineInfoDisplayTimer.Elapsed += new ElapsedEventHandler(_engineEvaluationGUI.ShowEngineLines);
             EngineInfoDisplayTimer.Interval = 200;
             EngineInfoDisplayTimer.Enabled = false;
         }
@@ -388,7 +391,7 @@ namespace ChessForge
         private void AnimateMove(SquareCoords origin, SquareCoords destination)
         {
             // caller already accounted for a possible flipped board so call with ignoreFlip = true
-            Image img = MainChessBoard.GetPieceImage(origin.Xcoord, origin.Ycoord,true);
+            Image img = MainChessBoard.GetPieceImage(origin.Xcoord, origin.Ycoord, true);
             MoveAnimation.Piece = img;
             MoveAnimation.Origin = origin;
             MoveAnimation.Destination = destination;
@@ -789,14 +792,14 @@ namespace ChessForge
                 menuEvalPos.IsEnabled = false;
             });
 
-            progEvaluation.Dispatcher.Invoke(() =>
+            _progEvaluation.Dispatcher.Invoke(() =>
             {
-                progEvaluation.Visibility = Visibility.Visible;
-                progEvaluation.Minimum = 0;
+                _progEvaluation.Visibility = Visibility.Visible;
+                _progEvaluation.Minimum = 0;
                 // add 10% to compensate for any processing delays
                 // we don't want to be too optimistic
-                progEvaluation.Maximum = (int)(Configuration.EngineEvaluationTime * 1.1);
-                progEvaluation.Value = 0;
+                _progEvaluation.Maximum = (int)(Configuration.EngineEvaluationTime * 1.1);
+                _progEvaluation.Value = 0;
             });
 
             Evaluation.PositionIndex = posIndex;
@@ -889,9 +892,9 @@ namespace ChessForge
                         {
                             menuEvalPos.IsEnabled = true;
                         });
-                        progEvaluation.Dispatcher.Invoke(() =>
+                        _progEvaluation.Dispatcher.Invoke(() =>
                         {
-                            progEvaluation.Visibility = Visibility.Hidden;
+                            _progEvaluation.Visibility = Visibility.Hidden;
                         });
 
                         ShowEvaluationControls(false, false);
@@ -1035,12 +1038,12 @@ namespace ChessForge
                 menuEvalPos.IsEnabled = false;
             });
 
-            progEvaluation.Dispatcher.Invoke(() =>
+            _progEvaluation.Dispatcher.Invoke(() =>
             {
-                progEvaluation.Visibility = Visibility.Visible;
-                progEvaluation.Minimum = 0;
-                progEvaluation.Maximum = (int)(Configuration.EngineEvaluationTime);
-                progEvaluation.Value = 0;
+                _progEvaluation.Visibility = Visibility.Visible;
+                _progEvaluation.Minimum = 0;
+                _progEvaluation.Maximum = (int)(Configuration.EngineEvaluationTime);
+                _progEvaluation.Value = 0;
             });
 
             Evaluation.Timer.Start();
@@ -1109,8 +1112,8 @@ namespace ChessForge
 
                     _dgEngineGame.Dispatcher.Invoke(() =>
                     {
-                    // the ply is already stored in EngineGame and now we need to add it
-                    // to the list of plies.
+                        // the ply is already stored in EngineGame and now we need to add it
+                        // to the list of plies.
                         EngineGame.AddLastNodeToPlies();
                     });
 
@@ -1134,12 +1137,12 @@ namespace ChessForge
                 menuEvalPos.IsEnabled = true;
             });
 
-            progEvaluation.Dispatcher.Invoke(() =>
+            _progEvaluation.Dispatcher.Invoke(() =>
             {
-                progEvaluation.Visibility = Visibility.Visible;
-                progEvaluation.Minimum = 0;
-                progEvaluation.Maximum = (int)(Configuration.EngineEvaluationTime);
-                progEvaluation.Value = 0;
+                _progEvaluation.Visibility = Visibility.Visible;
+                _progEvaluation.Minimum = 0;
+                _progEvaluation.Maximum = (int)(Configuration.EngineEvaluationTime);
+                _progEvaluation.Value = 0;
             });
 
             imgChessBoard.Source = ChessBoards.ChessBoardBlue;
@@ -1203,8 +1206,8 @@ namespace ChessForge
         {
             if (Workbook.Bookmarks.Count == 0)
             {
-                MessageBox.Show("There are no training positions in this Workbook.  Do you want to generate some?", 
-                    "ChessForge Training", MessageBoxButton.YesNoCancel, MessageBoxImage.Question); 
+                MessageBox.Show("There are no training positions in this Workbook.  Do you want to generate some?",
+                    "ChessForge Training", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
                 // TODO: implement handling of the answer.
             }
@@ -1227,7 +1230,7 @@ namespace ChessForge
 
             TreeNode startNode = Workbook.Bookmarks[bookmarkIndex].Node;
             MainChessBoard.DisplayPosition(startNode.Position);
-            
+
             _trainingBrowseRichTextBuilder.BuildFlowDocumentForWorkbook(Workbook.Bookmarks[bookmarkIndex].Node.NodeId);
 
             Paragraph progressStartPara = _trainingProgressRichTextBuilder.BuildPrefixParagraph(Workbook.Bookmarks[bookmarkIndex].Node);
