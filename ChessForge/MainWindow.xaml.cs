@@ -45,6 +45,9 @@ namespace ChessForge
         MainboardCommentBox _mainboardCommentBox;
         public GameReplay gameReplay;
 
+        private MediaPlayer _soundMove = new MediaPlayer();
+        private MediaPlayer _soundCapture = new MediaPlayer();
+
         /// <summary>
         /// The complete tree of the currently
         /// loaded workbook (from the PGN or CHFRG file)
@@ -62,6 +65,9 @@ namespace ChessForge
             AppState.MainWin = this;
 
             InitializeComponent();
+
+            _soundMove.Open(new Uri("Resources/Sounds/Move.mp3", UriKind.Relative));
+            _soundCapture.Open(new Uri("Resources/Sounds/Capture.mp3", UriKind.Relative));
 
             // initialize the UIElement states table
             InitializeUIElementStates();
@@ -102,8 +108,8 @@ namespace ChessForge
 
             btnStopEvaluation.Visibility = Visibility.Hidden;
             sliderReplaySpeed.Visibility = Visibility.Hidden;
-            lblLastMove.Visibility = Visibility.Hidden;
-            tbLastMove.Visibility = Visibility.Hidden;
+            _lblEvaluating.Visibility = Visibility.Hidden;
+            _lblMoveUnderEval.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -141,7 +147,7 @@ namespace ChessForge
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(20000);
             AppState.ChangeCurrentMode(AppState.Mode.IDLE);
-//            AppState.CurrentMode = AppState.Mode.IDLE;
+            //            AppState.CurrentMode = AppState.Mode.IDLE;
 
             bool engineStarted = EngineMessageProcessor.Start();
             if (!engineStarted)
@@ -190,7 +196,7 @@ namespace ChessForge
         private void CreateEngineInfoDispayTimer()
         {
             EngineInfoDisplayTimer.Elapsed += new ElapsedEventHandler(_engineEvaluationGUI.ShowEngineLines);
-            EngineInfoDisplayTimer.Interval = 200;
+            EngineInfoDisplayTimer.Interval = 100;
             EngineInfoDisplayTimer.Enabled = false;
         }
 
@@ -330,6 +336,8 @@ namespace ChessForge
                             {
                                 MainChessBoard.GetPieceImage(sq.Xcoord, sq.Ycoord, true).Source = DraggedPiece.ImageControl.Source;
                                 ReturnDraggedPiece(true);
+                                _soundMove.Position = TimeSpan.FromMilliseconds(0);
+                                _soundMove.Play();
                             }
                             else
                             {
@@ -595,10 +603,10 @@ namespace ChessForge
                         if (MessageBox.Show("Cancel Game", "Game with the Computer is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             result = true;
                         break;
-                    //case AppState.Mode.GAME_REPLAY:
-                    //    if (MessageBox.Show("Cancel Replay", "Game Replay is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                    //        result = true;
-                    //    break;
+                        //case AppState.Mode.GAME_REPLAY:
+                        //    if (MessageBox.Show("Cancel Replay", "Game Replay is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        //        result = true;
+                        //    break;
                 }
             }
 
@@ -678,6 +686,8 @@ namespace ChessForge
 
                 Configuration.LastPgnFile = fileName;
                 Configuration.AddRecentFile(fileName);
+
+                AppState.ChangeCurrentMode(AppState.Mode.MANUAL_REVIEW);
             }
             catch (Exception e)
             {
@@ -749,7 +759,7 @@ namespace ChessForge
                     // make an extra defensive check
                     if (posIndex < ActiveLine.NodeList.Count)
                     {
-                        StartMoveEvaluation(posIndex, EvaluationState.EvaluationMode.SINGLE_MOVE, true);
+                        RequestMoveEvaluation(posIndex, EvaluationState.EvaluationMode.SINGLE_MOVE, true);
                     }
                 }
                 else
@@ -779,7 +789,7 @@ namespace ChessForge
             if (EngineMessageProcessor.IsEngineAvailable())
             {
                 _dgActiveLine.SelectedCells.Clear();
-                StartMoveEvaluation(Evaluation.PositionIndex, EvaluationState.EvaluationMode.FULL_LINE, true);
+                RequestMoveEvaluation(Evaluation.PositionIndex, EvaluationState.EvaluationMode.FULL_LINE, true);
             }
             else
             {
@@ -787,8 +797,29 @@ namespace ChessForge
             }
         }
 
-        private void StartMoveEvaluation(int posIndex, EvaluationState.EvaluationMode mode, bool isLineStart)
+        /// <summary>
+        /// Starts move evaluation on user's request or when continuing line evaluation.
+        /// NOTE: does not start evaluation when making a move during a user vs engine game.
+        /// </summary>
+        /// <param name="posIndex"></param>
+        /// <param name="mode"></param>
+        /// <param name="isLineStart"></param>
+        private void RequestMoveEvaluation(int posIndex, EvaluationState.EvaluationMode mode, bool isLineStart)
         {
+            Evaluation.PositionIndex = posIndex;
+            Evaluation.Position = ActiveLine.NodeList[posIndex].Position;
+            MainChessBoard.DisplayPosition(Evaluation.Position);
+
+            ShowMoveEvaluationControls(true, isLineStart);
+            UpdateLastMoveTextBox(posIndex, isLineStart);
+
+            EngineMessageProcessor.StartMessagePollTimer();
+
+            PrepareMoveEvaluation(mode, Evaluation.Position);
+
+#if false
+            Evaluation.Mode = mode;
+
             menuEvalLine.Dispatcher.Invoke(() =>
             {
                 menuEvalLine.IsEnabled = false;
@@ -802,27 +833,94 @@ namespace ChessForge
             {
                 _pbEngineThinking.Visibility = Visibility.Visible;
                 _pbEngineThinking.Minimum = 0;
-                // add 10% to compensate for any processing delays
+                // add 50% to compensate for any processing delays
                 // we don't want to be too optimistic
-                _pbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime * 1.1);
+                _pbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime * 1.5);
                 _pbEngineThinking.Value = 0;
             });
 
-            Evaluation.PositionIndex = posIndex;
-            Evaluation.Position = ActiveLine.NodeList[posIndex].Position;
+
+            EngineInfoDisplayTimer.Enabled = true;
+            Evaluation.ProgressTimer.Start();
+
+            string fen = FenParser.GenerateFenFromPosition(Evaluation.Position);
+            EngineMessageProcessor.RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
+#endif
+        }
+
+        /// <summary>
+        /// Prepares controls, timers 
+        /// and requests the engine to make move.
+        /// </summary>
+        /// <param name="position"></param>
+        private void RequestEngineMove(BoardPosition position)
+        {
+            PrepareMoveEvaluation(EvaluationState.EvaluationMode.IN_GAME_PLAY, position);
+
+#if false            
+            Evaluation.Mode = EvaluationState.EvaluationMode.IN_GAME_PLAY;
+
+            menuEvalLine.Dispatcher.Invoke(() =>
+            {
+                menuEvalLine.IsEnabled = false;
+            });
+            menuEvalPos.Dispatcher.Invoke(() =>
+            {
+                menuEvalPos.IsEnabled = false;
+            });
+
+            _pbEngineThinking.Dispatcher.Invoke(() =>
+            {
+                _pbEngineThinking.Visibility = Visibility.Visible;
+                _pbEngineThinking.Minimum = 0;
+                // add 50% to compensate for any processing delays
+                // we don't want to be too optimistic
+                _pbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime * 1.5);
+                _pbEngineThinking.Value = 0;
+            });
+
+            EngineInfoDisplayTimer.Enabled = true;
+            Evaluation.ProgressTimer.Start();
+
+            // get the current position
+            string fen = FenParser.GenerateFenFromPosition(position);
+            EngineMessageProcessor.RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineMoveTime);
+#endif
+        }
+
+        /// <summary>
+        /// Preparations for move evaluation that are common for Position/Line 
+        /// evaluation as well as requesting engine move in a game.
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <param name="position"></param>
+        private void PrepareMoveEvaluation(EvaluationState.EvaluationMode mode, BoardPosition position)
+        {
             Evaluation.Mode = mode;
 
-            EngineMessageProcessor.StartMessagePollTimer();
+            menuEvalLine.Dispatcher.Invoke(() =>
+            {
+                menuEvalLine.IsEnabled = false;
+            });
+            menuEvalPos.Dispatcher.Invoke(() =>
+            {
+                menuEvalPos.IsEnabled = false;
+            });
+
+            _pbEngineThinking.Dispatcher.Invoke(() =>
+            {
+                _pbEngineThinking.Visibility = Visibility.Visible;
+                _pbEngineThinking.Minimum = 0;
+                // add 50% to compensate for any processing delays
+                // we don't want to be too optimistic
+                _pbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime * 1.5);
+                _pbEngineThinking.Value = 0;
+            });
+
             EngineInfoDisplayTimer.Enabled = true;
+            Evaluation.ProgressTimer.Start();
 
-            MainChessBoard.DisplayPosition(ActiveLine.NodeList[posIndex].Position);
-
-            Evaluation.Timer.Start();
-
-            ShowEvaluationControls(true, isLineStart);
-            UpdateLastMoveTextBox(posIndex, isLineStart);
-
-            string fen = FenParser.GenerateFenFromPosition(ActiveLine.NodeList[posIndex].Position);
+            string fen = FenParser.GenerateFenFromPosition(position);
             EngineMessageProcessor.RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
         }
 
@@ -834,13 +932,13 @@ namespace ChessForge
 
             if (isLineStart)
             {
-                tbLastMove.Text = moveTxt;
+                _lblMoveUnderEval.Content = moveTxt;
             }
             else
             {
-                tbLastMove.Dispatcher.Invoke(() =>
+                _lblMoveUnderEval.Dispatcher.Invoke(() =>
                 {
-                    tbLastMove.Text = moveTxt;
+                    _lblMoveUnderEval.Content = moveTxt;
                 });
             }
         }
@@ -851,12 +949,15 @@ namespace ChessForge
         /// Evaluation has finished.
         /// Tidy up and reset to prepare for the next 
         /// evaluation request.
+        /// NOTE: This is called in the evaluation mode as well as during user vs engine game. 
         /// </summary>
         public void MoveEvaluationFinished()
         {
             if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER)
             {
                 ProcessEngineGameMoveEvent();
+                Evaluation.PrepareToContinue();
+
                 EngineMessageProcessor.StopMessagePollTimer();
             }
             else
@@ -903,7 +1004,7 @@ namespace ChessForge
                             _pbEngineThinking.Visibility = Visibility.Hidden;
                         });
 
-                        ShowEvaluationControls(false, false);
+                        ShowMoveEvaluationControls(false, false);
 
                     }
                     else
@@ -912,14 +1013,22 @@ namespace ChessForge
                         Evaluation.PrepareToContinue();
 
                         Evaluation.PositionIndex++;
-                        StartMoveEvaluation(Evaluation.PositionIndex, Evaluation.Mode, false);
+                        RequestMoveEvaluation(Evaluation.PositionIndex, Evaluation.Mode, false);
                         EngineInfoDisplayTimer.Enabled = true;
                     }
                 }
             }
         }
 
-        private void ShowEvaluationControls(bool visible, bool isLineStart)
+        /// <summary>
+        /// Sets visibility for the controls relevant to move evaluation modes.
+        /// NOTE: this is not applicable to move evaluation during a game.
+        /// Engine Lines TextBox replaces the Board Comment RichTextBox if
+        /// we are in the Position/Line evaluation mode.
+        /// </summary>
+        /// <param name="visible"></param>
+        /// <param name="isLineStart"></param>
+        private void ShowMoveEvaluationControls(bool visible, bool isLineStart)
         {
             if (visible)
             {
@@ -930,8 +1039,8 @@ namespace ChessForge
                     _tbEngineLines.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
                     sliderReplaySpeed.Visibility = Visibility.Hidden;
 
-                    lblLastMove.Visibility = Visibility.Visible;
-                    tbLastMove.Visibility = Visibility.Visible;
+                    _lblEvaluating.Visibility = Visibility.Visible;
+                    _lblMoveUnderEval.Visibility = Visibility.Visible;
                 }
                 else
                 {
@@ -950,14 +1059,14 @@ namespace ChessForge
                         _tbEngineLines.Visibility = Visibility.Visible;
                     });
 
-                    lblLastMove.Dispatcher.Invoke(() =>
+                    _lblEvaluating.Dispatcher.Invoke(() =>
                     {
-                        lblLastMove.Visibility = Visibility.Visible;
+                        _lblEvaluating.Visibility = Visibility.Visible;
                     });
 
-                    tbLastMove.Dispatcher.Invoke(() =>
+                    _lblMoveUnderEval.Dispatcher.Invoke(() =>
                     {
-                        tbLastMove.Visibility = Visibility.Visible;
+                        _lblMoveUnderEval.Visibility = Visibility.Visible;
                     });
                 }
             }
@@ -978,14 +1087,14 @@ namespace ChessForge
                     _tbEngineLines.Visibility = Visibility.Hidden;
                 });
 
-                lblLastMove.Dispatcher.Invoke(() =>
+                _lblEvaluating.Dispatcher.Invoke(() =>
                 {
-                    lblLastMove.Visibility = Visibility.Hidden;
+                    _lblEvaluating.Visibility = Visibility.Hidden;
                 });
 
-                tbLastMove.Dispatcher.Invoke(() =>
+                _lblMoveUnderEval.Dispatcher.Invoke(() =>
                 {
-                    tbLastMove.Visibility = Visibility.Hidden;
+                    _lblMoveUnderEval.Visibility = Visibility.Hidden;
                 });
             }
         }
@@ -1032,33 +1141,6 @@ namespace ChessForge
             }
         }
 
-        private void RequestEngineMove(BoardPosition position)
-        {
-            menuEvalLine.Dispatcher.Invoke(() =>
-            {
-                menuEvalLine.IsEnabled = false;
-            });
-            menuEvalPos.Dispatcher.Invoke(() =>
-            {
-                menuEvalPos.IsEnabled = false;
-            });
-
-            _pbEngineThinking.Dispatcher.Invoke(() =>
-            {
-                _pbEngineThinking.Visibility = Visibility.Visible;
-                _pbEngineThinking.Minimum = 0;
-                _pbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime);
-                _pbEngineThinking.Value = 0;
-            });
-
-            Evaluation.Timer.Start();
-
-            // get the current position
-            //string fen = FenParser.GenerateFenFromPosition(ViewSingleLine_GetSelectedTreeNode().Position);
-            string fen = FenParser.GenerateFenFromPosition(position);
-            EngineMessageProcessor.RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineMoveTime);
-        }
-
         /// <summary>
         /// We have a response from the engine so need to choose
         /// the move from the list of candidates, show it on the board
@@ -1075,7 +1157,10 @@ namespace ChessForge
             this.Dispatcher.Invoke(() =>
             {
                 pos = EngineGame.ProcessEngineGameMove();
+                _soundMove.Position = TimeSpan.FromMilliseconds(0);
+                _soundMove.Play();
             });
+
 
             // update the GUI and finish
             // (the app will wait for the user's move)
@@ -1150,13 +1235,14 @@ namespace ChessForge
             });
 
             imgChessBoard.Source = ChessBoards.ChessBoardBlue;
-            Evaluation.Timer.Stop();
+            Evaluation.Reset();
+//            Evaluation.ProgressTimer.Stop();
             EngineMessageProcessor.StopMessagePollTimer();
             AppState.CurrentMode = AppState.Mode.MANUAL_REVIEW;
             EngineGame.State = EngineGame.GameState.IDLE;
             CheckForUserMoveTimer.Enabled = false;
 
-//            HideEngineGameGuiControls();
+            //            HideEngineGameGuiControls();
             AppState.ExitCurrentMode();
         }
 
@@ -1246,7 +1332,7 @@ namespace ChessForge
             EngineGame.PrepareGame(startNode, false);
             _dgEngineGame.ItemsSource = EngineGame.Line.MoveList;
             AppState.ChangeCurrentMode(AppState.Mode.TRAINING);
-//            ShowEngineGameGuiControls();
+            //            ShowEngineGameGuiControls();
             CheckForUserMoveTimer.Enabled = true;
         }
 

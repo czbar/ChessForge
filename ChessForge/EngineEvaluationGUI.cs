@@ -45,34 +45,38 @@ namespace ChessForge
         /// <param name="e"></param>
         public void ShowEngineLines(object source, ElapsedEventArgs e)
         {
-            List<MoveEvaluation> lines = new List<MoveEvaluation>();
-            lock (EngineMessageProcessor.MoveCandidatesLock)
+            if (_evalState.Mode != EvaluationState.EvaluationMode.IN_GAME_PLAY)
             {
-                // make a copy of Move candidates so we can release the lock asap
-                foreach (MoveEvaluation me in EngineMessageProcessor.MoveCandidates)
+                List<MoveEvaluation> lines = new List<MoveEvaluation>();
+                lock (EngineMessageProcessor.MoveCandidatesLock)
                 {
-                    lines.Add(new MoveEvaluation(me));
+                    // make a copy of Move candidates so we can release the lock asap
+                    foreach (MoveEvaluation me in EngineMessageProcessor.MoveCandidates)
+                    {
+                        lines.Add(new MoveEvaluation(me));
+                    }
+                }
+
+                StringBuilder sb = new StringBuilder();
+                _textBox.Dispatcher.Invoke(() =>
+                {
+                    for (int i = 0; i < lines.Count; i++)
+                    {
+                        sb.Append(BuildLineText(i, lines[i]));
+                        sb.Append(Environment.NewLine);
+                    }
+                    _textBox.Text = sb.ToString();
+                });
+
+                if (lines.Count > 0)
+                {
+                    _evalState.PositionCpScore = lines[0].ScoreCp;
                 }
             }
 
-            StringBuilder sb = new StringBuilder();
-            _textBox.Dispatcher.Invoke(() =>
-            {
-                for (int i = 0; i < lines.Count; i++)
-                {
-                    sb.Append(BuildLineText(i, lines[i]));
-                    sb.Append(Environment.NewLine);
-                }
-                _textBox.Text = sb.ToString();
-            });
-
-            if (lines.Count > 0)
-            {
-                _evalState.PositionCpScore = lines[0].ScoreCp;
-            }
             _progBar.Dispatcher.Invoke(() =>
             {
-                _progBar.Value = _evalState.Timer.ElapsedMilliseconds;
+                _progBar.Value = _evalState.ProgressTimer.ElapsedMilliseconds;
             });
         }
 

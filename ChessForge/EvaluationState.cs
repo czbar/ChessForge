@@ -44,24 +44,32 @@ namespace ChessForge
                 PositionCpScore = 0;
                 PositionIndex = 0;
 
-                if (Timer != null)
+                if (ProgressTimer != null)
                 {
-                    Timer.Stop();
-                    Timer.Reset();
+                    ProgressTimer.Stop();
+                    ProgressTimer.Reset();
                 }
             }
         }
 
+        /// <summary>
+        /// This will be called when in LINE evaluation or GAME mode
+        /// The progress bar timer must be reset. 
+        /// </summary>
         public void PrepareToContinue()
         {
-            if (Timer != null)
+            if (ProgressTimer != null)
             {
-                Timer.Stop();
-                Timer.Reset();
+                ProgressTimer.Stop();
+                ProgressTimer.Reset();
             }
         }
 
-        public Stopwatch Timer = new Stopwatch();
+        /// <summary>
+        /// Timer used by the evaluation progress bar to set
+        /// its position.
+        /// </summary>
+        public Stopwatch ProgressTimer = new Stopwatch();
 
         /// <summary>
         /// The current evaluation mode.

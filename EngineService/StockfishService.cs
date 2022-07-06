@@ -161,7 +161,7 @@ namespace EngineService
                 }
                 catch
                 {
-                    EngineLog.Message("EXCEPTION");
+                    throw new Exception("ReadEngineMessages()");
                 };
             }
         }
