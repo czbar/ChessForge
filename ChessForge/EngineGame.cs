@@ -103,7 +103,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    EngineGame.State = EngineGame.GameState.ENGINE_THINKING;
+                    State = GameState.ENGINE_THINKING;
                 }
                 return true;
             }

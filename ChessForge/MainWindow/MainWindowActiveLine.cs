@@ -210,24 +210,32 @@ namespace ChessForge
         /// Determines whether the cell at a specified row and column is selectable.
         /// Returns true if the column is selectable and the cell contains a move/ply.
         /// Handles the edge case where the last row contains White's move only.
+        /// Cells in this view are only selectable in MANUAL_REVIEW mode.
         /// </summary>
         /// <param name="row"></param>
         /// <param name="column"></param>
         /// <returns></returns>
         private bool ViewActiveLine_IsSelectableCell(int row, int column)
         {
-            if (!ViewActiveLine_IsSelectableColumn(column))
-                return false;
-
-            if (column == _dgActiveLineBlackPlyColumn
-                && row == ActiveLine.MoveList.Count - 1
-                && ActiveLine.MoveList[row].BlackPly == null)
+            if (AppState.CurrentMode == AppState.Mode.MANUAL_REVIEW)
             {
-                return false;
+                if (!ViewActiveLine_IsSelectableColumn(column))
+                    return false;
+
+                if (column == _dgActiveLineBlackPlyColumn
+                    && row == ActiveLine.MoveList.Count - 1
+                    && ActiveLine.MoveList[row].BlackPly == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
             else
             {
-                return true;
+                return false;
             }
         }
 

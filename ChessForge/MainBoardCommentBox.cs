@@ -120,8 +120,8 @@ namespace ChessForge
 
             Run r = new Run("The training session has started.");
             r.FontStyle = FontStyles.Normal;
-            r.FontSize = 18;
-            r.FontWeight = FontWeights.Regular;
+            r.FontSize = 16;
+            r.FontWeight = FontWeights.Bold;
 
             line_1.Inlines.Add(r);
             Document.Blocks.Add(line_1);
@@ -132,8 +132,8 @@ namespace ChessForge
 
             r = new Run("Make your move and watch the comments in the Workbook view to the right of this chessboard.");
             r.FontStyle = FontStyles.Normal;
-            r.FontSize = 20;
-            r.FontWeight = FontWeights.Bold;
+            r.FontSize = 14;
+            r.FontWeight = FontWeights.Regular;
 
             line_2.Inlines.Add(r);
             Document.Blocks.Add(line_2);
