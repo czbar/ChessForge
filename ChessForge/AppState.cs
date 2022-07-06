@@ -13,10 +13,7 @@ namespace ChessForge
     public class AppState
     {
         /// <summary>
-        /// The program is always in one or more of these modes.
-        /// For example, if the user is playing against the computer
-        /// as part of a training session, the TRAINING and PLAY_VS_COMPUTER
-        /// flags will be raised.
+        /// The program is always in one, and only one, of these modes.
         /// 
         /// Changing between modes requires a number of
         /// steps to be performed, in particular blocking certain 
@@ -24,16 +21,70 @@ namespace ChessForge
         /// requires that the position is set appropriately
         /// and user inputs, other than request to stop analysis
         /// are blocked.
+        /// 
         /// </summary>
-        public enum Mode
+        public enum Mode : uint
         {
-            IDLE = 0x00,              // no data read in, nothing's happening
-            TRAINING = 0x01,          // the user is in a training session
-            PLAY_VS_COMPUTER = 0x02,  // the user is playing against the computer
-                                      // this is only available if there is a game loaded
-            GAME_REPLAY = 0x04,       // auto-replaying a line from the currently loaded game
-            MANUAL_REVIEW = 0x08,     // the user is manually replaying the game, may make some new moves
-            ENGINE_EVALUATION = 0x10  // the program is evaluating a move or a line
+            /// <summary>
+            /// No workbook loaded, the program is waiting.
+            /// </summary>
+            IDLE = 0x0001,              
+
+            /// <summary>
+            /// A training session is in progress
+            /// </summary>
+            TRAINING = 0x0002,          
+
+            /// <summary>
+            /// The user is playing against the engine
+            /// </summary>
+            GAME_VS_COMPUTER = 0x0004,  
+
+            /// <summary>
+            /// The user is reviewing the workbook.
+            /// Can switch between different lines.
+            /// </summary>
+            MANUAL_REVIEW = 0x0010,  
+
+            /// <summary>
+            /// The program is evaluating a move or a line.
+            /// NOTE: this is separate from evaluation during the game
+            /// or training which are submodes of the respective modes.
+            /// </summary>
+            ENGINE_EVALUATION = 0x0020 
+        }
+
+        /// <summary>
+        /// Within a mode there can be several sub-modes. For example, if a play vs computer is in progress,
+        /// a SubMode will indicate whether the user or the computer is on move. 
+        /// </summary>
+        public enum SubMode : uint
+        {
+            NONE = 0x0000,
+            
+            /// <summary>
+            /// The program is idle while in Training
+            /// or Game mode, awaiting user's move.
+            /// </summary>
+            USER_THINKING = 0x0001,
+
+            /// <summary>
+            /// The program is monitoring
+            /// engine's messages awaiting engine's move.
+            /// </summary>
+            ENGINE_THINKING = 0x0002,
+            
+            /// <summary>
+            /// A selected line from the currently loaded workbook
+            /// is being replayed.
+            /// </summary>
+            GAME_REPLAY = 0x0008,
+
+            /// <summary>
+            /// The engine is evaluating position while
+            /// in the Training mode.
+            /// </summary>
+            TRAINING_ENGINE_EVALUATING = 0x0010
         }
 
         /// <summary>
@@ -44,9 +95,47 @@ namespace ChessForge
         public static MainWindow MainWin;
 
         /// <summary>
+        /// Switches application to another mode.
+        /// </summary>
+        public static void ChangeCurrentMode(AppState.Mode mode)
+        {
+            TidyUpOnModeExit(_previousMode);
+
+            _previousMode = _currentMode;
+            _currentMode = mode;
+
+            MainWin.ConfigureUIForMode(mode);
+        }
+
+        /// <summary>
+        /// Tidies up what ever necessary when
+        /// exiting a mode.
+        /// E.g. stoping appropriate timers.
+        /// </summary>
+        /// <param name="mode"></param>
+        private static void TidyUpOnModeExit(AppState.Mode previousMode)
+        {
+        }
+
+        /// <summary>
+        /// Exits the mode the application is currently in
+        /// and returns to the previous mode.
+        /// </summary>
+        public static void ExitCurrentMode()
+        {
+            ChangeCurrentMode(_previousMode);
+        }
+
+        /// <summary>
         /// The current mode of the application.
         /// </summary>
-        public static Mode CurrentMode { get; set; }
+        public static Mode CurrentMode { get => _currentMode; set => _currentMode = value; }
+
+        /// <summary>
+        /// The previous mode of the application.
+        /// This is applicable when an exit from the current mode is requested.
+        /// </summary>
+        public static Mode PreviousMode { get => _previousMode; set => _previousMode = value; }
 
         /// <summary>
         /// Horizontal animation object.
@@ -86,5 +175,8 @@ namespace ChessForge
         /// Precisely one bookmark can be active during a session. 
         /// </summary>
         public static int ActiveBookmarkInTraining = -1;
+
+        private static Mode _currentMode = Mode.IDLE;
+        private static Mode _previousMode = Mode.IDLE;
     }
 }

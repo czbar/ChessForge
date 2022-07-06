@@ -79,7 +79,7 @@
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox x:Name="_rtbTrainingProgress" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                 IsReadOnly="True" >
+                                 IsReadOnly="True"  MinHeight="600">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0" />
@@ -106,7 +106,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <TabControl x:Name="_tabMainControl" Grid.Column="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="2" SelectionChanged="tabControl_SelectionChanged">
+        <TabControl x:Name="_tabMainControl" Grid.Column="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="2">
             <TabItem x:Name="TabItemWorkbook"  Header="Workbook">
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox x:Name="_rtbWorkbookView" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
@@ -132,7 +132,7 @@
                         <StackPanel>
                             <ListView x:Name="_lvWorkbookTable" SelectionMode="Multiple" ItemsSource="{Binding}" Margin="0,0,0,0" 
                                       SelectionChanged="_lvWorkbookTable_SelectionChanged" PreviewMouseDown="_lvWorkbookTable_PreviewMouseDown" 
-                                      GotFocus="_lvWorkbookTable_GotFocus" DataContextChanged="_lvWorkbookTable_DataContextChanged" 
+                                      GotFocus="_lvWorkbookTable_GotFocus"  
                                        >
                                 <ListView.Resources>
                                     <DataTemplate x:Key="WorkbookTable" x:Name="WorkbookTableTemplate">
@@ -227,7 +227,7 @@
                     </ScrollViewer>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Bookmarks">
+            <TabItem x:Name="_tabBookmarks" Header="Bookmarks">
                 <Grid Background="#FFE5E5E5">
                     <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0">
                         <Grid.RowDefinitions>
@@ -396,7 +396,7 @@
             </FlowDocument>
         </RichTextBox>
         <TextBox x:Name="_tbEngineLines" TextWrapping="NoWrap" Text="" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
-        <ProgressBar x:Name="_progEvaluation" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="11" Margin="46,113,0,0" Grid.Row="2" VerticalAlignment="Top" Width="190"/>
+        <ProgressBar x:Name="_pbEngineThinking" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="11" Margin="46,113,0,0" Grid.Row="2" VerticalAlignment="Top" Width="190"/>
         <Button x:Name="btnStopEvaluation" Grid.Column="1" Content="Stop" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Height="27" Width="50" Margin="130,71,0,0"/>
         <TextBox x:Name="tbLastMove" Grid.Column="1" HorizontalAlignment="Left" Margin="143,17,0,0" Grid.Row="2" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="26"/>
         <Label x:Name="lblLastMove" Grid.Column="1" Content="Last move: " HorizontalAlignment="Left" Margin="45,22,0,0" Grid.Row="2" VerticalAlignment="Top"/>

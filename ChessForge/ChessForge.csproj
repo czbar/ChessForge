@@ -73,7 +73,6 @@
     <Compile Include="EvaluationState.cs" />
     <Compile Include="ListViewHelper.cs" />
     <Compile Include="MainBoardCommentBox.cs" />
-    <Compile Include="MainWindow\MainWindowEngineGame.cs" />
     <Compile Include="EngineEvaluationGUI.cs" />
     <Compile Include="MainWindow\MainWindowWorkbookTable.cs" />
     <Compile Include="GuiUtilities.cs" />
@@ -90,6 +89,7 @@
     <Compile Include="TreeTableCell.cs" />
     <Compile Include="TreeTableRow.cs" />
     <Compile Include="TreeTextBuilder.cs" />
+    <Compile Include="UIEelementState.cs" />
     <Compile Include="VariationLine.cs" />
     <Compile Include="WorkbookTableState.cs" />
     <Page Include="MainWindow.xaml">
