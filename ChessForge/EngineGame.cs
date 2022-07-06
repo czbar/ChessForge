@@ -16,10 +16,10 @@ namespace ChessForge
     {
         public enum GameState
         {
-            IDLE,
-            USER_THINKING,
-            ENGINE_THINKING,
-            PAUSED
+            IDLE = 0x00,
+            USER_THINKING = 0x01,
+            ENGINE_THINKING = 0x02,
+            PAUSED = 0x04
         }
 
         /// <summary>

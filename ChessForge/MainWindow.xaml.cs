@@ -40,6 +40,8 @@ namespace ChessForge
         ScoreSheet ActiveLine = new ScoreSheet();
         ChessBoard MainChessBoard;
 
+        List<UIEelementState> _uIEelementStates;
+
         MainboardCommentBox _mainboardCommentBox;
         public GameReplay gameReplay;
 
@@ -61,11 +63,14 @@ namespace ChessForge
 
             InitializeComponent();
 
+            // initialize the UIElement states table
+            InitializeUIElementStates();
+
             _mainboardCommentBox = new MainboardCommentBox(_rtbBoardComment.Document);
 
             _menuPlayComputer.Header = Strings.MENU_ENGINE_GAME_START;
 
-            _engineEvaluationGUI = new EngineEvaluationGUI(_tbEngineLines, _progEvaluation, Evaluation);
+            _engineEvaluationGUI = new EngineEvaluationGUI(_tbEngineLines, _pbEngineThinking, Evaluation);
 
             Configuration.Initialize(this);
             Configuration.StartDirectory = Directory.GetCurrentDirectory();
@@ -135,7 +140,8 @@ namespace ChessForge
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(20000);
-            AppState.CurrentMode = AppState.Mode.IDLE;
+            AppState.ChangeCurrentMode(AppState.Mode.IDLE);
+//            AppState.CurrentMode = AppState.Mode.IDLE;
 
             bool engineStarted = EngineMessageProcessor.Start();
             if (!engineStarted)
@@ -246,7 +252,7 @@ namespace ChessForge
                 SquareCoords sq = ClickedSquare(clickedPoint);
                 if (sq != null)
                 {
-                    if (AppState.CurrentMode == AppState.Mode.PLAY_VS_COMPUTER && EngineGame.State == EngineGame.GameState.USER_THINKING
+                    if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER && EngineGame.State == EngineGame.GameState.USER_THINKING
                         || AppState.CurrentMode == AppState.Mode.TRAINING && TrainingState.CurrentMode == TrainingState.Mode.AWAITING_USER_MOVE)
                     {
                         DraggedPiece.isDragInProgress = true;
@@ -296,7 +302,7 @@ namespace ChessForge
                 else
                 {
                     // double check that we are legitimately making a move
-                    if (AppState.CurrentMode == AppState.Mode.PLAY_VS_COMPUTER && EngineGame.State == EngineGame.GameState.USER_THINKING
+                    if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER && EngineGame.State == EngineGame.GameState.USER_THINKING
                         || AppState.CurrentMode == AppState.Mode.TRAINING && TrainingState.CurrentMode == TrainingState.Mode.AWAITING_USER_MOVE)
                     {
                         // if the move is valid swap image at destination 
@@ -585,14 +591,14 @@ namespace ChessForge
             {
                 switch (AppState.CurrentMode)
                 {
-                    case AppState.Mode.PLAY_VS_COMPUTER:
+                    case AppState.Mode.GAME_VS_COMPUTER:
                         if (MessageBox.Show("Cancel Game", "Game with the Computer is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             result = true;
                         break;
-                    case AppState.Mode.GAME_REPLAY:
-                        if (MessageBox.Show("Cancel Replay", "Game Replay is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                            result = true;
-                        break;
+                    //case AppState.Mode.GAME_REPLAY:
+                    //    if (MessageBox.Show("Cancel Replay", "Game Replay is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    //        result = true;
+                    //    break;
                 }
             }
 
@@ -792,14 +798,14 @@ namespace ChessForge
                 menuEvalPos.IsEnabled = false;
             });
 
-            _progEvaluation.Dispatcher.Invoke(() =>
+            _pbEngineThinking.Dispatcher.Invoke(() =>
             {
-                _progEvaluation.Visibility = Visibility.Visible;
-                _progEvaluation.Minimum = 0;
+                _pbEngineThinking.Visibility = Visibility.Visible;
+                _pbEngineThinking.Minimum = 0;
                 // add 10% to compensate for any processing delays
                 // we don't want to be too optimistic
-                _progEvaluation.Maximum = (int)(Configuration.EngineEvaluationTime * 1.1);
-                _progEvaluation.Value = 0;
+                _pbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime * 1.1);
+                _pbEngineThinking.Value = 0;
             });
 
             Evaluation.PositionIndex = posIndex;
@@ -848,7 +854,7 @@ namespace ChessForge
         /// </summary>
         public void MoveEvaluationFinished()
         {
-            if (AppState.CurrentMode == AppState.Mode.PLAY_VS_COMPUTER)
+            if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER)
             {
                 ProcessEngineGameMoveEvent();
                 EngineMessageProcessor.StopMessagePollTimer();
@@ -892,9 +898,9 @@ namespace ChessForge
                         {
                             menuEvalPos.IsEnabled = true;
                         });
-                        _progEvaluation.Dispatcher.Invoke(() =>
+                        _pbEngineThinking.Dispatcher.Invoke(() =>
                         {
-                            _progEvaluation.Visibility = Visibility.Hidden;
+                            _pbEngineThinking.Visibility = Visibility.Hidden;
                         });
 
                         ShowEvaluationControls(false, false);
@@ -991,7 +997,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void _menuPlayComputer_Click(object sender, RoutedEventArgs e)
         {
-            if (AppState.CurrentMode == AppState.Mode.PLAY_VS_COMPUTER)
+            if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER)
             {
                 // menu item was offering to exit the game so 
                 // change the header back and cleanup
@@ -1002,7 +1008,7 @@ namespace ChessForge
             {
 
                 // check that there is a move selected in the _dgMainLineView so
-                // that we have somhere to start
+                // that we have somewhere to start
 
                 // TODO: disable this menu if no move selected.
 
@@ -1011,9 +1017,8 @@ namespace ChessForge
                 {
                     imgChessBoard.Source = ChessBoards.ChessBoardGreen;
 
-                    ShowEngineGameGuiControls();
+                    AppState.ChangeCurrentMode(AppState.Mode.GAME_VS_COMPUTER);
 
-                    AppState.CurrentMode = AppState.Mode.PLAY_VS_COMPUTER;
                     EngineGame.PrepareGame(nd);
                     _dgEngineGame.ItemsSource = EngineGame.Line.MoveList;
 
@@ -1038,12 +1043,12 @@ namespace ChessForge
                 menuEvalPos.IsEnabled = false;
             });
 
-            _progEvaluation.Dispatcher.Invoke(() =>
+            _pbEngineThinking.Dispatcher.Invoke(() =>
             {
-                _progEvaluation.Visibility = Visibility.Visible;
-                _progEvaluation.Minimum = 0;
-                _progEvaluation.Maximum = (int)(Configuration.EngineEvaluationTime);
-                _progEvaluation.Value = 0;
+                _pbEngineThinking.Visibility = Visibility.Visible;
+                _pbEngineThinking.Minimum = 0;
+                _pbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime);
+                _pbEngineThinking.Value = 0;
             });
 
             Evaluation.Timer.Start();
@@ -1126,7 +1131,6 @@ namespace ChessForge
 
         private void StopEngineGame()
         {
-            //TODO display position we have before starting the game
             menuEvalLine.Dispatcher.Invoke(() =>
             {
                 menuEvalLine.IsEnabled = true;
@@ -1137,12 +1141,12 @@ namespace ChessForge
                 menuEvalPos.IsEnabled = true;
             });
 
-            _progEvaluation.Dispatcher.Invoke(() =>
+            _pbEngineThinking.Dispatcher.Invoke(() =>
             {
-                _progEvaluation.Visibility = Visibility.Visible;
-                _progEvaluation.Minimum = 0;
-                _progEvaluation.Maximum = (int)(Configuration.EngineEvaluationTime);
-                _progEvaluation.Value = 0;
+                _pbEngineThinking.Visibility = Visibility.Visible;
+                _pbEngineThinking.Minimum = 0;
+                _pbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime);
+                _pbEngineThinking.Value = 0;
             });
 
             imgChessBoard.Source = ChessBoards.ChessBoardBlue;
@@ -1152,7 +1156,8 @@ namespace ChessForge
             EngineGame.State = EngineGame.GameState.IDLE;
             CheckForUserMoveTimer.Enabled = false;
 
-            HideEngineGameGuiControls();
+//            HideEngineGameGuiControls();
+            AppState.ExitCurrentMode();
         }
 
         private void ShowBookmarks()
@@ -1184,15 +1189,6 @@ namespace ChessForge
             // In the future we may want to handle some key strokes here
             // but for now we will respond to whatever the ActiveLine view will request.
             ViewActiveLine_PreviewKeyDown(sender, e);
-        }
-
-        private void _lvWorkbookTable_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-
-        }
-
-        private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
         }
 
         /// <summary>
@@ -1249,14 +1245,16 @@ namespace ChessForge
             // The Line display is the same as when playing a game against the computer 
             EngineGame.PrepareGame(startNode, false);
             _dgEngineGame.ItemsSource = EngineGame.Line.MoveList;
-            ShowEngineGameGuiControls();
+            AppState.ChangeCurrentMode(AppState.Mode.TRAINING);
+//            ShowEngineGameGuiControls();
             CheckForUserMoveTimer.Enabled = true;
         }
 
         private void EnterGuiTrainingMode()
         {
-            _tabMainControl.Visibility = Visibility.Hidden;
-            _tabTrainingControl.Visibility = Visibility.Visible;
+            AppState.ChangeCurrentMode(AppState.Mode.TRAINING);
+            //_tabMainControl.Visibility = Visibility.Hidden;
+            //_tabTrainingControl.Visibility = Visibility.Visible;
         }
 
         private void ExitGuiTrainingMode()
@@ -1272,6 +1270,107 @@ namespace ChessForge
             MainChessBoard.SetBoardSourceImage(ChessBoards.ChessBoardBlue);
             TrainingState.IsTrainingInProgress = false;
         }
+
+        /// <summary>
+        /// Changes visibility of the GUI elements according to the passed mode
+        /// and submode.
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <param name="subMode"></param>
+        public void ConfigureUIForMode(AppState.Mode mode, AppState.SubMode subMode = 0)
+        {
+            foreach (UIEelementState el in _uIEelementStates)
+            {
+                if ((el.ModeVisibilityFlags & (uint)mode) != 0
+                    && (subMode == 0 || (el.ModeVisibilityFlags & (uint)subMode) != 0))
+                {
+                    el.Element.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    el.Element.Visibility = Visibility.Hidden;
+                }
+
+                if (el.ModeEnabledFlags == 0 || subMode == 0)
+                {
+                    el.Element.IsEnabled = true;
+                }
+                else
+                {
+                    if ((el.ModeEnabledFlags & (uint)mode) != 0
+                        && (subMode == 0 || (el.ModeEnabledFlags & (uint)subMode) != 0))
+                    {
+                        el.Element.IsEnabled = true;
+                    }
+                    else
+                    {
+                        el.Element.IsEnabled = false;
+                    }
+                }
+            }
+
+            SpecialUIHandling(mode, subMode);
+        }
+
+        /// <summary>
+        /// For some mode/submode combinations it may not be sufficient to 
+        /// configure the GUI according to the configuration table.
+        /// This method will perform any additional actions required.
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <param name="subMode"></param>
+        public void SpecialUIHandling(AppState.Mode mode, AppState.SubMode subMode = 0)
+        {
+        }
+
+        /// <summary>
+        /// Initializes table with the GUI configuration data
+        /// for app's modes and submodes.
+        /// </summary>
+        private void InitializeUIElementStates()
+        {
+            // helper variable
+            uint allModes = 0xFFFF;
+
+            _uIEelementStates = new List<UIEelementState>()
+            {
+                 // elements always visible and enabled except during a game vs engine
+                 { new UIEelementState(_dgActiveLine,
+                        allModes & (uint)~AppState.Mode.GAME_VS_COMPUTER,
+                        allModes & (uint)~AppState.Mode.GAME_VS_COMPUTER,
+                        0, 0 )},
+
+                 // elements visible in all modes except training mode
+                 { new UIEelementState(
+                        _tabMainControl,
+                        allModes & (uint)~AppState.Mode.TRAINING, 0,
+                        0, 0) },
+
+                 // elements only visible in training
+                 { new UIEelementState(_tabTrainingControl,
+                        (uint)AppState.Mode.TRAINING, 0,
+                        0, 0) },
+
+                 // elements only visible and enabled during a game vs engine
+                 { new UIEelementState(_dgEngineGame,
+                        (uint)AppState.Mode.GAME_VS_COMPUTER, 0,
+                        0,0) },
+
+                 { new UIEelementState(_lblGameInProgress,
+                        (uint)AppState.Mode.GAME_VS_COMPUTER, 0,
+                        0, 0) },
+
+                 // elements only visible during engine evaluation
+                 { new UIEelementState(_tbEngineLines,
+                        (uint)AppState.Mode.ENGINE_EVALUATION, 0,
+                        0, 0) },
+
+                 { new UIEelementState(_pbEngineThinking,
+                        (uint)AppState.Mode.ENGINE_EVALUATION, 0,
+                        0, 0) },
+            };
+        }
+
     }
 
 }
