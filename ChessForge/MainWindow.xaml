@@ -53,6 +53,9 @@
                 <MenuItem Header="Clear All Progress"/>
                 <MenuItem Header="Stop Training" Click="MenuItem_StopTraining"/>
             </MenuItem>
+            <MenuItem Header="View" Margin="0,0,0,0">
+                <MenuItem Header="Flip Board" Click="MenuItem_FlipBoard" />
+            </MenuItem>
         </Menu>
         <DataGrid x:Name="_dgEngineGame" Grid.Column="1" HorizontalAlignment="Left" Height="628" Margin="50,51,0,0" VerticalAlignment="Top" Width="180"  
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" CanUserSortColumns="False"
@@ -394,10 +397,10 @@
             </FlowDocument>
         </RichTextBox>
         <TextBox x:Name="_tbEngineLines" TextWrapping="NoWrap" Text="" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
-        <ProgressBar x:Name="_pbEngineThinking" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="11" Margin="46,113,0,0" Grid.Row="2" VerticalAlignment="Top" Width="190"/>
-        <Button x:Name="btnStopEvaluation" Grid.Column="1" Content="Stop" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Height="27" Width="50" Margin="130,71,0,0"/>
-        <Label x:Name="_lblEvaluating" Grid.Column="1" Content="Evaluating: " HorizontalAlignment="Left" Margin="55,22,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-        <Label x:Name="_lblMoveUnderEval" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="130,22,0,0" Grid.Row="2" FontWeight="Bold" FontSize="14"  VerticalAlignment="Top"/>
+        <ProgressBar x:Name="_pbEngineThinking" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="11" Margin="48,13,0,0" Grid.Row="2" VerticalAlignment="Top" Width="190"/>
+        <Image x:Name="_imgStop" Cursor="Hand" Grid.Column="1" Grid.Row="2" Margin="109,71,0,0" Source="Resources/Images/Stop.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="48" Height="48" RenderTransformOrigin="-1.186,-0.149" PreviewMouseLeftButtonDown="_imgStop_PreviewMouseLeftButtonDown" />
+        <Label x:Name="_lblEvaluating" Grid.Column="1" Content="Evaluating: " HorizontalAlignment="Left" Margin="59,31,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <Label x:Name="_lblMoveUnderEval" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="130,30,0,0" Grid.Row="2" FontWeight="Bold" FontSize="14"  VerticalAlignment="Top"/>
 
 
     </Grid>

@@ -61,7 +61,9 @@ namespace ChessForge
             TreeNode curr = GetCurrentNode();
 
             BoardPosition pos = new BoardPosition(curr.Position);
-            string algMove = MoveUtils.EngineNotationToAlgebraic(engMove, ref pos);
+
+            bool isCastle;
+            string algMove = MoveUtils.EngineNotationToAlgebraic(engMove, ref pos, out isCastle);
 
             // note: we don't care about NodeId here
             TreeNode nd = new TreeNode(curr, algMove, -1);
@@ -78,13 +80,15 @@ namespace ChessForge
         /// Returns true if it is a valid move.
         /// </summary>
         /// <returns></returns>
-        public static bool ProcessUserGameMove(string move)
+        public static bool ProcessUserGameMove(string move, out bool isCastle)
         {
+            isCastle = false;
+
             TreeNode nd = EngineGame.CreateNextNode();
             string algMove = "";
             try
             {
-                algMove = MoveUtils.EngineNotationToAlgebraic(move, ref nd.Position);
+                algMove = MoveUtils.EngineNotationToAlgebraic(move, ref nd.Position, out isCastle);
             }
             catch
             {

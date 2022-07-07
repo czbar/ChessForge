@@ -184,6 +184,11 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Flips the board upside down.
+        /// If it is already flipped it will go back
+        /// to normal.
+        /// </summary>
         public void FlipBoard()
         {
             System.Windows.Media.ImageSource temp;
@@ -198,7 +203,7 @@ namespace ChessForge
                 }
             }
 
-            _isFlipped = true;
+            _isFlipped = !_isFlipped;
         }
 
         /// <summary>

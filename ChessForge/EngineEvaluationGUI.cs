@@ -130,7 +130,8 @@ namespace ChessForge
                     sb.Append(workingPosition.MoveNumber.ToString() + ".");
                 }
                 firstMove = false;
-                sb.Append(MoveUtils.EngineNotationToAlgebraic(move, ref workingPosition));
+                bool isCastle;
+                sb.Append(MoveUtils.EngineNotationToAlgebraic(move, ref workingPosition, out isCastle));
                 // invert colors
                 workingPosition.ColorToMove = workingPosition.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
                 sb.Append(" ");

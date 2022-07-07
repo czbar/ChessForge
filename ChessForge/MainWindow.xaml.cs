@@ -106,7 +106,7 @@ namespace ChessForge
             // add the main context menu to the Single Variation view.
             _dgActiveLine.ContextMenu = menuContext;
 
-            btnStopEvaluation.Visibility = Visibility.Hidden;
+            _imgStop.Visibility = Visibility.Hidden;
             sliderReplaySpeed.Visibility = Visibility.Hidden;
             _lblEvaluating.Visibility = Visibility.Hidden;
             _lblMoveUnderEval.Visibility = Visibility.Hidden;
@@ -332,10 +332,15 @@ namespace ChessForge
                                 move.Append((char)((7 - sq.Ycoord) + (int)'1'));
                             }
 
-                            if (EngineGame.ProcessUserGameMove(move.ToString()))
+                            bool isCastle;
+                            if (EngineGame.ProcessUserGameMove(move.ToString(), out isCastle))
                             {
                                 MainChessBoard.GetPieceImage(sq.Xcoord, sq.Ycoord, true).Source = DraggedPiece.ImageControl.Source;
                                 ReturnDraggedPiece(true);
+                                if (isCastle)
+                                {
+                                    MoveCastlingRook(move.ToString());
+                                }
                                 _soundMove.Position = TimeSpan.FromMilliseconds(0);
                                 _soundMove.Play();
                             }
@@ -356,6 +361,51 @@ namespace ChessForge
                 }
                 Canvas.SetZIndex(DraggedPiece.ImageControl, 0);
             }
+        }
+
+        /// <summary>
+        /// Completes a castling move. King would have already been moved.
+        /// </summary>
+        /// <param name="move"></param>
+        private void MoveCastlingRook(string move)
+        {
+            SquareCoords orig = null;
+            SquareCoords dest = null;
+            switch (move)
+            {
+                case "e1g1":
+                    orig = !MainChessBoard.IsFlipped ? new SquareCoords(7, 0) : new SquareCoords(0, 7);
+                    dest = !MainChessBoard.IsFlipped ? new SquareCoords(5, 0) : new SquareCoords(2, 7);
+                    break;
+                case "e8g8":
+                    orig = !MainChessBoard.IsFlipped ? new SquareCoords(7, 7) : new SquareCoords(0, 0);
+                    dest = !MainChessBoard.IsFlipped ? new SquareCoords(5, 7) : new SquareCoords(2, 0);
+                    break;
+                case "e1c1":
+                    orig = !MainChessBoard.IsFlipped ? new SquareCoords(0, 0) : new SquareCoords(7, 7);
+                    dest = !MainChessBoard.IsFlipped ? new SquareCoords(3, 0) : new SquareCoords(4, 7);
+                    break;
+                case "e8c8":
+                    orig = !MainChessBoard.IsFlipped ? new SquareCoords(0, 7) : new SquareCoords(7, 0);
+                    dest = !MainChessBoard.IsFlipped ? new SquareCoords(3, 7) : new SquareCoords(4, 0);
+                    break;
+            }
+
+            MovePiece(orig, dest);
+        }
+
+        /// <summary>
+        /// Moving a piece from square to square.
+        /// </summary>
+        /// <param name="orig"></param>
+        /// <param name="dest"></param>
+        private void MovePiece(SquareCoords orig, SquareCoords dest)
+        {
+            if (orig == null || dest == null)
+                return;
+
+            MainChessBoard.GetPieceImage(dest.Xcoord, dest.Ycoord, true).Source = MainChessBoard.GetPieceImage(orig.Xcoord, orig.Ycoord, true).Source;
+            MainChessBoard.GetPieceImage(orig.Xcoord, orig.Ycoord, true).Source = null;
         }
 
         private void ReturnDraggedPiece(bool clearImage)
@@ -764,7 +814,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    MessageBox.Show("Chess Engine is not avalable.", "Move Evaluation Failure", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Chess Engine is not available.", "Move Evaluation Failure", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
@@ -817,35 +867,6 @@ namespace ChessForge
 
             PrepareMoveEvaluation(mode, Evaluation.Position);
 
-#if false
-            Evaluation.Mode = mode;
-
-            menuEvalLine.Dispatcher.Invoke(() =>
-            {
-                menuEvalLine.IsEnabled = false;
-            });
-            menuEvalPos.Dispatcher.Invoke(() =>
-            {
-                menuEvalPos.IsEnabled = false;
-            });
-
-            _pbEngineThinking.Dispatcher.Invoke(() =>
-            {
-                _pbEngineThinking.Visibility = Visibility.Visible;
-                _pbEngineThinking.Minimum = 0;
-                // add 50% to compensate for any processing delays
-                // we don't want to be too optimistic
-                _pbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime * 1.5);
-                _pbEngineThinking.Value = 0;
-            });
-
-
-            EngineInfoDisplayTimer.Enabled = true;
-            Evaluation.ProgressTimer.Start();
-
-            string fen = FenParser.GenerateFenFromPosition(Evaluation.Position);
-            EngineMessageProcessor.RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
-#endif
         }
 
         /// <summary>
@@ -856,36 +877,6 @@ namespace ChessForge
         private void RequestEngineMove(BoardPosition position)
         {
             PrepareMoveEvaluation(EvaluationState.EvaluationMode.IN_GAME_PLAY, position);
-
-#if false            
-            Evaluation.Mode = EvaluationState.EvaluationMode.IN_GAME_PLAY;
-
-            menuEvalLine.Dispatcher.Invoke(() =>
-            {
-                menuEvalLine.IsEnabled = false;
-            });
-            menuEvalPos.Dispatcher.Invoke(() =>
-            {
-                menuEvalPos.IsEnabled = false;
-            });
-
-            _pbEngineThinking.Dispatcher.Invoke(() =>
-            {
-                _pbEngineThinking.Visibility = Visibility.Visible;
-                _pbEngineThinking.Minimum = 0;
-                // add 50% to compensate for any processing delays
-                // we don't want to be too optimistic
-                _pbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime * 1.5);
-                _pbEngineThinking.Value = 0;
-            });
-
-            EngineInfoDisplayTimer.Enabled = true;
-            Evaluation.ProgressTimer.Start();
-
-            // get the current position
-            string fen = FenParser.GenerateFenFromPosition(position);
-            EngineMessageProcessor.RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineMoveTime);
-#endif
         }
 
         /// <summary>
@@ -1014,6 +1005,7 @@ namespace ChessForge
 
                         Evaluation.PositionIndex++;
                         RequestMoveEvaluation(Evaluation.PositionIndex, Evaluation.Mode, false);
+
                         EngineInfoDisplayTimer.Enabled = true;
                     }
                 }
@@ -1035,7 +1027,7 @@ namespace ChessForge
                 if (isLineStart)
                 {
                     _rtbBoardComment.Visibility = visible ? Visibility.Hidden : Visibility.Visible;
-                    btnStopEvaluation.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
+                    _imgStop.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
                     _tbEngineLines.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
                     sliderReplaySpeed.Visibility = Visibility.Hidden;
 
@@ -1049,9 +1041,9 @@ namespace ChessForge
                         _rtbBoardComment.Visibility = Visibility.Hidden;
                     });
 
-                    btnStopEvaluation.Dispatcher.Invoke(() =>
+                    _imgStop.Dispatcher.Invoke(() =>
                     {
-                        btnStopEvaluation.Visibility = Visibility.Visible;
+                        _imgStop.Visibility = Visibility.Visible;
                     });
 
                     _tbEngineLines.Dispatcher.Invoke(() =>
@@ -1077,9 +1069,9 @@ namespace ChessForge
                     _rtbBoardComment.Visibility = Visibility.Visible;
                 });
 
-                btnStopEvaluation.Dispatcher.Invoke(() =>
+                _imgStop.Dispatcher.Invoke(() =>
                 {
-                    btnStopEvaluation.Visibility = Visibility.Hidden;
+                    _imgStop.Visibility = Visibility.Hidden;
                 });
 
                 _tbEngineLines.Dispatcher.Invoke(() =>
@@ -1130,6 +1122,14 @@ namespace ChessForge
 
                     EngineGame.PrepareGame(nd);
                     _dgEngineGame.ItemsSource = EngineGame.Line.MoveList;
+
+                    if (nd.ColorToMove() == PieceColor.White)
+                    {
+                        if (!MainChessBoard.IsFlipped)
+                        {
+                            MainChessBoard.FlipBoard();
+                        }
+                    }
 
                     RequestEngineMove(nd.Position);
                     _menuPlayComputer.Header = Strings.MENU_ENGINE_GAME_STOP;
@@ -1214,8 +1214,16 @@ namespace ChessForge
         }
 
 
+        /// <summary>
+        /// Reset controls and restore selection in the ActiveLine
+        /// control.
+        /// We are going back to the MANUAL REVIEW or TRAINING mode
+        /// so Active Line view will be shown.
+        /// </summary>
         private void StopEngineGame()
         {
+            EngineInfoDisplayTimer.Enabled = false;
+
             menuEvalLine.Dispatcher.Invoke(() =>
             {
                 menuEvalLine.IsEnabled = true;
@@ -1236,14 +1244,19 @@ namespace ChessForge
 
             imgChessBoard.Source = ChessBoards.ChessBoardBlue;
             Evaluation.Reset();
-//            Evaluation.ProgressTimer.Stop();
             EngineMessageProcessor.StopMessagePollTimer();
             AppState.CurrentMode = AppState.Mode.MANUAL_REVIEW;
             EngineGame.State = EngineGame.GameState.IDLE;
             CheckForUserMoveTimer.Enabled = false;
-
-            //            HideEngineGameGuiControls();
             AppState.ExitCurrentMode();
+
+            int row, column;
+
+            ViewActiveLine_GetSelectedRowColumn(out row, out column);
+            SelectPlyInTextViews(row, column == 1 ? PieceColor.White : PieceColor.Black);
+            int nodeIndex = ViewActiveLine_GetNodeIndexFromRowColumn(row, column);
+            TreeNode nd = ActiveLine.NodeList[nodeIndex];
+            MainChessBoard.DisplayPosition(nd.Position);
         }
 
         private void ShowBookmarks()
@@ -1457,6 +1470,22 @@ namespace ChessForge
             };
         }
 
+        private void _imgStop_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // TODO: this only leads to stopping after the current move's evaluation finishes
+            // improve so that we send a stop message to the engine and abandon immediately
+            lock (EvalLock)
+            {
+                Evaluation.Mode = EvaluationState.EvaluationMode.SINGLE_MOVE;
+            }
+
+            e.Handled = true;
+        }
+
+        private void MenuItem_FlipBoard(object sender, RoutedEventArgs e)
+        {
+            MainChessBoard.FlipBoard();
+        }
     }
 
 }
