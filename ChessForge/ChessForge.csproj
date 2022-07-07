@@ -176,6 +176,7 @@
     <Resource Include="ChessForge2.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Images\Stop.png" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

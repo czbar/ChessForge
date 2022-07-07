@@ -32,6 +32,7 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// TODO: we do not need both this and the next functions. Rationalize here.
         /// Returns the index of the Node for the ply
         /// at a given row and column. 
         /// </summary>
@@ -46,6 +47,17 @@ namespace ChessForge
             int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
             return moveIndex;
         }
+
+        private int ViewActiveLine_GetNodeIndexFromRowColumn(int row, int column)
+        {
+            if (row < 0 || column < 0)
+                return -1;
+
+            int nodeIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
+
+            return (nodeIndex < ActiveLine.NodeList.Count) ? nodeIndex : -1;
+        }
+
 
         /// <summary>
         /// TODO: compare with GetColumnRowFromMouseClick()

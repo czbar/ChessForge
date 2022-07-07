@@ -177,8 +177,10 @@ namespace ChessPosition
         /// <param name="pos"></param>
         /// <returns></returns>
         ///
-        public static string EngineNotationToAlgebraic(string engMove, ref BoardPosition pos)
+        public static string EngineNotationToAlgebraic(string engMove, ref BoardPosition pos, out bool isCastle)
         {
+            isCastle = false;
+
             if (engMove.Length < 4 || engMove.Length > 5)
             {
                 throw new Exception("Invalid engine move received: " + engMove);
@@ -209,34 +211,39 @@ namespace ChessPosition
 
             move.Color = pos.ColorToMove;
 
-            string alg = "";
-            // check castling first
-            switch (engMove)
-            {
-                case "e1g1":
-                case "e8g8":
-                    alg = "O-O";
-                    move.CastlingType = move.Color == PieceColor.White ? Constants.WhiteKingsideCastle : Constants.BlackKingsideCastle;
-                    break;
-                case "e1c1":
-                case "e8c8":
-                    alg = "O-O-O";
-                    move.CastlingType = move.Color == PieceColor.White ? Constants.WhiteQueensideCastle : Constants.BlackQueensideCastle;
-                    break;
-            }
+            SquareCoords orig = PositionUtils.ConvertAlgebraicToXY(engOrig);
+            SquareCoords dest = PositionUtils.ConvertAlgebraicToXY(engDest);
 
+            // find out the piece type
+            PieceType piece = PositionUtils.GetPieceType(pos.Board[orig.Xcoord, orig.Ycoord]);
+            move.MovingPiece = piece;
+            bool isCapture = PositionUtils.GetPieceType(pos.Board[dest.Xcoord, dest.Ycoord]) == PieceType.None ? false : true;
+            move.IsCapture = isCapture;
+
+            string alg = "";
+
+            // check castling first
+            if (piece == PieceType.King)
+            {
+                switch (engMove)
+                {
+                    case "e1g1":
+                    case "e8g8":
+                        alg = "O-O";
+                        move.CastlingType = move.Color == PieceColor.White ? Constants.WhiteKingsideCastle : Constants.BlackKingsideCastle;
+                        isCastle = true;
+                        break;
+                    case "e1c1":
+                    case "e8c8":
+                        alg = "O-O-O";
+                        move.CastlingType = move.Color == PieceColor.White ? Constants.WhiteQueensideCastle : Constants.BlackQueensideCastle;
+                        isCastle = true;
+                        break;
+                }
+            }
 
             if (alg.Length == 0)
             {
-                SquareCoords orig = PositionUtils.ConvertAlgebraicToXY(engOrig);
-                SquareCoords dest = PositionUtils.ConvertAlgebraicToXY(engDest);
-
-                // find out the piece type
-                PieceType piece = PositionUtils.GetPieceType(pos.Board[orig.Xcoord, orig.Ycoord]);
-                move.MovingPiece = piece;
-                bool isCapture = PositionUtils.GetPieceType(pos.Board[dest.Xcoord, dest.Ycoord]) == PieceType.None ? false : true;
-                move.IsCapture = isCapture;
-
                 if (piece == PieceType.None)
                 {
                     alg = "???";
