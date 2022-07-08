@@ -25,8 +25,8 @@ namespace ChessForge
     /// </summary>
     public partial class MainWindow : Window
     {
-        TreeRichTextBuilder _workbookRichTextBuilder;
-        TreeRichTextBuilder _trainingBrowseRichTextBuilder;
+        WorkbookRichTextBuilder _workbookRichTextBuilder;
+        WorkbookRichTextBuilder _trainingBrowseRichTextBuilder;
         TrainingProgressRichTextBuilder _trainingProgressRichTextBuilder;
 
         ChfrgFileBuilder _chfrgFileText;
@@ -42,7 +42,7 @@ namespace ChessForge
 
         List<UIEelementState> _uIEelementStates;
 
-        MainboardCommentBox _mainboardCommentBox;
+        CommentBoxRichTextBuilder _mainboardCommentBox;
         public GameReplay gameReplay;
 
         private MediaPlayer _soundMove = new MediaPlayer();
@@ -72,7 +72,7 @@ namespace ChessForge
             // initialize the UIElement states table
             InitializeUIElementStates();
 
-            _mainboardCommentBox = new MainboardCommentBox(_rtbBoardComment.Document);
+            _mainboardCommentBox = new CommentBoxRichTextBuilder(_rtbBoardComment.Document);
 
             _menuPlayComputer.Header = Strings.MENU_ENGINE_GAME_START;
 
@@ -706,8 +706,8 @@ namespace ChessForge
                 PgnGameParser pgnGame = new PgnGameParser(gameText, Workbook, true);
                 _mainboardCommentBox.ShowWorkbookTitle(Workbook.Title);
 
-                _workbookRichTextBuilder = new TreeRichTextBuilder(_rtbWorkbookView.Document);
-                _trainingBrowseRichTextBuilder = new TreeRichTextBuilder(_rtbTrainingBrowse.Document);
+                _workbookRichTextBuilder = new WorkbookRichTextBuilder(_rtbWorkbookView.Document);
+                _trainingBrowseRichTextBuilder = new WorkbookRichTextBuilder(_rtbTrainingBrowse.Document);
                 _trainingProgressRichTextBuilder = new TrainingProgressRichTextBuilder(_rtbTrainingProgress.Document);
 
                 Workbook.BuildLines();
@@ -1328,7 +1328,7 @@ namespace ChessForge
 
             _trainingBrowseRichTextBuilder.BuildFlowDocumentForWorkbook(Workbook.Bookmarks[bookmarkIndex].Node.NodeId);
 
-            Paragraph progressStartPara = _trainingProgressRichTextBuilder.BuildPrefixParagraph(Workbook.Bookmarks[bookmarkIndex].Node);
+            Paragraph progressStartPara = _trainingProgressRichTextBuilder.BuildWorkbookStemLine(Workbook.Bookmarks[bookmarkIndex].Node);
             _rtbTrainingProgress.Document.Blocks.Add(progressStartPara);
 
             _trainingProgressRichTextBuilder.BuildIntroText(Workbook.Bookmarks[bookmarkIndex].Node);

@@ -72,7 +72,7 @@
     <Compile Include="EngineGame.cs" />
     <Compile Include="EvaluationState.cs" />
     <Compile Include="ListViewHelper.cs" />
-    <Compile Include="MainBoardCommentBox.cs" />
+    <Compile Include="CommentBoxRichTextBuilder.cs" />
     <Compile Include="EngineEvaluationGUI.cs" />
     <Compile Include="MainWindow\MainWindowWorkbookTable.cs" />
     <Compile Include="GuiUtilities.cs" />
@@ -85,7 +85,7 @@
     <Compile Include="RichTextBuilder.cs" />
     <Compile Include="TrainingProgressRichTextBuilder.cs" />
     <Compile Include="TrainingState.cs" />
-    <Compile Include="TreeRichTextBuilder.cs" />
+    <Compile Include="WorkbookRichTextBuilder.cs" />
     <Compile Include="TreeTableCell.cs" />
     <Compile Include="TreeTableRow.cs" />
     <Compile Include="TreeTextBuilder.cs" />
