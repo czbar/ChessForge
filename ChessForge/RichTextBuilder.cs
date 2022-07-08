@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Controls;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using ChessPosition;
@@ -16,27 +10,38 @@ namespace ChessForge
 {
     public abstract class RichTextBuilder
     {
+        /// <summary>
+        /// The Flow Document this object is working with.
+        /// This object will be typically associated with a RichTextBox control
+        /// </summary>
         internal FlowDocument Document;
 
-        internal abstract Dictionary<string, RichTextPara> RichTextParas { get;}
+        /// <summary>
+        /// Styles for the document's paragraphs.
+        /// The Dictionary must be implemented in derived classes.
+        /// </summary>
+        internal abstract Dictionary<string, RichTextPara> RichTextParas { get; }
 
+        /// <summary>
+        /// Constructs the object and sets pointer to its associated FlowDocument.
+        /// </summary>
+        /// <param name="doc"></param>
         public RichTextBuilder(FlowDocument doc)
         {
             Document = doc;
         }
 
         /// <summary>
-        /// Return a set of attributes for a given level.
-        /// If the level is greater than the greatest defined 
-        /// level, return the values for the greates defined one
-        /// except for increasing the indent slightly.
+        /// Return a set of attributes for a given style.
+        /// If the style is not found in the style dictionary, 
+        /// uses the default style. 
         /// </summary>
-        /// <param name="level"></param>
+        /// <param name="style"></param>
         /// <returns></returns>
-        public RichTextPara GetParaAttrs(string level)
+        public RichTextPara GetParaAttrs(string style)
         {
             RichTextPara para;
-            if (!RichTextParas.TryGetValue(level, out para))
+            if (!RichTextParas.TryGetValue(style, out para))
             {
                 RichTextParas.TryGetValue("default", out para);
             }
@@ -44,33 +49,77 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Create a paragraph for the specified level.
+        /// Create a paragraph for the specified style.
         /// </summary>
-        /// <param name="level"></param>
+        /// <param name="style"></param>
         /// <returns></returns>
-        public Paragraph CreateParagraph(string level)
+        public Paragraph CreateParagraph(string style)
         {
-            RichTextPara attrs = GetParaAttrs(level);
+            RichTextPara attrs = GetParaAttrs(style);
 
             Paragraph para = new Paragraph();
             para.Margin = new Thickness(attrs.LeftIndent, 0, 0, attrs.BottomMargin);
             para.FontSize = attrs.FontSize;
             para.FontWeight = attrs.FontWeight;
+            para.TextAlignment = attrs.TextAlign;
 
             return para;
         }
 
-        public Paragraph CreateParagraph(int level)
+        /// <summary>
+        /// Create a paragraph for the specified style and sets
+        /// the passed text in it..
+        /// </summary>
+        /// <param name="style"></param>
+        /// <returns></returns>
+        public Paragraph CreateParagraphWithText(string style, string text)
         {
-            return CreateParagraph(level.ToString());
+            Paragraph para = CreateParagraph(style);
+            
+            Run r = new Run(text);
+            para.Inlines.Add(r);
+
+            return para;
         }
 
-            public Paragraph BuildPrefixParagraph(TreeNode nd)
+        /// <summary>
+        /// Creates a paragraph, sets its text and insterts it
+        /// into the Document.
+        /// </summary>
+        /// <param name="style"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public Paragraph AddNewParagraphToDoc(string style, string text)
         {
-            Paragraph para = CreateParagraph(0);
+            Paragraph para = CreateParagraphWithText(style, text);
+            Document.Blocks.Add(para);
+
+            return para;
+        }
+
+        /// <summary>
+        /// Adds text to the referenced paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="text"></param>
+        public void AddTextToParagraph(Paragraph para, string text)
+        {
+            Run r = new Run(text);
+            para.Inlines.Add(r);
+        }
+
+        /// <summary>
+        /// Builds a paragraph displaying the "stem" line
+        /// i.e. moves from the first one to the first fork.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public Paragraph BuildWorkbookStemLine(TreeNode nd)
+        {
+            Paragraph para = CreateParagraph("0");
             para.Foreground = CHFRG_Colors.RTB_GRAY_FOREGROUND;
 
-            string prefix = GetPrefixText(nd);
+            string prefix = GetStemLineText(nd);
 
             Run r = new Run(prefix);
             para.Inlines.Add(r);
@@ -78,7 +127,13 @@ namespace ChessForge
             return para;
         }
 
-        public string GetPrefixText(TreeNode nd)
+        /// <summary>
+        /// Builds text for the paragraph displaying the "stem" line
+        /// i.e. moves from the first one to the first fork.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        protected string GetStemLineText(TreeNode nd)
         {
             StringBuilder sbPrefix = new StringBuilder();
             while (nd != null)

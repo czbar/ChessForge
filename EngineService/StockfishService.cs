@@ -37,7 +37,8 @@ namespace EngineService
 
         public bool StartEngine()
         {
-            FileInfo engine = new FileInfo(Path.Combine(Environment.CurrentDirectory, "stockfish_8_x64.exe"));
+            //FileInfo engine = new FileInfo(Path.Combine(Environment.CurrentDirectory, "stockfish_8_x64.exe"));
+            FileInfo engine = new FileInfo(Path.Combine(Environment.CurrentDirectory, "stockfish_15_x64_avx2.exe"));
             if (engine.Exists && engine.Extension == ".exe")
             {
                 try

@@ -27,11 +27,11 @@ namespace ChessForge
         /// </summary>
         internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
-            ["intro"] = new RichTextPara(0,  0, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0))),
-            ["prefix_line"] = new RichTextPara(0, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191))),
-            ["eval_results"] = new RichTextPara(30, 5, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(51, 159, 141))),
-            ["normal"] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172))),
-            ["default"] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63))),
+            ["intro"] = new RichTextPara(0,  0, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0) ), TextAlignment.Left),
+            ["prefix_line"] = new RichTextPara(0, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
+            ["eval_results"] = new RichTextPara(30, 5, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(51, 159, 141)), TextAlignment.Left),
+            ["normal"] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
+            ["default"] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
         };
 
         public void BuildIntroText(TreeNode node)            
@@ -44,26 +44,46 @@ namespace ChessForge
 
         private void BuildHeaderText()
         {
-            Paragraph para = CreateParagraph("intro");
-            Run r = new Run("You have started training from the position arising after:");
-            para.Inlines.Add(r);
-            Document.Blocks.Add(para);
+            AddNewParagraphToDoc("intro", "You have started training from the position arising after:");
         }
 
         private void BuildPrefixText(TreeNode node)
         {
-            Paragraph para = BuildPrefixParagraph(node);
-            Document.Blocks.Add(para);
+            AddNewParagraphToDoc("prefix_line", GetStemLineText(node));
         }
+
         private void BuildInitialPromptText()
         {
-            Paragraph para = CreateParagraph("intro");
-            Run r = new Run("Make your move on the chessboard.");
-            para.Inlines.Add(r);
-            Document.Blocks.Add(para);
+            AddNewParagraphToDoc("intro", "Make your move on the chessboard");
 
-            // insert dummy para to create extra spaciing
-            Document.Blocks.Add(CreateParagraph("intro"));
+            // insert dummy para to create extra spacing
+            AddNewParagraphToDoc("intro", "");
+        }
+
+        public void BuildMoveFromWorkbookText(TreeNode nd)
+        {
+            AddNewParagraphToDoc("normal", "  (" + nd.GetPlyText(true) + " is in the Workbook.)");
+        }
+
+        public void BuildMoveNotInWorkbookText(TreeNode nd)
+        {
+            AddNewParagraphToDoc("normal", "Your move " + nd.GetPlyText(true) + " has not been found in the Workbook.");
+        }
+
+        public void BuildWorkbookMovesText(string moves)
+        {
+            if (!string.IsNullOrEmpty(moves))
+            {
+                AddNewParagraphToDoc("normal", "From the Workbook: " + moves);
+            }
+        }
+
+        public void BuildOtherWorkbookMovesText(string moves)
+        {
+            if (!string.IsNullOrEmpty(moves))
+            {
+                AddNewParagraphToDoc("normal", "Other Workbook moves: " + moves);
+            }
         }
 
         /// <summary>
@@ -103,11 +123,6 @@ namespace ChessForge
                 else
                 {
                     wbMoves.Append(child.GetPlyText(true));
-                    //if (child.ColorToMove() == PieceColor.White)
-                    //{
-                    //    wbMoves.Append("..");
-                    //}
-                    //wbMoves.Append(child.LastMoveAlgebraicNotationWithNag);
                     wbMoves.Append("; ");
                 }
             }
@@ -122,44 +137,6 @@ namespace ChessForge
                 BuildMoveNotInWorkbookText(userMove);
                 BuildWorkbookMovesText(wbMoves.ToString());
             }
-        }
-
-        public void BuildMoveFromWorkbookText(TreeNode nd)
-        {
-            Paragraph para = CreateParagraph("normal");
-            Run r = new Run("  (" + nd.GetPlyText(true) + " is in the Workbook.)" );
-            para.Inlines.Add(r);
-            Document.Blocks.Add(para);
-        }
-
-        public void BuildMoveNotInWorkbookText(TreeNode nd)
-        {
-            Paragraph para = CreateParagraph("normal");
-            Run r = new Run("Your move " + nd.GetPlyText(true) + " has not been found in the Workbook.");
-            para.Inlines.Add(r);
-            Document.Blocks.Add(para);
-        }
-
-        public void BuildWorkbookMovesText(string moves)
-        {
-            if (string.IsNullOrEmpty(moves))
-                return;
-
-            Paragraph para = CreateParagraph("normal");
-            Run r = new Run("From the Workbook: " + moves);
-            para.Inlines.Add(r);
-            Document.Blocks.Add(para);
-        }
-
-        public void BuildOtherWorkbookMovesText(string moves)
-        {
-            if (string.IsNullOrEmpty(moves))
-                return;
-
-            Paragraph para = CreateParagraph("normal");
-            Run r = new Run("Other Workbook moves: " + moves);
-            para.Inlines.Add(r);
-            Document.Blocks.Add(para);
         }
 
     }
