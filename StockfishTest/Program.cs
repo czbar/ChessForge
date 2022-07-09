@@ -72,13 +72,13 @@ namespace StockfishTest
 
         private static void EvaluatePgnGame()
         {
-            Tree variationTree = new Tree();
+            WorkbookTree variationTree = new WorkbookTree();
             string gameText = File.ReadAllText("../../../ChessPositionTest/TestData/GameShort.pgn");
             PgnGameParser pgnGame = new PgnGameParser(gameText, variationTree, false);
             EvaluateVariationTree(variationTree);
         }
 
-        private static void EvaluateVariationTree(Tree tree)
+        private static void EvaluateVariationTree(WorkbookTree tree)
         {
             TreeNode root = tree.Nodes[0];
             EvaluateTreeLine(root);

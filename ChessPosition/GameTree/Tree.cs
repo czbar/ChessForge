@@ -16,15 +16,21 @@ namespace GameTree
     /// This is the highest level ChessForge data entity
     /// and there can only be one open at any time. 
     /// </summary>
-    public class Tree
+    public class WorkbookTree
     {
         /// <summary>
         /// The complete list of Nodes for the current Workbook.
         /// </summary>
         public List<TreeNode> Nodes = new List<TreeNode>();
 
+        /// <summary>
+        /// Title of this Workbook to show in the GUI
+        /// </summary>
         public string Title;
 
+        /// <summary>
+        /// "Stem" of this tree i.e., the starting moves up until the first fork.
+        /// </summary>
         public List<TreeNode> Stem;
 
         /// <summary>
@@ -105,7 +111,7 @@ namespace GameTree
                 }
             }
 
-            return Stem; 
+            return Stem;
         }
 
         /// <summary>
@@ -226,7 +232,7 @@ namespace GameTree
         /// <returns></returns>
         public string GetDefaultLineIdForNode(int nodeId)
         {
-            TreeNode nd = Nodes.First(x => x.NodeId == nodeId);
+            TreeNode nd = GetNodeFromNodeId(nodeId);
             // go to the last node
             while (nd.Children.Count > 0)
             {
@@ -234,6 +240,30 @@ namespace GameTree
             }
 
             return nd.LineId ?? "";
+        }
+
+        /// <summary>
+        /// Returns the TreeNode with a given id.
+        /// Returns null if node not found.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        public TreeNode GetNodeFromNodeId(int nodeId)
+        {
+            return Nodes.FirstOrDefault(x => x.NodeId == nodeId);
+        }
+
+        /// <summary>
+        /// Selects random child of a given parent.
+        /// This is needed to randomize training.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        public TreeNode SelectRandomChild(int nodeId)
+        {
+            TreeNode par = GetNodeFromNodeId(nodeId);
+            int sel = PositionUtils.GlobalRnd.Next(0, par.Children.Count);
+            return par.Children[sel];
         }
 
         /// <summary>
@@ -271,10 +301,14 @@ namespace GameTree
             }
         }
 
+        /// <summary>
+        /// TODO: this method is spurious.
+        /// Replace the call to it by a call to PositionUtils.SetupStartingPosition()
+        /// </summary>
+        /// <param name="node"></param>
         static public void SetupStartingPosition(ref TreeNode node)
         {
             node.Position = PositionUtils.SetupStartingPosition();
         }
-
     }
 }

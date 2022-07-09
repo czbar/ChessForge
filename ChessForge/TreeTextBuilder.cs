@@ -22,7 +22,7 @@ namespace ChessForge
         {
             _fileText = new StringBuilder();
 
-            Tree workbook = AppState.MainWin.Workbook;
+            WorkbookTree workbook = AppState.MainWin.Workbook;
             if (workbook.Nodes.Count == 0)
             {
                 return;

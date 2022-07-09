@@ -24,7 +24,7 @@ namespace ChessPositionTest
 
         private static void TestPgnGameParser()
         {
-            Tree variationTree = new Tree();
+            WorkbookTree variationTree = new WorkbookTree();
             string gameText = File.ReadAllText("../../../ChessPositionTest/TestData/GameTreeTest_1.pgn");
             PgnGameParser pgnGame = new PgnGameParser(gameText, variationTree, true);
             PrintVariationTree(variationTree);
@@ -70,7 +70,7 @@ namespace ChessPositionTest
             DebugUtils.PrintAttackers(algSquare, col, sa.Candidates);
         }
 
-        private static void PrintVariationTree(Tree tree)
+        private static void PrintVariationTree(WorkbookTree tree)
         {
             Console.WriteLine("");
             Console.WriteLine("VARIATION TREE");
