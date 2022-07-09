@@ -179,9 +179,10 @@ namespace GameTree
             return Position.ColorToMove;
         }
 
-        public uint MoveNumber()
+        public uint MoveNumber
         {
-            return Position.MoveNumber;
+            get { return Position.MoveNumber; }
+            set { Position.MoveNumber = value; }
         }
 
         /// <summary>
@@ -193,11 +194,11 @@ namespace GameTree
             StringBuilder sb = new StringBuilder();
             if (ColorToMove() == PieceColor.Black)
             {
-                sb.Append(MoveNumber().ToString() + ".");
+                sb.Append(MoveNumber.ToString() + ".");
             }
             else if (standalone)
             {
-                sb.Append(MoveNumber().ToString() + "...");
+                sb.Append(MoveNumber.ToString() + "...");
             }
             sb.Append(LastMoveAlgebraicNotationWithNag);
 

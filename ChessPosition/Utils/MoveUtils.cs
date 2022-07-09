@@ -99,6 +99,16 @@ namespace ChessPosition
             }
         }
 
+        /// <summary>
+        /// Builds a string for a stand alone move e.g. "9. Na4" or "9... Na5" 
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public static string BuildSingleMoveText(TreeNode nd)
+        {
+            return nd.MoveNumber.ToString() + (nd.ColorToMove() == PieceColor.White ? "... " : ". ") + nd.LastMoveAlgebraicNotation;
+        }
+
         public static void PerformCastling(BoardPosition position, MoveData move)
         {
             // the legality must be checked BEFORE making the move

@@ -16,6 +16,22 @@ namespace ChessForge
 {
     public class TrainingProgressRichTextBuilder : RichTextBuilder
     {
+        private Paragraph _intro;
+        private List<TreeNode> _workbookMoves = new List<TreeNode>();
+        private TreeNode _userMove;
+
+        private readonly string _run_eval_user_move = "user_eval";
+        private readonly string _run_play_engine = "play_engine";
+        private readonly string _run_eval_wb_move_ = "wb_eval_";
+        private readonly string _run_play_wb_move_ = "wb_play_";
+
+        private enum ButtonStyle
+        {
+            BLUE,
+            GREEN,
+            RED
+        }
+
         public TrainingProgressRichTextBuilder(FlowDocument doc) : base(doc)
         {
         }
@@ -42,50 +58,6 @@ namespace ChessForge
             BuildInitialPromptText();
         }
 
-        private void BuildHeaderText()
-        {
-            AddNewParagraphToDoc("intro", "You have started training from the position arising after:");
-        }
-
-        private void BuildPrefixText(TreeNode node)
-        {
-            AddNewParagraphToDoc("prefix_line", GetStemLineText(node));
-        }
-
-        private void BuildInitialPromptText()
-        {
-            AddNewParagraphToDoc("intro", "Make your move on the chessboard");
-
-            // insert dummy para to create extra spacing
-            AddNewParagraphToDoc("intro", "");
-        }
-
-        public void BuildMoveFromWorkbookText(TreeNode nd)
-        {
-            AddNewParagraphToDoc("normal", "  (" + nd.GetPlyText(true) + " is in the Workbook.)");
-        }
-
-        public void BuildMoveNotInWorkbookText(TreeNode nd)
-        {
-            AddNewParagraphToDoc("normal", "Your move " + nd.GetPlyText(true) + " has not been found in the Workbook.");
-        }
-
-        public void BuildWorkbookMovesText(string moves)
-        {
-            if (!string.IsNullOrEmpty(moves))
-            {
-                AddNewParagraphToDoc("normal", "From the Workbook: " + moves);
-            }
-        }
-
-        public void BuildOtherWorkbookMovesText(string moves)
-        {
-            if (!string.IsNullOrEmpty(moves))
-            {
-                AddNewParagraphToDoc("normal", "Other Workbook moves: " + moves);
-            }
-        }
-
         /// <summary>
         /// Gets the last move from the EngineGame.Line and finds
         /// its parent in the Workbook.
@@ -99,8 +71,11 @@ namespace ChessForge
         /// </summary>
         public void ReportLastMoveVsWorkbook()
         {
-            TreeNode userMove = EngineGame.GetCurrentNode();
-            TreeNode parent = userMove.Parent;
+            _workbookMoves.Clear();
+
+            _userMove = EngineGame.GetCurrentNode();
+            EngineGame.AddLastNodeToPlies();
+            TreeNode parent = _userMove.Parent;
 
             // double check that we have the parent in our Workbook
             if (AppState.MainWin.Workbook.Nodes.First(x => x.NodeId == parent.NodeId) == null)
@@ -113,7 +88,7 @@ namespace ChessForge
             TreeNode foundMove = null;
             foreach (TreeNode child in parent.Children)
             {
-                if (child.LastMoveAlgebraicNotation == userMove.LastMoveAlgebraicNotation)
+                if (child.LastMoveAlgebraicNotation == _userMove.LastMoveAlgebraicNotation)
                 {
                     // replace the TreeNode with the one from the Workbook so that
                     // we stay with the workbook as long as the user does.
@@ -124,6 +99,7 @@ namespace ChessForge
                 {
                     wbMoves.Append(child.GetPlyText(true));
                     wbMoves.Append("; ");
+                    _workbookMoves.Add(child);
                 }
             }
 
@@ -134,10 +110,134 @@ namespace ChessForge
             }
             else
             {
-                BuildMoveNotInWorkbookText(userMove);
+                BuildMoveNotInWorkbookText(_userMove);
                 BuildWorkbookMovesText(wbMoves.ToString());
             }
         }
 
+        private void BuildHeaderText()
+        {
+            AddNewParagraphToDoc("intro", "You have started training from the position arising after:");
+        }
+
+        private void BuildPrefixText(TreeNode node)
+        {
+            AddNewParagraphToDoc("prefix_line", GetStemLineText(node));
+        }
+
+        private void BuildInitialPromptText()
+        {
+            _intro = AddNewParagraphToDoc("intro", "Make your move on the chessboard");
+        }
+
+        private void BuildMoveFromWorkbookText(TreeNode nd)
+        {
+            AddNewParagraphToDoc("normal", "  (" + nd.GetPlyText(true) + " is in the Workbook.)");
+        }
+
+        private void BuildMoveNotInWorkbookText(TreeNode nd)
+        {
+            Paragraph para = AddNewParagraphToDoc("normal", "Your move ");
+            
+            Run r = new Run(nd.GetPlyText(true));
+            r.FontWeight = FontWeights.Bold;
+            r.FontSize = 16;
+            para.Inlines.Add(r);
+
+            para.Inlines.Add(new Run(" was not found in the Workbook. \n"));
+            para.Inlines.Add(new Run("You can click below to either evaluate it or start a game against the engine from this move.\n"));
+
+            if (_intro != null)
+            {
+                Document.Blocks.Remove(_intro);
+                _intro = null;
+            }
+
+            para.Inlines.Add(new Run("      "));
+            para.Inlines.Add(CreateButtonRun("Evaluate", _run_eval_user_move, ButtonStyle.BLUE));
+            para.Inlines.Add(new Run("   or   "));
+            para.Inlines.Add(CreateButtonRun("try against the engine", _run_play_engine, ButtonStyle.GREEN));
+        }
+
+        private void BuildWorkbookMovesText(string moves)
+        {
+            if (!string.IsNullOrEmpty(moves))
+            {
+                Paragraph para = AddNewParagraphToDoc("normal", "Alternatively, change your move to one from the Workbook by clicking on it below.\n");
+
+                foreach (TreeNode nd in _workbookMoves)
+                {
+                    para.Inlines.Add(new Run("      "));
+                    para.Inlines.Add(CreateButtonRun("Evaluate", _run_eval_wb_move_ + nd.NodeId.ToString(), ButtonStyle.BLUE));
+                    para.Inlines.Add(new Run("   or   "));
+                    para.Inlines.Add(CreateButtonRun("play " + MoveUtils.BuildSingleMoveText(nd), _run_play_wb_move_ + nd.NodeId.ToString(), ButtonStyle.GREEN));
+                    para.Inlines.Add(new Run(";\n"));
+                }
+            }
+        }
+
+        private void BuildOtherWorkbookMovesText(string moves)
+        {
+            if (!string.IsNullOrEmpty(moves))
+            {
+                AddNewParagraphToDoc("normal", "Other Workbook moves: " + moves);
+            }
+        }
+
+
+        private Run CreateButtonRun(string text, string runName, ButtonStyle style)
+        {
+            Run r = new Run(text);
+            r.Name = runName;
+
+            switch (style)
+            {
+                case ButtonStyle.BLUE:
+                    r.Foreground = Brushes.Blue;
+                    break;
+                case ButtonStyle.GREEN:
+                    r.Foreground = Brushes.Green;
+                    break;
+            }
+            r.FontWeight = FontWeights.Bold;
+            r.MouseDown += EventRunClicked;
+            r.Cursor = Cursors.Hand;
+
+            return r;
+        }
+
+        /// <summary>
+        /// Based on the name of the clicked run, performs an action.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventRunClicked(object sender, MouseButtonEventArgs e)
+        {
+            Run r = (Run)e.Source;
+            if (string.IsNullOrEmpty(r.Name))
+            {
+                return;
+            }
+
+            if (r.Name.StartsWith(_run_eval_wb_move_))
+            {
+                // get id of the node
+                int nodeId = int.Parse(r.Name.Substring(_run_eval_wb_move_.Length));
+                AppState.MainWin.RequestMoveEvaluationInTraining(nodeId);
+            }
+            else if (r.Name.StartsWith(_run_eval_user_move))
+            {
+                AppState.MainWin.RequestMoveEvaluationInTraining(_userMove);
+            }
+            else if (r.Name.StartsWith(_run_play_wb_move_))
+            {
+                int nodeId = int.Parse(r.Name.Substring(_run_eval_wb_move_.Length));
+                EngineGame.ReplaceCurrentWithWorkbookMove(nodeId);
+            }
+            else if (r.Name.StartsWith(_run_play_engine))
+            {
+
+            }
+        }
     }
 }

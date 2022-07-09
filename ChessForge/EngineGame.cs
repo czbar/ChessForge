@@ -47,15 +47,19 @@ namespace ChessForge
         /// </summary>
         /// <param name="startNode"></param>
         /// <param name="IsEngineMove"></param>
-        public static void PrepareGame(TreeNode startNode, bool IsEngineMove = true)
+        public static void PrepareGame(TreeNode startNode, bool IsEngineMove, bool IsTraining)
         {
             State = IsEngineMove ? GameState.ENGINE_THINKING : GameState.USER_THINKING;
             GameStartPosition = startNode;
-            Line.SetLineToNode(startNode);
-            Line.MoveList = PositionUtils.BuildViewListFromLine(Line.NodeList);
+
+            if (!IsTraining)
+            {
+                Line.SetLineToNode(startNode);
+                Line.MoveList = PositionUtils.BuildViewListFromLine(Line.NodeList);
+            }
         }
 
-        public static BoardPosition ProcessEngineGameMove()
+        public static BoardPosition ProcessEngineGameMove(out TreeNode nd)
         {
             string engMove = SelectMove(false);
             TreeNode curr = GetCurrentNode();
@@ -66,9 +70,10 @@ namespace ChessForge
             string algMove = MoveUtils.EngineNotationToAlgebraic(engMove, ref pos, out isCastle);
 
             // note: we don't care about NodeId here
-            TreeNode nd = new TreeNode(curr, algMove, -1);
+            nd = new TreeNode(curr, algMove, -1);
             nd.Position = pos;
             nd.Position.ColorToMove = pos.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
+            nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
             Line.NodeList.Add(nd);
             Line.AddPly(nd);
 
@@ -80,11 +85,11 @@ namespace ChessForge
         /// Returns true if it is a valid move.
         /// </summary>
         /// <returns></returns>
-        public static bool ProcessUserGameMove(string move, out bool isCastle)
+        public static bool ProcessUserGameMove(string move, out TreeNode nd, out bool isCastle)
         {
             isCastle = false;
 
-            TreeNode nd = EngineGame.CreateNextNode();
+            nd = EngineGame.CreateNextNode();
             string algMove = "";
             try
             {
@@ -99,8 +104,9 @@ namespace ChessForge
             if (!string.IsNullOrEmpty(algMove) && char.IsLetter(algMove[0]))
             {
                 nd.Position.ColorToMove = nd.Position.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
+                nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
                 nd.LastMoveAlgebraicNotation = algMove;
-                EngineGame.AddNode(nd);
+                AddNode(nd);
                 if (TrainingState.IsTrainingInProgress)
                 {
                     TrainingState.CurrentMode = TrainingState.Mode.USER_MOVE_COMPLETED;
@@ -164,6 +170,14 @@ namespace ChessForge
         public static void ReplaceCurrentWithWorkbookMove(TreeNode nd)
         {
             Line.NodeList[Line.NodeList.Count - 1] = nd;
+            Line.ReplaceLastPly(nd);
+            AppState.MainWin.DisplayPosition(nd.Position);
+        }
+
+        public static void ReplaceCurrentWithWorkbookMove(int nodeId)
+        {
+            TreeNode nd = AppState.MainWin.Workbook.Nodes.First(x => x.NodeId == nodeId);
+            ReplaceCurrentWithWorkbookMove(nd);
         }
 
         public static BoardPosition GetCurrentPosition()

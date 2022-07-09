@@ -44,6 +44,29 @@ namespace ChessForge
         };
 
         /// <summary>
+        /// Displays the last move made by the user.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void GameMoveMade(TreeNode nd, bool userMove)
+        {
+            Document.Blocks.Clear();
+            AddNewParagraphToDoc("dummy", "");
+
+            if (userMove)
+            {
+                AddNewParagraphToDoc("normal", "Your move was:");
+                AddNewParagraphToDoc("bold_prompt", MoveUtils.BuildSingleMoveText(nd));
+                AddNewParagraphToDoc("normal", "Wait for engine's response...");
+            }
+            else // engine moved
+            {
+                AddNewParagraphToDoc("normal", "The engine played:");
+                AddNewParagraphToDoc("bold_16", MoveUtils.BuildSingleMoveText(nd));
+                AddNewParagraphToDoc("normal", "It is your turn now.");
+            }
+        }
+
+        /// <summary>
         /// The main message when a new workbook was loaded or when nothing
         /// more relevant is to be shown.
         /// </summary>
@@ -61,7 +84,7 @@ namespace ChessForge
         /// Invoked when the game replay stops to revert to showing
         /// the workbook title message.
         /// </summary>
-        public void GameReplayStop()
+        public void RestoreTitleMessage()
         {
             ShowWorkbookTitle(AppState.MainWin.Workbook.Title);
         }

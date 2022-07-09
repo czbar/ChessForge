@@ -69,5 +69,20 @@ namespace ChessForge
             }
 
         }
+
+        public void ReplaceLastPly(TreeNode nd)
+        {
+            MoveWithEval move = MoveList[MoveList.Count - 1];
+
+            if (nd.Position.ColorToMove == PieceColor.White)
+            {
+                // we are replacing Black's move
+                move.BlackPly = nd.LastMoveAlgebraicNotationWithNag;
+            }
+            else
+            {
+                move.WhitePly = nd.LastMoveAlgebraicNotationWithNag;
+            }
+        }
     }
 }
