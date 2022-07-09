@@ -142,7 +142,7 @@ namespace ChessForge
             if (gameReplay.IsReplayActive)
             {
                 StopAnimation();
-                _mainboardCommentBox.GameReplayStop();            
+                _mainboardCommentBox.RestoreTitleMessage();            
             }
 
             if (row >= 0)
@@ -183,7 +183,7 @@ namespace ChessForge
                         // was part of a double click (in which case the double click
                         // handler will override this).
                         gameReplay.ShowPositionAndStop(nd);
-                        _mainboardCommentBox.GameReplayStop();
+                        _mainboardCommentBox.RestoreTitleMessage();
 
                         //StopAnimation();
                         //gameReplay.Stop();

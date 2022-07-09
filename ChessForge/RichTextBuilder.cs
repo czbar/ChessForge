@@ -140,7 +140,7 @@ namespace ChessForge
             {
                 if (nd.ColorToMove() == PieceColor.Black)
                 {
-                    sbPrefix.Insert(0, nd.MoveNumber().ToString() + "." + nd.LastMoveAlgebraicNotation);
+                    sbPrefix.Insert(0, nd.MoveNumber.ToString() + "." + nd.LastMoveAlgebraicNotation);
                 }
                 else
                 {
