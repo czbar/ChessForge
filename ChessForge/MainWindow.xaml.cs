@@ -333,7 +333,8 @@ namespace ChessForge
                             }
 
                             bool isCastle;
-                            if (EngineGame.ProcessUserGameMove(move.ToString(), out isCastle))
+                            TreeNode nd;
+                            if (EngineGame.ProcessUserGameMove(move.ToString(), out nd, out isCastle))
                             {
                                 MainChessBoard.GetPieceImage(sq.Xcoord, sq.Ycoord, true).Source = DraggedPiece.ImageControl.Source;
                                 ReturnDraggedPiece(true);
@@ -343,6 +344,7 @@ namespace ChessForge
                                 }
                                 _soundMove.Position = TimeSpan.FromMilliseconds(0);
                                 _soundMove.Play();
+                                _mainboardCommentBox.GameMoveMade(nd, true);
                             }
                             else
                             {
@@ -751,6 +753,11 @@ namespace ChessForge
             SetActiveLine(line, selectedNodeId);
         }
 
+        public void DisplayPosition(BoardPosition position)
+        {
+            MainChessBoard.DisplayPosition(position);
+        }
+
         public void SetActiveLine(ObservableCollection<TreeNode> line, int selectedNodeId)
         {
             ActiveLine.NodeList = line;
@@ -760,7 +767,7 @@ namespace ChessForge
             if (selectedNodeId > 0)
             {
                 TreeNode nd = ActiveLine.NodeList.First(x => x.NodeId == selectedNodeId);
-                ViewActiveLine_SelectPly((int)nd.Parent.MoveNumber(), nd.Parent.ColorToMove());
+                ViewActiveLine_SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove());
                 MainChessBoard.DisplayPosition(nd.Position);
             }
         }
@@ -866,7 +873,31 @@ namespace ChessForge
             EngineMessageProcessor.StartMessagePollTimer();
 
             PrepareMoveEvaluation(mode, Evaluation.Position);
+        }
 
+        /// <summary>
+        /// This method will be called when in Training mode to evaluate
+        /// user's move or moves from the Workbook.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        public void RequestMoveEvaluationInTraining(int nodeId)
+        {
+            TreeNode nd = Workbook.Nodes.First(x => x.NodeId == nodeId);
+            RequestMoveEvaluationInTraining(nd);
+            //Evaluation.Position = nd.Position;
+            //ShowMoveEvaluationControls(true, false);
+
+            //EngineMessageProcessor.StartMessagePollTimer();
+            //PrepareMoveEvaluation(EvaluationState.EvaluationMode.IN_TRAINING, Evaluation.Position);
+        }
+
+        public void RequestMoveEvaluationInTraining(TreeNode nd)
+        {
+            Evaluation.Position = nd.Position;
+            ShowMoveEvaluationControls(true, false);
+
+            EngineMessageProcessor.StartMessagePollTimer();
+            PrepareMoveEvaluation(EvaluationState.EvaluationMode.IN_TRAINING, Evaluation.Position);
         }
 
         /// <summary>
@@ -974,10 +1005,10 @@ namespace ChessForge
 
                     EngineInfoDisplayTimer.Enabled = false;
 
-                    // if the mode is SINGLE_MOVE or this is the last move in FULL_LINE
+                    // if the mode is not FULL_LINE or this is the last move in FULL_LINE
                     // evaluation we stop here
                     // otherwise we start the next move's evaluation
-                    if (Evaluation.Mode == EvaluationState.EvaluationMode.SINGLE_MOVE
+                    if (Evaluation.Mode != EvaluationState.EvaluationMode.FULL_LINE 
                         || Evaluation.PositionIndex == ActiveLine.NodeList.Count - 1)
                     {
                         Evaluation.Reset();
@@ -1116,29 +1147,60 @@ namespace ChessForge
                 TreeNode nd = ViewActiveLine_GetSelectedTreeNode();
                 if (nd != null)
                 {
-                    imgChessBoard.Source = ChessBoards.ChessBoardGreen;
+                    PlayComputer(nd, false);
+                    //imgChessBoard.Source = ChessBoards.ChessBoardGreen;
 
-                    AppState.ChangeCurrentMode(AppState.Mode.GAME_VS_COMPUTER);
+                    //AppState.ChangeCurrentMode(AppState.Mode.GAME_VS_COMPUTER);
 
-                    EngineGame.PrepareGame(nd);
-                    _dgEngineGame.ItemsSource = EngineGame.Line.MoveList;
+                    //EngineGame.PrepareGame(nd, true, false);
+                    //_dgEngineGame.ItemsSource = EngineGame.Line.MoveList;
 
-                    if (nd.ColorToMove() == PieceColor.White)
-                    {
-                        if (!MainChessBoard.IsFlipped)
-                        {
-                            MainChessBoard.FlipBoard();
-                        }
-                    }
+                    //if (nd.ColorToMove() == PieceColor.White)
+                    //{
+                    //    if (!MainChessBoard.IsFlipped)
+                    //    {
+                    //        MainChessBoard.FlipBoard();
+                    //    }
+                    //}
 
-                    RequestEngineMove(nd.Position);
-                    _menuPlayComputer.Header = Strings.MENU_ENGINE_GAME_STOP;
+                    //RequestEngineMove(nd.Position);
+                    //_menuPlayComputer.Header = Strings.MENU_ENGINE_GAME_STOP;
                 }
                 else
                 {
                     MessageBox.Show("Select the move from which to start.", "Computer Game", MessageBoxButton.OK);
                 }
             }
+        }
+
+        /// <summary>
+        /// This method will start a game vs the engine.
+        /// It will be called in one of two possible contexts:
+        /// either the game was requested from MANUAL_REVIEW
+        /// or during TRAINING.
+        /// If the latter, then the EngineGame has already been
+        /// constructed and we start from the last move/ply.
+        /// </summary>
+        /// <param name="startNode"></param>
+        public void PlayComputer(TreeNode startNode, bool IsTraining)
+        {
+            imgChessBoard.Source = ChessBoards.ChessBoardGreen;
+
+            AppState.ChangeCurrentMode(AppState.Mode.GAME_VS_COMPUTER);
+
+            EngineGame.PrepareGame(startNode, true, IsTraining);
+            _dgEngineGame.ItemsSource = EngineGame.Line.MoveList;
+
+            if (startNode.ColorToMove() == PieceColor.White)
+            {
+                if (!MainChessBoard.IsFlipped)
+                {
+                    MainChessBoard.FlipBoard();
+                }
+            }
+
+            RequestEngineMove(startNode.Position);
+            _menuPlayComputer.Header = Strings.MENU_ENGINE_GAME_STOP;
         }
 
         /// <summary>
@@ -1156,9 +1218,11 @@ namespace ChessForge
             // from the "wrong" thread)
             this.Dispatcher.Invoke(() =>
             {
-                pos = EngineGame.ProcessEngineGameMove();
+                TreeNode nd;
+                pos = EngineGame.ProcessEngineGameMove(out nd);
                 _soundMove.Position = TimeSpan.FromMilliseconds(0);
                 _soundMove.Play();
+                _mainboardCommentBox.GameMoveMade(nd, false);
             });
 
 
@@ -1257,6 +1321,8 @@ namespace ChessForge
             int nodeIndex = ViewActiveLine_GetNodeIndexFromRowColumn(row, column);
             TreeNode nd = ActiveLine.NodeList[nodeIndex];
             MainChessBoard.DisplayPosition(nd.Position);
+
+            _mainboardCommentBox.RestoreTitleMessage();
         }
 
         private void ShowBookmarks()
@@ -1342,7 +1408,7 @@ namespace ChessForge
             TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_MOVE;
 
             // The Line display is the same as when playing a game against the computer 
-            EngineGame.PrepareGame(startNode, false);
+            EngineGame.PrepareGame(startNode, false, false);
             _dgEngineGame.ItemsSource = EngineGame.Line.MoveList;
             AppState.ChangeCurrentMode(AppState.Mode.TRAINING);
             //            ShowEngineGameGuiControls();
@@ -1433,10 +1499,10 @@ namespace ChessForge
 
             _uIEelementStates = new List<UIEelementState>()
             {
-                 // elements always visible and enabled except during a game vs engine
+                 // Active Line scoresheet visible and enabled except during a game vs engine and training
                  { new UIEelementState(_dgActiveLine,
-                        allModes & (uint)~AppState.Mode.GAME_VS_COMPUTER,
-                        allModes & (uint)~AppState.Mode.GAME_VS_COMPUTER,
+                        allModes & (uint)~(AppState.Mode.GAME_VS_COMPUTER | AppState.Mode.TRAINING),
+                        allModes & (uint)~(AppState.Mode.GAME_VS_COMPUTER | AppState.Mode.TRAINING),
                         0, 0 )},
 
                  // elements visible in all modes except training mode
@@ -1450,11 +1516,12 @@ namespace ChessForge
                         (uint)AppState.Mode.TRAINING, 0,
                         0, 0) },
 
-                 // elements only visible and enabled during a game vs engine
+                 // game scoresheet visible and enabled during a game vs engine and training
                  { new UIEelementState(_dgEngineGame,
-                        (uint)AppState.Mode.GAME_VS_COMPUTER, 0,
+                        (uint)AppState.Mode.GAME_VS_COMPUTER | (uint)AppState.Mode.TRAINING, 0,
                         0,0) },
 
+                 // elements only visible and enabled during a game vs engine
                  { new UIEelementState(_lblGameInProgress,
                         (uint)AppState.Mode.GAME_VS_COMPUTER, 0,
                         0, 0) },
