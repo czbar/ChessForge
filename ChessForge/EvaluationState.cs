@@ -23,7 +23,8 @@ namespace ChessForge
             NONE,
             SINGLE_MOVE,
             FULL_LINE,
-            IN_GAME_PLAY
+            IN_GAME_PLAY,
+            IN_TRAINING
         };
 
         /// <summary>
