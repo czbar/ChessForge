@@ -222,7 +222,7 @@ namespace ChessForge
             _MainWin.SelectPlyInTextViews(-1, PieceColor.White);
             // Indicate that we are not replaying anything right now.
             IsReplayActive = false;
-            _commentBox.GameReplayStop();
+            _commentBox.RestoreTitleMessage();
         }
 
         /// <summary>
