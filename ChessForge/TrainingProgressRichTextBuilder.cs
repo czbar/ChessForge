@@ -16,15 +16,41 @@ namespace ChessForge
 {
     public class TrainingProgressRichTextBuilder : RichTextBuilder
     {
-        private Paragraph _intro;
-        private List<TreeNode> _workbookMoves = new List<TreeNode>();
+        /// <summary>
+        /// A reference to the paragraph with the initial instruction 
+        /// to make a move on the chessboard. This reference will be used
+        /// to removed this paragraph when no longer relevant.
+        /// </summary>
+        private Paragraph _prompt;
+
+        /// <summary>
+        /// The list of moves found in the Workbook in the current position,
+        /// </summary>
+        private List<TreeNode> _movesFromWorkbook = new List<TreeNode>();
+
+        /// <summary>
+        /// The user's move being currently examined.
+        /// </summary>
         private TreeNode _userMove;
 
+        /// <summary>
+        /// The move with which the user wishes to proceed after selecting
+        /// from the Workbook options.
+        /// </summary>
+        private int _userChoiceNodeId;
+
+        /// <summary>
+        /// Names and prefixes for the clickable Runs.
+        /// </summary>
         private readonly string _run_eval_user_move = "user_eval";
         private readonly string _run_play_engine = "play_engine";
         private readonly string _run_eval_wb_move_ = "wb_eval_";
         private readonly string _run_play_wb_move_ = "wb_play_";
+        private readonly string _run_continue = "wb_continue";
 
+        /// <summary>
+        /// IDs of button styles (here, buttons are highlighted clickable Runs
+        /// </summary>
         private enum ButtonStyle
         {
             BLUE,
@@ -32,10 +58,18 @@ namespace ChessForge
             RED
         }
 
+        /// <summary>
+        /// Creates an instance of this class and sets reference 
+        /// to the FlowDocument managed by the object.
+        /// </summary>
+        /// <param name="doc"></param>
         public TrainingProgressRichTextBuilder(FlowDocument doc) : base(doc)
         {
         }
 
+        /// <summary>
+        /// Property referencing definitions of Paragraphs 
+        /// </summary>
         override internal Dictionary<string, RichTextPara> RichTextParas { get { return _richTextParas; } }
 
         /// <summary>
@@ -43,14 +77,18 @@ namespace ChessForge
         /// </summary>
         internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
-            ["intro"] = new RichTextPara(0,  0, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0) ), TextAlignment.Left),
+            ["intro"] = new RichTextPara(0, 0, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Left),
             ["prefix_line"] = new RichTextPara(0, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
             ["eval_results"] = new RichTextPara(30, 5, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(51, 159, 141)), TextAlignment.Left),
             ["normal"] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
             ["default"] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
         };
 
-        public void BuildIntroText(TreeNode node)            
+        /// <summary>
+        /// Builds text for intorductory paragraphs.
+        /// </summary>
+        /// <param name="node"></param>
+        public void BuildIntroText(TreeNode node)
         {
             Document.Blocks.Clear();
             BuildHeaderText();
@@ -71,15 +109,16 @@ namespace ChessForge
         /// </summary>
         public void ReportLastMoveVsWorkbook()
         {
-            _workbookMoves.Clear();
+            _movesFromWorkbook.Clear();
 
             _userMove = EngineGame.GetCurrentNode();
             EngineGame.AddLastNodeToPlies();
             TreeNode parent = _userMove.Parent;
 
             // double check that we have the parent in our Workbook
-            if (AppState.MainWin.Workbook.Nodes.First(x => x.NodeId == parent.NodeId) == null)
+            if (AppState.MainWin.Workbook.GetNodeFromNodeId(parent.NodeId) == null)
             {
+                // we are "out of the book" in our training so there is nothing to report
                 return;
             }
 
@@ -99,7 +138,7 @@ namespace ChessForge
                 {
                     wbMoves.Append(child.GetPlyText(true));
                     wbMoves.Append("; ");
-                    _workbookMoves.Add(child);
+                    _movesFromWorkbook.Add(child);
                 }
             }
 
@@ -113,6 +152,17 @@ namespace ChessForge
                 BuildMoveNotInWorkbookText(_userMove);
                 BuildWorkbookMovesText(wbMoves.ToString());
             }
+
+            BuildContinueButton();
+        }
+
+        private void BuildContinueButton()
+        {
+            Paragraph para = AddNewParagraphToDoc("intro", "");
+            para.Inlines.Add("        ");
+            Run r = CreateButtonRun("Continue", _run_continue, ButtonStyle.GREEN);
+            r.FontSize = 16;
+            para.Inlines.Add(r);
         }
 
         private void BuildHeaderText()
@@ -125,9 +175,13 @@ namespace ChessForge
             AddNewParagraphToDoc("prefix_line", GetStemLineText(node));
         }
 
+        /// <summary>
+        /// Initial prompt to advise the user make their move.
+        /// This paragraph is removed later on to reduce clutter.
+        /// </summary>
         private void BuildInitialPromptText()
         {
-            _intro = AddNewParagraphToDoc("intro", "Make your move on the chessboard");
+            _prompt = AddNewParagraphToDoc("intro", "Make your move on the chessboard");
         }
 
         private void BuildMoveFromWorkbookText(TreeNode nd)
@@ -138,7 +192,7 @@ namespace ChessForge
         private void BuildMoveNotInWorkbookText(TreeNode nd)
         {
             Paragraph para = AddNewParagraphToDoc("normal", "Your move ");
-            
+
             Run r = new Run(nd.GetPlyText(true));
             r.FontWeight = FontWeights.Bold;
             r.FontSize = 16;
@@ -147,10 +201,10 @@ namespace ChessForge
             para.Inlines.Add(new Run(" was not found in the Workbook. \n"));
             para.Inlines.Add(new Run("You can click below to either evaluate it or start a game against the engine from this move.\n"));
 
-            if (_intro != null)
+            if (_prompt != null)
             {
-                Document.Blocks.Remove(_intro);
-                _intro = null;
+                Document.Blocks.Remove(_prompt);
+                _prompt = null;
             }
 
             para.Inlines.Add(new Run("      "));
@@ -165,7 +219,7 @@ namespace ChessForge
             {
                 Paragraph para = AddNewParagraphToDoc("normal", "Alternatively, change your move to one from the Workbook by clicking on it below.\n");
 
-                foreach (TreeNode nd in _workbookMoves)
+                foreach (TreeNode nd in _movesFromWorkbook)
                 {
                     para.Inlines.Add(new Run("      "));
                     para.Inlines.Add(CreateButtonRun("Evaluate", _run_eval_wb_move_ + nd.NodeId.ToString(), ButtonStyle.BLUE));
@@ -183,7 +237,6 @@ namespace ChessForge
                 AddNewParagraphToDoc("normal", "Other Workbook moves: " + moves);
             }
         }
-
 
         private Run CreateButtonRun(string text, string runName, ButtonStyle style)
         {
@@ -233,10 +286,17 @@ namespace ChessForge
             {
                 int nodeId = int.Parse(r.Name.Substring(_run_eval_wb_move_.Length));
                 EngineGame.ReplaceCurrentWithWorkbookMove(nodeId);
+                _userChoiceNodeId = nodeId;
+                // Selecting a random response to the user's choice from the Workbook
+                // TODO: set the flag so the main window can pick the move up and proceed.
+                TreeNode nd = AppState.MainWin.Workbook.SelectRandomChild(nodeId);
             }
             else if (r.Name.StartsWith(_run_play_engine))
             {
-
+                AppState.MainWin.PlayComputer(_userMove, true);
+            }
+            else if (r.Name.StartsWith(_run_continue))
+            {
             }
         }
     }

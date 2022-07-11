@@ -52,7 +52,7 @@ namespace ChessForge
         /// The complete tree of the currently
         /// loaded workbook (from the PGN or CHFRG file)
         /// </summary>
-        public Tree Workbook;
+        public WorkbookTree Workbook;
 
         private bool _isDebugMode = false;
 
@@ -646,6 +646,7 @@ namespace ChessForge
             {
                 // TODO: ask what to do with the current tree
                 // abandon, save, put aside
+                result = true;
             }
             else if (AppState.CurrentMode != AppState.Mode.MANUAL_REVIEW && newMode == AppState.Mode.MANUAL_REVIEW)
             {
@@ -655,11 +656,18 @@ namespace ChessForge
                         if (MessageBox.Show("Cancel Game", "Game with the Computer is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             result = true;
                         break;
-                        //case AppState.Mode.GAME_REPLAY:
-                        //    if (MessageBox.Show("Cancel Replay", "Game Replay is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                        //        result = true;
-                        //    break;
+                    //case AppState.Mode.GAME_REPLAY:
+                    //    if (MessageBox.Show("Cancel Replay", "Game Replay is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    //        result = true;
+                    //    break;
+                    default:
+                        result = true;
+                        break;
                 }
+            }
+            else
+            {
+                return true;
             }
 
             return result;
@@ -703,7 +711,7 @@ namespace ChessForge
                 Configuration.AddRecentFile(fileName);
                 RecreateRecentFilesMenuItems();
 
-                Workbook = new Tree();
+                Workbook = new WorkbookTree();
                 _rtbWorkbookView.Document.Blocks.Clear();
                 PgnGameParser pgnGame = new PgnGameParser(gameText, Workbook, true);
                 _mainboardCommentBox.ShowWorkbookTitle(Workbook.Title);
@@ -882,7 +890,7 @@ namespace ChessForge
         /// <param name="nodeId"></param>
         public void RequestMoveEvaluationInTraining(int nodeId)
         {
-            TreeNode nd = Workbook.Nodes.First(x => x.NodeId == nodeId);
+            TreeNode nd = Workbook.GetNodeFromNodeId(nodeId);
             RequestMoveEvaluationInTraining(nd);
             //Evaluation.Position = nd.Position;
             //ShowMoveEvaluationControls(true, false);
