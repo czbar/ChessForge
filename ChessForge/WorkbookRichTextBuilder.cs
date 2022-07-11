@@ -52,7 +52,7 @@ namespace ChessForge
         /// <summary>
         /// The Workbook tree.
         /// </summary>
-        private  Tree _workbook;
+        private  WorkbookTree _workbook;
 
         /// <summary>
         /// Maps Node Ids to Runs for quick access.
@@ -144,7 +144,7 @@ namespace ChessForge
             }
             else
             {
-                root = _workbook.Nodes.First(x => x.NodeId == rootNodeId);
+                root = _workbook.GetNodeFromNodeId(rootNodeId);
                 if (includeStem)
                 {
                     Paragraph paraStem = BuildWorkbookStemLine(root);
@@ -487,7 +487,7 @@ namespace ChessForge
             if (r.Name != null && r.Name.StartsWith(RUN_NAME_PREFIX))
             {
                 nodeId = int.Parse(r.Name.Substring(RUN_NAME_PREFIX.Length));
-                TreeNode foundNode = _workbook.Nodes.First(x => x.NodeId == nodeId);
+                TreeNode foundNode = _workbook.GetNodeFromNodeId(nodeId);
                 lineId = foundNode.LineId;
                 lineId = _workbook.GetDefaultLineIdForNode(nodeId);
                 _lstSelectedLine = _workbook.SelectLine(lineId);

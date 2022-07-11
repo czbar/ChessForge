@@ -45,7 +45,7 @@ namespace GameTree
         /// The constructor takes the entire game notation as a string.
         /// </summary>
         /// <param name="workbook"></param>
-        public PgnGameParser(string pgnGametext, Tree workbook, bool debugMode = false)
+        public PgnGameParser(string pgnGametext, WorkbookTree workbook, bool debugMode = false)
         {
             if (debugMode)
             {
@@ -151,13 +151,13 @@ namespace GameTree
         /// Branches can be found after any move and are surrounded by parenthesis '(' and ')'.
         /// </summary>
         /// <param name="text"></param>
-        private void ParseGameText(string text, Tree gameTree)
+        private void ParseGameText(string text, WorkbookTree gameTree)
         {
             // create a root node
             TreeNode rootNode = new TreeNode(null, "", runningNodeId);
             runningNodeId++;
 
-            Tree.SetupStartingPosition(ref rootNode);
+            WorkbookTree.SetupStartingPosition(ref rootNode);
             gameTree.AddNode(rootNode);
 
             if (DEBUG_MODE)
@@ -181,7 +181,7 @@ namespace GameTree
             return false;
         }
 
-        private void ParseBranch(TreeNode parentNode, Tree gameTree)
+        private void ParseBranch(TreeNode parentNode, WorkbookTree gameTree)
         {
             string token;
 
@@ -236,7 +236,7 @@ namespace GameTree
         /// </summary>
         /// <param name="gameTree"></param>
         /// <param name="nag"></param>
-        private void AddNAGtoLastMove(Tree gameTree, string nag)
+        private void AddNAGtoLastMove(WorkbookTree gameTree, string nag)
         {
             TreeNode nd = gameTree.Nodes[gameTree.Nodes.Count - 1];
             nd.AddNag(nag);

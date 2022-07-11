@@ -176,7 +176,7 @@ namespace ChessForge
 
         public static void ReplaceCurrentWithWorkbookMove(int nodeId)
         {
-            TreeNode nd = AppState.MainWin.Workbook.Nodes.First(x => x.NodeId == nodeId);
+            TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
             ReplaceCurrentWithWorkbookMove(nd);
         }
 
