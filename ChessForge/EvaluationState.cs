@@ -45,11 +45,7 @@ namespace ChessForge
                 PositionCpScore = 0;
                 PositionIndex = 0;
 
-                if (ProgressTimer != null)
-                {
-                    ProgressTimer.Stop();
-                    ProgressTimer.Reset();
-                }
+                AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUTION_PROGRESS);
             }
         }
 
@@ -59,18 +55,8 @@ namespace ChessForge
         /// </summary>
         public void PrepareToContinue()
         {
-            if (ProgressTimer != null)
-            {
-                ProgressTimer.Stop();
-                ProgressTimer.Reset();
-            }
+            AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUTION_PROGRESS);
         }
-
-        /// <summary>
-        /// Timer used by the evaluation progress bar to set
-        /// its position.
-        /// </summary>
-        public Stopwatch ProgressTimer = new Stopwatch();
 
         /// <summary>
         /// The current evaluation mode.

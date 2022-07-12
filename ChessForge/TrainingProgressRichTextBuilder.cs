@@ -46,7 +46,6 @@ namespace ChessForge
         private readonly string _run_play_engine = "play_engine";
         private readonly string _run_eval_wb_move_ = "wb_eval_";
         private readonly string _run_play_wb_move_ = "wb_play_";
-        private readonly string _run_continue = "wb_continue";
 
         /// <summary>
         /// IDs of button styles (here, buttons are highlighted clickable Runs
@@ -152,17 +151,6 @@ namespace ChessForge
                 BuildMoveNotInWorkbookText(_userMove);
                 BuildWorkbookMovesText(wbMoves.ToString());
             }
-
-            BuildContinueButton();
-        }
-
-        private void BuildContinueButton()
-        {
-            Paragraph para = AddNewParagraphToDoc("intro", "");
-            para.Inlines.Add("        ");
-            Run r = CreateButtonRun("Continue", _run_continue, ButtonStyle.GREEN);
-            r.FontSize = 16;
-            para.Inlines.Add(r);
         }
 
         private void BuildHeaderText()
@@ -294,9 +282,6 @@ namespace ChessForge
             else if (r.Name.StartsWith(_run_play_engine))
             {
                 AppState.MainWin.PlayComputer(_userMove, true);
-            }
-            else if (r.Name.StartsWith(_run_continue))
-            {
             }
         }
     }

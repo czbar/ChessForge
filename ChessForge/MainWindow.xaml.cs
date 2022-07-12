@@ -56,9 +56,7 @@ namespace ChessForge
 
         private bool _isDebugMode = false;
 
-        public Timer EngineInfoDisplayTimer = new System.Timers.Timer();
-
-        public Timer CheckForUserMoveTimer = new System.Timers.Timer();
+        internal AppTimers Timers;
 
         public MainWindow()
         {
@@ -138,6 +136,8 @@ namespace ChessForge
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Timers = new AppTimers(_engineEvaluationGUI);
+
             _rtbWorkbookView.Document.Blocks.Clear();
             _rtbWorkbookView.IsReadOnly = true;
 
@@ -154,9 +154,6 @@ namespace ChessForge
             {
                 MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            CreateEngineInfoDispayTimer();
-            CreateCheckForUserMoveTimer();
 
             string lastPgnFile = Configuration.LastPgnFile;
             if (!string.IsNullOrEmpty(lastPgnFile))
@@ -191,20 +188,6 @@ namespace ChessForge
                 }
                 catch { };
             }
-        }
-
-        private void CreateEngineInfoDispayTimer()
-        {
-            EngineInfoDisplayTimer.Elapsed += new ElapsedEventHandler(_engineEvaluationGUI.ShowEngineLines);
-            EngineInfoDisplayTimer.Interval = 100;
-            EngineInfoDisplayTimer.Enabled = false;
-        }
-
-        private void CreateCheckForUserMoveTimer()
-        {
-            CheckForUserMoveTimer.Elapsed += new ElapsedEventHandler(ProcessUserGameMoveEvent);
-            CheckForUserMoveTimer.Interval = 50;
-            CheckForUserMoveTimer.Enabled = false;
         }
 
         private Point GetSquareTopLeftPoint(SquareCoords sq)
@@ -947,8 +930,8 @@ namespace ChessForge
                 _pbEngineThinking.Value = 0;
             });
 
-            EngineInfoDisplayTimer.Enabled = true;
-            Evaluation.ProgressTimer.Start();
+            Timers.Start(AppTimers.TimerId.EVALUTION_LINE_DISPLAY);
+            Timers.Start(AppTimers.StopwatchId.EVALUTION_PROGRESS);
 
             string fen = FenParser.GenerateFenFromPosition(position);
             EngineMessageProcessor.RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
@@ -1011,7 +994,7 @@ namespace ChessForge
                         ActiveLine.MoveList[moveIndex].BlackEval = eval;
                     }
 
-                    EngineInfoDisplayTimer.Enabled = false;
+                    Timers.Stop(AppTimers.TimerId.EVALUTION_LINE_DISPLAY);
 
                     // if the mode is not FULL_LINE or this is the last move in FULL_LINE
                     // evaluation we stop here
@@ -1045,7 +1028,7 @@ namespace ChessForge
                         Evaluation.PositionIndex++;
                         RequestMoveEvaluation(Evaluation.PositionIndex, Evaluation.Mode, false);
 
-                        EngineInfoDisplayTimer.Enabled = true;
+                        Timers.Start(AppTimers.TimerId.EVALUTION_LINE_DISPLAY);
                     }
                 }
             }
@@ -1238,7 +1221,7 @@ namespace ChessForge
             // (the app will wait for the user's move)
             MainChessBoard.DisplayPosition(pos);
             EngineGame.State = EngineGame.GameState.USER_THINKING;
-            CheckForUserMoveTimer.Enabled = true;
+            Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
             EngineMessageProcessor.StopMessagePollTimer();
         }
 
@@ -1253,7 +1236,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        private void ProcessUserGameMoveEvent(object source, ElapsedEventArgs e)
+        internal void ProcessUserGameMoveEvent(object source, ElapsedEventArgs e)
         {
             if (TrainingState.IsTrainingInProgress)
             {
@@ -1262,7 +1245,7 @@ namespace ChessForge
                     this.Dispatcher.Invoke(() =>
                     {
                         _trainingProgressRichTextBuilder.ReportLastMoveVsWorkbook();
-                        CheckForUserMoveTimer.Enabled = false;
+                        Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
                     });
                 }
             }
@@ -1279,7 +1262,7 @@ namespace ChessForge
                         EngineGame.AddLastNodeToPlies();
                     });
 
-                    CheckForUserMoveTimer.Enabled = false;
+                    Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
                     RequestEngineMove(EngineGame.GetCurrentPosition());
                 }
             }
@@ -1294,7 +1277,7 @@ namespace ChessForge
         /// </summary>
         private void StopEngineGame()
         {
-            EngineInfoDisplayTimer.Enabled = false;
+            Timers.Stop(AppTimers.TimerId.EVALUTION_LINE_DISPLAY);
 
             menuEvalLine.Dispatcher.Invoke(() =>
             {
@@ -1319,7 +1302,7 @@ namespace ChessForge
             EngineMessageProcessor.StopMessagePollTimer();
             AppState.CurrentMode = AppState.Mode.MANUAL_REVIEW;
             EngineGame.State = EngineGame.GameState.IDLE;
-            CheckForUserMoveTimer.Enabled = false;
+            Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
             AppState.ExitCurrentMode();
 
             int row, column;
@@ -1420,14 +1403,12 @@ namespace ChessForge
             _dgEngineGame.ItemsSource = EngineGame.Line.MoveList;
             AppState.ChangeCurrentMode(AppState.Mode.TRAINING);
             //            ShowEngineGameGuiControls();
-            CheckForUserMoveTimer.Enabled = true;
+            Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
         }
 
         private void EnterGuiTrainingMode()
         {
             AppState.ChangeCurrentMode(AppState.Mode.TRAINING);
-            //_tabMainControl.Visibility = Visibility.Hidden;
-            //_tabTrainingControl.Visibility = Visibility.Visible;
         }
 
         private void ExitGuiTrainingMode()
