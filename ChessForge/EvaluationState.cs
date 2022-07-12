@@ -45,7 +45,7 @@ namespace ChessForge
                 PositionCpScore = 0;
                 PositionIndex = 0;
 
-                AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUTION_PROGRESS);
+                AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_PROGRESS);
             }
         }
 
@@ -55,7 +55,7 @@ namespace ChessForge
         /// </summary>
         public void PrepareToContinue()
         {
-            AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUTION_PROGRESS);
+            AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_PROGRESS);
         }
 
         /// <summary>

@@ -45,9 +45,6 @@ namespace ChessForge
         CommentBoxRichTextBuilder _mainboardCommentBox;
         public GameReplay gameReplay;
 
-        private MediaPlayer _soundMove = new MediaPlayer();
-        private MediaPlayer _soundCapture = new MediaPlayer();
-
         /// <summary>
         /// The complete tree of the currently
         /// loaded workbook (from the PGN or CHFRG file)
@@ -63,9 +60,6 @@ namespace ChessForge
             AppState.MainWin = this;
 
             InitializeComponent();
-
-            _soundMove.Open(new Uri("Resources/Sounds/Move.mp3", UriKind.Relative));
-            _soundCapture.Open(new Uri("Resources/Sounds/Capture.mp3", UriKind.Relative));
 
             // initialize the UIElement states table
             InitializeUIElementStates();
@@ -325,8 +319,8 @@ namespace ChessForge
                                 {
                                     MoveCastlingRook(move.ToString());
                                 }
-                                _soundMove.Position = TimeSpan.FromMilliseconds(0);
-                                _soundMove.Play();
+
+                                SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
                                 _mainboardCommentBox.GameMoveMade(nd, true);
                             }
                             else
@@ -885,6 +879,7 @@ namespace ChessForge
         public void RequestMoveEvaluationInTraining(TreeNode nd)
         {
             Evaluation.Position = nd.Position;
+            UpdateLastMoveTextBox(nd, true);
             ShowMoveEvaluationControls(true, false);
 
             Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
@@ -930,11 +925,18 @@ namespace ChessForge
                 _pbEngineThinking.Value = 0;
             });
 
-            Timers.Start(AppTimers.TimerId.EVALUTION_LINE_DISPLAY);
-            Timers.Start(AppTimers.StopwatchId.EVALUTION_PROGRESS);
+            Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+            Timers.Start(AppTimers.StopwatchId.EVALUATION_PROGRESS);
 
             string fen = FenParser.GenerateFenFromPosition(position);
             EngineMessageProcessor.RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
+        }
+
+        private void UpdateLastMoveTextBox(TreeNode nd, bool isLineStart)
+        {
+            string moveTxt = MoveUtils.BuildSingleMoveText(nd);
+
+            UpdateLastMoveTextBox(moveTxt, isLineStart);
         }
 
         private void UpdateLastMoveTextBox(int posIndex, bool isLineStart)
@@ -943,6 +945,11 @@ namespace ChessForge
                     + (Evaluation.Position.ColorToMove == PieceColor.Black ? "." : "...")
                     + ActiveLine.NodeList[posIndex].LastMoveAlgebraicNotation;
 
+            UpdateLastMoveTextBox(moveTxt, isLineStart);
+        }
+
+        private void UpdateLastMoveTextBox(string moveTxt, bool isLineStart)
+        {
             if (isLineStart)
             {
                 _lblMoveUnderEval.Content = moveTxt;
@@ -994,7 +1001,7 @@ namespace ChessForge
                         ActiveLine.MoveList[moveIndex].BlackEval = eval;
                     }
 
-                    Timers.Stop(AppTimers.TimerId.EVALUTION_LINE_DISPLAY);
+                    Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
 
                     // if the mode is not FULL_LINE or this is the last move in FULL_LINE
                     // evaluation we stop here
@@ -1028,7 +1035,7 @@ namespace ChessForge
                         Evaluation.PositionIndex++;
                         RequestMoveEvaluation(Evaluation.PositionIndex, Evaluation.Mode, false);
 
-                        Timers.Start(AppTimers.TimerId.EVALUTION_LINE_DISPLAY);
+                        Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                     }
                 }
             }
@@ -1139,23 +1146,6 @@ namespace ChessForge
                 if (nd != null)
                 {
                     PlayComputer(nd, false);
-                    //imgChessBoard.Source = ChessBoards.ChessBoardGreen;
-
-                    //AppState.ChangeCurrentMode(AppState.Mode.GAME_VS_COMPUTER);
-
-                    //EngineGame.PrepareGame(nd, true, false);
-                    //_dgEngineGame.ItemsSource = EngineGame.Line.MoveList;
-
-                    //if (nd.ColorToMove() == PieceColor.White)
-                    //{
-                    //    if (!MainChessBoard.IsFlipped)
-                    //    {
-                    //        MainChessBoard.FlipBoard();
-                    //    }
-                    //}
-
-                    //RequestEngineMove(nd.Position);
-                    //_menuPlayComputer.Header = Strings.MENU_ENGINE_GAME_STOP;
                 }
                 else
                 {
@@ -1211,8 +1201,7 @@ namespace ChessForge
             {
                 TreeNode nd;
                 pos = EngineGame.ProcessEngineGameMove(out nd);
-                _soundMove.Position = TimeSpan.FromMilliseconds(0);
-                _soundMove.Play();
+                SoundPlayer.PlayMoveSound(nd.LastMoveEngineNotation);
                 _mainboardCommentBox.GameMoveMade(nd, false);
             });
 
@@ -1277,7 +1266,7 @@ namespace ChessForge
         /// </summary>
         private void StopEngineGame()
         {
-            Timers.Stop(AppTimers.TimerId.EVALUTION_LINE_DISPLAY);
+            Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
 
             menuEvalLine.Dispatcher.Invoke(() =>
             {

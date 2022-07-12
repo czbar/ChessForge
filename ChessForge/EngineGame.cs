@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Timers;
 using System.Text;
 using System.Threading.Tasks;
 using GameTree;
@@ -41,6 +41,27 @@ namespace ChessForge
         /// </summary>
         private static TreeNode GameStartPosition;
 
+        private static bool _trainingWorkbookMoveMade;
+
+        /// <summary>
+        /// Flag indicating that a workbook move was selected during a training session
+        /// </summary>
+        public static bool TrainingWorkbookMoveMade { get => _trainingWorkbookMoveMade; set => _trainingWorkbookMoveMade = value; }
+
+        public static void CheckForTrainingWorkbookMoveMade(object source, ElapsedEventArgs e)
+        {
+            if (TrainingWorkbookMoveMade)
+            {
+                TrainingWorkbookMoveMade = false;
+                // stop polling for the workbook move
+                AppState.MainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
+
+                // TODO: show appropriate notifications in the GUI
+                // start polling for the user move
+                AppState.MainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+                TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_MOVE;
+            }
+        }
 
         /// <summary>
         /// Initializes the EngineGame structures before the game starts.
@@ -82,6 +103,11 @@ namespace ChessForge
 
         /// <summary>
         /// Processes a move made manually by the user on the board.
+        /// Sets appropriate flags so that ProcessUserGameMoveEvent will determine
+        /// what actions to take when its associated timer picks it up.
+        /// TODO: do we need a lock here so ProcessUserGameMoveEvent does not start before
+        /// we finish this?
+        /// 
         /// Returns true if it is a valid move.
         /// </summary>
         /// <returns></returns>
@@ -110,6 +136,7 @@ namespace ChessForge
                 if (TrainingState.IsTrainingInProgress)
                 {
                     TrainingState.CurrentMode = TrainingState.Mode.USER_MOVE_COMPLETED;
+                    AppState.MainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
                 }
                 else
                 {
@@ -143,7 +170,7 @@ namespace ChessForge
             return nd;
         }
 
-        public static void AddNode(TreeNode nd)
+        private static void AddNode(TreeNode nd)
         {
             Line.NodeList.Add(nd);
         }
@@ -193,6 +220,12 @@ namespace ChessForge
         public static void AddLastNodeToPlies()
         {
             Line.AddPly(GetCurrentNode());
+        }
+
+        public static void AddPlyToGame(TreeNode nd)
+        {
+            AddNode(nd);
+            AddLastNodeToPlies();
         }
 
         /// <summary>

@@ -76,7 +76,7 @@ namespace ChessForge
 
             _progBar.Dispatcher.Invoke(() =>
             {
-                _progBar.Value = AppState.MainWin.Timers.GetElapsedTime(AppTimers.StopwatchId.EVALUTION_PROGRESS);
+                _progBar.Value = AppState.MainWin.Timers.GetElapsedTime(AppTimers.StopwatchId.EVALUATION_PROGRESS);
             });
         }
 
