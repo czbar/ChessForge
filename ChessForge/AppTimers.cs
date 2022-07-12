@@ -22,15 +22,16 @@ namespace ChessForge
         internal enum TimerId
         {
             DUMMY,
-            EVALUTION_LINE_DISPLAY,
+            EVALUATION_LINE_DISPLAY,
             CHECK_FOR_USER_MOVE,
-            ENGINE_MESSAGE_POLL
+            ENGINE_MESSAGE_POLL,
+            CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE
         };
 
         internal enum StopwatchId
         {
             DUMMY,
-            EVALUTION_PROGRESS
+            EVALUATION_PROGRESS
         };
 
         /// <summary>
@@ -43,17 +44,19 @@ namespace ChessForge
         /// This timer invokes the method checking if a user made their move and if so
         /// requests appropriate processing.
         /// </summary>
-        private Timer _checkForUserMoveTimer = new Timer();
+        private Timer _checkForUserMoveTimer;
+
+        private Timer _checkForTrainingWorkbookMoveMade;
 
         /// <summary>
         /// Tracks time that evaluation of a move/position is taking.
         /// </summary>
-        private Stopwatch _evaluationProgressStopwatch = new Stopwatch();
+        private Stopwatch _evaluationProgressStopwatch;
 
         /// <summary>
         /// Maps TimerId to actual Timer object.
         /// </summary>
-        private Dictionary<TimerId, Timer> _dictTimers = new System.Collections.Generic.Dictionary<TimerId, Timer>();
+        private Dictionary<TimerId, Timer> _dictTimers = new Dictionary<TimerId, Timer>();
 
         /// <summary>
         /// Maps StopwatchId to actual Stopwatch object.
@@ -68,14 +71,18 @@ namespace ChessForge
         {
             _evaluationLinesDisplayTimer = new Timer();
             InitEvaluationLinesDisplayTimer(gui);
-            _dictTimers.Add(TimerId.EVALUTION_LINE_DISPLAY, _evaluationLinesDisplayTimer);
+            _dictTimers.Add(TimerId.EVALUATION_LINE_DISPLAY, _evaluationLinesDisplayTimer);
 
             _checkForUserMoveTimer = new Timer();
             InitCheckForUserMoveTimer();
             _dictTimers.Add(TimerId.CHECK_FOR_USER_MOVE, _checkForUserMoveTimer);
 
+            _checkForTrainingWorkbookMoveMade = new Timer();
+            InitCheckForTrainingWorkbookMoveMade();
+            _dictTimers.Add(TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE, _checkForTrainingWorkbookMoveMade);
+
             _evaluationProgressStopwatch = new Stopwatch();
-            _dictStopwatches.Add(StopwatchId.EVALUTION_PROGRESS, _evaluationProgressStopwatch);
+            _dictStopwatches.Add(StopwatchId.EVALUATION_PROGRESS, _evaluationProgressStopwatch);
         }
 
         /// <summary>
@@ -134,6 +141,13 @@ namespace ChessForge
             _checkForUserMoveTimer.Elapsed += new ElapsedEventHandler(AppState.MainWin.ProcessUserGameMoveEvent);
             _checkForUserMoveTimer.Interval = 50;
             _checkForUserMoveTimer.Enabled = false;
+        }
+
+        private void InitCheckForTrainingWorkbookMoveMade()
+        {
+            _checkForTrainingWorkbookMoveMade.Elapsed += new ElapsedEventHandler(EngineGame.CheckForTrainingWorkbookMoveMade);
+            _checkForTrainingWorkbookMoveMade.Interval = 50;
+            _checkForTrainingWorkbookMoveMade.Enabled = false;
         }
 
     }
