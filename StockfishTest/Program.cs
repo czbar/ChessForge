@@ -14,7 +14,7 @@ namespace StockfishTest
     {
         private static StringBuilder txtMessageFile = new StringBuilder();
 
-        private static EngineService.StockfishService engine;
+        private static EngineService.EngineProcess engine;
         private static MoveEval[] mev = new MoveEval[5];
         private static bool IsEngineReady = false;
 
@@ -27,7 +27,7 @@ namespace StockfishTest
 
         static void Main(string[] args)
         {
-            engine = new EngineService.StockfishService(true);
+            engine = new EngineService.EngineProcess(true);
             engine.EngineMessage += EngineMessage;
 
             StartStockfishEngine(engine);
@@ -45,7 +45,7 @@ namespace StockfishTest
 
         }
 
-        private static void StartStockfishEngine(EngineService.StockfishService engine)
+        private static void StartStockfishEngine(EngineService.EngineProcess engine)
         {
             engine.StartEngine();
 

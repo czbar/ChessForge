@@ -75,6 +75,7 @@ namespace ChessForge
             _menuPlayComputer.Header = Strings.MENU_ENGINE_GAME_START;
 
             _engineEvaluationGUI = new EngineEvaluationGUI(_tbEngineLines, _pbEngineThinking, Evaluation);
+            Timers = new AppTimers(_engineEvaluationGUI);
 
             Configuration.Initialize(this);
             Configuration.StartDirectory = Directory.GetCurrentDirectory();
@@ -136,7 +137,6 @@ namespace ChessForge
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Timers = new AppTimers(_engineEvaluationGUI);
 
             _rtbWorkbookView.Document.Blocks.Clear();
             _rtbWorkbookView.IsReadOnly = true;
@@ -861,7 +861,7 @@ namespace ChessForge
             ShowMoveEvaluationControls(true, isLineStart);
             UpdateLastMoveTextBox(posIndex, isLineStart);
 
-            EngineMessageProcessor.StartMessagePollTimer();
+            Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
 
             PrepareMoveEvaluation(mode, Evaluation.Position);
         }
@@ -887,7 +887,7 @@ namespace ChessForge
             Evaluation.Position = nd.Position;
             ShowMoveEvaluationControls(true, false);
 
-            EngineMessageProcessor.StartMessagePollTimer();
+            Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
             PrepareMoveEvaluation(EvaluationState.EvaluationMode.IN_TRAINING, Evaluation.Position);
         }
 
@@ -971,7 +971,7 @@ namespace ChessForge
                 ProcessEngineGameMoveEvent();
                 Evaluation.PrepareToContinue();
 
-                EngineMessageProcessor.StopMessagePollTimer();
+                Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
             }
             else
             {
@@ -1222,7 +1222,7 @@ namespace ChessForge
             MainChessBoard.DisplayPosition(pos);
             EngineGame.State = EngineGame.GameState.USER_THINKING;
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-            EngineMessageProcessor.StopMessagePollTimer();
+            Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
         }
 
         /// <summary>
@@ -1299,7 +1299,7 @@ namespace ChessForge
 
             imgChessBoard.Source = ChessBoards.ChessBoardBlue;
             Evaluation.Reset();
-            EngineMessageProcessor.StopMessagePollTimer();
+            Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
             AppState.CurrentMode = AppState.Mode.MANUAL_REVIEW;
             EngineGame.State = EngineGame.GameState.IDLE;
             Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
