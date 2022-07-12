@@ -9,17 +9,22 @@ using System.Diagnostics;
 namespace ChessForge
 {
     /// <summary>
-    /// Encapsulates all timers and stopwatches used in the application
+    /// Encapsulates all timers and stopwatches used in the application.
+    /// The timer for polling engine messages can be accessed from here too for
+    /// interface consistency. However, it is created and manipulated within the
+    /// Engine Service.
     /// </summary>
     internal class AppTimers
     {
         /// <summary>
         /// Ids of all timers used by the application
         /// </summary>
-        internal enum TimerId{
+        internal enum TimerId
+        {
             DUMMY,
             EVALUTION_LINE_DISPLAY,
-            CHECK_FOR_USER_MOVE
+            CHECK_FOR_USER_MOVE,
+            ENGINE_MESSAGE_POLL
         };
 
         internal enum StopwatchId
@@ -39,12 +44,6 @@ namespace ChessForge
         /// requests appropriate processing.
         /// </summary>
         private Timer _checkForUserMoveTimer = new Timer();
-
-        /// <summary>
-        /// This timer invokes the method checking for new messages
-        /// from the engine.
-        /// </summary>
-        private Timer _engineMessagePollTimer = new Timer();
 
         /// <summary>
         /// Tracks time that evaluation of a move/position is taking.
@@ -79,14 +78,32 @@ namespace ChessForge
             _dictStopwatches.Add(StopwatchId.EVALUTION_PROGRESS, _evaluationProgressStopwatch);
         }
 
+        /// <summary>
+        /// Handles EMGINE_MESSAGE_POLL timer as a special case.
+        /// </summary>
+        /// <param name="tt"></param>
         public void Start(TimerId tt)
         {
-            _dictTimers[tt].Enabled = true;
+            if (tt == TimerId.ENGINE_MESSAGE_POLL)
+            {
+                EngineMessageProcessor.ChessEngineService.StartMessagePollTimer();
+            }
+            else
+            {
+                _dictTimers[tt].Enabled = true;
+            }
         }
 
         public void Stop(TimerId tt)
         {
-            _dictTimers[tt].Enabled = false;
+            if (tt == TimerId.ENGINE_MESSAGE_POLL)
+            {
+                EngineMessageProcessor.ChessEngineService.StopMessagePollTimer();
+            }
+            else
+            {
+                _dictTimers[tt].Enabled = false;
+            }
         }
 
         public void Start(StopwatchId sw)

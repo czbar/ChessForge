@@ -15,15 +15,16 @@ namespace ChessForge
     {
 
         public static MainWindow MainWin;
+
         public static void CreateEngineService(MainWindow win, bool debugMode)
         {
             MainWin = win;
-            _ChessEngine = new EngineService.StockfishService(debugMode);
-            _ChessEngine.EngineMessage += EngineMessageReceived;
+            ChessEngineService = new EngineService.EngineProcess(debugMode);
+            ChessEngineService.EngineMessage += EngineMessageReceived;
         }
 
         // an instance of the engine service
-        private static EngineService.StockfishService _ChessEngine;
+        public static EngineService.EngineProcess ChessEngineService;
 
         /// <summary>
         /// The list of candidates retruned by the engine.
@@ -45,12 +46,14 @@ namespace ChessForge
 
         public static void StartMessagePollTimer()
         {
-            _ChessEngine.StartMessagePollTimer(); 
+            MainWin.Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
+//            ChessEngineService.StartMessagePollTimer(); 
         }
 
         public static void StopMessagePollTimer()
         {
-            _ChessEngine.StopMessagePollTimer();
+            MainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
+//            ChessEngineService.StopMessagePollTimer();
         }
 
         /// <summary>
@@ -71,18 +74,18 @@ namespace ChessForge
 
         public static bool IsEngineAvailable()
         {
-            return _ChessEngine.IsEngineReady;
+            return ChessEngineService.IsEngineReady;
         }
 
         public static void SendCommand(string cmd)
         {
             AppLog.Message("Tx Command: " + cmd);
-            _ChessEngine.SendCommand(cmd);
+            ChessEngineService.SendCommand(cmd);
         }
 
         public static bool Start()
         {
-            return _ChessEngine.StartEngine();
+            return ChessEngineService.StartEngine();
         }
 
         /// <summary>
