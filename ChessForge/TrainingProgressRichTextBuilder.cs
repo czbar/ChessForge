@@ -274,10 +274,16 @@ namespace ChessForge
             {
                 int nodeId = int.Parse(r.Name.Substring(_run_eval_wb_move_.Length));
                 EngineGame.ReplaceCurrentWithWorkbookMove(nodeId);
+                SoundPlayer.PlayMoveSound(AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId).LastMoveAlgebraicNotation);
                 _userChoiceNodeId = nodeId;
+
                 // Selecting a random response to the user's choice from the Workbook
-                // TODO: set the flag so the main window can pick the move up and proceed.
                 TreeNode nd = AppState.MainWin.Workbook.SelectRandomChild(nodeId);
+                EngineGame.AddPlyToGame(nd);
+                AppState.MainWin.DisplayPosition(nd.Position);
+                SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
+                EngineGame.TrainingWorkbookMoveMade = true;
+                AppState.MainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
             }
             else if (r.Name.StartsWith(_run_play_engine))
             {
