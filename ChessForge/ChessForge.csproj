@@ -84,6 +84,7 @@
     <Compile Include="Resources\Pieces.cs" />
     <Compile Include="Resources\Strings.cs" />
     <Compile Include="RichTextBuilder.cs" />
+    <Compile Include="SoundPlayer.cs" />
     <Compile Include="TrainingProgressRichTextBuilder.cs" />
     <Compile Include="TrainingState.cs" />
     <Compile Include="WorkbookRichTextBuilder.cs" />
