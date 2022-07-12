@@ -62,6 +62,7 @@
     <Compile Include="AnimationState.cs" />
     <Compile Include="AppLog.cs" />
     <Compile Include="AppState.cs" />
+    <Compile Include="AppTimers.cs" />
     <Compile Include="BookmarkView.cs" />
     <Compile Include="EngineMessage.cs" />
     <Compile Include="EngineMessageProcessor.cs" />
