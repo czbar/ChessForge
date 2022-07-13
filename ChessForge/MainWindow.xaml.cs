@@ -35,7 +35,7 @@ namespace ChessForge
 
         DispatcherTimer dispatcherTimer;
         EvaluationState Evaluation = new EvaluationState();
-        EngineEvaluationGUI _engineEvaluationGUI;
+        public EngineEvaluationGUI EngineLinesGUI;
         AnimationState MoveAnimation = new AnimationState();
         ScoreSheet ActiveLine = new ScoreSheet();
         ChessBoard MainChessBoard;
@@ -60,6 +60,7 @@ namespace ChessForge
             AppState.MainWin = this;
 
             InitializeComponent();
+            SoundPlayer.Initialize();
 
             // initialize the UIElement states table
             InitializeUIElementStates();
@@ -68,8 +69,8 @@ namespace ChessForge
 
             _menuPlayComputer.Header = Strings.MENU_ENGINE_GAME_START;
 
-            _engineEvaluationGUI = new EngineEvaluationGUI(_tbEngineLines, _pbEngineThinking, Evaluation);
-            Timers = new AppTimers(_engineEvaluationGUI);
+            EngineLinesGUI = new EngineEvaluationGUI(_tbEngineLines, _pbEngineThinking, Evaluation);
+            Timers = new AppTimers(EngineLinesGUI);
 
             Configuration.Initialize(this);
             Configuration.StartDirectory = Directory.GetCurrentDirectory();
@@ -752,7 +753,7 @@ namespace ChessForge
             if (selectedNodeId > 0)
             {
                 TreeNode nd = ActiveLine.NodeList.First(x => x.NodeId == selectedNodeId);
-                ViewActiveLine_SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove());
+                ViewActiveLine_SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
                 MainChessBoard.DisplayPosition(nd.Position);
             }
         }
@@ -778,7 +779,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MenuItem_EvaluatePosition(object sender, RoutedEventArgs e)
         {
-            if (Evaluation.Mode != EvaluationState.EvaluationMode.NONE)
+            if (Evaluation.Mode != EvaluationState.EvaluationMode.IDLE)
             {
                 // there is an evaluation running right now so do not allow another one.
                 // This menu item should be disabled if that's the case so we should never
@@ -819,7 +820,7 @@ namespace ChessForge
                 return;
             }
 
-            if (Evaluation.Mode != EvaluationState.EvaluationMode.NONE)
+            if (Evaluation.Mode != EvaluationState.EvaluationMode.IDLE)
             {
                 // there is an evaluation running right now so do not allow another one.
                 MessageBox.Show("Cannot start an evaluation while another one in progress.", "Move Evaluation", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -980,6 +981,15 @@ namespace ChessForge
 
                 Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
             }
+            else if (AppState.CurrentMode == AppState.Mode.TRAINING)
+            {
+                // stop the timer, reset mode and apply training mode specific handling 
+                Evaluation.Mode = EvaluationState.EvaluationMode.IDLE;
+                Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
+                Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+
+                MoveEvaluationFinishedInTraining();
+            }
             else
             {
                 lock (EvalLock)
@@ -1006,7 +1016,7 @@ namespace ChessForge
                     // if the mode is not FULL_LINE or this is the last move in FULL_LINE
                     // evaluation we stop here
                     // otherwise we start the next move's evaluation
-                    if (Evaluation.Mode != EvaluationState.EvaluationMode.FULL_LINE 
+                    if (Evaluation.Mode != EvaluationState.EvaluationMode.FULL_LINE
                         || Evaluation.PositionIndex == ActiveLine.NodeList.Count - 1)
                     {
                         Evaluation.Reset();
@@ -1042,6 +1052,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// If in training mode, we want to keep the evaluation lines
+        /// visible in the comment box, and display the response moves
+        /// with their line evaluations in the Training tab.
+        /// </summary>
+        public void MoveEvaluationFinishedInTraining()
+        {
+            ShowMoveEvaluationControls(false, false, true);
+            _trainingProgressRichTextBuilder.ShowEvaluationResult();
+        }
+
+        /// <summary>
         /// Sets visibility for the controls relevant to move evaluation modes.
         /// NOTE: this is not applicable to move evaluation during a game.
         /// Engine Lines TextBox replaces the Board Comment RichTextBox if
@@ -1049,15 +1070,15 @@ namespace ChessForge
         /// </summary>
         /// <param name="visible"></param>
         /// <param name="isLineStart"></param>
-        private void ShowMoveEvaluationControls(bool visible, bool isLineStart)
+        private void ShowMoveEvaluationControls(bool visible, bool isLineStart, bool keepLinesBox = false)
         {
             if (visible)
             {
                 if (isLineStart)
                 {
                     _rtbBoardComment.Visibility = visible ? Visibility.Hidden : Visibility.Visible;
-                    _imgStop.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
                     _tbEngineLines.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
+                    _imgStop.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
                     sliderReplaySpeed.Visibility = Visibility.Hidden;
 
                     _lblEvaluating.Visibility = Visibility.Visible;
@@ -1070,14 +1091,14 @@ namespace ChessForge
                         _rtbBoardComment.Visibility = Visibility.Hidden;
                     });
 
-                    _imgStop.Dispatcher.Invoke(() =>
-                    {
-                        _imgStop.Visibility = Visibility.Visible;
-                    });
-
                     _tbEngineLines.Dispatcher.Invoke(() =>
                     {
                         _tbEngineLines.Visibility = Visibility.Visible;
+                    });
+
+                    _imgStop.Dispatcher.Invoke(() =>
+                    {
+                        _imgStop.Visibility = Visibility.Visible;
                     });
 
                     _lblEvaluating.Dispatcher.Invoke(() =>
@@ -1093,19 +1114,22 @@ namespace ChessForge
             }
             else
             {
-                _rtbBoardComment.Dispatcher.Invoke(() =>
+                if (!keepLinesBox)
                 {
-                    _rtbBoardComment.Visibility = Visibility.Visible;
-                });
+                    _rtbBoardComment.Dispatcher.Invoke(() =>
+                    {
+                        _rtbBoardComment.Visibility = Visibility.Visible;
+                    });
+
+                    _tbEngineLines.Dispatcher.Invoke(() =>
+                    {
+                        _tbEngineLines.Visibility = Visibility.Hidden;
+                    });
+                }
 
                 _imgStop.Dispatcher.Invoke(() =>
                 {
                     _imgStop.Visibility = Visibility.Hidden;
-                });
-
-                _tbEngineLines.Dispatcher.Invoke(() =>
-                {
-                    _tbEngineLines.Visibility = Visibility.Hidden;
                 });
 
                 _lblEvaluating.Dispatcher.Invoke(() =>
@@ -1172,7 +1196,7 @@ namespace ChessForge
             EngineGame.PrepareGame(startNode, true, IsTraining);
             _dgEngineGame.ItemsSource = EngineGame.Line.MoveList;
 
-            if (startNode.ColorToMove() == PieceColor.White)
+            if (startNode.ColorToMove == PieceColor.White)
             {
                 if (!MainChessBoard.IsFlipped)
                 {
@@ -1373,11 +1397,7 @@ namespace ChessForge
             MainChessBoard.DisplayPosition(startNode.Position);
 
             _trainingBrowseRichTextBuilder.BuildFlowDocumentForWorkbook(Workbook.Bookmarks[bookmarkIndex].Node.NodeId);
-
-            Paragraph progressStartPara = _trainingProgressRichTextBuilder.BuildWorkbookStemLine(Workbook.Bookmarks[bookmarkIndex].Node);
-            _rtbTrainingProgress.Document.Blocks.Add(progressStartPara);
-
-            _trainingProgressRichTextBuilder.BuildIntroText(Workbook.Bookmarks[bookmarkIndex].Node);
+            _trainingProgressRichTextBuilder.Initialize(Workbook.Bookmarks[bookmarkIndex].Node);
 
             EnterGuiTrainingMode();
             TrainingState.IsTrainingInProgress = true;
