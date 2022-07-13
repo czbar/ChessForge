@@ -254,7 +254,7 @@ namespace GameTree
         /// <returns></returns>
         private TreeNode ProcessMove(string algMove, TreeNode parentNode)
         {
-            PieceColor parentSideToMove = parentNode.ColorToMove();
+            PieceColor parentSideToMove = parentNode.ColorToMove;
 
             PgnMoveParser pmp = new PgnMoveParser();
             pmp.ParseAlgebraic(algMove, parentSideToMove);

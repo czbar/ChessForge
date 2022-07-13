@@ -138,7 +138,7 @@ namespace ChessForge
             StringBuilder sbPrefix = new StringBuilder();
             while (nd != null)
             {
-                if (nd.ColorToMove() == PieceColor.Black)
+                if (nd.ColorToMove== PieceColor.Black)
                 {
                     sbPrefix.Insert(0, nd.MoveNumber.ToString() + "." + nd.LastMoveAlgebraicNotation);
                 }

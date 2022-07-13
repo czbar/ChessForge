@@ -66,7 +66,7 @@ namespace GameTree
                 pl.MoveNumber = nd.Position.MoveNumber;
                 pl.NodeId = nd.NodeId;
 
-                if (nd.ColorToMove() == PieceColor.Black)
+                if (nd.ColorToMove== PieceColor.Black)
                 {
                     vlWhite.Plies.Insert(0, pl);
                 }

@@ -174,10 +174,7 @@ namespace GameTree
             Children.Add(node);
         }
 
-        public PieceColor ColorToMove()
-        {
-            return Position.ColorToMove;
-        }
+        public PieceColor ColorToMove => Position.ColorToMove;
 
         public uint MoveNumber
         {
@@ -192,7 +189,7 @@ namespace GameTree
         public string GetPlyText(bool standalone)
         {
             StringBuilder sb = new StringBuilder();
-            if (ColorToMove() == PieceColor.Black)
+            if (ColorToMove== PieceColor.Black)
             {
                 sb.Append(MoveNumber.ToString() + ".");
             }

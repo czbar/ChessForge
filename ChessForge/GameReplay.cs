@@ -198,7 +198,7 @@ namespace ChessForge
                 return;
             }
 
-            _MainWin.SelectPlyInTextViews((int)_TreeLineToAnimate[index].Position.MoveNumber, _TreeLineToAnimate[index].ColorToMove());
+            _MainWin.SelectPlyInTextViews((int)_TreeLineToAnimate[index].Position.MoveNumber, _TreeLineToAnimate[index].ColorToMove);
 
             LastAnimatedMoveIndex = index + 1;
             if (LastAnimatedMoveIndex < _TreeLineToAnimate.Count)
