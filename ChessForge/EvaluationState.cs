@@ -20,7 +20,7 @@ namespace ChessForge
         /// </summary>
         public enum EvaluationMode
         {
-            NONE,
+            IDLE,
             SINGLE_MOVE,
             FULL_LINE,
             IN_GAME_PLAY,
@@ -40,7 +40,7 @@ namespace ChessForge
         {
             lock (EvaluationLock)
             {
-                Mode = EvaluationMode.NONE;
+                Mode = EvaluationMode.IDLE;
                 Position = null;
                 PositionCpScore = 0;
                 PositionIndex = 0;
@@ -61,7 +61,7 @@ namespace ChessForge
         /// <summary>
         /// The current evaluation mode.
         /// </summary>
-        public EvaluationMode Mode = EvaluationMode.NONE;
+        public EvaluationMode Mode = EvaluationMode.IDLE;
 
         /// <summary>
         /// Indicates whether any kind of evaluation is happening
@@ -73,7 +73,7 @@ namespace ChessForge
             {
                 lock (EvaluationLock)
                 {
-                    return Mode != EvaluationMode.NONE;
+                    return Mode != EvaluationMode.IDLE;
                 }
             }
         }

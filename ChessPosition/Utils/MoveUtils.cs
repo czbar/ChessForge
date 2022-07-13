@@ -106,7 +106,7 @@ namespace ChessPosition
         /// <returns></returns>
         public static string BuildSingleMoveText(TreeNode nd)
         {
-            return nd.MoveNumber.ToString() + (nd.ColorToMove() == PieceColor.White ? "... " : ". ") + nd.LastMoveAlgebraicNotation;
+            return nd.MoveNumber.ToString() + (nd.ColorToMove== PieceColor.White ? "... " : ". ") + nd.LastMoveAlgebraicNotation;
         }
 
         public static void PerformCastling(BoardPosition position, MoveData move)

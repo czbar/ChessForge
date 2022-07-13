@@ -56,6 +56,9 @@ namespace ChessForge
                 // stop polling for the workbook move
                 AppState.MainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
 
+                AppState.MainWin.DisplayPosition(GetCurrentPosition());
+                SoundPlayer.PlayMoveSound(GetCurrentNode().LastMoveAlgebraicNotation);
+
                 // TODO: show appropriate notifications in the GUI
                 // start polling for the user move
                 AppState.MainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);

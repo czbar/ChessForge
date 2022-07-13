@@ -25,7 +25,7 @@ namespace ChessForge
         /// <summary>
         /// Reads in sound files.
         /// </summary>
-        private static void Initialize()
+        public static void Initialize()
         {
             _soundMove.Open(new Uri("Resources/Sounds/Move.mp3", UriKind.Relative));
             _soundCapture.Open(new Uri("Resources/Sounds/Capture.mp3", UriKind.Relative));
@@ -42,17 +42,24 @@ namespace ChessForge
             if (!_isInitialized)
             {
                 Initialize();
+                _isInitialized = true;
             }
 
             if (algMove.IndexOf('x') > 0)
             {
-                _soundCapture.Position = TimeSpan.FromMilliseconds(0);
-                _soundCapture.Play();
+                _soundCapture.Dispatcher.Invoke(() =>
+                {
+                    _soundCapture.Position = TimeSpan.FromMilliseconds(0);
+                    _soundCapture.Play();
+                });
             }
             else
             {
-                _soundMove.Position = TimeSpan.FromMilliseconds(0);
-                _soundMove.Play();
+                _soundMove.Dispatcher.Invoke(() =>
+                {
+                    _soundMove.Position = TimeSpan.FromMilliseconds(0);
+                    _soundMove.Play();
+                });
             }
         }
 

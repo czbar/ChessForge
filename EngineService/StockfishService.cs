@@ -202,9 +202,9 @@ namespace EngineService
                         EngineLog.Message("NULL");
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
-                    throw new Exception("ReadEngineMessages()");
+                    throw new Exception("ReadEngineMessages():" + ex.Message);
                 };
             }
         }

@@ -146,7 +146,7 @@ namespace ChessForge
         private void InitCheckForTrainingWorkbookMoveMade()
         {
             _checkForTrainingWorkbookMoveMade.Elapsed += new ElapsedEventHandler(EngineGame.CheckForTrainingWorkbookMoveMade);
-            _checkForTrainingWorkbookMoveMade.Interval = 50;
+            _checkForTrainingWorkbookMoveMade.Interval = 1000;
             _checkForTrainingWorkbookMoveMade.Enabled = false;
         }
 

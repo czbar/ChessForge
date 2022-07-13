@@ -27,7 +27,7 @@ namespace ChessForge
         public static EngineService.EngineProcess ChessEngineService;
 
         /// <summary>
-        /// The list of candidates retruned by the engine.
+        /// The list of candidates returned by the engine.
         /// </summary>
         public static List<MoveEvaluation> MoveCandidates = new List<MoveEvaluation>();
 
@@ -47,13 +47,11 @@ namespace ChessForge
         public static void StartMessagePollTimer()
         {
             MainWin.Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
-//            ChessEngineService.StartMessagePollTimer(); 
         }
 
         public static void StopMessagePollTimer()
         {
             MainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
-//            ChessEngineService.StopMessagePollTimer();
         }
 
         /// <summary>
