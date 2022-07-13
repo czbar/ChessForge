@@ -24,6 +24,8 @@ namespace ChessForge
         private ProgressBar _progBar;
         private EvaluationState _evalState;
 
+        public List<MoveEvaluation> Lines = new List<MoveEvaluation>();
+
         /// <summary>
         /// Initialzes the object with GUI references.
         /// </summary>
@@ -47,30 +49,30 @@ namespace ChessForge
         {
             if (_evalState.Mode != EvaluationState.EvaluationMode.IN_GAME_PLAY)
             {
-                List<MoveEvaluation> lines = new List<MoveEvaluation>();
+                Lines.Clear();
                 lock (EngineMessageProcessor.MoveCandidatesLock)
                 {
                     // make a copy of Move candidates so we can release the lock asap
                     foreach (MoveEvaluation me in EngineMessageProcessor.MoveCandidates)
                     {
-                        lines.Add(new MoveEvaluation(me));
+                        Lines.Add(new MoveEvaluation(me));
                     }
                 }
 
                 StringBuilder sb = new StringBuilder();
                 _textBox.Dispatcher.Invoke(() =>
                 {
-                    for (int i = 0; i < lines.Count; i++)
+                    for (int i = 0; i < Lines.Count; i++)
                     {
-                        sb.Append(BuildLineText(i, lines[i]));
+                        sb.Append(BuildLineText(i, Lines[i]));
                         sb.Append(Environment.NewLine);
                     }
                     _textBox.Text = sb.ToString();
                 });
 
-                if (lines.Count > 0)
+                if (Lines.Count > 0)
                 {
-                    _evalState.PositionCpScore = lines[0].ScoreCp;
+                    _evalState.PositionCpScore = Lines[0].ScoreCp;
                 }
             }
 
