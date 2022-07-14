@@ -27,7 +27,7 @@ namespace ChessForge
     {
         WorkbookRichTextBuilder _workbookRichTextBuilder;
         WorkbookRichTextBuilder _trainingBrowseRichTextBuilder;
-        TrainingProgressRichTextBuilder _trainingProgressRichTextBuilder;
+        TrainingView _trainingView;
 
         ChfrgFileBuilder _chfrgFileText;
 
@@ -696,7 +696,7 @@ namespace ChessForge
 
                 _workbookRichTextBuilder = new WorkbookRichTextBuilder(_rtbWorkbookView.Document);
                 _trainingBrowseRichTextBuilder = new WorkbookRichTextBuilder(_rtbTrainingBrowse.Document);
-                _trainingProgressRichTextBuilder = new TrainingProgressRichTextBuilder(_rtbTrainingProgress.Document);
+                _trainingView = new TrainingView(_rtbTrainingProgress.Document);
 
                 Workbook.BuildLines();
 
@@ -1059,7 +1059,7 @@ namespace ChessForge
         public void MoveEvaluationFinishedInTraining()
         {
             ShowMoveEvaluationControls(false, false, true);
-            _trainingProgressRichTextBuilder.ShowEvaluationResult();
+            _trainingView.ShowEvaluationResult();
         }
 
         /// <summary>
@@ -1257,7 +1257,7 @@ namespace ChessForge
                 {
                     this.Dispatcher.Invoke(() =>
                     {
-                        _trainingProgressRichTextBuilder.ReportLastMoveVsWorkbook();
+                        _trainingView.ReportLastMoveVsWorkbook();
                         Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
                     });
                 }
@@ -1397,7 +1397,7 @@ namespace ChessForge
             MainChessBoard.DisplayPosition(startNode.Position);
 
             _trainingBrowseRichTextBuilder.BuildFlowDocumentForWorkbook(Workbook.Bookmarks[bookmarkIndex].Node.NodeId);
-            _trainingProgressRichTextBuilder.Initialize(Workbook.Bookmarks[bookmarkIndex].Node);
+            _trainingView.Initialize(Workbook.Bookmarks[bookmarkIndex].Node);
 
             EnterGuiTrainingMode();
             TrainingState.IsTrainingInProgress = true;
