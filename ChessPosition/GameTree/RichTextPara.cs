@@ -18,7 +18,8 @@ namespace GameTree
     /// </summary>
     public class RichTextPara
     {
-        public RichTextPara(int left, int bottom, int font_size, FontWeight font_weight, SolidColorBrush firstCharColor, TextAlignment align)
+        public RichTextPara(int left, int bottom, int font_size, FontWeight font_weight, 
+                            SolidColorBrush firstCharColor, TextAlignment align, SolidColorBrush foregroundColor = null)
         {
             LeftIndent = left;
             BottomMargin = bottom;
@@ -26,6 +27,7 @@ namespace GameTree
             FontWeight = font_weight;
             FirstCharColor = firstCharColor;
             TextAlign = align;
+            ForegroundColor = foregroundColor == null ? Brushes.Black : foregroundColor;
         }
 
         public RichTextPara(RichTextPara rtp)
@@ -36,6 +38,7 @@ namespace GameTree
             FontWeight = rtp.FontWeight;
             FirstCharColor = rtp.FirstCharColor;
             TextAlign=rtp.TextAlign;
+            ForegroundColor = rtp.ForegroundColor;
         }
 
         public int LeftIndent { get; set; }
@@ -49,5 +52,7 @@ namespace GameTree
         public SolidColorBrush FirstCharColor { get; set; }
 
         public TextAlignment TextAlign { get; set; }
+
+        public SolidColorBrush ForegroundColor { get; set; }
     }
 }

@@ -38,26 +38,62 @@ namespace ChessForge
     /// followed by a NodeId for easy identification. User moves and evaluations for moves not in the Workbook do
     /// not require Node identification as there can only be one such move at a time.
     /// </summary>
-    public class TrainingProgressRichTextBuilder : RichTextBuilder
+    public class TrainingView : RichTextBuilder
     {
         /// <summary>
-        /// A reference to the paragraph with the initial prompt 
-        /// to make a move on the chessboard. This reference will be used
-        /// to removed this paragraph when no longer relevant.
+        /// Types of paragraphs used in this document.
+        /// There can only be one, or none, paragraph of a given type in the document
         /// </summary>
-        private Paragraph _promptPara;
+        private enum ParaType
+        {
+            INTRO,
+            STEM,
+            INSTRUCTIONS,
+            FIRST_PROMPT,
+            USER_MOVE,
+            WORKBOOK_MOVES,
+            HISTORY
+        }
 
         /// <summary>
-        /// A reference to the paragraph with the initial instructions 
-        /// regarding the training process.
+        /// Maps paragraph types to Paragraph objects
         /// </summary>
-        private Paragraph _instructionPara;
+        private Dictionary<ParaType, Paragraph> _dictParas = new Dictionary<ParaType, Paragraph>()
+        {
+            [ParaType.INTRO] = null,
+            [ParaType.STEM] = null,
+            [ParaType.INSTRUCTIONS] = null,
+            [ParaType.FIRST_PROMPT] = null,
+            [ParaType.USER_MOVE] = null,
+            [ParaType.WORKBOOK_MOVES] = null,
+            [ParaType.HISTORY] = null
+        };
 
         /// <summary>
-        /// The main paragraph with reporting moves
-        /// found in the Workbook.
+        /// Keeps the order of paragraphs that is needed 
+        /// e.g. when we search for the first non-null paragraph
+        /// before a given one.
         /// </summary>
-        private Paragraph _workbookMovesPara;
+        private List<ParaType> _lstParaOrder = new List<ParaType>()
+        {
+            ParaType.INTRO,
+            ParaType.STEM,
+            ParaType.INSTRUCTIONS,
+            ParaType.FIRST_PROMPT,
+            ParaType.USER_MOVE,
+            ParaType.WORKBOOK_MOVES,
+            ParaType.HISTORY
+        };
+
+        /// <summary>
+        /// IDs of button styles (here, buttons are highlighted clickable Runs
+        /// </summary>
+        private enum ButtonStyle
+        {
+            BLUE,
+            GREEN,
+            RED
+        }
 
         /// <summary>
         /// The Run with the move for which engine evaluation
@@ -67,8 +103,9 @@ namespace ChessForge
 
         /// <summary>
         /// The list of moves found in the Workbook in the current position,
+        /// except the move made by the user (if it was a Workbook move).
         /// </summary>
-        private List<TreeNode> _movesFromWorkbook = new List<TreeNode>();
+        private List<TreeNode> _otherMovesInWorkbook = new List<TreeNode>();
 
         /// <summary>
         /// The user's move being currently examined.
@@ -95,24 +132,15 @@ namespace ChessForge
         private readonly string _run_play_engine = "play_engine";
         private readonly string _run_eval_wb_move_ = "wb_eval_";
         private readonly string _run_eval_results_ = "eval_results_";
+        private readonly string _run_user_eval_results = "user_eval_results";
         private readonly string _run_play_wb_move_ = "wb_play_";
-
-        /// <summary>
-        /// IDs of button styles (here, buttons are highlighted clickable Runs
-        /// </summary>
-        private enum ButtonStyle
-        {
-            BLUE,
-            GREEN,
-            RED
-        }
 
         /// <summary>
         /// Creates an instance of this class and sets reference 
         /// to the FlowDocument managed by the object.
         /// </summary>
         /// <param name="doc"></param>
-        public TrainingProgressRichTextBuilder(FlowDocument doc) : base(doc)
+        public TrainingView(FlowDocument doc) : base(doc)
         {
         }
 
@@ -127,6 +155,7 @@ namespace ChessForge
         internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
             ["intro"] = new RichTextPara(0, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Left),
+            ["first_prompt"] = new RichTextPara(10, 0, 16, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
             ["stem_line"] = new RichTextPara(0, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
             ["eval_results"] = new RichTextPara(30, 5, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(51, 159, 141)), TextAlignment.Left),
             ["normal"] = new RichTextPara(10, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
@@ -143,7 +172,21 @@ namespace ChessForge
         {
             _sessionStartNode = node;
             Document.Blocks.Clear();
+
+            InitParaDictionary();
+
             BuildIntroText(node);
+        }
+
+        private void InitParaDictionary()
+        {
+            _dictParas[ParaType.INTRO] = null;
+            _dictParas[ParaType.STEM] = null;
+            _dictParas[ParaType.INSTRUCTIONS] = null;
+            _dictParas[ParaType.FIRST_PROMPT] = null;
+            _dictParas[ParaType.USER_MOVE] = null;
+            _dictParas[ParaType.WORKBOOK_MOVES] = null;
+            _dictParas[ParaType.HISTORY] = null;
         }
 
         /// <summary>
@@ -173,7 +216,7 @@ namespace ChessForge
         {
             RemoveIntroParas();
 
-            _movesFromWorkbook.Clear();
+            _otherMovesInWorkbook.Clear();
 
             _userMove = EngineGame.GetCurrentNode();
             EngineGame.AddLastNodeToPlies();
@@ -202,19 +245,19 @@ namespace ChessForge
                 {
                     wbMoves.Append(child.GetPlyText(true));
                     wbMoves.Append("; ");
-                    _movesFromWorkbook.Add(child);
+                    _otherMovesInWorkbook.Add(child);
                 }
             }
 
             if (foundMove != null)
             {
-                BuildMoveFromWorkbookText(foundMove);
-                BuildOtherWorkbookMovesText(wbMoves.ToString());
+                BuildUserMoveParagraph(foundMove, true);
+                BuildWorkbookMovesParagraph(wbMoves.ToString(), true);
             }
             else
             {
-                BuildMoveNotInWorkbookText(_userMove);
-                BuildWorkbookMovesText(wbMoves.ToString());
+                BuildUserMoveParagraph(_userMove, false);
+                BuildWorkbookMovesParagraph(wbMoves.ToString(), false);
             }
         }
 
@@ -227,6 +270,9 @@ namespace ChessForge
         /// </summary>
         public void ShowEvaluationResult()
         {
+            // restore the position we are stopped at
+            AppState.MainWin.DisplayPosition(_userMove.Position);
+
             if (_underEvaluationRun == null)
                 return;
 
@@ -237,7 +283,17 @@ namespace ChessForge
             sb.Append("\n          Evaluation summary:\n");
             for (int i = 0; i < maxCandidates; i++)
             {
-                TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(_nodeIdUnderEvaluation);
+                TreeNode nd;
+
+                if (_nodeIdUnderEvaluation >= 0)
+                {
+                    nd = AppState.MainWin.Workbook.GetNodeFromNodeId(_nodeIdUnderEvaluation);
+                }
+                else
+                {
+                    nd = _userMove;
+                }
+
                 bool dummy;
                 if (i > 0)
                 {
@@ -266,23 +322,58 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Creates a paragraph for holding a ummary record of the
+        /// training session.
+        /// </summary>
+        private void BuildHistoryPara()
+        {
+            if (_dictParas[ParaType.HISTORY] != null)
+            {
+                return;
+            }
+
+            _dictParas[ParaType.HISTORY] = AddNewParagraphToDoc("normal", "\n", NonNullParaAtOrBefore(ParaType.WORKBOOK_MOVES));
+
+            Run title = new Run("\nYour Training Session summary:");
+            title.FontWeight = FontWeights.Bold;
+            title.FontSize = 14;
+
+            _dictParas[ParaType.HISTORY].Inlines.Add(title);
+        }
+
+        /// <summary>
         /// Inserts new evaluation results for the requested move.
         /// Clears previous results if exist.
         /// </summary>
         /// <param name="text"></param>
         private void InsertEvaluationResultsRun(string text)
         {
-            string runName = _run_eval_results_ + _nodeIdUnderEvaluation.ToString();
-            
-            Run runToDelete = _workbookMovesPara.Inlines.FirstOrDefault(x => x.Name == runName) as Run;
-            if (runToDelete != null)
+            string runName;
+            Run runToDelete;
+
+            if (_nodeIdUnderEvaluation >= 0)
             {
-                _workbookMovesPara.Inlines.Remove(runToDelete);
+                runName = _run_eval_results_ + _nodeIdUnderEvaluation.ToString();
+                runToDelete = _dictParas[ParaType.WORKBOOK_MOVES].Inlines.FirstOrDefault(x => x.Name == runName) as Run;
+                _dictParas[ParaType.WORKBOOK_MOVES].Inlines.Remove(runToDelete);
+            }
+            else
+            {
+                runName = _run_user_eval_results;
+                runToDelete = _dictParas[ParaType.USER_MOVE].Inlines.FirstOrDefault(x => x.Name == runName) as Run;
+                _dictParas[ParaType.USER_MOVE].Inlines.Remove(runToDelete);
             }
 
             Run evalRun = new Run(text);
             evalRun.Name = runName;
-            _workbookMovesPara.Inlines.InsertAfter(_underEvaluationRun, evalRun);
+            if (_nodeIdUnderEvaluation >= 0)
+            {
+                _dictParas[ParaType.WORKBOOK_MOVES].Inlines.InsertAfter(_underEvaluationRun, evalRun);
+            }
+            else
+            {
+                _dictParas[ParaType.USER_MOVE].Inlines.InsertAfter(_underEvaluationRun, evalRun);
+            }
         }
 
 
@@ -293,8 +384,8 @@ namespace ChessForge
         /// <param name="node"></param>
         private void BuildStemText(TreeNode node)
         {
-            AddNewParagraphToDoc("intro", "This training sessions starts from the position arising after:");
-            AddNewParagraphToDoc("stem_line", GetStemLineText(node));
+            _dictParas[ParaType.INTRO] = AddNewParagraphToDoc("intro", "This training sessions starts from the position arising after:");
+            _dictParas[ParaType.STEM] = AddNewParagraphToDoc("stem_line", GetStemLineText(node));
         }
 
         /// <summary>
@@ -313,12 +404,9 @@ namespace ChessForge
             sbInstruction.Append("     2. switch to a move from the Workbook, if there are any options,\n");
             sbInstruction.Append("     3. request engine evaluation of your or Workbook's moves.\n");
 
-            _instructionPara = AddNewParagraphToDoc("intro", sbInstruction.ToString());
+            _dictParas[ParaType.INSTRUCTIONS] = AddNewParagraphToDoc("intro", sbInstruction.ToString());
 
-            _promptPara = AddNewParagraphToDoc("intro", "To begin, make your first move on the chessboard.");
-            _promptPara.Foreground = Brushes.Green;
-            _promptPara.FontWeight = FontWeights.Bold;
-            _promptPara.FontSize = 16;
+            _dictParas[ParaType.FIRST_PROMPT] = AddNewParagraphToDoc("first_prompt", "To begin, make your first move on the chessboard.");
         }
 
         /// <summary>
@@ -332,21 +420,41 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// This paragraphs shows the move made by the user if it was not found
-        /// in the Workbook.
+        /// This paragraphs shows the move made by the user.
+        /// The commentary and "button" setup depends on whether the move
+        /// was found in the Workbook or not.
         /// </summary>
         /// <param name="nd"></param>
-        private void BuildMoveNotInWorkbookText(TreeNode nd)
+        private void BuildUserMoveParagraph(TreeNode nd, bool moveInWorkbook)
         {
-            Paragraph para = AddNewParagraphToDoc("normal", "Your move ");
+            Paragraph para = AddNewParagraphToDoc("normal", "Your move ", NonNullParaAtOrBefore(ParaType.STEM));
+            _dictParas[ParaType.USER_MOVE] = para;
 
             Run r = new Run(nd.GetPlyText(true));
             r.FontWeight = FontWeights.Bold;
             r.FontSize = 16;
+            r.Foreground = moveInWorkbook ? Brushes.Black : Brushes.Red;
             para.Inlines.Add(r);
 
-            para.Inlines.Add(new Run(" was not found in the Workbook. \n\nChoose how to proceed by clicking on one of the options highlighted below. \n"));
-            para.Inlines.Add(new Run("You can run evaluations (blue highlights) before selecting the move to go ahead with (green highlights). \n\n"));
+            if (moveInWorkbook)
+            {
+                if (_otherMovesInWorkbook.Count == 0)
+                {
+                    para.Inlines.Add(new Run(" is the only move in the Workbook in this position. \n\n"));
+                    para.Inlines.Add(new Run("You can play it now (green highlight) or check the engin evaluation first (blue highlights). \n\n"));
+                }
+                else
+                {
+                    para.Inlines.Add(new Run(" is in the Workbook. \n\nYou can confirm it or choose another move from the Workbook. \n"));
+                    para.Inlines.Add(new Run("You can run evaluations (blue highlights) before selecting the move to go ahead with (green highlights). \n\n"));
+                }
+            }
+            else
+            {
+                para.Inlines.Add(new Run(" was not found in the Workbook. \n\nChoose how to proceed by clicking on one of the options highlighted below. \n"));
+                para.Inlines.Add(new Run("You can run evaluations (blue highlights) before selecting the move to go ahead with (green highlights). \n\n"));
+            }
+
 
             RemoveIntroParas();
 
@@ -360,7 +468,14 @@ namespace ChessForge
             string evalButtonText = " evaluate only ";
             para.Inlines.Add(CreateButtonRun(evalButtonText, _run_eval_user_move, ButtonStyle.BLUE));
             para.Inlines.Add(new Run("   or   "));
-            para.Inlines.Add(CreateButtonRun("play it, starting a game against the engine", _run_play_engine, ButtonStyle.GREEN));
+            if (moveInWorkbook)
+            {
+                para.Inlines.Add(CreateButtonRun(" play it", _run_play_wb_move_ + nd.NodeId.ToString(), ButtonStyle.GREEN));
+            }
+            else
+            {
+                para.Inlines.Add(CreateButtonRun("play it, starting a game against the engine", _run_play_engine, ButtonStyle.GREEN));
+            }
         }
 
         /// <summary>
@@ -369,48 +484,50 @@ namespace ChessForge
         /// the Workbook.
         /// </summary>
         /// <param name="moves"></param>
-        private void BuildWorkbookMovesText(string moves)
+        private void BuildWorkbookMovesParagraph(string moves, bool moveInWorkbook)
         {
             RemoveIntroParas();
 
             if (!string.IsNullOrEmpty(moves))
             {
-                if (_workbookMovesPara != null)
+                Paragraph para;
+
+                if (moveInWorkbook)
                 {
-                    _workbookMovesPara.Inlines.Clear();
+                    if (_otherMovesInWorkbook.Count == 1)
+                    {
+                        para = AddNewParagraphToDoc("normal", "\nThe only other move in the Workbook:\n", NonNullParaAtOrBefore(ParaType.USER_MOVE));
+                    }
+                    else
+                    {
+                        para = AddNewParagraphToDoc("normal", "\nOther moves in the Workbook:\n", NonNullParaAtOrBefore(ParaType.USER_MOVE));
+                    }
+                }
+                else
+                {
+                    para = AddNewParagraphToDoc("normal", "\nMoves in the Workbook:\n", NonNullParaAtOrBefore(ParaType.USER_MOVE));
                 }
 
-                _workbookMovesPara = AddNewParagraphToDoc("normal", "Moves from the Workbook:\n");
+                _dictParas[ParaType.WORKBOOK_MOVES] = para;
 
-                foreach (TreeNode nd in _movesFromWorkbook)
+                foreach (TreeNode nd in _otherMovesInWorkbook)
                 {
-                    _workbookMovesPara.Inlines.Add(new Run("      "));
+                    para.Inlines.Add(new Run("      "));
 
                     Run r = new Run(nd.GetPlyText(true) + "  :  ");
                     r.FontWeight = FontWeights.Bold;
-                    _workbookMovesPara.Inlines.Add(r);
+                    para.Inlines.Add(r);
 
                     string evalButtonText = " evaluate only ";
-                    _workbookMovesPara.Inlines.Add(CreateButtonRun(evalButtonText, _run_eval_wb_move_ + nd.NodeId.ToString(), ButtonStyle.BLUE));
-                    _workbookMovesPara.Inlines.Add(new Run("   or   "));
-                    _workbookMovesPara.Inlines.Add(CreateButtonRun("go ahead and play it", _run_play_wb_move_ + nd.NodeId.ToString(), ButtonStyle.GREEN));
-                    _workbookMovesPara.Inlines.Add(new Run("\n"));
+                    para.Inlines.Add(CreateButtonRun(evalButtonText, _run_eval_wb_move_ + nd.NodeId.ToString(), ButtonStyle.BLUE));
+                    para.Inlines.Add(new Run("   or   "));
+                    para.Inlines.Add(CreateButtonRun("go ahead and play it", _run_play_wb_move_ + nd.NodeId.ToString(), ButtonStyle.GREEN));
+                    para.Inlines.Add(new Run("\n"));
                 }
             }
-        }
-
-        /// <summary>
-        /// Builds a paragraph with Workbook moves
-        /// other than the move made by the user.
-        /// It is used when the user makes a move
-        /// found in the Workbook.
-        /// </summary>
-        /// <param name="moves"></param>
-        private void BuildOtherWorkbookMovesText(string moves)
-        {
-            if (!string.IsNullOrEmpty(moves))
+            else
             {
-                AddNewParagraphToDoc("normal", "Other Workbook moves: " + moves);
+                _dictParas[ParaType.WORKBOOK_MOVES] = null;
             }
         }
 
@@ -460,17 +577,22 @@ namespace ChessForge
             {
                 // get id of the node
                 int nodeId = int.Parse(r.Name.Substring(_run_eval_wb_move_.Length));
-                
+                TreeNode userChoiceNode = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
+
                 _nodeIdUnderEvaluation = nodeId;
                 // find Run for the same NodeId with "play" option,
                 // we want to remember the reference so that we can append
                 // the evaluation results run after it
                 _underEvaluationRun = GetPlayRunForNodeId(nodeId);
+                AppState.MainWin.DisplayPosition(userChoiceNode.Position);
 
                 AppState.MainWin.RequestMoveEvaluationInTraining(nodeId);
             }
             else if (r.Name == _run_eval_user_move)
             {
+                _underEvaluationRun = GetPlayRunForNodeId(-1);
+                _nodeIdUnderEvaluation = -1;
+
                 AppState.MainWin.RequestMoveEvaluationInTraining(_userMove);
             }
             else if (r.Name.StartsWith(_run_play_wb_move_))
@@ -481,6 +603,10 @@ namespace ChessForge
                 SoundPlayer.PlayMoveSound(userChoiceNode.LastMoveAlgebraicNotation);
                 _userChoiceNodeId = nodeId;
 
+                BuildHistoryPara();
+                AddDecisionChangeToHistory(_userMove, userChoiceNode);
+                ClearDecisionParas();
+
                 AppState.MainWin.DisplayPosition(userChoiceNode.Position);
 
                 TreeNode nd = AppState.MainWin.Workbook.SelectRandomChild(nodeId);
@@ -488,12 +614,14 @@ namespace ChessForge
                 // Selecting a random response to the user's choice from the Workbook
                 EngineGame.AddPlyToGame(nd);
 
+
                 // The move will be visualized in response to CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE timer's elapsed event
                 EngineGame.TrainingWorkbookMoveMade = true;
                 AppState.MainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
             }
             else if (r.Name == _run_play_engine)
             {
+                BuildHistoryPara();
                 AppState.MainWin.PlayComputer(_userMove, true);
             }
         }
@@ -508,8 +636,63 @@ namespace ChessForge
         /// <returns></returns>
         private Run GetPlayRunForNodeId(int nodeId)
         {
-            string runName = _run_play_wb_move_ + nodeId.ToString();
-            return _workbookMovesPara.Inlines.FirstOrDefault(x => x.Name == runName) as Run;
+            if (nodeId >= 0)
+            {
+                string runName = _run_play_wb_move_ + nodeId.ToString();
+                return _dictParas[ParaType.WORKBOOK_MOVES].Inlines.FirstOrDefault(x => x.Name == runName) as Run;
+            }
+            else
+            {
+                return _dictParas[ParaType.USER_MOVE].Inlines.FirstOrDefault(x => x.Name == _run_play_engine) as Run;
+            }
+        }
+
+        private void AddDecisionChangeToHistory(TreeNode orig, TreeNode changed)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("\n     You played " + MoveUtils.BuildSingleMoveText(orig) + " but changed to a Workbook move " + MoveUtils.BuildSingleMoveText(changed));
+            Run r = new Run(sb.ToString());
+            _dictParas[ParaType.HISTORY].Inlines.Add(r);
+        }
+
+        /// <summary>
+        /// Removes all paragraphs related to the move decisions.
+        /// This method is called once the user has chosen the move.
+        /// </summary>
+        private void ClearDecisionParas()
+        {
+            Document.Blocks.Remove(_dictParas[ParaType.WORKBOOK_MOVES]);
+            Document.Blocks.Remove(_dictParas[ParaType.USER_MOVE]);
+        }
+
+        /// <summary>
+        /// It the Paragraph of the passed type is not null,
+        /// the reference to it is returned back.
+        /// If it is null, then the first non-null paragraph
+        /// above it in the document's hierarchy is returned.
+        /// </summary>
+        /// <param name="pt"></param>
+        /// <returns></returns>
+        private Paragraph NonNullParaAtOrBefore(ParaType pt)
+        {
+            bool ptFound = false;
+            Paragraph para = null;
+            for (int i = _lstParaOrder.Count - 1; i >= 0; i--)
+            {
+                if (_lstParaOrder[i] == pt)
+                {
+                    ptFound = true;
+                }
+
+                if (ptFound)
+                {
+                    para = _dictParas[_lstParaOrder[i]];
+                    if (para != null)
+                        break;
+                }
+            }
+
+            return para;
         }
 
         /// <summary>
@@ -518,16 +701,11 @@ namespace ChessForge
         /// </summary>
         private void RemoveIntroParas()
         {
-            if (_promptPara != null)
-            {
-                Document.Blocks.Remove(_promptPara);
-                _promptPara = null;
-            }
-            if (_instructionPara != null)
-            {
-                Document.Blocks.Remove(_instructionPara);
-                _instructionPara = null;
-            }
+            Document.Blocks.Remove(_dictParas[ParaType.FIRST_PROMPT]);
+            _dictParas[ParaType.FIRST_PROMPT] = null;
+
+            Document.Blocks.Remove(_dictParas[ParaType.INSTRUCTIONS]);
+            _dictParas[ParaType.INSTRUCTIONS] = null;
         }
     }
 }
