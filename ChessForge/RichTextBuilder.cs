@@ -62,6 +62,7 @@ namespace ChessForge
             para.FontSize = attrs.FontSize;
             para.FontWeight = attrs.FontWeight;
             para.TextAlignment = attrs.TextAlign;
+            para.Foreground = attrs.ForegroundColor;
 
             return para;
         }
@@ -89,10 +90,17 @@ namespace ChessForge
         /// <param name="style"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        public Paragraph AddNewParagraphToDoc(string style, string text)
+        public Paragraph AddNewParagraphToDoc(string style, string text, Paragraph insertAfter = null)
         {
             Paragraph para = CreateParagraphWithText(style, text);
-            Document.Blocks.Add(para);
+            if (insertAfter == null)
+            {
+                Document.Blocks.Add(para);
+            }
+            else
+            {
+                Document.Blocks.InsertAfter(insertAfter, para);
+            }
 
             return para;
         }
