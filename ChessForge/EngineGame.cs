@@ -59,6 +59,8 @@ namespace ChessForge
                 AppState.MainWin.DisplayPosition(GetCurrentPosition());
                 SoundPlayer.PlayMoveSound(GetCurrentNode().LastMoveAlgebraicNotation);
 
+                AppState.MainWin._trainingView.WorkbookMoveMade();
+
                 // TODO: show appropriate notifications in the GUI
                 // start polling for the user move
                 AppState.MainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
