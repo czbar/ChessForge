@@ -27,7 +27,7 @@ namespace ChessForge
     {
         WorkbookRichTextBuilder _workbookRichTextBuilder;
         WorkbookRichTextBuilder _trainingBrowseRichTextBuilder;
-        TrainingView _trainingView;
+        public TrainingView _trainingView;
 
         ChfrgFileBuilder _chfrgFileText;
 

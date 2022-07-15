@@ -48,8 +48,9 @@ namespace ChessForge
         {
             INTRO,
             STEM,
+            CONTINUATION,
             INSTRUCTIONS,
-            FIRST_PROMPT,
+            PROMPT_TO_MOVE,
             USER_MOVE,
             WORKBOOK_MOVES,
             HISTORY
@@ -62,8 +63,9 @@ namespace ChessForge
         {
             [ParaType.INTRO] = null,
             [ParaType.STEM] = null,
+            [ParaType.CONTINUATION] = null,
             [ParaType.INSTRUCTIONS] = null,
-            [ParaType.FIRST_PROMPT] = null,
+            [ParaType.PROMPT_TO_MOVE] = null,
             [ParaType.USER_MOVE] = null,
             [ParaType.WORKBOOK_MOVES] = null,
             [ParaType.HISTORY] = null
@@ -78,8 +80,9 @@ namespace ChessForge
         {
             ParaType.INTRO,
             ParaType.STEM,
+            ParaType.CONTINUATION,
             ParaType.INSTRUCTIONS,
-            ParaType.FIRST_PROMPT,
+            ParaType.PROMPT_TO_MOVE,
             ParaType.USER_MOVE,
             ParaType.WORKBOOK_MOVES,
             ParaType.HISTORY
@@ -123,6 +126,8 @@ namespace ChessForge
         /// </summary>
         private TreeNode _sessionStartNode;
 
+        private int _sessionStartNodeIndex;
+
         private int _nodeIdUnderEvaluation = -1;
 
         /// <summary>
@@ -156,7 +161,9 @@ namespace ChessForge
         {
             ["intro"] = new RichTextPara(0, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Left),
             ["first_prompt"] = new RichTextPara(10, 0, 16, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
+            ["second_prompt"] = new RichTextPara(10, 0, 14, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
             ["stem_line"] = new RichTextPara(0, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
+            ["continuation"] = new RichTextPara(0, 20, 12, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left, Brushes.Gray),
             ["eval_results"] = new RichTextPara(30, 5, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(51, 159, 141)), TextAlignment.Left),
             ["normal"] = new RichTextPara(10, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
             ["default"] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
@@ -171,6 +178,7 @@ namespace ChessForge
         public void Initialize(TreeNode node)
         {
             _sessionStartNode = node;
+            _sessionStartNodeIndex = (int)(node.MoveNumber * 2 - (node.ColorToMove == PieceColor.Black ? -1 : 0));
             Document.Blocks.Clear();
 
             InitParaDictionary();
@@ -182,8 +190,9 @@ namespace ChessForge
         {
             _dictParas[ParaType.INTRO] = null;
             _dictParas[ParaType.STEM] = null;
+            _dictParas[ParaType.CONTINUATION] = null;
             _dictParas[ParaType.INSTRUCTIONS] = null;
-            _dictParas[ParaType.FIRST_PROMPT] = null;
+            _dictParas[ParaType.PROMPT_TO_MOVE] = null;
             _dictParas[ParaType.USER_MOVE] = null;
             _dictParas[ParaType.WORKBOOK_MOVES] = null;
             _dictParas[ParaType.HISTORY] = null;
@@ -234,12 +243,13 @@ namespace ChessForge
             TreeNode foundMove = null;
             foreach (TreeNode child in parent.Children)
             {
-                if (child.LastMoveAlgebraicNotation == _userMove.LastMoveAlgebraicNotation)
+                if (child.LastMoveEngineNotation == _userMove.LastMoveEngineNotation)
                 {
                     // replace the TreeNode with the one from the Workbook so that
                     // we stay with the workbook as long as the user does.
                     EngineGame.ReplaceCurrentWithWorkbookMove(child);
                     foundMove = child;
+                    _userMove = child;
                 }
                 else
                 {
@@ -322,6 +332,30 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds the paragraph showing moves made in this training session
+        /// from the session's starting position.
+        /// </summary>
+        private void BuildContinuationPara()
+        {
+            if (_dictParas[ParaType.CONTINUATION] == null)
+            {
+                _dictParas[ParaType.CONTINUATION] = AddNewParagraphToDoc("continuation", "\n", NonNullParaAtOrBefore(ParaType.STEM));
+            }
+
+            Paragraph para = _dictParas[ParaType.CONTINUATION];
+            para.Inlines.Clear();
+            
+            Run intro = new Run("     moves made so far: ");
+            intro.FontWeight = FontWeights.Normal;
+
+            para.Inlines.Add(intro);
+
+            string line = TextUtils.BuildTextForLine(new List<TreeNode>(EngineGame.Line.NodeList), false, _sessionStartNodeIndex + 1);
+            Run cont = new Run(line);
+            para.Inlines.Add(cont);
+        }
+
+        /// <summary>
         /// Creates a paragraph for holding a ummary record of the
         /// training session.
         /// </summary>
@@ -384,7 +418,7 @@ namespace ChessForge
         /// <param name="node"></param>
         private void BuildStemText(TreeNode node)
         {
-            _dictParas[ParaType.INTRO] = AddNewParagraphToDoc("intro", "This training sessions starts from the position arising after:");
+            _dictParas[ParaType.INTRO] = AddNewParagraphToDoc("intro", "This training session started from the position arising after:");
             _dictParas[ParaType.STEM] = AddNewParagraphToDoc("stem_line", GetStemLineText(node));
         }
 
@@ -406,7 +440,13 @@ namespace ChessForge
 
             _dictParas[ParaType.INSTRUCTIONS] = AddNewParagraphToDoc("intro", sbInstruction.ToString());
 
-            _dictParas[ParaType.FIRST_PROMPT] = AddNewParagraphToDoc("first_prompt", "To begin, make your first move on the chessboard.");
+            _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc("first_prompt", "To begin, make your first move on the chessboard.");
+        }
+
+        private void BuildSecondPromptParagraph()
+        {
+            Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+            _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc("second_prompt", " Your turn. Make your move on the chessboard.", NonNullParaAtOrBefore(ParaType.PROMPT_TO_MOVE));
         }
 
         /// <summary>
@@ -427,10 +467,17 @@ namespace ChessForge
         /// <param name="nd"></param>
         private void BuildUserMoveParagraph(TreeNode nd, bool moveInWorkbook)
         {
-            Paragraph para = AddNewParagraphToDoc("normal", "Your move ", NonNullParaAtOrBefore(ParaType.STEM));
+            Paragraph para = AddNewParagraphToDoc("normal", "", NonNullParaAtOrBefore(ParaType.CONTINUATION));
             _dictParas[ParaType.USER_MOVE] = para;
+            para.Inlines.Clear();
 
-            Run r = new Run(nd.GetPlyText(true));
+            Run pre = new Run("Your move:\n");
+            pre.FontWeight = FontWeights.Bold;
+            pre.FontSize = 16;
+            pre.Foreground = Brushes.Black;
+            para.Inlines.Add(pre);
+
+            Run r = new Run("   " + nd.GetPlyText(true));
             r.FontWeight = FontWeights.Bold;
             r.FontSize = 16;
             r.Foreground = moveInWorkbook ? Brushes.Black : Brushes.Red;
@@ -604,7 +651,7 @@ namespace ChessForge
                 _userChoiceNodeId = nodeId;
 
                 BuildHistoryPara();
-                AddDecisionChangeToHistory(_userMove, userChoiceNode);
+                AddUserMoveDecisionToHistory(_userMove, userChoiceNode, false);
                 ClearDecisionParas();
 
                 AppState.MainWin.DisplayPosition(userChoiceNode.Position);
@@ -614,16 +661,31 @@ namespace ChessForge
                 // Selecting a random response to the user's choice from the Workbook
                 EngineGame.AddPlyToGame(nd);
 
-
                 // The move will be visualized in response to CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE timer's elapsed event
                 EngineGame.TrainingWorkbookMoveMade = true;
                 AppState.MainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
             }
             else if (r.Name == _run_play_engine)
             {
+                BuildContinuationPara();
+
                 BuildHistoryPara();
+                AddUserMoveDecisionToHistory(_userMove, null, true);
                 AppState.MainWin.PlayComputer(_userMove, true);
             }
+        }
+
+        /// <summary>
+        /// This method will be called when the program made a move 
+        /// and we want to update the Training view.
+        /// </summary>
+        public void WorkbookMoveMade()
+        {
+            AppState.MainWin._rtbTrainingProgress.Dispatcher.Invoke(() =>
+            {
+                BuildContinuationPara();
+                BuildSecondPromptParagraph();
+            });
         }
 
         /// <summary>
@@ -647,12 +709,75 @@ namespace ChessForge
             }
         }
 
-        private void AddDecisionChangeToHistory(TreeNode orig, TreeNode changed)
+        /// <summary>
+        /// User made their move and we have the following options to handle:
+        /// - the original move was not in the Workbook and the user chose a Workbook move
+        /// - the original move was not in the Workbook and the user chose play it anyway thus starting a game against the engine
+        /// - the original move was in the Workbook and the user stuck with it
+        /// - the original move was in the Workbook but the user chose a different Workbook move
+        /// </summary>
+        /// <param name="orig"></param>
+        /// <param name="changed"></param>
+        private void AddUserMoveDecisionToHistory(TreeNode orig, TreeNode changed, bool playEngine)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("\n     You played " + MoveUtils.BuildSingleMoveText(orig) + " but changed to a Workbook move " + MoveUtils.BuildSingleMoveText(changed));
-            Run r = new Run(sb.ToString());
-            _dictParas[ParaType.HISTORY].Inlines.Add(r);
+            Run pre = new Run();
+            if (orig.NodeId > 0)
+            {
+                pre.Text = "\nYou played a Workbook move ";
+            }
+            else
+            {
+                pre.Text = "\nYou played a non-Workbook move ";
+            }
+            _dictParas[ParaType.HISTORY].Inlines.Add(pre);
+
+
+            Run rOrig = new Run(MoveUtils.BuildSingleMoveText(orig));
+            rOrig.FontWeight = FontWeights.Bold;
+            if (orig.NodeId > 0)
+            {
+                rOrig.Foreground = Brushes.Green;
+            }
+            else
+            {
+                rOrig.Foreground = Brushes.Red;
+            }
+            _dictParas[ParaType.HISTORY].Inlines.Add(rOrig);
+
+            bool showChangedMove = false;
+            Run rDecision = new Run();
+            if (playEngine)
+            {
+                rDecision.Text = " and chose to challenge the engine to a game.";
+            }
+            else
+            {
+                if (orig.NodeId == changed.NodeId)
+                {
+                    rDecision.Text = ".";
+                }
+                else
+                {
+                    if (orig.NodeId > 0)
+                    {
+                        rDecision.Text = " but changed to a different Workbook move ";
+                        showChangedMove = true;
+                    }
+                    else
+                    {
+                        rDecision.Text = " and changed to a Workbook move ";
+                        showChangedMove = true;
+                    }
+                }
+            }
+            _dictParas[ParaType.HISTORY].Inlines.Add(rDecision);
+
+            if (showChangedMove)
+            {
+                Run rChanged = new Run(MoveUtils.BuildSingleMoveText(changed));
+                rChanged.FontWeight = FontWeights.Bold;
+                _dictParas[ParaType.HISTORY].Inlines.Add(rChanged);
+            }
         }
 
         /// <summary>
@@ -701,8 +826,8 @@ namespace ChessForge
         /// </summary>
         private void RemoveIntroParas()
         {
-            Document.Blocks.Remove(_dictParas[ParaType.FIRST_PROMPT]);
-            _dictParas[ParaType.FIRST_PROMPT] = null;
+            Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+            _dictParas[ParaType.PROMPT_TO_MOVE] = null;
 
             Document.Blocks.Remove(_dictParas[ParaType.INSTRUCTIONS]);
             _dictParas[ParaType.INSTRUCTIONS] = null;

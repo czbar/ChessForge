@@ -19,6 +19,10 @@ namespace ChessPosition
         /// </summary>
         public static Random GlobalRnd = new Random();
 
+        /// <summary>
+        /// Builds the starting position.
+        /// </summary>
+        /// <returns>BoardPosition object with the starting position.</returns>
         static public BoardPosition SetupStartingPosition()
         {
             BoardPosition pos = new BoardPosition();
@@ -245,8 +249,6 @@ namespace ChessPosition
             return xPos + 1;
         }
 
-
-
         /// <summary>
         /// If the move is made by a pawn 
         /// to the en passant square,
@@ -268,7 +270,13 @@ namespace ChessPosition
             }
         }
 
-        public static bool IsPositionLegal(BoardPosition pos, PieceColor kingColorToCheck)
+        /// <summary>
+        /// Checks if the position is legal in the sense of the King not being under attack.
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="kingColorToCheck"></param>
+        /// <returns></returns>
+        public static bool IsKingUnderAttack(BoardPosition pos, PieceColor kingColorToCheck)
         {
             SquareCoords square = GetKingPosition(ref pos, kingColorToCheck);
             PiecesTargetingSquare sa = new PiecesTargetingSquare((byte)square.Xcoord, (byte)square.Ycoord, -1, -1, kingColorToCheck, ref pos);

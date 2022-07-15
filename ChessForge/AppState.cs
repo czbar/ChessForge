@@ -104,7 +104,12 @@ namespace ChessForge
             _previousMode = _currentMode;
             _currentMode = mode;
 
-            MainWin.ConfigureUIForMode(mode);
+            // TODO: we need to sort out this condition using submode,
+            // introduce a new mode, or ... something
+            if (mode != Mode.GAME_VS_COMPUTER || _previousMode != Mode.TRAINING)
+            {
+                MainWin.ConfigureUIForMode(mode);
+            }
         }
 
         /// <summary>
