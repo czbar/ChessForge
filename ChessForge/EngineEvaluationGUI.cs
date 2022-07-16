@@ -40,6 +40,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Resets the evaluation progress bar to 0
+        /// </summary>
+        public void ResetEvaluationProgressBar()
+        {
+            _progBar.Dispatcher.Invoke(() =>
+            {
+                _progBar.Value = 0;
+            });
+        }
+
+        /// <summary>
         /// Shows the latest engine lines in response to 
         /// a timer event.
         /// </summary>

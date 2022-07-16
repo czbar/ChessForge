@@ -383,13 +383,30 @@ namespace ChessForge
         private void InsertEvaluationResultsRun(string text)
         {
             string runName;
-            Run runToDelete;
+            Run runToDelete = null;
+
+            bool runInUserPara = false;
 
             if (_nodeIdUnderEvaluation >= 0)
             {
                 runName = _run_eval_results_ + _nodeIdUnderEvaluation.ToString();
-                runToDelete = _dictParas[ParaType.WORKBOOK_MOVES].Inlines.FirstOrDefault(x => x.Name == runName) as Run;
-                _dictParas[ParaType.WORKBOOK_MOVES].Inlines.Remove(runToDelete);
+
+                if (_dictParas[ParaType.WORKBOOK_MOVES] != null)
+                {
+                    runToDelete = _dictParas[ParaType.WORKBOOK_MOVES].Inlines.FirstOrDefault(x => x.Name == runName) as Run;
+                    if (runToDelete != null)
+                    {
+                        _dictParas[ParaType.WORKBOOK_MOVES].Inlines.Remove(runToDelete);
+                    }
+                }
+
+                if (runToDelete == null)
+                {
+                    runToDelete = _dictParas[ParaType.USER_MOVE].Inlines.FirstOrDefault(x => x.Name == runName) as Run;
+                    _dictParas[ParaType.USER_MOVE].Inlines.Remove(runToDelete);
+                    runInUserPara = true;
+                }
+
             }
             else
             {
@@ -400,7 +417,7 @@ namespace ChessForge
 
             Run evalRun = new Run(text);
             evalRun.Name = runName;
-            if (_nodeIdUnderEvaluation >= 0)
+            if (_nodeIdUnderEvaluation >= 0 && !runInUserPara)
             {
                 _dictParas[ParaType.WORKBOOK_MOVES].Inlines.InsertAfter(_underEvaluationRun, evalRun);
             }
@@ -513,7 +530,15 @@ namespace ChessForge
             para.Inlines.Add(mv);
 
             string evalButtonText = " evaluate only ";
-            para.Inlines.Add(CreateButtonRun(evalButtonText, _run_eval_user_move, ButtonStyle.BLUE));
+            if (moveInWorkbook)
+            {
+                para.Inlines.Add(CreateButtonRun(evalButtonText, _run_eval_wb_move_ + nd.NodeId.ToString(), ButtonStyle.BLUE));
+            }
+            else
+            {
+                para.Inlines.Add(CreateButtonRun(evalButtonText, _run_eval_user_move, ButtonStyle.BLUE));
+            }
+
             para.Inlines.Add(new Run("   or   "));
             if (moveInWorkbook)
             {
@@ -664,6 +689,7 @@ namespace ChessForge
                 // The move will be visualized in response to CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE timer's elapsed event
                 EngineGame.TrainingWorkbookMoveMade = true;
                 AppState.MainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
+                AppState.MainWin.SwapCommentBoxForEngineLines(false);
             }
             else if (r.Name == _run_play_engine)
             {
@@ -672,6 +698,7 @@ namespace ChessForge
                 BuildHistoryPara();
                 AddUserMoveDecisionToHistory(_userMove, null, true);
                 AppState.MainWin.PlayComputer(_userMove, true);
+                AppState.MainWin.SwapCommentBoxForEngineLines(false);
             }
         }
 
@@ -701,7 +728,18 @@ namespace ChessForge
             if (nodeId >= 0)
             {
                 string runName = _run_play_wb_move_ + nodeId.ToString();
-                return _dictParas[ParaType.WORKBOOK_MOVES].Inlines.FirstOrDefault(x => x.Name == runName) as Run;
+                Run r = null;
+                if (_dictParas[ParaType.WORKBOOK_MOVES] != null)
+                {
+                    r = _dictParas[ParaType.WORKBOOK_MOVES].Inlines.FirstOrDefault(x => x.Name == runName) as Run;
+                }
+
+                if (r == null)
+                {
+                    r = _dictParas[ParaType.USER_MOVE].Inlines.FirstOrDefault(x => x.Name == runName) as Run;
+                }
+                return r;
+
             }
             else
             {
