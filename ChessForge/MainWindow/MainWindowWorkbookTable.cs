@@ -220,31 +220,13 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Build a stem text to display in a TextBox.
-        /// We know that none of the nodes in the stem has
-        /// more than one child which simplifies processing
+        /// Build text for the stem line to display.
         /// </summary>
         /// <param name="stem"></param>
         /// <returns></returns>
         private string BuildStemText(List<TreeNode> stem)
         {
-            StringBuilder sb = new StringBuilder();
-
-            foreach (TreeNode nd in stem)
-            {
-                if (nd.Position.ColorToMove == PieceColor.Black)
-                {
-                    if (nd.Position.MoveNumber != 1)
-                    {
-                        sb.Append(" ");
-                    }
-                    sb.Append(nd.Position.MoveNumber.ToString() + ".");
-                }
-
-                sb.Append(" " + nd.LastMoveAlgebraicNotation);
-            }
-
-            return sb.ToString();
+            return TextUtils.BuildTextForLine(stem);
         }
 
         private void _lvWorkbookTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
