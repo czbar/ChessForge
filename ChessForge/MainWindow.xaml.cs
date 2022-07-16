@@ -980,6 +980,8 @@ namespace ChessForge
                 Evaluation.PrepareToContinue();
 
                 Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
+                Timers.Stop(AppTimers.StopwatchId.EVALUATION_PROGRESS);
+                ResetEvaluationProgressBar();
             }
             else if (AppState.CurrentMode == AppState.Mode.TRAINING)
             {
@@ -987,6 +989,8 @@ namespace ChessForge
                 Evaluation.Mode = EvaluationState.EvaluationMode.IDLE;
                 Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
                 Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                Timers.Stop(AppTimers.StopwatchId.EVALUATION_PROGRESS);
+                ResetEvaluationProgressBar();
 
                 MoveEvaluationFinishedInTraining();
             }
@@ -1012,6 +1016,7 @@ namespace ChessForge
                     }
 
                     Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                    Timers.Stop(AppTimers.StopwatchId.EVALUATION_PROGRESS);
 
                     // if the mode is not FULL_LINE or this is the last move in FULL_LINE
                     // evaluation we stop here
@@ -1049,6 +1054,11 @@ namespace ChessForge
                     }
                 }
             }
+        }
+
+        public void ResetEvaluationProgressBar()
+        {
+            EngineLinesGUI.ResetEvaluationProgressBar();
         }
 
         /// <summary>
@@ -1484,6 +1494,16 @@ namespace ChessForge
         /// <param name="subMode"></param>
         public void SpecialUIHandling(AppState.Mode mode, AppState.SubMode subMode = 0)
         {
+        }
+
+        public void SwapCommentBoxForEngineLines(bool showEngineLines)
+        {
+            _rtbBoardComment.Visibility = showEngineLines ? Visibility.Hidden : Visibility.Visible;
+            _tbEngineLines.Visibility = showEngineLines ? Visibility.Visible : Visibility.Hidden;
+            if (!showEngineLines)
+            {
+                Timers.Stop(AppTimers.StopwatchId.EVALUATION_PROGRESS);
+            }
         }
 
         /// <summary>
