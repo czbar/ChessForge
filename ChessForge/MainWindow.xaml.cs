@@ -1261,7 +1261,7 @@ namespace ChessForge
         /// <param name="e"></param>
         internal void ProcessUserGameMoveEvent(object source, ElapsedEventArgs e)
         {
-            if (TrainingState.IsTrainingInProgress)
+            if (TrainingState.IsTrainingInProgress && AppState.CurrentMode != AppState.Mode.GAME_VS_COMPUTER )
             {
                 if ((TrainingState.CurrentMode & TrainingState.Mode.USER_MOVE_COMPLETED) != 0)
                 {
