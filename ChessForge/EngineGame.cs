@@ -138,7 +138,7 @@ namespace ChessForge
                 nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
                 nd.LastMoveAlgebraicNotation = algMove;
                 AddNode(nd);
-                if (TrainingState.IsTrainingInProgress)
+                if (TrainingState.IsTrainingInProgress && AppState.CurrentMode != AppState.Mode.GAME_VS_COMPUTER)
                 {
                     TrainingState.CurrentMode = TrainingState.Mode.USER_MOVE_COMPLETED;
                     AppState.MainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);

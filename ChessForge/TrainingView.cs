@@ -50,6 +50,7 @@ namespace ChessForge
             STEM,
             CONTINUATION,
             INSTRUCTIONS,
+            PLAY_ENGINE_NOTE,
             PROMPT_TO_MOVE,
             USER_MOVE,
             WORKBOOK_MOVES,
@@ -65,6 +66,7 @@ namespace ChessForge
             [ParaType.STEM] = null,
             [ParaType.CONTINUATION] = null,
             [ParaType.INSTRUCTIONS] = null,
+            [ParaType.PLAY_ENGINE_NOTE] = null,
             [ParaType.PROMPT_TO_MOVE] = null,
             [ParaType.USER_MOVE] = null,
             [ParaType.WORKBOOK_MOVES] = null,
@@ -82,6 +84,7 @@ namespace ChessForge
             ParaType.STEM,
             ParaType.CONTINUATION,
             ParaType.INSTRUCTIONS,
+            ParaType.PLAY_ENGINE_NOTE,
             ParaType.PROMPT_TO_MOVE,
             ParaType.USER_MOVE,
             ParaType.WORKBOOK_MOVES,
@@ -162,6 +165,7 @@ namespace ChessForge
             ["intro"] = new RichTextPara(0, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Left),
             ["first_prompt"] = new RichTextPara(10, 0, 16, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
             ["second_prompt"] = new RichTextPara(10, 0, 14, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
+            ["play_engine_note"] = new RichTextPara(10, 10, 14, FontWeights.Bold, Brushes.Black, TextAlignment.Left, Brushes.Black),
             ["stem_line"] = new RichTextPara(0, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
             ["continuation"] = new RichTextPara(0, 20, 12, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left, Brushes.Gray),
             ["eval_results"] = new RichTextPara(30, 5, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(51, 159, 141)), TextAlignment.Left),
@@ -191,6 +195,7 @@ namespace ChessForge
             _dictParas[ParaType.INTRO] = null;
             _dictParas[ParaType.STEM] = null;
             _dictParas[ParaType.CONTINUATION] = null;
+            _dictParas[ParaType.PLAY_ENGINE_NOTE] = null;
             _dictParas[ParaType.INSTRUCTIONS] = null;
             _dictParas[ParaType.PROMPT_TO_MOVE] = null;
             _dictParas[ParaType.USER_MOVE] = null;
@@ -697,8 +702,11 @@ namespace ChessForge
 
                 BuildHistoryPara();
                 AddUserMoveDecisionToHistory(_userMove, null, true);
-                AppState.MainWin.PlayComputer(_userMove, true);
                 AppState.MainWin.SwapCommentBoxForEngineLines(false);
+                Document.Blocks.Remove(_dictParas[ParaType.USER_MOVE]);
+                Document.Blocks.Remove(_dictParas[ParaType.WORKBOOK_MOVES]);
+                _dictParas[ParaType.PLAY_ENGINE_NOTE] = AddNewParagraphToDoc("play_engine_note", "\nYou are now playing against the engine.", NonNullParaAtOrBefore(ParaType.INSTRUCTIONS));
+                AppState.MainWin.PlayComputer(_userMove, true);
             }
         }
 
