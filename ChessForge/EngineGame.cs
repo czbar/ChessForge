@@ -120,8 +120,8 @@ namespace ChessForge
         {
             isCastle = false;
 
-            nd = EngineGame.CreateNextNode();
-            string algMove = "";
+            nd = CreateNextNode();
+            string algMove;
             try
             {
                 algMove = MoveUtils.EngineNotationToAlgebraic(move, ref nd.Position, out isCastle);
@@ -197,6 +197,26 @@ namespace ChessForge
             {
                 return Line.NodeList[Line.NodeList.Count - 1];
             }
+        }
+
+        /// <summary>
+        /// Returns the type of the piece on a given square
+        /// in the current position.
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        public static PieceType GetPieceType(SquareCoords sq)
+        {
+            return PositionUtils.GetPieceType(GetCurrentNode().Position.Board[sq.Xcoord, sq.Ycoord]);
+        }
+
+        /// <summary>
+        /// Accessor to ColorToMove property
+        /// of the current position
+        /// </summary>
+        public static PieceColor ColorToMove
+        {
+            get { return GetCurrentPosition().ColorToMove; }
         }
 
         public static void ReplaceCurrentWithWorkbookMove(TreeNode nd)
