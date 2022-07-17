@@ -29,7 +29,7 @@ namespace ChessForge
         WorkbookRichTextBuilder _trainingBrowseRichTextBuilder;
         public TrainingView _trainingView;
 
-        ChfrgFileBuilder _chfrgFileText;
+        ChfFileBuilder _chfFileText;
 
         private const int squareSize = 80;
 
@@ -47,7 +47,7 @@ namespace ChessForge
 
         /// <summary>
         /// The complete tree of the currently
-        /// loaded workbook (from the PGN or CHFRG file)
+        /// loaded workbook (from the PGN or CHF file)
         /// </summary>
         public WorkbookTree Workbook;
 
@@ -276,8 +276,8 @@ namespace ChessForge
             {
                 DraggedPiece.isDragInProgress = false;
                 Point clickedPoint = e.GetPosition(imgChessBoard);
-                SquareCoords sq = ClickedSquare(clickedPoint);
-                if (sq == null)
+                SquareCoords targetSquare = ClickedSquare(clickedPoint);
+                if (targetSquare == null)
                 {
                     // just put the piece back
                     Canvas.SetLeft(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.X);
@@ -291,34 +291,54 @@ namespace ChessForge
                     {
                         // if the move is valid swap image at destination 
                         // and clear image at origin
-                        if (sq.Xcoord != DraggedPiece.Square.Xcoord || sq.Ycoord != DraggedPiece.Square.Ycoord)
+                        if (targetSquare.Xcoord != DraggedPiece.Square.Xcoord || targetSquare.Ycoord != DraggedPiece.Square.Ycoord)
                         {
                             //TODO: handle promotion!!!
-                            StringBuilder move = new StringBuilder();
-                            if (!MainChessBoard.IsFlipped)
+                            StringBuilder moveEngCode = new StringBuilder();
+                            SquareCoords origSquareNorm = new SquareCoords(DraggedPiece.Square);
+                            SquareCoords targetSquareNorm = new SquareCoords(targetSquare);
+                            if (MainChessBoard.IsFlipped)
                             {
-                                move.Append((char)(DraggedPiece.Square.Xcoord + (int)'a'));
-                                move.Append((char)(DraggedPiece.Square.Ycoord + (int)'1'));
-                                move.Append((char)(sq.Xcoord + (int)'a'));
-                                move.Append((char)(sq.Ycoord + (int)'1'));
+                                origSquareNorm.Flip();
+                                targetSquareNorm.Flip();
                             }
-                            else
+
+                            if (EngineGame.GetPieceType(origSquareNorm) == PieceType.Pawn
+                                && (EngineGame.ColorToMove == PieceColor.White && targetSquareNorm.Ycoord == 7)
+                                || (EngineGame.ColorToMove == PieceColor.Black && targetSquareNorm.Ycoord == 0))
                             {
-                                move.Append((char)((7 - DraggedPiece.Square.Xcoord) + (int)'a'));
-                                move.Append((char)((7 - DraggedPiece.Square.Ycoord) + (int)'1'));
-                                move.Append((char)((7 - sq.Xcoord) + (int)'a'));
-                                move.Append((char)((7 - sq.Ycoord) + (int)'1'));
+                                PieceType promoteTo = GetUserPromoSelection(targetSquareNorm);
                             }
+
+                            moveEngCode.Append((char)(DraggedPiece.Square.Xcoord + (int)'a'));
+                            moveEngCode.Append((char)(DraggedPiece.Square.Ycoord + (int)'1'));
+                            moveEngCode.Append((char)(targetSquare.Xcoord + (int)'a'));
+                            moveEngCode.Append((char)(targetSquare.Ycoord + (int)'1'));
+
+                            //if (!MainChessBoard.IsFlipped)
+                            //{
+                            //    moveEngCode.Append((char)(DraggedPiece.Square.Xcoord + (int)'a'));
+                            //    moveEngCode.Append((char)(DraggedPiece.Square.Ycoord + (int)'1'));
+                            //    moveEngCode.Append((char)(targetSquare.Xcoord + (int)'a'));
+                            //    moveEngCode.Append((char)(targetSquare.Ycoord + (int)'1'));
+                            //}
+                            //else
+                            //{
+                            //    moveEngCode.Append((char)((7 - DraggedPiece.Square.Xcoord) + (int)'a'));
+                            //    moveEngCode.Append((char)((7 - DraggedPiece.Square.Ycoord) + (int)'1'));
+                            //    moveEngCode.Append((char)((7 - targetSquare.Xcoord) + (int)'a'));
+                            //    moveEngCode.Append((char)((7 - targetSquare.Ycoord) + (int)'1'));
+                            //}
 
                             bool isCastle;
                             TreeNode nd;
-                            if (EngineGame.ProcessUserGameMove(move.ToString(), out nd, out isCastle))
+                            if (EngineGame.ProcessUserGameMove(moveEngCode.ToString(), out nd, out isCastle))
                             {
-                                MainChessBoard.GetPieceImage(sq.Xcoord, sq.Ycoord, true).Source = DraggedPiece.ImageControl.Source;
+                                MainChessBoard.GetPieceImage(targetSquare.Xcoord, targetSquare.Ycoord, true).Source = DraggedPiece.ImageControl.Source;
                                 ReturnDraggedPiece(true);
                                 if (isCastle)
                                 {
-                                    MoveCastlingRook(move.ToString());
+                                    MoveCastlingRook(moveEngCode.ToString());
                                 }
 
                                 SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
@@ -341,6 +361,17 @@ namespace ChessForge
                 }
                 Canvas.SetZIndex(DraggedPiece.ImageControl, 0);
             }
+        }
+
+        /// <summary>
+        /// Shows a GUI element allow the user 
+        /// to select the piece to promote to.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        private PieceType GetUserPromoSelection(SquareCoords target)
+        {
+            return PieceType.None;
         }
 
         /// <summary>
@@ -570,7 +601,7 @@ namespace ChessForge
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Multiselect = false;
-                openFileDialog.Filter = "Game files (*.pgn)|*.pgn|All files (*.*)|*.*";
+                openFileDialog.Filter = "ChessForge Workbooks (*.chf)|*.chf|PGN Game files (*.pgn)|*.pgn|All files (*.*)|*.*";
 
                 string initDir;
                 if (!string.IsNullOrEmpty(Configuration.LastPgnDirectory))
@@ -700,8 +731,8 @@ namespace ChessForge
 
                 Workbook.BuildLines();
 
-                _chfrgFileText = new ChfrgFileBuilder();
-                _chfrgFileText.BuildTreeText();
+                _chfFileText = new ChfFileBuilder();
+                _chfFileText.BuildTreeText();
 
                 _workbookRichTextBuilder.BuildFlowDocumentForWorkbook();
                 if (Workbook.Bookmarks.Count == 0)
@@ -1261,7 +1292,7 @@ namespace ChessForge
         /// <param name="e"></param>
         internal void ProcessUserGameMoveEvent(object source, ElapsedEventArgs e)
         {
-            if (TrainingState.IsTrainingInProgress && AppState.CurrentMode != AppState.Mode.GAME_VS_COMPUTER )
+            if (TrainingState.IsTrainingInProgress && AppState.CurrentMode != AppState.Mode.GAME_VS_COMPUTER)
             {
                 if ((TrainingState.CurrentMode & TrainingState.Mode.USER_MOVE_COMPLETED) != 0)
                 {
