@@ -375,7 +375,7 @@ namespace ChessForge
             // un-highlight the previously selected move
             if (WorkbookTableState.SelectedTextBlock != null)
             {
-                WorkbookTableState.SelectedTextBlock.Foreground = CHFRG_Colors.WORKBOOK_TABLE_REGULAR_FORE;
+                WorkbookTableState.SelectedTextBlock.Foreground = CHF_Colors.WORKBOOK_TABLE_REGULAR_FORE;
             }
 
             // highlight the clicked cell and store it for later un-highlighting
@@ -385,7 +385,7 @@ namespace ChessForge
                 WorkbookTableState.SelectedTextBlock = (TextBlock)element;
 //                WorkbookTableState.HighlightForeground = ((TextBlock)element).Foreground as SolidColorBrush;
 
-                ((TextBlock)element).Foreground = CHFRG_Colors.WORKBOOK_TABLE_HILITE_FORE;
+                ((TextBlock)element).Foreground = CHF_Colors.WORKBOOK_TABLE_HILITE_FORE;
 
             }
         }
@@ -394,7 +394,7 @@ namespace ChessForge
         {
             if (WorkbookTableState.SelectedTextBlock != null)
             {
-                WorkbookTableState.SelectedTextBlock.Foreground = CHFRG_Colors.WORKBOOK_TABLE_HILITE_FORE;
+                WorkbookTableState.SelectedTextBlock.Foreground = CHF_Colors.WORKBOOK_TABLE_HILITE_FORE;
             }
         }
 
@@ -403,7 +403,7 @@ namespace ChessForge
             // reset the previously selected cell
             if (WorkbookTableState.SelectedTextBlock != null)
             {
-                WorkbookTableState.SelectedTextBlock.Foreground = CHFRG_Colors.WORKBOOK_TABLE_REGULAR_FORE;
+                WorkbookTableState.SelectedTextBlock.Foreground = CHF_Colors.WORKBOOK_TABLE_REGULAR_FORE;
                 WorkbookTableState.SelectedTextBlock = null;
             }
 
@@ -417,7 +417,7 @@ namespace ChessForge
                 WorkbookTableState.SelectedTextBlock = tb;
 //                WorkbookTableState.HighlightForeground = tb.Foreground as SolidColorBrush;
 
-                tb.Foreground = CHFRG_Colors.WORKBOOK_TABLE_HILITE_FORE;
+                tb.Foreground = CHF_Colors.WORKBOOK_TABLE_HILITE_FORE;
             }
         }
 
@@ -432,7 +432,7 @@ namespace ChessForge
             TextBlock tbCell = ListViewHelper.GetElementFromCellTemplate(_lvWorkbookTable, row, column, "");
             if (tbCell != null)
             {
-                tbCell.Foreground = CHFRG_Colors.WORKBOOK_TABLE_HILITE_FORE;
+                tbCell.Foreground = CHF_Colors.WORKBOOK_TABLE_HILITE_FORE;
             }
         }
 
@@ -460,7 +460,7 @@ namespace ChessForge
         public void _lvWorkbookTable_SelectLineAndMove(string lineId, int nodeId)
         {
             int rowIndex = -1;
-            // The passed Line Id should be that found in the last (leaf) node of the line.
+            // The passed Line Id should be the one found in the last (leaf) node of the line.
             // Otherwise we will not find it.
 
             if (!string.IsNullOrEmpty(lineId))
@@ -491,11 +491,11 @@ namespace ChessForge
                 int column = GetColumnForNode(ttr, nodeId) - WorkbookTableState.StemLength;
                 if (column < 0)
                 {
-                    column = GetColumnForNode(rows[rowIndex + 1], nodeId) - WorkbookTableState.StemLength;
-                    row = rowIndex + 1;
+                    rowIndex++;
+                    column = GetColumnForNode(rows[rowIndex], nodeId) - WorkbookTableState.StemLength;
                 }
 
-                TextBlock tb = _lvWorkbookTable_GetCell(row, column);
+                TextBlock tb = _lvWorkbookTable_GetCell(rowIndex, column);
                 WorkbookTableState.SelectedTextBlock = tb;
 
                 _lvWorkbookTable_HighlightCell(tb);
