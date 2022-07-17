@@ -163,10 +163,10 @@ namespace ChessForge
         public static List<BookmarkView> Bookmarks = new List<BookmarkView>();
 
         /// <summary>
-        /// Currently selected line.
+        /// Currently active (selected) line.
         /// There can only be one (or none) line selected in the Workbook at any time
         /// </summary>
-        public static string SelectedLine;
+        public static string ActiveLineId;
 
         /// <summary>
         /// Currently selected Tree Node (ply) in the Workbook.

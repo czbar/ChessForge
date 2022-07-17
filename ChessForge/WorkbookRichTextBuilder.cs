@@ -504,6 +504,7 @@ namespace ChessForge
                 }
 
                 AppState.MainWin.SetActiveLine(_lstSelectedLine, nodeId);
+                AppState.ActiveLineId = lineId;
             }
 
             _selectedRunBkg = (SolidColorBrush)r.Background;
