@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace ChessForge
 {
-    internal class CHFRG_Colors
+    internal class CHF_Colors
     {
         public static SolidColorBrush WORKBOOK_TABLE_HILITE_FORE = new SolidColorBrush(Color.FromRgb(255, 0, 0));
         public static SolidColorBrush WORKBOOK_TABLE_REGULAR_FORE = new SolidColorBrush(Color.FromRgb(0, 0, 0));

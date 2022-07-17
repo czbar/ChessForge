@@ -9,9 +9,9 @@ using ChessPosition;
 namespace ChessForge
 {
     /// <summary>
-    /// Manages the text of the CHFRG file that will be writtent out.
+    /// Manages the text of the CHF file that will be writtent out.
     /// </summary>
-    public class ChfrgFileBuilder
+    public class ChfFileBuilder
     {
         private StringBuilder _fileText;
 
