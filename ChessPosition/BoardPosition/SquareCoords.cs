@@ -10,17 +10,50 @@ namespace ChessPosition
     // in the algebraic notation.
     public class SquareCoords
     {
-        public int Xcoord { get; set; }  // x coordinate a.k.a column a.k.a file:
-                                         // values 0-7 coresponding to 'a'-'h' in the algebraic notation
-                                         // if not set the value is -1
-        public int Ycoord { get; set; }  // y coordinate a.k.a row a.k.a rank:
-                                         // values 0-7 coresponding to '1'-'8' in the algebraic notation
-                                         // if not set the value is -1
+        /// <summary>
+        /// x coordinate a.k.a column a.k.a file:
+        /// values 0-7 coresponding to 'a'-'h' in the algebraic notation
+        ///  if not set the value is -1
+        /// </summary>
+        public int Xcoord { get; set; }
 
+        /// <summary>
+        /// y coordinate a.k.a row a.k.a rank:
+        /// values 0-7 coresponding to '1'-'8' in the algebraic notation
+        /// if not set the value is -1        
+        /// </summary>
+        public int Ycoord { get; set; }  
+
+        /// <summary>
+        /// Creates an instance of this class with
+        /// coordinates specified in the arguments.
+        /// </summary>
+        /// <param name="xCoord"></param>
+        /// <param name="yCoord"></param>
         public SquareCoords(int xCoord, int yCoord)
         {
             Ycoord = yCoord;
             Xcoord = xCoord;
+        }
+
+        /// <summary>
+        /// Copy contstructor
+        /// </summary>
+        /// <param name="sq"></param>
+        public SquareCoords(SquareCoords sq)
+        {
+            Ycoord = sq.Ycoord;
+            Xcoord = sq.Xcoord;
+        }
+
+        /// <summary>
+        /// Flips the coordinates to correspond to
+        /// a fliiped board;
+        /// </summary>
+        public void Flip()
+        {
+            Xcoord = 7 - Xcoord;
+            Ycoord = 7 - Ycoord;
         }
     }
 }
