@@ -124,6 +124,7 @@ namespace ChessForge
         /// </summary>
         public  void BuildFlowDocumentForWorkbook(int rootNodeId = 0, bool includeStem = true)
         {
+            Document.Blocks.Clear();
             _workbook = AppState.MainWin.Workbook;
 
             // resets

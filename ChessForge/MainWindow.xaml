@@ -80,7 +80,7 @@
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox x:Name="_rtbTrainingProgress" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                 IsReadOnly="True"  MinHeight="600">
+                                 IsReadOnly="True"  MinHeight="640">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0" />
@@ -95,7 +95,7 @@
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox x:Name="_rtbTrainingBrowse" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                 IsReadOnly="True" >
+                                 IsReadOnly="True" MinHeight="640">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0" />
@@ -108,11 +108,11 @@
             </TabItem>
         </TabControl>
         <TabControl x:Name="_tabMainControl" Grid.Column="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="2">
-            <TabItem x:Name="TabItemWorkbook"  Header="Workbook">
+            <TabItem x:Name="TabItemWorkbook"  Header="Workbook" >
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox x:Name="_rtbWorkbookView" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                 IsReadOnly="True" PreviewKeyDown="_rtbWorkbookFull_PreviewKeyDown">
+                                   MinHeight="640" IsReadOnly="True" PreviewKeyDown="_rtbWorkbookFull_PreviewKeyDown">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0" />
@@ -251,7 +251,7 @@
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
-                                <Image x:Name="_imgBookmark_1" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                                <Image x:Name="_imgBookmark_1" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" PreviewMouseDown="_imgBookmark_1_PreviewMouseDown"/>
                             </Canvas>
                         </Viewbox>
                         <Viewbox x:Name="_vbLblBookmark_2" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
@@ -262,7 +262,7 @@
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
-                                <Image x:Name="_imgBookmark_2" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                                <Image x:Name="_imgBookmark_2" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" PreviewMouseDown="_imgBookmark_2_PreviewMouseDown"/>
                             </Canvas>
                         </Viewbox>
                         <Viewbox x:Name="_vbLblBookmark_3" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
@@ -273,7 +273,7 @@
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
-                                <Image x:Name="_imgBookmark_3" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                                <Image x:Name="_imgBookmark_3" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" PreviewMouseDown="_imgBookmark_3_PreviewMouseDown"/>
                             </Canvas>
                         </Viewbox>
                         <Viewbox x:Name="_vbLblBookmark_4" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
@@ -284,7 +284,7 @@
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
-                                <Image x:Name="_imgBookmark_4" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                                <Image x:Name="_imgBookmark_4" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" PreviewMouseDown="_imgBookmark_4_PreviewMouseDown"/>
                             </Canvas>
                         </Viewbox>
                         <Viewbox x:Name="_vbLblBookmark_5" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
@@ -295,7 +295,7 @@
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
-                                <Image x:Name="_imgBookmark_5" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                                <Image x:Name="_imgBookmark_5" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" PreviewMouseDown="_imgBookmark_5_PreviewMouseDown"/>
                             </Canvas>
                         </Viewbox>
                         <Viewbox x:Name="_vbLblBookmark_6" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
@@ -306,7 +306,7 @@
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
-                                <Image x:Name="_imgBookmark_6" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                                <Image x:Name="_imgBookmark_6" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" PreviewMouseDown="_imgBookmark_6_PreviewMouseDown"/>
                             </Canvas>
                         </Viewbox>
 
@@ -318,7 +318,7 @@
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
-                                <Image x:Name="_imgBookmark_7" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                                <Image x:Name="_imgBookmark_7" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" PreviewMouseDown="_imgBookmark_7_PreviewMouseDown"/>
                             </Canvas>
                         </Viewbox>
                         <Viewbox x:Name="_vbLblBookmark_8" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
@@ -329,7 +329,7 @@
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
-                                <Image x:Name="_imgBookmark_8" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                                <Image x:Name="_imgBookmark_8" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" PreviewMouseDown="_imgBookmark_8_PreviewMouseDown"/>
                             </Canvas>
                         </Viewbox>
                         <Viewbox x:Name="_vbLblBookmark_9" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
@@ -340,7 +340,7 @@
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
-                                <Image x:Name="_imgBookmark_9" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                                <Image x:Name="_imgBookmark_9" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" PreviewMouseDown="_imgBookmark_9_PreviewMouseDown"/>
                             </Canvas>
                         </Viewbox>
 

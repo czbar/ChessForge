@@ -88,6 +88,9 @@
     <Compile Include="Resources\Strings.cs" />
     <Compile Include="RichTextBuilder.cs" />
     <Compile Include="SoundPlayer.cs" />
+    <Compile Include="TrainingSideDialog.xaml.cs">
+      <DependentUpon>TrainingSideDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TrainingView.cs" />
     <Compile Include="TrainingState.cs" />
     <Compile Include="WorkbookRichTextBuilder.cs" />
@@ -110,6 +113,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PromotionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TrainingSideDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

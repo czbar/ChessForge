@@ -443,626 +443,632 @@ namespace ChessForge
             return leftTop;
         }
 
-            /// <summary>
-            /// Completes a castling move. King would have already been moved.
-            /// </summary>
-            /// <param name="move"></param>
-            private void MoveCastlingRook(string move)
+        /// <summary>
+        /// Completes a castling move. King would have already been moved.
+        /// </summary>
+        /// <param name="move"></param>
+        private void MoveCastlingRook(string move)
+        {
+            SquareCoords orig = null;
+            SquareCoords dest = null;
+            switch (move)
             {
-                SquareCoords orig = null;
-                SquareCoords dest = null;
-                switch (move)
+                case "e1g1":
+                    orig = !MainChessBoard.IsFlipped ? new SquareCoords(7, 0) : new SquareCoords(0, 7);
+                    dest = !MainChessBoard.IsFlipped ? new SquareCoords(5, 0) : new SquareCoords(2, 7);
+                    break;
+                case "e8g8":
+                    orig = !MainChessBoard.IsFlipped ? new SquareCoords(7, 7) : new SquareCoords(0, 0);
+                    dest = !MainChessBoard.IsFlipped ? new SquareCoords(5, 7) : new SquareCoords(2, 0);
+                    break;
+                case "e1c1":
+                    orig = !MainChessBoard.IsFlipped ? new SquareCoords(0, 0) : new SquareCoords(7, 7);
+                    dest = !MainChessBoard.IsFlipped ? new SquareCoords(3, 0) : new SquareCoords(4, 7);
+                    break;
+                case "e8c8":
+                    orig = !MainChessBoard.IsFlipped ? new SquareCoords(0, 7) : new SquareCoords(7, 0);
+                    dest = !MainChessBoard.IsFlipped ? new SquareCoords(3, 7) : new SquareCoords(4, 0);
+                    break;
+            }
+
+            MovePiece(orig, dest);
+        }
+
+        /// <summary>
+        /// Moving a piece from square to square.
+        /// </summary>
+        /// <param name="orig"></param>
+        /// <param name="dest"></param>
+        private void MovePiece(SquareCoords orig, SquareCoords dest)
+        {
+            if (orig == null || dest == null)
+                return;
+
+            MainChessBoard.GetPieceImage(dest.Xcoord, dest.Ycoord, true).Source = MainChessBoard.GetPieceImage(orig.Xcoord, orig.Ycoord, true).Source;
+            MainChessBoard.GetPieceImage(orig.Xcoord, orig.Ycoord, true).Source = null;
+        }
+
+        private void ReturnDraggedPiece(bool clearImage)
+        {
+            if (clearImage)
+            {
+                DraggedPiece.ImageControl.Source = null;
+            }
+            Canvas.SetLeft(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.X);
+            Canvas.SetTop(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.Y);
+        }
+
+        private void OnMouseMove(object sender, MouseEventArgs e)
+        {
+            Point clickedPoint = e.GetPosition(imgChessBoard);
+
+            if (DraggedPiece.isDragInProgress)
+            {
+                Canvas.SetZIndex(DraggedPiece.ImageControl, 10);
+                clickedPoint.X += imgChessBoard.Margin.Left;
+                clickedPoint.Y += imgChessBoard.Margin.Top;
+
+                Canvas.SetLeft(DraggedPiece.ImageControl, clickedPoint.X - squareSize / 2);
+                Canvas.SetTop(DraggedPiece.ImageControl, clickedPoint.Y - squareSize / 2);
+            }
+
+        }
+
+        /// <summary>
+        /// Move animation requested as part of auto-replay.
+        /// As such we need to flip the coordinates if
+        /// the board is flipped.
+        /// </summary>
+        /// <param name="move"></param>
+        public void MakeMove(MoveUI move)
+        {
+            SquareCoords origin = MainChessBoard.FlipCoords(move.Origin);
+            SquareCoords destination = MainChessBoard.FlipCoords(move.Destination);
+            AnimateMove(origin, destination);
+        }
+
+        /// <summary>
+        /// Caller must handle a possible flipped stated of the board.
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="destination"></param>
+        private void AnimateMove(SquareCoords origin, SquareCoords destination)
+        {
+            // caller already accounted for a possible flipped board so call with ignoreFlip = true
+            Image img = MainChessBoard.GetPieceImage(origin.Xcoord, origin.Ycoord, true);
+            MoveAnimation.Piece = img;
+            MoveAnimation.Origin = origin;
+            MoveAnimation.Destination = destination;
+
+            Canvas.SetZIndex(img, 1);
+
+            Point orig = GetSquareTopLeftPoint(origin);
+            Point dest = GetSquareTopLeftPoint(destination);
+
+            TranslateTransform trans = new TranslateTransform();
+            if (img.RenderTransform != null)
+                img.RenderTransform = trans;
+
+            DoubleAnimation animX = new DoubleAnimation(0, dest.X - orig.X, TimeSpan.FromMilliseconds(MoveAnimation.MoveDuration));
+            DoubleAnimation animY = new DoubleAnimation(0, dest.Y - orig.Y, TimeSpan.FromMilliseconds(MoveAnimation.MoveDuration));
+
+            AppState.CurrentTranslateTransform = trans;
+            AppState.CurrentAnimationX = animX;
+            AppState.CurrentAnimationY = animY;
+
+            animX.Completed += new EventHandler(Move_Completed);
+            trans.BeginAnimation(TranslateTransform.XProperty, animX);
+            trans.BeginAnimation(TranslateTransform.YProperty, animY);
+
+        }
+
+        private void StopAnimation()
+        {
+            // TODO Apparently, there are 2 methods to stop animation.
+            // Method 1 below keeps the animated image at the spot it was when the stop request came.
+            // Method 2 returns it to the initial position.
+            // Neither works fully to our satisfaction. They seem to not be exiting immediately and are leaving some garbage
+            // behind which prevents us from immediatey changing the speed of animation on user's request 
+            if (AppState.CurrentAnimationX != null && AppState.CurrentAnimationY != null && AppState.CurrentTranslateTransform != null)
+            {
+                // *** Method 1.
+                //AppState.CurrentAnimationX.BeginTime = null;
+                //AppState.CurrentAnimationY.BeginTime = null;
+                //AppState.CurrentTranslateTransform.BeginAnimation(TranslateTransform.XProperty, AppState.CurrentAnimationX);
+                //AppState.CurrentTranslateTransform.BeginAnimation(TranslateTransform.YProperty, AppState.CurrentAnimationY);
+
+                // *** Method 2.
+                AppState.CurrentTranslateTransform.BeginAnimation(TranslateTransform.XProperty, null);
+                AppState.CurrentTranslateTransform.BeginAnimation(TranslateTransform.YProperty, null);
+            }
+        }
+
+        /// <summary>
+        /// Called when animation completes.
+        /// The coords saved in the MoveAnimation object
+        /// are absolute as a possible flipped state of the board was
+        /// taken into account at the start fo the animation.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Move_Completed(object sender, EventArgs e)
+        {
+            AppState.CurrentTranslateTransform = null;
+            AppState.CurrentAnimationX = null;
+            AppState.CurrentAnimationY = null;
+
+            MainChessBoard.GetPieceImage(MoveAnimation.Destination.Xcoord, MoveAnimation.Destination.Ycoord, true).Source = MoveAnimation.Piece.Source;
+
+            Point orig = GetSquareTopLeftPoint(MoveAnimation.Origin);
+            //_pieces[AnimationOrigin.Xcoord, AnimationOrigin.Ycoord].Source = AnimationPiece.Source;
+
+            Canvas.SetLeft(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), orig.X);
+            Canvas.SetTop(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), orig.Y);
+
+            //TODO: there should be a better way than having to recreate the image control.
+            //   but it seems the image would no longer show (tested when not removing
+            //   the image from the origin square, the image won't show seemingly due to
+            // RenderTransfrom being set.)
+            //
+            // This seems to work but re-shows the last moved piece on its origin square???
+            // _pieces[AnimationOrigin.Xcoord, AnimationOrigin.Ycoord].RenderTransform = null;
+            //
+
+            Image old = MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true);
+            MainCanvas.Children.Remove(old);
+            MainChessBoard.SetPieceImage(new Image(), MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true);
+            MainCanvas.Children.Add(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true));
+            Canvas.SetLeft(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), squareSize * MoveAnimation.Origin.Xcoord + imgChessBoard.Margin.Left);
+            Canvas.SetTop(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), squareSize * (7 - MoveAnimation.Origin.Ycoord) + imgChessBoard.Margin.Top);
+
+            gameReplay.PrepareNextMoveForAnimation(gameReplay.LastAnimatedMoveIndex, false);
+        }
+
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            if (MainBoard.Width > 100)
+            {
+                MainBoard.Margin = new Thickness(MainBoard.Margin.Left + 10, MainBoard.Margin.Top, MainBoard.Margin.Right, MainBoard.Margin.Bottom);
+                MainBoard.Width -= 10;
+                //            SideBoard.Height = 640;
+            }
+        }
+
+        /// <summary>
+        /// Selects a move in all relevant views.
+        /// </summary>
+        /// <param name="moveNo"></param>
+        /// <param name="colorToMove"></param>
+        public void SelectPlyInTextViews(int moveNo, PieceColor colorToMove)
+        {
+            ViewActiveLine_SelectPly(moveNo, colorToMove);
+        }
+
+        private void OpenPgnFile(object sender, RoutedEventArgs e)
+        {
+            if (ChangeAppModeWarning(AppState.Mode.MANUAL_REVIEW))
+            {
+                string menuItemName = ((MenuItem)e.Source).Name;
+                string path = Configuration.GetRecentFile(menuItemName);
+                ReadPgnFile(path);
+            }
+        }
+
+        /// <summary>
+        /// Loads a new PGN file.
+        /// If the application is NOT in the IDLE mode, it will ask the user:
+        /// - to close/cancel/save/put_aside the current tree (TODO: TO BE IMPLEMENTED)
+        /// - stop a game against the engine, if in progress
+        /// - stop any engine evaluations if in progress (TODO: it should be allowed to continue background analysis in a separate low-pri thread).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Menu_LoadPgn(object sender, RoutedEventArgs e)
+        {
+            if (ChangeAppModeWarning(AppState.Mode.MANUAL_REVIEW))
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Multiselect = false;
+                openFileDialog.Filter = "ChessForge Workbooks (*.chf)|*.chf|PGN Game files (*.pgn)|*.pgn|All files (*.*)|*.*";
+
+                string initDir;
+                if (!string.IsNullOrEmpty(Configuration.LastPgnDirectory))
                 {
-                    case "e1g1":
-                        orig = !MainChessBoard.IsFlipped ? new SquareCoords(7, 0) : new SquareCoords(0, 7);
-                        dest = !MainChessBoard.IsFlipped ? new SquareCoords(5, 0) : new SquareCoords(2, 7);
-                        break;
-                    case "e8g8":
-                        orig = !MainChessBoard.IsFlipped ? new SquareCoords(7, 7) : new SquareCoords(0, 0);
-                        dest = !MainChessBoard.IsFlipped ? new SquareCoords(5, 7) : new SquareCoords(2, 0);
-                        break;
-                    case "e1c1":
-                        orig = !MainChessBoard.IsFlipped ? new SquareCoords(0, 0) : new SquareCoords(7, 7);
-                        dest = !MainChessBoard.IsFlipped ? new SquareCoords(3, 0) : new SquareCoords(4, 7);
-                        break;
-                    case "e8c8":
-                        orig = !MainChessBoard.IsFlipped ? new SquareCoords(0, 7) : new SquareCoords(7, 0);
-                        dest = !MainChessBoard.IsFlipped ? new SquareCoords(3, 7) : new SquareCoords(4, 0);
-                        break;
-                }
-
-                MovePiece(orig, dest);
-            }
-
-            /// <summary>
-            /// Moving a piece from square to square.
-            /// </summary>
-            /// <param name="orig"></param>
-            /// <param name="dest"></param>
-            private void MovePiece(SquareCoords orig, SquareCoords dest)
-            {
-                if (orig == null || dest == null)
-                    return;
-
-                MainChessBoard.GetPieceImage(dest.Xcoord, dest.Ycoord, true).Source = MainChessBoard.GetPieceImage(orig.Xcoord, orig.Ycoord, true).Source;
-                MainChessBoard.GetPieceImage(orig.Xcoord, orig.Ycoord, true).Source = null;
-            }
-
-            private void ReturnDraggedPiece(bool clearImage)
-            {
-                if (clearImage)
-                {
-                    DraggedPiece.ImageControl.Source = null;
-                }
-                Canvas.SetLeft(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.X);
-                Canvas.SetTop(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.Y);
-            }
-
-            private void OnMouseMove(object sender, MouseEventArgs e)
-            {
-                Point clickedPoint = e.GetPosition(imgChessBoard);
-
-                if (DraggedPiece.isDragInProgress)
-                {
-                    Canvas.SetZIndex(DraggedPiece.ImageControl, 10);
-                    clickedPoint.X += imgChessBoard.Margin.Left;
-                    clickedPoint.Y += imgChessBoard.Margin.Top;
-
-                    Canvas.SetLeft(DraggedPiece.ImageControl, clickedPoint.X - squareSize / 2);
-                    Canvas.SetTop(DraggedPiece.ImageControl, clickedPoint.Y - squareSize / 2);
-                }
-
-            }
-
-            /// <summary>
-            /// Move animation requested as part of auto-replay.
-            /// As such we need to flip the coordinates if
-            /// the board is flipped.
-            /// </summary>
-            /// <param name="move"></param>
-            public void MakeMove(MoveUI move)
-            {
-                SquareCoords origin = MainChessBoard.FlipCoords(move.Origin);
-                SquareCoords destination = MainChessBoard.FlipCoords(move.Destination);
-                AnimateMove(origin, destination);
-            }
-
-            /// <summary>
-            /// Caller must handle a possible flipped stated of the board.
-            /// </summary>
-            /// <param name="origin"></param>
-            /// <param name="destination"></param>
-            private void AnimateMove(SquareCoords origin, SquareCoords destination)
-            {
-                // caller already accounted for a possible flipped board so call with ignoreFlip = true
-                Image img = MainChessBoard.GetPieceImage(origin.Xcoord, origin.Ycoord, true);
-                MoveAnimation.Piece = img;
-                MoveAnimation.Origin = origin;
-                MoveAnimation.Destination = destination;
-
-                Canvas.SetZIndex(img, 1);
-
-                Point orig = GetSquareTopLeftPoint(origin);
-                Point dest = GetSquareTopLeftPoint(destination);
-
-                TranslateTransform trans = new TranslateTransform();
-                if (img.RenderTransform != null)
-                    img.RenderTransform = trans;
-
-                DoubleAnimation animX = new DoubleAnimation(0, dest.X - orig.X, TimeSpan.FromMilliseconds(MoveAnimation.MoveDuration));
-                DoubleAnimation animY = new DoubleAnimation(0, dest.Y - orig.Y, TimeSpan.FromMilliseconds(MoveAnimation.MoveDuration));
-
-                AppState.CurrentTranslateTransform = trans;
-                AppState.CurrentAnimationX = animX;
-                AppState.CurrentAnimationY = animY;
-
-                animX.Completed += new EventHandler(Move_Completed);
-                trans.BeginAnimation(TranslateTransform.XProperty, animX);
-                trans.BeginAnimation(TranslateTransform.YProperty, animY);
-
-            }
-
-            private void StopAnimation()
-            {
-                // TODO Apparently, there are 2 methods to stop animation.
-                // Method 1 below keeps the animated image at the spot it was when the stop request came.
-                // Method 2 returns it to the initial position.
-                // Neither works fully to our satisfaction. They seem to not be exiting immediately and are leaving some garbage
-                // behind which prevents us from immediatey changing the speed of animation on user's request 
-                if (AppState.CurrentAnimationX != null && AppState.CurrentAnimationY != null && AppState.CurrentTranslateTransform != null)
-                {
-                    // *** Method 1.
-                    //AppState.CurrentAnimationX.BeginTime = null;
-                    //AppState.CurrentAnimationY.BeginTime = null;
-                    //AppState.CurrentTranslateTransform.BeginAnimation(TranslateTransform.XProperty, AppState.CurrentAnimationX);
-                    //AppState.CurrentTranslateTransform.BeginAnimation(TranslateTransform.YProperty, AppState.CurrentAnimationY);
-
-                    // *** Method 2.
-                    AppState.CurrentTranslateTransform.BeginAnimation(TranslateTransform.XProperty, null);
-                    AppState.CurrentTranslateTransform.BeginAnimation(TranslateTransform.YProperty, null);
-                }
-            }
-
-            /// <summary>
-            /// Called when animation completes.
-            /// The coords saved in the MoveAnimation object
-            /// are absolute as a possible flipped state of the board was
-            /// taken into account at the start fo the animation.
-            /// </summary>
-            /// <param name="sender"></param>
-            /// <param name="e"></param>
-            private void Move_Completed(object sender, EventArgs e)
-            {
-                AppState.CurrentTranslateTransform = null;
-                AppState.CurrentAnimationX = null;
-                AppState.CurrentAnimationY = null;
-
-                MainChessBoard.GetPieceImage(MoveAnimation.Destination.Xcoord, MoveAnimation.Destination.Ycoord, true).Source = MoveAnimation.Piece.Source;
-
-                Point orig = GetSquareTopLeftPoint(MoveAnimation.Origin);
-                //_pieces[AnimationOrigin.Xcoord, AnimationOrigin.Ycoord].Source = AnimationPiece.Source;
-
-                Canvas.SetLeft(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), orig.X);
-                Canvas.SetTop(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), orig.Y);
-
-                //TODO: there should be a better way than having to recreate the image control.
-                //   but it seems the image would no longer show (tested when not removing
-                //   the image from the origin square, the image won't show seemingly due to
-                // RenderTransfrom being set.)
-                //
-                // This seems to work but re-shows the last moved piece on its origin square???
-                // _pieces[AnimationOrigin.Xcoord, AnimationOrigin.Ycoord].RenderTransform = null;
-                //
-
-                Image old = MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true);
-                MainCanvas.Children.Remove(old);
-                MainChessBoard.SetPieceImage(new Image(), MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true);
-                MainCanvas.Children.Add(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true));
-                Canvas.SetLeft(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), squareSize * MoveAnimation.Origin.Xcoord + imgChessBoard.Margin.Left);
-                Canvas.SetTop(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), squareSize * (7 - MoveAnimation.Origin.Ycoord) + imgChessBoard.Margin.Top);
-
-                gameReplay.PrepareNextMoveForAnimation(gameReplay.LastAnimatedMoveIndex, false);
-            }
-
-
-            private void dispatcherTimer_Tick(object sender, EventArgs e)
-            {
-                if (MainBoard.Width > 100)
-                {
-                    MainBoard.Margin = new Thickness(MainBoard.Margin.Left + 10, MainBoard.Margin.Top, MainBoard.Margin.Right, MainBoard.Margin.Bottom);
-                    MainBoard.Width -= 10;
-                    //            SideBoard.Height = 640;
-                }
-            }
-
-            /// <summary>
-            /// Selects a move in all relevant views.
-            /// </summary>
-            /// <param name="moveNo"></param>
-            /// <param name="colorToMove"></param>
-            public void SelectPlyInTextViews(int moveNo, PieceColor colorToMove)
-            {
-                ViewActiveLine_SelectPly(moveNo, colorToMove);
-            }
-
-            private void OpenPgnFile(object sender, RoutedEventArgs e)
-            {
-                if (ChangeAppModeWarning(AppState.Mode.MANUAL_REVIEW))
-                {
-                    string menuItemName = ((MenuItem)e.Source).Name;
-                    string path = Configuration.GetRecentFile(menuItemName);
-                    ReadPgnFile(path);
-                }
-            }
-
-            /// <summary>
-            /// Loads a new PGN file.
-            /// If the application is NOT in the IDLE mode, it will ask the user:
-            /// - to close/cancel/save/put_aside the current tree (TODO: TO BE IMPLEMENTED)
-            /// - stop a game against the engine, if in progress
-            /// - stop any engine evaluations if in progress (TODO: it should be allowed to continue background analysis in a separate low-pri thread).
-            /// </summary>
-            /// <param name="sender"></param>
-            /// <param name="e"></param>
-            private void Menu_LoadPgn(object sender, RoutedEventArgs e)
-            {
-                if (ChangeAppModeWarning(AppState.Mode.MANUAL_REVIEW))
-                {
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Multiselect = false;
-                    openFileDialog.Filter = "ChessForge Workbooks (*.chf)|*.chf|PGN Game files (*.pgn)|*.pgn|All files (*.*)|*.*";
-
-                    string initDir;
-                    if (!string.IsNullOrEmpty(Configuration.LastPgnDirectory))
-                    {
-                        initDir = Configuration.LastPgnDirectory;
-                    }
-                    else
-                    {
-                        initDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    }
-
-                    openFileDialog.InitialDirectory = initDir;
-
-                    bool? result = false;
-
-                    try
-                    {
-                        result = openFileDialog.ShowDialog();
-                    }
-                    catch
-                    {
-                        openFileDialog.InitialDirectory = "";
-                        result = openFileDialog.ShowDialog();
-                    };
-
-                    if (result == true)
-                    {
-                        Configuration.LastPgnDirectory = Path.GetDirectoryName(openFileDialog.FileName);
-                        ReadPgnFile(openFileDialog.FileName);
-                    }
-                }
-            }
-
-            /// <summary>
-            /// Returns true if user accept the change. of mode.
-            /// </summary>
-            /// <param name="newMode"></param>
-            /// <returns></returns>
-            private bool ChangeAppModeWarning(AppState.Mode newMode)
-            {
-                if (AppState.CurrentMode == AppState.Mode.IDLE)
-                {
-                    // it is a fresh state, no need for any warnings
-                    return true;
-                }
-
-                bool result = false;
-                // we may not be changing the mode, but changing
-                // the variation tree we are working with.
-                if (AppState.CurrentMode == AppState.Mode.MANUAL_REVIEW && newMode == AppState.Mode.MANUAL_REVIEW)
-                {
-                    // TODO: ask what to do with the current tree
-                    // abandon, save, put aside
-                    result = true;
-                }
-                else if (AppState.CurrentMode != AppState.Mode.MANUAL_REVIEW && newMode == AppState.Mode.MANUAL_REVIEW)
-                {
-                    switch (AppState.CurrentMode)
-                    {
-                        case AppState.Mode.GAME_VS_COMPUTER:
-                            if (MessageBox.Show("Cancel Game", "Game with the Computer is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                                result = true;
-                            break;
-                        //case AppState.Mode.GAME_REPLAY:
-                        //    if (MessageBox.Show("Cancel Replay", "Game Replay is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                        //        result = true;
-                        //    break;
-                        default:
-                            result = true;
-                            break;
-                    }
+                    initDir = Configuration.LastPgnDirectory;
                 }
                 else
                 {
-                    return true;
+                    initDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 }
 
-                return result;
-            }
+                openFileDialog.InitialDirectory = initDir;
 
-            private void RecreateRecentFilesMenuItems()
-            {
-                List<object> itemsToRemove = new List<object>();
+                bool? result = false;
 
-                for (int i = 0; i < MenuFile.Items.Count; i++)
-                {
-                    if (MenuFile.Items[i] is MenuItem)
-                    {
-                        MenuItem item = (MenuItem)MenuFile.Items[i];
-                        if (item.Name.StartsWith("RecentFiles"))
-                        {
-                            itemsToRemove.Add(item);
-                        }
-                    }
-                }
-
-                foreach (MenuItem item in itemsToRemove)
-                {
-                    MenuFile.Items.Remove(item);
-                }
-
-                CreateRecentFilesMenuItems();
-            }
-
-            /// <summary>
-            /// Reads in the file and builds internal Variation Tree
-            /// structures for the entire content.
-            /// </summary>
-            /// <param name="fileName"></param>
-            private void ReadPgnFile(string fileName)
-            {
                 try
                 {
-                    string gameText = File.ReadAllText(fileName);
+                    result = openFileDialog.ShowDialog();
+                }
+                catch
+                {
+                    openFileDialog.InitialDirectory = "";
+                    result = openFileDialog.ShowDialog();
+                };
 
-                    Configuration.AddRecentFile(fileName);
-                    RecreateRecentFilesMenuItems();
+                if (result == true)
+                {
+                    Configuration.LastPgnDirectory = Path.GetDirectoryName(openFileDialog.FileName);
+                    ReadPgnFile(openFileDialog.FileName);
+                }
+            }
+        }
 
-                    Workbook = new WorkbookTree();
-                    _rtbWorkbookView.Document.Blocks.Clear();
-                    PgnGameParser pgnGame = new PgnGameParser(gameText, Workbook, true);
-                    _mainboardCommentBox.ShowWorkbookTitle(Workbook.Title);
+        /// <summary>
+        /// Returns true if user accept the change. of mode.
+        /// </summary>
+        /// <param name="newMode"></param>
+        /// <returns></returns>
+        private bool ChangeAppModeWarning(AppState.Mode newMode)
+        {
+            if (AppState.CurrentMode == AppState.Mode.IDLE)
+            {
+                // it is a fresh state, no need for any warnings
+                return true;
+            }
 
-                    _workbookRichTextBuilder = new WorkbookRichTextBuilder(_rtbWorkbookView.Document);
-                    _trainingBrowseRichTextBuilder = new WorkbookRichTextBuilder(_rtbTrainingBrowse.Document);
-                    _trainingView = new TrainingView(_rtbTrainingProgress.Document);
+            bool result = false;
+            // we may not be changing the mode, but changing
+            // the variation tree we are working with.
+            if (AppState.CurrentMode == AppState.Mode.MANUAL_REVIEW && newMode == AppState.Mode.MANUAL_REVIEW)
+            {
+                // TODO: ask what to do with the current tree
+                // abandon, save, put aside
+                result = true;
+            }
+            else if (AppState.CurrentMode != AppState.Mode.MANUAL_REVIEW && newMode == AppState.Mode.MANUAL_REVIEW)
+            {
+                switch (AppState.CurrentMode)
+                {
+                    case AppState.Mode.GAME_VS_COMPUTER:
+                        if (MessageBox.Show("Cancel Game", "Game with the Computer is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            result = true;
+                        break;
+                    //case AppState.Mode.GAME_REPLAY:
+                    //    if (MessageBox.Show("Cancel Replay", "Game Replay is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    //        result = true;
+                    //    break;
+                    default:
+                        result = true;
+                        break;
+                }
+            }
+            else
+            {
+                return true;
+            }
 
-                    Workbook.BuildLines();
+            return result;
+        }
 
-                    _chfFileText = new ChfFileBuilder();
-                    _chfFileText.BuildTreeText();
+        private void RecreateRecentFilesMenuItems()
+        {
+            List<object> itemsToRemove = new List<object>();
 
-                    _workbookRichTextBuilder.BuildFlowDocumentForWorkbook();
-                    if (Workbook.Bookmarks.Count == 0)
+            for (int i = 0; i < MenuFile.Items.Count; i++)
+            {
+                if (MenuFile.Items[i] is MenuItem)
+                {
+                    MenuItem item = (MenuItem)MenuFile.Items[i];
+                    if (item.Name.StartsWith("RecentFiles"))
                     {
-                        Workbook.GenerateBookmarks();
-                    }
-
-                    int startingNode = 0;
-                    string startLineId = Workbook.GetDefaultLineIdForNode(startingNode);
-                    SetActiveLine(startLineId, startingNode);
-
-                    //_dgActiveLine.ItemsSource = ActiveLine.MoveList;
-
-                    SetupDataInTreeView();
-
-                    ShowBookmarks();
-
-                    _workbookRichTextBuilder.SelectLineAndMove(startLineId, startingNode);
-                    _lvWorkbookTable_SelectLineAndMove(startLineId, startingNode);
-
-                    Configuration.LastPgnFile = fileName;
-                    Configuration.AddRecentFile(fileName);
-
-                    AppState.ChangeCurrentMode(AppState.Mode.MANUAL_REVIEW);
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message, "Error processing PGN file", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-
-            public void SetActiveLine(string lineId, int selectedNodeId)
-            {
-                ObservableCollection<TreeNode> line = Workbook.SelectLine(lineId);
-                SetActiveLine(line, selectedNodeId);
-            }
-
-            public void DisplayPosition(BoardPosition position)
-            {
-                MainChessBoard.DisplayPosition(position);
-            }
-
-            public void SetActiveLine(ObservableCollection<TreeNode> line, int selectedNodeId)
-            {
-                ActiveLine.NodeList = line;
-                ActiveLine.MoveList = PositionUtils.BuildViewListFromLine(line);
-                _dgActiveLine.ItemsSource = ActiveLine.MoveList;
-
-                if (selectedNodeId > 0)
-                {
-                    TreeNode nd = ActiveLine.NodeList.First(x => x.NodeId == selectedNodeId);
-                    ViewActiveLine_SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
-                    MainChessBoard.DisplayPosition(nd.Position);
-                }
-            }
-
-            private void ChessForgeMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-            {
-                AppLog.Dump();
-                EngineLog.Dump();
-                Configuration.WriteOutConfiguration();
-            }
-
-            private void sliderReplaySpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-            {
-                Configuration.MoveSpeed = (int)e.NewValue;
-                MoveAnimation.MoveDuration = Configuration.MoveSpeed;
-            }
-
-            /// <summary>
-            /// The user requested evaluation of the currently selected move.
-            /// Check if there is an item currently selected. 
-            /// </summary>
-            /// <param name="sender"></param>
-            /// <param name="e"></param>
-            private void MenuItem_EvaluatePosition(object sender, RoutedEventArgs e)
-            {
-                if (Evaluation.Mode != EvaluationState.EvaluationMode.IDLE)
-                {
-                    // there is an evaluation running right now so do not allow another one.
-                    // This menu item should be disabled if that's the case so we should never
-                    // end up here but just in case ...
-                    MessageBox.Show("Cannot start an evaluation while another one in progress.", "Move Evaluation", MessageBoxButton.OK, MessageBoxImage.Information);
-                    return;
-                }
-                int moveIndex = ViewSingleLine_GetSelectedPlyNodeIndex();
-                if (moveIndex < 0)
-                {
-                    MessageBox.Show("Select a move to evaluate.", "Move Evaluation", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    // the position we want to show is the next element
-                    int posIndex = moveIndex + 1;
-                    // check that the engine is available
-                    if (EngineMessageProcessor.IsEngineAvailable())
-                    {
-                        // make an extra defensive check
-                        if (posIndex < ActiveLine.NodeList.Count)
-                        {
-                            RequestMoveEvaluation(posIndex, EvaluationState.EvaluationMode.SINGLE_MOVE, true);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Chess Engine is not available.", "Move Evaluation Failure", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        itemsToRemove.Add(item);
                     }
                 }
             }
 
-            private void MenuItem_EvaluateLine(object sender, RoutedEventArgs e)
+            foreach (MenuItem item in itemsToRemove)
             {
-                // a defensive check
-                if (ActiveLine.NodeList == null || ActiveLine.NodeList.Count == 0)
+                MenuFile.Items.Remove(item);
+            }
+
+            CreateRecentFilesMenuItems();
+        }
+
+        /// <summary>
+        /// Reads in the file and builds internal Variation Tree
+        /// structures for the entire content.
+        /// </summary>
+        /// <param name="fileName"></param>
+        private void ReadPgnFile(string fileName)
+        {
+            try
+            {
+                string gameText = File.ReadAllText(fileName);
+
+                Configuration.AddRecentFile(fileName);
+                RecreateRecentFilesMenuItems();
+
+                Workbook = new WorkbookTree();
+                _rtbWorkbookView.Document.Blocks.Clear();
+                PgnGameParser pgnGame = new PgnGameParser(gameText, Workbook, true);
+                _mainboardCommentBox.ShowWorkbookTitle(Workbook.Title);
+
+                if (Workbook.TrainingSide == PieceColor.None)
                 {
-                    return;
+                    TrainingSideDialog dlg = new TrainingSideDialog();
+                    dlg.ShowDialog();
+                    Workbook.TrainingSide = dlg.SelectedSide;
+                }
+                _workbookRichTextBuilder = new WorkbookRichTextBuilder(_rtbWorkbookView.Document);
+                _trainingBrowseRichTextBuilder = new WorkbookRichTextBuilder(_rtbTrainingBrowse.Document);
+                _trainingView = new TrainingView(_rtbTrainingProgress.Document);
+
+                Workbook.BuildLines();
+
+                _chfFileText = new ChfFileBuilder();
+                _chfFileText.BuildTreeText();
+
+                _workbookRichTextBuilder.BuildFlowDocumentForWorkbook();
+                if (Workbook.Bookmarks.Count == 0)
+                {
+                    Workbook.GenerateBookmarks();
                 }
 
-                if (Evaluation.Mode != EvaluationState.EvaluationMode.IDLE)
-                {
-                    // there is an evaluation running right now so do not allow another one.
-                    MessageBox.Show("Cannot start an evaluation while another one in progress.", "Move Evaluation", MessageBoxButton.OK, MessageBoxImage.Information);
-                    return;
-                }
+                int startingNode = 0;
+                string startLineId = Workbook.GetDefaultLineIdForNode(startingNode);
+                SetActiveLine(startLineId, startingNode);
 
-                Evaluation.PositionIndex = 1;
-                // we will start with the first move of the active line
+                //_dgActiveLine.ItemsSource = ActiveLine.MoveList;
+
+                SetupDataInTreeView();
+
+                ShowBookmarks();
+
+                _workbookRichTextBuilder.SelectLineAndMove(startLineId, startingNode);
+                _lvWorkbookTable_SelectLineAndMove(startLineId, startingNode);
+
+                Configuration.LastPgnFile = fileName;
+                Configuration.AddRecentFile(fileName);
+
+                AppState.ChangeCurrentMode(AppState.Mode.MANUAL_REVIEW);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error processing PGN file", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void SetActiveLine(string lineId, int selectedNodeId)
+        {
+            ObservableCollection<TreeNode> line = Workbook.SelectLine(lineId);
+            SetActiveLine(line, selectedNodeId);
+        }
+
+        public void DisplayPosition(BoardPosition position)
+        {
+            MainChessBoard.DisplayPosition(position);
+        }
+
+        public void SetActiveLine(ObservableCollection<TreeNode> line, int selectedNodeId)
+        {
+            ActiveLine.NodeList = line;
+            ActiveLine.MoveList = PositionUtils.BuildViewListFromLine(line);
+            _dgActiveLine.ItemsSource = ActiveLine.MoveList;
+
+            if (selectedNodeId > 0)
+            {
+                TreeNode nd = ActiveLine.NodeList.First(x => x.NodeId == selectedNodeId);
+                ViewActiveLine_SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
+                MainChessBoard.DisplayPosition(nd.Position);
+            }
+        }
+
+        private void ChessForgeMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            AppLog.Dump();
+            EngineLog.Dump();
+            Configuration.WriteOutConfiguration();
+        }
+
+        private void sliderReplaySpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Configuration.MoveSpeed = (int)e.NewValue;
+            MoveAnimation.MoveDuration = Configuration.MoveSpeed;
+        }
+
+        /// <summary>
+        /// The user requested evaluation of the currently selected move.
+        /// Check if there is an item currently selected. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItem_EvaluatePosition(object sender, RoutedEventArgs e)
+        {
+            if (Evaluation.Mode != EvaluationState.EvaluationMode.IDLE)
+            {
+                // there is an evaluation running right now so do not allow another one.
+                // This menu item should be disabled if that's the case so we should never
+                // end up here but just in case ...
+                MessageBox.Show("Cannot start an evaluation while another one in progress.", "Move Evaluation", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            int moveIndex = ViewSingleLine_GetSelectedPlyNodeIndex();
+            if (moveIndex < 0)
+            {
+                MessageBox.Show("Select a move to evaluate.", "Move Evaluation", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                // the position we want to show is the next element
+                int posIndex = moveIndex + 1;
+                // check that the engine is available
                 if (EngineMessageProcessor.IsEngineAvailable())
                 {
-                    _dgActiveLine.SelectedCells.Clear();
-                    RequestMoveEvaluation(Evaluation.PositionIndex, EvaluationState.EvaluationMode.FULL_LINE, true);
+                    // make an extra defensive check
+                    if (posIndex < ActiveLine.NodeList.Count)
+                    {
+                        RequestMoveEvaluation(posIndex, EvaluationState.EvaluationMode.SINGLE_MOVE, true);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Chess Engine is not avalable.", "Move Evaluation Failure", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Chess Engine is not available.", "Move Evaluation Failure", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
+        }
 
-            /// <summary>
-            /// Starts move evaluation on user's request or when continuing line evaluation.
-            /// NOTE: does not start evaluation when making a move during a user vs engine game.
-            /// </summary>
-            /// <param name="posIndex"></param>
-            /// <param name="mode"></param>
-            /// <param name="isLineStart"></param>
-            private void RequestMoveEvaluation(int posIndex, EvaluationState.EvaluationMode mode, bool isLineStart)
+        private void MenuItem_EvaluateLine(object sender, RoutedEventArgs e)
+        {
+            // a defensive check
+            if (ActiveLine.NodeList == null || ActiveLine.NodeList.Count == 0)
             {
-                Evaluation.PositionIndex = posIndex;
-                Evaluation.Position = ActiveLine.NodeList[posIndex].Position;
-                MainChessBoard.DisplayPosition(Evaluation.Position);
-
-                ShowMoveEvaluationControls(true, isLineStart);
-                UpdateLastMoveTextBox(posIndex, isLineStart);
-
-                Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
-
-                PrepareMoveEvaluation(mode, Evaluation.Position);
+                return;
             }
 
-            /// <summary>
-            /// This method will be called when in Training mode to evaluate
-            /// user's move or moves from the Workbook.
-            /// </summary>
-            /// <param name="nodeId"></param>
-            public void RequestMoveEvaluationInTraining(int nodeId)
+            if (Evaluation.Mode != EvaluationState.EvaluationMode.IDLE)
             {
-                TreeNode nd = Workbook.GetNodeFromNodeId(nodeId);
-                RequestMoveEvaluationInTraining(nd);
-                //Evaluation.Position = nd.Position;
-                //ShowMoveEvaluationControls(true, false);
-
-                //EngineMessageProcessor.StartMessagePollTimer();
-                //PrepareMoveEvaluation(EvaluationState.EvaluationMode.IN_TRAINING, Evaluation.Position);
+                // there is an evaluation running right now so do not allow another one.
+                MessageBox.Show("Cannot start an evaluation while another one in progress.", "Move Evaluation", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
             }
 
-            public void RequestMoveEvaluationInTraining(TreeNode nd)
+            Evaluation.PositionIndex = 1;
+            // we will start with the first move of the active line
+            if (EngineMessageProcessor.IsEngineAvailable())
             {
-                Evaluation.Position = nd.Position;
-                UpdateLastMoveTextBox(nd, true);
-                ShowMoveEvaluationControls(true, false);
-
-                Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
-                PrepareMoveEvaluation(EvaluationState.EvaluationMode.IN_TRAINING, Evaluation.Position);
+                _dgActiveLine.SelectedCells.Clear();
+                RequestMoveEvaluation(Evaluation.PositionIndex, EvaluationState.EvaluationMode.FULL_LINE, true);
             }
-
-            /// <summary>
-            /// Prepares controls, timers 
-            /// and requests the engine to make move.
-            /// </summary>
-            /// <param name="position"></param>
-            private void RequestEngineMove(BoardPosition position)
+            else
             {
-                PrepareMoveEvaluation(EvaluationState.EvaluationMode.IN_GAME_PLAY, position);
+                MessageBox.Show("Chess Engine is not avalable.", "Move Evaluation Failure", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
 
-            /// <summary>
-            /// Preparations for move evaluation that are common for Position/Line 
-            /// evaluation as well as requesting engine move in a game.
-            /// </summary>
-            /// <param name="mode"></param>
-            /// <param name="position"></param>
-            private void PrepareMoveEvaluation(EvaluationState.EvaluationMode mode, BoardPosition position)
+        /// <summary>
+        /// Starts move evaluation on user's request or when continuing line evaluation.
+        /// NOTE: does not start evaluation when making a move during a user vs engine game.
+        /// </summary>
+        /// <param name="posIndex"></param>
+        /// <param name="mode"></param>
+        /// <param name="isLineStart"></param>
+        private void RequestMoveEvaluation(int posIndex, EvaluationState.EvaluationMode mode, bool isLineStart)
+        {
+            Evaluation.PositionIndex = posIndex;
+            Evaluation.Position = ActiveLine.NodeList[posIndex].Position;
+            MainChessBoard.DisplayPosition(Evaluation.Position);
+
+            ShowMoveEvaluationControls(true, isLineStart);
+            UpdateLastMoveTextBox(posIndex, isLineStart);
+
+            Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
+
+            PrepareMoveEvaluation(mode, Evaluation.Position);
+        }
+
+        /// <summary>
+        /// This method will be called when in Training mode to evaluate
+        /// user's move or moves from the Workbook.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        public void RequestMoveEvaluationInTraining(int nodeId)
+        {
+            TreeNode nd = Workbook.GetNodeFromNodeId(nodeId);
+            RequestMoveEvaluationInTraining(nd);
+            //Evaluation.Position = nd.Position;
+            //ShowMoveEvaluationControls(true, false);
+
+            //EngineMessageProcessor.StartMessagePollTimer();
+            //PrepareMoveEvaluation(EvaluationState.EvaluationMode.IN_TRAINING, Evaluation.Position);
+        }
+
+        public void RequestMoveEvaluationInTraining(TreeNode nd)
+        {
+            Evaluation.Position = nd.Position;
+            UpdateLastMoveTextBox(nd, true);
+            ShowMoveEvaluationControls(true, false);
+
+            Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
+            PrepareMoveEvaluation(EvaluationState.EvaluationMode.IN_TRAINING, Evaluation.Position);
+        }
+
+        /// <summary>
+        /// Prepares controls, timers 
+        /// and requests the engine to make move.
+        /// </summary>
+        /// <param name="position"></param>
+        private void RequestEngineMove(BoardPosition position)
+        {
+            PrepareMoveEvaluation(EvaluationState.EvaluationMode.IN_GAME_PLAY, position);
+        }
+
+        /// <summary>
+        /// Preparations for move evaluation that are common for Position/Line 
+        /// evaluation as well as requesting engine move in a game.
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <param name="position"></param>
+        private void PrepareMoveEvaluation(EvaluationState.EvaluationMode mode, BoardPosition position)
+        {
+            Evaluation.Mode = mode;
+
+            menuEvalLine.Dispatcher.Invoke(() =>
             {
-                Evaluation.Mode = mode;
+                menuEvalLine.IsEnabled = false;
+            });
+            menuEvalPos.Dispatcher.Invoke(() =>
+            {
+                menuEvalPos.IsEnabled = false;
+            });
 
-                menuEvalLine.Dispatcher.Invoke(() =>
-                {
-                    menuEvalLine.IsEnabled = false;
-                });
-                menuEvalPos.Dispatcher.Invoke(() =>
-                {
-                    menuEvalPos.IsEnabled = false;
-                });
+            _pbEngineThinking.Dispatcher.Invoke(() =>
+            {
+                _pbEngineThinking.Visibility = Visibility.Visible;
+                _pbEngineThinking.Minimum = 0;
+                    // add 50% to compensate for any processing delays
+                    // we don't want to be too optimistic
+                _pbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime * 1.5);
+                _pbEngineThinking.Value = 0;
+            });
 
-                _pbEngineThinking.Dispatcher.Invoke(() =>
-                {
-                    _pbEngineThinking.Visibility = Visibility.Visible;
-                    _pbEngineThinking.Minimum = 0;
-                // add 50% to compensate for any processing delays
-                // we don't want to be too optimistic
-                    _pbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime * 1.5);
-                    _pbEngineThinking.Value = 0;
-                });
+            Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+            Timers.Start(AppTimers.StopwatchId.EVALUATION_PROGRESS);
 
-                Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
-                Timers.Start(AppTimers.StopwatchId.EVALUATION_PROGRESS);
+            string fen = FenParser.GenerateFenFromPosition(position);
+            EngineMessageProcessor.RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
+        }
 
-                string fen = FenParser.GenerateFenFromPosition(position);
-                EngineMessageProcessor.RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
+        private void UpdateLastMoveTextBox(TreeNode nd, bool isLineStart)
+        {
+            string moveTxt = MoveUtils.BuildSingleMoveText(nd);
+
+            UpdateLastMoveTextBox(moveTxt, isLineStart);
+        }
+
+        private void UpdateLastMoveTextBox(int posIndex, bool isLineStart)
+        {
+            string moveTxt = Evaluation.Position.MoveNumber.ToString()
+                    + (Evaluation.Position.ColorToMove == PieceColor.Black ? "." : "...")
+                    + ActiveLine.NodeList[posIndex].LastMoveAlgebraicNotation;
+
+            UpdateLastMoveTextBox(moveTxt, isLineStart);
+        }
+
+        private void UpdateLastMoveTextBox(string moveTxt, bool isLineStart)
+        {
+            if (isLineStart)
+            {
+                _lblMoveUnderEval.Content = moveTxt;
             }
-
-            private void UpdateLastMoveTextBox(TreeNode nd, bool isLineStart)
+            else
             {
-                string moveTxt = MoveUtils.BuildSingleMoveText(nd);
-
-                UpdateLastMoveTextBox(moveTxt, isLineStart);
-            }
-
-            private void UpdateLastMoveTextBox(int posIndex, bool isLineStart)
-            {
-                string moveTxt = Evaluation.Position.MoveNumber.ToString()
-                        + (Evaluation.Position.ColorToMove == PieceColor.Black ? "." : "...")
-                        + ActiveLine.NodeList[posIndex].LastMoveAlgebraicNotation;
-
-                UpdateLastMoveTextBox(moveTxt, isLineStart);
-            }
-
-            private void UpdateLastMoveTextBox(string moveTxt, bool isLineStart)
-            {
-                if (isLineStart)
+                _lblMoveUnderEval.Dispatcher.Invoke(() =>
                 {
                     _lblMoveUnderEval.Content = moveTxt;
-                }
-                else
-                {
-                    _lblMoveUnderEval.Dispatcher.Invoke(() =>
-                    {
-                        _lblMoveUnderEval.Content = moveTxt;
-                    });
-                }
+                });
             }
+        }
 
         public static object EvalLock = new object();
 
@@ -1493,6 +1499,11 @@ namespace ChessForge
 
         private void SetAppInTrainingMode(int bookmarkIndex)
         {
+            if (bookmarkIndex >= Workbook.Bookmarks.Count)
+            {
+                return;
+            }
+
             // Set training mode, clearing any other states
             // that may have been set
             // TODO: need to reset any possible activities like
@@ -1511,6 +1522,13 @@ namespace ChessForge
 
             EnterGuiTrainingMode();
             TrainingState.IsTrainingInProgress = true;
+            if (AppState.TrainingSide == PieceColor.Black)
+            {
+                if (!MainChessBoard.IsFlipped)
+                {
+                    MainChessBoard.FlipBoard();
+                }
+            }
 
             _mainboardCommentBox.TrainingSessionStart();
 
@@ -1670,6 +1688,60 @@ namespace ChessForge
         private void MenuItem_FlipBoard(object sender, RoutedEventArgs e)
         {
             MainChessBoard.FlipBoard();
+        }
+
+        private void _imgBookmark_1_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SetAppInTrainingMode(0);
+            e.Handled = true;
+        }
+
+        private void _imgBookmark_2_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SetAppInTrainingMode(1);
+            e.Handled = true;
+        }
+
+        private void _imgBookmark_3_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SetAppInTrainingMode(2);
+            e.Handled = true;
+        }
+
+        private void _imgBookmark_4_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SetAppInTrainingMode(3);
+            e.Handled = true;
+        }
+
+        private void _imgBookmark_5_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SetAppInTrainingMode(4);
+            e.Handled = true;
+        }
+
+        private void _imgBookmark_6_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SetAppInTrainingMode(5);
+            e.Handled = true;
+        }
+
+        private void _imgBookmark_7_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SetAppInTrainingMode(6);
+            e.Handled = true;
+        }
+
+        private void _imgBookmark_8_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SetAppInTrainingMode(7);
+            e.Handled = true;
+        }
+
+        private void _imgBookmark_9_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SetAppInTrainingMode(8);
+            e.Handled = true;
         }
     }
 

@@ -29,6 +29,11 @@ namespace GameTree
         public string Title;
 
         /// <summary>
+        /// Title of this Workbook to show in the GUI
+        /// </summary>
+        public PieceColor TrainingSide;
+
+        /// <summary>
         /// "Stem" of this tree i.e., the starting moves up until the first fork.
         /// </summary>
         public List<TreeNode> Stem;
@@ -65,28 +70,50 @@ namespace GameTree
         /// <summary>
         /// If there are no bookmarks, we will generate some
         /// for the user.
+        /// In the bookmarked position, the training side
+        /// should be on move.
+        /// 
+        /// Hence, we look for forks on the moves by the side
+        /// opposite to the side doing the training.
+        /// If the fork is for the training side, the parent
+        /// may be a good candidate for bookmarking.
         /// </summary>
         public void GenerateBookmarks()
         {
             if (Nodes.Count == 0)
                 return;
 
-            int MAX_BOOKMARKS = 6;
+            int MAX_BOOKMARKS = 9;
 
-            // find the first fork
+            // find the first, highhest level, fork
             TreeNode fork = FindNextFork(Nodes[0]);
             if (fork == null)
             {
                 return;
             }
 
-            BookmarkChildren(fork, MAX_BOOKMARKS);
+            // bookmark children of the first fork
+            if (fork.ColorToMove != TrainingSide)
+            {
+                BookmarkChildren(fork, MAX_BOOKMARKS);
+            }
+            else if (fork.Parent.NodeId != 0)
+            {
+                BookmarkChildren(fork.Parent, MAX_BOOKMARKS);
+            }
 
             // look for the next fork in each child
             foreach (TreeNode nd in fork.Children)
             {
                 TreeNode nextFork = FindNextFork(nd);
-                BookmarkChildren(nextFork, MAX_BOOKMARKS);
+                if (nextFork.ColorToMove != TrainingSide)
+                {
+                    BookmarkChildren(nextFork, MAX_BOOKMARKS);
+                }
+                else
+                {
+                    BookmarkChildren(nextFork.Parent, MAX_BOOKMARKS);
+                }
             }
         }
 
