@@ -58,6 +58,19 @@ namespace GameTree
             ParseGameText(remainingGameText, workbook);
 
             Headers.TryGetValue("Title", out workbook.Title);
+
+            string trainingSide;
+            if (Headers.TryGetValue("TrainingSide", out trainingSide))
+            {
+                if (trainingSide.Trim().ToLower() == "black")
+                {
+                    workbook.TrainingSide = PieceColor.Black;
+                }
+                else
+                {
+                    workbook.TrainingSide = PieceColor.White;
+                }
+            };
         }
 
         /// <summary>

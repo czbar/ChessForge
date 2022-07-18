@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using ChessPosition;
 
 namespace ChessForge
 {
@@ -110,6 +111,15 @@ namespace ChessForge
             {
                 MainWin.ConfigureUIForMode(mode);
             }
+        }
+
+        /// <summary>
+        /// The side, White or Black, that is training in 
+        /// this session.
+        /// </summary>
+        public static PieceColor TrainingSide
+        {
+            get { return MainWin.Workbook.TrainingSide; }
         }
 
         /// <summary>
