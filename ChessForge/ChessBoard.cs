@@ -17,7 +17,7 @@ namespace ChessForge
         /// <summary>
         /// Images for White pieces.
         /// </summary>
-        private static Dictionary<PieceType, BitmapImage> WhitePieces =
+        public static Dictionary<PieceType, BitmapImage> WhitePieces =
             new Dictionary<PieceType, BitmapImage>()
             {
                 [PieceType.Rook] = ChessForge.Pieces.WhiteRook,
@@ -31,7 +31,7 @@ namespace ChessForge
         /// <summary>
         /// Images for Black pieces.
         /// </summary>
-        private static Dictionary<PieceType, BitmapImage> BlackPieces =
+        public static Dictionary<PieceType, BitmapImage> BlackPieces =
             new Dictionary<PieceType, BitmapImage>()
             {
                 [PieceType.Rook] = ChessForge.Pieces.BlackRook,

@@ -79,6 +79,9 @@
     <Compile Include="GuiUtilities.cs" />
     <Compile Include="MainWindow\MainWindowActiveLine.cs" />
     <Compile Include="MoveEvaluation.cs" />
+    <Compile Include="PromotionDialog.xaml.cs">
+      <DependentUpon>PromotionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\ChessBoards.cs" />
     <Compile Include="Resources\Colors.cs" />
     <Compile Include="Resources\Pieces.cs" />
@@ -106,6 +109,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PromotionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -179,6 +186,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Stop.png" />
+    <Resource Include="Resources\Images\BlackPromo.png" />
+    <Resource Include="Resources\Images\WhitePromo.png" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
