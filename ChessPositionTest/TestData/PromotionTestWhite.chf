@@ -1,11 +1,11 @@
-﻿[Title "Promotion Test"]
+﻿[Title "Promotion Test White"]
 [TrainingSide "White"]
 [White "Chess Forge"]
 [Black "Test"]
 [Result "*"]
 
 1. g4 h5 2.
-gxh5 g6 3. hxg6 a5 4. g7 a4 [%chf-bkm] 5. gxh8=Q (5. d3) 5... a3 6. c4 axb2 7. Nc3 b1=Q *
+gxh5 g6 3. hxg6 a5 4. g7 a4 [%chf-bkm] 5. gxh8=Q 5... a3 6. c4 (6. d3)  axb2 7. Nc3 b1=Q *
 
 
 
