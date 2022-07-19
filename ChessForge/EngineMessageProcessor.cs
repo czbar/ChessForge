@@ -13,7 +13,7 @@ namespace ChessForge
     /// </summary>
     public class EngineMessageProcessor
     {
-
+        // reference to the main application window
         public static MainWindow MainWin;
 
         public static void CreateEngineService(MainWindow win, bool debugMode)
@@ -34,6 +34,11 @@ namespace ChessForge
         public static object MoveCandidatesLock = new object();
         public static object InfoMessageProcessLock = new object();
 
+        /// <summary>
+        /// Flags whether message processing is in progress.
+        /// We won't process another message untile this flag
+        /// is reset.
+        /// </summary>
         public static bool IsInfoMessageProcessing = false;
 
         public static void Clear()
@@ -120,6 +125,12 @@ namespace ChessForge
             MainWin.MoveEvaluationFinished();
         }
 
+        /// <summary>
+        /// Parses a text message from the engine and sets properties
+        /// of the MoveEvaluation object stored in MoveCandidates list
+        /// under the index corresponding to the value of multipv.
+        /// </summary>
+        /// <param name="message"></param>
         private static void ProcessInfoMessage(string message)
         {
             lock (InfoMessageProcessLock)
@@ -135,6 +146,7 @@ namespace ChessForge
             int idx = 0;
             int? multipv = null;
             int? score = null;
+            int? movesToMate = null;
             string moves = "";
 
             string STRING_PV = " pv ";
@@ -148,9 +160,9 @@ namespace ChessForge
                         multipv = int.Parse(tokens[idx]);
                         break;
                     case "score":
-                        // next token should be cp and only then the value
+                        // next token can be "cp" or "mate" followed by an int value
+                        ProcessScoreTokens(tokens[idx + 1], tokens[idx + 2], out score, out movesToMate);
                         idx += 2;
-                        score = int.Parse(tokens[idx]);
                         break;
                     case "pv":
                         int pvIndex = message.IndexOf(STRING_PV);
@@ -163,7 +175,7 @@ namespace ChessForge
                 idx++;
             }
 
-            if (multipv != null && score != null)
+            if (multipv != null && (score != null || movesToMate != null))
             {
                 // we have updated evaluation
                 lock (MoveCandidatesLock)
@@ -175,7 +187,15 @@ namespace ChessForge
                     }
 
                     MoveCandidates[multipv.Value - 1].Line = moves;
-                    MoveCandidates[multipv.Value - 1].ScoreCp = score.Value;
+                    if (score != null)
+                    {
+                        MoveCandidates[multipv.Value - 1].ScoreCp = score.Value;
+                    }
+                    else
+                    {
+                        MoveCandidates[multipv.Value - 1].IsMateDetected = true;
+                        MoveCandidates[multipv.Value - 1].MovesToMate = movesToMate.Value;
+                    }
                 }
             }
 
@@ -185,5 +205,31 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Processes the 2 tokens following the "score" token.
+        /// We will only process it if the value of the first token is "cp" or "mate".
+        /// </summary>
+        private static void ProcessScoreTokens(string firstToken, string secondToken, out int? score, out int? movesToMate)
+        {
+            score = null;
+            movesToMate = null;
+
+            int iVal;
+
+            if (firstToken == "cp")
+            {
+                if (int.TryParse(secondToken, out iVal))
+                {
+                    score = iVal;
+                }
+            }
+            else if (firstToken == "mate")
+            {
+                if (int.TryParse(secondToken, out iVal))
+                {
+                    movesToMate = iVal;
+                }
+            }
+        }
     }
 }

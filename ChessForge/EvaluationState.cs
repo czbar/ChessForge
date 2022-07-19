@@ -42,7 +42,7 @@ namespace ChessForge
             {
                 Mode = EvaluationMode.IDLE;
                 Position = null;
-                PositionCpScore = 0;
+                PositionEvaluation = "";
                 PositionIndex = 0;
 
                 AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_PROGRESS);
@@ -124,26 +124,26 @@ namespace ChessForge
         /// <summary>
         /// The centipawn score evaluated for the position.
         /// </summary>
-        public int PositionCpScore
+        public string PositionEvaluation
         {
             get
             {
                 lock (EvaluationLock)
                 {
-                    return _positionCpScore;
+                    return _positionEvaluation;
                 }
             }
             set
             {
                 lock (EvaluationLock)
                 {
-                    _positionCpScore = value;
+                    _positionEvaluation = value;
                 }
             }
         }
 
         private BoardPosition _position;
         private int _positionIndex;
-        private int _positionCpScore;
+        private string _positionEvaluation = "";
     }
 }

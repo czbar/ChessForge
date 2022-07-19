@@ -20,8 +20,13 @@ namespace ChessForge
     /// </summary>
     public class EngineEvaluationGUI
     {
-        private TextBox _textBox;
-        private ProgressBar _progBar;
+        // Text box showing engine lines during evaluation
+        private TextBox _tbEvalLines;
+
+        // progress bar for engine evaluation
+        private ProgressBar _pbEngineEval;
+
+        // reference to EvaluationState object.
         private EvaluationState _evalState;
 
         public List<MoveEvaluation> Lines = new List<MoveEvaluation>();
@@ -34,8 +39,8 @@ namespace ChessForge
         /// <param name="evalState"></param>
         public EngineEvaluationGUI(TextBox textBox, ProgressBar progBar, EvaluationState evalState)
         {
-            _textBox = textBox;
-            _progBar = progBar;
+            _tbEvalLines = textBox;
+            _pbEngineEval = progBar;
             _evalState = evalState;
         }
 
@@ -44,9 +49,9 @@ namespace ChessForge
         /// </summary>
         public void ResetEvaluationProgressBar()
         {
-            _progBar.Dispatcher.Invoke(() =>
+            _pbEngineEval.Dispatcher.Invoke(() =>
             {
-                _progBar.Value = 0;
+                _pbEngineEval.Value = 0;
             });
         }
 
@@ -71,26 +76,52 @@ namespace ChessForge
                 }
 
                 StringBuilder sb = new StringBuilder();
-                _textBox.Dispatcher.Invoke(() =>
+                _tbEvalLines.Dispatcher.Invoke(() =>
                 {
                     for (int i = 0; i < Lines.Count; i++)
                     {
                         sb.Append(BuildLineText(i, Lines[i]));
                         sb.Append(Environment.NewLine);
                     }
-                    _textBox.Text = sb.ToString();
+                    _tbEvalLines.Text = sb.ToString();
                 });
 
-                if (Lines.Count > 0)
+                if (Lines.Count > 0 && _evalState.Position != null)
                 {
-                    _evalState.PositionCpScore = Lines[0].ScoreCp;
+                    _evalState.PositionEvaluation = BuildEvaluationText(Lines[0], _evalState.Position.ColorToMove);
                 }
             }
 
-            _progBar.Dispatcher.Invoke(() =>
+            _pbEngineEval.Dispatcher.Invoke(() =>
             {
-                _progBar.Value = AppState.MainWin.Timers.GetElapsedTime(AppTimers.StopwatchId.EVALUATION_PROGRESS);
+                _pbEngineEval.Value = AppState.MainWin.Timers.GetElapsedTime(AppTimers.StopwatchId.EVALUATION_PROGRESS);
             });
+        }
+
+        /// <summary>
+        /// Builds evaluation text ready to be included in a GUI element.
+        /// It will produce a double value with 2 decimal digits or an
+        /// indication of mate in a specified number of moves.
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        private string BuildEvaluationText(MoveEvaluation line, PieceColor colorToMove)
+        {
+            string eval;
+
+            if (!line.IsMateDetected)
+            {
+                int intEval = colorToMove == PieceColor.White ? line.ScoreCp : -1 * line.ScoreCp;
+                eval = (((double)intEval) / 100.0).ToString("F2");
+            }
+            else
+            {
+                int movesToMate = colorToMove == PieceColor.White ? line.MovesToMate : -1 * line.MovesToMate;
+                string sign = Math.Sign(movesToMate) > 0 ? "+" : "-";
+                eval = sign + "#" + (Math.Abs(line.MovesToMate)).ToString();
+            }
+
+            return eval;
         }
 
         /// <summary>
@@ -104,10 +135,12 @@ namespace ChessForge
             try
             {
                 if (line == null || _evalState.Position == null)
+                {
                     return " ";
+                }
 
-                int intEval = _evalState.Position.ColorToMove == PieceColor.White ? line.ScoreCp : -1 * line.ScoreCp;
-                string eval = (((double)intEval) / 100.0).ToString("F2");
+                string eval = BuildEvaluationText(line, _evalState.Position.ColorToMove);
+
                 uint moveNoToShow = _evalState.Position.ColorToMove == PieceColor.Black ? 
                     _evalState.Position.MoveNumber : (_evalState.Position.MoveNumber + 1);
                 

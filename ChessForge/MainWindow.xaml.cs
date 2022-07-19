@@ -1109,11 +1109,13 @@ namespace ChessForge
                 {
                     AppLog.Message("Move evaluation finished for index " + Evaluation.PositionIndex.ToString());
 
-                    // TODO need to implement all these calculations completely differently
+                    string eval = "";
+                    if (!string.IsNullOrEmpty(Evaluation.PositionEvaluation))
+                    {
+                        eval = (Evaluation.PositionEvaluation[0] == '-' ? "" : "+") + Evaluation.PositionEvaluation;
+                    }
+
                     bool isWhiteEval = (Evaluation.PositionIndex - 1) % 2 == 0;
-                    int evalInt = isWhiteEval ? -1 * Evaluation.PositionCpScore : Evaluation.PositionCpScore;
-                    //                    string eval = "(" + (((double)evalInt) / 100.0).ToString("F2") + ")";
-                    string eval = (evalInt > 0 ? "+" : "") + (((double)evalInt) / 100.0).ToString("F2");
                     int moveIndex = (Evaluation.PositionIndex - 1) / 2;
                     if (isWhiteEval)
                     {
