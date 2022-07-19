@@ -23,47 +23,9 @@ namespace ChessForge
             set { }
         }
 
-        /// <summary>
-        /// The list of plies that we will bind to the ItemsSource of the hosting ListView.
-        /// </summary>
-        //public List<string> Moves
-        //{
-        //    get { return _moves; }
-        //    set { }
-        //}
-
-        /// <summary>
-        /// Holds attributes of the row to display.
-        /// It parallels the Moves list in that attributes at a certain index here correspond to 
-        /// the move in Moves. TODO: we should combine move and attrs in one object once
-        /// all the binding issues have been resolved.
-        /// </summary>
-        //public List<int> PlieAttrs
-        //{
-        //    get { return _plieAttrs; }
-        //    set { }
-        //}
-
-        //public List<int> NodeIds
-        //{
-        //    get { return _nodeIds; }
-        //    set { }
-        //}
-
-        /// <summary>
-        /// Tool tips that will be displayed for the row under conditions
-        /// specified in data binding triggers, and created externally.
-        /// </summary>
-        //public List<string> ToolTips
-        //{
-        //    get { return _toolTips; }
-        //    set {}
-        //}
-
         public int HasToolTip 
         {
             get { return 1; }
-//            get { return string.IsNullOrWhiteSpace(_toolTip) ? 0 : 1; } 
         }
 
         /// <summary>
@@ -90,11 +52,6 @@ namespace ChessForge
         {
             get { return ((_variationLineNumber * 2) + (_rowColor == Strings.ROW_COLOR_WHITE ? 0 : 1)) % 4; }
         }
-
-        //private List<string> _moves = new List<string>();
-        //private List<string> _toolTips = new List<string>();
-        //private List<int> _plieAttrs = new List<int>();
-//        private List<int> _nodeIds = new List<int>();
 
         private List<TreeTableCell> _cells = new List<TreeTableCell>();  
 
