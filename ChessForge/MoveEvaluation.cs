@@ -7,12 +7,64 @@ using ChessPosition;
 
 namespace ChessForge
 {
+    /// <summary>
+    /// Encapsulates all info from the engine for
+    /// a single candidate move (first move in the "Line"). 
+    /// </summary>
     public class MoveEvaluation
     {
-        public MoveEvaluation()
-        {
-        }
+        /// <summary>
+        /// The string with moves from the eninge single
+        /// evaluation line e.g. "e2e4 e7e5 g1f3 b8c6"
+        /// </summary>
+        public string Line = "";
 
+        /// <summary>
+        /// Engine evaluation score in centipawns.
+        /// It is not valid if IsMateDetected == true. 
+        /// </summary>
+        public int ScoreCp;
+
+        /// <summary>
+        /// True if the evaluation is checkmate
+        /// </summary>
+        public bool IsMateDetected;
+
+        /// <summary>
+        /// Number of moves (not half-moves/plies)
+        /// to checkmate.
+        /// Only valid if IsMateDetected == true;
+        /// </summary>
+        public int MovesToMate;
+
+        /// <summary>
+        /// Position for which this evaluation applies
+        /// (NOT USED currently)
+        /// </summary>
+        public string Fen = "";
+
+        /// <summary>
+        /// Side to move in the position being evaluated
+        /// (NOT USED currently)
+        /// </summary>
+        public PieceColor Color;
+
+        /// <summary>
+        /// Number of the move to be made in the position
+        /// (NOT USED currently)
+        /// </summary>
+        public int MoveNumber;
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public MoveEvaluation()
+        {}
+
+        /// <summary>
+        /// Copy constructor;
+        /// </summary>
+        /// <param name="moveEval"></param>
         public MoveEvaluation(MoveEvaluation moveEval)
         {
             this.Fen = string.Copy(moveEval.Fen);
@@ -20,13 +72,10 @@ namespace ChessForge
             this.MoveNumber = moveEval.MoveNumber;
             this.Color = moveEval.Color;
             this.ScoreCp = moveEval.ScoreCp;
+            this.IsMateDetected = moveEval.IsMateDetected;
+            this.MovesToMate = moveEval.MovesToMate;
         }
 
-        public string Fen = "";
-        public string Line = "";
-        public int MoveNumber;
-        public PieceColor Color;
-        public int ScoreCp;
 
         /// <summary>
         /// Returns the first move in the Line string which is the move
