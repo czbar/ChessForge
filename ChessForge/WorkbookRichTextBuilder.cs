@@ -298,7 +298,7 @@ namespace ChessForge
                 if (GetNodeType(nd) == NodeType.ISOLATED || GetNodeType(nd) == NodeType.LEAF)
                 {
                     TreeNode child = nd.Children[0];
-                    BuildNodeText(child, includeNumber, para, false);
+                    BuildNodeText(child, includeNumber, para);
                     BuildTreeLineText(child, para, false);
                     return;
                 }
@@ -315,24 +315,27 @@ namespace ChessForge
                     bool multi = nodeType == NodeType.FORK_WITH_FORK_LINES;
 
                     // the first child remains at the same level as the parent
-                    BuildNodeText(nd.Children[0], includeNumber, para, false);
+                    BuildNodeText(nd.Children[0], includeNumber, para);
+
+                    bool specialTopLineCase = false;
 
                     for (int i = 1; i < nd.Children.Count; i++)
                     {
-                        bool inlineFork = false;
-
-                        // if there is more than 2 children, create a new para,
-                        // otherwise just use parenthesis
-                        // ViewLevel increases, ViewSubLevel resets
-
+                        // if there is more than 2 children, create a new para, otherwise just use parenthesis.
+                        // The exception is when we are at the top level (_currParagraphLevel == 0) 
+                        // when we don't want any "intra forks" and always create a new, lower level
+                        // paragraph even if there are just 2 children.
                         Paragraph para2;
                         if (multi || _currParagraphLevel == 0)
                         {
+                            if (!multi)
+                            {
+                                specialTopLineCase = true;
+                            }
                             if (i == 1)
                             {
                                 _currParagraphLevel++;
                                 para2 = CreateParagraph(_currParagraphLevel.ToString());
-                                //                                para2.Margin = new Thickness(para.Margin.Left + 50, 0, 0, 5);
                             }
                             else
                             {
@@ -340,7 +343,6 @@ namespace ChessForge
                                 para2.Margin = new Thickness(para.Margin.Left, 0, 0, 5);
                             }
                             Document.Blocks.Add(para2);
-                            inlineFork = false;
                         }
                         else
                         {
@@ -350,13 +352,12 @@ namespace ChessForge
                                 para2.Inlines.Add(new Run(" ( "));
                                 _isIntraFork = true;
                             }
-                            inlineFork = true;
                         }
 
-                        BuildNodeText(nd.Children[i], true, para2, inlineFork);
+                        BuildNodeText(nd.Children[i], true, para2);
                         BuildTreeLineText(nd.Children[i], para2, false);
 
-                        if ((multi || _currParagraphLevel == 0) && i == nd.Children.Count - 1)
+                        if (multi && i == nd.Children.Count - 1)
                         {
                             _currParagraphLevel--;
                             para = CreateParagraph(_currParagraphLevel.ToString());
@@ -367,7 +368,10 @@ namespace ChessForge
                             para = para2;
                             if (i == nd.Children.Count - 1)
                             {
-                                para.Inlines.Add(new Run(" ) "));
+                                if (_isIntraFork)
+                                {
+                                    para.Inlines.Add(new Run(" ) "));
+                                }
                                 _isIntraFork = false;
                             }
                             else
@@ -377,7 +381,17 @@ namespace ChessForge
                         }
                     }
 
-                    BuildTreeLineText(nd.Children[0], para, true);
+                    if (specialTopLineCase)
+                    {
+                        _currParagraphLevel--;
+                        Paragraph spec = CreateParagraph(_currParagraphLevel.ToString());
+                        Document.Blocks.Add(spec);
+                        BuildTreeLineText(nd.Children[0], spec, true);
+                    }
+                    else
+                    {
+                        BuildTreeLineText(nd.Children[0], para, true);
+                    }
                     return;
                 }
             }
@@ -388,7 +402,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        private  void BuildNodeText(TreeNode nd, bool includeNumber, Paragraph para, bool inlineFork)
+        private  void BuildNodeText(TreeNode nd, bool includeNumber, Paragraph para)
         {
             StringBuilder sb = new StringBuilder();
             if (nd.Position.ColorToMove == PieceColor.Black)
@@ -413,7 +427,7 @@ namespace ChessForge
                 fontColor = GetParaAttrs(_currParagraphLevel.ToString()).FirstCharColor;
             }
 
-            AddRunToParagraph(nd, para, sb.ToString(), fontColor, inlineFork);
+            AddRunToParagraph(nd, para, sb.ToString(), fontColor);
         }
 
         /// <summary>
@@ -423,8 +437,7 @@ namespace ChessForge
         /// <param name="para"></param>
         /// <param name="text"></param>
         /// <param name="fontColor"></param>
-        /// <param name="inlineFork"></param>
-        private  void AddRunToParagraph(TreeNode nd, Paragraph para, string text, SolidColorBrush fontColor, bool inlineFork)
+        private  void AddRunToParagraph(TreeNode nd, Paragraph para, string text, SolidColorBrush fontColor)
         {
             Run r = new Run(text.ToString());
             r.Name = "run_" + nd.NodeId.ToString();
