@@ -797,6 +797,9 @@ namespace ChessForge
                 if (Workbook.TrainingSide == PieceColor.None)
                 {
                     TrainingSideDialog dlg = new TrainingSideDialog();
+                    dlg.Left = ChessForgeMain.Left + 100;
+                    dlg.Top = ChessForgeMain.Top + 100;
+                    dlg.Topmost = true;
                     dlg.ShowDialog();
                     Workbook.TrainingSide = dlg.SelectedSide;
                 }
@@ -1690,55 +1693,55 @@ namespace ChessForge
             MainChessBoard.FlipBoard();
         }
 
-        private void _imgBookmark_1_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void _cnvBookmark_1_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SetAppInTrainingMode(0);
             e.Handled = true;
         }
 
-        private void _imgBookmark_2_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void _cnvBookmark_2_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SetAppInTrainingMode(1);
             e.Handled = true;
         }
 
-        private void _imgBookmark_3_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void _cnvBookmark_3_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SetAppInTrainingMode(2);
             e.Handled = true;
         }
 
-        private void _imgBookmark_4_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void _cnvBookmark_4_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SetAppInTrainingMode(3);
             e.Handled = true;
         }
 
-        private void _imgBookmark_5_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void _cnvBookmark_5_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SetAppInTrainingMode(4);
             e.Handled = true;
         }
 
-        private void _imgBookmark_6_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void _cnvBookmark_6_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SetAppInTrainingMode(5);
             e.Handled = true;
         }
 
-        private void _imgBookmark_7_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void _cnvBookmark_7_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SetAppInTrainingMode(6);
             e.Handled = true;
         }
 
-        private void _imgBookmark_8_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void _cnvBookmark_8_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SetAppInTrainingMode(7);
             e.Handled = true;
         }
 
-        private void _imgBookmark_9_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void _cnvBookmark_9_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SetAppInTrainingMode(8);
             e.Handled = true;

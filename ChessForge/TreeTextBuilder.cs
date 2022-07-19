@@ -73,7 +73,6 @@ namespace ChessForge
                     {
                         // if there is more than 2 children, create a new para,
                         // otherwise just use parenthesis
-                        // ViewLevel increases, ViewSubLevel resets
 
                         _fileText.Append(" (");
                         BuildNodeText(nd.Children[i], true);

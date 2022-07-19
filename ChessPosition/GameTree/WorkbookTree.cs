@@ -106,13 +106,16 @@ namespace GameTree
             foreach (TreeNode nd in fork.Children)
             {
                 TreeNode nextFork = FindNextFork(nd);
-                if (nextFork.ColorToMove != TrainingSide)
+                if (nextFork != null)
                 {
-                    BookmarkChildren(nextFork, MAX_BOOKMARKS);
-                }
-                else
-                {
-                    BookmarkChildren(nextFork.Parent, MAX_BOOKMARKS);
+                    if (nextFork.ColorToMove != TrainingSide)
+                    {
+                        BookmarkChildren(nextFork, MAX_BOOKMARKS);
+                    }
+                    else
+                    {
+                        BookmarkChildren(nextFork.Parent, MAX_BOOKMARKS);
+                    }
                 }
             }
         }
@@ -153,16 +156,11 @@ namespace GameTree
 
             foreach (TreeNode nd in fork.Children)
             {
+                if (Bookmarks.Count >= maxCount)
+                {
+                    break;
+                }
                 Bookmarks.Add(new Bookmark(nd));
-                if (Bookmarks.Count >= maxCount)
-                {
-                    break;
-                }
-
-                if (Bookmarks.Count >= maxCount)
-                {
-                    break;
-                }
             }
         }
 
