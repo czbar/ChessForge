@@ -16,7 +16,8 @@ namespace GameTree
     {
         private string fullGameText;
 
-        private string remainingGameText;
+        // Remaining text of the file, yet to be processed
+        private string _remainingGameText;
 
         private int runningNodeId = 0;
 
@@ -53,9 +54,9 @@ namespace GameTree
             }
 
             fullGameText = pgnGametext;
-            remainingGameText = ReadHeaders(pgnGametext);
+            _remainingGameText = ReadHeaders(pgnGametext);
 
-            ParseGameText(remainingGameText, workbook);
+            ParseGameText(_remainingGameText, workbook);
 
             Headers.TryGetValue("Title", out workbook.Title);
 
@@ -177,7 +178,6 @@ namespace GameTree
             {
                 DebugUtils.PrintPosition(rootNode.Position);
             }
-
 
             //TreeNode
             ParseBranch(rootNode, gameTree);
@@ -336,32 +336,70 @@ namespace GameTree
             // but otherwise this is spurious
         }
 
+        /// <summary>
+        /// If the comment inludes Chess Forge commands, the commands
+        /// will be stored with the node.
+        /// Chess Forge commands are in the form [%chf-<cmd> <params>] and must be at the start
+        /// of the comment, with any (optional) free text comment following.
+        /// The comment will also be stored with the node, stripped of the Chess Forge commands.
+        /// </summary>
+        /// <param name="node"></param>
         private void ProcessComment(TreeNode node)
         {
-            int charPos = 0;
-            // for now, we are just skipping comments
-            while ((remainingGameText[charPos]) != '}' && charPos < remainingGameText.Length)
+            int endPos = _remainingGameText.IndexOf('}');
+            // if end of comment not found, there is something wrong with the file, force end of processing.
+            if (endPos < 0)
             {
-                charPos++;
+                _remainingGameText = "";
+                return;
             }
 
-            remainingGameText = remainingGameText.Substring(charPos);
+            // process any Chess Forge commands
+            while (true)
+            {
+                int commandStart = _remainingGameText.IndexOf("[%chf-");
+                if (commandStart < 0)
+                    break;
+
+                int commandEnd = _remainingGameText.IndexOf(']');
+                if (commandEnd > 0)
+                {
+                    string command = _remainingGameText.Substring(commandStart + 1, commandEnd - (commandStart + 1));
+                    node.ChfCommands.Add(command);
+                    _remainingGameText = _remainingGameText.Substring(commandEnd + 1);
+                }
+            }
+
+            // update endPos as it may have been changed above when removing commands
+            endPos = _remainingGameText.IndexOf('}');
+
+            string comment = _remainingGameText.Substring(0, endPos);
+            // trim to check if there is any comment but do not trim the comment if it is there.
+            if (comment.Trim().Length > 0)
+            {
+                node.Comment = comment;
+            }
+            _remainingGameText = _remainingGameText.Substring(endPos + 1);
         }
 
+        /// <summary>
+        /// Find the next token in the remaining text.
+        /// </summary>
+        /// <returns></returns>
         private string GetNextToken()
         {
             int charPos = 0;
             string token = "";
 
             // first skip the spaces
-            while ((remainingGameText[charPos]) == ' ')
+            while ((_remainingGameText[charPos]) == ' ')
             {
                 charPos++;
             }
 
             int tokenStartIndex = charPos;
 
-            char c = remainingGameText[charPos];
+            char c = _remainingGameText[charPos];
 
             if (SingleCharTokens.Contains(c))
             {
@@ -371,18 +409,23 @@ namespace GameTree
             else
             {
                 // go to the next space or closing parenthesis
-                while (remainingGameText[charPos] != ' ' && remainingGameText[charPos] != ')' && charPos < remainingGameText.Length)
+                while (_remainingGameText[charPos] != ' ' && _remainingGameText[charPos] != ')' && charPos < _remainingGameText.Length)
                 {
                     charPos++;
                 }
-                token = remainingGameText.Substring(tokenStartIndex, charPos - tokenStartIndex);
+                token = _remainingGameText.Substring(tokenStartIndex, charPos - tokenStartIndex);
             }
 
 
-            remainingGameText = remainingGameText.Substring(charPos);
+            _remainingGameText = _remainingGameText.Substring(charPos);
             return token;
         }
 
+        /// <summary>
+        /// Returns the type of the passed token.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         private PgnTokenType GetTokenType(string token)
         {
             if (token.Length == 0)

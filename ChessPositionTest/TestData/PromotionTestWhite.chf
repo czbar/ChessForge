@@ -5,7 +5,7 @@
 [Result "*"]
 
 1. g4 h5 2.
-gxh5 g6 3. hxg6 a5 4. g7 a4 [%chf-bkm] 5. gxh8=Q a3 6. c4 (6. d3) 6... axb2 7. Nc3 b1=Q *
+gxh5 g6 3. hxg6 a5 4. g7 a4 {[%chf-bkm] Some comment} 5. gxh8=Q a3 6. c4 (6. d3) 6... axb2 7. Nc3 b1=Q *
 
 
 
