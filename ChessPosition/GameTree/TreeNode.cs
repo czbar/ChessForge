@@ -31,7 +31,30 @@ namespace GameTree
         public List<TreeNode> Children = new List<TreeNode>();
 
         /// <summary>
-        /// LastMove in algebraic notation (e.g. "d4", "Nbd2", "e8Q")
+        /// List of Chess Forge commands associated with the leadup move,
+        /// if any.
+        /// </summary>
+        public List<string> ChfCommands = new List<string>();
+
+        /// <summary>
+        /// A text comment associated with the leadup move
+        /// </summary>
+        public string Comment = null;
+
+        // the move leading to this position (algebraic notation)
+        private string _lastMoveAlg;
+
+        // the move leading to this position (algebraic notation with NAG symbols)
+        private string _lastMoveAlgWithNag;
+
+
+        /// <summary>
+        /// The color of the side on move in this position.
+        /// </summary>
+        public PieceColor ColorToMove => Position.ColorToMove;
+
+        /// <summary>
+        /// The move leading to this psoition in algebraic notation (e.g. "d4", "Nbd2", "e8Q")
         /// </summary>
         public string LastMoveAlgebraicNotation
         {
@@ -43,15 +66,11 @@ namespace GameTree
             }
         }
 
-        private string _lastMoveAlg;
-
         public string LastMoveAlgebraicNotationWithNag
         {
             get { return _lastMoveAlgWithNag; }
             set { _lastMoveAlgWithNag = value; }
         }
-
-        private string _lastMoveAlgWithNag;
 
         /// <summary>
         /// Numeric Annotation Glyphs associated with this
@@ -173,8 +192,6 @@ namespace GameTree
         {
             Children.Add(node);
         }
-
-        public PieceColor ColorToMove => Position.ColorToMove;
 
         public uint MoveNumber
         {
