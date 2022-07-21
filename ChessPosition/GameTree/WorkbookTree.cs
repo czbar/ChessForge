@@ -40,7 +40,7 @@ namespace GameTree
         /// </summary>
         public string Title
         {
-            get 
+            get
             {
                 string title;
                 Headers.TryGetValue(HEADER_TITLE, out title);
@@ -53,7 +53,7 @@ namespace GameTree
         /// </summary>
         public PieceColor TrainingSide
         {
-            get 
+            get
             {
                 string trainingSide;
                 if (Headers.TryGetValue(HEADER_TRAINING_SIDE, out trainingSide))
@@ -115,6 +115,33 @@ namespace GameTree
             root.LineId = "1";
             BuildLine(root);
         }
+
+        /// <summary>
+        /// Processes a CfhCommand received from the parser.
+        /// If possible, applies the command to this node's
+        /// properties.
+        /// If not, stores in the list of unprocessed commands.
+        /// </summary>
+        /// <param name="command"></param>
+        public void AddChfCommand(TreeNode nd, string command)
+        {
+            if (!string.IsNullOrEmpty(command))
+            {
+                string[] tokens = command.Split(' ');
+                string cmdPrefix = tokens[0];
+
+                switch (CfhCommands.GetCommand(cmdPrefix))
+                {
+                    case CfhCommands.Command.BOOKMARK:
+                        AddBookmark(nd);
+                        break;
+                    default:
+                        nd.AddUnprocessedChfCommand(command);
+                        break;
+                }
+            }
+        }
+
 
         /// <summary>
         /// If there are no bookmarks, we will generate some
@@ -194,10 +221,73 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Adds a bookmark to the list
+        /// and sets the Bookmark flag on the
+        /// bookmark's TreeNode.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void AddBookmark(TreeNode nd)
+        {
+            if (FindBookmarkIndex(nd) == -1)
+            {
+                Bookmarks.Add(new Bookmark(nd));
+                nd.IsBookmark = true;
+            }
+        }
+
+        /// <summary>
+        /// Removes a node from the list of bookmarks. 
+        /// </summary>
+        /// <param name="nd"></param>
+        public void RemoveBookmark(TreeNode nd)
+        {
+            nd.IsBookmark = false;
+            int idx = FindBookmarkIndex(nd);
+            if (idx >= 0)
+            {
+                Bookmarks.RemoveAt(idx);
+            }
+        }
+
+        /// <summary>
+        /// Clears the list of bookmarks.
+        /// </summary>
+        public void RemoveAllBookmarks()
+        {
+            foreach (Bookmark bookmark in Bookmarks)
+            {
+                bookmark.Node.IsBookmark = false;
+            }
+            Bookmarks.Clear();
+        }
+
+        /// <summary>
+        /// Finds index of a passed node in the 
+        /// Bookmarks list.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public int FindBookmarkIndex(TreeNode nd)
+        {
+            int idx = -1;
+
+            for (int i = 0; i < Bookmarks.Count; i++)
+            {
+                if (Bookmarks[i].Node.NodeId == nd.NodeId)
+                {
+                    idx = i;
+                    break;
+                }
+            }
+
+            return idx;
+        }
+
+        /// <summary>
         /// Adds children of a node to the list of Bookmarks.
         /// </summary>
         /// <param name="fork">Node whose children to bookmark.</param>
-        /// <param name="maxCount">Max allwoed number of bookmarked positions.</param>
+        /// <param name="maxCount">Max allowed number of bookmarked positions.</param>
         private void BookmarkChildren(TreeNode fork, int maxCount)
         {
             if (fork == null)
@@ -209,7 +299,7 @@ namespace GameTree
                 {
                     break;
                 }
-                Bookmarks.Add(new Bookmark(nd));
+                AddBookmark(nd);
             }
         }
 

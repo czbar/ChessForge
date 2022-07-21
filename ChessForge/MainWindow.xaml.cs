@@ -83,7 +83,7 @@ namespace ChessForge
             // main chess board
             MainChessBoard = new ChessBoard(MainCanvas, imgChessBoard, null, true);
 
-            ResetBookmarks();
+            InitBookmarksGui();
 
             Configuration.ReadConfigurationFile();
             MoveAnimation.MoveDuration = Configuration.MoveSpeed;
@@ -113,9 +113,9 @@ namespace ChessForge
 
         /// <summary>
         /// Resets or recreates all the bookmarks.
-        /// Called on app initialization or when a Workbook was closed.
+        /// Called on app initialization..
         /// </summary>
-        private void ResetBookmarks()
+        private void InitBookmarksGui()
         {
             AppState.Bookmarks.Clear();
 
@@ -128,9 +128,13 @@ namespace ChessForge
             AppState.Bookmarks.Add(new BookmarkView(new ChessBoard(_cnvBookmark_7, _imgBookmark_7, _lblBookmark_7, false)));
             AppState.Bookmarks.Add(new BookmarkView(new ChessBoard(_cnvBookmark_8, _imgBookmark_8, _lblBookmark_8, false)));
             AppState.Bookmarks.Add(new BookmarkView(new ChessBoard(_cnvBookmark_9, _imgBookmark_9, _lblBookmark_9, false)));
+        }
 
+        private void ClearBookmarksGui()
+        {
             foreach (BookmarkView bv in AppState.Bookmarks)
             {
+                bv.Deactivate();
                 bv.SetOpacity(0.5);
             }
         }
@@ -806,9 +810,12 @@ namespace ChessForge
                     return;
                 }
 
+                AppState.WorkbookFilePath = fileName;
+
                 string workbookText = File.ReadAllText(fileName);
 
                 Workbook = new WorkbookTree();
+                ClearBookmarksGui();
                 _rtbWorkbookView.Document.Blocks.Clear();
                 PgnGameParser pgnGame = new PgnGameParser(workbookText, Workbook, true);
 
@@ -834,12 +841,14 @@ namespace ChessForge
                     SaveFileDialog saveDlg = new SaveFileDialog();
                     saveDlg.Filter = "chf Workbook files (*.chf)|*.chf";
                     saveDlg.Title =  " Save Workbook converted from " + Path.GetFileName(fileName);
+                    
+                    saveDlg.FileName = Path.GetFileNameWithoutExtension(fileName) + ".chf";
                     saveDlg.OverwritePrompt = true;
                     if (saveDlg.ShowDialog() == true)
                     {
                         fileName = saveDlg.FileName;
-                        string chfText = ChfTextBuilder.BuildText(Workbook);
-                        File.WriteAllText(fileName, chfText);
+                        AppState.WorkbookFilePath = fileName;
+                        AppState.SaveWorkbookFile();
                         AppState.WorkbookFileType = AppState.FileType.CHF;
                     }
                     else
@@ -862,7 +871,13 @@ namespace ChessForge
                 _workbookRichTextBuilder.BuildFlowDocumentForWorkbook();
                 if (Workbook.Bookmarks.Count == 0)
                 {
-                    Workbook.GenerateBookmarks();
+                    var res = MessageBox.Show("Would you like to auto-select positions for training?",
+                        "No Bookmarks in this Workbook", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    if (res == MessageBoxResult.Yes)
+                    {
+                        Workbook.GenerateBookmarks();
+                        AppState.SaveWorkbookFile();
+                    }
                 }
 
                 int startingNode = 0;
@@ -1502,7 +1517,6 @@ namespace ChessForge
                 AppState.Bookmarks[i].Activate();
             }
         }
-
 
         /// <summary>
         /// Ensure that Workbook Tree's ListView allows

@@ -157,11 +157,17 @@ namespace ChessForge
             sb.Append(" " + nd.LastMoveAlgebraicNotation);
             sb.Append(nd.Nags);
 
-            // is there a comment or commands
-            if (!string.IsNullOrEmpty(nd.Comment) || nd.ChfCommands.Count > 0)
+            if (nd.IsBookmark || !string.IsNullOrEmpty(nd.Comment) || nd.UnprocessedChfCommands.Count > 0)
             {
                 sb.Append(" {");
-                foreach (string cmd in nd.ChfCommands)
+
+                if (nd.IsBookmark)
+                {
+                    string sCmd = CfhCommands.GetStringForCommand(CfhCommands.Command.BOOKMARK);
+                    sb.Append("[" + sCmd + "]");
+                }
+
+                foreach (string cmd in nd.UnprocessedChfCommands)
                 {
                     sb.Append("[" + cmd + "]");
                 }
@@ -171,7 +177,7 @@ namespace ChessForge
                     sb.Append(nd.Comment);
                 }
 
-                sb.Append("}");
+                sb.Append("} ");
             }
 
             _fileText.Append(sb.ToString());

@@ -48,6 +48,7 @@
     <Compile Include="BoardPosition\FullMoveWithEval.cs" />
     <Compile Include="BoardPosition\MoveUI.cs" />
     <Compile Include="GameTree\Bookmark.cs" />
+    <Compile Include="GameTree\CfhCommands.cs" />
     <Compile Include="GameTree\PlyForTreeView.cs" />
     <Compile Include="GameTree\RichTextPara.cs" />
     <Compile Include="GameTree\WorkbookTree.cs" />

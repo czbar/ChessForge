@@ -49,5 +49,17 @@ namespace ChessForge
             _guiBoard.SetLabelText(BookmarkData.Node.GetPlyText(true));
             SetOpacity(1);
         }
+
+        /// <summary>
+        /// Deactivates the bookmark by removing the pieces
+        /// from the board, clearing the label
+        /// and graying it out.
+        /// </summary>
+        public void Deactivate()
+        {
+            _guiBoard.ClearBoard();
+            _guiBoard.SetLabelText("Bookmark");
+            SetOpacity(0.5);
+        }
     }
 }
