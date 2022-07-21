@@ -89,6 +89,23 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Types of files that Chess Forge can handle.
+        /// PGN can only be viewed, not edited.
+        /// CHF can be viewed and edited.
+        /// </summary>
+        public enum FileType
+        {
+            CHF,
+            PGN
+        }
+
+        /// <summary>
+        /// Type of the file currently open as
+        /// the Workbook.
+        /// </summary>
+        public static FileType WorkbookFileType; 
+
+        /// <summary>
         /// Main application window.
         /// Exposing the public reference through this object
         /// for convenient access/reference.
