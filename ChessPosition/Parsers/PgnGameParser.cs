@@ -14,13 +14,18 @@ namespace GameTree
     /// </summary>
     public class PgnGameParser
     {
-        private string fullGameText;
-
         // Remaining text of the file, yet to be processed
         private string _remainingGameText;
 
+        // id of the node currently being processed
         private int runningNodeId = 0;
 
+        // the workbook for which this parser was called
+        private WorkbookTree _workbook;
+
+        /// <summary>
+        /// Types of PGN/CHF token
+        /// </summary>
         enum PgnTokenType
         {
             Unknown,
@@ -33,13 +38,12 @@ namespace GameTree
             NAG
         }
 
+        /// <summary>
+        /// Special characters
+        /// </summary>
         private char[] SingleCharTokens = new char[] { '{', '}', '(', ')' };
 
-        /// <summary>
-        /// Game headers as Name/Value pair.
-        /// </summary>
-        public Dictionary<string, string> Headers = new Dictionary<string, string>();
-
+        // whether debug information is to be logged 
         private bool DEBUG_MODE = false;
 
         /// <summary>
@@ -53,25 +57,10 @@ namespace GameTree
                 DEBUG_MODE = true;
             }
 
-            fullGameText = pgnGametext;
+            _workbook = workbook;
             _remainingGameText = ReadHeaders(pgnGametext);
 
             ParseGameText(_remainingGameText, workbook);
-
-            Headers.TryGetValue("Title", out workbook.Title);
-
-            string trainingSide;
-            if (Headers.TryGetValue("TrainingSide", out trainingSide))
-            {
-                if (trainingSide.Trim().ToLower() == "black")
-                {
-                    workbook.TrainingSide = PieceColor.Black;
-                }
-                else
-                {
-                    workbook.TrainingSide = PieceColor.White;
-                }
-            };
         }
 
         /// <summary>
@@ -149,7 +138,7 @@ namespace GameTree
                 string[] tokens = line.Split('\"');
                 if (tokens.Length >= 2)
                 {
-                    Headers.Add(tokens[0].Trim(), tokens[1].Trim());
+                    _workbook.Headers.Add(tokens[0].Trim(), tokens[1].Trim());
                 }
             }
         }
@@ -183,6 +172,12 @@ namespace GameTree
             ParseBranch(rootNode, gameTree);
         }
 
+        /// <summary>
+        /// Checks if the passed string matches any of the
+        /// strings that mark the end of the game/workbook text.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         private bool IsGameTerminationMarker(string s)
         {
             if (string.IsNullOrEmpty(s))
@@ -194,6 +189,11 @@ namespace GameTree
             return false;
         }
 
+        /// <summary>
+        /// Parses a branch of the tree.
+        /// </summary>
+        /// <param name="parentNode"></param>
+        /// <param name="gameTree"></param>
         private void ParseBranch(TreeNode parentNode, WorkbookTree gameTree)
         {
             string token;

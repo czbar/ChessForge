@@ -24,14 +24,63 @@ namespace GameTree
         public List<TreeNode> Nodes = new List<TreeNode>();
 
         /// <summary>
-        /// Title of this Workbook to show in the GUI
+        /// Workbook headers as Name/Value pair.
         /// </summary>
-        public string Title;
+        public Dictionary<string, string> Headers = new Dictionary<string, string>();
+
+        // Headers dictionary keys
+        public readonly string HEADER_TRAINING_SIDE = "TrainingSide";
+        public readonly string HEADER_TITLE = "Title";
+        public readonly string HEADER_WHITE = "White";
+        public readonly string HEADER_BLACK = "Black";
+
 
         /// <summary>
         /// Title of this Workbook to show in the GUI
         /// </summary>
-        public PieceColor TrainingSide;
+        public string Title
+        {
+            get 
+            {
+                string title;
+                Headers.TryGetValue(HEADER_TITLE, out title);
+                return title == null ? "Untitled Workbook" : title;
+            }
+        }
+
+        /// <summary>
+        /// Title of this Workbook to show in the GUI
+        /// </summary>
+        public PieceColor TrainingSide
+        {
+            get 
+            {
+                string trainingSide;
+                if (Headers.TryGetValue(HEADER_TRAINING_SIDE, out trainingSide))
+                {
+                    return (trainingSide.Trim().ToLower() == "black" ? PieceColor.Black : PieceColor.White);
+                }
+                else
+                {
+                    return PieceColor.None;
+                };
+            }
+            set
+            {
+                if (value == PieceColor.White)
+                {
+                    Headers[HEADER_TRAINING_SIDE] = "white";
+                }
+                else if (value == PieceColor.Black)
+                {
+                    Headers[HEADER_TRAINING_SIDE] = "black";
+                }
+                else
+                {
+                    Headers[HEADER_TRAINING_SIDE] = "none";
+                }
+            }
+        }
 
         /// <summary>
         /// "Stem" of this tree i.e., the starting moves up until the first fork.
