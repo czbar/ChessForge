@@ -76,7 +76,7 @@ namespace GameTree
         /// Numeric Annotation Glyphs associated with this
         /// move, if any.
         /// </summary>
-        private string Nags = "";
+        public string Nags = "";
 
         public void AddNag(string nag)
         {
@@ -84,7 +84,8 @@ namespace GameTree
             if (nag.Length < 2 || nag[0] != '$')
                 return;
 
-            Nags += nag;
+            // insert space between NAGs so they re ready for writing out without further parsing
+            Nags += " " + nag;
 
             int res;
             if (int.TryParse(nag.Substring(1), out res))
@@ -206,7 +207,7 @@ namespace GameTree
         public string GetPlyText(bool standalone)
         {
             StringBuilder sb = new StringBuilder();
-            if (ColorToMove== PieceColor.Black)
+            if (ColorToMove == PieceColor.Black)
             {
                 sb.Append(MoveNumber.ToString() + ".");
             }

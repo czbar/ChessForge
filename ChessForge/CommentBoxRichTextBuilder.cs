@@ -75,7 +75,7 @@ namespace ChessForge
         {
             Document.Blocks.Clear();
 
-            AddNewParagraphToDoc("title", string.IsNullOrWhiteSpace(title) ? "Untitled Workbook" : title);
+            AddNewParagraphToDoc("title", title);
             AddNewParagraphToDoc("bold_prompt", "Some available actions are:");
             AddNewParagraphToDoc("normal", Strings.QUICK_INSTRUCTION);
         }

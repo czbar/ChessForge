@@ -29,6 +29,9 @@ namespace ChessForge
         // reference to EvaluationState object.
         private EvaluationState _evalState;
 
+        /// <summary>
+        /// Evaluation lines obtained from the engine.
+        /// </summary>
         public List<MoveEvaluation> Lines = new List<MoveEvaluation>();
 
         /// <summary>
