@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -103,7 +103,12 @@ namespace ChessForge
         /// Type of the file currently open as
         /// the Workbook.
         /// </summary>
-        public static FileType WorkbookFileType; 
+        public static FileType WorkbookFileType;
+
+        /// <summary>
+        /// The file path of the current Workbook file
+        /// </summary>
+        public static string WorkbookFilePath;
 
         /// <summary>
         /// Main application window.
@@ -207,6 +212,20 @@ namespace ChessForge
         /// Precisely one bookmark can be active during a session. 
         /// </summary>
         public static int ActiveBookmarkInTraining = -1;
+
+        /// <summary>
+        /// Saves the workbook to a file.
+        /// It will only write to the file if the 
+        /// session's file type is CHF
+        /// </summary>
+        public static void SaveWorkbookFile()
+        {
+            if (WorkbookFileType == FileType.CHF)
+            {
+                string chfText = ChfTextBuilder.BuildText(MainWin.Workbook);
+                File.WriteAllText(WorkbookFilePath, chfText);
+            }
+        }
 
         private static Mode _currentMode = Mode.IDLE;
         private static Mode _previousMode = Mode.IDLE;
