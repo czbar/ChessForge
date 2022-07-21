@@ -44,7 +44,7 @@
         <Menu VerticalAlignment="Top" Background="#334B4B4B" BorderBrush="#993C3C3C" BorderThickness="1" Height="29" Grid.ColumnSpan="3">
             <!-- Game menu -->
             <MenuItem x:Name ="MenuFile"  Header="File" Margin="0,0,0,0" >
-                <MenuItem Header="Open Workbook" Click="Menu_LoadPgn"/>
+                <MenuItem Header="Open Workbook" Click="Menu_LoadWorkbook"/>
                 <Separator />
             </MenuItem>
             <MenuItem Header="Training" Margin="0,0,0,0">
