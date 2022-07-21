@@ -21,12 +21,12 @@ namespace ChessForge
         /// <summary>
         /// Last directory from which a PGN file was read.
         /// </summary>
-        public static string LastPgnDirectory = "";
+        public static string LastOpenDirectory = "";
 
         /// <summary>
         /// Last read PGN file.
         /// </summary>
-        public static string LastPgnFile = "";
+        public static string LastWorkbookFile = "";
 
         /// <summary>
         /// Time given to the engine to evaluate a single move
@@ -94,6 +94,12 @@ namespace ChessForge
 
 
 
+        /// <summary>
+        /// Adds a file to the list of recently opened files.
+        /// Removes a previous duplicate entry if exists.
+        /// Removes oldes item if size of the list exceeded.
+        /// </summary>
+        /// <param name="path"></param>
         public static void AddRecentFile(string path)
         {
             // remove dupe if any
@@ -110,6 +116,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Removes an item from a list of recent files.
+        /// This will be called, if the app failed go open
+        /// a file on the recent files list.
+        /// </summary>
+        /// <param name="path"></param>
+        public static void RemoveFromRecentFiles(string path)
+        {
+            RecentFiles.Remove(path);
+        }
+
+        /// <summary>
         /// Maps configurable items to strings
         /// representing them in the configuration file.
         /// </summary>
@@ -120,10 +137,13 @@ namespace ChessForge
             MainWin = mainWin;
 
             MoveSpeed = 200;
-            LastPgnDirectory = "";
-            LastPgnFile = "";
+            LastOpenDirectory = "";
+            LastWorkbookFile = "";
         }
 
+        /// <summary>
+        /// Reads configuration key/value pairs from the configuration file
+        /// </summary>
         public static void ReadConfigurationFile()
         {
             try
@@ -143,6 +163,9 @@ namespace ChessForge
             catch { }
         }
 
+        /// <summary>
+        /// Writes configuration key/value pairs to the configuration file.
+        /// </summary>
         public static void WriteOutConfiguration()
         {
             StringBuilder sb = new StringBuilder();
@@ -154,8 +177,8 @@ namespace ChessForge
                 sb.Append(CFG_DEBUG_MODE + "=" + DebugMode.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_MOVE_SPEED + "=" + MoveSpeed.ToString() + Environment.NewLine);
-                sb.Append(CFG_LAST_PGN_DIRECTORY + "=" + LastPgnDirectory.ToString() + Environment.NewLine);
-                sb.Append(CFG_LAST_PGN_FILE + "=" + LastPgnFile.ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_PGN_DIRECTORY + "=" + LastOpenDirectory.ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_PGN_FILE + "=" + LastWorkbookFile.ToString() + Environment.NewLine);
 
                 sb.Append(Environment.NewLine);
 
@@ -179,6 +202,11 @@ namespace ChessForge
             catch { }
         }
 
+        /// <summary>
+        /// Gets the position of the Main Window and encodes it
+        /// for saving.
+        /// </summary>
+        /// <returns></returns>
         public static string GetWindowPosition()
         {
             double left = Application.Current.MainWindow.Left;
@@ -190,6 +218,11 @@ namespace ChessForge
                 + width.ToString() + "," + height.ToString() + Environment.NewLine;
         }
 
+        /// <summary>
+        /// Gets the list of recently opend files and combines it
+        /// in one string for saving.
+        /// </summary>
+        /// <returns></returns>
         public static string GetRecentFiles()
         {
             string itemName = CFG_RECENT_FILES;
@@ -204,13 +237,22 @@ namespace ChessForge
             return sbFiles.ToString();
         }
 
+        /// <summary>
+        /// Called in response to user clicking one of the RecentFile
+        /// menu items.  
+        /// The index of the file in the list of recent files is encoded
+        /// in the name of the manu item e.g. "RecentFiles2" hence the way
+        /// the MenuItem's name is processed here.
+        /// </summary>
+        /// <param name="menuItemName"></param>
+        /// <returns></returns>
         public static string GetRecentFile(string menuItemName)
         {
-            if (menuItemName.StartsWith("RecentFiles"))
+            if (menuItemName.StartsWith(MainWin.MENUITEM_RECENT_FILES_PREFIX))
             {
                 try
                 {
-                    int index = int.Parse(menuItemName.Substring("RecentFiles".Length));
+                    int index = int.Parse(menuItemName.Substring(MainWin.MENUITEM_RECENT_FILES_PREFIX.Length));
                     return RecentFiles[index];
                 }
                 catch
@@ -247,10 +289,10 @@ namespace ChessForge
                             int.TryParse(value, out DebugMode);
                             break;
                         case CFG_LAST_PGN_DIRECTORY:
-                            LastPgnDirectory = value;
+                            LastOpenDirectory = value;
                             break;
                         case CFG_LAST_PGN_FILE:
-                            LastPgnFile = value;
+                            LastWorkbookFile = value;
                             break;
                         case CFG_ENGINE_EVALUATION_TIME:
                             int.TryParse(value, out EngineEvaluationTime);

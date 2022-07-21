@@ -9,27 +9,68 @@ using ChessPosition;
 namespace ChessForge
 {
     /// <summary>
-    /// Manages the text of the CHF file that will be writtent out.
+    /// Builds the text of the CHF file that will be written out.
     /// </summary>
-    public class ChfFileBuilder
+    public class ChfTextBuilder
     {
-        private StringBuilder _fileText;
+        private static StringBuilder _fileText;
+
+        private static WorkbookTree _workbook;
 
         /// <summary>
         /// Builds text of the complete Workbook.
         /// </summary>
-        public void BuildTreeText()
+        public static string BuildText(WorkbookTree workbook)
         {
+            _workbook = workbook;
             _fileText = new StringBuilder();
 
-            WorkbookTree workbook = AppState.MainWin.Workbook;
-            if (workbook.Nodes.Count == 0)
+            BuildHeaders();
+
+            if (workbook.Nodes.Count > 0)
             {
-                return;
+                TreeNode root = workbook.Nodes[0];
+                BuildTreeLineText(root);
             }
 
-            TreeNode root = workbook.Nodes[0];
-            BuildTreeLineText(root);
+            // add terminating character
+            _fileText.Append(" *");
+            _fileText.AppendLine();
+
+            return _fileText.ToString();
+        }
+
+        /// <summary>
+        /// Build text for the headers
+        /// </summary>
+        private static void BuildHeaders()
+        {
+            BuildHeader(_workbook.HEADER_TITLE);
+            BuildHeader(_workbook.HEADER_TRAINING_SIDE);
+            BuildHeader(_workbook.HEADER_WHITE, "Chess Forge");
+            BuildHeader(_workbook.HEADER_BLACK, "Workbook File");
+            _fileText.AppendLine();
+        }
+
+        /// <summary>
+        /// Build text for a single header.
+        /// </summary>
+        /// <param name="key"></param>
+        private static void BuildHeader(string key, string value = null)
+        {
+            string val;
+            if (value == null)
+            {
+                _workbook.Headers.TryGetValue(key, out val);
+            }
+            else
+            {
+                val = value;
+            }
+            _fileText.Append("[" + key + " \"");
+            _fileText.Append(val ?? "");
+            _fileText.Append("\"]");
+            _fileText.AppendLine();
         }
 
         /// <summary>
@@ -39,7 +80,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        private void BuildTreeLineText(TreeNode nd, bool includeNumber = false)
+        private static void BuildTreeLineText(TreeNode nd, bool includeNumber = false)
         {
             while (true)
             {
@@ -91,7 +132,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        private void BuildNodeText(TreeNode nd, bool includeNumber)
+        private static void BuildNodeText(TreeNode nd, bool includeNumber)
         {
             nd.TextStart = _fileText.Length;
 
@@ -114,6 +155,25 @@ namespace ChessForge
             }
 
             sb.Append(" " + nd.LastMoveAlgebraicNotation);
+            sb.Append(nd.Nags);
+
+            // is there a comment or commands
+            if (!string.IsNullOrEmpty(nd.Comment) || nd.ChfCommands.Count > 0)
+            {
+                sb.Append(" {");
+                foreach (string cmd in nd.ChfCommands)
+                {
+                    sb.Append("[" + cmd + "]");
+                }
+
+                if (!string.IsNullOrEmpty(nd.Comment))
+                {
+                    sb.Append(nd.Comment);
+                }
+
+                sb.Append("}");
+            }
+
             _fileText.Append(sb.ToString());
 
             nd.TextEnd = _fileText.Length - 1;

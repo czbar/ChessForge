@@ -96,7 +96,7 @@
     <Compile Include="WorkbookRichTextBuilder.cs" />
     <Compile Include="TreeTableCell.cs" />
     <Compile Include="TreeTableRow.cs" />
-    <Compile Include="TreeTextBuilder.cs" />
+    <Compile Include="ChfTextBuilder.cs" />
     <Compile Include="UIEelementState.cs" />
     <Compile Include="VariationLine.cs" />
     <Compile Include="WorkbookTableState.cs" />
