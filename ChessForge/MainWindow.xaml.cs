@@ -25,11 +25,12 @@ namespace ChessForge
     /// </summary>
     public partial class MainWindow : Window
     {
+        // prefix use for manu items showing recent files
+        public readonly string MENUITEM_RECENT_FILES_PREFIX = "RecentFiles";
+
         WorkbookRichTextBuilder _workbookRichTextBuilder;
         WorkbookRichTextBuilder _trainingBrowseRichTextBuilder;
         public TrainingView _trainingView;
-
-        ChfFileBuilder _chfFileText;
 
         private const int squareSize = 80;
 
@@ -55,8 +56,12 @@ namespace ChessForge
 
         internal AppTimers Timers;
 
+        /// <summary>
+        /// The main application window
+        /// </summary>
         public MainWindow()
         {
+            // Sets a public reference for access from other objects.
             AppState.MainWin = this;
 
             InitializeComponent();
@@ -142,7 +147,6 @@ namespace ChessForge
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(20000);
             AppState.ChangeCurrentMode(AppState.Mode.IDLE);
-            //            AppState.CurrentMode = AppState.Mode.IDLE;
 
             bool engineStarted = EngineMessageProcessor.Start();
             if (!engineStarted)
@@ -150,12 +154,12 @@ namespace ChessForge
                 MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            string lastPgnFile = Configuration.LastPgnFile;
-            if (!string.IsNullOrEmpty(lastPgnFile))
+            string lastWorkbookFile = Configuration.LastWorkbookFile;
+            if (!string.IsNullOrEmpty(lastWorkbookFile))
             {
                 try
                 {
-                    ReadPgnFile(lastPgnFile);
+                    ReadWorkbookFile(lastWorkbookFile, true);
                 }
                 catch
                 {
@@ -170,7 +174,7 @@ namespace ChessForge
             for (int i = 0; i < recentFiles.Count; i++)
             {
                 MenuItem mi = new MenuItem();
-                mi.Name = "RecentFiles" + i.ToString();
+                mi.Name = MENUITEM_RECENT_FILES_PREFIX + i.ToString();
                 try
                 {
                     string fileName = System.IO.Path.GetFileName(recentFiles.ElementAt(i));
@@ -178,7 +182,7 @@ namespace ChessForge
                     {
                         mi.Header = fileName;
                         MenuFile.Items.Add(mi);
-                        mi.Click += OpenPgnFile;
+                        mi.Click += OpenWorkbookFile;
                     }
                 }
                 catch { };
@@ -645,18 +649,18 @@ namespace ChessForge
             ViewActiveLine_SelectPly(moveNo, colorToMove);
         }
 
-        private void OpenPgnFile(object sender, RoutedEventArgs e)
+        private void OpenWorkbookFile(object sender, RoutedEventArgs e)
         {
             if (ChangeAppModeWarning(AppState.Mode.MANUAL_REVIEW))
             {
                 string menuItemName = ((MenuItem)e.Source).Name;
                 string path = Configuration.GetRecentFile(menuItemName);
-                ReadPgnFile(path);
+                ReadWorkbookFile(path, false);
             }
         }
 
         /// <summary>
-        /// Loads a new PGN file.
+        /// Loads a new Workbook file.
         /// If the application is NOT in the IDLE mode, it will ask the user:
         /// - to close/cancel/save/put_aside the current tree (TODO: TO BE IMPLEMENTED)
         /// - stop a game against the engine, if in progress
@@ -664,7 +668,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Menu_LoadPgn(object sender, RoutedEventArgs e)
+        private void Menu_LoadWorkbook(object sender, RoutedEventArgs e)
         {
             if (ChangeAppModeWarning(AppState.Mode.MANUAL_REVIEW))
             {
@@ -673,9 +677,9 @@ namespace ChessForge
                 openFileDialog.Filter = "ChessForge Workbooks (*.chf)|*.chf|PGN Game files (*.pgn)|*.pgn|All files (*.*)|*.*";
 
                 string initDir;
-                if (!string.IsNullOrEmpty(Configuration.LastPgnDirectory))
+                if (!string.IsNullOrEmpty(Configuration.LastOpenDirectory))
                 {
-                    initDir = Configuration.LastPgnDirectory;
+                    initDir = Configuration.LastOpenDirectory;
                 }
                 else
                 {
@@ -684,7 +688,7 @@ namespace ChessForge
 
                 openFileDialog.InitialDirectory = initDir;
 
-                bool? result = false;
+                bool? result;
 
                 try
                 {
@@ -698,8 +702,8 @@ namespace ChessForge
 
                 if (result == true)
                 {
-                    Configuration.LastPgnDirectory = Path.GetDirectoryName(openFileDialog.FileName);
-                    ReadPgnFile(openFileDialog.FileName);
+                    Configuration.LastOpenDirectory = Path.GetDirectoryName(openFileDialog.FileName);
+                    ReadWorkbookFile(openFileDialog.FileName, false);
                 }
             }
         }
@@ -760,7 +764,7 @@ namespace ChessForge
                 if (MenuFile.Items[i] is MenuItem)
                 {
                     MenuItem item = (MenuItem)MenuFile.Items[i];
-                    if (item.Name.StartsWith("RecentFiles"))
+                    if (item.Name.StartsWith(MENUITEM_RECENT_FILES_PREFIX))
                     {
                         itemsToRemove.Add(item);
                     }
@@ -778,21 +782,35 @@ namespace ChessForge
         /// <summary>
         /// Reads in the file and builds internal Variation Tree
         /// structures for the entire content.
+        /// The Chess Forge file will have a .chf extension.
+        /// However, we also read .pgn files (with the intent
+        /// to save them as .chf files)
         /// </summary>
         /// <param name="fileName"></param>
-        private void ReadPgnFile(string fileName)
+        private void ReadWorkbookFile(string fileName, bool isLastOpen)
         {
             try
             {
-                string gameText = File.ReadAllText(fileName);
+                if (!File.Exists(fileName))
+                {
+                    if (isLastOpen)
+                    {
+                        MessageBox.Show("Most recent file " + fileName + " could not be found.", "File Not Found", MessageBoxButton.OK);
+                    }
+                    else
+                    {
+                        MessageBox.Show("File " + fileName + " could not be found.", "File Not Found", MessageBoxButton.OK);
+                    }
+                    Configuration.RemoveFromRecentFiles(fileName);
+                    RecreateRecentFilesMenuItems();
+                    return;
+                }
 
-                Configuration.AddRecentFile(fileName);
-                RecreateRecentFilesMenuItems();
+                string workbookText = File.ReadAllText(fileName);
 
                 Workbook = new WorkbookTree();
                 _rtbWorkbookView.Document.Blocks.Clear();
-                PgnGameParser pgnGame = new PgnGameParser(gameText, Workbook, true);
-                _mainboardCommentBox.ShowWorkbookTitle(Workbook.Title);
+                PgnGameParser pgnGame = new PgnGameParser(workbookText, Workbook, true);
 
                 if (Workbook.TrainingSide == PieceColor.None)
                 {
@@ -803,14 +821,43 @@ namespace ChessForge
                     dlg.ShowDialog();
                     Workbook.TrainingSide = dlg.SelectedSide;
                 }
+
+                //
+                // If this is not a CHF file, ask the user to save the converted file.
+                //
+                if (Path.GetExtension(fileName).ToLower() == ".chf")
+                {
+                    AppState.WorkbookFileType = AppState.FileType.CHF;
+                }
+                else
+                {
+                    SaveFileDialog saveDlg = new SaveFileDialog();
+                    saveDlg.Filter = "chf Workbook files (*.chf)|*.chf";
+                    saveDlg.Title =  " Save Workbook converted from " + Path.GetFileName(fileName);
+                    saveDlg.OverwritePrompt = true;
+                    if (saveDlg.ShowDialog() == true)
+                    {
+                        fileName = saveDlg.FileName;
+                        string chfText = ChfTextBuilder.BuildText(Workbook);
+                        File.WriteAllText(fileName, chfText);
+                        AppState.WorkbookFileType = AppState.FileType.CHF;
+                    }
+                    else
+                    {
+                        AppState.WorkbookFileType = AppState.FileType.PGN;
+                    }
+                }
+
+                Configuration.AddRecentFile(fileName);
+                RecreateRecentFilesMenuItems();
+
+                _mainboardCommentBox.ShowWorkbookTitle(Workbook.Title);
+
                 _workbookRichTextBuilder = new WorkbookRichTextBuilder(_rtbWorkbookView.Document);
                 _trainingBrowseRichTextBuilder = new WorkbookRichTextBuilder(_rtbTrainingBrowse.Document);
                 _trainingView = new TrainingView(_rtbTrainingProgress.Document);
 
                 Workbook.BuildLines();
-
-                _chfFileText = new ChfFileBuilder();
-                _chfFileText.BuildTreeText();
 
                 _workbookRichTextBuilder.BuildFlowDocumentForWorkbook();
                 if (Workbook.Bookmarks.Count == 0)
@@ -822,8 +869,6 @@ namespace ChessForge
                 string startLineId = Workbook.GetDefaultLineIdForNode(startingNode);
                 SetActiveLine(startLineId, startingNode);
 
-                //_dgActiveLine.ItemsSource = ActiveLine.MoveList;
-
                 SetupDataInTreeView();
 
                 ShowBookmarks();
@@ -831,14 +876,13 @@ namespace ChessForge
                 _workbookRichTextBuilder.SelectLineAndMove(startLineId, startingNode);
                 _lvWorkbookTable_SelectLineAndMove(startLineId, startingNode);
 
-                Configuration.LastPgnFile = fileName;
-                Configuration.AddRecentFile(fileName);
+                Configuration.LastWorkbookFile = fileName;
 
                 AppState.ChangeCurrentMode(AppState.Mode.MANUAL_REVIEW);
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "Error processing PGN file", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(e.Message, "Error processing input file", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -1029,8 +1073,8 @@ namespace ChessForge
             {
                 _pbEngineThinking.Visibility = Visibility.Visible;
                 _pbEngineThinking.Minimum = 0;
-                    // add 50% to compensate for any processing delays
-                    // we don't want to be too optimistic
+                // add 50% to compensate for any processing delays
+                // we don't want to be too optimistic
                 _pbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime * 1.5);
                 _pbEngineThinking.Value = 0;
             });
