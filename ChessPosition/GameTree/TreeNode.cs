@@ -26,6 +26,11 @@ namespace GameTree
         public TreeNode Parent;
 
         /// <summary>
+        /// Id of the node which is unique across the tree (a.k.a. Workbook)
+        /// </summary>
+        public int NodeId;
+
+        /// <summary>
         /// Child nodes.
         /// </summary>
         public List<TreeNode> Children = new List<TreeNode>();
@@ -34,7 +39,7 @@ namespace GameTree
         /// List of Chess Forge commands associated with the leadup move,
         /// if any.
         /// </summary>
-        public List<string> ChfCommands = new List<string>();
+        public List<string> UnprocessedChfCommands = new List<string>();
 
         /// <summary>
         /// A text comment associated with the leadup move
@@ -47,6 +52,11 @@ namespace GameTree
         // the move leading to this position (algebraic notation with NAG symbols)
         private string _lastMoveAlgWithNag;
 
+        /// <summary>
+        /// Numeric Annotation Glyphs associated with this
+        /// move, if any.
+        /// </summary>
+        public string Nags = "";
 
         /// <summary>
         /// The color of the side on move in this position.
@@ -73,11 +83,9 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Numeric Annotation Glyphs associated with this
-        /// move, if any.
+        /// Adds a nag string to the NAG string for this node.
         /// </summary>
-        public string Nags = "";
-
+        /// <param name="nag"></param>
         public void AddNag(string nag)
         {
             // double check that this is a nag
@@ -106,6 +114,16 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Adds a string to the list of unprocessed CHF commands.
+        /// This will be called from the parser.
+        /// </summary>
+        /// <param name="cmd"></param>
+        public void AddUnprocessedChfCommand(string cmd)
+        {
+            UnprocessedChfCommands.Add(cmd);
+        }
+
+        /// <summary>
         /// LastMove in engine notation (e.g. "d2d4", "b1d2", "e7e8q")
         /// </summary>
         public string LastMoveEngineNotation
@@ -115,11 +133,6 @@ namespace GameTree
                 return Position.LastMove.GetEngineNotation();
             }
         }
-
-        /// <summary>
-        /// Id of the node which is unique across the tree (a.k.a. Workbook)
-        /// </summary>
-        public int NodeId;
 
         /// <summary>
         /// If the line id consists of 1 and dots only
@@ -177,6 +190,19 @@ namespace GameTree
         /// </summary>
         public BoardPosition Position = new BoardPosition();
 
+        /// <summary>
+        /// Indicates whether this position is a bookmark.
+        /// </summary>
+        public bool IsBookmark = false;
+
+        /// <summary>
+        /// Creates a new object as a child of the passed parent.
+        /// Initializes the IheritedEnPassant square and the
+        /// DynamicProperties based on the parent's properties.
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="alg"></param>
+        /// <param name="nodeId"></param>
         public TreeNode(TreeNode parent, string alg, int nodeId)
         {
             Parent = parent;
@@ -189,11 +215,19 @@ namespace GameTree
             NodeId = nodeId;
         }
 
+        /// <summary>
+        /// Adds a node to this node's Children list.
+        /// </summary>
+        /// <param name="node"></param>
         public void AddChild(TreeNode node)
         {
             Children.Add(node);
         }
 
+        /// <summary>
+        /// Move number property exposing
+        /// the MoveNumber property from Position.
+        /// </summary>
         public uint MoveNumber
         {
             get { return Position.MoveNumber; }

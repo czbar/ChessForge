@@ -60,7 +60,7 @@ namespace GameTree
             _workbook = workbook;
             _remainingGameText = ReadHeaders(pgnGametext);
 
-            ParseGameText(_remainingGameText, workbook);
+            ParseWorkbookText(_remainingGameText, workbook);
         }
 
         /// <summary>
@@ -154,14 +154,14 @@ namespace GameTree
         /// Branches can be found after any move and are surrounded by parenthesis '(' and ')'.
         /// </summary>
         /// <param name="text"></param>
-        private void ParseGameText(string text, WorkbookTree gameTree)
+        private void ParseWorkbookText(string text, WorkbookTree workbook)
         {
             // create a root node
             TreeNode rootNode = new TreeNode(null, "", runningNodeId);
             runningNodeId++;
 
             WorkbookTree.SetupStartingPosition(ref rootNode);
-            gameTree.AddNode(rootNode);
+            workbook.AddNode(rootNode);
 
             if (DEBUG_MODE)
             {
@@ -169,7 +169,7 @@ namespace GameTree
             }
 
             //TreeNode
-            ParseBranch(rootNode, gameTree);
+            ParseBranch(rootNode, workbook);
         }
 
         /// <summary>
@@ -193,8 +193,8 @@ namespace GameTree
         /// Parses a branch of the tree.
         /// </summary>
         /// <param name="parentNode"></param>
-        /// <param name="gameTree"></param>
-        private void ParseBranch(TreeNode parentNode, WorkbookTree gameTree)
+        /// <param name="workbook"></param>
+        private void ParseBranch(TreeNode parentNode, WorkbookTree workbook)
         {
             string token;
 
@@ -211,7 +211,7 @@ namespace GameTree
                 {
                     // if this is a new branch then invoke this method again
                     case PgnTokenType.BranchStart:
-                        ParseBranch(previousNode, gameTree);
+                        ParseBranch(previousNode, workbook);
                         break;
                     case PgnTokenType.BranchEnd:
                         return;
@@ -226,7 +226,7 @@ namespace GameTree
                         parentNode.AddChild(newNode);
                         previousNode = parentNode;
                         parentNode = newNode;
-                        gameTree.AddNode(parentNode);
+                        workbook.AddNode(parentNode);
                         if (DEBUG_MODE)
                         {
                             DebugUtils.PrintPosition(newNode.Position);
@@ -238,7 +238,7 @@ namespace GameTree
                         break;
                     case PgnTokenType.NAG:
                         // add to the last processed move
-                        AddNAGtoLastMove(gameTree, token);
+                        AddNAGtoLastMove(workbook, token);
                         break;
                 }
             }
@@ -247,11 +247,11 @@ namespace GameTree
         /// <summary>
         /// Adds an encountered NAG character to the last processed move.
         /// </summary>
-        /// <param name="gameTree"></param>
+        /// <param name="workbook"></param>
         /// <param name="nag"></param>
-        private void AddNAGtoLastMove(WorkbookTree gameTree, string nag)
+        private void AddNAGtoLastMove(WorkbookTree workbook, string nag)
         {
-            TreeNode nd = gameTree.Nodes[gameTree.Nodes.Count - 1];
+            TreeNode nd = workbook.Nodes[workbook.Nodes.Count - 1];
             nd.AddNag(nag);
         }
 
@@ -357,15 +357,15 @@ namespace GameTree
             // process any Chess Forge commands
             while (true)
             {
-                int commandStart = _remainingGameText.IndexOf("[%chf-");
+                int commandStart = _remainingGameText.IndexOf("[%chf-", 0, endPos);
                 if (commandStart < 0)
                     break;
 
-                int commandEnd = _remainingGameText.IndexOf(']');
+                int commandEnd = _remainingGameText.IndexOf(']', 0, endPos);
                 if (commandEnd > 0)
                 {
                     string command = _remainingGameText.Substring(commandStart + 1, commandEnd - (commandStart + 1));
-                    node.ChfCommands.Add(command);
+                    _workbook.AddChfCommand(node, command);
                     _remainingGameText = _remainingGameText.Substring(commandEnd + 1);
                 }
             }
