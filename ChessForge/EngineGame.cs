@@ -95,8 +95,8 @@ namespace ChessForge
             bool isCastle;
             string algMove = MoveUtils.EngineNotationToAlgebraic(engMove, ref pos, out isCastle);
 
-            // note: we don't care about NodeId here
-            nd = new TreeNode(curr, algMove, -1);
+            nd = new TreeNode(curr, algMove, AppState.MainWin.Workbook.GetNewNodeId());
+            nd.IsNewTrainingMove = true;
             nd.Position = pos;
             nd.Position.ColorToMove = pos.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
             nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
@@ -145,6 +145,12 @@ namespace ChessForge
                 }
                 else
                 {
+                    if (TrainingState.IsTrainingInProgress)
+                    {
+                        nd.IsNewTrainingMove = true;
+                        nd.NodeId = AppState.MainWin.Workbook.GetNewNodeId();
+                        AppState.MainWin._trainingView.UserMoveMade();
+                    }
                     State = GameState.ENGINE_THINKING;
                 }
                 return true;

@@ -76,9 +76,12 @@ namespace ChessForge
         public Paragraph CreateParagraphWithText(string style, string text)
         {
             Paragraph para = CreateParagraph(style);
-            
-            Run r = new Run(text);
-            para.Inlines.Add(r);
+
+            if (text != null)
+            {
+                Run r = new Run(text);
+                para.Inlines.Add(r);
+            }
 
             return para;
         }

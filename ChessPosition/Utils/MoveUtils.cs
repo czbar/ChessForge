@@ -104,9 +104,10 @@ namespace ChessPosition
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        public static string BuildSingleMoveText(TreeNode nd)
+        public static string BuildSingleMoveText(TreeNode nd, bool withNAGs = false)
         {
-            return nd.MoveNumber.ToString() + (nd.ColorToMove== PieceColor.White ? "... " : ". ") + nd.LastMoveAlgebraicNotation;
+            string moveTxt = withNAGs ? nd.LastMoveAlgebraicNotationWithNag : nd.LastMoveAlgebraicNotation;
+            return nd.MoveNumber.ToString() + (nd.ColorToMove== PieceColor.White ? "... " : ". ") + moveTxt;
         }
 
         public static void PerformCastling(BoardPosition position, MoveData move)

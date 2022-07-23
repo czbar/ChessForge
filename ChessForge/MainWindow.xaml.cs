@@ -1038,11 +1038,6 @@ namespace ChessForge
         {
             TreeNode nd = Workbook.GetNodeFromNodeId(nodeId);
             RequestMoveEvaluationInTraining(nd);
-            //Evaluation.Position = nd.Position;
-            //ShowMoveEvaluationControls(true, false);
-
-            //EngineMessageProcessor.StartMessagePollTimer();
-            //PrepareMoveEvaluation(EvaluationState.EvaluationMode.IN_TRAINING, Evaluation.Position);
         }
 
         public void RequestMoveEvaluationInTraining(TreeNode nd)
@@ -1150,6 +1145,13 @@ namespace ChessForge
                 Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
                 Timers.Stop(AppTimers.StopwatchId.EVALUATION_PROGRESS);
                 ResetEvaluationProgressBar();
+                if (TrainingState.IsTrainingInProgress)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        _trainingView.EngineMoveMade();
+                    });
+                }
             }
             else if (AppState.CurrentMode == AppState.Mode.TRAINING)
             {
@@ -1420,7 +1422,7 @@ namespace ChessForge
 
         /// <summary>
         /// This method will be invoked periodically by the 
-        /// times checking for the completion of user moves.
+        /// timer checking for the completion of user moves.
         /// The user can make moves in 2 contexts:
         /// 1. a game against the engine (in this case EngineGame.State 
         /// should already be set to ENGINE_THINKING)
@@ -1679,12 +1681,15 @@ namespace ChessForge
 
         public void SwapCommentBoxForEngineLines(bool showEngineLines)
         {
-            _rtbBoardComment.Visibility = showEngineLines ? Visibility.Hidden : Visibility.Visible;
-            _tbEngineLines.Visibility = showEngineLines ? Visibility.Visible : Visibility.Hidden;
-            if (!showEngineLines)
+            this.Dispatcher.Invoke(() =>
             {
-                Timers.Stop(AppTimers.StopwatchId.EVALUATION_PROGRESS);
-            }
+                _rtbBoardComment.Visibility = showEngineLines ? Visibility.Hidden : Visibility.Visible;
+                _tbEngineLines.Visibility = showEngineLines ? Visibility.Visible : Visibility.Hidden;
+                if (!showEngineLines)
+                {
+                    Timers.Stop(AppTimers.StopwatchId.EVALUATION_PROGRESS);
+                }
+            });
         }
 
         /// <summary>
@@ -1806,6 +1811,12 @@ namespace ChessForge
             SetAppInTrainingMode(8);
             e.Handled = true;
         }
+
+        public void InvokeRequestWorkbookResponse(object source, ElapsedEventArgs e)
+        {
+            _trainingView.RequestWorkbookResponse();
+        }
+
     }
 
 }

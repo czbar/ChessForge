@@ -42,6 +42,13 @@ namespace GameTree
         public List<string> UnprocessedChfCommands = new List<string>();
 
         /// <summary>
+        /// Marks a node that was not in the Workbook when the training started.
+        /// Depending on user choices, it may be later on removed from the Workbook
+        /// or added permanently.
+        /// </summary>
+        public bool IsNewTrainingMove = false;
+
+        /// <summary>
         /// A text comment associated with the leadup move
         /// </summary>
         public string Comment = null;

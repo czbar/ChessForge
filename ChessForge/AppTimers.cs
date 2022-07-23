@@ -25,7 +25,8 @@ namespace ChessForge
             EVALUATION_LINE_DISPLAY,
             CHECK_FOR_USER_MOVE,
             ENGINE_MESSAGE_POLL,
-            CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE
+            CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE,
+            REQUEST_WORKBOOK_MOVE,
         };
 
         internal enum StopwatchId
@@ -47,6 +48,8 @@ namespace ChessForge
         private Timer _checkForUserMoveTimer;
 
         private Timer _checkForTrainingWorkbookMoveMade;
+
+        private Timer _requestWorkbookMove;
 
         /// <summary>
         /// Tracks time that evaluation of a move/position is taking.
@@ -80,6 +83,10 @@ namespace ChessForge
             _checkForTrainingWorkbookMoveMade = new Timer();
             InitCheckForTrainingWorkbookMoveMade();
             _dictTimers.Add(TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE, _checkForTrainingWorkbookMoveMade);
+
+            _requestWorkbookMove = new Timer();
+            InitRequestWorkbookMove();
+            _dictTimers.Add(TimerId.REQUEST_WORKBOOK_MOVE, _requestWorkbookMove);
 
             _evaluationProgressStopwatch = new Stopwatch();
             _dictStopwatches.Add(StopwatchId.EVALUATION_PROGRESS, _evaluationProgressStopwatch);
@@ -148,6 +155,13 @@ namespace ChessForge
             _checkForTrainingWorkbookMoveMade.Elapsed += new ElapsedEventHandler(EngineGame.CheckForTrainingWorkbookMoveMade);
             _checkForTrainingWorkbookMoveMade.Interval = 600;
             _checkForTrainingWorkbookMoveMade.Enabled = false;
+        }
+
+        private void InitRequestWorkbookMove()
+        {
+            _requestWorkbookMove.Elapsed += new ElapsedEventHandler(AppState.MainWin.InvokeRequestWorkbookResponse);
+            _requestWorkbookMove.Interval = 300;
+            _requestWorkbookMove.Enabled = false;
         }
 
     }

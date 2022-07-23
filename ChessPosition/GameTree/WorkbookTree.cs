@@ -284,6 +284,18 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns a new NodeId that can be used by the caller in a newly
+        /// created Node.  
+        /// This is the id of the node currently last in the list of nodes
+        /// incremented by one.
+        /// </summary>
+        /// <returns></returns>
+        public int GetNewNodeId()
+        {
+            return Nodes[Nodes.Count - 1].NodeId + 1;
+        }
+
+        /// <summary>
         /// Adds children of a node to the list of Bookmarks.
         /// </summary>
         /// <param name="fork">Node whose children to bookmark.</param>
