@@ -55,13 +55,13 @@ namespace ChessForge
             if (userMove)
             {
                 AddNewParagraphToDoc("normal", "Your move was:");
-                AddNewParagraphToDoc("bold_prompt", MoveUtils.BuildSingleMoveText(nd));
+                AddNewParagraphToDoc("bold_prompt", MoveUtils.BuildSingleMoveText(nd, true));
                 AddNewParagraphToDoc("normal", "Wait for engine's response...");
             }
             else // engine moved
             {
                 AddNewParagraphToDoc("normal", "The engine played:");
-                AddNewParagraphToDoc("bold_16", MoveUtils.BuildSingleMoveText(nd));
+                AddNewParagraphToDoc("bold_16", MoveUtils.BuildSingleMoveText(nd, true));
                 AddNewParagraphToDoc("normal", "It is your turn now.");
             }
         }

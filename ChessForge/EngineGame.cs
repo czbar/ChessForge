@@ -250,7 +250,10 @@ namespace ChessForge
         /// </summary>
         public static void AddLastNodeToPlies()
         {
-            Line.AddPly(GetCurrentNode());
+            AppState.MainWin.Dispatcher.Invoke(() =>
+            {
+                Line.AddPly(GetCurrentNode());
+            });
         }
 
         public static void AddPlyToGame(TreeNode nd)

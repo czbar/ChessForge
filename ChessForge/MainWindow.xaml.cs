@@ -1098,7 +1098,7 @@ namespace ChessForge
 
         private void UpdateLastMoveTextBox(TreeNode nd, bool isLineStart)
         {
-            string moveTxt = MoveUtils.BuildSingleMoveText(nd);
+            string moveTxt = MoveUtils.BuildSingleMoveText(nd, true);
 
             UpdateLastMoveTextBox(moveTxt, isLineStart);
         }
@@ -1407,7 +1407,7 @@ namespace ChessForge
             {
                 TreeNode nd;
                 pos = EngineGame.ProcessEngineGameMove(out nd);
-                SoundPlayer.PlayMoveSound(nd.LastMoveEngineNotation);
+                SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
                 _mainboardCommentBox.GameMoveMade(nd, false);
             });
 

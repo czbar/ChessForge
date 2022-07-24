@@ -100,14 +100,22 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Builds a string for a stand alone move e.g. "9. Na4" or "9... Na5" 
+        /// Builds a string for a move either standalone e.g. "9. Na4" or "9... Na5" 
+        /// or as part of game text where Black's moves come without the number and elipsis.
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        public static string BuildSingleMoveText(TreeNode nd, bool withNAGs = false)
+        public static string BuildSingleMoveText(TreeNode nd, bool isStandalone, bool withNAGs = false)
         {
             string moveTxt = withNAGs ? nd.LastMoveAlgebraicNotationWithNag : nd.LastMoveAlgebraicNotation;
-            return nd.MoveNumber.ToString() + (nd.ColorToMove== PieceColor.White ? "... " : ". ") + moveTxt;
+            if (isStandalone)
+            {
+                return nd.MoveNumber.ToString() + (nd.ColorToMove == PieceColor.White ? "... " : ". ") + moveTxt;
+            }
+            else
+            {
+                return  (nd.ColorToMove == PieceColor.Black ? nd.MoveNumber.ToString() + "." : "") + moveTxt;
+            }
         }
 
         public static void PerformCastling(BoardPosition position, MoveData move)
