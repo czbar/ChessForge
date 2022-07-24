@@ -98,6 +98,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The paragraph holding the text of the current game
+        /// against the engine if one is in progress.
+        /// </summary>
+        private Paragraph _paraCurrentEngineGame;
+
+        private int _currentEngineGameMoveCount;
+
+        /// <summary>
         /// The Run with the move for which engine evaluation
         /// is running.
         /// </summary>
@@ -139,6 +147,9 @@ namespace ChessForge
         private readonly string _run_user_eval_results = "user_eval_results";
         private readonly string _run_play_wb_move_ = "wb_play_";
 
+        private readonly string _run_engine_game_move_ = "eng_game_";
+        private readonly string _run_wb_move_ = "wb_move_";
+
         /// <summary>
         /// Creates an instance of this class and sets reference 
         /// to the FlowDocument managed by the object.
@@ -152,6 +163,11 @@ namespace ChessForge
         /// Property referencing definitions of Paragraphs 
         /// </summary>
         override internal Dictionary<string, RichTextPara> RichTextParas { get { return _richTextParas; } }
+
+        private static readonly string STYLE_MOVES_MAIN = "moves_main";
+        private static readonly string STYLE_COACH_NOTES = "coach_notes";
+        private static readonly string STYLE_ENGINE_EVAL = "engine_eval";
+        private static readonly string STYLE_ENGINE_GAME = "engine_game";
 
         /// <summary>
         /// Layout definitions for paragraphs at different levels.
@@ -169,11 +185,10 @@ namespace ChessForge
             ["normal"] = new RichTextPara(10, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
             ["default"] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
 
-            ["moves_main"] = new RichTextPara(10, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-            ["coach_notes"] = new RichTextPara(50, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-            ["engine_eval"] = new RichTextPara(80, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-            ["engine_game"] = new RichTextPara(40, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-
+            [STYLE_MOVES_MAIN] = new RichTextPara(10, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
+            [STYLE_COACH_NOTES] = new RichTextPara(50, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
+            [STYLE_ENGINE_EVAL] = new RichTextPara(80, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
+            [STYLE_ENGINE_GAME] = new RichTextPara(50, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
         };
 
         /// <summary>
@@ -283,6 +298,9 @@ namespace ChessForge
             }
             else
             {
+                _paraCurrentEngineGame = AddNewParagraphToDoc(STYLE_ENGINE_GAME, "");
+                _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine has started. Wait for the engine\'s move..."));
+
                 // call RequestEngineResponse() directly so it invokes PlayEngine
                 RequestEngineResponse();
             }
@@ -340,7 +358,7 @@ namespace ChessForge
         /// </summary>
         public void EngineMoveMade()
         {
-            BuildMoveParagraph(EngineGame.GetCurrentNode(), false);
+            AddMoveToEngineGamePara(EngineGame.GetCurrentNode());
         }
 
         /// <summary>
@@ -349,7 +367,38 @@ namespace ChessForge
         /// </summary>
         public void UserMoveMade()
         {
-            BuildMoveParagraph(EngineGame.GetCurrentNode(), true);
+            AddMoveToEngineGamePara(EngineGame.GetCurrentNode());
+        }
+
+        private void AddMoveToEngineGamePara(TreeNode nd)
+        {
+            if (_paraCurrentEngineGame == null)
+            {
+                // should never be null here so this is just defensive
+                _paraCurrentEngineGame = AddNewParagraphToDoc(STYLE_ENGINE_GAME, "");
+            }
+
+            string text = "";
+            if (_currentEngineGameMoveCount == 0)
+            {
+                _paraCurrentEngineGame.Inlines.Clear();
+                _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine is in progress...\n"));
+                text = "          " + MoveUtils.BuildSingleMoveText(nd, true) + " ";
+            }
+            else
+            {
+                text = MoveUtils.BuildSingleMoveText(nd, false) + " ";
+                if (_currentEngineGameMoveCount % 8 == 0)
+                {
+                    text = "\n          " + text;
+                }
+            }
+
+            Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
+            _paraCurrentEngineGame.Inlines.Add(gm);
+
+            _currentEngineGameMoveCount++;
+
         }
 
         /// <summary>
@@ -420,7 +469,7 @@ namespace ChessForge
             string paraName = "p_moves_" + nd.NodeId.ToString();
             string runName = "r_moves_" + nd.NodeId.ToString();
 
-            Paragraph para = AddNewParagraphToDoc("moves_main", "");
+            Paragraph para = AddNewParagraphToDoc(STYLE_MOVES_MAIN, "");
             para.Name = paraName;
 
             Run r_prefix = new Run();
@@ -436,7 +485,7 @@ namespace ChessForge
 
             para.Inlines.Add(r_prefix);
 
-            Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true), runName, ButtonStyle.BLACK);
+            Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true), runName, Brushes.Black);
             para.Inlines.Add(r);
         }
 
@@ -557,10 +606,14 @@ namespace ChessForge
         {
             string paraName = "p_coach_" + _userMove.NodeId.ToString();
 
-            Paragraph para = AddNewParagraphToDoc("coach_notes", "");
+            Paragraph para = AddNewParagraphToDoc(STYLE_COACH_NOTES, "");
             para.Name = paraName;
 
-            string txt = "Coach says: ";
+            Run coach = new Run("Coach says:");
+            coach.TextDecorations = TextDecorations.Underline;
+            para.Inlines.Add(coach);
+
+            string txt = "  ";
             if (_otherMovesInWorkbook.Count == 0)
             {
                 txt += "The move you made is the only move in the Workbook.";
@@ -614,136 +667,11 @@ namespace ChessForge
         {
             foreach (TreeNode nd in _otherMovesInWorkbook)
             {
-                para.Inlines.Add(CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true) + "; ", "", ButtonStyle.GREEN));
+                para.Inlines.Add(CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true) + "; ", _run_wb_move_ + nd.NodeId.ToString(), Brushes.Green));
             }
         }
 
-        /// <summary>
-        /// This paragraph shows the move made by the user.
-        /// The commentary and "button" setup depends on whether the move
-        /// was found in the Workbook or not.
-        /// </summary>
-        /// <param name="nd"></param>
-        private void BuildUserMoveParagraph(TreeNode nd, bool moveInWorkbook)
-        {
-            Paragraph para = AddNewParagraphToDoc("normal", "", NonNullParaAtOrBefore(ParaType.CONTINUATION));
-            _dictParas[ParaType.USER_MOVE] = para;
-            para.Inlines.Clear();
 
-            Run pre = new Run("Your move:\n");
-            pre.FontWeight = FontWeights.Bold;
-            pre.FontSize = 16;
-            pre.Foreground = Brushes.Black;
-            para.Inlines.Add(pre);
-
-            Run r = new Run("   " + nd.GetPlyText(true));
-            r.FontWeight = FontWeights.Bold;
-            r.FontSize = 16;
-            r.Foreground = moveInWorkbook ? Brushes.Black : Brushes.Red;
-            para.Inlines.Add(r);
-
-            if (moveInWorkbook)
-            {
-                if (_otherMovesInWorkbook.Count == 0)
-                {
-                    para.Inlines.Add(new Run(" is the only move in the Workbook in this position. \n\n"));
-                    para.Inlines.Add(new Run("You can play it now (green highlight) or check the engin evaluation first (blue highlights). \n\n"));
-                }
-                else
-                {
-                    para.Inlines.Add(new Run(" is in the Workbook. \n\nYou can confirm it or choose another move from the Workbook. \n"));
-                    para.Inlines.Add(new Run("You can run evaluations (blue highlights) before selecting the move to go ahead with (green highlights). \n\n"));
-                }
-            }
-            else
-            {
-                para.Inlines.Add(new Run(" was not found in the Workbook. \n\nChoose how to proceed by clicking on one of the options highlighted below. \n"));
-                para.Inlines.Add(new Run("You can run evaluations (blue highlights) before selecting the move to go ahead with (green highlights). \n\n"));
-            }
-
-
-            RemoveIntroParas();
-
-            para.Inlines.Add(new Run("The move you made:\n"));
-            para.Inlines.Add(new Run("      "));
-
-            Run mv = new Run(_userMove.GetPlyText(true) + "  :  ");
-            mv.FontWeight = FontWeights.Bold;
-            para.Inlines.Add(mv);
-
-            string evalButtonText = " evaluate only ";
-            if (moveInWorkbook)
-            {
-                para.Inlines.Add(CreateButtonRun(evalButtonText, _run_eval_wb_move_ + nd.NodeId.ToString(), ButtonStyle.BLUE));
-            }
-            else
-            {
-                para.Inlines.Add(CreateButtonRun(evalButtonText, _run_eval_user_move, ButtonStyle.BLUE));
-            }
-
-            para.Inlines.Add(new Run("   or   "));
-            if (moveInWorkbook)
-            {
-                para.Inlines.Add(CreateButtonRun(" play it", _run_play_wb_move_ + nd.NodeId.ToString(), ButtonStyle.GREEN));
-            }
-            else
-            {
-                para.Inlines.Add(CreateButtonRun("play it, starting a game against the engine", _run_play_engine, ButtonStyle.GREEN));
-            }
-        }
-
-        /// <summary>
-        /// This paragraph is built when the user made a move not
-        /// found in the Workbook and we are showing them what's in
-        /// the Workbook.
-        /// </summary>
-        /// <param name="moves"></param>
-        private void BuildWorkbookMovesParagraph(string moves, bool moveInWorkbook)
-        {
-            RemoveIntroParas();
-
-            if (!string.IsNullOrEmpty(moves))
-            {
-                Paragraph para;
-
-                if (moveInWorkbook)
-                {
-                    if (_otherMovesInWorkbook.Count == 1)
-                    {
-                        para = AddNewParagraphToDoc("normal", "\nThe only other move in the Workbook:\n", NonNullParaAtOrBefore(ParaType.USER_MOVE));
-                    }
-                    else
-                    {
-                        para = AddNewParagraphToDoc("normal", "\nOther moves in the Workbook:\n", NonNullParaAtOrBefore(ParaType.USER_MOVE));
-                    }
-                }
-                else
-                {
-                    para = AddNewParagraphToDoc("normal", "\nMoves in the Workbook:\n", NonNullParaAtOrBefore(ParaType.USER_MOVE));
-                }
-
-                _dictParas[ParaType.WORKBOOK_MOVES] = para;
-
-                foreach (TreeNode nd in _otherMovesInWorkbook)
-                {
-                    para.Inlines.Add(new Run("      "));
-
-                    Run r = new Run(nd.GetPlyText(true) + "  :  ");
-                    r.FontWeight = FontWeights.Bold;
-                    para.Inlines.Add(r);
-
-                    string evalButtonText = " evaluate only ";
-                    para.Inlines.Add(CreateButtonRun(evalButtonText, _run_eval_wb_move_ + nd.NodeId.ToString(), ButtonStyle.BLUE));
-                    para.Inlines.Add(new Run("   or   "));
-                    para.Inlines.Add(CreateButtonRun("go ahead and play it", _run_play_wb_move_ + nd.NodeId.ToString(), ButtonStyle.GREEN));
-                    para.Inlines.Add(new Run("\n"));
-                }
-            }
-            else
-            {
-                _dictParas[ParaType.WORKBOOK_MOVES] = null;
-            }
-        }
 
         /// <summary>
         /// Creates a highlighted, clickable text that here we refer to
@@ -753,26 +681,12 @@ namespace ChessForge
         /// <param name="runName"></param>
         /// <param name="style"></param>
         /// <returns></returns>
-        private Run CreateButtonRun(string text, string runName, ButtonStyle style)
+        private Run CreateButtonRun(string text, string runName, Brush color)
         {
             Run r = new Run(text);
             r.Name = runName;
 
-            switch (style)
-            {
-                case ButtonStyle.BLUE:
-                    r.Foreground = Brushes.Blue;
-                    break;
-                case ButtonStyle.GREEN:
-                    r.Foreground = Brushes.Green;
-                    break;
-                case ButtonStyle.RED:
-                    r.Foreground = Brushes.Red;
-                    break;
-                case ButtonStyle.BLACK:
-                    r.Foreground = Brushes.Black;
-                    break;
-            }
+            r.Foreground = color;
 
             r.FontWeight = FontWeights.Bold;
             r.MouseDown += EventRunClicked;
