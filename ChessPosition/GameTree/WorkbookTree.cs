@@ -221,6 +221,21 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Removes all nodes that follow the passed
+        /// node.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void RemoveTailAfter(TreeNode nd)
+        {
+            for (int i = nd.Children.Count - 1; i >= 0; i--)
+            {
+                Nodes.Remove(nd.Children[i]);
+                RemoveTailAfter(nd.Children[i]);
+                nd.Children.Remove(nd.Children[i]);
+            }
+        }
+
+        /// <summary>
         /// Adds a bookmark to the list
         /// and sets the Bookmark flag on the
         /// bookmark's TreeNode.
@@ -343,6 +358,13 @@ namespace GameTree
         public void AddNode(TreeNode node)
         {
             Nodes.Add(node);
+
+        }
+
+        public void AddNodeToParent(TreeNode node)
+        {
+            Nodes.Add(node);
+            node.Parent.AddChild(node);
         }
 
         /// <summary>

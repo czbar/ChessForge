@@ -13,25 +13,23 @@ namespace ChessForge
 {
     /// <summary>
     /// Manages the RichTextBox showing the progress of the training session.
-    /// The document has the follwoing structure:
-    /// - The header and the "stem" paragraph are permanently displayed at the top of the box.
-    /// - The "intro" and "instruction" paragraphs are shown only at the start and are removed
-    ///   as soon as any training content is to be shown.
-    /// - The last paragraphs deal with the latest move made by the user:
-    ///    o if the user's move was in the Workbook a paragraph offering to evaluate it or
-    ///      start a game with the engine will be shown.
-    ///    o a paragraph with all workbook move options will be displayed with options to evaluate
-    ///      or make the selected move. If there is only one move in the workbook, and it is the move
-    ///      made by the user, only an "evaluate" option will be offered.
-    ///    o if the user chooses to evaluate any move, a Run with evaluation results will be inserted
-    ///      after the line with the move.  It will be deleted/replaced if the user asks to evaluate
-    ///      again.
+    /// The document has the following structure:
+    /// - The "stem" paragraph is displayed at the top of the box.
+    /// - The "instructions" paragraph follows
+    /// - The initial prompt paragraph is shown before user's first move and is then deleted.
+    /// - The paragraphs that follow show user moves and "coach's" responses with comment
+    ///   paragraphs, optionally, in between.
+    ///   The comment paragraph will in particular include wrokbook moves other than the move
+    ///   made by the user.
+    /// - If the user starts a game with the engine, an engine game paragraph will be created.
+    ///   It will be removed when the game ends or is abandoned.
+    /// - The history paragraph will record the list of session branches (when the user goes back and restarts training 
+    ///   at a different move, the new session branch is created.)
     ///      
-    /// When needed, the Paragraphs and Runs are assigned names that are used to upadate / delete or use them 
+    /// Paragraphs and Runs are assigned names that are used to upadate / delete or use them 
     /// as position references.
-    /// Runs with Workbook moves (play and eval "buttons" as well as evaluation results) are named using a prefix 
-    /// followed by a NodeId for easy identification. User moves and evaluations for moves not in the Workbook do
-    /// not require Node identification as there can only be one such move at a time.
+    /// Runs with moves are named using a prefix specific to the type of paragraph they're in
+    /// followed by a NodeId for easy identification. 
     /// </summary>
     public class TrainingView : RichTextBuilder
     {
@@ -103,7 +101,14 @@ namespace ChessForge
         /// </summary>
         private Paragraph _paraCurrentEngineGame;
 
+        /// <summary>
+        /// Number of moves made in the game agains the engine.
+        /// This is used to decide when to start a new line in the
+        /// Engine Game paragraph.
+        /// </summary>
         private int _currentEngineGameMoveCount;
+
+        private TreeNode _engineGameRootNode;
 
         /// <summary>
         /// The Run with the move for which engine evaluation
@@ -132,8 +137,6 @@ namespace ChessForge
         /// The node from which we start the training session.
         /// </summary>
         private TreeNode _sessionStartNode;
-
-        private int _sessionStartNodeIndex;
 
         private int _nodeIdUnderEvaluation = -1;
 
@@ -191,23 +194,6 @@ namespace ChessForge
             [STYLE_ENGINE_GAME] = new RichTextPara(50, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
         };
 
-        /// <summary>
-        /// Initializes the state of the view.
-        /// Sets the starting node of the training session
-        /// and shows the intro text.
-        /// </summary>
-        /// <param name="node"></param>
-        public void Initialize(TreeNode node)
-        {
-            _sessionStartNode = node;
-            _sessionStartNodeIndex = (int)(node.MoveNumber * 2 - (node.ColorToMove == PieceColor.Black ? -1 : 0));
-            Document.Blocks.Clear();
-
-            InitParaDictionary();
-
-            BuildIntroText(node);
-        }
-
         private void InitParaDictionary()
         {
             _dictParas[ParaType.INTRO] = null;
@@ -221,14 +207,20 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds text for intorductory paragraphs.
+        /// Initializes the state of the view.
+        /// Sets the starting node of the training session
+        /// and shows the intro text.
         /// </summary>
         /// <param name="node"></param>
-        private void BuildIntroText(TreeNode node)
+        public void Initialize(TreeNode node)
         {
-            ///            BuildSessionHeaderText();
-            BuildStemText(node);
-            BuildInstructionsText();
+            _sessionStartNode = node;
+            //_sessionStartNodeIndex = (int)(node.MoveNumber * 2 - (node.ColorToMove == PieceColor.Black ? -1 : 0));
+            Document.Blocks.Clear();
+
+            InitParaDictionary();
+
+            BuildIntroText(node);
         }
 
         /// <summary>
@@ -251,7 +243,6 @@ namespace ChessForge
             _otherMovesInWorkbook.Clear();
 
             _userMove = EngineGame.GetCurrentNode();
-            EngineGame.AddLastNodeToPlies();
             TreeNode parent = _userMove.Parent;
 
             // double check that we have the parent in our Workbook
@@ -266,7 +257,7 @@ namespace ChessForge
             TreeNode foundMove = null;
             foreach (TreeNode child in parent.Children)
             {
-                if (child.LastMoveEngineNotation == _userMove.LastMoveEngineNotation)
+                if (child.LastMoveEngineNotation == _userMove.LastMoveEngineNotation && !_userMove.IsNewTrainingMove)
                 {
                     // replace the TreeNode with the one from the Workbook so that
                     // we stay with the workbook as long as the user does.
@@ -276,9 +267,12 @@ namespace ChessForge
                 }
                 else
                 {
-                    wbMoves.Append(child.GetPlyText(true));
-                    wbMoves.Append("; ");
-                    _otherMovesInWorkbook.Add(child);
+                    if (!child.IsNewTrainingMove)
+                    {
+                        wbMoves.Append(child.GetPlyText(true));
+                        wbMoves.Append("; ");
+                        _otherMovesInWorkbook.Add(child);
+                    }
                 }
             }
 
@@ -300,7 +294,7 @@ namespace ChessForge
             {
                 _paraCurrentEngineGame = AddNewParagraphToDoc(STYLE_ENGINE_GAME, "");
                 _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine has started. Wait for the engine\'s move..."));
-
+                _engineGameRootNode = _userMove;
                 // call RequestEngineResponse() directly so it invokes PlayEngine
                 RequestEngineResponse();
             }
@@ -370,6 +364,16 @@ namespace ChessForge
             AddMoveToEngineGamePara(EngineGame.GetCurrentNode());
         }
 
+        /// <summary>
+        /// Builds text for intorductory paragraphs.
+        /// </summary>
+        /// <param name="node"></param>
+        private void BuildIntroText(TreeNode node)
+        {
+            BuildStemText(node);
+            BuildInstructionsText();
+        }
+
         private void AddMoveToEngineGamePara(TreeNode nd)
         {
             if (_paraCurrentEngineGame == null)
@@ -399,6 +403,36 @@ namespace ChessForge
 
             _currentEngineGameMoveCount++;
 
+        }
+
+        private void RebuildEngineGamePara(TreeNode toNode)
+        {
+            if (_paraCurrentEngineGame == null)
+            {
+                _paraCurrentEngineGame = AddNewParagraphToDoc(STYLE_ENGINE_GAME, "");
+            }
+            TreeNode nd = _engineGameRootNode.Children[0];
+            _currentEngineGameMoveCount = 0;
+
+            string text = "";
+            _paraCurrentEngineGame.Inlines.Clear();
+            _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine is in progress...\n"));
+            text = "          " + MoveUtils.BuildSingleMoveText(nd, true) + " ";
+            Run r_root = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
+            _paraCurrentEngineGame.Inlines.Add(r_root);
+
+            while (nd.Children.Count > 0)
+            {
+                nd = nd.Children[0];
+                _currentEngineGameMoveCount++;
+                text = MoveUtils.BuildSingleMoveText(nd, false) + " ";
+                if (_currentEngineGameMoveCount % 8 == 0)
+                {
+                    text = "\n          " + text;
+                }
+                Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
+                _paraCurrentEngineGame.Inlines.Add(gm);
+            }; 
         }
 
         /// <summary>
@@ -550,7 +584,6 @@ namespace ChessForge
         /// <param name="node"></param>
         private void BuildStemText(TreeNode node)
         {
-            //            _dictParas[ParaType.INTRO] = AddNewParagraphToDoc("intro", "The starting position arises after:");
             _dictParas[ParaType.STEM] = AddNewParagraphToDoc("stem_line", null);
 
             Run r_prefix = new Run("\nThis training session with your virtual Coach starts from the position arising after: ");
@@ -590,16 +623,6 @@ namespace ChessForge
 
             Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
             _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc("second_prompt", "\n   Your turn...");
-        }
-
-        /// <summary>
-        /// A paragraph with a notification that user 's move was not found
-        /// in the Workbook.
-        /// </summary>
-        /// <param name="nd"></param>
-        private void BuildMoveFromWorkbookText(TreeNode nd)
-        {
-            AddNewParagraphToDoc("normal", "  (" + nd.GetPlyText(true) + " is in the Workbook.)");
         }
 
         private void BuildCommentParagraph(bool isWorkbookMove)
@@ -723,6 +746,22 @@ namespace ChessForge
 
                 AppState.MainWin.RequestMoveEvaluationInTraining(nodeId);
             }
+            else if (r.Name.StartsWith(_run_engine_game_move_))
+            {
+                // a move from a game against the engine was clicked,
+                // we take the game back to that move.
+                // If it is an engine move, the user will be required to respond,
+                // otherwise it will be engine's turn.
+                int nodeId = GetNodeIdFromRunName(r.Name, _run_engine_game_move_);
+                TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
+                if (nd.ColorToMove != AppState.TrainingSide)
+                {
+                    // a user move was clicked so we keep it and get a 'new" response
+                    // from the engine
+                    EngineGame.RestartAtUserMove(nd);
+                    RebuildEngineGamePara(nd);
+                }
+            }
             else if (r.Name == _run_eval_user_move)
             {
                 _underEvaluationRun = GetPlayRunForNodeId(-1);
@@ -775,6 +814,21 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Given a run name and a prefix, returns the NodeId
+        /// associated with the run.
+        /// The run name is expected to be in the form prefix + NodeId.
+        /// </summary>
+        /// <param name="runName"></param>
+        /// <param name="prefix"></param>
+        /// <returns></returns>
+        int GetNodeIdFromRunName(string runName, string prefix)
+        {
+            string sId = runName.Substring(prefix.Length);
+            int iId = int.Parse(sId);
+            return iId;
+        }
+
+        /// <summary>
         /// Returns the Run with the "button" to play the move
         /// from a given NodeId.
         /// We will use it as refrence after which 
@@ -805,7 +859,6 @@ namespace ChessForge
                 return _dictParas[ParaType.USER_MOVE].Inlines.FirstOrDefault(x => x.Name == _run_play_engine) as Run;
             }
         }
-
 
         /// <summary>
         /// Removes all paragraphs related to the move decisions.
@@ -855,9 +908,6 @@ namespace ChessForge
         {
             Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
             _dictParas[ParaType.PROMPT_TO_MOVE] = null;
-
-            //Document.Blocks.Remove(_dictParas[ParaType.INSTRUCTIONS]);
-            //_dictParas[ParaType.INSTRUCTIONS] = null;
         }
     }
 }

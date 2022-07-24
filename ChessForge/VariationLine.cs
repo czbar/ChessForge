@@ -22,7 +22,7 @@ namespace ChessForge
         /// The number of nodes equals the number of plies (half moves)
         /// plus 1, because we store the starting position at index 0.
         /// </summary>
-        public ObservableCollection<TreeNode> NodeList;
+        public ObservableCollection<TreeNode> NodeList = new ObservableCollection<TreeNode>();
 
         /// <summary>
         /// The list of full moves. Each object contains both the
@@ -30,7 +30,7 @@ namespace ChessForge
         /// If the line finishes on a white move, the value of BlackPly 
         /// will be null in the last object.
         /// </summary>
-        public ObservableCollection<MoveWithEval> MoveList;
+        public ObservableCollection<MoveWithEval> MoveList = new ObservableCollection<MoveWithEval>();
 
         public void SetLineToNode(TreeNode targetNode)
         {
@@ -42,6 +42,74 @@ namespace ChessForge
                 NodeList.Insert(0,nd);
                 nd = nd.Parent;
             }
+        }
+
+        public void AddPlyAndMove(TreeNode nd)
+        {
+            AppState.MainWin.Dispatcher.Invoke(() =>
+            {
+                NodeList.Add(nd);
+                AddPly(nd);
+            });
+        }
+
+        public void BuildMoveListFromPlyList()
+        {
+            MoveList = PositionUtils.BuildViewListFromLine(NodeList);
+        }
+
+        public void RollbackToNode(TreeNode nd)
+        {
+            for (int i = NodeList.Count - 1; i >= 0; i--)
+            {
+                if (NodeList[i].NodeId == nd.NodeId)
+                {
+                    break;
+                }
+                else
+                {
+                    RemoveLastPly();
+                }
+            }
+        }
+
+        public TreeNode GetCurrentNode()
+        {
+            if (NodeList.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return NodeList[NodeList.Count - 1];
+            }
+        }
+
+        public TreeNode GetNodeAtIndex(int idx)
+        {
+            return NodeList[idx];
+        }
+
+        public MoveWithEval GetMoveAtIndex(int idx)
+        {
+            return MoveList[idx];
+        }
+
+
+        public TreeNode GetNodeFromId(int nodeId)
+        {
+            return NodeList.First(x => x.NodeId == nodeId);
+        }
+
+        public void SetNodeList(ObservableCollection<TreeNode> line)
+        {
+            NodeList = line;
+            BuildMoveListFromPlyList();
+        }
+
+        public int GetPlyCount()
+        {
+            return NodeList.Count;
         }
 
         /// <summary>
@@ -67,11 +135,31 @@ namespace ChessForge
                 move.Number = (MoveList.Count + 1).ToString() + ".";
                 MoveList.Add(move);
             }
+        }
 
+        /// <summary>
+        /// Removes the last ply from both
+        /// the list of plies and the scoresheet.
+        /// </summary>
+        public void RemoveLastPly()
+        {
+            NodeList.RemoveAt(NodeList.Count - 1);
+
+            MoveWithEval lastMove = MoveList[MoveList.Count - 1];
+            if (!string.IsNullOrEmpty(lastMove.BlackPly))
+            {
+                lastMove.BlackPly = null;
+            }
+            else
+            {
+                MoveList.RemoveAt(MoveList.Count - 1);
+            }
         }
 
         public void ReplaceLastPly(TreeNode nd)
         {
+            NodeList[NodeList.Count - 1] = nd;
+            
             MoveWithEval move = MoveList[MoveList.Count - 1];
 
             if (nd.Position.ColorToMove == PieceColor.White)

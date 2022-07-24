@@ -914,13 +914,12 @@ namespace ChessForge
 
         public void SetActiveLine(ObservableCollection<TreeNode> line, int selectedNodeId)
         {
-            ActiveLine.NodeList = line;
-            ActiveLine.MoveList = PositionUtils.BuildViewListFromLine(line);
+            ActiveLine.SetNodeList(line);
             _dgActiveLine.ItemsSource = ActiveLine.MoveList;
 
             if (selectedNodeId > 0)
             {
-                TreeNode nd = ActiveLine.NodeList.First(x => x.NodeId == selectedNodeId);
+                TreeNode nd = ActiveLine.GetNodeFromId(selectedNodeId);
                 ViewActiveLine_SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
                 MainChessBoard.DisplayPosition(nd.Position);
             }
@@ -968,7 +967,7 @@ namespace ChessForge
                 if (EngineMessageProcessor.IsEngineAvailable())
                 {
                     // make an extra defensive check
-                    if (posIndex < ActiveLine.NodeList.Count)
+                    if (posIndex < ActiveLine.GetPlyCount())
                     {
                         RequestMoveEvaluation(posIndex, EvaluationState.EvaluationMode.SINGLE_MOVE, true);
                     }
@@ -983,7 +982,7 @@ namespace ChessForge
         private void MenuItem_EvaluateLine(object sender, RoutedEventArgs e)
         {
             // a defensive check
-            if (ActiveLine.NodeList == null || ActiveLine.NodeList.Count == 0)
+            if (ActiveLine.GetPlyCount() == 0)
             {
                 return;
             }
@@ -1018,7 +1017,7 @@ namespace ChessForge
         private void RequestMoveEvaluation(int posIndex, EvaluationState.EvaluationMode mode, bool isLineStart)
         {
             Evaluation.PositionIndex = posIndex;
-            Evaluation.Position = ActiveLine.NodeList[posIndex].Position;
+            Evaluation.Position = ActiveLine.GetNodeAtIndex(posIndex).Position;
             MainChessBoard.DisplayPosition(Evaluation.Position);
 
             ShowMoveEvaluationControls(true, isLineStart);
@@ -1107,7 +1106,7 @@ namespace ChessForge
         {
             string moveTxt = Evaluation.Position.MoveNumber.ToString()
                     + (Evaluation.Position.ColorToMove == PieceColor.Black ? "." : "...")
-                    + ActiveLine.NodeList[posIndex].LastMoveAlgebraicNotation;
+                    + ActiveLine.GetNodeAtIndex(posIndex).LastMoveAlgebraicNotation;
 
             UpdateLastMoveTextBox(moveTxt, isLineStart);
         }
@@ -1180,11 +1179,11 @@ namespace ChessForge
                     int moveIndex = (Evaluation.PositionIndex - 1) / 2;
                     if (isWhiteEval)
                     {
-                        ActiveLine.MoveList[moveIndex].WhiteEval = eval;
+                        ActiveLine.GetMoveAtIndex(moveIndex).WhiteEval = eval;
                     }
                     else
                     {
-                        ActiveLine.MoveList[moveIndex].BlackEval = eval;
+                        ActiveLine.GetMoveAtIndex(moveIndex).BlackEval = eval;
                     }
 
                     Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
@@ -1194,7 +1193,7 @@ namespace ChessForge
                     // evaluation we stop here
                     // otherwise we start the next move's evaluation
                     if (Evaluation.Mode != EvaluationState.EvaluationMode.FULL_LINE
-                        || Evaluation.PositionIndex == ActiveLine.NodeList.Count - 1)
+                        || Evaluation.PositionIndex == ActiveLine.GetPlyCount() - 1)
                     {
                         Evaluation.Reset();
 
@@ -1449,14 +1448,6 @@ namespace ChessForge
                 // check if the user move was completed and if so request engine move
                 if (EngineGame.State == EngineGame.GameState.ENGINE_THINKING)
                 {
-
-                    _dgEngineGame.Dispatcher.Invoke(() =>
-                    {
-                        // the ply is already stored in EngineGame and now we need to add it
-                        // to the list of plies.
-                        EngineGame.AddLastNodeToPlies();
-                    });
-
                     Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
                     RequestEngineMove(EngineGame.GetCurrentPosition());
                 }
@@ -1505,7 +1496,7 @@ namespace ChessForge
             ViewActiveLine_GetSelectedRowColumn(out row, out column);
             SelectPlyInTextViews(row, column == 1 ? PieceColor.White : PieceColor.Black);
             int nodeIndex = ViewActiveLine_GetNodeIndexFromRowColumn(row, column);
-            TreeNode nd = ActiveLine.NodeList[nodeIndex];
+            TreeNode nd = ActiveLine.GetNodeAtIndex(nodeIndex);
             MainChessBoard.DisplayPosition(nd.Position);
 
             _mainboardCommentBox.RestoreTitleMessage();
@@ -1579,7 +1570,11 @@ namespace ChessForge
             AppState.ActiveBookmarkInTraining = 0;
             MainChessBoard.SetBoardSourceImage(ChessBoards.ChessBoardGreen);
 
+            // TODO: need tpo check that the side on move is what was declared
+            // and maybe give an option to chage that?
             TreeNode startNode = Workbook.Bookmarks[bookmarkIndex].Node;
+            AppState.TrainingSide = startNode.ColorToMove;
+
             MainChessBoard.DisplayPosition(startNode.Position);
 
             _trainingBrowseRichTextBuilder.BuildFlowDocumentForWorkbook(Workbook.Bookmarks[bookmarkIndex].Node.NodeId);
@@ -1604,7 +1599,6 @@ namespace ChessForge
             EngineGame.PrepareGame(startNode, false, false);
             _dgEngineGame.ItemsSource = EngineGame.Line.MoveList;
             AppState.ChangeCurrentMode(AppState.Mode.TRAINING);
-            //            ShowEngineGameGuiControls();
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
         }
 

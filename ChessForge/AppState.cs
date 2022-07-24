@@ -142,6 +142,7 @@ namespace ChessForge
         public static PieceColor TrainingSide
         {
             get { return MainWin.Workbook.TrainingSide; }
+            set { MainWin.Workbook.TrainingSide = value; }
         }
 
         /// <summary>
