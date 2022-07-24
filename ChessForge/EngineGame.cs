@@ -81,7 +81,7 @@ namespace ChessForge
             if (!IsTraining)
             {
                 Line.SetLineToNode(startNode);
-                Line.MoveList = PositionUtils.BuildViewListFromLine(Line.NodeList);
+                Line.BuildMoveListFromPlyList();
             }
         }
 
@@ -100,8 +100,8 @@ namespace ChessForge
             nd.Position = pos;
             nd.Position.ColorToMove = pos.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
             nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
-            Line.NodeList.Add(nd);
-            Line.AddPly(nd);
+            Line.AddPlyAndMove(nd);
+            AppState.MainWin.Workbook.AddNodeToParent(nd);
 
             return pos;
         }
@@ -137,28 +137,48 @@ namespace ChessForge
                 nd.Position.ColorToMove = nd.Position.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
                 nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
                 nd.LastMoveAlgebraicNotation = algMove;
-                AddNode(nd);
-                if (TrainingState.IsTrainingInProgress && AppState.CurrentMode != AppState.Mode.GAME_VS_COMPUTER)
-                {
-                    TrainingState.CurrentMode = TrainingState.Mode.USER_MOVE_COMPLETED;
-                    AppState.MainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-                }
-                else
-                {
-                    if (TrainingState.IsTrainingInProgress)
-                    {
-                        nd.IsNewTrainingMove = true;
-                        nd.NodeId = AppState.MainWin.Workbook.GetNewNodeId();
-                        AppState.MainWin._trainingView.UserMoveMade();
-                    }
-                    State = GameState.ENGINE_THINKING;
-                }
+                nd.IsNewTrainingMove = true;
+                AppState.MainWin.Workbook.AddNodeToParent(nd);
+                Line.AddPlyAndMove(nd);
+                SwitchToAwaitEngineMove(nd);
                 return true;
             }
             else
             {
                 return false;
             }
+        }
+
+        private static void SwitchToAwaitEngineMove(TreeNode nd)
+        {
+            if (TrainingState.IsTrainingInProgress && AppState.CurrentMode != AppState.Mode.GAME_VS_COMPUTER)
+            {
+                TrainingState.CurrentMode = TrainingState.Mode.USER_MOVE_COMPLETED;
+                AppState.MainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+            }
+            else
+            {
+                if (TrainingState.IsTrainingInProgress)
+                {
+                    nd.IsNewTrainingMove = true;
+                    nd.NodeId = AppState.MainWin.Workbook.GetNewNodeId();
+                    AppState.MainWin._trainingView.UserMoveMade();
+                }
+                State = GameState.ENGINE_THINKING;
+            }
+        }
+
+        /// <summary>
+        /// A request to restart the engine game at a given
+        /// node was received.
+        /// We remove all nodes created after the last node.
+        /// </summary>
+        /// <param name="nd"></param>
+        public static void RestartAtUserMove(TreeNode nd)
+        {
+            AppState.MainWin.Workbook.RemoveTailAfter(nd);
+            Line.RollbackToNode(nd);
+            SwitchToAwaitEngineMove(nd);
         }
 
         /// <summary>
@@ -174,16 +194,10 @@ namespace ChessForge
 
             BoardPosition pos = new BoardPosition(curr.Position);
 
-            // note: we don't care about NodeId here
-            TreeNode nd = new TreeNode(curr, "", -1);
+            TreeNode nd = new TreeNode(curr, "", AppState.MainWin.Workbook.GetNewNodeId());
             nd.Position = pos;
 
             return nd;
-        }
-
-        private static void AddNode(TreeNode nd)
-        {
-            Line.NodeList.Add(nd);
         }
 
         /// <summary>
@@ -195,14 +209,13 @@ namespace ChessForge
         /// <returns></returns>
         public static TreeNode GetCurrentNode()
         {
-            if (Line.NodeList.Count == 0)
+            TreeNode nd = Line.GetCurrentNode();
+            if (nd == null)
             {
-                return GameStartPosition;
+                nd = GameStartPosition;
             }
-            else
-            {
-                return Line.NodeList[Line.NodeList.Count - 1];
-            }
+
+            return nd;
         }
 
         /// <summary>
@@ -227,7 +240,6 @@ namespace ChessForge
 
         public static void ReplaceCurrentWithWorkbookMove(TreeNode nd)
         {
-            Line.NodeList[Line.NodeList.Count - 1] = nd;
             Line.ReplaceLastPly(nd);
             AppState.MainWin.DisplayPosition(nd.Position);
         }
@@ -258,8 +270,10 @@ namespace ChessForge
 
         public static void AddPlyToGame(TreeNode nd)
         {
-            AddNode(nd);
-            AddLastNodeToPlies();
+            AppState.MainWin.Dispatcher.Invoke(() =>
+            {
+                Line.AddPlyAndMove(nd);
+            });
         }
 
         /// <summary>

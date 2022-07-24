@@ -55,7 +55,7 @@ namespace ChessForge
 
             int nodeIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
 
-            return (nodeIndex < ActiveLine.NodeList.Count) ? nodeIndex : -1;
+            return (nodeIndex < ActiveLine.GetPlyCount()) ? nodeIndex : -1;
         }
 
 
@@ -172,9 +172,9 @@ namespace ChessForge
             {
                 int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
 
-                if (moveIndex + 1 < ActiveLine.NodeList.Count)
+                if (moveIndex + 1 < ActiveLine.GetPlyCount())
                 {
-                    TreeNode nd = ActiveLine.NodeList[moveIndex + 1];
+                    TreeNode nd = ActiveLine.GetNodeAtIndex(moveIndex + 1);
 
                     if (gameReplay.IsReplayActive)
                     {
@@ -279,9 +279,9 @@ namespace ChessForge
         {
             int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
 
-            if (moveIndex + 1 < ActiveLine.NodeList.Count)
+            if (moveIndex + 1 < ActiveLine.GetPlyCount())
             {
-                return ActiveLine.NodeList[moveIndex + 1];
+                return ActiveLine.GetNodeAtIndex(moveIndex + 1);
             }
             else
             {
@@ -318,7 +318,7 @@ namespace ChessForge
                         // if we went beyond the last move (because it is White's and Black cell is empty.)
                         // switch back to the White column
                         moveIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1);
-                        if (moveIndex + 1 >= ActiveLine.NodeList.Count)
+                        if (moveIndex + 1 >= ActiveLine.GetPlyCount())
                         {
                             selColumn = _dgActiveLineWhitePlyColumn;
                         }
@@ -329,7 +329,7 @@ namespace ChessForge
                         break;
                     case Key.Down:
                         selRow = _dgActiveLine.Items.Count - 1;
-                        selColumn = (ActiveLine.NodeList.Count % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
+                        selColumn = (ActiveLine.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
                         break;
                 }
 
@@ -341,7 +341,7 @@ namespace ChessForge
                     _dgActiveLine.SelectedCells.Add(cell);
 
                     moveIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1);
-                    TreeNode nd = ActiveLine.NodeList[moveIndex + 1];
+                    TreeNode nd = ActiveLine.GetNodeAtIndex(moveIndex + 1);
 
                     if (gameReplay.IsReplayActive)
                     {
