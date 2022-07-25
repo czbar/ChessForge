@@ -7,7 +7,18 @@
         mc:Ignorable="d"
         Title="Chess Forge" Height="900" Width="1676" Loaded="Window_Loaded" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" Closing="ChessForgeMain_Closing">
 
+    <Window.Resources>
+        <ContextMenu x:Key="_cmTrainingEngineGame">
+            <MenuItem x:Name="_mnEvalMove" Header="Evaluate move" />
+            <MenuItem x:Name="_mnEvalGame" Header="Evaluate all moves" />
+            <MenuItem x:Name="_mnRestartGame" Header="Restart game after " />
+            <Separator />
+            <MenuItem x:Name="_mnRestartTraining" Header="Restart Training" />
+            <MenuItem x:Name="_mnExitTraining" Header="Exit Training" />
+        </ContextMenu>
+    </Window.Resources>
 
+    
     <Grid x:Name="_gridMain" ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -80,7 +91,7 @@
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox x:Name="_rtbTrainingProgress" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                 IsReadOnly="True"  MinHeight="640">
+                                 IsReadOnly="True"  MinHeight="640" PreviewMouseMove="_rtbTrainingProgress_PreviewMouseMove">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0" />
@@ -89,6 +100,14 @@
                         <FlowDocument>
                         </FlowDocument>
                     </RichTextBox>
+                    <Viewbox x:Name="_vbFloatingChessboard" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Margin="0,0" Height="160" Width="160"  >
+                        <Canvas x:Name="_cnvFloat" HorizontalAlignment="Left" Height="644" Margin="0,0,0,0" VerticalAlignment="Top" Width="644">
+                            <Canvas.Background>
+                                <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                            </Canvas.Background>
+                            <Image x:Name="_imgFloatingBoard" Margin="2,2,0,0" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="640" Height="640" />
+                        </Canvas>
+                    </Viewbox>
                 </Grid>
             </TabItem>
             <TabItem x:Name="_tabItemTrainingBrowse"  Header="Browse">

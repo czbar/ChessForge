@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using ChessPosition;
 using GameTree;
@@ -127,6 +128,7 @@ namespace ChessForge
         /// </summary>
         private TreeNode _userMove;
 
+        private TreeNode _lastClickedNode;
         /// <summary>
         /// The move with which the user wishes to proceed after selecting
         /// from the Workbook options.
@@ -142,6 +144,11 @@ namespace ChessForge
 
         /// <summary>
         /// Names and prefixes for Runs.
+        /// NOTE: prefixes that are to be followed by NodeId 
+        /// must end with the undesrscore character.
+        /// This faciliates easy parsing of the NodeId when the run's 
+        /// prefix is not that important e.g. when showing the floating
+        /// chessboard.
         /// </summary>
         private readonly string _run_eval_user_move = "user_eval";
         private readonly string _run_play_engine = "play_engine";
@@ -421,6 +428,8 @@ namespace ChessForge
             Run r_root = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
             _paraCurrentEngineGame.Inlines.Add(r_root);
 
+            _currentEngineGameMoveCount++;
+
             while (nd.Children.Count > 0)
             {
                 nd = nd.Children[0];
@@ -432,7 +441,7 @@ namespace ChessForge
                 }
                 Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
                 _paraCurrentEngineGame.Inlines.Add(gm);
-            }; 
+            };
         }
 
         /// <summary>
@@ -713,9 +722,69 @@ namespace ChessForge
 
             r.FontWeight = FontWeights.Bold;
             r.MouseDown += EventRunClicked;
+            r.MouseMove += EventRunMoveOver;
             r.Cursor = Cursors.Hand;
 
             return r;
+        }
+
+        public void ShowPopupMenu()
+        {
+            AppState.MainWin.ShowFloatingChessboard(false);
+
+            AppState.MainWin.Dispatcher.Invoke(() =>
+            {
+                string midTxt;
+                if (_lastClickedNode.ColorToMove != AppState.TrainingSide)
+                {
+                    midTxt = " your ";
+                }
+                else
+                {
+                    midTxt = " engine\'s ";
+                }
+                // this is user move - adjust menu text accordingly
+
+                ContextMenu cm = AppState.MainWin.FindResource("_cmTrainingEngineGame") as ContextMenu;
+                foreach (object o in cm.Items)
+                {
+                    if (o is MenuItem)
+                    {
+                        MenuItem mi = o as MenuItem;
+                        switch (mi.Name)
+                        {
+                            case "_mnEvalMove":
+                                mi.Header = "Evaluate" + midTxt + "move " + MoveUtils.BuildSingleMoveText(_lastClickedNode, true);
+                                break;
+                            case "_mnRestartGame":
+                                mi.Header = "Restart game after" + midTxt + "move " + MoveUtils.BuildSingleMoveText(_lastClickedNode, true);
+                                mi.Click += RestartGameAfter;
+                                break;
+                        }
+                    }
+                }
+                cm.PlacementTarget = AppState.MainWin._rtbTrainingProgress;
+                cm.IsOpen = true;
+                AppState.MainWin.Timers.Stop(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUMENU);
+            });
+        }
+
+        public void RestartGameAfter(object sender, RoutedEventArgs e)
+        {
+            TreeNode nd = _lastClickedNode;
+            if (nd != null)
+            {
+                if (_lastClickedNode.ColorToMove != AppState.TrainingSide)
+                {
+                    EngineGame.RestartAtUserMove(nd);
+                }
+                else
+                {
+                    EngineGame.RestartAtEngineMove(nd);
+                }
+                AppState.MainWin.DisplayPosition(nd.Position);
+                RebuildEngineGamePara(nd);
+            }
         }
 
         /// <summary>
@@ -754,13 +823,31 @@ namespace ChessForge
                 // otherwise it will be engine's turn.
                 int nodeId = GetNodeIdFromRunName(r.Name, _run_engine_game_move_);
                 TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
-                if (nd.ColorToMove != AppState.TrainingSide)
-                {
-                    // a user move was clicked so we keep it and get a 'new" response
-                    // from the engine
-                    EngineGame.RestartAtUserMove(nd);
-                    RebuildEngineGamePara(nd);
-                }
+                _lastClickedNode = nd;
+
+                string moveTxt = MoveUtils.BuildSingleMoveText(nd, true);
+
+                AppState.MainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUMENU);
+                //if (nd.ColorToMove != AppState.TrainingSide)
+                //{
+                //    if (MessageBox.Show("Restart the game after your " + moveTxt + " move?", "Training Game with Engine", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
+                //    {
+                //        // a user move clicked so keep it and get a response  from the engine
+                //        EngineGame.RestartAtUserMove(nd);
+                //        AppState.MainWin.DisplayPosition(nd.Position);
+                //        RebuildEngineGamePara(nd);
+                //    }
+                //}
+                //else
+                //{
+                //    if (MessageBox.Show("Restart the game after engine\'s " + moveTxt + " move?", "Training Game with Engine", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
+                //    {
+                //        // an engine move clicked so keep it and ask user for their move
+                //        EngineGame.RestartAtEngineMove(nd);
+                //        AppState.MainWin.DisplayPosition(nd.Position);
+                //        RebuildEngineGamePara(nd);
+                //    }
+                //}
             }
             else if (r.Name == _run_eval_user_move)
             {
@@ -798,6 +885,31 @@ namespace ChessForge
                 Document.Blocks.Remove(_dictParas[ParaType.WORKBOOK_MOVES]);
                 _dictParas[ParaType.PLAY_ENGINE_NOTE] = AddNewParagraphToDoc("play_engine_note", "\nYou are now playing against the engine.", NonNullParaAtOrBefore(ParaType.INSTRUCTIONS));
                 AppState.MainWin.PlayComputer(_userMove, true);
+            }
+        }
+
+        private void EventRunMoveOver(object sender, MouseEventArgs e)
+        {
+            // check if a move run was clicked
+            Run r = (Run)e.Source;
+            if (string.IsNullOrEmpty(r.Name))
+            {
+                return;
+            }
+
+            int underscore = r.Name.LastIndexOf('_');
+            if (underscore < 0 || underscore == r.Name.Length - 1)
+            {
+                return;
+            }
+
+            int nodeId;
+            if (int.TryParse(r.Name.Substring(underscore + 1), out nodeId))
+            {
+                Point pt = e.GetPosition(AppState.MainWin._rtbTrainingProgress);
+                AppState.MainWin.TrainingViewChessBoard.DisplayPosition(AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId).Position);
+                AppState.MainWin._vbFloatingChessboard.Margin = new Thickness(pt.X, pt.Y - 165, 0, 0);
+                AppState.MainWin._vbFloatingChessboard.Visibility = Visibility.Visible;
             }
         }
 

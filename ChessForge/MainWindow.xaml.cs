@@ -40,6 +40,7 @@ namespace ChessForge
         AnimationState MoveAnimation = new AnimationState();
         ScoreSheet ActiveLine = new ScoreSheet();
         ChessBoard MainChessBoard;
+        public ChessBoard TrainingViewChessBoard;
 
         List<UIEelementState> _uIEelementStates;
 
@@ -82,6 +83,7 @@ namespace ChessForge
 
             // main chess board
             MainChessBoard = new ChessBoard(MainCanvas, imgChessBoard, null, true);
+            TrainingViewChessBoard = new ChessBoard(_cnvFloat, _imgFloatingBoard, null, true);
 
             InitBookmarksGui();
 
@@ -925,8 +927,16 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Tidy up upon application closing.
+        /// Stop all timers, write out any logs,
+        /// save any unsaved bits.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ChessForgeMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            Timers.StopAll();   
             AppLog.Dump();
             EngineLog.Dump();
             Configuration.WriteOutConfiguration();
@@ -1811,6 +1821,28 @@ namespace ChessForge
             _trainingView.RequestWorkbookResponse();
         }
 
+        public void ShowTrainingProgressPopupMenu(object source, ElapsedEventArgs e)
+        {
+            _trainingView.ShowPopupMenu();
+        }
+
+        /// <summary>
+        /// Hides the floating board if shown
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _rtbTrainingProgress_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            ShowFloatingChessboard(false);
+        }
+
+        public void ShowFloatingChessboard(bool visible)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                _vbFloatingChessboard.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
+            });
+        }
     }
 
 }
