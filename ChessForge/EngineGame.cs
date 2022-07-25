@@ -168,9 +168,16 @@ namespace ChessForge
             }
         }
 
+        private static void SwitchToAwaitUserMove(TreeNode nd)
+        {
+            State = GameState.USER_THINKING;
+            AppState.MainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+            AppState.MainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
+        }
+
         /// <summary>
-        /// A request to restart the engine game at a given
-        /// node was received.
+        /// A request to restart the engine game at the specified
+        /// user move was received.
         /// We remove all nodes created after the last node.
         /// </summary>
         /// <param name="nd"></param>
@@ -179,6 +186,19 @@ namespace ChessForge
             AppState.MainWin.Workbook.RemoveTailAfter(nd);
             Line.RollbackToNode(nd);
             SwitchToAwaitEngineMove(nd);
+        }
+
+        /// <summary>
+        /// A request to restart the engine game at the specified
+        /// engine move was received.
+        /// We remove all nodes created after the last node.
+        /// </summary>
+        /// <param name="nd"></param>
+        public static void RestartAtEngineMove(TreeNode nd)
+        {
+            AppState.MainWin.Workbook.RemoveTailAfter(nd);
+            Line.RollbackToNode(nd);
+            SwitchToAwaitUserMove(nd);
         }
 
         /// <summary>
