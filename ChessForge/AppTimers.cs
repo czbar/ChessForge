@@ -27,8 +27,12 @@ namespace ChessForge
             ENGINE_MESSAGE_POLL,
             CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE,
             REQUEST_WORKBOOK_MOVE,
+            SHOW_TRAINING_PROGRESS_POPUMENU,
         };
 
+        /// <summary>
+        /// Ids of all Stopwatch's used by the application
+        /// </summary>
         internal enum StopwatchId
         {
             DUMMY,
@@ -47,9 +51,22 @@ namespace ChessForge
         /// </summary>
         private Timer _checkForUserMoveTimer;
 
+        /// <summary>
+        /// Checks if the program responded with a workbook-based move yet.
+        /// </summary>
         private Timer _checkForTrainingWorkbookMoveMade;
 
+        /// <summary>
+        /// Checks if a workbook-based response has been requested.
+        /// </summary>
         private Timer _requestWorkbookMove;
+
+        /// <summary>
+        /// When elapsed, it invokes the Training Move context menu.
+        /// NOTE: this is for the workaround where the context menu
+        /// closes itself immediately when invoked "normally".
+        /// </summary>
+        private Timer _showTrainingProgressPopupMenu;
 
         /// <summary>
         /// Tracks time that evaluation of a move/position is taking.
@@ -88,12 +105,17 @@ namespace ChessForge
             InitRequestWorkbookMove();
             _dictTimers.Add(TimerId.REQUEST_WORKBOOK_MOVE, _requestWorkbookMove);
 
+            _showTrainingProgressPopupMenu = new Timer();
+            InitShowTrainingProgressPopupMenu();
+            _dictTimers.Add(TimerId.SHOW_TRAINING_PROGRESS_POPUMENU, _showTrainingProgressPopupMenu);
+
             _evaluationProgressStopwatch = new Stopwatch();
             _dictStopwatches.Add(StopwatchId.EVALUATION_PROGRESS, _evaluationProgressStopwatch);
         }
 
         /// <summary>
-        /// Handles EMGINE_MESSAGE_POLL timer as a special case.
+        /// Starts a timer.
+        /// Handles ENGINE_MESSAGE_POLL timer as a special case.
         /// </summary>
         /// <param name="tt"></param>
         public void Start(TimerId tt)
@@ -108,6 +130,11 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Stops a timer.
+        /// Handles ENGINE_MESSAGE_POLL timer as a special case.
+        /// </summary>
+        /// <param name="tt"></param>
         public void Stop(TimerId tt)
         {
             if (tt == TimerId.ENGINE_MESSAGE_POLL)
@@ -120,17 +147,50 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Called on application exit.
+        /// Stops all timers.
+        /// Handles ENGINE_MESSAGE_POLL timer as a special case.
+        /// </summary>
+        public void StopAll()
+        {
+            EngineMessageProcessor.ChessEngineService.StopMessagePollTimer();
+
+            foreach (var timer in _dictTimers.Values)
+            {
+                timer.Stop();
+            }
+
+            foreach (var stopWatch in _dictStopwatches.Values)
+            {
+                stopWatch.Stop();
+            }
+        }
+
+        /// <summary>
+        /// Starts a Stopwatch
+        /// </summary>
+        /// <param name="sw"></param>
         public void Start(StopwatchId sw)
         {
             _dictStopwatches[sw].Start();
         }
 
+        /// <summary>
+        /// Stops a Stopwatch
+        /// </summary>
+        /// <param name="sw"></param>
         public void Stop(StopwatchId sw)
         {
             _dictStopwatches[sw].Stop();
             _dictStopwatches[sw].Reset();
         }
 
+        /// <summary>
+        /// Gets the elapsed time for the specified Stopwatch.
+        /// </summary>
+        /// <param name="sw"></param>
+        /// <returns></returns>
         public long GetElapsedTime(StopwatchId sw)
         {
             return _dictStopwatches[sw].ElapsedMilliseconds;
@@ -163,6 +223,12 @@ namespace ChessForge
             _requestWorkbookMove.Interval = 300;
             _requestWorkbookMove.Enabled = false;
         }
-
+        
+        private void InitShowTrainingProgressPopupMenu()
+        {
+            _showTrainingProgressPopupMenu.Elapsed += new ElapsedEventHandler(AppState.MainWin.ShowTrainingProgressPopupMenu);
+            _showTrainingProgressPopupMenu.Interval = 100;
+            _showTrainingProgressPopupMenu.Enabled = false;
+        }
     }
 }
