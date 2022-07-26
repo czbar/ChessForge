@@ -241,12 +241,24 @@ namespace GameTree
         /// bookmark's TreeNode.
         /// </summary>
         /// <param name="nd"></param>
-        public void AddBookmark(TreeNode nd)
+        public int AddBookmark(TreeNode nd, bool inFront = false)
         {
             if (FindBookmarkIndex(nd) == -1)
             {
-                Bookmarks.Add(new Bookmark(nd));
+                if (inFront)
+                {
+                    Bookmarks.Insert(0, new Bookmark(nd));
+                }
+                else
+                {
+                    Bookmarks.Add(new Bookmark(nd));
+                }
                 nd.IsBookmark = true;
+                return 0;
+            }
+            else
+            {
+                return -1;
             }
         }
 
@@ -256,6 +268,8 @@ namespace GameTree
         /// <param name="nd"></param>
         public void RemoveBookmark(TreeNode nd)
         {
+            if (nd == null) return;
+
             nd.IsBookmark = false;
             int idx = FindBookmarkIndex(nd);
             if (idx >= 0)

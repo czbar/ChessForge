@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace ChessForge
 {
@@ -25,6 +26,11 @@ namespace ChessForge
         override internal Dictionary<string, RichTextPara> RichTextParas { get { return _richTextParas; } }
 
         /// <summary>
+        /// Most recent clicked node
+        /// </summary>
+        public int LastClickedNodeId { get => _lastClickedNodeId; set => _lastClickedNodeId = value; }
+
+        /// <summary>
         /// Layout definitions for paragrahs at different levels.
         /// </summary>
         internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
@@ -36,6 +42,11 @@ namespace ChessForge
             ["4"] = new RichTextPara(105, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
             ["default"] = new RichTextPara(110, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
         };
+
+        /// <summary>
+        /// Most recent clicked node 
+        /// </summary>
+        private int _lastClickedNodeId = -1;
 
         /// <summary>
         /// Determines whether we are inside an intra fork.
@@ -119,10 +130,39 @@ namespace ChessForge
             FORK_WITH_FORK_LINES // a fork with at least one other fork down any of the branches starting from it.
         }
 
+        public void EnableWorkbookMenus(ContextMenu cmn, bool isEnabled)
+        {
+            // ClickedIndex should be in sync with isEnabled but double check just in case
+            if (LastClickedNodeId < 0)
+            {
+                isEnabled = false;
+            }
+
+            foreach (var item in cmn.Items)
+            {
+                if (item is MenuItem)
+                {
+                    MenuItem menuItem = item as MenuItem;
+                    switch (menuItem.Name)
+                    {
+                        case "_mnWorkbookSelectAsBookmark":
+                            menuItem.IsEnabled = isEnabled;
+                            break;
+                        case "_mnWorkbookEvalMove":
+                            menuItem.IsEnabled = isEnabled;
+                            break;
+                        case "_mnWorkbookEvalLine":
+                            menuItem.IsEnabled = true;
+                            break;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Builds the FlowDocument from the entire Workbook tree for the RichTextBox to display.
         /// </summary>
-        public  void BuildFlowDocumentForWorkbook(int rootNodeId = 0, bool includeStem = true)
+        public void BuildFlowDocumentForWorkbook(int rootNodeId = 0, bool includeStem = true)
         {
             Document.Blocks.Clear();
             _workbook = AppState.MainWin.Workbook;
@@ -527,13 +567,18 @@ namespace ChessForge
             r.Background = _brushSelectedMoveBkg;
             r.Foreground = _brushSelectedMoveFore;
 
-            //Image img = new Image();
-            //img.Source = ChessForge.Pieces.BlackRook;
-            //img.Width = 20;
-            //img.Height = 20;
-            //pp.Inlines.Add(img);
-
             AppState.MainWin._lvWorkbookTable_SelectLineAndMove(lineId, nodeId);
+
+            // this is a right click offer the context menu
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                _lastClickedNodeId = nodeId;
+                EnableWorkbookMenus(AppState.MainWin._cmWorkbookRightClick, true);
+            }
+            else
+            {
+                _lastClickedNodeId = -1;
+            }
         }
 
         /// <summary>
