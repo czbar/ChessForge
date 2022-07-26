@@ -202,7 +202,12 @@ namespace ChessForge
                     // is not selectable but will open the context menu.
                     _dgActiveLine.ContextMenu.IsOpen = true;
                 }
-                e.Handled = true;
+                
+                // if row < 0 this could be a scrollbar so do not prevent WPF processing 
+                if (row >= 0)
+                {
+                    e.Handled = true;
+                }
 
             }
         }
