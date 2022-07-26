@@ -14,15 +14,24 @@ using System.Windows.Controls;
 namespace ChessForge
 {
     /// <summary>
-    /// Builds the content and handles events in the RichTextBox showing
-    /// the entire Workbook.
+    /// Manages text and events in the main Workbook view.
+    /// The view is built in a RichTextBox.
     /// </summary>
-    public class WorkbookRichTextBuilder : RichTextBuilder
+    public class WorkbookView : RichTextBuilder
     {
-        public WorkbookRichTextBuilder(FlowDocument doc) : base(doc)
+        /// <summary>
+        /// Constructor. Sets a reference to the 
+        /// FlowDocument for the RichTextBox control, via
+        /// a call to the base class's constructor.
+        /// </summary>
+        /// <param name="doc"></param>
+        public WorkbookView(FlowDocument doc) : base(doc)
         {
         }
 
+        /// <summary>
+        /// RichTextPara dictionary accessor
+        /// </summary>
         override internal Dictionary<string, RichTextPara> RichTextParas { get { return _richTextParas; } }
 
         /// <summary>
@@ -33,7 +42,7 @@ namespace ChessForge
         /// <summary>
         /// Layout definitions for paragrahs at different levels.
         /// </summary>
-        internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
+        private Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
             ["0"] = new RichTextPara(0, 10, 18, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Left),
             ["1"] = new RichTextPara(40, 10, 16, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
@@ -44,7 +53,8 @@ namespace ChessForge
         };
 
         /// <summary>
-        /// Most recent clicked node 
+        /// Most recent clicked node.
+        /// This allows the context menu to reference the correct move.
         /// </summary>
         private int _lastClickedNodeId = -1;
 
@@ -61,7 +71,7 @@ namespace ChessForge
         private  FontStyle _intraForkFontStyle = FontStyles.Italic;
 
         /// <summary>
-        /// The Workbook tree.
+        /// The main Workbook tree.
         /// </summary>
         private  WorkbookTree _workbook;
 

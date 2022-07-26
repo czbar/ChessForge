@@ -94,7 +94,7 @@
     </Compile>
     <Compile Include="TrainingView.cs" />
     <Compile Include="TrainingState.cs" />
-    <Compile Include="WorkbookRichTextBuilder.cs" />
+    <Compile Include="WorkbookView.cs" />
     <Compile Include="TreeTableCell.cs" />
     <Compile Include="TreeTableRow.cs" />
     <Compile Include="ChfTextBuilder.cs" />
