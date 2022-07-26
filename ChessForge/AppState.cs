@@ -191,11 +191,6 @@ namespace ChessForge
         public static TranslateTransform CurrentTranslateTransform;
 
         /// <summary>
-        /// The list of bookmarks.
-        /// </summary>
-        public static List<BookmarkView> Bookmarks = new List<BookmarkView>();
-
-        /// <summary>
         /// Currently active (selected) line.
         /// There can only be one (or none) line selected in the Workbook at any time
         /// </summary>
@@ -206,13 +201,6 @@ namespace ChessForge
         /// There can only be one (or none) node selected in the Workbook at any time
         /// </summary>
         public static int NodeId;
-
-        /// <summary>
-        /// Index in the list of bookmarks of the bookmark currently being
-        /// active in a training session.
-        /// Precisely one bookmark can be active during a session. 
-        /// </summary>
-        public static int ActiveBookmarkInTraining = -1;
 
         /// <summary>
         /// Saves the workbook to a file.
