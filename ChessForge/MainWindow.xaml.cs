@@ -28,8 +28,8 @@ namespace ChessForge
         // prefix use for manu items showing recent files
         public readonly string MENUITEM_RECENT_FILES_PREFIX = "RecentFiles";
 
-        WorkbookRichTextBuilder _workbookRichTextBuilder;
-        WorkbookRichTextBuilder _trainingBrowseRichTextBuilder;
+        WorkbookView _workbookView;
+        WorkbookView _trainingBrowseRichTextBuilder;
         public TrainingView _trainingView;
 
         private const int squareSize = 80;
@@ -53,12 +53,18 @@ namespace ChessForge
         /// </summary>
         public WorkbookTree Workbook;
 
+        /// <summary>
+        /// Determines if the program is running in Debug mode.
+        /// </summary>
         private bool _isDebugMode = false;
 
+        /// <summary>
+        /// Collection of timers for this application.
+        /// </summary>
         internal AppTimers Timers;
 
         /// <summary>
-        /// The main application window
+        /// The main application window.
         /// </summary>
         public MainWindow()
         {
@@ -155,7 +161,7 @@ namespace ChessForge
                 mi.Name = MENUITEM_RECENT_FILES_PREFIX + i.ToString();
                 try
                 {
-                    string fileName = System.IO.Path.GetFileName(recentFiles.ElementAt(i));
+                    string fileName = Path.GetFileName(recentFiles.ElementAt(i));
                     if (!string.IsNullOrEmpty(fileName))
                     {
                         mi.Header = fileName;
@@ -167,6 +173,11 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Get position of a chessboard's square
+        /// </summary>
+        /// <param name="sq">XY coordinates of the square</param>
+        /// <returns></returns>
         private Point GetSquareTopLeftPoint(SquareCoords sq)
         {
             double left = squareSize * sq.Xcoord + imgChessBoard.Margin.Left;
@@ -175,6 +186,11 @@ namespace ChessForge
             return new Point(left, top);
         }
 
+        /// <summary>
+        /// Get the center point of a chessboard's square
+        /// </summary>
+        /// <param name="sq">XY coordinates of the square</param>
+        /// <returns></returns>
         private Point GetSquareCenterPoint(SquareCoords sq)
         {
             Point pt = GetSquareTopLeftPoint(sq);
@@ -194,6 +210,11 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Get XY coordinates of clicked square.
+        /// </summary>
+        /// <param name="p">Location of the clicked point.</param>
+        /// <returns></returns>
         private SquareCoords ClickedSquare(Point p)
         {
             double squareSide = imgChessBoard.Width / 8.0;
@@ -836,13 +857,13 @@ namespace ChessForge
 
                 _mainboardCommentBox.ShowWorkbookTitle(Workbook.Title);
 
-                _workbookRichTextBuilder = new WorkbookRichTextBuilder(_rtbWorkbookView.Document);
-                _trainingBrowseRichTextBuilder = new WorkbookRichTextBuilder(_rtbTrainingBrowse.Document);
+                _workbookView = new WorkbookView(_rtbWorkbookView.Document);
+                _trainingBrowseRichTextBuilder = new WorkbookView(_rtbTrainingBrowse.Document);
                 _trainingView = new TrainingView(_rtbTrainingProgress.Document);
 
                 Workbook.BuildLines();
 
-                _workbookRichTextBuilder.BuildFlowDocumentForWorkbook();
+                _workbookView.BuildFlowDocumentForWorkbook();
                 if (Workbook.Bookmarks.Count == 0)
                 {
                     var res = AskToGenerateBookmarks();
@@ -861,7 +882,7 @@ namespace ChessForge
 
                 BookmarkManager.ShowBookmarks();
 
-                _workbookRichTextBuilder.SelectLineAndMove(startLineId, startingNode);
+                _workbookView.SelectLineAndMove(startLineId, startingNode);
                 _lvWorkbookTable_SelectLineAndMove(startLineId, startingNode);
 
                 Configuration.LastWorkbookFile = fileName;
@@ -1822,15 +1843,23 @@ namespace ChessForge
             MessageBox.Show("Right-click a move and select \"Add to Bookmarks\" from the popup-menu", "Chess Forge Training", MessageBoxButton.OK);
         }
 
+        /// <summary>
+        /// Handles a mouse click in the Workbook's grid. At this point
+        /// we disable node specific manu items in case no node was clicked.
+        /// If a node was clicked, it will be corrected when the event is handled
+        /// in the Run's OnClick handler.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WorkbookGrid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            _workbookRichTextBuilder.LastClickedNodeId = -1;
-            _workbookRichTextBuilder.EnableWorkbookMenus(_cmWorkbookRightClick, false);
+            _workbookView.LastClickedNodeId = -1;
+            _workbookView.EnableWorkbookMenus(_cmWorkbookRightClick, false);
         }
 
         private void _mnWorkbookSelectAsBookmark_Click(object sender, RoutedEventArgs e)
         {
-            if (BookmarkManager.AddBookmark(_workbookRichTextBuilder.LastClickedNodeId) == -1)
+            if (BookmarkManager.AddBookmark(_workbookView.LastClickedNodeId) == -1)
             {
                 MessageBox.Show("Chess Forge Training Bookmarks", "This bookmark already exists.", MessageBoxButton.OK);
             }

@@ -190,7 +190,7 @@ namespace ChessForge
                     }
 
                     MainChessBoard.DisplayPosition(nd.Position);
-                    _workbookRichTextBuilder.SelectLineAndMove(null, nd.NodeId);
+                    _workbookView.SelectLineAndMove(null, nd.NodeId);
                     _lvWorkbookTable_SelectLineAndMove(null, nd.NodeId);
                 }
             }
@@ -362,7 +362,7 @@ namespace ChessForge
                     {
                         MainChessBoard.DisplayPosition(nd.Position);
                     }
-                    _workbookRichTextBuilder.SelectLineAndMove(null, nd.NodeId);
+                    _workbookView.SelectLineAndMove(null, nd.NodeId);
                     _lvWorkbookTable_SelectLineAndMove(null, nd.NodeId);
                 }
                 e.Handled = true;
