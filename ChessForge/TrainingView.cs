@@ -112,6 +112,11 @@ namespace ChessForge
         private TreeNode _engineGameRootNode;
 
         /// <summary>
+        /// Whether the floating board is allowed to be displayed.
+        /// </summary>
+        private bool _blockFloatingBoard;
+
+        /// <summary>
         /// The Run with the move for which engine evaluation
         /// is running.
         /// </summary>
@@ -128,7 +133,11 @@ namespace ChessForge
         /// </summary>
         private TreeNode _userMove;
 
+        /// <summary>
+        /// The last clicked move in the view
+        /// </summary>
         private TreeNode _lastClickedNode;
+
         /// <summary>
         /// The move with which the user wishes to proceed after selecting
         /// from the Workbook options.
@@ -730,6 +739,7 @@ namespace ChessForge
 
         public void ShowPopupMenu()
         {
+            _blockFloatingBoard = true;
             AppState.MainWin.ShowFloatingChessboard(false);
 
             AppState.MainWin.Dispatcher.Invoke(() =>
@@ -753,7 +763,7 @@ namespace ChessForge
                         MenuItem mi = o as MenuItem;
                         switch (mi.Name)
                         {
-                            case "_mnEvalMove":
+                            case "_mnEvalMoveGame":
                                 mi.Header = "Evaluate" + midTxt + "move " + MoveUtils.BuildSingleMoveText(_lastClickedNode, true);
                                 break;
                             case "_mnRestartGame":
@@ -767,6 +777,7 @@ namespace ChessForge
                 cm.IsOpen = true;
                 AppState.MainWin.Timers.Stop(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUMENU);
             });
+            _blockFloatingBoard = false;
         }
 
         public void RestartGameAfter(object sender, RoutedEventArgs e)
@@ -828,26 +839,6 @@ namespace ChessForge
                 string moveTxt = MoveUtils.BuildSingleMoveText(nd, true);
 
                 AppState.MainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUMENU);
-                //if (nd.ColorToMove != AppState.TrainingSide)
-                //{
-                //    if (MessageBox.Show("Restart the game after your " + moveTxt + " move?", "Training Game with Engine", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
-                //    {
-                //        // a user move clicked so keep it and get a response  from the engine
-                //        EngineGame.RestartAtUserMove(nd);
-                //        AppState.MainWin.DisplayPosition(nd.Position);
-                //        RebuildEngineGamePara(nd);
-                //    }
-                //}
-                //else
-                //{
-                //    if (MessageBox.Show("Restart the game after engine\'s " + moveTxt + " move?", "Training Game with Engine", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
-                //    {
-                //        // an engine move clicked so keep it and ask user for their move
-                //        EngineGame.RestartAtEngineMove(nd);
-                //        AppState.MainWin.DisplayPosition(nd.Position);
-                //        RebuildEngineGamePara(nd);
-                //    }
-                //}
             }
             else if (r.Name == _run_eval_user_move)
             {
@@ -890,6 +881,9 @@ namespace ChessForge
 
         private void EventRunMoveOver(object sender, MouseEventArgs e)
         {
+            if (_blockFloatingBoard)
+                return;
+
             // check if a move run was clicked
             Run r = (Run)e.Source;
             if (string.IsNullOrEmpty(r.Name))
@@ -909,7 +903,7 @@ namespace ChessForge
                 Point pt = e.GetPosition(AppState.MainWin._rtbTrainingProgress);
                 AppState.MainWin.TrainingViewChessBoard.DisplayPosition(AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId).Position);
                 AppState.MainWin._vbFloatingChessboard.Margin = new Thickness(pt.X, pt.Y - 165, 0, 0);
-                AppState.MainWin._vbFloatingChessboard.Visibility = Visibility.Visible;
+                AppState.MainWin.ShowFloatingChessboard(true);
             }
         }
 

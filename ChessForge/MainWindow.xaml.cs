@@ -85,7 +85,7 @@ namespace ChessForge
             MainChessBoard = new ChessBoard(MainCanvas, imgChessBoard, null, true);
             TrainingViewChessBoard = new ChessBoard(_cnvFloat, _imgFloatingBoard, null, true);
 
-            InitBookmarksGui();
+            BookmarkManager.InitBookmarksGui();
 
             Configuration.ReadConfigurationFile();
             MoveAnimation.MoveDuration = Configuration.MoveSpeed;
@@ -111,34 +111,6 @@ namespace ChessForge
             sliderReplaySpeed.Visibility = Visibility.Hidden;
             _lblEvaluating.Visibility = Visibility.Hidden;
             _lblMoveUnderEval.Visibility = Visibility.Hidden;
-        }
-
-        /// <summary>
-        /// Resets or recreates all the bookmarks.
-        /// Called on app initialization..
-        /// </summary>
-        private void InitBookmarksGui()
-        {
-            AppState.Bookmarks.Clear();
-
-            AppState.Bookmarks.Add(new BookmarkView(new ChessBoard(_cnvBookmark_1, _imgBookmark_1, _lblBookmark_1, false)));
-            AppState.Bookmarks.Add(new BookmarkView(new ChessBoard(_cnvBookmark_2, _imgBookmark_2, _lblBookmark_2, false)));
-            AppState.Bookmarks.Add(new BookmarkView(new ChessBoard(_cnvBookmark_3, _imgBookmark_3, _lblBookmark_3, false)));
-            AppState.Bookmarks.Add(new BookmarkView(new ChessBoard(_cnvBookmark_4, _imgBookmark_4, _lblBookmark_4, false)));
-            AppState.Bookmarks.Add(new BookmarkView(new ChessBoard(_cnvBookmark_5, _imgBookmark_5, _lblBookmark_5, false)));
-            AppState.Bookmarks.Add(new BookmarkView(new ChessBoard(_cnvBookmark_6, _imgBookmark_6, _lblBookmark_6, false)));
-            AppState.Bookmarks.Add(new BookmarkView(new ChessBoard(_cnvBookmark_7, _imgBookmark_7, _lblBookmark_7, false)));
-            AppState.Bookmarks.Add(new BookmarkView(new ChessBoard(_cnvBookmark_8, _imgBookmark_8, _lblBookmark_8, false)));
-            AppState.Bookmarks.Add(new BookmarkView(new ChessBoard(_cnvBookmark_9, _imgBookmark_9, _lblBookmark_9, false)));
-        }
-
-        private void ClearBookmarksGui()
-        {
-            foreach (BookmarkView bv in AppState.Bookmarks)
-            {
-                bv.Deactivate();
-                bv.SetOpacity(0.5);
-            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -817,7 +789,7 @@ namespace ChessForge
                 string workbookText = File.ReadAllText(fileName);
 
                 Workbook = new WorkbookTree();
-                ClearBookmarksGui();
+                BookmarkManager.ClearBookmarksGui();
                 _rtbWorkbookView.Document.Blocks.Clear();
                 PgnGameParser pgnGame = new PgnGameParser(workbookText, Workbook, true);
 
@@ -842,8 +814,8 @@ namespace ChessForge
                 {
                     SaveFileDialog saveDlg = new SaveFileDialog();
                     saveDlg.Filter = "chf Workbook files (*.chf)|*.chf";
-                    saveDlg.Title =  " Save Workbook converted from " + Path.GetFileName(fileName);
-                    
+                    saveDlg.Title = " Save Workbook converted from " + Path.GetFileName(fileName);
+
                     saveDlg.FileName = Path.GetFileNameWithoutExtension(fileName) + ".chf";
                     saveDlg.OverwritePrompt = true;
                     if (saveDlg.ShowDialog() == true)
@@ -873,8 +845,7 @@ namespace ChessForge
                 _workbookRichTextBuilder.BuildFlowDocumentForWorkbook();
                 if (Workbook.Bookmarks.Count == 0)
                 {
-                    var res = MessageBox.Show("Would you like to auto-select positions for training?",
-                        "No Bookmarks in this Workbook", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    var res = AskToGenerateBookmarks();
                     if (res == MessageBoxResult.Yes)
                     {
                         Workbook.GenerateBookmarks();
@@ -888,7 +859,7 @@ namespace ChessForge
 
                 SetupDataInTreeView();
 
-                ShowBookmarks();
+                BookmarkManager.ShowBookmarks();
 
                 _workbookRichTextBuilder.SelectLineAndMove(startLineId, startingNode);
                 _lvWorkbookTable_SelectLineAndMove(startLineId, startingNode);
@@ -901,6 +872,12 @@ namespace ChessForge
             {
                 MessageBox.Show(e.Message, "Error processing input file", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private MessageBoxResult AskToGenerateBookmarks()
+        {
+            return MessageBox.Show("Would you like to auto-select positions for training?",
+                "No Bookmarks in this Workbook", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
         }
 
         public void SetActiveLine(string lineId, int selectedNodeId)
@@ -936,7 +913,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void ChessForgeMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Timers.StopAll();   
+            Timers.StopAll();
             AppLog.Dump();
             EngineLog.Dump();
             Configuration.WriteOutConfiguration();
@@ -1512,18 +1489,9 @@ namespace ChessForge
             _mainboardCommentBox.RestoreTitleMessage();
         }
 
-        private void ShowBookmarks()
-        {
-            for (int i = 0; i < Workbook.Bookmarks.Count; i++)
-            {
-                AppState.Bookmarks[i].BookmarkData = Workbook.Bookmarks[i];
-                AppState.Bookmarks[i].Activate();
-            }
-        }
-
         /// <summary>
         /// Ensure that Workbook Tree's ListView allows
-        /// mouse wheel scrilling.
+        /// mouse wheel scrolling.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1543,26 +1511,20 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Starts a training session.
-        /// If the workbook has results from an earlier session, we will ask the user
-        /// if they want to clear those results or to resume that earlier session.
+        /// Re-directs the user to the bookmark page where they can
+        /// select a bookmarked position.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MenuItem_StartTraining(object sender, RoutedEventArgs e)
         {
-            if (Workbook.Bookmarks.Count == 0)
-            {
-                MessageBox.Show("There are no training positions in this Workbook.  Do you want to generate some?",
-                    "ChessForge Training", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-
-                // TODO: implement handling of the answer.
-            }
-
-            //TODO: check if we have results from an earlier session
-            SetAppInTrainingMode(0);
+            _tabBookmarks.Focus();
         }
 
+        /// <summary>
+        /// Starts a training session from a specified bookmark position.
+        /// </summary>
+        /// <param name="bookmarkIndex"></param>
         private void SetAppInTrainingMode(int bookmarkIndex)
         {
             if (bookmarkIndex >= Workbook.Bookmarks.Count)
@@ -1577,11 +1539,11 @@ namespace ChessForge
             AppState.CurrentMode = AppState.Mode.TRAINING;
 
             // Get the first bookmarked position
-            AppState.ActiveBookmarkInTraining = 0;
+            BookmarkManager.ActiveBookmarkInTraining = 0;
             MainChessBoard.SetBoardSourceImage(ChessBoards.ChessBoardGreen);
 
-            // TODO: need tpo check that the side on move is what was declared
-            // and maybe give an option to chage that?
+            // TODO: need to check that the side on move is what was declared
+            // and maybe give an option to change that?
             TreeNode startNode = Workbook.Bookmarks[bookmarkIndex].Node;
             AppState.TrainingSide = startNode.ColorToMove;
 
@@ -1762,60 +1724,6 @@ namespace ChessForge
             MainChessBoard.FlipBoard();
         }
 
-        private void _cnvBookmark_1_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            SetAppInTrainingMode(0);
-            e.Handled = true;
-        }
-
-        private void _cnvBookmark_2_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            SetAppInTrainingMode(1);
-            e.Handled = true;
-        }
-
-        private void _cnvBookmark_3_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            SetAppInTrainingMode(2);
-            e.Handled = true;
-        }
-
-        private void _cnvBookmark_4_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            SetAppInTrainingMode(3);
-            e.Handled = true;
-        }
-
-        private void _cnvBookmark_5_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            SetAppInTrainingMode(4);
-            e.Handled = true;
-        }
-
-        private void _cnvBookmark_6_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            SetAppInTrainingMode(5);
-            e.Handled = true;
-        }
-
-        private void _cnvBookmark_7_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            SetAppInTrainingMode(6);
-            e.Handled = true;
-        }
-
-        private void _cnvBookmark_8_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            SetAppInTrainingMode(7);
-            e.Handled = true;
-        }
-
-        private void _cnvBookmark_9_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            SetAppInTrainingMode(8);
-            e.Handled = true;
-        }
-
         public void InvokeRequestWorkbookResponse(object source, ElapsedEventArgs e)
         {
             _trainingView.RequestWorkbookResponse();
@@ -1842,6 +1750,94 @@ namespace ChessForge
             {
                 _vbFloatingChessboard.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
             });
+        }
+
+        /// <summary>
+        /// Handles a context menu event to start training
+        /// from the recently clicked bookmark.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _mnTrainFromBookmark_Click(object sender, RoutedEventArgs e)
+        {
+            if (BookmarkManager.ClickedIndex >= 0)
+            {
+                SetAppInTrainingMode(BookmarkManager.ClickedIndex);
+            }
+        }
+
+        /// <summary>
+        /// Handles left click on any of the Bookmark chessboards.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _cnvBookmark_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Canvas)
+            {
+                string name = ((Canvas)sender).Name;
+                int underscore = name.LastIndexOf('_');
+                int bkmNo;
+                if (underscore > 0 && underscore < name.Length - 1)
+                {
+                    if (!int.TryParse(name.Substring(underscore + 1), out bkmNo))
+                    {
+                        return;
+                    }
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        SetAppInTrainingMode(bkmNo - 1);
+                        e.Handled = true;
+                    }
+                    // for the benefit of the conetx menu set the clicked index.
+                    BookmarkManager.ClickedIndex = bkmNo - 1;
+                    BookmarkManager.EnableBookmarkMenus(_cmBookmarks, true);
+                }
+            }
+        }
+
+        /// <summary>
+        /// A bookmark view was clicked somewhere.
+        /// We disable the bookmark menu in case the click was not on a bookmark.
+        /// The event is then handled by a bookmark handler, if the click was on
+        /// a bookmark and the menus will be enabled accordingly.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BookmarkGrid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            BookmarkManager.ClickedIndex = -1;
+            BookmarkManager.EnableBookmarkMenus(_cmBookmarks, false);
+        }
+
+        /// <summary>
+        /// Allows the user to add a bookmark by re-directing them to the Workbook view 
+        /// and advising on the procedure. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _mnAddBookmark_Click(object sender, RoutedEventArgs e)
+        {
+            TabItemWorkbook.Focus();
+            MessageBox.Show("Right-click a move and select \"Add to Bookmarks\" from the popup-menu", "Chess Forge Training", MessageBoxButton.OK);
+        }
+
+        private void WorkbookGrid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _workbookRichTextBuilder.LastClickedNodeId = -1;
+            _workbookRichTextBuilder.EnableWorkbookMenus(_cmWorkbookRightClick, false);
+        }
+
+        private void _mnWorkbookSelectAsBookmark_Click(object sender, RoutedEventArgs e)
+        {
+            if (BookmarkManager.AddBookmark(_workbookRichTextBuilder.LastClickedNodeId) == -1)
+            {
+                MessageBox.Show("Chess Forge Training Bookmarks", "This bookmark already exists.", MessageBoxButton.OK);
+            }
+            else
+            {
+                _tabBookmarks.Focus();
+            }
         }
     }
 
