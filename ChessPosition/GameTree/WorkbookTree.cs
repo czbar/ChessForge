@@ -263,6 +263,24 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Deletes a bookmark from the list of bookmarks
+        /// and removes the bookmark flag from the node.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void DeleteBookmark(TreeNode nd)
+        {
+            nd.IsBookmark = false;
+            for (int i = 0; i < Bookmarks.Count; i++)
+            {
+                if (Bookmarks[i].Node.NodeId == nd.NodeId)
+                {
+                    Bookmarks.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
         /// Removes a node from the list of bookmarks. 
         /// </summary>
         /// <param name="nd"></param>

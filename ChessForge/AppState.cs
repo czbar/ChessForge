@@ -29,30 +29,30 @@ namespace ChessForge
             /// <summary>
             /// No workbook loaded, the program is waiting.
             /// </summary>
-            IDLE = 0x0001,              
+            IDLE = 0x0001,
 
             /// <summary>
             /// A training session is in progress
             /// </summary>
-            TRAINING = 0x0002,          
+            TRAINING = 0x0002,
 
             /// <summary>
             /// The user is playing against the engine
             /// </summary>
-            GAME_VS_COMPUTER = 0x0004,  
+            GAME_VS_COMPUTER = 0x0004,
 
             /// <summary>
             /// The user is reviewing the workbook.
             /// Can switch between different lines.
             /// </summary>
-            MANUAL_REVIEW = 0x0010,  
+            MANUAL_REVIEW = 0x0010,
 
             /// <summary>
             /// The program is evaluating a move or a line.
             /// NOTE: this is separate from evaluation during the game
             /// or training which are submodes of the respective modes.
             /// </summary>
-            ENGINE_EVALUATION = 0x0020 
+            ENGINE_EVALUATION = 0x0020
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace ChessForge
         public enum SubMode : uint
         {
             NONE = 0x0000,
-            
+
             /// <summary>
             /// The program is idle while in Training
             /// or Game mode, awaiting user's move.
@@ -74,7 +74,7 @@ namespace ChessForge
             /// engine's messages awaiting engine's move.
             /// </summary>
             ENGINE_THINKING = 0x0002,
-            
+
             /// <summary>
             /// A selected line from the currently loaded workbook
             /// is being replayed.
@@ -100,22 +100,16 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Type of the file currently open as
-        /// the Workbook.
-        /// </summary>
-        public static FileType WorkbookFileType;
-
-        /// <summary>
-        /// The file path of the current Workbook file
-        /// </summary>
-        public static string WorkbookFilePath;
-
-        /// <summary>
         /// Main application window.
         /// Exposing the public reference through this object
         /// for convenient access/reference.
         /// </summary>
         public static MainWindow MainWin;
+
+        /// <summary>
+        /// Indicates whether there are any unsaved changes in the Workbook
+        /// </summary>
+        public static bool IsDirty;
 
         /// <summary>
         /// Switches application to another mode.
@@ -175,6 +169,39 @@ namespace ChessForge
         /// </summary>
         public static Mode PreviousMode { get => _previousMode; set => _previousMode = value; }
 
+
+        /// <summary>
+        /// The file path of the current Workbook file.
+        /// When set, checks if there was a different value previously, and if
+        /// so, if it should be saved.
+        /// </summary>
+        public static string WorkbookFilePath
+        {
+            get => _workbookFilePath;
+            set {
+                if (!string.IsNullOrEmpty(_workbookFilePath) && WorkbookFileType == FileType.CHF && IsDirty)
+                {
+                    SaveWorkbookFile();
+                }
+                _workbookFilePath = value;
+                if (Path.GetExtension(_workbookFilePath).ToLower() == ".chf")
+                {
+                    _workbookFileType = FileType.CHF;
+                }
+                else
+                {
+                    _workbookFileType = FileType.PGN;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Type of the file currently open as
+        /// the Workbook.
+        /// </summary>
+        public static FileType WorkbookFileType { get => _workbookFileType;}
+
+
         /// <summary>
         /// Horizontal animation object.
         /// </summary>
@@ -218,5 +245,10 @@ namespace ChessForge
 
         private static Mode _currentMode = Mode.IDLE;
         private static Mode _previousMode = Mode.IDLE;
+
+        private static string _workbookFilePath;
+        private static FileType _workbookFileType;
+
+
     }
 }
