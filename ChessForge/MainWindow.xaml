@@ -278,10 +278,10 @@
                         <ContextMenu x:Name="_cmBookmarks">
                             <MenuItem x:Name="_mnTrainFromBookmark" Header="Start Training from This Bookmark" Click="_mnTrainFromBookmark_Click" />
                             <Separator />
-                            <MenuItem x:Name="_mnGenerateBookmark" Header="Generate Bookmarks" />
+                            <MenuItem x:Name="_mnGenerateBookmark" Header="Generate Bookmarks" Click="_mnGenerateBookmark_Click" />
                             <MenuItem x:Name="_mnAddBookmark" Header="Add a Bookmark" Click="_mnAddBookmark_Click" />
-                            <MenuItem x:Name="_mnDeleteBookmark" Header="Delete This Bookmark" />
-                            <MenuItem x:Name="_mnDeleteAllBookmarks" Header="Delete All Bookmarks" />
+                            <MenuItem x:Name="_mnDeleteBookmark" Header="Delete This Bookmark" Click="_mnDeleteBookmark_Click" />
+                            <MenuItem x:Name="_mnDeleteAllBookmarks" Header="Delete All Bookmarks" Click="_mnDeleteAllBookmarks_Click" />
                         </ContextMenu>
                     </Grid.ContextMenu>
                     <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0">
