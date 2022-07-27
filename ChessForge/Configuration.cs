@@ -61,8 +61,8 @@ namespace ChessForge
         //*********************************
 
         private const string CFG_MOVE_SPEED = "MoveSpeed";
-        private const string CFG_LAST_PGN_DIRECTORY = "LastPgnDirectory";
-        private const string CFG_LAST_PGN_FILE = "LastPgnFile";
+        private const string CFG_LAST_DIRECTORY = "LastDirectory";
+        private const string CFG_LAST_FILE = "LastFile";
         private const string CFG_RECENT_FILES = "RecentFiles";
         private const string CFG_MAIN_WINDOW_POS = "MainWindowPosition";
 
@@ -177,8 +177,8 @@ namespace ChessForge
                 sb.Append(CFG_DEBUG_MODE + "=" + DebugMode.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_MOVE_SPEED + "=" + MoveSpeed.ToString() + Environment.NewLine);
-                sb.Append(CFG_LAST_PGN_DIRECTORY + "=" + LastOpenDirectory.ToString() + Environment.NewLine);
-                sb.Append(CFG_LAST_PGN_FILE + "=" + LastWorkbookFile.ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_DIRECTORY + "=" + LastOpenDirectory.ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_FILE + "=" + LastWorkbookFile.ToString() + Environment.NewLine);
 
                 sb.Append(Environment.NewLine);
 
@@ -288,10 +288,10 @@ namespace ChessForge
                         case CFG_DEBUG_MODE:
                             int.TryParse(value, out DebugMode);
                             break;
-                        case CFG_LAST_PGN_DIRECTORY:
+                        case CFG_LAST_DIRECTORY:
                             LastOpenDirectory = value;
                             break;
-                        case CFG_LAST_PGN_FILE:
+                        case CFG_LAST_FILE:
                             LastWorkbookFile = value;
                             break;
                         case CFG_ENGINE_EVALUATION_TIME:
