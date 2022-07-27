@@ -827,11 +827,7 @@ namespace ChessForge
                 //
                 // If this is not a CHF file, ask the user to save the converted file.
                 //
-                if (Path.GetExtension(fileName).ToLower() == ".chf")
-                {
-                    AppState.WorkbookFileType = AppState.FileType.CHF;
-                }
-                else
+                if (AppState.WorkbookFileType != AppState.FileType.CHF)
                 {
                     SaveFileDialog saveDlg = new SaveFileDialog();
                     saveDlg.Filter = "chf Workbook files (*.chf)|*.chf";
@@ -844,11 +840,6 @@ namespace ChessForge
                         fileName = saveDlg.FileName;
                         AppState.WorkbookFilePath = fileName;
                         AppState.SaveWorkbookFile();
-                        AppState.WorkbookFileType = AppState.FileType.CHF;
-                    }
-                    else
-                    {
-                        AppState.WorkbookFileType = AppState.FileType.PGN;
                     }
                 }
 
@@ -1546,7 +1537,7 @@ namespace ChessForge
         /// Starts a training session from a specified bookmark position.
         /// </summary>
         /// <param name="bookmarkIndex"></param>
-        private void SetAppInTrainingMode(int bookmarkIndex)
+        public void SetAppInTrainingMode(int bookmarkIndex)
         {
             if (bookmarkIndex >= Workbook.Bookmarks.Count)
             {
@@ -1796,24 +1787,7 @@ namespace ChessForge
         {
             if (sender is Canvas)
             {
-                string name = ((Canvas)sender).Name;
-                int underscore = name.LastIndexOf('_');
-                int bkmNo;
-                if (underscore > 0 && underscore < name.Length - 1)
-                {
-                    if (!int.TryParse(name.Substring(underscore + 1), out bkmNo))
-                    {
-                        return;
-                    }
-                    if (e.ChangedButton == MouseButton.Left)
-                    {
-                        SetAppInTrainingMode(bkmNo - 1);
-                        e.Handled = true;
-                    }
-                    // for the benefit of the conetx menu set the clicked index.
-                    BookmarkManager.ClickedIndex = bkmNo - 1;
-                    BookmarkManager.EnableBookmarkMenus(_cmBookmarks, true);
-                }
+                BookmarkManager.ChessboardClickedEvent(((Canvas)sender).Name, _cmBookmarks, e);
             }
         }
 
@@ -1861,12 +1835,28 @@ namespace ChessForge
         {
             if (BookmarkManager.AddBookmark(_workbookView.LastClickedNodeId) == -1)
             {
-                MessageBox.Show("Chess Forge Training Bookmarks", "This bookmark already exists.", MessageBoxButton.OK);
+                MessageBox.Show("Training Bookmarks", "This bookmark already exists.", MessageBoxButton.OK);
             }
             else
             {
+                AppState.SaveWorkbookFile();
                 _tabBookmarks.Focus();
             }
+        }
+
+        private void _mnGenerateBookmark_Click(object sender, RoutedEventArgs e)
+        {
+            BookmarkManager.GenerateBookmarks();
+        }
+
+        private void _mnDeleteBookmark_Click(object sender, RoutedEventArgs e)
+        {
+            BookmarkManager.DeleteBookmark();
+        }
+
+        private void _mnDeleteAllBookmarks_Click(object sender, RoutedEventArgs e)
+        {
+            BookmarkManager.DeleteAllBookmarks();
         }
     }
 

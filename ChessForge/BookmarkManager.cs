@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Controls;
 using GameTree;
 
@@ -65,10 +66,17 @@ namespace ChessForge
             Bookmarks.Add(new BookmarkView(new ChessBoard(mw._cnvBookmark_9, mw._imgBookmark_9, mw._lblBookmark_9, false)));
         }
 
+        /// <summary>
+        /// Initializes the GUI for the bookmarks.
+        /// Only first MAX_BOOKMARKS bookmarks can be shown at most.
+        /// </summary>
         internal static void ShowBookmarks()
         {
             for (int i = 0; i < AppState.MainWin.Workbook.Bookmarks.Count; i++)
             {
+                if (i >= Bookmarks.Count)
+                    break;
+
                 Bookmarks[i].BookmarkData = AppState.MainWin.Workbook.Bookmarks[i];
                 Bookmarks[i].Activate();
             }
@@ -113,6 +121,102 @@ namespace ChessForge
             {
                 return -1;
             }
+        }
+
+        /// <summary>
+        /// Deletes the bookmark at index ClickedIndex.
+        /// </summary>
+        public static void DeleteBookmark()
+        {
+            if (ClickedIndex < 0 || ClickedIndex >= Bookmarks.Count)
+            {
+                return;
+            }
+
+            TreeNode nd = Bookmarks[ClickedIndex].BookmarkData.Node;
+            if (nd != null)
+            {
+                AppState.MainWin.Workbook.DeleteBookmark(nd);
+                ResyncBookmarks();
+            }
+            AppState.SaveWorkbookFile();
+        }
+
+        /// <summary>
+        /// Removes all bookmarks.
+        /// </summary>
+        public static void DeleteAllBookmarks()
+        {
+            if (Bookmarks.Count > 0)
+            {
+                if (MessageBox.Show("This will delete all Bookmarks. Proceed?"
+                    , "Training Bookmarks", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+            }
+
+            foreach (BookmarkView bm in Bookmarks)
+            {
+                if (bm.BookmarkData != null && bm.BookmarkData.Node != null)
+                {
+                    bm.BookmarkData.Node.IsBookmark = false;
+                }
+            }
+
+            ClearBookmarksGui();
+            Bookmarks.Clear();
+            AppState.SaveWorkbookFile();
+        }
+
+        /// <summary>
+        /// Handles a click on one of the bookmark chessboards.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="cm"></param>
+        /// <param name="e"></param>
+        public static void ChessboardClickedEvent(string name, ContextMenu cm, MouseButtonEventArgs e)
+        {
+            int underscore = name.LastIndexOf('_');
+            int bkmNo;
+            if (underscore > 0 && underscore < name.Length - 1)
+            {
+                if (!int.TryParse(name.Substring(underscore + 1), out bkmNo))
+                {
+                    return;
+                }
+                if (e.ChangedButton == MouseButton.Left)
+                {
+                    AppState.MainWin.SetAppInTrainingMode(bkmNo - 1);
+                    e.Handled = true;
+                }
+                // for the benefit of the conetx menu set the clicked index.
+                ClickedIndex = bkmNo - 1;
+                EnableBookmarkMenus(cm, true);
+
+            }
+        }
+
+        /// <summary>
+        /// Generate bookmarks automatically.
+        /// This option should only be available from the menus if there are currently no
+        /// bookmarks.
+        /// But we will handle the situtation if this condition somehow is not met.
+        /// </summary>
+        public static void GenerateBookmarks()
+        {
+            if (Bookmarks.Count > 0)
+            {
+                if (MessageBox.Show("Generated bookmarks will replace the ones in the Workbook. Proceed?"
+                    , "Training Bookmarks", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+
+            }
+            DeleteAllBookmarks();
+            AppState.MainWin.Workbook.GenerateBookmarks();
+            ShowBookmarks();
         }
 
         /// <summary>
