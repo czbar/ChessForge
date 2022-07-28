@@ -234,8 +234,11 @@ namespace ChessForge
         /// It will only write to the file if the 
         /// session's file type is CHF
         /// </summary>
-        public static void SaveWorkbookFile()
+        public static void SaveWorkbookFile(bool checkDirty = false)
         {
+            if (checkDirty && !IsDirty)
+                return;
+
             if (WorkbookFileType == FileType.CHF)
             {
                 string chfText = ChfTextBuilder.BuildText(MainWin.Workbook);
