@@ -64,7 +64,7 @@ namespace ChessForge
                 // TODO: show appropriate notifications in the GUI
                 // start polling for the user move
                 AppState.MainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-                TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_MOVE;
+                TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_TRAINING_MOVE;
             }
         }
 
