@@ -34,18 +34,18 @@ namespace ChessForge
 
         private const int squareSize = 80;
 
-        DispatcherTimer dispatcherTimer;
         EvaluationState Evaluation = new EvaluationState();
         public EngineEvaluationGUI EngineLinesGUI;
         AnimationState MoveAnimation = new AnimationState();
-        ScoreSheet ActiveLine = new ScoreSheet();
         ChessBoard MainChessBoard;
         public ChessBoard TrainingViewChessBoard;
 
         List<UIEelementState> _uIEelementStates;
 
-        CommentBoxRichTextBuilder _mainboardCommentBox;
-        public GameReplay gameReplay;
+        public CommentBoxRichTextBuilder CommentBox;
+        public GameReplay ActiveLineReplay;
+
+        private ActiveLineManager ActiveLine;
 
         /// <summary>
         /// The complete tree of the currently
@@ -77,7 +77,8 @@ namespace ChessForge
             // initialize the UIElement states table
             InitializeUIElementStates();
 
-            _mainboardCommentBox = new CommentBoxRichTextBuilder(_rtbBoardComment.Document);
+            CommentBox = new CommentBoxRichTextBuilder(_rtbBoardComment.Document);
+            ActiveLine = new ActiveLineManager(_dgActiveLine);
 
             _menuPlayComputer.Header = Strings.MENU_ENGINE_GAME_START;
 
@@ -88,14 +89,14 @@ namespace ChessForge
             Configuration.StartDirectory = Directory.GetCurrentDirectory();
 
             // main chess board
-            MainChessBoard = new ChessBoard(MainCanvas, imgChessBoard, null, true);
+            MainChessBoard = new ChessBoard(MainCanvas, _imgMainChessboard, null, true);
             TrainingViewChessBoard = new ChessBoard(_cnvFloat, _imgFloatingBoard, null, true);
 
             BookmarkManager.InitBookmarksGui();
 
             Configuration.ReadConfigurationFile();
             MoveAnimation.MoveDuration = Configuration.MoveSpeed;
-            gameReplay = new GameReplay(this, MainChessBoard, _mainboardCommentBox);
+            ActiveLineReplay = new GameReplay(this, MainChessBoard, CommentBox);
 
             if (Configuration.MainWinPos.IsValid)
             {
@@ -127,9 +128,6 @@ namespace ChessForge
 
             CreateRecentFilesMenuItems();
 
-            dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(20000);
             AppState.ChangeCurrentMode(AppState.Mode.IDLE);
 
             bool engineStarted = EngineMessageProcessor.Start();
@@ -180,8 +178,8 @@ namespace ChessForge
         /// <returns></returns>
         private Point GetSquareTopLeftPoint(SquareCoords sq)
         {
-            double left = squareSize * sq.Xcoord + imgChessBoard.Margin.Left;
-            double top = squareSize * (7 - sq.Ycoord) + imgChessBoard.Margin.Top;
+            double left = squareSize * sq.Xcoord + _imgMainChessboard.Margin.Left;
+            double top = squareSize * (7 - sq.Ycoord) + _imgMainChessboard.Margin.Top;
 
             return new Point(left, top);
         }
@@ -217,7 +215,7 @@ namespace ChessForge
         /// <returns></returns>
         private SquareCoords ClickedSquare(Point p)
         {
-            double squareSide = imgChessBoard.Width / 8.0;
+            double squareSide = _imgMainChessboard.Width / 8.0;
             double xPos = p.X / squareSide;
             double yPos = p.Y / squareSide;
 
@@ -235,12 +233,12 @@ namespace ChessForge
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                Point clickedPoint = e.GetPosition(imgChessBoard);
+                Point clickedPoint = e.GetPosition(_imgMainChessboard);
                 SquareCoords sq = ClickedSquare(clickedPoint);
                 if (sq != null)
                 {
                     if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER && EngineGame.State == EngineGame.GameState.USER_THINKING
-                        || AppState.CurrentMode == AppState.Mode.TRAINING && TrainingState.CurrentMode == TrainingState.Mode.AWAITING_USER_MOVE)
+                        || AppState.CurrentMode == AppState.Mode.TRAINING && TrainingState.CurrentMode == TrainingState.Mode.AWAITING_USER_TRAINING_MOVE)
                     {
                         DraggedPiece.isDragInProgress = true;
                         DraggedPiece.Square = sq;
@@ -250,8 +248,8 @@ namespace ChessForge
                         DraggedPiece.ptDraggedPieceOrigin = ptLeftTop;
 
                         // for the remainder, we need absolute point
-                        clickedPoint.X += imgChessBoard.Margin.Left;
-                        clickedPoint.Y += imgChessBoard.Margin.Top;
+                        clickedPoint.X += _imgMainChessboard.Margin.Left;
+                        clickedPoint.Y += _imgMainChessboard.Margin.Top;
                         DraggedPiece.ptStartDragLocation = clickedPoint;
 
 
@@ -273,12 +271,10 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OnMouseUp(object sender, MouseButtonEventArgs e)
         {
-            dispatcherTimer.Stop();
-
             if (DraggedPiece.isDragInProgress)
             {
                 DraggedPiece.isDragInProgress = false;
-                Point clickedPoint = e.GetPosition(imgChessBoard);
+                Point clickedPoint = e.GetPosition(_imgMainChessboard);
                 SquareCoords targetSquare = ClickedSquare(clickedPoint);
                 if (targetSquare == null)
                 {
@@ -290,7 +286,7 @@ namespace ChessForge
                 {
                     // double check that we are legitimately making a move
                     if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER && EngineGame.State == EngineGame.GameState.USER_THINKING
-                        || AppState.CurrentMode == AppState.Mode.TRAINING && TrainingState.CurrentMode == TrainingState.Mode.AWAITING_USER_MOVE)
+                        || AppState.CurrentMode == AppState.Mode.TRAINING && TrainingState.CurrentMode == TrainingState.Mode.AWAITING_USER_TRAINING_MOVE)
                     {
                         // if the move is valid swap image at destination 
                         // and clear image at origin
@@ -356,7 +352,7 @@ namespace ChessForge
                                     }
 
                                     SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
-                                    _mainboardCommentBox.GameMoveMade(nd, true);
+                                    CommentBox.GameMoveMade(nd, true);
                                 }
                                 else
                                 {
@@ -420,26 +416,26 @@ namespace ChessForge
             Point leftTop = new Point();
             if (!MainChessBoard.IsFlipped)
             {
-                leftTop.X = ChessForgeMain.Left + ChessForgeMain.imgChessBoard.Margin.Left + 20 + normTarget.Xcoord * 80;
+                leftTop.X = ChessForgeMain.Left + ChessForgeMain._imgMainChessboard.Margin.Left + 20 + normTarget.Xcoord * 80;
                 if (whitePromotion)
                 {
-                    leftTop.Y = ChessForgeMain.Top + ChessForgeMain.imgChessBoard.Margin.Top + 40 + (7 - normTarget.Ycoord) * 80;
+                    leftTop.Y = ChessForgeMain.Top + ChessForgeMain._imgMainChessboard.Margin.Top + 40 + (7 - normTarget.Ycoord) * 80;
                 }
                 else
                 {
-                    leftTop.Y = ChessForgeMain.Top + ChessForgeMain.imgChessBoard.Margin.Top + 40 + (3 - normTarget.Ycoord) * 80;
+                    leftTop.Y = ChessForgeMain.Top + ChessForgeMain._imgMainChessboard.Margin.Top + 40 + (3 - normTarget.Ycoord) * 80;
                 }
             }
             else
             {
-                leftTop.X = ChessForgeMain.Left + ChessForgeMain.imgChessBoard.Margin.Left + 20 + (7 - normTarget.Xcoord) * 80;
+                leftTop.X = ChessForgeMain.Left + ChessForgeMain._imgMainChessboard.Margin.Left + 20 + (7 - normTarget.Xcoord) * 80;
                 if (whitePromotion)
                 {
-                    leftTop.X = ChessForgeMain.Top + ChessForgeMain.imgChessBoard.Margin.Top + 40 + (normTarget.Ycoord - 4) * 80;
+                    leftTop.X = ChessForgeMain.Top + ChessForgeMain._imgMainChessboard.Margin.Top + 40 + (normTarget.Ycoord - 4) * 80;
                 }
                 else
                 {
-                    leftTop.X = ChessForgeMain.Top + ChessForgeMain.imgChessBoard.Margin.Top + 40 + (normTarget.Ycoord) * 80;
+                    leftTop.X = ChessForgeMain.Top + ChessForgeMain._imgMainChessboard.Margin.Top + 40 + (normTarget.Ycoord) * 80;
                 }
             }
 
@@ -503,13 +499,13 @@ namespace ChessForge
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            Point clickedPoint = e.GetPosition(imgChessBoard);
+            Point clickedPoint = e.GetPosition(_imgMainChessboard);
 
             if (DraggedPiece.isDragInProgress)
             {
                 Canvas.SetZIndex(DraggedPiece.ImageControl, 10);
-                clickedPoint.X += imgChessBoard.Margin.Left;
-                clickedPoint.Y += imgChessBoard.Margin.Top;
+                clickedPoint.X += _imgMainChessboard.Margin.Left;
+                clickedPoint.Y += _imgMainChessboard.Margin.Top;
 
                 Canvas.SetLeft(DraggedPiece.ImageControl, clickedPoint.X - squareSize / 2);
                 Canvas.SetTop(DraggedPiece.ImageControl, clickedPoint.Y - squareSize / 2);
@@ -559,13 +555,16 @@ namespace ChessForge
             AppState.CurrentAnimationX = animX;
             AppState.CurrentAnimationY = animY;
 
-            animX.Completed += new EventHandler(Move_Completed);
+            animX.Completed += new EventHandler(MoveAnimationCompleted);
             trans.BeginAnimation(TranslateTransform.XProperty, animX);
             trans.BeginAnimation(TranslateTransform.YProperty, animY);
 
         }
 
-        private void StopAnimation()
+        /// <summary>
+        /// Stops move animation if there is one in progress.
+        /// </summary>
+        public void StopMoveAnimation()
         {
             // TODO Apparently, there are 2 methods to stop animation.
             // Method 1 below keeps the animated image at the spot it was when the stop request came.
@@ -594,7 +593,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Move_Completed(object sender, EventArgs e)
+        private void MoveAnimationCompleted(object sender, EventArgs e)
         {
             AppState.CurrentTranslateTransform = null;
             AppState.CurrentAnimationX = null;
@@ -621,21 +620,10 @@ namespace ChessForge
             MainCanvas.Children.Remove(old);
             MainChessBoard.SetPieceImage(new Image(), MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true);
             MainCanvas.Children.Add(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true));
-            Canvas.SetLeft(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), squareSize * MoveAnimation.Origin.Xcoord + imgChessBoard.Margin.Left);
-            Canvas.SetTop(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), squareSize * (7 - MoveAnimation.Origin.Ycoord) + imgChessBoard.Margin.Top);
+            Canvas.SetLeft(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), squareSize * MoveAnimation.Origin.Xcoord + _imgMainChessboard.Margin.Left);
+            Canvas.SetTop(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), squareSize * (7 - MoveAnimation.Origin.Ycoord) + _imgMainChessboard.Margin.Top);
 
-            gameReplay.PrepareNextMoveForAnimation(gameReplay.LastAnimatedMoveIndex, false);
-        }
-
-
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            if (MainBoard.Width > 100)
-            {
-                MainBoard.Margin = new Thickness(MainBoard.Margin.Left + 10, MainBoard.Margin.Top, MainBoard.Margin.Right, MainBoard.Margin.Bottom);
-                MainBoard.Width -= 10;
-                //            SideBoard.Height = 640;
-            }
+            ActiveLineReplay.PrepareNextMoveForAnimation(ActiveLineReplay.LastAnimatedMoveIndex, false);
         }
 
         /// <summary>
@@ -645,7 +633,7 @@ namespace ChessForge
         /// <param name="colorToMove"></param>
         public void SelectPlyInTextViews(int moveNo, PieceColor colorToMove)
         {
-            ViewActiveLine_SelectPly(moveNo, colorToMove);
+            ActiveLine.SelectPly(moveNo, colorToMove);
         }
 
         private void OpenWorkbookFile(object sender, RoutedEventArgs e)
@@ -846,7 +834,7 @@ namespace ChessForge
                 Configuration.AddRecentFile(fileName);
                 RecreateRecentFilesMenuItems();
 
-                _mainboardCommentBox.ShowWorkbookTitle(Workbook.Title);
+                CommentBox.ShowWorkbookTitle(Workbook.Title);
 
                 _workbookView = new WorkbookView(_rtbWorkbookView.Document);
                 _trainingBrowseRichTextBuilder = new WorkbookView(_rtbTrainingBrowse.Document);
@@ -873,8 +861,7 @@ namespace ChessForge
 
                 BookmarkManager.ShowBookmarks();
 
-                _workbookView.SelectLineAndMove(startLineId, startingNode);
-                _lvWorkbookTable_SelectLineAndMove(startLineId, startingNode);
+                SelectLineAndMoveInWorkbookViews(startLineId, startingNode);
 
                 Configuration.LastWorkbookFile = fileName;
 
@@ -884,6 +871,12 @@ namespace ChessForge
             {
                 MessageBox.Show(e.Message, "Error processing input file", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        public void SelectLineAndMoveInWorkbookViews(string lineId, int nodeId) 
+        {
+            _workbookView.SelectLineAndMove(lineId, nodeId);
+            _lvWorkbookTable_SelectLineAndMove(lineId, nodeId);
         }
 
         private MessageBoxResult AskToGenerateBookmarks()
@@ -906,12 +899,11 @@ namespace ChessForge
         public void SetActiveLine(ObservableCollection<TreeNode> line, int selectedNodeId)
         {
             ActiveLine.SetNodeList(line);
-            _dgActiveLine.ItemsSource = ActiveLine.MoveList;
 
             if (selectedNodeId > 0)
             {
                 TreeNode nd = ActiveLine.GetNodeFromId(selectedNodeId);
-                ViewActiveLine_SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
+                ActiveLine.SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
                 MainChessBoard.DisplayPosition(nd.Position);
             }
         }
@@ -925,6 +917,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void ChessForgeMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            AppState.SaveWorkbookFile(true);
             Timers.StopAll();
             AppLog.Dump();
             EngineLog.Dump();
@@ -953,7 +946,7 @@ namespace ChessForge
                 MessageBox.Show("Cannot start an evaluation while another one in progress.", "Move Evaluation", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            int moveIndex = ViewSingleLine_GetSelectedPlyNodeIndex();
+            int moveIndex = ActiveLine.GetSelectedPlyNodeIndex();
             if (moveIndex < 0)
             {
                 MessageBox.Show("Select a move to evaluate.", "Move Evaluation", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -1346,7 +1339,7 @@ namespace ChessForge
 
                 // TODO: disable this menu if no move selected.
 
-                TreeNode nd = ViewActiveLine_GetSelectedTreeNode();
+                TreeNode nd = ActiveLine.GetSelectedTreeNode();
                 if (nd != null)
                 {
                     PlayComputer(nd, false);
@@ -1369,7 +1362,7 @@ namespace ChessForge
         /// <param name="startNode"></param>
         public void PlayComputer(TreeNode startNode, bool IsTraining)
         {
-            imgChessBoard.Source = ChessBoards.ChessBoardGreen;
+            _imgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
             AppState.ChangeCurrentMode(AppState.Mode.GAME_VS_COMPUTER);
 
@@ -1406,7 +1399,7 @@ namespace ChessForge
                 TreeNode nd;
                 pos = EngineGame.ProcessEngineGameMove(out nd);
                 SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
-                _mainboardCommentBox.GameMoveMade(nd, false);
+                CommentBox.GameMoveMade(nd, false);
             });
 
 
@@ -1482,7 +1475,7 @@ namespace ChessForge
                 _pbEngineThinking.Value = 0;
             });
 
-            imgChessBoard.Source = ChessBoards.ChessBoardBlue;
+            _imgMainChessboard.Source = ChessBoards.ChessBoardBlue;
             Evaluation.Reset();
             Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
             AppState.CurrentMode = AppState.Mode.MANUAL_REVIEW;
@@ -1492,13 +1485,13 @@ namespace ChessForge
 
             int row, column;
 
-            ViewActiveLine_GetSelectedRowColumn(out row, out column);
+            ActiveLine.GetSelectedRowColumn(out row, out column);
             SelectPlyInTextViews(row, column == 1 ? PieceColor.White : PieceColor.Black);
-            int nodeIndex = ViewActiveLine_GetNodeIndexFromRowColumn(row, column);
+            int nodeIndex = ActiveLine.GetNodeIndexFromRowColumn(row, column);
             TreeNode nd = ActiveLine.GetNodeAtIndex(nodeIndex);
             MainChessBoard.DisplayPosition(nd.Position);
 
-            _mainboardCommentBox.RestoreTitleMessage();
+            CommentBox.RestoreTitleMessage();
         }
 
         /// <summary>
@@ -1519,7 +1512,7 @@ namespace ChessForge
             // Hand it off to the ActiveLine view.
             // In the future we may want to handle some key strokes here
             // but for now we will respond to whatever the ActiveLine view will request.
-            ViewActiveLine_PreviewKeyDown(sender, e);
+            ActiveLine.PreviewKeyDown(sender, e);
         }
 
         /// <summary>
@@ -1574,10 +1567,10 @@ namespace ChessForge
                 }
             }
 
-            _mainboardCommentBox.TrainingSessionStart();
+            CommentBox.TrainingSessionStart();
 
             //TODO check if there conditions where there is no point in user making a move.
-            TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_MOVE;
+            TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_TRAINING_MOVE;
 
             // The Line display is the same as when playing a game against the computer 
             EngineGame.PrepareGame(startNode, false, false);
@@ -1858,6 +1851,32 @@ namespace ChessForge
         {
             BookmarkManager.DeleteAllBookmarks();
         }
+
+        private void _mnTrainRestartGame_Click(object sender, RoutedEventArgs e)
+        {
+            _trainingView.RestartGameAfter(sender, e);
+        }
+
+        private void _mnTrainEvalMove_Click(object sender, RoutedEventArgs e)
+        {
+            _trainingView.RequestMoveEvaluation(sender, e);
+        }
+
+        private void ViewActiveLine_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            ActiveLine.PreviewKeyDown(sender, e);
+        }
+
+        private void ViewActiveLine_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ActiveLine.PreviewMouseDown(sender, e);
+        }
+
+        private void ViewActiveLine_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ActiveLine.MouseDoubleClick(sender, e);
+        }
+
     }
 
 }
