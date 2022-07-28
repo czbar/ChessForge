@@ -86,14 +86,18 @@ namespace ChessForge
         };
 
         /// <summary>
-        /// IDs of button styles (here, buttons are highlighted clickable Runs
+        /// Types of moves that can be shown in this view
         /// </summary>
-        private enum ButtonStyle
+        private enum MoveContext
         {
-            BLACK,
-            BLUE,
-            GREEN,
-            RED
+            // undefined
+            NONE,
+            // main training line
+            LINE,
+            // workbook move in the Coach's comment
+            WORKBOOK_COMMENT,
+            // move in the game against engine
+            GAME
         }
 
         /// <summary>
@@ -139,6 +143,13 @@ namespace ChessForge
         private TreeNode _lastClickedNode;
 
         /// <summary>
+        /// Type of move being made.
+        /// Used to display the appropriate context menu.
+        /// Should be set whenever _lastClickedNode is set.
+        /// </summary>
+        private MoveContext _moveContext;
+
+        /// <summary>
         /// The move with which the user wishes to proceed after selecting
         /// from the Workbook options.
         /// </summary>
@@ -168,6 +179,8 @@ namespace ChessForge
 
         private readonly string _run_engine_game_move_ = "eng_game_";
         private readonly string _run_wb_move_ = "wb_move_";
+        private readonly string _run_line_move_ = "line_move_";
+        private readonly string _par_line_moves_ = "par_line_moves_";
 
         /// <summary>
         /// Creates an instance of this class and sets reference 
@@ -518,8 +531,8 @@ namespace ChessForge
         /// </summary>
         private void BuildMoveParagraph(TreeNode nd, bool userMove)
         {
-            string paraName = "p_moves_" + nd.NodeId.ToString();
-            string runName = "r_moves_" + nd.NodeId.ToString();
+            string paraName = _par_line_moves_ + nd.NodeId.ToString();
+            string runName = _run_line_move_ + nd.NodeId.ToString();
 
             Paragraph para = AddNewParagraphToDoc(STYLE_MOVES_MAIN, "");
             para.Name = paraName;
@@ -737,25 +750,36 @@ namespace ChessForge
             return r;
         }
 
+        /// <summary>
+        /// Shows the Training View's context menu.
+        /// Visibility of the items is configured based on the
+        /// value of _moveContext.
+        /// </summary>
         public void ShowPopupMenu()
         {
+            if (_lastClickedNode == null) 
+                return;
+
             _blockFloatingBoard = true;
             AppState.MainWin.ShowFloatingChessboard(false);
 
             AppState.MainWin.Dispatcher.Invoke(() =>
             {
-                string midTxt;
-                if (_lastClickedNode.ColorToMove != AppState.TrainingSide)
+                string midTxt = " ";
+                if (_moveContext == MoveContext.GAME || _moveContext == MoveContext.LINE)
                 {
-                    midTxt = " your ";
+                    if (_lastClickedNode.ColorToMove != AppState.TrainingSide)
+                    {
+                        midTxt = " Your ";
+                    }
+                    else
+                    {
+                        midTxt = " Engine\'s ";
+                    }
                 }
-                else
-                {
-                    midTxt = " engine\'s ";
-                }
-                // this is user move - adjust menu text accordingly
+                string moveTxt = MoveUtils.BuildSingleMoveText(_lastClickedNode, true);
 
-                ContextMenu cm = AppState.MainWin.FindResource("_cmTrainingEngineGame") as ContextMenu;
+                ContextMenu cm = AppState.MainWin.FindResource("_cmTrainingView") as ContextMenu;
                 foreach (object o in cm.Items)
                 {
                     if (o is MenuItem)
@@ -763,13 +787,34 @@ namespace ChessForge
                         MenuItem mi = o as MenuItem;
                         switch (mi.Name)
                         {
-                            case "_mnEvalMoveGame":
-                                mi.Header = "Evaluate" + midTxt + "move " + MoveUtils.BuildSingleMoveText(_lastClickedNode, true);
+                            case "_mnTrainEvalMove":
+                                mi.Header = "Evaluate" + midTxt + "Move " + moveTxt;
                                 break;
-                            case "_mnRestartGame":
-                                mi.Header = "Restart game after" + midTxt + "move " + MoveUtils.BuildSingleMoveText(_lastClickedNode, true);
-                                mi.Click += RestartGameAfter;
+                            case "_mnTrainEvalLine":
+                                mi.Header = "Evaluate Line";
+                                mi.Visibility = _moveContext == MoveContext.WORKBOOK_COMMENT ? Visibility.Collapsed : Visibility.Visible;
                                 break;
+                            case "_mnTrainRestartGame":
+                                mi.Header = "Restart Game After" + midTxt + "Move " + moveTxt;
+                                mi.Visibility = _moveContext == MoveContext.GAME ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "_mnTrainSwitchToWorkbook":
+                                mi.Header = "Play " + moveTxt + " Instead of Your Move";
+                                mi.Visibility = _moveContext == MoveContext.WORKBOOK_COMMENT ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "_mnTrainRestartTraining":
+                                break;
+                            case "_mnTrainExitTraining":
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        if (o is Separator && (o as Separator).Name == "_mnTrainSepar_1")
+                        {
+                            (o as Separator).Visibility = _moveContext == MoveContext.LINE ? Visibility.Collapsed : Visibility.Visible;
                         }
                     }
                 }
@@ -780,6 +825,16 @@ namespace ChessForge
             _blockFloatingBoard = false;
         }
 
+        public void RequestMoveEvaluation(object sender, RoutedEventArgs e)
+        {
+            AppState.MainWin.RequestMoveEvaluationInTraining(_lastClickedNode);
+        }
+
+        /// <summary>
+        /// Restarts the game against the engine after the last clicked move.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void RestartGameAfter(object sender, RoutedEventArgs e)
         {
             TreeNode nd = _lastClickedNode;
@@ -826,6 +881,24 @@ namespace ChessForge
 
                 AppState.MainWin.RequestMoveEvaluationInTraining(nodeId);
             }
+            else if (r.Name.StartsWith(_run_line_move_))
+            {
+                // a workbook move in the comment was clicked 
+                int nodeId = GetNodeIdFromRunName(r.Name, _run_line_move_);
+                TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
+                _lastClickedNode = nd;
+                _moveContext = MoveContext.LINE;
+                AppState.MainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUMENU);
+            }
+            else if (r.Name.StartsWith(_run_wb_move_))
+            {
+                // a workbook move in the comment was clicked 
+                int nodeId = GetNodeIdFromRunName(r.Name, _run_wb_move_);
+                TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
+                _lastClickedNode = nd;
+                _moveContext = MoveContext.WORKBOOK_COMMENT;
+                AppState.MainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUMENU);
+            }
             else if (r.Name.StartsWith(_run_engine_game_move_))
             {
                 // a move from a game against the engine was clicked,
@@ -835,9 +908,7 @@ namespace ChessForge
                 int nodeId = GetNodeIdFromRunName(r.Name, _run_engine_game_move_);
                 TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
                 _lastClickedNode = nd;
-
-                string moveTxt = MoveUtils.BuildSingleMoveText(nd, true);
-
+                _moveContext = MoveContext.GAME;
                 AppState.MainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUMENU);
             }
             else if (r.Name == _run_eval_user_move)

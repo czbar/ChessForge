@@ -85,28 +85,53 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Gets the Node object from the Line
+        /// given its index on the Node list.
+        /// </summary>
+        /// <param name="idx"></param>
+        /// <returns></returns>
         public TreeNode GetNodeAtIndex(int idx)
         {
             return NodeList[idx];
         }
 
+        /// <summary>
+        /// Gets the Move object from the Line
+        /// given its index in the Move list.
+        /// </summary>
+        /// <param name="idx"></param>
+        /// <returns></returns>
         public MoveWithEval GetMoveAtIndex(int idx)
         {
             return MoveList[idx];
         }
 
-
+        /// <summary>
+        /// Gets the Node object from the line
+        /// given its id.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
         public TreeNode GetNodeFromId(int nodeId)
         {
             return NodeList.First(x => x.NodeId == nodeId);
         }
 
+        /// <summary>
+        /// Sets a new Node list and builds the move list.
+        /// </summary>
+        /// <param name="line"></param>
         public void SetNodeList(ObservableCollection<TreeNode> line)
         {
             NodeList = line;
             BuildMoveListFromPlyList();
         }
 
+        /// <summary>
+        /// Gets the number of plies in the Line.
+        /// </summary>
+        /// <returns></returns>
         public int GetPlyCount()
         {
             return NodeList.Count;

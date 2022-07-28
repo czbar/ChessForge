@@ -8,30 +8,15 @@
         Title="Chess Forge" Height="900" Width="1676" Loaded="Window_Loaded" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" Closing="ChessForgeMain_Closing">
 
     <Window.Resources>
-        <!-- on moves during a game played while training-->
-        <ContextMenu x:Key="_cmTrainingEngineGame">
-            <MenuItem x:Name="_mnEvalMoveGame" Header="Evaluate Move" />
-            <MenuItem x:Name="_mnEvalAllMovesGame" Header="Evaluate All Moves" />
-            <MenuItem x:Name="_mnRestartGame" Header="Restart Game After " />
-            <Separator />
-            <MenuItem x:Name="_mnRestartTrainingGame" Header="Restart Training" />
-            <MenuItem x:Name="_mnExitTrainingGame" Header="Exit Training" />
-        </ContextMenu>
-        <!-- on main training line-->
-        <ContextMenu x:Key="_cmTrainingMain">
-            <MenuItem x:Name="_mnEvalMoveMain" Header="Evaluate Move" />
-            <MenuItem x:Name="_mnEvalAllMovesMain" Header="Evaluate All Moves" />
-            <Separator />
-            <MenuItem x:Name="_mnRestartTrainingMain" Header="Restart Training" />
-            <MenuItem x:Name="_mnExitTrainingMain" Header="Exit Training" />
-        </ContextMenu>
-        <!-- on workbook moves in Coach's comments-->
-        <ContextMenu x:Key="_cmTrainingWorkbook">
-            <MenuItem x:Name="_mnSwitchMoveWorkbook" Header="Play Move %0% Instead of Text" />
-            <MenuItem x:Name="_mnEvalMoveWorkbook" Header="Evaluate Move" />
-            <Separator />
-            <MenuItem x:Name="_mnRestartTrainingWorkbook" Header="Restart Training" />
-            <MenuItem x:Name="_mnExitTrainingWorkbook" Header="Exit Training" />
+        <ContextMenu x:Key="_cmTrainingView">
+            <MenuItem x:Name="_mnTrainEvalMove" Header="Evaluate Move" Click="_mnTrainEvalMove_Click" />
+            <MenuItem x:Name="_mnTrainEvalLine" Header="Evaluate All Moves" />
+            <Separator x:Name="_mnTrainSepar_1" />
+            <MenuItem x:Name="_mnTrainSwitchToWorkbook" Header="Play Move %0% Instead of Text" />
+            <MenuItem x:Name="_mnTrainRestartGame" Header="Restart Game After " Click="_mnTrainRestartGame_Click" />
+            <Separator x:Name="_mnTrainSepar_2" />
+            <MenuItem x:Name="_mnTrainRestartTraining" Header="Restart Training" />
+            <MenuItem x:Name="_mnTrainExitTraining" Header="Exit Training" />
         </ContextMenu>
     </Window.Resources>
 
@@ -65,7 +50,7 @@
                 <Canvas.Background>
                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                 </Canvas.Background>
-                <Image x:Name="imgChessBoard" Margin="20,20,0,0" Source="Resources/Images/ChessBoardBlue.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                <Image x:Name="_imgMainChessboard" Margin="20,20,0,0" Source="Resources/Images/ChessBoardBlue.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
             </Canvas>
         </Viewbox>
 

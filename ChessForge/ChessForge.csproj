@@ -65,7 +65,6 @@
     <Compile Include="AppTimers.cs" />
     <Compile Include="BookmarkManager.cs" />
     <Compile Include="BookmarkView.cs" />
-    <Compile Include="EngineMessage.cs" />
     <Compile Include="EngineMessageProcessor.cs" />
     <Compile Include="GameReplay.cs" />
     <Compile Include="ChessBoard.cs" />
@@ -78,7 +77,7 @@
     <Compile Include="EngineEvaluationGUI.cs" />
     <Compile Include="MainWindow\MainWindowWorkbookTable.cs" />
     <Compile Include="GuiUtilities.cs" />
-    <Compile Include="MainWindow\MainWindowActiveLine.cs" />
+    <Compile Include="ActiveLineManager.cs" />
     <Compile Include="MoveEvaluation.cs" />
     <Compile Include="PromotionDialog.xaml.cs">
       <DependentUpon>PromotionDialog.xaml</DependentUpon>
