@@ -1,4 +1,4 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ChessPosition;
@@ -7,10 +7,20 @@ using GameTree;
 namespace ChessForge
 {
     /// <summary>
-    /// Functions handling the Active Line view (DataGrid)
+    /// Encapsulates functions that handle the Active Line view (DataGrid)
     /// </summary>
-    public partial class MainWindow : Window
+    public class ActiveLineManager
     {
+        /// <summary>
+        /// Holds all moves/plies of the active line.
+        /// </summary>
+        private ScoreSheet Line = new ScoreSheet();
+
+        /// <summary>
+        /// The DataGrid control visualizing the active line.
+        /// </summary>
+        private DataGrid _dgActiveLine;
+
         // column where White's plies are displayed
         private int _dgActiveLineWhitePlyColumn = 1;
 
@@ -18,46 +28,98 @@ namespace ChessForge
         private int _dgActiveLineBlackPlyColumn = 3;
 
         /// <summary>
+        /// Constructor.
+        /// Sets reference to the DataGrid control
+        /// visualizing the active line.
+        /// </summary>
+        /// <param name="dg"></param>
+        public ActiveLineManager(DataGrid dg)
+        {
+            _dgActiveLine = dg;
+        }
+
+        /// <summary>
+        /// Binds a new line to this object and DataGrid control.
+        /// </summary>
+        /// <param name="line"></param>
+        public void SetNodeList(ObservableCollection<TreeNode> line)
+        {
+            Line.SetNodeList(line);
+            _dgActiveLine.ItemsSource = Line.MoveList;
+        }
+
+        /// <summary>
+        /// Gets the Node object from the Line
+        /// given its id.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        public TreeNode GetNodeFromId(int nodeId)
+        {
+            return Line.GetNodeFromId(nodeId);
+        }
+
+        /// <summary>
+        /// Gets the Node object from the Line
+        /// given its index on the Node list.
+        /// </summary>
+        /// <param name="idx"></param>
+        /// <returns></returns>
+        public TreeNode GetNodeAtIndex(int idx)
+        {
+            return Line.GetNodeAtIndex(idx);
+        }
+
+        /// <summary>
+        /// Gets the Move object from the Line
+        /// given its index in the Move list.
+        /// </summary>
+        /// <param name="idx"></param>
+        /// <returns></returns>
+        public MoveWithEval GetMoveAtIndex(int idx)
+        {
+            return Line.GetMoveAtIndex(idx);
+        }
+
+        /// <summary>
+        /// Gets the number of plies in the Line.
+        /// </summary>
+        /// <returns></returns>
+        public int GetPlyCount()
+        {
+            return Line.GetPlyCount();
+        }
+
+        /// <summary>
         /// Returns the index of the Node for the ply
         /// currently selected in the Single Line View. 
         /// </summary>
         /// <returns></returns>
-        public int ViewSingleLine_GetSelectedPlyNodeIndex()
+        public int GetSelectedPlyNodeIndex()
         {
             int row;
             int column;
 
-            ViewActiveLine_GetSelectedRowColumn(out row, out column);
-            return ViewActiveLine_GetPlyNodeIndexFromRowColumn(row, column);
+            GetSelectedRowColumn(out row, out column);
+            return GetPlyNodeIndexFromRowColumn(row, column);
         }
 
         /// <summary>
-        /// TODO: we do not need both this and the next functions. Rationalize here.
-        /// Returns the index of the Node for the ply
-        /// at a given row and column. 
+        /// Calculates the index of a node give the node's
+        /// row and column.
         /// </summary>
         /// <param name="row"></param>
         /// <param name="column"></param>
         /// <returns></returns>
-        private int ViewActiveLine_GetPlyNodeIndexFromRowColumn(int row, int column)
-        {
-            if (row < 0 || column < 0)
-                return -1;
-
-            int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
-            return moveIndex;
-        }
-
-        private int ViewActiveLine_GetNodeIndexFromRowColumn(int row, int column)
+        internal int GetNodeIndexFromRowColumn(int row, int column)
         {
             if (row < 0 || column < 0)
                 return -1;
 
             int nodeIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
 
-            return (nodeIndex < ActiveLine.GetPlyCount()) ? nodeIndex : -1;
+            return (nodeIndex < Line.GetPlyCount()) ? nodeIndex : -1;
         }
-
 
         /// <summary>
         /// TODO: compare with GetColumnRowFromMouseClick()
@@ -71,7 +133,7 @@ namespace ChessForge
         /// <param name="row"></param>
         /// <param name="column"></param>
         /// <returns></returns>
-        private bool ViewActiveLine_GetSelectedRowColumn(out int row, out int column)
+        internal bool GetSelectedRowColumn(out int row, out int column)
         {
             row = -1;
             column = -1;
@@ -93,13 +155,12 @@ namespace ChessForge
             }
         }
 
-
         /// <summary>
         /// Selects the requested ply in relevant controls.
         /// </summary>
         /// <param name="moveNo">Number of the move</param>
         /// <param name="colorToMove">Side on move</param>
-        private void ViewActiveLine_SelectPly(int moveNo, PieceColor colorToMove)
+        internal void SelectPly(int moveNo, PieceColor colorToMove)
         {
             _dgActiveLine.SelectedCells.Clear();
             if (moveNo >= 0)
@@ -126,12 +187,30 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the currently selected Node/Ply, if any.
+        /// </summary>
+        /// <returns></returns>
+        internal TreeNode GetSelectedTreeNode()
+        {
+            int row, column;
+
+            if (GetSelectedRowColumn(out row, out column))
+            {
+                return GetTreeNodeFromRowColumn(row, column);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// A double click triggers a replay animation from the currently
         /// selected Node.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ViewActiveLine_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        internal void MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             int column = -1;
             int row = -1;
@@ -139,17 +218,17 @@ namespace ChessForge
             GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out row, out column);
 
             // if there is replay happening now, stop it
-            if (gameReplay.IsReplayActive)
+            if (AppState.MainWin.ActiveLineReplay.IsReplayActive)
             {
-                StopAnimation();
-                _mainboardCommentBox.RestoreTitleMessage();            
+                AppState.MainWin.StopMoveAnimation();
+                AppState.MainWin.CommentBox.RestoreTitleMessage();
             }
 
             if (row >= 0)
             {
                 int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
-                gameReplay.SetupTreeLineToDisplay(ActiveLine.NodeList, moveIndex + 1);
-                _mainboardCommentBox.GameReplayStart();
+                AppState.MainWin.ActiveLineReplay.SetupTreeLineToDisplay(Line.NodeList, moveIndex + 1);
+                AppState.MainWin.CommentBox.GameReplayStart();
             }
         }
 
@@ -161,37 +240,36 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ViewActiveLine_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        internal void PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             int column;
             int row;
 
             GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out row, out column);
 
-            if (ViewActiveLine_IsSelectableCell(row, column))
+            if (IsSelectableCell(row, column))
             {
                 int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
 
-                if (moveIndex + 1 < ActiveLine.GetPlyCount())
+                if (moveIndex + 1 < Line.GetPlyCount())
                 {
-                    TreeNode nd = ActiveLine.GetNodeAtIndex(moveIndex + 1);
+                    TreeNode nd = Line.GetNodeAtIndex(moveIndex + 1);
 
-                    if (gameReplay.IsReplayActive)
+                    if (AppState.MainWin.ActiveLineReplay.IsReplayActive)
                     {
                         // request that the replay be stopped and the clicked
                         // position shown, unless this mouse down
                         // was part of a double click (in which case the double click
                         // handler will override this).
-                        gameReplay.ShowPositionAndStop(nd);
-                        _mainboardCommentBox.RestoreTitleMessage();
+                        AppState.MainWin.ActiveLineReplay.ShowPositionAndStop(nd);
+                        AppState.MainWin.CommentBox.RestoreTitleMessage();
 
                         //StopAnimation();
                         //gameReplay.Stop();
                     }
 
-                    MainChessBoard.DisplayPosition(nd.Position);
-                    _workbookView.SelectLineAndMove(null, nd.NodeId);
-                    _lvWorkbookTable_SelectLineAndMove(null, nd.NodeId);
+                    AppState.MainWin.DisplayPosition(nd.Position);
+                    AppState.MainWin.SelectLineAndMoveInWorkbookViews(null, nd.NodeId);
                 }
             }
             else
@@ -202,95 +280,12 @@ namespace ChessForge
                     // is not selectable but will open the context menu.
                     _dgActiveLine.ContextMenu.IsOpen = true;
                 }
-                
+
                 // if row < 0 this could be a scrollbar so do not prevent WPF processing 
                 if (row >= 0)
                 {
                     e.Handled = true;
                 }
-
-            }
-        }
-
-        /// <summary>
-        /// Determines whether the column at a given index is selectable.
-        /// Only the columns showing plies are selectable.
-        /// </summary>
-        /// <param name="column"></param>
-        /// <returns></returns>
-        private bool ViewActiveLine_IsSelectableColumn(int column)
-        {
-            return (column == _dgActiveLineWhitePlyColumn || column == _dgActiveLineBlackPlyColumn) ? true : false;
-        }
-
-        /// <summary>
-        /// Determines whether the cell at a specified row and column is selectable.
-        /// Returns true if the column is selectable and the cell contains a move/ply.
-        /// Handles the edge case where the last row contains White's move only.
-        /// Cells in this view are only selectable in MANUAL_REVIEW mode.
-        /// </summary>
-        /// <param name="row"></param>
-        /// <param name="column"></param>
-        /// <returns></returns>
-        private bool ViewActiveLine_IsSelectableCell(int row, int column)
-        {
-            if (AppState.CurrentMode == AppState.Mode.MANUAL_REVIEW)
-            {
-                if (!ViewActiveLine_IsSelectableColumn(column))
-                    return false;
-
-                if (column == _dgActiveLineBlackPlyColumn
-                    && row == ActiveLine.MoveList.Count - 1
-                    && ActiveLine.MoveList[row].BlackPly == null)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Retruns the currently selected Node/Ply, if any.
-        /// </summary>
-        /// <returns></returns>
-        private TreeNode ViewActiveLine_GetSelectedTreeNode()
-        {
-            int row, column;
-
-            if (ViewActiveLine_GetSelectedRowColumn(out row, out column))
-            {
-                return ViewActiveLine_GetTreeNodeFromRowColumn(row, column);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Returns Node bound to the specified row and column.
-        /// </summary>
-        /// <param name="row"></param>
-        /// <param name="column"></param>
-        /// <returns></returns>
-        private TreeNode ViewActiveLine_GetTreeNodeFromRowColumn(int row, int column)
-        {
-            int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
-
-            if (moveIndex + 1 < ActiveLine.GetPlyCount())
-            {
-                return ActiveLine.GetNodeAtIndex(moveIndex + 1);
-            }
-            else
-            {
-                return null;
             }
         }
 
@@ -300,11 +295,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ViewActiveLine_PreviewKeyDown(object sender, KeyEventArgs e)
+        internal void PreviewKeyDown(object sender, KeyEventArgs e)
         {
             int row;
             int column;
-            if (ViewActiveLine_GetSelectedRowColumn(out row, out column))
+            if (GetSelectedRowColumn(out row, out column))
             {
                 int selColumn = -1;
                 int selRow = -1;
@@ -323,7 +318,7 @@ namespace ChessForge
                         // if we went beyond the last move (because it is White's and Black cell is empty.)
                         // switch back to the White column
                         moveIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1);
-                        if (moveIndex + 1 >= ActiveLine.GetPlyCount())
+                        if (moveIndex + 1 >= Line.GetPlyCount())
                         {
                             selColumn = _dgActiveLineWhitePlyColumn;
                         }
@@ -334,7 +329,7 @@ namespace ChessForge
                         break;
                     case Key.Down:
                         selRow = _dgActiveLine.Items.Count - 1;
-                        selColumn = (ActiveLine.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
+                        selColumn = (Line.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
                         break;
                 }
 
@@ -346,27 +341,114 @@ namespace ChessForge
                     _dgActiveLine.SelectedCells.Add(cell);
 
                     moveIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1);
-                    TreeNode nd = ActiveLine.GetNodeAtIndex(moveIndex + 1);
+                    TreeNode nd = Line.GetNodeAtIndex(moveIndex + 1);
 
-                    if (gameReplay.IsReplayActive)
+                    if (AppState.MainWin.ActiveLineReplay.IsReplayActive)
                     {
                         // request that the replay be stopped and the clicked
                         // position shown, unless this mouse down
                         // was part of double click (in which case the doble click
                         // handler will override this.
-                        gameReplay.ShowPositionAndStop(nd);
-                        //StopAnimation();
-                        //gameReplay.Stop();
+                        AppState.MainWin.ActiveLineReplay.ShowPositionAndStop(nd);
                     }
                     else
                     {
-                        MainChessBoard.DisplayPosition(nd.Position);
+                        AppState.MainWin.DisplayPosition(nd.Position);
                     }
-                    _workbookView.SelectLineAndMove(null, nd.NodeId);
-                    _lvWorkbookTable_SelectLineAndMove(null, nd.NodeId);
+                    AppState.MainWin.SelectLineAndMoveInWorkbookViews(null, nd.NodeId);
                 }
                 e.Handled = true;
             }
+        }
+
+        /// <summary>
+        /// TODO: we do not need both this and the next functions. Rationalize here.
+        /// Returns the index of the Node for the ply
+        /// at a given row and column. 
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
+        private int GetPlyNodeIndexFromRowColumn(int row, int column)
+        {
+            if (row < 0 || column < 0)
+                return -1;
+
+            int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
+            return moveIndex;
+        }
+
+        /// <summary>
+        /// Determines whether the column at a given index is selectable.
+        /// Only the columns showing plies are selectable.
+        /// </summary>
+        /// <param name="column"></param>
+        /// <returns></returns>
+        private bool IsSelectableColumn(int column)
+        {
+            return (column == _dgActiveLineWhitePlyColumn || column == _dgActiveLineBlackPlyColumn) ? true : false;
+        }
+
+        /// <summary>
+        /// Determines whether the cell at a specified row and column is selectable.
+        /// Returns true if the column is selectable and the cell contains a move/ply.
+        /// Handles the edge case where the last row contains White's move only.
+        /// Cells in this view are only selectable in MANUAL_REVIEW mode.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
+        private bool IsSelectableCell(int row, int column)
+        {
+            if (AppState.CurrentMode == AppState.Mode.MANUAL_REVIEW)
+            {
+                if (!IsSelectableColumn(column))
+                    return false;
+
+                if (column == _dgActiveLineBlackPlyColumn
+                    && row == Line.MoveList.Count - 1
+                    && Line.MoveList[row].BlackPly == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Returns Node bound to the specified row and column.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
+        private TreeNode GetTreeNodeFromRowColumn(int row, int column)
+        {
+            int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
+
+            if (moveIndex + 1 < Line.GetPlyCount())
+            {
+                return Line.GetNodeAtIndex(moveIndex + 1);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Accessor to the list that is bound to the DataGrid control.
+        /// </summary>
+        private ObservableCollection<MoveWithEval> MoveList
+        {
+            get { return Line.MoveList; }
+            set { Line.MoveList = value; }
         }
     }
 }
