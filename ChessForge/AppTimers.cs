@@ -14,12 +14,12 @@ namespace ChessForge
     /// interface consistency. However, it is created and manipulated within the
     /// Engine Service.
     /// </summary>
-    internal class AppTimers
+    public class AppTimers
     {
         /// <summary>
         /// Ids of all timers used by the application
         /// </summary>
-        internal enum TimerId
+        public enum TimerId
         {
             DUMMY,
             EVALUATION_LINE_DISPLAY,
@@ -27,16 +27,16 @@ namespace ChessForge
             ENGINE_MESSAGE_POLL,
             CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE,
             REQUEST_WORKBOOK_MOVE,
-            SHOW_TRAINING_PROGRESS_POPUMENU,
+            SHOW_TRAINING_PROGRESS_POPUP_MENU,
         };
 
         /// <summary>
         /// Ids of all Stopwatch's used by the application
         /// </summary>
-        internal enum StopwatchId
+        public enum StopwatchId
         {
             DUMMY,
-            EVALUATION_PROGRESS
+            EVALUATION_ELAPSED_TIME
         };
 
         /// <summary>
@@ -107,10 +107,10 @@ namespace ChessForge
 
             _showTrainingProgressPopupMenu = new Timer();
             InitShowTrainingProgressPopupMenu();
-            _dictTimers.Add(TimerId.SHOW_TRAINING_PROGRESS_POPUMENU, _showTrainingProgressPopupMenu);
+            _dictTimers.Add(TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU, _showTrainingProgressPopupMenu);
 
             _evaluationProgressStopwatch = new Stopwatch();
-            _dictStopwatches.Add(StopwatchId.EVALUATION_PROGRESS, _evaluationProgressStopwatch);
+            _dictStopwatches.Add(StopwatchId.EVALUATION_ELAPSED_TIME, _evaluationProgressStopwatch);
         }
 
         /// <summary>
