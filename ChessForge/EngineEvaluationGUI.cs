@@ -91,7 +91,7 @@ namespace ChessForge
 
                 if (Lines.Count > 0 && _evalState.Position != null)
                 {
-                    _evalState.PositionEvaluation = BuildEvaluationText(Lines[0], _evalState.Position.ColorToMove);
+                    _evalState.PositionEvaluation = GuiUtilities.BuildEvaluationText(Lines[0], _evalState.Position.ColorToMove);
                 }
             }
 
@@ -99,32 +99,6 @@ namespace ChessForge
             {
                 _pbEngineEval.Value = AppState.MainWin.Timers.GetElapsedTime(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
             });
-        }
-
-        /// <summary>
-        /// Builds evaluation text ready to be included in a GUI element.
-        /// It will produce a double value with 2 decimal digits or an
-        /// indication of mate in a specified number of moves.
-        /// </summary>
-        /// <param name="line"></param>
-        /// <returns></returns>
-        private string BuildEvaluationText(MoveEvaluation line, PieceColor colorToMove)
-        {
-            string eval;
-
-            if (!line.IsMateDetected)
-            {
-                int intEval = colorToMove == PieceColor.White ? line.ScoreCp : -1 * line.ScoreCp;
-                eval = (((double)intEval) / 100.0).ToString("F2");
-            }
-            else
-            {
-                int movesToMate = colorToMove == PieceColor.White ? line.MovesToMate : -1 * line.MovesToMate;
-                string sign = Math.Sign(movesToMate) > 0 ? "+" : "-";
-                eval = sign + "#" + (Math.Abs(line.MovesToMate)).ToString();
-            }
-
-            return eval;
         }
 
         /// <summary>
@@ -142,7 +116,7 @@ namespace ChessForge
                     return " ";
                 }
 
-                string eval = BuildEvaluationText(line, _evalState.Position.ColorToMove);
+                string eval = GuiUtilities.BuildEvaluationText(line, _evalState.Position.ColorToMove);
 
                 uint moveNoToShow = _evalState.Position.ColorToMove == PieceColor.Black ? 
                     _evalState.Position.MoveNumber : (_evalState.Position.MoveNumber + 1);

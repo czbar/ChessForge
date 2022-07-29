@@ -42,7 +42,6 @@ namespace ChessForge
         {
             INTRO,
             STEM,
-            CONTINUATION,
             SESSION_HEADER,
             INSTRUCTIONS,
             PLAY_ENGINE_NOTE,
@@ -58,7 +57,6 @@ namespace ChessForge
         {
             [ParaType.INTRO] = null,
             [ParaType.STEM] = null,
-            [ParaType.CONTINUATION] = null,
             [ParaType.SESSION_HEADER] = null,
             [ParaType.INSTRUCTIONS] = null,
             [ParaType.PLAY_ENGINE_NOTE] = null,
@@ -76,7 +74,6 @@ namespace ChessForge
         {
             ParaType.INTRO,
             ParaType.STEM,
-            ParaType.CONTINUATION,
             ParaType.SESSION_HEADER,
             ParaType.INSTRUCTIONS,
             ParaType.PLAY_ENGINE_NOTE,
@@ -143,6 +140,16 @@ namespace ChessForge
         private TreeNode _lastClickedNode;
 
         /// <summary>
+        /// The last clicked Run in the view
+        /// </summary>
+        private Run _lastClickedRun;
+
+        /// <summary>
+        /// Position of the mouse when a Node was last clicked.
+        /// </summary>
+        private Point _lastClickedPoint;
+
+        /// <summary>
         /// Type of move being made.
         /// Used to display the appropriate context menu.
         /// Should be set whenever _lastClickedNode is set.
@@ -160,8 +167,6 @@ namespace ChessForge
         /// </summary>
         private TreeNode _sessionStartNode;
 
-        private int _nodeIdUnderEvaluation = -1;
-
         /// <summary>
         /// Names and prefixes for Runs.
         /// NOTE: prefixes that are to be followed by NodeId 
@@ -173,8 +178,6 @@ namespace ChessForge
         private readonly string _run_eval_user_move = "user_eval";
         private readonly string _run_play_engine = "play_engine";
         private readonly string _run_eval_wb_move_ = "wb_eval_";
-        private readonly string _run_eval_results_ = "eval_results_";
-        private readonly string _run_user_eval_results = "user_eval_results";
         private readonly string _run_play_wb_move_ = "wb_play_";
 
         private readonly string _run_engine_game_move_ = "eng_game_";
@@ -211,8 +214,6 @@ namespace ChessForge
             ["second_prompt"] = new RichTextPara(10, 0, 14, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
             ["play_engine_note"] = new RichTextPara(10, 10, 16, FontWeights.Bold, Brushes.Black, TextAlignment.Left, Brushes.Black),
             ["stem_line"] = new RichTextPara(0, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
-            ["continuation"] = new RichTextPara(0, 20, 12, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left, Brushes.Gray),
-            ["session_header"] = new RichTextPara(10, 10, 16, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left, Brushes.Black),
             ["eval_results"] = new RichTextPara(30, 5, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(51, 159, 141)), TextAlignment.Left),
             ["normal"] = new RichTextPara(10, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
             ["default"] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
@@ -227,7 +228,6 @@ namespace ChessForge
         {
             _dictParas[ParaType.INTRO] = null;
             _dictParas[ParaType.STEM] = null;
-            _dictParas[ParaType.CONTINUATION] = null;
             _dictParas[ParaType.PLAY_ENGINE_NOTE] = null;
             _dictParas[ParaType.INSTRUCTIONS] = null;
             _dictParas[ParaType.PROMPT_TO_MOVE] = null;
@@ -469,60 +469,37 @@ namespace ChessForge
         /// <summary>
         /// This method will be invoked when we requested evaluation and got the results back.
         /// The EngineMessageProcessor has the results.
-        /// We will create a new Run and insert it after the Run that reported
-        /// the move with a "play" option. Reference to that run was preserved
-        /// when calling the engine evaluation method.
         /// </summary>
         public void ShowEvaluationResult()
         {
-            // restore the position we are stopped at
-            AppState.MainWin.DisplayPosition(_userMove.Position);
-
-            if (_underEvaluationRun == null)
+            if (_lastClickedRun == null)
                 return;
 
+            // insert the evaluation result after the move.
+            // TODO: remove the highlight from the move 
+            // try focus and show floating board
+
             List<MoveEvaluation> moveCandidates = AppState.MainWin.EngineLinesGUI.Lines;
-            int maxCandidates = Math.Min(5, moveCandidates.Count);
+            if (moveCandidates.Count == 0)
+                return;
 
-            StringBuilder sb = new StringBuilder();
-            sb.Append("\n          Evaluation summary:\n");
-            for (int i = 0; i < maxCandidates; i++)
+            AppState.MainWin.Dispatcher.Invoke(() =>
             {
-                TreeNode nd;
+                MoveEvaluation eval = moveCandidates[0];
 
-                if (_nodeIdUnderEvaluation >= 0)
+                int prevEval = _lastClickedRun.Text.IndexOf('(');
+                if (prevEval > 0)
                 {
-                    nd = AppState.MainWin.Workbook.GetNodeFromNodeId(_nodeIdUnderEvaluation);
-                }
-                else
-                {
-                    nd = _userMove;
+                    _lastClickedRun.Text = _lastClickedRun.Text.Substring(0, prevEval);
                 }
 
-                bool dummy;
-                if (i > 0)
-                {
-                    sb.Append("\n");
-                }
+                StringBuilder sb = new StringBuilder(_lastClickedRun.Text);
+                sb.Append("(" + GuiUtilities.BuildEvaluationText(eval, _lastClickedNode.Position.ColorToMove) + ")  ");
 
-                int intEval = nd.Position.ColorToMove == PieceColor.White ? moveCandidates[i].ScoreCp : -1 * moveCandidates[i].ScoreCp;
-                sb.Append("               " + (i + 1).ToString() + ". (" + (((double)intEval) / 100.0).ToString("F2") + ") ");
-                BoardPosition workingPosition = new BoardPosition(nd.Position);
-                if (workingPosition.ColorToMove == PieceColor.White)
-                {
-                    sb.Append(workingPosition.MoveNumber.ToString() + ".");
-                }
-                else
-                {
-                    sb.Append(workingPosition.MoveNumber.ToString() + "...");
-                }
-                string move = MoveUtils.EngineNotationToAlgebraic(moveCandidates[i].GetCandidateMove(), ref workingPosition, out dummy);
-                sb.Append(move);
-            }
-
-            AppState.MainWin._rtbTrainingBrowse.Dispatcher.Invoke(() =>
-            {
-                InsertEvaluationResultsRun(sb.ToString());
+                _lastClickedRun.Text = sb.ToString();
+                AppState.MainWin.TrainingViewChessBoard.DisplayPosition(_lastClickedNode.Position);
+                AppState.MainWin._vbFloatingChessboard.Margin = new Thickness(_lastClickedPoint.X, _lastClickedPoint.Y - 165, 0, 0);
+                AppState.MainWin.ShowFloatingChessboard(true);
             });
         }
 
@@ -554,60 +531,6 @@ namespace ChessForge
             para.Inlines.Add(r);
         }
 
-
-        /// <summary>
-        /// Inserts new evaluation results for the requested move.
-        /// Clears previous results if exist.
-        /// </summary>
-        /// <param name="text"></param>
-        private void InsertEvaluationResultsRun(string text)
-        {
-            string runName;
-            Run runToDelete = null;
-
-            bool runInUserPara = false;
-
-            if (_nodeIdUnderEvaluation >= 0)
-            {
-                runName = _run_eval_results_ + _nodeIdUnderEvaluation.ToString();
-
-                if (_dictParas[ParaType.WORKBOOK_MOVES] != null)
-                {
-                    runToDelete = _dictParas[ParaType.WORKBOOK_MOVES].Inlines.FirstOrDefault(x => x.Name == runName) as Run;
-                    if (runToDelete != null)
-                    {
-                        _dictParas[ParaType.WORKBOOK_MOVES].Inlines.Remove(runToDelete);
-                    }
-                }
-
-                if (runToDelete == null)
-                {
-                    runToDelete = _dictParas[ParaType.USER_MOVE].Inlines.FirstOrDefault(x => x.Name == runName) as Run;
-                    _dictParas[ParaType.USER_MOVE].Inlines.Remove(runToDelete);
-                    runInUserPara = true;
-                }
-
-            }
-            else
-            {
-                runName = _run_user_eval_results;
-                runToDelete = _dictParas[ParaType.USER_MOVE].Inlines.FirstOrDefault(x => x.Name == runName) as Run;
-                _dictParas[ParaType.USER_MOVE].Inlines.Remove(runToDelete);
-            }
-
-            Run evalRun = new Run(text);
-            evalRun.Name = runName;
-            if (_nodeIdUnderEvaluation >= 0 && !runInUserPara)
-            {
-                _dictParas[ParaType.WORKBOOK_MOVES].Inlines.InsertAfter(_underEvaluationRun, evalRun);
-            }
-            else
-            {
-                _dictParas[ParaType.USER_MOVE].Inlines.InsertAfter(_underEvaluationRun, evalRun);
-            }
-        }
-
-
         /// <summary>
         /// Builds "intro" and "stem line" paragraphs that are always visible at the top
         /// of the view.
@@ -617,7 +540,7 @@ namespace ChessForge
         {
             _dictParas[ParaType.STEM] = AddNewParagraphToDoc("stem_line", null);
 
-            Run r_prefix = new Run("\nThis training session with your virtual Coach starts from the position arising after: ");
+            Run r_prefix = new Run("\nThis training session with your virtual Coach starts from the position arising after: \n");
             r_prefix.FontWeight = FontWeights.Normal;
             _dictParas[ParaType.STEM].Inlines.Add(r_prefix);
 
@@ -721,11 +644,11 @@ namespace ChessForge
         {
             foreach (TreeNode nd in _otherMovesInWorkbook)
             {
-                para.Inlines.Add(CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true) + "; ", _run_wb_move_ + nd.NodeId.ToString(), Brushes.Green));
+                para.Inlines.Add(CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true) + " ", _run_wb_move_ + nd.NodeId.ToString(), Brushes.Green));
+                Run r_semi = new Run("; ");
+                para.Inlines.Add(r_semi);
             }
         }
-
-
 
         /// <summary>
         /// Creates a highlighted, clickable text that here we refer to
@@ -860,6 +783,10 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
+            // don't accept any clicks if evaluation is in progress
+            if (AppState.MainWin.Evaluation.Mode == EvaluationState.EvaluationMode.SINGLE_MOVE || AppState.MainWin.Evaluation.Mode == EvaluationState.EvaluationMode.FULL_LINE)
+                return;
+
             Run r = (Run)e.Source;
             if (string.IsNullOrEmpty(r.Name))
             {
@@ -872,7 +799,6 @@ namespace ChessForge
                 int nodeId = int.Parse(r.Name.Substring(_run_eval_wb_move_.Length));
                 TreeNode userChoiceNode = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
 
-                _nodeIdUnderEvaluation = nodeId;
                 // find Run for the same NodeId with "play" option,
                 // we want to remember the reference so that we can append
                 // the evaluation results run after it
@@ -886,7 +812,7 @@ namespace ChessForge
                 // a workbook move in the comment was clicked 
                 int nodeId = GetNodeIdFromRunName(r.Name, _run_line_move_);
                 TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
-                _lastClickedNode = nd;
+                SetLastClicked(nd, r, e);
                 _moveContext = MoveContext.LINE;
                 AppState.MainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
             }
@@ -895,7 +821,7 @@ namespace ChessForge
                 // a workbook move in the comment was clicked 
                 int nodeId = GetNodeIdFromRunName(r.Name, _run_wb_move_);
                 TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
-                _lastClickedNode = nd;
+                SetLastClicked(nd, r, e);
                 _moveContext = MoveContext.WORKBOOK_COMMENT;
                 AppState.MainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
             }
@@ -907,14 +833,13 @@ namespace ChessForge
                 // otherwise it will be engine's turn.
                 int nodeId = GetNodeIdFromRunName(r.Name, _run_engine_game_move_);
                 TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
-                _lastClickedNode = nd;
+                SetLastClicked(nd, r, e);
                 _moveContext = MoveContext.GAME;
                 AppState.MainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
             }
             else if (r.Name == _run_eval_user_move)
             {
                 _underEvaluationRun = GetPlayRunForNodeId(-1);
-                _nodeIdUnderEvaluation = -1;
 
                 EngineMessageProcessor.RequestMoveEvaluationInTraining(_userMove);
             }
@@ -950,12 +875,31 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Sets the values of "_lastClciked" properties.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="r"></param>
+        /// <param name="e"></param>
+        private void SetLastClicked(TreeNode nd, Run r, MouseButtonEventArgs e)
+        {
+            _lastClickedNode = nd;
+            _lastClickedRun = r;
+            _lastClickedPoint = e.GetPosition(AppState.MainWin._rtbTrainingProgress);
+        }
+
+        /// <summary>
+        /// Handles a mouse move over a Run.
+        /// Shows the floating chessboard.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EventRunMoveOver(object sender, MouseEventArgs e)
         {
             if (_blockFloatingBoard)
                 return;
 
-            // check if a move run was clicked
+            // check if we are over a move run
             Run r = (Run)e.Source;
             if (string.IsNullOrEmpty(r.Name))
             {
