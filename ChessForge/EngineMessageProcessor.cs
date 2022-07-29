@@ -81,13 +81,17 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Evaluation has finished.
-        /// Tidy up and reset to prepare for the next evaluation request.
-        /// NOTE: This is called in the evaluation mode as well as during user vs engine game. 
+        /// Evaluation has finished. Tidy up and reset to prepare for the next evaluation request.
+        /// This is called in the evaluation mode as well as during user vs engine game. 
+        /// 
+        /// This method may be invoked to evaluate a single move whether there is or there is not
+        /// a game in progress i.e. AppState.Mode is or is not equal to GAME_VS_COMPUTER.
+        /// To distinguish we need to check Evaluation.Mode.
         /// </summary>
         public static void MoveEvaluationFinished()
         {
-            if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER)
+            // if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER && AppState.MainWin.Evaluation.Mode == EvaluationState.EvaluationMode.IN_GAME_PLAY)
+            if (AppState.MainWin.Evaluation.Mode == EvaluationState.EvaluationMode.IN_GAME_PLAY)
             {
                 ProcessEngineGameMoveEvent();
                 AppState.MainWin.Evaluation.PrepareToContinue();
@@ -100,7 +104,8 @@ namespace ChessForge
                     AppState.MainWin.EngineTrainingGameMoveMade();
                 }
             }
-            else if (AppState.CurrentMode == AppState.Mode.TRAINING)
+            // else if (AppState.CurrentMode == AppState.Mode.TRAINING)
+            else if (TrainingState.IsTrainingInProgress)
             {
                 // stop the timer, reset mode and apply training mode specific handling 
                 AppState.MainWin.Evaluation.Mode = EvaluationState.EvaluationMode.IDLE;
@@ -224,9 +229,14 @@ namespace ChessForge
             RequestMoveEvaluationInTraining(nd);
         }
 
+        /// <summary>
+        /// Requests evaluation while in Training mode.
+        /// </summary>
+        /// <param name="nd"></param>
         public static void RequestMoveEvaluationInTraining(TreeNode nd)
         {
             AppState.MainWin.Evaluation.Position = nd.Position;
+            AppState.MainWin.Evaluation.Mode = EvaluationState.EvaluationMode.SINGLE_MOVE;
             AppState.MainWin.UpdateLastMoveTextBox(nd, true);
             AppState.MainWin.ShowMoveEvaluationControls(true, false);
 

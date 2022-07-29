@@ -1,7 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using ChessPosition;
 
 namespace ChessForge
 {
@@ -45,6 +47,32 @@ namespace ChessForge
                     row = dr.GetIndex();
                 }
             }
+        }
+
+        /// <summary>
+        /// Builds evaluation text ready to be included in a GUI element.
+        /// It will produce a double value with 2 decimal digits or an
+        /// indication of mate in a specified number of moves.
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        public static string BuildEvaluationText(MoveEvaluation line, PieceColor colorToMove)
+        {
+            string eval;
+
+            if (!line.IsMateDetected)
+            {
+                int intEval = colorToMove == PieceColor.White ? line.ScoreCp : -1 * line.ScoreCp;
+                eval = (((double)intEval) / 100.0).ToString("F2");
+            }
+            else
+            {
+                int movesToMate = colorToMove == PieceColor.White ? line.MovesToMate : -1 * line.MovesToMate;
+                string sign = Math.Sign(movesToMate) > 0 ? "+" : "-";
+                eval = sign + "#" + (Math.Abs(line.MovesToMate)).ToString();
+            }
+
+            return eval;
         }
 
     }
