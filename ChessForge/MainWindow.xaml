@@ -39,8 +39,8 @@
             <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682">
                 <Canvas.ContextMenu>
                     <ContextMenu  x:Name="menuContext">
-                        <MenuItem x:Name="menuEvalPos" Header="Evaluate Position" Click="MenuItem_EvaluatePosition" />
-                        <MenuItem x:Name="menuEvalLine" Header="Evaluate Line" Click="MenuItem_EvaluateLine" />
+                        <MenuItem x:Name="_mnEvalPos" Header="Evaluate Position" Click="MenuItem_EvaluatePosition" />
+                        <MenuItem x:Name="_mnEvalLine" Header="Evaluate Line" Click="MenuItem_EvaluateLine" />
                         <Separator />
                         <MenuItem Header="Replay" />
                         <Separator />
@@ -415,7 +415,7 @@
                 <DataGridTextColumn Header="Ev" Width="50" Binding="{Binding BlackEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Slider x:Name="sliderReplaySpeed" HorizontalAlignment="Left" Margin="71,50,0,0" Grid.Row="2" VerticalAlignment="Top" 
+        <Slider x:Name="_sldReplaySpeed" HorizontalAlignment="Left" Margin="71,50,0,0" Grid.Row="2" VerticalAlignment="Top" 
                 Height="36" Width="170" ValueChanged="sliderReplaySpeed_ValueChanged"
                 Maximum="2000" TickFrequency="600" IsSnapToTickEnabled="True" Grid.Column="1" Minimum="200" TickPlacement="BottomRight" Value="400" IsDirectionReversed="True" AutoToolTipPlacement="TopLeft" LargeChange="500" SmallChange="100" />
         <RichTextBox x:Name="_rtbBoardComment" HorizontalAlignment="Left" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">

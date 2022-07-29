@@ -820,14 +820,14 @@ namespace ChessForge
                 }
                 cm.PlacementTarget = AppState.MainWin._rtbTrainingProgress;
                 cm.IsOpen = true;
-                AppState.MainWin.Timers.Stop(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUMENU);
+                AppState.MainWin.Timers.Stop(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
             });
             _blockFloatingBoard = false;
         }
 
         public void RequestMoveEvaluation(object sender, RoutedEventArgs e)
         {
-            AppState.MainWin.RequestMoveEvaluationInTraining(_lastClickedNode);
+            EngineMessageProcessor.RequestMoveEvaluationInTraining(_lastClickedNode);
         }
 
         /// <summary>
@@ -879,7 +879,7 @@ namespace ChessForge
                 _underEvaluationRun = GetPlayRunForNodeId(nodeId);
                 AppState.MainWin.DisplayPosition(userChoiceNode.Position);
 
-                AppState.MainWin.RequestMoveEvaluationInTraining(nodeId);
+                EngineMessageProcessor.RequestMoveEvaluationInTraining(nodeId);
             }
             else if (r.Name.StartsWith(_run_line_move_))
             {
@@ -888,7 +888,7 @@ namespace ChessForge
                 TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
                 _lastClickedNode = nd;
                 _moveContext = MoveContext.LINE;
-                AppState.MainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUMENU);
+                AppState.MainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
             }
             else if (r.Name.StartsWith(_run_wb_move_))
             {
@@ -897,7 +897,7 @@ namespace ChessForge
                 TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
                 _lastClickedNode = nd;
                 _moveContext = MoveContext.WORKBOOK_COMMENT;
-                AppState.MainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUMENU);
+                AppState.MainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
             }
             else if (r.Name.StartsWith(_run_engine_game_move_))
             {
@@ -909,14 +909,14 @@ namespace ChessForge
                 TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
                 _lastClickedNode = nd;
                 _moveContext = MoveContext.GAME;
-                AppState.MainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUMENU);
+                AppState.MainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
             }
             else if (r.Name == _run_eval_user_move)
             {
                 _underEvaluationRun = GetPlayRunForNodeId(-1);
                 _nodeIdUnderEvaluation = -1;
 
-                AppState.MainWin.RequestMoveEvaluationInTraining(_userMove);
+                EngineMessageProcessor.RequestMoveEvaluationInTraining(_userMove);
             }
             else if (r.Name.StartsWith(_run_play_wb_move_))
             {

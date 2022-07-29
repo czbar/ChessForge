@@ -97,7 +97,7 @@ namespace ChessForge
 
             _pbEngineEval.Dispatcher.Invoke(() =>
             {
-                _pbEngineEval.Value = AppState.MainWin.Timers.GetElapsedTime(AppTimers.StopwatchId.EVALUATION_PROGRESS);
+                _pbEngineEval.Value = AppState.MainWin.Timers.GetElapsedTime(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
             });
         }
 

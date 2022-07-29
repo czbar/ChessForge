@@ -18,7 +18,7 @@ namespace ChessForge
         /// 
         /// Changing between modes requires a number of
         /// steps to be performed, in particular blocking certain 
-        /// activities. E.g. going from manual analysis to game replay
+        /// activities. E.g. going from manual analysis to game play
         /// requires that the position is set appropriately
         /// and user inputs, other than request to stop analysis
         /// are blocked.
@@ -27,7 +27,9 @@ namespace ChessForge
         public enum Mode : uint
         {
             /// <summary>
-            /// No workbook loaded, the program is waiting.
+            /// No workbook loaded, 
+            /// no session started,
+            /// the program is waiting.
             /// </summary>
             IDLE = 0x0001,
 
@@ -37,7 +39,10 @@ namespace ChessForge
             TRAINING = 0x0002,
 
             /// <summary>
-            /// The user is playing against the engine
+            /// The user is playing against the engine.
+            /// This mode can only be entered from the 
+            /// MANUAL_REVIEW_MODE and that is the mode the program
+            /// will return to when the game is finished.
             /// </summary>
             GAME_VS_COMPUTER = 0x0004,
 
@@ -45,14 +50,7 @@ namespace ChessForge
             /// The user is reviewing the workbook.
             /// Can switch between different lines.
             /// </summary>
-            MANUAL_REVIEW = 0x0010,
-
-            /// <summary>
-            /// The program is evaluating a move or a line.
-            /// NOTE: this is separate from evaluation during the game
-            /// or training which are submodes of the respective modes.
-            /// </summary>
-            ENGINE_EVALUATION = 0x0020
+            MANUAL_REVIEW = 0x0010
         }
 
         /// <summary>
@@ -112,6 +110,24 @@ namespace ChessForge
         public static bool IsDirty;
 
         /// <summary>
+        /// Lock object to use whan accessing evaluation related
+        /// variables.
+        /// </summary>
+        public static object EvalLock = new object();
+
+        // current appliction mode
+        private static Mode _currentMode = Mode.IDLE;
+
+        // previous application mode
+        private static Mode _previousMode = Mode.IDLE;
+
+        // path to the current workbook file
+        private static string _workbookFilePath;
+
+        // type of the current workbook (chf or pgn)
+        private static FileType _workbookFileType;
+
+        /// <summary>
         /// Switches application to another mode.
         /// </summary>
         public static void ChangeCurrentMode(AppState.Mode mode)
@@ -169,7 +185,6 @@ namespace ChessForge
         /// </summary>
         public static Mode PreviousMode { get => _previousMode; set => _previousMode = value; }
 
-
         /// <summary>
         /// The file path of the current Workbook file.
         /// When set, checks if there was a different value previously, and if
@@ -201,7 +216,6 @@ namespace ChessForge
         /// </summary>
         public static FileType WorkbookFileType { get => _workbookFileType;}
 
-
         /// <summary>
         /// Horizontal animation object.
         /// </summary>
@@ -224,12 +238,6 @@ namespace ChessForge
         public static string ActiveLineId;
 
         /// <summary>
-        /// Currently selected Tree Node (ply) in the Workbook.
-        /// There can only be one (or none) node selected in the Workbook at any time
-        /// </summary>
-        public static int NodeId;
-
-        /// <summary>
         /// Saves the workbook to a file.
         /// It will only write to the file if the 
         /// session's file type is CHF
@@ -245,13 +253,6 @@ namespace ChessForge
                 File.WriteAllText(WorkbookFilePath, chfText);
             }
         }
-
-        private static Mode _currentMode = Mode.IDLE;
-        private static Mode _previousMode = Mode.IDLE;
-
-        private static string _workbookFilePath;
-        private static FileType _workbookFileType;
-
 
     }
 }
