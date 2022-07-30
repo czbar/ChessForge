@@ -385,7 +385,7 @@ namespace ChessForge
                     }
                     bool isCastle;
                     TreeNode nd;
-                    if (EngineGame.ProcessUserGameMove(moveEngCode.ToString(), out nd, out isCastle))
+                    if (EngineGame.ProcessUserMove(moveEngCode.ToString(), out nd, out isCastle))
                     {
                         // NOTE now EngineGame has a new move added so the 
                         // other side is on move!
@@ -1209,7 +1209,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        internal void ProcessUserGameMoveEvent(object source, ElapsedEventArgs e)
+        internal void ProcessUserMoveEvent(object source, ElapsedEventArgs e)
         {
             if (TrainingState.IsTrainingInProgress && AppState.CurrentMode != AppState.Mode.GAME_VS_COMPUTER)
             {
@@ -1632,6 +1632,11 @@ namespace ChessForge
         private void _mnTrainRestartGame_Click(object sender, RoutedEventArgs e)
         {
             _trainingView.RestartGameAfter(sender, e);
+        }
+
+        private void _mnTrainSwitchToWorkbook_Click(object sender, RoutedEventArgs e)
+        {
+            _trainingView.RollbackToWorkbookMove();
         }
 
         private void _mnTrainEvalMove_Click(object sender, RoutedEventArgs e)

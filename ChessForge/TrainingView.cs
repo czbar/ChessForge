@@ -163,11 +163,6 @@ namespace ChessForge
         private int _userChoiceNodeId;
 
         /// <summary>
-        /// The node from which we start the training session.
-        /// </summary>
-        private TreeNode _sessionStartNode;
-
-        /// <summary>
         /// Names and prefixes for Runs.
         /// NOTE: prefixes that are to be followed by NodeId 
         /// must end with the undesrscore character.
@@ -243,8 +238,7 @@ namespace ChessForge
         /// <param name="node"></param>
         public void Initialize(TreeNode node)
         {
-            _sessionStartNode = node;
-            //_sessionStartNodeIndex = (int)(node.MoveNumber * 2 - (node.ColorToMove == PieceColor.Black ? -1 : 0));
+            TrainingState.ResetTrainingLine(node);
             Document.Blocks.Clear();
 
             InitParaDictionary();
@@ -281,11 +275,11 @@ namespace ChessForge
                 return;
             }
 
-            int childCount = parent.Children.Count;
             StringBuilder wbMoves = new StringBuilder();
             TreeNode foundMove = null;
             foreach (TreeNode child in parent.Children)
             {
+                // we cannot use ArePositionsIdentical() because _userMove only has static position
                 if (child.LastMoveEngineNotation == _userMove.LastMoveEngineNotation && !_userMove.IsNewTrainingMove)
                 {
                     // replace the TreeNode with the one from the Workbook so that
@@ -326,6 +320,63 @@ namespace ChessForge
                 _engineGameRootNode = _userMove;
                 // call RequestEngineResponse() directly so it invokes PlayEngine
                 RequestEngineResponse();
+            }
+        }
+
+        /// <summary>
+        /// Rolls back the training to the ply
+        /// that we want to replace with the last clicked node.
+        /// </summary>
+        public void RollbackToWorkbookMove()
+        {
+            TrainingState.RollbackTrainingLine(_lastClickedNode);
+            EngineGame.RollbackGame(_lastClickedNode);
+
+            RemoveParagraphsFromMove(_lastClickedNode);
+            ReportLastMoveVsWorkbook();
+
+            //_userMove = EngineGame.GetCurrentNode();
+
+            //// remove all paragraphs starting at the move we are replacing
+            //RemoveParagraphsFromMove(_lastClickedNode);
+            //BuildMoveParagraph(_userMove, true);
+
+            //// start the timer that will trigger a workbook response by RequestWorkbookResponse()
+            //AppState.MainWin.Timers.Start(AppTimers.TimerId.REQUEST_WORKBOOK_MOVE);
+        }
+
+        /// <summary>
+        /// Removes the paragraph for the ply
+        /// with the move number and color-to-move same
+        /// as in the passed Node.
+        /// </summary>
+        /// <param name="move"></param>
+        private void RemoveParagraphsFromMove(TreeNode move)
+        {
+            List<Block> parasToRemove = new List<Block>();
+
+            bool found = false;
+            foreach (var block in Document.Blocks)
+            {
+                if (found)
+                {
+                    parasToRemove.Add(block);
+                }
+                else if (block is Paragraph)
+                {
+                    int nodeId = GetNodeIdFromObjectName(((Paragraph)block).Name, _par_line_moves_);
+                    TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
+                    if (nd != null && nd.MoveNumber == move.MoveNumber && nd.ColorToMove == move.ColorToMove)
+                    {
+                        found = true;
+                        parasToRemove.Add(block);
+                    }
+                }
+            }
+
+            foreach (var block in parasToRemove)
+            {
+                Document.Blocks.Remove(block);
             }
         }
 
@@ -556,9 +607,9 @@ namespace ChessForge
         {
             StringBuilder sbInstruction = new StringBuilder();
             sbInstruction.Append("You will be making moves for");
-            sbInstruction.Append(_sessionStartNode.ColorToMove == PieceColor.White ? " White " : " Black ");
+            sbInstruction.Append(TrainingState.StartPosition.ColorToMove == PieceColor.White ? " White " : " Black ");
             sbInstruction.Append("and the program (a.k.a. the \"Coach\") will respond for");
-            sbInstruction.Append(_sessionStartNode.ColorToMove == PieceColor.White ? " Black." : " White.");
+            sbInstruction.Append(TrainingState.StartPosition.ColorToMove == PieceColor.White ? " Black." : " White.");
             sbInstruction.AppendLine();
             sbInstruction.Append("The Coach will comment on your every move based on the content of the Workbook.\n");
             sbInstruction.Append("\nRemember that you can:\n");
@@ -810,7 +861,7 @@ namespace ChessForge
             else if (r.Name.StartsWith(_run_line_move_))
             {
                 // a workbook move in the comment was clicked 
-                int nodeId = GetNodeIdFromRunName(r.Name, _run_line_move_);
+                int nodeId = GetNodeIdFromObjectName(r.Name, _run_line_move_);
                 TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
                 SetLastClicked(nd, r, e);
                 _moveContext = MoveContext.LINE;
@@ -819,7 +870,7 @@ namespace ChessForge
             else if (r.Name.StartsWith(_run_wb_move_))
             {
                 // a workbook move in the comment was clicked 
-                int nodeId = GetNodeIdFromRunName(r.Name, _run_wb_move_);
+                int nodeId = GetNodeIdFromObjectName(r.Name, _run_wb_move_);
                 TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
                 SetLastClicked(nd, r, e);
                 _moveContext = MoveContext.WORKBOOK_COMMENT;
@@ -831,7 +882,7 @@ namespace ChessForge
                 // we take the game back to that move.
                 // If it is an engine move, the user will be required to respond,
                 // otherwise it will be engine's turn.
-                int nodeId = GetNodeIdFromRunName(r.Name, _run_engine_game_move_);
+                int nodeId = GetNodeIdFromObjectName(r.Name, _run_engine_game_move_);
                 TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
                 SetLastClicked(nd, r, e);
                 _moveContext = MoveContext.GAME;
@@ -942,8 +993,11 @@ namespace ChessForge
         /// <param name="runName"></param>
         /// <param name="prefix"></param>
         /// <returns></returns>
-        int GetNodeIdFromRunName(string runName, string prefix)
+        int GetNodeIdFromObjectName(string runName, string prefix)
         {
+            if (string.IsNullOrEmpty(runName))
+                return -1;
+
             string sId = runName.Substring(prefix.Length);
             int iId = int.Parse(sId);
             return iId;

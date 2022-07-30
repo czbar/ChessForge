@@ -58,6 +58,11 @@ namespace ChessForge
             MoveList = PositionUtils.BuildViewListFromLine(NodeList);
         }
 
+        /// <summary>
+        /// Removes all moves and plies trailing
+        /// the specified Node.
+        /// </summary>
+        /// <param name="nd"></param>
         public void RollbackToNode(TreeNode nd)
         {
             for (int i = NodeList.Count - 1; i >= 0; i--)
@@ -73,6 +78,32 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Removes all moves and plies trailing
+        /// the node for a ply identified by the move number
+        /// and color to move.
+        /// </summary>
+        /// <param name="moveNumber"></param>
+        /// <param name="colorToMove"></param>
+        public void RollbackToPly(uint moveNumber, PieceColor colorToMove)
+        {
+            for (int i = NodeList.Count - 1; i >= 0; i--)
+            {
+                if (NodeList[i].MoveNumber == moveNumber && NodeList[i].ColorToMove == colorToMove)
+                {
+                    break;
+                }
+                else
+                {
+                    RemoveLastPly();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns the last Node of the game.
+        /// </summary>
+        /// <returns></returns>
         public TreeNode GetCurrentNode()
         {
             if (NodeList.Count == 0)
