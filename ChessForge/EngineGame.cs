@@ -108,6 +108,8 @@ namespace ChessForge
 
         /// <summary>
         /// Processes a move made manually by the user on the board.
+        /// This could be in any App Mode i.e. during a game against thje engine in
+        /// Manual Review or Game Play mode, or in Training responding to "coach's" move.
         /// Sets appropriate flags so that ProcessUserGameMoveEvent will determine
         /// what actions to take when its associated timer picks it up.
         /// TODO: do we need a lock here so ProcessUserGameMoveEvent does not start before
@@ -116,7 +118,7 @@ namespace ChessForge
         /// Returns true if it is a valid move.
         /// </summary>
         /// <returns></returns>
-        public static bool ProcessUserGameMove(string move, out TreeNode nd, out bool isCastle)
+        public static bool ProcessUserMove(string move, out TreeNode nd, out bool isCastle)
         {
             isCastle = false;
 
@@ -137,8 +139,16 @@ namespace ChessForge
                 nd.Position.ColorToMove = nd.Position.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
                 nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
                 nd.LastMoveAlgebraicNotation = algMove;
-                nd.IsNewTrainingMove = true;
-                AppState.MainWin.Workbook.AddNodeToParent(nd);
+                TreeNode existing = AppState.MainWin.Workbook.FindExistingNode(nd);
+                if (existing == null)
+                {
+                    nd.IsNewTrainingMove = true;
+                    AppState.MainWin.Workbook.AddNodeToParent(nd);
+                }
+                else
+                {
+                    nd = existing;
+                }
                 Line.AddPlyAndMove(nd);
                 SwitchToAwaitEngineMove(nd);
                 return true;
@@ -149,6 +159,11 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// This method will be invoked after the engine's move was processed,
+        /// or when we restart a game vs engine from an eralier move.
+        /// </summary>
+        /// <param name="nd"></param>
         private static void SwitchToAwaitEngineMove(TreeNode nd)
         {
             if (TrainingState.IsTrainingInProgress && AppState.CurrentMode != AppState.Mode.GAME_VS_COMPUTER)
@@ -160,6 +175,8 @@ namespace ChessForge
             {
                 if (TrainingState.IsTrainingInProgress)
                 {
+                    // this is a game during Training triggered by the user making a move not in Workbook.
+                    // We know, therefore, that this is a new move.
                     nd.IsNewTrainingMove = true;
                     nd.NodeId = AppState.MainWin.Workbook.GetNewNodeId();
                     AppState.MainWin._trainingView.UserMoveMade();
@@ -199,6 +216,19 @@ namespace ChessForge
             AppState.MainWin.Workbook.RemoveTailAfter(nd);
             Line.RollbackToNode(nd);
             SwitchToAwaitUserMove(nd);
+        }
+
+        /// <summary>
+        /// Rolls back the game to the position with 
+        /// the same move number and color-to-move as 
+        /// the passed Node.
+        /// Replaces the found Node with the one passed.
+        /// </summary>
+        /// <param name="nd"></param>
+        public static void RollbackGame(TreeNode nd)
+        {
+            Line.RollbackToPly(nd.MoveNumber, nd.ColorToMove);
+            Line.ReplaceLastPly(nd);
         }
 
         /// <summary>

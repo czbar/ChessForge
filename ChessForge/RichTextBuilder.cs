@@ -87,7 +87,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates a paragraph, sets its text and insterts it
+        /// Creates a paragraph, sets its text and inserts it
         /// into the Document.
         /// </summary>
         /// <param name="style"></param>

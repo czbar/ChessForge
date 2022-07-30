@@ -12,7 +12,7 @@
             <MenuItem x:Name="_mnTrainEvalMove" Header="Evaluate Move" Click="_mnTrainEvalMove_Click" />
             <MenuItem x:Name="_mnTrainEvalLine" Header="Evaluate All Moves" />
             <Separator x:Name="_mnTrainSepar_1" />
-            <MenuItem x:Name="_mnTrainSwitchToWorkbook" Header="Play Move %0% Instead of Text" />
+            <MenuItem x:Name="_mnTrainSwitchToWorkbook" Header="Play Move %0% Instead of Text" Click="_mnTrainSwitchToWorkbook_Click" />
             <MenuItem x:Name="_mnTrainRestartGame" Header="Restart Game After " Click="_mnTrainRestartGame_Click" />
             <Separator x:Name="_mnTrainSepar_2" />
             <MenuItem x:Name="_mnTrainRestartTraining" Header="Restart Training" />

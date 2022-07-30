@@ -205,7 +205,7 @@ namespace ChessForge
 
         private void InitCheckForUserMoveTimer()
         {
-            _checkForUserMoveTimer.Elapsed += new ElapsedEventHandler(AppState.MainWin.ProcessUserGameMoveEvent);
+            _checkForUserMoveTimer.Elapsed += new ElapsedEventHandler(AppState.MainWin.ProcessUserMoveEvent);
             _checkForUserMoveTimer.Interval = 50;
             _checkForUserMoveTimer.Enabled = false;
         }

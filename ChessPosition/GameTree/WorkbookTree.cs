@@ -393,10 +393,54 @@ namespace GameTree
 
         }
 
+        /// <summary>
+        /// Adds a new Node to the Workbook
+        /// and to its parent node 
+        /// </summary>
+        /// <param name="node"></param>
         public void AddNodeToParent(TreeNode node)
         {
             Nodes.Add(node);
             node.Parent.AddChild(node);
+        }
+
+        /// <summary>
+        /// Checks if the node already exists in the tree 
+        /// by checking if it has the same position as one of the children.
+        /// If so returns the already exisiting. Otherwise, returns null 
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public TreeNode FindExistingNode(TreeNode nd)
+        {
+            if (nd.Parent == null)
+                return null;
+
+            foreach (TreeNode child in nd.Parent.Children)
+            {
+                if (ArePositionsIdentical(child.Position, nd.Position))
+                {
+                    return child;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Returns true if the two passed positions are identical.
+        /// Note that this means "identical" in both static and dynamic terms
+        /// as encapsulated in the FEN encoding.
+        /// </summary>
+        /// <param name="pos1"></param>
+        /// <param name="pos2"></param>
+        /// <returns></returns>
+        public bool ArePositionsIdentical(BoardPosition pos1, BoardPosition pos2)
+        {
+            if (pos1 == null || pos2 == null)
+                return false;
+
+            return FenParser.GenerateFenFromPosition(pos1) == FenParser.GenerateFenFromPosition(pos2);
         }
 
         /// <summary>
