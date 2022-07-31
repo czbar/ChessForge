@@ -50,6 +50,29 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Extracts the integer value from a string that has it
+        /// as a suffix.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="lastChar"></param>
+        /// <returns></returns>
+        public static int GetNodeIdFromPrefixedString(string s, char lastChar = '_')
+        {
+            int nodeId = -1;
+
+            int lastCharPos = s.LastIndexOf('_');
+            if (lastCharPos >= 0 && lastCharPos < s.Length - 1)
+            {
+                if (!int.TryParse(s.Substring(lastCharPos + 1), out nodeId))
+                {
+                    nodeId = -1;
+                }
+            }
+
+            return nodeId;
+        }
+
+        /// <summary>
         /// Builds evaluation text ready to be included in a GUI element.
         /// It will produce a double value with 2 decimal digits or an
         /// indication of mate in a specified number of moves.

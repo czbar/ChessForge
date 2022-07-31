@@ -405,6 +405,32 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns a sibling move of found to represent the same
+        /// move as the passed node.
+        /// Otherwise returns null.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public TreeNode GetIdenticalSibling(TreeNode nd)
+        {
+            TreeNode ret = null;
+
+            if (nd.Parent != null)
+            {
+                foreach (TreeNode sib in nd.Parent.Children)
+                {
+                    if (sib.LastMoveEngineNotation == nd.LastMoveEngineNotation)
+                    {
+                        ret = sib;
+                        break;
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        /// <summary>
         /// Checks if the node already exists in the tree 
         /// by checking if it has the same position as one of the children.
         /// If so returns the already exisiting. Otherwise, returns null 

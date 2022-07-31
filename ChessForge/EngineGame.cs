@@ -85,8 +85,17 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Processes engine move during a game.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
         public static BoardPosition ProcessEngineGameMove(out TreeNode nd)
         {
+            // debug exception
+            if (AppState.CurrentMode != AppState.Mode.GAME_VS_COMPUTER)
+                throw (new Exception("ProcessEngineGameMove() called NOT during a game"));
+
             string engMove = SelectMove(false);
             TreeNode curr = GetCurrentNode();
 
@@ -96,7 +105,7 @@ namespace ChessForge
             string algMove = MoveUtils.EngineNotationToAlgebraic(engMove, ref pos, out isCastle);
 
             nd = new TreeNode(curr, algMove, AppState.MainWin.Workbook.GetNewNodeId());
-            nd.IsNewTrainingMove = true;
+            nd.IsNewTrainingMove = curr.IsNewTrainingMove;
             nd.Position = pos;
             nd.Position.ColorToMove = pos.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
             nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
@@ -139,15 +148,16 @@ namespace ChessForge
                 nd.Position.ColorToMove = nd.Position.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
                 nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
                 nd.LastMoveAlgebraicNotation = algMove;
-                TreeNode existing = AppState.MainWin.Workbook.FindExistingNode(nd);
-                if (existing == null)
+                TreeNode sib = AppState.MainWin.Workbook.GetIdenticalSibling(nd);
+                if (sib == null)
                 {
+                    // if this is a new move, mark as such and add to Workbook
                     nd.IsNewTrainingMove = true;
                     AppState.MainWin.Workbook.AddNodeToParent(nd);
                 }
                 else
                 {
-                    nd = existing;
+                    nd = sib;
                 }
                 Line.AddPlyAndMove(nd);
                 SwitchToAwaitEngineMove(nd);
