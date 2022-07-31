@@ -38,10 +38,23 @@ namespace ChessForge
         /// </summary>
         private List<Run> _runsToEvaluate = new List<Run>();
 
+        /// <summary>
+        /// The lists of Nodes corresponding to the Runs in _runsToEvaluate
+        /// </summary>
         private List<TreeNode> _nodesToEvaluate = new List<TreeNode>();
 
+        /// <summary>
+        /// Current index of the run to evaluate.
+        /// If the evaluation has noit started yet it is set to -1.
+        /// </summary>
         private int _runToEvaluateIndex = -1;
 
+        /// <summary>
+        /// Adds a Run to the list of _runsToEvaluate.
+        /// At the same time, adds the corresponding Node
+        /// to the list of Nodes.
+        /// </summary>
+        /// <param name="r"></param>
         public void AddRunToEvaluate(Run r)
         {
             int nodeId = GuiUtilities.GetNodeIdFromPrefixedString(r.Name);
@@ -51,6 +64,10 @@ namespace ChessForge
             _runsToEvaluate.Add(r);
         }
 
+        /// <summary>
+        /// Returns the Run currently being evaluated.
+        /// </summary>
+        /// <returns></returns>
         public Run GetCurrentEvaluatedRun()
         {
             if (_runToEvaluateIndex < 0 || _runToEvaluateIndex >= _runsToEvaluate.Count)
@@ -61,6 +78,10 @@ namespace ChessForge
             return _runsToEvaluate[_runToEvaluateIndex];
         }
 
+        /// <summary>
+        /// Returns the Node currently being evaluated.
+        /// </summary>
+        /// <returns></returns>
         public TreeNode GetCurrentEvaluatedNode()
         {
             if (_runToEvaluateIndex < 0 || _runToEvaluateIndex >= _runsToEvaluate.Count)
@@ -92,6 +113,10 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Clears tje list of Nodes and Runs.
+        /// Resets the evaluation index.
+        /// </summary>
         public void ClearRunsToEvaluate()
         {
             _runsToEvaluate.Clear();
