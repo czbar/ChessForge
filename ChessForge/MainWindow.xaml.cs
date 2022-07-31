@@ -989,7 +989,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MenuItem_EvaluatePosition(object sender, RoutedEventArgs e)
         {
-            if (Evaluation.Mode != EvaluationState.EvaluationMode.IDLE)
+            if (Evaluation.CurrentMode != EvaluationState.EvaluationMode.IDLE)
             {
                 // there is an evaluation running right now so do not allow another one.
                 // This menu item should be disabled if that's the case so we should never
@@ -1012,7 +1012,7 @@ namespace ChessForge
                     // make an extra defensive check
                     if (posIndex < ActiveLine.GetPlyCount())
                     {
-                        EngineMessageProcessor.RequestMoveEvaluation(posIndex, EvaluationState.EvaluationMode.SINGLE_MOVE, true);
+                        EngineMessageProcessor.RequestMoveEvaluation(posIndex, EvaluationState.EvaluationMode.MANUAL_SINGLE_MOVE, true);
                     }
                 }
                 else
@@ -1030,7 +1030,7 @@ namespace ChessForge
                 return;
             }
 
-            if (Evaluation.Mode != EvaluationState.EvaluationMode.IDLE)
+            if (Evaluation.CurrentMode != EvaluationState.EvaluationMode.IDLE)
             {
                 // there is an evaluation running right now so do not allow another one.
                 MessageBox.Show("Cannot start an evaluation while another one in progress.", "Move Evaluation", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -1042,7 +1042,7 @@ namespace ChessForge
             if (EngineMessageProcessor.IsEngineAvailable())
             {
                 _dgActiveLine.SelectedCells.Clear();
-                EngineMessageProcessor.RequestMoveEvaluation(Evaluation.PositionIndex, EvaluationState.EvaluationMode.FULL_LINE, true);
+                EngineMessageProcessor.RequestMoveEvaluation(Evaluation.PositionIndex, EvaluationState.EvaluationMode.MANUAL_LINE, true);
             }
             else
             {
@@ -1495,7 +1495,7 @@ namespace ChessForge
             // improve so that we send a stop message to the engine and abandon immediately
             lock (AppState.EvalLock)
             {
-                Evaluation.Mode = EvaluationState.EvaluationMode.SINGLE_MOVE;
+                Evaluation.CurrentMode = EvaluationState.EvaluationMode.MANUAL_SINGLE_MOVE;
             }
 
             e.Handled = true;
@@ -1641,7 +1641,13 @@ namespace ChessForge
 
         private void _mnTrainEvalMove_Click(object sender, RoutedEventArgs e)
         {
-            _trainingView.RequestMoveEvaluation(sender, e);
+            _trainingView.RequestMoveEvaluation();
+        }
+
+
+        private void _mnTrainEvalLine_Click(object sender, RoutedEventArgs e)
+        {
+            _trainingView.RequestLineEvaluation();
         }
 
         private void ViewActiveLine_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -1696,6 +1702,5 @@ namespace ChessForge
                 _pbEngineThinking.Value = 0;
             });
         }
-
     }
 }

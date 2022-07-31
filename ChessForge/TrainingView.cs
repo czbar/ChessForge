@@ -110,6 +110,9 @@ namespace ChessForge
         /// </summary>
         private int _currentEngineGameMoveCount;
 
+        /// <summary>
+        /// The Node at which the training game started
+        /// </summary>
         private TreeNode _engineGameRootNode;
 
         /// <summary>
@@ -157,12 +160,6 @@ namespace ChessForge
         private MoveContext _moveContext;
 
         /// <summary>
-        /// The move with which the user wishes to proceed after selecting
-        /// from the Workbook options.
-        /// </summary>
-        private int _userChoiceNodeId;
-
-        /// <summary>
         /// Names and prefixes for Runs.
         /// NOTE: prefixes that are to be followed by NodeId 
         /// must end with the undesrscore character.
@@ -178,7 +175,10 @@ namespace ChessForge
         private readonly string _run_engine_game_move_ = "eng_game_";
         private readonly string _run_wb_move_ = "wb_move_";
         private readonly string _run_line_move_ = "line_move_";
-        private readonly string _par_line_moves_ = "par_line_moves_";
+        private readonly string _run_move_eval_ = "move_eval_";
+
+        private readonly string _par_line_moves_  = "par_line_moves_";
+        private readonly string _par_coach_moves_ = "par_coach_moves_";
 
         /// <summary>
         /// Creates an instance of this class and sets reference 
@@ -219,6 +219,10 @@ namespace ChessForge
             [STYLE_ENGINE_GAME] = new RichTextPara(50, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
         };
 
+        /// <summary>
+        /// Initializes the Dictionary that holds references
+        /// to Paragraphs.
+        /// </summary>
         private void InitParaDictionary()
         {
             _dictParas[ParaType.INTRO] = null;
@@ -240,7 +244,6 @@ namespace ChessForge
         {
             TrainingState.ResetTrainingLine(node);
             Document.Blocks.Clear();
-
             InitParaDictionary();
 
             BuildIntroText(node);
@@ -249,7 +252,7 @@ namespace ChessForge
         /// <summary>
         /// This method is invoked when user makes their move.
         /// 
-        /// It dets the last play from the EngineGame.Line (which is the
+        /// It gets the last ply from the EngineGame.Line (which is the
         /// move made by the user) and finds its parent in the Workbook.
         /// 
         /// NOTE: If the parent is not in the Workbook, this method should
@@ -261,65 +264,67 @@ namespace ChessForge
         /// </summary>
         public void ReportLastMoveVsWorkbook()
         {
-            RemoveIntroParas();
-
-            _otherMovesInWorkbook.Clear();
-
-            _userMove = EngineGame.GetCurrentNode();
-            TreeNode parent = _userMove.Parent;
-
-            // double check that we have the parent in our Workbook
-            if (AppState.MainWin.Workbook.GetNodeFromNodeId(parent.NodeId) == null)
+            lock (TrainingState.UserVsWorkbookMoveLock)
             {
-                // we are "out of the book" in our training so there is nothing to report
-                return;
-            }
+                if (TrainingState.CurrentMode != TrainingState.Mode.USER_MOVE_COMPLETED)
+                    return;
 
-            StringBuilder wbMoves = new StringBuilder();
-            TreeNode foundMove = null;
-            foreach (TreeNode child in parent.Children)
-            {
-                // we cannot use ArePositionsIdentical() because _userMove only has static position
-                if (child.LastMoveEngineNotation == _userMove.LastMoveEngineNotation && !_userMove.IsNewTrainingMove)
+                RemoveIntroParas();
+
+                _otherMovesInWorkbook.Clear();
+
+                _userMove = EngineGame.GetCurrentNode();
+                TreeNode parent = _userMove.Parent;
+
+                // double check that we have the parent in our Workbook
+                if (AppState.MainWin.Workbook.GetNodeFromNodeId(parent.NodeId) == null)
                 {
-                    // replace the TreeNode with the one from the Workbook so that
-                    // we stay with the workbook as long as the user does.
-                    EngineGame.ReplaceCurrentWithWorkbookMove(child);
-                    foundMove = child;
-                    _userMove = child;
+                    // we are "out of the book" in our training so there is nothing to report
+                    return;
+                }
+
+                StringBuilder wbMoves = new StringBuilder();
+                TreeNode foundMove = null;
+                foreach (TreeNode child in parent.Children)
+                {
+                    // we cannot use ArePositionsIdentical() because _userMove only has static position
+                    if (child.LastMoveEngineNotation == _userMove.LastMoveEngineNotation && !_userMove.IsNewTrainingMove)
+                    {
+                        // replace the TreeNode with the one from the Workbook so that
+                        // we stay with the workbook as long as the user does.
+                        EngineGame.ReplaceCurrentWithWorkbookMove(child);
+                        foundMove = child;
+                        _userMove = child;
+                    }
+                    else
+                    {
+                        if (!child.IsNewTrainingMove)
+                        {
+                            wbMoves.Append(child.GetPlyText(true));
+                            wbMoves.Append("; ");
+                            _otherMovesInWorkbook.Add(child);
+                        }
+                    }
+                }
+
+                BuildMoveParagraph(_userMove, true);
+                BuildCommentParagraph(foundMove != null);
+
+                if (foundMove != null)
+                {
+                    // start the timer that will trigger a workbook response by RequestWorkbookResponse()
+                    TrainingState.CurrentMode = TrainingState.Mode.AWAITING_WORKBOOK_RESPONSE;
+                    AppState.MainWin.Timers.Start(AppTimers.TimerId.REQUEST_WORKBOOK_MOVE);
                 }
                 else
                 {
-                    if (!child.IsNewTrainingMove)
-                    {
-                        wbMoves.Append(child.GetPlyText(true));
-                        wbMoves.Append("; ");
-                        _otherMovesInWorkbook.Add(child);
-                    }
+                    _paraCurrentEngineGame = AddNewParagraphToDoc(STYLE_ENGINE_GAME, "");
+                    _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine has started. Wait for the engine\'s move..."));
+                    _engineGameRootNode = _userMove;
+                    // call RequestEngineResponse() directly so it invokes PlayEngine
+                    TrainingState.CurrentMode = TrainingState.Mode.ENGINE_GAME;
+                    RequestEngineResponse();
                 }
-            }
-
-            if (_userMove.NodeId < 0)
-            {
-                _userMove.NodeId = AppState.MainWin.Workbook.GetNewNodeId();
-                _userMove.IsNewTrainingMove = true;
-                AppState.MainWin.Workbook.AddNode(_userMove);
-            }
-            BuildMoveParagraph(_userMove, true);
-            BuildCommentParagraph(foundMove != null);
-
-            if (foundMove != null)
-            {
-                // start the timer that will trigger a workbook response by RequestWorkbookResponse()
-                AppState.MainWin.Timers.Start(AppTimers.TimerId.REQUEST_WORKBOOK_MOVE);
-            }
-            else
-            {
-                _paraCurrentEngineGame = AddNewParagraphToDoc(STYLE_ENGINE_GAME, "");
-                _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine has started. Wait for the engine\'s move..."));
-                _engineGameRootNode = _userMove;
-                // call RequestEngineResponse() directly so it invokes PlayEngine
-                RequestEngineResponse();
             }
         }
 
@@ -332,17 +337,10 @@ namespace ChessForge
             TrainingState.RollbackTrainingLine(_lastClickedNode);
             EngineGame.RollbackGame(_lastClickedNode);
 
+            TrainingState.CurrentMode = TrainingState.Mode.USER_MOVE_COMPLETED;
+
             RemoveParagraphsFromMove(_lastClickedNode);
             ReportLastMoveVsWorkbook();
-
-            //_userMove = EngineGame.GetCurrentNode();
-
-            //// remove all paragraphs starting at the move we are replacing
-            //RemoveParagraphsFromMove(_lastClickedNode);
-            //BuildMoveParagraph(_userMove, true);
-
-            //// start the timer that will trigger a workbook response by RequestWorkbookResponse()
-            //AppState.MainWin.Timers.Start(AppTimers.TimerId.REQUEST_WORKBOOK_MOVE);
         }
 
         /// <summary>
@@ -399,8 +397,7 @@ namespace ChessForge
 
             TreeNode userChoiceNode = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
             SoundPlayer.PlayMoveSound(userChoiceNode.LastMoveAlgebraicNotation);
-            _userChoiceNodeId = nodeId;
-
+            
             AppState.MainWin.DisplayPosition(userChoiceNode.Position);
 
             TreeNode nd = AppState.MainWin.Workbook.SelectRandomChild(nodeId);
@@ -454,6 +451,10 @@ namespace ChessForge
             BuildInstructionsText();
         }
 
+        /// <summary>
+        /// Adds a node/ply to the Engine Game paragraph.
+        /// </summary>
+        /// <param name="nd"></param>
         private void AddMoveToEngineGamePara(TreeNode nd)
         {
             if (_paraCurrentEngineGame == null)
@@ -485,6 +486,11 @@ namespace ChessForge
 
         }
 
+        /// <summary>
+        /// Rebuilds the Engine Game paragraph up to 
+        /// a specified Node.
+        /// </summary>
+        /// <param name="toNode"></param>
         private void RebuildEngineGamePara(TreeNode toNode)
         {
             if (_paraCurrentEngineGame == null)
@@ -520,16 +526,31 @@ namespace ChessForge
         /// <summary>
         /// This method will be invoked when we requested evaluation and got the results back.
         /// The EngineMessageProcessor has the results.
+        /// We can be in a MOVE or LINE evaluation mode.
         /// </summary>
         public void ShowEvaluationResult()
         {
-            if (_lastClickedRun == null)
+            Run runEvaluated;
+            TreeNode nodeEvaluated;
+            if (AppState.MainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.TRAINING_LINE)
+            {
+                runEvaluated = AppState.MainWin.Evaluation.GetCurrentEvaluatedRun();
+                nodeEvaluated = AppState.MainWin.Evaluation.GetCurrentEvaluatedNode();
+            }
+            else
+            {
+                runEvaluated = _lastClickedRun;
+                nodeEvaluated = _lastClickedNode;
+            }
+
+            if (runEvaluated == null)
+            {
+                // this should never happen but...
+                AppState.MainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.IDLE;
                 return;
+            }
 
             // insert the evaluation result after the move.
-            // TODO: remove the highlight from the move 
-            // try focus and show floating board
-
             List<MoveEvaluation> moveCandidates = AppState.MainWin.EngineLinesGUI.Lines;
             if (moveCandidates.Count == 0)
                 return;
@@ -538,20 +559,47 @@ namespace ChessForge
             {
                 MoveEvaluation eval = moveCandidates[0];
 
-                int prevEval = _lastClickedRun.Text.IndexOf('(');
-                if (prevEval > 0)
-                {
-                    _lastClickedRun.Text = _lastClickedRun.Text.Substring(0, prevEval);
-                }
+                Paragraph parent = runEvaluated.Parent as Paragraph;
+                string runEvalName = _run_move_eval_ + nodeEvaluated.NodeId.ToString();
 
-                StringBuilder sb = new StringBuilder(_lastClickedRun.Text);
-                sb.Append("(" + GuiUtilities.BuildEvaluationText(eval, _lastClickedNode.Position.ColorToMove) + ")  ");
+                // Remove previous evaluation if exists
+                var r_prev = parent.Inlines.FirstOrDefault(x => x.Name == runEvalName);
+                parent.Inlines.Remove(r_prev);
 
-                _lastClickedRun.Text = sb.ToString();
-                AppState.MainWin.TrainingViewChessBoard.DisplayPosition(_lastClickedNode.Position);
+                Run r_eval = CreateEvaluationRun(eval, runEvalName);
+
+                parent.Inlines.InsertAfter(runEvaluated, r_eval);
+
+                AppState.MainWin.TrainingViewChessBoard.DisplayPosition(nodeEvaluated.Position);
                 AppState.MainWin._vbFloatingChessboard.Margin = new Thickness(_lastClickedPoint.X, _lastClickedPoint.Y - 165, 0, 0);
                 AppState.MainWin.ShowFloatingChessboard(true);
+
+                if (AppState.MainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.TRAINING_LINE)
+                {
+                    RequestMoveEvaluation();
+                }
+                else
+                {
+                    AppState.MainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.IDLE;
+                }
             });
+
+        }
+
+        /// <summary>
+        /// Creates a Run object with the evaluation text
+        /// </summary>
+        /// <param name="eval"></param>
+        /// <param name="runName"></param>
+        /// <returns></returns>
+        private Run CreateEvaluationRun(MoveEvaluation eval, string runName)
+        {
+            Run r_eval = new Run(" (" + GuiUtilities.BuildEvaluationText(eval, _lastClickedNode.Position.ColorToMove) + ")");
+            r_eval.Name = runName;
+            r_eval.FontWeight = FontWeights.Normal;
+            r_eval.Foreground = Brushes.Black;
+
+            return r_eval;
         }
 
         /// <summary>
@@ -621,6 +669,10 @@ namespace ChessForge
             _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc("first_prompt", "To begin, make your first move on the chessboard.");
         }
 
+        /// <summary>
+        /// Builds the paragraph prompting the user to make a move
+        /// after the program responded.
+        /// </summary>
         private void BuildSecondPromptParagraph()
         {
             TreeNode nd = EngineGame.GetCurrentNode();
@@ -630,9 +682,13 @@ namespace ChessForge
             _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc("second_prompt", "\n   Your turn...");
         }
 
+        /// <summary>
+        /// Builds the paragraph with "coach's" comments.
+        /// </summary>
+        /// <param name="isWorkbookMove"></param>
         private void BuildCommentParagraph(bool isWorkbookMove)
         {
-            string paraName = "p_coach_" + _userMove.NodeId.ToString();
+            string paraName = _par_coach_moves_ + _userMove.NodeId.ToString();
 
             Paragraph para = AddNewParagraphToDoc(STYLE_COACH_NOTES, "");
             para.Name = paraName;
@@ -691,6 +747,11 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Adds plies from _otherMovesInWorkbook to the
+        /// passed paragraph.
+        /// </summary>
+        /// <param name="para"></param>
         private void BuildOtherWorkbookMovesRun(Paragraph para)
         {
             foreach (TreeNode nd in _otherMovesInWorkbook)
@@ -731,7 +792,7 @@ namespace ChessForge
         /// </summary>
         public void ShowPopupMenu()
         {
-            if (_lastClickedNode == null) 
+            if (_lastClickedNode == null)
                 return;
 
             _blockFloatingBoard = true;
@@ -799,9 +860,97 @@ namespace ChessForge
             _blockFloatingBoard = false;
         }
 
-        public void RequestMoveEvaluation(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Invoked from the Training context menu.
+        /// Starts evalaution of the clicked move.
+        /// Alternatively, can be called as part of line 
+        /// evaluation.
+        /// </summary>
+        public void RequestMoveEvaluation()
         {
-            EngineMessageProcessor.RequestMoveEvaluationInTraining(_lastClickedNode);
+            if (AppState.MainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.TRAINING_LINE)
+            {
+                TreeNode nd = AppState.MainWin.Evaluation.GetNextNodeToEvaluate();
+                if (nd == null)
+                {
+                    AppState.MainWin.Evaluation.ClearRunsToEvaluate();
+                    AppState.MainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.IDLE;
+                }
+                else
+                {
+                    EngineMessageProcessor.RequestMoveEvaluationInTraining(nd);
+                }
+            }
+            else
+            {
+                AppState.MainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.TRAINING_SINGLE_MOVE;
+                EngineMessageProcessor.RequestMoveEvaluationInTraining(_lastClickedNode);
+            }
+        }
+
+        /// <summary>
+        /// Requests evaluation of a  line.
+        /// Checks if this is for the Main Line or an Engine Game,
+        /// sets up a list of Nodes and Runs to evaluate 
+        /// and calls RequestMpoveEvaluation().
+        /// Sets Evaluation.CurrentMode to TRAINING_LINE to ensure
+        /// that evaluation does not stop after the first move.
+        /// </summary>
+        public void RequestLineEvaluation()
+        {
+            AppState.MainWin.Evaluation.ClearRunsToEvaluate();
+
+            // figure out whether this is for the Main Line or Engine Game
+            Run firstRun = _lastClickedRun;
+            if (firstRun != null)
+            {
+                string paraName = (firstRun.Parent as Paragraph).Name;
+                if (paraName.StartsWith(_par_line_moves_))
+                {
+                    // this is main line so collect the Runs we want to evaluate
+                    SetMainLineRunsToEvaluate(paraName, _lastClickedRun);
+                    AppState.MainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.TRAINING_LINE;
+                    RequestMoveEvaluation();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Collects all Runs found in the Paragraph
+        /// identified by the firstRun and all Paragraphs 
+        /// that follow.
+        /// </summary>
+        /// <param name="firstRun"></param>
+        private void SetMainLineRunsToEvaluate(string firstParaName, Run firstRun)
+        {
+            bool started = false;
+
+            foreach (var block in Document.Blocks)
+            {
+                if (block is Paragraph)
+                {
+                    Paragraph para = (Paragraph)block;
+
+                    if (!started && para.Name == firstParaName)
+                    {
+                        started = true;
+                    }
+
+                    if (started && (para.Name.StartsWith(_par_line_moves_)))
+                    {
+                        foreach (var inl in para.Inlines)
+                        {
+                            if (inl is Run)
+                            {
+                                if (inl.Name.StartsWith(_run_line_move_) || inl.Name.StartsWith(_run_wb_move_))
+                                {
+                                    AppState.MainWin.Evaluation.AddRunToEvaluate(inl as Run);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -835,7 +984,7 @@ namespace ChessForge
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
             // don't accept any clicks if evaluation is in progress
-            if (AppState.MainWin.Evaluation.Mode == EvaluationState.EvaluationMode.SINGLE_MOVE || AppState.MainWin.Evaluation.Mode == EvaluationState.EvaluationMode.FULL_LINE)
+            if (AppState.MainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.MANUAL_SINGLE_MOVE || AppState.MainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.MANUAL_LINE)
                 return;
 
             Run r = (Run)e.Source;
@@ -891,7 +1040,7 @@ namespace ChessForge
             else if (r.Name == _run_eval_user_move)
             {
                 _underEvaluationRun = GetPlayRunForNodeId(-1);
-
+                AppState.MainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.TRAINING_SINGLE_MOVE;
                 EngineMessageProcessor.RequestMoveEvaluationInTraining(_userMove);
             }
             else if (r.Name.StartsWith(_run_play_wb_move_))
@@ -900,7 +1049,6 @@ namespace ChessForge
                 EngineGame.ReplaceCurrentWithWorkbookMove(nodeId);
                 TreeNode userChoiceNode = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
                 SoundPlayer.PlayMoveSound(userChoiceNode.LastMoveAlgebraicNotation);
-                _userChoiceNodeId = nodeId;
 
                 ClearDecisionParas();
 
@@ -924,19 +1072,6 @@ namespace ChessForge
                 _dictParas[ParaType.PLAY_ENGINE_NOTE] = AddNewParagraphToDoc("play_engine_note", "\nYou are now playing against the engine.", NonNullParaAtOrBefore(ParaType.INSTRUCTIONS));
                 AppState.MainWin.PlayComputer(_userMove, true);
             }
-        }
-
-        /// <summary>
-        /// Sets the values of "_lastClciked" properties.
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <param name="r"></param>
-        /// <param name="e"></param>
-        private void SetLastClicked(TreeNode nd, Run r, MouseButtonEventArgs e)
-        {
-            _lastClickedNode = nd;
-            _lastClickedRun = r;
-            _lastClickedPoint = e.GetPosition(AppState.MainWin._rtbTrainingProgress);
         }
 
         /// <summary>
@@ -974,6 +1109,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the values of "_lastClciked" properties.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="r"></param>
+        /// <param name="e"></param>
+        private void SetLastClicked(TreeNode nd, Run r, MouseButtonEventArgs e)
+        {
+            _lastClickedNode = nd;
+            _lastClickedRun = r;
+            _lastClickedPoint = e.GetPosition(AppState.MainWin._rtbTrainingProgress);
+        }
+
+        /// <summary>
         /// This method will be called when the program made a move 
         /// and we want to update the Training view.
         /// </summary>
@@ -995,7 +1143,7 @@ namespace ChessForge
         /// <returns></returns>
         int GetNodeIdFromObjectName(string runName, string prefix)
         {
-            if (string.IsNullOrEmpty(runName))
+            if (string.IsNullOrEmpty(runName) || runName.Length <= prefix.Length)
                 return -1;
 
             string sId = runName.Substring(prefix.Length);

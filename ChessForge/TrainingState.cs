@@ -15,13 +15,34 @@ namespace ChessForge
         private static bool _isTrainingInProgress;
         private static bool _isEngineGameInProgress;
 
+        /// <summary>
+        /// Object to lock examining of the user move vs Workbook.
+        /// We will be setting a Training State to new value
+        /// and don't want another timer response to interfere.
+        /// </summary>
+        public static object UserVsWorkbookMoveLock = new object();
+
+        /// <summary>
+        /// Possible Training states.
+        /// </summary>
         public enum Mode
         {
             UNKNOWN = 0x00,
+
+            // all is idle, awaiting the user to make a move
             AWAITING_USER_TRAINING_MOVE = 0x01,
-            ENGINE_EVALUATION_IN_PROGRESS = 0x02,
-            PAUSED = 0x04,
-            USER_MOVE_COMPLETED = 0x08
+
+            // user's move accepted, awaiting a workboook-based response
+            AWAITING_WORKBOOK_RESPONSE = 0x02,
+
+            // the engine is evalauting a move or a line
+            ENGINE_EVALUATION_IN_PROGRESS = 0x04,
+            
+            // user move completed, the program will pick it up
+            USER_MOVE_COMPLETED = 0x08,
+
+            // a game vs engine is in progress
+            ENGINE_GAME = 0x10
         }
 
         /// <summary>

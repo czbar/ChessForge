@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using ChessPosition;
+using GameTree;
 
 namespace ChessForge
 {
@@ -21,11 +23,81 @@ namespace ChessForge
         public enum EvaluationMode
         {
             IDLE,
-            SINGLE_MOVE,
-            FULL_LINE,
+            MANUAL_SINGLE_MOVE,
+            MANUAL_LINE,
+
+            TRAINING_SINGLE_MOVE,
+            TRAINING_LINE,
+
             IN_GAME_PLAY,
-            IN_TRAINING
         };
+
+        /// <summary>
+        /// The list of Runs to evaluate when we are evaluating a line
+        /// in the Training mode.
+        /// </summary>
+        private List<Run> _runsToEvaluate = new List<Run>();
+
+        private List<TreeNode> _nodesToEvaluate = new List<TreeNode>();
+
+        private int _runToEvaluateIndex = -1;
+
+        public void AddRunToEvaluate(Run r)
+        {
+            int nodeId = GuiUtilities.GetNodeIdFromPrefixedString(r.Name);
+            TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
+            
+            _nodesToEvaluate.Add(nd);
+            _runsToEvaluate.Add(r);
+        }
+
+        public Run GetCurrentEvaluatedRun()
+        {
+            if (_runToEvaluateIndex < 0 || _runToEvaluateIndex >= _runsToEvaluate.Count)
+            {
+                return null;
+            }
+
+            return _runsToEvaluate[_runToEvaluateIndex];
+        }
+
+        public TreeNode GetCurrentEvaluatedNode()
+        {
+            if (_runToEvaluateIndex < 0 || _runToEvaluateIndex >= _runsToEvaluate.Count)
+            {
+                return null;
+            }
+
+            return _nodesToEvaluate[_runToEvaluateIndex];
+        }
+
+        /// <summary>
+        /// Returns the next node to evaluate
+        /// or null if we reached the end of the list.
+        /// If there are no more Nodes to evaluate,
+        /// the lists are reset.
+        /// </summary>
+        /// <returns></returns>
+        public TreeNode GetNextNodeToEvaluate()
+        {
+            _runToEvaluateIndex++;
+            if (_runToEvaluateIndex < _nodesToEvaluate.Count)
+            {
+                return _nodesToEvaluate[_runToEvaluateIndex];
+            }
+            else
+            {
+                ClearRunsToEvaluate();
+                return null;
+            }
+        }
+
+        public void ClearRunsToEvaluate()
+        {
+            _runsToEvaluate.Clear();
+            _nodesToEvaluate.Clear();
+            _runToEvaluateIndex = -1;
+        }
 
         /// <summary>
         /// Lock object to use when accessing this object's data
@@ -40,7 +112,7 @@ namespace ChessForge
         {
             lock (EvaluationLock)
             {
-                Mode = EvaluationMode.IDLE;
+                CurrentMode = EvaluationMode.IDLE;
                 Position = null;
                 PositionEvaluation = "";
                 PositionIndex = 0;
@@ -61,7 +133,7 @@ namespace ChessForge
         /// <summary>
         /// The current evaluation mode.
         /// </summary>
-        public EvaluationMode Mode = EvaluationMode.IDLE;
+        public EvaluationMode CurrentMode = EvaluationMode.IDLE;
 
         /// <summary>
         /// Indicates whether any kind of evaluation is happening
@@ -73,7 +145,7 @@ namespace ChessForge
             {
                 lock (EvaluationLock)
                 {
-                    return Mode != EvaluationMode.IDLE;
+                    return CurrentMode != EvaluationMode.IDLE;
                 }
             }
         }

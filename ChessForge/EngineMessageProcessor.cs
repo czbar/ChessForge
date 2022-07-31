@@ -91,7 +91,7 @@ namespace ChessForge
         public static void MoveEvaluationFinished()
         {
             // if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER && AppState.MainWin.Evaluation.Mode == EvaluationState.EvaluationMode.IN_GAME_PLAY)
-            if (AppState.MainWin.Evaluation.Mode == EvaluationState.EvaluationMode.IN_GAME_PLAY)
+            if (AppState.MainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.IN_GAME_PLAY)
             {
                 ProcessEngineGameMoveEvent();
                 AppState.MainWin.Evaluation.PrepareToContinue();
@@ -107,8 +107,9 @@ namespace ChessForge
             // else if (AppState.CurrentMode == AppState.Mode.TRAINING)
             else if (TrainingState.IsTrainingInProgress)
             {
-                // stop the timer, reset mode and apply training mode specific handling 
-                AppState.MainWin.Evaluation.Mode = EvaluationState.EvaluationMode.IDLE;
+                // stop the timer, apply training mode specific handling 
+                // NOTE do not reset Evaluation.CurrentMode as this will be done 
+                // later down the chain
                 AppState.MainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
                 AppState.MainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                 AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
@@ -145,7 +146,7 @@ namespace ChessForge
                     // if the mode is not FULL_LINE or this is the last move in FULL_LINE
                     // evaluation we stop here
                     // otherwise we start the next move's evaluation
-                    if (AppState.MainWin.Evaluation.Mode != EvaluationState.EvaluationMode.FULL_LINE
+                    if (AppState.MainWin.Evaluation.CurrentMode != EvaluationState.EvaluationMode.MANUAL_LINE
                         || AppState.MainWin.Evaluation.PositionIndex == AppState.MainWin.ActiveLine.GetPlyCount() - 1)
                     {
                         AppState.MainWin.Evaluation.Reset();
@@ -159,7 +160,7 @@ namespace ChessForge
                         AppState.MainWin.Evaluation.PrepareToContinue();
 
                         AppState.MainWin.Evaluation.PositionIndex++;
-                        RequestMoveEvaluation(AppState.MainWin.Evaluation.PositionIndex, AppState.MainWin.Evaluation.Mode, false);
+                        RequestMoveEvaluation(AppState.MainWin.Evaluation.PositionIndex, AppState.MainWin.Evaluation.CurrentMode, false);
 
                         AppState.MainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                     }
@@ -236,12 +237,11 @@ namespace ChessForge
         public static void RequestMoveEvaluationInTraining(TreeNode nd)
         {
             AppState.MainWin.Evaluation.Position = nd.Position;
-            AppState.MainWin.Evaluation.Mode = EvaluationState.EvaluationMode.SINGLE_MOVE;
             AppState.MainWin.UpdateLastMoveTextBox(nd, true);
             AppState.MainWin.ShowMoveEvaluationControls(true, false);
 
             AppState.MainWin.Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
-            PrepareMoveEvaluation(EvaluationState.EvaluationMode.IN_TRAINING, AppState.MainWin.Evaluation.Position);
+            PrepareMoveEvaluation(AppState.MainWin.Evaluation.CurrentMode, AppState.MainWin.Evaluation.Position);
         }
 
         /// <summary>
@@ -317,6 +317,11 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// In response to the "bestmove" message,
+        /// flags the completion of evaluation.
+        /// </summary>
+        /// <param name="message"></param>
         private static void ProcessBestMoveMessage(string message)
         {
             // tell the app that the evaluation has finished
@@ -437,7 +442,7 @@ namespace ChessForge
         /// <param name="position"></param>
         private static void PrepareMoveEvaluation(EvaluationState.EvaluationMode mode, BoardPosition position)
         {
-            AppState.MainWin.Evaluation.Mode = mode;
+            AppState.MainWin.Evaluation.CurrentMode = mode;
 
             AppState.MainWin.PrepareEvaluationControls();
 
