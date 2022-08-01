@@ -283,36 +283,38 @@ namespace ChessForge
                 Point clickedPoint = e.GetPosition(_imgMainChessboard);
                 SquareCoords sq = ClickedSquare(clickedPoint);
 
-                SquareCoords sqNorm = new SquareCoords(sq);
-                if (MainChessBoard.IsFlipped)
+                if (sq != null)
                 {
-                    sqNorm.Flip();
-                }
-
-                if (sq != null && EngineGame.GetPieceColor(sqNorm) == EngineGame.ColorToMove)
-                {
-                    if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER && EngineGame.State == EngineGame.GameState.USER_THINKING
-                        || AppState.CurrentMode == AppState.Mode.TRAINING && TrainingState.CurrentMode == TrainingState.Mode.AWAITING_USER_TRAINING_MOVE)
+                    SquareCoords sqNorm = new SquareCoords(sq);
+                    if (MainChessBoard.IsFlipped)
                     {
-                        DraggedPiece.isDragInProgress = true;
-                        DraggedPiece.Square = sq;
-
-                        DraggedPiece.ImageControl = GetImageFromPoint(clickedPoint);
-                        Point ptLeftTop = GetSquareTopLeftPoint(sq);
-                        DraggedPiece.ptDraggedPieceOrigin = ptLeftTop;
-
-                        // for the remainder, we need absolute point
-                        clickedPoint.X += _imgMainChessboard.Margin.Left;
-                        clickedPoint.Y += _imgMainChessboard.Margin.Top;
-                        DraggedPiece.ptStartDragLocation = clickedPoint;
-
-
-                        Point ptCenter = GetSquareCenterPoint(sq);
-
-                        Canvas.SetLeft(DraggedPiece.ImageControl, ptLeftTop.X + (clickedPoint.X - ptCenter.X));
-                        Canvas.SetTop(DraggedPiece.ImageControl, ptLeftTop.Y + (clickedPoint.Y - ptCenter.Y));
+                        sqNorm.Flip();
                     }
 
+                    if (sq != null && EngineGame.GetPieceColor(sqNorm) == EngineGame.ColorToMove)
+                    {
+                        if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER && EngineGame.State == EngineGame.GameState.USER_THINKING
+                            || AppState.CurrentMode == AppState.Mode.TRAINING && TrainingState.CurrentMode == TrainingState.Mode.AWAITING_USER_TRAINING_MOVE)
+                        {
+                            DraggedPiece.isDragInProgress = true;
+                            DraggedPiece.Square = sq;
+
+                            DraggedPiece.ImageControl = GetImageFromPoint(clickedPoint);
+                            Point ptLeftTop = GetSquareTopLeftPoint(sq);
+                            DraggedPiece.ptDraggedPieceOrigin = ptLeftTop;
+
+                            // for the remainder, we need absolute point
+                            clickedPoint.X += _imgMainChessboard.Margin.Left;
+                            clickedPoint.Y += _imgMainChessboard.Margin.Top;
+                            DraggedPiece.ptStartDragLocation = clickedPoint;
+
+
+                            Point ptCenter = GetSquareCenterPoint(sq);
+
+                            Canvas.SetLeft(DraggedPiece.ImageControl, ptLeftTop.X + (clickedPoint.X - ptCenter.X));
+                            Canvas.SetTop(DraggedPiece.ImageControl, ptLeftTop.Y + (clickedPoint.Y - ptCenter.Y));
+                        }
+                    }
                 }
             }
         }

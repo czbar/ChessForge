@@ -30,6 +30,10 @@ namespace ChessForge
         /// </summary>
         private void SetupDataInTreeView()
         {
+            //TODO: currently WorkTable view is disabled!
+            return;
+
+#if false
             // get the stem of the tree to show on the TextBox control at the top. 
             List<TreeNode> stem = Workbook.BuildStem();
 
@@ -195,7 +199,7 @@ namespace ChessForge
             }
 
             _lvWorkbookTable.ItemsSource = rows;
-
+#endif
         }
 
         private string BuildLineRemainder(int vlIdx, int moveIdx)
@@ -459,6 +463,10 @@ namespace ChessForge
         /// <param name="lineId"></param>
         public void _lvWorkbookTable_SelectLineAndMove(string lineId, int nodeId)
         {
+            //TODO: currently WorkTable view is disabled!
+            return;
+
+#if false
             int rowIndex = -1;
             // The passed Line Id should be the one found in the last (leaf) node of the line.
             // Otherwise we will not find it.
@@ -505,6 +513,7 @@ namespace ChessForge
                 WorkbookTableState.SelectedRow = row;// - (row % 2);
                 WorkbookTableState.SelectedColumn = column;
             }
+#endif
         }
 
         private int GetColumnForNode(TreeTableRow ttr, int nodeId)
