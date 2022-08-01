@@ -88,7 +88,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <TabControl x:Name="_tabTrainingControl" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" 
-                    VerticalAlignment="Top" Grid.RowSpan="2" Visibility="Hidden">
+                    VerticalAlignment="Top" Grid.RowSpan="1" Visibility="Hidden">
             <TabItem x:Name="_tabItemTrainingProgress"  Header="Progress">
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox x:Name="_rtbTrainingProgress" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
@@ -128,7 +128,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <TabControl x:Name="_tabMainControl" Grid.Column="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="2">
+        <TabControl x:Name="_tabMainControl" Grid.Column="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1">
             <TabItem x:Name="TabItemWorkbook"  Header="Workbook" >
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookGrid_PreviewMouseDown">
                     <Grid.ContextMenu>
@@ -155,7 +155,7 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="TabItemTable" Header="Table">
+            <TabItem x:Name="TabItemTable" Header="Table" Visibility="Collapsed">
                 <DockPanel >
                     <TextBox x:Name="_tbWorkbookTable" DockPanel.Dock="Top" BorderThickness="0,0,0,0" IsEnabled="False" Height="30" Margin="5,5,0,0" TextAlignment="Center" Text="" HorizontalAlignment="Left" FontSize="14" FontWeight="Bold"/>
                     <ScrollViewer x:Name="_scvWorkbookTable" DockPanel.Dock="Bottom" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" PreviewMouseWheel="_scvWorkbookTable_PreviewMouseWheel" >
