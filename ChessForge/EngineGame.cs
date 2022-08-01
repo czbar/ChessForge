@@ -290,6 +290,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the color of the piece on a given square
+        /// in the current position.
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        public static PieceColor GetPieceColor(SquareCoords sq)
+        {
+            return PositionUtils.GetPieceColor(GetCurrentNode().Position.Board[sq.Xcoord, sq.Ycoord]);
+        }
+
+        /// <summary>
         /// Accessor to ColorToMove property
         /// of the current position
         /// </summary>
