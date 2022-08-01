@@ -165,6 +165,7 @@ namespace ChessForge
         private readonly string _run_wb_move_ = "wb_move_";
         private readonly string _run_line_move_ = "line_move_";
         private readonly string _run_move_eval_ = "move_eval_";
+        private readonly string _run_stem_move_ = "stem_move_";
 
         private readonly string _par_line_moves_ = "par_line_moves_";
         private readonly string _par_coach_moves_ = "par_coach_moves_";
@@ -438,7 +439,7 @@ namespace ChessForge
         /// <param name="node"></param>
         private void BuildIntroText(TreeNode node)
         {
-            BuildStemText(node);
+            CreateStemParagraph(node);
             BuildInstructionsText();
         }
 
@@ -622,11 +623,11 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds "intro" and "stem line" paragraphs that are always visible at the top
+        /// Builds the "stem line" paragraphs that is always visible at the top
         /// of the view.
         /// </summary>
         /// <param name="node"></param>
-        private void BuildStemText(TreeNode node)
+        private void CreateStemParagraph(TreeNode node)
         {
             _dictParas[ParaType.STEM] = AddNewParagraphToDoc("stem_line", null);
 
@@ -634,8 +635,28 @@ namespace ChessForge
             r_prefix.FontWeight = FontWeights.Normal;
             _dictParas[ParaType.STEM].Inlines.Add(r_prefix);
 
-            Run r_stem = new Run(GetStemLineText(node));
-            _dictParas[ParaType.STEM].Inlines.Add(r_stem);
+            InsertPrefixRuns(_dictParas[ParaType.STEM], node);
+        }
+
+        private void InsertPrefixRuns(Paragraph para, TreeNode lastNode)
+        {
+            TreeNode nd = lastNode;
+            Run prevRun = null;
+            while (nd != null)
+            {
+                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, false) + " ", _run_stem_move_ + nd.NodeId.ToString(), Brushes.Black);
+                nd = nd.Parent;
+
+                if (prevRun == null)
+                {
+                    para.Inlines.Add(r);
+                }
+                else
+                {
+                    para.Inlines.InsertBefore(prevRun, r);
+                }
+                prevRun = r;
+            }
         }
 
         /// <summary>
@@ -1107,18 +1128,13 @@ namespace ChessForge
                 return;
             }
 
-            int underscore = r.Name.LastIndexOf('_');
-            if (underscore < 0 || underscore == r.Name.Length - 1)
-            {
-                return;
-            }
-
-            int nodeId;
-            if (int.TryParse(r.Name.Substring(underscore + 1), out nodeId))
+            int nodeId = GuiUtilities.GetNodeIdFromPrefixedString(r.Name);
+            if (nodeId >= 0)
             {
                 Point pt = e.GetPosition(AppState.MainWin._rtbTrainingProgress);
                 AppState.MainWin.TrainingViewChessBoard.DisplayPosition(AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId).Position);
-                AppState.MainWin._vbFloatingChessboard.Margin = new Thickness(pt.X, pt.Y - 165, 0, 0);
+                int yOffset = r.Name.StartsWith(_run_stem_move_) ? 25 : -165;
+                AppState.MainWin._vbFloatingChessboard.Margin = new Thickness(pt.X, pt.Y + yOffset, 0, 0);
                 AppState.MainWin.ShowFloatingChessboard(true);
             }
         }
