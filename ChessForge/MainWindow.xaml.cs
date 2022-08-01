@@ -269,13 +269,27 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// The user pressed the mouse button over the board.
+        /// If it is a left button it indicates the start position of
+        /// an intended move.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
                 Point clickedPoint = e.GetPosition(_imgMainChessboard);
                 SquareCoords sq = ClickedSquare(clickedPoint);
-                if (sq != null)
+
+                SquareCoords sqNorm = new SquareCoords(sq);
+                if (MainChessBoard.IsFlipped)
+                {
+                    sqNorm.Flip();
+                }
+
+                if (sq != null && EngineGame.GetPieceColor(sqNorm) == EngineGame.ColorToMove)
                 {
                     if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER && EngineGame.State == EngineGame.GameState.USER_THINKING
                         || AppState.CurrentMode == AppState.Mode.TRAINING && TrainingState.CurrentMode == TrainingState.Mode.AWAITING_USER_TRAINING_MOVE)
@@ -371,7 +385,7 @@ namespace ChessForge
                 }
 
                 // do not process if this was a canceled promotion
-                if (!isPromotion || promoteTo != PieceType.None)
+                if ((!isPromotion || promoteTo != PieceType.None) && EngineGame.GetPieceColor(targetSquareNorm) != EngineGame.ColorToMove)
                 {
                     moveEngCode.Append((char)(origSquareNorm.Xcoord + (int)'a'));
                     moveEngCode.Append((char)(origSquareNorm.Ycoord + (int)'1'));
@@ -1313,7 +1327,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Starts a training session from a specified bookmark position.
+        /// Starts a training session from the specified bookmark position.
         /// </summary>
         /// <param name="bookmarkIndex"></param>
         public void SetAppInTrainingMode(int bookmarkIndex)
@@ -1323,8 +1337,19 @@ namespace ChessForge
                 return;
             }
 
+            TreeNode startNode = Workbook.Bookmarks[bookmarkIndex].Node;
+            SetAppInTrainingMode(startNode);
+
+        }
+
+        /// <summary>
+        /// Starts a training session from the specified Node.
+        /// </summary>
+        /// <param name="startNode"></param>
+        public void SetAppInTrainingMode(TreeNode startNode)
+        {
             // Set training mode, clearing any other states
-            // that may have been set
+            // that may have been set.
             // TODO: need to reset any possible activities like
             // replaying a line or playing against the computer.
             AppState.CurrentMode = AppState.Mode.TRAINING;
@@ -1335,13 +1360,12 @@ namespace ChessForge
 
             // TODO: need to check that the side on move is what was declared
             // and maybe give an option to change that?
-            TreeNode startNode = Workbook.Bookmarks[bookmarkIndex].Node;
             AppState.TrainingSide = startNode.ColorToMove;
 
             MainChessBoard.DisplayPosition(startNode.Position);
 
-            _trainingBrowseRichTextBuilder.BuildFlowDocumentForWorkbook(Workbook.Bookmarks[bookmarkIndex].Node.NodeId);
-            _trainingView.Initialize(Workbook.Bookmarks[bookmarkIndex].Node);
+            _trainingBrowseRichTextBuilder.BuildFlowDocumentForWorkbook(startNode.NodeId);
+            _trainingView.Initialize(startNode);
 
             EnterGuiTrainingMode();
             TrainingState.IsTrainingInProgress = true;
@@ -1650,6 +1674,20 @@ namespace ChessForge
             _trainingView.RequestLineEvaluation();
         }
 
+        /// <summary>
+        /// Restarts training from the same position/bookmark
+        /// that we started the current session with.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _mnTrainRestartTraining_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Restart the training session?", "Chess Forge Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                SetAppInTrainingMode(TrainingState.StartPosition);
+            }
+        }
+
         private void ViewActiveLine_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             ActiveLine.PreviewKeyDown(sender, e);
@@ -1702,5 +1740,6 @@ namespace ChessForge
                 _pbEngineThinking.Value = 0;
             });
         }
+
     }
 }
