@@ -297,7 +297,8 @@ namespace ChessForge
         /// <returns></returns>
         public static PieceColor GetPieceColor(SquareCoords sq)
         {
-            return PositionUtils.GetPieceColor(GetCurrentNode().Position.Board[sq.Xcoord, sq.Ycoord]);
+            TreeNode nd = GetCurrentNode();
+            return nd != null ? PositionUtils.GetPieceColor(GetCurrentNode().Position.Board[sq.Xcoord, sq.Ycoord]) : PieceColor.None;
         }
 
         /// <summary>
@@ -323,7 +324,8 @@ namespace ChessForge
 
         public static BoardPosition GetCurrentPosition()
         {
-            return GetCurrentNode().Position;
+            TreeNode nd = GetCurrentNode();
+            return nd != null ?  GetCurrentNode().Position : null;
         }
 
         /// <summary>
