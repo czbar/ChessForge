@@ -13,19 +13,39 @@ namespace ChessForge
     /// <summary>
     /// Manages training bookmarks.
     /// The WorkbookTree keeps the Bookmark data objects.
-    /// This class mainatins a list of MAX_BOOKMARKS (currently 9) BookmarkView objects 
+    /// This class mainatins a list of BOOKMARKS_PER_PAGE (9) BookmarkView objects 
     /// that contain
     /// references to the relevant GUI controls
     /// and can show position from the Bookmark objects.
     /// </summary>
-    internal class BookmarkManager
+    public class BookmarkManager
     {
+        /// <summary>
+        /// The page currently shown in the GUI.
+        /// The first page has number 1 (not 0).
+        /// </summary>
+        private static int _currentPage = 1;
+
+        /// <summary>
+        /// The number of Bookmark pages.
+        /// </summary>
+        private static int _maxPage
+        {
+            get {
+                int bm_count = AppState.MainWin.Workbook.Bookmarks.Count;
+                if (bm_count <= BOOKMARKS_PER_PAGE)
+                    return 1;
+                else
+                    return (bm_count - 1) / BOOKMARKS_PER_PAGE + 1;
+                }
+        }
+
         /// <summary>
         /// Max number of bookmarks that can be shown in the GUI.
         /// There is no limit on how many bookmarks there can be
         /// altogether.
         /// </summary>
-        public static readonly int MAX_BOOKMARKS = 9;
+        public static readonly int BOOKMARKS_PER_PAGE = 9;
 
         /// <summary>
         /// A Bookmark context menu uses this value
@@ -68,10 +88,12 @@ namespace ChessForge
 
         /// <summary>
         /// Initializes the GUI for the bookmarks.
-        /// Only first MAX_BOOKMARKS bookmarks can be shown at most.
+        /// Only BOOKMARKS_PER_PAGE bookmarks can be shown at most.
         /// </summary>
-        internal static void ShowBookmarks()
+        public static void ShowBookmarks()
         {
+            SortBookmarks();
+
             for (int i = 0; i < AppState.MainWin.Workbook.Bookmarks.Count; i++)
             {
                 if (i >= Bookmarks.Count)
@@ -82,6 +104,17 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Sorts bookmarks by round numbers and then
+        /// color-to-move.
+        /// This method should be called after initilaization
+        /// and any subsequents addition.
+        /// </summary>
+        public static void SortBookmarks()
+        {
+            AppState.MainWin.Workbook.Bookmarks.Sort();
+            ResyncBookmarks(_currentPage);
+        }
 
         /// <summary>
         /// resets all bookmark chessboards in the Bookmark view.
@@ -109,7 +142,8 @@ namespace ChessForge
                 //add to the list in the Workbook
                 if (AppState.MainWin.Workbook.AddBookmark(nd, true) == 0)
                 {
-                    ResyncBookmarks();
+                    SortBookmarks();
+                    ResyncBookmarks(_currentPage);
                     return 0;
                 }
                 else
@@ -121,6 +155,7 @@ namespace ChessForge
             {
                 return -1;
             }
+
         }
 
         /// <summary>
@@ -137,7 +172,11 @@ namespace ChessForge
             if (nd != null)
             {
                 AppState.MainWin.Workbook.DeleteBookmark(nd);
-                ResyncBookmarks();
+                if (_currentPage > _maxPage)
+                {
+                    _currentPage = _maxPage;
+                }
+                ResyncBookmarks(_currentPage);
             }
             AppState.SaveWorkbookFile();
         }
@@ -170,6 +209,32 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// A request to go back one page has been made
+        /// by the user.
+        /// </summary>
+        public static void PageDown()
+        {
+            if (_currentPage == 1)
+                return;
+
+            _currentPage--;
+            ResyncBookmarks(_currentPage);
+        }
+
+        /// <summary>
+        /// A request to go one page forward has been made
+        /// by the user.
+        /// </summary>
+        public static void PageUp()
+        {
+            if (_currentPage == _maxPage)
+                return;
+
+            _currentPage++;
+            ResyncBookmarks(_currentPage);
+        }
+
+        /// <summary>
         /// Handles a click on one of the bookmark chessboards.
         /// </summary>
         /// <param name="name"></param>
@@ -185,15 +250,18 @@ namespace ChessForge
                 {
                     return;
                 }
+
+                // adjust bkmNo for Page number
+                bkmNo = (bkmNo - 1) + (_currentPage - 1) * BOOKMARKS_PER_PAGE;
+
                 if (e.ChangedButton == MouseButton.Left)
                 {
-                    AppState.MainWin.SetAppInTrainingMode(bkmNo - 1);
+                    AppState.MainWin.SetAppInTrainingMode(bkmNo);
                     e.Handled = true;
                 }
-                // for the benefit of the conetx menu set the clicked index.
-                ClickedIndex = bkmNo - 1;
+                // for the benefit of the context menu set the clicked index.
+                ClickedIndex = bkmNo;
                 EnableBookmarkMenus(cm, true);
-
             }
         }
 
@@ -268,24 +336,65 @@ namespace ChessForge
         /// Syncs the list of BookmarkViews with the Workbook's list
         /// of bookmarks.
         /// </summary>
-        private static void ResyncBookmarks()
+        private static void ResyncBookmarks(int pageNo)
         {
             int count = AppState.MainWin.Workbook.Bookmarks.Count;
 
-            for (int i = 0; i < MAX_BOOKMARKS; i++)
+            int start = (pageNo - 1) * BOOKMARKS_PER_PAGE;
+            int end = pageNo * BOOKMARKS_PER_PAGE - 1;
+
+            for (int i = start; i <= end; i++)
             {
                 if (i < count)
                 {
-                    Bookmarks[i].BookmarkData = AppState.MainWin.Workbook.Bookmarks[i];
-                    Bookmarks[i].Activate();
+                    Bookmarks[i - start].BookmarkData = AppState.MainWin.Workbook.Bookmarks[i];
+                    Bookmarks[i - start].Activate();
                 }
                 else
                 {
-                    Bookmarks[i].BookmarkData = null;
-                    Bookmarks[i].Deactivate();
+                    Bookmarks[i - start].BookmarkData = null;
+                    Bookmarks[i - start].Deactivate();
+                }
+            }
+
+            ShowPageControls();
+        }
+
+        /// <summary>
+        /// Shows/hides paging controls and updates
+        /// the label text as per the current number of 
+        /// Bookmarks and currently displayed page.
+        /// </summary>
+        private static void ShowPageControls()
+        {
+            int bm_count = AppState.MainWin.Workbook.Bookmarks.Count;
+            if (bm_count <= BOOKMARKS_PER_PAGE)
+            {
+                AppState.MainWin._gridBookmarks.RowDefinitions[0].Height = new GridLength(0);
+                AppState.MainWin._cnvPaging.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                AppState.MainWin._cnvPaging.Visibility = Visibility.Visible;
+                AppState.MainWin._gridBookmarks.RowDefinitions[0].Height = new GridLength(20);
+                AppState.MainWin._lblBookmarkPage.Visibility = Visibility.Visible;
+                AppState.MainWin._lblBookmarkPage.Content = "Page " + _currentPage.ToString() +" of " + _maxPage.ToString();
+                if (_currentPage == 1)
+                {
+                    AppState.MainWin._imgRightArrow.Visibility = Visibility.Visible;
+                    AppState.MainWin._imgLeftArrow.Visibility = Visibility.Hidden;
+                }
+                else if (_currentPage == _maxPage)
+                {
+                    AppState.MainWin._imgRightArrow.Visibility = Visibility.Hidden;
+                    AppState.MainWin._imgLeftArrow.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    AppState.MainWin._imgRightArrow.Visibility = Visibility.Visible;
+                    AppState.MainWin._imgLeftArrow.Visibility = Visibility.Visible;
                 }
             }
         }
-
     }
 }
