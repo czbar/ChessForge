@@ -13,7 +13,7 @@ namespace ChessForge
     public class TrainingState
     {
         private static bool _isTrainingInProgress;
-        private static bool _isEngineGameInProgress;
+        private static bool _isBrowseActive;
 
         /// <summary>
         /// Object to lock examining of the user move vs Workbook.
@@ -57,9 +57,9 @@ namespace ChessForge
         public static Mode CurrentMode { get; set; }
 
         /// <summary>
-        /// Indicates if the training is in a game mode i.e. off the Workbook.
+        /// Indicates if the user is using the Browsing view of the training lines. 
         /// </summary>
-        public static bool IsEngineGameInProgress { get => _isEngineGameInProgress; set => _isEngineGameInProgress = value; }
+        public static bool IsBrowseActive { get => _isBrowseActive; set => _isBrowseActive = value; }
 
         /// <summary>
         /// The current training line.
