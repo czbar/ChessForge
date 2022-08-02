@@ -576,6 +576,7 @@ namespace ChessForge
                 }
             });
 
+            AppState.MainWin.ShowEvaluationProgressControls();
         }
 
         /// <summary>

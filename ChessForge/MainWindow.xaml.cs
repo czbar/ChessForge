@@ -135,10 +135,11 @@ namespace ChessForge
             // add the main context menu to the Single Variation view.
             _dgActiveLine.ContextMenu = menuContext;
 
-            _imgStop.Visibility = Visibility.Hidden;
+            SetupGuiForManualReviewMode();
+
+//            ShowEvaluationProgressControls(false);
+            ShowEvaluationProgressControls();
             _sldReplaySpeed.Visibility = Visibility.Hidden;
-            _lblEvaluating.Visibility = Visibility.Hidden;
-            _lblMoveUnderEval.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -271,7 +272,7 @@ namespace ChessForge
 
         /// <summary>
         /// The user pressed the mouse button over the board.
-        /// If it is a left button it indicates the start position of
+        /// If it is a left button it indicates the commencement of
         /// an intended move.
         /// </summary>
         /// <param name="sender"></param>
@@ -294,7 +295,7 @@ namespace ChessForge
                     if (sq != null && EngineGame.GetPieceColor(sqNorm) == EngineGame.ColorToMove)
                     {
                         if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER && EngineGame.State == EngineGame.GameState.USER_THINKING
-                            || AppState.CurrentMode == AppState.Mode.TRAINING && TrainingState.CurrentMode == TrainingState.Mode.AWAITING_USER_TRAINING_MOVE)
+                            || AppState.CurrentMode == AppState.Mode.TRAINING && TrainingState.CurrentMode == TrainingState.Mode.AWAITING_USER_TRAINING_MOVE && !TrainingState.IsBrowseActive)
                         {
                             DraggedPiece.isDragInProgress = true;
                             DraggedPiece.Square = sq;
@@ -1130,9 +1131,8 @@ namespace ChessForge
                 {
                     _rtbBoardComment.Visibility = Visibility.Hidden;
                     _tbEngineLines.Visibility = Visibility.Visible;
-                    _imgStop.Visibility = Visibility.Visible;
-                    _lblEvaluating.Visibility = Visibility.Visible;
-                    _lblMoveUnderEval.Visibility = Visibility.Visible;
+//                    ShowEvaluationProgressControls(true);
+                    ShowEvaluationProgressControls();
                 }
                 else
                 {
@@ -1142,9 +1142,8 @@ namespace ChessForge
                         _tbEngineLines.Visibility = Visibility.Hidden;
                     }
 
-                    _imgStop.Visibility = Visibility.Hidden;
-                    _lblEvaluating.Visibility = Visibility.Hidden;
-                    _lblMoveUnderEval.Visibility = Visibility.Hidden;
+//                    ShowEvaluationProgressControls(false);
+                    ShowEvaluationProgressControls();
                 }
             });
 
@@ -1404,10 +1403,15 @@ namespace ChessForge
 
         private void MenuItem_StopTraining(object sender, RoutedEventArgs e)
         {
-            // TODO: ask questions re saving etc.
-            ExitGuiTrainingMode();
-            MainChessBoard.SetBoardSourceImage(ChessBoards.ChessBoardBlue);
-            TrainingState.IsTrainingInProgress = false;
+            if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                // TODO: ask questions re saving etc.
+                MainChessBoard.SetBoardSourceImage(ChessBoards.ChessBoardBlue);
+                TrainingState.IsTrainingInProgress = false;
+                SetupGuiForManualReviewMode();
+                ExitGuiTrainingMode();
+                AppState.CurrentMode = AppState.Mode.MANUAL_REVIEW;
+            }
         }
 
         /// <summary>
@@ -1640,20 +1644,11 @@ namespace ChessForge
             }
         }
 
-        private void _mnGenerateBookmark_Click(object sender, RoutedEventArgs e)
-        {
-            BookmarkManager.GenerateBookmarks();
-        }
+        private void _mnGenerateBookmark_Click(object sender, RoutedEventArgs e) {BookmarkManager.GenerateBookmarks();}
 
-        private void _mnDeleteBookmark_Click(object sender, RoutedEventArgs e)
-        {
-            BookmarkManager.DeleteBookmark();
-        }
+        private void _mnDeleteBookmark_Click(object sender, RoutedEventArgs e) {BookmarkManager.DeleteBookmark();}
 
-        private void _mnDeleteAllBookmarks_Click(object sender, RoutedEventArgs e)
-        {
-            BookmarkManager.DeleteAllBookmarks();
-        }
+        private void _mnDeleteAllBookmarks_Click(object sender, RoutedEventArgs e) {BookmarkManager.DeleteAllBookmarks();}
 
         private void _mnTrainRestartGame_Click(object sender, RoutedEventArgs e)
         {
@@ -1743,5 +1738,115 @@ namespace ChessForge
             });
         }
 
+        /// <summary>
+        /// Shows or hides the Engine evaluation 
+        /// progress GUI elements.
+        /// 
+        /// In the "hide" mode all elements are hidden.
+        /// 
+        /// In the "show" mode, if isSecretMode is false
+        /// all elements are visible except the label for the "secret" mode.
+        /// If the isSecretMode is true, only the progress bar and the 
+        /// label for the "secret mode are visible.
+        /// </summary>
+        /// <param name="show"></param>
+        /// <param name="isSecretMode"></param>
+        public void ShowEvaluationProgressControls(bool show, bool isSecretMode = false)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                // visibility based on the value of "show" alone
+                _imgStop.Visibility = show ? Visibility.Visible : Visibility.Hidden;
+                _pbEngineThinking.Visibility = show ? Visibility.Visible : Visibility.Hidden;
+
+                // shown if show == true and isSecretMode is false
+                _lblEvaluating.Visibility = show && !isSecretMode ? Visibility.Visible : Visibility.Hidden;
+                _lblMoveUnderEval.Visibility = show && !isSecretMode ? Visibility.Visible : Visibility.Hidden;
+
+                // only shown if both show == true and isSecretMode == true
+                _lblEvalSecretMode.Visibility = show && isSecretMode ? Visibility.Visible : Visibility.Hidden;
+            });
+        }
+
+        public void ShowEvaluationProgressControls()
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                if (Evaluation.CurrentMode == EvaluationState.EvaluationMode.IDLE)
+                {
+                    _imgStop.Visibility = Visibility.Hidden;
+                    _pbEngineThinking.Visibility = Visibility.Hidden;
+
+                    _lblEvaluating.Visibility = Visibility.Hidden;
+                    _lblMoveUnderEval.Visibility = Visibility.Hidden;
+
+                    _lblEvalSecretMode.Visibility = Visibility.Hidden;
+                }
+                else if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER 
+                        && (!TrainingState.IsTrainingInProgress || Evaluation.CurrentMode == EvaluationState.EvaluationMode.IN_GAME_PLAY))
+                {
+                    bool think = EngineGame.State == EngineGame.GameState.ENGINE_THINKING;
+                    _imgStop.Visibility = think ? Visibility.Visible : Visibility.Hidden;
+                    _pbEngineThinking.Visibility = Visibility.Visible;
+
+                    _lblEvaluating.Visibility = Visibility.Hidden;
+                    _lblMoveUnderEval.Visibility = Visibility.Hidden;
+
+                    _lblEvalSecretMode.Visibility = think ? Visibility.Visible : Visibility.Hidden;
+                }
+                else
+                {
+                    _imgStop.Visibility = Visibility.Visible;
+                    _pbEngineThinking.Visibility = Visibility.Visible;
+
+                    _lblEvaluating.Visibility = Visibility.Visible;
+                    _lblMoveUnderEval.Visibility = Visibility.Visible;
+
+                    _lblEvalSecretMode.Visibility = Visibility.Hidden;
+                }
+            });
+        }
+
+        public void SetupGuiForManualReviewMode()
+        {
+            TrainingState.IsBrowseActive = false;
+            _tabTrainingControl.Margin = new Thickness(5, 5, 5, 5);
+            _dgEngineGame.Visibility = Visibility.Hidden;
+
+            _dgActiveLine.Visibility = Visibility.Visible;
+            _dgActiveLine.Columns[2].Visibility = Visibility.Visible;
+            _dgActiveLine.Columns[4].Visibility = Visibility.Visible;
+            _dgActiveLine.Width = 260;
+        }
+
+        public void SetupGuiForTrainingBrowseMode()
+        {
+            TrainingState.IsBrowseActive = true;
+            _tabTrainingControl.Margin = new Thickness(185, 5, 5, 5);
+            _dgEngineGame.Visibility = Visibility.Hidden;
+
+            _dgActiveLine.Visibility = Visibility.Visible;
+            _dgActiveLine.Columns[2].Visibility = Visibility.Collapsed;
+            _dgActiveLine.Columns[4].Visibility = Visibility.Collapsed;
+            _dgActiveLine.Width = 160;
+        }
+
+        public void SetupGuiForTrainingProgressMode()
+        {
+            TrainingState.IsBrowseActive = false;
+            _tabTrainingControl.Margin = new Thickness(5, 5, 5, 5);
+            _dgEngineGame.Visibility = Visibility.Visible;
+            _dgActiveLine.Visibility = Visibility.Hidden;
+
+            DisplayPosition(EngineGame.GetCurrentPosition());
+        }
+
+        private void _tabItemTrainingBrowse_GotFocus(object sender, RoutedEventArgs e) {SetupGuiForTrainingBrowseMode();}
+
+        private void _rtbTrainingProgress_GotFocus(object sender, RoutedEventArgs e) {SetupGuiForTrainingProgressMode();}
+
+        private void _imgLeftArrow_PreviewMouseDown(object sender, MouseButtonEventArgs e)  {BookmarkManager.PageDown();}
+
+        private void _imgRightArrow_PreviewMouseDown(object sender, MouseButtonEventArgs e) { BookmarkManager.PageUp();}
     }
 }

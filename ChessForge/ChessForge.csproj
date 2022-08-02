@@ -195,6 +195,8 @@
     <Resource Include="Resources\Images\Stop.png" />
     <Resource Include="Resources\Images\BlackPromo.png" />
     <Resource Include="Resources\Images\WhitePromo.png" />
+    <Resource Include="Resources\Images\LeftArrow.png" />
+    <Resource Include="Resources\Images\RightArrow.png" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

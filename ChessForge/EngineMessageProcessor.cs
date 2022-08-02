@@ -208,6 +208,10 @@ namespace ChessForge
         public static void RequestMoveEvaluation(int posIndex, EvaluationState.EvaluationMode mode, bool isLineStart)
         {
             AppState.MainWin.Evaluation.PositionIndex = posIndex;
+            if (AppState.MainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.IDLE)
+            {
+                AppState.MainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.MANUAL_SINGLE_MOVE;
+            }
             AppState.MainWin.Evaluation.Position = AppState.MainWin.ActiveLine.GetNodeAtIndex(posIndex).Position;
             AppState.MainWin.DisplayPosition(AppState.MainWin.Evaluation.Position);
 
