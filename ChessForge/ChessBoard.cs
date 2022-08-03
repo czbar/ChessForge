@@ -258,7 +258,7 @@ namespace ChessForge
 
         private void DisplayPiece(int xcoord, int ycoord, byte square)
         {
-            AppState.MainWin.Dispatcher.Invoke(() =>
+            AppStateManager.MainWin.Dispatcher.Invoke(() =>
             {
                 if (PositionUtils.GetPieceColor(square) == PieceColor.White)
                 {

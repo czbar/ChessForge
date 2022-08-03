@@ -19,14 +19,18 @@ namespace ChessForge
     /// </summary>
     public class WorkbookView : RichTextBuilder
     {
+        // Application's Main Window
+        private MainWindow _mainWin;
+
         /// <summary>
         /// Constructor. Sets a reference to the 
         /// FlowDocument for the RichTextBox control, via
         /// a call to the base class's constructor.
         /// </summary>
         /// <param name="doc"></param>
-        public WorkbookView(FlowDocument doc) : base(doc)
+        public WorkbookView(FlowDocument doc, MainWindow mainWin) : base(doc)
         {
+            _mainWin = mainWin;
         }
 
         /// <summary>
@@ -175,7 +179,7 @@ namespace ChessForge
         public void BuildFlowDocumentForWorkbook(int rootNodeId = 0, bool includeStem = true)
         {
             Document.Blocks.Clear();
-            _workbook = AppState.MainWin.Workbook;
+            _workbook = _mainWin.Workbook;
 
             // resets
             _dictNodeToRun.Clear();
@@ -567,8 +571,8 @@ namespace ChessForge
                     }
                 }
 
-                AppState.MainWin.SetActiveLine(_lstSelectedLine, nodeId);
-                AppState.ActiveLineId = lineId;
+                _mainWin.SetActiveLine(_lstSelectedLine, nodeId);
+                LearningMode.ActiveLineId = lineId;
             }
 
             _selectedRunBkg = (SolidColorBrush)r.Background;
@@ -577,13 +581,13 @@ namespace ChessForge
             r.Background = _brushSelectedMoveBkg;
             r.Foreground = _brushSelectedMoveFore;
 
-            AppState.MainWin._lvWorkbookTable_SelectLineAndMove(lineId, nodeId);
+            _mainWin._lvWorkbookTable_SelectLineAndMove(lineId, nodeId);
 
             // this is a right click offer the context menu
             if (e.ChangedButton == MouseButton.Right)
             {
                 _lastClickedNodeId = nodeId;
-                EnableWorkbookMenus(AppState.MainWin._cmWorkbookRightClick, true);
+                EnableWorkbookMenus(_mainWin._cmWorkbookRightClick, true);
             }
             else
             {

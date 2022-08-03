@@ -49,6 +49,13 @@ namespace ChessForge
         /// </summary>
         private int _runToEvaluateIndex = -1;
 
+        private MainWindow _mainWin;
+
+        public EvaluationState(MainWindow mainWin)
+        {
+            _mainWin = mainWin;
+        }
+
         /// <summary>
         /// Adds a Run to the list of _runsToEvaluate.
         /// At the same time, adds the corresponding Node
@@ -58,7 +65,7 @@ namespace ChessForge
         public void AddRunToEvaluate(Run r)
         {
             int nodeId = GuiUtilities.GetNodeIdFromPrefixedString(r.Name);
-            TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
+            TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
             
             _nodesToEvaluate.Add(nd);
             _runsToEvaluate.Add(r);
@@ -142,7 +149,7 @@ namespace ChessForge
                 PositionEvaluation = "";
                 PositionIndex = 0;
 
-                AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
             }
         }
 
@@ -152,7 +159,7 @@ namespace ChessForge
         /// </summary>
         public void PrepareToContinue()
         {
-            AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+            _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
         }
 
         /// <summary>

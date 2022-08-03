@@ -32,7 +32,7 @@ namespace ChessForge
         private static int _maxPage
         {
             get {
-                int bm_count = AppState.MainWin.Workbook.Bookmarks.Count;
+                int bm_count = _mainWin.Workbook.Bookmarks.Count;
                 if (bm_count <= BOOKMARKS_PER_PAGE)
                     return 1;
                 else
@@ -65,25 +65,27 @@ namespace ChessForge
         /// </summary>
         public static int ActiveBookmarkInTraining = -1;
 
+        private static MainWindow _mainWin;
+
         /// <summary>
         /// Resets or recreates all the bookmarks.
         /// Called on app initialization..
         /// </summary>
-        public static void InitBookmarksGui()
+        public static void InitBookmarksGui(MainWindow mainWin)
         {
-            MainWindow mw = AppState.MainWin;
+            _mainWin = mainWin; ;
 
             Bookmarks.Clear();
 
-            Bookmarks.Add(new BookmarkView(new ChessBoard(mw._cnvBookmark_1, mw._imgBookmark_1, mw._lblBookmark_1, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(mw._cnvBookmark_2, mw._imgBookmark_2, mw._lblBookmark_2, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(mw._cnvBookmark_3, mw._imgBookmark_3, mw._lblBookmark_3, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(mw._cnvBookmark_4, mw._imgBookmark_4, mw._lblBookmark_4, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(mw._cnvBookmark_5, mw._imgBookmark_5, mw._lblBookmark_5, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(mw._cnvBookmark_6, mw._imgBookmark_6, mw._lblBookmark_6, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(mw._cnvBookmark_7, mw._imgBookmark_7, mw._lblBookmark_7, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(mw._cnvBookmark_8, mw._imgBookmark_8, mw._lblBookmark_8, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(mw._cnvBookmark_9, mw._imgBookmark_9, mw._lblBookmark_9, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_1, _mainWin._imgBookmark_1, _mainWin._lblBookmark_1, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_2, _mainWin._imgBookmark_2, _mainWin._lblBookmark_2, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_3, _mainWin._imgBookmark_3, _mainWin._lblBookmark_3, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_4, _mainWin._imgBookmark_4, _mainWin._lblBookmark_4, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_5, _mainWin._imgBookmark_5, _mainWin._lblBookmark_5, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_6, _mainWin._imgBookmark_6, _mainWin._lblBookmark_6, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_7, _mainWin._imgBookmark_7, _mainWin._lblBookmark_7, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_8, _mainWin._imgBookmark_8, _mainWin._lblBookmark_8, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_9, _mainWin._imgBookmark_9, _mainWin._lblBookmark_9, false)));
         }
 
         /// <summary>
@@ -94,12 +96,12 @@ namespace ChessForge
         {
             SortBookmarks();
 
-            for (int i = 0; i < AppState.MainWin.Workbook.Bookmarks.Count; i++)
+            for (int i = 0; i < _mainWin.Workbook.Bookmarks.Count; i++)
             {
                 if (i >= Bookmarks.Count)
                     break;
 
-                Bookmarks[i].BookmarkData = AppState.MainWin.Workbook.Bookmarks[i];
+                Bookmarks[i].BookmarkData = _mainWin.Workbook.Bookmarks[i];
                 Bookmarks[i].Activate();
             }
         }
@@ -112,7 +114,7 @@ namespace ChessForge
         /// </summary>
         public static void SortBookmarks()
         {
-            AppState.MainWin.Workbook.Bookmarks.Sort();
+            _mainWin.Workbook.Bookmarks.Sort();
             ResyncBookmarks(_currentPage);
         }
 
@@ -136,11 +138,11 @@ namespace ChessForge
         /// <returns>0 on success, 1 if already exists, -1 on failure</returns>
         public static int AddBookmark(int nodeId)
         {
-            TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
+            TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
             if (nd != null)
             {
                 //add to the list in the Workbook
-                if (AppState.MainWin.Workbook.AddBookmark(nd, true) == 0)
+                if (_mainWin.Workbook.AddBookmark(nd, true) == 0)
                 {
                     SortBookmarks();
                     ResyncBookmarks(_currentPage);
@@ -171,14 +173,14 @@ namespace ChessForge
             TreeNode nd = Bookmarks[ClickedIndex].BookmarkData.Node;
             if (nd != null)
             {
-                AppState.MainWin.Workbook.DeleteBookmark(nd);
+                _mainWin.Workbook.DeleteBookmark(nd);
                 if (_currentPage > _maxPage)
                 {
                     _currentPage = _maxPage;
                 }
                 ResyncBookmarks(_currentPage);
             }
-            AppState.SaveWorkbookFile();
+            LearningMode.SaveWorkbookFile();
         }
 
         /// <summary>
@@ -205,7 +207,7 @@ namespace ChessForge
 
             ClearBookmarksGui();
             Bookmarks.Clear();
-            AppState.SaveWorkbookFile();
+            LearningMode.SaveWorkbookFile();
         }
 
         /// <summary>
@@ -256,7 +258,7 @@ namespace ChessForge
 
                 if (e.ChangedButton == MouseButton.Left)
                 {
-                    AppState.MainWin.SetAppInTrainingMode(bkmNo);
+                    _mainWin.SetAppInTrainingMode(bkmNo);
                     e.Handled = true;
                 }
                 // for the benefit of the context menu set the clicked index.
@@ -283,7 +285,7 @@ namespace ChessForge
 
             }
             DeleteAllBookmarks();
-            AppState.MainWin.Workbook.GenerateBookmarks();
+            _mainWin.Workbook.GenerateBookmarks();
             ShowBookmarks();
         }
 
@@ -338,7 +340,7 @@ namespace ChessForge
         /// </summary>
         private static void ResyncBookmarks(int pageNo)
         {
-            int count = AppState.MainWin.Workbook.Bookmarks.Count;
+            int count = _mainWin.Workbook.Bookmarks.Count;
 
             int start = (pageNo - 1) * BOOKMARKS_PER_PAGE;
             int end = pageNo * BOOKMARKS_PER_PAGE - 1;
@@ -347,7 +349,7 @@ namespace ChessForge
             {
                 if (i < count)
                 {
-                    Bookmarks[i - start].BookmarkData = AppState.MainWin.Workbook.Bookmarks[i];
+                    Bookmarks[i - start].BookmarkData = _mainWin.Workbook.Bookmarks[i];
                     Bookmarks[i - start].Activate();
                 }
                 else
@@ -367,32 +369,32 @@ namespace ChessForge
         /// </summary>
         private static void ShowPageControls()
         {
-            int bm_count = AppState.MainWin.Workbook.Bookmarks.Count;
+            int bm_count = _mainWin.Workbook.Bookmarks.Count;
             if (bm_count <= BOOKMARKS_PER_PAGE)
             {
-                AppState.MainWin._gridBookmarks.RowDefinitions[0].Height = new GridLength(0);
-                AppState.MainWin._cnvPaging.Visibility = Visibility.Collapsed;
+                _mainWin._gridBookmarks.RowDefinitions[0].Height = new GridLength(0);
+                _mainWin._cnvPaging.Visibility = Visibility.Collapsed;
             }
             else
             {
-                AppState.MainWin._cnvPaging.Visibility = Visibility.Visible;
-                AppState.MainWin._gridBookmarks.RowDefinitions[0].Height = new GridLength(20);
-                AppState.MainWin._lblBookmarkPage.Visibility = Visibility.Visible;
-                AppState.MainWin._lblBookmarkPage.Content = "Page " + _currentPage.ToString() +" of " + _maxPage.ToString();
+                _mainWin._cnvPaging.Visibility = Visibility.Visible;
+                _mainWin._gridBookmarks.RowDefinitions[0].Height = new GridLength(20);
+                _mainWin._lblBookmarkPage.Visibility = Visibility.Visible;
+                _mainWin._lblBookmarkPage.Content = "Page " + _currentPage.ToString() +" of " + _maxPage.ToString();
                 if (_currentPage == 1)
                 {
-                    AppState.MainWin._imgRightArrow.Visibility = Visibility.Visible;
-                    AppState.MainWin._imgLeftArrow.Visibility = Visibility.Hidden;
+                    _mainWin._imgRightArrow.Visibility = Visibility.Visible;
+                    _mainWin._imgLeftArrow.Visibility = Visibility.Hidden;
                 }
                 else if (_currentPage == _maxPage)
                 {
-                    AppState.MainWin._imgRightArrow.Visibility = Visibility.Hidden;
-                    AppState.MainWin._imgLeftArrow.Visibility = Visibility.Visible;
+                    _mainWin._imgRightArrow.Visibility = Visibility.Hidden;
+                    _mainWin._imgLeftArrow.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    AppState.MainWin._imgRightArrow.Visibility = Visibility.Visible;
-                    AppState.MainWin._imgLeftArrow.Visibility = Visibility.Visible;
+                    _mainWin._imgRightArrow.Visibility = Visibility.Visible;
+                    _mainWin._imgLeftArrow.Visibility = Visibility.Visible;
                 }
             }
         }

@@ -29,10 +29,9 @@ namespace ChessForge
         private bool _IsNewTreeLineWaiting = false;
 
         /// <summary>
-        /// Reference to the main window hosting the board
-        /// that animates the moves.
+        // Application's Main Window
         /// </summary>
-        private MainWindow _MainWin;
+        private MainWindow _mainWin;
 
         /// <summary>
         /// The variation being currently animated.
@@ -76,7 +75,7 @@ namespace ChessForge
         /// <param name="win"></param>
         public GameReplay(MainWindow win, ChessBoard chessBoard, CommentBoxRichTextBuilder commentBox)
         {
-            _MainWin = win;
+            _mainWin = win;
             _chessBoard = chessBoard;
             _commentBox = commentBox;
         }
@@ -198,7 +197,7 @@ namespace ChessForge
                 return;
             }
 
-            _MainWin.SelectPlyInTextViews((int)_TreeLineToAnimate[index].Position.MoveNumber, _TreeLineToAnimate[index].ColorToMove);
+            _mainWin.SelectPlyInTextViews((int)_TreeLineToAnimate[index].Position.MoveNumber, _TreeLineToAnimate[index].ColorToMove);
 
             LastAnimatedMoveIndex = index + 1;
             if (LastAnimatedMoveIndex < _TreeLineToAnimate.Count)
@@ -219,7 +218,7 @@ namespace ChessForge
         private void FinalizeTreeLineAnimation()
         {
             // tell the GUI to remove the selection from the GridView control
-            _MainWin.SelectPlyInTextViews(-1, PieceColor.White);
+            _mainWin.SelectPlyInTextViews(-1, PieceColor.White);
             // Indicate that we are not replaying anything right now.
             IsReplayActive = false;
             _commentBox.RestoreTitleMessage();
@@ -234,7 +233,7 @@ namespace ChessForge
         private void RequestNodeAnimation(TreeNode nd)
         {
             _chessBoard.DisplayPosition(nd.Parent.Position);
-            _MainWin.MakeMove(nd.Position.LastMove);
+            _mainWin.MakeMove(nd.Position.LastMove);
 
         }
     }

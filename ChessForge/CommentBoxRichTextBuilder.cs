@@ -21,8 +21,11 @@ namespace ChessForge
     /// </summary>
     public class CommentBoxRichTextBuilder : RichTextBuilder
     {
-        public CommentBoxRichTextBuilder(FlowDocument doc) : base(doc)
+        private MainWindow _mainWin;
+
+        public CommentBoxRichTextBuilder(FlowDocument doc, MainWindow mainWin) : base(doc)
         {
+            _mainWin = mainWin;
         }
 
         override internal Dictionary<string, RichTextPara> RichTextParas { get { return _richTextParas; } }
@@ -86,7 +89,7 @@ namespace ChessForge
         /// </summary>
         public void RestoreTitleMessage()
         {
-            ShowWorkbookTitle(AppState.MainWin.Workbook.Title);
+            ShowWorkbookTitle(_mainWin.Workbook.Title);
         }
 
         public void GameReplayStart()

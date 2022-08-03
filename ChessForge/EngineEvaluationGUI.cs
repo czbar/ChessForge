@@ -34,14 +34,19 @@ namespace ChessForge
         /// </summary>
         public List<MoveEvaluation> Lines = new List<MoveEvaluation>();
 
+        // Application's Main Window
+        private MainWindow _mainWin;
+
         /// <summary>
         /// Initialzes the object with GUI references.
         /// </summary>
         /// <param name="textBox"></param>
         /// <param name="progBar"></param>
         /// <param name="evalState"></param>
-        public EngineEvaluationGUI(TextBox textBox, ProgressBar progBar, EvaluationState evalState)
+        public EngineEvaluationGUI(MainWindow mainWin, TextBox textBox, ProgressBar progBar, EvaluationState evalState)
         {
+            _mainWin = mainWin;
+
             _tbEvalLines = textBox;
             _pbEngineEval = progBar;
             _evalState = evalState;
@@ -97,7 +102,7 @@ namespace ChessForge
 
             _pbEngineEval.Dispatcher.Invoke(() =>
             {
-                _pbEngineEval.Value = AppState.MainWin.Timers.GetElapsedTime(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                _pbEngineEval.Value = _mainWin.Timers.GetElapsedTime(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
             });
         }
 

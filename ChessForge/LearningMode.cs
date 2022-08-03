@@ -11,7 +11,7 @@ namespace ChessForge
     /// <summary>
     /// Application wide settings.
     /// </summary>
-    public class AppState
+    public class LearningMode
     {
         /// <summary>
         /// The program is always in one, and only one, of these modes.
@@ -98,13 +98,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Main application window.
-        /// Exposing the public reference through this object
-        /// for convenient access/reference.
-        /// </summary>
-        public static MainWindow MainWin;
-
-        /// <summary>
         /// Indicates whether there are any unsaved changes in the Workbook
         /// </summary>
         public static bool IsDirty;
@@ -130,7 +123,7 @@ namespace ChessForge
         /// <summary>
         /// Switches application to another mode.
         /// </summary>
-        public static void ChangeCurrentMode(AppState.Mode mode)
+        public static void ChangeCurrentMode(LearningMode.Mode mode)
         {
             TidyUpOnModeExit(_previousMode);
 
@@ -141,7 +134,7 @@ namespace ChessForge
             // introduce a new mode, or ... something
             if (mode != Mode.GAME_VS_COMPUTER || _previousMode != Mode.TRAINING)
             {
-                MainWin.ConfigureUIForMode(mode);
+                AppStateManager.MainWin.ConfigureUIForMode(mode);
             }
         }
 
@@ -151,8 +144,8 @@ namespace ChessForge
         /// </summary>
         public static PieceColor TrainingSide
         {
-            get { return MainWin.Workbook.TrainingSide; }
-            set { MainWin.Workbook.TrainingSide = value; }
+            get { return AppStateManager.MainWin.Workbook.TrainingSide; }
+            set { AppStateManager.MainWin.Workbook.TrainingSide = value; }
         }
 
         /// <summary>
@@ -161,7 +154,7 @@ namespace ChessForge
         /// E.g. stoping appropriate timers.
         /// </summary>
         /// <param name="mode"></param>
-        private static void TidyUpOnModeExit(AppState.Mode previousMode)
+        private static void TidyUpOnModeExit(LearningMode.Mode previousMode)
         {
         }
 
@@ -249,7 +242,7 @@ namespace ChessForge
 
             if (WorkbookFileType == FileType.CHF)
             {
-                string chfText = ChfTextBuilder.BuildText(MainWin.Workbook);
+                string chfText = ChfTextBuilder.BuildText(AppStateManager.MainWin.Workbook);
                 File.WriteAllText(WorkbookFilePath, chfText);
             }
         }
