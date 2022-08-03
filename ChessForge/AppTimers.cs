@@ -83,12 +83,16 @@ namespace ChessForge
         /// </summary>
         private Dictionary<StopwatchId, Stopwatch> _dictStopwatches = new Dictionary<StopwatchId, Stopwatch>();
 
+        private MainWindow _mainWin;
+
         /// <summary>
         /// Constructs all application timers.
         /// </summary>
         /// <param name="gui"></param>
-        public AppTimers(EngineEvaluationGUI gui)
+        public AppTimers(EngineEvaluationGUI gui, MainWindow mainWin)
         {
+            _mainWin = mainWin;
+
             _evaluationLinesDisplayTimer = new Timer();
             InitEvaluationLinesDisplayTimer(gui);
             _dictTimers.Add(TimerId.EVALUATION_LINE_DISPLAY, _evaluationLinesDisplayTimer);
@@ -205,7 +209,7 @@ namespace ChessForge
 
         private void InitCheckForUserMoveTimer()
         {
-            _checkForUserMoveTimer.Elapsed += new ElapsedEventHandler(AppState.MainWin.ProcessUserMoveEvent);
+            _checkForUserMoveTimer.Elapsed += new ElapsedEventHandler(_mainWin.ProcessUserMoveEvent);
             _checkForUserMoveTimer.Interval = 50;
             _checkForUserMoveTimer.Enabled = false;
         }
@@ -219,14 +223,14 @@ namespace ChessForge
 
         private void InitRequestWorkbookMove()
         {
-            _requestWorkbookMove.Elapsed += new ElapsedEventHandler(AppState.MainWin.InvokeRequestWorkbookResponse);
+            _requestWorkbookMove.Elapsed += new ElapsedEventHandler(_mainWin.InvokeRequestWorkbookResponse);
             _requestWorkbookMove.Interval = 300;
             _requestWorkbookMove.Enabled = false;
         }
         
         private void InitShowTrainingProgressPopupMenu()
         {
-            _showTrainingProgressPopupMenu.Elapsed += new ElapsedEventHandler(AppState.MainWin.ShowTrainingProgressPopupMenu);
+            _showTrainingProgressPopupMenu.Elapsed += new ElapsedEventHandler(_mainWin.ShowTrainingProgressPopupMenu);
             _showTrainingProgressPopupMenu.Interval = 100;
             _showTrainingProgressPopupMenu.Enabled = false;
         }

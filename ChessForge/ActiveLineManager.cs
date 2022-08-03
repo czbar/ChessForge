@@ -27,14 +27,18 @@ namespace ChessForge
         // column where Black's plies are displayed
         private int _dgActiveLineBlackPlyColumn = 3;
 
+        // Application's Main Window
+        private MainWindow _mainWin;
+
         /// <summary>
         /// Constructor.
         /// Sets reference to the DataGrid control
         /// visualizing the active line.
         /// </summary>
         /// <param name="dg"></param>
-        public ActiveLineManager(DataGrid dg)
+        public ActiveLineManager(DataGrid dg, MainWindow mainWin)
         {
+            _mainWin = mainWin;
             _dgActiveLine = dg;
         }
 
@@ -218,17 +222,17 @@ namespace ChessForge
             GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out row, out column);
 
             // if there is replay happening now, stop it
-            if (AppState.MainWin.ActiveLineReplay.IsReplayActive)
+            if (_mainWin.ActiveLineReplay.IsReplayActive)
             {
-                AppState.MainWin.StopMoveAnimation();
-                AppState.MainWin.CommentBox.RestoreTitleMessage();
+                _mainWin.StopMoveAnimation();
+                _mainWin.CommentBox.RestoreTitleMessage();
             }
 
             if (row >= 0)
             {
                 int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
-                AppState.MainWin.ActiveLineReplay.SetupTreeLineToDisplay(Line.NodeList, moveIndex + 1);
-                AppState.MainWin.CommentBox.GameReplayStart();
+                _mainWin.ActiveLineReplay.SetupTreeLineToDisplay(Line.NodeList, moveIndex + 1);
+                _mainWin.CommentBox.GameReplayStart();
             }
         }
 
@@ -255,21 +259,21 @@ namespace ChessForge
                 {
                     TreeNode nd = Line.GetNodeAtIndex(moveIndex + 1);
 
-                    if (AppState.MainWin.ActiveLineReplay.IsReplayActive)
+                    if (_mainWin.ActiveLineReplay.IsReplayActive)
                     {
                         // request that the replay be stopped and the clicked
                         // position shown, unless this mouse down
                         // was part of a double click (in which case the double click
                         // handler will override this).
-                        AppState.MainWin.ActiveLineReplay.ShowPositionAndStop(nd);
-                        AppState.MainWin.CommentBox.RestoreTitleMessage();
+                        _mainWin.ActiveLineReplay.ShowPositionAndStop(nd);
+                        _mainWin.CommentBox.RestoreTitleMessage();
 
                         //StopAnimation();
                         //gameReplay.Stop();
                     }
 
-                    AppState.MainWin.DisplayPosition(nd.Position);
-                    AppState.MainWin.SelectLineAndMoveInWorkbookViews(null, nd.NodeId);
+                    _mainWin.DisplayPosition(nd.Position);
+                    _mainWin.SelectLineAndMoveInWorkbookViews(null, nd.NodeId);
                 }
             }
             else
@@ -343,19 +347,19 @@ namespace ChessForge
                     moveIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1);
                     TreeNode nd = Line.GetNodeAtIndex(moveIndex + 1);
 
-                    if (AppState.MainWin.ActiveLineReplay.IsReplayActive)
+                    if (_mainWin.ActiveLineReplay.IsReplayActive)
                     {
                         // request that the replay be stopped and the clicked
                         // position shown, unless this mouse down
                         // was part of double click (in which case the doble click
                         // handler will override this.
-                        AppState.MainWin.ActiveLineReplay.ShowPositionAndStop(nd);
+                        _mainWin.ActiveLineReplay.ShowPositionAndStop(nd);
                     }
                     else
                     {
-                        AppState.MainWin.DisplayPosition(nd.Position);
+                        _mainWin.DisplayPosition(nd.Position);
                     }
-                    AppState.MainWin.SelectLineAndMoveInWorkbookViews(null, nd.NodeId);
+                    _mainWin.SelectLineAndMoveInWorkbookViews(null, nd.NodeId);
                 }
                 e.Handled = true;
             }
@@ -400,7 +404,7 @@ namespace ChessForge
         /// <returns></returns>
         private bool IsSelectableCell(int row, int column)
         {
-            if (AppState.CurrentMode == AppState.Mode.MANUAL_REVIEW)
+            if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
             {
                 if (!IsSelectableColumn(column))
                     return false;

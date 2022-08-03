@@ -32,7 +32,7 @@ namespace ChessForge
         /// <summary>
         /// Current state of the game.
         /// </summary>
-        public static GameState State;
+        public static GameState CurrentState;
 
         /// <summary>
         /// Position from which the game started.
@@ -48,22 +48,29 @@ namespace ChessForge
         /// </summary>
         public static bool TrainingWorkbookMoveMade { get => _trainingWorkbookMoveMade; set => _trainingWorkbookMoveMade = value; }
 
+        private static MainWindow _mainWin;
+
+        public static void SetMainWin(MainWindow mainWin)
+        {
+            _mainWin = mainWin;
+        }
+
         public static void CheckForTrainingWorkbookMoveMade(object source, ElapsedEventArgs e)
         {
             if (TrainingWorkbookMoveMade)
             {
                 TrainingWorkbookMoveMade = false;
                 // stop polling for the workbook move
-                AppState.MainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
+                _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
 
-                AppState.MainWin.DisplayPosition(GetCurrentPosition());
+                _mainWin.DisplayPosition(GetCurrentPosition());
                 SoundPlayer.PlayMoveSound(GetCurrentNode().LastMoveAlgebraicNotation);
 
-                AppState.MainWin._trainingView.WorkbookMoveMade();
+                _mainWin._trainingView.WorkbookMoveMade();
 
                 // TODO: show appropriate notifications in the GUI
                 // start polling for the user move
-                AppState.MainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+                _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
                 TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_TRAINING_MOVE;
             }
         }
@@ -75,7 +82,7 @@ namespace ChessForge
         /// <param name="IsEngineMove"></param>
         public static void PrepareGame(TreeNode startNode, bool IsEngineMove, bool IsTraining)
         {
-            State = IsEngineMove ? GameState.ENGINE_THINKING : GameState.USER_THINKING;
+            CurrentState = IsEngineMove ? GameState.ENGINE_THINKING : GameState.USER_THINKING;
             GameStartPosition = startNode;
 
             if (!IsTraining)
@@ -93,7 +100,7 @@ namespace ChessForge
         public static BoardPosition ProcessEngineGameMove(out TreeNode nd)
         {
             // debug exception
-            if (AppState.CurrentMode != AppState.Mode.GAME_VS_COMPUTER)
+            if (LearningMode.CurrentMode != LearningMode.Mode.GAME_VS_COMPUTER)
                 throw (new Exception("ProcessEngineGameMove() called NOT during a game"));
 
             string engMove = SelectMove(false);
@@ -104,13 +111,13 @@ namespace ChessForge
             bool isCastle;
             string algMove = MoveUtils.EngineNotationToAlgebraic(engMove, ref pos, out isCastle);
 
-            nd = new TreeNode(curr, algMove, AppState.MainWin.Workbook.GetNewNodeId());
+            nd = new TreeNode(curr, algMove, _mainWin.Workbook.GetNewNodeId());
             nd.IsNewTrainingMove = curr.IsNewTrainingMove;
             nd.Position = pos;
             nd.Position.ColorToMove = pos.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
             nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
             Line.AddPlyAndMove(nd);
-            AppState.MainWin.Workbook.AddNodeToParent(nd);
+            _mainWin.Workbook.AddNodeToParent(nd);
 
             return pos;
         }
@@ -148,12 +155,12 @@ namespace ChessForge
                 nd.Position.ColorToMove = nd.Position.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
                 nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
                 nd.LastMoveAlgebraicNotation = algMove;
-                TreeNode sib = AppState.MainWin.Workbook.GetIdenticalSibling(nd);
+                TreeNode sib = _mainWin.Workbook.GetIdenticalSibling(nd);
                 if (sib == null)
                 {
                     // if this is a new move, mark as such and add to Workbook
                     nd.IsNewTrainingMove = true;
-                    AppState.MainWin.Workbook.AddNodeToParent(nd);
+                    _mainWin.Workbook.AddNodeToParent(nd);
                 }
                 else
                 {
@@ -176,10 +183,10 @@ namespace ChessForge
         /// <param name="nd"></param>
         private static void SwitchToAwaitEngineMove(TreeNode nd)
         {
-            if (TrainingState.IsTrainingInProgress && AppState.CurrentMode != AppState.Mode.GAME_VS_COMPUTER)
+            if (TrainingState.IsTrainingInProgress && LearningMode.CurrentMode != LearningMode.Mode.GAME_VS_COMPUTER)
             {
                 TrainingState.CurrentMode = TrainingState.Mode.USER_MOVE_COMPLETED;
-                AppState.MainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+                _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
             }
             else
             {
@@ -188,18 +195,18 @@ namespace ChessForge
                     // this is a game during Training triggered by the user making a move not in Workbook.
                     // We know, therefore, that this is a new move.
                     nd.IsNewTrainingMove = true;
-                    nd.NodeId = AppState.MainWin.Workbook.GetNewNodeId();
-                    AppState.MainWin._trainingView.UserMoveMade();
+                    nd.NodeId = _mainWin.Workbook.GetNewNodeId();
+                    _mainWin._trainingView.UserMoveMade();
                 }
-                State = GameState.ENGINE_THINKING;
+                CurrentState = GameState.ENGINE_THINKING;
             }
         }
 
         private static void SwitchToAwaitUserMove(TreeNode nd)
         {
-            State = GameState.USER_THINKING;
-            AppState.MainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-            AppState.MainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
+            CurrentState = GameState.USER_THINKING;
+            _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+            _mainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
         }
 
         /// <summary>
@@ -210,7 +217,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public static void RestartAtUserMove(TreeNode nd)
         {
-            AppState.MainWin.Workbook.RemoveTailAfter(nd);
+            _mainWin.Workbook.RemoveTailAfter(nd);
             Line.RollbackToNode(nd);
             SwitchToAwaitEngineMove(nd);
         }
@@ -223,7 +230,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public static void RestartAtEngineMove(TreeNode nd)
         {
-            AppState.MainWin.Workbook.RemoveTailAfter(nd);
+            _mainWin.Workbook.RemoveTailAfter(nd);
             Line.RollbackToNode(nd);
             SwitchToAwaitUserMove(nd);
         }
@@ -254,7 +261,7 @@ namespace ChessForge
 
             BoardPosition pos = new BoardPosition(curr.Position);
 
-            TreeNode nd = new TreeNode(curr, "", AppState.MainWin.Workbook.GetNewNodeId());
+            TreeNode nd = new TreeNode(curr, "", _mainWin.Workbook.GetNewNodeId());
             nd.Position = pos;
 
             return nd;
@@ -313,12 +320,12 @@ namespace ChessForge
         public static void ReplaceCurrentWithWorkbookMove(TreeNode nd)
         {
             Line.ReplaceLastPly(nd);
-            AppState.MainWin.DisplayPosition(nd.Position);
+            _mainWin.DisplayPosition(nd.Position);
         }
 
         public static void ReplaceCurrentWithWorkbookMove(int nodeId)
         {
-            TreeNode nd = AppState.MainWin.Workbook.GetNodeFromNodeId(nodeId);
+            TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
             ReplaceCurrentWithWorkbookMove(nd);
         }
 
@@ -335,7 +342,7 @@ namespace ChessForge
         /// </summary>
         public static void AddLastNodeToPlies()
         {
-            AppState.MainWin.Dispatcher.Invoke(() =>
+            _mainWin.Dispatcher.Invoke(() =>
             {
                 Line.AddPly(GetCurrentNode());
             });
@@ -343,7 +350,7 @@ namespace ChessForge
 
         public static void AddPlyToGame(TreeNode nd)
         {
-            AppState.MainWin.Dispatcher.Invoke(() =>
+            _mainWin.Dispatcher.Invoke(() =>
             {
                 Line.AddPlyAndMove(nd);
             });

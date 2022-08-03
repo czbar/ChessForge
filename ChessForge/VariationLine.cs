@@ -46,7 +46,7 @@ namespace ChessForge
 
         public void AddPlyAndMove(TreeNode nd)
         {
-            AppState.MainWin.Dispatcher.Invoke(() =>
+            AppStateManager.MainWin.Dispatcher.Invoke(() =>
             {
                 NodeList.Add(nd);
                 AddPly(nd);
