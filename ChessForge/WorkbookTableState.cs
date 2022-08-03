@@ -10,6 +10,7 @@ namespace ChessForge
 {
     internal class WorkbookTableState
     {
+#if false // suppressing "never assigned to" warning while the WorkbookTable code is commented out
         /// <summary>
         /// The number of plies in the stem of the game
         /// i.e. before the first fork.
@@ -20,11 +21,15 @@ namespace ChessForge
         /// The maximum number of moves to show in the table.
         /// </summary>
         public static int MaxMoves;
+#endif
 
+        /// <summary>
+        /// Indicates whether the Table has been initialized
+        /// </summary>
         public static bool IsInitialized;
 
         /// <summary>
-        /// Selected TextBox (cell in the table)
+        /// Selected TextBox (cell in the table).
         /// </summary>
         public static TextBlock SelectedTextBlock
         {
@@ -33,16 +38,13 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Color of the foreground for the selected move.
+        /// Returns the selected row
         /// </summary>
-        //public static SolidColorBrush HighlightForeground
-        //{
-        //    get { return _highlightForeground; }
-        //    set { _highlightForeground = value; }
-        //}
-
         public static int SelectedRow { get => _selectedRow; set => _selectedRow = value; }
 
+        /// <summary>
+        /// Returns the selected column.
+        /// </summary>
         public static int SelectedColumn { get => _selectedColumn; set => _selectedColumn = value; }
 
         /// <summary>
@@ -51,12 +53,10 @@ namespace ChessForge
         public static void Reset()
         {
             _selectedTextBlock = null;
-//            _highlightForeground = null;
             IsInitialized = false;
         }
 
         private static TextBlock _selectedTextBlock;
-//        private static SolidColorBrush _highlightForeground;
 
         private static int _selectedRow = -1;
         private static int _selectedColumn = -1;
