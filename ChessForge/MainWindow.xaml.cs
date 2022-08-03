@@ -1377,6 +1377,13 @@ namespace ChessForge
                     MainChessBoard.FlipBoard();
                 }
             }
+            else
+            {
+                if (MainChessBoard.IsFlipped)
+                {
+                    MainChessBoard.FlipBoard();
+                }
+            }
 
             CommentBox.TrainingSessionStart();
 
