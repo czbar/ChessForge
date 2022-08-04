@@ -40,9 +40,6 @@ namespace ChessForge
             
             // user move completed, the program will pick it up
             USER_MOVE_COMPLETED = 0x08,
-
-            // a game vs engine is in progress
-            ENGINE_GAME = 0x10
         }
 
         /// <summary>

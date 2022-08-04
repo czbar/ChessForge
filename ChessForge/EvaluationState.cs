@@ -29,7 +29,7 @@ namespace ChessForge
             TRAINING_SINGLE_MOVE,
             TRAINING_LINE,
 
-            IN_GAME_PLAY,
+            ENGINE_GAME,
         };
 
         /// <summary>

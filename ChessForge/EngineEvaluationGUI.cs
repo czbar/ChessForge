@@ -71,7 +71,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void ShowEngineLines(object source, ElapsedEventArgs e)
         {
-            if (_evalState.CurrentMode != EvaluationState.EvaluationMode.IN_GAME_PLAY)
+            if (_evalState.CurrentMode != EvaluationState.EvaluationMode.ENGINE_GAME)
             {
                 Lines.Clear();
                 lock (EngineMessageProcessor.MoveCandidatesLock)

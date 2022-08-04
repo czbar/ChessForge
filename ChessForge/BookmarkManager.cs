@@ -65,6 +65,7 @@ namespace ChessForge
         /// </summary>
         public static int ActiveBookmarkInTraining = -1;
 
+        // main application window
         private static MainWindow _mainWin;
 
         /// <summary>
@@ -73,19 +74,19 @@ namespace ChessForge
         /// </summary>
         public static void InitBookmarksGui(MainWindow mainWin)
         {
-            _mainWin = mainWin; ;
+            _mainWin = mainWin;
 
             Bookmarks.Clear();
 
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_1, _mainWin._imgBookmark_1, _mainWin._lblBookmark_1, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_2, _mainWin._imgBookmark_2, _mainWin._lblBookmark_2, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_3, _mainWin._imgBookmark_3, _mainWin._lblBookmark_3, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_4, _mainWin._imgBookmark_4, _mainWin._lblBookmark_4, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_5, _mainWin._imgBookmark_5, _mainWin._lblBookmark_5, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_6, _mainWin._imgBookmark_6, _mainWin._lblBookmark_6, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_7, _mainWin._imgBookmark_7, _mainWin._lblBookmark_7, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_8, _mainWin._imgBookmark_8, _mainWin._lblBookmark_8, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin._cnvBookmark_9, _mainWin._imgBookmark_9, _mainWin._lblBookmark_9, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_1, _mainWin.UiImgBookmark_1, _mainWin.UiLblBookmark_1, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_2, _mainWin.UiImgBookmark_2, _mainWin.UiLblBookmark_2, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_3, _mainWin.UiImgBookmark_3, _mainWin.UiLblBookmark_3, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_4, _mainWin.UiImgBookmark_4, _mainWin.UiLblBookmark_4, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_5, _mainWin.UiImgBookmark_5, _mainWin.UiLblBookmark_5, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_6, _mainWin.UiImgBookmark_6, _mainWin.UiLblBookmark_6, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_7, _mainWin.UiImgBookmark_7, _mainWin.UiLblBookmark_7, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_8, _mainWin.UiImgBookmark_8, _mainWin.UiLblBookmark_8, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_9, _mainWin.UiImgBookmark_9, _mainWin.UiLblBookmark_9, false)));
         }
 
         /// <summary>
@@ -372,29 +373,29 @@ namespace ChessForge
             int bm_count = _mainWin.Workbook.Bookmarks.Count;
             if (bm_count <= BOOKMARKS_PER_PAGE)
             {
-                _mainWin._gridBookmarks.RowDefinitions[0].Height = new GridLength(0);
-                _mainWin._cnvPaging.Visibility = Visibility.Collapsed;
+                _mainWin.UiGridBookmarks.RowDefinitions[0].Height = new GridLength(0);
+                _mainWin.UiCnvPaging.Visibility = Visibility.Collapsed;
             }
             else
             {
-                _mainWin._cnvPaging.Visibility = Visibility.Visible;
-                _mainWin._gridBookmarks.RowDefinitions[0].Height = new GridLength(20);
-                _mainWin._lblBookmarkPage.Visibility = Visibility.Visible;
-                _mainWin._lblBookmarkPage.Content = "Page " + _currentPage.ToString() +" of " + _maxPage.ToString();
+                _mainWin.UiCnvPaging.Visibility = Visibility.Visible;
+                _mainWin.UiGridBookmarks.RowDefinitions[0].Height = new GridLength(20);
+                _mainWin.UiLblBookmarkPage.Visibility = Visibility.Visible;
+                _mainWin.UiLblBookmarkPage.Content = "Page " + _currentPage.ToString() +" of " + _maxPage.ToString();
                 if (_currentPage == 1)
                 {
-                    _mainWin._imgRightArrow.Visibility = Visibility.Visible;
-                    _mainWin._imgLeftArrow.Visibility = Visibility.Hidden;
+                    _mainWin.UiImgRightArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiImgLeftArrow.Visibility = Visibility.Hidden;
                 }
                 else if (_currentPage == _maxPage)
                 {
-                    _mainWin._imgRightArrow.Visibility = Visibility.Hidden;
-                    _mainWin._imgLeftArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiImgRightArrow.Visibility = Visibility.Hidden;
+                    _mainWin.UiImgLeftArrow.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    _mainWin._imgRightArrow.Visibility = Visibility.Visible;
-                    _mainWin._imgLeftArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiImgRightArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiImgLeftArrow.Visibility = Visibility.Visible;
                 }
             }
         }

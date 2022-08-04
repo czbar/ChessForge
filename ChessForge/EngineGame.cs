@@ -19,7 +19,6 @@ namespace ChessForge
             IDLE = 0x00,
             USER_THINKING = 0x01,
             ENGINE_THINKING = 0x02,
-            PAUSED = 0x04
         }
 
         /// <summary>
@@ -66,7 +65,7 @@ namespace ChessForge
                 _mainWin.DisplayPosition(GetCurrentPosition());
                 SoundPlayer.PlayMoveSound(GetCurrentNode().LastMoveAlgebraicNotation);
 
-                _mainWin._trainingView.WorkbookMoveMade();
+                _mainWin.UiTrainingView.WorkbookMoveMade();
 
                 // TODO: show appropriate notifications in the GUI
                 // start polling for the user move
@@ -100,7 +99,7 @@ namespace ChessForge
         public static BoardPosition ProcessEngineGameMove(out TreeNode nd)
         {
             // debug exception
-            if (LearningMode.CurrentMode != LearningMode.Mode.GAME_VS_COMPUTER)
+            if (LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
                 throw (new Exception("ProcessEngineGameMove() called NOT during a game"));
 
             string engMove = SelectMove(false);
@@ -183,7 +182,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         private static void SwitchToAwaitEngineMove(TreeNode nd)
         {
-            if (TrainingState.IsTrainingInProgress && LearningMode.CurrentMode != LearningMode.Mode.GAME_VS_COMPUTER)
+            if (TrainingState.IsTrainingInProgress && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
             {
                 TrainingState.CurrentMode = TrainingState.Mode.USER_MOVE_COMPLETED;
                 _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
@@ -196,7 +195,7 @@ namespace ChessForge
                     // We know, therefore, that this is a new move.
                     nd.IsNewTrainingMove = true;
                     nd.NodeId = _mainWin.Workbook.GetNewNodeId();
-                    _mainWin._trainingView.UserMoveMade();
+                    _mainWin.UiTrainingView.UserMoveMade();
                 }
                 CurrentState = GameState.ENGINE_THINKING;
             }

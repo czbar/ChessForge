@@ -43,8 +43,9 @@ namespace ChessForge
         /// <summary>
         /// The RichTextBox based training view
         /// </summary>
-        public TrainingView _trainingView;
+        public TrainingView UiTrainingView;
 
+        // width and and height of a square in the main chessboard
         private const int squareSize = 80;
 
         public EngineEvaluationGUI EngineLinesGUI;
@@ -54,9 +55,7 @@ namespace ChessForge
         // The main chessboard of the application
         private ChessBoard MainChessBoard;
 
-        public ChessBoard TrainingViewChessBoard;
-
-        private List<UIEelementState> _uIEelementStates;
+        public ChessBoard FloatingChessBoard;
 
         /// <summary>
         /// The RichTextBox based comment box
@@ -86,6 +85,10 @@ namespace ChessForge
 
         /// <summary>
         /// The main application window.
+        /// Initializes the GUI controls.
+        /// Note that some of the controls must be initialized
+        /// in a particular order as one control may use a reference 
+        /// to another one.
         /// </summary>
         public MainWindow()
         {
@@ -98,30 +101,18 @@ namespace ChessForge
             InitializeComponent();
             SoundPlayer.Initialize();
 
-            // initialize the UIElement states table
-            InitializeUIElementStates();
-
-            CommentBox = new CommentBoxRichTextBuilder(_rtbBoardComment.Document, this);
-            ActiveLine = new ActiveLineManager(_dgActiveLine, this);
+            CommentBox = new CommentBoxRichTextBuilder(UiRtbBoardComment.Document, this);
+            ActiveLine = new ActiveLineManager(UiDgActiveLine, this);
 
             _menuPlayComputer.Header = Strings.MENU_ENGINE_GAME_START;
 
-            EngineLinesGUI = new EngineEvaluationGUI(this, _tbEngineLines, _pbEngineThinking, Evaluation);
+            EngineLinesGUI = new EngineEvaluationGUI(this, UiTbEngineLines, UiPbEngineThinking, Evaluation);
             Timers = new AppTimers(EngineLinesGUI, this);
 
             Configuration.Initialize(this);
             Configuration.StartDirectory = Directory.GetCurrentDirectory();
-
-            // main chess board
-            MainChessBoard = new ChessBoard(MainCanvas, _imgMainChessboard, null, true);
-            TrainingViewChessBoard = new ChessBoard(_cnvFloat, _imgFloatingBoard, null, true);
-
-            BookmarkManager.InitBookmarksGui(this);
-
             Configuration.ReadConfigurationFile();
             MoveAnimation.MoveDuration = Configuration.MoveSpeed;
-            ActiveLineReplay = new GameReplay(this, MainChessBoard, CommentBox);
-
             if (Configuration.MainWinPos.IsValid)
             {
                 this.Left = Configuration.MainWinPos.Left;
@@ -130,19 +121,25 @@ namespace ChessForge
                 this.Height = Configuration.MainWinPos.Height;
             }
 
-            _sldReplaySpeed.Value = Configuration.MoveSpeed;
+            // main chess board
+            MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true);
+            FloatingChessBoard = new ChessBoard(_cnvFloat, _imgFloatingBoard, null, true);
+
+            BookmarkManager.InitBookmarksGui(this);
+
+            ActiveLineReplay = new GameReplay(this, MainChessBoard, CommentBox);
+
+
+            UiSldReplaySpeed.Value = Configuration.MoveSpeed;
             _isDebugMode = Configuration.DebugMode != 0;
 
             EngineMessageProcessor.CreateEngineService(this, _isDebugMode);
 
             // add the main context menu to the Single Variation view.
-            _dgActiveLine.ContextMenu = menuContext;
+            UiDgActiveLine.ContextMenu = menuContext;
 
-            SetupGuiForManualReviewMode();
-
-            //            ShowEvaluationProgressControls(false);
-            ShowEvaluationProgressControls();
-            _sldReplaySpeed.Visibility = Visibility.Hidden;
+            AppStateManager.CurrentLearningMode = LearningMode.Mode.IDLE;
+            AppStateManager.SetupGuiForCurrentStates();
         }
 
         /// <summary>
@@ -156,8 +153,8 @@ namespace ChessForge
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            _rtbWorkbookView.Document.Blocks.Clear();
-            _rtbWorkbookView.IsReadOnly = true;
+            UiRtbWorkbookView.Document.Blocks.Clear();
+            UiRtbWorkbookView.IsReadOnly = true;
 
             CreateRecentFilesMenuItems();
 
@@ -180,7 +177,6 @@ namespace ChessForge
                 {
                 }
             }
-
         }
 
         /// <summary>
@@ -215,8 +211,8 @@ namespace ChessForge
         /// <returns></returns>
         private Point GetSquareTopLeftPoint(SquareCoords sq)
         {
-            double left = squareSize * sq.Xcoord + _imgMainChessboard.Margin.Left;
-            double top = squareSize * (7 - sq.Ycoord) + _imgMainChessboard.Margin.Top;
+            double left = squareSize * sq.Xcoord + UiImgMainChessboard.Margin.Left;
+            double top = squareSize * (7 - sq.Ycoord) + UiImgMainChessboard.Margin.Top;
 
             return new Point(left, top);
         }
@@ -259,7 +255,7 @@ namespace ChessForge
         /// <returns></returns>
         private SquareCoords ClickedSquare(Point p)
         {
-            double squareSide = _imgMainChessboard.Width / 8.0;
+            double squareSide = UiImgMainChessboard.Width / 8.0;
             double xPos = p.X / squareSide;
             double yPos = p.Y / squareSide;
 
@@ -284,7 +280,7 @@ namespace ChessForge
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                Point clickedPoint = e.GetPosition(_imgMainChessboard);
+                Point clickedPoint = e.GetPosition(UiImgMainChessboard);
                 SquareCoords sq = ClickedSquare(clickedPoint);
 
                 if (sq != null)
@@ -297,7 +293,7 @@ namespace ChessForge
 
                     if (sq != null && EngineGame.GetPieceColor(sqNorm) == EngineGame.ColorToMove)
                     {
-                        if (LearningMode.CurrentMode == LearningMode.Mode.GAME_VS_COMPUTER && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
+                        if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
                             || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingState.CurrentMode == TrainingState.Mode.AWAITING_USER_TRAINING_MOVE && !TrainingState.IsBrowseActive)
                         {
                             DraggedPiece.isDragInProgress = true;
@@ -308,8 +304,8 @@ namespace ChessForge
                             DraggedPiece.ptDraggedPieceOrigin = ptLeftTop;
 
                             // for the remainder, we need absolute point
-                            clickedPoint.X += _imgMainChessboard.Margin.Left;
-                            clickedPoint.Y += _imgMainChessboard.Margin.Top;
+                            clickedPoint.X += UiImgMainChessboard.Margin.Left;
+                            clickedPoint.Y += UiImgMainChessboard.Margin.Top;
                             DraggedPiece.ptStartDragLocation = clickedPoint;
 
 
@@ -334,7 +330,7 @@ namespace ChessForge
             if (DraggedPiece.isDragInProgress)
             {
                 DraggedPiece.isDragInProgress = false;
-                Point clickedPoint = e.GetPosition(_imgMainChessboard);
+                Point clickedPoint = e.GetPosition(UiImgMainChessboard);
                 SquareCoords targetSquare = ClickedSquare(clickedPoint);
                 if (targetSquare == null)
                 {
@@ -345,7 +341,7 @@ namespace ChessForge
                 else
                 {
                     // double check that we are legitimately making a move
-                    if (LearningMode.CurrentMode == LearningMode.Mode.GAME_VS_COMPUTER && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
+                    if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
                         || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingState.CurrentMode == TrainingState.Mode.AWAITING_USER_TRAINING_MOVE)
                     {
                         FinalizeUserMove(targetSquare);
@@ -487,26 +483,26 @@ namespace ChessForge
             Point leftTop = new Point();
             if (!MainChessBoard.IsFlipped)
             {
-                leftTop.X = ChessForgeMain.Left + ChessForgeMain._imgMainChessboard.Margin.Left + 20 + normTarget.Xcoord * 80;
+                leftTop.X = ChessForgeMain.Left + ChessForgeMain.UiImgMainChessboard.Margin.Left + 20 + normTarget.Xcoord * 80;
                 if (whitePromotion)
                 {
-                    leftTop.Y = ChessForgeMain.Top + ChessForgeMain._imgMainChessboard.Margin.Top + 40 + (7 - normTarget.Ycoord) * 80;
+                    leftTop.Y = ChessForgeMain.Top + ChessForgeMain.UiImgMainChessboard.Margin.Top + 40 + (7 - normTarget.Ycoord) * 80;
                 }
                 else
                 {
-                    leftTop.Y = ChessForgeMain.Top + ChessForgeMain._imgMainChessboard.Margin.Top + 40 + (3 - normTarget.Ycoord) * 80;
+                    leftTop.Y = ChessForgeMain.Top + ChessForgeMain.UiImgMainChessboard.Margin.Top + 40 + (3 - normTarget.Ycoord) * 80;
                 }
             }
             else
             {
-                leftTop.X = ChessForgeMain.Left + ChessForgeMain._imgMainChessboard.Margin.Left + 20 + (7 - normTarget.Xcoord) * 80;
+                leftTop.X = ChessForgeMain.Left + ChessForgeMain.UiImgMainChessboard.Margin.Left + 20 + (7 - normTarget.Xcoord) * 80;
                 if (whitePromotion)
                 {
-                    leftTop.X = ChessForgeMain.Top + ChessForgeMain._imgMainChessboard.Margin.Top + 40 + (normTarget.Ycoord - 4) * 80;
+                    leftTop.X = ChessForgeMain.Top + ChessForgeMain.UiImgMainChessboard.Margin.Top + 40 + (normTarget.Ycoord - 4) * 80;
                 }
                 else
                 {
-                    leftTop.X = ChessForgeMain.Top + ChessForgeMain._imgMainChessboard.Margin.Top + 40 + (normTarget.Ycoord) * 80;
+                    leftTop.X = ChessForgeMain.Top + ChessForgeMain.UiImgMainChessboard.Margin.Top + 40 + (normTarget.Ycoord) * 80;
                 }
             }
 
@@ -558,6 +554,15 @@ namespace ChessForge
             MainChessBoard.GetPieceImage(orig.Xcoord, orig.Ycoord, true).Source = null;
         }
 
+        /// <summary>
+        /// Returns the dragged piece's Image control to
+        /// the square it started from.
+        /// If claerImage == true, the image in the control
+        /// will be cleared (e.g. because the move was successfully
+        /// executed and the image has been transferred to the control
+        /// on the target square.
+        /// </summary>
+        /// <param name="clearImage"></param>
         private void ReturnDraggedPiece(bool clearImage)
         {
             if (clearImage)
@@ -570,13 +575,13 @@ namespace ChessForge
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            Point clickedPoint = e.GetPosition(_imgMainChessboard);
+            Point clickedPoint = e.GetPosition(UiImgMainChessboard);
 
             if (DraggedPiece.isDragInProgress)
             {
                 Canvas.SetZIndex(DraggedPiece.ImageControl, 10);
-                clickedPoint.X += _imgMainChessboard.Margin.Left;
-                clickedPoint.Y += _imgMainChessboard.Margin.Top;
+                clickedPoint.X += UiImgMainChessboard.Margin.Left;
+                clickedPoint.Y += UiImgMainChessboard.Margin.Top;
 
                 Canvas.SetLeft(DraggedPiece.ImageControl, clickedPoint.X - squareSize / 2);
                 Canvas.SetTop(DraggedPiece.ImageControl, clickedPoint.Y - squareSize / 2);
@@ -691,8 +696,8 @@ namespace ChessForge
             MainCanvas.Children.Remove(old);
             MainChessBoard.SetPieceImage(new Image(), MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true);
             MainCanvas.Children.Add(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true));
-            Canvas.SetLeft(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), squareSize * MoveAnimation.Origin.Xcoord + _imgMainChessboard.Margin.Left);
-            Canvas.SetTop(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), squareSize * (7 - MoveAnimation.Origin.Ycoord) + _imgMainChessboard.Margin.Top);
+            Canvas.SetLeft(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), squareSize * MoveAnimation.Origin.Xcoord + UiImgMainChessboard.Margin.Left);
+            Canvas.SetTop(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), squareSize * (7 - MoveAnimation.Origin.Ycoord) + UiImgMainChessboard.Margin.Top);
 
             ActiveLineReplay.PrepareNextMoveForAnimation(ActiveLineReplay.LastAnimatedMoveIndex, false);
         }
@@ -792,14 +797,10 @@ namespace ChessForge
             {
                 switch (LearningMode.CurrentMode)
                 {
-                    case LearningMode.Mode.GAME_VS_COMPUTER:
+                    case LearningMode.Mode.ENGINE_GAME:
                         if (MessageBox.Show("Cancel Game", "Game with the Computer is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             result = true;
                         break;
-                    //case AppState.Mode.GAME_REPLAY:
-                    //    if (MessageBox.Show("Cancel Replay", "Game Replay is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                    //        result = true;
-                    //    break;
                     default:
                         result = true;
                         break;
@@ -870,7 +871,7 @@ namespace ChessForge
 
                 Workbook = new WorkbookTree();
                 BookmarkManager.ClearBookmarksGui();
-                _rtbWorkbookView.Document.Blocks.Clear();
+                UiRtbWorkbookView.Document.Blocks.Clear();
                 PgnGameParser pgnGame = new PgnGameParser(workbookText, Workbook, true);
 
                 if (Workbook.TrainingSide == PieceColor.None)
@@ -907,9 +908,9 @@ namespace ChessForge
 
                 CommentBox.ShowWorkbookTitle(Workbook.Title);
 
-                _workbookView = new WorkbookView(_rtbWorkbookView.Document, this);
+                _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
                 _trainingBrowseRichTextBuilder = new WorkbookView(_rtbTrainingBrowse.Document, this);
-                _trainingView = new TrainingView(_rtbTrainingProgress.Document, this);
+                UiTrainingView = new TrainingView(UiRtbTrainingProgress.Document, this);
 
                 Workbook.BuildLines();
 
@@ -1032,7 +1033,8 @@ namespace ChessForge
                     // make an extra defensive check
                     if (posIndex < ActiveLine.GetPlyCount())
                     {
-                        EngineMessageProcessor.RequestMoveEvaluation(posIndex, EvaluationState.EvaluationMode.MANUAL_SINGLE_MOVE, true);
+                        AppStateManager.ChangeEvaluationState(EvaluationState.EvaluationMode.MANUAL_SINGLE_MOVE);
+                        EngineMessageProcessor.RequestMoveEvaluation(posIndex);
                     }
                 }
                 else
@@ -1061,8 +1063,9 @@ namespace ChessForge
             // we will start with the first move of the active line
             if (EngineMessageProcessor.IsEngineAvailable())
             {
-                _dgActiveLine.SelectedCells.Clear();
-                EngineMessageProcessor.RequestMoveEvaluation(Evaluation.PositionIndex, EvaluationState.EvaluationMode.MANUAL_LINE, true);
+                AppStateManager.ChangeEvaluationState(EvaluationState.EvaluationMode.MANUAL_LINE);
+                UiDgActiveLine.SelectedCells.Clear();
+                EngineMessageProcessor.RequestMoveEvaluation(Evaluation.PositionIndex);
             }
             else
             {
@@ -1071,35 +1074,28 @@ namespace ChessForge
         }
 
 
-        public void UpdateLastMoveTextBox(TreeNode nd, bool isLineStart)
+        public void UpdateLastMoveTextBox(TreeNode nd)
         {
             string moveTxt = MoveUtils.BuildSingleMoveText(nd, true);
 
-            UpdateLastMoveTextBox(moveTxt, isLineStart);
+            UpdateLastMoveTextBox(moveTxt);
         }
 
-        public void UpdateLastMoveTextBox(int posIndex, bool isLineStart)
+        public void UpdateLastMoveTextBox(int posIndex)
         {
             string moveTxt = Evaluation.Position.MoveNumber.ToString()
                     + (Evaluation.Position.ColorToMove == PieceColor.Black ? "." : "...")
                     + ActiveLine.GetNodeAtIndex(posIndex).LastMoveAlgebraicNotation;
 
-            UpdateLastMoveTextBox(moveTxt, isLineStart);
+            UpdateLastMoveTextBox(moveTxt);
         }
 
-        public void UpdateLastMoveTextBox(string moveTxt, bool isLineStart)
+        public void UpdateLastMoveTextBox(string moveTxt)
         {
-            if (isLineStart)
+            UiLblMoveUnderEval.Dispatcher.Invoke(() =>
             {
-                _lblMoveUnderEval.Content = moveTxt;
-            }
-            else
-            {
-                _lblMoveUnderEval.Dispatcher.Invoke(() =>
-                {
-                    _lblMoveUnderEval.Content = moveTxt;
-                });
-            }
+                UiLblMoveUnderEval.Content = moveTxt;
+            });
         }
 
         public void ResetEvaluationProgressBar()
@@ -1114,42 +1110,8 @@ namespace ChessForge
         /// </summary>
         public void MoveEvaluationFinishedInTraining()
         {
-            ShowMoveEvaluationControls(false, true);
-            _trainingView.ShowEvaluationResult();
-        }
-
-        /// <summary>
-        /// Sets visibility for the controls relevant to move evaluation modes.
-        /// NOTE: this is not applicable to move evaluation during a game.
-        /// Engine Lines TextBox replaces the Board Comment RichTextBox if
-        /// we are in the Position/Line evaluation mode.
-        /// </summary>
-        /// <param name="visible"></param>
-        /// <param name="isLineStart"></param>
-        public void ShowMoveEvaluationControls(bool visible, bool keepLinesBox = false)
-        {
-            this.Dispatcher.Invoke(() =>
-            {
-                if (visible)
-                {
-                    _rtbBoardComment.Visibility = Visibility.Hidden;
-                    _tbEngineLines.Visibility = Visibility.Visible;
-                    //                    ShowEvaluationProgressControls(true);
-                    ShowEvaluationProgressControls();
-                }
-                else
-                {
-                    if (!keepLinesBox)
-                    {
-                        _rtbBoardComment.Visibility = Visibility.Visible;
-                        _tbEngineLines.Visibility = Visibility.Hidden;
-                    }
-
-                    //                    ShowEvaluationProgressControls(false);
-                    ShowEvaluationProgressControls();
-                }
-            });
-
+            AppStateManager.ShowMoveEvaluationControls(false, true);
+            UiTrainingView.ShowEvaluationResult();
         }
 
         /// <summary>
@@ -1159,7 +1121,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void _menuPlayComputer_Click(object sender, RoutedEventArgs e)
         {
-            if (LearningMode.CurrentMode == LearningMode.Mode.GAME_VS_COMPUTER)
+            if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME)
             {
                 // menu item was offering to exit the game so 
                 // change the header back and cleanup
@@ -1197,12 +1159,12 @@ namespace ChessForge
         /// <param name="startNode"></param>
         public void PlayComputer(TreeNode startNode, bool IsTraining)
         {
-            _imgMainChessboard.Source = ChessBoards.ChessBoardGreen;
+            UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.GAME_VS_COMPUTER);
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
 
             EngineGame.PrepareGame(startNode, true, IsTraining);
-            _dgEngineGame.ItemsSource = EngineGame.Line.MoveList;
+            UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
 
             if (startNode.ColorToMove == PieceColor.White)
             {
@@ -1229,13 +1191,13 @@ namespace ChessForge
         /// <param name="e"></param>
         internal void ProcessUserMoveEvent(object source, ElapsedEventArgs e)
         {
-            if (TrainingState.IsTrainingInProgress && LearningMode.CurrentMode != LearningMode.Mode.GAME_VS_COMPUTER)
+            if (TrainingState.IsTrainingInProgress && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
             {
                 if ((TrainingState.CurrentMode & TrainingState.Mode.USER_MOVE_COMPLETED) != 0)
                 {
                     this.Dispatcher.Invoke(() =>
                     {
-                        _trainingView.ReportLastMoveVsWorkbook();
+                        UiTrainingView.ReportLastMoveVsWorkbook();
                         Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
                     });
                 }
@@ -1261,25 +1223,25 @@ namespace ChessForge
         {
             Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
 
-            _mnEvalLine.Dispatcher.Invoke(() =>
+            UiMniEvalLine.Dispatcher.Invoke(() =>
             {
-                _mnEvalLine.IsEnabled = true;
+                UiMniEvalLine.IsEnabled = true;
             });
 
-            _mnEvalPos.Dispatcher.Invoke(() =>
+            UiMniEvalPos.Dispatcher.Invoke(() =>
             {
-                _mnEvalPos.IsEnabled = true;
+                UiMniEvalPos.IsEnabled = true;
             });
 
-            _pbEngineThinking.Dispatcher.Invoke(() =>
+            UiPbEngineThinking.Dispatcher.Invoke(() =>
             {
-                _pbEngineThinking.Visibility = Visibility.Visible;
-                _pbEngineThinking.Minimum = 0;
-                _pbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime);
-                _pbEngineThinking.Value = 0;
+                UiPbEngineThinking.Visibility = Visibility.Visible;
+                UiPbEngineThinking.Minimum = 0;
+                UiPbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime);
+                UiPbEngineThinking.Value = 0;
             });
 
-            _imgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+            UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
             Evaluation.Reset();
             Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
             LearningMode.CurrentMode = LearningMode.Mode.MANUAL_REVIEW;
@@ -1327,7 +1289,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MenuItem_StartTraining(object sender, RoutedEventArgs e)
         {
-            _tabBookmarks.Focus();
+            UiTabBookmarks.Focus();
         }
 
         /// <summary>
@@ -1369,7 +1331,7 @@ namespace ChessForge
             MainChessBoard.DisplayPosition(startNode.Position);
 
             _trainingBrowseRichTextBuilder.BuildFlowDocumentForWorkbook(startNode.NodeId);
-            _trainingView.Initialize(startNode);
+            UiTrainingView.Initialize(startNode);
 
             EnterGuiTrainingMode();
             TrainingState.IsTrainingInProgress = true;
@@ -1395,7 +1357,7 @@ namespace ChessForge
 
             // The Line display is the same as when playing a game against the computer 
             EngineGame.PrepareGame(startNode, false, false);
-            _dgEngineGame.ItemsSource = EngineGame.Line.MoveList;
+            UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
         }
@@ -1407,8 +1369,8 @@ namespace ChessForge
 
         private void ExitGuiTrainingMode()
         {
-            _tabMainControl.Visibility = Visibility.Visible;
-            _tabTrainingControl.Visibility = Visibility.Hidden;
+            UiTabCtrlManualReview.Visibility = Visibility.Visible;
+            UiTabCtrlTraining.Visibility = Visibility.Hidden;
         }
 
         private void MenuItem_StopTraining(object sender, RoutedEventArgs e)
@@ -1418,115 +1380,10 @@ namespace ChessForge
                 // TODO: ask questions re saving etc.
                 MainChessBoard.SetBoardSourceImage(ChessBoards.ChessBoardBlue);
                 TrainingState.IsTrainingInProgress = false;
-                SetupGuiForManualReviewMode();
                 ExitGuiTrainingMode();
                 LearningMode.CurrentMode = LearningMode.Mode.MANUAL_REVIEW;
+                AppStateManager.SetupGuiForCurrentStates();
             }
-        }
-
-        /// <summary>
-        /// Changes visibility of the GUI elements according to the passed mode
-        /// and submode.
-        /// </summary>
-        /// <param name="mode"></param>
-        /// <param name="subMode"></param>
-        public void ConfigureUIForMode(LearningMode.Mode mode, LearningMode.SubMode subMode = 0)
-        {
-            foreach (UIEelementState el in _uIEelementStates)
-            {
-                if ((el.ModeVisibilityFlags & (uint)mode) != 0
-                    && (subMode == 0 || (el.ModeVisibilityFlags & (uint)subMode) != 0))
-                {
-                    el.Element.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    el.Element.Visibility = Visibility.Hidden;
-                }
-
-                if (el.ModeEnabledFlags == 0 || subMode == 0)
-                {
-                    el.Element.IsEnabled = true;
-                }
-                else
-                {
-                    if ((el.ModeEnabledFlags & (uint)mode) != 0
-                        && (subMode == 0 || (el.ModeEnabledFlags & (uint)subMode) != 0))
-                    {
-                        el.Element.IsEnabled = true;
-                    }
-                    else
-                    {
-                        el.Element.IsEnabled = false;
-                    }
-                }
-            }
-
-            SpecialUIHandling(mode, subMode);
-        }
-
-        /// <summary>
-        /// For some mode/submode combinations it may not be sufficient to 
-        /// configure the GUI according to the configuration table.
-        /// This method will perform any additional actions required.
-        /// </summary>
-        /// <param name="mode"></param>
-        /// <param name="subMode"></param>
-        public void SpecialUIHandling(LearningMode.Mode mode, LearningMode.SubMode subMode = 0)
-        {
-        }
-
-        public void SwapCommentBoxForEngineLines(bool showEngineLines)
-        {
-            this.Dispatcher.Invoke(() =>
-            {
-                _rtbBoardComment.Visibility = showEngineLines ? Visibility.Hidden : Visibility.Visible;
-                _tbEngineLines.Visibility = showEngineLines ? Visibility.Visible : Visibility.Hidden;
-                if (!showEngineLines)
-                {
-                    Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                }
-            });
-        }
-
-        /// <summary>
-        /// Initializes table with the GUI configuration data
-        /// for app's modes and submodes.
-        /// </summary>
-        private void InitializeUIElementStates()
-        {
-            // helper variable
-            uint allModes = 0xFFFF;
-
-            _uIEelementStates = new List<UIEelementState>()
-            {
-                 // Active Line scoresheet visible and enabled except during a game vs engine and training
-                 { new UIEelementState(_dgActiveLine,
-                        allModes & (uint)~(LearningMode.Mode.GAME_VS_COMPUTER | LearningMode.Mode.TRAINING),
-                        allModes & (uint)~(LearningMode.Mode.GAME_VS_COMPUTER | LearningMode.Mode.TRAINING),
-                        0, 0 )},
-
-                 // elements visible in all modes except training mode
-                 { new UIEelementState(
-                        _tabMainControl,
-                        allModes & (uint)~LearningMode.Mode.TRAINING, 0,
-                        0, 0) },
-
-                 // elements only visible in training
-                 { new UIEelementState(_tabTrainingControl,
-                        (uint)LearningMode.Mode.TRAINING, 0,
-                        0, 0) },
-
-                 // game scoresheet visible and enabled during a game vs engine and training
-                 { new UIEelementState(_dgEngineGame,
-                        (uint)LearningMode.Mode.GAME_VS_COMPUTER | (uint)LearningMode.Mode.TRAINING, 0,
-                        0,0) },
-
-                 // elements only visible and enabled during a game vs engine
-                 { new UIEelementState(_lblGameInProgress,
-                        (uint)LearningMode.Mode.GAME_VS_COMPUTER, 0,
-                        0, 0) },
-            };
         }
 
         private void _imgStop_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -1548,12 +1405,12 @@ namespace ChessForge
 
         public void InvokeRequestWorkbookResponse(object source, ElapsedEventArgs e)
         {
-            _trainingView.RequestWorkbookResponse();
+            UiTrainingView.RequestWorkbookResponse();
         }
 
         public void ShowTrainingProgressPopupMenu(object source, ElapsedEventArgs e)
         {
-            _trainingView.ShowPopupMenu();
+            UiTrainingView.ShowPopupMenu();
         }
 
         /// <summary>
@@ -1570,7 +1427,7 @@ namespace ChessForge
         {
             this.Dispatcher.Invoke(() =>
             {
-                _vbFloatingChessboard.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
+                UiVbFloatingChessboard.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
             });
         }
 
@@ -1623,7 +1480,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void _mnAddBookmark_Click(object sender, RoutedEventArgs e)
         {
-            TabItemWorkbook.Focus();
+            UiTabWorkbook.Focus();
             MessageBox.Show("Right-click a move and select \"Add to Bookmarks\" from the popup-menu", "Chess Forge Training", MessageBoxButton.OK);
         }
 
@@ -1638,7 +1495,7 @@ namespace ChessForge
         private void WorkbookGrid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             _workbookView.LastClickedNodeId = -1;
-            _workbookView.EnableWorkbookMenus(_cmWorkbookRightClick, false);
+            _workbookView.EnableWorkbookMenus(UiCmnWorkbookRightClick, false);
         }
 
         private void _mnWorkbookSelectAsBookmark_Click(object sender, RoutedEventArgs e)
@@ -1650,7 +1507,7 @@ namespace ChessForge
             else
             {
                 LearningMode.SaveWorkbookFile();
-                _tabBookmarks.Focus();
+                UiTabBookmarks.Focus();
             }
         }
 
@@ -1662,23 +1519,23 @@ namespace ChessForge
 
         private void _mnTrainRestartGame_Click(object sender, RoutedEventArgs e)
         {
-            _trainingView.RestartGameAfter(sender, e);
+            UiTrainingView.RestartGameAfter(sender, e);
         }
 
         private void _mnTrainSwitchToWorkbook_Click(object sender, RoutedEventArgs e)
         {
-            _trainingView.RollbackToWorkbookMove();
+            UiTrainingView.RollbackToWorkbookMove();
         }
 
         private void _mnTrainEvalMove_Click(object sender, RoutedEventArgs e)
         {
-            _trainingView.RequestMoveEvaluation();
+            UiTrainingView.RequestMoveEvaluation();
         }
 
 
         private void _mnTrainEvalLine_Click(object sender, RoutedEventArgs e)
         {
-            _trainingView.RequestLineEvaluation();
+            UiTrainingView.RequestLineEvaluation();
         }
 
         /// <summary>
@@ -1718,142 +1575,13 @@ namespace ChessForge
         {
             this.Dispatcher.Invoke(() =>
             {
-                _trainingView.EngineMoveMade();
+                UiTrainingView.EngineMoveMade();
             });
         }
 
-        public void ResetEvaluationControls()
-        {
-            this.Dispatcher.Invoke(() =>
-            {
-                _mnEvalLine.IsEnabled = true;
-                _mnEvalPos.IsEnabled = true;
-                _pbEngineThinking.Visibility = Visibility.Hidden;
-            });
-        }
+        private void _tabItemTrainingBrowse_GotFocus(object sender, RoutedEventArgs e) { AppStateManager.SetupGuiForTrainingBrowseMode(); }
 
-        public void PrepareEvaluationControls()
-        {
-            this.Dispatcher.Invoke(() =>
-            {
-                _mnEvalLine.IsEnabled = false;
-                _mnEvalPos.IsEnabled = false;
-
-                _pbEngineThinking.Visibility = Visibility.Visible;
-                _pbEngineThinking.Minimum = 0;
-                // add 50% to compensate for any processing delays
-                // we don't want to be too optimistic
-                _pbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime * 1.5);
-                _pbEngineThinking.Value = 0;
-            });
-        }
-
-        /// <summary>
-        /// Shows or hides the Engine evaluation 
-        /// progress GUI elements.
-        /// 
-        /// In the "hide" mode all elements are hidden.
-        /// 
-        /// In the "show" mode, if isSecretMode is false
-        /// all elements are visible except the label for the "secret" mode.
-        /// If the isSecretMode is true, only the progress bar and the 
-        /// label for the "secret mode are visible.
-        /// </summary>
-        /// <param name="show"></param>
-        /// <param name="isSecretMode"></param>
-        public void ShowEvaluationProgressControls(bool show, bool isSecretMode = false)
-        {
-            this.Dispatcher.Invoke(() =>
-            {
-                // visibility based on the value of "show" alone
-                _imgStop.Visibility = show ? Visibility.Visible : Visibility.Hidden;
-                _pbEngineThinking.Visibility = show ? Visibility.Visible : Visibility.Hidden;
-
-                // shown if show == true and isSecretMode is false
-                _lblEvaluating.Visibility = show && !isSecretMode ? Visibility.Visible : Visibility.Hidden;
-                _lblMoveUnderEval.Visibility = show && !isSecretMode ? Visibility.Visible : Visibility.Hidden;
-
-                // only shown if both show == true and isSecretMode == true
-                _lblEvalSecretMode.Visibility = show && isSecretMode ? Visibility.Visible : Visibility.Hidden;
-            });
-        }
-
-        public void ShowEvaluationProgressControls()
-        {
-            this.Dispatcher.Invoke(() =>
-            {
-                if (Evaluation.CurrentMode == EvaluationState.EvaluationMode.IDLE)
-                {
-                    _imgStop.Visibility = Visibility.Hidden;
-                    _pbEngineThinking.Visibility = Visibility.Hidden;
-
-                    _lblEvaluating.Visibility = Visibility.Hidden;
-                    _lblMoveUnderEval.Visibility = Visibility.Hidden;
-
-                    _lblEvalSecretMode.Visibility = Visibility.Hidden;
-                }
-                else if (LearningMode.CurrentMode == LearningMode.Mode.GAME_VS_COMPUTER
-                        && (!TrainingState.IsTrainingInProgress || Evaluation.CurrentMode == EvaluationState.EvaluationMode.IN_GAME_PLAY))
-                {
-                    bool think = EngineGame.CurrentState == EngineGame.GameState.ENGINE_THINKING;
-                    _imgStop.Visibility = think ? Visibility.Visible : Visibility.Hidden;
-                    _pbEngineThinking.Visibility = Visibility.Visible;
-
-                    _lblEvaluating.Visibility = Visibility.Hidden;
-                    _lblMoveUnderEval.Visibility = Visibility.Hidden;
-
-                    _lblEvalSecretMode.Visibility = think ? Visibility.Visible : Visibility.Hidden;
-                }
-                else
-                {
-                    _imgStop.Visibility = Visibility.Visible;
-                    _pbEngineThinking.Visibility = Visibility.Visible;
-
-                    _lblEvaluating.Visibility = Visibility.Visible;
-                    _lblMoveUnderEval.Visibility = Visibility.Visible;
-
-                    _lblEvalSecretMode.Visibility = Visibility.Hidden;
-                }
-            });
-        }
-
-        public void SetupGuiForManualReviewMode()
-        {
-            TrainingState.IsBrowseActive = false;
-            _tabTrainingControl.Margin = new Thickness(5, 5, 5, 5);
-            _dgEngineGame.Visibility = Visibility.Hidden;
-
-            _dgActiveLine.Visibility = Visibility.Visible;
-            _dgActiveLine.Columns[2].Visibility = Visibility.Visible;
-            _dgActiveLine.Columns[4].Visibility = Visibility.Visible;
-            _dgActiveLine.Width = 260;
-        }
-
-        public void SetupGuiForTrainingBrowseMode()
-        {
-            TrainingState.IsBrowseActive = true;
-            _tabTrainingControl.Margin = new Thickness(185, 5, 5, 5);
-            _dgEngineGame.Visibility = Visibility.Hidden;
-
-            _dgActiveLine.Visibility = Visibility.Visible;
-            _dgActiveLine.Columns[2].Visibility = Visibility.Collapsed;
-            _dgActiveLine.Columns[4].Visibility = Visibility.Collapsed;
-            _dgActiveLine.Width = 160;
-        }
-
-        public void SetupGuiForTrainingProgressMode()
-        {
-            TrainingState.IsBrowseActive = false;
-            _tabTrainingControl.Margin = new Thickness(5, 5, 5, 5);
-            _dgEngineGame.Visibility = Visibility.Visible;
-            _dgActiveLine.Visibility = Visibility.Hidden;
-
-            DisplayPosition(EngineGame.GetCurrentPosition());
-        }
-
-        private void _tabItemTrainingBrowse_GotFocus(object sender, RoutedEventArgs e) { SetupGuiForTrainingBrowseMode(); }
-
-        private void _rtbTrainingProgress_GotFocus(object sender, RoutedEventArgs e) { SetupGuiForTrainingProgressMode(); }
+        private void _rtbTrainingProgress_GotFocus(object sender, RoutedEventArgs e) { AppStateManager.SetupGuiForTrainingProgressMode(); }
 
         private void _imgLeftArrow_PreviewMouseDown(object sender, MouseButtonEventArgs e) { BookmarkManager.PageDown(); }
 

@@ -79,6 +79,7 @@
     <Compile Include="MainWindow\MainWindowWorkbookTable.cs" />
     <Compile Include="GuiUtilities.cs" />
     <Compile Include="ActiveLineManager.cs" />
+    <Compile Include="ManualReviewState.cs" />
     <Compile Include="MoveEvaluation.cs" />
     <Compile Include="PromotionDialog.xaml.cs">
       <DependentUpon>PromotionDialog.xaml</DependentUpon>
