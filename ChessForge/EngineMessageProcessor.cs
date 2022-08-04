@@ -95,7 +95,7 @@ namespace ChessForge
         public static void MoveEvaluationFinished()
         {
             // if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER && AppState.MainWin.Evaluation.Mode == EvaluationState.EvaluationMode.IN_GAME_PLAY)
-            if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.IN_GAME_PLAY)
+            if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.ENGINE_GAME)
             {
                 ProcessEngineGameMoveEvent();
                 _mainWin.Evaluation.PrepareToContinue();
@@ -155,8 +155,8 @@ namespace ChessForge
                     {
                         _mainWin.Evaluation.Reset();
 
-                        _mainWin.ResetEvaluationControls();
-                        _mainWin.ShowMoveEvaluationControls(false, false);
+                        AppStateManager.ResetEvaluationControls();
+                        AppStateManager.ShowMoveEvaluationControls(false, false);
                     }
                     else
                     {
@@ -164,7 +164,7 @@ namespace ChessForge
                         _mainWin.Evaluation.PrepareToContinue();
 
                         _mainWin.Evaluation.PositionIndex++;
-                        RequestMoveEvaluation(_mainWin.Evaluation.PositionIndex, _mainWin.Evaluation.CurrentMode, false);
+                        RequestMoveEvaluation(_mainWin.Evaluation.PositionIndex);
 
                         _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                     }
@@ -207,9 +207,7 @@ namespace ChessForge
         /// NOTE: does not start evaluation when making a move during a user vs engine game.
         /// </summary>
         /// <param name="posIndex"></param>
-        /// <param name="mode"></param>
-        /// <param name="isLineStart"></param>
-        public static void RequestMoveEvaluation(int posIndex, EvaluationState.EvaluationMode mode, bool isLineStart)
+        public static void RequestMoveEvaluation(int posIndex)
         {
             _mainWin.Evaluation.PositionIndex = posIndex;
             if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.IDLE)
@@ -219,12 +217,13 @@ namespace ChessForge
             _mainWin.Evaluation.Position = _mainWin.ActiveLine.GetNodeAtIndex(posIndex).Position;
             _mainWin.DisplayPosition(_mainWin.Evaluation.Position);
 
-            _mainWin.ShowMoveEvaluationControls(true, isLineStart);
-            _mainWin.UpdateLastMoveTextBox(posIndex, isLineStart);
+            AppStateManager.ShowMoveEvaluationControls(true);
+            _mainWin.UpdateLastMoveTextBox(posIndex);
 
             _mainWin.Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
 
-            PrepareMoveEvaluation(mode, _mainWin.Evaluation.Position);
+            string fen = AppStateManager.PrepareMoveEvaluation(_mainWin.Evaluation.Position);
+            RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
         }
 
         /// <summary>
@@ -245,11 +244,12 @@ namespace ChessForge
         public static void RequestMoveEvaluationInTraining(TreeNode nd)
         {
             _mainWin.Evaluation.Position = nd.Position;
-            _mainWin.UpdateLastMoveTextBox(nd, true);
-            _mainWin.ShowMoveEvaluationControls(true, false);
+            _mainWin.UpdateLastMoveTextBox(nd);
+            AppStateManager.ShowMoveEvaluationControls(true, false);
 
             _mainWin.Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
-            PrepareMoveEvaluation(_mainWin.Evaluation.CurrentMode, _mainWin.Evaluation.Position);
+            string fen = AppStateManager.PrepareMoveEvaluation(_mainWin.Evaluation.Position);
+            RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
         }
 
         /// <summary>
@@ -259,10 +259,15 @@ namespace ChessForge
         /// <param name="position"></param>
         public static void RequestEngineMove(BoardPosition position)
         {
-            PrepareMoveEvaluation(EvaluationState.EvaluationMode.IN_GAME_PLAY, position);
+            AppStateManager.ChangeEvaluationState(EvaluationState.EvaluationMode.ENGINE_GAME);
+            string fen = AppStateManager.PrepareMoveEvaluation(position);
+            RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
         }
 
 
+        /// <summary>
+        /// Clears the list of candidate moves.
+        /// </summary>
         public static void Clear()
         {
             lock (MoveCandidatesLock)
@@ -271,11 +276,19 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Starts the timer controlling polling
+        /// for engine messages.
+        /// </summary>
         public static void StartMessagePollTimer()
         {
             _mainWin.Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
         }
 
+        /// <summary>
+        /// Stops the timer controlling polling
+        /// for engine messages.
+        /// </summary>
         public static void StopMessagePollTimer()
         {
             _mainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
@@ -440,25 +453,6 @@ namespace ChessForge
                     movesToMate = iVal;
                 }
             }
-        }
-
-        /// <summary>
-        /// Preparations for move evaluation that are common for Position/Line 
-        /// evaluation as well as requesting engine move in a game.
-        /// </summary>
-        /// <param name="mode"></param>
-        /// <param name="position"></param>
-        private static void PrepareMoveEvaluation(EvaluationState.EvaluationMode mode, BoardPosition position)
-        {
-            _mainWin.Evaluation.CurrentMode = mode;
-
-            _mainWin.PrepareEvaluationControls();
-
-            _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
-            _mainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-
-            string fen = FenParser.GenerateFenFromPosition(position);
-            RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
         }
 
     }

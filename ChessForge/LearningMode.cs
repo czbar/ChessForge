@@ -44,46 +44,13 @@ namespace ChessForge
             /// MANUAL_REVIEW_MODE and that is the mode the program
             /// will return to when the game is finished.
             /// </summary>
-            GAME_VS_COMPUTER = 0x0004,
+            ENGINE_GAME = 0x0004,
 
             /// <summary>
             /// The user is reviewing the workbook.
             /// Can switch between different lines.
             /// </summary>
             MANUAL_REVIEW = 0x0010
-        }
-
-        /// <summary>
-        /// Within a mode there can be several sub-modes. For example, if a play vs computer is in progress,
-        /// a SubMode will indicate whether the user or the computer is on move. 
-        /// </summary>
-        public enum SubMode : uint
-        {
-            NONE = 0x0000,
-
-            /// <summary>
-            /// The program is idle while in Training
-            /// or Game mode, awaiting user's move.
-            /// </summary>
-            USER_THINKING = 0x0001,
-
-            /// <summary>
-            /// The program is monitoring
-            /// engine's messages awaiting engine's move.
-            /// </summary>
-            ENGINE_THINKING = 0x0002,
-
-            /// <summary>
-            /// A selected line from the currently loaded workbook
-            /// is being replayed.
-            /// </summary>
-            GAME_REPLAY = 0x0008,
-
-            /// <summary>
-            /// The engine is evaluating position while
-            /// in the Training mode.
-            /// </summary>
-            TRAINING_ENGINE_EVALUATING = 0x0010
         }
 
         /// <summary>
@@ -132,9 +99,9 @@ namespace ChessForge
 
             // TODO: we need to sort out this condition using submode,
             // introduce a new mode, or ... something
-            if (mode != Mode.GAME_VS_COMPUTER || _previousMode != Mode.TRAINING)
+            if (mode != Mode.ENGINE_GAME || _previousMode != Mode.TRAINING)
             {
-                AppStateManager.MainWin.ConfigureUIForMode(mode);
+                AppStateManager.SetupGuiForCurrentStates();
             }
         }
 

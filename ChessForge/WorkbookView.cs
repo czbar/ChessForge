@@ -587,7 +587,7 @@ namespace ChessForge
             if (e.ChangedButton == MouseButton.Right)
             {
                 _lastClickedNodeId = nodeId;
-                EnableWorkbookMenus(_mainWin._cmWorkbookRightClick, true);
+                EnableWorkbookMenus(_mainWin.UiCmnWorkbookRightClick, true);
             }
             else
             {
