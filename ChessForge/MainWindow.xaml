@@ -24,20 +24,20 @@
     <Grid x:Name="_gridMain" ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="682"/>
+            <RowDefinition Height="680"/>
             <RowDefinition />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="682"/>
+            <ColumnDefinition Width="680"/>
             <ColumnDefinition Width="270"/>
             <ColumnDefinition />
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Label x:Name="_lblGameInProgress" Grid.Column="1" Content="Game in Progress" Visibility="Hidden"
                HorizontalAlignment="Left" Margin="75,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="159" FontWeight="Bold" FontSize="14"/>
-        <Viewbox x:Name="MainBoard" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682">
-            <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682">
+        <Viewbox x:Name="MainBoard" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680">
+            <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680">
                 <Canvas.ContextMenu>
                     <ContextMenu  x:Name="menuContext">
                         <MenuItem x:Name="UiMniEvalPos" Header="Evaluate Position" Click="MenuItem_EvaluatePosition" />
@@ -51,7 +51,7 @@
                 <Canvas.Background>
                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                 </Canvas.Background>
-                <Image x:Name="UiImgMainChessboard" Margin="20,20,0,0" Source="Resources/Images/ChessBoardBlue.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0"/>
+                <Image x:Name="UiImgMainChessboard" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBlue.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="640" Height="640" Grid.Column="0"/>
             </Canvas>
         </Viewbox>
 

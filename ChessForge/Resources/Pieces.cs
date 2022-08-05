@@ -22,5 +22,7 @@ namespace ChessForge
         public static BitmapImage BlackKnight = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/BlackKnight.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage BlackRook = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/BlackRook.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage BlackPawn = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/BlackPawn.png", UriKind.RelativeOrAbsolute));
+
+        public static BitmapImage YellowOverlay = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/YellowOverlay.png", UriKind.RelativeOrAbsolute));
     }
 }
