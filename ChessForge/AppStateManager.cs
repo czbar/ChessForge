@@ -88,6 +88,7 @@ namespace ChessForge
                     SetupGuiForEngineGame();
                     break;
             }
+            ShowEvaluationProgressControlsForCurrentStates();
         }
 
         /// <summary>
@@ -120,6 +121,8 @@ namespace ChessForge
 
             ShowGuiActiveLine(true);
             ShowEvaluationProgressControls();
+
+            SetupMenusForManualReview();
         }
 
         /// <summary>
@@ -130,7 +133,8 @@ namespace ChessForge
             _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
             _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
-            _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
+            ShowGuiEngineGameLine(false);
+//            _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
 
             _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
             _mainWin.UiTabCtrlTraining.Visibility = Visibility.Visible;
@@ -146,6 +150,8 @@ namespace ChessForge
             _mainWin.UiTabTrainingBrowse.IsEnabled = true;
 
             ShowEvaluationProgressControls();
+
+            SetupMenusForTraining();
         }
 
         /// <summary>
@@ -186,7 +192,41 @@ namespace ChessForge
 
             ShowEvaluationProgressControls();
             ShowGuiEngineGameLine(true);
+
+            SetupMenusForEngineGame();
         }
+
+        private static void SetupMenusForManualReview()
+        {
+        }
+
+        private static void SetupMenusForTraining()
+        {
+        }
+
+        private static void SetupMenusForEngineGame()
+        {
+        }
+
+        private static void ShowEvaluationProgressControlsForCurrentStates()
+        {
+            _mainWin.Dispatcher.Invoke(() =>
+                {
+                    if (MainWin.Evaluation.IsRunning)
+                    {
+                        _mainWin.UiMniEvalLine.IsEnabled = false;
+                        _mainWin.UiMniEvalPos.IsEnabled = false;
+                        _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        _mainWin.UiMniEvalLine.IsEnabled = true;
+                        _mainWin.UiMniEvalPos.IsEnabled = true;
+                        _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
+                    }
+                });
+        }
+
 
         private static void ShowGuiActiveLine(bool includeEvals)
         {
@@ -210,7 +250,7 @@ namespace ChessForge
             {
                 _mainWin.UiTabCtrlTraining.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
 
-                _mainWin.UiTabTrainingBrowse.Opacity = 0.1;
+                _mainWin.UiTabTrainingBrowse.Opacity = 0.3;
                 _mainWin.UiTabTrainingBrowse.IsEnabled = false;
             }
             else
