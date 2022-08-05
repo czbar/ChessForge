@@ -318,7 +318,6 @@ namespace ChessForge
                     _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine has started. Wait for the engine\'s move..."));
                     _engineGameRootNode = _userMove;
                     // call RequestEngineResponse() directly so it invokes PlayEngine
-                    //TrainingState.CurrentMode = TrainingState.Mode.ENGINE_GAME;
                     AppStateManager.CurrentLearningMode = LearningMode.Mode.ENGINE_GAME;
                     AppStateManager.SetupGuiForCurrentStates();
                     RequestEngineResponse();
@@ -336,6 +335,9 @@ namespace ChessForge
             EngineGame.RollbackGame(_lastClickedNode);
 
             TrainingState.CurrentMode = TrainingState.Mode.USER_MOVE_COMPLETED;
+
+            AppStateManager.CurrentLearningMode = LearningMode.Mode.TRAINING;
+            AppStateManager.SetupGuiForCurrentStates();
 
             RemoveParagraphsFromMove(_lastClickedNode);
             ReportLastMoveVsWorkbook();
@@ -360,7 +362,7 @@ namespace ChessForge
                 }
                 else if (block is Paragraph)
                 {
-                    int nodeId = GetNodeIdFromObjectName(((Paragraph)block).Name, _par_line_moves_);
+                    int nodeId = GuiUtilities.GetNodeIdFromPrefixedString(((Paragraph)block).Name);
                     TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
                     if (nd != null && nd.MoveNumber == move.MoveNumber && nd.ColorToMove == move.ColorToMove)
                     {
@@ -394,9 +396,9 @@ namespace ChessForge
             EngineGame.ReplaceCurrentWithWorkbookMove(nodeId);
 
             TreeNode userChoiceNode = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
-            SoundPlayer.PlayMoveSound(userChoiceNode.LastMoveAlgebraicNotation);
 
             _mainWin.DisplayPosition(userChoiceNode.Position);
+            _mainWin.ColorMoveSquares(_userMove.LastMoveEngineNotation);
 
             TreeNode nd = _mainWin.Workbook.SelectRandomChild(nodeId);
 
@@ -530,7 +532,7 @@ namespace ChessForge
         {
             Run runEvaluated;
             TreeNode nodeEvaluated;
-            if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.TRAINING_LINE)
+            if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.LINE)
             {
                 runEvaluated = _mainWin.Evaluation.GetCurrentEvaluatedRun();
                 nodeEvaluated = _mainWin.Evaluation.GetCurrentEvaluatedNode();
@@ -572,7 +574,7 @@ namespace ChessForge
                 _mainWin.UiVbFloatingChessboard.Margin = new Thickness(_lastClickedPoint.X, _lastClickedPoint.Y - 165, 0, 0);
                 _mainWin.ShowFloatingChessboard(true);
 
-                if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.TRAINING_LINE)
+                if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.LINE)
                 {
                     RequestMoveEvaluation();
                 }
@@ -888,13 +890,13 @@ namespace ChessForge
 
         /// <summary>
         /// Invoked from the Training context menu.
-        /// Starts evalaution of the clicked move.
+        /// Starts evaluation of the clicked move.
         /// Alternatively, can be called as part of line 
         /// evaluation.
         /// </summary>
         public void RequestMoveEvaluation()
         {
-            if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.TRAINING_LINE)
+            if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.LINE)
             {
                 TreeNode nd = _mainWin.Evaluation.GetNextNodeToEvaluate();
                 if (nd == null)
@@ -909,7 +911,7 @@ namespace ChessForge
             }
             else
             {
-                _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.TRAINING_SINGLE_MOVE;
+                _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.SINGLE_MOVE;
                 EngineMessageProcessor.RequestMoveEvaluationInTraining(_lastClickedNode);
             }
         }
@@ -936,13 +938,13 @@ namespace ChessForge
                 {
                     // collect the Main Line's Runs to evaluate the moves
                     SetMainLineRunsToEvaluate(paraName, _lastClickedRun);
-                    _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.TRAINING_LINE;
+                    _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.LINE;
                     RequestMoveEvaluation();
                 }
                 else if (paraName.StartsWith(_par_game_moves_))
                 {
                     SetGameRunsToEvaluate(parentPara, _lastClickedRun);
-                    _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.TRAINING_LINE;
+                    _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.LINE;
                     RequestMoveEvaluation();
                 }
             }
@@ -1043,7 +1045,7 @@ namespace ChessForge
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
             // don't accept any clicks if evaluation is in progress
-            if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.MANUAL_SINGLE_MOVE || _mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.MANUAL_LINE)
+            if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.SINGLE_MOVE || _mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.LINE)
                 return;
 
             Run r = (Run)e.Source;

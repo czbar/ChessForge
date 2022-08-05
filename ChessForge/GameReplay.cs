@@ -197,7 +197,7 @@ namespace ChessForge
                 return;
             }
 
-            _mainWin.SelectPlyInTextViews((int)_TreeLineToAnimate[index].Position.MoveNumber, _TreeLineToAnimate[index].ColorToMove);
+            _mainWin.ActiveLine.SelectPly((int)_TreeLineToAnimate[index].Position.MoveNumber, _TreeLineToAnimate[index].ColorToMove);
 
             LastAnimatedMoveIndex = index + 1;
             if (LastAnimatedMoveIndex < _TreeLineToAnimate.Count)
@@ -218,7 +218,7 @@ namespace ChessForge
         private void FinalizeTreeLineAnimation()
         {
             // tell the GUI to remove the selection from the GridView control
-            _mainWin.SelectPlyInTextViews(-1, PieceColor.White);
+            _mainWin.ActiveLine.SelectPly(-1, PieceColor.White);
             // Indicate that we are not replaying anything right now.
             IsReplayActive = false;
             _commentBox.RestoreTitleMessage();

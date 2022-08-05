@@ -64,6 +64,8 @@ namespace ChessForge
 
                 _mainWin.DisplayPosition(GetCurrentPosition());
                 SoundPlayer.PlayMoveSound(GetCurrentNode().LastMoveAlgebraicNotation);
+                _mainWin.ColorMoveSquares(GetCurrentNode().LastMoveEngineNotation);
+
 
                 _mainWin.UiTrainingView.WorkbookMoveMade();
 
@@ -79,7 +81,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="startNode"></param>
         /// <param name="IsEngineMove"></param>
-        public static void PrepareGame(TreeNode startNode, bool IsEngineMove, bool IsTraining)
+        public static void InitializeGameObject(TreeNode startNode, bool IsEngineMove, bool IsTraining)
         {
             CurrentState = IsEngineMove ? GameState.ENGINE_THINKING : GameState.USER_THINKING;
             GameStartPosition = startNode;
@@ -313,13 +315,17 @@ namespace ChessForge
         /// </summary>
         public static PieceColor ColorToMove
         {
-            get { return GetCurrentPosition().ColorToMove; }
+            get {
+                BoardPosition pos = GetCurrentPosition();
+                return pos != null ? GetCurrentPosition().ColorToMove : PieceColor.None; 
+            }
         }
 
         public static void ReplaceCurrentWithWorkbookMove(TreeNode nd)
         {
             Line.ReplaceLastPly(nd);
             _mainWin.DisplayPosition(nd.Position);
+            _mainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
         }
 
         public static void ReplaceCurrentWithWorkbookMove(int nodeId)
