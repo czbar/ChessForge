@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Timers;
 using System.Text;
 using System.Threading.Tasks;
 using GameTree;
@@ -198,7 +198,7 @@ namespace ChessForge
             {
                 pos = EngineGame.ProcessEngineGameMove(out nd);
                 SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
-                _mainWin.CommentBox.GameMoveMade(nd, false);
+                _mainWin.BoardCommentBox.GameMoveMade(nd, false);
             });
 
             // update the GUI and finish
@@ -328,12 +328,31 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Stops engine evaluation.
+        /// Stops engine evaluation. Sends the "stop"
+        /// command and raises the "_pendingStop" flag.
+        /// We want to wait for a "bestmove" command if it 
+        /// is coming or time out, if it is not.
         /// </summary>
         public static void StopEngineEvaluation()
         {
             SendCommand("stop");
             _pendingStop = true;
+            _mainWin.Timers.Start(AppTimers.TimerId.STOP_MESSAGE_POLL);
+        }
+
+        /// <summary>
+        /// Called when STOP_MESSAGE_POLL timer elapsed.
+        /// We let some time elapse between since sending
+        /// the "stop" command so we are assuming that there
+        /// are no messages pending.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public static void MessageQueueTimeout(object source, ElapsedEventArgs e)
+        {
+            _pendingStop = false;
+            _mainWin.Timers.Stop(AppTimers.TimerId.STOP_MESSAGE_POLL);
+            StopMessagePollTimer();
         }
 
         /// <summary>
