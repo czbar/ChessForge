@@ -41,7 +41,16 @@ namespace ChessForge
         /// </summary>
         private static object InfoMessageProcessLock = new object();
 
+        // main application window
         private static MainWindow _mainWin;
+
+
+        /// <summary>
+        /// Set when we want to stop processing.
+        /// We have to wait for the bestmove message though or
+        /// strange things will happen.
+        /// </summary>
+        private static bool _pendingStop = false;
 
         /// <summary>
         /// Creates an instance of the Engine service.
@@ -94,7 +103,6 @@ namespace ChessForge
         /// </summary>
         public static void MoveEvaluationFinished()
         {
-            // if (AppState.CurrentMode == AppState.Mode.GAME_VS_COMPUTER && AppState.MainWin.Evaluation.Mode == EvaluationState.EvaluationMode.IN_GAME_PLAY)
             if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.ENGINE_GAME)
             {
                 ProcessEngineGameMoveEvent();
@@ -107,8 +115,8 @@ namespace ChessForge
                 {
                     _mainWin.EngineTrainingGameMoveMade();
                 }
+                _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.IDLE;
             }
-            // else if (AppState.CurrentMode == AppState.Mode.TRAINING)
             else if (TrainingState.IsTrainingInProgress)
             {
                 // stop the timer, apply training mode specific handling 
@@ -147,22 +155,22 @@ namespace ChessForge
                     _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                     _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
 
-                    // if the mode is not FULL_LINE or this is the last move in FULL_LINE
+                    // if the mode is not LINE or this is the last move in LINE
                     // evaluation we stop here
                     // otherwise we start the next move's evaluation
-                    if (_mainWin.Evaluation.CurrentMode != EvaluationState.EvaluationMode.MANUAL_LINE
+                    if (_mainWin.Evaluation.CurrentMode != EvaluationState.EvaluationMode.LINE
                         || _mainWin.Evaluation.PositionIndex == _mainWin.ActiveLine.GetPlyCount() - 1)
                     {
                         _mainWin.Evaluation.Reset();
 
                         AppStateManager.ResetEvaluationControls();
-                        AppStateManager.ShowMoveEvaluationControls(false, false);
+                        AppStateManager.ShowMoveEvaluationControls(false, true);
                     }
                     else
                     {
                         AppLog.Message("Continue eval next move after index " + _mainWin.Evaluation.PositionIndex.ToString());
+                        Clear();
                         _mainWin.Evaluation.PrepareToContinue();
-
                         _mainWin.Evaluation.PositionIndex++;
                         RequestMoveEvaluation(_mainWin.Evaluation.PositionIndex);
 
@@ -179,6 +187,7 @@ namespace ChessForge
         /// </summary>
         public static void ProcessEngineGameMoveEvent()
         {
+            TreeNode nd = null;
             BoardPosition pos = null;
 
             // NOTE: need to invoke from the Dispatcher here or the program
@@ -187,16 +196,15 @@ namespace ChessForge
             // from the "wrong" thread)
             _mainWin.Dispatcher.Invoke(() =>
             {
-                TreeNode nd;
                 pos = EngineGame.ProcessEngineGameMove(out nd);
                 SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
                 _mainWin.CommentBox.GameMoveMade(nd, false);
             });
 
-
             // update the GUI and finish
             // (the app will wait for the user's move)
             _mainWin.DisplayPosition(pos);
+            _mainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
             EngineGame.CurrentState = EngineGame.GameState.USER_THINKING;
             _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
             _mainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
@@ -212,10 +220,21 @@ namespace ChessForge
             _mainWin.Evaluation.PositionIndex = posIndex;
             if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.IDLE)
             {
-                _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.MANUAL_SINGLE_MOVE;
+                _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.SINGLE_MOVE;
             }
-            _mainWin.Evaluation.Position = _mainWin.ActiveLine.GetNodeAtIndex(posIndex).Position;
+
+            TreeNode nd = _mainWin.ActiveLine.GetNodeAtIndex(posIndex);
+            _mainWin.Evaluation.Position = nd.Position;
             _mainWin.DisplayPosition(_mainWin.Evaluation.Position);
+
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && _mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.LINE)
+                {
+                    _mainWin.ActiveLine.SelectPly((int)nd.Parent.Position.MoveNumber, nd.Parent.Position.ColorToMove);
+                    _mainWin.SelectLineAndMoveInWorkbookViews(null, nd.NodeId);
+                }
+            });
 
             AppStateManager.ShowMoveEvaluationControls(true);
             _mainWin.UpdateLastMoveTextBox(posIndex);
@@ -264,7 +283,6 @@ namespace ChessForge
             RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
         }
 
-
         /// <summary>
         /// Clears the list of candidate moves.
         /// </summary>
@@ -303,11 +321,19 @@ namespace ChessForge
         /// <param name="movetime">Time to think per move (milliseconds)</param>
         public static void RequestEngineEvaluation(string fen, int mpv, int movetime)
         {
-            Clear();
             StartMessagePollTimer();
             SendCommand("setoption name multipv value " + mpv.ToString());
             SendCommand("position fen " + fen);
             SendCommand("go movetime " + movetime.ToString());
+        }
+
+        /// <summary>
+        /// Stops engine evaluation.
+        /// </summary>
+        public static void StopEngineEvaluation()
+        {
+            SendCommand("stop");
+            _pendingStop = true;
         }
 
         /// <summary>
@@ -334,7 +360,15 @@ namespace ChessForge
             }
             else if (message.StartsWith("bestmove"))
             {
-                ProcessBestMoveMessage(message);
+                if (_pendingStop)
+                {
+                    _pendingStop = false;
+                    StopMessagePollTimer();
+                }
+                else
+                {
+                    ProcessBestMoveMessage(message);
+                }
             }
         }
 
