@@ -321,6 +321,48 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Converts engine notation to origin and destination coordinates.
+        /// It only needs the first 4 characters of the move.
+        /// </summary>
+        /// <param name="engMove"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <exception cref="Exception"></exception>
+        public static void EngineNotationToCoords(string engMove, out SquareCoords from, out SquareCoords to)
+        {
+            if (engMove.Length < 4 || engMove.Length > 5)
+            {
+                throw new Exception("Invalid engine move received: " + engMove);
+            }
+
+            char engOriginFile = engMove[0];
+            char engOriginRank = engMove[1];
+            char engDestFile = engMove[2];
+            char engDestRank = engMove[3];
+
+            int xFrom = (int)engOriginFile - (int)'a';
+            int yFrom = (int)engOriginRank - (int)'1';
+            from = new SquareCoords(xFrom, yFrom);
+
+            int xTo = (int)engDestFile - (int)'a';
+            int yTo = (int)engDestRank - (int)'1';
+            to = new SquareCoords(xTo, yTo);
+        }
+
+        /// <summary>
+        /// Returns the color opposite to the one passed.
+        /// </summary>
+        /// <param name="col"></param>
+        /// <returns></returns>
+        public static PieceColor ReverseColor(PieceColor col)
+        {
+            if (col == PieceColor.None)
+                return col;
+
+            return col == PieceColor.White ? PieceColor.Black : PieceColor.White;
+        }
+
+        /// <summary>
         /// Given the actual origin and a list of origins to disambiguate from with a shortest notation, checks whether 
         /// it is sufficient to:
         /// 1. indicate the origin file
