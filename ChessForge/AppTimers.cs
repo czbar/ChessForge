@@ -28,6 +28,8 @@ namespace ChessForge
             CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE,
             REQUEST_WORKBOOK_MOVE,
             SHOW_TRAINING_PROGRESS_POPUP_MENU,
+            STOP_MESSAGE_POLL,
+            FLASH_ANNOUNCEMENT,
         };
 
         /// <summary>
@@ -69,6 +71,20 @@ namespace ChessForge
         private Timer _showTrainingProgressPopupMenu;
 
         /// <summary>
+        /// Used to check if engine has any messages coming after
+        /// a stop command was issued.
+        /// We do not want to stop polling for engine messages
+        /// prematurely.
+        /// </summary>
+        private Timer _stopMessagePollTimer;
+
+        /// <summary>
+        /// Controls the time, a "flash announcement" is
+        /// shown in the Comment Box.
+        /// </summary>
+        private Timer _flashAnnouncementTimer;
+
+        /// <summary>
         /// Tracks time that evaluation of a move/position is taking.
         /// </summary>
         private Stopwatch _evaluationProgressStopwatch;
@@ -83,6 +99,7 @@ namespace ChessForge
         /// </summary>
         private Dictionary<StopwatchId, Stopwatch> _dictStopwatches = new Dictionary<StopwatchId, Stopwatch>();
 
+        // main application window
         private MainWindow _mainWin;
 
         /// <summary>
@@ -112,6 +129,14 @@ namespace ChessForge
             _showTrainingProgressPopupMenu = new Timer();
             InitShowTrainingProgressPopupMenu();
             _dictTimers.Add(TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU, _showTrainingProgressPopupMenu);
+
+            _flashAnnouncementTimer = new Timer();
+            InitFlashAnnouncementTimer();
+            _dictTimers.Add(TimerId.FLASH_ANNOUNCEMENT, _flashAnnouncementTimer);
+
+            _stopMessagePollTimer = new Timer();
+            InitStopMessagePoll();
+            _dictTimers.Add(TimerId.STOP_MESSAGE_POLL, _stopMessagePollTimer);
 
             _evaluationProgressStopwatch = new Stopwatch();
             _dictStopwatches.Add(StopwatchId.EVALUATION_ELAPSED_TIME, _evaluationProgressStopwatch);
@@ -233,6 +258,20 @@ namespace ChessForge
             _showTrainingProgressPopupMenu.Elapsed += new ElapsedEventHandler(_mainWin.ShowTrainingProgressPopupMenu);
             _showTrainingProgressPopupMenu.Interval = 100;
             _showTrainingProgressPopupMenu.Enabled = false;
+        }
+
+        private void InitStopMessagePoll()
+        {
+            _stopMessagePollTimer.Elapsed += new ElapsedEventHandler(EngineMessageProcessor.MessageQueueTimeout);
+            _stopMessagePollTimer.Interval = 200;
+            _stopMessagePollTimer.Enabled = false;
+        }
+
+        private void InitFlashAnnouncementTimer()
+        {
+            _flashAnnouncementTimer.Elapsed += new ElapsedEventHandler(_mainWin.FlashAnnouncementTimeUp);
+            _flashAnnouncementTimer.Interval = 1000;
+            _flashAnnouncementTimer.Enabled = false;
         }
     }
 }

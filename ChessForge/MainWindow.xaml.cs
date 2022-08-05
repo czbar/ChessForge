@@ -61,7 +61,7 @@ namespace ChessForge
         /// The RichTextBox based comment box
         /// underneath the main chessbaord.
         /// </summary>
-        public CommentBoxRichTextBuilder CommentBox;
+        public CommentBox BoardCommentBox;
 
         public GameReplay ActiveLineReplay;
 
@@ -101,7 +101,7 @@ namespace ChessForge
             InitializeComponent();
             SoundPlayer.Initialize();
 
-            CommentBox = new CommentBoxRichTextBuilder(UiRtbBoardComment.Document, this);
+            BoardCommentBox = new CommentBox(UiRtbBoardComment.Document, this);
             ActiveLine = new ActiveLineManager(UiDgActiveLine, this);
 
             _menuPlayComputer.Header = Strings.MENU_ENGINE_GAME_START;
@@ -127,7 +127,7 @@ namespace ChessForge
 
             BookmarkManager.InitBookmarksGui(this);
 
-            ActiveLineReplay = new GameReplay(this, MainChessBoard, CommentBox);
+            ActiveLineReplay = new GameReplay(this, MainChessBoard, BoardCommentBox);
 
 
             UiSldReplaySpeed.Value = Configuration.MoveSpeed;
@@ -279,6 +279,12 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (Evaluation.IsRunning)
+            {
+                BoardCommentBox.ShowFlashAnnouncement("Engine evaluation in progress!");
+                return;
+            }
+
             if (e.ChangedButton == MouseButton.Left)
             {
                 Point clickedPoint = e.GetPosition(UiImgMainChessboard);
@@ -427,7 +433,7 @@ namespace ChessForge
                         }
 
                         SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
-                        CommentBox.GameMoveMade(nd, true);
+                        BoardCommentBox.GameMoveMade(nd, true);
                         ColorMoveSquares(nd.LastMoveEngineNotation);
                     }
                     else
@@ -898,7 +904,7 @@ namespace ChessForge
                 Configuration.AddRecentFile(fileName);
                 RecreateRecentFilesMenuItems();
 
-                CommentBox.ShowWorkbookTitle(Workbook.Title);
+                BoardCommentBox.ShowWorkbookTitle(Workbook.Title);
 
                 _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
                 _trainingBrowseRichTextBuilder = new WorkbookView(_rtbTrainingBrowse.Document, this);
@@ -1215,16 +1221,6 @@ namespace ChessForge
         {
             Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
 
-            UiMniEvalLine.Dispatcher.Invoke(() =>
-            {
-                UiMniEvalLine.IsEnabled = true;
-            });
-
-            UiMniEvalPos.Dispatcher.Invoke(() =>
-            {
-                UiMniEvalPos.IsEnabled = true;
-            });
-
             UiPbEngineThinking.Dispatcher.Invoke(() =>
             {
                 UiPbEngineThinking.Visibility = Visibility.Visible;
@@ -1235,11 +1231,11 @@ namespace ChessForge
 
             UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
             Evaluation.Reset();
-            Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
+
+            EngineMessageProcessor.StopEngineEvaluation();
             LearningMode.CurrentMode = LearningMode.Mode.MANUAL_REVIEW;
             EngineGame.CurrentState = EngineGame.GameState.IDLE;
             Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-            LearningMode.ExitCurrentMode();
 
             int row, column;
 
@@ -1249,7 +1245,7 @@ namespace ChessForge
             TreeNode nd = ActiveLine.GetNodeAtIndex(nodeIndex);
             MainChessBoard.DisplayPosition(nd.Position);
 
-            CommentBox.RestoreTitleMessage();
+            BoardCommentBox.RestoreTitleMessage();
         }
 
         /// <summary>
@@ -1281,6 +1277,20 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MenuItem_StartTraining(object sender, RoutedEventArgs e)
         {
+            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+            {
+                StopEngineGame();
+            }
+            else if (Evaluation.IsRunning)
+            {
+                EngineMessageProcessor.StopEngineEvaluation();
+                AppStateManager.ChangeEvaluationState(EvaluationState.EvaluationMode.IDLE);
+            }
+
+            AppStateManager.CurrentLearningMode = LearningMode.Mode.MANUAL_REVIEW;
+            AppStateManager.SetupGuiForCurrentStates();
+            AppStateManager.SwapCommentBoxForEngineLines(false);
+
             UiTabBookmarks.Focus();
         }
 
@@ -1324,7 +1334,7 @@ namespace ChessForge
                 MainChessBoard.FlipBoard();
             }
 
-            CommentBox.TrainingSessionStart();
+            BoardCommentBox.TrainingSessionStart();
 
             // The Line display is the same as when playing a game against the computer 
             EngineGame.InitializeGameObject(startNode, false, false);
@@ -1379,6 +1389,11 @@ namespace ChessForge
         public void ShowTrainingProgressPopupMenu(object source, ElapsedEventArgs e)
         {
             UiTrainingView.ShowPopupMenu();
+        }
+
+        public void FlashAnnouncementTimeUp(object source, ElapsedEventArgs e)
+        {
+            BoardCommentBox.HideFlashAnnouncement();
         }
 
         /// <summary>

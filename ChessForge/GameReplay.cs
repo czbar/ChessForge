@@ -64,7 +64,7 @@ namespace ChessForge
 
         private ChessBoard _chessBoard;
 
-        private CommentBoxRichTextBuilder _commentBox;
+        private CommentBox _commentBox;
 
         /// <summary>
         /// Sets reference to the hosting window.
@@ -73,7 +73,7 @@ namespace ChessForge
         /// and the object persists across the entire session.
         /// </summary>
         /// <param name="win"></param>
-        public GameReplay(MainWindow win, ChessBoard chessBoard, CommentBoxRichTextBuilder commentBox)
+        public GameReplay(MainWindow win, ChessBoard chessBoard, CommentBox commentBox)
         {
             _mainWin = win;
             _chessBoard = chessBoard;

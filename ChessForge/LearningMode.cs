@@ -126,15 +126,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Exits the mode the application is currently in
-        /// and returns to the previous mode.
-        /// </summary>
-        public static void ExitCurrentMode()
-        {
-            ChangeCurrentMode(_previousMode);
-        }
-
-        /// <summary>
         /// The current mode of the application.
         /// </summary>
         public static Mode CurrentMode { get => _currentMode; set => _currentMode = value; }

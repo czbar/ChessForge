@@ -198,16 +198,29 @@ namespace ChessForge
 
         private static void SetupMenusForManualReview()
         {
+            _mainWin.UiMnStartTraining.IsEnabled = true;
+            _mainWin.UiMnRestartTraining.IsEnabled = false;
+            _mainWin.UiMnExitTraining.IsEnabled = false;
         }
 
         private static void SetupMenusForTraining()
         {
+            _mainWin.UiMnStartTraining.IsEnabled = false;
+            _mainWin.UiMnRestartTraining.IsEnabled = true;
+            _mainWin.UiMnExitTraining.IsEnabled = true;
         }
 
         private static void SetupMenusForEngineGame()
         {
+            _mainWin.UiMnStartTraining.IsEnabled = true;
+            _mainWin.UiMnRestartTraining.IsEnabled = false;
+            _mainWin.UiMnExitTraining.IsEnabled = false;
         }
 
+        /// <summary>
+        /// Shows/hides the engine evaluation progress bar
+        /// and the manu items for move and line evaluation.
+        /// </summary>
         private static void ShowEvaluationProgressControlsForCurrentStates()
         {
             _mainWin.Dispatcher.Invoke(() =>
@@ -319,6 +332,11 @@ namespace ChessForge
             return FenParser.GenerateFenFromPosition(position);
         }
 
+        /// <summary>
+        /// Depending on the "showEngineLines" argument
+        /// shows either the Comment Box or the Engine Lines text box.
+        /// </summary>
+        /// <param name="showEngineLines"></param>
         public static void SwapCommentBoxForEngineLines(bool showEngineLines)
         {
             _mainWin.Dispatcher.Invoke(() =>
@@ -329,21 +347,6 @@ namespace ChessForge
                 {
                     _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                 }
-            });
-        }
-
-        private static void PrepareEvaluationControls()
-        {
-            _mainWin.Dispatcher.Invoke(() =>
-            {
-                _mainWin.UiMniEvalLine.IsEnabled = false;
-                _mainWin.UiMniEvalPos.IsEnabled = false;
-
-                _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
-                _mainWin.UiPbEngineThinking.Minimum = 0;
-                // add 50% to compensate for any processing delays, we don't want to be too optimistic
-                _mainWin.UiPbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime * 1.5);
-                _mainWin.UiPbEngineThinking.Value = 0;
             });
         }
 
@@ -457,18 +460,6 @@ namespace ChessForge
             });
         }
 
-        //public static void SetupGuiForManualReviewMode()
-        //{
-        //    TrainingState.IsBrowseActive = false;
-        //    _mainWin.UiTabTrainingControl.Margin = new Thickness(5, 5, 5, 5);
-        //    _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
-
-        //    _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
-        //    _mainWin.UiDgActiveLine.Columns[2].Visibility = Visibility.Visible;
-        //    _mainWin.UiDgActiveLine.Columns[4].Visibility = Visibility.Visible;
-        //    _mainWin.UiDgActiveLine.Width = 260;
-        //}
-
         public static void SetupGuiForTrainingBrowseMode()
         {
             TrainingState.IsBrowseActive = true;
@@ -489,6 +480,21 @@ namespace ChessForge
             _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
 
             _mainWin.DisplayPosition(EngineGame.GetCurrentPosition());
+        }
+
+        private static void PrepareEvaluationControls()
+        {
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                _mainWin.UiMniEvalLine.IsEnabled = false;
+                _mainWin.UiMniEvalPos.IsEnabled = false;
+
+                _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
+                _mainWin.UiPbEngineThinking.Minimum = 0;
+                // add 50% to compensate for any processing delays, we don't want to be too optimistic
+                _mainWin.UiPbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime * 1.5);
+                _mainWin.UiPbEngineThinking.Value = 0;
+            });
         }
 
     }
