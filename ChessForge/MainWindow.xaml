@@ -58,19 +58,19 @@
         <Menu VerticalAlignment="Top" Background="#334B4B4B" BorderBrush="#993C3C3C" BorderThickness="1" Height="29" Grid.ColumnSpan="3">
             <!-- Game menu -->
             <MenuItem x:Name ="MenuFile"  Header="File" Margin="0,0,0,0" >
-                <MenuItem Header="Open Workbook" Click="Menu_LoadWorkbook"/>
+                <MenuItem x:Name="UiMnLoadWorkbook" Header="Open Workbook" Click="Menu_LoadWorkbook"/>
                 <Separator />
             </MenuItem>
             <MenuItem Header="Training" Margin="0,0,0,0">
-                <MenuItem Header="Start New Session" Click="MenuItem_StartTraining"/>
-                <MenuItem Header="Restart Training" Click="_mnTrainRestartTraining_Click"/>
-                <MenuItem Header="Exit Training" Click="MenuItem_StopTraining"/>
+                <MenuItem x:Name="UiMnStartTraining"  Header="Start New Session" Click="MenuItem_StartTraining"/>
+                <MenuItem x:Name="UiMnRestartTraining"  Header="Restart Training" Click="_mnTrainRestartTraining_Click"/>
+                <MenuItem x:Name="UiMnExitTraining" Header="Exit Training" Click="MenuItem_StopTraining"/>
             </MenuItem>
             <MenuItem Header="View" Margin="0,0,0,0">
                 <MenuItem Header="Flip Board" Click="MenuItem_FlipBoard" />
             </MenuItem>
         </Menu>
-        <DataGrid x:Name="UiDgEngineGame" Grid.Column="1" HorizontalAlignment="Left" Height="676" Margin="10,5,0,0" VerticalAlignment="Top" Width="180"  
+        <DataGrid x:Name="UiDgEngineGame" Grid.Column="1" HorizontalAlignment="Left" Height="670" Margin="10,5,0,0" VerticalAlignment="Top" Width="180"  
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" CanUserSortColumns="False"
                   GridLinesVisibility="None" Grid.Row="1" Background="White"   >
             <DataGrid.Resources>
@@ -393,7 +393,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <DataGrid x:Name="UiDgActiveLine" Grid.Column="1" HorizontalAlignment="Left" Height="676" Margin="10,5,0,0" VerticalAlignment="Top" Width="260"  
+        <DataGrid x:Name="UiDgActiveLine" Grid.Column="1" HorizontalAlignment="Left" Height="670" Margin="10,5,0,0" VerticalAlignment="Top" Width="260"  
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" 
                   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
                   CanUserSortColumns="False" GridLinesVisibility="None" Grid.Row="1" 
