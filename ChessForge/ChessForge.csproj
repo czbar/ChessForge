@@ -199,6 +199,7 @@
     <Resource Include="Resources\Images\WhitePromo.png" />
     <Resource Include="Resources\Images\LeftArrow.png" />
     <Resource Include="Resources\Images\RightArrow.png" />
+    <Resource Include="Resources\Images\YellowOverlay.png" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
