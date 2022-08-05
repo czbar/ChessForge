@@ -225,14 +225,14 @@ namespace ChessForge
             if (_mainWin.ActiveLineReplay.IsReplayActive)
             {
                 _mainWin.StopMoveAnimation();
-                _mainWin.CommentBox.RestoreTitleMessage();
+                _mainWin.BoardCommentBox.RestoreTitleMessage();
             }
 
             if (row >= 0)
             {
                 int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
                 _mainWin.ActiveLineReplay.SetupTreeLineToDisplay(Line.NodeList, moveIndex + 1);
-                _mainWin.CommentBox.GameReplayStart();
+                _mainWin.BoardCommentBox.GameReplayStart();
             }
         }
 
@@ -266,7 +266,7 @@ namespace ChessForge
                         // was part of a double click (in which case the double click
                         // handler will override this).
                         _mainWin.ActiveLineReplay.ShowPositionAndStop(nd);
-                        _mainWin.CommentBox.RestoreTitleMessage();
+                        _mainWin.BoardCommentBox.RestoreTitleMessage();
 
                         //StopAnimation();
                         //gameReplay.Stop();
