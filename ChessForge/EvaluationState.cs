@@ -23,12 +23,8 @@ namespace ChessForge
         public enum EvaluationMode
         {
             IDLE,
-            MANUAL_SINGLE_MOVE,
-            MANUAL_LINE,
-
-            TRAINING_SINGLE_MOVE,
-            TRAINING_LINE,
-
+            SINGLE_MOVE,
+            LINE,
             ENGINE_GAME,
         };
 
@@ -138,7 +134,7 @@ namespace ChessForge
 
         /// <summary>
         /// Reset the state to get ready for another
-        /// evluation run.
+        /// evaluation run.
         /// </summary>
         public void Reset()
         {
