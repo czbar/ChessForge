@@ -177,6 +177,7 @@ namespace ChessForge
                 {
                 }
             }
+
         }
 
         /// <summary>
@@ -427,6 +428,7 @@ namespace ChessForge
 
                         SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
                         CommentBox.GameMoveMade(nd, true);
+                        ColorMoveSquares(nd.LastMoveEngineNotation);
                     }
                     else
                     {
@@ -700,16 +702,6 @@ namespace ChessForge
             Canvas.SetTop(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), squareSize * (7 - MoveAnimation.Origin.Ycoord) + UiImgMainChessboard.Margin.Top);
 
             ActiveLineReplay.PrepareNextMoveForAnimation(ActiveLineReplay.LastAnimatedMoveIndex, false);
-        }
-
-        /// <summary>
-        /// Selects a move in all relevant views.
-        /// </summary>
-        /// <param name="moveNo"></param>
-        /// <param name="colorToMove"></param>
-        public void SelectPlyInTextViews(int moveNo, PieceColor colorToMove)
-        {
-            ActiveLine.SelectPly(moveNo, colorToMove);
         }
 
         private void OpenWorkbookFile(object sender, RoutedEventArgs e)
@@ -1033,7 +1025,7 @@ namespace ChessForge
                     // make an extra defensive check
                     if (posIndex < ActiveLine.GetPlyCount())
                     {
-                        AppStateManager.ChangeEvaluationState(EvaluationState.EvaluationMode.MANUAL_SINGLE_MOVE);
+                        AppStateManager.ChangeEvaluationState(EvaluationState.EvaluationMode.SINGLE_MOVE);
                         EngineMessageProcessor.RequestMoveEvaluation(posIndex);
                     }
                 }
@@ -1063,7 +1055,7 @@ namespace ChessForge
             // we will start with the first move of the active line
             if (EngineMessageProcessor.IsEngineAvailable())
             {
-                AppStateManager.ChangeEvaluationState(EvaluationState.EvaluationMode.MANUAL_LINE);
+                AppStateManager.ChangeEvaluationState(EvaluationState.EvaluationMode.LINE);
                 UiDgActiveLine.SelectedCells.Clear();
                 EngineMessageProcessor.RequestMoveEvaluation(Evaluation.PositionIndex);
             }
@@ -1163,7 +1155,7 @@ namespace ChessForge
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
 
-            EngineGame.PrepareGame(startNode, true, IsTraining);
+            EngineGame.InitializeGameObject(startNode, true, IsTraining);
             UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
 
             if (startNode.ColorToMove == PieceColor.White)
@@ -1252,7 +1244,7 @@ namespace ChessForge
             int row, column;
 
             ActiveLine.GetSelectedRowColumn(out row, out column);
-            SelectPlyInTextViews(row, column == 1 ? PieceColor.White : PieceColor.Black);
+            ActiveLine.SelectPly(row, column == 1 ? PieceColor.White : PieceColor.Black);
             int nodeIndex = ActiveLine.GetNodeIndexFromRowColumn(row, column);
             TreeNode nd = ActiveLine.GetNodeAtIndex(nodeIndex);
             MainChessBoard.DisplayPosition(nd.Position);
@@ -1314,73 +1306,47 @@ namespace ChessForge
         /// <param name="startNode"></param>
         public void SetAppInTrainingMode(TreeNode startNode)
         {
-            // Set training mode, clearing any other states
-            // that may have been set.
-            // TODO: need to reset any possible activities like
-            // replaying a line or playing against the computer.
+            // Set up the training mode
             LearningMode.CurrentMode = LearningMode.Mode.TRAINING;
+            TrainingState.IsTrainingInProgress = true;
+            TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_TRAINING_MOVE;
+            AppStateManager.SetupGuiForCurrentStates();
 
-            // Get the first bookmarked position
-            BookmarkManager.ActiveBookmarkInTraining = 0;
-            MainChessBoard.SetBoardSourceImage(ChessBoards.ChessBoardGreen);
-
-            // TODO: need to check that the side on move is what was declared
-            // and maybe give an option to change that?
             LearningMode.TrainingSide = startNode.ColorToMove;
-
             MainChessBoard.DisplayPosition(startNode.Position);
 
             _trainingBrowseRichTextBuilder.BuildFlowDocumentForWorkbook(startNode.NodeId);
             UiTrainingView.Initialize(startNode);
 
-            EnterGuiTrainingMode();
-            TrainingState.IsTrainingInProgress = true;
-            if (LearningMode.TrainingSide == PieceColor.Black)
+            if (LearningMode.TrainingSide == PieceColor.Black && !MainChessBoard.IsFlipped
+                || LearningMode.TrainingSide == PieceColor.White && MainChessBoard.IsFlipped)
             {
-                if (!MainChessBoard.IsFlipped)
-                {
-                    MainChessBoard.FlipBoard();
-                }
-            }
-            else
-            {
-                if (MainChessBoard.IsFlipped)
-                {
-                    MainChessBoard.FlipBoard();
-                }
+                MainChessBoard.FlipBoard();
             }
 
             CommentBox.TrainingSessionStart();
 
-            //TODO check if there are conditions where there is no point in user making a move.
-            TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_TRAINING_MOVE;
-
             // The Line display is the same as when playing a game against the computer 
-            EngineGame.PrepareGame(startNode, false, false);
+            EngineGame.InitializeGameObject(startNode, false, false);
             UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-        }
-
-        private void EnterGuiTrainingMode()
-        {
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
-        }
-
-        private void ExitGuiTrainingMode()
-        {
-            UiTabCtrlManualReview.Visibility = Visibility.Visible;
-            UiTabCtrlTraining.Visibility = Visibility.Hidden;
         }
 
         private void MenuItem_StopTraining(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
+                if (Evaluation.CurrentMode != EvaluationState.EvaluationMode.IDLE)
+                {
+                    EngineMessageProcessor.StopEngineEvaluation();
+                    Evaluation.Reset();
+                    AppStateManager.ResetEvaluationControls();
+                    AppStateManager.ShowMoveEvaluationControls(false, false);
+                    AppStateManager.SetupGuiForCurrentStates();
+                }
+
                 // TODO: ask questions re saving etc.
-                MainChessBoard.SetBoardSourceImage(ChessBoards.ChessBoardBlue);
                 TrainingState.IsTrainingInProgress = false;
-                ExitGuiTrainingMode();
                 LearningMode.CurrentMode = LearningMode.Mode.MANUAL_REVIEW;
                 AppStateManager.SetupGuiForCurrentStates();
             }
@@ -1388,11 +1354,13 @@ namespace ChessForge
 
         private void _imgStop_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            // TODO: this only leads to stopping after the current move's evaluation finishes
-            // improve so that we send a stop message to the engine and abandon immediately
+            EngineMessageProcessor.StopEngineEvaluation();
             lock (LearningMode.EvalLock)
             {
-                Evaluation.CurrentMode = EvaluationState.EvaluationMode.MANUAL_SINGLE_MOVE;
+                Evaluation.Reset();
+                AppStateManager.ResetEvaluationControls();
+                AppStateManager.ShowMoveEvaluationControls(false, false);
+                AppStateManager.SetupGuiForCurrentStates();
             }
 
             e.Handled = true;
@@ -1576,6 +1544,19 @@ namespace ChessForge
             this.Dispatcher.Invoke(() =>
             {
                 UiTrainingView.EngineMoveMade();
+            });
+        }
+
+        public void ColorMoveSquares(string engCode)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                MainChessBoard.RemoveMoveSquareColors();
+
+                SquareCoords sqOrig, sqDest;
+                MoveUtils.EngineNotationToCoords(engCode, out sqOrig, out sqDest);
+                MainChessBoard.ColorMoveSquare(sqOrig.Xcoord, sqOrig.Ycoord, true);
+                MainChessBoard.ColorMoveSquare(sqDest.Xcoord, sqDest.Ycoord, false);
             });
         }
 
