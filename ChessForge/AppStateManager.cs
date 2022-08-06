@@ -56,6 +56,18 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Adjusts the GUI to the changed Evaluation state.
+        /// The state of the GUI will depend on the Learning Mode
+        /// and Game State.
+        /// </summary>
+        /// <param name="mode"></param>
+        public static void SetCurrentEvaluationMode(EvaluationState.EvaluationMode mode)
+        {
+            MainWin.Evaluation.SetCurrentMode(mode);
+            ShowEvaluationProgressControlsForCurrentStates();
+        }
+
+        /// <summary>
         /// Current Game State.
         /// </summary>
         public static EngineGame.GameState CurrentGameState
@@ -97,7 +109,7 @@ namespace ChessForge
         private static void SetupGuiForManualReview()
         {
             _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
-            
+
             _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
             _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
 
@@ -115,12 +127,12 @@ namespace ChessForge
             // these tabs may have been disabled for the engine game
             _mainWin.UiRtbWorkbookView.Opacity = 1;
             _mainWin.UiRtbWorkbookView.IsEnabled = true;
-            
+
             _mainWin.UiTabBookmarks.Opacity = 1;
             _mainWin.UiTabBookmarks.IsEnabled = true;
 
             ShowGuiActiveLine(true);
-            ShowEvaluationProgressControls();
+            ShowEvaluationProgressControlsForCurrentStates();
 
             SetupMenusForManualReview();
         }
@@ -134,7 +146,7 @@ namespace ChessForge
 
             _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
             ShowGuiEngineGameLine(false);
-//            _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
+            //            _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
 
             _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
             _mainWin.UiTabCtrlTraining.Visibility = Visibility.Visible;
@@ -149,7 +161,7 @@ namespace ChessForge
             _mainWin.UiTabTrainingBrowse.Opacity = 1;
             _mainWin.UiTabTrainingBrowse.IsEnabled = true;
 
-            ShowEvaluationProgressControls();
+            ShowEvaluationProgressControlsForCurrentStates();
 
             SetupMenusForTraining();
         }
@@ -190,7 +202,7 @@ namespace ChessForge
                 _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Hidden;
             }
 
-            ShowEvaluationProgressControls();
+            ShowEvaluationProgressControlsForCurrentStates();
             ShowGuiEngineGameLine(true);
 
             SetupMenusForEngineGame();
@@ -201,6 +213,9 @@ namespace ChessForge
             _mainWin.UiMnStartTraining.IsEnabled = true;
             _mainWin.UiMnRestartTraining.IsEnabled = false;
             _mainWin.UiMnExitTraining.IsEnabled = false;
+
+            _mainWin.UiMniPlayEngine.IsEnabled = true;
+            _mainWin.UiMniPlayEngine.Header = Strings.MENU_ENGINE_GAME_START;
         }
 
         private static void SetupMenusForTraining()
@@ -208,38 +223,119 @@ namespace ChessForge
             _mainWin.UiMnStartTraining.IsEnabled = false;
             _mainWin.UiMnRestartTraining.IsEnabled = true;
             _mainWin.UiMnExitTraining.IsEnabled = true;
+
+            _mainWin.UiMniPlayEngine.IsEnabled = false;
+            _mainWin.UiMniPlayEngine.Header = Strings.MENU_ENGINE_GAME_START;
         }
 
         private static void SetupMenusForEngineGame()
         {
-            _mainWin.UiMnStartTraining.IsEnabled = true;
-            _mainWin.UiMnRestartTraining.IsEnabled = false;
-            _mainWin.UiMnExitTraining.IsEnabled = false;
+            bool train = TrainingState.IsTrainingInProgress;
+
+            _mainWin.UiMnStartTraining.IsEnabled = !train;
+            _mainWin.UiMnRestartTraining.IsEnabled = train;
+            _mainWin.UiMnExitTraining.IsEnabled = train;
+
+            _mainWin.UiMniPlayEngine.IsEnabled = true;
+            _mainWin.UiMniPlayEngine.Header = Strings.MENU_ENGINE_GAME_STOP;
         }
 
         /// <summary>
-        /// Shows/hides the engine evaluation progress bar
-        /// and the manu items for move and line evaluation.
+        /// Shows/hides the engine evaluation progress bar, labels,
+        /// and the menu items for move and line evaluation.
         /// </summary>
-        private static void ShowEvaluationProgressControlsForCurrentStates()
+        public static void ShowEvaluationProgressControlsForCurrentStates()
         {
+            bool eval = MainWin.Evaluation.IsRunning;
+            bool game = EngineGame.CurrentState != EngineGame.GameState.IDLE;
+
             _mainWin.Dispatcher.Invoke(() =>
                 {
-                    if (MainWin.Evaluation.IsRunning)
+                    if (eval)
                     {
                         _mainWin.UiMniEvalLine.IsEnabled = false;
                         _mainWin.UiMniEvalPos.IsEnabled = false;
+
                         _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
+                        _mainWin.UiImgStop.Visibility = Visibility.Visible;
+
+                        if (game)
+                        {
+                            _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
+                            _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
+                            _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            _mainWin.UiLblEvaluating.Visibility = Visibility.Visible;
+                            _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Visible;
+                            _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
+                        }
                     }
                     else
                     {
                         _mainWin.UiMniEvalLine.IsEnabled = true;
                         _mainWin.UiMniEvalPos.IsEnabled = true;
+
                         _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
+                        _mainWin.UiImgStop.Visibility = Visibility.Hidden;
+                        _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
+                        _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
+                        _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
                     }
                 });
         }
 
+
+#if false
+        /// <summary>
+        /// Shows/hides evaluation progress controls depending on the
+        /// relevant states/modes in the application.
+        /// These are the controls showing the lines being evaluated,
+        /// what move is being evaluated and such.
+        /// In particular in the context of a game, whether in MANUAL_REVIEW or TRAINING
+        /// we do not want to show the lines being evaluated so that it feels like 
+        /// a "real" game.
+        /// </summary>
+        public static void ShowEvaluationProgressControls()
+        {
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.IDLE)
+                {
+                    _mainWin.UiImgStop.Visibility = Visibility.Hidden;
+                    _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
+
+                    _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
+                    _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
+
+                    _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
+                }
+                else if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME
+                        && (!TrainingState.IsTrainingInProgress || _mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.ENGINE_GAME))
+                {
+                    bool think = EngineGame.CurrentState == EngineGame.GameState.ENGINE_THINKING;
+                    _mainWin.UiImgStop.Visibility = think ? Visibility.Visible : Visibility.Hidden;
+                    _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
+
+                    _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
+                    _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
+
+                    _mainWin.UiLblEvalSecretMode.Visibility = think ? Visibility.Visible : Visibility.Hidden;
+                }
+                else
+                {
+                    _mainWin.UiImgStop.Visibility = Visibility.Visible;
+                    _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
+
+                    _mainWin.UiLblEvaluating.Visibility = Visibility.Visible;
+                    _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Visible;
+
+                    _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
+                }
+            });
+        }
+#endif
 
         private static void ShowGuiActiveLine(bool includeEvals)
         {
@@ -269,7 +365,8 @@ namespace ChessForge
             else
             {
                 _mainWin.UiTabCtrlManualReview.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
-                
+
+                _mainWin.UiTabWorkbook.Focus();
                 _mainWin.UiRtbWorkbookView.Opacity = 0.1;
                 _mainWin.UiRtbWorkbookView.IsEnabled = false;
 
@@ -284,17 +381,6 @@ namespace ChessForge
         /// <param name="newMode"></param>
         public static void ChangeLearningMode(LearningMode.Mode newMode)
         {
-        }
-
-        /// <summary>
-        /// Adjusts the GUI to the changed Evaluation state.
-        /// The state of the GUI will depend on the Learning Mode
-        /// and Game State.
-        /// </summary>
-        /// <param name="newMode"></param>
-        public static void ChangeEvaluationState(EvaluationState.EvaluationMode newMode)
-        {
-            MainWin.Evaluation.CurrentMode = newMode;
         }
 
         /// <summary>
@@ -366,7 +452,6 @@ namespace ChessForge
                 {
                     _mainWin.UiRtbBoardComment.Visibility = Visibility.Hidden;
                     _mainWin.UiTbEngineLines.Visibility = Visibility.Visible;
-                    ShowEvaluationProgressControls();
                 }
                 else
                 {
@@ -376,89 +461,12 @@ namespace ChessForge
                         _mainWin.UiTbEngineLines.Visibility = Visibility.Hidden;
                     }
 
-                    ShowEvaluationProgressControls();
                 }
+                ShowEvaluationProgressControlsForCurrentStates();
             });
 
         }
 
-        /// <summary>
-        /// Shows or hides the Engine evaluation 
-        /// progress GUI elements.
-        /// 
-        /// In the "hide" mode all elements are hidden.
-        /// 
-        /// In the "show" mode, if isSecretMode is false
-        /// all elements are visible except the label for the "secret" mode.
-        /// If the isSecretMode is true, only the progress bar and the 
-        /// label for the "secret mode are visible.
-        /// </summary>
-        /// <param name="show"></param>
-        /// <param name="isSecretMode"></param>
-        public static void ShowEvaluationProgressControls(bool show, bool isSecretMode = false)
-        {
-            _mainWin.Dispatcher.Invoke(() =>
-            {
-                // visibility based on the value of "show" alone
-                _mainWin.UiImgStop.Visibility = show ? Visibility.Visible : Visibility.Hidden;
-                _mainWin.UiPbEngineThinking.Visibility = show ? Visibility.Visible : Visibility.Hidden;
-
-                // shown if show == true and isSecretMode is false
-                _mainWin.UiLblEvaluating.Visibility = show && !isSecretMode ? Visibility.Visible : Visibility.Hidden;
-                _mainWin.UiLblMoveUnderEval.Visibility = show && !isSecretMode ? Visibility.Visible : Visibility.Hidden;
-
-                // only shown if both show == true and isSecretMode == true
-                _mainWin.UiLblEvalSecretMode.Visibility = show && isSecretMode ? Visibility.Visible : Visibility.Hidden;
-            });
-        }
-
-        /// <summary>
-        /// Shows/hides evaluation progress controls depending on the
-        /// relevant states/modes in the application.
-        /// These are the controls showing the lines being evaluated,
-        /// what move is being evaluated and such.
-        /// In particular in the context of a game, whether in MANUAL_REVIEW or TRAINING
-        /// we do not want to show the lines being evaluated so that it feels like 
-        /// a "real" game.
-        /// </summary>
-        public static void ShowEvaluationProgressControls()
-        {
-            _mainWin.Dispatcher.Invoke(() =>
-            {
-                if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.IDLE)
-                {
-                    _mainWin.UiImgStop.Visibility = Visibility.Hidden;
-                    _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
-
-                    _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
-                    _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
-
-                    _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
-                }
-                else if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME
-                        && (!TrainingState.IsTrainingInProgress || _mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.ENGINE_GAME))
-                {
-                    bool think = EngineGame.CurrentState == EngineGame.GameState.ENGINE_THINKING;
-                    _mainWin.UiImgStop.Visibility = think ? Visibility.Visible : Visibility.Hidden;
-                    _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
-
-                    _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
-                    _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
-
-                    _mainWin.UiLblEvalSecretMode.Visibility = think ? Visibility.Visible : Visibility.Hidden;
-                }
-                else
-                {
-                    _mainWin.UiImgStop.Visibility = Visibility.Visible;
-                    _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
-
-                    _mainWin.UiLblEvaluating.Visibility = Visibility.Visible;
-                    _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Visible;
-
-                    _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
-                }
-            });
-        }
 
         public static void SetupGuiForTrainingBrowseMode()
         {
@@ -472,14 +480,22 @@ namespace ChessForge
             _mainWin.UiDgActiveLine.Width = 160;
         }
 
+        /// <summary>
+        /// This will setup the GUI for the Training progress
+        /// unless we are in a game mode and the focus is here because
+        /// the user requested the context menu.
+        /// </summary>
         public static void SetupGuiForTrainingProgressMode()
         {
-            TrainingState.IsBrowseActive = false;
-            _mainWin.UiTabCtrlTraining.Margin = new Thickness(5, 5, 5, 5);
-            _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
-            _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING)
+            {
+                TrainingState.IsBrowseActive = false;
+                _mainWin.UiTabCtrlTraining.Margin = new Thickness(5, 5, 5, 5);
+                _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
+                _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
 
-            _mainWin.DisplayPosition(EngineGame.GetCurrentPosition());
+                _mainWin.DisplayPosition(EngineGame.GetCurrentPosition());
+            }
         }
 
         private static void PrepareEvaluationControls()

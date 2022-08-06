@@ -115,7 +115,7 @@ namespace ChessForge
                 {
                     _mainWin.EngineTrainingGameMoveMade();
                 }
-                _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.IDLE;
+                AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.IDLE);
             }
             else if (TrainingState.IsTrainingInProgress)
             {
@@ -220,7 +220,7 @@ namespace ChessForge
             _mainWin.Evaluation.PositionIndex = posIndex;
             if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.IDLE)
             {
-                _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.SINGLE_MOVE;
+                AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.SINGLE_MOVE);
             }
 
             TreeNode nd = _mainWin.ActiveLine.GetNodeAtIndex(posIndex);
@@ -278,7 +278,8 @@ namespace ChessForge
         /// <param name="position"></param>
         public static void RequestEngineMove(BoardPosition position)
         {
-            AppStateManager.ChangeEvaluationState(EvaluationState.EvaluationMode.ENGINE_GAME);
+            AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.ENGINE_GAME);
+
             string fen = AppStateManager.PrepareMoveEvaluation(position);
             RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
         }

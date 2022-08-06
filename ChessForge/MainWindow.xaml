@@ -45,7 +45,7 @@
                         <Separator />
                         <MenuItem Header="Replay" />
                         <Separator />
-                        <MenuItem x:Name="_menuPlayComputer" Header="Play Against Computer " Click="_menuPlayComputer_Click" />
+                        <MenuItem x:Name="UiMniPlayEngine" Header="Play Against Computer " Click="_menuPlayComputer_Click" />
                     </ContextMenu>
                 </Canvas.ContextMenu>
                 <Canvas.Background>
@@ -443,11 +443,12 @@
             </FlowDocument>
         </RichTextBox>
         <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
-        <ProgressBar x:Name="UiPbEngineThinking" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="11" Margin="48,13,0,0" Grid.Row="2" VerticalAlignment="Top" Width="190"/>
-        <Image x:Name="UiImgStop" Cursor="Hand" Grid.Column="1" Grid.Row="2" Margin="109,71,0,0" Source="Resources/Images/Stop.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="48" Height="48" RenderTransformOrigin="-1.186,-0.149" PreviewMouseLeftButtonDown="_imgStop_PreviewMouseLeftButtonDown" />
+        <ProgressBar x:Name="UiPbEngineThinking" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="6" Margin="10,13,0,0" Grid.Row="2" VerticalAlignment="Top" Width="160"/>
+        <Image x:Name="UiImgStop" Cursor="Hand" Grid.Column="1" Grid.Row="2" Margin="65,71,0,0" Source="Resources/Images/Stop.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="48" Height="48" RenderTransformOrigin="-1.186,-0.149" PreviewMouseLeftButtonDown="_imgStop_PreviewMouseLeftButtonDown" />
         <Label x:Name="UiLblEvaluating" Grid.Column="1" Content="Evaluating: " HorizontalAlignment="Left" Margin="59,31,0,0" Grid.Row="2" VerticalAlignment="Top"/>
         <Label x:Name="UiLblMoveUnderEval" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="130,30,0,0" Grid.Row="2" FontWeight="Bold" FontSize="14"  VerticalAlignment="Top"/>
-        <Label x:Name="UiLblEvalSecretMode" Grid.Column="1" Content="Engine is thinking ..." HorizontalAlignment="Center" Margin="0,0,0,0" Width="160" Grid.Row="2" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblEvalSecretMode" Grid.Column="1" Content="Engine is thinking ..." HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
+               Margin="10,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="160" Grid.Row="2" />
 
     </Grid>
 

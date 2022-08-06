@@ -237,6 +237,7 @@ namespace ChessForge
         /// <param name="node"></param>
         public void Initialize(TreeNode node)
         {
+            _currentEngineGameMoveCount = 0;
             TrainingState.ResetTrainingLine(node);
             Document.Blocks.Clear();
             InitParaDictionary();
@@ -315,7 +316,7 @@ namespace ChessForge
                 {
                     _paraCurrentEngineGame = AddNewParagraphToDoc(STYLE_ENGINE_GAME, "");
                     _paraCurrentEngineGame.Name = _par_game_moves_;
-                    _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine has started. Wait for the engine\'s move..."));
+                    _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine has started. Wait for the engine\'s move...\n"));
                     _engineGameRootNode = _userMove;
                     // call RequestEngineResponse() directly so it invokes PlayEngine
                     AppStateManager.CurrentLearningMode = LearningMode.Mode.ENGINE_GAME;
@@ -331,6 +332,8 @@ namespace ChessForge
         /// </summary>
         public void RollbackToWorkbookMove()
         {
+            _currentEngineGameMoveCount = 0;
+
             TrainingState.RollbackTrainingLine(_lastClickedNode);
             EngineGame.RollbackGame(_lastClickedNode);
 
@@ -546,7 +549,7 @@ namespace ChessForge
             if (runEvaluated == null)
             {
                 // this should never happen but...
-                _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.IDLE;
+                AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.IDLE);
                 return;
             }
 
@@ -580,11 +583,11 @@ namespace ChessForge
                 }
                 else
                 {
-                    _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.IDLE;
+                    AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.IDLE);
                 }
             });
 
-            AppStateManager.ShowEvaluationProgressControls();
+            AppStateManager.ShowEvaluationProgressControlsForCurrentStates();
         }
 
         /// <summary>
@@ -902,7 +905,7 @@ namespace ChessForge
                 if (nd == null)
                 {
                     _mainWin.Evaluation.ClearRunsToEvaluate();
-                    _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.IDLE;
+                    AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.IDLE);
                 }
                 else
                 {
@@ -911,7 +914,7 @@ namespace ChessForge
             }
             else
             {
-                _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.SINGLE_MOVE;
+                AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.SINGLE_MOVE);
                 EngineMessageProcessor.RequestMoveEvaluationInTraining(_lastClickedNode);
             }
         }
@@ -938,13 +941,13 @@ namespace ChessForge
                 {
                     // collect the Main Line's Runs to evaluate the moves
                     SetMainLineRunsToEvaluate(paraName, _lastClickedRun);
-                    _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.LINE;
+                    AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.LINE);
                     RequestMoveEvaluation();
                 }
                 else if (paraName.StartsWith(_par_game_moves_))
                 {
                     SetGameRunsToEvaluate(parentPara, _lastClickedRun);
-                    _mainWin.Evaluation.CurrentMode = EvaluationState.EvaluationMode.LINE;
+                    AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.LINE);
                     RequestMoveEvaluation();
                 }
             }
