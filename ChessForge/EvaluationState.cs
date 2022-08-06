@@ -140,12 +140,13 @@ namespace ChessForge
         {
             lock (EvaluationLock)
             {
-                CurrentMode = EvaluationMode.IDLE;
+                _currentMode = EvaluationMode.IDLE;
                 Position = null;
                 PositionEvaluation = "";
                 PositionIndex = 0;
 
                 _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                AppStateManager.ShowEvaluationProgressControlsForCurrentStates();
             }
         }
 
@@ -158,10 +159,20 @@ namespace ChessForge
             _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
         }
 
+        private EvaluationMode _currentMode = EvaluationMode.IDLE;
+
         /// <summary>
         /// The current evaluation mode.
         /// </summary>
-        public EvaluationMode CurrentMode = EvaluationMode.IDLE;
+        public EvaluationMode CurrentMode
+        {
+            get { return _currentMode; }
+        }
+
+        public void SetCurrentMode(EvaluationMode mode)
+        {
+            _currentMode = mode;
+        }
 
         /// <summary>
         /// Indicates whether any kind of evaluation is happening
