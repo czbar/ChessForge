@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ChessPosition;
@@ -40,6 +41,24 @@ namespace ChessForge
         {
             _mainWin = mainWin;
             _dgActiveLine = dg;
+        }
+
+        /// <summary>
+        /// Figures out the node corresponding to 
+        /// the selected cell and displays the position.
+        /// </summary>
+        public void DisplayPositionForSelectedCell()
+        {
+            int row, column;
+            if (!GetSelectedRowColumn(out row, out column))
+            {
+                row = 0;
+                column = 1;
+            }
+            SelectPly(row, column == 1 ? PieceColor.White : PieceColor.Black);
+            int nodeIndex = GetNodeIndexFromRowColumn(row, column);
+            TreeNode nd = GetNodeAtIndex(nodeIndex);
+            _mainWin.DisplayPosition(nd.Position);
         }
 
         /// <summary>
@@ -167,26 +186,25 @@ namespace ChessForge
         internal void SelectPly(int moveNo, PieceColor colorToMove)
         {
             _dgActiveLine.SelectedCells.Clear();
-            if (moveNo >= 0)
-            {
-                DataGridCellInfo cell;
-                if (colorToMove == PieceColor.White && moveNo < _dgActiveLine.Items.Count)
-                {
-                    cell = new DataGridCellInfo(_dgActiveLine.Items[moveNo], _dgActiveLine.Columns[_dgActiveLineWhitePlyColumn]);
-                    _dgActiveLine.ScrollIntoView(_dgActiveLine.Items[moveNo]);
-                }
-                else
-                {
-                    cell = new DataGridCellInfo(_dgActiveLine.Items[moveNo - 1], _dgActiveLine.Columns[_dgActiveLineBlackPlyColumn]);
-                    _dgActiveLine.ScrollIntoView(_dgActiveLine.Items[moveNo - 1]);
-                }
+            moveNo = Math.Max(moveNo, 1);
 
-                var cellContent = cell.Column.GetCellContent(cell.Item);
-                if (cellContent != null)
-                {
-                    DataGridCell mycell = (DataGridCell)cellContent.Parent;
-                    _dgActiveLine.SelectedCells.Add(cell);
-                }
+            DataGridCellInfo cell;
+            if (colorToMove == PieceColor.White && moveNo < _dgActiveLine.Items.Count)
+            {
+                cell = new DataGridCellInfo(_dgActiveLine.Items[moveNo], _dgActiveLine.Columns[_dgActiveLineWhitePlyColumn]);
+                _dgActiveLine.ScrollIntoView(_dgActiveLine.Items[moveNo]);
+            }
+            else
+            {
+                cell = new DataGridCellInfo(_dgActiveLine.Items[moveNo - 1], _dgActiveLine.Columns[_dgActiveLineBlackPlyColumn]);
+                _dgActiveLine.ScrollIntoView(_dgActiveLine.Items[moveNo - 1]);
+            }
+
+            var cellContent = cell.Column.GetCellContent(cell.Item);
+            if (cellContent != null)
+            {
+                DataGridCell mycell = (DataGridCell)cellContent.Parent;
+                _dgActiveLine.SelectedCells.Add(cell);
             }
         }
 
