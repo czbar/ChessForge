@@ -39,13 +39,18 @@
         <Viewbox x:Name="MainBoard" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680">
             <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680">
                 <Canvas.ContextMenu>
-                    <ContextMenu  x:Name="menuContext">
-                        <MenuItem x:Name="UiMniEvalPos" Header="Evaluate Position" Click="MenuItem_EvaluatePosition" />
-                        <MenuItem x:Name="UiMniEvalLine" Header="Evaluate Line" Click="MenuItem_EvaluateLine" />
-                        <Separator />
-                        <MenuItem Header="Replay" />
-                        <Separator />
-                        <MenuItem x:Name="UiMniPlayEngine" Header="Play Against Computer " Click="_menuPlayComputer_Click" />
+                    <ContextMenu  x:Name="UiMnMainBoard">
+                        <MenuItem x:Name="UiMnciStartTraining"  Header="Start Training" Click="MenuItem_StartTraining"/>
+                        <MenuItem x:Name="UiMnciRestartTraining"  Header="Restart Training" Click="_mnTrainRestartTraining_Click"/>
+                        <MenuItem x:Name="UiMnciExitTraining" Header="Exit Training" Click="MenuItem_StopTraining"/>
+                        <Separator x:Name="UiMncMainBoardSepar_1" />
+                        <MenuItem x:Name="UiMnciEvalPos" Header="Evaluate Position" Click="MenuItem_EvaluatePosition" />
+                        <MenuItem x:Name="UiMnciEvalLine" Header="Evaluate Line" Click="MenuItem_EvaluateLine" />
+                        <Separator x:Name="UiMncMainBoardSepar_2" />
+                        <MenuItem x:Name="UiMnciReplay" Header="Replay"  Click="MenuItem_ReplayLine"/>
+                        <Separator x:Name="UiMncMainBoardSepar_3" />
+                        <MenuItem x:Name="UiMnciPlayEngine" Header="Play Against Computer " Click="_menuPlayComputer_Click" />
+                        <MenuItem x:Name="UiMnciExitEngineGame" Header="Exit Game " Click="UiMnciExitEngineGame_Click" />
                     </ContextMenu>
                 </Canvas.ContextMenu>
                 <Canvas.Background>
@@ -72,7 +77,7 @@
         </Menu>
         <DataGrid x:Name="UiDgEngineGame" Grid.Column="1" HorizontalAlignment="Left" Height="670" Margin="10,5,0,0" VerticalAlignment="Top" Width="180"  
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" CanUserSortColumns="False"
-                  GridLinesVisibility="None" Grid.Row="1" Background="White"   >
+                  GridLinesVisibility="None" Grid.Row="1" Background="White" PreviewMouseDown="UiDgEngineGame_PreviewMouseDown"  PreviewMouseUp="UiDgEngineGame_PreviewMouseUp"   >
             <DataGrid.Resources>
                 <Style x:Key="DisableSelection" TargetType="{x:Type DataGridCell}">
                     <Setter Property="Focusable" Value="False"/>
@@ -444,7 +449,7 @@
         </RichTextBox>
         <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
         <ProgressBar x:Name="UiPbEngineThinking" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="6" Margin="10,13,0,0" Grid.Row="2" VerticalAlignment="Top" Width="160"/>
-        <Image x:Name="UiImgStop" Cursor="Hand" Grid.Column="1" Grid.Row="2" Margin="65,71,0,0" Source="Resources/Images/Stop.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="48" Height="48" RenderTransformOrigin="-1.186,-0.149" PreviewMouseLeftButtonDown="_imgStop_PreviewMouseLeftButtonDown" />
+        <Image x:Name="UiImgStop" Cursor="Hand" Grid.Column="1" Grid.Row="2" Margin="65,71,0,0" Source="Resources/Images/Stop.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="48" Height="48" RenderTransformOrigin="-1.186,-0.149" PreviewMouseLeftButtonDown="UiImgStop_PreviewMouseLeftButtonDown" />
         <Label x:Name="UiLblEvaluating" Grid.Column="1" Content="Evaluating: " HorizontalAlignment="Left" Margin="59,31,0,0" Grid.Row="2" VerticalAlignment="Top"/>
         <Label x:Name="UiLblMoveUnderEval" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="130,30,0,0" Grid.Row="2" FontWeight="Bold" FontSize="14"  VerticalAlignment="Top"/>
         <Label x:Name="UiLblEvalSecretMode" Grid.Column="1" Content="Engine is thinking ..." HorizontalContentAlignment="Center" VerticalContentAlignment="Top"

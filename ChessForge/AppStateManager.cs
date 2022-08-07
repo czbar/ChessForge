@@ -50,7 +50,7 @@ namespace ChessForge
         /// <summary>
         /// Current Evaluation State
         /// </summary>
-        public static EvaluationState.EvaluationMode CurrentEvaluationState
+        public static EvaluationState.EvaluationMode CurrentEvaluationMode
         {
             get { return MainWin.Evaluation.CurrentMode; }
         }
@@ -101,6 +101,7 @@ namespace ChessForge
                     break;
             }
             ShowEvaluationProgressControlsForCurrentStates();
+            ConfigureMainBoardContextMenu();
         }
 
         /// <summary>
@@ -134,7 +135,7 @@ namespace ChessForge
             ShowGuiActiveLine(true);
             ShowEvaluationProgressControlsForCurrentStates();
 
-            SetupMenusForManualReview();
+            ConfigureMenusForManualReview();
         }
 
         /// <summary>
@@ -146,7 +147,6 @@ namespace ChessForge
 
             _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
             ShowGuiEngineGameLine(false);
-            //            _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
 
             _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
             _mainWin.UiTabCtrlTraining.Visibility = Visibility.Visible;
@@ -163,7 +163,7 @@ namespace ChessForge
 
             ShowEvaluationProgressControlsForCurrentStates();
 
-            SetupMenusForTraining();
+            ConfigureMenusForTraining();
         }
 
         /// <summary>
@@ -205,30 +205,37 @@ namespace ChessForge
             ShowEvaluationProgressControlsForCurrentStates();
             ShowGuiEngineGameLine(true);
 
-            SetupMenusForEngineGame();
+            ConfigureMenusForEngineGame();
         }
 
-        private static void SetupMenusForManualReview()
+        /// <summary>
+        /// Configures menu items for the Manual Review mode
+        /// </summary>
+        private static void ConfigureMenusForManualReview()
         {
             _mainWin.UiMnStartTraining.IsEnabled = true;
             _mainWin.UiMnRestartTraining.IsEnabled = false;
             _mainWin.UiMnExitTraining.IsEnabled = false;
 
-            _mainWin.UiMniPlayEngine.IsEnabled = true;
-            _mainWin.UiMniPlayEngine.Header = Strings.MENU_ENGINE_GAME_START;
+            _mainWin.UiMnciPlayEngine.IsEnabled = true;
         }
 
-        private static void SetupMenusForTraining()
+        /// <summary>
+        /// Configures menu items for the Training mode
+        /// </summary>
+        private static void ConfigureMenusForTraining()
         {
             _mainWin.UiMnStartTraining.IsEnabled = false;
             _mainWin.UiMnRestartTraining.IsEnabled = true;
             _mainWin.UiMnExitTraining.IsEnabled = true;
 
-            _mainWin.UiMniPlayEngine.IsEnabled = false;
-            _mainWin.UiMniPlayEngine.Header = Strings.MENU_ENGINE_GAME_START;
+            _mainWin.UiMnciPlayEngine.IsEnabled = false;
         }
 
-        private static void SetupMenusForEngineGame()
+        /// <summary>
+        /// Configures menu items for the Engine Game mode
+        /// </summary>
+        private static void ConfigureMenusForEngineGame()
         {
             bool train = TrainingState.IsTrainingInProgress;
 
@@ -236,8 +243,88 @@ namespace ChessForge
             _mainWin.UiMnRestartTraining.IsEnabled = train;
             _mainWin.UiMnExitTraining.IsEnabled = train;
 
-            _mainWin.UiMniPlayEngine.IsEnabled = true;
-            _mainWin.UiMniPlayEngine.Header = Strings.MENU_ENGINE_GAME_STOP;
+            _mainWin.UiMnciPlayEngine.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Configure the Main Board's context menu.
+        /// </summary>
+        private static void ConfigureMainBoardContextMenu()
+        {
+            switch (CurrentLearningMode)
+            {
+                case LearningMode.Mode.MANUAL_REVIEW:
+                    _mainWin.UiMnciStartTraining.Visibility = Visibility.Visible;
+                    _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
+                    _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
+
+                    _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Visible;
+
+                    _mainWin.UiMnciEvalPos.Visibility = Visibility.Visible;
+                    _mainWin.UiMnciEvalLine.Visibility = Visibility.Visible;
+
+                    _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Visible;
+
+                    _mainWin.UiMnciReplay.Visibility = Visibility.Visible;
+
+                    _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Visible;
+
+                    _mainWin.UiMnciPlayEngine.Visibility = Visibility.Visible;
+                    _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Collapsed;
+                    break;
+                case LearningMode.Mode.TRAINING:
+                    _mainWin.UiMnciStartTraining.Visibility = Visibility.Collapsed;
+                    _mainWin.UiMnciRestartTraining.Visibility = Visibility.Visible;
+                    _mainWin.UiMnciExitTraining.Visibility = Visibility.Visible;
+
+                    _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Collapsed;
+
+                    _mainWin.UiMnciEvalPos.Visibility = Visibility.Collapsed;
+                    _mainWin.UiMnciEvalLine.Visibility = Visibility.Collapsed;
+
+                    _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Collapsed;
+
+                    _mainWin.UiMnciReplay.Visibility = Visibility.Collapsed;
+
+                    _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Collapsed;
+
+                    _mainWin.UiMnciPlayEngine.Visibility = Visibility.Collapsed;
+                    _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Collapsed;
+                    break;
+                case LearningMode.Mode.ENGINE_GAME:
+                    if (TrainingState.IsTrainingInProgress)
+                    {
+                        _mainWin.UiMnciStartTraining.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciRestartTraining.Visibility = Visibility.Visible;
+                        _mainWin.UiMnciExitTraining.Visibility = Visibility.Visible;
+
+                        _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Collapsed;
+
+                        _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        _mainWin.UiMnciStartTraining.Visibility = Visibility.Visible;
+                        _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
+
+                        _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Visible;
+
+                        _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Visible;
+                    }
+
+                    _mainWin.UiMnciEvalPos.Visibility = Visibility.Collapsed;
+                    _mainWin.UiMnciEvalLine.Visibility = Visibility.Collapsed;
+
+                    _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Collapsed;
+
+                    _mainWin.UiMnciReplay.Visibility = Visibility.Collapsed;
+
+                    _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Collapsed;
+
+                    _mainWin.UiMnciPlayEngine.Visibility = Visibility.Collapsed;
+                    break;
+            }
         }
 
         /// <summary>
@@ -253,8 +340,8 @@ namespace ChessForge
                 {
                     if (eval)
                     {
-                        _mainWin.UiMniEvalLine.IsEnabled = false;
-                        _mainWin.UiMniEvalPos.IsEnabled = false;
+                        _mainWin.UiMnciEvalLine.IsEnabled = false;
+                        _mainWin.UiMnciEvalPos.IsEnabled = false;
 
                         _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
                         _mainWin.UiImgStop.Visibility = Visibility.Visible;
@@ -274,8 +361,8 @@ namespace ChessForge
                     }
                     else
                     {
-                        _mainWin.UiMniEvalLine.IsEnabled = true;
-                        _mainWin.UiMniEvalPos.IsEnabled = true;
+                        _mainWin.UiMnciEvalLine.IsEnabled = true;
+                        _mainWin.UiMnciEvalPos.IsEnabled = true;
 
                         _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
                         _mainWin.UiImgStop.Visibility = Visibility.Hidden;
@@ -337,6 +424,12 @@ namespace ChessForge
         }
 #endif
 
+        /// <summary>
+        /// Shows ActiveLine's DataGrid control.
+        /// The width, as well as the size of the Tab controls depends on whether
+        /// we are showing evaluations as well.
+        /// </summary>
+        /// <param name="includeEvals"></param>
         private static void ShowGuiActiveLine(bool includeEvals)
         {
             _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
@@ -349,6 +442,10 @@ namespace ChessForge
             _mainWin.UiTabCtrlTraining.Margin = includeEvals ? new Thickness(185, 5, 5, 5) : new Thickness(5, 5, 5, 5);
         }
 
+        /// <summary>
+        /// Shows or hides EngineGame's DataGrid control.
+        /// </summary>
+        /// <param name="show"></param>
         private static void ShowGuiEngineGameLine(bool show)
         {
             _mainWin.UiDgEngineGame.Visibility = show ? Visibility.Visible : Visibility.Hidden;
@@ -376,28 +473,15 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Adjusts the GUI to the changed Learning Mode.
+        /// Enables Move/Line evaluation menus.
+        /// Hides engine evaluation progress bar.
         /// </summary>
-        /// <param name="newMode"></param>
-        public static void ChangeLearningMode(LearningMode.Mode newMode)
-        {
-        }
-
-        /// <summary>
-        /// Adjusts the GUI to the changed game state.
-        /// The state of the GUI will depend on the Learning Mode.
-        /// </summary>
-        /// <param name="newState"></param>
-        public static void ChangeGameState(EngineGame.GameState newState)
-        {
-        }
-
         public static void ResetEvaluationControls()
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                _mainWin.UiMniEvalLine.IsEnabled = true;
-                _mainWin.UiMniEvalPos.IsEnabled = true;
+                _mainWin.UiMnciEvalLine.IsEnabled = true;
+                _mainWin.UiMnciEvalPos.IsEnabled = true;
                 _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
             });
         }
@@ -502,8 +586,8 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                _mainWin.UiMniEvalLine.IsEnabled = false;
-                _mainWin.UiMniEvalPos.IsEnabled = false;
+                _mainWin.UiMnciEvalLine.IsEnabled = false;
+                _mainWin.UiMnciEvalPos.IsEnabled = false;
 
                 _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
                 _mainWin.UiPbEngineThinking.Minimum = 0;

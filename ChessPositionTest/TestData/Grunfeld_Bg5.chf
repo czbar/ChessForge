@@ -1,0 +1,6 @@
+[Title ""]
+[TrainingSide "black"]
+[White "Chess Forge"]
+[Black "Workbook File"]
+
+1. d4 Nf6 2. c4 g6 3. Nc3 d5 4. Bg5 Bg7 5. Bxf6 {[%chf-bkm]}  (5. e3 {[%chf-bkm]}  c5 6. Bxf6 {[%chf-bkm]}  (6. dxc5 {[%chf-bkm]}  Qa5 7. Bxf6 Bxf6 8. Rc1 dxc4 9. Bxc4 O-O $11) 6... Bxf6 7. cxd5 (7. Nxd5 Bg7 8. Nf3 (8. Qd2 cxd4 9. exd4 Nc6 10. Rd1 O-O 11. Ne2 b5 $15) 8... Nc6 9. Be2 e6 10. Nc3 cxd4 11. exd4 Nxd4 $15) 7... cxd4 8. exd4 O-O $11 {Krasenkov-Svidler} ) 5... Bxf6 6. cxd5 {[%chf-bkm]}  (6. Nxd5 {[%chf-bkm]}  Bg7 7. e3 c5 {See 5.e3} ) 6... c5 7. Nf3 (7. dxc6 $6 Bxd4 8. cxb7 Bxb7 $11 {Popov-Svidler} )  (7. dxc5 Nd7 8. Nf3 (8. e3 O-O 9. Bc4 Nxc5 10. Nge2 Qa5 {followed by Qb4. Svidler-Nepomnachtchi} )  (8. c6 Nc5 {Vallejo Pons-Niepomniachtchi} ) 8... Nxc5 9. e3 (9. e4 O-O 10. e5 Bg7 {Malakhatko-Gopal} ) 9... O-O 10. Nd4 (10. Be2 Qb6 11. Qd2 Bf5 {with the idea Ne4. Michalik-Van Kampen} ) 10... Qb6 11. Qd2 Rd8 12. Be2 e6 {Vallejo Pons-Niepomniachtchi}  13. Bc4 $14) 7... cxd4 8. Nxd4 Qb6 9. Nb3 a5 (9... O-O $5 {Rd8 to follow} ) 10. a4 Qb4 {Schoenbeck-Azevedo}  (10... O-O $5 {Garcia Almaguer-Arman} )  *

@@ -10,7 +10,7 @@ namespace ChessForge
     public class Configuration
     {
         //*********************************
-        // CONFIGUARTION ITEMS
+        // CONFIGURATION ITEMS
         //*********************************
         /// <summary>
         /// The time in milliseconds that it takes
@@ -47,7 +47,7 @@ namespace ChessForge
         /// be worse than by this centipawn value from the
         /// best move.
         /// </summary>
-        public static int ViableMoveCpDiff = 300;
+        public static int ViableMoveCpDiff = 100;
 
         /// <summary>
         /// Number of moves to return with evaluations.
@@ -89,10 +89,8 @@ namespace ChessForge
 
         private static int MAX_RECENT_FILES = 5;
 
-
+        // application's main window
         private static MainWindow MainWin;
-
-
 
         /// <summary>
         /// Adds a file to the list of recently opened files.

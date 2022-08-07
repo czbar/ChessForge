@@ -632,6 +632,8 @@ namespace ChessForge
 
             Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true) + " ", runName, Brushes.Black);
             para.Inlines.Add(r);
+
+            r.BringIntoView();
         }
 
         /// <summary>
@@ -752,6 +754,7 @@ namespace ChessForge
                     }
                     Run r_wb = new Run(txt);
                     para.Inlines.Add(r_wb);
+                    r_wb.BringIntoView();
                 }
                 else
                 {
@@ -765,6 +768,7 @@ namespace ChessForge
                     }
                     Run r_wb = new Run(txt);
                     para.Inlines.Add(r_wb);
+                    r_wb.BringIntoView();
                 }
 
                 BuildOtherWorkbookMovesRun(para);
@@ -783,6 +787,7 @@ namespace ChessForge
                 para.Inlines.Add(CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true) + " ", _run_wb_move_ + nd.NodeId.ToString(), Brushes.Green));
                 Run r_semi = new Run("; ");
                 para.Inlines.Add(r_semi);
+                r_semi.BringIntoView();
             }
         }
 
@@ -805,6 +810,8 @@ namespace ChessForge
             r.MouseDown += EventRunClicked;
             r.MouseMove += EventRunMoveOver;
             r.Cursor = Cursors.Hand;
+
+            r.BringIntoView();
 
             return r;
         }

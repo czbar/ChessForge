@@ -23,10 +23,10 @@ namespace ChessForge
         private DataGrid _dgActiveLine;
 
         // column where White's plies are displayed
-        private int _dgActiveLineWhitePlyColumn = 1;
+        private const int _dgActiveLineWhitePlyColumn = 1;
 
         // column where Black's plies are displayed
-        private int _dgActiveLineBlackPlyColumn = 3;
+        private const int _dgActiveLineBlackPlyColumn = 3;
 
         // Application's Main Window
         private MainWindow _mainWin;
@@ -232,13 +232,18 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        internal void MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        public void MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             int column = -1;
             int row = -1;
 
             GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out row, out column);
 
+            ReplayLine(row, column);
+        }
+
+        public void ReplayLine(int row, int column = _dgActiveLineWhitePlyColumn)
+        {
             // if there is replay happening now, stop it
             if (_mainWin.ActiveLineReplay.IsReplayActive)
             {

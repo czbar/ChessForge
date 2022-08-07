@@ -17,7 +17,7 @@ namespace ChessForge
         /// <summary>
         /// Images for White pieces.
         /// </summary>
-        public static Dictionary<PieceType, BitmapImage> WhitePieces =
+        private static Dictionary<PieceType, BitmapImage> WhitePieces =
             new Dictionary<PieceType, BitmapImage>()
             {
                 [PieceType.Rook] = ChessForge.Pieces.WhiteRook,
@@ -31,7 +31,7 @@ namespace ChessForge
         /// <summary>
         /// Images for Black pieces.
         /// </summary>
-        public static Dictionary<PieceType, BitmapImage> BlackPieces =
+        private static Dictionary<PieceType, BitmapImage> BlackPieces =
             new Dictionary<PieceType, BitmapImage>()
             {
                 [PieceType.Rook] = ChessForge.Pieces.BlackRook,
@@ -114,6 +114,32 @@ namespace ChessForge
             Initialize(startPos);
         }
 
+        /// <summary>
+        /// Gets the image for regular size White piece
+        /// of the requested type.
+        /// </summary>
+        /// <param name="pt"></param>
+        /// <returns></returns>
+        public static BitmapImage GetWhitePieceRegImg(PieceType pt)
+        {
+            return WhitePieces[pt];
+        }
+
+        /// <summary>
+        /// Gets the image for regular size Black piece
+        /// of the requested type.
+        /// </summary>
+        /// <param name="pt"></param>
+        /// <returns></returns>
+        public static BitmapImage GetBlackPieceRegImg(PieceType pt)
+        {
+            return BlackPieces[pt];
+        }
+
+        /// <summary>
+        /// Sets the image for the board.
+        /// </summary>
+        /// <param name="imgBoard"></param>
         public void SetBoardSourceImage(BitmapImage imgBoard)
         {
             BoardImgCtrl.Source = imgBoard;
@@ -309,6 +335,9 @@ namespace ChessForge
             RemoveMoveSquareColors();
         }
 
+        /// <summary>
+        /// Removes all piece images from the board.
+        /// </summary>
         public void ClearBoard()
         {
             for (int xcoord = 0; xcoord < 8; xcoord++)
@@ -336,6 +365,7 @@ namespace ChessForge
         /// Indicates whether the board is displayed upside down
         /// </summary>
         public bool IsFlipped { get => _isFlipped; set => _isFlipped = value; }
+
         /// <summary>
         /// This is the only method that handles the IsFlipped flag.
         /// All other methods displaying pieces and positions
@@ -391,6 +421,14 @@ namespace ChessForge
             _moveToOverlay.Source = ChessForge.Pieces.YellowOverlay;
         }
 
+        /// <summary>
+        /// Puts a piece image on the board if one
+        /// is encoded in "square".
+        /// Otherwise, clears the square.
+        /// </summary>
+        /// <param name="xcoord"></param>
+        /// <param name="ycoord"></param>
+        /// <param name="square"></param>
         private void DisplayPiece(int xcoord, int ycoord, byte square)
         {
             AppStateManager.MainWin.Dispatcher.Invoke(() =>

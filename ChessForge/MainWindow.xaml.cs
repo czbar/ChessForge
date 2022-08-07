@@ -104,8 +104,6 @@ namespace ChessForge
             BoardCommentBox = new CommentBox(UiRtbBoardComment.Document, this);
             ActiveLine = new ActiveLineManager(UiDgActiveLine, this);
 
-            UiMniPlayEngine.Header = Strings.MENU_ENGINE_GAME_START;
-
             EngineLinesGUI = new EngineEvaluationGUI(this, UiTbEngineLines, UiPbEngineThinking, Evaluation);
             Timers = new AppTimers(EngineLinesGUI, this);
 
@@ -136,7 +134,7 @@ namespace ChessForge
             EngineMessageProcessor.CreateEngineService(this, _isDebugMode);
 
             // add the main context menu to the Single Variation view.
-            UiDgActiveLine.ContextMenu = menuContext;
+            UiDgActiveLine.ContextMenu = UiMnMainBoard;
 
             AppStateManager.CurrentLearningMode = LearningMode.Mode.IDLE;
             AppStateManager.SetupGuiForCurrentStates();
@@ -417,11 +415,11 @@ namespace ChessForge
                         {
                             if (EngineGame.ColorToMove == PieceColor.Black)
                             {
-                                imgSrc = ChessBoard.WhitePieces[promoteTo];
+                                imgSrc = ChessBoard.GetWhitePieceRegImg(promoteTo);
                             }
                             else
                             {
-                                imgSrc = ChessBoard.BlackPieces[promoteTo];
+                                imgSrc = ChessBoard.GetBlackPieceRegImg(promoteTo);
                             }
                         }
                         MainChessBoard.GetPieceImage(targetSquare.Xcoord, targetSquare.Ycoord, true).Source = imgSrc;
@@ -919,6 +917,7 @@ namespace ChessForge
                     if (res == MessageBoxResult.Yes)
                     {
                         Workbook.GenerateBookmarks();
+                        UiTabBookmarks.Focus();
                         LearningMode.SaveWorkbookFile();
                     }
                 }
@@ -1119,28 +1118,22 @@ namespace ChessForge
         /// <param name="e"></param>
         private void _menuPlayComputer_Click(object sender, RoutedEventArgs e)
         {
-            if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME)
+            // check that there is a move selected in the _dgMainLineView so
+            // that we have somewhere to start
+            TreeNode nd = ActiveLine.GetSelectedTreeNode();
+            if (nd != null)
             {
-                // menu item was offering to exit the game so 
-                // change the header back and cleanup
-                UiMniPlayEngine.Header = Strings.MENU_ENGINE_GAME_START;
-                StopEngineGame();
+                PlayComputer(nd, false);
             }
             else
             {
-
-                // check that there is a move selected in the _dgMainLineView so
-                // that we have somewhere to start
-                TreeNode nd = ActiveLine.GetSelectedTreeNode();
-                if (nd != null)
-                {
-                    PlayComputer(nd, false);
-                }
-                else
-                {
-                    MessageBox.Show("Select the move from which to start.", "Computer Game", MessageBoxButton.OK);
-                }
+                MessageBox.Show("Select the move from which to start.", "Computer Game", MessageBoxButton.OK);
             }
+        }
+
+        private void UiMnciExitEngineGame_Click(object sender, RoutedEventArgs e)
+        {
+            StopEngineGame();
         }
 
         /// <summary>
@@ -1170,7 +1163,6 @@ namespace ChessForge
             }
 
             EngineMessageProcessor.RequestEngineMove(startNode.Position);
-            UiMniPlayEngine.Header = Strings.MENU_ENGINE_GAME_STOP;
         }
 
         /// <summary>
@@ -1339,6 +1331,11 @@ namespace ChessForge
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
         }
 
+        /// <summary>
+        /// Exits the Training session, if confirmed by the user.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItem_StopTraining(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -1360,7 +1357,13 @@ namespace ChessForge
             }
         }
 
-        private void _imgStop_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        /// <summary>
+        /// Stops evaluation in response to the user clicking
+        /// the stop button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgStop_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             EngineMessageProcessor.StopEngineEvaluation();
             lock (LearningMode.EvalLock)
@@ -1374,6 +1377,11 @@ namespace ChessForge
             e.Handled = true;
         }
 
+        /// <summary>
+        /// Flips the main chess board upside down.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItem_FlipBoard(object sender, RoutedEventArgs e)
         {
             MainChessBoard.FlipBoard();
@@ -1549,6 +1557,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Auto-replays the current Active Line on a menu request.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItem_ReplayLine(object sender, RoutedEventArgs e)
+        {
+            ActiveLine.ReplayLine(0);
+        }
+
+        /// <summary>
         /// Advise the Training View that the engine made a move
         /// while playing a training game against the user.
         /// </summary>
@@ -1580,5 +1598,16 @@ namespace ChessForge
         private void _imgLeftArrow_PreviewMouseDown(object sender, MouseButtonEventArgs e) { BookmarkManager.PageDown(); }
 
         private void _imgRightArrow_PreviewMouseDown(object sender, MouseButtonEventArgs e) { BookmarkManager.PageUp(); }
+
+        private void UiDgEngineGame_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void UiDgEngineGame_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
+
     }
 }

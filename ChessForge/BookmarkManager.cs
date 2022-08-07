@@ -287,6 +287,7 @@ namespace ChessForge
             }
             DeleteAllBookmarks();
             _mainWin.Workbook.GenerateBookmarks();
+            _mainWin.UiTabBookmarks.Focus();
             ShowBookmarks();
         }
 
