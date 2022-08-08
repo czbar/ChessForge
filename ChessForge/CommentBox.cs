@@ -110,6 +110,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// A prompt to the user to open a Workbook.
+        /// </summary>
+        public void OpenFile()
+        {
+            UserWaitAnnouncement("Use File->Open menu to read in a Workbook", Brushes.Blue);
+        }
+
+        /// <summary>
         /// Shows a "flash announcement" and starts a timer
         /// to close it later on.
         /// </summary>
