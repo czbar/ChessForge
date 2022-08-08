@@ -30,6 +30,7 @@ namespace ChessForge
             SHOW_TRAINING_PROGRESS_POPUP_MENU,
             STOP_MESSAGE_POLL,
             FLASH_ANNOUNCEMENT,
+            APP_START,
         };
 
         /// <summary>
@@ -85,6 +86,14 @@ namespace ChessForge
         private Timer _flashAnnouncementTimer;
 
         /// <summary>
+        /// Used when the app is starting to allow
+        /// display of messages before engine load
+        /// and file read complete.
+        /// shown in the Comment Box.
+        /// </summary>
+        private Timer _appStartTimer;
+
+        /// <summary>
         /// Tracks time that evaluation of a move/position is taking.
         /// </summary>
         private Stopwatch _evaluationProgressStopwatch;
@@ -133,6 +142,10 @@ namespace ChessForge
             _flashAnnouncementTimer = new Timer();
             InitFlashAnnouncementTimer();
             _dictTimers.Add(TimerId.FLASH_ANNOUNCEMENT, _flashAnnouncementTimer);
+
+            _appStartTimer = new Timer();
+            InitAppStartTimer();
+            _dictTimers.Add(TimerId.APP_START, _appStartTimer);
 
             _stopMessagePollTimer = new Timer();
             InitStopMessagePoll();
@@ -272,6 +285,13 @@ namespace ChessForge
             _flashAnnouncementTimer.Elapsed += new ElapsedEventHandler(_mainWin.FlashAnnouncementTimeUp);
             _flashAnnouncementTimer.Interval = 1000;
             _flashAnnouncementTimer.Enabled = false;
+        }
+
+        private void InitAppStartTimer()
+        {
+            _appStartTimer.Elapsed += new ElapsedEventHandler(_mainWin.AppStartTimeUp);
+            _appStartTimer.Interval = 100;
+            _appStartTimer.Enabled = false;
         }
     }
 }
