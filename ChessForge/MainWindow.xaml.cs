@@ -190,7 +190,9 @@ namespace ChessForge
                     {
 
                         CreateRecentFilesMenuItems();
+                        Timers.Stop(AppTimers.TimerId.APP_START);
                         bool engineStarted = EngineMessageProcessor.Start();
+                        Timers.Start(AppTimers.TimerId.APP_START);
                         if (!engineStarted)
                         {
                             MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -206,6 +208,10 @@ namespace ChessForge
                             catch
                             {
                             }
+                        }
+                        else
+                        {
+                            BoardCommentBox.OpenFile();
                         }
                     });
                 }
