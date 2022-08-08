@@ -44,7 +44,11 @@ namespace GameTree
             {
                 string title;
                 Headers.TryGetValue(HEADER_TITLE, out title);
-                return title == null ? "Untitled Workbook" : title;
+                return string.IsNullOrEmpty(title) ? "Untitled Workbook" : title;
+            }
+            set
+            {
+                Headers[HEADER_TITLE] = value;
             }
         }
 
