@@ -1055,8 +1055,11 @@ namespace ChessForge
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
             // don't accept any clicks if evaluation is in progress
-            if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.SINGLE_MOVE || _mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.LINE)
+            if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.SINGLE_MOVE
+                || _mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.LINE)
+            {
                 return;
+            }
 
             Run r = (Run)e.Source;
             if (string.IsNullOrEmpty(r.Name))
@@ -1064,7 +1067,7 @@ namespace ChessForge
                 return;
             }
 
-            if (e.ChangedButton == MouseButton.Right)
+            if (e.ChangedButton == MouseButton.Right || e.ChangedButton == MouseButton.Left)
             {
                 if (r.Name.StartsWith(_run_line_move_))
                 {
@@ -1091,35 +1094,35 @@ namespace ChessForge
                     _mainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
                 }
             }
-            else if (e.ChangedButton == MouseButton.Left)
-            {
-                if (r.Name.StartsWith(_run_wb_move_))
-                {
-                    SetTrainingPosition(r, _run_wb_move_, e);
-                    _moveContext = MoveContext.WORKBOOK_COMMENT;
-                    e.Handled = true;
-                    string midTxt;
-                    string moveTxt = BuildMoveTextForMenu(out midTxt);
-                    if (MessageBox.Show("Play " + moveTxt + " instead of Your Move?", "Chess Forge Training", 
-                        MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
-                    {
-                        RollbackToWorkbookMove();
-                    }
-                }
-                else if (r.Name.StartsWith(_run_engine_game_move_))
-                {
-                    SetTrainingPosition(r, _run_engine_game_move_, e);
-                    _moveContext = MoveContext.GAME;
-                    e.Handled = true;
-                    string midTxt;
-                    string moveTxt = BuildMoveTextForMenu(out midTxt);
-                    if (MessageBox.Show("Restart Game After" + midTxt + "Move " + moveTxt + "?", "Chess Forge Training",
-                        MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
-                    {
-                        RestartGameAfter(sender, e);
-                    }
-                }
-            }
+            //else if (e.ChangedButton == MouseButton.Left)
+            //{
+            //    if (r.Name.StartsWith(_run_wb_move_))
+            //    {
+            //        SetTrainingPosition(r, _run_wb_move_, e);
+            //        _moveContext = MoveContext.WORKBOOK_COMMENT;
+            //        e.Handled = true;
+            //        string midTxt;
+            //        string moveTxt = BuildMoveTextForMenu(out midTxt);
+            //        if (MessageBox.Show("Play " + moveTxt + " instead of Your Move?", "Chess Forge Training", 
+            //            MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
+            //        {
+            //            RollbackToWorkbookMove();
+            //        }
+            //    }
+            //    else if (r.Name.StartsWith(_run_engine_game_move_))
+            //    {
+            //        SetTrainingPosition(r, _run_engine_game_move_, e);
+            //        _moveContext = MoveContext.GAME;
+            //        e.Handled = true;
+            //        string midTxt;
+            //        string moveTxt = BuildMoveTextForMenu(out midTxt);
+            //        if (MessageBox.Show("Restart Game After" + midTxt + "Move " + moveTxt + "?", "Chess Forge Training",
+            //            MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
+            //        {
+            //            RestartGameAfter(sender, e);
+            //        }
+            //    }
+            //}
         }
 
         private void SetTrainingPosition(Run r, string prefix, MouseButtonEventArgs e)
