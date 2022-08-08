@@ -151,7 +151,10 @@ namespace EngineService
         /// </summary>
         public void StopMessagePollTimer()
         {
-            MessagePollTimer.Enabled = false;
+            if (MessagePollTimer != null)
+            {
+                MessagePollTimer.Enabled = false;
+            }
         }
 
 
