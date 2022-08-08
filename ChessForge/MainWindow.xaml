@@ -49,7 +49,7 @@
                         <Separator x:Name="UiMncMainBoardSepar_2" />
                         <MenuItem x:Name="UiMnciReplay" Header="Replay"  Click="MenuItem_ReplayLine"/>
                         <Separator x:Name="UiMncMainBoardSepar_3" />
-                        <MenuItem x:Name="UiMnciPlayEngine" Header="Play Against Computer " Click="_menuPlayComputer_Click" />
+                        <MenuItem x:Name="UiMnciPlayEngine" Header="Play Against Computer " Click="Menu_PlayEngine" />
                         <MenuItem x:Name="UiMnciExitEngineGame" Header="Exit Game " Click="UiMnciExitEngineGame_Click" />
                     </ContextMenu>
                 </Canvas.ContextMenu>
