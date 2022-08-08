@@ -11,11 +11,10 @@ using System.Text;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace ChessForge
@@ -27,6 +26,8 @@ namespace ChessForge
     {
         // prefix use for manu items showing recent files
         public readonly string MENUITEM_RECENT_FILES_PREFIX = "RecentFiles";
+
+        public readonly string APP_NAME = "Chess Forge";
 
         /// <summary>
         /// The RichTextBox based full Workbook view
@@ -131,13 +132,6 @@ namespace ChessForge
             UiSldReplaySpeed.Value = Configuration.MoveSpeed;
             _isDebugMode = Configuration.DebugMode != 0;
 
-            EngineMessageProcessor.CreateEngineService(this, _isDebugMode);
-
-            // add the main context menu to the Single Variation view.
-            UiDgActiveLine.ContextMenu = UiMnMainBoard;
-
-            AppStateManager.CurrentLearningMode = LearningMode.Mode.IDLE;
-            AppStateManager.SetupGuiForCurrentStates();
         }
 
         /// <summary>
@@ -150,32 +144,77 @@ namespace ChessForge
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            UiDgActiveLine.ContextMenu = UiMnMainBoard;
 
-            UiRtbWorkbookView.Document.Blocks.Clear();
-            UiRtbWorkbookView.IsReadOnly = true;
+            AppStateManager.CurrentLearningMode = LearningMode.Mode.IDLE;
+            AppStateManager.SetupGuiForCurrentStates();
 
-            CreateRecentFilesMenuItems();
+            Timers.Start(AppTimers.TimerId.APP_START);
+        }
 
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
+        // tracks the application start stage
+        private int _appStartStage = 0;
 
-            bool engineStarted = EngineMessageProcessor.Start();
-            if (!engineStarted)
+        // lock object to use during the startup process
+        private object _appStartLock = new object();
+
+        /// <summary>
+        /// This method controls the two important stages of the startup process.
+        /// When the Appstart timer invokes it for the first time, the engine
+        /// will be loaded while the timer is stopped.
+        /// The second time it is invoked, it will read the most recent file
+        /// if such file exists.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public void AppStartTimeUp(object source, ElapsedEventArgs e)
+        {
+            lock (_appStartLock)
             {
-                MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                if (_appStartStage == 0)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        BoardCommentBox.StartingEngine();
+                    });
+                    _appStartStage = 1;
+                    Timers.Stop(AppTimers.TimerId.APP_START);
+                    EngineMessageProcessor.CreateEngineService(this, _isDebugMode);
+                    Timers.Start(AppTimers.TimerId.APP_START);
+                }
+                else if (_appStartStage == 1)
+                {
+                    _appStartStage = 2;
+                    this.Dispatcher.Invoke(() =>
+                    {
+
+                        CreateRecentFilesMenuItems();
+                        bool engineStarted = EngineMessageProcessor.Start();
+                        if (!engineStarted)
+                        {
+                            MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+
+                        string lastWorkbookFile = Configuration.LastWorkbookFile;
+                        if (!string.IsNullOrEmpty(lastWorkbookFile))
+                        {
+                            try
+                            {
+                                ReadWorkbookFile(lastWorkbookFile, true);
+                            }
+                            catch
+                            {
+                            }
+                        }
+                    });
+                }
             }
 
-            string lastWorkbookFile = Configuration.LastWorkbookFile;
-            if (!string.IsNullOrEmpty(lastWorkbookFile))
+            if (_appStartStage == 2)
             {
-                try
-                {
-                    ReadWorkbookFile(lastWorkbookFile, true);
-                }
-                catch
-                {
-                }
+                Timers.Stop(AppTimers.TimerId.APP_START);
             }
-
         }
 
         /// <summary>
@@ -842,7 +881,7 @@ namespace ChessForge
         /// to save them as .chf files)
         /// </summary>
         /// <param name="fileName"></param>
-        private void ReadWorkbookFile(string fileName, bool isLastOpen)
+        private async void ReadWorkbookFile(string fileName, bool isLastOpen)
         {
             try
             {
@@ -861,7 +900,14 @@ namespace ChessForge
                     return;
                 }
 
+                await Task.Run(() =>
+                {
+                    BoardCommentBox.ReadingFile();
+                });
+
+                System.Threading.Thread.Sleep(1000);
                 LearningMode.WorkbookFilePath = fileName;
+                this.Title = APP_NAME + " - " + Path.GetFileName(fileName);
 
                 string workbookText = File.ReadAllText(fileName);
 
@@ -870,14 +916,23 @@ namespace ChessForge
                 UiRtbWorkbookView.Document.Blocks.Clear();
                 PgnGameParser pgnGame = new PgnGameParser(workbookText, Workbook, true);
 
+                BoardCommentBox.ShowWorkbookTitle(Workbook.Title);
+
                 if (Workbook.TrainingSide == PieceColor.None)
                 {
                     TrainingSideDialog dlg = new TrainingSideDialog();
                     dlg.Left = ChessForgeMain.Left + 100;
                     dlg.Top = ChessForgeMain.Top + 100;
                     dlg.Topmost = true;
+                    dlg.WorkbookTitle = Workbook.Title;
                     dlg.ShowDialog();
                     Workbook.TrainingSide = dlg.SelectedSide;
+                    Workbook.Title = dlg.WorkbookTitle;
+                }
+
+                if (Workbook.TrainingSide == PieceColor.White && MainChessBoard.IsFlipped || Workbook.TrainingSide == PieceColor.Black && !MainChessBoard.IsFlipped)
+                {
+                    MainChessBoard.FlipBoard();
                 }
 
                 //
@@ -1116,7 +1171,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _menuPlayComputer_Click(object sender, RoutedEventArgs e)
+        private void Menu_PlayEngine(object sender, RoutedEventArgs e)
         {
             // check that there is a move selected in the _dgMainLineView so
             // that we have somewhere to start
@@ -1124,6 +1179,10 @@ namespace ChessForge
             if (nd != null)
             {
                 PlayComputer(nd, false);
+                if (nd.ColorToMove == PieceColor.White && !MainChessBoard.IsFlipped || nd.ColorToMove == PieceColor.Black && MainChessBoard.IsFlipped)
+                {
+                    MainChessBoard.FlipBoard();
+                }
             }
             else
             {
