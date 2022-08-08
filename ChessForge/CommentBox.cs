@@ -21,6 +21,7 @@ namespace ChessForge
     /// </summary>
     public class CommentBox : RichTextBuilder
     {
+        // main application window
         private MainWindow _mainWin;
 
         /// <summary>
@@ -56,6 +57,7 @@ namespace ChessForge
         {
             ["title"] = new RichTextPara(0, 10, 24, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
             ["big_red"] = new RichTextPara(0, 10, 22, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
+            ["user_wait"] = new RichTextPara(0, 10, 20, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
             ["bold_prompt"] = new RichTextPara(0, 5, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
             ["eval_results"] = new RichTextPara(30, 5, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(51, 159, 141)), TextAlignment.Center),
             ["normal"] = new RichTextPara(0, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Center),
@@ -87,6 +89,24 @@ namespace ChessForge
                 AddNewParagraphToDoc("bold_16", MoveUtils.BuildSingleMoveText(nd, true));
                 AddNewParagraphToDoc("normal", "It is your turn now.");
             }
+        }
+
+        /// <summary>
+        /// A message about the chess engine being loaded
+        /// displayed during the application's startup.
+        /// </summary>
+        public void StartingEngine()
+        {
+            UserWaitAnnouncement("Chess engine loading...", null);
+        }
+
+        /// <summary>
+        /// A message to display while the workbook is being read
+        /// and processed.
+        /// </summary>
+        public void ReadingFile()
+        {
+            UserWaitAnnouncement("Reading workbook file...", Brushes.Blue);
         }
 
         /// <summary>
@@ -188,5 +208,31 @@ namespace ChessForge
             AddNewParagraphToDoc("normal_14", "Make your move and watch the comments in the Workbook view to the right of this chessboard.");
         }
 
+        /// <summary>
+        /// Displays a special message to the user.
+        /// Uses the main window's dispatcher context
+        /// so can be invoked from a timer thread.
+        /// </summary>
+        /// <param name="txt"></param>
+        /// <param name="brush"></param>
+        private void UserWaitAnnouncement(string txt, Brush brush)
+        {
+            if (brush == null)
+            {
+                brush = Brushes.Green;
+            }
+
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                Document.Blocks.Clear();
+
+                Paragraph dummy = CreateParagraphWithText("dummy", "");
+                Document.Blocks.Add(dummy);
+
+                Paragraph para = CreateParagraphWithText("user_wait", txt);
+                Document.Blocks.Add(para);
+                para.Foreground = brush;
+            });
+        }
     }
 }
