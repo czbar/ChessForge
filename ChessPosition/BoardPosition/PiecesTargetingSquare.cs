@@ -172,7 +172,7 @@ namespace ChessPosition
         {
             if ((XposOrigin < 0 || XposOrigin == sq.Location.Xcoord) && (YposOrigin < 0 || YposOrigin == sq.Location.Ycoord))
             {
-                if (sq.pieceType == PieceType.None || sq.pieceType == CandidatePieceType)
+                if (sq.pieceType == PieceType.None || sq.pieceType == CandidatePieceType || (CandidatePieceType == PieceType.None && AttackCheckOnly))
                 {
                     Candidates.Add(sq);
                 }
@@ -334,6 +334,8 @@ namespace ChessPosition
             int x = (int)XposTarget;
             int y = (int)YposTarget;
 
+            // chacking for pawn attackers only in the first iteration so flag it
+            bool firstIter = true;
             while (true)
             {
                 x = x + xIncrement;
@@ -379,29 +381,31 @@ namespace ChessPosition
                             break;
                         }
 
-                        // check for attack by the pawn (only in this branch
-                        // since it has to be on a diagonal)
-                        if ((xIncrement == -1 || xIncrement == 1) && yIncrement == -1 && CandidateColor == PieceColor.White
-                            ||
-                            (xIncrement == -1 || xIncrement == 1) && yIncrement == 1 && CandidateColor == PieceColor.Black)
+                        // check for attack by the pawn (only in this branch since it has to be on a diagonal)
+                        if (firstIter)
                         {
-                            if ((square & Constants.PieceToFlag[PieceType.Pawn]) != 0)
+                            if ((xIncrement == -1 || xIncrement == 1) && yIncrement == -1 && CandidateColor == PieceColor.White
+                                ||
+                                (xIncrement == -1 || xIncrement == 1) && yIncrement == 1 && CandidateColor == PieceColor.Black)
                             {
-                                AddCandidate(new Square(x, y, PieceType.Pawn));
-                                // if the target square is occupied by a defender piece or is an en passant square,
-                                // the pawn can move there too
-                                if (IsDefenderPiece(TargetSquare) || IsInheritedEnPassantSquare)
+                                if ((square & Constants.PieceToFlag[PieceType.Pawn]) != 0)
                                 {
                                     AddCandidate(new Square(x, y, PieceType.Pawn));
+                                    // if the target square is occupied by a defender piece or is an en passant square,
+                                    // the pawn can move there too
+                                    if (IsDefenderPiece(TargetSquare) || IsInheritedEnPassantSquare)
+                                    {
+                                        AddCandidate(new Square(x, y, PieceType.Pawn));
+                                    }
+                                    break;
                                 }
-                                break;
                             }
                         }
 
                     }
 
                     // check for attack by the king
-                    if (Math.Abs(xIncrement) <= 1 && Math.Abs(yIncrement) <= 1)
+                    if (firstIter)
                     {
                         if ((square & Constants.PieceToFlag[PieceType.King]) != 0)
                         {
@@ -414,6 +418,7 @@ namespace ChessPosition
                     // Exit the loop
                     break;
                 }
+                firstIter = false;
             }
 
         }
