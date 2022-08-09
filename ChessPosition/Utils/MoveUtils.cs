@@ -67,7 +67,7 @@ namespace ChessPosition
                     //and remove the current one.
                     PositionUtils.ClearSquare((byte)sq.Location.Xcoord, (byte)sq.Location.Ycoord, ref position.Board);
 
-                    if (PositionUtils.IsKingUnderAttack(position, move.Color))
+                    if (PositionUtils.IsKingSafe(position, move.Color))
                     {
                         goodOrigins.Add(sq.Location);
                         goodOriginBoards.Add((byte[,])position.Board.Clone());
@@ -446,7 +446,7 @@ namespace ChessPosition
                 //and remove the current one.
                 PositionUtils.ClearSquare((byte)sq.Location.Xcoord, (byte)sq.Location.Ycoord, ref position.Board);
 
-                if (PositionUtils.IsKingUnderAttack(position, position.ColorToMove))
+                if (PositionUtils.IsKingSafe(position, position.ColorToMove))
                 {
                     goodOrigins.Add(sq.Location);
                 }

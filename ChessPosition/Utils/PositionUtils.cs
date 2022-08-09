@@ -276,10 +276,12 @@ namespace ChessPosition
         /// <param name="pos"></param>
         /// <param name="kingColorToCheck"></param>
         /// <returns></returns>
-        public static bool IsKingUnderAttack(BoardPosition pos, PieceColor kingColorToCheck)
+        public static bool IsKingSafe(BoardPosition pos, PieceColor kingColorToCheck)
         {
             SquareCoords square = GetKingPosition(ref pos, kingColorToCheck);
-            PiecesTargetingSquare sa = new PiecesTargetingSquare((byte)square.Xcoord, (byte)square.Ycoord, -1, -1, kingColorToCheck, ref pos);
+            // we are looking for king's attacker so change the color to the opposite of the king
+            PiecesTargetingSquare sa = new PiecesTargetingSquare((byte)square.Xcoord, (byte)square.Ycoord, -1, -1, 
+               MoveUtils.ReverseColor(kingColorToCheck), ref pos, PieceType.None, true);
 
             return sa.Candidates.Count == 0;
         }
