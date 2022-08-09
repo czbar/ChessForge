@@ -970,6 +970,7 @@ namespace ChessForge
                 //UiTrainingView = new TrainingView(UiRtbTrainingProgress.Document, this);
 
                 Workbook.BuildLines();
+                UiTabWorkbook.Focus();
 
                 _workbookView.BuildFlowDocumentForWorkbook();
                 if (Workbook.Bookmarks.Count == 0)
