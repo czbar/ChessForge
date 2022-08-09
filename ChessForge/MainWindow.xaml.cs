@@ -1000,6 +1000,7 @@ namespace ChessForge
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Error processing input file", MessageBoxButton.OK, MessageBoxImage.Error);
+                // TODO: tidy up and return to IDLE mode
             }
         }
 
