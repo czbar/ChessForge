@@ -92,17 +92,10 @@ namespace ChessForge
         /// </summary>
         public static void ChangeCurrentMode(LearningMode.Mode mode)
         {
-            TidyUpOnModeExit(_previousMode);
-
             _previousMode = _currentMode;
             _currentMode = mode;
 
-            // TODO: we need to sort out this condition using submode,
-            // introduce a new mode, or ... something
-            if (mode != Mode.ENGINE_GAME || _previousMode != Mode.TRAINING)
-            {
-                AppStateManager.SetupGuiForCurrentStates();
-            }
+            AppStateManager.SetupGuiForCurrentStates();
         }
 
         /// <summary>
@@ -113,16 +106,6 @@ namespace ChessForge
         {
             get { return AppStateManager.MainWin.Workbook.TrainingSide; }
             set { AppStateManager.MainWin.Workbook.TrainingSide = value; }
-        }
-
-        /// <summary>
-        /// Tidies up what ever necessary when
-        /// exiting a mode.
-        /// E.g. stoping appropriate timers.
-        /// </summary>
-        /// <param name="mode"></param>
-        private static void TidyUpOnModeExit(LearningMode.Mode previousMode)
-        {
         }
 
         /// <summary>
@@ -144,7 +127,8 @@ namespace ChessForge
         public static string WorkbookFilePath
         {
             get => _workbookFilePath;
-            set {
+            set
+            {
                 if (!string.IsNullOrEmpty(_workbookFilePath) && WorkbookFileType == FileType.CHF && IsDirty)
                 {
                     SaveWorkbookFile();
@@ -165,7 +149,7 @@ namespace ChessForge
         /// Type of the file currently open as
         /// the Workbook.
         /// </summary>
-        public static FileType WorkbookFileType { get => _workbookFileType;}
+        public static FileType WorkbookFileType { get => _workbookFileType; }
 
         /// <summary>
         /// Horizontal animation object.
