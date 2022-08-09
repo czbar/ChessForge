@@ -177,7 +177,7 @@ namespace GameTree
             {
                 BookmarkChildren(fork, MAX_BOOKMARKS);
             }
-            else if (fork.Parent.NodeId != 0)
+            else if (fork.Parent != null && fork.Parent.NodeId != 0)
             {
                 BookmarkChildren(fork.Parent, MAX_BOOKMARKS);
             }
