@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Media;
@@ -54,22 +53,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Types of files that Chess Forge can handle.
-        /// PGN can only be viewed, not edited.
-        /// CHF can be viewed and edited.
-        /// </summary>
-        public enum FileType
-        {
-            CHF,
-            PGN
-        }
-
-        /// <summary>
-        /// Indicates whether there are any unsaved changes in the Workbook
-        /// </summary>
-        public static bool IsDirty;
-
-        /// <summary>
         /// Lock object to use whan accessing evaluation related
         /// variables.
         /// </summary>
@@ -80,12 +63,6 @@ namespace ChessForge
 
         // previous application mode
         private static Mode _previousMode = Mode.IDLE;
-
-        // path to the current workbook file
-        private static string _workbookFilePath;
-
-        // type of the current workbook (chf or pgn)
-        private static FileType _workbookFileType;
 
         /// <summary>
         /// Switches application to another mode.
@@ -120,38 +97,6 @@ namespace ChessForge
         public static Mode PreviousMode { get => _previousMode; set => _previousMode = value; }
 
         /// <summary>
-        /// The file path of the current Workbook file.
-        /// When set, checks if there was a different value previously, and if
-        /// so, if it should be saved.
-        /// </summary>
-        public static string WorkbookFilePath
-        {
-            get => _workbookFilePath;
-            set
-            {
-                if (!string.IsNullOrEmpty(_workbookFilePath) && WorkbookFileType == FileType.CHF && IsDirty)
-                {
-                    SaveWorkbookFile();
-                }
-                _workbookFilePath = value;
-                if (Path.GetExtension(_workbookFilePath).ToLower() == ".chf")
-                {
-                    _workbookFileType = FileType.CHF;
-                }
-                else
-                {
-                    _workbookFileType = FileType.PGN;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Type of the file currently open as
-        /// the Workbook.
-        /// </summary>
-        public static FileType WorkbookFileType { get => _workbookFileType; }
-
-        /// <summary>
         /// Horizontal animation object.
         /// </summary>
         public static DoubleAnimation CurrentAnimationX;
@@ -171,23 +116,6 @@ namespace ChessForge
         /// There can only be one (or none) line selected in the Workbook at any time
         /// </summary>
         public static string ActiveLineId;
-
-        /// <summary>
-        /// Saves the workbook to a file.
-        /// It will only write to the file if the 
-        /// session's file type is CHF
-        /// </summary>
-        public static void SaveWorkbookFile(bool checkDirty = false)
-        {
-            if (checkDirty && !IsDirty)
-                return;
-
-            if (WorkbookFileType == FileType.CHF)
-            {
-                string chfText = ChfTextBuilder.BuildText(AppStateManager.MainWin.Workbook);
-                File.WriteAllText(WorkbookFilePath, chfText);
-            }
-        }
 
     }
 }

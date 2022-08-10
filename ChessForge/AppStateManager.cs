@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,79 @@ namespace ChessForge
     {
         // main application window
         private static MainWindow _mainWin;
+
+        /// <summary>
+        /// Types of files that Chess Forge can handle.
+        /// PGN can only be viewed, not edited.
+        /// CHF can be viewed and edited.
+        /// </summary>
+        public enum FileType
+        {
+            CHF,
+            PGN
+        }
+
+        /// <summary>
+        /// Indicates whether there are any unsaved changes in the Workbook
+        /// </summary>
+        public static bool IsDirty;
+
+        // path to the current workbook file
+        private static string _workbookFilePath;
+
+        // type of the current workbook (chf or pgn)
+        private static FileType _workbookFileType;
+
+        /// <summary>
+        /// The file path of the current Workbook file.
+        /// When set, checks if there was a different value previously, and if
+        /// so, if it should be saved.
+        /// </summary>
+        public static string WorkbookFilePath
+        {
+            get => _workbookFilePath;
+            set
+            {
+                if (!string.IsNullOrEmpty(_workbookFilePath) && WorkbookFileType == FileType.CHF && IsDirty)
+                {
+                    SaveWorkbookFile();
+                }
+                _workbookFilePath = value;
+                if (Path.GetExtension(_workbookFilePath).ToLower() == ".chf")
+                {
+                    _workbookFileType = FileType.CHF;
+                }
+                else
+                {
+                    _workbookFileType = FileType.PGN;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Saves the workbook to a file.
+        /// It will only write to the file if the 
+        /// session's file type is CHF
+        /// </summary>
+        public static void SaveWorkbookFile(bool checkDirty = false)
+        {
+            if (checkDirty && !IsDirty)
+                return;
+
+            if (WorkbookFileType == FileType.CHF)
+            {
+                string chfText = ChfTextBuilder.BuildText(AppStateManager.MainWin.Workbook);
+                File.WriteAllText(WorkbookFilePath, chfText);
+            }
+        }
+
+        /// <summary>
+        /// Type of the file currently open as
+        /// the Workbook.
+        /// </summary>
+        public static FileType WorkbookFileType { get => _workbookFileType; }
+
 
         /// <summary>
         /// Main application window
@@ -82,6 +156,9 @@ namespace ChessForge
         public static void RestartInIdleMode()
         {
             _mainWin.ActiveLine.Clear();
+            _mainWin.UiRtbWorkbookView.Document.Blocks.Clear();
+            _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
+            _mainWin.UiRtbTrainingBrowse.Document.Blocks.Clear();
             _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
             AppStateManager.SwapCommentBoxForEngineLines(false);
             AppStateManager.CurrentLearningMode = LearningMode.Mode.IDLE;
@@ -123,6 +200,15 @@ namespace ChessForge
         /// </summary>
         private static void SetupGuiForManualReview()
         {
+            if (CurrentLearningMode == LearningMode.Mode.IDLE)
+            {
+                _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
+            }
+
             _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
 
             _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
@@ -160,6 +246,8 @@ namespace ChessForge
         /// </summary>
         private static void SetupGuiForTraining()
         {
+            _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
+
             _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
             _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
@@ -191,6 +279,8 @@ namespace ChessForge
         /// </summary>
         private static void SetupGuiForEngineGame()
         {
+            _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
+
             if (TrainingState.IsTrainingInProgress)
             {
                 _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;

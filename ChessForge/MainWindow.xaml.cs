@@ -813,6 +813,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Invoked from the menu item File->Close Workbook
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnCloseWorkbook_Click(object sender, RoutedEventArgs e)
+        {
+            if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN)
+            {
+                PromptUserToConvertPGNToCHF();
+            }
+            else
+            {
+                AppStateManager.SaveWorkbookFile(true);
+            }
+            AppStateManager.RestartInIdleMode();
+        }
+
+        /// <summary>
         /// Returns true if user accept the change. of mode.
         /// </summary>
         /// <param name="newMode"></param>
@@ -912,7 +930,7 @@ namespace ChessForge
                 });
 
                 System.Threading.Thread.Sleep(1000);
-                LearningMode.WorkbookFilePath = fileName;
+                AppStateManager.WorkbookFilePath = fileName;
                 this.Title = APP_NAME + " - " + Path.GetFileName(fileName);
 
                 string workbookText = File.ReadAllText(fileName);
@@ -944,20 +962,9 @@ namespace ChessForge
                 //
                 // If this is not a CHF file, ask the user to save the converted file.
                 //
-                if (LearningMode.WorkbookFileType != LearningMode.FileType.CHF)
+                if (AppStateManager.WorkbookFileType != AppStateManager.FileType.CHF)
                 {
-                    SaveFileDialog saveDlg = new SaveFileDialog();
-                    saveDlg.Filter = "chf Workbook files (*.chf)|*.chf";
-                    saveDlg.Title = " Save Workbook converted from " + Path.GetFileName(fileName);
-
-                    saveDlg.FileName = Path.GetFileNameWithoutExtension(fileName) + ".chf";
-                    saveDlg.OverwritePrompt = true;
-                    if (saveDlg.ShowDialog() == true)
-                    {
-                        fileName = saveDlg.FileName;
-                        LearningMode.WorkbookFilePath = fileName;
-                        LearningMode.SaveWorkbookFile();
-                    }
+                    SaveConvertedWorkbooFile(fileName);
                 }
 
                 Configuration.AddRecentFile(fileName);
@@ -966,7 +973,7 @@ namespace ChessForge
                 BoardCommentBox.ShowWorkbookTitle(Workbook.Title);
 
                 _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
-                _trainingBrowseRichTextBuilder = new WorkbookView(_rtbTrainingBrowse.Document, this);
+                _trainingBrowseRichTextBuilder = new WorkbookView(UiRtbTrainingBrowse.Document, this);
                 //UiTrainingView = new TrainingView(UiRtbTrainingProgress.Document, this);
 
                 Workbook.BuildLines();
@@ -980,7 +987,7 @@ namespace ChessForge
                     {
                         Workbook.GenerateBookmarks();
                         UiTabBookmarks.Focus();
-                        LearningMode.SaveWorkbookFile();
+                        AppStateManager.SaveWorkbookFile();
                     }
                 }
 
@@ -1002,6 +1009,51 @@ namespace ChessForge
             {
                 MessageBox.Show(e.Message, "Error processing input file", MessageBoxButton.OK, MessageBoxImage.Error);
                 AppStateManager.RestartInIdleMode();
+            }
+        }
+
+        /// <summary>
+        /// Prompts the user to decide whether they want to convert/save 
+        /// PGN file as a CHF Workbook.
+        /// Invoked when the app or the Workbook is being closed.
+        /// </summary>
+        /// <returns></returns>
+        private int PromptUserToConvertPGNToCHF()
+        {
+            bool hasBookmarks = Workbook.Bookmarks.Count > 0;
+
+            string msg = "Your edits " + (hasBookmarks ? "and bookmarks " : "")
+                + "will be lost unless you save this Workbook as a ChessForge (.chf) file.\n\n Convert and save?";
+            if (MessageBox.Show(msg, "Chess Forge File Closing", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                SaveConvertedWorkbooFile(AppStateManager.WorkbookFilePath);
+                return 0;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// Allows the user to save the PGN files as CHF
+        /// thus allowing editing etc.
+        /// </summary>
+        /// <param name="fileName"></param>
+        private void SaveConvertedWorkbooFile(string fileName)
+        {
+            SaveFileDialog saveDlg = new SaveFileDialog();
+            saveDlg.Filter = "chf Workbook files (*.chf)|*.chf";
+            saveDlg.Title = " Save Workbook converted from " + Path.GetFileName(fileName);
+
+            saveDlg.FileName = Path.GetFileNameWithoutExtension(fileName) + ".chf";
+            saveDlg.OverwritePrompt = true;
+            if (saveDlg.ShowDialog() == true)
+            {
+                fileName = saveDlg.FileName;
+                AppStateManager.WorkbookFilePath = fileName;
+                AppStateManager.SaveWorkbookFile();
+                Configuration.LastWorkbookFile = fileName;
             }
         }
 
@@ -1049,7 +1101,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void ChessForgeMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            LearningMode.SaveWorkbookFile(true);
+            if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN)
+            {
+                PromptUserToConvertPGNToCHF();
+            }
+            else
+            {
+                AppStateManager.SaveWorkbookFile(true);
+            }
             Timers.StopAll();
             AppLog.Dump();
             EngineLog.Dump();
@@ -1570,7 +1629,7 @@ namespace ChessForge
             }
             else
             {
-                LearningMode.SaveWorkbookFile();
+                AppStateManager.SaveWorkbookFile();
                 UiTabBookmarks.Focus();
             }
         }
@@ -1593,7 +1652,7 @@ namespace ChessForge
             }
             else
             {
-                LearningMode.SaveWorkbookFile();
+                AppStateManager.SaveWorkbookFile();
                 UiTabBookmarks.Focus();
             }
         }
