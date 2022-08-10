@@ -82,6 +82,9 @@ namespace ChessForge
         public static void RestartInIdleMode()
         {
             _mainWin.ActiveLine.Clear();
+            _mainWin.UiRtbWorkbookView.Document.Blocks.Clear();
+            _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
+            _mainWin.UiRtbTrainingBrowse.Document.Blocks.Clear();
             _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
             AppStateManager.SwapCommentBoxForEngineLines(false);
             AppStateManager.CurrentLearningMode = LearningMode.Mode.IDLE;
@@ -123,6 +126,15 @@ namespace ChessForge
         /// </summary>
         private static void SetupGuiForManualReview()
         {
+            if (CurrentLearningMode == LearningMode.Mode.IDLE)
+            {
+                _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
+            }
+
             _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
 
             _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
@@ -160,6 +172,8 @@ namespace ChessForge
         /// </summary>
         private static void SetupGuiForTraining()
         {
+            _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
+
             _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
             _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
@@ -191,6 +205,8 @@ namespace ChessForge
         /// </summary>
         private static void SetupGuiForEngineGame()
         {
+            _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
+
             if (TrainingState.IsTrainingInProgress)
             {
                 _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
