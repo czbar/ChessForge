@@ -283,8 +283,8 @@ namespace ChessForge
                 {
                     return;
                 }
-
             }
+
             DeleteAllBookmarks();
             _mainWin.Workbook.GenerateBookmarks();
             _mainWin.UiTabBookmarks.Focus();
