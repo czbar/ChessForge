@@ -76,6 +76,20 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Resets the relevant controls to bring the application
+        /// into the IDLE mode after it was in another mode.
+        /// </summary>
+        public static void RestartInIdleMode()
+        {
+            _mainWin.ActiveLine.Clear();
+            _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+            AppStateManager.SwapCommentBoxForEngineLines(false);
+            AppStateManager.CurrentLearningMode = LearningMode.Mode.IDLE;
+            AppStateManager.SetupGuiForCurrentStates();
+            _mainWin.BoardCommentBox.OpenFile();
+        }
+
+        /// <summary>
         /// The Learning Mode, Evaluation State and Game State
         /// determine visibility of most of the GUI controls.
         /// There are some controls that have to be handled dynamically

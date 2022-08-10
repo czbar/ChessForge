@@ -1001,7 +1001,7 @@ namespace ChessForge
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Error processing input file", MessageBoxButton.OK, MessageBoxImage.Error);
-                // TODO: tidy up and return to IDLE mode
+                AppStateManager.RestartInIdleMode();
             }
         }
 
@@ -1014,7 +1014,7 @@ namespace ChessForge
         private MessageBoxResult AskToGenerateBookmarks()
         {
             return MessageBox.Show("Would you like to auto-select positions for training?",
-                "No Bookmarks in this Workbook", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                "No Bookmarks in this Workbook", MessageBoxButton.YesNo, MessageBoxImage.Question);
         }
 
         public void SetActiveLine(string lineId, int selectedNodeId)
@@ -1296,7 +1296,6 @@ namespace ChessForge
             AppStateManager.SetupGuiForCurrentStates();
 
             ActiveLine.DisplayPositionForSelectedCell();
-
             AppStateManager.SwapCommentBoxForEngineLines(false);
             BoardCommentBox.RestoreTitleMessage();
         }
