@@ -211,7 +211,7 @@ namespace ChessForge
                 }
                 ResyncBookmarks(_currentPage);
             }
-            LearningMode.SaveWorkbookFile();
+            AppStateManager.SaveWorkbookFile();
         }
 
         /// <summary>
@@ -239,8 +239,7 @@ namespace ChessForge
             }
 
             ClearBookmarksGui();
-//            Bookmarks.Clear();
-            LearningMode.SaveWorkbookFile();
+            AppStateManager.SaveWorkbookFile();
         }
 
         /// <summary>

@@ -819,13 +819,13 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnCloseWorkbook_Click(object sender, RoutedEventArgs e)
         {
-            if (LearningMode.WorkbookFileType == LearningMode.FileType.PGN)
+            if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN)
             {
                 PromptUserToConvertPGNToCHF();
             }
             else
             {
-                LearningMode.SaveWorkbookFile(true);
+                AppStateManager.SaveWorkbookFile(true);
             }
             AppStateManager.RestartInIdleMode();
         }
@@ -930,7 +930,7 @@ namespace ChessForge
                 });
 
                 System.Threading.Thread.Sleep(1000);
-                LearningMode.WorkbookFilePath = fileName;
+                AppStateManager.WorkbookFilePath = fileName;
                 this.Title = APP_NAME + " - " + Path.GetFileName(fileName);
 
                 string workbookText = File.ReadAllText(fileName);
@@ -962,7 +962,7 @@ namespace ChessForge
                 //
                 // If this is not a CHF file, ask the user to save the converted file.
                 //
-                if (LearningMode.WorkbookFileType != LearningMode.FileType.CHF)
+                if (AppStateManager.WorkbookFileType != AppStateManager.FileType.CHF)
                 {
                     SaveConvertedWorkbooFile(fileName);
                 }
@@ -987,7 +987,7 @@ namespace ChessForge
                     {
                         Workbook.GenerateBookmarks();
                         UiTabBookmarks.Focus();
-                        LearningMode.SaveWorkbookFile();
+                        AppStateManager.SaveWorkbookFile();
                     }
                 }
 
@@ -1026,7 +1026,7 @@ namespace ChessForge
                 + "will be lost unless you save this Workbook as a ChessForge (.chf) file.\n\n Convert and save?";
             if (MessageBox.Show(msg, "Chess Forge File Closing", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                SaveConvertedWorkbooFile(LearningMode.WorkbookFilePath);
+                SaveConvertedWorkbooFile(AppStateManager.WorkbookFilePath);
                 return 0;
             }
             else
@@ -1051,8 +1051,8 @@ namespace ChessForge
             if (saveDlg.ShowDialog() == true)
             {
                 fileName = saveDlg.FileName;
-                LearningMode.WorkbookFilePath = fileName;
-                LearningMode.SaveWorkbookFile();
+                AppStateManager.WorkbookFilePath = fileName;
+                AppStateManager.SaveWorkbookFile();
                 Configuration.LastWorkbookFile = fileName;
             }
         }
@@ -1101,13 +1101,13 @@ namespace ChessForge
         /// <param name="e"></param>
         private void ChessForgeMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (LearningMode.WorkbookFileType == LearningMode.FileType.PGN)
+            if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN)
             {
                 PromptUserToConvertPGNToCHF();
             }
             else
             {
-                LearningMode.SaveWorkbookFile(true);
+                AppStateManager.SaveWorkbookFile(true);
             }
             Timers.StopAll();
             AppLog.Dump();
@@ -1629,7 +1629,7 @@ namespace ChessForge
             }
             else
             {
-                LearningMode.SaveWorkbookFile();
+                AppStateManager.SaveWorkbookFile();
                 UiTabBookmarks.Focus();
             }
         }
@@ -1652,7 +1652,7 @@ namespace ChessForge
             }
             else
             {
-                LearningMode.SaveWorkbookFile();
+                AppStateManager.SaveWorkbookFile();
                 UiTabBookmarks.Focus();
             }
         }
