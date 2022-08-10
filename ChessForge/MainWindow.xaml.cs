@@ -1407,20 +1407,19 @@ namespace ChessForge
         {
             if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                if (Evaluation.CurrentMode != EvaluationState.EvaluationMode.IDLE)
-                {
-                    EngineMessageProcessor.StopEngineEvaluation();
-                    Evaluation.Reset();
-                    AppStateManager.ResetEvaluationControls();
-                    AppStateManager.ShowMoveEvaluationControls(false, false);
-                    AppStateManager.SetupGuiForCurrentStates();
-                }
-
                 // TODO: ask questions re saving etc.
+
+                EngineMessageProcessor.StopEngineEvaluation();
+                Evaluation.Reset();
+
                 TrainingState.IsTrainingInProgress = false;
                 MainChessBoard.RemoveMoveSquareColors();
                 LearningMode.CurrentMode = LearningMode.Mode.MANUAL_REVIEW;
                 AppStateManager.SetupGuiForCurrentStates();
+
+                ActiveLine.DisplayPositionForSelectedCell();
+                AppStateManager.SwapCommentBoxForEngineLines(false);
+                BoardCommentBox.RestoreTitleMessage();
             }
         }
 
