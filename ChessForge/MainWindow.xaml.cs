@@ -1540,7 +1540,7 @@ namespace ChessForge
 
         /// <summary>
         /// Handles a mouse click in the Workbook's grid. At this point
-        /// we disable node specific manu items in case no node was clicked.
+        /// we disable node specific menu items in case no node was clicked.
         /// If a node was clicked, it will be corrected when the event is handled
         /// in the Run's OnClick handler.
         /// </summary>
@@ -1552,11 +1552,44 @@ namespace ChessForge
             _workbookView.EnableWorkbookMenus(UiCmnWorkbookRightClick, false);
         }
 
+        /// <summary>
+        /// Adds the lst clicked node to bookmarks.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _mnWorkbookSelectAsBookmark_Click(object sender, RoutedEventArgs e)
         {
-            if (BookmarkManager.AddBookmark(_workbookView.LastClickedNodeId) == -1)
+            int ret = BookmarkManager.AddBookmark(_workbookView.LastClickedNodeId);
+            if (ret == 1)
             {
-                MessageBox.Show("Training Bookmarks", "This bookmark already exists.", MessageBoxButton.OK);
+                MessageBox.Show("This bookmark already exists.", "Training Bookmarks", MessageBoxButton.OK);
+            }
+            else if (ret == -1)
+            {
+                MessageBox.Show("Failed to add the bookmark.", "Training Bookmarks", MessageBoxButton.OK);
+            }
+            else
+            {
+                LearningMode.SaveWorkbookFile();
+                UiTabBookmarks.Focus();
+            }
+        }
+
+        /// <summary>
+        /// Adds the last click node, and all its siblings to bookmarks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _mnWorkbookBookmarkAlternatives_Click(object sender, RoutedEventArgs e)
+        {
+            int ret = BookmarkManager.AddAllSiblingsToBookmarks(_workbookView.LastClickedNodeId);
+            if (ret == 1)
+            {
+                MessageBox.Show("Bookmarks already exist.", "Training Bookmarks", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            else if (ret == -1)
+            {
+                MessageBox.Show("Failed to add the bookmarks.", "Training Bookmarks", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             else
             {
@@ -1683,5 +1716,6 @@ namespace ChessForge
         {
             StopEngineGame();
         }
+
     }
 }

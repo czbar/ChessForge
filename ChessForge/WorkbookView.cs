@@ -162,6 +162,18 @@ namespace ChessForge
                         case "_mnWorkbookSelectAsBookmark":
                             menuItem.IsEnabled = isEnabled;
                             break;
+                        case "_mnWorkbookBookmarkAlternatives":
+                            if (_mainWin.Workbook.NodeHasSiblings(LastClickedNodeId))
+                            {
+                                menuItem.Visibility = Visibility.Visible;
+                                menuItem.IsEnabled = isEnabled;
+                            }
+                            else
+                            {
+                                menuItem.Visibility = Visibility.Collapsed;
+                                menuItem.IsEnabled = false;
+                            }
+                            break;
                         case "_mnWorkbookEvalMove":
                             menuItem.IsEnabled = isEnabled;
                             break;

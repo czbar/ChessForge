@@ -435,6 +435,27 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns true if the specified node has at least one sibling.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        public bool NodeHasSiblings(int nodeId)
+        {
+            bool ret;
+            TreeNode nd = GetNodeFromNodeId(nodeId);
+            if (nd != null && nd.Parent != null && nd.Parent.Children.Count > 1)
+            {
+                ret = true;
+            }
+            else
+            {
+                ret = false;
+            }
+
+            return ret;
+        }
+
+        /// <summary>
         /// Checks if the node already exists in the tree 
         /// by checking if it has the same position as one of the children.
         /// If so returns the already exisiting. Otherwise, returns null 
