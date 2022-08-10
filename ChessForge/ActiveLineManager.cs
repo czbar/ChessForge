@@ -44,6 +44,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Clears all content and selection
+        /// </summary>
+        public void Clear()
+        {
+            _dgActiveLine.SelectedCells.Clear();
+            Line.MoveList.Clear();
+            Line.NodeList.Clear(); 
+        }
+
+        /// <summary>
         /// Figures out the node corresponding to 
         /// the selected cell and displays the position.
         /// </summary>
