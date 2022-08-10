@@ -132,9 +132,8 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Adds a bookmark to the list of bookmarks at index 0.
-        /// If there are 9 or more bookmarks, shifts them so 
-        /// the lst one drops out of the GUI's first page.
+        /// Adds a bookmark to the list of bookmarks.
+        /// Sorts the bookmarks and updates the GUI.
         /// </summary>
         /// <returns>0 on success, 1 if already exists, -1 on failure</returns>
         public static int AddBookmark(int nodeId)
@@ -159,6 +158,37 @@ namespace ChessForge
                 return -1;
             }
 
+        }
+
+        /// <summary>
+        /// Adds the node and all its siblings to the list of bookmarks.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns>0 on success, 1 if ALL bookmarks already exists, -1 on failure</returns>
+        public static int AddAllSiblingsToBookmarks(int nodeId)
+        {
+            int res = 1;
+
+            TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
+
+            TreeNode parent = nd.Parent;
+            if (parent != null)
+            {
+                foreach (TreeNode sib in parent.Children)
+                {
+                    int ret = AddBookmark(sib.NodeId);
+                    if (ret == 0)
+                    {
+                        res = 0;
+                    }
+                    else if (ret == -1 && res != 0)
+                    {
+                        res = -1;
+                    }
+                }
+            }
+
+            return res;
         }
 
         /// <summary>
@@ -202,12 +232,14 @@ namespace ChessForge
             {
                 if (bm.BookmarkData != null && bm.BookmarkData.Node != null)
                 {
+                    _mainWin.Workbook.DeleteBookmark(bm.BookmarkData.Node);
                     bm.BookmarkData.Node.IsBookmark = false;
+                    bm.BookmarkData = null;
                 }
             }
 
             ClearBookmarksGui();
-            Bookmarks.Clear();
+//            Bookmarks.Clear();
             LearningMode.SaveWorkbookFile();
         }
 
@@ -283,8 +315,8 @@ namespace ChessForge
                 {
                     return;
                 }
-
             }
+
             DeleteAllBookmarks();
             _mainWin.Workbook.GenerateBookmarks();
             _mainWin.UiTabBookmarks.Focus();

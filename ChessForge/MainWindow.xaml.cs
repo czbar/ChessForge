@@ -970,6 +970,7 @@ namespace ChessForge
                 //UiTrainingView = new TrainingView(UiRtbTrainingProgress.Document, this);
 
                 Workbook.BuildLines();
+                UiTabWorkbook.Focus();
 
                 _workbookView.BuildFlowDocumentForWorkbook();
                 if (Workbook.Bookmarks.Count == 0)
@@ -1000,7 +1001,7 @@ namespace ChessForge
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Error processing input file", MessageBoxButton.OK, MessageBoxImage.Error);
-                // TODO: tidy up and return to IDLE mode
+                AppStateManager.RestartInIdleMode();
             }
         }
 
@@ -1013,7 +1014,7 @@ namespace ChessForge
         private MessageBoxResult AskToGenerateBookmarks()
         {
             return MessageBox.Show("Would you like to auto-select positions for training?",
-                "No Bookmarks in this Workbook", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                "No Bookmarks in this Workbook", MessageBoxButton.YesNo, MessageBoxImage.Question);
         }
 
         public void SetActiveLine(string lineId, int selectedNodeId)
@@ -1295,7 +1296,6 @@ namespace ChessForge
             AppStateManager.SetupGuiForCurrentStates();
 
             ActiveLine.DisplayPositionForSelectedCell();
-
             AppStateManager.SwapCommentBoxForEngineLines(false);
             BoardCommentBox.RestoreTitleMessage();
         }
@@ -1406,20 +1406,19 @@ namespace ChessForge
         {
             if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                if (Evaluation.CurrentMode != EvaluationState.EvaluationMode.IDLE)
-                {
-                    EngineMessageProcessor.StopEngineEvaluation();
-                    Evaluation.Reset();
-                    AppStateManager.ResetEvaluationControls();
-                    AppStateManager.ShowMoveEvaluationControls(false, false);
-                    AppStateManager.SetupGuiForCurrentStates();
-                }
-
                 // TODO: ask questions re saving etc.
+
+                EngineMessageProcessor.StopEngineEvaluation();
+                Evaluation.Reset();
+
                 TrainingState.IsTrainingInProgress = false;
                 MainChessBoard.RemoveMoveSquareColors();
                 LearningMode.CurrentMode = LearningMode.Mode.MANUAL_REVIEW;
                 AppStateManager.SetupGuiForCurrentStates();
+
+                ActiveLine.DisplayPositionForSelectedCell();
+                AppStateManager.SwapCommentBoxForEngineLines(false);
+                BoardCommentBox.RestoreTitleMessage();
             }
         }
 
@@ -1541,7 +1540,7 @@ namespace ChessForge
 
         /// <summary>
         /// Handles a mouse click in the Workbook's grid. At this point
-        /// we disable node specific manu items in case no node was clicked.
+        /// we disable node specific menu items in case no node was clicked.
         /// If a node was clicked, it will be corrected when the event is handled
         /// in the Run's OnClick handler.
         /// </summary>
@@ -1553,11 +1552,44 @@ namespace ChessForge
             _workbookView.EnableWorkbookMenus(UiCmnWorkbookRightClick, false);
         }
 
+        /// <summary>
+        /// Adds the lst clicked node to bookmarks.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _mnWorkbookSelectAsBookmark_Click(object sender, RoutedEventArgs e)
         {
-            if (BookmarkManager.AddBookmark(_workbookView.LastClickedNodeId) == -1)
+            int ret = BookmarkManager.AddBookmark(_workbookView.LastClickedNodeId);
+            if (ret == 1)
             {
-                MessageBox.Show("Training Bookmarks", "This bookmark already exists.", MessageBoxButton.OK);
+                MessageBox.Show("This bookmark already exists.", "Training Bookmarks", MessageBoxButton.OK);
+            }
+            else if (ret == -1)
+            {
+                MessageBox.Show("Failed to add the bookmark.", "Training Bookmarks", MessageBoxButton.OK);
+            }
+            else
+            {
+                LearningMode.SaveWorkbookFile();
+                UiTabBookmarks.Focus();
+            }
+        }
+
+        /// <summary>
+        /// Adds the last click node, and all its siblings to bookmarks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _mnWorkbookBookmarkAlternatives_Click(object sender, RoutedEventArgs e)
+        {
+            int ret = BookmarkManager.AddAllSiblingsToBookmarks(_workbookView.LastClickedNodeId);
+            if (ret == 1)
+            {
+                MessageBox.Show("Bookmarks already exist.", "Training Bookmarks", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            else if (ret == -1)
+            {
+                MessageBox.Show("Failed to add the bookmarks.", "Training Bookmarks", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             else
             {
@@ -1673,6 +1705,16 @@ namespace ChessForge
         private void UiDgEngineGame_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void UiBtnExitTraining_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem_StopTraining(sender, e);
+        }
+
+        private void UiBtnExitGame_Click(object sender, RoutedEventArgs e)
+        {
+            StopEngineGame();
         }
 
     }

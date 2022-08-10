@@ -177,7 +177,7 @@ namespace GameTree
             {
                 BookmarkChildren(fork, MAX_BOOKMARKS);
             }
-            else if (fork.Parent.NodeId != 0)
+            else if (fork.Parent != null && fork.Parent.NodeId != 0)
             {
                 BookmarkChildren(fork.Parent, MAX_BOOKMARKS);
             }
@@ -429,6 +429,27 @@ namespace GameTree
                         break;
                     }
                 }
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// Returns true if the specified node has at least one sibling.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        public bool NodeHasSiblings(int nodeId)
+        {
+            bool ret;
+            TreeNode nd = GetNodeFromNodeId(nodeId);
+            if (nd != null && nd.Parent != null && nd.Parent.Children.Count > 1)
+            {
+                ret = true;
+            }
+            else
+            {
+                ret = false;
             }
 
             return ret;

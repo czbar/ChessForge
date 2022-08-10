@@ -138,7 +138,8 @@
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookGrid_PreviewMouseDown">
                     <Grid.ContextMenu>
                         <ContextMenu x:Name="UiCmnWorkbookRightClick">
-                            <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Add to Bookmarks" Click="_mnWorkbookSelectAsBookmark_Click" />
+                            <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Bookmarks This Position" Click="_mnWorkbookSelectAsBookmark_Click" />
+                            <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="Bookmark All Options Here" Click="_mnWorkbookBookmarkAlternatives_Click" />
                             <Separator />
                             <MenuItem x:Name="_mnWorkbookEvalMove" Header="Evaluate Move" />
                             <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line" />
@@ -429,7 +430,7 @@
         <Slider x:Name="UiSldReplaySpeed" HorizontalAlignment="Left" Margin="71,50,0,0" Grid.Row="2" VerticalAlignment="Top" 
                 Height="36" Width="170" ValueChanged="sliderReplaySpeed_ValueChanged"
                 Maximum="2000" TickFrequency="600" IsSnapToTickEnabled="True" Grid.Column="1" Minimum="200" TickPlacement="BottomRight" Value="400" IsDirectionReversed="True" AutoToolTipPlacement="TopLeft" LargeChange="500" SmallChange="100" />
-        <RichTextBox x:Name="UiRtbBoardComment" HorizontalAlignment="Left" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
+        <RichTextBox x:Name="UiRtbBoardComment" Panel.ZIndex="0" HorizontalAlignment="Left" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0" />
@@ -454,6 +455,8 @@
         <Label x:Name="UiLblMoveUnderEval" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="130,30,0,0" Grid.Row="2" FontWeight="Bold" FontSize="14"  VerticalAlignment="Top"/>
         <Label x:Name="UiLblEvalSecretMode" Grid.Column="1" Content="Engine is thinking ..." HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
                Margin="10,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="160" Grid.Row="2" />
+        <Button x:Name="UiBtnExitTraining" Panel.ZIndex="1" Grid.Column="0" Content="Exit Training" HorizontalAlignment="Right" Margin="30,20,20,0" Width="100" Height="25" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitTraining_Click"/>
+        <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="0" Content="Exit Game" HorizontalAlignment="Right" Margin="30,20,20,0" Width="100" Height="25" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitGame_Click"/>
 
     </Grid>
 
