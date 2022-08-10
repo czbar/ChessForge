@@ -1676,5 +1676,14 @@ namespace ChessForge
             e.Handled = true;
         }
 
+        private void UiBtnExitTraining_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem_StopTraining(sender, e);
+        }
+
+        private void UiBtnExitGame_Click(object sender, RoutedEventArgs e)
+        {
+            StopEngineGame();
+        }
     }
 }

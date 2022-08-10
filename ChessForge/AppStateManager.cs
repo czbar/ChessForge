@@ -132,6 +132,9 @@ namespace ChessForge
             _mainWin.UiTabBookmarks.Opacity = 1;
             _mainWin.UiTabBookmarks.IsEnabled = true;
 
+            _mainWin.UiBtnExitTraining.Visibility = Visibility.Collapsed;
+            _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
+
             ShowGuiActiveLine(true);
             ShowEvaluationProgressControlsForCurrentStates();
 
@@ -161,6 +164,9 @@ namespace ChessForge
             _mainWin.UiTabTrainingBrowse.Opacity = 1;
             _mainWin.UiTabTrainingBrowse.IsEnabled = true;
 
+            _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
+            _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
+
             ShowEvaluationProgressControlsForCurrentStates();
 
             ConfigureMenusForTraining();
@@ -185,6 +191,9 @@ namespace ChessForge
                 _mainWin.UiTabCtrlTraining.Visibility = Visibility.Visible;
                 _mainWin.UiTabTrainingProgress.Visibility = Visibility.Visible;
                 _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Visible;
+
+                _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
+                _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -200,6 +209,9 @@ namespace ChessForge
                 _mainWin.UiTabCtrlTraining.Visibility = Visibility.Hidden;
                 _mainWin.UiTabTrainingProgress.Visibility = Visibility.Hidden;
                 _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Hidden;
+
+                _mainWin.UiBtnExitTraining.Visibility = Visibility.Collapsed;
+                _mainWin.UiBtnExitGame.Visibility = Visibility.Visible;
             }
 
             ShowEvaluationProgressControlsForCurrentStates();
