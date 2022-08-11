@@ -185,6 +185,7 @@ namespace ChessForge
             AppStateManager.SwapCommentBoxForEngineLines(false);
             AppStateManager.CurrentLearningMode = LearningMode.Mode.IDLE;
             AppStateManager.SetupGuiForCurrentStates();
+            AppStateManager.WorkbookFilePath = "";
             if (updateCommentBox)
             {
                 _mainWin.BoardCommentBox.OpenFile();
