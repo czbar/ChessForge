@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using ChessPosition;
@@ -158,6 +159,27 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns true if this node is the first child of its parent
+        /// </summary>
+        /// <returns></returns>
+        public bool IsFirstChild()
+        {
+            if (Parent == null)
+            {
+                return true;
+            }
+
+            if (Parent.Children[0].NodeId == NodeId)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Id of the line this move belongs to.
         /// It is in the form of integers separated by dots e.g. "1.2.1.3".
         /// The "main" line will be of the form "1.1.1.1.1"
@@ -178,7 +200,7 @@ namespace GameTree
         ///  0 - this node is a leaf
         /// -1 - there is a fork before we reach a leaf.
         /// </summary>
-        public int DistanceToLeaf;
+        public int DistanceToLeaf = -1;
 
         /// <summary>
         /// Index of the first character of this move
