@@ -112,12 +112,12 @@ namespace ChessForge
             Configuration.StartDirectory = Directory.GetCurrentDirectory();
             Configuration.ReadConfigurationFile();
             MoveAnimation.MoveDuration = Configuration.MoveSpeed;
-            if (Configuration.MainWinPos.IsValid)
+            if (Configuration.IsMainWinPosValid())
             {
                 this.Left = Configuration.MainWinPos.Left;
                 this.Top = Configuration.MainWinPos.Top;
-                this.Width = Configuration.MainWinPos.Width;
-                this.Height = Configuration.MainWinPos.Height;
+                this.Width = Configuration.MainWinPos.Right - Configuration.MainWinPos.Left;
+                this.Height = Configuration.MainWinPos.Bottom - Configuration.MainWinPos.Top;
             }
 
             // main chess board
