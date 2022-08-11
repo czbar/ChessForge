@@ -52,8 +52,14 @@ namespace ChessForge
             ["1"] = new RichTextPara(40, 10, 16, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
             ["2"] = new RichTextPara(70, 5, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(51, 159, 141)), TextAlignment.Left),
             ["3"] = new RichTextPara(90, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-            ["4"] = new RichTextPara(105, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
-            ["default"] = new RichTextPara(110, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
+            ["4"] = new RichTextPara(105, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
+            ["5"] = new RichTextPara(110, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(100, 90, 63)), TextAlignment.Left),
+            ["6"] = new RichTextPara(115, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(90, 60, 60)), TextAlignment.Left),
+            ["7"] = new RichTextPara(120, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(60, 60, 60)), TextAlignment.Left),
+            ["8"] = new RichTextPara(125, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(40, 50, 60)), TextAlignment.Left),
+            ["9"] = new RichTextPara(130, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(30, 50, 40)), TextAlignment.Left),
+            ["10"] = new RichTextPara(135, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(20, 20, 10)), TextAlignment.Left),
+            ["default"] = new RichTextPara(140, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(20, 0, 0)), TextAlignment.Left),
         };
 
         /// <summary>
@@ -72,65 +78,65 @@ namespace ChessForge
         /// <summary>
         /// Font style to use when inside an intra fork.
         /// </summary>
-        private  FontStyle _intraForkFontStyle = FontStyles.Italic;
+        private FontStyle _intraForkFontStyle = FontStyles.Italic;
 
         /// <summary>
         /// The main Workbook tree.
         /// </summary>
-        private  WorkbookTree _workbook;
+        private WorkbookTree _workbook;
 
         /// <summary>
         /// Maps Node Ids to Runs for quick access.
         /// </summary>
-        private  Dictionary<int, Run> _dictNodeToRun = new Dictionary<int, Run>();
+        private Dictionary<int, Run> _dictNodeToRun = new Dictionary<int, Run>();
 
         /// <summary>
         /// Currently selected line.
         /// </summary>
-        private  ObservableCollection<TreeNode> _lstSelectedLine = new ObservableCollection<TreeNode>();
+        private ObservableCollection<TreeNode> _lstSelectedLine = new ObservableCollection<TreeNode>();
 
         /// <summary>
         /// Current Paragraph level.
         /// </summary>
-        private  int _currParagraphLevel;
+        private int _currParagraphLevel;
 
         /// <summary>
         /// Color to use for the background of the highlighted line.
         /// </summary>
-        private  SolidColorBrush _brushSelectedBkg = new SolidColorBrush(Color.FromRgb(255, 255, 206));
+        private SolidColorBrush _brushSelectedBkg = new SolidColorBrush(Color.FromRgb(255, 255, 206));
 
         /// <summary>
         /// Color to use for the background of the selected move.
         /// </summary>
-        private  SolidColorBrush _brushSelectedMoveBkg = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+        private SolidColorBrush _brushSelectedMoveBkg = new SolidColorBrush(Color.FromRgb(0, 0, 0));
 
         /// <summary>
         /// Color to use for the foreground of the selected move.
         /// </summary>
-        private  SolidColorBrush _brushSelectedMoveFore = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+        private SolidColorBrush _brushSelectedMoveFore = new SolidColorBrush(Color.FromRgb(255, 255, 255));
 
         /// <summary>
         /// Color to use for the overall background.
         /// </summary>
-        private  SolidColorBrush _brushRegularBkg = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+        private SolidColorBrush _brushRegularBkg = new SolidColorBrush(Color.FromRgb(255, 255, 255));
 
         /// <summary>
         /// Color to use for the overall foreground.
         /// </summary>
-        private  SolidColorBrush _brushRegularFore = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+        private SolidColorBrush _brushRegularFore = new SolidColorBrush(Color.FromRgb(0, 0, 0));
 
         /// <summary>
         /// Selected (clicked) run.
         /// </summary>
-        private  Run _selectedRun;
-        private  SolidColorBrush _selectedRunFore;
-        private  SolidColorBrush _selectedRunBkg;
+        private Run _selectedRun;
+        private SolidColorBrush _selectedRunFore;
+        private SolidColorBrush _selectedRunBkg;
 
         /// <summary>
         /// Prefix that will be followed by NodeId in the name of each Run
         /// that represents a TreeNode.
         /// </summary>
-        private  readonly string RUN_NAME_PREFIX = "run_";
+        private readonly string RUN_NAME_PREFIX = "run_";
 
         /// <summary>
         /// Type of nodes that can be encountered in the Workbook tree.
@@ -224,13 +230,15 @@ namespace ChessForge
             Document.Blocks.Add(para);
 
             BuildTreeLineText(root, para, false);
+
+            RemoveEmptyParagraphs();
         }
 
         /// <summary>
         /// Traverses the tree back from each leaf populating the DistanceToFork
         /// and DistanceToLeaf fields
         /// </summary>
-        private  void SetNodeDistances()
+        private void SetNodeDistances()
         {
             foreach (TreeNode nd in _workbook.Nodes)
             {
@@ -293,7 +301,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd">Node to check.</param>
         /// <returns></returns>
-        private  bool IsFork(TreeNode nd)
+        private bool IsFork(TreeNode nd)
         {
             if (nd == null)
                 return false;
@@ -307,7 +315,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd">Node to check</param>
         /// <returns></returns>
-        private  bool IsLeaf(TreeNode nd)
+        private bool IsLeaf(TreeNode nd)
         {
             return nd.Children.Count == 0;
         }
@@ -317,7 +325,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        private  NodeType GetNodeType(TreeNode nd)
+        private NodeType GetNodeType(TreeNode nd)
         {
             if (IsLeaf(nd))
             {
@@ -348,7 +356,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        private  void BuildTreeLineText(TreeNode nd, Paragraph para, bool includeNumber)
+        private void BuildTreeLineText(TreeNode nd, Paragraph para, bool includeNumber)
         {
             while (true)
             {
@@ -468,7 +476,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        private  void BuildNodeText(TreeNode nd, bool includeNumber, Paragraph para)
+        private void BuildNodeText(TreeNode nd, bool includeNumber, Paragraph para)
         {
             StringBuilder sb = new StringBuilder();
             if (nd.Position.ColorToMove == PieceColor.Black)
@@ -490,7 +498,11 @@ namespace ChessForge
             SolidColorBrush fontColor = null;
             if (IsFork(nd.Parent) && !nd.IsMainLine())
             {
-                fontColor = GetParaAttrs(_currParagraphLevel.ToString()).FirstCharColor;
+                //                if (nd.Parent.Parent == null || nd.Parent.IsMainLine() || !IsFork(nd.Parent.Parent) || !nd.IsFirstChild())
+                if (!nd.IsFirstChild())
+                {
+                    fontColor = GetParaAttrs(_currParagraphLevel.ToString()).FirstCharColor;
+                }
             }
 
             AddRunToParagraph(nd, para, sb.ToString(), fontColor);
@@ -503,7 +515,7 @@ namespace ChessForge
         /// <param name="para"></param>
         /// <param name="text"></param>
         /// <param name="fontColor"></param>
-        private  void AddRunToParagraph(TreeNode nd, Paragraph para, string text, SolidColorBrush fontColor)
+        private void AddRunToParagraph(TreeNode nd, Paragraph para, string text, SolidColorBrush fontColor)
         {
             Run r = new Run(text.ToString());
             r.Name = "run_" + nd.NodeId.ToString();
@@ -537,7 +549,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private  void EventRunClicked(object sender, MouseButtonEventArgs e)
+        private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
             if (_selectedRun != null)
             {
@@ -614,7 +626,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nodeId"></param>
         /// <param name="lineId"></param>
-        public  void SelectLineAndMove(string lineId, int nodeId)
+        public void SelectLineAndMove(string lineId, int nodeId)
         {
             if (_selectedRun != null)
             {
