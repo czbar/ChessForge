@@ -778,7 +778,7 @@ namespace ChessForge
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Multiselect = false;
-                openFileDialog.Filter = "ChessForge Workbooks (*.chf)|*.chf|PGN Game files (*.pgn)|*.pgn|All files (*.*)|*.*";
+                openFileDialog.Filter = "Workbooks (*.chf); PGN (*.pgn)|*.chf;*.pgn|All files (*.*)|*.*";
 
                 string initDir;
                 if (!string.IsNullOrEmpty(Configuration.LastOpenDirectory))
@@ -873,7 +873,12 @@ namespace ChessForge
             return result;
         }
 
-        private void RecreateRecentFilesMenuItems()
+        /// <summary>
+        /// Recreates the "Recent Files" menu items by
+        /// removing the exisiting ones and inserting
+        /// ones corresponding to what's in the configuration file.
+        /// </summary>
+        public void RecreateRecentFilesMenuItems()
         {
             List<object> itemsToRemove = new List<object>();
 
@@ -931,7 +936,7 @@ namespace ChessForge
 
                 System.Threading.Thread.Sleep(1000);
                 AppStateManager.WorkbookFilePath = fileName;
-                this.Title = APP_NAME + " - " + Path.GetFileName(fileName);
+                AppStateManager.UpdateAppTitleBar();
 
                 string workbookText = File.ReadAllText(fileName);
 
@@ -962,13 +967,21 @@ namespace ChessForge
                 //
                 // If this is not a CHF file, ask the user to save the converted file.
                 //
+                bool recentFilesProcessed = false;
                 if (AppStateManager.WorkbookFileType != AppStateManager.FileType.CHF)
                 {
-                    SaveConvertedWorkbooFile(fileName);
+                    if (SaveConvertedWorkbookFile(fileName))
+                    {
+                        recentFilesProcessed = true;
+                    }
                 }
 
-                Configuration.AddRecentFile(fileName);
-                RecreateRecentFilesMenuItems();
+                if (!recentFilesProcessed)
+                {
+                    Configuration.AddRecentFile(fileName);
+                    RecreateRecentFilesMenuItems();
+                    Configuration.LastWorkbookFile = fileName;
+                }
 
                 BoardCommentBox.ShowWorkbookTitle(Workbook.Title);
 
@@ -1001,8 +1014,6 @@ namespace ChessForge
 
                 SelectLineAndMoveInWorkbookViews(startLineId, startingNode);
 
-                Configuration.LastWorkbookFile = fileName;
-
                 LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
             }
             catch (Exception e)
@@ -1026,7 +1037,7 @@ namespace ChessForge
                 + "will be lost unless you save this Workbook as a ChessForge (.chf) file.\n\n Convert and save?";
             if (MessageBox.Show(msg, "Chess Forge File Closing", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                SaveConvertedWorkbooFile(AppStateManager.WorkbookFilePath);
+                SaveConvertedWorkbookFile(AppStateManager.WorkbookFilePath);
                 return 0;
             }
             else
@@ -1039,21 +1050,24 @@ namespace ChessForge
         /// Allows the user to save the PGN files as CHF
         /// thus allowing editing etc.
         /// </summary>
-        /// <param name="fileName"></param>
-        private void SaveConvertedWorkbooFile(string fileName)
+        /// <param name="pgnFileName"></param>
+        private bool SaveConvertedWorkbookFile(string pgnFileName)
         {
             SaveFileDialog saveDlg = new SaveFileDialog();
             saveDlg.Filter = "chf Workbook files (*.chf)|*.chf";
-            saveDlg.Title = " Save Workbook converted from " + Path.GetFileName(fileName);
+            saveDlg.Title = " Save Workbook converted from " + Path.GetFileName(pgnFileName);
 
-            saveDlg.FileName = Path.GetFileNameWithoutExtension(fileName) + ".chf";
+            saveDlg.FileName = Path.GetFileNameWithoutExtension(pgnFileName) + ".chf";
             saveDlg.OverwritePrompt = true;
             if (saveDlg.ShowDialog() == true)
             {
-                fileName = saveDlg.FileName;
-                AppStateManager.WorkbookFilePath = fileName;
-                AppStateManager.SaveWorkbookFile();
-                Configuration.LastWorkbookFile = fileName;
+                string chfFileName = saveDlg.FileName;
+                AppStateManager.SaveConvertedWorkbookFile(pgnFileName, chfFileName);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
