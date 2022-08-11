@@ -49,7 +49,7 @@ namespace ChessForge
         // width and and height of a square in the main chessboard
         private const int squareSize = 80;
 
-        public EngineEvaluationGUI EngineLinesGUI;
+        public EngineLinesBox EngineLinesGUI;
         AnimationState MoveAnimation = new AnimationState();
         public EvaluationState Evaluation;
 
@@ -105,7 +105,7 @@ namespace ChessForge
             BoardCommentBox = new CommentBox(UiRtbBoardComment.Document, this);
             ActiveLine = new ActiveLineManager(UiDgActiveLine, this);
 
-            EngineLinesGUI = new EngineEvaluationGUI(this, UiTbEngineLines, UiPbEngineThinking, Evaluation);
+            EngineLinesGUI = new EngineLinesBox(this, UiTbEngineLines, UiPbEngineThinking, Evaluation);
             Timers = new AppTimers(EngineLinesGUI, this);
 
             Configuration.Initialize(this);

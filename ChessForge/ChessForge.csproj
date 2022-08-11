@@ -75,7 +75,7 @@
     <Compile Include="EvaluationState.cs" />
     <Compile Include="ListViewHelper.cs" />
     <Compile Include="CommentBox.cs" />
-    <Compile Include="EngineEvaluationGUI.cs" />
+    <Compile Include="EngineLinesBox.cs" />
     <Compile Include="MainWindow\MainWindowWorkbookTable.cs" />
     <Compile Include="GuiUtilities.cs" />
     <Compile Include="ActiveLineManager.cs" />
