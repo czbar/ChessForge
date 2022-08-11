@@ -79,12 +79,16 @@ namespace ChessForge
         private const string CFG_VIABLE_MOVE_CP_DIFF = "ViableMoveCpDiff";
 
         public static string StartDirectory = "";
+
+        // name of the file in which this configuration is stored.
         public static string ConfigurationFile = "config.txt";
 
         private const string CFG_DEBUG_MODE = "DebugMode";
 
-        public static Rectangle MainWinPos = new Rectangle();
+        // position of the main application window
+        public static Thickness MainWinPos = new Thickness();
 
+        // List of recently opened files
         public static List<string> RecentFiles = new List<string>();
 
         private static int MAX_RECENT_FILES = 5;
@@ -122,6 +126,10 @@ namespace ChessForge
         public static void RemoveFromRecentFiles(string path)
         {
             RecentFiles.Remove(path);
+            if (LastWorkbookFile == path)
+            {
+                LastWorkbookFile = "";
+            }
         }
 
         /// <summary>
@@ -130,6 +138,10 @@ namespace ChessForge
         /// </summary>
         private static Dictionary<object, string> ItemToName = new Dictionary<object, string>();
 
+        /// <summary>
+        /// Initializes variables.
+        /// </summary>
+        /// <param name="mainWin"></param>
         public static void Initialize(MainWindow mainWin)
         {
             MainWin = mainWin;
@@ -209,11 +221,29 @@ namespace ChessForge
         {
             double left = Application.Current.MainWindow.Left;
             double top = Application.Current.MainWindow.Top;
-            double width = Application.Current.MainWindow.Width;
-            double height = Application.Current.MainWindow.Height;
+            double right = left + Application.Current.MainWindow.Width;
+            double bottom = top + Application.Current.MainWindow.Height;
 
             return CFG_MAIN_WINDOW_POS + " = " + left.ToString() + "," + top.ToString() + ","
-                + width.ToString() + "," + height.ToString() + Environment.NewLine;
+                + right.ToString() + "," + bottom.ToString() + Environment.NewLine;
+        }
+
+        /// <summary>
+        /// Checks if the saved Window position is valid and can be used
+        /// when reopening the application.
+        /// We consider the position valid if both width and length are greater than 100.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsMainWinPosValid()
+        {
+            if (MainWinPos.Right > MainWinPos.Left + 100 && MainWinPos.Bottom > MainWinPos.Top + 100)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -264,6 +294,10 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Processes a single line/item from the configuration file.
+        /// </summary>
+        /// <param name="line"></param>
         private static void ProcessConfigurationItem(string line)
         {
             string[] tokens = line.Split('=');
@@ -314,13 +348,11 @@ namespace ChessForge
                                 {
                                     MainWinPos.Left = double.Parse(sizes[0]);
                                     MainWinPos.Top = double.Parse(sizes[1]);
-                                    MainWinPos.Width = double.Parse(sizes[2]);
-                                    MainWinPos.Height = double.Parse(sizes[3]);
-                                    MainWinPos.CheckValid();
+                                    MainWinPos.Right = double.Parse(sizes[2]);
+                                    MainWinPos.Bottom = double.Parse(sizes[3]);
                                 }
                                 catch
                                 {
-                                    MainWinPos.IsValid = false;
                                 }
                             }
                             break;
@@ -331,29 +363,4 @@ namespace ChessForge
 
     }
 
-    public struct Rectangle
-    {
-        public bool IsValid;
-
-        public double Left;
-        public double Top;
-        public double Width;
-        public double Height;
-
-        /// <summary>
-        /// Check basic sanity.
-        /// </summary>
-        /// <returns></returns>
-        public void CheckValid()
-        {
-            if (Width > 100 && Height > 100)
-            {
-                IsValid = true;
-            }
-            else
-            {
-                IsValid = false;
-            }
-        }
-    }
 }

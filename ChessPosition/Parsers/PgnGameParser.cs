@@ -219,7 +219,7 @@ namespace GameTree
                         ProcessComment(parentNode);
                         break;
                     case PgnTokenType.Move:
-                        // ProcessMove() will retrun a new node
+                        // ProcessMove() will return a new node
                         // that will then be the "parentNode" for
                         // the processing of the next move (ply)
                         TreeNode newNode = ProcessMove(token, parentNode);

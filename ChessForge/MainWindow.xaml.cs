@@ -112,12 +112,12 @@ namespace ChessForge
             Configuration.StartDirectory = Directory.GetCurrentDirectory();
             Configuration.ReadConfigurationFile();
             MoveAnimation.MoveDuration = Configuration.MoveSpeed;
-            if (Configuration.MainWinPos.IsValid)
+            if (Configuration.IsMainWinPosValid())
             {
                 this.Left = Configuration.MainWinPos.Left;
                 this.Top = Configuration.MainWinPos.Top;
-                this.Width = Configuration.MainWinPos.Width;
-                this.Height = Configuration.MainWinPos.Height;
+                this.Width = Configuration.MainWinPos.Right - Configuration.MainWinPos.Left;
+                this.Height = Configuration.MainWinPos.Bottom - Configuration.MainWinPos.Top;
             }
 
             // main chess board
@@ -929,6 +929,14 @@ namespace ChessForge
                     return;
                 }
 
+                if (fileName == AppStateManager.WorkbookFilePath)
+                {
+                    MessageBox.Show(Path.GetFileName(fileName) + " is already open.", "Chess Forge File", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    return;
+                }
+
+                AppStateManager.RestartInIdleMode(false);
+
                 await Task.Run(() =>
                 {
                     BoardCommentBox.ReadingFile();
@@ -936,9 +944,9 @@ namespace ChessForge
 
                 System.Threading.Thread.Sleep(1000);
                 AppStateManager.WorkbookFilePath = fileName;
-                AppStateManager.UpdateAppTitleBar();
 
                 string workbookText = File.ReadAllText(fileName);
+                AppStateManager.UpdateAppTitleBar();
 
                 Workbook = new WorkbookTree();
                 BookmarkManager.ClearBookmarksGui();

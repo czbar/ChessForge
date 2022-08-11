@@ -55,6 +55,11 @@ namespace ChessForge
         /// <returns></returns>
         public Paragraph CreateParagraph(string style)
         {
+            //if (Configuration.DebugMode != 0)
+            //{
+            //    AppLog.Message("RTB: new paragraph of style" + style);
+            //}
+
             RichTextPara attrs = GetParaAttrs(style);
 
             Paragraph para = new Paragraph();
@@ -69,7 +74,7 @@ namespace ChessForge
 
         /// <summary>
         /// Create a paragraph for the specified style and sets
-        /// the passed text in it..
+        /// the passed text in it.
         /// </summary>
         /// <param name="style"></param>
         /// <returns></returns>
@@ -107,6 +112,31 @@ namespace ChessForge
 
             return para;
         }
+
+        /// <summary>
+        /// Removes empty paragraphs that get created when building the document.
+        /// </summary>
+        public void RemoveEmptyParagraphs()
+        {
+            List<Paragraph> parasToRemove = new List<Paragraph>();
+
+            foreach (var para in Document.Blocks)
+            {
+                if (para is Paragraph)
+                {
+                    if (((Paragraph)para).Inlines.Count == 0)
+                    {
+                        parasToRemove.Add((Paragraph)para);
+                    }
+                }
+            }
+
+            foreach (Paragraph para in parasToRemove)
+            {
+                Document.Blocks.Remove(para);
+            }
+        }
+
 
         /// <summary>
         /// Adds text to the referenced paragraph.
