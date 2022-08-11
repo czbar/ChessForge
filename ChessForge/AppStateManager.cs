@@ -174,8 +174,9 @@ namespace ChessForge
         /// Resets the relevant controls to bring the application
         /// into the IDLE mode after it was in another mode.
         /// </summary>
-        public static void RestartInIdleMode()
+        public static void RestartInIdleMode(bool updateCommentBox = true)
         {
+            BookmarkManager.ClearBookmarksGui();
             _mainWin.ActiveLine.Clear();
             _mainWin.UiRtbWorkbookView.Document.Blocks.Clear();
             _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
@@ -184,7 +185,10 @@ namespace ChessForge
             AppStateManager.SwapCommentBoxForEngineLines(false);
             AppStateManager.CurrentLearningMode = LearningMode.Mode.IDLE;
             AppStateManager.SetupGuiForCurrentStates();
-            _mainWin.BoardCommentBox.OpenFile();
+            if (updateCommentBox)
+            {
+                _mainWin.BoardCommentBox.OpenFile();
+            }
         }
 
         /// <summary>

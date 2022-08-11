@@ -929,6 +929,8 @@ namespace ChessForge
                     return;
                 }
 
+                AppStateManager.RestartInIdleMode(false);
+
                 await Task.Run(() =>
                 {
                     BoardCommentBox.ReadingFile();
@@ -936,9 +938,9 @@ namespace ChessForge
 
                 System.Threading.Thread.Sleep(1000);
                 AppStateManager.WorkbookFilePath = fileName;
-                AppStateManager.UpdateAppTitleBar();
 
                 string workbookText = File.ReadAllText(fileName);
+                AppStateManager.UpdateAppTitleBar();
 
                 Workbook = new WorkbookTree();
                 BookmarkManager.ClearBookmarksGui();
