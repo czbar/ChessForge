@@ -929,6 +929,12 @@ namespace ChessForge
                     return;
                 }
 
+                if (fileName == AppStateManager.WorkbookFilePath)
+                {
+                    MessageBox.Show(Path.GetFileName(fileName) + " is already open.", "Chess Forge File", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    return;
+                }
+
                 AppStateManager.RestartInIdleMode(false);
 
                 await Task.Run(() =>
