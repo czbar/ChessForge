@@ -84,6 +84,31 @@ namespace ChessForge
         /// <param name="e"></param>
         private void _btnOK_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            SaveAndClose();
+            WorkbookTitle = _tbTitle.Text;
+            this.Close();
+        }
+
+        /// <summary>
+        /// If the user presses the Enter key while the Title editor
+        /// is open (i.e. after the Training Side selection has been made)
+        /// consider it the same as clocking the OK button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Grid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && _tbTitle.Visibility == Visibility.Visible)
+            {
+                SaveAndClose();
+            }
+        }
+
+        /// <summary>
+        /// Set the Workbook title property and exit.
+        /// </summary>
+        private void SaveAndClose()
+        {
             WorkbookTitle = _tbTitle.Text;
             this.Close();
         }

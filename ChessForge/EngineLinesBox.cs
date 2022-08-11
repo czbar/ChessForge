@@ -4,10 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Timers;
 using System.Text;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using ChessForge;
 using ChessPosition;
 using GameTree;
 
@@ -18,7 +14,7 @@ namespace ChessForge
     /// i.e. displaying the dynamic lines, progrress bar and handling the
     /// stop request.
     /// </summary>
-    public class EngineEvaluationGUI
+    public class EngineLinesBox
     {
         // Text box showing engine lines during evaluation
         private TextBox _tbEvalLines;
@@ -43,7 +39,7 @@ namespace ChessForge
         /// <param name="textBox"></param>
         /// <param name="progBar"></param>
         /// <param name="evalState"></param>
-        public EngineEvaluationGUI(MainWindow mainWin, TextBox textBox, ProgressBar progBar, EvaluationState evalState)
+        public EngineLinesBox(MainWindow mainWin, TextBox textBox, ProgressBar progBar, EvaluationState evalState)
         {
             _mainWin = mainWin;
 

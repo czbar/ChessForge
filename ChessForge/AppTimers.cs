@@ -115,7 +115,7 @@ namespace ChessForge
         /// Constructs all application timers.
         /// </summary>
         /// <param name="gui"></param>
-        public AppTimers(EngineEvaluationGUI gui, MainWindow mainWin)
+        public AppTimers(EngineLinesBox gui, MainWindow mainWin)
         {
             _mainWin = mainWin;
 
@@ -238,7 +238,7 @@ namespace ChessForge
             return _dictStopwatches[sw].ElapsedMilliseconds;
         }
 
-        private void InitEvaluationLinesDisplayTimer(EngineEvaluationGUI gui)
+        private void InitEvaluationLinesDisplayTimer(EngineLinesBox gui)
         {
             _evaluationLinesDisplayTimer.Elapsed += new ElapsedEventHandler(gui.ShowEngineLines);
             _evaluationLinesDisplayTimer.Interval = 100;

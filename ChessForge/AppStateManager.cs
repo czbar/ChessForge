@@ -66,10 +66,6 @@ namespace ChessForge
             get => _workbookFilePath;
             set
             {
-                if (!string.IsNullOrEmpty(_workbookFilePath) && WorkbookFileType == FileType.CHF && IsDirty)
-                {
-                    SaveWorkbookFile();
-                }
                 _workbookFilePath = value;
                 if (Path.GetExtension(_workbookFilePath).ToLower() == ".chf")
                 {
@@ -82,6 +78,31 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Saves the converted Workbook, updates the title bar
+        /// and the list of recent files.
+        /// </summary>
+        /// <param name="pgnFileName"></param>
+        /// <param name="chfFileName"></param>
+        public static void SaveConvertedWorkbookFile(string pgnFileName, string chfFileName)
+        {
+            AppStateManager.WorkbookFilePath = chfFileName;
+            AppStateManager.SaveWorkbookFile();
+            UpdateAppTitleBar();
+            Configuration.RemoveFromRecentFiles(pgnFileName);
+            Configuration.AddRecentFile(chfFileName);
+            _mainWin.RecreateRecentFilesMenuItems();
+            Configuration.LastWorkbookFile = chfFileName;
+            Configuration.WriteOutConfiguration();
+        }
+
+        /// <summary>
+        /// Updates the application's title bar with the name of the open file.
+        /// </summary>
+        public static void UpdateAppTitleBar()
+        {
+            _mainWin.Title = _mainWin.APP_NAME + " - " + Path.GetFileName(WorkbookFilePath);
+        }
 
         /// <summary>
         /// Saves the workbook to a file.

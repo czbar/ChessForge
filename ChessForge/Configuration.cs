@@ -24,7 +24,7 @@ namespace ChessForge
         public static string LastOpenDirectory = "";
 
         /// <summary>
-        /// Last read PGN file.
+        /// Last read Workbook file.
         /// </summary>
         public static string LastWorkbookFile = "";
 
