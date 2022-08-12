@@ -99,6 +99,20 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Move a piece from one square to another.
+        /// Does not perform checks of any kind.
+        /// The caller must perform all such checks
+        /// </summary>
+        /// <param name="orig"></param>
+        /// <param name="dest"></param>
+        /// <param name="board"></param>
+        public static void MovePiece(SquareCoords orig, SquareCoords dest, ref byte[,] board)
+        {
+            board[dest.Xcoord, dest.Ycoord] = board[orig.Xcoord, orig.Ycoord];
+            board[orig.Xcoord, orig.Ycoord] = 0;
+        }
+
+        /// <summary>
         /// Finds the king of a given color on the board.
         /// Assumes there is only one king of a given color so exits as
         /// soon as found.
@@ -271,6 +285,20 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Converts xy coords encoded into a byte 
+        /// to a SquareCoords object.
+        /// </summary>
+        /// <param name="square"></param>
+        /// <returns></returns>
+        public static SquareCoords DecodeEnPassantSquare(byte square)
+        {
+            int x = square >> 4;
+            int y = square & 0x000F;
+
+            return new SquareCoords(x, y);
+        }
+
+        /// <summary>
         /// Checks if the position is legal in the sense of the King not being under attack.
         /// </summary>
         /// <param name="pos"></param>
@@ -284,6 +312,17 @@ namespace ChessPosition
                MoveUtils.ReverseColor(kingColorToCheck), ref pos, PieceType.None, true);
 
             return sa.Candidates.Count == 0;
+        }
+
+        /// <summary>
+        /// Returns true if King of the given color is in check.
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="kingColorToCheck"></param>
+        /// <returns></returns>
+        public static bool IsKingInCheck(BoardPosition pos, PieceColor kingColorToCheck)
+        {
+            return !IsKingSafe(pos, kingColorToCheck);
         }
 
         /// <summary>
@@ -420,6 +459,54 @@ namespace ChessPosition
                         }
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Checks if the piece defined by the passed
+        /// byte value describes an opposition piece i.e. a piece
+        /// of the color opposite to "our color".
+        /// </summary>
+        /// <param name="square"></param>
+        /// <returns></returns>
+        public static bool IsOppositionPiece(byte square, PieceColor ourColor)
+        {
+            if (square == 0)
+                return false;
+
+            if (((square & Constants.Color) != 0) && ourColor == PieceColor.White
+               ||
+               ((square & Constants.Color) == 0) && ourColor == PieceColor.Black)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks if the piece defined by the passed
+        /// byte value describes an opposition piece i.e. a piece
+        /// of the color opposite to "our color".
+        /// </summary>
+        /// <param name="square"></param>
+        /// <returns></returns>
+        public static bool IsOurPiece(byte square, PieceColor ourColor)
+        {
+            if (square == 0)
+                return false;
+
+            if (((square & Constants.Color) == 0) && ourColor == PieceColor.White
+               ||
+               ((square & Constants.Color) != 0) && ourColor == PieceColor.Black)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
