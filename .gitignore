@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 ChessPositionTest/TestData/CaroKann.pgn
+ChessPositionTest/TestData/Motivation.pgn
+ChessPositionTest/TestData/Motivation.chf
