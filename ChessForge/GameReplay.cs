@@ -233,7 +233,7 @@ namespace ChessForge
         private void RequestNodeAnimation(TreeNode nd)
         {
             _chessBoard.DisplayPosition(nd.Parent.Position);
-            _mainWin.MakeMove(nd.Position.LastMove);
+            _mainWin.RequestMoveAnimation(nd.Position.LastMove);
 
         }
     }
