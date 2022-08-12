@@ -139,7 +139,7 @@
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookGrid_PreviewMouseDown">
                     <Grid.ContextMenu>
                         <ContextMenu x:Name="UiCmnWorkbookRightClick">
-                            <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Bookmarks This Position" Click="_mnWorkbookSelectAsBookmark_Click" />
+                            <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Bookmark This Position" Click="_mnWorkbookSelectAsBookmark_Click" />
                             <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="Bookmark All Options Here" Click="_mnWorkbookBookmarkAlternatives_Click" />
                             <Separator />
                             <MenuItem x:Name="_mnWorkbookEvalMove" Header="Evaluate Move" />
