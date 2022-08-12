@@ -646,7 +646,7 @@ namespace ChessForge
         /// the board is flipped.
         /// </summary>
         /// <param name="move"></param>
-        public void MakeMove(MoveUI move)
+        public void RequestMoveAnimation(MoveUI move)
         {
             SquareCoords origin = MainChessBoard.FlipCoords(move.Origin);
             SquareCoords destination = MainChessBoard.FlipCoords(move.Destination);
