@@ -384,7 +384,7 @@ namespace ChessForge
                 return "";
             }
 
-            if (getBest)
+            if (getBest || EngineMessageProcessor.MoveCandidates[0].IsMateDetected)
             {
                 return EngineMessageProcessor.MoveCandidates[0].GetCandidateMove();
             }
