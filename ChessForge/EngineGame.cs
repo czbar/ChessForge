@@ -178,8 +178,8 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// This method will be invoked after the engine's move was processed,
-        /// or when we restart a game vs engine from an eralier move.
+        /// This method will be invoked after the user's move was processed,
+        /// or when we restart a game vs engine from an earlier move.
         /// </summary>
         /// <param name="nd"></param>
         private static void SwitchToAwaitEngineMove(TreeNode nd)
