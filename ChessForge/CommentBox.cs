@@ -10,6 +10,7 @@ using System.Windows.Media;
 using ChessForge;
 using ChessPosition;
 using GameTree;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ChessForge
 {
@@ -66,6 +67,7 @@ namespace ChessForge
             ["dummy"] = new RichTextPara(0, 16, 10, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
             ["bold_16"] = new RichTextPara(0, 0, 16, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
             ["bold_18"] = new RichTextPara(0, 5, 18, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
+            ["end_of_game"] = new RichTextPara(0, 5, 18, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),            
         };
 
         /// <summary>
@@ -214,6 +216,55 @@ namespace ChessForge
             AddNewParagraphToDoc("dummy", "");
             AddNewParagraphToDoc("bold_16", "The training session has started.");
             AddNewParagraphToDoc("normal_14", "Make your move and watch the comments in the Workbook view to the right of this chessboard.");
+        }
+
+        /// <summary>
+        /// Displays  a checkmate message.
+        /// </summary>
+        /// <param name="userMade"></param>
+        public void ReportCheckmate(bool userMade)
+        {
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                Document.Blocks.Clear();
+
+                Paragraph dummy = CreateParagraphWithText("dummy", "");
+                Document.Blocks.Add(dummy);
+
+                string txt;
+                if (userMade)
+                {
+                    txt = "You have checkmated the engine. Congratulations!";
+                }
+                else
+                {
+                    txt = "You have been checkmated by the engine. Better luck next time!";
+                }
+
+                Paragraph para = CreateParagraphWithText("end_of_game", txt);
+                Document.Blocks.Add(para);
+                para.Foreground = Brushes.Red;
+            });
+        }
+
+        /// <summary>
+        /// Displays a stalemate message.
+        /// </summary>
+        public void ReportStalemate()
+        {
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                Document.Blocks.Clear();
+
+                Paragraph dummy = CreateParagraphWithText("dummy", "");
+                Document.Blocks.Add(dummy);
+
+                string txt = "This is a stalemate! You have drawn the game.";
+
+                Paragraph para = CreateParagraphWithText("end_of_game", txt);
+                Document.Blocks.Add(para);
+                para.Foreground = Brushes.Red;
+            });
         }
 
         /// <summary>
