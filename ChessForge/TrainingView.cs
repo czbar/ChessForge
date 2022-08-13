@@ -726,9 +726,18 @@ namespace ChessForge
             string txt = "  ";
             if (_otherMovesInWorkbook.Count == 0)
             {
-                txt += "The move you made is the only move in the Workbook.";
-                Run r_only = new Run(txt);
-                para.Inlines.Add(r_only);
+                if (isWorkbookMove)
+                {
+                    txt += "The move you made is the only move in the Workbook.";
+                    Run r_only = new Run(txt);
+                    para.Inlines.Add(r_only);
+                }
+                else
+                {
+                    txt += "The Workbook line has ended. ";
+                    Run r_notWb = new Run(txt);
+                    para.Inlines.Add(r_notWb);
+                }
             }
             else
             {
