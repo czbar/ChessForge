@@ -364,3 +364,6 @@ FodyWeavers.xsd
 ChessPositionTest/TestData/CaroKann.pgn
 ChessPositionTest/TestData/Motivation.pgn
 ChessPositionTest/TestData/Motivation.chf
+ChessPositionTest/TestData/White Caro-Kann c5.pgn
+ChessPositionTest/TestData/Chess Forge Castle Test Study.chf
+ChessPositionTest/TestData/White Caro-Kann c5.chf
