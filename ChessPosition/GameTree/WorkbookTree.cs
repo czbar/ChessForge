@@ -175,7 +175,7 @@ namespace GameTree
             // bookmark children of the first fork
             if (fork.ColorToMove != TrainingSide)
             {
-                BookmarkChildren(fork, MAX_BOOKMARKS);
+                //BookmarkChildren(fork, MAX_BOOKMARKS);
             }
             else if (fork.Parent != null && fork.Parent.NodeId != 0)
             {
@@ -190,7 +190,7 @@ namespace GameTree
                 {
                     if (nextFork.ColorToMove != TrainingSide)
                     {
-                        BookmarkChildren(nextFork, MAX_BOOKMARKS);
+                        //BookmarkChildren(nextFork, MAX_BOOKMARKS);
                     }
                     else
                     {
