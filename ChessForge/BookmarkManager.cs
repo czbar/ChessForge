@@ -217,9 +217,9 @@ namespace ChessForge
         /// <summary>
         /// Removes all bookmarks.
         /// </summary>
-        public static void DeleteAllBookmarks()
+        public static void DeleteAllBookmarks(bool askUser = true)
         {
-            if (Bookmarks.Count > 0)
+            if (askUser && _mainWin.Workbook.Bookmarks.Count > 0)
             {
                 if (MessageBox.Show("This will delete all Bookmarks. Proceed?"
                     , "Training Bookmarks", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
@@ -307,7 +307,7 @@ namespace ChessForge
         /// </summary>
         public static void GenerateBookmarks()
         {
-            if (Bookmarks.Count > 0)
+            if (_mainWin.Workbook.Bookmarks.Count > 0)
             {
                 if (MessageBox.Show("Generated bookmarks will replace the ones in the Workbook. Proceed?"
                     , "Training Bookmarks", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
@@ -316,7 +316,7 @@ namespace ChessForge
                 }
             }
 
-            DeleteAllBookmarks();
+            DeleteAllBookmarks(false);
             _mainWin.Workbook.GenerateBookmarks();
             _mainWin.UiTabBookmarks.Focus();
             ShowBookmarks();
@@ -357,10 +357,10 @@ namespace ChessForge
                             menuItem.IsEnabled = isEnabled;
                             break;
                         case "_mnDeleteAllBookmarks":
-                            menuItem.IsEnabled = Bookmarks.Count > 0;
+                            menuItem.IsEnabled = _mainWin.Workbook.Bookmarks.Count > 0;
                             break;
                         case "_mnGenerateBookmark":
-                            menuItem.Visibility = Bookmarks.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+                            menuItem.Visibility = _mainWin.Workbook.Bookmarks.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
                             break;
                     }
                 }

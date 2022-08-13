@@ -306,7 +306,8 @@ namespace ChessForge
                 BuildMoveParagraph(_userMove, true);
                 BuildCommentParagraph(foundMove != null);
 
-                if (foundMove != null)
+                // if we found a move and this is not the last move in the Workbbook, request response.
+                if (foundMove != null && foundMove.Children.Count > 0)
                 {
                     // start the timer that will trigger a workbook response by RequestWorkbookResponse()
                     TrainingState.CurrentMode = TrainingState.Mode.AWAITING_WORKBOOK_RESPONSE;
@@ -316,6 +317,10 @@ namespace ChessForge
                 {
                     _paraCurrentEngineGame = AddNewParagraphToDoc(STYLE_ENGINE_GAME, "");
                     _paraCurrentEngineGame.Name = _par_game_moves_;
+                    if (foundMove != null)
+                    {
+                        _paraCurrentEngineGame.Inlines.Add(new Run("\nThe Worbook line has ended."));
+                    }
                     _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine has started. Wait for the engine\'s move...\n"));
                     _engineGameRootNode = _userMove;
                     // call RequestEngineResponse() directly so it invokes PlayEngine
@@ -324,6 +329,7 @@ namespace ChessForge
                     RequestEngineResponse();
                 }
             }
+            _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
         /// <summary>
@@ -433,6 +439,7 @@ namespace ChessForge
         public void EngineMoveMade()
         {
             AddMoveToEngineGamePara(EngineGame.GetCurrentNode());
+            _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
         /// <summary>
@@ -442,6 +449,7 @@ namespace ChessForge
         public void UserMoveMade()
         {
             AddMoveToEngineGamePara(EngineGame.GetCurrentNode());
+            _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
         /// <summary>
@@ -633,7 +641,7 @@ namespace ChessForge
             Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true) + " ", runName, Brushes.Black);
             para.Inlines.Add(r);
 
-            r.BringIntoView();
+            _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
         /// <summary>
@@ -706,6 +714,7 @@ namespace ChessForge
 
             Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
             _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc("second_prompt", "\n   Your turn...");
+            _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
         /// <summary>
@@ -726,9 +735,18 @@ namespace ChessForge
             string txt = "  ";
             if (_otherMovesInWorkbook.Count == 0)
             {
-                txt += "The move you made is the only move in the Workbook.";
-                Run r_only = new Run(txt);
-                para.Inlines.Add(r_only);
+                if (isWorkbookMove)
+                {
+                    txt += "The move you made is the only move in the Workbook.";
+                    Run r_only = new Run(txt);
+                    para.Inlines.Add(r_only);
+                }
+                else
+                {
+                    txt += "The Workbook line has ended. ";
+                    Run r_notWb = new Run(txt);
+                    para.Inlines.Add(r_notWb);
+                }
             }
             else
             {
@@ -754,7 +772,6 @@ namespace ChessForge
                     }
                     Run r_wb = new Run(txt);
                     para.Inlines.Add(r_wb);
-                    r_wb.BringIntoView();
                 }
                 else
                 {
@@ -768,11 +785,11 @@ namespace ChessForge
                     }
                     Run r_wb = new Run(txt);
                     para.Inlines.Add(r_wb);
-                    r_wb.BringIntoView();
                 }
 
                 BuildOtherWorkbookMovesRun(para);
             }
+            _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
         /// <summary>
@@ -787,7 +804,6 @@ namespace ChessForge
                 para.Inlines.Add(CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true) + " ", _run_wb_move_ + nd.NodeId.ToString(), Brushes.Green));
                 Run r_semi = new Run("; ");
                 para.Inlines.Add(r_semi);
-                r_semi.BringIntoView();
             }
         }
 
@@ -810,8 +826,6 @@ namespace ChessForge
             r.MouseDown += EventRunClicked;
             r.MouseMove += EventRunMoveOver;
             r.Cursor = Cursors.Hand;
-
-            r.BringIntoView();
 
             return r;
         }

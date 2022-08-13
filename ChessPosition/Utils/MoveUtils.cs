@@ -311,6 +311,7 @@ namespace ChessPosition
                 }
             }
 
+            move.PromoteToPiece = promoteToPiece;
             MakeMove(pos, move);
             pos.EnPassantSquare = 0;
             PositionUtils.SetEnpassantSquare(ref pos, move);
@@ -414,7 +415,7 @@ namespace ChessPosition
             //TODO implement check and mate signalling too
             char pieceChar = FenParser.PieceToFenChar[piece];
             string alg = (piece != PieceType.Pawn ? pieceChar.ToString() : "") + disambPrefix + (isCapture ? "x" : "")
-                + engDest + (promoteTo == PieceType.None ? "" : (FenParser.PieceToFenChar[promoteTo]).ToString());
+                + engDest + (promoteTo == PieceType.None ? "" : ("=" + (FenParser.PieceToFenChar[promoteTo]).ToString()));
             return alg;
         }
 

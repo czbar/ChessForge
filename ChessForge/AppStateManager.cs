@@ -46,6 +46,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// A utility that may prove useful one day.
+        /// </summary>
+        public static void DoEvents()
+        {
+            Application.Current.Dispatcher.Invoke(
+                System.Windows.Threading.DispatcherPriority.Background,
+                new Action(delegate { }));
+        }
+
+        /// <summary>
         /// Indicates whether there are any unsaved changes in the Workbook
         /// </summary>
         public static bool IsDirty;
@@ -86,8 +96,8 @@ namespace ChessForge
         /// <param name="chfFileName"></param>
         public static void SaveConvertedWorkbookFile(string pgnFileName, string chfFileName)
         {
-            AppStateManager.WorkbookFilePath = chfFileName;
-            AppStateManager.SaveWorkbookFile();
+            WorkbookFilePath = chfFileName;
+            SaveWorkbookFile();
             UpdateAppTitleBar();
             Configuration.RemoveFromRecentFiles(pgnFileName);
             Configuration.AddRecentFile(chfFileName);
