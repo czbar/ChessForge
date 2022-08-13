@@ -775,10 +775,37 @@ namespace ChessForge
         private void BuildSecondPromptParagraph()
         {
             TreeNode nd = EngineGame.GetCurrentNode();
-            BuildMoveParagraph(nd, false);
 
-            Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
-            _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc("second_prompt", "\n   Your turn...");
+            bool isMateCf = PositionUtils.IsCheckmate(nd.Position);
+            bool isMateEng = nd.LastMoveAlgebraicNotation[nd.LastMoveAlgebraicNotation.Length - 1] == '#';
+            if (isMateCf != isMateEng)
+            {
+                throw new Exception("Checkmate detection conflict: " + (isMateCf ? "ChessForge alone says checkmate" : "StockFish alone says checkmate"));
+            }
+
+            bool isStalemate = false;
+            if (!isMateCf)
+            {
+                isStalemate = PositionUtils.IsStalemate(nd.Position);
+            }
+
+            if (isMateEng)
+            {
+                BuildCheckmateParagraph(nd, false);
+                Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+            }
+            else if (isStalemate)
+            {
+                BuildStalemateParagraph(nd);
+                Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+            }
+            else
+            {
+                BuildMoveParagraph(nd, false);
+
+                Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+                _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc("second_prompt", "\n   Your turn...");
+            }
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
