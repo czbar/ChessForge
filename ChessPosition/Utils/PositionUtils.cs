@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChessPosition.Utils;
 using GameTree;
 
 namespace ChessPosition
@@ -308,7 +309,7 @@ namespace ChessPosition
         {
             SquareCoords square = GetKingPosition(ref pos, kingColorToCheck);
             // we are looking for king's attacker so change the color to the opposite of the king
-            PiecesTargetingSquare sa = new PiecesTargetingSquare((byte)square.Xcoord, (byte)square.Ycoord, -1, -1, 
+            PiecesTargetingSquare sa = new PiecesTargetingSquare((byte)square.Xcoord, (byte)square.Ycoord, -1, -1,
                MoveUtils.ReverseColor(kingColorToCheck), ref pos, PieceType.None, true);
 
             return sa.Candidates.Count == 0;
@@ -323,6 +324,44 @@ namespace ChessPosition
         public static bool IsKingInCheck(BoardPosition pos, PieceColor kingColorToCheck)
         {
             return !IsKingSafe(pos, kingColorToCheck);
+        }
+
+        /// <summary>
+        /// Determines if the passed position is checkmate.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsCheckmate(BoardPosition pos)
+        {
+            // we are checking of the ColorToMove side is checkmates
+            if (IsKingInCheck(pos, pos.ColorToMove))
+            {
+                var lst = PieceMoves.GetLegalMoves(pos.ColorToMove, pos, true);
+                if (lst.Count == 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Determines if the passed position is stalemate.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsStalemate(BoardPosition pos)
+        {
+            // we are checking of the ColorToMove side is checkmates
+            if (!IsKingInCheck(pos, pos.ColorToMove))
+            {
+                var lst = PieceMoves.GetLegalMoves(pos.ColorToMove, pos, true);
+                if (lst.Count == 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -472,7 +511,7 @@ namespace ChessPosition
         /// </summary>
         /// <param name="square"></param>
         /// <returns></returns>
-        public static bool IsOppositionPiece(byte square, PieceColor ourColor)
+        public static bool IsOurPiece(byte square, PieceColor ourColor)
         {
             if (square == 0)
                 return false;
@@ -496,7 +535,7 @@ namespace ChessPosition
         /// </summary>
         /// <param name="square"></param>
         /// <returns></returns>
-        public static bool IsOurPiece(byte square, PieceColor ourColor)
+        public static bool IsOppositionPiece(byte square, PieceColor ourColor)
         {
             if (square == 0)
                 return false;
