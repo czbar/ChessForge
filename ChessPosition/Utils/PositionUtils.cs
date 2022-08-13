@@ -326,7 +326,7 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// For castling to be legal, the king's origin, target, and the square betwee, cannot be attacked
+        /// For castling to be legal, the king's origin, target, and the square between, cannot be attacked
         /// and all the squares between the king and the rook must be empty.
         /// </summary>
         /// <param name="castlingType"></param>
@@ -335,6 +335,9 @@ namespace ChessPosition
         /// <returns></returns>
         public static bool IsCastlingLegal(byte castlingType, PieceColor col, BoardPosition pos)
         {
+            if ((pos.DynamicProperties & castlingType) == 0)
+                return false;
+
             // check that relevant squares are not under attack
             List<SquareCoords> squaresToCheck = new List<SquareCoords>();
 
