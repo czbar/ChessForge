@@ -21,7 +21,7 @@ namespace ChessPosition.Utils
         /// <param name="position"></param>
         /// <param name="stopAtFirstLegal"></param>
         /// <returns></returns>
-        public static List<MoveOrigDest> GetLegalMoves(SquareCoords sq, PieceColor color, BoardPosition position, bool stopAtFirstLegal)
+        public static List<MoveOrigDest> GetLegalMoves(PieceColor color, BoardPosition position, bool stopAtFirstLegal)
         {
             List<MoveOrigDest> moves = new List<MoveOrigDest>();
 
@@ -31,6 +31,7 @@ namespace ChessPosition.Utils
                 {
                     if (PositionUtils.GetPieceColor(position.Board[x, y]) == color)
                     {
+                        SquareCoords sq = new SquareCoords(x, y);
                         PieceType pieceType = PositionUtils.GetPieceType(position.Board[x, y]);
                         switch (pieceType)
                         {
@@ -55,7 +56,7 @@ namespace ChessPosition.Utils
                         }
 
                         if (moves.Count > 0 && stopAtFirstLegal)
-                            break;
+                            return moves;
                     }
                 }
             }
@@ -66,48 +67,48 @@ namespace ChessPosition.Utils
         /// <summary>
         /// For rooks, we need to check 4 directions: horizontal left and right, vertical up and down.
         /// </summary>
-        /// <param name="sq"></param>
+        /// <param name="orig"></param>
         /// <param name="color"></param>
         /// <param name="position"></param>
         /// <param name="stopAtFirstLegal"></param>
         /// <param name="moves"></param>
         /// <returns></returns>
-        public static void GetLegalRookMoves(SquareCoords sq, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
+        public static void GetLegalRookMoves(SquareCoords orig, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
         {
-            GetLegalRookSingleDirectionMoves(0, 1, sq, color, position, stopAtFirstLegal, ref moves);
+            GetLegalRookSingleDirectionMoves(0, 1, orig, color, position, stopAtFirstLegal, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
 
-            GetLegalRookSingleDirectionMoves(1, 0, sq, color, position, stopAtFirstLegal, ref moves);
+            GetLegalRookSingleDirectionMoves(1, 0, orig, color, position, stopAtFirstLegal, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
 
-            GetLegalRookSingleDirectionMoves(0, -1, sq, color, position, stopAtFirstLegal, ref moves);
+            GetLegalRookSingleDirectionMoves(0, -1, orig, color, position, stopAtFirstLegal, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
 
-            GetLegalRookSingleDirectionMoves(-1, 0, sq, color, position, stopAtFirstLegal, ref moves);
+            GetLegalRookSingleDirectionMoves(-1, 0, orig, color, position, stopAtFirstLegal, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
         }
 
         /// <summary>
         /// For bishops we need to check diagonals. 
         /// </summary>
-        /// <param name="sq"></param>
+        /// <param name="orig"></param>
         /// <param name="color"></param>
         /// <param name="position"></param>
         /// <param name="stopAtFirstLegal"></param>
         /// <param name="moves"></param>
         /// <returns></returns>
-        public static void GetLegalBishopMoves(SquareCoords sq, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
+        public static void GetLegalBishopMoves(SquareCoords orig, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
         {
-            GetLegalBishopSingleDirectionMoves(1, 1, sq, color, position, stopAtFirstLegal, ref moves);
+            GetLegalBishopSingleDirectionMoves(1, 1, orig, color, position, stopAtFirstLegal, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
 
-            GetLegalBishopSingleDirectionMoves(1, -1, sq, color, position, stopAtFirstLegal, ref moves);
+            GetLegalBishopSingleDirectionMoves(1, -1, orig, color, position, stopAtFirstLegal, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
 
-            GetLegalBishopSingleDirectionMoves(-1, 1, sq, color, position, stopAtFirstLegal, ref moves);
+            GetLegalBishopSingleDirectionMoves(-1, 1, orig, color, position, stopAtFirstLegal, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
 
-            GetLegalBishopSingleDirectionMoves(-1, -1, sq, color, position, stopAtFirstLegal, ref moves);
+            GetLegalBishopSingleDirectionMoves(-1, -1, orig, color, position, stopAtFirstLegal, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
         }
 
@@ -115,19 +116,19 @@ namespace ChessPosition.Utils
         /// For queens, we simply check the combination of Rook and Bishop moves
         /// which constitutes a set of Queen moves.
         /// </summary>
-        /// <param name="sq"></param>
+        /// <param name="orig"></param>
         /// <param name="color"></param>
         /// <param name="position"></param>
         /// <param name="stopAtFirstLegal"></param>
         /// <param name="moves"></param>
         /// <returns></returns>
-        public static void GetLegalQueenMoves(SquareCoords sq, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
+        public static void GetLegalQueenMoves(SquareCoords orig, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
         {
-            GetLegalRookMoves(sq, color, position, stopAtFirstLegal, ref moves);
+            GetLegalRookMoves(orig, color, position, stopAtFirstLegal, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal)
                 return;
 
-            GetLegalBishopMoves(sq, color, position, stopAtFirstLegal, ref moves);
+            GetLegalBishopMoves(orig, color, position, stopAtFirstLegal, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal)
                 return;
         }
@@ -136,36 +137,36 @@ namespace ChessPosition.Utils
         /// <summary>
         /// For knights we need to check all 8 possible jumps. 
         /// </summary>
-        /// <param name="sq"></param>
+        /// <param name="orig"></param>
         /// <param name="color"></param>
         /// <param name="position"></param>
         /// <param name="stopAtFirstLegal"></param>
         /// <param name="moves"></param>
         /// <returns></returns>
-        public static void GetLegalKnightMoves(SquareCoords sq, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
+        public static void GetLegalKnightMoves(SquareCoords orig, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
         {
-            GetLegalKnightSingleDirectionMoves(2, 1, sq, color, position, ref moves);
+            GetLegalKnightSingleDirectionMoves(2, 1, orig, color, position, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
 
-            GetLegalKnightSingleDirectionMoves(2, -1, sq, color, position, ref moves);
+            GetLegalKnightSingleDirectionMoves(2, -1, orig, color, position, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
 
-            GetLegalKnightSingleDirectionMoves(-2, 1, sq, color, position, ref moves);
+            GetLegalKnightSingleDirectionMoves(-2, 1, orig, color, position, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
 
-            GetLegalKnightSingleDirectionMoves(-2, -1, sq, color, position, ref moves);
+            GetLegalKnightSingleDirectionMoves(-2, -1, orig, color, position, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
 
-            GetLegalKnightSingleDirectionMoves(1, 2, sq, color, position, ref moves);
+            GetLegalKnightSingleDirectionMoves(1, 2, orig, color, position, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
 
-            GetLegalKnightSingleDirectionMoves(1, -2, sq, color, position, ref moves);
+            GetLegalKnightSingleDirectionMoves(1, -2, orig, color, position, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
 
-            GetLegalKnightSingleDirectionMoves(-1, 2, sq, color, position, ref moves);
+            GetLegalKnightSingleDirectionMoves(-1, 2, orig, color, position, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
 
-            GetLegalKnightSingleDirectionMoves(-1, -2, sq, color, position, ref moves);
+            GetLegalKnightSingleDirectionMoves(-1, -2, orig, color, position, ref moves);
             if (moves.Count > 0 && stopAtFirstLegal) return;
 
         }
@@ -174,42 +175,39 @@ namespace ChessPosition.Utils
         /// For kings we check for possible moves to neighbouring squares
         /// and also any legal castling.
         /// </summary>
-        /// <param name="sq"></param>
+        /// <param name="orig"></param>
         /// <param name="color"></param>
         /// <param name="position"></param>
         /// <param name="stopAtFirstLegal"></param>
         /// <param name="moves"></param>
-        public static void GetLegalKingMoves(SquareCoords sq, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
+        public static void GetLegalKingMoves(SquareCoords orig, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
         {
             for (int i = -1; i <= 1; i++)
             {
                 for (int j = -1; j <= 1; j++)
                 {
-                    int x = sq.Xcoord + i;
-                    int y = sq.Ycoord + j;
-                    byte square = position.Board[x, y];
+                    int x = orig.Xcoord + i;
+                    int y = orig.Ycoord + j;
                     if (PositionUtils.AreValidCoordinates(x, y))
                     {
+                        byte square = position.Board[x, y];
                         SquareCoords dest = new SquareCoords(x, y);
-                        if (PositionUtils.IsOppositionPiece(square, color))
+                        if (!PositionUtils.IsOurPiece(square, color))
                         {
+                            // a legal move is a possiblity
                             BoardPosition positionAfterMove = new BoardPosition(position.Board);
-                            PositionUtils.MovePiece(sq, dest, ref positionAfterMove.Board);
+                            PositionUtils.MovePiece(orig, dest, ref positionAfterMove.Board);
                             if (PositionUtils.IsKingSafe(positionAfterMove, color))
                             {
-                                moves.Add(new MoveOrigDest(sq, dest));
-                                break;
+                                moves.Add(new MoveOrigDest(orig, dest));
+                                if (stopAtFirstLegal)
+                                    break;
                             }
                         }
-                        else if (square == 0)
-                        {
-                            moves.Add(new MoveOrigDest(sq, new SquareCoords(x, y)));
-                            if (stopAtFirstLegal)
-                                break;
-                        }
                     }
+                    if (moves.Count > 0 && stopAtFirstLegal)
+                        break;
                 }
-
                 if (moves.Count > 0 && stopAtFirstLegal)
                     break;
             }
@@ -219,29 +217,29 @@ namespace ChessPosition.Utils
             {
                 if (color == PieceColor.White)
                 {
-                    if (sq.Xcoord == 4 && sq.Ycoord == 0)
+                    if (orig.Xcoord == 4 && orig.Ycoord == 0)
                     {
                         if ((position.DynamicProperties & Constants.WhiteKingsideCastle) != 0 && PositionUtils.IsCastlingLegal(Constants.WhiteKingsideCastle, color, position))
                         {
-                            moves.Add(new MoveOrigDest(sq, new SquareCoords(6, 0)));
+                            moves.Add(new MoveOrigDest(orig, new SquareCoords(6, 0)));
                         }
                         if ((position.DynamicProperties & Constants.WhiteQueensideCastle) != 0 && PositionUtils.IsCastlingLegal(Constants.WhiteQueensideCastle, color, position))
                         {
-                            moves.Add(new MoveOrigDest(sq, new SquareCoords(2, 0)));
+                            moves.Add(new MoveOrigDest(orig, new SquareCoords(2, 0)));
                         }
                     }
                 }
                 else
                 {
-                    if (sq.Xcoord == 4 && sq.Ycoord == 7)
+                    if (orig.Xcoord == 4 && orig.Ycoord == 7)
                     {
                         if ((position.DynamicProperties & Constants.BlackKingsideCastle) != 0 && PositionUtils.IsCastlingLegal(Constants.BlackKingsideCastle, color, position))
                         {
-                            moves.Add(new MoveOrigDest(sq, new SquareCoords(6, 7)));
+                            moves.Add(new MoveOrigDest(orig, new SquareCoords(6, 7)));
                         }
                         if ((position.DynamicProperties & Constants.BlackQueensideCastle) != 0 && PositionUtils.IsCastlingLegal(Constants.BlackQueensideCastle, color, position))
                         {
-                            moves.Add(new MoveOrigDest(sq, new SquareCoords(2, 7)));
+                            moves.Add(new MoveOrigDest(orig, new SquareCoords(2, 7)));
                         }
                     }
                 }
@@ -253,56 +251,56 @@ namespace ChessPosition.Utils
         /// by 1 square ahead, 2 squares ahead from the original square,
         /// captures and capture en passant.
         /// </summary>
-        /// <param name="sq"></param>
+        /// <param name="orig"></param>
         /// <param name="color"></param>
         /// <param name="position"></param>
         /// <param name="stopAtFirstLegal"></param>
         /// <param name="moves"></param>
-        public static void GetLegalPawnMoves(SquareCoords sq, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
+        public static void GetLegalPawnMoves(SquareCoords orig, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
         {
             int inc = color == PieceColor.White ? 1 : -1;
 
             // one square ahead
-            int x = sq.Xcoord;
-            int y = sq.Ycoord + inc;
+            int x = orig.Xcoord;
+            int y = orig.Ycoord + inc;
             if (PositionUtils.AreValidCoordinates(x, y))
             {
                 SquareCoords dest = new SquareCoords(x, y);
                 if (position.Board[x, y] == 0)
                 {
-                    bool res = AddMoveIfValid(sq, dest, color, position, ref moves);
+                    bool res = AddMoveIfValid(orig, dest, color, position, ref moves);
                     if (res && stopAtFirstLegal)
                     {
                         return;
                     }
-                }
-            }
 
-            // two squares ahead
-            x = sq.Xcoord;
-            y = sq.Ycoord + 2 * inc;
-            if (PositionUtils.AreValidCoordinates(x, y))
-            {
-                SquareCoords dest = new SquareCoords(x, y);
-                if (position.Board[x, y] == 0)
-                {
-                    bool res = AddMoveIfValid(sq, dest, color, position, ref moves);
-                    if (res && stopAtFirstLegal)
+                    // check 2 squares ahead now that we know the square ahead is empty
+                    x = orig.Xcoord;
+                    y = orig.Ycoord + 2 * inc;
+                    if (PositionUtils.AreValidCoordinates(x, y))
                     {
-                        return;
+                        dest = new SquareCoords(x, y);
+                        if (position.Board[x, y] == 0)
+                        {
+                            res = AddMoveIfValid(orig, dest, color, position, ref moves);
+                            if (res && stopAtFirstLegal)
+                            {
+                                return;
+                            }
+                        }
                     }
                 }
             }
 
             // capture left
-            x = sq.Xcoord - 1;
-            y = sq.Ycoord + inc;
+            x = orig.Xcoord - 1;
+            y = orig.Ycoord + inc;
             if (PositionUtils.AreValidCoordinates(x, y))
             {
                 SquareCoords dest = new SquareCoords(x, y);
                 if (PositionUtils.IsOppositionPiece(position.Board[x, y], color))
                 {
-                    bool res = AddMoveIfValid(sq, dest, color, position, ref moves);
+                    bool res = AddMoveIfValid(orig, dest, color, position, ref moves);
                     if (res && stopAtFirstLegal)
                     {
                         return;
@@ -311,14 +309,14 @@ namespace ChessPosition.Utils
             }
 
             // capture right
-            x = sq.Xcoord + 1;
-            y = sq.Ycoord + inc;
+            x = orig.Xcoord + 1;
+            y = orig.Ycoord + inc;
             if (PositionUtils.AreValidCoordinates(x, y))
             {
                 SquareCoords dest = new SquareCoords(x, y);
                 if (PositionUtils.IsOppositionPiece(position.Board[x, y], color))
                 {
-                    bool res = AddMoveIfValid(sq, dest, color, position, ref moves);
+                    bool res = AddMoveIfValid(orig, dest, color, position, ref moves);
                     if (res && stopAtFirstLegal)
                     {
                         return;
@@ -330,9 +328,9 @@ namespace ChessPosition.Utils
             if (position.InheritedEnPassantSquare != 0)
             {
                 SquareCoords ep = PositionUtils.DecodeEnPassantSquare(position.InheritedEnPassantSquare);
-                if ((sq.Xcoord == ep.Xcoord + 1 || sq.Xcoord == ep.Xcoord - 1) && sq.Ycoord + inc == ep.Ycoord)
+                if ((orig.Xcoord == ep.Xcoord + 1 || orig.Xcoord == ep.Xcoord - 1) && orig.Ycoord + inc == ep.Ycoord)
                 {
-                    bool res = AddMoveIfValid(sq, ep, color, position, ref moves);
+                    bool res = AddMoveIfValid(orig, ep, color, position, ref moves);
                     if (res && stopAtFirstLegal)
                     {
                         return;
@@ -348,43 +346,43 @@ namespace ChessPosition.Utils
         /// </summary>
         /// <param name="xIncr"></param>
         /// <param name="yIncr"></param>
-        /// <param name="sq"></param>
+        /// <param name="orig"></param>
         /// <param name="color"></param>
         /// <param name="position"></param>
         /// <param name="stopAtFirstLegal"></param>
         /// <param name="moves"></param>
-        private static void GetLegalRookSingleDirectionMoves(int xIncr, int yIncr, SquareCoords sq, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
+        private static void GetLegalRookSingleDirectionMoves(int xIncr, int yIncr, SquareCoords orig, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
         {
-            int x = sq.Xcoord + xIncr;
-            int y = sq.Ycoord + yIncr;
+            int x = orig.Xcoord + xIncr;
+            int y = orig.Ycoord + yIncr;
 
             while (PositionUtils.AreValidCoordinates(x, y))
             {
                 byte square = position.Board[x, y];
                 SquareCoords dest = new SquareCoords(x, y);
-                if (PositionUtils.IsOppositionPiece(square, color))
+                if (!PositionUtils.IsOurPiece(square, color))
                 {
+                    // a legal move is a possibility
                     BoardPosition positionAfterMove = new BoardPosition(position.Board);
-                    PositionUtils.MovePiece(sq, dest, ref positionAfterMove.Board);
+                    PositionUtils.MovePiece(orig, dest, ref positionAfterMove.Board);
                     if (PositionUtils.IsKingSafe(positionAfterMove, color))
                     {
-                        moves.Add(new MoveOrigDest(sq, dest));
-                        break;
+                        moves.Add(new MoveOrigDest(orig, dest));
+                        if (square != 0)
+                        {
+                            // there is a piece here  so the rest of the rank/file is blocked
+                            break;
+                        }
                     }
-                }
-                else if (PositionUtils.IsOurPiece(square, color))
-                {
-                    break;
                 }
                 else
                 {
-                    moves.Add(new MoveOrigDest(sq, new SquareCoords(x, y)));
-                    if (stopAtFirstLegal)
-                        break;
+                    // we hit our piece so the rest of the rank/file is blocked
+                    break;
                 }
 
-                x = sq.Xcoord + xIncr;
-                y = sq.Ycoord + yIncr;
+                x += xIncr;
+                y += yIncr;
             }
         }
 
@@ -393,43 +391,43 @@ namespace ChessPosition.Utils
         /// </summary>
         /// <param name="xIncr"></param>
         /// <param name="yIncr"></param>
-        /// <param name="sq"></param>
+        /// <param name="orig"></param>
         /// <param name="color"></param>
         /// <param name="position"></param>
         /// <param name="stopAtFirstLegal"></param>
         /// <param name="moves"></param>
-        private static void GetLegalBishopSingleDirectionMoves(int xIncr, int yIncr, SquareCoords sq, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
+        private static void GetLegalBishopSingleDirectionMoves(int xIncr, int yIncr, SquareCoords orig, PieceColor color, BoardPosition position, bool stopAtFirstLegal, ref List<MoveOrigDest> moves)
         {
-            int x = sq.Xcoord + xIncr;
-            int y = sq.Ycoord + yIncr;
+            int x = orig.Xcoord + xIncr;
+            int y = orig.Ycoord + yIncr;
 
             while (PositionUtils.AreValidCoordinates(x, y))
             {
                 byte square = position.Board[x, y];
                 SquareCoords dest = new SquareCoords(x, y);
-                if (PositionUtils.IsOppositionPiece(square, color))
+                if (!PositionUtils.IsOurPiece(square, color))
                 {
+                    // a legal move is a possibility
                     BoardPosition positionAfterMove = new BoardPosition(position.Board);
-                    PositionUtils.MovePiece(sq, dest, ref positionAfterMove.Board);
+                    PositionUtils.MovePiece(orig, dest, ref positionAfterMove.Board);
                     if (PositionUtils.IsKingSafe(positionAfterMove, color))
                     {
-                        moves.Add(new MoveOrigDest(sq, dest));
-                        break;
+                        moves.Add(new MoveOrigDest(orig, dest));
+                        if (square != 0)
+                        {
+                            // there is a piece here  so the rest of the diagonal is blocked
+                            break;
+                        }
                     }
-                }
-                else if (PositionUtils.IsOurPiece(square, color))
-                {
-                    break;
                 }
                 else
                 {
-                    moves.Add(new MoveOrigDest(sq, new SquareCoords(x, y)));
-                    if (stopAtFirstLegal)
-                        break;
+                    // this is our piece so the rest of the diagonal is blocked
+                    break;
                 }
 
-                x = sq.Xcoord + xIncr;
-                y = sq.Ycoord + yIncr;
+                x += xIncr;
+                y += yIncr;
             }
         }
 
@@ -438,34 +436,28 @@ namespace ChessPosition.Utils
         /// </summary>
         /// <param name="xIncr"></param>
         /// <param name="yIncr"></param>
-        /// <param name="sq"></param>
+        /// <param name="orig"></param>
         /// <param name="color"></param>
         /// <param name="position"></param>
         /// <param name="moves"></param>
-        private static void GetLegalKnightSingleDirectionMoves(int xIncr, int yIncr, SquareCoords sq, PieceColor color, BoardPosition position, ref List<MoveOrigDest> moves)
+        private static void GetLegalKnightSingleDirectionMoves(int xIncr, int yIncr, SquareCoords orig, PieceColor color, BoardPosition position, ref List<MoveOrigDest> moves)
         {
-            int x = sq.Xcoord + xIncr;
-            int y = sq.Ycoord + yIncr;
+            int x = orig.Xcoord + xIncr;
+            int y = orig.Ycoord + yIncr;
 
             if (PositionUtils.AreValidCoordinates(x, y))
             {
                 byte square = position.Board[x, y];
                 SquareCoords dest = new SquareCoords(x, y);
-                if (PositionUtils.IsOppositionPiece(square, color))
+                if (!PositionUtils.IsOurPiece(square, color))
                 {
+                    // a legal move is a possibility
                     BoardPosition positionAfterMove = new BoardPosition(position.Board);
-                    PositionUtils.MovePiece(sq, dest, ref positionAfterMove.Board);
+                    PositionUtils.MovePiece(orig, dest, ref positionAfterMove.Board);
                     if (PositionUtils.IsKingSafe(positionAfterMove, color))
                     {
-                        moves.Add(new MoveOrigDest(sq, dest));
+                        moves.Add(new MoveOrigDest(orig, dest));
                     }
-                }
-                else if (PositionUtils.IsOurPiece(square, color))
-                {
-                }
-                else
-                {
-                    moves.Add(new MoveOrigDest(sq, new SquareCoords(x, y)));
                 }
             }
         }
