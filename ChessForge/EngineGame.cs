@@ -125,7 +125,7 @@ namespace ChessForge
 
         /// <summary>
         /// Processes a move made manually by the user on the board.
-        /// This could be in any App Mode i.e. during a game against thje engine in
+        /// This could be in any App Mode i.e. during a game against the engine in
         /// Manual Review or Game Play mode, or in Training responding to "coach's" move.
         /// Sets appropriate flags so that ProcessUserGameMoveEvent will determine
         /// what actions to take when its associated timer picks it up.
@@ -263,6 +263,11 @@ namespace ChessForge
             BoardPosition pos = new BoardPosition(curr.Position);
 
             TreeNode nd = new TreeNode(curr, "", _mainWin.Workbook.GetNewNodeId());
+            // preserve InheritedEnPassent and Dynamic Properities
+            pos.InheritedEnPassantSquare = nd.Position.InheritedEnPassantSquare;
+            pos.DynamicProperties = nd.Position.DynamicProperties;
+            pos.EnPassantSquare = 0;
+
             nd.Position = pos;
 
             return nd;
