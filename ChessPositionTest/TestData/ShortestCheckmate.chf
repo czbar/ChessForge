@@ -1,0 +1,6 @@
+[Title "Shortest Checkmate"]
+[TrainingSide "black"]
+[White "Chess Forge"]
+[Black "Workbook File"]
+
+1. g4 e5 2. f3 {[%chf-bkm]}  Qh4# *
