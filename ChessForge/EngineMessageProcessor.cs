@@ -205,9 +205,33 @@ namespace ChessForge
             // (the app will wait for the user's move)
             _mainWin.DisplayPosition(pos);
             _mainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
-            EngineGame.CurrentState = EngineGame.GameState.USER_THINKING;
-            _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-            _mainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
+
+            // check for mate and stalemate
+            bool isMateCf = PositionUtils.IsCheckmate(nd.Position);
+            bool isStalemate = false;
+            if (!isMateCf)
+            {
+                isStalemate = PositionUtils.IsStalemate(nd.Position);
+            }
+
+            if (isMateCf)
+            {
+                EngineGame.CurrentState = EngineGame.GameState.IDLE;
+                _mainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
+                _mainWin.BoardCommentBox.ReportCheckmate(false);
+            }
+            else if (isStalemate)
+            {
+                EngineGame.CurrentState = EngineGame.GameState.IDLE;
+                _mainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
+                _mainWin.BoardCommentBox.ReportStalemate();
+            }
+            else
+            {
+                EngineGame.CurrentState = EngineGame.GameState.USER_THINKING;
+                _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+                _mainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
+            }
         }
 
         /// <summary>
