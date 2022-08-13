@@ -125,7 +125,7 @@ namespace ChessForge
 
         /// <summary>
         /// Processes a move made manually by the user on the board.
-        /// This could be in any App Mode i.e. during a game against thje engine in
+        /// This could be in any App Mode i.e. during a game against the engine in
         /// Manual Review or Game Play mode, or in Training responding to "coach's" move.
         /// Sets appropriate flags so that ProcessUserGameMoveEvent will determine
         /// what actions to take when its associated timer picks it up.
@@ -168,7 +168,20 @@ namespace ChessForge
                     nd = sib;
                 }
                 Line.AddPlyAndMove(nd);
-                SwitchToAwaitEngineMove(nd);
+
+                bool endOfGame = false;
+                if (PositionUtils.IsCheckmate(nd.Position))
+                {
+                    endOfGame = true;
+                    _mainWin.BoardCommentBox.ReportCheckmate(true);
+                }
+                else if (PositionUtils.IsStalemate(nd.Position))
+                {
+                    endOfGame = true;
+                    _mainWin.BoardCommentBox.ReportStalemate();
+                }
+
+                SwitchToAwaitEngineMove(nd, endOfGame);
                 return true;
             }
             else
@@ -178,16 +191,19 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// This method will be invoked after the engine's move was processed,
-        /// or when we restart a game vs engine from an eralier move.
+        /// This method will be invoked after the user's move was processed,
+        /// or when we restart a game vs engine from an earlier move.
         /// </summary>
         /// <param name="nd"></param>
-        private static void SwitchToAwaitEngineMove(TreeNode nd)
+        private static void SwitchToAwaitEngineMove(TreeNode nd, bool endOfGame)
         {
             if (TrainingState.IsTrainingInProgress && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
             {
                 TrainingState.CurrentMode = TrainingState.Mode.USER_MOVE_COMPLETED;
-                _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+                if (!endOfGame)
+                {
+                    _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+                }
             }
             else
             {
@@ -220,7 +236,7 @@ namespace ChessForge
         {
             _mainWin.Workbook.RemoveTailAfter(nd);
             Line.RollbackToNode(nd);
-            SwitchToAwaitEngineMove(nd);
+            SwitchToAwaitEngineMove(nd, false);
         }
 
         /// <summary>
@@ -263,6 +279,11 @@ namespace ChessForge
             BoardPosition pos = new BoardPosition(curr.Position);
 
             TreeNode nd = new TreeNode(curr, "", _mainWin.Workbook.GetNewNodeId());
+            // preserve InheritedEnPassent and Dynamic Properities
+            pos.InheritedEnPassantSquare = nd.Position.InheritedEnPassantSquare;
+            pos.DynamicProperties = nd.Position.DynamicProperties;
+            pos.EnPassantSquare = 0;
+
             nd.Position = pos;
 
             return nd;
@@ -315,9 +336,10 @@ namespace ChessForge
         /// </summary>
         public static PieceColor ColorToMove
         {
-            get {
+            get
+            {
                 BoardPosition pos = GetCurrentPosition();
-                return pos != null ? GetCurrentPosition().ColorToMove : PieceColor.None; 
+                return pos != null ? GetCurrentPosition().ColorToMove : PieceColor.None;
             }
         }
 
@@ -337,7 +359,7 @@ namespace ChessForge
         public static BoardPosition GetCurrentPosition()
         {
             TreeNode nd = GetCurrentNode();
-            return nd != null ?  GetCurrentNode().Position : null;
+            return nd != null ? GetCurrentNode().Position : null;
         }
 
         /// <summary>
@@ -379,7 +401,7 @@ namespace ChessForge
                 return "";
             }
 
-            if (getBest)
+            if (getBest || EngineMessageProcessor.MoveCandidates[0].IsMateDetected)
             {
                 return EngineMessageProcessor.MoveCandidates[0].GetCandidateMove();
             }

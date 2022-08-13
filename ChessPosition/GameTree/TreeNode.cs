@@ -226,7 +226,7 @@ namespace GameTree
 
         /// <summary>
         /// Creates a new object as a child of the passed parent.
-        /// Initializes the IheritedEnPassant square and the
+        /// Initializes the InheritedEnPassant square and the
         /// DynamicProperties based on the parent's properties.
         /// </summary>
         /// <param name="parent"></param>

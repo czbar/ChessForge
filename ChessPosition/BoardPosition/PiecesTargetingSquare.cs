@@ -334,7 +334,7 @@ namespace ChessPosition
             int x = (int)XposTarget;
             int y = (int)YposTarget;
 
-            // chacking for pawn attackers only in the first iteration so flag it
+            // checking for pawn attackers only in the first iteration so flag it
             bool firstIter = true;
             while (true)
             {
