@@ -777,11 +777,6 @@ namespace ChessForge
             TreeNode nd = EngineGame.GetCurrentNode();
 
             bool isMateCf = PositionUtils.IsCheckmate(nd.Position);
-            bool isMateEng = nd.LastMoveAlgebraicNotation[nd.LastMoveAlgebraicNotation.Length - 1] == '#';
-            if (isMateCf != isMateEng)
-            {
-                throw new Exception("Checkmate detection conflict: " + (isMateCf ? "ChessForge alone says checkmate" : "StockFish alone says checkmate"));
-            }
 
             bool isStalemate = false;
             if (!isMateCf)
@@ -789,7 +784,7 @@ namespace ChessForge
                 isStalemate = PositionUtils.IsStalemate(nd.Position);
             }
 
-            if (isMateEng)
+            if (isMateCf)
             {
                 BuildCheckmateParagraph(nd, false);
                 Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
