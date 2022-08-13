@@ -3,4 +3,4 @@
 [White "Chess Forge"]
 [Black "Workbook File"]
 
-1. g4 e5 2. f3 {[%chf-bkm]}  Qh4# *
+1. g4 e5 {[%chf-bkm]}  2. f3 {[%chf-bkm]}  Qh4# *
