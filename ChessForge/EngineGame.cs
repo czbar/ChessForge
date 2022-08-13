@@ -389,7 +389,7 @@ namespace ChessForge
                 int highestEval = EngineMessageProcessor.MoveCandidates[0].ScoreCp;
                 for (int i = 1; i < EngineMessageProcessor.MoveCandidates.Count; i++)
                 {
-                    if (EngineMessageProcessor.MoveCandidates[i].ScoreCp < highestEval - Configuration.ViableMoveCpDiff)
+                    if (EngineMessageProcessor.MoveCandidates[i].IsMateDetected || EngineMessageProcessor.MoveCandidates[i].ScoreCp < highestEval - Configuration.ViableMoveCpDiff)
                     {
                         break;
                     }
