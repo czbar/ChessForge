@@ -194,6 +194,9 @@ namespace ChessForge
         private static readonly string STYLE_ENGINE_EVAL = "engine_eval";
         private static readonly string STYLE_ENGINE_GAME = "engine_game";
 
+        private static readonly string STYLE_CHECKMATE = "mate";
+        private static readonly string STYLE_STALEMATE = "stalemate";
+
         /// <summary>
         /// Layout definitions for paragraphs at different levels.
         /// </summary>
@@ -212,6 +215,9 @@ namespace ChessForge
             [STYLE_COACH_NOTES] = new RichTextPara(50, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
             [STYLE_ENGINE_EVAL] = new RichTextPara(80, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
             [STYLE_ENGINE_GAME] = new RichTextPara(50, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
+
+            [STYLE_CHECKMATE] = new RichTextPara(50, 0, 18, FontWeights.Bold, Brushes.Red, TextAlignment.Left, Brushes.Red),
+            [STYLE_STALEMATE] = new RichTextPara(50, 0, 18, FontWeights.Bold, Brushes.Red, TextAlignment.Left, Brushes.Red),
         };
 
         /// <summary>
@@ -272,61 +278,72 @@ namespace ChessForge
                 _userMove = EngineGame.GetCurrentNode();
                 TreeNode parent = _userMove.Parent;
 
-                // double check that we have the parent in our Workbook
-                if (_mainWin.Workbook.GetNodeFromNodeId(parent.NodeId) == null)
+                if (PositionUtils.IsCheckmate(_userMove.Position))
                 {
-                    // we are "out of the book" in our training so there is nothing to report
-                    return;
+                    BuildCheckmateParagraph(_userMove, true);
                 }
-
-                StringBuilder wbMoves = new StringBuilder();
-                TreeNode foundMove = null;
-                foreach (TreeNode child in parent.Children)
+                else if (PositionUtils.IsStalemate(_userMove.Position))
                 {
-                    // we cannot use ArePositionsIdentical() because _userMove only has static position
-                    if (child.LastMoveEngineNotation == _userMove.LastMoveEngineNotation && !_userMove.IsNewTrainingMove)
-                    {
-                        // replace the TreeNode with the one from the Workbook so that
-                        // we stay with the workbook as long as the user does.
-                        EngineGame.ReplaceCurrentWithWorkbookMove(child);
-                        foundMove = child;
-                        _userMove = child;
-                    }
-                    else
-                    {
-                        if (!child.IsNewTrainingMove)
-                        {
-                            wbMoves.Append(child.GetPlyText(true));
-                            wbMoves.Append("; ");
-                            _otherMovesInWorkbook.Add(child);
-                        }
-                    }
-                }
-
-                BuildMoveParagraph(_userMove, true);
-                BuildCommentParagraph(foundMove != null);
-
-                // if we found a move and this is not the last move in the Workbbook, request response.
-                if (foundMove != null && foundMove.Children.Count > 0)
-                {
-                    // start the timer that will trigger a workbook response by RequestWorkbookResponse()
-                    TrainingState.CurrentMode = TrainingState.Mode.AWAITING_WORKBOOK_RESPONSE;
-                    _mainWin.Timers.Start(AppTimers.TimerId.REQUEST_WORKBOOK_MOVE);
+                    BuildStalemateParagraph(_userMove);
                 }
                 else
                 {
-                    _paraCurrentEngineGame = AddNewParagraphToDoc(STYLE_ENGINE_GAME, "");
-                    _paraCurrentEngineGame.Name = _par_game_moves_;
-                    if (foundMove != null)
+                    // double check that we have the parent in our Workbook
+                    if (_mainWin.Workbook.GetNodeFromNodeId(parent.NodeId) == null)
                     {
-                        _paraCurrentEngineGame.Inlines.Add(new Run("\nThe Worbook line has ended."));
+                        // we are "out of the book" in our training so there is nothing to report
+                        return;
                     }
-                    _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine has started. Wait for the engine\'s move...\n"));
-                    _engineGameRootNode = _userMove;
-                    // call RequestEngineResponse() directly so it invokes PlayEngine
-                    AppStateManager.CurrentLearningMode = LearningMode.Mode.ENGINE_GAME;
-                    AppStateManager.SetupGuiForCurrentStates();
-                    RequestEngineResponse();
+
+                    StringBuilder wbMoves = new StringBuilder();
+                    TreeNode foundMove = null;
+                    foreach (TreeNode child in parent.Children)
+                    {
+                        // we cannot use ArePositionsIdentical() because _userMove only has static position
+                        if (child.LastMoveEngineNotation == _userMove.LastMoveEngineNotation && !_userMove.IsNewTrainingMove)
+                        {
+                            // replace the TreeNode with the one from the Workbook so that
+                            // we stay with the workbook as long as the user does.
+                            EngineGame.ReplaceCurrentWithWorkbookMove(child);
+                            foundMove = child;
+                            _userMove = child;
+                        }
+                        else
+                        {
+                            if (!child.IsNewTrainingMove)
+                            {
+                                wbMoves.Append(child.GetPlyText(true));
+                                wbMoves.Append("; ");
+                                _otherMovesInWorkbook.Add(child);
+                            }
+                        }
+                    }
+
+                    BuildMoveParagraph(_userMove, true);
+                    BuildCommentParagraph(foundMove != null);
+
+                    // if we found a move and this is not the last move in the Workbbook, request response.
+                    if (foundMove != null && foundMove.Children.Count > 0)
+                    {
+                        // start the timer that will trigger a workbook response by RequestWorkbookResponse()
+                        TrainingState.CurrentMode = TrainingState.Mode.AWAITING_WORKBOOK_RESPONSE;
+                        _mainWin.Timers.Start(AppTimers.TimerId.REQUEST_WORKBOOK_MOVE);
+                    }
+                    else
+                    {
+                        _paraCurrentEngineGame = AddNewParagraphToDoc(STYLE_ENGINE_GAME, "");
+                        _paraCurrentEngineGame.Name = _par_game_moves_;
+                        if (foundMove != null)
+                        {
+                            _paraCurrentEngineGame.Inlines.Add(new Run("\nThe Worbook line has ended."));
+                        }
+                        _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine has started. Wait for the engine\'s move...\n"));
+                        _engineGameRootNode = _userMove;
+                        // call RequestEngineResponse() directly so it invokes PlayEngine
+                        AppStateManager.CurrentLearningMode = LearningMode.Mode.ENGINE_GAME;
+                        AppStateManager.SetupGuiForCurrentStates();
+                        RequestEngineResponse();
+                    }
                 }
             }
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
@@ -643,6 +660,54 @@ namespace ChessForge
 
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
+
+        /// <summary>
+        /// Builds a paragraph reporting checkmate
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="userMove"></param>
+        private void BuildCheckmateParagraph(TreeNode nd, bool userMove)
+        {
+            string paraName = _par_line_moves_ + nd.NodeId.ToString();
+            string runName = _run_line_move_ + nd.NodeId.ToString();
+
+            Paragraph para = AddNewParagraphToDoc(STYLE_CHECKMATE, "");
+            para.Name = paraName;
+
+            Run r_prefix = new Run();
+            if (userMove)
+            {
+                r_prefix.Text = "\nYou have checkmated the engine. Congratulations!";
+            }
+            else
+            {
+                r_prefix.Text = "\nYou have been checkmated by the engine. Better luck next time!";
+            }
+
+            para.Inlines.Add(r_prefix);
+            _mainWin.UiRtbTrainingProgress.ScrollToEnd();
+        }
+
+        /// <summary>
+        /// Builds a paragraph reporting stalemate
+        /// </summary>
+        /// <param name="nd"></param>
+        private void BuildStalemateParagraph(TreeNode nd)
+        {
+            string paraName = _par_line_moves_ + nd.NodeId.ToString();
+            string runName = _run_line_move_ + nd.NodeId.ToString();
+
+            Paragraph para = AddNewParagraphToDoc(STYLE_CHECKMATE, "");
+            para.Name = paraName;
+
+            Run r_prefix = new Run();
+            r_prefix.Text = "\nThis is a stalemate! You have drawn the game.";
+
+            para.Inlines.Add(r_prefix);
+            _mainWin.UiRtbTrainingProgress.ScrollToEnd();
+        }
+
+
 
         /// <summary>
         /// Builds the "stem line" paragraphs that is always visible at the top
@@ -1029,7 +1094,7 @@ namespace ChessForge
                     {
                         started = true;
                     }
-        
+
                     if (started && inl.Name.StartsWith(_run_engine_game_move_))
                     {
                         _mainWin.Evaluation.AddRunToEvaluate(inl as Run);
