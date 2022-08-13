@@ -367,7 +367,7 @@ namespace ChessPosition
 
             foreach (SquareCoords sc in squaresToCheck)
             {
-                PiecesTargetingSquare sa = new PiecesTargetingSquare((byte)sc.Xcoord, (byte)sc.Ycoord, -1, -1, col, ref pos);
+                PiecesTargetingSquare sa = new PiecesTargetingSquare((byte)sc.Xcoord, (byte)sc.Ycoord, -1, -1, MoveUtils.ReverseColor(col), ref pos, PieceType.None, true);
                 if (sa.Candidates.Count > 0)
                 {
                     return false;
