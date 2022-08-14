@@ -22,6 +22,9 @@ namespace ChessForge
         // Application's Main Window
         private MainWindow _mainWin;
 
+        // tracks the last added run as we may need to change its color
+        private Run _lastAddedRun;
+
         /// <summary>
         /// Constructor. Sets a reference to the 
         /// FlowDocument for the RichTextBox control, via
@@ -150,6 +153,11 @@ namespace ChessForge
             FORK_WITH_FORK_LINES // a fork with at least one other fork down any of the branches starting from it.
         }
 
+        /// <summary>
+        /// Sets up Workbook view's context menu.
+        /// </summary>
+        /// <param name="cmn"></param>
+        /// <param name="isEnabled"></param>
         public void EnableWorkbookMenus(ContextMenu cmn, bool isEnabled)
         {
             // ClickedIndex should be in sync with isEnabled but double check just in case
@@ -188,6 +196,56 @@ namespace ChessForge
                             break;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Selects the move and the line in this view on a request from another view (as opposed
+        /// to a user request).
+        /// Therefore it does not request other views to follow the selection.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <param name="lineId"></param>
+        public void SelectLineAndMove(string lineId, int nodeId)
+        {
+            if (_selectedRun != null)
+            {
+                _selectedRun.Background = _selectedRunBkg;
+                _selectedRun.Foreground = _selectedRunFore;
+            }
+
+            foreach (TreeNode nd in _lstSelectedLine)
+            {
+                if (nd.NodeId != 0)
+                {
+                    _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
+                }
+            }
+
+            _selectedRun = null;
+            _dictNodeToRun.TryGetValue(nodeId, out _selectedRun);
+
+            if (!string.IsNullOrEmpty(lineId))
+            {
+                _lstSelectedLine = _workbook.SelectLine(lineId);
+                foreach (TreeNode nd in _lstSelectedLine)
+                {
+                    if (nd.NodeId != 0)
+                    {
+                        _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
+                    }
+                }
+            }
+
+            if (_selectedRun != null)
+            {
+                _selectedRunBkg = (SolidColorBrush)_selectedRun.Background;
+                _selectedRunFore = (SolidColorBrush)_selectedRun.Foreground;
+
+                _selectedRun.Background = _brushSelectedMoveBkg;
+                _selectedRun.Foreground = _brushSelectedMoveFore;
+
+                _selectedRun.BringIntoView();
             }
         }
 
@@ -409,6 +467,7 @@ namespace ChessForge
                             if (i == 1)
                             {
                                 _currParagraphLevel++;
+                                ColorLastRun();
                                 para2 = CreateParagraph(_currParagraphLevel.ToString());
                             }
                             else
@@ -539,6 +598,8 @@ namespace ChessForge
                 para.Inlines.Add(r);
 
             _dictNodeToRun.Add(nd.NodeId, r);
+
+            _lastAddedRun = r;
         }
 
         /// <summary>
@@ -620,52 +681,18 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Selects the move and the line in this view on a request from another view (as opposed
-        /// to a user request).
-        /// Therefore it does not request other views to follow the selection.
+        /// Colors the last run in the paragraph witht the color of the next (lower level)
+        /// paragraph's first char.
+        /// The idea is to provide a more obvious visual hint as to where the fork is.
         /// </summary>
-        /// <param name="nodeId"></param>
-        /// <param name="lineId"></param>
-        public void SelectLineAndMove(string lineId, int nodeId)
+        private void ColorLastRun()
         {
-            if (_selectedRun != null)
+            if (_lastAddedRun != null)
             {
-                _selectedRun.Background = _selectedRunBkg;
-                _selectedRun.Foreground = _selectedRunFore;
-            }
-
-            foreach (TreeNode nd in _lstSelectedLine)
-            {
-                if (nd.NodeId != 0)
-                {
-                    _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
-                }
-            }
-
-            _selectedRun = null;
-            _dictNodeToRun.TryGetValue(nodeId, out _selectedRun);
-
-            if (!string.IsNullOrEmpty(lineId))
-            {
-                _lstSelectedLine = _workbook.SelectLine(lineId);
-                foreach (TreeNode nd in _lstSelectedLine)
-                {
-                    if (nd.NodeId != 0)
-                    {
-                        _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
-                    }
-                }
-            }
-
-            if (_selectedRun != null)
-            {
-                _selectedRunBkg = (SolidColorBrush)_selectedRun.Background;
-                _selectedRunFore = (SolidColorBrush)_selectedRun.Foreground;
-
-                _selectedRun.Background = _brushSelectedMoveBkg;
-                _selectedRun.Foreground = _brushSelectedMoveFore;
-
-                _selectedRun.BringIntoView();
+                string style = _currParagraphLevel.ToString();
+                RichTextPara attrs = GetParaAttrs(style);
+                _lastAddedRun.Foreground = attrs.FirstCharColor;
+                _lastAddedRun.FontWeight = FontWeights.Bold;  
             }
         }
     }
