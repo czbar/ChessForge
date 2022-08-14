@@ -103,6 +103,7 @@ namespace ChessForge
         /// </summary>
         public static void MoveEvaluationFinished()
         {
+            ClearMoveCandidates();
             if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.ENGINE_GAME)
             {
                 ProcessEngineGameMoveEvent();
@@ -138,7 +139,11 @@ namespace ChessForge
                     string eval = "";
                     if (!string.IsNullOrEmpty(_mainWin.Evaluation.PositionEvaluation))
                     {
-                        eval = (_mainWin.Evaluation.PositionEvaluation[0] == '-' ? "" : "+") + _mainWin.Evaluation.PositionEvaluation;
+                        // if this is not checkmate, check the sign (for checkmate it is already there)
+                        if (_mainWin.Evaluation.PositionEvaluation.IndexOf('#') < 0)
+                        {
+                            eval = (_mainWin.Evaluation.PositionEvaluation[0] == '-' ? "" : "+") + _mainWin.Evaluation.PositionEvaluation;
+                        }
                     }
 
                     bool isWhiteEval = (_mainWin.Evaluation.PositionIndex - 1) % 2 == 0;
@@ -169,7 +174,7 @@ namespace ChessForge
                     else
                     {
                         AppLog.Message("Continue eval next move after index " + _mainWin.Evaluation.PositionIndex.ToString());
-                        Clear();
+                        ClearMoveCandidates();
                         _mainWin.Evaluation.PrepareToContinue();
                         _mainWin.Evaluation.PositionIndex++;
                         RequestMoveEvaluation(_mainWin.Evaluation.PositionIndex);
@@ -311,7 +316,7 @@ namespace ChessForge
         /// <summary>
         /// Clears the list of candidate moves.
         /// </summary>
-        public static void Clear()
+        public static void ClearMoveCandidates()
         {
             lock (MoveCandidatesLock)
             {
@@ -423,6 +428,9 @@ namespace ChessForge
         /// <param name="message"></param>
         private static void ProcessBestMoveMessage(string message)
         {
+            // make sure the last lines are shown before we stop the timer.
+            _mainWin.EngineLinesGUI.ShowEngineLines(null, null);
+
             // tell the app that the evaluation has finished
             MoveEvaluationFinished();
         }
@@ -476,11 +484,11 @@ namespace ChessForge
                 idx++;
             }
 
-            if (multipv != null && (score != null || movesToMate != null))
+            lock (MoveCandidatesLock)
             {
-                // we have updated evaluation
-                lock (MoveCandidatesLock)
+                if (multipv != null && (score != null || movesToMate != null))
                 {
+                    // we have updated evaluation
                     // make sure we have the object to set
                     while (MoveCandidates.Count < multipv)
                     {
@@ -491,6 +499,7 @@ namespace ChessForge
                     if (score != null)
                     {
                         MoveCandidates[multipv.Value - 1].ScoreCp = score.Value;
+                        MoveCandidates[multipv.Value - 1].IsMateDetected = false;
                     }
                     else
                     {
@@ -498,7 +507,27 @@ namespace ChessForge
                         MoveCandidates[multipv.Value - 1].MovesToMate = movesToMate.Value;
                     }
                 }
+                else if (multipv == null && movesToMate == 0) // special case where we have a check mate position
+                {
+                    if (MoveCandidates.Count == 0)
+                    {
+                        MoveCandidates.Add(new MoveEvaluation());
+                    }
+                    MoveCandidates[0].IsMateDetected = true;
+                    MoveCandidates[0].MovesToMate = 0;
+                }
+                else if (multipv == null && score == 0) // special case where we have a stalemate
+                {
+                    if (MoveCandidates.Count == 0)
+                    {
+                        MoveCandidates.Add(new MoveEvaluation());
+                    }
+                    MoveCandidates[0].ScoreCp = score.Value;
+                    MoveCandidates[0].IsMateDetected = false;
+                    MoveCandidates[0].MovesToMate = 0;
+                }
             }
+
 
             lock (InfoMessageProcessLock)
             {
