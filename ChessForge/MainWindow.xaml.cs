@@ -1122,6 +1122,11 @@ namespace ChessForge
             MainChessBoard.DisplayPosition(position);
         }
 
+        public void RemoveMoveSquareColors()
+        {
+            MainChessBoard.RemoveMoveSquareColors();
+        }
+
         public void SetActiveLine(ObservableCollection<TreeNode> line, int selectedNodeId)
         {
             ActiveLine.SetNodeList(line);
@@ -1154,7 +1159,7 @@ namespace ChessForge
                     AskAndSaveSaveWorkbook();
                 }
             }
-            Timers.StopAll();
+            Timers.StopAll(false);
             AppLog.Dump();
             EngineLog.Dump();
             Configuration.WriteOutConfiguration();
@@ -1290,7 +1295,7 @@ namespace ChessForge
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
             if (nd != null)
             {
-                PlayComputer(nd, false);
+                StartEngineGame(nd, false);
                 if (nd.ColorToMove == PieceColor.White && !MainChessBoard.IsFlipped || nd.ColorToMove == PieceColor.Black && MainChessBoard.IsFlipped)
                 {
                     MainChessBoard.FlipBoard();
@@ -1316,7 +1321,7 @@ namespace ChessForge
         /// constructed and we start from the last move/ply.
         /// </summary>
         /// <param name="startNode"></param>
-        public void PlayComputer(TreeNode startNode, bool IsTraining)
+        public void StartEngineGame(TreeNode startNode, bool IsTraining)
         {
             UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
@@ -1381,13 +1386,7 @@ namespace ChessForge
         {
             Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
 
-            UiPbEngineThinking.Dispatcher.Invoke(() =>
-            {
-                UiPbEngineThinking.Visibility = Visibility.Hidden;
-                UiPbEngineThinking.Minimum = 0;
-                UiPbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime);
-                UiPbEngineThinking.Value = 0;
-            });
+            ResetEngineThinkingGUI();
 
             MainChessBoard.RemoveMoveSquareColors();
 
@@ -1402,6 +1401,18 @@ namespace ChessForge
             ActiveLine.DisplayPositionForSelectedCell();
             AppStateManager.SwapCommentBoxForEngineLines(false);
             BoardCommentBox.RestoreTitleMessage();
+        }
+
+        public void ResetEngineThinkingGUI()
+        {
+            UiPbEngineThinking.Dispatcher.Invoke(() =>
+            {
+                UiPbEngineThinking.Visibility = Visibility.Hidden;
+                UiPbEngineThinking.Minimum = 0;
+                UiPbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime);
+                UiPbEngineThinking.Value = 0;
+            });
+
         }
 
         /// <summary>
@@ -1541,6 +1552,7 @@ namespace ChessForge
                 AppStateManager.ResetEvaluationControls();
                 AppStateManager.ShowMoveEvaluationControls(false, false);
                 AppStateManager.SetupGuiForCurrentStates();
+                Timers.StopAll(true);
             }
 
             e.Handled = true;

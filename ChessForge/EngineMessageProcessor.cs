@@ -103,7 +103,7 @@ namespace ChessForge
         /// </summary>
         public static void MoveEvaluationFinished()
         {
-            ClearMoveCandidates();
+            ClearMoveCandidates(false);
             if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.ENGINE_GAME)
             {
                 ProcessEngineGameMoveEvent();
@@ -174,7 +174,7 @@ namespace ChessForge
                     else
                     {
                         AppLog.Message("Continue eval next move after index " + _mainWin.Evaluation.PositionIndex.ToString());
-                        ClearMoveCandidates();
+                        ClearMoveCandidates(false);
                         _mainWin.Evaluation.PrepareToContinue();
                         _mainWin.Evaluation.PositionIndex++;
                         RequestMoveEvaluation(_mainWin.Evaluation.PositionIndex);
@@ -315,9 +315,12 @@ namespace ChessForge
 
         /// <summary>
         /// Clears the list of candidate moves.
+        /// Not in engine mode, though, (unless forced)
+        /// because we will be choosing from the candidates a little later.
         /// </summary>
-        public static void ClearMoveCandidates()
+        public static void ClearMoveCandidates(bool force)
         {
+            if (force || !(AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME))
             lock (MoveCandidatesLock)
             {
                 MoveCandidates.Clear();
