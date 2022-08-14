@@ -146,8 +146,8 @@ namespace ChessForge
                 PositionIndex = 0;
 
                 _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                AppStateManager.ShowEvaluationProgressControlsForCurrentStates();
             }
+            AppStateManager.ShowEvaluationProgressControlsForCurrentStates();
         }
 
         /// <summary>
