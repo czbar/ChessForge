@@ -162,6 +162,7 @@ namespace ChessForge
             TreeNode nd = _workbook.GetNodeFromNodeId(_lastClickedNodeId);
             _workbook.PromoteLine(nd);
             BuildFlowDocumentForWorkbook();
+            AppStateManager.IsDirty = true;
         }
 
         /// <summary>
@@ -172,6 +173,7 @@ namespace ChessForge
             TreeNode nd = _workbook.GetNodeFromNodeId(_lastClickedNodeId);
             _workbook.DeleteRemainingMoves(nd);
             BuildFlowDocumentForWorkbook();
+            AppStateManager.IsDirty = true;
         }
 
         /// <summary>
