@@ -12,8 +12,8 @@
             <MenuItem x:Name="_mnTrainSwitchToWorkbook" Header="Play Move %0% Instead of Text" Click="_mnTrainSwitchToWorkbook_Click" />
             <MenuItem x:Name="_mnTrainRestartGame" Header="Restart Game After " Click="_mnTrainRestartGame_Click" />
             <Separator x:Name="_mnTrainSepar_1" />
-            <MenuItem x:Name="_mnTrainEvalMove" Header="Evaluate Move" Click="_mnTrainEvalMove_Click" />
-            <MenuItem x:Name="_mnTrainEvalLine" Header="Evaluate All Moves" Click="_mnTrainEvalLine_Click" />
+            <MenuItem x:Name="_mnTrainEvalMove" Header="Evaluate Position" Click="_mnTrainEvalMove_Click" />
+            <MenuItem x:Name="_mnTrainEvalLine" Header="Evaluate Line" Click="_mnTrainEvalLine_Click" />
             <Separator x:Name="_mnTrainSepar_2" />
             <MenuItem x:Name="_mnTrainRestartTraining" Header="Restart Training" Click="_mnTrainRestartTraining_Click" />
             <MenuItem x:Name="_mnTrainExitTraining" Header="Exit Training"  Click="MenuItem_StopTraining" />
@@ -142,8 +142,8 @@
                             <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Bookmark This Position" Click="_mnWorkbookSelectAsBookmark_Click" />
                             <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="Bookmark All Options Here" Click="_mnWorkbookBookmarkAlternatives_Click" />
                             <Separator />
-                            <MenuItem x:Name="_mnWorkbookEvalMove" Header="Evaluate Move" />
-                            <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line" />
+                            <MenuItem x:Name="_mnWorkbookEvalMove" Header="Evaluate Position"  Click="MenuItem_EvaluatePosition" />
+                            <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line"  Click="MenuItem_EvaluateLine" />
                         </ContextMenu>
                     </Grid.ContextMenu>
                     <RichTextBox x:Name="UiRtbWorkbookView" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
