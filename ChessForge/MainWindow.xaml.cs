@@ -1798,5 +1798,14 @@ namespace ChessForge
             StopEngineGame();
         }
 
+        private void UiMnPromoteLine_Click(object sender, RoutedEventArgs e)
+        {
+            _workbookView.PromoteCurrentLine();
+        }
+
+        private void UiMnDeleteMovesFromHere_Click(object sender, RoutedEventArgs e)
+        {
+            _workbookView.DeleteRemainingMoves();
+        }
     }
 }

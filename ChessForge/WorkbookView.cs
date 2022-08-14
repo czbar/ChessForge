@@ -154,6 +154,27 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Promotes the line with the last clicked node
+        /// one level up.
+        /// </summary>
+        public void PromoteCurrentLine()
+        {
+            TreeNode nd = _workbook.GetNodeFromNodeId(_lastClickedNodeId);
+            _workbook.PromoteLine(nd);
+            BuildFlowDocumentForWorkbook();
+        }
+
+        /// <summary>
+        /// Deletes the current move and all moves that follow it.
+        /// </summary>
+        public void DeleteRemainingMoves()
+        {
+            TreeNode nd = _workbook.GetNodeFromNodeId(_lastClickedNodeId);
+            _workbook.DeleteRemainingMoves(nd);
+            BuildFlowDocumentForWorkbook();
+        }
+
+        /// <summary>
         /// Sets up Workbook view's context menu.
         /// </summary>
         /// <param name="cmn"></param>
@@ -266,7 +287,6 @@ namespace ChessForge
             // and note the distances in the Nodes so that we can use them when creating the document
             // in the forward traversing
             SetNodeDistances();
-
 
             TreeNode root;
             if (rootNodeId == 0)
@@ -557,7 +577,6 @@ namespace ChessForge
             SolidColorBrush fontColor = null;
             if (IsFork(nd.Parent) && !nd.IsMainLine())
             {
-                //                if (nd.Parent.Parent == null || nd.Parent.IsMainLine() || !IsFork(nd.Parent.Parent) || !nd.IsFirstChild())
                 if (!nd.IsFirstChild())
                 {
                     fontColor = GetParaAttrs(_currParagraphLevel.ToString()).FirstCharColor;

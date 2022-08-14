@@ -347,47 +347,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Adds children of a node to the list of Bookmarks.
-        /// </summary>
-        /// <param name="fork">Node whose children to bookmark.</param>
-        /// <param name="maxCount">Max allowed number of bookmarked positions.</param>
-        private void BookmarkChildren(TreeNode fork, int maxCount)
-        {
-            if (fork == null)
-                return;
-
-            foreach (TreeNode nd in fork.Children)
-            {
-                if (Bookmarks.Count >= maxCount)
-                {
-                    break;
-                }
-                AddBookmark(nd);
-            }
-        }
-
-        /// <summary>
-        /// Find next fork after the given node.
-        /// </summary>
-        /// <param name="fromNode"></param>
-        /// <returns></returns>
-        private TreeNode FindNextFork(TreeNode fromNode)
-        {
-            TreeNode nd = fromNode;
-
-            while (nd.Children.Count != 0)
-            {
-                if (nd.Children.Count > 1)
-                {
-                    return nd;
-                }
-                nd = nd.Children[0];
-            }
-
-            return null;
-        }
-
-        /// <summary>
         /// Adds a node to the Workbook tree.
         /// </summary>
         /// <param name="node"></param>
@@ -627,6 +586,135 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Promotes a line by moving it one level up.
+        /// Starting from the passed node, this methods walks
+        /// up the branch until it encounters a fork where this
+        /// line is not a child 0. Then it moves up to the 0 position
+        /// and calls a rebuild of the tree.
+        /// The caller is then responsible for rebuilding the GUIs.
+        /// </summary>
+        /// <param name="nd"></param>
+        public bool PromoteLine(TreeNode nd)
+        {
+            bool changed = false;
+
+            if (nd == null || nd.IsMainLine())
+            {
+                return changed;
+            }
+
+            TreeNode currNode = nd;
+            while (currNode.Parent != null)
+            {
+                if (currNode.Parent.Children[0].NodeId != currNode.NodeId)
+                {
+                    bool onthemove = false;
+                    for (int i = currNode.Parent.Children.Count - 1; i > 0; i--)
+                    {
+                        if (onthemove || currNode.Parent.Children[i].NodeId == currNode.NodeId)
+                        {
+                            currNode.Parent.Children[i] = currNode.Parent.Children[i - 1];
+                            onthemove = true;
+                        }
+                    }
+                    changed = true;
+                    currNode.Parent.Children[0] = currNode;
+                    break;
+                }
+                currNode = currNode.Parent;
+            }
+
+            if (changed)
+            {
+                BuildLines();
+            }
+
+            return changed;
+        }
+
+        /// <summary>
+        /// Deletes the passed node and all of its subtree.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public bool DeleteRemainingMoves(TreeNode nd)
+        {
+            // identify moves to delete
+            _subTree.Clear();
+            nd.Parent.Children.Remove(nd);
+
+            GetSubTree(nd);
+
+            foreach (TreeNode node in _subTree)
+            {
+                Nodes.Remove(node);
+            }
+
+            return _subTree.Count > 0;
+        }
+
+        private List<TreeNode> _subTree = new List<TreeNode>();
+
+        private void GetSubTree(TreeNode nd)
+        {
+            _subTree.Add(nd);
+            if (nd.Children.Count == 0)
+            {
+                return;
+            }
+            else
+            {
+                for (int i = 0; i < nd.Children.Count; i++)
+                {
+                    GetSubTree(nd.Children[i]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adds children of a node to the list of Bookmarks.
+        /// </summary>
+        /// <param name="fork">Node whose children to bookmark.</param>
+        /// <param name="maxCount">Max allowed number of bookmarked positions.</param>
+        private void BookmarkChildren(TreeNode fork, int maxCount)
+        {
+            if (fork == null)
+                return;
+
+            foreach (TreeNode nd in fork.Children)
+            {
+                if (Bookmarks.Count >= maxCount)
+                {
+                    break;
+                }
+                AddBookmark(nd);
+            }
+        }
+
+        /// <summary>
+        /// Find next fork after the given node.
+        /// </summary>
+        /// <param name="fromNode"></param>
+        /// <returns></returns>
+        private TreeNode FindNextFork(TreeNode fromNode)
+        {
+            TreeNode nd = fromNode;
+
+            while (nd.Children.Count != 0)
+            {
+                if (nd.Children.Count > 1)
+                {
+                    return nd;
+                }
+                nd = nd.Children[0];
+            }
+
+            return null;
+        }
+
+
+#if false
+        /// <summary>
         /// TODO: this method is spurious.
         /// Replace the call to it by a call to PositionUtils.SetupStartingPosition()
         /// </summary>
@@ -635,5 +723,8 @@ namespace GameTree
         {
             node.Position = PositionUtils.SetupStartingPosition();
         }
+#endif
+
     }
 }
+
