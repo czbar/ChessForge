@@ -34,6 +34,8 @@ namespace GameTree
         public readonly string HEADER_WHITE = "White";
         public readonly string HEADER_BLACK = "Black";
 
+        // a list of nodes from a subtree
+        private List<TreeNode> _subTree = new List<TreeNode>();
 
         /// <summary>
         /// Title of this Workbook to show in the GUI
@@ -653,8 +655,12 @@ namespace GameTree
             return _subTree.Count > 0;
         }
 
-        private List<TreeNode> _subTree = new List<TreeNode>();
-
+        /// <summary>
+        /// Identifies all nodes of a subtree with the root
+        /// at the passed Node. Saves them in the
+        /// _subTree list.
+        /// </summary>
+        /// <param name="nd"></param>
         private void GetSubTree(TreeNode nd)
         {
             _subTree.Add(nd);
