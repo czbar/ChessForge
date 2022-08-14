@@ -196,7 +196,7 @@ namespace ChessForge
         internal void SelectPly(int moveNo, PieceColor colorToMove)
         {
             _dgActiveLine.SelectedCells.Clear();
-            moveNo = Math.Max(moveNo, 1);
+            moveNo = Math.Max(moveNo, 0);
 
             DataGridCellInfo cell;
             if (colorToMove == PieceColor.White && moveNo < _dgActiveLine.Items.Count)
