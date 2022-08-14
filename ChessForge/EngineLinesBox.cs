@@ -119,16 +119,33 @@ namespace ChessForge
 
                 string eval = GuiUtilities.BuildEvaluationText(line, _evalState.Position.ColorToMove);
 
-                uint moveNoToShow = _evalState.Position.ColorToMove == PieceColor.Black ? 
-                    _evalState.Position.MoveNumber : (_evalState.Position.MoveNumber + 1);
-                
-                return (lineNo + 1).ToString() + ". (" + eval + "): "
-                    + moveNoToShow.ToString()
-                    + (_evalState.Position.ColorToMove == PieceColor.White ? "." : "...")
-                    + BuildMoveSequence(line.Line);
+                if (eval == "#")
+                {
+                    return "# checkmate";
+                }
+                else
+                {
+
+                    uint moveNoToShow = _evalState.Position.ColorToMove == PieceColor.Black ?
+                        _evalState.Position.MoveNumber : (_evalState.Position.MoveNumber + 1);
+
+                    string sMoveNo = moveNoToShow.ToString() + (_evalState.Position.ColorToMove == PieceColor.White ? "." : "...");
+                    if (string.IsNullOrEmpty(line.Line))
+                    {
+                        sMoveNo = "";
+                    }
+
+                    return (lineNo + 1).ToString() + ". (" + eval + "): "
+                        + sMoveNo
+                        + BuildMoveSequence(line.Line);
+                }
             }
             catch
             {
+                if (Configuration.DebugMode != 0)
+                {
+                    AppLog.Message("BuildTextLine() exception: LineNo=" + lineNo.ToString() + ". LineText: " + line.Line);
+                }
                 // this will indicate to us in the GUI that something went wrong.
                 return "******";
             }
@@ -147,21 +164,31 @@ namespace ChessForge
             // make a copy of the position under evaluation
             BoardPosition workingPosition = new BoardPosition(_evalState.Position);
             bool firstMove = true;
-            foreach (string move in moves)
+            try
             {
-                if (workingPosition.ColorToMove == PieceColor.White && !firstMove)
+                foreach (string move in moves)
                 {
-                    sb.Append(workingPosition.MoveNumber.ToString() + ".");
+                    if (workingPosition.ColorToMove == PieceColor.White && !firstMove)
+                    {
+                        sb.Append(workingPosition.MoveNumber.ToString() + ".");
+                    }
+                    firstMove = false;
+                    bool isCastle;
+                    sb.Append(MoveUtils.EngineNotationToAlgebraic(move, ref workingPosition, out isCastle));
+                    // invert colors
+                    workingPosition.ColorToMove = workingPosition.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
+                    sb.Append(" ");
+                    if (workingPosition.ColorToMove == PieceColor.White)
+                    {
+                        workingPosition.MoveNumber++;
+                    }
                 }
-                firstMove = false;
-                bool isCastle;
-                sb.Append(MoveUtils.EngineNotationToAlgebraic(move, ref workingPosition, out isCastle));
-                // invert colors
-                workingPosition.ColorToMove = workingPosition.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
-                sb.Append(" ");
-                if (workingPosition.ColorToMove == PieceColor.White)
+            }
+            catch (Exception ex)
+            {
+                if (Configuration.DebugMode != 0)
                 {
-                    workingPosition.MoveNumber++;
+                    AppLog.Message("Exception in BuildMoveSequence(): " + ex.Message);
                 }
             }
 
