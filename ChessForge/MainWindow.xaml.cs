@@ -825,7 +825,17 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.SaveWorkbookFile(true);
+                if (AppStateManager.IsDirty)
+                {
+                    if (AskToSaveWorkbook())
+                    {
+                        AppStateManager.SaveWorkbookFile(true);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
             }
             AppStateManager.RestartInIdleMode();
         }
@@ -1008,7 +1018,8 @@ namespace ChessForge
                     {
                         Workbook.GenerateBookmarks();
                         UiTabBookmarks.Focus();
-                        AppStateManager.SaveWorkbookFile();
+                        AppStateManager.IsDirty = true;
+                        //AppStateManager.SaveWorkbookFile();
                     }
                 }
 
@@ -1129,7 +1140,13 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.SaveWorkbookFile(true);
+                if (AppStateManager.IsDirty)
+                {
+                    if (AskToSaveWorkbook())
+                    {
+                        AppStateManager.SaveWorkbookFile(true);
+                    }
+                }
             }
             Timers.StopAll();
             AppLog.Dump();
@@ -1651,7 +1668,8 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.SaveWorkbookFile();
+                AppStateManager.IsDirty = true;
+                // AppStateManager.SaveWorkbookFile();
                 UiTabBookmarks.Focus();
             }
         }
@@ -1674,8 +1692,33 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.SaveWorkbookFile();
+                AppStateManager.IsDirty = true;
+                //AppStateManager.SaveWorkbookFile();
                 UiTabBookmarks.Focus();
+            }
+        }
+
+        /// <summary>
+        /// Prompts the user to save the Workbook
+        /// or exit without saving.
+        /// Returns true if the user chooses yes or no,
+        /// returns false if the user cancels.
+        /// </summary>
+        private bool AskToSaveWorkbook()
+        {
+            var ret = MessageBox.Show("Save the Workbook?", "Workbook not saved", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            if (ret == MessageBoxResult.Yes)
+            {
+                AppStateManager.SaveWorkbookFile();
+                return true;
+            }
+            else if (ret == MessageBoxResult.No)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
