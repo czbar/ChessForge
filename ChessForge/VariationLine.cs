@@ -124,7 +124,7 @@ namespace ChessForge
         /// <returns></returns>
         public TreeNode GetNodeAtIndex(int idx)
         {
-            return NodeList[idx];
+            return idx >= 0 ? NodeList[idx] : null;
         }
 
         /// <summary>
