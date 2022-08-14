@@ -825,7 +825,14 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.SaveWorkbookFile(true);
+                if (AppStateManager.IsDirty)
+                {
+                    if (!AskAndSaveSaveWorkbook())
+                    {
+                        // the user chose cancel so we are not closing after all
+                        return;
+                    }
+                }
             }
             AppStateManager.RestartInIdleMode();
         }
@@ -857,7 +864,7 @@ namespace ChessForge
                 switch (LearningMode.CurrentMode)
                 {
                     case LearningMode.Mode.ENGINE_GAME:
-                        if (MessageBox.Show("Cancel Game", "Game with the Computer is in Progress", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        if (MessageBox.Show("Cancel Game?", "Game with the Computer is in Progress", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                             result = true;
                         break;
                     default:
@@ -937,12 +944,15 @@ namespace ChessForge
 
                 AppStateManager.RestartInIdleMode(false);
 
+                // WorkbookFilePath is reset to "" in the above call!
+                AppStateManager.WorkbookFilePath = fileName;
+
                 await Task.Run(() =>
                 {
                     BoardCommentBox.ReadingFile();
                 });
 
-                System.Threading.Thread.Sleep(1000);
+//                System.Threading.Thread.Sleep(100);
                 AppStateManager.WorkbookFilePath = fileName;
 
                 string workbookText = File.ReadAllText(fileName);
@@ -978,7 +988,7 @@ namespace ChessForge
                 bool recentFilesProcessed = false;
                 if (AppStateManager.WorkbookFileType != AppStateManager.FileType.CHF)
                 {
-                    if (SaveConvertedWorkbookFile(fileName))
+                    if (SaveWorkbookToNewFile(fileName, true))
                     {
                         recentFilesProcessed = true;
                     }
@@ -1008,7 +1018,8 @@ namespace ChessForge
                     {
                         Workbook.GenerateBookmarks();
                         UiTabBookmarks.Focus();
-                        AppStateManager.SaveWorkbookFile();
+                        AppStateManager.IsDirty = true;
+                        //AppStateManager.SaveWorkbookFile();
                     }
                 }
 
@@ -1045,7 +1056,7 @@ namespace ChessForge
                 + "will be lost unless you save this Workbook as a ChessForge (.chf) file.\n\n Convert and save?";
             if (MessageBox.Show(msg, "Chess Forge File Closing", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                SaveConvertedWorkbookFile(AppStateManager.WorkbookFilePath);
+                SaveWorkbookToNewFile(AppStateManager.WorkbookFilePath, true);
                 return 0;
             }
             else
@@ -1055,22 +1066,31 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Allows the user to save the PGN files as CHF
-        /// thus allowing editing etc.
+        /// Allows the user to save the Workbook in a new file.
+        /// This method will be called when converting a PGN file to CHF
+        /// or in reponce to File->Save As menu selection.
         /// </summary>
         /// <param name="pgnFileName"></param>
-        private bool SaveConvertedWorkbookFile(string pgnFileName)
+        private bool SaveWorkbookToNewFile(string pgnFileName, bool typeConversion)
         {
             SaveFileDialog saveDlg = new SaveFileDialog();
             saveDlg.Filter = "chf Workbook files (*.chf)|*.chf";
-            saveDlg.Title = " Save Workbook converted from " + Path.GetFileName(pgnFileName);
+
+            if (typeConversion)
+            {
+                saveDlg.Title = " Save Workbook converted from " + Path.GetFileName(pgnFileName);
+            }
+            else
+            {
+                saveDlg.Title = " Save Workbook " + Path.GetFileName(pgnFileName) + " As...";
+            }
 
             saveDlg.FileName = Path.GetFileNameWithoutExtension(pgnFileName) + ".chf";
             saveDlg.OverwritePrompt = true;
             if (saveDlg.ShowDialog() == true)
             {
                 string chfFileName = saveDlg.FileName;
-                AppStateManager.SaveConvertedWorkbookFile(pgnFileName, chfFileName);
+                AppStateManager.SaveWorkbookToNewFile(pgnFileName, chfFileName, typeConversion);
                 return true;
             }
             else
@@ -1129,7 +1149,10 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.SaveWorkbookFile(true);
+                if (AppStateManager.IsDirty)
+                {
+                    AskAndSaveSaveWorkbook();
+                }
             }
             Timers.StopAll();
             AppLog.Dump();
@@ -1354,7 +1377,7 @@ namespace ChessForge
         /// We are going back to the MANUAL REVIEW mode
         /// so Active Line view will be shown.
         /// </summary>
-        private void StopEngineGame()
+        public void StopEngineGame()
         {
             Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
 
@@ -1651,7 +1674,8 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.SaveWorkbookFile();
+                AppStateManager.IsDirty = true;
+                // AppStateManager.SaveWorkbookFile();
                 UiTabBookmarks.Focus();
             }
         }
@@ -1674,8 +1698,33 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.SaveWorkbookFile();
+                AppStateManager.IsDirty = true;
+                //AppStateManager.SaveWorkbookFile();
                 UiTabBookmarks.Focus();
+            }
+        }
+
+        /// <summary>
+        /// Prompts the user to save the Workbook
+        /// or exit without saving.
+        /// Returns true if the user chooses yes or no,
+        /// returns false if the user cancels.
+        /// </summary>
+        private bool AskAndSaveSaveWorkbook()
+        {
+            var ret = MessageBox.Show("Save the Workbook?", "Workbook not saved", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            if (ret == MessageBoxResult.Yes)
+            {
+                AppStateManager.SaveWorkbookFile();
+                return true;
+            }
+            else if (ret == MessageBoxResult.No)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -1798,5 +1847,24 @@ namespace ChessForge
             StopEngineGame();
         }
 
+        private void UiMnPromoteLine_Click(object sender, RoutedEventArgs e)
+        {
+            _workbookView.PromoteCurrentLine();
+        }
+
+        private void UiMnDeleteMovesFromHere_Click(object sender, RoutedEventArgs e)
+        {
+            _workbookView.DeleteRemainingMoves();
+        }
+
+        private void UiMnWorkbookSave_Click(object sender, RoutedEventArgs e)
+        {
+            AppStateManager.SaveWorkbookFile();
+        }
+
+        private void UiMnWorkbookSaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            SaveWorkbookToNewFile(AppStateManager.WorkbookFilePath, false);
+        }
     }
 }

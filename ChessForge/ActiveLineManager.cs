@@ -68,7 +68,10 @@ namespace ChessForge
             SelectPly(row, column == 1 ? PieceColor.White : PieceColor.Black);
             int nodeIndex = GetNodeIndexFromRowColumn(row, column);
             TreeNode nd = GetNodeAtIndex(nodeIndex);
-            _mainWin.DisplayPosition(nd.Position);
+            if (nd != null)
+            {
+                _mainWin.DisplayPosition(nd.Position);
+            }
         }
 
         /// <summary>
@@ -197,6 +200,11 @@ namespace ChessForge
         {
             _dgActiveLine.SelectedCells.Clear();
             moveNo = Math.Max(moveNo, 0);
+
+            if (moveNo >= _dgActiveLine.Items.Count)
+            {
+                return;
+            }
 
             DataGridCellInfo cell;
             if (colorToMove == PieceColor.White && moveNo < _dgActiveLine.Items.Count)

@@ -160,7 +160,8 @@ namespace GameTree
             TreeNode rootNode = new TreeNode(null, "", runningNodeId);
             runningNodeId++;
 
-            WorkbookTree.SetupStartingPosition(ref rootNode);
+//            WorkbookTree.SetupStartingPosition(ref rootNode);
+            rootNode.Position = PositionUtils.SetupStartingPosition();
             workbook.AddNode(rootNode);
 
             if (DEBUG_MODE)

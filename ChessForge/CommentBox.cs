@@ -191,7 +191,10 @@ namespace ChessForge
         /// </summary>
         public void RestoreTitleMessage()
         {
-            ShowWorkbookTitle(_mainWin.Workbook.Title);
+            if (_mainWin.Workbook != null)
+            {
+                ShowWorkbookTitle(_mainWin.Workbook.Title);
+            }
         }
 
         /// <summary>
@@ -292,6 +295,8 @@ namespace ChessForge
                 Document.Blocks.Add(para);
                 para.Foreground = brush;
             });
+
+            AppStateManager.DoEvents();
         }
     }
 }

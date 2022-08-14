@@ -41,6 +41,7 @@ namespace ChessForge
         /// </summary>
         public enum FileType
         {
+            NONE,
             CHF,
             PGN
         }
@@ -58,7 +59,7 @@ namespace ChessForge
         /// <summary>
         /// Indicates whether there are any unsaved changes in the Workbook
         /// </summary>
-        public static bool IsDirty;
+        private static bool isDirty;
 
         // path to the current workbook file
         private static string _workbookFilePath;
@@ -77,7 +78,11 @@ namespace ChessForge
             set
             {
                 _workbookFilePath = value;
-                if (Path.GetExtension(_workbookFilePath).ToLower() == ".chf")
+                if (string.IsNullOrWhiteSpace(_workbookFilePath))
+                {
+                    _workbookFileType = FileType.NONE;
+                }
+                else if (Path.GetExtension(_workbookFilePath).ToLower() == ".chf")
                 {
                     _workbookFileType = FileType.CHF;
                 }
@@ -89,17 +94,20 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Saves the converted Workbook, updates the title bar
+        /// Saves the Workbook to a new file, updates the title bar
         /// and the list of recent files.
         /// </summary>
         /// <param name="pgnFileName"></param>
         /// <param name="chfFileName"></param>
-        public static void SaveConvertedWorkbookFile(string pgnFileName, string chfFileName)
+        public static void SaveWorkbookToNewFile(string pgnFileName, string chfFileName, bool typeConversion)
         {
             WorkbookFilePath = chfFileName;
             SaveWorkbookFile();
             UpdateAppTitleBar();
-            Configuration.RemoveFromRecentFiles(pgnFileName);
+            if (typeConversion)
+            {
+                Configuration.RemoveFromRecentFiles(pgnFileName);
+            }
             Configuration.AddRecentFile(chfFileName);
             _mainWin.RecreateRecentFilesMenuItems();
             Configuration.LastWorkbookFile = chfFileName;
@@ -181,6 +189,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Indicates whether the currently open workbook has been modified.
+        /// </summary>
+        public static bool IsDirty
+        {
+            get => isDirty;
+            set
+            {
+                isDirty = value;
+                ConfigureSaveMenus();
+            }
+        }
+
+        /// <summary>
         /// Resets the relevant controls to bring the application
         /// into the IDLE mode after it was in another mode.
         /// </summary>
@@ -191,11 +212,14 @@ namespace ChessForge
             _mainWin.UiRtbWorkbookView.Document.Blocks.Clear();
             _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
             _mainWin.UiRtbTrainingBrowse.Document.Blocks.Clear();
+            _mainWin.StopEngineGame();
+            _mainWin.Timers.StopAll();
             _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
-            AppStateManager.SwapCommentBoxForEngineLines(false);
-            AppStateManager.CurrentLearningMode = LearningMode.Mode.IDLE;
-            AppStateManager.SetupGuiForCurrentStates();
-            AppStateManager.WorkbookFilePath = "";
+            WorkbookFilePath = "";
+            UpdateAppTitleBar();
+            SwapCommentBoxForEngineLines(false);
+            CurrentLearningMode = LearningMode.Mode.IDLE;
+            SetupGuiForCurrentStates();
             if (updateCommentBox)
             {
                 _mainWin.BoardCommentBox.OpenFile();
@@ -229,6 +253,7 @@ namespace ChessForge
             }
             ShowEvaluationProgressControlsForCurrentStates();
             ConfigureMainBoardContextMenu();
+            ConfigureSaveMenus();
         }
 
         /// <summary>
@@ -358,6 +383,35 @@ namespace ChessForge
             ShowGuiEngineGameLine(true);
 
             ConfigureMenusForEngineGame();
+        }
+
+        /// <summary>
+        /// Depending on what type of file we have and its state,
+        /// set the state of the menus.
+        /// </summary>
+        public static void ConfigureSaveMenus()
+        {
+            if (!string.IsNullOrEmpty(WorkbookFilePath) && IsDirty && WorkbookFileType == FileType.CHF)
+            {
+                _mainWin.UiMnWorkbookSave.IsEnabled = true;
+                _mainWin.UiMnWorkbookSave.Header = "Save " + Path.GetFileName(WorkbookFilePath);
+            }
+            else
+            {
+                _mainWin.UiMnWorkbookSave.IsEnabled = false;
+                _mainWin.UiMnWorkbookSave.Header = "Save";
+            }
+
+            if (!string.IsNullOrEmpty(WorkbookFilePath))
+            {
+                _mainWin.UiMnWorkbookSaveAs.IsEnabled = true;
+                _mainWin.UiMnWorkbookSaveAs.Header = "Save " + Path.GetFileName(WorkbookFilePath) + " As...";
+            }
+            else
+            {
+                _mainWin.UiMnWorkbookSaveAs.IsEnabled = false;
+                _mainWin.UiMnWorkbookSaveAs.Header = "Save As...";
+            }
         }
 
         /// <summary>

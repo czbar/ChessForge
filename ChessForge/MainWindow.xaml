@@ -66,6 +66,9 @@
                 <MenuItem x:Name="UiMnLoadWorkbook" Header="Open Workbook" Click="Menu_LoadWorkbook"/>
                 <MenuItem x:Name="UiMnCloseWorkbook" Header="Close Workbook" Click="UiMnCloseWorkbook_Click" />
                 <Separator />
+                <MenuItem x:Name="UiMnWorkbookSave" Header="Save" Click="UiMnWorkbookSave_Click" />
+                <MenuItem x:Name="UiMnWorkbookSaveAs" Header="Save As ..." Click="UiMnWorkbookSaveAs_Click" />
+                <Separator />
             </MenuItem>
             <MenuItem Header="Training" Margin="0,0,0,0">
                 <MenuItem x:Name="UiMnStartTraining"  Header="Start New Session" Click="MenuItem_StartTraining"/>
@@ -139,6 +142,9 @@
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookGrid_PreviewMouseDown">
                     <Grid.ContextMenu>
                         <ContextMenu x:Name="UiCmnWorkbookRightClick">
+                            <MenuItem x:Name="UiMnPromoteLine" Header="Promote Line" Click="UiMnPromoteLine_Click" />
+                            <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnDeleteMovesFromHere_Click" />
+                            <Separator />
                             <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Bookmark This Position" Click="_mnWorkbookSelectAsBookmark_Click" />
                             <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="Bookmark All Options Here" Click="_mnWorkbookBookmarkAlternatives_Click" />
                             <Separator />
