@@ -90,9 +90,16 @@ namespace ChessForge
             }
             else
             {
-                int movesToMate = colorToMove == PieceColor.White ? line.MovesToMate : -1 * line.MovesToMate;
-                string sign = Math.Sign(movesToMate) > 0 ? "+" : "-";
-                eval = sign + "#" + (Math.Abs(line.MovesToMate)).ToString();
+                if (line.MovesToMate == 0)
+                {
+                    eval = "#";
+                }
+                else
+                {
+                    int movesToMate = colorToMove == PieceColor.White ? line.MovesToMate : -1 * line.MovesToMate;
+                    string sign = Math.Sign(movesToMate) > 0 ? "+" : "-";
+                    eval = sign + "#" + (Math.Abs(line.MovesToMate)).ToString();
+                }
             }
 
             return eval;
