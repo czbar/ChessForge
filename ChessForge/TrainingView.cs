@@ -446,7 +446,7 @@ namespace ChessForge
         public void RequestEngineResponse()
         {
             int nodeId = _userMove.NodeId;
-            _mainWin.PlayComputer(_userMove, true);
+            _mainWin.StartEngineGame(_userMove, true);
         }
 
         /// <summary>
