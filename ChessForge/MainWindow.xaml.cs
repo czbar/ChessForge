@@ -429,8 +429,8 @@ namespace ChessForge
                 PieceType promoteTo = PieceType.None;
 
                 if (EngineGame.GetPieceType(origSquareNorm) == PieceType.Pawn
-                    && (EngineGame.ColorToMove == PieceColor.White && targetSquareNorm.Ycoord == 7)
-                    || (EngineGame.ColorToMove == PieceColor.Black && targetSquareNorm.Ycoord == 0))
+                    && ((EngineGame.ColorToMove == PieceColor.White && targetSquareNorm.Ycoord == 7)
+                    || (EngineGame.ColorToMove == PieceColor.Black && targetSquareNorm.Ycoord == 0)))
                 {
                     isPromotion = true;
                     promoteTo = GetUserPromoSelection(targetSquareNorm);
