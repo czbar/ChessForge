@@ -368,6 +368,7 @@ namespace GameTree
                     string command = _remainingGameText.Substring(commandStart + 1, commandEnd - (commandStart + 1));
                     _workbook.AddChfCommand(node, command);
                     _remainingGameText = _remainingGameText.Substring(commandEnd + 1);
+                    endPos = endPos - (commandEnd + 1);
                 }
             }
 
