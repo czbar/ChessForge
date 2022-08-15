@@ -151,10 +151,14 @@ namespace ChessForge
                     if (isWhiteEval)
                     {
                         _mainWin.ActiveLine.GetMoveAtIndex(moveIndex).WhiteEval = eval;
+                        _mainWin.ActiveLine.GetNodeForMove(moveIndex, PieceColor.White).EngineEvaluation = eval;
+                        AppStateManager.IsDirty = true;
                     }
                     else
                     {
                         _mainWin.ActiveLine.GetMoveAtIndex(moveIndex).BlackEval = eval;
+                        _mainWin.ActiveLine.GetNodeForMove(moveIndex, PieceColor.Black).EngineEvaluation = eval;
+                        AppStateManager.IsDirty = true;
                     }
 
                     _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
