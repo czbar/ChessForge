@@ -118,6 +118,18 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns Node corresponding to a ply.
+        /// </summary>
+        /// <param name="moveIdx"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public TreeNode GetNodeForMove(int moveIdx, PieceColor color)
+        {
+            int nodeIdx = moveIdx * 2 + (color == PieceColor.White ? 0 : 1) + 1;
+            return Line.GetNodeAtIndex(nodeIdx);
+        }
+
+        /// <summary>
         /// Gets the number of plies in the Line.
         /// </summary>
         /// <returns></returns>

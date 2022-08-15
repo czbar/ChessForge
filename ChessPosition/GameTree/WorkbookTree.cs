@@ -136,10 +136,16 @@ namespace GameTree
                 string[] tokens = command.Split(' ');
                 string cmdPrefix = tokens[0];
 
-                switch (CfhCommands.GetCommand(cmdPrefix))
+                switch (ChfCommands.GetCommand(cmdPrefix))
                 {
-                    case CfhCommands.Command.BOOKMARK:
+                    case ChfCommands.Command.BOOKMARK:
                         AddBookmark(nd);
+                        break;
+                    case ChfCommands.Command.ENGINE_EVALUATION:
+                        if (tokens.Length > 1)
+                        {
+                            nd.EngineEvaluation = tokens[1];
+                        }
                         break;
                     default:
                         nd.AddUnprocessedChfCommand(command);

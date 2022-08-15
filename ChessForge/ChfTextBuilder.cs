@@ -157,13 +157,19 @@ namespace ChessForge
             sb.Append(" " + nd.LastMoveAlgebraicNotation);
             sb.Append(nd.Nags);
 
-            if (nd.IsBookmark || !string.IsNullOrEmpty(nd.Comment) || nd.UnprocessedChfCommands.Count > 0)
+            if (nd.IsBookmark || !string.IsNullOrEmpty(nd.Comment) || !string.IsNullOrEmpty(nd.EngineEvaluation) || nd.UnprocessedChfCommands.Count > 0)
             {
                 sb.Append(" {");
 
                 if (nd.IsBookmark)
                 {
-                    string sCmd = CfhCommands.GetStringForCommand(CfhCommands.Command.BOOKMARK);
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.BOOKMARK);
+                    sb.Append("[" + sCmd + "]");
+                }
+
+                if (!string.IsNullOrEmpty(nd.EngineEvaluation))
+                {
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ENGINE_EVALUATION) + " " + nd.EngineEvaluation;
                     sb.Append("[" + sCmd + "]");
                 }
 

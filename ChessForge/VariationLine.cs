@@ -183,11 +183,13 @@ namespace ChessForge
                 // previous move was by White
                 MoveWithEval move = MoveList[MoveList.Count - 1];
                 move.BlackPly = nd.LastMoveAlgebraicNotationWithNag;
+                move.BlackEval = nd.EngineEvaluation;
             }
             else
             {
                 MoveWithEval move = new MoveWithEval();
                 move.WhitePly = nd.LastMoveAlgebraicNotationWithNag;
+                move.WhiteEval = nd.EngineEvaluation;
                 move.Number = (MoveList.Count + 1).ToString() + ".";
                 MoveList.Add(move);
             }

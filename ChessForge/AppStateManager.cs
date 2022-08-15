@@ -196,8 +196,12 @@ namespace ChessForge
             get => isDirty;
             set
             {
-                isDirty = value;
-                ConfigureSaveMenus();
+                _mainWin.Dispatcher.Invoke(() =>
+                {
+
+                    isDirty = value;
+                    ConfigureSaveMenus();
+                });
             }
         }
 
@@ -212,9 +216,13 @@ namespace ChessForge
             _mainWin.UiRtbWorkbookView.Document.Blocks.Clear();
             _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
             _mainWin.UiRtbTrainingBrowse.Document.Blocks.Clear();
-            _mainWin.StopEngineGame();
-            _mainWin.Timers.StopAll();
+
+            _mainWin.Timers.StopAll(true);
+            _mainWin.ResetEngineThinkingGUI();
+            EngineGame.CurrentState = EngineGame.GameState.IDLE;
+
             _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+            _mainWin.RemoveMoveSquareColors();
             WorkbookFilePath = "";
             UpdateAppTitleBar();
             SwapCommentBoxForEngineLines(false);

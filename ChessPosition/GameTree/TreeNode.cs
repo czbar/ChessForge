@@ -37,8 +37,9 @@ namespace GameTree
         public List<TreeNode> Children = new List<TreeNode>();
 
         /// <summary>
-        /// List of Chess Forge commands associated with the leadup move,
-        /// if any.
+        /// List of Chess Forge commands associated with the leadup move
+        /// that we are not handling.
+        /// We will preserve them in this list so that we will write them out.
         /// </summary>
         public List<string> UnprocessedChfCommands = new List<string>();
 
@@ -59,6 +60,9 @@ namespace GameTree
 
         // the move leading to this position (algebraic notation with NAG symbols)
         private string _lastMoveAlgWithNag;
+
+        // engine evaluation
+        private string _engEval;
 
         /// <summary>
         /// Numeric Annotation Glyphs associated with this
@@ -262,6 +266,11 @@ namespace GameTree
             get { return Position.MoveNumber; }
             set { Position.MoveNumber = value; }
         }
+
+        /// <summary>
+        /// Holds engine evaluation if available.
+        /// </summary>
+        public string EngineEvaluation { get => _engEval; set => _engEval = value; }
 
         /// <summary>
         /// Text to show if the move is displayed somewhere.

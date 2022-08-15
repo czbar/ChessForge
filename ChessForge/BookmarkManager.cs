@@ -136,9 +136,8 @@ namespace ChessForge
         /// Sorts the bookmarks and updates the GUI.
         /// </summary>
         /// <returns>0 on success, 1 if already exists, -1 on failure</returns>
-        public static int AddBookmark(int nodeId)
+        public static int AddBookmark(TreeNode nd)
         {
-            TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
             if (nd != null)
             {
                 //add to the list in the Workbook
@@ -146,6 +145,7 @@ namespace ChessForge
                 {
                     SortBookmarks();
                     ResyncBookmarks(_currentPage);
+                    AppStateManager.IsDirty = true;
                     return 0;
                 }
                 else
@@ -158,6 +158,17 @@ namespace ChessForge
                 return -1;
             }
 
+        }
+
+        /// <summary>
+        /// Adds a bookmark to the list of bookmarks.
+        /// Sorts the bookmarks and updates the GUI.
+        /// </summary>
+        /// <returns>0 on success, 1 if already exists, -1 on failure</returns>
+        public static int AddBookmark(int nodeId)
+        {
+            TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
+            return AddBookmark(nd);
         }
 
         /// <summary>

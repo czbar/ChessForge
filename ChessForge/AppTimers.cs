@@ -194,9 +194,12 @@ namespace ChessForge
         /// Stops all timers.
         /// Handles ENGINE_MESSAGE_POLL timer as a special case.
         /// </summary>
-        public void StopAll()
+        public void StopAll(bool excludeMessagePoll)
         {
-            EngineMessageProcessor.ChessEngineService.StopMessagePollTimer();
+            if (!excludeMessagePoll)
+            {
+                EngineMessageProcessor.ChessEngineService.StopMessagePollTimer();
+            }
 
             foreach (var timer in _dictTimers.Values)
             {

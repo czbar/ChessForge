@@ -638,11 +638,13 @@ namespace ChessPosition
                 // white
                 move.Number = line[i].Position.MoveNumber.ToString() + ".";
                 move.WhitePly = line[i].LastMoveAlgebraicNotationWithNag;
+                move.WhiteEval = line[i].EngineEvaluation;
 
                 // black
                 if (i + 1 < line.Count)
                 {
                     move.BlackPly = line[i + 1].LastMoveAlgebraicNotationWithNag;
+                    move.BlackEval = line[i + 1].EngineEvaluation;
                 }
 
                 game.Add(move);
