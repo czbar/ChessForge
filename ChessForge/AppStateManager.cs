@@ -196,8 +196,12 @@ namespace ChessForge
             get => isDirty;
             set
             {
-                isDirty = value;
-                ConfigureSaveMenus();
+                _mainWin.Dispatcher.Invoke(() =>
+                {
+
+                    isDirty = value;
+                    ConfigureSaveMenus();
+                });
             }
         }
 
