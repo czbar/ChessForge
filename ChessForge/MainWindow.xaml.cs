@@ -952,7 +952,7 @@ namespace ChessForge
                     BoardCommentBox.ReadingFile();
                 });
 
-//                System.Threading.Thread.Sleep(100);
+                //                System.Threading.Thread.Sleep(100);
                 AppStateManager.WorkbookFilePath = fileName;
 
                 string workbookText = File.ReadAllText(fileName);
@@ -1310,6 +1310,23 @@ namespace ChessForge
         private void UiMnciExitEngineGame_Click(object sender, RoutedEventArgs e)
         {
             StopEngineGame();
+        }
+
+
+        private void UiMnciBookmarkPosition_Click(object sender, RoutedEventArgs e)
+        {
+            int moveIndex = ActiveLine.GetSelectedPlyNodeIndex();
+            if (moveIndex < 0)
+            {
+                return;
+            }
+            else
+            {
+                int posIndex = moveIndex + 1;
+                TreeNode nd = ActiveLine.GetNodeAtIndex(posIndex);
+                int ret = BookmarkManager.AddBookmark(nd);
+                UiTabBookmarks.Focus();
+            }
         }
 
         /// <summary>

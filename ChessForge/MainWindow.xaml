@@ -47,6 +47,8 @@
                         <MenuItem x:Name="UiMnciEvalPos" Header="Evaluate Position" Click="MenuItem_EvaluatePosition" />
                         <MenuItem x:Name="UiMnciEvalLine" Header="Evaluate Line" Click="MenuItem_EvaluateLine" />
                         <Separator x:Name="UiMncMainBoardSepar_2" />
+                        <MenuItem x:Name="UiMnciBookmarkPosition" Header="Bookmark This Position" Click="UiMnciBookmarkPosition_Click" />
+                        <Separator x:Name="UiMncMainBoardSepar_4" />
                         <MenuItem x:Name="UiMnciReplay" Header="Replay"  Click="MenuItem_ReplayLine"/>
                         <Separator x:Name="UiMncMainBoardSepar_3" />
                         <MenuItem x:Name="UiMnciPlayEngine" Header="Play Against Computer " Click="Menu_PlayEngine" />
@@ -277,7 +279,8 @@
                             <MenuItem x:Name="_mnTrainFromBookmark" Header="Start Training from This Bookmark" Click="_mnTrainFromBookmark_Click" />
                             <Separator />
                             <MenuItem x:Name="_mnGenerateBookmark" Header="Generate Bookmarks" Click="_mnGenerateBookmark_Click" />
-                            <MenuItem x:Name="_mnAddBookmark" Header="Add a Bookmark" Click="_mnAddBookmark_Click" />
+                            <MenuItem x:Name="_mnAddBookmark" Header="Go to Workbook to Add a Bookmark" Click="_mnAddBookmark_Click" />
+                            <Separator />
                             <MenuItem x:Name="_mnDeleteBookmark" Header="Delete This Bookmark" Click="_mnDeleteBookmark_Click" />
                             <MenuItem x:Name="_mnDeleteAllBookmarks" Header="Delete All Bookmarks" Click="_mnDeleteAllBookmarks_Click" />
                         </ContextMenu>
