@@ -37,8 +37,9 @@ namespace GameTree
         public List<TreeNode> Children = new List<TreeNode>();
 
         /// <summary>
-        /// List of Chess Forge commands associated with the leadup move,
-        /// if any.
+        /// List of Chess Forge commands associated with the leadup move
+        /// that we are not handling.
+        /// We will preserve them in this list so that we will write them out.
         /// </summary>
         public List<string> UnprocessedChfCommands = new List<string>();
 
