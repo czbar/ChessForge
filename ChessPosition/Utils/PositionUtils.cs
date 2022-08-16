@@ -451,18 +451,21 @@ namespace ChessPosition
 
 
         /// <summary>
-        /// If the move is castling, then the side who just moved
-        /// (i.e. the one NOT on the move in the new position
+        /// If the move is castling, depending on the forSideMove value
+        /// the side on the move on the opposite who just moved
         /// loses all castling rights.
+        /// The pgn parser will call it for the move who moved previous
+        /// while the engine line anlyser will call it for the side
+        /// on move in the current position.
         /// Similarly, if it is a king move.
         /// If it was a rook moving from its initial position
         /// the right to castle in its direction will be removed.
         /// </summary>
         /// <param name="pos"></param>
         /// <param name="move"></param>
-        public static void UpdateCastlingRights(ref BoardPosition pos, MoveData move)
+        public static void UpdateCastlingRights(ref BoardPosition pos, MoveData move, bool forSideOnMove)
         {
-            PieceColor colorToProcess = pos.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
+            PieceColor colorToProcess = forSideOnMove ? pos.ColorToMove : MoveUtils.ReverseColor(pos.ColorToMove);
 
             // if there are no castling rights left,
             // no need to process
@@ -486,21 +489,21 @@ namespace ChessPosition
                     UpdateCastlingRightsForRook(colorToProcess == PieceColor.White ? PieceColor.Black : PieceColor.White, move.Destination.Xcoord, move.Destination.Ycoord, ref pos);
                 }
 
-                if (colorToProcess == PieceColor.White)
-                {
-                    if (move.CastlingType != 0)
-                    {
-                        // need the color of the side that moved on previous ply.
-                        if (pos.ColorToMove == PieceColor.White)
-                        {
-                            pos.DynamicProperties &= unchecked((byte)~(Constants.BlackKingsideCastle | Constants.BlackQueensideCastle));
-                        }
-                        else
-                        {
-                            pos.DynamicProperties &= unchecked((byte)~(Constants.WhiteKingsideCastle | Constants.WhiteQueensideCastle));
-                        }
-                    }
-                }
+                //if (colorToProcess == PieceColor.White)
+                //{
+                //    if (move.CastlingType != 0)
+                //    {
+                //        // need the color of the side that moved on previous ply.
+                //        if (pos.ColorToMove == PieceColor.White)
+                //        {
+                //            pos.DynamicProperties &= unchecked((byte)~(Constants.BlackKingsideCastle | Constants.BlackQueensideCastle));
+                //        }
+                //        else
+                //        {
+                //            pos.DynamicProperties &= unchecked((byte)~(Constants.WhiteKingsideCastle | Constants.WhiteQueensideCastle));
+                //        }
+                //    }
+                //}
             }
         }
 
