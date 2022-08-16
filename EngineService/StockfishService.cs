@@ -19,7 +19,7 @@ namespace EngineService
     {
         // true if the engine is running ready to accept requets
         public bool IsEngineRunning = false;
-        
+
         // true if we have received "readyok" from the engine 
         public bool IsEngineReady = false;
 
@@ -63,47 +63,38 @@ namespace EngineService
         /// Initializes all relevant objects and variables.
         /// </summary>
         /// <returns></returns>
-        public bool StartEngine()
+        public bool StartEngine(string enginePath)
         {
-            //FileInfo engine = new FileInfo(Path.Combine(Environment.CurrentDirectory, "stockfish_8_x64.exe"));
-            FileInfo engine = new FileInfo(Path.Combine(Environment.CurrentDirectory, "stockfish_15_x64_avx2.exe"));
-            if (engine.Exists && engine.Extension == ".exe")
+            try
             {
-                try
-                {
-                    engineProcess = new Process();
-                    engineProcess.StartInfo.FileName = engine.FullName;
-                    engineProcess.StartInfo.UseShellExecute = false;
-                    engineProcess.StartInfo.RedirectStandardInput = true;
-                    engineProcess.StartInfo.RedirectStandardOutput = true;
-                    engineProcess.StartInfo.RedirectStandardError = true;
-                    engineProcess.StartInfo.CreateNoWindow = true;
+                engineProcess = new Process();
+                engineProcess.StartInfo.FileName = enginePath;
+                engineProcess.StartInfo.UseShellExecute = false;
+                engineProcess.StartInfo.RedirectStandardInput = true;
+                engineProcess.StartInfo.RedirectStandardOutput = true;
+                engineProcess.StartInfo.RedirectStandardError = true;
+                engineProcess.StartInfo.CreateNoWindow = true;
 
-                    engineProcess.Start();
+                engineProcess.Start();
 
-                    strmWriter = engineProcess.StandardInput;
-                    strmReader = engineProcess.StandardOutput;
+                strmWriter = engineProcess.StandardInput;
+                strmReader = engineProcess.StandardOutput;
 
-                    CreateTimer();
+                CreateTimer();
 
-                    // start the message polling timer
-                    // it will be stopped when ok is received
-                    StartMessagePollTimer();
+                // start the message polling timer
+                // it will be stopped when ok is received
+                StartMessagePollTimer();
 
-                    strmWriter.WriteLine(UciCommands.ENG_UCI);
-                    strmWriter.WriteLine(UciCommands.ENG_ISREADY);
-                    strmWriter.WriteLine(UciCommands.ENG_UCI_NEW_GAME);
+                strmWriter.WriteLine(UciCommands.ENG_UCI);
+                strmWriter.WriteLine(UciCommands.ENG_ISREADY);
+                strmWriter.WriteLine(UciCommands.ENG_UCI_NEW_GAME);
 
-                    IsEngineRunning = true;
+                IsEngineRunning = true;
 
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+                return true;
             }
-            else
+            catch
             {
                 return false;
             }
@@ -118,6 +109,7 @@ namespace EngineService
             {
                 strmReader.Close();
                 strmWriter.Close();
+                engineProcess.Close();
             }
 
             IsEngineRunning = false;
@@ -205,7 +197,7 @@ namespace EngineService
                         EngineLog.Message("NULL");
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw new Exception("ReadEngineMessages():" + ex.Message);
                 };
