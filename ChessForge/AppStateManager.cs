@@ -805,8 +805,7 @@ namespace ChessForge
 
                 _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
                 _mainWin.UiPbEngineThinking.Minimum = 0;
-                // add 50% to compensate for any processing delays, we don't want to be too optimistic
-                _mainWin.UiPbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime * 1.5);
+                _mainWin.UiPbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime);
                 _mainWin.UiPbEngineThinking.Value = 0;
             });
         }
