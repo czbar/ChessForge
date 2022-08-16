@@ -47,7 +47,7 @@ namespace StockfishTest
 
         private static void StartStockfishEngine(EngineService.EngineProcess engine)
         {
-            engine.StartEngine();
+            engine.StartEngine("stockfish_15_x64_avx2.exe");
 
             // wait for "readyok"
             while (true)

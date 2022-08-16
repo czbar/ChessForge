@@ -285,7 +285,7 @@ namespace GameTree
             MoveUtils.MakeMove(newNode.Position, move);
 
             // do the postprocessing
-            PositionUtils.UpdateCastlingRights(ref newNode.Position, move);
+            PositionUtils.UpdateCastlingRights(ref newNode.Position, move, false);
             PositionUtils.SetEnpassantSquare(ref newNode.Position, move);
 
             return newNode;

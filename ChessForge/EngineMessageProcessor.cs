@@ -372,6 +372,9 @@ namespace ChessForge
             SendCommand("setoption name multipv value " + mpv.ToString());
             SendCommand("position fen " + fen);
             SendCommand("go movetime " + movetime.ToString());
+            //SendCommand("go");
+            //_mainWin.Timers.SetInterval(AppTimers.TimerId.ENGINE_EVALUATION_STOP, Configuration.EngineEvaluationTime);
+            //_mainWin.Timers.Start(AppTimers.TimerId.ENGINE_EVALUATION_STOP);
         }
 
         /// <summary>
@@ -385,6 +388,16 @@ namespace ChessForge
             SendCommand("stop");
             _pendingStop = true;
             _mainWin.Timers.Start(AppTimers.TimerId.STOP_MESSAGE_POLL);
+        }
+
+        /// <summary>
+        /// Stops the evaluation once the allowed time expired.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public static void StopEngineEvaluation(object source, ElapsedEventArgs e)
+        {
+            SendCommand("stop");
         }
 
         /// <summary>
@@ -419,7 +432,7 @@ namespace ChessForge
             if (message == null)
                 return;
 
-            AppLog.Message("Rx Msg: " + message);
+            //AppLog.Message("Rx Msg: " + message);
             if (message.StartsWith("info"))
             {
                 ProcessInfoMessage(message);

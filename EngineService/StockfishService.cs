@@ -67,6 +67,7 @@ namespace EngineService
         {
             try
             {
+                EngineLog.Message("Starting engine: " + enginePath);
                 engineProcess = new Process();
                 engineProcess.StartInfo.FileName = enginePath;
                 engineProcess.StartInfo.UseShellExecute = false;
@@ -92,10 +93,13 @@ namespace EngineService
 
                 IsEngineRunning = true;
 
+                EngineLog.Message("Engine running.");
+
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                EngineLog.Message("Failed to start engine: " + ex.Message);
                 return false;
             }
         }
@@ -165,6 +169,9 @@ namespace EngineService
         /// </summary>
         private static object EngineLock = new object();
 
+        // helper counter for ReadEngineMessages
+        private int counter = 0;
+
         /// <summary>
         /// Called periodically in response to MessagePollTimer's elapse event
         /// to check on messages from the engine.
@@ -178,23 +185,30 @@ namespace EngineService
             {
                 try
                 {
-                    var message = strmReader.ReadLine();
-                    if (message != null)
+                    string message;
+                    while ((message = strmReader.ReadLine()) != null)
                     {
-                        EngineLog.Message(message);
-                        if (message.StartsWith(UciCommands.ENG_READY_OK))
+                        if (message != null && !message.Contains("currmove"))
                         {
-                            IsEngineReady = true;
-                            StopMessagePollTimer();
+                            EngineLog.Message(message);
+                            if (message.StartsWith(UciCommands.ENG_READY_OK))
+                            {
+                                IsEngineReady = true;
+                                StopMessagePollTimer();
+                            }
+                            else
+                            {
+                                EngineMessage?.Invoke(message);
+                            }
                         }
-                        else
+
+                        // escape every now then if it gets to tight so that GUI updates can happen
+                        counter++;
+                        if (counter % 10 == 0)
                         {
-                            EngineMessage?.Invoke(message);
+                            counter = 0;
+                            break;
                         }
-                    }
-                    else
-                    {
-                        EngineLog.Message("NULL");
                     }
                 }
                 catch (Exception ex)

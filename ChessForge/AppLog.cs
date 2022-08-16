@@ -29,9 +29,12 @@ namespace ChessForge
         /// <param name="msg"></param>
         public static void Message(string msg)
         {
+            if (Configuration.DebugMode == 0)
+                return;
+
             lock (AppLogLock)
             {
-                string timeStamp = DateTime.Now.ToString("0:MM / dd / yyy HH: mm: ss.fff") + "  ";
+                string timeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "  ";
                 Log.Add(timeStamp + msg);
             }
         }

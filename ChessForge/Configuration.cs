@@ -313,7 +313,12 @@ namespace ChessForge
         {
             if (!File.Exists(EngineExePath))
             {
-                string searchPath = Path.GetDirectoryName(EngineExePath);
+                string searchPath = "";
+                try
+                {
+                    searchPath = Path.GetDirectoryName(EngineExePath);
+                }
+                catch { };
                 EngineExePath = "";
                 DirectoryInfo info = new DirectoryInfo(".");
                 FileInfo[] files = info.GetFiles();
