@@ -316,7 +316,7 @@ namespace ChessPosition
             pos.EnPassantSquare = 0;
             PositionUtils.SetEnpassantSquare(ref pos, move);
             pos.InheritedEnPassantSquare = pos.EnPassantSquare;
-            PositionUtils.UpdateCastlingRights(ref pos, move);
+            PositionUtils.UpdateCastlingRights(ref pos, move, true);
 
             return alg;
         }
