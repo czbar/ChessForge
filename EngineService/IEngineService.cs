@@ -8,7 +8,7 @@ namespace EngineService
 {
     public interface IEngineService
     {
-        bool StartEngine();
+        bool StartEngine(string enginePath);
         void StopEngine();
         void SendCommand(string command);
         event Action<string> EngineMessage;

@@ -1895,5 +1895,26 @@ namespace ChessForge
         {
             SaveWorkbookToNewFile(AppStateManager.WorkbookFilePath, false);
         }
+
+        /// <summary>
+        /// View->Select Engine... menu item clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnSelectEngine_Click(object sender, RoutedEventArgs e)
+        {
+            string searchPath =  Path.GetDirectoryName(Configuration.EngineExePath);
+            if (!string.IsNullOrEmpty(Configuration.SelectEngineExecutable(searchPath)))
+            {
+                EngineMessageProcessor.StopEngineService();
+                EngineMessageProcessor.CreateEngineService(this, _isDebugMode);
+
+                bool engineStarted = EngineMessageProcessor.Start();
+                if (!engineStarted)
+                {
+                    MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
     }
 }

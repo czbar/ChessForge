@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 
@@ -27,6 +29,11 @@ namespace ChessForge
         /// Last read Workbook file.
         /// </summary>
         public static string LastWorkbookFile = "";
+
+        /// <summary>
+        /// Path to the engine executable
+        /// </summary>
+        public static string EngineExePath = "";
 
         /// <summary>
         /// Time given to the engine to evaluate a single move
@@ -65,6 +72,7 @@ namespace ChessForge
         private const string CFG_LAST_FILE = "LastFile";
         private const string CFG_RECENT_FILES = "RecentFiles";
         private const string CFG_MAIN_WINDOW_POS = "MainWindowPosition";
+        private const string CFG_ENGINE_EXE = "EngineExe";
 
         /// <summary>
         /// Time the engine has to make a move in a training game
@@ -192,6 +200,7 @@ namespace ChessForge
 
                 sb.Append(Environment.NewLine);
 
+                sb.Append(CFG_ENGINE_EXE + "=" + EngineExePath + Environment.NewLine);
                 sb.Append(CFG_ENGINE_MOVE_TIME + "=" + EngineMoveTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_EVALUATION_TIME + "=" + EngineEvaluationTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_MPV + "=" + EngineMpv.ToString() + Environment.NewLine);
@@ -295,6 +304,88 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Finds engine executable by checking if it is already set
+        /// and if not, if we have it in the current directory.
+        /// If all fails, asks the user to find it.
+        /// </summary>
+        /// <returns></returns>
+        public static string EngineExecutableFilePath()
+        {
+            if (!File.Exists(EngineExePath))
+            {
+                string searchPath = Path.GetDirectoryName(EngineExePath);
+                EngineExePath = "";
+                DirectoryInfo info = new DirectoryInfo(".");
+                FileInfo[] files = info.GetFiles();
+
+                int latestVer = -1;
+                foreach (FileInfo file in files)
+                {
+                    string fileLowerCase = file.Name.ToLower();
+                    if (file.Name.StartsWith("stockfish", StringComparison.OrdinalIgnoreCase) && fileLowerCase.IndexOf(".exe") > 0)
+                    {
+                        string[] tokens = file.Name.Split('_');
+                        if (tokens.Length >= 2)
+                        {
+                            int ver;
+                            if (int.TryParse(tokens[1], out ver))
+                            {
+                                if (ver > latestVer)
+                                {
+                                    latestVer = ver;
+                                    EngineExePath = file.FullName;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (string.IsNullOrEmpty(EngineExePath))
+                {
+                    EngineExePath = SelectEngineExecutable(searchPath);
+                }
+            }
+
+            return EngineExePath;
+        }
+
+        /// <summary>
+        /// Opens a dialog allowing the user to choose engine executable.
+        /// If selected, the configuration is saved.
+        /// </summary>
+        /// <returns></returns>
+        public static string SelectEngineExecutable(string searchPath)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = "Chess engine (*.exe)|*.exe";
+
+            if (!string.IsNullOrEmpty(searchPath))
+            {
+                openFileDialog.InitialDirectory = searchPath;
+            }
+            else
+            {
+                openFileDialog.InitialDirectory = "";
+            }
+
+            bool? result;
+            openFileDialog.InitialDirectory = "";
+            result = openFileDialog.ShowDialog();
+
+            if (result == true)
+            {
+                EngineExePath = openFileDialog.FileName;
+                WriteOutConfiguration();
+                return EngineExePath;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        /// <summary>
         /// Processes a single line/item from the configuration file.
         /// </summary>
         /// <param name="line"></param>
@@ -325,6 +416,9 @@ namespace ChessForge
                             break;
                         case CFG_LAST_FILE:
                             LastWorkbookFile = value;
+                            break;
+                        case CFG_ENGINE_EXE:
+                            EngineExePath = value;
                             break;
                         case CFG_ENGINE_EVALUATION_TIME:
                             int.TryParse(value, out EngineEvaluationTime);

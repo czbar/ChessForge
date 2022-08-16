@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameTree;
 using ChessPosition;
+using System.IO;
 
 namespace ChessForge
 {
@@ -66,6 +67,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Stops the engine service e.g. when
+        /// we want to switch the engines.
+        /// </summary>
+        public static void StopEngineService()
+        {
+        }
+
+        /// <summary>
         /// Returns true if the engine service is running.
         /// </summary>
         /// <returns></returns>
@@ -90,7 +99,8 @@ namespace ChessForge
         /// <returns></returns>
         public static bool Start()
         {
-            return ChessEngineService.StartEngine();
+            string enginePath = Configuration.EngineExecutableFilePath();
+            return ChessEngineService.StartEngine(enginePath);
         }
 
         /// <summary>
