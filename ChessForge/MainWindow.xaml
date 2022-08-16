@@ -79,6 +79,8 @@
             </MenuItem>
             <MenuItem Header="View" Margin="0,0,0,0">
                 <MenuItem Header="Flip Board" Click="MenuItem_FlipBoard" />
+                <Separator />
+                <MenuItem Header="Analysis Engine..." Click="UiMnSelectEngine_Click" />
             </MenuItem>
         </Menu>
         <DataGrid x:Name="UiDgEngineGame" Grid.Column="1" HorizontalAlignment="Left" Height="670" Margin="10,5,0,0" VerticalAlignment="Top" Width="180"  

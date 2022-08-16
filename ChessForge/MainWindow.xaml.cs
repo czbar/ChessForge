@@ -429,8 +429,8 @@ namespace ChessForge
                 PieceType promoteTo = PieceType.None;
 
                 if (EngineGame.GetPieceType(origSquareNorm) == PieceType.Pawn
-                    && (EngineGame.ColorToMove == PieceColor.White && targetSquareNorm.Ycoord == 7)
-                    || (EngineGame.ColorToMove == PieceColor.Black && targetSquareNorm.Ycoord == 0))
+                    && ((EngineGame.ColorToMove == PieceColor.White && targetSquareNorm.Ycoord == 7)
+                    || (EngineGame.ColorToMove == PieceColor.Black && targetSquareNorm.Ycoord == 0)))
                 {
                     isPromotion = true;
                     promoteTo = GetUserPromoSelection(targetSquareNorm);
@@ -1894,6 +1894,27 @@ namespace ChessForge
         private void UiMnWorkbookSaveAs_Click(object sender, RoutedEventArgs e)
         {
             SaveWorkbookToNewFile(AppStateManager.WorkbookFilePath, false);
+        }
+
+        /// <summary>
+        /// View->Select Engine... menu item clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnSelectEngine_Click(object sender, RoutedEventArgs e)
+        {
+            string searchPath =  Path.GetDirectoryName(Configuration.EngineExePath);
+            if (!string.IsNullOrEmpty(Configuration.SelectEngineExecutable(searchPath)))
+            {
+                EngineMessageProcessor.StopEngineService();
+                EngineMessageProcessor.CreateEngineService(this, _isDebugMode);
+
+                bool engineStarted = EngineMessageProcessor.Start();
+                if (!engineStarted)
+                {
+                    MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
     }
 }
