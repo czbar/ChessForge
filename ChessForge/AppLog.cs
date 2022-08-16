@@ -31,7 +31,7 @@ namespace ChessForge
         {
             lock (AppLogLock)
             {
-                string timeStamp = DateTime.Now.ToString("0:MM / dd / yyy HH: mm: ss.fff") + "  ";
+                string timeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "  ";
                 Log.Add(timeStamp + msg);
             }
         }
