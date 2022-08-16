@@ -170,6 +170,7 @@ namespace ChessForge
             {
                 _dictTimers[tt].Enabled = true;
             }
+            AppLog.Message("Start timer:" + tt.ToString());
         }
 
         /// <summary>
@@ -187,6 +188,7 @@ namespace ChessForge
             {
                 _dictTimers[tt].Enabled = false;
             }
+            AppLog.Message("Stop timer:" + tt.ToString());
         }
 
         /// <summary>
