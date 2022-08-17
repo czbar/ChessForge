@@ -223,6 +223,18 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Checks if passed coordinates are valid
+        /// chessboard square coordinates
+        /// </summary>
+        /// <param name="sq"></param>
+        /// <returns></returns>
+        public static bool AreValidCoordinates(SquareCoords sq)
+        {
+            return AreValidCoordinates(sq.Xcoord, sq.Ycoord);
+        }
+
+
+        /// <summary>
         /// Returns the color of the side that is on move.
         /// </summary>
         /// <param name="board"></param>
