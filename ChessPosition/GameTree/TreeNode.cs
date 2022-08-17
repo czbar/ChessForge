@@ -51,6 +51,14 @@ namespace GameTree
         public bool IsNewTrainingMove = false;
 
         /// <summary>
+        /// Marks a node that was not in the Workbook when it was open.
+        /// This is edit by the user
+        /// Depending on user choices, it may be later on removed from the Workbook
+        /// or added permanently.
+        /// </summary>
+        public bool IsNewUserMove = false;
+
+        /// <summary>
         /// A text comment associated with the leadup move
         /// </summary>
         public string Comment = null;
