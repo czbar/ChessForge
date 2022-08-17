@@ -205,6 +205,10 @@ namespace ChessForge
 
         /// <summary>
         /// Selects the requested ply in relevant controls.
+        /// We get passed the move number of the parent of the node we want 
+        /// to select and also parent's ColorToMove.
+        /// We keep the color but adjust the move number if the ColorToMove
+        /// is Black.
         /// </summary>
         /// <param name="moveNo">Number of the move</param>
         /// <param name="colorToMove">Side on move</param>
@@ -213,7 +217,12 @@ namespace ChessForge
             _dgActiveLine.SelectedCells.Clear();
             moveNo = Math.Max(moveNo, 0);
 
-            if (moveNo >= _dgActiveLine.Items.Count)
+            if (moveNo == 0 && colorToMove != PieceColor.White)
+            {
+                return;
+            }
+
+            if (moveNo > _dgActiveLine.Items.Count || (moveNo == _dgActiveLine.Items.Count && colorToMove != PieceColor.Black))
             {
                 return;
             }
@@ -242,7 +251,7 @@ namespace ChessForge
         /// Returns the currently selected Node/Ply, if any.
         /// </summary>
         /// <returns></returns>
-        internal TreeNode GetSelectedTreeNode()
+        public TreeNode GetSelectedTreeNode()
         {
             int row, column;
 

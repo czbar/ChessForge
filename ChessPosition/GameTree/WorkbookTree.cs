@@ -361,7 +361,25 @@ namespace GameTree
         public void AddNode(TreeNode node)
         {
             Nodes.Add(node);
+        }
 
+        /// <summary>
+        /// Creates a new child node for the passed node.
+        /// </summary>
+        /// <returns></returns>
+        public TreeNode CreateNewChildNode(TreeNode nd)
+        {
+            BoardPosition pos = new BoardPosition(nd.Position);
+            TreeNode newChild = new TreeNode(nd, "", GetNewNodeId());
+            
+            // preserve InheritedEnPassent and Dynamic Properities
+            pos.InheritedEnPassantSquare = newChild.Position.InheritedEnPassantSquare;
+            pos.DynamicProperties = newChild.Position.DynamicProperties;
+            pos.EnPassantSquare = 0;
+
+            newChild.Position = pos;
+
+            return newChild;
         }
 
         /// <summary>

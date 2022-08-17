@@ -42,6 +42,8 @@ namespace ChessForge
                 [PieceType.Pawn] = ChessForge.Pieces.BlackPawn
             };
 
+        // board position currently shown
+        private BoardPosition _position;
 
         /// <summary>
         /// Size of an individual square in pixels
@@ -324,6 +326,8 @@ namespace ChessForge
         /// <param name="pos"></param>
         public void DisplayPosition(BoardPosition pos)
         {
+            _position = new BoardPosition(pos);
+
             for (int xcoord = 0; xcoord < 8; xcoord++)
             {
                 for (int ycoord = 0; ycoord < 8; ycoord++)
@@ -336,10 +340,30 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the position object.
+        /// If display == true, shows the position in the GUI.
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="display"></param>
+        public void SetPosition(BoardPosition pos, bool display)
+        {
+            if (display)
+            {
+                DisplayPosition(pos);
+            }
+            else
+            {
+                _position = new BoardPosition(pos);
+            }
+        }
+
+        /// <summary>
         /// Removes all piece images from the board.
         /// </summary>
         public void ClearBoard()
         {
+            _position = new BoardPosition();
+
             for (int xcoord = 0; xcoord < 8; xcoord++)
             {
                 for (int ycoord = 0; ycoord < 8; ycoord++)
@@ -351,14 +375,55 @@ namespace ChessForge
             RemoveMoveSquareColors();
         }
 
+        /// <summary>
+        /// Sets and shows the starting position.
+        /// </summary>
         public void DisplayStartingPosition()
         {
-            DisplayPosition(PositionUtils.SetupStartingPosition());
+            _position = PositionUtils.SetupStartingPosition();
+            DisplayPosition(_position);
         }
 
+        /// <summary>
+        /// Sets and shows the starting position.
+        /// </summary>
         public void SetStartingPosition()
         {
             DisplayStartingPosition();
+        }
+
+        /// <summary>
+        /// Returns the type of the piece occupying the passed square.
+        /// </summary>
+        /// <param name="sq"></param>
+        /// <returns></returns>
+        public PieceType GetPieceType(SquareCoords sq)
+        {
+            if (PositionUtils.AreValidCoordinates(sq))
+            {
+                return PositionUtils.GetPieceType(_position.Board[sq.Xcoord, sq.Ycoord]);
+            }
+            else
+            {
+                return PieceType.None;
+            }
+        }
+
+        /// <summary>
+        /// Returns the color of the piece occupying the passed square.
+        /// </summary>
+        /// <param name="sq"></param>
+        /// <returns></returns>
+        public PieceColor GetPieceColor(SquareCoords sq)
+        {
+            if (PositionUtils.AreValidCoordinates(sq))
+            {
+                return PositionUtils.GetPieceColor(_position.Board[sq.Xcoord, sq.Ycoord]);
+            }
+            else
+            {
+                return PieceColor.None;
+            }
         }
 
         /// <summary>
