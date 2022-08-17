@@ -255,6 +255,8 @@ namespace ChessForge
                 {
                     if (nd.NodeId != 0)
                     {
+                        // TODO: we crash here when run is not added
+                        //       keep for now to help finding bugs
                         _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
                     }
                 }
