@@ -56,6 +56,9 @@ namespace ChessForge
         // The main chessboard of the application
         public ChessBoard MainChessBoard;
 
+        /// <summary>
+        /// Chessboard shown over moves in different views
+        /// </summary>
         public ChessBoard FloatingChessBoard;
 
         /// <summary>
@@ -66,6 +69,9 @@ namespace ChessForge
 
         public GameReplay ActiveLineReplay;
 
+        /// <summary>
+        /// manages data for the ActiveLine DataGrid
+        /// </summary>
         public ActiveLineManager ActiveLine;
 
         /// <summary>
@@ -1284,7 +1290,7 @@ namespace ChessForge
         {
             UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
-            //LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
 
             // TODO: should make a call to SetupGUI for game, instead
             AppStateManager.ShowMoveEvaluationControls(false, false);
