@@ -47,7 +47,8 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// A utility that may prove useful one day.
+        /// A utility clearing the events so that e.g. we can 
+        /// show messages in the BoardCommentBox immediately.
         /// </summary>
         public static void DoEvents()
         {
@@ -59,7 +60,7 @@ namespace ChessForge
         /// <summary>
         /// Indicates whether there are any unsaved changes in the Workbook
         /// </summary>
-        private static bool isDirty;
+        private static bool _isDirty;
 
         // path to the current workbook file
         private static string _workbookFilePath;
@@ -136,6 +137,7 @@ namespace ChessForge
             {
                 string chfText = ChfTextBuilder.BuildText(AppStateManager.MainWin.Workbook);
                 File.WriteAllText(WorkbookFilePath, chfText);
+                _isDirty = false;
             }
         }
 
@@ -193,13 +195,13 @@ namespace ChessForge
         /// </summary>
         public static bool IsDirty
         {
-            get => isDirty;
+            get => _isDirty;
             set
             {
                 _mainWin.Dispatcher.Invoke(() =>
                 {
 
-                    isDirty = value;
+                    _isDirty = value;
                     ConfigureSaveMenus();
                 });
             }
