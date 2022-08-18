@@ -1095,7 +1095,8 @@ namespace ChessForge
             }
             else
             {
-                if (AppStateManager.IsDirty)
+                if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE 
+                    && AppStateManager.IsDirty || Workbook.HasTrainingMoves())
                 {
                     AskAndSaveSaveWorkbook();
                 }
@@ -1492,6 +1493,7 @@ namespace ChessForge
                     MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         Workbook.ClearTrainingFlags();
+                        Workbook.BuildLines();
                         AppStateManager.SaveWorkbookFile();
                         _workbookView.BuildFlowDocumentForWorkbook();
                         AppStateManager.IsDirty = false;
