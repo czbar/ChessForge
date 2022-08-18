@@ -371,7 +371,7 @@ namespace GameTree
         {
             BoardPosition pos = new BoardPosition(nd.Position);
             TreeNode newChild = new TreeNode(nd, "", GetNewNodeId());
-            
+
             // preserve InheritedEnPassent and Dynamic Properities
             pos.InheritedEnPassantSquare = newChild.Position.InheritedEnPassantSquare;
             pos.DynamicProperties = newChild.Position.DynamicProperties;
@@ -477,6 +477,96 @@ namespace GameTree
                 return false;
 
             return FenParser.GenerateFenFromPosition(pos1) == FenParser.GenerateFenFromPosition(pos2);
+        }
+
+        /// <summary>
+        /// Checks if there are any moves marked
+        /// as training in the tree.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasTrainingMoves()
+        {
+            foreach (TreeNode nd in Nodes)
+            {
+                if (nd.IsNewTrainingMove)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if there are any moves with
+        /// engine evaluations in the tree.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasMovesWithEvaluations()
+        {
+            foreach (TreeNode nd in Nodes)
+            {
+                if (!string.IsNullOrWhiteSpace(nd.EngineEvaluation))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Clears any training flags found.
+        /// </summary>
+        public void ClearTrainingFlags()
+        {
+            foreach (TreeNode nd in Nodes)
+            {
+                nd.IsNewTrainingMove = false;
+            }
+        }
+
+        /// <summary>
+        /// Removes all training moves from the tree
+        /// </summary>
+        public void RemoveTrainingMoves()
+        {
+            // identify the nodes first and remove them
+            // from parents'  children lists
+            List<TreeNode> nodesToRemove = new List<TreeNode>();
+            foreach (TreeNode nd in Nodes)
+            {
+                if (nd.IsNewTrainingMove)
+                {
+                    nodesToRemove.Add(nd);
+                    if (nd.Parent != null)
+                    {
+                        nd.Parent.Children.Remove(nd);
+                    }
+                }
+            }
+
+            foreach (TreeNode nd in nodesToRemove)
+            {
+                Nodes.Remove(nd);
+            }
+        }
+
+        /// <summary>
+        /// Clears all engine evaluations.
+        /// </summary>
+        public void ClearEngineEvaluations()
+        {
+            foreach (TreeNode nd in Nodes)
+            {
+                nd.EngineEvaluation = null;
+            }
+        }
+
+        /// <summary>
+        /// Checks if there are any bookmarks
+        /// as training in the tree.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasBookmarks()
+        {
+            return Bookmarks.Count > 0;
         }
 
         /// <summary>
