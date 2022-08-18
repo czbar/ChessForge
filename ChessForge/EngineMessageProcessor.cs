@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GameTree;
 using ChessPosition;
 using System.IO;
+using EngineService;
 
 namespace ChessForge
 {
@@ -335,10 +336,10 @@ namespace ChessForge
         public static void ClearMoveCandidates(bool force)
         {
             if (force || !(AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME))
-            lock (MoveCandidatesLock)
-            {
-                MoveCandidates.Clear();
-            }
+                lock (MoveCandidatesLock)
+                {
+                    MoveCandidates.Clear();
+                }
         }
 
         /// <summary>
@@ -448,6 +449,11 @@ namespace ChessForge
                 {
                     ProcessBestMoveMessage(message);
                 }
+            }
+            else if (message.StartsWith(UciCommands.ENG_ID_NAME))
+            {
+                string engineName = message.Substring(UciCommands.ENG_ID_NAME.Length).Trim();
+                AppStateManager.EngineName = engineName;
             }
         }
 
