@@ -58,6 +58,11 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Name of the engine currently loaded.
+        /// </summary>
+        public static string EngineName = "unknown";
+
+        /// <summary>
         /// Indicates whether there are any unsaved changes in the Workbook
         /// </summary>
         private static bool _isDirty;

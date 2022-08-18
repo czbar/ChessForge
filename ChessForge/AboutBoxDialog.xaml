@@ -1,0 +1,17 @@
+﻿<Window x:Class="ChessForge.AboutBoxDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+        Title="Chess Forge" Height="300" Width="400" MouseDown="Window_MouseDown">
+    <Grid>
+        <RichTextBox x:Name="_rtbAboutBox" Margin="8,8,8,60" BorderThickness="2" >
+            <FlowDocument>
+            </FlowDocument>
+        </RichTextBox>
+        <Button x:Name="_btnOK" Content="OK" HorizontalAlignment="Center" Margin="0,242,0,20" VerticalAlignment="Top" Width="74" Click="_btnOK_Click" Height="20"/>
+
+    </Grid>
+</Window>

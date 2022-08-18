@@ -17,6 +17,9 @@
 
         // other strings
         public const string ENG_MULTIPV = "mpv";
+
+        // prefix in the engine's message naming itself
+        public const string ENG_ID_NAME = "id name";
     }
 }
 

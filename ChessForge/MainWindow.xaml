@@ -82,6 +82,9 @@
                 <Separator />
                 <MenuItem Header="Analysis Engine..." Click="UiMnSelectEngine_Click" />
             </MenuItem>
+            <MenuItem Header="Help" Margin="0,0,0,0">
+                <MenuItem Header="About" Click="UiMnHelpAbout_Click" />
+            </MenuItem>
         </Menu>
         <DataGrid x:Name="UiDgEngineGame" Grid.Column="1" HorizontalAlignment="Left" Height="670" Margin="10,5,0,0" VerticalAlignment="Top" Width="180"  
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" CanUserSortColumns="False"
