@@ -1481,12 +1481,26 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MenuItem_StopTraining(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                // TODO: ask questions re saving etc.
-
                 EngineMessageProcessor.StopEngineEvaluation();
                 Evaluation.Reset();
+
+                if (Workbook.HasTrainingMoves())
+                {
+                    if (MessageBox.Show("Save training moves in the Workbook?", "Chess Forge Training",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        Workbook.ClearTrainingFlags();
+                        AppStateManager.SaveWorkbookFile();
+                        _workbookView.BuildFlowDocumentForWorkbook();
+                        AppStateManager.IsDirty = false;
+                    }
+                    else
+                    {
+                        Workbook.RemoveTrainingMoves();
+                    }
+                }
 
                 TrainingState.IsTrainingInProgress = false;
                 MainChessBoard.RemoveMoveSquareColors();
