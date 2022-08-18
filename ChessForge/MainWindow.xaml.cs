@@ -1877,5 +1877,16 @@ namespace ChessForge
                 }
             }
         }
+
+        /// <summary>
+        /// User clicked Help->About
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnHelpAbout_Click(object sender, RoutedEventArgs e)
+        {
+            AboutBoxDialog dlg = new AboutBoxDialog();
+            dlg.ShowDialog();
+        }
     }
 }
