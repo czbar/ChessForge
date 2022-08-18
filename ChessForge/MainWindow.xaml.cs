@@ -1283,7 +1283,10 @@ namespace ChessForge
         {
             UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
+            //LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
+
+            // TODO: should make a call to SetupGUI for game, instead
+            AppStateManager.ShowMoveEvaluationControls(false, false);
 
             EngineGame.InitializeGameObject(startNode, true, IsTraining);
             UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
@@ -1462,6 +1465,7 @@ namespace ChessForge
                 MainChessBoard.FlipBoard();
             }
 
+            AppStateManager.ShowMoveEvaluationControls(false, false);
             BoardCommentBox.TrainingSessionStart();
 
             // The Line display is the same as when playing a game against the computer 

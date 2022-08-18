@@ -706,11 +706,14 @@ namespace ChessForge
         /// </summary>
         /// <param name="mode"></param>
         /// <param name="position"></param>
-        public static string PrepareMoveEvaluation(BoardPosition position)
+        public static string PrepareMoveEvaluation(BoardPosition position, bool monitorLines)
         {
             PrepareEvaluationControls();
 
-            _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+            if (monitorLines)
+            {
+                _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+            }
             _mainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
 
             return FenParser.GenerateFenFromPosition(position);
@@ -746,7 +749,7 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                if (visible)
+                if (visible && CurrentEvaluationMode != EvaluationState.EvaluationMode.ENGINE_GAME)
                 {
                     _mainWin.UiRtbBoardComment.Visibility = Visibility.Hidden;
                     _mainWin.UiTbEngineLines.Visibility = Visibility.Visible;
