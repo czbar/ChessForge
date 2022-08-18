@@ -83,7 +83,12 @@ namespace ChessForge
 
                         SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
 
-                        // TODO: adjust to the learning mode
+                        if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                        {
+                            AppStateManager.ShowMoveEvaluationControls(false, false);
+                        }
+
+                        // TODO: adjust message to the learning mode
                         AppStateManager.MainWin.BoardCommentBox.GameMoveMade(nd, true);
                         AppStateManager.MainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
                         if (nd != null)

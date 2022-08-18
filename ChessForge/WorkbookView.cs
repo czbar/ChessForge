@@ -311,7 +311,8 @@ namespace ChessForge
             Paragraph para = CreateParagraph("0");
             Document.Blocks.Add(para);
 
-            BuildTreeLineText(root, para, false);
+            // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
+            BuildTreeLineText(root, para, includeStem);
 
             RemoveEmptyParagraphs();
         }
@@ -468,7 +469,7 @@ namespace ChessForge
                     NodeType nodeType = GetNodeType(nd);
 
                     //bool multi = nd.Children.Count > 2;
-                    bool multi = nodeType == NodeType.FORK_WITH_FORK_LINES;
+                    bool multi = (nodeType == NodeType.FORK_WITH_FORK_LINES) || nd.Children.Count > 2;
 
                     // the first child remains at the same level as the parent
                     BuildNodeText(nd.Children[0], includeNumber, para);
@@ -533,7 +534,10 @@ namespace ChessForge
                             }
                             else
                             {
-                                para.Inlines.Add(new Run("; "));
+                                if (!multi)
+                                {
+                                    para.Inlines.Add(new Run("; "));
+                                }
                             }
                         }
                     }

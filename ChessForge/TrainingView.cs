@@ -44,7 +44,6 @@ namespace ChessForge
             STEM,
             SESSION_HEADER,
             INSTRUCTIONS,
-            PLAY_ENGINE_NOTE,
             PROMPT_TO_MOVE,
             USER_MOVE,
             WORKBOOK_MOVES
@@ -59,7 +58,6 @@ namespace ChessForge
             [ParaType.STEM] = null,
             [ParaType.SESSION_HEADER] = null,
             [ParaType.INSTRUCTIONS] = null,
-            [ParaType.PLAY_ENGINE_NOTE] = null,
             [ParaType.PROMPT_TO_MOVE] = null,
             [ParaType.USER_MOVE] = null,
             [ParaType.WORKBOOK_MOVES] = null
@@ -76,7 +74,6 @@ namespace ChessForge
             ParaType.STEM,
             ParaType.SESSION_HEADER,
             ParaType.INSTRUCTIONS,
-            ParaType.PLAY_ENGINE_NOTE,
             ParaType.PROMPT_TO_MOVE,
             ParaType.USER_MOVE,
             ParaType.WORKBOOK_MOVES
@@ -189,6 +186,10 @@ namespace ChessForge
         /// </summary>
         override internal Dictionary<string, RichTextPara> RichTextParas { get { return _richTextParas; } }
 
+        private static readonly string STYLE_INTRO = "intro";
+        private static readonly string STYLE_FIRST_PROMPT = "first_prompt";
+        private static readonly string STYLE_SECOND_PROMPT = "second_prompt";
+        private static readonly string STYLE_STEM_LINE = "stem_line";
         private static readonly string STYLE_MOVES_MAIN = "moves_main";
         private static readonly string STYLE_COACH_NOTES = "coach_notes";
         private static readonly string STYLE_ENGINE_EVAL = "engine_eval";
@@ -197,24 +198,23 @@ namespace ChessForge
         private static readonly string STYLE_CHECKMATE = "mate";
         private static readonly string STYLE_STALEMATE = "stalemate";
 
+        private static readonly string STYLE_DEFAULT = "default";
+
         /// <summary>
         /// Layout definitions for paragraphs at different levels.
         /// </summary>
         internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
-            ["intro"] = new RichTextPara(0, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Left),
-            ["first_prompt"] = new RichTextPara(10, 20, 16, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
-            ["second_prompt"] = new RichTextPara(10, 0, 14, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
-            ["play_engine_note"] = new RichTextPara(10, 10, 16, FontWeights.Bold, Brushes.Black, TextAlignment.Left, Brushes.Black),
-            ["stem_line"] = new RichTextPara(0, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
-            ["eval_results"] = new RichTextPara(30, 5, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(51, 159, 141)), TextAlignment.Left),
-            ["normal"] = new RichTextPara(10, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-            ["default"] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
+            [STYLE_INTRO] = new RichTextPara(0, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Left),
+            [STYLE_FIRST_PROMPT] = new RichTextPara(10, 0, 16, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
+            [STYLE_SECOND_PROMPT] = new RichTextPara(10, 0, 14, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
+            [STYLE_STEM_LINE] = new RichTextPara(0, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
+            [STYLE_DEFAULT] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
 
-            [STYLE_MOVES_MAIN] = new RichTextPara(10, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-            [STYLE_COACH_NOTES] = new RichTextPara(50, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
+            [STYLE_MOVES_MAIN] = new RichTextPara(10, 5, 16, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
+            [STYLE_COACH_NOTES] = new RichTextPara(50, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
             [STYLE_ENGINE_EVAL] = new RichTextPara(80, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-            [STYLE_ENGINE_GAME] = new RichTextPara(50, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
+            [STYLE_ENGINE_GAME] = new RichTextPara(50, 0, 16, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
 
             [STYLE_CHECKMATE] = new RichTextPara(50, 0, 18, FontWeights.Bold, Brushes.Red, TextAlignment.Left, Brushes.Red),
             [STYLE_STALEMATE] = new RichTextPara(50, 0, 18, FontWeights.Bold, Brushes.Red, TextAlignment.Left, Brushes.Red),
@@ -228,7 +228,6 @@ namespace ChessForge
         {
             _dictParas[ParaType.INTRO] = null;
             _dictParas[ParaType.STEM] = null;
-            _dictParas[ParaType.PLAY_ENGINE_NOTE] = null;
             _dictParas[ParaType.INSTRUCTIONS] = null;
             _dictParas[ParaType.PROMPT_TO_MOVE] = null;
             _dictParas[ParaType.USER_MOVE] = null;
@@ -645,11 +644,11 @@ namespace ChessForge
             Run r_prefix = new Run();
             if (userMove)
             {
-                r_prefix.Text = "\nYou played:   ";
+                r_prefix.Text = "You played:   ";
             }
             else
             {
-                r_prefix.Text = "\nCoach's response:   ";
+                r_prefix.Text = "Coach's response:   ";
             }
             r_prefix.FontWeight = FontWeights.Normal;
 
@@ -707,8 +706,6 @@ namespace ChessForge
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
-
-
         /// <summary>
         /// Builds the "stem line" paragraphs that is always visible at the top
         /// of the view.
@@ -716,7 +713,7 @@ namespace ChessForge
         /// <param name="node"></param>
         private void CreateStemParagraph(TreeNode node)
         {
-            _dictParas[ParaType.STEM] = AddNewParagraphToDoc("stem_line", null);
+            _dictParas[ParaType.STEM] = AddNewParagraphToDoc(STYLE_STEM_LINE, null);
 
             Run r_prefix = new Run("\nThis training session with your virtual Coach starts from the position arising after: \n");
             r_prefix.FontWeight = FontWeights.Normal;
@@ -763,9 +760,9 @@ namespace ChessForge
             sbInstruction.Append("- click on an alternative move in the Coach's comment to play it instead of your original choice,\n");
             sbInstruction.Append("- right click on any move to invoke a context menu where, among other options, you can request engine evaluation of the move.\n");
 
-            _dictParas[ParaType.INSTRUCTIONS] = AddNewParagraphToDoc("intro", sbInstruction.ToString());
+            _dictParas[ParaType.INSTRUCTIONS] = AddNewParagraphToDoc(STYLE_INTRO, sbInstruction.ToString());
 
-            _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc("first_prompt", "To begin, make your first move on the chessboard.");
+            _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_FIRST_PROMPT, "To begin, make your first move on the chessboard.");
         }
 
         /// <summary>
@@ -799,7 +796,7 @@ namespace ChessForge
                 BuildMoveParagraph(nd, false);
 
                 Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
-                _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc("second_prompt", "\n   Your turn...");
+                _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   Your turn...");
             }
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }

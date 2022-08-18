@@ -1095,7 +1095,8 @@ namespace ChessForge
             }
             else
             {
-                if (AppStateManager.IsDirty)
+                if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE 
+                    && AppStateManager.IsDirty || Workbook.HasTrainingMoves())
                 {
                     AskAndSaveSaveWorkbook();
                 }
@@ -1283,7 +1284,10 @@ namespace ChessForge
         {
             UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
+            //LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
+
+            // TODO: should make a call to SetupGUI for game, instead
+            AppStateManager.ShowMoveEvaluationControls(false, false);
 
             EngineGame.InitializeGameObject(startNode, true, IsTraining);
             UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
@@ -1462,6 +1466,7 @@ namespace ChessForge
                 MainChessBoard.FlipBoard();
             }
 
+            AppStateManager.ShowMoveEvaluationControls(false, false);
             BoardCommentBox.TrainingSessionStart();
 
             // The Line display is the same as when playing a game against the computer 
@@ -1477,12 +1482,27 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MenuItem_StopTraining(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                // TODO: ask questions re saving etc.
-
                 EngineMessageProcessor.StopEngineEvaluation();
                 Evaluation.Reset();
+
+                if (Workbook.HasTrainingMoves())
+                {
+                    if (MessageBox.Show("Save training moves in the Workbook?", "Chess Forge Training",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        Workbook.ClearTrainingFlags();
+                        Workbook.BuildLines();
+                        AppStateManager.SaveWorkbookFile();
+                        _workbookView.BuildFlowDocumentForWorkbook();
+                        AppStateManager.IsDirty = false;
+                    }
+                    else
+                    {
+                        Workbook.RemoveTrainingMoves();
+                    }
+                }
 
                 TrainingState.IsTrainingInProgress = false;
                 MainChessBoard.RemoveMoveSquareColors();

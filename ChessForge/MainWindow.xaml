@@ -104,9 +104,9 @@
                     VerticalAlignment="Top" Grid.RowSpan="1" Visibility="Hidden">
             <TabItem x:Name="UiTabTrainingProgress"  Header="Progress">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox x:Name="UiRtbTrainingProgress" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                    <RichTextBox x:Name="UiRtbTrainingProgress" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                 IsReadOnly="True"  MinHeight="620" PreviewMouseMove="_rtbTrainingProgress_PreviewMouseMove" GotFocus="_rtbTrainingProgress_GotFocus">
+                                 IsReadOnly="True"  MinHeight="640" PreviewMouseMove="_rtbTrainingProgress_PreviewMouseMove" GotFocus="_rtbTrainingProgress_GotFocus">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0" />
@@ -127,9 +127,9 @@
             </TabItem>
             <TabItem x:Name="UiTabTrainingBrowse"  Header="Browse" GotFocus="_tabItemTrainingBrowse_GotFocus" >
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox x:Name="UiRtbTrainingBrowse" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                    <RichTextBox x:Name="UiRtbTrainingBrowse" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                 IsReadOnly="True" MinHeight="620">
+                                 IsReadOnly="True" MinHeight="640">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0" />
@@ -156,9 +156,9 @@
                             <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line"  Click="MenuItem_EvaluateLine" />
                         </ContextMenu>
                     </Grid.ContextMenu>
-                    <RichTextBox x:Name="UiRtbWorkbookView" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                    <RichTextBox x:Name="UiRtbWorkbookView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   MinHeight="620" IsReadOnly="True" PreviewKeyDown="_rtbWorkbookFull_PreviewKeyDown">
+                                   Height="640" MinHeight="500" IsReadOnly="True" PreviewKeyDown="_rtbWorkbookFull_PreviewKeyDown">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0" />
