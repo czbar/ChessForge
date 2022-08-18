@@ -11,7 +11,7 @@ namespace ChessForge
 {
     /// <summary>
     /// Handles GUI elements visualizing engine's real-time calculations
-    /// i.e. displaying the dynamic lines, progrress bar and handling the
+    /// i.e. displaying the dynamic lines, progress bar and handling the
     /// stop request.
     /// </summary>
     public class EngineLinesBox

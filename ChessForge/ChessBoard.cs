@@ -9,7 +9,7 @@ using ChessPosition;
 namespace ChessForge
 {
     /// <summary>
-    /// Encapsualate the Chessboard GUI object
+    /// Encapsulate the Chessboard GUI object
     /// including the hosting canvas.
     /// </summary>
     public class ChessBoard

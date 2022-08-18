@@ -52,7 +52,7 @@ namespace GameTree
 
         /// <summary>
         /// Marks a node that was not in the Workbook when it was open.
-        /// This is edit by the user
+        /// This is an edit by the user.
         /// Depending on user choices, it may be later on removed from the Workbook
         /// or added permanently.
         /// </summary>
