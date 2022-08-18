@@ -710,10 +710,9 @@ namespace ChessForge
         {
             PrepareEvaluationControls();
 
-            if (monitorLines)
-            {
-                _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
-            }
+            // do not remove/stop EVALUATION_LINE_DISPLAY timer as it is responsible
+            // for keeping the progress bar active
+            _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
             _mainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
 
             return FenParser.GenerateFenFromPosition(position);
