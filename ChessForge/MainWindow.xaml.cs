@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using System.Security.Policy;
 
 namespace ChessForge
 {
@@ -764,13 +765,10 @@ namespace ChessForge
             }
             else
             {
-                if (AppStateManager.IsDirty)
+                if (!PromptAndSaveWorkbook(false))
                 {
-                    if (!AskAndSaveSaveWorkbook())
-                    {
-                        // the user chose cancel so we are not closing after all
-                        return;
-                    }
+                    // the user chose cancel so we are not closing after all
+                    return;
                 }
             }
             AppStateManager.RestartInIdleMode();
@@ -1012,7 +1010,9 @@ namespace ChessForge
         /// <summary>
         /// Allows the user to save the Workbook in a new file.
         /// This method will be called when converting a PGN file to CHF
-        /// or in reponce to File->Save As menu selection.
+        /// or in reponse to File->Save As menu selection
+        /// or in response when saving a file that has no name yet (i.e. saving
+        /// first time since creation).
         /// </summary>
         /// <param name="pgnFileName"></param>
         private bool SaveWorkbookToNewFile(string pgnFileName, bool typeConversion)
@@ -1026,10 +1026,21 @@ namespace ChessForge
             }
             else
             {
-                saveDlg.Title = " Save Workbook " + Path.GetFileName(pgnFileName) + " As...";
+                if (!string.IsNullOrEmpty(pgnFileName))
+                {
+                    saveDlg.Title = " Save Workbook " + Path.GetFileName(pgnFileName) + " As...";
+                }
+                else
+                {
+                    saveDlg.Title = " Save New Workbook As...";
+                }
             }
 
-            saveDlg.FileName = Path.GetFileNameWithoutExtension(pgnFileName) + ".chf";
+            if (!string.IsNullOrEmpty(pgnFileName))
+            {
+                saveDlg.FileName = Path.GetFileNameWithoutExtension(pgnFileName) + ".chf";
+            }
+
             saveDlg.OverwritePrompt = true;
             if (saveDlg.ShowDialog() == true)
             {
@@ -1101,10 +1112,10 @@ namespace ChessForge
             }
             else
             {
-                if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE 
+                if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE
                     && AppStateManager.IsDirty || Workbook.HasTrainingMoves())
                 {
-                    AskAndSaveSaveWorkbook();
+                    PromptAndSaveWorkbook(false);
                 }
             }
             Timers.StopAll(false);
@@ -1493,10 +1504,11 @@ namespace ChessForge
                 EngineMessageProcessor.StopEngineEvaluation();
                 Evaluation.Reset();
 
+                PromptAndSaveWorkbook(false);
                 if (Workbook.HasTrainingMoves())
                 {
-                    if (MessageBox.Show("Save training moves in the Workbook?", "Chess Forge Training",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    if (MessageBox.Show("Merge and Save new moves from this session into the Workbook?", "Chess Forge Save Workbook",
+                        MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         Workbook.ClearTrainingFlags();
                         Workbook.BuildLines();
@@ -1518,6 +1530,70 @@ namespace ChessForge
                 ActiveLine.DisplayPositionForSelectedCell();
                 AppStateManager.SwapCommentBoxForEngineLines(false);
                 BoardCommentBox.RestoreTitleMessage();
+            }
+        }
+
+        /// <summary>
+        /// This function will be called when:
+        /// 1. the user selects File->Save (userRequest == true)
+        /// 2. the user exists a Training session
+        /// 3. the user selectes File->Close
+        /// 4. the user closes the application.
+        /// First, we check if there are any training moves in the Tree which
+        /// means that we have not exited the training session yet.
+        /// If there are, we ask the user to save the training moves and upon
+        /// confirmation we save the entire Workbook.
+        /// If not, or the user declines, and if the Workbook is "dirty", we offer to save the workbook without 
+        /// training moves.
+        /// In addition, if the user does want to save the file but there is no file name, we aks them to choose one.
+        /// </summary>
+        /// <returns> Returns true if the user chooses yes or no,
+        /// returns false if the user cancels. </returns>
+        private bool PromptAndSaveWorkbook(bool userRequest)
+        {
+            bool saved = false;
+            MessageBoxResult res = MessageBoxResult.None;
+
+            if (Workbook.HasTrainingMoves())
+            {
+                res = MessageBox.Show("Merge and Save new moves from this session into the Workbook?", "Chess Forge Save Workbook",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (res == MessageBoxResult.Yes)
+                {
+                    Workbook.ClearTrainingFlags();
+                    Workbook.BuildLines();
+                    AppStateManager.SaveWorkbookFile();
+                    _workbookView.BuildFlowDocumentForWorkbook();
+                    saved = true;
+                }
+            }
+
+            if (!saved)
+            {
+                // not saved yet
+                if (userRequest)
+                {
+                    // user requested File->Save so proceed...
+                    AppStateManager.SaveWorkbookFile();
+                }
+                else if (AppStateManager.IsDirty)
+                {
+                    // this was prompted by an action other than File->Save so ask...
+                    res = MessageBox.Show("Save the Workbook?", "Workbook not saved", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    if (res == MessageBoxResult.Yes)
+                    {
+                        AppStateManager.SaveWorkbookFile();
+                    }
+                }
+            }
+
+            if (res == MessageBoxResult.Yes || res == MessageBoxResult.No)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -1700,30 +1776,6 @@ namespace ChessForge
             }
         }
 
-        /// <summary>
-        /// Prompts the user to save the Workbook
-        /// or exit without saving.
-        /// Returns true if the user chooses yes or no,
-        /// returns false if the user cancels.
-        /// </summary>
-        private bool AskAndSaveSaveWorkbook()
-        {
-            var ret = MessageBox.Show("Save the Workbook?", "Workbook not saved", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-            if (ret == MessageBoxResult.Yes)
-            {
-                AppStateManager.SaveWorkbookFile();
-                return true;
-            }
-            else if (ret == MessageBoxResult.No)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         private void _mnGenerateBookmark_Click(object sender, RoutedEventArgs e) { BookmarkManager.GenerateBookmarks(); }
 
         private void _mnDeleteBookmark_Click(object sender, RoutedEventArgs e) { BookmarkManager.DeleteBookmark(); }
@@ -1855,7 +1907,7 @@ namespace ChessForge
 
         private void UiMnWorkbookSave_Click(object sender, RoutedEventArgs e)
         {
-            AppStateManager.SaveWorkbookFile();
+            PromptAndSaveWorkbook(true);
         }
 
         private void UiMnWorkbookSaveAs_Click(object sender, RoutedEventArgs e)
