@@ -231,17 +231,26 @@ namespace ChessForge
                 // if we have LineId we are done
                 if (!string.IsNullOrEmpty(nd.LineId))
                 {
-                    AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
-                    // TODO: make it less drastic if this does not create a new paragraph
-                    AppStateManager.MainWin.RebuildWorkbookView();
-                    AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd.NodeId);
+                    if (nd.IsNewTrainingMove)
+                    {
+                        //AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
+                        AppStateManager.MainWin.AppendNodeToActiveLine(nd, false);
+                        //AppStateManager.MainWin.RebuildWorkbookView();
+                        AppStateManager.MainWin.AddNewNodeToWorkbookView(nd);
+                        AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd.NodeId);
+                    }
+                    else
+                    {
+                        AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
+                        AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd.NodeId);
+                    }
                 }
                 else
                 {
                     // new move for which we need a new line id
                     // if it is new and has siblings, rebuild line ids
                     // Workbook view will need a full update unless TODO this node AND its parent have no siblings
-                    AppStateManager.MainWin.Workbook.BuildLines();
+                    AppStateManager.MainWin.Workbook.SetLineIdForNewNode(nd);
                     AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
                     AppStateManager.MainWin.RebuildWorkbookView();
                     AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd.NodeId);

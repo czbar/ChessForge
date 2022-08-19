@@ -15,7 +15,7 @@ namespace ChessForge
         /// <summary>
         /// Holds all moves/plies of the active line.
         /// </summary>
-        private ScoreSheet Line = new ScoreSheet();
+        public ScoreSheet Line = new ScoreSheet();
 
         /// <summary>
         /// The DataGrid control visualizing the active line.

@@ -979,9 +979,23 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Rebuilds the entire Workbook View
+        /// </summary>
         public void RebuildWorkbookView()
         {
             _workbookView.BuildFlowDocumentForWorkbook();
+        }
+
+        /// <summary>
+        /// Adds a new Node to the Workbook View,
+        /// avoiding the full rebuild (performance).
+        /// This can only be done "safely" if we are adding a move to a leaf.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void AddNewNodeToWorkbookView(TreeNode nd)
+        {
+            _workbookView.AddNewNode(nd);
         }
 
         /// <summary>
@@ -1082,6 +1096,12 @@ namespace ChessForge
             MainChessBoard.RemoveMoveSquareColors();
         }
 
+        /// <summary>
+        /// Sets data and selection for the Active Line
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="selectedNodeId"></param>
+        /// <param name="displayPosition"></param>
         public void SetActiveLine(ObservableCollection<TreeNode> line, int selectedNodeId, bool displayPosition = true)
         {
             ActiveLine.SetNodeList(line);
@@ -1089,6 +1109,24 @@ namespace ChessForge
             if (selectedNodeId > 0)
             {
                 TreeNode nd = ActiveLine.GetNodeFromId(selectedNodeId);
+                ActiveLine.SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
+                if (displayPosition)
+                {
+                    MainChessBoard.DisplayPosition(nd.Position);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Appends a new node to the Active Line.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="displayPosition"></param>
+        public void AppendNodeToActiveLine(TreeNode nd, bool displayPosition = true)
+        {
+            if (nd.NodeId > 0)
+            {
+                ActiveLine.Line.AddPlyAndMove(nd);
                 ActiveLine.SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
                 if (displayPosition)
                 {

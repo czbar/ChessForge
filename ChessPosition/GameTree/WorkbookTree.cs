@@ -702,6 +702,16 @@ namespace GameTree
         }
 
         /// <summary>
+        /// A new node has been created; rebuild the lines
+        /// from the parent.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void SetLineIdForNewNode(TreeNode nd)
+        {
+            BuildLine(nd.Parent);
+        }
+
+        /// <summary>
         /// Promotes a line by moving it one level up.
         /// Starting from the passed node, this methods walks
         /// up the branch until it encounters a fork where this
