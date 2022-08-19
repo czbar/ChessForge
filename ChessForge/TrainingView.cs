@@ -364,6 +364,8 @@ namespace ChessForge
             AppStateManager.CurrentLearningMode = LearningMode.Mode.TRAINING;
             AppStateManager.SetupGuiForCurrentStates();
 
+            _mainWin.BoardCommentBox.GameMoveMade(_lastClickedNode, true);
+
             RemoveParagraphsFromMove(_lastClickedNode);
             ReportLastMoveVsWorkbook();
         }
@@ -785,11 +787,13 @@ namespace ChessForge
             {
                 BuildCheckmateParagraph(nd, false);
                 Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+                _mainWin.BoardCommentBox.ReportCheckmate(false);
             }
             else if (isStalemate)
             {
                 BuildStalemateParagraph(nd);
                 Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+                _mainWin.BoardCommentBox.ReportStalemate();
             }
             else
             {
@@ -797,6 +801,8 @@ namespace ChessForge
 
                 Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
                 _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   Your turn...");
+
+                _mainWin.BoardCommentBox.GameMoveMade(nd, false);
             }
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
@@ -1135,10 +1141,12 @@ namespace ChessForge
                 if (_lastClickedNode.ColorToMove != LearningMode.TrainingSide)
                 {
                     EngineGame.RestartAtUserMove(nd);
+                    _mainWin.BoardCommentBox.GameMoveMade(nd, true);
                 }
                 else
                 {
                     EngineGame.RestartAtEngineMove(nd);
+                    _mainWin.BoardCommentBox.GameMoveMade(nd, false);
                 }
                 _mainWin.DisplayPosition(nd.Position);
                 RebuildEngineGamePara(nd);
@@ -1170,14 +1178,14 @@ namespace ChessForge
                 if (r.Name.StartsWith(_run_line_move_))
                 {
                     // a move in the main training line was clicked 
-                    SetTrainingPosition(r, _run_line_move_, e);
+                    DetectLastClickedNode(r, _run_line_move_, e);
                     _moveContext = MoveContext.LINE;
                     _mainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
                 }
                 else if (r.Name.StartsWith(_run_wb_move_))
                 {
                     // a workbook move in the comment was clicked 
-                    SetTrainingPosition(r, _run_wb_move_, e);
+                    DetectLastClickedNode(r, _run_wb_move_, e);
                     _moveContext = MoveContext.WORKBOOK_COMMENT;
                     _mainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
                 }
@@ -1187,43 +1195,21 @@ namespace ChessForge
                     // we take the game back to that move.
                     // If it is an engine move, the user will be required to respond,
                     // otherwise it will be engine's turn.
-                    SetTrainingPosition(r, _run_engine_game_move_, e);
+                    DetectLastClickedNode(r, _run_engine_game_move_, e);
                     _moveContext = MoveContext.GAME;
                     _mainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
                 }
             }
-            //else if (e.ChangedButton == MouseButton.Left)
-            //{
-            //    if (r.Name.StartsWith(_run_wb_move_))
-            //    {
-            //        SetTrainingPosition(r, _run_wb_move_, e);
-            //        _moveContext = MoveContext.WORKBOOK_COMMENT;
-            //        e.Handled = true;
-            //        string midTxt;
-            //        string moveTxt = BuildMoveTextForMenu(out midTxt);
-            //        if (MessageBox.Show("Play " + moveTxt + " instead of Your Move?", "Chess Forge Training", 
-            //            MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
-            //        {
-            //            RollbackToWorkbookMove();
-            //        }
-            //    }
-            //    else if (r.Name.StartsWith(_run_engine_game_move_))
-            //    {
-            //        SetTrainingPosition(r, _run_engine_game_move_, e);
-            //        _moveContext = MoveContext.GAME;
-            //        e.Handled = true;
-            //        string midTxt;
-            //        string moveTxt = BuildMoveTextForMenu(out midTxt);
-            //        if (MessageBox.Show("Restart Game After" + midTxt + "Move " + moveTxt + "?", "Chess Forge Training",
-            //            MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
-            //        {
-            //            RestartGameAfter(sender, e);
-            //        }
-            //    }
-            //}
         }
 
-        private void SetTrainingPosition(Run r, string prefix, MouseButtonEventArgs e)
+        /// <summary>
+        /// Based on the name of the run, determines the
+        /// last clicked node.
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="prefix"></param>
+        /// <param name="e"></param>
+        private void DetectLastClickedNode(Run r, string prefix, MouseButtonEventArgs e)
         {
             int nodeId = GetNodeIdFromObjectName(r.Name, prefix);
             TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);

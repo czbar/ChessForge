@@ -83,11 +83,25 @@ namespace ChessForge
             {
                 AddNewParagraphToDoc("normal", "Your move was:");
                 AddNewParagraphToDoc("bold_prompt", MoveUtils.BuildSingleMoveText(nd, true));
-                AddNewParagraphToDoc("normal", "Wait for engine's response...");
+                if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                {
+                    AddNewParagraphToDoc("normal", "Wait for engine's response...");
+                }
+                else if (TrainingState.IsTrainingInProgress)
+                {
+                    AddNewParagraphToDoc("normal", "Wait for a response...");
+                }
             }
-            else // engine moved
+            else // engine or "coach" moved
             {
-                AddNewParagraphToDoc("normal", "The engine played:");
+                if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                {
+                    AddNewParagraphToDoc("normal", "The engine played:");
+                }
+                else
+                {
+                    AddNewParagraphToDoc("normal", "The coach played:");
+                }
                 AddNewParagraphToDoc("bold_16", MoveUtils.BuildSingleMoveText(nd, true));
                 AddNewParagraphToDoc("normal", "It is your turn now.");
             }
@@ -237,7 +251,18 @@ namespace ChessForge
                 string txt;
                 if (userMade)
                 {
-                    txt = "You have checkmated the engine. Congratulations!";
+                    if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                    {
+                        txt = "You have checkmated the engine. Congratulations!";
+                    }
+                    else if (TrainingState.IsTrainingInProgress)
+                    {
+                        txt = "You have checkmated the coach. Congratulations!";
+                    }
+                    else 
+                    {
+                        txt = "Check and Mate!";
+                    }
                 }
                 else
                 {
