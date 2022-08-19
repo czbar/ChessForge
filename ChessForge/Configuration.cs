@@ -133,10 +133,13 @@ namespace ChessForge
         /// <param name="path"></param>
         public static void RemoveFromRecentFiles(string path)
         {
-            RecentFiles.Remove(path);
-            if (LastWorkbookFile == path)
+            if (!string.IsNullOrEmpty(path))
             {
-                LastWorkbookFile = "";
+                RecentFiles.Remove(path);
+                if (LastWorkbookFile == path)
+                {
+                    LastWorkbookFile = "";
+                }
             }
         }
 
