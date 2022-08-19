@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ChessForge
 {
@@ -92,6 +93,11 @@ namespace ChessForge
         /// Maps Node Ids to Runs for quick access.
         /// </summary>
         private Dictionary<int, Run> _dictNodeToRun = new Dictionary<int, Run>();
+
+        /// <summary>
+        /// Maps Runs to Paragraphs for quick access.
+        /// </summary>
+        private Dictionary<Run, Paragraph> _dictRunToParagraph = new Dictionary<Run, Paragraph>();
 
         /// <summary>
         /// Currently selected line.
@@ -284,6 +290,7 @@ namespace ChessForge
 
             // resets
             _dictNodeToRun.Clear();
+            _dictRunToParagraph.Clear();
             _lstSelectedLine.Clear();
             _currParagraphLevel = 0;
 
@@ -430,6 +437,35 @@ namespace ChessForge
             }
 
             return NodeType.ISOLATED;
+        }
+
+        /// <summary>
+        /// Finds the parent node of the passed node
+        /// and insert this node after it.
+        /// The caller needs to ensure that this is logically correct
+        /// e.g. that this is a new leaf in a line
+        /// </summary>
+        /// <param name="nd"></param>
+        public void AddNewNode(TreeNode nd)
+        {
+            TreeNode parent = nd.Parent;
+            Run rParent = _dictNodeToRun[parent.NodeId];
+            Paragraph para = _dictRunToParagraph[rParent];
+
+            Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, false));
+            r.Name = "run_" + nd.NodeId.ToString();
+            r.MouseDown += EventRunClicked;
+
+            r.FontStyle = rParent.FontStyle;
+            r.FontSize = rParent.FontSize;
+            r.Foreground = Brushes.Black;
+            r.FontWeight = FontWeights.Normal;
+
+            _dictNodeToRun[nd.NodeId] = r;
+            _dictRunToParagraph[r] = para;
+
+            para.Inlines.InsertAfter(rParent, r);
+            _lastAddedRun = r;
         }
 
         /// <summary>
@@ -580,7 +616,12 @@ namespace ChessForge
                 sb.Append(nd.Position.MoveNumber.ToString() + "...");
             }
 
-            sb.Append(" " + nd.LastMoveAlgebraicNotationWithNag);
+            if (nd.Position.ColorToMove == PieceColor.White)
+            {
+                sb.Append(" ");
+            }
+
+            sb.Append(nd.LastMoveAlgebraicNotationWithNag);
 
             SolidColorBrush fontColor = null;
             if (IsFork(nd.Parent) && !nd.IsMainLine())
@@ -625,6 +666,7 @@ namespace ChessForge
                 para.Inlines.Add(r);
 
             _dictNodeToRun.Add(nd.NodeId, r);
+            _dictRunToParagraph.Add(r, para);
 
             _lastAddedRun = r;
         }
@@ -719,7 +761,7 @@ namespace ChessForge
                 string style = _currParagraphLevel.ToString();
                 RichTextPara attrs = GetParaAttrs(style);
                 _lastAddedRun.Foreground = attrs.FirstCharColor;
-                _lastAddedRun.FontWeight = FontWeights.Bold;  
+                _lastAddedRun.FontWeight = FontWeights.Bold;
             }
         }
     }
