@@ -178,6 +178,7 @@ namespace ChessForge
         {
             TreeNode nd = _workbook.GetNodeFromNodeId(_lastClickedNodeId);
             _workbook.DeleteRemainingMoves(nd);
+            BookmarkManager.ResyncBookmarks(1);
             BuildFlowDocumentForWorkbook();
             AppStateManager.IsDirty = true;
         }
