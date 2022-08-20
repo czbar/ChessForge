@@ -169,6 +169,7 @@ namespace ChessForge
             _workbook.PromoteLine(nd);
             _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
             BuildFlowDocumentForWorkbook();
+            _mainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd.NodeId);
             AppStateManager.IsDirty = true;
         }
 
@@ -179,8 +180,11 @@ namespace ChessForge
         {
             TreeNode nd = _workbook.GetNodeFromNodeId(_lastClickedNodeId);
             _workbook.DeleteRemainingMoves(nd);
+            _workbook.BuildLines();
+            _mainWin.SetActiveLine(nd.Parent.LineId, nd.Parent.NodeId);
             BookmarkManager.ResyncBookmarks(1);
             BuildFlowDocumentForWorkbook();
+            _mainWin.SelectLineAndMoveInWorkbookViews(nd.Parent.LineId, nd.Parent.NodeId);
             AppStateManager.IsDirty = true;
         }
 
