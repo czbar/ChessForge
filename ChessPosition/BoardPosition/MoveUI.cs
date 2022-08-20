@@ -67,13 +67,6 @@ namespace ChessPosition
         /// </summary>
         public PieceColor Color;
 
-        /// <summary>
-        /// If the move is an en passant capture,
-        /// the coordinates of the piece (pawn) to be removed
-        /// will be specified here. 
-        /// </summary>
-        public SquareCoords RemovedPiece;
-
         public string GetEngineNotation()
         {
             StringBuilder sb = new StringBuilder();
