@@ -1,0 +1,6 @@
+[Title "En Passant"]
+[TrainingSide "white"]
+[White "Chess Forge"]
+[Black "Workbook File"]
+
+1. e4 e6 2. e5 d5 (2... b5 3. Nf3 b4 4. c4 (4. d4) 4... bxc3) 3. exd6 Bxd6 *
