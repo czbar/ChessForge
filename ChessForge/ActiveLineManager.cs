@@ -421,7 +421,7 @@ namespace ChessForge
                     {
                         _mainWin.DisplayPosition(nd.Position);
                     }
-                    _mainWin.SelectLineAndMoveInWorkbookViews(null, nd.NodeId);
+                    _mainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd.NodeId);
                 }
                 e.Handled = true;
             }
