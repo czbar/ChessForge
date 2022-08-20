@@ -397,6 +397,11 @@ namespace GameTree
             while ((_remainingGameText[charPos]) == ' ')
             {
                 charPos++;
+                // if there is no end-of-game char we will get a bad index
+                if (charPos >= _remainingGameText.Length)
+                {
+                    return "";
+                }
             }
 
             int tokenStartIndex = charPos;
