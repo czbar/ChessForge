@@ -167,6 +167,7 @@ namespace ChessForge
         {
             TreeNode nd = _workbook.GetNodeFromNodeId(_lastClickedNodeId);
             _workbook.PromoteLine(nd);
+            _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
             BuildFlowDocumentForWorkbook();
             AppStateManager.IsDirty = true;
         }
