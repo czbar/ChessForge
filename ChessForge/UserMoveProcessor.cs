@@ -93,7 +93,7 @@ namespace ChessForge
                         AppStateManager.MainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
                         if (nd != null)
                         {
-                            AppStateManager.MainWin.MainChessBoard.SetPosition(nd.Position, false);
+                            AppStateManager.MainWin.MainChessBoard.SetPosition(nd.Position, true);
                         }
                     }
                     else
@@ -231,11 +231,9 @@ namespace ChessForge
                 // if we have LineId we are done
                 if (!string.IsNullOrEmpty(nd.LineId))
                 {
-                    if (nd.IsNewTrainingMove)
+                    if (nd.IsNewUserMove)
                     {
-                        //AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
                         AppStateManager.MainWin.AppendNodeToActiveLine(nd, false);
-                        //AppStateManager.MainWin.RebuildWorkbookView();
                         AppStateManager.MainWin.AddNewNodeToWorkbookView(nd);
                         AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd.NodeId);
                     }
@@ -251,6 +249,7 @@ namespace ChessForge
                     // if it is new and has siblings, rebuild line ids
                     // Workbook view will need a full update unless TODO this node AND its parent have no siblings
                     AppStateManager.MainWin.Workbook.SetLineIdForNewNode(nd);
+                    //AppStateManager.MainWin.ActiveLine.Line.AddPlyAndMove(nd);
                     AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
                     AppStateManager.MainWin.RebuildWorkbookView();
                     AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd.NodeId);
