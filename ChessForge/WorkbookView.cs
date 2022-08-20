@@ -167,7 +167,9 @@ namespace ChessForge
         {
             TreeNode nd = _workbook.GetNodeFromNodeId(_lastClickedNodeId);
             _workbook.PromoteLine(nd);
+            _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
             BuildFlowDocumentForWorkbook();
+            _mainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd.NodeId);
             AppStateManager.IsDirty = true;
         }
 
@@ -178,7 +180,11 @@ namespace ChessForge
         {
             TreeNode nd = _workbook.GetNodeFromNodeId(_lastClickedNodeId);
             _workbook.DeleteRemainingMoves(nd);
+            _workbook.BuildLines();
+            _mainWin.SetActiveLine(nd.Parent.LineId, nd.Parent.NodeId);
+            BookmarkManager.ResyncBookmarks(1);
             BuildFlowDocumentForWorkbook();
+            _mainWin.SelectLineAndMoveInWorkbookViews(nd.Parent.LineId, nd.Parent.NodeId);
             AppStateManager.IsDirty = true;
         }
 
@@ -458,8 +464,15 @@ namespace ChessForge
 
             r.FontStyle = rParent.FontStyle;
             r.FontSize = rParent.FontSize;
+            if (nd.IsMainLine())
+            {
+                r.FontWeight = FontWeights.Bold;
+            }
+            else
+            {
+                r.FontWeight = FontWeights.Normal;
+            }
             r.Foreground = Brushes.Black;
-            r.FontWeight = FontWeights.Normal;
 
             _dictNodeToRun[nd.NodeId] = r;
             _dictRunToParagraph[r] = para;
@@ -661,7 +674,10 @@ namespace ChessForge
             }
 
             if (para.Margin.Left == 0 && nd.IsMainLine())
-                para.Inlines.Add(new Bold(r));
+            {
+                r.FontWeight = FontWeights.Bold;
+                para.Inlines.Add(r);
+            }
             else
                 para.Inlines.Add(r);
 

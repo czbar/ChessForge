@@ -414,7 +414,7 @@ namespace ChessForge
             else
             {
                 _mainWin.UiMnWorkbookSave.IsEnabled = false;
-                _mainWin.UiMnWorkbookSave.Header = "Save";
+                _mainWin.UiMnWorkbookSave.Header = "Save " + Path.GetFileName(WorkbookFilePath);
             }
 
             if (!string.IsNullOrEmpty(WorkbookFilePath))

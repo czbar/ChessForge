@@ -774,6 +774,7 @@ namespace GameTree
             foreach (TreeNode node in _subTree)
             {
                 Nodes.Remove(node);
+                DeleteBookmark(node);
             }
 
             return _subTree.Count > 0;

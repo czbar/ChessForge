@@ -88,12 +88,22 @@ namespace ChessForge
                             AppStateManager.ShowMoveEvaluationControls(false, false);
                         }
 
-                        // TODO: adjust message to the learning mode
-                        AppStateManager.MainWin.BoardCommentBox.GameMoveMade(nd, true);
+                        if (nd.Position.IsCheckmate)
+                        {
+                            AppStateManager.MainWin.BoardCommentBox.ReportCheckmate(true);
+                        }
+                        else if (nd.Position.IsStalemate)
+                        {
+                            AppStateManager.MainWin.BoardCommentBox.ReportStalemate();
+                        }
+                        else
+                        {
+                            AppStateManager.MainWin.BoardCommentBox.GameMoveMade(nd, true);
+                        }
                         AppStateManager.MainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
                         if (nd != null)
                         {
-                            AppStateManager.MainWin.MainChessBoard.SetPosition(nd.Position, false);
+                            AppStateManager.MainWin.MainChessBoard.SetPosition(nd.Position, true);
                         }
                     }
                     else
@@ -211,11 +221,13 @@ namespace ChessForge
             {
                 if (PositionUtils.IsCheckmate(nd.Position))
                 {
-                    AppStateManager.MainWin.BoardCommentBox.ReportCheckmate(true);
+                    nd.Position.IsCheckmate = true;
+//                    AppStateManager.MainWin.BoardCommentBox.ReportCheckmate(true);
                 }
                 else if (PositionUtils.IsStalemate(nd.Position))
                 {
-                    AppStateManager.MainWin.BoardCommentBox.ReportStalemate();
+                    nd.Position.IsStalemate = true;
+//                    AppStateManager.MainWin.BoardCommentBox.ReportStalemate();
                 }
 
                 //TODO: update Workbook, ActiveLine and Workbook View
@@ -231,11 +243,9 @@ namespace ChessForge
                 // if we have LineId we are done
                 if (!string.IsNullOrEmpty(nd.LineId))
                 {
-                    if (nd.IsNewTrainingMove)
+                    if (nd.IsNewUserMove)
                     {
-                        //AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
                         AppStateManager.MainWin.AppendNodeToActiveLine(nd, false);
-                        //AppStateManager.MainWin.RebuildWorkbookView();
                         AppStateManager.MainWin.AddNewNodeToWorkbookView(nd);
                         AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd.NodeId);
                     }
@@ -251,6 +261,7 @@ namespace ChessForge
                     // if it is new and has siblings, rebuild line ids
                     // Workbook view will need a full update unless TODO this node AND its parent have no siblings
                     AppStateManager.MainWin.Workbook.SetLineIdForNewNode(nd);
+                    //AppStateManager.MainWin.ActiveLine.Line.AddPlyAndMove(nd);
                     AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
                     AppStateManager.MainWin.RebuildWorkbookView();
                     AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd.NodeId);

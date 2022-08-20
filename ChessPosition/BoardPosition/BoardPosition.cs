@@ -83,6 +83,21 @@ namespace ChessPosition
         public MoveUI LastMove = new MoveUI();
 
         /// <summary>
+        /// Flags a check to the king of the side on move
+        /// </summary>
+        public bool IsCheck = false;
+
+        /// <summary>
+        /// Flags checkmate to the side that would moe next
+        /// </summary>
+        public bool IsCheckmate = false;
+
+        /// <summary>
+        /// Flags stalemate to the side that would moe next
+        /// </summary>
+        public bool IsStalemate = false;
+
+        /// <summary>
         /// Constructor.
         /// Creates a new board array.
         /// </summary>

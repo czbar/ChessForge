@@ -384,7 +384,7 @@ namespace ChessForge
         /// Syncs the list of BookmarkViews with the Workbook's list
         /// of bookmarks.
         /// </summary>
-        private static void ResyncBookmarks(int pageNo)
+        public static void ResyncBookmarks(int pageNo)
         {
             int count = _mainWin.Workbook.Bookmarks.Count;
 

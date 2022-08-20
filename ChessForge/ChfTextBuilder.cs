@@ -27,17 +27,80 @@ namespace ChessForge
 
             BuildHeaders();
 
+            StringBuilder sbOutput = new StringBuilder(_fileText.ToString());
+
+            _fileText.Clear();
             if (workbook.Nodes.Count > 0)
             {
                 TreeNode root = workbook.Nodes[0];
                 BuildTreeLineText(root);
             }
 
+            sbOutput.Append(DivideLine(_fileText.ToString(), 80));
+            
             // add terminating character
-            _fileText.Append(" *");
-            _fileText.AppendLine();
+            sbOutput.Append(" *");
+            sbOutput.AppendLine();
 
-            return _fileText.ToString();
+            return sbOutput.ToString();
+        }
+
+        /// <summary>
+        /// Divides a line into multiple lines no longer than maxChars
+        /// </summary>
+        /// <param name="inp"></param>
+        /// <param name="maxChars"></param>
+        /// <returns></returns>
+        private static string DivideLine(string inp, int maxChars)
+        {
+            StringBuilder sb = new StringBuilder();
+            int startIdx = 0;
+            int lastSpaceIdx;
+
+            // loop subline by subline
+            while (true)
+            {
+                string nextLine = "";
+
+                // is this the last subline
+                if (inp.Length <= startIdx + maxChars)
+                {
+                    nextLine = inp.Substring(startIdx);
+                    sb.Append(nextLine);
+                    break;
+                }
+
+                // find the last space before the maxChars limit
+                lastSpaceIdx = inp.LastIndexOf(' ', Math.Min(startIdx + maxChars, inp.Length -1), maxChars);
+
+                if (lastSpaceIdx == -1)
+                {
+                    // no more spaces so save and exit
+                    nextLine = inp.Substring(startIdx);
+                    sb.Append(nextLine);
+                    break;
+                }
+                else if (lastSpaceIdx - startIdx == 0)
+                {
+                    // advance 1 char to avoid getting stuck on a leading space
+                    lastSpaceIdx++; // becomes startIdx at the bottom of this loop which is what we need.
+                }
+                else
+                {
+                    // all normal, get the subline
+                    nextLine = inp.Substring(startIdx, (lastSpaceIdx - startIdx) + 1);
+                }
+
+                if (nextLine.Length > 0) // skip the leading space case
+                {
+                    sb.Append(nextLine);
+                    sb.AppendLine();
+                }
+
+                startIdx = lastSpaceIdx + 1;
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
