@@ -948,7 +948,7 @@ namespace ChessForge
                 UiTabWorkbook.Focus();
 
                 _workbookView.BuildFlowDocumentForWorkbook();
-                if (Workbook.Bookmarks.Count == 0)
+                if (Workbook.Bookmarks.Count == 0 && AppStateManager.WorkbookFileType != AppStateManager.FileType.CHF)
                 {
                     var res = AskToGenerateBookmarks();
                     if (res == MessageBoxResult.Yes)
