@@ -1614,17 +1614,26 @@ namespace ChessForge
                     // user requested File->Save so proceed...
                     AppStateManager.SaveWorkbookFile();
                 }
-                else if (AppStateManager.IsDirty)
+                else 
                 {
-                    // this was prompted by an action other than File->Save so ask...
-                    res = MessageBox.Show("Save the Workbook?", "Workbook not saved", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-                    if (res == MessageBoxResult.Yes)
+                    if (AppStateManager.IsDirty)
                     {
-                        AppStateManager.SaveWorkbookFile();
+                        // this was prompted by an action other than File->Save so ask...
+                        res = MessageBox.Show("Save the Workbook?", "Workbook not saved", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                        if (res == MessageBoxResult.Yes)
+                        {
+                            AppStateManager.SaveWorkbookFile();
+                        }
+                    }
+                    else
+                    {
+                        // not dirty and not user request so this is on close. Return Yes in order not to prevent closing 
+                        res = MessageBoxResult.Yes;
                     }
                 }
             }
 
+            AppStateManager.ConfigureSaveMenus();
             if (res == MessageBoxResult.Yes || res == MessageBoxResult.No)
             {
                 return true;
