@@ -183,7 +183,10 @@ namespace ChessForge
         private void AnimateMove(int index)
         {
             if (index >= _TreeLineToAnimate.Count)
+            {
+                _mainWin.BoardCommentBox.RestoreTitleMessage();
                 return;
+            }
 
             //IsReplayActive = true;
 
