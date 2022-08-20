@@ -458,8 +458,15 @@ namespace ChessForge
 
             r.FontStyle = rParent.FontStyle;
             r.FontSize = rParent.FontSize;
+            if (nd.IsMainLine())
+            {
+                r.FontWeight = FontWeights.Bold;
+            }
+            else
+            {
+                r.FontWeight = FontWeights.Normal;
+            }
             r.Foreground = Brushes.Black;
-            r.FontWeight = FontWeights.Normal;
 
             _dictNodeToRun[nd.NodeId] = r;
             _dictRunToParagraph[r] = para;
@@ -661,7 +668,10 @@ namespace ChessForge
             }
 
             if (para.Margin.Left == 0 && nd.IsMainLine())
-                para.Inlines.Add(new Bold(r));
+            {
+                r.FontWeight = FontWeights.Bold;
+                para.Inlines.Add(r);
+            }
             else
                 para.Inlines.Add(r);
 
