@@ -88,8 +88,18 @@ namespace ChessForge
                             AppStateManager.ShowMoveEvaluationControls(false, false);
                         }
 
-                        // TODO: adjust message to the learning mode
-                        AppStateManager.MainWin.BoardCommentBox.GameMoveMade(nd, true);
+                        if (nd.Position.IsCheckmate)
+                        {
+                            AppStateManager.MainWin.BoardCommentBox.ReportCheckmate(true);
+                        }
+                        else if (nd.Position.IsStalemate)
+                        {
+                            AppStateManager.MainWin.BoardCommentBox.ReportStalemate();
+                        }
+                        else
+                        {
+                            AppStateManager.MainWin.BoardCommentBox.GameMoveMade(nd, true);
+                        }
                         AppStateManager.MainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
                         if (nd != null)
                         {
@@ -211,11 +221,13 @@ namespace ChessForge
             {
                 if (PositionUtils.IsCheckmate(nd.Position))
                 {
-                    AppStateManager.MainWin.BoardCommentBox.ReportCheckmate(true);
+                    nd.Position.IsCheckmate = true;
+//                    AppStateManager.MainWin.BoardCommentBox.ReportCheckmate(true);
                 }
                 else if (PositionUtils.IsStalemate(nd.Position))
                 {
-                    AppStateManager.MainWin.BoardCommentBox.ReportStalemate();
+                    nd.Position.IsStalemate = true;
+//                    AppStateManager.MainWin.BoardCommentBox.ReportStalemate();
                 }
 
                 //TODO: update Workbook, ActiveLine and Workbook View
