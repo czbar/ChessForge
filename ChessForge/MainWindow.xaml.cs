@@ -1479,6 +1479,36 @@ namespace ChessForge
             UiTabBookmarks.Focus();
         }
 
+        private void UiMnciStartTrainingHere_Click(object sender, RoutedEventArgs e)
+        {
+            // do some housekeeping just in case
+            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+            {
+                StopEngineGame();
+            }
+            else if (Evaluation.IsRunning)
+            {
+                EngineMessageProcessor.StopEngineEvaluation();
+            }
+
+            TreeNode nd = ActiveLine.GetSelectedTreeNode();
+            if (nd != null)
+            {
+                if (!BookmarkManager.IsBookmarked(nd.NodeId))
+                {
+                    if (MessageBox.Show("Do you want to bookmark this move?", "Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        BookmarkManager.AddBookmark(nd);
+                    }
+                }
+                SetAppInTrainingMode(nd);
+            }
+            else
+            {
+                MessageBox.Show("No move selected to start training from.", "Training", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
         /// <summary>
         /// Starts a training session from the specified bookmark position.
         /// </summary>
@@ -1980,5 +2010,6 @@ namespace ChessForge
             AboutBoxDialog dlg = new AboutBoxDialog();
             dlg.ShowDialog();
         }
+
     }
 }
