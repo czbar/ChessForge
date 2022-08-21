@@ -116,7 +116,7 @@ namespace ChessForge
             Timers = new AppTimers(EngineLinesGUI, this);
 
             Configuration.Initialize(this);
-            Configuration.StartDirectory = Directory.GetCurrentDirectory();
+            Configuration.StartDirectory = App.AppPath;
             Configuration.ReadConfigurationFile();
             MoveAnimation.MoveDuration = Configuration.MoveSpeed;
             if (Configuration.IsMainWinPosValid())
