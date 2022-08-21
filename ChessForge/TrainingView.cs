@@ -216,8 +216,8 @@ namespace ChessForge
             [STYLE_ENGINE_EVAL] = new RichTextPara(80, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
             [STYLE_ENGINE_GAME] = new RichTextPara(50, 0, 16, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
 
-            [STYLE_CHECKMATE] = new RichTextPara(50, 0, 18, FontWeights.Bold, Brushes.Red, TextAlignment.Left, Brushes.Red),
-            [STYLE_STALEMATE] = new RichTextPara(50, 0, 18, FontWeights.Bold, Brushes.Red, TextAlignment.Left, Brushes.Red),
+            [STYLE_CHECKMATE] = new RichTextPara(50, 0, 16, FontWeights.Bold, Brushes.Navy, TextAlignment.Left, Brushes.Navy),
+            [STYLE_STALEMATE] = new RichTextPara(50, 0, 16, FontWeights.Bold, Brushes.Navy, TextAlignment.Left, Brushes.Navy),
         };
 
         /// <summary>
@@ -279,10 +279,12 @@ namespace ChessForge
 
                 if (PositionUtils.IsCheckmate(_userMove.Position))
                 {
+                    BuildMoveParagraph(_userMove, true);
                     BuildCheckmateParagraph(_userMove, true);
                 }
                 else if (PositionUtils.IsStalemate(_userMove.Position))
                 {
+                    BuildMoveParagraph(_userMove, true);
                     BuildStalemateParagraph(_userMove);
                 }
                 else
@@ -511,6 +513,15 @@ namespace ChessForge
             Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
             _paraCurrentEngineGame.Inlines.Add(gm);
 
+            if (nd.Position.IsCheckmate)
+            {
+                BuildCheckmateParagraph(nd, false);
+            }
+            else if (nd.Position.IsStalemate)
+            {
+                BuildStalemateParagraph(nd);
+            }
+
             _currentEngineGameMoveCount++;
 
         }
@@ -678,11 +689,11 @@ namespace ChessForge
             Run r_prefix = new Run();
             if (userMove)
             {
-                r_prefix.Text = "\nYou have checkmated the engine. Congratulations!";
+                r_prefix.Text = "\nThe training game has ended. You have delivered a checkmate!";
             }
             else
             {
-                r_prefix.Text = "\nYou have been checkmated by the engine. Better luck next time!";
+                r_prefix.Text = "\nThe training game has ended. You have been checkmated by the engine.";
             }
 
             para.Inlines.Add(r_prefix);
@@ -702,7 +713,7 @@ namespace ChessForge
             para.Name = paraName;
 
             Run r_prefix = new Run();
-            r_prefix.Text = "\nThis is a stalemate! You have drawn the game.";
+            r_prefix.Text = "\nThis is a stalemate. The game has been drawn.";
 
             para.Inlines.Add(r_prefix);
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
