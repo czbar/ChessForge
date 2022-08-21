@@ -138,7 +138,6 @@ namespace ChessForge
 
             UiSldReplaySpeed.Value = Configuration.MoveSpeed;
             _isDebugMode = Configuration.DebugMode != 0;
-
         }
 
         /// <summary>
@@ -205,20 +204,41 @@ namespace ChessForge
                             MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
 
-                        string lastWorkbookFile = Configuration.LastWorkbookFile;
-                        if (!string.IsNullOrEmpty(lastWorkbookFile))
+                        // if we have LastWorkbookFile or a name on the commend line
+                        // we will try to open
+                        string cmdLineFile = App.CmdLineFileName;
+                        bool success = false;
+                        if (!string.IsNullOrEmpty(cmdLineFile))
                         {
                             try
                             {
-                                ReadWorkbookFile(lastWorkbookFile, true);
+                                ReadWorkbookFile(cmdLineFile, true);
+                                success = true;
                             }
                             catch
                             {
+                                success = false;
                             }
                         }
-                        else
+
+                        if (!success)
                         {
-                            BoardCommentBox.OpenFile();
+                            string lastWorkbookFile = Configuration.LastWorkbookFile;
+
+                            if (!string.IsNullOrEmpty(lastWorkbookFile))
+                            {
+                                try
+                                {
+                                    ReadWorkbookFile(lastWorkbookFile, true);
+                                }
+                                catch
+                                {
+                                }
+                            }
+                            else
+                            {
+                                BoardCommentBox.OpenFile();
+                            }
                         }
                     });
                 }
@@ -1445,6 +1465,11 @@ namespace ChessForge
             e.Handled = true;
         }
 
+        /// <summary>
+        /// A key pressed event has been received.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _rtbWorkbookFull_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // Hand it off to the ActiveLine view.
@@ -1479,6 +1504,11 @@ namespace ChessForge
             UiTabBookmarks.Focus();
         }
 
+        /// <summary>
+        /// A request from the menu to start training at the currently selected position.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiMnciStartTrainingHere_Click(object sender, RoutedEventArgs e)
         {
             // do some housekeeping just in case
