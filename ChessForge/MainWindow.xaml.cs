@@ -924,14 +924,7 @@ namespace ChessForge
 
                 if (Workbook.TrainingSide == PieceColor.None)
                 {
-                    TrainingSideDialog dlg = new TrainingSideDialog();
-                    dlg.Left = ChessForgeMain.Left + 100;
-                    dlg.Top = ChessForgeMain.Top + 100;
-                    dlg.Topmost = true;
-                    dlg.WorkbookTitle = Workbook.Title;
-                    dlg.ShowDialog();
-                    Workbook.TrainingSide = dlg.SelectedSide;
-                    Workbook.Title = dlg.WorkbookTitle;
+                    ShowWorkbookOptionsDialog();
                 }
 
                 if (Workbook.TrainingSide == PieceColor.White && MainChessBoard.IsFlipped || Workbook.TrainingSide == PieceColor.Black && !MainChessBoard.IsFlipped)
@@ -1446,7 +1439,10 @@ namespace ChessForge
             {
                 UiPbEngineThinking.Visibility = Visibility.Hidden;
                 UiPbEngineThinking.Minimum = 0;
-                UiPbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime);
+
+                int moveTime = AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME ?
+                    Configuration.EngineMoveTime : Configuration.EngineEvaluationTime;
+                UiPbEngineThinking.Maximum = moveTime;
                 UiPbEngineThinking.Value = 0;
             });
 
@@ -1661,7 +1657,7 @@ namespace ChessForge
                     // user requested File->Save so proceed...
                     AppStateManager.SaveWorkbookFile();
                 }
-                else 
+                else
                 {
                     if (AppStateManager.IsDirty)
                     {
@@ -2019,14 +2015,24 @@ namespace ChessForge
             string searchPath = Path.GetDirectoryName(Configuration.EngineExePath);
             if (!string.IsNullOrEmpty(Configuration.SelectEngineExecutable(searchPath)))
             {
-                EngineMessageProcessor.StopEngineService();
-                EngineMessageProcessor.CreateEngineService(this, _isDebugMode);
+                ReloadEngine();
+            }
+        }
 
-                bool engineStarted = EngineMessageProcessor.Start();
-                if (!engineStarted)
-                {
-                    MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+        public bool ReloadEngine()
+        {
+            EngineMessageProcessor.StopEngineService();
+            EngineMessageProcessor.CreateEngineService(this, _isDebugMode);
+
+            bool engineStarted = EngineMessageProcessor.Start();
+            if (!engineStarted)
+            {
+                MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 
@@ -2039,6 +2045,57 @@ namespace ChessForge
         {
             AboutBoxDialog dlg = new AboutBoxDialog();
             dlg.ShowDialog();
+        }
+
+        private void UiMnWorkbookOptions_Click(object sender, RoutedEventArgs e)
+        {
+            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE)
+            {
+                ShowWorkbookOptionsDialog();
+            }
+        }
+
+        private void ShowWorkbookOptionsDialog()
+        {
+            WorkbookOptionsDialog dlg = new WorkbookOptionsDialog(Workbook);
+            dlg.Left = ChessForgeMain.Left + 100;
+            dlg.Top = ChessForgeMain.Top + 100;
+            dlg.Topmost = true;
+            dlg.ShowDialog();
+
+            if (dlg.ExitOK)
+            {
+                Workbook.TrainingSide = dlg.TrainingSide;
+                Workbook.Title = dlg.WorkbookTitle;
+            }
+        }
+
+        private void UiMnApplicationOptions_Click(object sender, RoutedEventArgs e)
+        {
+            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE)
+            {
+                ShowApplicationOptionsDialog();
+            }
+        }
+
+        private void ShowApplicationOptionsDialog()
+        {
+            AppOptionsDialog dlg = new AppOptionsDialog();
+            dlg.Left = ChessForgeMain.Left + 100;
+            dlg.Top = ChessForgeMain.Top + 100;
+            dlg.Topmost = true;
+            dlg.ShowDialog();
+
+            if (dlg.ExitOK)
+            {
+                Configuration.EngineExePath = dlg.EnginePath;
+                Configuration.MoveSpeed = (int)(dlg.ReplaySpeed * 1000.0);
+                Configuration.EngineMoveTime = (int)(dlg.EngineTimePerMoveInGame * 1000.0);
+                Configuration.EngineEvaluationTime = (int)(dlg.EngineTimePerMoveInEvaluation * 1000.0);
+                Configuration.WriteOutConfiguration();
+
+                ReloadEngine();
+            }
         }
 
     }

@@ -81,6 +81,8 @@
             <MenuItem Header="View" Margin="0,0,0,0">
                 <MenuItem Header="Flip Board" Click="MenuItem_FlipBoard" />
                 <Separator />
+                <MenuItem Header="Application Options..." Click="UiMnApplicationOptions_Click" />
+                <MenuItem Header="Workbook Options..." Click="UiMnWorkbookOptions_Click" />
                 <MenuItem Header="Analysis Engine..." Click="UiMnSelectEngine_Click" />
             </MenuItem>
             <MenuItem Header="Help" Margin="0,0,0,0">
