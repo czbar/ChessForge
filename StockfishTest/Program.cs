@@ -27,7 +27,7 @@ namespace StockfishTest
 
         static void Main(string[] args)
         {
-            engine = new EngineService.EngineProcess(true);
+            engine = new EngineService.EngineProcess(true, "");
             engine.EngineMessage += EngineMessage;
 
             StartStockfishEngine(engine);

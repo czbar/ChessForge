@@ -49,7 +49,13 @@ namespace ChessForge
             {
                 sb.Append(s + Environment.NewLine);
             }
-            File.WriteAllText("log.txt", sb.ToString());
+            try
+            {
+                // this may fail if we try to write to the system folder e.g. because the app was invoked via menu association.
+                string fileName = Path.Combine(App.AppPath, "log.txt");
+                File.WriteAllText(fileName, sb.ToString());
+            }
+            catch { };
         }
     }
 }

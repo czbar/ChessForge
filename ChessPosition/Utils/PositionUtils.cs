@@ -335,7 +335,8 @@ namespace ChessPosition
         /// <returns></returns>
         public static bool IsKingInCheck(BoardPosition pos, PieceColor kingColorToCheck)
         {
-            return !IsKingSafe(pos, kingColorToCheck);
+            pos.IsCheck = !IsKingSafe(pos, kingColorToCheck);
+            return pos.IsCheck;
         }
 
         /// <summary>
@@ -350,12 +351,15 @@ namespace ChessPosition
                 var lst = PieceMoves.GetLegalMoves(pos.ColorToMove, pos, true);
                 if (lst.Count == 0)
                 {
+                    pos.IsCheckmate = true;
                     return true;
                 }
             }
 
+            pos.IsCheckmate = false;
             return false;
         }
+
 
         /// <summary>
         /// Determines if the passed position is stalemate.
@@ -369,10 +373,12 @@ namespace ChessPosition
                 var lst = PieceMoves.GetLegalMoves(pos.ColorToMove, pos, true);
                 if (lst.Count == 0)
                 {
+                    pos.IsStalemate = true;
                     return true;
                 }
             }
 
+            pos.IsStalemate = false;
             return false;
         }
 

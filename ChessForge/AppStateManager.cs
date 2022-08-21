@@ -476,6 +476,7 @@ namespace ChessForge
             {
                 case LearningMode.Mode.MANUAL_REVIEW:
                     _mainWin.UiMnciStartTraining.Visibility = Visibility.Visible;
+                    _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Visible;
                     _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
                     _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
 
@@ -495,6 +496,7 @@ namespace ChessForge
                     break;
                 case LearningMode.Mode.TRAINING:
                     _mainWin.UiMnciStartTraining.Visibility = Visibility.Collapsed;
+                    _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
                     _mainWin.UiMnciRestartTraining.Visibility = Visibility.Visible;
                     _mainWin.UiMnciExitTraining.Visibility = Visibility.Visible;
 
@@ -516,6 +518,7 @@ namespace ChessForge
                     if (TrainingState.IsTrainingInProgress)
                     {
                         _mainWin.UiMnciStartTraining.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciRestartTraining.Visibility = Visibility.Visible;
                         _mainWin.UiMnciExitTraining.Visibility = Visibility.Visible;
 
@@ -526,6 +529,7 @@ namespace ChessForge
                     else
                     {
                         _mainWin.UiMnciStartTraining.Visibility = Visibility.Visible;
+                        _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
 

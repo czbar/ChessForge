@@ -54,6 +54,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns true if there is a cell selected
+        /// in the DataGrid.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasAnySelection()
+        {
+            return _dgActiveLine.SelectedCells.Count > 0;
+        }
+
+        /// <summary>
         /// Figures out the node corresponding to 
         /// the selected cell and displays the position.
         /// </summary>
@@ -159,7 +169,7 @@ namespace ChessForge
         /// <param name="row"></param>
         /// <param name="column"></param>
         /// <returns></returns>
-        internal int GetNodeIndexFromRowColumn(int row, int column)
+        public int GetNodeIndexFromRowColumn(int row, int column)
         {
             if (row < 0 || column < 0)
                 return -1;
@@ -181,7 +191,7 @@ namespace ChessForge
         /// <param name="row"></param>
         /// <param name="column"></param>
         /// <returns></returns>
-        internal bool GetSelectedRowColumn(out int row, out int column)
+        public bool GetSelectedRowColumn(out int row, out int column)
         {
             row = -1;
             column = -1;
@@ -212,7 +222,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="moveNo">Number of the move</param>
         /// <param name="colorToMove">Side on move</param>
-        internal void SelectPly(int moveNo, PieceColor colorToMove)
+        public void SelectPly(int moveNo, PieceColor colorToMove)
         {
             _dgActiveLine.SelectedCells.Clear();
             moveNo = Math.Max(moveNo, 0);

@@ -116,7 +116,7 @@ namespace ChessForge
             Timers = new AppTimers(EngineLinesGUI, this);
 
             Configuration.Initialize(this);
-            Configuration.StartDirectory = Directory.GetCurrentDirectory();
+            Configuration.StartDirectory = App.AppPath;
             Configuration.ReadConfigurationFile();
             MoveAnimation.MoveDuration = Configuration.MoveSpeed;
             if (Configuration.IsMainWinPosValid())
@@ -138,7 +138,6 @@ namespace ChessForge
 
             UiSldReplaySpeed.Value = Configuration.MoveSpeed;
             _isDebugMode = Configuration.DebugMode != 0;
-
         }
 
         /// <summary>
@@ -205,20 +204,41 @@ namespace ChessForge
                             MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
 
-                        string lastWorkbookFile = Configuration.LastWorkbookFile;
-                        if (!string.IsNullOrEmpty(lastWorkbookFile))
+                        // if we have LastWorkbookFile or a name on the commend line
+                        // we will try to open
+                        string cmdLineFile = App.CmdLineFileName;
+                        bool success = false;
+                        if (!string.IsNullOrEmpty(cmdLineFile))
                         {
                             try
                             {
-                                ReadWorkbookFile(lastWorkbookFile, true);
+                                ReadWorkbookFile(cmdLineFile, true);
+                                success = true;
                             }
                             catch
                             {
+                                success = false;
                             }
                         }
-                        else
+
+                        if (!success)
                         {
-                            BoardCommentBox.OpenFile();
+                            string lastWorkbookFile = Configuration.LastWorkbookFile;
+
+                            if (!string.IsNullOrEmpty(lastWorkbookFile))
+                            {
+                                try
+                                {
+                                    ReadWorkbookFile(lastWorkbookFile, true);
+                                }
+                                catch
+                                {
+                                }
+                            }
+                            else
+                            {
+                                BoardCommentBox.OpenFile();
+                            }
                         }
                     });
                 }
@@ -1445,6 +1465,11 @@ namespace ChessForge
             e.Handled = true;
         }
 
+        /// <summary>
+        /// A key pressed event has been received.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _rtbWorkbookFull_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // Hand it off to the ActiveLine view.
@@ -1477,6 +1502,41 @@ namespace ChessForge
             AppStateManager.SwapCommentBoxForEngineLines(false);
 
             UiTabBookmarks.Focus();
+        }
+
+        /// <summary>
+        /// A request from the menu to start training at the currently selected position.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnciStartTrainingHere_Click(object sender, RoutedEventArgs e)
+        {
+            // do some housekeeping just in case
+            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+            {
+                StopEngineGame();
+            }
+            else if (Evaluation.IsRunning)
+            {
+                EngineMessageProcessor.StopEngineEvaluation();
+            }
+
+            TreeNode nd = ActiveLine.GetSelectedTreeNode();
+            if (nd != null)
+            {
+                if (!BookmarkManager.IsBookmarked(nd.NodeId))
+                {
+                    if (MessageBox.Show("Do you want to bookmark this move?", "Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        BookmarkManager.AddBookmark(nd);
+                    }
+                }
+                SetAppInTrainingMode(nd);
+            }
+            else
+            {
+                MessageBox.Show("No move selected to start training from.", "Training", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         /// <summary>
@@ -1543,23 +1603,6 @@ namespace ChessForge
                 Evaluation.Reset();
 
                 PromptAndSaveWorkbook(false);
-                if (Workbook.HasTrainingMoves())
-                {
-                    if (MessageBox.Show("Merge and Save new moves from this session into the Workbook?", "Chess Forge Save Workbook",
-                        MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                    {
-                        Workbook.ClearTrainingFlags();
-                        Workbook.BuildLines();
-                        AppStateManager.SaveWorkbookFile();
-                        _workbookView.BuildFlowDocumentForWorkbook();
-                        AppStateManager.IsDirty = false;
-                    }
-                    else
-                    {
-                        Workbook.RemoveTrainingMoves();
-                    }
-                }
-
                 TrainingState.IsTrainingInProgress = false;
                 MainChessBoard.RemoveMoveSquareColors();
                 LearningMode.CurrentMode = LearningMode.Mode.MANUAL_REVIEW;
@@ -1603,6 +1646,10 @@ namespace ChessForge
                     AppStateManager.SaveWorkbookFile();
                     _workbookView.BuildFlowDocumentForWorkbook();
                     saved = true;
+                }
+                else
+                {
+                    Workbook.RemoveTrainingMoves();
                 }
             }
 
@@ -1993,5 +2040,6 @@ namespace ChessForge
             AboutBoxDialog dlg = new AboutBoxDialog();
             dlg.ShowDialog();
         }
+
     }
 }

@@ -132,6 +132,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if the passed nodeId has already
+        /// been bookmarked.
+        /// </summary>
+        /// <param name="nodeId">Id of the node to check.</param>
+        /// <returns></returns>
+        public static bool IsBookmarked(int nodeId)
+        {
+            return (_mainWin.Workbook.IsBookmarked(nodeId));
+        }
+
+        /// <summary>
         /// Adds a bookmark to the list of bookmarks.
         /// Sorts the bookmarks and updates the GUI.
         /// </summary>
@@ -157,7 +168,6 @@ namespace ChessForge
             {
                 return -1;
             }
-
         }
 
         /// <summary>

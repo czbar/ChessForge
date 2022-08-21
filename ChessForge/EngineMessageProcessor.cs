@@ -63,7 +63,7 @@ namespace ChessForge
         {
             _mainWin = mainWin;
 
-            ChessEngineService = new EngineService.EngineProcess(debugMode);
+            ChessEngineService = new EngineService.EngineProcess(debugMode, App.AppPath);
             ChessEngineService.EngineMessage += EngineMessageReceived;
         }
 
@@ -147,13 +147,13 @@ namespace ChessForge
                 {
                     AppLog.Message("Move evaluation finished for index " + _mainWin.Evaluation.PositionIndex.ToString());
 
-                    string eval = "";
-                    if (!string.IsNullOrEmpty(_mainWin.Evaluation.PositionEvaluation))
+                    string eval = _mainWin.Evaluation.PositionEvaluation;
+                    if (!string.IsNullOrEmpty(eval))
                     {
                         // if this is not checkmate, check the sign (for checkmate it is already there)
-                        if (_mainWin.Evaluation.PositionEvaluation.IndexOf('#') < 0)
+                        if (eval.IndexOf('#') < 0)
                         {
-                            eval = (_mainWin.Evaluation.PositionEvaluation[0] == '-' ? "" : "+") + _mainWin.Evaluation.PositionEvaluation;
+                            eval = (eval[0] == '-' ? "" : "+") + eval;
                         }
                     }
 

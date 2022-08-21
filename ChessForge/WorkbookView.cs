@@ -253,7 +253,17 @@ namespace ChessForge
             {
                 if (nd.NodeId != 0)
                 {
-                    _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
+                    if (_dictNodeToRun.ContainsKey(nd.NodeId))
+                    {
+                        _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
+                    }
+                    else
+                    {
+                        if (Configuration.DebugMode != 0)
+                        {
+                            AppLog.Message("Error in SelectLineAndMove(): NodeId " + nd.NodeId.ToString() + " not in _dictNodeToRun");
+                        }
+                    }
                 }
             }
 
