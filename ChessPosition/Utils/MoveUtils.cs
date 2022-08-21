@@ -114,7 +114,7 @@ namespace ChessPosition
             }
             else
             {
-                return  (nd.ColorToMove == PieceColor.Black ? nd.MoveNumber.ToString() + "." : "") + moveTxt;
+                return (nd.ColorToMove == PieceColor.Black ? nd.MoveNumber.ToString() + "." : "") + moveTxt;
             }
         }
 
@@ -280,8 +280,7 @@ namespace ChessPosition
                 else
                 {
                     // how many pieces of this type can come to the destination
-                    PiecesTargetingSquare sa = new PiecesTargetingSquare((byte)dest.Xcoord, (byte)dest.Ycoord, (byte)orig.Xcoord, (byte)orig.Ycoord,
-                        pos.ColorToMove, ref pos, piece);
+                    PiecesTargetingSquare sa = new PiecesTargetingSquare((byte)dest.Xcoord, (byte)dest.Ycoord, -1, -1, pos.ColorToMove, ref pos, piece);
                     if (sa.Candidates.Count == 1)
                     {
                         alg = BuildAlgebraicMove(piece, promoteToPiece, engDest, isCapture, "");
