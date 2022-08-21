@@ -312,7 +312,9 @@ namespace ChessForge
 
             _mainWin.Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
             string fen = AppStateManager.PrepareMoveEvaluation(_mainWin.Evaluation.Position, true);
-            RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
+            int moveTime = AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME ?
+                Configuration.EngineMoveTime : Configuration.EngineEvaluationTime;
+            RequestEngineEvaluation(fen, Configuration.EngineMpv, moveTime);
         }
 
         /// <summary>
@@ -325,7 +327,7 @@ namespace ChessForge
             AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.ENGINE_GAME);
 
             string fen = AppStateManager.PrepareMoveEvaluation(position, false);
-            RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
+            RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineMoveTime);
         }
 
         /// <summary>
