@@ -79,6 +79,9 @@
     </Compile>
     <Compile Include="AnimationState.cs" />
     <Compile Include="AppLog.cs" />
+    <Compile Include="AppOptionsDialog.xaml.cs">
+      <DependentUpon>AppOptionsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LearningMode.cs" />
     <Compile Include="AppStateManager.cs" />
     <Compile Include="AppTimers.cs" />
@@ -108,8 +111,8 @@
     <Compile Include="Resources\Strings.cs" />
     <Compile Include="RichTextBuilder.cs" />
     <Compile Include="SoundPlayer.cs" />
-    <Compile Include="TrainingSideDialog.xaml.cs">
-      <DependentUpon>TrainingSideDialog.xaml</DependentUpon>
+    <Compile Include="WorkbookOptionsDialog.xaml.cs">
+      <DependentUpon>WorkbookOptionsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="TrainingView.cs" />
     <Compile Include="TrainingState.cs" />
@@ -122,6 +125,10 @@
     <Compile Include="VariationLine.cs" />
     <Compile Include="WorkbookTableState.cs" />
     <Page Include="AboutBoxDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppOptionsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -141,7 +148,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TrainingSideDialog.xaml">
+    <Page Include="WorkbookOptionsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -235,6 +242,7 @@
     <Resource Include="Resources\Images\BlackRookSmall.png" />
     <Resource Include="Resources\Images\WhiteBishopSmall.png" />
     <Resource Include="Resources\Images\WhiteKingSmall.png" />
+    <Resource Include="Resources\Images\swap_vert.png" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

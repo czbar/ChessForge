@@ -1,0 +1,24 @@
+﻿<Window x:Class="ChessForge.WorkbookOptionsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+         AllowsTransparency="False"
+         Background="Transparent"
+        Title="Workbook Options" Height="200" Width="400" HorizontalAlignment="Center">
+
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="_tbTitle" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="134,27,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="26" Width="231" Visibility="Visible"/>
+        <Button x:Name="_btnOK" Content="Save" HorizontalAlignment="Left" Margin="110,115,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" PreviewMouseDown="_btnOK_PreviewMouseDown"/>
+        <Button x:Name="_btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="211,116,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" PreviewMouseDown="_btnCancel_PreviewMouseDown" />
+        <Label x:Name="_lblTrainingSide" Content="Training Side:" HorizontalAlignment="Left" Margin="29,63,0,0" VerticalAlignment="Top" Width="141"/>
+        <Label x:Name="_lblTitle" Content="Workbook Title: " HorizontalAlignment="Left" Margin="28,25,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="_tbSideOnMove" IsEnabled="False" HorizontalAlignment="Left" Margin="134,63,0,0" TextWrapping="Wrap" Text="WHITE" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Width="77" FontWeight="Bold" Height="26"/>
+        <Image x:Name="_imgSwapColor" HorizontalAlignment="Left" Height="28" Margin="218,62,0,0" VerticalAlignment="Top" Width="28" Source="Resources/Images/swap_vert.png" PreviewMouseDown="_imgSwapColor_PreviewMouseDown"/>
+    </Grid>
+</Window>

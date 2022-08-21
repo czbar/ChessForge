@@ -818,7 +818,9 @@ namespace ChessForge
 
                 _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
                 _mainWin.UiPbEngineThinking.Minimum = 0;
-                _mainWin.UiPbEngineThinking.Maximum = (int)(Configuration.EngineEvaluationTime);
+                int moveTime = AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME ?
+                    Configuration.EngineMoveTime : Configuration.EngineEvaluationTime;
+                _mainWin.UiPbEngineThinking.Maximum = moveTime;
                 _mainWin.UiPbEngineThinking.Value = 0;
             });
         }
