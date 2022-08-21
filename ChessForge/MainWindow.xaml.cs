@@ -1543,23 +1543,6 @@ namespace ChessForge
                 Evaluation.Reset();
 
                 PromptAndSaveWorkbook(false);
-                if (Workbook.HasTrainingMoves())
-                {
-                    if (MessageBox.Show("Merge and Save new moves from this session into the Workbook?", "Chess Forge Save Workbook",
-                        MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                    {
-                        Workbook.ClearTrainingFlags();
-                        Workbook.BuildLines();
-                        AppStateManager.SaveWorkbookFile();
-                        _workbookView.BuildFlowDocumentForWorkbook();
-                        AppStateManager.IsDirty = false;
-                    }
-                    else
-                    {
-                        Workbook.RemoveTrainingMoves();
-                    }
-                }
-
                 TrainingState.IsTrainingInProgress = false;
                 MainChessBoard.RemoveMoveSquareColors();
                 LearningMode.CurrentMode = LearningMode.Mode.MANUAL_REVIEW;
@@ -1603,6 +1586,10 @@ namespace ChessForge
                     AppStateManager.SaveWorkbookFile();
                     _workbookView.BuildFlowDocumentForWorkbook();
                     saved = true;
+                }
+                else
+                {
+                    Workbook.RemoveTrainingMoves();
                 }
             }
 
