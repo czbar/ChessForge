@@ -53,7 +53,7 @@ namespace ChessForge
             para.FontSize = 22;
             para.FontWeight = FontWeights.Bold;
             para.TextAlignment = TextAlignment.Left;
-            para.Foreground = Brushes.OrangeRed;
+            para.Foreground = Brushes.Teal;
 
             Run run = new Run("CHESS FORGE beta");
             para.Inlines.Add(run);
