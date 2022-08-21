@@ -275,6 +275,17 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns true if the passed NodeId
+        /// has already been bookmarked.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        public bool IsBookmarked(int nodeId)
+        {
+            return FindBookmarkIndex(nodeId) >= 0;
+        }
+
+        /// <summary>
         /// Deletes a bookmark from the list of bookmarks
         /// and removes the bookmark flag from the node.
         /// </summary>
@@ -324,15 +335,38 @@ namespace GameTree
         /// Finds index of a passed node in the 
         /// Bookmarks list.
         /// </summary>
-        /// <param name="nd"></param>
+        /// <param name="nd">Index in the bookmark list or -1 if not found</param>
         /// <returns></returns>
         public int FindBookmarkIndex(TreeNode nd)
+        {
+            int idx = -1;
+            int nodeId = nd.NodeId;
+
+            for (int i = 0; i < Bookmarks.Count; i++)
+            {
+                if (Bookmarks[i].Node.NodeId == nodeId)
+                {
+                    idx = i;
+                    break;
+                }
+            }
+
+            return idx;
+        }
+
+        /// <summary>
+        /// Finds index of a passed Node Id in the 
+        /// Bookmarks list.
+        /// </summary>
+        /// <param name="nodeId">Index in the bookmark list or -1 if not found</param>
+        /// <returns></returns>
+        public int FindBookmarkIndex(int nodeId)
         {
             int idx = -1;
 
             for (int i = 0; i < Bookmarks.Count; i++)
             {
-                if (Bookmarks[i].Node.NodeId == nd.NodeId)
+                if (Bookmarks[i].Node.NodeId == nodeId)
                 {
                     idx = i;
                     break;
