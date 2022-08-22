@@ -166,6 +166,10 @@ namespace ChessForge
         public void PromoteCurrentLine()
         {
             TreeNode nd = _workbook.GetNodeFromNodeId(_lastClickedNodeId);
+            // TODO: it would be more precise to get the last move of the line being promoted and set it as line id
+            // otherwise we end up selecting a different line that the one we are promoting.
+            // However, with the current GUI logic, the selected line changes when the user right-clicks on the
+            // move to promote the line, so the end result wouldn't change. But it may if we chnage that other logic.
             _workbook.PromoteLine(nd);
             _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
             BuildFlowDocumentForWorkbook();
@@ -298,6 +302,7 @@ namespace ChessForge
 
         /// <summary>
         /// Builds the FlowDocument from the entire Workbook tree for the RichTextBox to display.
+        /// Inserts dummy (no text) run for the starting position (NodeId == 0)
         /// </summary>
         public void BuildFlowDocumentForWorkbook(int rootNodeId = 0, bool includeStem = true)
         {
@@ -333,6 +338,8 @@ namespace ChessForge
             // start be creating a level 1 paragraph.
             Paragraph para = CreateParagraph("0");
             Document.Blocks.Add(para);
+
+            CreateStartingNode(para);
 
             // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
             BuildTreeLineText(root, para, includeStem);
@@ -465,6 +472,7 @@ namespace ChessForge
         public void AddNewNode(TreeNode nd)
         {
             TreeNode parent = nd.Parent;
+
             Run rParent = _dictNodeToRun[parent.NodeId];
             Paragraph para = _dictRunToParagraph[rParent];
 
@@ -656,6 +664,18 @@ namespace ChessForge
             }
 
             AddRunToParagraph(nd, para, sb.ToString(), fontColor);
+        }
+
+        /// <summary>
+        /// Creates an "invisible" run for the starting position.
+        /// This is necessary so that we have parent for the first move
+        /// when starting a new Workbook.
+        /// </summary>
+        /// <param name="para"></param>
+        private void CreateStartingNode(Paragraph para)
+        {
+            TreeNode nd = _mainWin.Workbook.Nodes[0];
+            AddRunToParagraph(nd, para, "", Brushes.White);
         }
 
         /// <summary>

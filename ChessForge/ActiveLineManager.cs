@@ -128,6 +128,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the id of the line represented by this object.
+        /// This is LineId of the last node in the list.
+        /// </summary>
+        /// <returns></returns>
+        public string GetLineId()
+        {
+            return Line.GetLineId();
+        }
+
+        /// <summary>
         /// Returns Node corresponding to a ply.
         /// </summary>
         /// <param name="moveIdx"></param>
@@ -250,9 +260,14 @@ namespace ChessForge
             }
 
             var cellContent = cell.Column.GetCellContent(cell.Item);
+            if (cellContent == null)
+            {
+                _dgActiveLine.UpdateLayout();
+                cellContent = cell.Column.GetCellContent(cell.Item);
+            }
+
             if (cellContent != null)
             {
-                DataGridCell mycell = (DataGridCell)cellContent.Parent;
                 _dgActiveLine.SelectedCells.Add(cell);
             }
         }
@@ -263,6 +278,12 @@ namespace ChessForge
         /// <returns></returns>
         public TreeNode GetSelectedTreeNode()
         {
+            if (GetPlyCount() == 1)
+            {
+                // game with no moves
+                return _mainWin.Workbook.Nodes[0];
+            }
+
             int row, column;
 
             if (GetSelectedRowColumn(out row, out column))
@@ -345,7 +366,7 @@ namespace ChessForge
                     }
 
                     _mainWin.DisplayPosition(nd.Position);
-                    _mainWin.SelectLineAndMoveInWorkbookViews(null, nd.NodeId);
+                    _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), nd.NodeId);
                 }
             }
             else
@@ -431,7 +452,7 @@ namespace ChessForge
                     {
                         _mainWin.DisplayPosition(nd.Position);
                     }
-                    _mainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd.NodeId);
+                    _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), nd.NodeId);
                 }
                 e.Handled = true;
             }

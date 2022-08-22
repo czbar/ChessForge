@@ -7,6 +7,7 @@ using System.Windows.Documents;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ChessPosition;
+using System.Xml.Linq;
 
 namespace GameTree
 {
@@ -46,7 +47,7 @@ namespace GameTree
             {
                 string title;
                 Headers.TryGetValue(HEADER_TITLE, out title);
-                return string.IsNullOrEmpty(title) ? "Untitled Workbook" : title;
+                return title ?? "";
             }
             set
             {
@@ -106,6 +107,21 @@ namespace GameTree
         /// will be included more than ones.
         /// </summary>
         public ObservableCollection<VariationLine> VariationLines = new ObservableCollection<VariationLine>();
+
+        /// <summary>
+        /// Creates a new WorkbookTree.
+        /// Creates a root node and inserts in the tree. 
+        /// </summary>
+        public void CreateNew()
+        {
+            VariationLines.Clear();
+            Nodes.Clear();
+
+            TreeNode root = new TreeNode(null, "", 0);
+            root.Position = PositionUtils.SetupStartingPosition();
+            AddNode(root);
+            BuildLines();
+        }
 
         /// <summary>
         /// Walks the tree and assigns line id to each node

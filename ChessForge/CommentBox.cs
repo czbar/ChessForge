@@ -130,7 +130,7 @@ namespace ChessForge
         /// </summary>
         public void OpenFile()
         {
-            UserWaitAnnouncement("Use File->Open menu to read in a Workbook", Brushes.Blue);
+            UserWaitAnnouncement("Use File menu to open or create a new Workbook", Brushes.Blue);
         }
 
         /// <summary>
@@ -194,6 +194,10 @@ namespace ChessForge
         {
             Document.Blocks.Clear();
 
+            if (string.IsNullOrEmpty(title))
+            {
+                title = "Untitled";
+            }
             AddNewParagraphToDoc("title", title);
             AddNewParagraphToDoc("bold_prompt", "Some available actions are:");
             AddNewParagraphToDoc("normal", Strings.QUICK_INSTRUCTION);

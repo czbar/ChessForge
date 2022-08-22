@@ -320,6 +320,21 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Determines whether the chessboard should be flipped to show
+        /// the passed color at the bottom.
+        /// If so, flips the board.
+        /// </summary>
+        /// <param name="sideAtBottom"></param>
+        public void FlipBoard(PieceColor sideAtBottom)
+        {
+            if (sideAtBottom == PieceColor.White && _isFlipped
+                || sideAtBottom == PieceColor.Black && !_isFlipped)
+            {
+                FlipBoard();
+            }
+        }
+
+        /// <summary>
         /// Sets up the position on the board
         /// reflecting the passed Position object.
         /// </summary>

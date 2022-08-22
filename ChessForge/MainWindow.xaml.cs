@@ -399,7 +399,15 @@ namespace ChessForge
             // in the Manual Review, the color of the piece on the main board must match the side on the move in the selected position
             if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
             {
-                TreeNode nd = ActiveLine.GetSelectedTreeNode();
+                TreeNode nd;
+                if (ActiveLine.GetPlyCount() > 1)
+                {
+                    nd = ActiveLine.GetSelectedTreeNode();
+                }
+                else
+                {
+                    nd = Workbook.Nodes[0];
+                }
                 if (pieceColor != PieceColor.None && pieceColor == nd.ColorToMove)
                     return true;
                 else
@@ -779,19 +787,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnCloseWorkbook_Click(object sender, RoutedEventArgs e)
         {
-            if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN)
-            {
-                PromptUserToConvertPGNToCHF();
-            }
-            else
-            {
-                if (!PromptAndSaveWorkbook(false))
-                {
-                    // the user chose cancel so we are not closing after all
-                    return;
-                }
-            }
-            AppStateManager.RestartInIdleMode();
+            WorkbookManager.AskToSaveWorkbook();
         }
 
         /// <summary>
@@ -878,24 +874,8 @@ namespace ChessForge
         {
             try
             {
-                if (!File.Exists(fileName))
+                if (!WorkbookManager.CheckFileExists(fileName, isLastOpen))
                 {
-                    if (isLastOpen)
-                    {
-                        MessageBox.Show("Most recent file " + fileName + " could not be found.", "File Not Found", MessageBoxButton.OK);
-                    }
-                    else
-                    {
-                        MessageBox.Show("File " + fileName + " could not be found.", "File Not Found", MessageBoxButton.OK);
-                    }
-                    Configuration.RemoveFromRecentFiles(fileName);
-                    RecreateRecentFilesMenuItems();
-                    return;
-                }
-
-                if (fileName == AppStateManager.WorkbookFilePath)
-                {
-                    MessageBox.Show(Path.GetFileName(fileName) + " is already open.", "Chess Forge File", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     return;
                 }
 
@@ -909,7 +889,6 @@ namespace ChessForge
                     BoardCommentBox.ReadingFile();
                 });
 
-                //                System.Threading.Thread.Sleep(100);
                 AppStateManager.WorkbookFilePath = fileName;
 
                 string workbookText = File.ReadAllText(fileName);
@@ -932,13 +911,11 @@ namespace ChessForge
                     MainChessBoard.FlipBoard();
                 }
 
-                //
                 // If this is not a CHF file, ask the user to save the converted file.
-                //
                 bool recentFilesProcessed = false;
                 if (AppStateManager.WorkbookFileType != AppStateManager.FileType.CHF)
                 {
-                    if (SaveWorkbookToNewFile(fileName, true))
+                    if (WorkbookManager.SaveWorkbookToNewFile(fileName, true))
                     {
                         recentFilesProcessed = true;
                     }
@@ -946,9 +923,7 @@ namespace ChessForge
 
                 if (!recentFilesProcessed)
                 {
-                    Configuration.AddRecentFile(fileName);
-                    RecreateRecentFilesMenuItems();
-                    Configuration.LastWorkbookFile = fileName;
+                    WorkbookManager.UpdateRecentFilesList(fileName);
                 }
 
                 BoardCommentBox.ShowWorkbookTitle(Workbook.Title);
@@ -956,8 +931,14 @@ namespace ChessForge
                 _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
                 _trainingBrowseRichTextBuilder = new WorkbookView(UiRtbTrainingBrowse.Document, this);
                 //UiTrainingView = new TrainingView(UiRtbTrainingProgress.Document, this);
-
-                Workbook.BuildLines();
+                if (Workbook.Nodes.Count == 0)
+                {
+                    Workbook.CreateNew();
+                }
+                else
+                {
+                    Workbook.BuildLines();
+                }
                 UiTabWorkbook.Focus();
 
                 _workbookView.BuildFlowDocumentForWorkbook();
@@ -969,7 +950,6 @@ namespace ChessForge
                         Workbook.GenerateBookmarks();
                         UiTabBookmarks.Focus();
                         AppStateManager.IsDirty = true;
-                        //AppStateManager.SaveWorkbookFile();
                     }
                 }
 
@@ -1011,76 +991,6 @@ namespace ChessForge
             _workbookView.AddNewNode(nd);
         }
 
-        /// <summary>
-        /// Prompts the user to decide whether they want to convert/save 
-        /// PGN file as a CHF Workbook.
-        /// Invoked when the app or the Workbook is being closed.
-        /// </summary>
-        /// <returns></returns>
-        private int PromptUserToConvertPGNToCHF()
-        {
-            bool hasBookmarks = Workbook.Bookmarks.Count > 0;
-
-            string msg = "Your edits " + (hasBookmarks ? "and bookmarks " : "")
-                + "will be lost unless you save this Workbook as a ChessForge (.chf) file.\n\n Convert and save?";
-            if (MessageBox.Show(msg, "Chess Forge File Closing", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                SaveWorkbookToNewFile(AppStateManager.WorkbookFilePath, true);
-                return 0;
-            }
-            else
-            {
-                return -1;
-            }
-        }
-
-        /// <summary>
-        /// Allows the user to save the Workbook in a new file.
-        /// This method will be called when converting a PGN file to CHF
-        /// or in reponse to File->Save As menu selection
-        /// or in response when saving a file that has no name yet (i.e. saving
-        /// first time since creation).
-        /// </summary>
-        /// <param name="pgnFileName"></param>
-        private bool SaveWorkbookToNewFile(string pgnFileName, bool typeConversion)
-        {
-            SaveFileDialog saveDlg = new SaveFileDialog();
-            saveDlg.Filter = "chf Workbook files (*.chf)|*.chf";
-
-            if (typeConversion)
-            {
-                saveDlg.Title = " Save Workbook converted from " + Path.GetFileName(pgnFileName);
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(pgnFileName))
-                {
-                    saveDlg.Title = " Save Workbook " + Path.GetFileName(pgnFileName) + " As...";
-                }
-                else
-                {
-                    saveDlg.Title = " Save New Workbook As...";
-                }
-            }
-
-            if (!string.IsNullOrEmpty(pgnFileName))
-            {
-                saveDlg.FileName = Path.GetFileNameWithoutExtension(pgnFileName) + ".chf";
-            }
-
-            saveDlg.OverwritePrompt = true;
-            if (saveDlg.ShowDialog() == true)
-            {
-                string chfFileName = saveDlg.FileName;
-                AppStateManager.SaveWorkbookToNewFile(pgnFileName, chfFileName, typeConversion);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         public void SelectLineAndMoveInWorkbookViews(string lineId, int nodeId)
         {
             _workbookView.SelectLineAndMove(lineId, nodeId);
@@ -1119,10 +1029,13 @@ namespace ChessForge
         {
             ActiveLine.SetNodeList(line);
 
-            if (selectedNodeId > 0)
+            if (selectedNodeId >= 0)
             {
                 TreeNode nd = ActiveLine.GetNodeFromId(selectedNodeId);
-                ActiveLine.SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
+                if (selectedNodeId > 0)
+                {
+                    ActiveLine.SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
+                }
                 if (displayPosition)
                 {
                     MainChessBoard.DisplayPosition(nd.Position);
@@ -1159,14 +1072,14 @@ namespace ChessForge
         {
             if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN)
             {
-                PromptUserToConvertPGNToCHF();
+                WorkbookManager.PromptUserToConvertPGNToCHF();
             }
             else
             {
                 if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE
-                    && AppStateManager.IsDirty || Workbook.HasTrainingMoves())
+                    && AppStateManager.IsDirty || (Workbook != null && Workbook.HasTrainingMoves()))
                 {
-                    PromptAndSaveWorkbook(false);
+                    WorkbookManager.PromptAndSaveWorkbook(false);
                 }
             }
             Timers.StopAll(false);
@@ -1598,7 +1511,7 @@ namespace ChessForge
                 EngineMessageProcessor.StopEngineEvaluation();
                 Evaluation.Reset();
 
-                PromptAndSaveWorkbook(false);
+                WorkbookManager.PromptAndSaveWorkbook(false);
                 TrainingState.IsTrainingInProgress = false;
                 MainChessBoard.RemoveMoveSquareColors();
                 LearningMode.CurrentMode = LearningMode.Mode.MANUAL_REVIEW;
@@ -1607,83 +1520,6 @@ namespace ChessForge
                 ActiveLine.DisplayPositionForSelectedCell();
                 AppStateManager.SwapCommentBoxForEngineLines(false);
                 BoardCommentBox.RestoreTitleMessage();
-            }
-        }
-
-        /// <summary>
-        /// This function will be called when:
-        /// 1. the user selects File->Save (userRequest == true)
-        /// 2. the user exists a Training session
-        /// 3. the user selectes File->Close
-        /// 4. the user closes the application.
-        /// First, we check if there are any training moves in the Tree which
-        /// means that we have not exited the training session yet.
-        /// If there are, we ask the user to save the training moves and upon
-        /// confirmation we save the entire Workbook.
-        /// If not, or the user declines, and if the Workbook is "dirty", we offer to save the workbook without 
-        /// training moves.
-        /// In addition, if the user does want to save the file but there is no file name, we aks them to choose one.
-        /// </summary>
-        /// <returns> Returns true if the user chooses yes or no,
-        /// returns false if the user cancels. </returns>
-        private bool PromptAndSaveWorkbook(bool userRequest)
-        {
-            bool saved = false;
-            MessageBoxResult res = MessageBoxResult.None;
-
-            if (Workbook.HasTrainingMoves())
-            {
-                res = MessageBox.Show("Merge and Save new moves from this session into the Workbook?", "Chess Forge Save Workbook",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (res == MessageBoxResult.Yes)
-                {
-                    Workbook.ClearTrainingFlags();
-                    Workbook.BuildLines();
-                    AppStateManager.SaveWorkbookFile();
-                    _workbookView.BuildFlowDocumentForWorkbook();
-                    saved = true;
-                }
-                else
-                {
-                    Workbook.RemoveTrainingMoves();
-                }
-            }
-
-            if (!saved)
-            {
-                // not saved yet
-                if (userRequest)
-                {
-                    // user requested File->Save so proceed...
-                    AppStateManager.SaveWorkbookFile();
-                }
-                else
-                {
-                    if (AppStateManager.IsDirty)
-                    {
-                        // this was prompted by an action other than File->Save so ask...
-                        res = MessageBox.Show("Save the Workbook?", "Workbook not saved", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-                        if (res == MessageBoxResult.Yes)
-                        {
-                            AppStateManager.SaveWorkbookFile();
-                        }
-                    }
-                    else
-                    {
-                        // not dirty and not user request so this is on close. Return Yes in order not to prevent closing 
-                        res = MessageBoxResult.Yes;
-                    }
-                }
-            }
-
-            AppStateManager.ConfigureSaveMenus();
-            if (res == MessageBoxResult.Yes || res == MessageBoxResult.No)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
             }
         }
 
@@ -1997,12 +1833,12 @@ namespace ChessForge
 
         private void UiMnWorkbookSave_Click(object sender, RoutedEventArgs e)
         {
-            PromptAndSaveWorkbook(true);
+            WorkbookManager.PromptAndSaveWorkbook(true);
         }
 
         private void UiMnWorkbookSaveAs_Click(object sender, RoutedEventArgs e)
         {
-            SaveWorkbookToNewFile(AppStateManager.WorkbookFilePath, false);
+            WorkbookManager.SaveWorkbookToNewFile(AppStateManager.WorkbookFilePath, false);
         }
 
         /// <summary>
@@ -2055,7 +1891,7 @@ namespace ChessForge
             }
         }
 
-        private void ShowWorkbookOptionsDialog()
+        private bool ShowWorkbookOptionsDialog()
         {
             WorkbookOptionsDialog dlg = new WorkbookOptionsDialog(Workbook);
             dlg.Left = ChessForgeMain.Left + 100;
@@ -2067,6 +1903,13 @@ namespace ChessForge
             {
                 Workbook.TrainingSide = dlg.TrainingSide;
                 Workbook.Title = dlg.WorkbookTitle;
+                AppStateManager.SaveWorkbookFile();
+                MainChessBoard.FlipBoard(Workbook.TrainingSide);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -2098,5 +1941,48 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Creates a new Workbook.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnNewWorkbook_Click(object sender, RoutedEventArgs e)
+        {
+            if (!WorkbookManager.AskToCloseWorkbook())
+            {
+                return;
+            }
+
+            // prepare document
+            AppStateManager.RestartInIdleMode(false);
+            Workbook = new WorkbookTree();
+            _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
+            _trainingBrowseRichTextBuilder = new WorkbookView(UiRtbTrainingBrowse.Document, this);
+
+            // ask for the options
+            if (!ShowWorkbookOptionsDialog())
+            {
+                // user abandoned
+                return;
+            }
+
+            if (!WorkbookManager.SaveWorkbookToNewFile(null, false))
+            {
+                AppStateManager.RestartInIdleMode(false);
+                return;
+            }
+
+            BoardCommentBox.ShowWorkbookTitle(Workbook.Title);
+
+            AppStateManager.CurrentLearningMode = LearningMode.Mode.MANUAL_REVIEW;
+
+            AppStateManager.SetupGuiForCurrentStates();
+            Workbook.CreateNew();
+            UiTabWorkbook.Focus();
+            _workbookView.BuildFlowDocumentForWorkbook();
+            int startingNode = 0;
+            string startLineId = Workbook.GetDefaultLineIdForNode(startingNode);
+            SetActiveLine(startLineId, startingNode);
+        }
     }
 }
