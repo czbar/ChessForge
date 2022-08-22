@@ -884,6 +884,12 @@ namespace ChessForge
                 // WorkbookFilePath is reset to "" in the above call!
                 AppStateManager.WorkbookFilePath = fileName;
 
+                bool isOrigPgn = false;
+                if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN)
+                {
+                    isOrigPgn = true;
+                }
+
                 await Task.Run(() =>
                 {
                     BoardCommentBox.ReadingFile();
@@ -930,7 +936,6 @@ namespace ChessForge
 
                 _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
                 _trainingBrowseRichTextBuilder = new WorkbookView(UiRtbTrainingBrowse.Document, this);
-                //UiTrainingView = new TrainingView(UiRtbTrainingProgress.Document, this);
                 if (Workbook.Nodes.Count == 0)
                 {
                     Workbook.CreateNew();
@@ -942,7 +947,7 @@ namespace ChessForge
                 UiTabWorkbook.Focus();
 
                 _workbookView.BuildFlowDocumentForWorkbook();
-                if (Workbook.Bookmarks.Count == 0 && AppStateManager.WorkbookFileType != AppStateManager.FileType.CHF)
+                if (Workbook.Bookmarks.Count == 0 && isOrigPgn)
                 {
                     var res = AskToGenerateBookmarks();
                     if (res == MessageBoxResult.Yes)
