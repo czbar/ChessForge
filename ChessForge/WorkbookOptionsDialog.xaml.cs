@@ -31,7 +31,7 @@ namespace ChessForge
             TrainingSide = _workbook.TrainingSide;
 
             _tbTitle.Text = _workbook.Title;
-            _tbSideOnMove.Text = _workbook.TrainingSide == PieceColor.White ? _strWhite : _strBlack;
+            _tbSideOnMove.Text = _workbook.TrainingSide == PieceColor.Black ? _strBlack : _strWhite;
         }
 
         /// <summary>
@@ -57,6 +57,17 @@ namespace ChessForge
         /// <param name="e"></param>
         private void _btnOK_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            WorkbookTitle = _tbTitle.Text;
+
+            if (_tbSideOnMove.Text == _strBlack)
+            {
+                TrainingSide = PieceColor.Black;
+            }
+            else
+            {
+                TrainingSide = PieceColor.White;
+            }
+
             ExitOK = true;
             this.Close();
         }
@@ -68,6 +79,11 @@ namespace ChessForge
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void _imgSwapColor_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SwapTrainingSide();
+        }
+
+        private void SwapTrainingSide()
         {
             if (_tbSideOnMove.Text == _strWhite)
             {
