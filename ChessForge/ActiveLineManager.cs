@@ -260,9 +260,14 @@ namespace ChessForge
             }
 
             var cellContent = cell.Column.GetCellContent(cell.Item);
+            if (cellContent == null)
+            {
+                _dgActiveLine.UpdateLayout();
+                cellContent = cell.Column.GetCellContent(cell.Item);
+            }
+
             if (cellContent != null)
             {
-                DataGridCell mycell = (DataGridCell)cellContent.Parent;
                 _dgActiveLine.SelectedCells.Add(cell);
             }
         }
@@ -273,6 +278,12 @@ namespace ChessForge
         /// <returns></returns>
         public TreeNode GetSelectedTreeNode()
         {
+            if (GetPlyCount() == 1)
+            {
+                // game with no moves
+                return _mainWin.Workbook.Nodes[0];
+            }
+
             int row, column;
 
             if (GetSelectedRowColumn(out row, out column))
