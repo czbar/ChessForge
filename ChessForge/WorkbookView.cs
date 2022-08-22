@@ -166,6 +166,10 @@ namespace ChessForge
         public void PromoteCurrentLine()
         {
             TreeNode nd = _workbook.GetNodeFromNodeId(_lastClickedNodeId);
+            // TODO: it would be more precise to get the last move of the line being promoted and set it as line id
+            // otherwise we end up selecting a different line that the one we are promoting.
+            // However, with the current GUI logic, the selected line changes when the user right-clicks on the
+            // move to promote the line, so the end result wouldn't change. But it may if we chnage that other logic.
             _workbook.PromoteLine(nd);
             _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
             BuildFlowDocumentForWorkbook();
