@@ -32,6 +32,12 @@ namespace ChessForge
         /// </summary>
         public ObservableCollection<MoveWithEval> MoveList = new ObservableCollection<MoveWithEval>();
 
+        /// <summary>
+        /// Creates a line for the starting position to the passed Node.
+        /// This is needed e.g. when a game is about to start from a position
+        /// selected by the user.
+        /// </summary>
+        /// <param name="targetNode"></param>
         public void SetLineToNode(TreeNode targetNode)
         {
             NodeList = new ObservableCollection<TreeNode>();
@@ -44,6 +50,11 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Adds the passed Node to the list of Nodes (plies)
+        /// and to the list of moves (ScoreSheet)
+        /// </summary>
+        /// <param name="nd"></param>
         public void AddPlyAndMove(TreeNode nd)
         {
             AppStateManager.MainWin.Dispatcher.Invoke(() =>
@@ -53,6 +64,9 @@ namespace ChessForge
             });
         }
 
+        /// <summary>
+        /// Builds the list of moves from the list of Nodes.
+        /// </summary>
         public void BuildMoveListFromPlyList()
         {
             MoveList = PositionUtils.BuildViewListFromLine(NodeList);
@@ -104,7 +118,7 @@ namespace ChessForge
         /// Returns the last Node of the game.
         /// </summary>
         /// <returns></returns>
-        public TreeNode GetCurrentNode()
+        public TreeNode GetLastNode()
         {
             if (NodeList.Count == 0)
             {
@@ -113,6 +127,23 @@ namespace ChessForge
             else
             {
                 return NodeList[NodeList.Count - 1];
+            }
+        }
+
+        /// <summary>
+        /// Returns the id of the line represented by this object.
+        /// This is LineId of the last node in the list.
+        /// </summary>
+        /// <returns></returns>
+        public string GetLineId()
+        {
+            if (NodeList.Count > 0)
+            {
+                return NodeList[NodeList.Count - 1].LineId;
+            }
+            else
+            {
+                return "";
             }
         }
 

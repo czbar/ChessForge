@@ -128,6 +128,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the id of the line represented by this object.
+        /// This is LineId of the last node in the list.
+        /// </summary>
+        /// <returns></returns>
+        public string GetLineId()
+        {
+            return Line.GetLineId();
+        }
+
+        /// <summary>
         /// Returns Node corresponding to a ply.
         /// </summary>
         /// <param name="moveIdx"></param>
@@ -345,7 +355,7 @@ namespace ChessForge
                     }
 
                     _mainWin.DisplayPosition(nd.Position);
-                    _mainWin.SelectLineAndMoveInWorkbookViews(null, nd.NodeId);
+                    _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), nd.NodeId);
                 }
             }
             else
@@ -431,7 +441,7 @@ namespace ChessForge
                     {
                         _mainWin.DisplayPosition(nd.Position);
                     }
-                    _mainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd.NodeId);
+                    _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), nd.NodeId);
                 }
                 e.Handled = true;
             }
