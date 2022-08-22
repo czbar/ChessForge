@@ -189,7 +189,7 @@ namespace GameTree
 
             int MAX_BOOKMARKS = 9;
 
-            // find the first, highhest level, fork
+            // find the first, highest level, fork
             TreeNode fork = FindNextFork(Nodes[0]);
             if (fork == null)
             {
@@ -199,7 +199,7 @@ namespace GameTree
             // bookmark children of the first fork
             if (fork.ColorToMove != TrainingSide)
             {
-                //BookmarkChildren(fork, MAX_BOOKMARKS);
+                BookmarkChildren(fork, MAX_BOOKMARKS);
             }
             else if (fork.Parent != null && fork.Parent.NodeId != 0)
             {
@@ -214,7 +214,7 @@ namespace GameTree
                 {
                     if (nextFork.ColorToMove != TrainingSide)
                     {
-                        //BookmarkChildren(nextFork, MAX_BOOKMARKS);
+                        BookmarkChildren(nextFork, MAX_BOOKMARKS);
                     }
                     else
                     {
