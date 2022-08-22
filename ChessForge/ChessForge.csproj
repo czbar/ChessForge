@@ -243,6 +243,7 @@
     <Resource Include="Resources\Images\WhiteBishopSmall.png" />
     <Resource Include="Resources\Images\WhiteKingSmall.png" />
     <Resource Include="Resources\Images\swap_vert.png" />
+    <Resource Include="Resources\Images\flip_board.png" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
