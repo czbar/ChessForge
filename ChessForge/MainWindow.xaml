@@ -465,9 +465,9 @@
                     <Run>Welcome to</Run>
                 </Paragraph>
                 <Paragraph FontSize="36" FontWeight="Bold" TextAlignment="Center">
-                    <Image Source="Resources/Images/ChessForge2.ico" Margin="0,0,100,0" Height="48" Width="48"></Image>
+                    <Image Source="Resources/Images/icon_blue.ico" Margin="0,0,100,0" Height="48" Width="48"></Image>
                     <Run>Chess Forge</Run>
-                    <Image Source="Resources/Images/ChessForge2.ico" Margin="100,0,0,0" Height="48" Width="48"></Image>
+                    <Image Source="Resources/Images/icon_green.ico" Margin="100,0,0,0" Height="48" Width="48"></Image>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>

@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ChessForge2.ico</ApplicationIcon>
+    <ApplicationIcon>icon_blue.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -245,6 +245,9 @@
     <Resource Include="Resources\Images\WhiteKingSmall.png" />
     <Resource Include="Resources\Images\swap_vert.png" />
     <Resource Include="Resources\Images\flip_board.png" />
+    <Resource Include="icon_blue.ico" />
+    <Resource Include="Resources\Images\icon_blue.ico" />
+    <Resource Include="Resources\Images\icon_green.ico" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
