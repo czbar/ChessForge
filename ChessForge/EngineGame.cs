@@ -217,7 +217,7 @@ namespace ChessForge
         /// <returns></returns>
         public static TreeNode GetCurrentNode()
         {
-            TreeNode nd = Line.GetCurrentNode();
+            TreeNode nd = Line.GetLastNode();
             if (nd == null)
             {
                 nd = GameStartPosition;
