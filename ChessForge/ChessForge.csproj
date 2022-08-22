@@ -111,6 +111,7 @@
     <Compile Include="Resources\Strings.cs" />
     <Compile Include="RichTextBuilder.cs" />
     <Compile Include="SoundPlayer.cs" />
+    <Compile Include="WorkbookManager.cs" />
     <Compile Include="WorkbookOptionsDialog.xaml.cs">
       <DependentUpon>WorkbookOptionsDialog.xaml</DependentUpon>
     </Compile>
