@@ -20,7 +20,7 @@
         </ContextMenu>
     </Window.Resources>
 
-    
+
     <Grid x:Name="_gridMain" ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -79,7 +79,11 @@
                 <MenuItem x:Name="UiMnExitTraining" Header="Exit Training" Click="MenuItem_StopTraining"/>
             </MenuItem>
             <MenuItem Header="View" Margin="0,0,0,0">
-                <MenuItem Header="Flip Board" Click="MenuItem_FlipBoard" />
+                <MenuItem Header="Flip Board" Click="MenuItem_FlipBoard" >
+                    <MenuItem.Icon>
+                        <Image Source="Resources/Images/flip_board.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator />
                 <MenuItem Header="Application Options..." Click="UiMnApplicationOptions_Click" />
                 <MenuItem Header="Workbook Options..." Click="UiMnWorkbookOptions_Click" />
