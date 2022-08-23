@@ -34,6 +34,9 @@ namespace GameTree
         public readonly string HEADER_TITLE = "Title";
         public readonly string HEADER_WHITE = "White";
         public readonly string HEADER_BLACK = "Black";
+        public readonly string HEADER_DATE = "Date";
+        public readonly string HEADER_RESULT = "Result";
+        public readonly string HEADER_EVENT = "Event";
 
         // a list of nodes from a subtree
         private List<TreeNode> _subTree = new List<TreeNode>();

@@ -40,8 +40,7 @@ namespace ChessForge
         /// <returns></returns>
         public RichTextPara GetParaAttrs(string style)
         {
-            RichTextPara para;
-            if (!RichTextParas.TryGetValue(style, out para))
+            if (!RichTextParas.TryGetValue(style, out RichTextPara para))
             {
                 RichTextParas.TryGetValue("default", out para);
             }
@@ -55,19 +54,16 @@ namespace ChessForge
         /// <returns></returns>
         public Paragraph CreateParagraph(string style)
         {
-            //if (Configuration.DebugMode != 0)
-            //{
-            //    AppLog.Message("RTB: new paragraph of style" + style);
-            //}
-
             RichTextPara attrs = GetParaAttrs(style);
 
-            Paragraph para = new Paragraph();
-            para.Margin = new Thickness(attrs.LeftIndent, 0, 0, attrs.BottomMargin);
-            para.FontSize = attrs.FontSize;
-            para.FontWeight = attrs.FontWeight;
-            para.TextAlignment = attrs.TextAlign;
-            para.Foreground = attrs.ForegroundColor;
+            Paragraph para = new Paragraph
+            {
+                Margin = new Thickness(attrs.LeftIndent, 0, 0, attrs.BottomMargin),
+                FontSize = attrs.FontSize,
+                FontWeight = attrs.FontWeight,
+                TextAlignment = attrs.TextAlign,
+                Foreground = attrs.ForegroundColor
+            };
 
             return para;
         }
@@ -122,11 +118,11 @@ namespace ChessForge
 
             foreach (var para in Document.Blocks)
             {
-                if (para is Paragraph)
+                if (para is Paragraph paragraph)
                 {
-                    if (((Paragraph)para).Inlines.Count == 0)
+                    if (paragraph.Inlines.Count == 0)
                     {
-                        parasToRemove.Add((Paragraph)para);
+                        parasToRemove.Add(paragraph);
                     }
                 }
             }

@@ -266,5 +266,36 @@ namespace ChessForge
                 return false;
             }
         }
+
+        /// <summary>
+        /// Saves current workbook to a PGN file.
+        /// </summary>
+        /// <returns></returns>
+        public static bool SaveWorkbookToPgn()
+        {
+            SaveFileDialog saveDlg = new SaveFileDialog
+            {
+                Filter = "PGN files (*.pgn)|*.pgn",
+                Title = "Export Workbook to a PGN file"
+            };
+
+            if (!string.IsNullOrEmpty(AppStateManager.WorkbookFilePath))
+            {
+                saveDlg.FileName = Path.GetFileNameWithoutExtension(AppStateManager.WorkbookFilePath) + ".pgn";
+            }
+
+            saveDlg.OverwritePrompt = true;
+            if (saveDlg.ShowDialog() == true)
+            {
+                string pgnFileName = saveDlg.FileName;
+                AppStateManager.ExportToPgn(pgnFileName);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }

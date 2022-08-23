@@ -1986,5 +1986,10 @@ namespace ChessForge
             string startLineId = Workbook.GetDefaultLineIdForNode(startingNode);
             SetActiveLine(startLineId, startingNode);
         }
+
+        private void UiMnExportPgn_Click(object sender, RoutedEventArgs e)
+        {
+            WorkbookManager.SaveWorkbookToPgn();
+        }
     }
 }

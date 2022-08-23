@@ -61,6 +61,20 @@ namespace ChessForge
         /// </summary>
         public static int EngineMpv = 5;
 
+        /// <summary>
+        /// Whether to include bookmark locations in the PGN export
+        /// </summary>
+        public static bool PgnExportBookmarks = true;
+
+        /// <summary>
+        /// Whether to include evaluations in the PGN export
+        /// </summary>
+        public static bool PgnExportEvaluations = true;
+
+        /// <summary>
+        /// Debug node.
+        /// If set to 1, messages will be logged for the app and the engine.
+        /// </summary>
         public static int DebugMode = 0;
 
         //*********************************
@@ -85,6 +99,13 @@ namespace ChessForge
         private const string CFG_ENGINE_EVALUATION_TIME = "EngineEvaluationTime";
         private const string CFG_ENGINE_MPV = "EngineMpv";
         private const string CFG_VIABLE_MOVE_CP_DIFF = "ViableMoveCpDiff";
+
+        /// <summary>
+        /// PGN export configuration.
+        /// What to include
+        /// </summary>
+        private const string CFG_PGN_EXP_BOOKMARKS = "PgnExportBookmarks";
+        private const string CFG_PGN_EXP_EVALS = "PgnExportEvals";
 
         public static string StartDirectory = "";
 
@@ -209,6 +230,9 @@ namespace ChessForge
                 sb.Append(CFG_ENGINE_MPV + "=" + EngineMpv.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_VIABLE_MOVE_CP_DIFF + "=" + ViableMoveCpDiff.ToString() + Environment.NewLine);
+
+                sb.Append(CFG_PGN_EXP_BOOKMARKS + "=" + (PgnExportBookmarks ? "1" : "0") + Environment.NewLine);
+                sb.Append(CFG_PGN_EXP_EVALS + "=" + (PgnExportEvaluations ? "1" : "0") + Environment.NewLine);
 
                 sb.Append(Environment.NewLine);
 
@@ -441,6 +465,12 @@ namespace ChessForge
                             int.TryParse(value, out ViableMoveCpDiff);
                             // make sure this is not negative
                             ViableMoveCpDiff = Math.Abs(ViableMoveCpDiff);
+                            break;
+                        case CFG_PGN_EXP_BOOKMARKS:
+                            PgnExportBookmarks = value != "0" ? true : false;
+                            break;
+                        case CFG_PGN_EXP_EVALS:
+                            PgnExportEvaluations = value != "0" ? true : false;
                             break;
                         case CFG_MAIN_WINDOW_POS:
                             string[] sizes = value.Split(',');
