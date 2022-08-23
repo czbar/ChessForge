@@ -257,12 +257,61 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Makes a deep copy of this TreeNode.
+        /// If clearChildren == false it will also make deep copies of the Children list.
+        /// </summary>
+        /// <param name="clearChildren"></param>
+        public TreeNode CloneMe(bool clearChildren)
+        {
+            // shallow copy first
+            TreeNode clone = this.MemberwiseClone() as TreeNode;
+            BoardPosition pos = new BoardPosition(this.Position);
+            clone.Position = pos;
+
+            clone.Children = new List<TreeNode>();
+
+            if (!clearChildren)
+            {
+                foreach (TreeNode child in Children)
+                {
+                    clone.Children.Add(child.CloneMe(false));
+                }
+            }
+
+            return clone;
+        }
+
+        /// <summary>
         /// Adds a node to this node's Children list.
         /// </summary>
         /// <param name="node"></param>
         public void AddChild(TreeNode node)
         {
             Children.Add(node);
+        }
+
+        /// <summary>
+        /// Find a child of this node with a position identical
+        /// to that in the passed Node.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public TreeNode FindChildIdenticalTo(TreeNode nd)
+        {
+            TreeNode ret = null;
+
+            string fen = FenParser.GenerateFenFromPosition(nd.Position);
+
+            foreach (TreeNode child in Children)
+            {
+                if (FenParser.GenerateFenFromPosition(child.Position) == fen)
+                {
+                    ret = child;
+                    break;
+                }
+            }
+
+            return ret;
         }
 
         /// <summary>
