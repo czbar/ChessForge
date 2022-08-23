@@ -190,15 +190,11 @@ namespace ChessForge
         /// more relevant is to be shown.
         /// </summary>
         /// <param name="title"></param>
-        public void ShowWorkbookTitle(string title)
+        public void ShowWorkbookTitle()
         {
             Document.Blocks.Clear();
 
-            if (string.IsNullOrEmpty(title))
-            {
-                title = "Untitled";
-            }
-            AddNewParagraphToDoc("title", title);
+            AddNewParagraphToDoc("title", _mainWin.Workbook.Title);
             AddNewParagraphToDoc("bold_prompt", "Some available actions are:");
             AddNewParagraphToDoc("normal", Strings.QUICK_INSTRUCTION);
         }
@@ -211,7 +207,7 @@ namespace ChessForge
         {
             if (_mainWin.Workbook != null)
             {
-                ShowWorkbookTitle(_mainWin.Workbook.Title);
+                ShowWorkbookTitle();
             }
         }
 

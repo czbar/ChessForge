@@ -25,6 +25,11 @@ namespace ChessPosition
             Destination = new SquareCoords(xDestination, yDestination);
         }
 
+        public MoveUI CloneMe()
+        {
+            return this.MemberwiseClone() as MoveUI;
+        }
+
         /// <summary>
         /// The square from which the piece is moving.
         /// The GUI will leave this square empty after the move.

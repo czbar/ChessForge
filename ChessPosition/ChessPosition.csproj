@@ -54,6 +54,7 @@
     <Compile Include="GameTree\WorkbookTree.cs" />
     <Compile Include="GameTree\TreeNode.cs" />
     <Compile Include="GameTree\VariationLine.cs" />
+    <Compile Include="GameTree\WorkbookTreeMerge.cs" />
     <Compile Include="Parsers\FenParser.cs" />
     <Compile Include="Parsers\PgnGameParser.cs" />
     <Compile Include="Parsers\PgnMoveParser.cs" />

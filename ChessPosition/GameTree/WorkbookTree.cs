@@ -59,7 +59,7 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Title of this Workbook to show in the GUI
+        /// Default training side for the Workbook
         /// </summary>
         public PieceColor TrainingSide
         {
@@ -414,6 +414,30 @@ namespace GameTree
         public void AddNode(TreeNode node)
         {
             Nodes.Add(node);
+        }
+
+        /// <summary>
+        /// Inserts an external subtree into this tree.
+        /// Recursively clones the nodes from the external tree,
+        /// assigns NodeIds, sets parent object, adds to the parent's
+        /// list of children and finally adds to this Tree.
+        /// </summary>
+        /// <param name="nodeToInsertAt"></param>
+        /// <param name="extSubtreeRoot"></param>
+        public void InsertSubtree(TreeNode nodeToInsertAt, TreeNode extSubtreeRoot)
+        {
+            for (int i = 0; i < extSubtreeRoot.Children.Count; i++)
+            {
+                TreeNode subtreeNode = extSubtreeRoot.Children[i];
+
+                TreeNode newNode = subtreeNode.CloneMe(true);
+                newNode.NodeId = GetNewNodeId();
+                newNode.Parent = nodeToInsertAt;
+                nodeToInsertAt.AddChild(newNode);
+                AddNode(newNode);
+
+                InsertSubtree(newNode, subtreeNode);
+            }
         }
 
         /// <summary>
@@ -895,19 +919,6 @@ namespace GameTree
 
             return null;
         }
-
-
-#if false
-        /// <summary>
-        /// TODO: this method is spurious.
-        /// Replace the call to it by a call to PositionUtils.SetupStartingPosition()
-        /// </summary>
-        /// <param name="node"></param>
-        static public void SetupStartingPosition(ref TreeNode node)
-        {
-            node.Position = PositionUtils.SetupStartingPosition();
-        }
-#endif
 
     }
 }
