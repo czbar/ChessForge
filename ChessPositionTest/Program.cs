@@ -3,12 +3,15 @@ using System.IO;
 using System.Collections.Generic;
 using ChessPosition;
 using GameTree;
+using System.Xml;
 
 namespace ChessPositionTest
 {
     class Program
     {
-
+        /// <summary>
+        /// Positions to test
+        /// </summary>
         private static List<TestPosition> TestPositions = new List<TestPosition>()
         {
              new TestPosition("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1","")
@@ -16,12 +19,139 @@ namespace ChessPositionTest
             ,new TestPosition("r1r3k1/p2bppbp/3p1np1/q2Nn2P/1p1NP1P1/1B2BP2/PPPQ4/2KR3R b - - 1 15", "c6")
         };
 
+        /// <summary>
+        /// Tree to build.
+        /// </summary>
+        private static WorkbookTree _treeOut;
+
+        /// <summary>
+        /// Tessts aspects of variation trees and text parsing.
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
+            TestTreeMerge();
             TestPgnGameParser();
             TestFenParser();
         }
 
+        /// <summary>
+        /// Reads in 2 PGN files, parses them into a tree,
+        /// performs a merge and writes the result out.
+        /// </summary>
+        private static void TestTreeMerge()
+        {
+            WorkbookTree tree1 = BuildTreeFromFile("../../../ChessPositionTest/TestData/TestMerge_1.pgn");
+            WorkbookTree tree2 = BuildTreeFromFile("../../../ChessPositionTest/TestData/TestMerge_2.pgn");
+
+            _treeOut = new WorkbookTree();
+            _treeOut.AddNode(new TreeNode(null, "", 0));
+
+            MergeTrees(tree1.Nodes[0], tree2.Nodes[0], _treeOut.Nodes[0]);
+            PrintVariationTree(_treeOut);
+        }
+
+        /// <summary>
+        /// Build a WorkbookTree object from a PGN file
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        private static WorkbookTree BuildTreeFromFile(string fileName)
+        {
+            WorkbookTree tree = new WorkbookTree();
+            string gameText = File.ReadAllText(fileName);
+            PgnGameParser pgnGame = new PgnGameParser(gameText, tree, true);
+
+            return tree;
+        }
+
+        private static Dictionary<string, TreeNode> _dict1 = new Dictionary<string, TreeNode>();
+        private static Dictionary<string, TreeNode> _dict2 = new Dictionary<string, TreeNode>();
+
+        /// <summary>
+        /// Get all children of each node and add them the output tree
+        /// making sure we don't add duplicates.
+        /// Where the node is found in only one of the trees, add the entire subtree,
+        /// otherwise add the node and call this method recursively on all such nodes.
+        /// </summary>
+        /// <param name="tn1"></param>
+        /// <param name="tn2"></param>
+        private static void MergeTrees(TreeNode tn1, TreeNode tn2, TreeNode outParent)
+        {
+            // node tn1 and tn2 are already added (as one node since they were matched)
+
+            _dict1.Clear();
+            _dict2.Clear();
+
+            // add all children of tn1 to the dictionary
+            foreach (TreeNode nd in tn1.Children)
+            {
+                _dict1[FenParser.GenerateFenFromPosition(nd.Position)] = nd;
+            }
+
+            // add all children of tn2 to the dictionary
+            foreach (TreeNode nd in tn2.Children)
+            {
+                _dict2[FenParser.GenerateFenFromPosition(nd.Position)] = nd;
+            }
+
+            // place the ones in both dictionaries to one side and remove from dictionaries
+            List<TreeNode> dupes1 = new List<TreeNode>();
+            List<TreeNode> dupes2 = new List<TreeNode>();
+            List<string> dupeFens = new List<string>();
+
+            foreach (string fen in _dict1.Keys)
+            {
+                if (_dict2.ContainsKey(fen))
+                {
+                    dupes1.Add(_dict1[fen]);
+                    dupes2.Add(_dict2[fen]);
+                    dupeFens.Add(fen);
+                }
+            }
+            foreach (string fen in dupeFens)
+            {
+                _dict1.Remove(fen);
+                _dict2.Remove(fen);
+            }
+
+            // now the dictionaries contain unique nodes
+            foreach (TreeNode nd in _dict1.Values)
+            {
+                TreeNode outNode = InsertNode(nd, outParent);
+                _treeOut.InsertSubtree(outNode, nd);
+            }
+            foreach (TreeNode nd in _dict2.Values)
+            {
+                TreeNode outNode = InsertNode(nd, outParent);
+                _treeOut.InsertSubtree(outNode, nd);
+            }
+
+            // for those in dupes, and a new node to the output tree 
+            // and call this method recursively
+            for (int i = 0; i < dupes1.Count; i++)
+            {
+                TreeNode outNode = InsertNode(dupes1[i], outParent);
+
+                MergeTrees(dupes1[i], dupes2[i], outNode);
+            }
+        }
+
+        private static TreeNode InsertNode(TreeNode nd, TreeNode outParent)
+        {
+            TreeNode outNode = nd.CloneMe(true);
+            outNode.Parent = outParent;
+            outParent.AddChild(outNode);
+            outNode.NodeId = _treeOut.GetNewNodeId();
+
+            _treeOut.AddNode(outNode);
+
+            return outNode;
+        }
+
+        /// <summary>
+        /// Tests parsing a game text. Writes readable output to STDOUT
+        /// </summary>
         private static void TestPgnGameParser()
         {
             WorkbookTree variationTree = new WorkbookTree();
@@ -30,6 +160,11 @@ namespace ChessPositionTest
             PrintVariationTree(variationTree);
         }
 
+        /// <summary>
+        /// Tests the FEN parser by reading in FEN strings converting them
+        /// to ChessForge position format and then back out to FEN.
+        /// Compares the input and output FEN.
+        /// </summary>
         private static void TestFenParser()
         {
             foreach (TestPosition s in TestPositions)
@@ -38,7 +173,7 @@ namespace ChessPositionTest
                 FenParser.ParseFenIntoBoard(s.Fen, ref pos);
                 DebugUtils.PrintPosition(pos, s.Fen);
 
-                string fen =FenParser.GenerateFenFromPosition(pos);
+                string fen = FenParser.GenerateFenFromPosition(pos);
 
                 Console.WriteLine("Original FEN");
                 Console.WriteLine("   " + s.Fen);
@@ -62,6 +197,12 @@ namespace ChessPositionTest
             }
         }
 
+        /// <summary>
+        /// Tests identification of pieces attacking a certain square in a certain position.
+        /// </summary>
+        /// <param name="algSquare"></param>
+        /// <param name="col"></param>
+        /// <param name="testBoard"></param>
         private static void GetSquareAttackers(string algSquare, PieceColor col, ref BoardPosition testBoard)
         {
             SquareCoords coords = PositionUtils.ConvertAlgebraicToXY(algSquare);
@@ -70,6 +211,10 @@ namespace ChessPositionTest
             DebugUtils.PrintAttackers(algSquare, col, sa.Candidates);
         }
 
+        /// <summary>
+        /// Prints the entire tree to STDOUT
+        /// </summary>
+        /// <param name="tree"></param>
         private static void PrintVariationTree(WorkbookTree tree)
         {
             Console.WriteLine("");
@@ -89,6 +234,11 @@ namespace ChessPositionTest
             Console.WriteLine("");
         }
 
+        /// <summary>
+        /// Prints a line to STDOUT
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="includeNumber"></param>
         private static void PrintTreeLine(TreeNode nd, bool includeNumber = false)
         {
             while (true)
@@ -97,7 +247,7 @@ namespace ChessPositionTest
                 // print it and return 
                 if (nd.Children.Count == 0)
                 {
-//                    Console.Write(")");
+                    //                    Console.Write(")");
                     return;
                 }
 
@@ -127,19 +277,14 @@ namespace ChessPositionTest
                     PrintTreeLine(nd.Children[0], true);
                     return;
                 }
-
-                //for (int i = 0; i < nd.Children.Count; i++)
-                //{
-                //    PrintNode(nd.Children[i]);
-                //    PrintTreeLine(nd.Children[i]);
-                //}
-                //if (nd.Children.Count == 0)
-                //{
-                //    Console.WriteLine(" :LINE END:");
-                //}
-                //return;
             }
         }
+
+        /// <summary>
+        /// Prints a single node to STDOUT
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="includeNumber"></param>
         private static void PrintNode(TreeNode nd, bool includeNumber)
         {
             if (nd.Position.ColorToMove == PieceColor.Black)
@@ -161,6 +306,9 @@ namespace ChessPositionTest
 
     }
 
+    /// <summary>
+    /// A structure holding FEN and square to test together
+    /// </summary>
     class TestPosition
     {
         public TestPosition(string fen, string square)
