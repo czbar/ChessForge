@@ -13,16 +13,25 @@ namespace ChessForge
     /// </summary>
     public class ChfTextBuilder
     {
+        // keeps output text as it is being built
         private static StringBuilder _fileText;
 
+        // convenience reference to the Workbook
         private static WorkbookTree _workbook;
+
+        /// <summary>
+        /// The type of the file the output text is for.
+        /// Supported types are CHF and PGN
+        /// </summary>
+        private static AppStateManager.FileType _fileType;
 
         /// <summary>
         /// Builds text of the complete Workbook.
         /// </summary>
-        public static string BuildText(WorkbookTree workbook)
+        public static string BuildText(WorkbookTree workbook, AppStateManager.FileType type = AppStateManager.FileType.CHF)
         {
             _workbook = workbook;
+            _fileType = type;
             _fileText = new StringBuilder();
 
             BuildHeaders();
@@ -108,10 +117,23 @@ namespace ChessForge
         /// </summary>
         private static void BuildHeaders()
         {
-            BuildHeader(_workbook.HEADER_TITLE);
-            BuildHeader(_workbook.HEADER_TRAINING_SIDE);
-            BuildHeader(_workbook.HEADER_WHITE, "Chess Forge");
-            BuildHeader(_workbook.HEADER_BLACK, "Workbook File");
+            if (_fileType == AppStateManager.FileType.CHF)
+            {
+                BuildHeader(_workbook.HEADER_TITLE);
+                BuildHeader(_workbook.HEADER_DATE, DateTime.Now.ToString("yyyy.MM.dd"));
+                BuildHeader(_workbook.HEADER_TRAINING_SIDE);
+                BuildHeader(_workbook.HEADER_WHITE, "Chess Forge");
+                BuildHeader(_workbook.HEADER_BLACK, "Workbook File");
+                BuildHeader(_workbook.HEADER_RESULT, "*");
+            }
+            else
+            {  // PGN export
+                BuildHeader(_workbook.HEADER_EVENT, "Chess Forge Export");
+                BuildHeader(_workbook.HEADER_DATE, DateTime.Now.ToString("yyyy.MM.dd"));
+                BuildHeader(_workbook.HEADER_WHITE, _workbook.Title);
+                BuildHeader(_workbook.HEADER_BLACK, "Workbook");
+                BuildHeader(_workbook.HEADER_RESULT, "*");
+            }
             _fileText.AppendLine();
         }
 
@@ -220,20 +242,49 @@ namespace ChessForge
             sb.Append(" " + nd.LastMoveAlgebraicNotation);
             sb.Append(nd.Nags);
 
+            sb.Append(BuildCommandAndCommentText(nd));
+            _fileText.Append(sb.ToString());
+
+            nd.TextEnd = _fileText.Length - 1;
+        }
+
+        /// <summary>
+        /// Builds text for the comment and ChessForge commands if any
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private static string BuildCommandAndCommentText(TreeNode nd)
+        {
             if (nd.IsBookmark || !string.IsNullOrEmpty(nd.Comment) || !string.IsNullOrEmpty(nd.EngineEvaluation) || nd.UnprocessedChfCommands.Count > 0)
             {
+                StringBuilder sb = new StringBuilder();
+
                 sb.Append(" {");
 
                 if (nd.IsBookmark)
                 {
-                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.BOOKMARK);
-                    sb.Append("[" + sCmd + "]");
+                    if (_fileType == AppStateManager.FileType.CHF)
+                    {
+                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.BOOKMARK);
+                        sb.Append("[" + sCmd + "]");
+                    }
+                    else if (Configuration.PgnExportBookmarks)
+                    {
+                        sb.Append("[ChF bookmark]");
+                    }
                 }
 
                 if (!string.IsNullOrEmpty(nd.EngineEvaluation))
                 {
-                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ENGINE_EVALUATION) + " " + nd.EngineEvaluation;
-                    sb.Append("[" + sCmd + "]");
+                    if (_fileType == AppStateManager.FileType.CHF)
+                    {
+                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ENGINE_EVALUATION) + " " + nd.EngineEvaluation;
+                        sb.Append("[" + sCmd + "]");
+                    }
+                    else if (Configuration.PgnExportEvaluations)
+                    {
+                        sb.Append("[ChF eval " + nd.EngineEvaluation +"]");
+                    }
                 }
 
                 foreach (string cmd in nd.UnprocessedChfCommands)
@@ -247,11 +298,13 @@ namespace ChessForge
                 }
 
                 sb.Append("} ");
+
+                return sb.ToString();
             }
-
-            _fileText.Append(sb.ToString());
-
-            nd.TextEnd = _fileText.Length - 1;
+            else
+            {
+                return "";
+            }
         }
     }
 }
