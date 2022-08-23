@@ -69,8 +69,7 @@ namespace ChessForge
         /// </summary>
         public void DisplayPositionForSelectedCell()
         {
-            int row, column;
-            if (!GetSelectedRowColumn(out row, out column))
+            if (!GetSelectedRowColumn(out int row, out int column))
             {
                 row = 0;
                 column = 1;
@@ -165,10 +164,7 @@ namespace ChessForge
         /// <returns></returns>
         public int GetSelectedPlyNodeIndex()
         {
-            int row;
-            int column;
-
-            GetSelectedRowColumn(out row, out column);
+            GetSelectedRowColumn(out int row, out int column);
             return GetPlyNodeIndexFromRowColumn(row, column);
         }
 
@@ -284,9 +280,8 @@ namespace ChessForge
                 return _mainWin.Workbook.Nodes[0];
             }
 
-            int row, column;
 
-            if (GetSelectedRowColumn(out row, out column))
+            if (GetSelectedRowColumn(out int row, out int column))
             {
                 return GetTreeNodeFromRowColumn(row, column);
             }
@@ -304,10 +299,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            int column = -1;
-            int row = -1;
-
-            GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out row, out column);
+            GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out int row, out int column);
 
             ReplayLine(row, column);
         }
@@ -339,10 +331,7 @@ namespace ChessForge
         /// <param name="e"></param>
         internal void PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            int column;
-            int row;
-
-            GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out row, out column);
+            GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out int row, out int column);
 
             if (IsSelectableCell(row, column))
             {
@@ -394,9 +383,7 @@ namespace ChessForge
         /// <param name="e"></param>
         internal void PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            int row;
-            int column;
-            if (GetSelectedRowColumn(out row, out column))
+            if (GetSelectedRowColumn(out int row, out int column))
             {
                 int selColumn = -1;
                 int selRow = -1;
@@ -483,7 +470,7 @@ namespace ChessForge
         /// <returns></returns>
         private bool IsSelectableColumn(int column)
         {
-            return (column == _dgActiveLineWhitePlyColumn || column == _dgActiveLineBlackPlyColumn) ? true : false;
+            return (column == _dgActiveLineWhitePlyColumn || column == _dgActiveLineBlackPlyColumn);
         }
 
         /// <summary>

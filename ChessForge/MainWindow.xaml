@@ -9,13 +9,13 @@
 
     <Window.Resources>
         <ContextMenu x:Key="_cmTrainingView">
-            <MenuItem x:Name="_mnTrainSwitchToWorkbook" Header="Play Move %0% Instead of Text" Click="_mnTrainSwitchToWorkbook_Click" />
-            <MenuItem x:Name="_mnTrainRestartGame" Header="Restart Game After " Click="_mnTrainRestartGame_Click" />
+            <MenuItem x:Name="_mnTrainSwitchToWorkbook" Header="Play Move %0% Instead of Text" Click="UiMnTrainSwitchToWorkbook_Click" />
+            <MenuItem x:Name="_mnTrainRestartGame" Header="Restart Game After " Click="UiMnTrainRestartGame_Click" />
             <Separator x:Name="_mnTrainSepar_1" />
-            <MenuItem x:Name="_mnTrainEvalMove" Header="Evaluate Position" Click="_mnTrainEvalMove_Click" />
-            <MenuItem x:Name="_mnTrainEvalLine" Header="Evaluate Line" Click="_mnTrainEvalLine_Click" />
+            <MenuItem x:Name="_mnTrainEvalMove" Header="Evaluate Position" Click="UiMnTrainEvalMove_Click" />
+            <MenuItem x:Name="_mnTrainEvalLine" Header="Evaluate Line" Click="UiMnTrainEvalLine_Click" />
             <Separator x:Name="_mnTrainSepar_2" />
-            <MenuItem x:Name="_mnTrainRestartTraining" Header="Restart Training" Click="_mnTrainRestartTraining_Click" />
+            <MenuItem x:Name="_mnTrainRestartTraining" Header="Restart Training" Click="UiMnTrainRestartTraining_Click" />
             <MenuItem x:Name="_mnTrainExitTraining" Header="Exit Training"  Click="MenuItem_StopTraining" />
         </ContextMenu>
     </Window.Resources>
@@ -42,7 +42,7 @@
                     <ContextMenu  x:Name="UiMnMainBoard">
                         <MenuItem x:Name="UiMnciStartTraining"  Header="Start Training from a Bookmark" Click="MenuItem_StartTraining"/>
                         <MenuItem x:Name="UiMnciStartTrainingHere"  Header="Start Training from Here" Click="UiMnciStartTrainingHere_Click" />
-                        <MenuItem x:Name="UiMnciRestartTraining"  Header="Restart Training" Click="_mnTrainRestartTraining_Click"/>
+                        <MenuItem x:Name="UiMnciRestartTraining"  Header="Restart Training" Click="UiMnTrainRestartTraining_Click"/>
                         <MenuItem x:Name="UiMnciExitTraining" Header="Exit Training" Click="MenuItem_StopTraining"/>
                         <Separator x:Name="UiMncMainBoardSepar_1" />
                         <MenuItem x:Name="UiMnciEvalPos" Header="Evaluate Position" Click="MenuItem_EvaluatePosition" />
@@ -76,7 +76,7 @@
             </MenuItem>
             <MenuItem Header="Training" Margin="0,0,0,0">
                 <MenuItem x:Name="UiMnStartTraining"  Header="Start New Session" Click="MenuItem_StartTraining"/>
-                <MenuItem x:Name="UiMnRestartTraining"  Header="Restart Training" Click="_mnTrainRestartTraining_Click"/>
+                <MenuItem x:Name="UiMnRestartTraining"  Header="Restart Training" Click="UiMnTrainRestartTraining_Click"/>
                 <MenuItem x:Name="UiMnExitTraining" Header="Exit Training" Click="MenuItem_StopTraining"/>
             </MenuItem>
             <MenuItem Header="View" Margin="0,0,0,0">
@@ -117,7 +117,7 @@
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox x:Name="UiRtbTrainingProgress" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                 IsReadOnly="True"  MinHeight="640" PreviewMouseMove="_rtbTrainingProgress_PreviewMouseMove" GotFocus="_rtbTrainingProgress_GotFocus">
+                                 IsReadOnly="True"  MinHeight="640" PreviewMouseMove="UiRtbTrainingProgress_PreviewMouseMove" GotFocus="UiRtbTrainingProgress_GotFocus">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0" />
@@ -136,7 +136,7 @@
                     </Viewbox>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="UiTabTrainingBrowse"  Header="Browse" GotFocus="_tabItemTrainingBrowse_GotFocus" >
+            <TabItem x:Name="UiTabTrainingBrowse"  Header="Browse" GotFocus="UiTabItemTrainingBrowse_GotFocus" >
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox x:Name="UiRtbTrainingBrowse" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
@@ -160,8 +160,8 @@
                             <MenuItem x:Name="UiMnPromoteLine" Header="Promote Line" Click="UiMnPromoteLine_Click" />
                             <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnDeleteMovesFromHere_Click" />
                             <Separator />
-                            <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Bookmark This Position" Click="_mnWorkbookSelectAsBookmark_Click" />
-                            <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="Bookmark All Options Here" Click="_mnWorkbookBookmarkAlternatives_Click" />
+                            <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Bookmark This Position" Click="UiMnWorkbookSelectAsBookmark_Click" />
+                            <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="Bookmark All Options Here" Click="UiMnWorkbookBookmarkAlternatives_Click" />
                             <Separator />
                             <MenuItem x:Name="_mnWorkbookEvalMove" Header="Evaluate Position"  Click="MenuItem_EvaluatePosition" />
                             <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line"  Click="MenuItem_EvaluateLine" />
@@ -169,7 +169,7 @@
                     </Grid.ContextMenu>
                     <RichTextBox x:Name="UiRtbWorkbookView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="640" MinHeight="500" IsReadOnly="True" PreviewKeyDown="_rtbWorkbookFull_PreviewKeyDown">
+                                   Height="640" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbWorkbookFull_PreviewKeyDown">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0" />
@@ -186,7 +186,7 @@
             <TabItem x:Name="TabItemTable" Header="Table" Visibility="Collapsed">
                 <DockPanel >
                     <TextBox x:Name="_tbWorkbookTable" DockPanel.Dock="Top" BorderThickness="0,0,0,0" IsEnabled="False" Height="30" Margin="5,5,0,0" TextAlignment="Center" Text="" HorizontalAlignment="Left" FontSize="14" FontWeight="Bold"/>
-                    <ScrollViewer x:Name="_scvWorkbookTable" DockPanel.Dock="Bottom" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" PreviewMouseWheel="_scvWorkbookTable_PreviewMouseWheel" >
+                    <ScrollViewer x:Name="_scvWorkbookTable" DockPanel.Dock="Bottom" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" PreviewMouseWheel="UiScvWorkbookTable_PreviewMouseWheel" >
                         <StackPanel>
                             <ListView x:Name="_lvWorkbookTable" SelectionMode="Multiple" ItemsSource="{Binding}" Margin="0,0,0,0" 
                                       SelectionChanged="_lvWorkbookTable_SelectionChanged" PreviewMouseDown="_lvWorkbookTable_PreviewMouseDown" 
@@ -289,13 +289,13 @@
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="BookmarkGrid_PreviewMouseDown">
                     <Grid.ContextMenu>
                         <ContextMenu x:Name="_cmBookmarks">
-                            <MenuItem x:Name="_mnTrainFromBookmark" Header="Start Training from This Bookmark" Click="_mnTrainFromBookmark_Click" />
+                            <MenuItem x:Name="_mnTrainFromBookmark" Header="Start Training from This Bookmark" Click="UiMnTrainFromBookmark_Click" />
                             <Separator />
-                            <MenuItem x:Name="_mnGenerateBookmark" Header="Generate Bookmarks" Click="_mnGenerateBookmark_Click" />
-                            <MenuItem x:Name="_mnAddBookmark" Header="Go to Workbook to Add a Bookmark" Click="_mnAddBookmark_Click" />
+                            <MenuItem x:Name="_mnGenerateBookmark" Header="Generate Bookmarks" Click="UiMnGenerateBookmark_Click" />
+                            <MenuItem x:Name="_mnAddBookmark" Header="Go to Workbook to Add a Bookmark" Click="UiMnAddBookmark_Click" />
                             <Separator />
-                            <MenuItem x:Name="_mnDeleteBookmark" Header="Delete This Bookmark" Click="_mnDeleteBookmark_Click" />
-                            <MenuItem x:Name="_mnDeleteAllBookmarks" Header="Delete All Bookmarks" Click="_mnDeleteAllBookmarks_Click" />
+                            <MenuItem x:Name="_mnDeleteBookmark" Header="Delete This Bookmark" Click="UiMnDeleteBookmark_Click" />
+                            <MenuItem x:Name="_mnDeleteAllBookmarks" Header="Delete All Bookmarks" Click="UiMnDeleteAllBookmarks_Click" />
                         </ContextMenu>
                     </Grid.ContextMenu>
                     <Grid x:Name="UiGridBookmarks" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0">
@@ -312,16 +312,16 @@
                         </Grid.ColumnDefinitions>
 
                         <Canvas x:Name="UiCnvPaging" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"  >
-                            <Image x:Name="UiImgLeftArrow" HorizontalAlignment="Left"  Margin="-80,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseDown="_imgLeftArrow_PreviewMouseDown"  />
+                            <Image x:Name="UiImgLeftArrow" HorizontalAlignment="Left"  Margin="-80,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseDown="UiImgLeftArrow_PreviewMouseDown"  />
                             <Label x:Name="UiLblBookmarkPage" Content="Page 1 of 3" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-50,-5,0,0" Width="100"  FontWeight="Bold"/>
-                            <Image x:Name="UiImgRightArrow" HorizontalAlignment="Right" Margin="0,0,-80,0" Source="Resources/Images/RightArrow.png" PreviewMouseDown="_imgRightArrow_PreviewMouseDown"  />
+                            <Image x:Name="UiImgRightArrow" HorizontalAlignment="Right" Margin="0,0,-80,0" Source="Resources/Images/RightArrow.png" PreviewMouseDown="UiImgRightArrow_PreviewMouseDown"  />
                         </Canvas>
 
                         <Viewbox x:Name="_vbLblBookmark_1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
                             <Label x:Name="UiLblBookmark_1" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                         </Viewbox>
                         <Viewbox x:Name="_vbBookmark_1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
-                            <Canvas x:Name="UiCnvBookmark_1" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="_cnvBookmark_PreviewMouseDown">
+                            <Canvas x:Name="UiCnvBookmark_1" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="UiCnvBookmark_PreviewMouseDown">
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
@@ -332,7 +332,7 @@
                             <Label x:Name="UiLblBookmark_2" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                         </Viewbox>
                         <Viewbox x:Name="_vbBookmark_2" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
-                            <Canvas x:Name="UiCnvBookmark_2" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="_cnvBookmark_PreviewMouseDown">
+                            <Canvas x:Name="UiCnvBookmark_2" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="UiCnvBookmark_PreviewMouseDown">
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
@@ -343,7 +343,7 @@
                             <Label x:Name="UiLblBookmark_3" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                         </Viewbox>
                         <Viewbox x:Name="_vbBookmark_3" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top">
-                            <Canvas x:Name="UiCnvBookmark_3" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="_cnvBookmark_PreviewMouseDown">
+                            <Canvas x:Name="UiCnvBookmark_3" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="UiCnvBookmark_PreviewMouseDown">
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
@@ -354,7 +354,7 @@
                             <Label x:Name="UiLblBookmark_4" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                         </Viewbox>
                         <Viewbox x:Name="_vbBookmark_4" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top">
-                            <Canvas x:Name="UiCnvBookmark_4" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="_cnvBookmark_PreviewMouseDown">
+                            <Canvas x:Name="UiCnvBookmark_4" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="UiCnvBookmark_PreviewMouseDown">
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
@@ -365,7 +365,7 @@
                             <Label x:Name="UiLblBookmark_5" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                         </Viewbox>
                         <Viewbox x:Name="_vbBookmark_5" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
-                            <Canvas x:Name="UiCnvBookmark_5" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="_cnvBookmark_PreviewMouseDown">
+                            <Canvas x:Name="UiCnvBookmark_5" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="UiCnvBookmark_PreviewMouseDown">
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
@@ -376,7 +376,7 @@
                             <Label x:Name="UiLblBookmark_6" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                         </Viewbox>
                         <Viewbox x:Name="_vbBookmark_6" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
-                            <Canvas x:Name="UiCnvBookmark_6" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="_cnvBookmark_PreviewMouseDown">
+                            <Canvas x:Name="UiCnvBookmark_6" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="UiCnvBookmark_PreviewMouseDown">
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
@@ -388,7 +388,7 @@
                             <Label x:Name="UiLblBookmark_7" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                         </Viewbox>
                         <Viewbox x:Name="_vbBookmark_7" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center"  Margin="10,50,10,10" VerticalAlignment="Top" >
-                            <Canvas x:Name="UiCnvBookmark_7" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="_cnvBookmark_PreviewMouseDown">
+                            <Canvas x:Name="UiCnvBookmark_7" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="UiCnvBookmark_PreviewMouseDown">
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
@@ -399,7 +399,7 @@
                             <Label x:Name="UiLblBookmark_8" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                         </Viewbox>
                         <Viewbox x:Name="_vbBookmark_8" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
-                            <Canvas x:Name="UiCnvBookmark_8" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="_cnvBookmark_PreviewMouseDown">
+                            <Canvas x:Name="UiCnvBookmark_8" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="UiCnvBookmark_PreviewMouseDown">
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
@@ -410,7 +410,7 @@
                             <Label x:Name="UiLblBookmark_9" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                         </Viewbox>
                         <Viewbox x:Name="_vbBookmark_9" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center"  Margin="10,50,10,10" VerticalAlignment="Top" >
-                            <Canvas x:Name="UiCnvBookmark_9" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="_cnvBookmark_PreviewMouseDown">
+                            <Canvas x:Name="UiCnvBookmark_9" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="UiCnvBookmark_PreviewMouseDown">
                                 <Canvas.Background>
                                     <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                 </Canvas.Background>
@@ -450,9 +450,6 @@
                 <DataGridTextColumn Header="Ev" Width="50" Binding="{Binding BlackEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Slider x:Name="UiSldReplaySpeed" HorizontalAlignment="Left" Margin="71,50,0,0" Grid.Row="2" VerticalAlignment="Top" 
-                Height="36" Width="170" ValueChanged="sliderReplaySpeed_ValueChanged"
-                Maximum="2000" TickFrequency="600" IsSnapToTickEnabled="True" Grid.Column="1" Minimum="200" TickPlacement="BottomRight" Value="400" IsDirectionReversed="True" AutoToolTipPlacement="TopLeft" LargeChange="500" SmallChange="100" />
         <RichTextBox x:Name="UiRtbBoardComment" Panel.ZIndex="0" HorizontalAlignment="Left" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">

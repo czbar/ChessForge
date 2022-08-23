@@ -135,8 +135,6 @@ namespace ChessForge
 
             ActiveLineReplay = new GameReplay(this, MainChessBoard, BoardCommentBox);
 
-
-            UiSldReplaySpeed.Value = Configuration.MoveSpeed;
             _isDebugMode = Configuration.DebugMode != 0;
         }
 
@@ -259,8 +257,10 @@ namespace ChessForge
             List<string> recentFiles = Configuration.RecentFiles;
             for (int i = 0; i < recentFiles.Count; i++)
             {
-                MenuItem mi = new MenuItem();
-                mi.Name = MENUITEM_RECENT_FILES_PREFIX + i.ToString();
+                MenuItem mi = new MenuItem
+                {
+                    Name = MENUITEM_RECENT_FILES_PREFIX + i.ToString()
+                };
                 try
                 {
                     string fileName = Path.GetFileName(recentFiles.ElementAt(i));
@@ -744,9 +744,11 @@ namespace ChessForge
         {
             if (ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Multiselect = false;
-                openFileDialog.Filter = "Workbooks (*.chf); PGN (*.pgn)|*.chf;*.pgn|All files (*.*)|*.*";
+                OpenFileDialog openFileDialog = new OpenFileDialog
+                {
+                    Multiselect = false,
+                    Filter = "Workbooks (*.chf); PGN (*.pgn)|*.chf;*.pgn|All files (*.*)|*.*"
+                };
 
                 string initDir;
                 if (!string.IsNullOrEmpty(Configuration.LastOpenDirectory))
@@ -844,9 +846,8 @@ namespace ChessForge
 
             for (int i = 0; i < MenuFile.Items.Count; i++)
             {
-                if (MenuFile.Items[i] is MenuItem)
+                if (MenuFile.Items[i] is MenuItem item)
                 {
-                    MenuItem item = (MenuItem)MenuFile.Items[i];
                     if (item.Name.StartsWith(MENUITEM_RECENT_FILES_PREFIX))
                     {
                         itemsToRemove.Add(item);
@@ -854,7 +855,7 @@ namespace ChessForge
                 }
             }
 
-            foreach (MenuItem item in itemsToRemove)
+            foreach (MenuItem item in itemsToRemove.Cast<MenuItem>())
             {
                 MenuFile.Items.Remove(item);
             }
@@ -1093,12 +1094,6 @@ namespace ChessForge
             Configuration.WriteOutConfiguration();
         }
 
-        private void sliderReplaySpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            Configuration.MoveSpeed = (int)e.NewValue;
-            MoveAnimation.MoveDuration = Configuration.MoveSpeed;
-        }
-
         /// <summary>
         /// The user requested evaluation of the currently selected move.
         /// Check if there is an item currently selected. 
@@ -1252,7 +1247,7 @@ namespace ChessForge
             {
                 int posIndex = moveIndex + 1;
                 TreeNode nd = ActiveLine.GetNodeAtIndex(posIndex);
-                int ret = BookmarkManager.AddBookmark(nd);
+                BookmarkManager.AddBookmark(nd);
                 UiTabBookmarks.Focus();
             }
         }
@@ -1372,7 +1367,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _scvWorkbookTable_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private void UiScvWorkbookTable_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             ScrollViewer scv = (ScrollViewer)sender;
             scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
@@ -1384,7 +1379,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _rtbWorkbookFull_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void UiRtbWorkbookFull_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // Hand it off to the ActiveLine view.
             // In the future we may want to handle some key strokes here
@@ -1579,7 +1574,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _rtbTrainingProgress_PreviewMouseMove(object sender, MouseEventArgs e)
+        private void UiRtbTrainingProgress_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             ShowFloatingChessboard(false);
         }
@@ -1598,7 +1593,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _mnTrainFromBookmark_Click(object sender, RoutedEventArgs e)
+        private void UiMnTrainFromBookmark_Click(object sender, RoutedEventArgs e)
         {
             if (BookmarkManager.ClickedIndex >= 0)
             {
@@ -1611,11 +1606,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _cnvBookmark_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void UiCnvBookmark_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender is Canvas)
+            if (sender is Canvas canvas)
             {
-                BookmarkManager.ChessboardClickedEvent(((Canvas)sender).Name, _cmBookmarks, e);
+                BookmarkManager.ChessboardClickedEvent(canvas.Name, _cmBookmarks, e);
             }
         }
 
@@ -1639,7 +1634,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _mnAddBookmark_Click(object sender, RoutedEventArgs e)
+        private void UiMnAddBookmark_Click(object sender, RoutedEventArgs e)
         {
             UiTabWorkbook.Focus();
             MessageBox.Show("Right-click a move and select \"Add to Bookmarks\" from the popup-menu", "Chess Forge Training", MessageBoxButton.OK);
@@ -1664,7 +1659,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _mnWorkbookSelectAsBookmark_Click(object sender, RoutedEventArgs e)
+        private void UiMnWorkbookSelectAsBookmark_Click(object sender, RoutedEventArgs e)
         {
             int ret = BookmarkManager.AddBookmark(_workbookView.LastClickedNodeId);
             if (ret == 1)
@@ -1688,7 +1683,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _mnWorkbookBookmarkAlternatives_Click(object sender, RoutedEventArgs e)
+        private void UiMnWorkbookBookmarkAlternatives_Click(object sender, RoutedEventArgs e)
         {
             int ret = BookmarkManager.AddAllSiblingsToBookmarks(_workbookView.LastClickedNodeId);
             if (ret == 1)
@@ -1702,34 +1697,33 @@ namespace ChessForge
             else
             {
                 AppStateManager.IsDirty = true;
-                //AppStateManager.SaveWorkbookFile();
                 UiTabBookmarks.Focus();
             }
         }
 
-        private void _mnGenerateBookmark_Click(object sender, RoutedEventArgs e) { BookmarkManager.GenerateBookmarks(); }
+        private void UiMnGenerateBookmark_Click(object sender, RoutedEventArgs e) { BookmarkManager.GenerateBookmarks(); }
 
-        private void _mnDeleteBookmark_Click(object sender, RoutedEventArgs e) { BookmarkManager.DeleteBookmark(); }
+        private void UiMnDeleteBookmark_Click(object sender, RoutedEventArgs e) { BookmarkManager.DeleteBookmark(); }
 
-        private void _mnDeleteAllBookmarks_Click(object sender, RoutedEventArgs e) { BookmarkManager.DeleteAllBookmarks(); }
+        private void UiMnDeleteAllBookmarks_Click(object sender, RoutedEventArgs e) { BookmarkManager.DeleteAllBookmarks(); }
 
-        private void _mnTrainRestartGame_Click(object sender, RoutedEventArgs e)
+        private void UiMnTrainRestartGame_Click(object sender, RoutedEventArgs e)
         {
             UiTrainingView.RestartGameAfter(sender, e);
         }
 
-        private void _mnTrainSwitchToWorkbook_Click(object sender, RoutedEventArgs e)
+        private void UiMnTrainSwitchToWorkbook_Click(object sender, RoutedEventArgs e)
         {
             UiTrainingView.RollbackToWorkbookMove();
         }
 
-        private void _mnTrainEvalMove_Click(object sender, RoutedEventArgs e)
+        private void UiMnTrainEvalMove_Click(object sender, RoutedEventArgs e)
         {
             UiTrainingView.RequestMoveEvaluation();
         }
 
 
-        private void _mnTrainEvalLine_Click(object sender, RoutedEventArgs e)
+        private void UiMnTrainEvalLine_Click(object sender, RoutedEventArgs e)
         {
             UiTrainingView.RequestLineEvaluation();
         }
@@ -1740,7 +1734,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _mnTrainRestartTraining_Click(object sender, RoutedEventArgs e)
+        private void UiMnTrainRestartTraining_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Restart the training session?", "Chess Forge Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
@@ -1791,20 +1785,19 @@ namespace ChessForge
             {
                 MainChessBoard.RemoveMoveSquareColors();
 
-                SquareCoords sqOrig, sqDest;
-                MoveUtils.EngineNotationToCoords(engCode, out sqOrig, out sqDest);
+                MoveUtils.EngineNotationToCoords(engCode, out SquareCoords sqOrig, out SquareCoords sqDest);
                 MainChessBoard.ColorMoveSquare(sqOrig.Xcoord, sqOrig.Ycoord, true);
                 MainChessBoard.ColorMoveSquare(sqDest.Xcoord, sqDest.Ycoord, false);
             });
         }
 
-        private void _tabItemTrainingBrowse_GotFocus(object sender, RoutedEventArgs e) { AppStateManager.SetupGuiForTrainingBrowseMode(); }
+        private void UiTabItemTrainingBrowse_GotFocus(object sender, RoutedEventArgs e) { AppStateManager.SetupGuiForTrainingBrowseMode(); }
 
-        private void _rtbTrainingProgress_GotFocus(object sender, RoutedEventArgs e) { AppStateManager.SetupGuiForTrainingProgressMode(); }
+        private void UiRtbTrainingProgress_GotFocus(object sender, RoutedEventArgs e) { AppStateManager.SetupGuiForTrainingProgressMode(); }
 
-        private void _imgLeftArrow_PreviewMouseDown(object sender, MouseButtonEventArgs e) { BookmarkManager.PageDown(); }
+        private void UiImgLeftArrow_PreviewMouseDown(object sender, MouseButtonEventArgs e) { BookmarkManager.PageDown(); }
 
-        private void _imgRightArrow_PreviewMouseDown(object sender, MouseButtonEventArgs e) { BookmarkManager.PageUp(); }
+        private void UiImgRightArrow_PreviewMouseDown(object sender, MouseButtonEventArgs e) { BookmarkManager.PageUp(); }
 
         private void UiDgEngineGame_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -1898,10 +1891,12 @@ namespace ChessForge
 
         private bool ShowWorkbookOptionsDialog()
         {
-            WorkbookOptionsDialog dlg = new WorkbookOptionsDialog(Workbook);
-            dlg.Left = ChessForgeMain.Left + 100;
-            dlg.Top = ChessForgeMain.Top + 100;
-            dlg.Topmost = true;
+            WorkbookOptionsDialog dlg = new WorkbookOptionsDialog(Workbook)
+            {
+                Left = ChessForgeMain.Left + 100,
+                Top = ChessForgeMain.Top + 100,
+                Topmost = true
+            };
             dlg.ShowDialog();
 
             if (dlg.ExitOK)
@@ -1928,10 +1923,12 @@ namespace ChessForge
 
         private void ShowApplicationOptionsDialog()
         {
-            AppOptionsDialog dlg = new AppOptionsDialog();
-            dlg.Left = ChessForgeMain.Left + 100;
-            dlg.Top = ChessForgeMain.Top + 100;
-            dlg.Topmost = true;
+            AppOptionsDialog dlg = new AppOptionsDialog
+            {
+                Left = ChessForgeMain.Left + 100,
+                Top = ChessForgeMain.Top + 100,
+                Topmost = true
+            };
             dlg.ShowDialog();
 
             if (dlg.ExitOK)

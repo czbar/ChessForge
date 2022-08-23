@@ -14,11 +14,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBox x:Name="_tbTitle" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="134,27,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="26" Width="231" Visibility="Visible"/>
-        <Button x:Name="_btnOK" Content="Save" HorizontalAlignment="Left" Margin="110,115,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" PreviewMouseDown="_btnOK_PreviewMouseDown"/>
-        <Button x:Name="_btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="211,116,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" PreviewMouseDown="_btnCancel_PreviewMouseDown" />
+        <Button x:Name="_btnOK" Content="Save" HorizontalAlignment="Left" Margin="110,115,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" PreviewMouseDown="UiBtnOK_PreviewMouseDown"/>
+        <Button x:Name="_btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="211,116,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" PreviewMouseDown="UiBtnCancel_PreviewMouseDown" />
         <Label x:Name="_lblTrainingSide" Content="Training Side:" HorizontalAlignment="Left" Margin="29,63,0,0" VerticalAlignment="Top" Width="141"/>
         <Label x:Name="_lblTitle" Content="Workbook Title: " HorizontalAlignment="Left" Margin="28,25,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="_tbSideOnMove" IsEnabled="False" HorizontalAlignment="Left" Margin="134,63,0,0" TextWrapping="Wrap" Text="WHITE" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Width="77" FontWeight="Bold" Height="26"/>
-        <Image x:Name="_imgSwapColor" HorizontalAlignment="Left" Height="28" Margin="218,62,0,0" VerticalAlignment="Top" Width="28" Source="Resources/Images/swap_vert.png" PreviewMouseDown="_imgSwapColor_PreviewMouseDown"/>
+        <Image x:Name="_imgSwapColor" HorizontalAlignment="Left" Height="28" Margin="218,62,0,0" VerticalAlignment="Top" Width="28" Source="Resources/Images/swap_vert.png" PreviewMouseDown="UiImgSwapColor_PreviewMouseDown"/>
     </Grid>
 </Window>
