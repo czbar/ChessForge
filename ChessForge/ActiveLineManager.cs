@@ -332,6 +332,7 @@ namespace ChessForge
         internal void PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out int row, out int column);
+            _mainWin.BoardCommentBox.ShowWorkbookTitle();
 
             if (IsSelectableCell(row, column))
             {
