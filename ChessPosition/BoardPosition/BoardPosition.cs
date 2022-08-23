@@ -129,6 +129,8 @@ namespace ChessPosition
             this.EnPassantSquare = position.EnPassantSquare;
             this.HalfMove50Clock = position.HalfMove50Clock;
             this.MoveNumber = position.MoveNumber;
+
+            this.LastMove = position.LastMove.CloneMe();
         }
 
         /// <summary>
