@@ -224,8 +224,10 @@ namespace ChessForge
         /// <param name="pgnFileName"></param>
         public static bool SaveWorkbookToNewFile(string pgnFileName, bool typeConversion)
         {
-            SaveFileDialog saveDlg = new SaveFileDialog();
-            saveDlg.Filter = "chf Workbook files (*.chf)|*.chf";
+            SaveFileDialog saveDlg = new SaveFileDialog
+            {
+                Filter = "chf Workbook files (*.chf)|*.chf"
+            };
 
             if (typeConversion)
             {

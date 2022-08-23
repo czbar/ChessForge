@@ -299,8 +299,6 @@ namespace ChessForge
             _mainWin.UiTabTrainingProgress.Visibility = Visibility.Hidden;
             _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Hidden;
 
-            _mainWin.UiSldReplaySpeed.Visibility = Visibility.Hidden;
-
             // these tabs may have been disabled for the engine game
             _mainWin.UiRtbWorkbookView.Opacity = 1;
             _mainWin.UiRtbWorkbookView.IsEnabled = true;

@@ -55,7 +55,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _btnOK_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void UiBtnOK_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             WorkbookTitle = _tbTitle.Text;
 
@@ -78,7 +78,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _imgSwapColor_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void UiImgSwapColor_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SwapTrainingSide();
         }
@@ -103,7 +103,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _btnCancel_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void UiBtnCancel_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             this.Close();
         }
