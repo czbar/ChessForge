@@ -59,7 +59,7 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Title of this Workbook to show in the GUI
+        /// Default training side for the Workbook
         /// </summary>
         public PieceColor TrainingSide
         {
