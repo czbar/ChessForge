@@ -906,7 +906,7 @@ namespace ChessForge
                 UiRtbWorkbookView.Document.Blocks.Clear();
                 PgnGameParser pgnGame = new PgnGameParser(workbookText, Workbook, true);
 
-                BoardCommentBox.ShowWorkbookTitle(Workbook.Title);
+                BoardCommentBox.ShowWorkbookTitle();
 
                 if (Workbook.TrainingSide == PieceColor.None)
                 {
@@ -933,7 +933,7 @@ namespace ChessForge
                     WorkbookManager.UpdateRecentFilesList(fileName);
                 }
 
-                BoardCommentBox.ShowWorkbookTitle(Workbook.Title);
+                BoardCommentBox.ShowWorkbookTitle();
 
                 _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
                 _trainingBrowseRichTextBuilder = new WorkbookView(UiRtbTrainingBrowse.Document, this);
@@ -1974,7 +1974,7 @@ namespace ChessForge
                 return;
             }
 
-            BoardCommentBox.ShowWorkbookTitle(Workbook.Title);
+            BoardCommentBox.ShowWorkbookTitle();
 
             AppStateManager.CurrentLearningMode = LearningMode.Mode.MANUAL_REVIEW;
 
