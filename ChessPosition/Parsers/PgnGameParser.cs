@@ -18,7 +18,7 @@ namespace GameTree
         private string _remainingGameText;
 
         // id of the node currently being processed
-        private int runningNodeId = 0;
+        private int _runningNodeId = 0;
 
         // the workbook for which this parser was called
         private WorkbookTree _workbook;
@@ -59,15 +59,25 @@ namespace GameTree
                 DEBUG_MODE = true;
             }
 
-            _workbook = workbook;
-            _remainingGameText = ReadHeaders(pgnGametext);
-
-            ParseWorkbookText(_remainingGameText, workbook);
+            ProcessRemainingGameText(workbook, pgnGametext);
 
             if (_remainingGameText.IndexOf("[White") >= 0)
             {
                 multiGame = true;
             }
+        }
+
+        /// <summary>
+        /// This method may be invoked to process another game in the 
+        /// file in which we have already processed the firts game. 
+        /// </summary>
+        /// <param name="workbook"></param>
+        private void ProcessRemainingGameText(WorkbookTree workbook, string pgnGametext)
+        {
+            _workbook = workbook;
+            _runningNodeId = 0;
+            _remainingGameText = ReadHeaders(pgnGametext);
+            ParseWorkbookText(workbook);
         }
 
         /// <summary>
@@ -113,7 +123,7 @@ namespace GameTree
             line = line.Trim();
             if (line.Length == 0)
             {
-                // if empty line, retrun true
+                // if empty line, return true
                 // as there may be a header line still
                 // following
                 return true;
@@ -160,14 +170,14 @@ namespace GameTree
         /// "N..." where N is the last White move number.
         /// Branches can be found after any move and are surrounded by parenthesis '(' and ')'.
         /// </summary>
-        /// <param name="text"></param>
-        private void ParseWorkbookText(string text, WorkbookTree workbook)
+        /// <param name="workbook"></param>
+        private void ParseWorkbookText(WorkbookTree workbook)
         {
             // create a root node
-            TreeNode rootNode = new TreeNode(null, "", runningNodeId);
-            runningNodeId++;
+            TreeNode rootNode = new TreeNode(null, "", _runningNodeId);
+            _runningNodeId++;
 
-//            WorkbookTree.SetupStartingPosition(ref rootNode);
+            //            WorkbookTree.SetupStartingPosition(ref rootNode);
             rootNode.Position = PositionUtils.SetupStartingPosition();
             workbook.AddNode(rootNode);
 
@@ -309,8 +319,8 @@ namespace GameTree
         /// <returns></returns>
         private TreeNode CreateNewNode(string algMove, MoveData move, TreeNode parentNode, PieceColor parentSideToMove)
         {
-            TreeNode newNode = new TreeNode(parentNode, algMove, runningNodeId);
-            runningNodeId++;
+            TreeNode newNode = new TreeNode(parentNode, algMove, _runningNodeId);
+            _runningNodeId++;
 
             // copy the board from the parent
             newNode.Position.Board = (byte[,])parentNode.Position.Board.Clone();
@@ -397,6 +407,11 @@ namespace GameTree
         /// <returns></returns>
         private string GetNextToken()
         {
+            if (_remainingGameText.Length == 0)
+            {
+                return "*"; // this is unexpected, return game termination token to prevent crash
+            }
+
             int charPos = 0;
             string token = "";
 
