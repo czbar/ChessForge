@@ -102,7 +102,7 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// PropertChange even handler
+        /// PropertChange event handler
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 

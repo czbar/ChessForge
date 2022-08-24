@@ -5,6 +5,9 @@ using System.Text;
 using System.IO;
 using System.Windows;
 using Microsoft.Win32;
+using ChessPosition.GameTree;
+using System.Collections.ObjectModel;
+using GameTree;
 
 namespace ChessForge
 {
@@ -13,6 +16,11 @@ namespace ChessForge
     /// </summary>
     public class WorkbookManager
     {
+        /// <summary>
+        /// The list of game metadata from the currently read PGN file.
+        /// </summary>
+        public static ObservableCollection<GameMetadata> GamesHeaders = new ObservableCollection<GameMetadata>();
+
         /// <summary>
         /// Check if file exists or is already open 
         /// and advises the user accordingly.
@@ -51,6 +59,130 @@ namespace ChessForge
 
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Called when upon opening a PGN file we detect that it has more than one game in it.
+        /// The user will be asked whether they want to select games for evaluation or for
+        /// merging into a single workbook.
+        /// First let's get all game titles from the file.
+        /// </summary>
+        public static bool HandleMultiGamePgn(string path, PgnGameParser pgnGame)
+        {
+            GamesHeaders.Clear();
+
+            // read line by line, fishing for lines with PGN headers i.e. beginning with "[" followed by a keyword.
+            // Note we may accidentally hit a comment formatted that way, so make sure that the last char on the line is "]".
+            GameMetadata gm = new GameMetadata();
+            gm.FirstLineInFile = 1;
+            
+            using (StreamReader sr = new StreamReader(path))
+            {
+                StringBuilder gameText = new StringBuilder();
+                int lineNo = 0;
+                bool headerLine = true;
+
+                while (sr.Peek() >= 0)
+                {
+                    lineNo++;
+                    headerLine = true;
+
+                    string line = sr.ReadLine();
+                    string header = ProcessPgnHeaderLine(line, out string val);
+                    switch (header)
+                    {
+                        case "Event":
+                            gm.Event = val;
+                            break;
+                        case "Site":
+                            gm.Site = val;
+                            break;
+                        case "Date":
+                            gm.Date = val;
+                            break;
+                        case "Round":
+                            gm.Round = val;
+                            break;
+                        case "White":
+                            gm.White = val;
+                            break;
+                        case "Black":
+                            gm.Black = val;
+                            break;
+                        case "Result":
+                            gm.Result = val;
+                            break;
+                        default:
+                            headerLine = false;
+                            // if no header then this is the end of the header lines if we do have any data
+                            if (header.Length == 0 && gm.White != null && gm.Black != null)
+                            {
+                                GamesHeaders.Add(gm);
+                                gm = new GameMetadata();
+                            }
+                            break;
+                    }
+                    if (headerLine == true && gm.FirstLineInFile == 0)
+                    {
+                        gm.FirstLineInFile = lineNo - 1;
+                        // added game text to the PREVIOUS game object 
+                        GamesHeaders[GamesHeaders.Count - 1].GameText = gameText.ToString();
+                        gameText.Clear();
+                    }
+
+                    gameText.AppendLine(line);                    
+                }
+
+                // add game text to the last object
+                GamesHeaders[GamesHeaders.Count - 1].GameText = gameText.ToString();
+            }
+
+            SelectGamesDialog dlg = new SelectGamesDialog();
+            dlg.ShowDialog();
+
+            if (dlg.Result)
+            {
+                // merge workbooks
+                for (int i = 1; i < GamesHeaders.Count; i++)
+                {
+                    WorkbookTree workbook2 = new WorkbookTree();
+                    PgnGameParser pgp = new PgnGameParser(GamesHeaders[1].GameText, workbook2, out bool multi);
+                    AppStateManager.MainWin.Workbook = WorkbookTreeMerge.MergeWorkbooks(AppStateManager.MainWin.Workbook, workbook2);
+                }
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("The Workbook will be created from the first game only.", "Chess Forge Workbook", 
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks if the passed string looks like a header line and if so
+        /// returns the name and value of the header.
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        private static string ProcessPgnHeaderLine(string line, out string val)
+        {
+            string header = "";
+            val = "";
+            line = line.Trim();
+
+            if (line.Length > 0 && line[0] == '[' && line[line.Length - 1] == ']')
+            {
+                line = line.Substring(1, line.Length - 2);
+                string[] tokens = line.Split('\"');
+                if (tokens.Length >= 2)
+                {
+                    header = tokens[0].Trim();
+                    val = tokens[1].Trim();
+                }
+            }
+
+            return header;
         }
 
         /// <summary>
@@ -249,7 +381,7 @@ namespace ChessForge
             {
                 saveDlg.FileName = Path.GetFileNameWithoutExtension(pgnFileName) + ".chf";
             }
-            else if (!typeConversion && !string.IsNullOrWhiteSpace(AppStateManager.MainWin.Workbook.Title) )
+            else if (!typeConversion && !string.IsNullOrWhiteSpace(AppStateManager.MainWin.Workbook.Title))
             {
                 saveDlg.FileName = AppStateManager.MainWin.Workbook.Title + ".chf";
             }

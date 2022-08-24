@@ -110,6 +110,9 @@
     <Compile Include="Resources\Pieces.cs" />
     <Compile Include="Resources\Strings.cs" />
     <Compile Include="RichTextBuilder.cs" />
+    <Compile Include="SelectGamesDialog.xaml.cs">
+      <DependentUpon>SelectGamesDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SoundPlayer.cs" />
     <Compile Include="WorkbookManager.cs" />
     <Compile Include="WorkbookOptionsDialog.xaml.cs">
@@ -123,7 +126,7 @@
     <Compile Include="TreeTableRow.cs" />
     <Compile Include="ChfTextBuilder.cs" />
     <Compile Include="UIEelementState.cs" />
-    <Compile Include="VariationLine.cs" />
+    <Compile Include="ScoreSheet.cs" />
     <Compile Include="WorkbookTableState.cs" />
     <Page Include="AboutBoxDialog.xaml">
       <SubType>Designer</SubType>
@@ -146,6 +149,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PromotionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectGamesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

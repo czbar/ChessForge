@@ -904,7 +904,12 @@ namespace ChessForge
                 Workbook = new WorkbookTree();
                 BookmarkManager.ClearBookmarksGui();
                 UiRtbWorkbookView.Document.Blocks.Clear();
-                PgnGameParser pgnGame = new PgnGameParser(workbookText, Workbook, true);
+
+                PgnGameParser pgnGame = new PgnGameParser(workbookText, Workbook, out bool isMulti, true);
+                if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN && isMulti)
+                {
+                    WorkbookManager.HandleMultiGamePgn(fileName, pgnGame);
+                }
 
                 BoardCommentBox.ShowWorkbookTitle();
 
@@ -959,9 +964,11 @@ namespace ChessForge
                     }
                 }
 
-                int startingNode = 0;
+                TreeNode firstNode = Workbook.GetFirstNodeInMainLine();
+                int startingNode = firstNode == null ? 0 : firstNode.NodeId;
                 string startLineId = Workbook.GetDefaultLineIdForNode(startingNode);
                 SetActiveLine(startLineId, startingNode);
+                UiRtbWorkbookView.Focus();
 
                 SetupDataInTreeView();
 

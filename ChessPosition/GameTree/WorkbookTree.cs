@@ -789,6 +789,25 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the first move of the main line i.e. the move
+        /// we want selected when we open a workbook.
+        /// The first move can be identified as the one that has its
+        /// LineId=="1" (if no fork on the very first move) or LineId=="1.1".
+        /// Alternatively, we could just return the first child of the root node.
+        /// </summary>
+        /// <returns></returns>
+        public TreeNode GetFirstNodeInMainLine()
+        {
+            foreach (TreeNode child in Nodes[0].Children)
+            {
+                if (child.LineId == "1" || child.LineId == "1.1")
+                    return child;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Promotes a line by moving it one level up.
         /// Starting from the passed node, this methods walks
         /// up the branch until it encounters a fork where this

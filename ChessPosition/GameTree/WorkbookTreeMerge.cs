@@ -37,7 +37,7 @@ namespace ChessPosition.GameTree
         {
             // create a new Workbook and create a root Node
             _mergedTree = new WorkbookTree();
-            _mergedTree.AddNode(new TreeNode(null, "", 0));
+            _mergedTree.CreateNew();
 
             MergeTrees(tree1.Nodes[0], tree2.Nodes[0], _mergedTree.Nodes[0]);
 
