@@ -27,6 +27,11 @@ namespace ChessPosition.GameTree
         }
 
         /// <summary>
+        /// Text of the game
+        /// </summary>
+        public string GameText {get; set;}
+
+        /// <summary>
         /// Accessor to _isSelected.
         /// This is the only property that can be changed
         /// from the GUI.
@@ -52,6 +57,12 @@ namespace ChessPosition.GameTree
         public string White { get; set; }
         public string Black { get; set; }
         public string Result { get; set; }
+
+        /// <summary>
+        /// Index of the first line in the PGN file where this game starts
+        /// (to be precise, the first empty line after the previous game)
+        /// </summary>
+        public int FirstLineInFile { get; set; }
 
         /// <summary>
         /// Builds text for the column with the name of the game.
