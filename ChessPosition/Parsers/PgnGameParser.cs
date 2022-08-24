@@ -50,8 +50,10 @@ namespace GameTree
         /// The constructor takes the entire game notation as a string.
         /// </summary>
         /// <param name="workbook"></param>
-        public PgnGameParser(string pgnGametext, WorkbookTree workbook, bool debugMode = false)
+        public PgnGameParser(string pgnGametext, WorkbookTree workbook, out bool multiGame, bool debugMode = false)
         {
+            multiGame = false;
+
             if (debugMode)
             {
                 DEBUG_MODE = true;
@@ -61,6 +63,11 @@ namespace GameTree
             _remainingGameText = ReadHeaders(pgnGametext);
 
             ParseWorkbookText(_remainingGameText, workbook);
+
+            if (_remainingGameText.IndexOf("[White") >= 0)
+            {
+                multiGame = true;
+            }
         }
 
         /// <summary>
