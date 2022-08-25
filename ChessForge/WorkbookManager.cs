@@ -67,7 +67,7 @@ namespace ChessForge
         /// games for merging into a Workbook.
         /// Returns true if at least one game was found in the file.
         /// </summary>
-        public static bool ReadPgnFile(string path, PgnGameParser pgnGame)
+        public static bool ReadPgnFile(string path)
         {
             GamesHeaders.Clear();
 
@@ -133,8 +133,11 @@ namespace ChessForge
                     gameText.AppendLine(line);                    
                 }
 
-                // add game text to the last object
-                GamesHeaders[GamesHeaders.Count - 1].GameText = gameText.ToString();
+                if (GamesHeaders.Count > 0)
+                {
+                    // add game text to the last object
+                    GamesHeaders[GamesHeaders.Count - 1].GameText = gameText.ToString();
+                }
             }
 
             bool mergedGames = false;
@@ -144,7 +147,7 @@ namespace ChessForge
                 mergedGames = MergeGames();
             }
 
-            if (!mergedGames || GamesHeaders.Count > 0)
+            if (GamesHeaders.Count != 0 && (!mergedGames || GamesHeaders.Count > 0))
             {
                 PgnGameParser pgp = new PgnGameParser(GamesHeaders[0].GameText, AppStateManager.MainWin.Workbook, out bool multi);
             }
