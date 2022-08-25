@@ -3,6 +3,9 @@
 ## Idle Mode
 
 - Open PGN file
+  - 1 game inside
+  - 0 games inside
+  - multiple games inside   
 - Open CHF file
 - Generate Bookmarks
 
