@@ -257,16 +257,10 @@ namespace ChessForge
             {
                 if (nd.NodeId != 0)
                 {
-                    if (_dictNodeToRun.ContainsKey(nd.NodeId))
+                    //we should always have this key, so allow crash in the debug mode
+                    if (_dictNodeToRun.ContainsKey(nd.NodeId) || Configuration.DebugMode != 0)
                     {
                         _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
-                    }
-                    else
-                    {
-                        if (Configuration.DebugMode != 0)
-                        {
-                            AppLog.Message("Error in SelectLineAndMove(): NodeId " + nd.NodeId.ToString() + " not in _dictNodeToRun");
-                        }
                     }
                 }
             }
@@ -281,9 +275,11 @@ namespace ChessForge
                 {
                     if (nd.NodeId != 0)
                     {
-                        // TODO: we crash here when run is not added
-                        //       keep for now to help finding bugs
-                        _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
+                        //we should always have this key, so allow crash in the debug mode
+                        if (_dictNodeToRun.ContainsKey(nd.NodeId) || Configuration.DebugMode != 0)
+                        {
+                            _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
+                        }
                     }
                 }
             }
