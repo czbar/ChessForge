@@ -194,7 +194,12 @@ namespace ChessForge
         {
             Document.Blocks.Clear();
 
-            AddNewParagraphToDoc("title", _mainWin.Workbook.Title);
+            string title = _mainWin.Workbook.Title;
+            if (string.IsNullOrEmpty(_mainWin.Workbook.Title))
+            {
+                title = "Untitled Workbook";
+            }
+            AddNewParagraphToDoc("title", title);
             AddNewParagraphToDoc("bold_prompt", "Some available actions are:");
             AddNewParagraphToDoc("normal", Strings.QUICK_INSTRUCTION);
         }
