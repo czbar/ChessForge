@@ -910,10 +910,10 @@ namespace ChessForge
                 }
                 else
                 {
-                    bool ret = WorkbookManager.ReadPgnFile(fileName);
-                    if (!ret)
+                    int gameCount = WorkbookManager.ReadPgnFile(fileName);
+                    if (gameCount == 0)
                     {
-                        MessageBox.Show("No valid games found in the file", "Input File", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("No games to process.", "Input File", MessageBoxButton.OK, MessageBoxImage.Error);
                         AppStateManager.WorkbookFilePath = "";
                         AppStateManager.UpdateAppTitleBar();
                         return;

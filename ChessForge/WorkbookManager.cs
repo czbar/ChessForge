@@ -67,7 +67,7 @@ namespace ChessForge
         /// games for merging into a Workbook.
         /// Returns true if at least one game was found in the file.
         /// </summary>
-        public static bool ReadPgnFile(string path)
+        public static int ReadPgnFile(string path)
         {
             GamesHeaders.Clear();
 
@@ -140,47 +140,63 @@ namespace ChessForge
                 }
             }
 
-            bool mergedGames = false;
+            int mergedGames = 0;
             // if there is more than 1 game, ask the user to select
             if (GamesHeaders.Count > 1)
             {
-                PgnGameParser pgp = new PgnGameParser(GamesHeaders[0].GameText, AppStateManager.MainWin.Workbook, out bool multi);
                 mergedGames = MergeGames();
             }
-
-            if (GamesHeaders.Count != 0 && (!mergedGames && GamesHeaders.Count > 0))
+            else if (GamesHeaders.Count == 1)
             {
                 PgnGameParser pgp = new PgnGameParser(GamesHeaders[0].GameText, AppStateManager.MainWin.Workbook, out bool multi);
+                mergedGames = 1;
             }
 
-            return GamesHeaders.Count > 0;
+            return mergedGames;
         }
 
         /// <summary>
         /// Asks the user to select games before merging.
+        /// Returns the number of games merged, or -1 if the user
+        /// canceled the selection dialog.
         /// </summary>
         /// <returns></returns>
-        private static bool MergeGames()
+        private static int MergeGames()
         {
             SelectGamesDialog dlg = new SelectGamesDialog();
             dlg.ShowDialog();
 
+            int mergedCount = 0;
+
             if (dlg.Result)
             {
                 // merge workbooks
-                for (int i = 1; i < GamesHeaders.Count; i++)
+                for (int i = 0; i < GamesHeaders.Count; i++)
                 {
-                    WorkbookTree workbook2 = new WorkbookTree();
-                    PgnGameParser pgp = new PgnGameParser(GamesHeaders[1].GameText, workbook2, out bool multi);
-                    AppStateManager.MainWin.Workbook = WorkbookTreeMerge.MergeWorkbooks(AppStateManager.MainWin.Workbook, workbook2);
+                    if (GamesHeaders[i].IsSelected)
+                    {
+                        if (mergedCount == 0)
+                        {
+                            // special treatment for the first one
+                            PgnGameParser pgp = new PgnGameParser(GamesHeaders[i].GameText, AppStateManager.MainWin.Workbook, out bool multi);
+                            mergedCount++;
+                        }
+                        else
+                        {
+                            WorkbookTree workbook2 = new WorkbookTree();
+                            PgnGameParser pgp = new PgnGameParser(GamesHeaders[i].GameText, workbook2, out bool multi);
+                            AppStateManager.MainWin.Workbook = WorkbookTreeMerge.MergeWorkbooks(AppStateManager.MainWin.Workbook, workbook2);
+                            mergedCount++;
+                        }
+                    }
                 }
-                return true;
+                return mergedCount;
             }
             else
             {
-                MessageBox.Show("The Workbook will be created from the first game only.", "Chess Forge Workbook",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
-                return false;
+                //MessageBox.Show("The Workbook will be created from the first game only.", "Chess Forge Workbook",
+                //    MessageBoxButton.OK, MessageBoxImage.Information);
+                return 0;
             }
         }
 
