@@ -10,5 +10,18 @@
 [PlyCount "23"]
 [SourceVersionDate "2022.02.17"]
 
-1. e4 e6 2. d4 d5 3. Nc3 *
+1. e4 (1. d4 d6) e6 2. d3 d6 3. Nc3 *
 
+[Event "?"]
+[Site "?"]
+[Date "2022.02.17"]
+[Round "?"]
+[White "French (Langrock)"]
+[Black "6.Nxf6 Nxf6 7.Bd3"]
+[Result "*"]
+[ECO "C10"]
+[Annotator "Rozycki,Robert"]
+[PlyCount "23"]
+[SourceVersionDate "2022.02.17"]
+
+1. e4 (1. d4 d5) c5 2. f4 f5 *
