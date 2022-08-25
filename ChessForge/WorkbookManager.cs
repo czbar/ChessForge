@@ -144,10 +144,11 @@ namespace ChessForge
             // if there is more than 1 game, ask the user to select
             if (GamesHeaders.Count > 1)
             {
+                PgnGameParser pgp = new PgnGameParser(GamesHeaders[0].GameText, AppStateManager.MainWin.Workbook, out bool multi);
                 mergedGames = MergeGames();
             }
 
-            if (GamesHeaders.Count != 0 && (!mergedGames || GamesHeaders.Count > 0))
+            if (GamesHeaders.Count != 0 && (!mergedGames && GamesHeaders.Count > 0))
             {
                 PgnGameParser pgp = new PgnGameParser(GamesHeaders[0].GameText, AppStateManager.MainWin.Workbook, out bool multi);
             }
@@ -155,6 +156,10 @@ namespace ChessForge
             return GamesHeaders.Count > 0;
         }
 
+        /// <summary>
+        /// Asks the user to select games before merging.
+        /// </summary>
+        /// <returns></returns>
         private static bool MergeGames()
         {
             SelectGamesDialog dlg = new SelectGamesDialog();
