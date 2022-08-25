@@ -28,7 +28,7 @@ namespace ChessPosition.GameTree
 
 
         /// <summary>
-        /// Performs the merging of 2 WorbokkTree objects and returns the result.
+        /// Performs the merging of 2 WorbookTree objects and returns the result.
         /// </summary>
         /// <param name="tree1"></param>
         /// <param name="tree2"></param>
