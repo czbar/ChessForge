@@ -62,12 +62,12 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Called when upon opening a PGN file we detect that it has more than one game in it.
-        /// The user will be asked whether they want to select games for evaluation or for
-        /// merging into a single workbook.
-        /// First let's get all game titles from the file.
+        /// Reads a PGN file that may have 1 or multiple games in it.
+        /// If there are multiple games, the user will be asked to select
+        /// games for merging into a Workbook.
+        /// Returns true if at least one game was found in the file.
         /// </summary>
-        public static bool HandleMultiGamePgn(string path, PgnGameParser pgnGame)
+        public static bool ReadPgnFile(string path, PgnGameParser pgnGame)
         {
             GamesHeaders.Clear();
 
@@ -137,6 +137,23 @@ namespace ChessForge
                 GamesHeaders[GamesHeaders.Count - 1].GameText = gameText.ToString();
             }
 
+            bool mergedGames = false;
+            // if there is more than 1 game, ask the user to select
+            if (GamesHeaders.Count > 1)
+            {
+                mergedGames = MergeGames();
+            }
+
+            if (!mergedGames || GamesHeaders.Count > 0)
+            {
+                PgnGameParser pgp = new PgnGameParser(GamesHeaders[0].GameText, AppStateManager.MainWin.Workbook, out bool multi);
+            }
+
+            return GamesHeaders.Count > 0;
+        }
+
+        private static bool MergeGames()
+        {
             SelectGamesDialog dlg = new SelectGamesDialog();
             dlg.ShowDialog();
 
@@ -153,7 +170,7 @@ namespace ChessForge
             }
             else
             {
-                MessageBox.Show("The Workbook will be created from the first game only.", "Chess Forge Workbook", 
+                MessageBox.Show("The Workbook will be created from the first game only.", "Chess Forge Workbook",
                     MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }

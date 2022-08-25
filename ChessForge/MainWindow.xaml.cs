@@ -908,7 +908,12 @@ namespace ChessForge
                 PgnGameParser pgnGame = new PgnGameParser(workbookText, Workbook, out bool isMulti, true);
                 if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN && isMulti)
                 {
-                    WorkbookManager.HandleMultiGamePgn(fileName, pgnGame);
+                    bool ret = WorkbookManager.ReadPgnFile(fileName, pgnGame);
+                    if (!ret)
+                    {
+                        MessageBox.Show("No valid games found in the file", "Input File", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
                 }
 
                 BoardCommentBox.ShowWorkbookTitle();
