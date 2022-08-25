@@ -452,6 +452,7 @@ namespace ChessPosition
                 }
             }
 
+            position.Board = (byte[,])boardBeforeMove.Clone();
             return goodOrigins;
         }
 

@@ -897,18 +897,27 @@ namespace ChessForge
                 });
 
                 AppStateManager.WorkbookFilePath = fileName;
-
-                string workbookText = File.ReadAllText(fileName);
                 AppStateManager.UpdateAppTitleBar();
 
                 Workbook = new WorkbookTree();
                 BookmarkManager.ClearBookmarksGui();
                 UiRtbWorkbookView.Document.Blocks.Clear();
 
-                PgnGameParser pgnGame = new PgnGameParser(workbookText, Workbook, out bool isMulti, true);
-                if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN && isMulti)
+                if (AppStateManager.WorkbookFileType == AppStateManager.FileType.CHF)
                 {
-                    WorkbookManager.HandleMultiGamePgn(fileName, pgnGame);
+                    string workbookText = File.ReadAllText(fileName);
+                    PgnGameParser pgnGame = new PgnGameParser(workbookText, Workbook, out bool isMulti, true);
+                }
+                else
+                {
+                    int gameCount = WorkbookManager.ReadPgnFile(fileName);
+                    if (gameCount == 0)
+                    {
+                        MessageBox.Show("No games to process.", "Input File", MessageBoxButton.OK, MessageBoxImage.Error);
+                        AppStateManager.WorkbookFilePath = "";
+                        AppStateManager.UpdateAppTitleBar();
+                        return;
+                    }
                 }
 
                 BoardCommentBox.ShowWorkbookTitle();

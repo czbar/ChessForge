@@ -152,7 +152,7 @@ namespace GameTree
         {
             if (!string.IsNullOrEmpty(command))
             {
-                string[] tokens = command.Split(' ');
+                string[] tokens = command.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 string cmdPrefix = tokens[0];
 
                 switch (ChfCommands.GetCommand(cmdPrefix))

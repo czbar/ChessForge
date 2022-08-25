@@ -74,7 +74,7 @@ namespace StockfishTest
         {
             WorkbookTree variationTree = new WorkbookTree();
             string gameText = File.ReadAllText("../../../ChessPositionTest/TestData/GameShort.pgn");
-            PgnGameParser pgnGame = new PgnGameParser(gameText, variationTree, false);
+            PgnGameParser pgnGame = new PgnGameParser(gameText, variationTree, out bool multi, false);
             EvaluateVariationTree(variationTree);
         }
 

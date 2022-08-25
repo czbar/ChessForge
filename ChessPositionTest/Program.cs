@@ -60,7 +60,7 @@ namespace ChessPositionTest
         {
             WorkbookTree tree = new WorkbookTree();
             string gameText = File.ReadAllText(fileName);
-            PgnGameParser pgnGame = new PgnGameParser(gameText, tree, true);
+            PgnGameParser pgnGame = new PgnGameParser(gameText, tree, out bool multi, true);
 
             return tree;
         }
@@ -156,7 +156,7 @@ namespace ChessPositionTest
         {
             WorkbookTree variationTree = new WorkbookTree();
             string gameText = File.ReadAllText("../../../ChessPositionTest/TestData/GameTreeTest_1.pgn");
-            PgnGameParser pgnGame = new PgnGameParser(gameText, variationTree, true);
+            PgnGameParser pgnGame = new PgnGameParser(gameText, variationTree, out bool multi, true);
             PrintVariationTree(variationTree);
         }
 

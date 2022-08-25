@@ -62,12 +62,12 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Called when upon opening a PGN file we detect that it has more than one game in it.
-        /// The user will be asked whether they want to select games for evaluation or for
-        /// merging into a single workbook.
-        /// First let's get all game titles from the file.
+        /// Reads a PGN file that may have 1 or multiple games in it.
+        /// If there are multiple games, the user will be asked to select
+        /// games for merging into a Workbook.
+        /// Returns true if at least one game was found in the file.
         /// </summary>
-        public static bool HandleMultiGamePgn(string path, PgnGameParser pgnGame)
+        public static int ReadPgnFile(string path)
         {
             GamesHeaders.Clear();
 
@@ -133,29 +133,70 @@ namespace ChessForge
                     gameText.AppendLine(line);                    
                 }
 
-                // add game text to the last object
-                GamesHeaders[GamesHeaders.Count - 1].GameText = gameText.ToString();
+                if (GamesHeaders.Count > 0)
+                {
+                    // add game text to the last object
+                    GamesHeaders[GamesHeaders.Count - 1].GameText = gameText.ToString();
+                }
             }
 
+            int mergedGames = 0;
+            // if there is more than 1 game, ask the user to select
+            if (GamesHeaders.Count > 1)
+            {
+                mergedGames = MergeGames();
+            }
+            else if (GamesHeaders.Count == 1)
+            {
+                PgnGameParser pgp = new PgnGameParser(GamesHeaders[0].GameText, AppStateManager.MainWin.Workbook, out bool multi);
+                mergedGames = 1;
+            }
+
+            return mergedGames;
+        }
+
+        /// <summary>
+        /// Asks the user to select games before merging.
+        /// Returns the number of games merged, or -1 if the user
+        /// canceled the selection dialog.
+        /// </summary>
+        /// <returns></returns>
+        private static int MergeGames()
+        {
             SelectGamesDialog dlg = new SelectGamesDialog();
             dlg.ShowDialog();
+
+            int mergedCount = 0;
 
             if (dlg.Result)
             {
                 // merge workbooks
-                for (int i = 1; i < GamesHeaders.Count; i++)
+                for (int i = 0; i < GamesHeaders.Count; i++)
                 {
-                    WorkbookTree workbook2 = new WorkbookTree();
-                    PgnGameParser pgp = new PgnGameParser(GamesHeaders[1].GameText, workbook2, out bool multi);
-                    AppStateManager.MainWin.Workbook = WorkbookTreeMerge.MergeWorkbooks(AppStateManager.MainWin.Workbook, workbook2);
+                    if (GamesHeaders[i].IsSelected)
+                    {
+                        if (mergedCount == 0)
+                        {
+                            // special treatment for the first one
+                            PgnGameParser pgp = new PgnGameParser(GamesHeaders[i].GameText, AppStateManager.MainWin.Workbook, out bool multi);
+                            mergedCount++;
+                        }
+                        else
+                        {
+                            WorkbookTree workbook2 = new WorkbookTree();
+                            PgnGameParser pgp = new PgnGameParser(GamesHeaders[i].GameText, workbook2, out bool multi);
+                            AppStateManager.MainWin.Workbook = WorkbookTreeMerge.MergeWorkbooks(AppStateManager.MainWin.Workbook, workbook2);
+                            mergedCount++;
+                        }
+                    }
                 }
-                return true;
+                return mergedCount;
             }
             else
             {
-                MessageBox.Show("The Workbook will be created from the first game only.", "Chess Forge Workbook", 
-                    MessageBoxButton.OK, MessageBoxImage.Information);
-                return false;
+                //MessageBox.Show("The Workbook will be created from the first game only.", "Chess Forge Workbook",
+                //    MessageBoxButton.OK, MessageBoxImage.Information);
+                return 0;
             }
         }
 

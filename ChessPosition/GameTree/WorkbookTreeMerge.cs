@@ -18,17 +18,17 @@ namespace ChessPosition.GameTree
         /// Helper dictionaries to hold distinct nodes at a given tree level. 
         /// Map FEN of the node (FEN uniquely identifies a chess position) to the Node objects.
         /// </summary>
-        private static Dictionary<string, TreeNode> _dict1 = new Dictionary<string, TreeNode>();
-        private static Dictionary<string, TreeNode> _dict2 = new Dictionary<string, TreeNode>();
+        //private static Dictionary<string, TreeNode> _dict1 = new Dictionary<string, TreeNode>();
+        //private static Dictionary<string, TreeNode> _dict2 = new Dictionary<string, TreeNode>();
 
-        // helper lists to hold duplicate nodes at a given tree level
-        private static List<TreeNode> _dupes1 = new List<TreeNode>();
-        private static List<TreeNode> _dupes2 = new List<TreeNode>();
-        private static List<string> _dupeFens = new List<string>();
+        //// helper lists to hold duplicate nodes at a given tree level
+        //private static List<TreeNode> _dupes1 = new List<TreeNode>();
+        //private static List<TreeNode> _dupes2 = new List<TreeNode>();
+        //private static List<string> _dupeFens = new List<string>();
 
 
         /// <summary>
-        /// Performs the merging of 2 WorbokkTree objects and returns the result.
+        /// Performs the merging of 2 WorbookTree objects and returns the result.
         /// </summary>
         /// <param name="tree1"></param>
         /// <param name="tree2"></param>
@@ -61,6 +61,13 @@ namespace ChessPosition.GameTree
         /// <param name="tn2"></param>
         private static void MergeTrees(TreeNode tn1, TreeNode tn2, TreeNode outParent)
         {
+            Dictionary<string, TreeNode> _dict1 = new Dictionary<string, TreeNode>();
+            Dictionary<string, TreeNode> _dict2 = new Dictionary<string, TreeNode>();
+
+            List<TreeNode> _dupes1 = new List<TreeNode>();
+            List<TreeNode> _dupes2 = new List<TreeNode>();
+            List<string> _dupeFens = new List<string>();
+
             _dict1.Clear();
             _dict2.Clear();
 
