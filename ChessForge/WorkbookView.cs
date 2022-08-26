@@ -254,7 +254,7 @@ namespace ChessForge
             {
                 if (nd.NodeId != 0)
                 {
-                    
+
                     if (_dictNodeToRun.ContainsKey(nd.NodeId) || Configuration.DebugMode != 0)
                     {
                         _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
@@ -352,6 +352,12 @@ namespace ChessForge
         /// </summary>
         private void SetNodeDistances()
         {
+            foreach (TreeNode nd in _workbook.Nodes)
+            {
+                nd.DistanceToLeaf = -1;
+                nd.DistanceToNextFork = 0;
+            }
+
             foreach (TreeNode nd in _workbook.Nodes)
             {
                 // if the node is a leaf start traversing
@@ -757,7 +763,7 @@ namespace ChessForge
                 TreeNode foundNode = _workbook.GetNodeFromNodeId(nodeId);
                 lineId = foundNode.LineId;
                 lineId = _workbook.GetDefaultLineIdForNode(nodeId);
-                ObservableCollection <TreeNode> lineToSelect = _workbook.SelectLine(lineId);
+                ObservableCollection<TreeNode> lineToSelect = _workbook.SelectLine(lineId);
                 foreach (TreeNode nd in lineToSelect)
                 {
                     if (nd.NodeId != 0)
