@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameTree;
 using ChessPosition;
+using System.Windows;
 
 namespace ChessForge
 {
@@ -155,6 +156,17 @@ namespace ChessForge
         /// <returns></returns>
         public TreeNode GetNodeAtIndex(int idx)
         {
+            if (idx < 0 || idx >= NodeList.Count)
+            {
+                if (Configuration.IsDebug)
+                {
+                    DebugUtils.ShowDebugMessage("ScoreSheet:GetNodeAtIndex bad index = " + idx.ToString());
+                }
+                else
+                {
+                    return null;
+                }
+            }
             return idx >= 0 ? NodeList[idx] : null;
         }
 

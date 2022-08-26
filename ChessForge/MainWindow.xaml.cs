@@ -1003,6 +1003,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Obtains the current ActiveLine's lineId and move,
+        /// and asks other view to select / re-select.
+        /// This is needed e.g. when the WorkbookTree is rubuilt after
+        /// adding nodes.
+        /// </summary>
+        public void RefreshSelectedActiveLineAndNode()
+        {
+            TreeNode nd = ActiveLine.GetSelectedTreeNode();
+            string lineId = ActiveLine.GetLineId();
+            SelectLineAndMoveInWorkbookViews(lineId, nd.NodeId);
+        }
+
+        /// <summary>
         /// Adds a new Node to the Workbook View,
         /// avoiding the full rebuild (performance).
         /// This can only be done "safely" if we are adding a move to a leaf.

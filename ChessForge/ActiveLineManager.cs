@@ -428,19 +428,22 @@ namespace ChessForge
                     moveIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1);
                     TreeNode nd = Line.GetNodeAtIndex(moveIndex + 1);
 
-                    if (_mainWin.ActiveLineReplay.IsReplayActive)
+                    if (nd != null)
                     {
-                        // request that the replay be stopped and the clicked
-                        // position shown, unless this mouse down
-                        // was part of double click (in which case the doble click
-                        // handler will override this.
-                        _mainWin.ActiveLineReplay.ShowPositionAndStop(nd);
+                        if (_mainWin.ActiveLineReplay.IsReplayActive)
+                        {
+                            // request that the replay be stopped and the clicked
+                            // position shown, unless this mouse down
+                            // was part of double click (in which case the doble click
+                            // handler will override this.
+                            _mainWin.ActiveLineReplay.ShowPositionAndStop(nd);
+                        }
+                        else
+                        {
+                            _mainWin.DisplayPosition(nd.Position);
+                        }
+                        _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), nd.NodeId);
                     }
-                    else
-                    {
-                        _mainWin.DisplayPosition(nd.Position);
-                    }
-                    _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), nd.NodeId);
                 }
                 e.Handled = true;
             }
