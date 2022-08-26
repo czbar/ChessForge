@@ -115,7 +115,7 @@ namespace ChessForge
                         default:
                             headerLine = false;
                             // if no header then this is the end of the header lines if we do have any data
-                            if (header.Length == 0 && gm.White != null && gm.Black != null)
+                            if (header.Length == 0 && (gm.White != null || gm.Black != null || gm.Result != null))
                             {
                                 GamesHeaders.Add(gm);
                                 gm = new GameMetadata();
@@ -280,6 +280,7 @@ namespace ChessForge
                     AppStateManager.MainWin.Workbook.BuildLines();
                     AppStateManager.SaveWorkbookFile();
                     AppStateManager.MainWin.RebuildWorkbookView();
+                    AppStateManager.MainWin.RefreshSelectedActiveLineAndNode();
                     saved = true;
                 }
                 else
