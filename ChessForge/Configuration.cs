@@ -77,6 +77,11 @@ namespace ChessForge
         /// </summary>
         public static int DebugMode = 0;
 
+        /// <summary>
+        /// Returns true if app is in debug mode
+        /// </summary>
+        public static bool IsDebug { get { return DebugMode != 0; } }
+
         //*********************************
         // CONFIGUARTION ITEM NAMES
         //*********************************
