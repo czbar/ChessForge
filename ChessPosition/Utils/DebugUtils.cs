@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameTree;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,29 @@ namespace ChessPosition
         public static void ShowDebugMessage(string msg)
         {
             MessageBox.Show(msg, "DEBUG", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        public static string DumpWorkbookTree(WorkbookTree tree)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < tree.Nodes.Count; i++)
+            {
+                TreeNode nd = tree.Nodes[i];
+                sb.Append("Node index = " + i.ToString() + Environment.NewLine);
+                sb.Append("Node Id = " + nd.NodeId.ToString() + Environment.NewLine);
+                sb.Append("Parent Node Id = " + (nd.Parent == null ? "-" : nd.Parent.NodeId.ToString()) + Environment.NewLine);
+                sb.Append("Move alg = " + nd.LastMoveAlgebraicNotation + Environment.NewLine);
+                sb.Append("DistanceToLeaf = " + nd.DistanceToLeaf.ToString() + Environment.NewLine);
+                sb.Append("DistanceToFork = " + nd.DistanceToNextFork.ToString() + Environment.NewLine  );
+                for(int j = 0; j < nd.Children.Count; j++)
+                {
+                    sb.Append("    Child " + j.ToString() + " Node Id = " + nd.Children[j].NodeId.ToString() +  Environment.NewLine);
+                }
+                sb.Append(Environment.NewLine + Environment.NewLine);
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
