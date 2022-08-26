@@ -100,11 +100,6 @@ namespace ChessForge
         private Dictionary<Run, Paragraph> _dictRunToParagraph = new Dictionary<Run, Paragraph>();
 
         /// <summary>
-        /// Currently selected line.
-        /// </summary>
-        private ObservableCollection<TreeNode> _lstSelectedLine = new ObservableCollection<TreeNode>();
-
-        /// <summary>
         /// Current Paragraph level.
         /// </summary>
         private int _currParagraphLevel;
@@ -183,12 +178,13 @@ namespace ChessForge
         public void DeleteRemainingMoves()
         {
             TreeNode nd = _workbook.GetNodeFromNodeId(_lastClickedNodeId);
+            TreeNode parent = nd.Parent;
             _workbook.DeleteRemainingMoves(nd);
             _workbook.BuildLines();
-            _mainWin.SetActiveLine(nd.Parent.LineId, nd.Parent.NodeId);
+            _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
             BookmarkManager.ResyncBookmarks(1);
             BuildFlowDocumentForWorkbook();
-            _mainWin.SelectLineAndMoveInWorkbookViews(nd.Parent.LineId, nd.Parent.NodeId);
+            _mainWin.SelectLineAndMoveInWorkbookViews(parent.LineId, parent.NodeId);
             AppStateManager.IsDirty = true;
         }
 
@@ -253,14 +249,19 @@ namespace ChessForge
                 _selectedRun.Foreground = _selectedRunFore;
             }
 
-            foreach (TreeNode nd in _lstSelectedLine)
+            ObservableCollection<TreeNode> lineToSelect = _workbook.SelectLine(lineId);
+            foreach (TreeNode nd in lineToSelect)
             {
                 if (nd.NodeId != 0)
                 {
-                    //we should always have this key, so allow crash in the debug mode
+                    
                     if (_dictNodeToRun.ContainsKey(nd.NodeId) || Configuration.DebugMode != 0)
                     {
                         _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
+                    }
+                    else
+                    {  //we should always have this key, so show deubug message if not
+                        DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-brushRegularBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
                     }
                 }
             }
@@ -270,8 +271,7 @@ namespace ChessForge
 
             if (!string.IsNullOrEmpty(lineId))
             {
-                _lstSelectedLine = _workbook.SelectLine(lineId);
-                foreach (TreeNode nd in _lstSelectedLine)
+                foreach (TreeNode nd in lineToSelect)
                 {
                     if (nd.NodeId != 0)
                     {
@@ -279,6 +279,10 @@ namespace ChessForge
                         if (_dictNodeToRun.ContainsKey(nd.NodeId) || Configuration.DebugMode != 0)
                         {
                             _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
+                        }
+                        else
+                        {  //we should always have this key, so show deubug message if not
+                            DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-_brushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
                         }
                     }
                 }
@@ -308,7 +312,6 @@ namespace ChessForge
             // resets
             _dictNodeToRun.Clear();
             _dictRunToParagraph.Clear();
-            _lstSelectedLine.Clear();
             _currParagraphLevel = 0;
 
             // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
@@ -729,7 +732,7 @@ namespace ChessForge
                 _selectedRun.Foreground = _selectedRunFore;
             }
 
-            foreach (TreeNode nd in _lstSelectedLine)
+            foreach (TreeNode nd in _mainWin.ActiveLine.Line.NodeList)
             {
                 if (nd.NodeId != 0)
                 {
@@ -754,8 +757,8 @@ namespace ChessForge
                 TreeNode foundNode = _workbook.GetNodeFromNodeId(nodeId);
                 lineId = foundNode.LineId;
                 lineId = _workbook.GetDefaultLineIdForNode(nodeId);
-                _lstSelectedLine = _workbook.SelectLine(lineId);
-                foreach (TreeNode nd in _lstSelectedLine)
+                ObservableCollection <TreeNode> lineToSelect = _workbook.SelectLine(lineId);
+                foreach (TreeNode nd in lineToSelect)
                 {
                     if (nd.NodeId != 0)
                     {
@@ -767,7 +770,7 @@ namespace ChessForge
                     }
                 }
 
-                _mainWin.SetActiveLine(_lstSelectedLine, nodeId);
+                _mainWin.SetActiveLine(lineToSelect, nodeId);
                 LearningMode.ActiveLineId = lineId;
             }
 
