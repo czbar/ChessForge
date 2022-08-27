@@ -1114,7 +1114,7 @@ namespace ChessForge
                 if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE
                     && AppStateManager.IsDirty || (Workbook != null && Workbook.HasTrainingMoves()))
                 {
-                    WorkbookManager.PromptAndSaveWorkbook(false);
+                    WorkbookManager.PromptAndSaveWorkbook(false, true);
                 }
             }
             Timers.StopAll(false);
