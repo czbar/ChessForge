@@ -1882,6 +1882,10 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Stops and restarts the engine.
+        /// </summary>
+        /// <returns></returns>
         public bool ReloadEngine()
         {
             EngineMessageProcessor.StopEngineService();
@@ -1962,13 +1966,12 @@ namespace ChessForge
 
             if (dlg.ExitOK)
             {
-                Configuration.EngineExePath = dlg.EnginePath;
-                Configuration.MoveSpeed = (int)(dlg.ReplaySpeed * 1000.0);
-                Configuration.EngineMoveTime = (int)(dlg.EngineTimePerMoveInGame * 1000.0);
-                Configuration.EngineEvaluationTime = (int)(dlg.EngineTimePerMoveInEvaluation * 1000.0);
+                if (dlg.ChangedEnginePath)
                 Configuration.WriteOutConfiguration();
-
-                ReloadEngine();
+                if (dlg.ChangedEnginePath)
+                {
+                    ReloadEngine();
+                }
             }
         }
 
