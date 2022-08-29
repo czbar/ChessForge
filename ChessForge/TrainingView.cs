@@ -458,7 +458,7 @@ namespace ChessForge
         /// </summary>
         public void EngineMoveMade()
         {
-            AddMoveToEngineGamePara(EngineGame.GetCurrentNode());
+            AddMoveToEngineGamePara(EngineGame.GetCurrentNode(), false);
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
@@ -468,7 +468,7 @@ namespace ChessForge
         /// </summary>
         public void UserMoveMade()
         {
-            AddMoveToEngineGamePara(EngineGame.GetCurrentNode());
+            AddMoveToEngineGamePara(EngineGame.GetCurrentNode(), true);
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
@@ -486,7 +486,7 @@ namespace ChessForge
         /// Adds a node/ply to the Engine Game paragraph.
         /// </summary>
         /// <param name="nd"></param>
-        private void AddMoveToEngineGamePara(TreeNode nd)
+        private void AddMoveToEngineGamePara(TreeNode nd, bool isUserMove)
         {
             if (_paraCurrentEngineGame == null)
             {
@@ -515,7 +515,7 @@ namespace ChessForge
 
             if (nd.Position.IsCheckmate)
             {
-                BuildCheckmateParagraph(nd, false);
+                BuildCheckmateParagraph(nd, isUserMove);
             }
             else if (nd.Position.IsStalemate)
             {
