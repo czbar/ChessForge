@@ -465,7 +465,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Shows a GUI element allow the user 
+        /// Shows a GUI element allowing the user 
         /// to select the piece to promote to.
         /// </summary>
         /// <param name="normTarget">Normalized propmotion square coordinates
@@ -1367,6 +1367,9 @@ namespace ChessForge
             LearningMode.CurrentMode = LearningMode.Mode.MANUAL_REVIEW;
             EngineGame.CurrentState = EngineGame.GameState.IDLE;
             Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+
+            AppStateManager.MainWin.Workbook.BuildLines();
+            RebuildWorkbookView();
 
             AppStateManager.SetupGuiForCurrentStates();
 
