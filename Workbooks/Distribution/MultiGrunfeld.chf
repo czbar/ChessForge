@@ -1,0 +1,32 @@
+[Title "Grunfeld"]
+[Date "2022.08.27"]
+[TrainingSide "black"]
+[White "Chess Forge"]
+[Black "Workbook File"]
+[Result "*"]
+
+1. d4 {[%chf-eev +0.38]}  Nf6 {[%chf-eev +0.38]}  2. c4 {[%chf-eev +0.41]}  g6 
+{[%chf-eev +0.45]}  3. Nc3 {[%chf-bkm]}  (3. Bg5 {[%chf-bkm][%chf-eev -0.11]}  
+Bg7 {[%chf-eev +0.18]}  4. Nc3 {[%chf-eev +0.10]}  d6 {[%chf-eev +0.39]}  (4... 
+d5 5. Bxf6 Bxf6 6. Nxd5 {[%chf-bkm]}  (6. cxd5 {[%chf-bkm]}  c5 7. dxc5 Nd7 
+(7... Na6) 8. e3 (8. c6 Nc5 9. Rc1 Qb6 10. Nf3 O-O 11. e3 Qxb2 12. Nd4 bxc6 13. 
+Be2 cxd5 14. Nxd5 Bxd4 15. Nxe7+ Kg7 16. Qxd4+ Qxd4 17. exd4 Re8 18. Rxc5) 8... 
+O-O 9. Nf3 Nxc5 10. Nd4 Qb6 11. Qd2 Rd8 12. Be2 e6 13. Bf3 Qa6 14. Be2 Qb6 15. 
+Bf3 Qa6 16. Be2 Qb6) 6... Bg7 7. e3 c5 8. Nf3 Nc6 $13) 5. e4 {[%chf-eev +0.33]}  
+O-O {[%chf-eev +0.71]}  6. f3 {[%chf-eev +0.43]} ) 3... d5 4. Bg5 {[%chf-bkm]}  
+(4. Nf3 {[%chf-bkm]}  Bg7 5. Bg5 c5 6. Bxf6 Bxf6 7. cxd5 cxd4 8. Nxd4 Qb6 9. Nb3 
+a5 10. a4 O-O 11. e3 Bg4 12. Be2 Bxe2 13. Kxe2 Rd8 14. Nb5 Na6 15. Rc1 Bxb2 16. 
+Rc2 Bf6 17. e4 Nb4 18. Rd2 Rac8 19. Qb1 Rc4 20. Rc1 Rdc8 21. Rxc4 Rxc4 22. f3 
+Bg5 23. Rd4 Rc2+ 24. Kf1 Be3 25. Rxb4 Rf2+ 26. Ke1 axb4 27. Qd3 Rxg2 28. Qc4 
+Bd2+ 29. Kd1 Qg1+ 30. Kc2 Bc3+ 31. Kd3 Qf1+ 32. Ke3 Qxc4) 4... Bg7 5. Bxf6 Bxf6 
+6. cxd5 c5 7. dxc5 Nd7 8. e4 (8. e3 O-O 9. Nf3 (9. Bc4 Nxc5 10. Nge2 Qa5 11. O-O 
+Qb4 12. Bb3 Bf5 13. Nd4 Bd3 14. Re1 Rfd8 15. Qd2 a5 16. a3 Qb6 17. Ba2 Rac8 18. 
+Rac1 Ba6 19. Rb1 Bd3 20. Rbc1 Ba6 21. Rb1 Bd3 22. Rbc1) 9... Nxc5 10. Be2 Qb6 
+11. Qd2 Bf5 12. Nd4 Ne4 13. Nxe4 Bxe4 14. Bf3 Bxf3 15. Nxf3 Bxb2 16. Rd1 Rac8 
+17. O-O Bc3 18. Qd3 Qa5 19. Qe4 Rc7 20. Qf4 Rd7 21. e4 Qxa2 22. Rd3 Bg7 23. Ne5 
+Rd6 24. Rh3 Rb6 25. Nd7 Rb1 26. g4 Rd8 27. Rf3 Rxf1+ 28. Kxf1 Qc4+ 29. Kg2 f6 
+30. Ne5 fxe5 31. Qf7+ Kh8 32. Qxe7 Qc8 33. Rc3 Qxg4+ 34. Kf1 Rf8 35. d6 Qf4) 
+8... O-O 9. Nf3 Nxc5 10. e5 Bg7 11. Qd4 Qb6 12. Bb5 f6 13. O-O fxe5 14. Nxe5 a6 
+15. Bc4 Qd6 16. Rae1 b5 17. Bb3 b4 18. Na4 Nd7 19. f4 Rf5 20. g3 a5 21. Re4 Nxe5 
+22. fxe5 Rxe5 23. Rxe5 Bxe5 24. Qe3 Bh3 25. Rf2 Rc8 26. g4 Bxg4 27. Nb6 Rf8 28. 
+Nc4 Bf4 29. Qe4 Qc5 30. d6 Bxh2+ 31. Kh1 Qxf2 32. Ne3+ Kh8 *
