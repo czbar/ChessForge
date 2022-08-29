@@ -73,6 +73,7 @@ namespace ChessForge
         /// </summary>
         public static void StopEngineService()
         {
+            ChessEngineService.StopEngine();
         }
 
         /// <summary>
