@@ -1,0 +1,35 @@
+[Title "Stafford Gambit"]
+[Date "2022.08.27"]
+[TrainingSide "black"]
+[White "Chess Forge"]
+[Black "Workbook File"]
+[Result "*"]
+
+1. e4 {[%chf-eev +0.42]}  e5 {[%chf-eev +0.49]}  2. Nf3 {[%chf-eev +0.25]}  Nf6 
+{[%chf-eev +0.72]}  3. Nxe5 {[%chf-eev +0.70]}  Nc6 {[%chf-eev +2.00]}  4. Nxc6 
+{[%chf-bkm][%chf-eev +2.06]}  (4. Nf3 {[%chf-bkm][%chf-eev +0.10]}  Nxe4 
+{[%chf-eev +0.19]}  5. d3 {[%chf-eev -0.02]}  Nf6 {[%chf-eev -0.07]}  6. d4 
+{[%chf-eev -0.14]}  d5 {[%chf-eev -0.06]}  7. Bd3 {[%chf-eev -0.10]}  Bd6 
+{[%chf-eev +0.09]}  8. O-O {[%chf-bkm][%chf-eev -0.06]}  (8. Bg5 {[%chf-bkm]}  
+h6 9. Bh4 Bg4 $17) 8... O-O {[%chf-eev +0.10]}  9. c3 {[%chf-eev -0.18]}  Ne4 
+{[%chf-eev +0.17]}  10. c4 {[%chf-eev -0.20]}  Nb4 {[%chf-eev -0.17]}  11. Be2 
+{[%chf-eev -0.25]}  Bf5 $6 {[%chf-eev +1.49]}  (11... dxc4 $11) 12. a3 
+{[%chf-eev +0.21]}  Nc6 {[%chf-eev +0.55]}  13. Nc3 $6 {[%chf-eev -0.30]}  (13. 
+cxd5 Ne7 14. Bc4 Ng6 $14) 13... dxc4 {[%chf-eev -0.25]}  14. Bxc4 {[%chf-eev 
+-0.28]}  h6 $11 {[%chf-eev -0.14]Hou  Yifan - Daniil Dubov} ) 4... dxc6 
+{[%chf-eev +2.47]}  5. d3 {[%chf-bkm][%chf-eev +1.89]}  (5. e5 {[%chf-bkm]}  Ne4 
+6. d4 (6. d3 Bc5 7. Be3 Bxe3 8. fxe3 Qh4+)  (6. Nc3 Qh4 7. g3 $2 (7. Qf3 Nc5) 
+7... Nxc3 8. gxh4 Nxd1 $11) 6... Qh4 7. g3 (7. Be3 f6) 7... Nxg3)  (5. Nc3 
+{[%chf-bkm]}  Bc5 6. Be2 (6. Bc4 Ng4 7. O-O Qh4) 6... Qd4 7. O-O Nxe4) 5... Bc5 
+{[%chf-eev +2.21]}  6. Be2 {[%chf-eev +2.10]}  (6. Bg5 Nxe4 7. Be3 (7. dxe4 
+Bxf2+) 7... Bxe3 8. fxe3 Qh4+ 9. g3 Nxg3) 6... h5 {[%chf-eev +2.95]}  7. c3 
+{[%chf-eev +2.57]}  (7. O-O Ng4 8. Bf4 Nxf2 $17) 7... Ng4 {[%chf-eev +2.89]}  8. 
+d4 {[%chf-eev +2.56]}  Qh4 {[%chf-eev +3.83]}  9. g3 {[%chf-eev +3.84]}  Qf6 
+{[%chf-eev +3.85]}  10. Bf3 {[%chf-eev +3.46]}  (10. f3 h4 11. Rg1 hxg3 12. hxg3 
+Rh2 13. dxc5 Be6 14. Qd4 Bc4 15. Bxc4 (15. Qxc4 Ne5 16. Qd4 Rxe2+ 17. Kxe2 Qxf3+ 
+18. Ke1 Nd3+ $15) 15... Ne5 16. Nd2 Rxd2 17. Qxe5+ Qxe5 18. Bxd2 Qxc5 19. Rh1 
+O-O-O 20. Bf1 a5 21. Rh7 b5 22. Rxg7 a4 23. Rxf7 a3 24. b3 Qh5 25. Rf6 Qh2 26. 
+Bf4 Qb2 27. Rc1 Rh8 28. Rf7 Rh2 29. Rxc7+ Kd8 30. Rd1+ Ke8 31. Rc8+ Kf7 32. Bd2 
+Qxa2 $11) 10... Bd7 {[%chf-eev +4.36]}  11. dxc5 {[%chf-eev +2.86]}  O-O-O 
+{[%chf-eev +3.87]}  12. Qe2 $4 {[%chf-eev -2.46]}  (12. Be3 $18) 12... Ne5 
+{[%chf-eev -2.05]}  13. Bf4 {[%chf-eev -5.39]}  Nxf3+ {[%chf-eev -4.78]}  *

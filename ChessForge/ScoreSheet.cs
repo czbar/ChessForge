@@ -189,7 +189,7 @@ namespace ChessForge
         /// <returns></returns>
         public TreeNode GetNodeFromId(int nodeId)
         {
-            return NodeList.First(x => x.NodeId == nodeId);
+            return NodeList.FirstOrDefault(x => x.NodeId == nodeId);
         }
 
         /// <summary>

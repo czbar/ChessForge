@@ -465,7 +465,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Shows a GUI element allow the user 
+        /// Shows a GUI element allowing the user 
         /// to select the piece to promote to.
         /// </summary>
         /// <param name="normTarget">Normalized propmotion square coordinates
@@ -1114,7 +1114,7 @@ namespace ChessForge
                 if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE
                     && AppStateManager.IsDirty || (Workbook != null && Workbook.HasTrainingMoves()))
                 {
-                    WorkbookManager.PromptAndSaveWorkbook(false);
+                    WorkbookManager.PromptAndSaveWorkbook(false, true);
                 }
             }
             Timers.StopAll(false);
@@ -1367,6 +1367,9 @@ namespace ChessForge
             LearningMode.CurrentMode = LearningMode.Mode.MANUAL_REVIEW;
             EngineGame.CurrentState = EngineGame.GameState.IDLE;
             Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+
+            AppStateManager.MainWin.Workbook.BuildLines();
+            RebuildWorkbookView();
 
             AppStateManager.SetupGuiForCurrentStates();
 
@@ -1882,6 +1885,10 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Stops and restarts the engine.
+        /// </summary>
+        /// <returns></returns>
         public bool ReloadEngine()
         {
             EngineMessageProcessor.StopEngineService();
@@ -1962,13 +1969,12 @@ namespace ChessForge
 
             if (dlg.ExitOK)
             {
-                Configuration.EngineExePath = dlg.EnginePath;
-                Configuration.MoveSpeed = (int)(dlg.ReplaySpeed * 1000.0);
-                Configuration.EngineMoveTime = (int)(dlg.EngineTimePerMoveInGame * 1000.0);
-                Configuration.EngineEvaluationTime = (int)(dlg.EngineTimePerMoveInEvaluation * 1000.0);
+                if (dlg.ChangedEnginePath)
                 Configuration.WriteOutConfiguration();
-
-                ReloadEngine();
+                if (dlg.ChangedEnginePath)
+                {
+                    ReloadEngine();
+                }
             }
         }
 

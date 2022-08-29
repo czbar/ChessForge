@@ -242,6 +242,7 @@ namespace ChessForge
         public static void RestartInIdleMode(bool updateCommentBox = true)
         {
             BookmarkManager.ClearBookmarksGui();
+            IsDirty = false;
             _mainWin.ActiveLine.Clear();
             _mainWin.UiRtbWorkbookView.Document.Blocks.Clear();
             _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();

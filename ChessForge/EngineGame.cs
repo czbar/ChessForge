@@ -145,11 +145,8 @@ namespace ChessForge
                     // this is a game during Training triggered by the user making a move not in Workbook.
                     // We know, therefore, that this is a new move.
                     nd.IsNewTrainingMove = true;
-                    if (!endOfGame)
-                    {
-                        nd.NodeId = _mainWin.Workbook.GetNewNodeId();
-                        _mainWin.UiTrainingView.UserMoveMade();
-                    }
+                    nd.NodeId = _mainWin.Workbook.GetNewNodeId();
+                    _mainWin.UiTrainingView.UserMoveMade();
                 }
                 if (endOfGame)
                 {

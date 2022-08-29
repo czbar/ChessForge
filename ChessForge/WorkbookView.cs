@@ -255,11 +255,11 @@ namespace ChessForge
                 if (nd.NodeId != 0)
                 {
 
-                    if (_dictNodeToRun.ContainsKey(nd.NodeId) || Configuration.DebugMode != 0)
+                    if (_dictNodeToRun.ContainsKey(nd.NodeId))
                     {
                         _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
                     }
-                    else
+                    else if (Configuration.DebugMode != 0)
                     {  //we should always have this key, so show deubug message if not
                         DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-brushRegularBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
                     }
@@ -276,11 +276,11 @@ namespace ChessForge
                     if (nd.NodeId != 0)
                     {
                         //we should always have this key, so allow crash in the debug mode
-                        if (_dictNodeToRun.ContainsKey(nd.NodeId) || Configuration.DebugMode != 0)
+                        if (_dictNodeToRun.ContainsKey(nd.NodeId))
                         {
                             _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
                         }
-                        else
+                        else if (Configuration.DebugMode != 0)
                         {  //we should always have this key, so show deubug message if not
                             DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-_brushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
                         }

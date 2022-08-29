@@ -331,7 +331,12 @@ namespace ChessForge
                 }
                 else
                 {
+                    // nd has en passant processed already
+                    byte enPassant = nd.Position.EnPassantSquare;
+                    byte inheritedEnPassant = nd.Position.InheritedEnPassantSquare;
                     nd = sib;
+                    nd.Position.EnPassantSquare = enPassant;
+                    nd.Position.InheritedEnPassantSquare = inheritedEnPassant;
                 }
                 return true;
             }

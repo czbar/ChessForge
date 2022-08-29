@@ -109,9 +109,12 @@ namespace EngineService
         /// </summary>
         public void StopEngine()
         {
+            MessagePollTimer.Enabled = false;
+
             if (engineProcess != null && !engineProcess.HasExited)
             {
                 strmReader.Close();
+                strmReader = null;
                 strmWriter.Close();
                 engineProcess.Close();
             }
@@ -183,6 +186,9 @@ namespace EngineService
         {
             lock (EngineLock)
             {
+                if (strmReader == null)
+                    return;
+
                 try
                 {
                     string message;

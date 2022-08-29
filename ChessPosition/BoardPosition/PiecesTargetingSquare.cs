@@ -73,6 +73,13 @@ namespace ChessPosition
             this.AttackCheckOnly = attackCheckOnly;
 
             this.TargetSquare = Position.Board[XposTarget, YposTarget];
+
+            // check if the target square is occupied by a piece of attacker color, if so return
+            if (IsAttackerPiece(TargetSquare))
+            {
+                return;
+            }
+
             IsInheritedEnPassantSquare = position.InheritedEnPassantSquare == (byte)(XposTarget << 4 | YposTarget);
 
             FindMoversAttackers();

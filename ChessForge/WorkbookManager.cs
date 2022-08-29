@@ -265,7 +265,7 @@ namespace ChessForge
         /// </summary>
         /// <returns> Returns true if the user chooses yes or no,
         /// returns false if the user cancels. </returns>
-        public static bool PromptAndSaveWorkbook(bool userRequest)
+        public static bool PromptAndSaveWorkbook(bool userRequest, bool isAppClosing = false)
         {
             bool saved = false;
             MessageBoxResult res = MessageBoxResult.None;
@@ -302,7 +302,8 @@ namespace ChessForge
                     if (AppStateManager.IsDirty)
                     {
                         // this was prompted by an action other than File->Save so ask...
-                        res = MessageBox.Show("Save the Workbook?", "Workbook not saved", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                        MessageBoxButton mbb = isAppClosing ? MessageBoxButton.YesNo : MessageBoxButton.YesNoCancel;
+                        res = MessageBox.Show("Save the Workbook?", "Workbook not saved", mbb, MessageBoxImage.Question);
                         if (res == MessageBoxResult.Yes)
                         {
                             AppStateManager.SaveWorkbookFile();

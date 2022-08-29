@@ -40,8 +40,8 @@
             <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680">
                 <Canvas.ContextMenu>
                     <ContextMenu  x:Name="UiMnMainBoard">
-                        <MenuItem x:Name="UiMnciStartTraining"  Header="Start Training from a Bookmark" Click="MenuItem_StartTraining"/>
                         <MenuItem x:Name="UiMnciStartTrainingHere"  Header="Start Training from Here" Click="UiMnciStartTrainingHere_Click" />
+                        <MenuItem x:Name="UiMnciStartTraining"  Header="Start Training from a Bookmark" Click="MenuItem_StartTraining"/>
                         <MenuItem x:Name="UiMnciRestartTraining"  Header="Restart Training" Click="UiMnTrainRestartTraining_Click"/>
                         <MenuItem x:Name="UiMnciExitTraining" Header="Exit Training" Click="MenuItem_StopTraining"/>
                         <Separator x:Name="UiMncMainBoardSepar_1" />
@@ -159,6 +159,8 @@
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookGrid_PreviewMouseDown">
                     <Grid.ContextMenu>
                         <ContextMenu x:Name="UiCmnWorkbookRightClick">
+                            <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnciStartTrainingHere_Click" />
+                            <Separator />
                             <MenuItem x:Name="UiMnPromoteLine" Header="Promote Line" Click="UiMnPromoteLine_Click" />
                             <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnDeleteMovesFromHere_Click" />
                             <Separator />
