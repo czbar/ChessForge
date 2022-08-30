@@ -19,7 +19,7 @@ namespace EngineService
         private static bool _isDebugMode = false;
 
         // file to save the log file to
-        private static string _outputFile = "";
+        private static string _outputPath = "";
 
         /// <summary>
         /// Sets the debug mode and path to save the log to.
@@ -28,7 +28,7 @@ namespace EngineService
         public static void SetDebugMode(string appPath)
         {
             _isDebugMode = true;
-            _outputFile = Path.Combine(appPath, "engine.txt");
+            _outputPath = appPath;
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace EngineService
         /// <summary>
         /// Dumps all loogged messages to a file
         /// </summary>
-        public static void Dump()
+        public static void Dump(string logFileDistinct)
         {
             if (!_isDebugMode)
             {
@@ -61,12 +61,21 @@ namespace EngineService
 
             try
             {
+                if (logFileDistinct != null)
+                {
+                    _outputPath = Path.Combine(_outputPath, "enginelog" + logFileDistinct);
+                }
+                else 
+                {
+                    _outputPath = Path.Combine(_outputPath, "enginelog.txt");
+                }
+
                 StringBuilder sb = new StringBuilder();
                 foreach (string s in Log)
                 {
                     sb.Append(s + Environment.NewLine);
                 }
-                File.WriteAllText(_outputFile, sb.ToString());
+                File.WriteAllText(_outputPath, sb.ToString());
             }
             catch { };
         }

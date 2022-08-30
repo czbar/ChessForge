@@ -42,7 +42,7 @@ namespace ChessForge
         /// <summary>
         /// Writes the logged messages out to a file.
         /// </summary>
-        public static void Dump()
+        public static void Dump(string logFileDistnct)
         {
             StringBuilder sb = new StringBuilder();
             foreach (string s in Log)
@@ -51,9 +51,18 @@ namespace ChessForge
             }
             try
             {
+                string filePath = App.AppPath;
+                if (logFileDistnct != null)
+                {
+                    filePath = Path.Combine(filePath, "applog" + logFileDistnct);
+                }
+                else
+                {
+                    filePath = Path.Combine(filePath, "applog.txt");
+                }
+
                 // this may fail if we try to write to the system folder e.g. because the app was invoked via menu association.
-                string fileName = Path.Combine(App.AppPath, "log.txt");
-                File.WriteAllText(fileName, sb.ToString());
+                File.WriteAllText(filePath, sb.ToString());
             }
             catch { };
         }

@@ -1118,8 +1118,20 @@ namespace ChessForge
                 }
             }
             Timers.StopAll(false);
-            AppLog.Dump();
-            EngineLog.Dump();
+
+            string logFileName = null;
+            if (Configuration.DebugMode > 0)
+            {
+                string logFileDistinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".txt";
+                if (MessageBox.Show("Save logs with unique names ([name_]" + logFileDistinct + ") ?", "DEBUG",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    logFileName = logFileDistinct;
+                }
+            }
+
+            AppLog.Dump(logFileName);
+            EngineLog.Dump(logFileName);
             Configuration.WriteOutConfiguration();
         }
 
