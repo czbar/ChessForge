@@ -12,7 +12,7 @@
     - CaroKann.chf
     - Stockfish_15_x64_avx2.exe  
     
-    into __SourceForgeComplete.zip__.  
+    into __SourceForgeFull.zip__.  
  4. Zip the above, __excluding__ Stockfish_15_x64_avx2.exe, into __SourceForge.zip__.
  5. Create a new tag and a new release on GitHub.
  6. Include the above 2 zip files and remove other files added there by github.
