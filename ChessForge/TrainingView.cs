@@ -293,6 +293,7 @@ namespace ChessForge
                     if (_mainWin.Workbook.GetNodeFromNodeId(parent.NodeId) == null)
                     {
                         // we are "out of the book" in our training so there is nothing to report
+                        DebugUtils.ShowDebugMessage("ReportLastMoveVsWorkbook() : parent not found");
                         return;
                     }
 
