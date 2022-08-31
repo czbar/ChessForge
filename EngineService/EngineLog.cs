@@ -50,7 +50,7 @@ namespace EngineService
         }
 
         /// <summary>
-        /// Dumps all loogged messages to a file
+        /// Dumps all logged messages to a file
         /// </summary>
         public static void Dump(string logFileDistinct)
         {
