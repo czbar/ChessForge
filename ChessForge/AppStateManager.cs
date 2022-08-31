@@ -248,7 +248,7 @@ namespace ChessForge
             _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
             _mainWin.UiRtbTrainingBrowse.Document.Blocks.Clear();
 
-            _mainWin.Timers.StopAll(true);
+            _mainWin.Timers.StopAll();
             _mainWin.ResetEngineThinkingGUI();
             EngineGame.CurrentState = EngineGame.GameState.IDLE;
 
