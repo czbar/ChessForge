@@ -24,7 +24,6 @@ namespace ChessForge
             DUMMY,
             EVALUATION_LINE_DISPLAY,
             CHECK_FOR_USER_MOVE,
-            ENGINE_MESSAGE_POLL,
             ENGINE_EVALUATION_STOP,
             CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE,
             REQUEST_WORKBOOK_MOVE,
@@ -173,14 +172,7 @@ namespace ChessForge
         /// <param name="tt"></param>
         public void Start(TimerId tt)
         {
-            if (tt == TimerId.ENGINE_MESSAGE_POLL)
-            {
-                EngineMessageProcessor.ChessEngineService.StartMessagePollTimer();
-            }
-            else
-            {
-                _dictTimers[tt].Enabled = true;
-            }
+            _dictTimers[tt].Enabled = true;
             AppLog.Message("Start timer:" + tt.ToString());
         }
 
@@ -191,14 +183,7 @@ namespace ChessForge
         /// <param name="tt"></param>
         public void Stop(TimerId tt)
         {
-            if (tt == TimerId.ENGINE_MESSAGE_POLL)
-            {
-                EngineMessageProcessor.ChessEngineService.StopMessagePollTimer();
-            }
-            else
-            {
-                _dictTimers[tt].Enabled = false;
-            }
+            _dictTimers[tt].Enabled = false;
             AppLog.Message("Stop timer:" + tt.ToString());
         }
 
@@ -215,15 +200,9 @@ namespace ChessForge
         /// <summary>
         /// Called on application exit.
         /// Stops all timers.
-        /// Handles ENGINE_MESSAGE_POLL timer as a special case.
         /// </summary>
-        public void StopAll(bool excludeMessagePoll)
+        public void StopAll()
         {
-            if (!excludeMessagePoll)
-            {
-                EngineMessageProcessor.ChessEngineService.StopMessagePollTimer();
-            }
-
             foreach (var timer in _dictTimers.Values)
             {
                 timer.Stop();
@@ -299,7 +278,7 @@ namespace ChessForge
             _requestWorkbookMove.Interval = 300;
             _requestWorkbookMove.Enabled = false;
         }
-        
+
         private void InitShowTrainingProgressPopupMenu()
         {
             _showTrainingProgressPopupMenu.Elapsed += new ElapsedEventHandler(_mainWin.ShowTrainingProgressPopupMenu);

@@ -247,12 +247,12 @@ namespace ChessForge
                     {
                         AppStateManager.MainWin.AppendNodeToActiveLine(nd, false);
                         AppStateManager.MainWin.AddNewNodeToWorkbookView(nd);
-                        AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveLine.GetLineId(), nd.NodeId);
+                        AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveLine.GetLineId(), nd);
                     }
                     else
                     {
                         AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
-                        AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveLine.GetLineId(), nd.NodeId);
+                        AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveLine.GetLineId(), nd);
                     }
                 }
                 else
@@ -264,7 +264,7 @@ namespace ChessForge
                     //AppStateManager.MainWin.ActiveLine.Line.AddPlyAndMove(nd);
                     AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
                     AppStateManager.MainWin.RebuildWorkbookView();
-                    AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveLine.GetLineId(), nd.NodeId);
+                    AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveLine.GetLineId(), nd);
                 }
 
 

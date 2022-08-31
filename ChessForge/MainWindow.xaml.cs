@@ -344,11 +344,21 @@ namespace ChessForge
         /// The user pressed the mouse button over the board.
         /// If it is a left button it indicates the commencement of
         /// an intended move.
+        /// TODO: fix so this is only called when indded the click occured on the board.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
+
+            Point clickedPoint = e.GetPosition(UiImgMainChessboard);
+            SquareCoords sq = ClickedSquare(clickedPoint);
+
+            if (sq == null)
+            {
+                return;
+            }
+
             if (Evaluation.IsRunning)
             {
                 BoardCommentBox.ShowFlashAnnouncement("Engine evaluation in progress!");
@@ -357,9 +367,6 @@ namespace ChessForge
 
             if (e.ChangedButton == MouseButton.Left)
             {
-                Point clickedPoint = e.GetPosition(UiImgMainChessboard);
-                SquareCoords sq = ClickedSquare(clickedPoint);
-
                 if (sq != null)
                 {
                     SquareCoords sqNorm = new SquareCoords(sq);
@@ -983,7 +990,7 @@ namespace ChessForge
 
                 BookmarkManager.ShowBookmarks();
 
-                SelectLineAndMoveInWorkbookViews(startLineId, startingNode);
+                SelectLineAndMoveInWorkbookViews(startLineId, firstNode);
 
                 LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
             }
@@ -1012,7 +1019,7 @@ namespace ChessForge
         {
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
             string lineId = ActiveLine.GetLineId();
-            SelectLineAndMoveInWorkbookViews(lineId, nd.NodeId);
+            SelectLineAndMoveInWorkbookViews(lineId, nd);
         }
 
         /// <summary>
@@ -1026,10 +1033,14 @@ namespace ChessForge
             _workbookView.AddNewNode(nd);
         }
 
-        public void SelectLineAndMoveInWorkbookViews(string lineId, int nodeId)
+        public void SelectLineAndMoveInWorkbookViews(string lineId, TreeNode nd)
         {
-            _workbookView.SelectLineAndMove(lineId, nodeId);
-            _lvWorkbookTable_SelectLineAndMove(lineId, nodeId);
+            _workbookView.SelectLineAndMove(lineId, nd.NodeId);
+            _lvWorkbookTable_SelectLineAndMove(lineId, nd.NodeId);
+            if (Evaluation.CurrentMode == EvaluationState.EvaluationMode.SINGLE_MOVE)
+            {
+                EvaluateActiveLineSelectedPositionEx(nd);
+            }
         }
 
         private MessageBoxResult AskToGenerateBookmarks()
@@ -1117,9 +1128,21 @@ namespace ChessForge
                     WorkbookManager.PromptAndSaveWorkbook(false, true);
                 }
             }
-            Timers.StopAll(false);
-            AppLog.Dump();
-            EngineLog.Dump();
+            Timers.StopAll();
+
+            string logFileName = null;
+            if (Configuration.DebugMode > 0)
+            {
+                string logFileDistinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".txt";
+                if (MessageBox.Show("Save logs with unique names ([name_]" + logFileDistinct + ") ?", "DEBUG",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    logFileName = logFileDistinct;
+                }
+            }
+
+            AppLog.Dump(logFileName);
+            EngineLog.Dump(logFileName);
             Configuration.WriteOutConfiguration();
         }
 
@@ -1130,6 +1153,11 @@ namespace ChessForge
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MenuItem_EvaluatePosition(object sender, RoutedEventArgs e)
+        {
+            EvaluateActiveLineSelectedPosition();
+        }
+
+        private void EvaluateActiveLineSelectedPosition()
         {
             if (Evaluation.CurrentMode != EvaluationState.EvaluationMode.IDLE)
             {
@@ -1165,6 +1193,23 @@ namespace ChessForge
             }
         }
 
+        private void EvaluateActiveLineSelectedPositionEx(TreeNode nd)
+        {
+            if (nd == null)
+            {
+                nd = ActiveLine.GetSelectedTreeNode();
+            }
+
+            if (nd != null)
+            {
+//                EngineMessageProcessor.ResetSearch();
+
+                Evaluation.Position = nd.Position;
+                EngineMessageProcessor.RequestPositionEvaluation(nd, Configuration.EngineMpv, 0);
+            }
+        }
+
+
         private void MenuItem_EvaluateLine(object sender, RoutedEventArgs e)
         {
             // a defensive check
@@ -1190,7 +1235,7 @@ namespace ChessForge
             }
             else
             {
-                MessageBox.Show("Chess Engine is not avalable.", "Move Evaluation Failure", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Chess Engine is not available.", "Move Evaluation Failure", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -1570,7 +1615,7 @@ namespace ChessForge
                 AppStateManager.ResetEvaluationControls();
                 AppStateManager.ShowMoveEvaluationControls(false, false);
                 AppStateManager.SetupGuiForCurrentStates();
-                Timers.StopAll(true);
+                Timers.StopAll();
             }
 
             e.Handled = true;
@@ -1970,7 +2015,7 @@ namespace ChessForge
             if (dlg.ExitOK)
             {
                 if (dlg.ChangedEnginePath)
-                Configuration.WriteOutConfiguration();
+                    Configuration.WriteOutConfiguration();
                 if (dlg.ChangedEnginePath)
                 {
                     ReloadEngine();
@@ -2025,6 +2070,28 @@ namespace ChessForge
         private void UiMnExportPgn_Click(object sender, RoutedEventArgs e)
         {
             WorkbookManager.SaveWorkbookToPgn();
+        }
+
+        private void UiImgEngineOn_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Evaluation.SetCurrentMode(EvaluationState.EvaluationMode.IDLE);
+
+            EngineMessageProcessor.StopEngineEvaluation();
+
+            UiImgEngineOff.Visibility = Visibility.Visible;
+            UiImgEngineOn.Visibility = Visibility.Collapsed;
+        }
+
+        private void UiImgEngineOff_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+            {
+                AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.SINGLE_MOVE);
+                UiImgEngineOff.Visibility = Visibility.Collapsed;
+                UiImgEngineOn.Visibility = Visibility.Visible;
+                Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                EvaluateActiveLineSelectedPositionEx(null);
+            }
         }
     }
 }

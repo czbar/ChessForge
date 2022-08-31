@@ -744,7 +744,7 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Each invokation of this method builds a Line for 
+        /// Each invocation of this method builds a Line for 
         /// the flattened view of the Workbook.
         /// The method calls itself recursively to build
         /// the complete set of lines.

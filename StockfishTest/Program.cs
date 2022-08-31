@@ -31,13 +31,12 @@ namespace StockfishTest
             engine.EngineMessage += EngineMessage;
 
             StartStockfishEngine(engine);
-            engine.StartMessagePollTimer();
 
             AnalyzePosition("5rk1/2p1bppp/p1p1pn2/PQ6/3P4/6P1/NP2PP1P/2BR2K1 b k - 0 18");
 
             //EvaluatePgnGame();
 
-            EngineLog.Dump();
+            EngineLog.Dump(null);
 
             //Console.WriteLine(sbAllText.ToString());
 
@@ -269,7 +268,7 @@ namespace StockfishTest
 
         static public void SendMovesToEngine(string moves, short time)
         {
-            var command = UciCommands.ENG_POSITION + " " + moves;
+            var command = UciCommands.ENG_POSITION_STARTPOS + " " + moves;
             engine.SendCommand(command);
             command = UciCommands.ENG_GO_MOVE_TIME + " " + time.ToString();
             engine.SendCommand(command);

@@ -163,7 +163,6 @@ namespace ChessForge
         {
             CurrentState = GameState.USER_THINKING;
             _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-            _mainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
         }
 
         /// <summary>

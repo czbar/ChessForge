@@ -255,6 +255,8 @@
     <Resource Include="icon_blue.ico" />
     <Resource Include="Resources\Images\icon_blue.ico" />
     <Resource Include="Resources\Images\icon_green.ico" />
+    <Resource Include="Resources\Images\switch-off-64.png" />
+    <Resource Include="Resources\Images\switch-on-64.png" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
