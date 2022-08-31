@@ -7,6 +7,8 @@
         public const string ENG_ISREADY = "isready";
         public const string ENG_UCI_NEW_GAME = "ucinewgame";
         public const string ENG_POSITION = "position startpos moves";
+        public const string ENG_POSITION_STARTPOS = "position startpos moves";
+        public const string ENG_GO = "go";
         public const string ENG_GO_MOVE_TIME = "go movetime";
         public const string ENG_STOP = "stop";
 
