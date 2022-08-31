@@ -121,7 +121,6 @@ namespace ChessForge
                 ProcessEngineGameMoveEvent();
                 _mainWin.Evaluation.PrepareToContinue();
 
-                _mainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
                 _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                 _mainWin.ResetEvaluationProgressBar();
                 if (TrainingState.IsTrainingInProgress)
@@ -135,7 +134,6 @@ namespace ChessForge
                 // stop the timer, apply training mode specific handling 
                 // NOTE do not reset Evaluation.CurrentMode as this will be done 
                 // later down the chain
-                _mainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
                 _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                 _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                 _mainWin.ResetEvaluationProgressBar();
@@ -238,20 +236,17 @@ namespace ChessForge
             if (isMateCf)
             {
                 EngineGame.CurrentState = EngineGame.GameState.IDLE;
-                _mainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
                 _mainWin.BoardCommentBox.ReportCheckmate(false);
             }
             else if (isStalemate)
             {
                 EngineGame.CurrentState = EngineGame.GameState.IDLE;
-                _mainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
                 _mainWin.BoardCommentBox.ReportStalemate();
             }
             else
             {
                 EngineGame.CurrentState = EngineGame.GameState.USER_THINKING;
                 _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-                _mainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
             }
         }
 
@@ -277,14 +272,12 @@ namespace ChessForge
                 if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && _mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.LINE)
                 {
                     _mainWin.ActiveLine.SelectPly((int)nd.Parent.Position.MoveNumber, nd.Parent.Position.ColorToMove);
-                    _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveLine.GetLineId(), nd.NodeId);
+                    _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveLine.GetLineId(), nd);
                 }
             });
 
             AppStateManager.ShowMoveEvaluationControls(true);
             _mainWin.UpdateLastMoveTextBox(posIndex);
-
-            _mainWin.Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
 
             string fen = AppStateManager.PrepareMoveEvaluation(_mainWin.Evaluation.Position, true);
             RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
@@ -311,7 +304,6 @@ namespace ChessForge
             _mainWin.UpdateLastMoveTextBox(nd);
             AppStateManager.ShowMoveEvaluationControls(true, false);
 
-            _mainWin.Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
             string fen = AppStateManager.PrepareMoveEvaluation(_mainWin.Evaluation.Position, true);
             int moveTime = AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME ?
                 Configuration.EngineMoveTime : Configuration.EngineEvaluationTime;
@@ -346,24 +338,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Starts the timer controlling polling
-        /// for engine messages.
-        /// </summary>
-        public static void StartMessagePollTimer()
-        {
-            _mainWin.Timers.Start(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
-        }
-
-        /// <summary>
-        /// Stops the timer controlling polling
-        /// for engine messages.
-        /// </summary>
-        public static void StopMessagePollTimer()
-        {
-            _mainWin.Timers.Stop(AppTimers.TimerId.ENGINE_MESSAGE_POLL);
-        }
-
-        /// <summary>
         /// Sends a sequence of commands to the engine to request evaluation
         /// of the position.
         /// </summary>
@@ -372,13 +346,27 @@ namespace ChessForge
         /// <param name="movetime">Time to think per move (milliseconds)</param>
         public static void RequestEngineEvaluation(string fen, int mpv, int movetime)
         {
-            StartMessagePollTimer();
             SendCommand("setoption name multipv value " + mpv.ToString());
             SendCommand("position fen " + fen);
             SendCommand("go movetime " + movetime.ToString());
-            //SendCommand("go");
-            //_mainWin.Timers.SetInterval(AppTimers.TimerId.ENGINE_EVALUATION_STOP, Configuration.EngineEvaluationTime);
-            //_mainWin.Timers.Start(AppTimers.TimerId.ENGINE_EVALUATION_STOP);
+        }
+
+        public static void RequestPositionEvaluation(TreeNode nd, int mpv, int movetime)
+        {
+            string fen = FenParser.GenerateFenFromPosition(nd.Position);
+            SendCommand("setoption name multipv value " + mpv.ToString());
+            SendCommand("position fen " + fen);
+
+            if (movetime >= 0)
+            {
+                SendCommand("go movetime " + movetime.ToString());
+            }
+            else
+            {
+                SendCommand("go");
+            }
+            AppStateManager.ShowMoveEvaluationControls(true);
+
         }
 
         /// <summary>
@@ -416,7 +404,7 @@ namespace ChessForge
         {
             _pendingStop = false;
             _mainWin.Timers.Stop(AppTimers.TimerId.STOP_MESSAGE_POLL);
-            StopMessagePollTimer();
+            //StopMessagePollTimer();
         }
 
         /// <summary>
@@ -446,7 +434,7 @@ namespace ChessForge
                 if (_pendingStop)
                 {
                     _pendingStop = false;
-                    StopMessagePollTimer();
+                    //StopMessagePollTimer();
                 }
                 else
                 {
