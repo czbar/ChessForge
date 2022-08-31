@@ -356,7 +356,7 @@ namespace ChessForge
                     }
 
                     _mainWin.DisplayPosition(nd.Position);
-                    _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), nd.NodeId);
+                    _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), nd);
                 }
             }
             else
@@ -442,7 +442,7 @@ namespace ChessForge
                         {
                             _mainWin.DisplayPosition(nd.Position);
                         }
-                        _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), nd.NodeId);
+                        _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), nd);
                     }
                 }
                 e.Handled = true;

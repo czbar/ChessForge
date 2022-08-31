@@ -168,7 +168,7 @@ namespace ChessForge
             _workbook.PromoteLine(nd);
             _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
             BuildFlowDocumentForWorkbook();
-            _mainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd.NodeId);
+            _mainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd);
             AppStateManager.IsDirty = true;
         }
 
@@ -184,7 +184,7 @@ namespace ChessForge
             _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
             BookmarkManager.ResyncBookmarks(1);
             BuildFlowDocumentForWorkbook();
-            _mainWin.SelectLineAndMoveInWorkbookViews(parent.LineId, parent.NodeId);
+            _mainWin.SelectLineAndMoveInWorkbookViews(parent.LineId, parent);
             AppStateManager.IsDirty = true;
         }
 
