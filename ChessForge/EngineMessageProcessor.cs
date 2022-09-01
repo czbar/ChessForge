@@ -65,6 +65,7 @@ namespace ChessForge
 
             ChessEngineService = new EngineService.EngineProcess(debugMode, App.AppPath);
             ChessEngineService.EngineMessage += EngineMessageReceived;
+            ChessEngineService.Multipv = Configuration.EngineMpv;
         }
 
         /// <summary>
@@ -116,7 +117,7 @@ namespace ChessForge
         public static void MoveEvaluationFinished()
         {
             ClearMoveCandidates(false);
-            if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.ENGINE_GAME)
+            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
             {
                 ProcessEngineGameMoveEvent();
                 _mainWin.Evaluation.PrepareToContinue();
@@ -127,7 +128,7 @@ namespace ChessForge
                 {
                     _mainWin.EngineTrainingGameMoveMade();
                 }
-                AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.IDLE);
+                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.IDLE);
             }
             else if (TrainingState.IsTrainingInProgress)
             {
@@ -171,19 +172,25 @@ namespace ChessForge
                         AppStateManager.IsDirty = true;
                     }
 
-                    _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
-                    _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    if (_mainWin.Evaluation.CurrentMode != EvaluationManager.Mode.SINGLE_MOVE)
+                    {
+                        _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                        _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    }
 
                     // if the mode is not LINE or this is the last move in LINE
                     // evaluation we stop here
                     // otherwise we start the next move's evaluation
-                    if (_mainWin.Evaluation.CurrentMode != EvaluationState.EvaluationMode.LINE
+                    if (_mainWin.Evaluation.CurrentMode != EvaluationManager.Mode.LINE
                         || _mainWin.Evaluation.PositionIndex == _mainWin.ActiveLine.GetPlyCount() - 1)
                     {
-                        _mainWin.Evaluation.Reset();
+                        if (_mainWin.Evaluation.CurrentMode != EvaluationManager.Mode.SINGLE_MOVE)
+                        {
+                            _mainWin.Evaluation.Reset();
 
-                        AppStateManager.ResetEvaluationControls();
-                        AppStateManager.ShowMoveEvaluationControls(false, true);
+                            AppStateManager.ResetEvaluationControls();
+                            AppStateManager.ShowMoveEvaluationControls(false, true);
+                        }
                     }
                     else
                     {
@@ -258,9 +265,9 @@ namespace ChessForge
         public static void RequestMoveEvaluation(int posIndex)
         {
             _mainWin.Evaluation.PositionIndex = posIndex;
-            if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.IDLE)
+            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.IDLE)
             {
-                AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.SINGLE_MOVE);
+                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.SINGLE_MOVE);
             }
 
             TreeNode nd = _mainWin.ActiveLine.GetNodeAtIndex(posIndex);
@@ -269,7 +276,7 @@ namespace ChessForge
 
             _mainWin.Dispatcher.Invoke(() =>
             {
-                if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && _mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.LINE)
+                if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && _mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE)
                 {
                     _mainWin.ActiveLine.SelectPly((int)nd.Parent.Position.MoveNumber, nd.Parent.Position.ColorToMove);
                     _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveLine.GetLineId(), nd);
@@ -317,7 +324,7 @@ namespace ChessForge
         /// <param name="position"></param>
         public static void RequestEngineMove(BoardPosition position)
         {
-            AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.ENGINE_GAME);
+            AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.ENGINE_GAME);
 
             string fen = AppStateManager.PrepareMoveEvaluation(position, false);
             RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineMoveTime);
@@ -346,27 +353,29 @@ namespace ChessForge
         /// <param name="movetime">Time to think per move (milliseconds)</param>
         public static void RequestEngineEvaluation(string fen, int mpv, int movetime)
         {
-            SendCommand("setoption name multipv value " + mpv.ToString());
+//            SendCommand("setoption name multipv value " + mpv.ToString());
             SendCommand("position fen " + fen);
             SendCommand("go movetime " + movetime.ToString());
         }
 
         public static void RequestPositionEvaluation(TreeNode nd, int mpv, int movetime)
         {
+            _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+            _mainWin.Evaluation.Position = nd.Position;
+
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
-            SendCommand("setoption name multipv value " + mpv.ToString());
             SendCommand("position fen " + fen);
 
-            if (movetime >= 0)
+            if (movetime > 0)
             {
-                SendCommand("go movetime " + movetime.ToString());
+                SendCommand(UciCommands.ENG_GO_MOVE_TIME + " " + movetime.ToString());
             }
             else
             {
-                SendCommand("go");
+                SendCommand(UciCommands.ENG_GO_INFINITE);
             }
             AppStateManager.ShowMoveEvaluationControls(true);
-
+            _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
         }
 
         /// <summary>
@@ -408,6 +417,9 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// This function is subscribed to EngineMessageReceived
+        /// in Engine Service's EngineMessage.
+        /// 
         /// Processes a response from the engine.
         /// We will be interested in messages of these forms:
         /// 1. ongoing evaluation update e.g.: 
@@ -424,7 +436,6 @@ namespace ChessForge
             if (message == null)
                 return;
 
-            //AppLog.Message("Rx Msg: " + message);
             if (message.StartsWith("info"))
             {
                 ProcessInfoMessage(message);
@@ -564,8 +575,13 @@ namespace ChessForge
 
         /// <summary>
         /// Processes the 2 tokens following the "score" token.
-        /// We will only process it if the value of the first token is "cp" or "mate".
+        /// We will only process it if the value of the first token is "cp" (centipawn evaluation)
+        /// or "mate" (a variation ending in checkmate).
         /// </summary>
+        /// <param name="firstToken"></param>
+        /// <param name="secondToken"></param>
+        /// <param name="score"></param>
+        /// <param name="movesToMate"></param>
         private static void ProcessScoreTokens(string firstToken, string secondToken, out int? score, out int? movesToMate)
         {
             score = null;
