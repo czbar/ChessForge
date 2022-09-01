@@ -28,8 +28,9 @@ namespace EngineService
         /// After receiving a "stop" command, the engine enters the STOPPING state
         /// during which it will not accept any commands. It will await a 
         /// "best move" command to then go back to IDLE.
-        /// If the "best move" is not received within 1 second, the engine will enter
-        /// UNEXPECTED state and won't be accepting any commands.
+        /// If the "best move" is not received within 500 milliseconds, the engine will enter
+        /// IDLE state too, assuming that the bestmove message is not coming and 
+        /// the engine is ready to receive commands.
         /// It is up to the client to check for this state and restart the engine
         /// if appropariate.
         /// </summary>
@@ -38,8 +39,7 @@ namespace EngineService
             NOT_READY,
             IDLE,
             CALCULATING,
-            STOPPING,
-            UNEXPECTED
+            STOPPING
         }
 
         /// <summary>
@@ -58,11 +58,17 @@ namespace EngineService
         /// </summary>
         public bool IsEngineReady = false;
 
+        /// <summary>
+        /// The number of alternative lines to analyze
+        /// </summary>
+        public int Multipv { get => _multipv; set => _multipv = value; }
+
         // Message polling interval in milliseconds
         private static readonly int POLL_INTERVAL = 50;
 
-        // A number of polls in the STOPPING state after which we decide that the engine state is unhealthy
-        private static readonly int MAX_POLL_COUNT_IN_STOPPING = (int)(1000 / POLL_INTERVAL);
+        // A number of polls in the STOPPING state after which we decide that the engine will not send "bestmove". 
+        // We allow 500 ms which is rather generous.
+        private static readonly int MAX_POLL_COUNT_IN_STOPPING = (int)(500 / POLL_INTERVAL);
 
         // A lock object to use when reading engine messages
         private static object _lockEngineMessage = new object();
@@ -105,6 +111,9 @@ namespace EngineService
 
         // a "go" command queued while in STOPPING mode
         private string _queuedGoCommand;
+
+        // number of lines to analyze
+        private int _multipv = 5;
 
         /// <summary>
         /// Creates the Engine Service object.
@@ -204,7 +213,7 @@ namespace EngineService
             {
                 if (_strmWriter != null && command != UciCommands.ENG_UCI)
                 {
-                    EngineLog.Message("Cmd: " + command);
+                    EngineLog.Message("Command requested: " + command + " : State=" + _currentState.ToString());
                     bool accept = false;
                     switch (_currentState)
                     {
@@ -220,7 +229,7 @@ namespace EngineService
                                 // we may have a queued "position" command
                                 if (!string.IsNullOrWhiteSpace(_queuedPositionCommand))
                                 {
-                                    _strmWriter.WriteLine(command);
+                                    WriteOutCommand(_queuedPositionCommand);
                                     _queuedPositionCommand = null;
                                 }
                                 _queuedGoCommand = null;
@@ -233,18 +242,18 @@ namespace EngineService
                                 accept = true;
                                 _currentState = State.STOPPING;
                             }
+                            else if (IsPartEvaluationRequest(command))
+                            {
+                                // new request came in so queue it and stop the previous one
+                                _currentState = State.STOPPING;
+                                _strmWriter.WriteLine(UciCommands.ENG_STOP);
+                                WriteOutCommand(UciCommands.ENG_STOP);
+                                QueueCommand(command);
+                            }
                             break;
                         case State.STOPPING:
                             // queue the command to send once we are back in IDLE mode.
-                            // we only allow one (latest) position and go command and 
-                            if (command.StartsWith(UciCommands.ENG_GO))
-                            {
-                                _queuedGoCommand = command;
-                            }
-                            else if (command.StartsWith(UciCommands.ENG_POSITION))
-                            {
-                                _queuedPositionCommand = command;
-                            }
+                            QueueCommand(command);
                             break;
                     }
 
@@ -252,12 +261,76 @@ namespace EngineService
                     {
                         // we are sending a command so enable message polling, if not enabled
                         StartMessagePollTimer();
-                        _strmWriter.WriteLine(command);
+                        WriteOutCommand(command);
                     }
                     else
                     {
-                        EngineLog.Message("Command rejected! : State=" + _currentState.ToString());
+                        EngineLog.Message("Command rejected: " + command + " : State=" + _currentState.ToString());
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Writes out the command requested from SendCommand().
+        /// If this is a "position" command, send the mpv command first.
+        /// </summary>
+        /// <param name="command"></param>
+        private void WriteOutCommand(string command)
+        {
+            if (!string.IsNullOrWhiteSpace(command))
+            {
+                if (command.StartsWith(UciCommands.ENG_POSITION))
+                {
+                    string optCmd = UciCommands.ENG_SET_MULTIPV + " " + _multipv.ToString();
+                    WriteOut(optCmd);
+                }
+                WriteOut(command);
+            }
+        }
+
+        /// <summary>
+        /// Writes directly to the engine.
+        /// </summary>
+        /// <param name="command"></param>
+        private void WriteOut(string command)
+        {
+            _strmWriter.WriteLine(command);
+            EngineLog.Message("Command sent: " + command + " : State=" + _currentState.ToString());
+        }
+
+        /// <summary>
+        /// Checks if the command is one the commands forming an evaluation 
+        /// requets i.e. a "go" or a "position" command.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        private bool IsPartEvaluationRequest(string command)
+        {
+            return command != null && (command.StartsWith(UciCommands.ENG_POSITION) || command.StartsWith(UciCommands.ENG_GO));
+        }
+
+        /// <summary>
+        /// If the command could not be sent, we may have chosen to
+        /// queue it and send once we get into IDLE state.  
+        /// Only "position" and "go" commands can be queued.
+        /// There can only be at most one "position" and one "go" command. 
+        /// The newly received command of a given type overwrites the previous one.
+        /// </summary>
+        /// <param name="command"></param>
+        private void QueueCommand(string command)
+        {
+            if (!string.IsNullOrWhiteSpace(command))
+            {
+                if (command.StartsWith(UciCommands.ENG_POSITION))
+                {
+                    _queuedPositionCommand = command;
+                    EngineLog.Message("Queued command: " + command);
+                }
+                else if (command.StartsWith(UciCommands.ENG_GO))
+                {
+                    _queuedGoCommand = command;
+                    EngineLog.Message("Queued command: " + command);
                 }
             }
         }
@@ -292,6 +365,7 @@ namespace EngineService
         /// Called periodically in response to MessagePollTimer's elapse event
         /// to check on messages from the engine.
         /// Invokes the message handler to process the info.
+        /// The message handler is EngineMessageProcessor.EngineMessageReceived(string)
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
@@ -307,7 +381,10 @@ namespace EngineService
                     _pollCountInStopping++;
                     if (_pollCountInStopping >= MAX_POLL_COUNT_IN_STOPPING)
                     {
-                        _currentState = State.UNEXPECTED;
+                        // we have not received "bestmove" message in a reasonable time,
+                        // assume the engine is available but log the problem.
+                        EngineLog.Message("ERROR: wait for bestmove timed out");
+                        HandleBestMove();
                     }
                 }
                 else
@@ -331,7 +408,7 @@ namespace EngineService
                             {
                                 if (message.StartsWith(UciCommands.ENG_BEST_MOVE))
                                 {
-                                    HandleBestMove(message);
+                                    HandleBestMove();
                                 }
                                 EngineMessage?.Invoke(message);
                             }
@@ -348,7 +425,7 @@ namespace EngineService
                 }
                 catch (Exception ex)
                 {
-                    EngineLog.Message("ReadEngineMessages():" + ex.Message);
+                    EngineLog.Message("ERROR: ReadEngineMessages():" + ex.Message);
                     throw new Exception("ReadEngineMessages():" + ex.Message);
                 };
             }
@@ -365,10 +442,11 @@ namespace EngineService
         }
 
         /// <summary>
-        /// Handles the "bestmove" message
+        /// Receiving the "bestmove" message (or timing out waiting for it)
+        /// completes the evaluation process.
+        /// We change state to IDLE and send the queued commands, if any.
         /// </summary>
-        /// <param name="message"></param>
-        private void HandleBestMove(string message)
+        private void HandleBestMove()
         {
             lock (_lockStateChange)
             {
