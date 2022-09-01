@@ -573,7 +573,7 @@ namespace ChessForge
         {
             Run runEvaluated;
             TreeNode nodeEvaluated;
-            if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.LINE)
+            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE)
             {
                 runEvaluated = _mainWin.Evaluation.GetCurrentEvaluatedRun();
                 nodeEvaluated = _mainWin.Evaluation.GetCurrentEvaluatedNode();
@@ -587,7 +587,7 @@ namespace ChessForge
             if (runEvaluated == null)
             {
                 // this should never happen but...
-                AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.IDLE);
+                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.IDLE);
                 return;
             }
 
@@ -615,13 +615,13 @@ namespace ChessForge
                 _mainWin.UiVbFloatingChessboard.Margin = new Thickness(_lastClickedPoint.X, _lastClickedPoint.Y - 165, 0, 0);
                 _mainWin.ShowFloatingChessboard(true);
 
-                if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.LINE)
+                if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE)
                 {
                     RequestMoveEvaluation();
                 }
                 else
                 {
-                    AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.IDLE);
+                    AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.IDLE);
                 }
             });
 
@@ -1022,13 +1022,13 @@ namespace ChessForge
         /// </summary>
         public void RequestMoveEvaluation()
         {
-            if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.LINE)
+            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE)
             {
                 TreeNode nd = _mainWin.Evaluation.GetNextNodeToEvaluate();
                 if (nd == null)
                 {
                     _mainWin.Evaluation.ClearRunsToEvaluate();
-                    AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.IDLE);
+                    AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.IDLE);
                 }
                 else
                 {
@@ -1037,7 +1037,7 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.SINGLE_MOVE);
+                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.SINGLE_MOVE);
                 EngineMessageProcessor.RequestMoveEvaluationInTraining(_lastClickedNode);
             }
         }
@@ -1064,13 +1064,13 @@ namespace ChessForge
                 {
                     // collect the Main Line's Runs to evaluate the moves
                     SetMainLineRunsToEvaluate(paraName, _lastClickedRun);
-                    AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.LINE);
+                    AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.LINE);
                     RequestMoveEvaluation();
                 }
                 else if (paraName.StartsWith(_par_game_moves_))
                 {
                     SetGameRunsToEvaluate(parentPara, _lastClickedRun);
-                    AppStateManager.SetCurrentEvaluationMode(EvaluationState.EvaluationMode.LINE);
+                    AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.LINE);
                     RequestMoveEvaluation();
                 }
             }
@@ -1173,8 +1173,8 @@ namespace ChessForge
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
             // don't accept any clicks if evaluation is in progress
-            if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.SINGLE_MOVE
-                || _mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.LINE)
+            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.SINGLE_MOVE
+                || _mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE)
             {
                 return;
             }

@@ -23,7 +23,7 @@ namespace ChessForge
         private ProgressBar _pbEngineEval;
 
         // reference to EvaluationState object.
-        private EvaluationState _evalState;
+        private EvaluationManager _evalState;
 
         /// <summary>
         /// Evaluation lines obtained from the engine.
@@ -39,7 +39,7 @@ namespace ChessForge
         /// <param name="textBox"></param>
         /// <param name="progBar"></param>
         /// <param name="evalState"></param>
-        public EngineLinesBox(MainWindow mainWin, TextBox textBox, ProgressBar progBar, EvaluationState evalState)
+        public EngineLinesBox(MainWindow mainWin, TextBox textBox, ProgressBar progBar, EvaluationManager evalState)
         {
             _mainWin = mainWin;
 
@@ -67,7 +67,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void ShowEngineLines(object source, ElapsedEventArgs e)
         {
-            if (_evalState.CurrentMode != EvaluationState.EvaluationMode.ENGINE_GAME)
+            if (_evalState.CurrentMode != EvaluationManager.Mode.ENGINE_GAME)
             {
                 Lines.Clear();
                 lock (EngineMessageProcessor.MoveCandidatesLock)

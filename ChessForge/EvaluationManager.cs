@@ -9,7 +9,7 @@ using GameTree;
 
 namespace ChessForge
 {
-    public class EvaluationState
+    public class EvaluationManager
     {
         /// <summary>
         /// There can only be no or one evaluation happening
@@ -20,37 +20,42 @@ namespace ChessForge
         /// or if it is happening during the practice game against
         /// the user.
         /// </summary>
-        public enum EvaluationMode
+        public enum Mode
         {
+            // No evaluation currently in progress
             IDLE,
+            // DEPRECATED: a single move evaluation on request
             SINGLE_MOVE,
+            // Evaluation of all moves in the Active Line is in progress, move by move automatically
             LINE,
+            // Continuous (infinite) evaluation for the currently selected move in the Active Lines
+            CONTINUOUS,
+            // Working out engine's response during a game against the engine
             ENGINE_GAME,
         };
 
-        /// <summary>
-        /// The list of Runs to evaluate when we are evaluating a line
-        /// in the Training mode.
-        /// </summary>
+        // Current evaluation mode
+        private Mode _currentMode = Mode.IDLE;
+
+        // Position being evaluated
+        private BoardPosition _position;
+
+        // Index of the position being evaluated in the ActiveLine
+        private int _positionIndex;
+
+        // Text value of the evaluation
+        private string _positionEvaluation = "";
+
+        // The list of Runs to evaluate when we are evaluating a line
+        // in the Training mode.
         private List<Run> _runsToEvaluate = new List<Run>();
 
-        /// <summary>
-        /// The lists of Nodes corresponding to the Runs in _runsToEvaluate
-        /// </summary>
+        // The lists of Nodes corresponding to the Runs in _runsToEvaluate
         private List<TreeNode> _nodesToEvaluate = new List<TreeNode>();
 
-        /// <summary>
-        /// Current index of the run to evaluate.
-        /// If the evaluation has noit started yet it is set to -1.
-        /// </summary>
+        // Current index of the run to evaluate.
+        // If the evaluation has noit started yet it is set to -1.
         private int _runToEvaluateIndex = -1;
-
-        private MainWindow _mainWin;
-
-        public EvaluationState(MainWindow mainWin)
-        {
-            _mainWin = mainWin;
-        }
 
         /// <summary>
         /// Adds a Run to the list of _runsToEvaluate.
@@ -61,7 +66,7 @@ namespace ChessForge
         public void AddRunToEvaluate(Run r)
         {
             int nodeId = GuiUtilities.GetNodeIdFromPrefixedString(r.Name);
-            TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
+            TreeNode nd = AppStateManager.Workbook.GetNodeFromNodeId(nodeId);
             
             _nodesToEvaluate.Add(nd);
             _runsToEvaluate.Add(r);
@@ -117,7 +122,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Clears tje list of Nodes and Runs.
+        /// Clears the list of Nodes and Runs.
         /// Resets the evaluation index.
         /// </summary>
         public void ClearRunsToEvaluate()
@@ -140,12 +145,12 @@ namespace ChessForge
         {
             lock (EvaluationLock)
             {
-                _currentMode = EvaluationMode.IDLE;
+                _currentMode = Mode.IDLE;
                 Position = null;
                 PositionEvaluation = "";
                 PositionIndex = 0;
 
-                _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
             }
             AppStateManager.ShowEvaluationProgressControlsForCurrentStates();
         }
@@ -156,22 +161,16 @@ namespace ChessForge
         /// </summary>
         public void PrepareToContinue()
         {
-            _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+            AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
         }
-
-        private EvaluationMode _currentMode = EvaluationMode.IDLE;
 
         /// <summary>
         /// The current evaluation mode.
         /// </summary>
-        public EvaluationMode CurrentMode
+        public Mode CurrentMode
         {
             get { return _currentMode; }
-        }
-
-        public void SetCurrentMode(EvaluationMode mode)
-        {
-            _currentMode = mode;
+            set {_currentMode = value; }
         }
 
         /// <summary>
@@ -184,7 +183,7 @@ namespace ChessForge
             {
                 lock (EvaluationLock)
                 {
-                    return CurrentMode != EvaluationMode.IDLE;
+                    return CurrentMode != Mode.IDLE;
                 }
             }
         }
@@ -233,7 +232,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The centipawn score evaluated for the position.
+        /// Accessor for the position evaluation text value.
         /// </summary>
         public string PositionEvaluation
         {
@@ -253,8 +252,5 @@ namespace ChessForge
             }
         }
 
-        private BoardPosition _position;
-        private int _positionIndex;
-        private string _positionEvaluation = "";
     }
 }

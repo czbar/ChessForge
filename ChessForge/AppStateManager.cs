@@ -182,6 +182,11 @@ namespace ChessForge
         public static MainWindow MainWin { get => _mainWin; set => _mainWin = value; }
 
         /// <summary>
+        /// A convenience reference to the Workbook.
+        /// </summary>
+        public static WorkbookTree Workbook { get { return _mainWin.Workbook; } }
+
+        /// <summary>
         /// Current Learning Mode
         /// </summary>
         public static LearningMode.Mode CurrentLearningMode
@@ -193,7 +198,7 @@ namespace ChessForge
         /// <summary>
         /// Current Evaluation State
         /// </summary>
-        public static EvaluationState.EvaluationMode CurrentEvaluationMode
+        public static EvaluationManager.Mode CurrentEvaluationMode
         {
             get { return MainWin.Evaluation.CurrentMode; }
         }
@@ -204,9 +209,9 @@ namespace ChessForge
         /// and Game State.
         /// </summary>
         /// <param name="mode"></param>
-        public static void SetCurrentEvaluationMode(EvaluationState.EvaluationMode mode)
+        public static void SetCurrentEvaluationMode(EvaluationManager.Mode mode)
         {
-            MainWin.Evaluation.SetCurrentMode(mode);
+            MainWin.Evaluation.CurrentMode = mode;
             ShowEvaluationProgressControlsForCurrentStates();
         }
 
@@ -783,7 +788,7 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                if (visible && CurrentEvaluationMode != EvaluationState.EvaluationMode.ENGINE_GAME)
+                if (visible && CurrentEvaluationMode != EvaluationManager.Mode.ENGINE_GAME)
                 {
                     _mainWin.UiRtbBoardComment.Visibility = Visibility.Hidden;
                     _mainWin.UiTbEngineLines.Visibility = Visibility.Visible;
