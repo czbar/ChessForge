@@ -195,7 +195,7 @@ namespace ChessForge
 
                         CreateRecentFilesMenuItems();
                         Timers.Stop(AppTimers.TimerId.APP_START);
-                        bool engineStarted = EngineMessageProcessor.Start();
+                        bool engineStarted = EngineMessageProcessor.StartEngineService();
                         Timers.Start(AppTimers.TimerId.APP_START);
                         if (!engineStarted)
                         {
@@ -1036,7 +1036,7 @@ namespace ChessForge
         {
             _workbookView.SelectLineAndMove(lineId, nd.NodeId);
             _lvWorkbookTable_SelectLineAndMove(lineId, nd.NodeId);
-            if (Evaluation.CurrentMode == EvaluationManager.Mode.SINGLE_MOVE)
+            if (Evaluation.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
             {
                 EvaluateActiveLineSelectedPositionEx(nd);
             }
@@ -1176,12 +1176,12 @@ namespace ChessForge
                 // the position we want to show is the next element
                 int posIndex = moveIndex + 1;
                 // check that the engine is available
-                if (EngineMessageProcessor.IsEngineAvailable())
+                if (EngineMessageProcessor.IsEngineAvailable)
                 {
                     // make an extra defensive check
                     if (posIndex < ActiveLine.GetPlyCount())
                     {
-                        AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.SINGLE_MOVE);
+                        AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.CONTINUOUS);
                         EngineMessageProcessor.RequestMoveEvaluation(posIndex);
                     }
                 }
@@ -1224,7 +1224,7 @@ namespace ChessForge
 
             Evaluation.PositionIndex = 1;
             // we will start with the first move of the active line
-            if (EngineMessageProcessor.IsEngineAvailable())
+            if (EngineMessageProcessor.IsEngineAvailable)
             {
                 AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.LINE);
                 UiDgActiveLine.SelectedCells.Clear();
@@ -1936,7 +1936,7 @@ namespace ChessForge
             EngineMessageProcessor.StopEngineService();
             EngineMessageProcessor.CreateEngineService(this, _isDebugMode);
 
-            bool engineStarted = EngineMessageProcessor.Start();
+            bool engineStarted = EngineMessageProcessor.StartEngineService();
             if (!engineStarted)
             {
                 MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -2083,7 +2083,7 @@ namespace ChessForge
         {
             if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
             {
-                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.SINGLE_MOVE);
+                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.CONTINUOUS);
                 UiImgEngineOff.Visibility = Visibility.Collapsed;
                 UiImgEngineOn.Visibility = Visibility.Visible;
                 Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
