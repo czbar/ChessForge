@@ -25,7 +25,7 @@ namespace ChessForge
             // No evaluation currently in progress
             IDLE,
             // DEPRECATED: a single move evaluation on request
-            SINGLE_MOVE,
+//            SINGLE_MOVE,
             // Evaluation of all moves in the Active Line is in progress, move by move automatically
             LINE,
             // Continuous (infinite) evaluation for the currently selected move in the Active Lines
