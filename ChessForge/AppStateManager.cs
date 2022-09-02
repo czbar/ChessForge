@@ -598,32 +598,53 @@ namespace ChessForge
                 {
                     if (eval)
                     {
-                        _mainWin.UiMnciEvalLine.IsEnabled = false;
-                        _mainWin.UiMnciEvalPos.IsEnabled = false;
-
-                        _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
-                        _mainWin.UiImgStop.Visibility = Visibility.Visible;
-
-                        if (game)
+                        if (MainWin.Evaluation.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
                         {
-                            _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
-                            _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
-                            _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Visible;
+                            _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;
+                            _mainWin.UiImgEngineOff.Visibility = Visibility.Collapsed;
+
+                            _mainWin.UiMnciEvalLine.IsEnabled = true;
+                            _mainWin.UiMnciEvalPos.IsEnabled = false;
+
+                            _mainWin.UiPbEngineThinking.Visibility = Visibility.Collapsed;
+
+                            _mainWin.UiLblEvaluating.Visibility = Visibility.Collapsed;
+                            _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Collapsed;
+                            _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Collapsed;
                         }
                         else
                         {
-                            _mainWin.UiLblEvaluating.Visibility = Visibility.Visible;
-                            _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Visible;
-                            _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
+                            _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;
+                            _mainWin.UiImgEngineOff.Visibility = Visibility.Collapsed;
+
+                            _mainWin.UiMnciEvalLine.IsEnabled = false;
+                            _mainWin.UiMnciEvalPos.IsEnabled = false;
+
+                            _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
+
+                            if (game)
+                            {
+                                _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
+                                _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
+                                _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Visible;
+                            }
+                            else
+                            {
+                                _mainWin.UiLblEvaluating.Visibility = Visibility.Visible;
+                                _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Visible;
+                                _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
+                            }
                         }
                     }
                     else
                     {
+                        _mainWin.UiImgEngineOn.Visibility = Visibility.Collapsed;
+                        _mainWin.UiImgEngineOff.Visibility = Visibility.Visible;
+
                         _mainWin.UiMnciEvalLine.IsEnabled = true;
                         _mainWin.UiMnciEvalPos.IsEnabled = true;
 
                         _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
-                        _mainWin.UiImgStop.Visibility = Visibility.Hidden;
                         _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
                         _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
                         _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
@@ -752,6 +773,19 @@ namespace ChessForge
         /// <param name="position"></param>
         public static string PrepareMoveEvaluation(BoardPosition position, bool monitorLines)
         {
+            string fen = FenParser.GenerateFenFromPosition(position);
+            return PrepareMoveEvaluation(fen, monitorLines);
+        }
+
+        /// <summary>
+        /// Preparations for move evaluation that are common for Position/Line 
+        /// evaluation as well as requesting engine move in a game.
+        /// </summary>
+        /// <param name="fen"></param>
+        /// <param name="monitorLines"></param>
+        /// <returns></returns>
+        public static string PrepareMoveEvaluation(string fen, bool monitorLines)
+        {
             PrepareEvaluationControls();
 
             // do not remove/stop EVALUATION_LINE_DISPLAY timer as it is responsible
@@ -759,7 +793,7 @@ namespace ChessForge
             _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
             _mainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
 
-            return FenParser.GenerateFenFromPosition(position);
+            return fen;
         }
 
         /// <summary>
