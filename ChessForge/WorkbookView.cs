@@ -168,7 +168,7 @@ namespace ChessForge
             _workbook.PromoteLine(nd);
             _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
             BuildFlowDocumentForWorkbook();
-            _mainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, nd);
+            _mainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex());
             AppStateManager.IsDirty = true;
         }
 
@@ -184,7 +184,7 @@ namespace ChessForge
             _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
             BookmarkManager.ResyncBookmarks(1);
             BuildFlowDocumentForWorkbook();
-            _mainWin.SelectLineAndMoveInWorkbookViews(parent.LineId, parent);
+            _mainWin.SelectLineAndMoveInWorkbookViews(parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex());
             AppStateManager.IsDirty = true;
         }
 
@@ -732,6 +732,12 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
+            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE)
+            {
+                _mainWin.StopEvaluation();
+                AppStateManager.SwapCommentBoxForEngineLines(false);
+            }
+
             if (_selectedRun != null)
             {
                 _selectedRun.Background = _selectedRunBkg;
