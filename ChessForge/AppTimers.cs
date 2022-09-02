@@ -28,7 +28,6 @@ namespace ChessForge
             CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE,
             REQUEST_WORKBOOK_MOVE,
             SHOW_TRAINING_PROGRESS_POPUP_MENU,
-            STOP_MESSAGE_POLL,
             FLASH_ANNOUNCEMENT,
             APP_START,
         };
@@ -76,14 +75,6 @@ namespace ChessForge
         /// closes itself immediately when invoked "normally".
         /// </summary>
         private Timer _showTrainingProgressPopupMenu;
-
-        /// <summary>
-        /// Used to check if engine has any messages coming after
-        /// a stop command was issued.
-        /// We do not want to stop polling for engine messages
-        /// prematurely.
-        /// </summary>
-        private Timer _stopMessagePollTimer;
 
         /// <summary>
         /// Controls the time, a "flash announcement" is
@@ -156,10 +147,6 @@ namespace ChessForge
             _appStartTimer = new Timer();
             InitAppStartTimer();
             _dictTimers.Add(TimerId.APP_START, _appStartTimer);
-
-            _stopMessagePollTimer = new Timer();
-            InitStopMessagePoll();
-            _dictTimers.Add(TimerId.STOP_MESSAGE_POLL, _stopMessagePollTimer);
 
             _evaluationProgressStopwatch = new Stopwatch();
             _dictStopwatches.Add(StopwatchId.EVALUATION_ELAPSED_TIME, _evaluationProgressStopwatch);
@@ -284,13 +271,6 @@ namespace ChessForge
             _showTrainingProgressPopupMenu.Elapsed += new ElapsedEventHandler(_mainWin.ShowTrainingProgressPopupMenu);
             _showTrainingProgressPopupMenu.Interval = 100;
             _showTrainingProgressPopupMenu.Enabled = false;
-        }
-
-        private void InitStopMessagePoll()
-        {
-            _stopMessagePollTimer.Elapsed += new ElapsedEventHandler(EngineMessageProcessor.MessageQueueTimeout);
-            _stopMessagePollTimer.Interval = 200;
-            _stopMessagePollTimer.Enabled = false;
         }
 
         private void InitFlashAnnouncementTimer()
