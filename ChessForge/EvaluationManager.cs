@@ -146,22 +146,13 @@ namespace ChessForge
             lock (EvaluationLock)
             {
                 _currentMode = Mode.IDLE;
-                Position = null;
-                PositionEvaluation = "";
-                PositionIndex = 0;
+                _position = null;
+                _positionEvaluation = "";
+                _positionIndex = 0;
 
                 AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
             }
             AppStateManager.ShowEvaluationProgressControlsForCurrentStates();
-        }
-
-        /// <summary>
-        /// This will be called when in LINE evaluation or GAME mode
-        /// The progress bar timer must be reset. 
-        /// </summary>
-        public void PrepareToContinue()
-        {
-            AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
         }
 
         /// <summary>
@@ -200,13 +191,6 @@ namespace ChessForge
                     return _position;
                 }
             }
-            set
-            {
-                lock (EvaluationLock)
-                {
-                    _position = value;
-                }
-            }
         }
 
         /// <summary>
@@ -227,6 +211,10 @@ namespace ChessForge
                 lock (EvaluationLock)
                 {
                     _positionIndex = value;
+                    if (_positionIndex >= 0)
+                    {
+                        _position = AppStateManager.MainWin.ActiveLine.GetNodeAtIndex(_positionIndex).Position;
+                    }
                 }
             }
         }
