@@ -20,8 +20,8 @@ namespace ChessForge
         /// <summary>
         /// The list of TreeNodes for the currently selected line
         /// (a line is a single list, not a tree).
-        /// The number of nodes equals the number of plies (half moves)
-        /// plus 1, because we store the starting position at index 0.
+        /// The number of nodes equals the number of plies (half moves) plus 1, 
+        /// because we store the starting position BEFORE first move at index 0.
         /// </summary>
         public ObservableCollection<TreeNode> NodeList = new ObservableCollection<TreeNode>();
 
@@ -30,6 +30,7 @@ namespace ChessForge
         /// white and black moves.
         /// If the line finishes on a white move, the value of BlackPly 
         /// will be null in the last object.
+        /// Move number 1 is stored at index 0.
         /// </summary>
         public ObservableCollection<MoveWithEval> MoveList = new ObservableCollection<MoveWithEval>();
 
