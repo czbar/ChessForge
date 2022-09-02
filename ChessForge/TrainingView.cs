@@ -1037,7 +1037,7 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.SINGLE_MOVE);
+                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.CONTINUOUS);
                 EngineMessageProcessor.RequestMoveEvaluationInTraining(_lastClickedNode);
             }
         }
@@ -1173,7 +1173,7 @@ namespace ChessForge
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
             // don't accept any clicks if evaluation is in progress
-            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.SINGLE_MOVE
+            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.CONTINUOUS
                 || _mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE)
             {
                 return;

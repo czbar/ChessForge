@@ -195,7 +195,7 @@ namespace ChessForge
 
                         CreateRecentFilesMenuItems();
                         Timers.Stop(AppTimers.TimerId.APP_START);
-                        bool engineStarted = EngineMessageProcessor.Start();
+                        bool engineStarted = EngineMessageProcessor.StartEngineService();
                         Timers.Start(AppTimers.TimerId.APP_START);
                         if (!engineStarted)
                         {
@@ -989,7 +989,7 @@ namespace ChessForge
 
                 BookmarkManager.ShowBookmarks();
 
-                SelectLineAndMoveInWorkbookViews(startLineId, firstNode);
+                SelectLineAndMoveInWorkbookViews(startLineId, ActiveLine.GetSelectedPlyNodeIndex());
 
                 LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
             }
@@ -1018,7 +1018,7 @@ namespace ChessForge
         {
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
             string lineId = ActiveLine.GetLineId();
-            SelectLineAndMoveInWorkbookViews(lineId, nd);
+            SelectLineAndMoveInWorkbookViews(lineId, ActiveLine.GetSelectedPlyNodeIndex());
         }
 
         /// <summary>
@@ -1032,13 +1032,14 @@ namespace ChessForge
             _workbookView.AddNewNode(nd);
         }
 
-        public void SelectLineAndMoveInWorkbookViews(string lineId, TreeNode nd)
+        public void SelectLineAndMoveInWorkbookViews(string lineId, int index)
         {
+            TreeNode nd = ActiveLine.GetNodeAtIndex(index);
             _workbookView.SelectLineAndMove(lineId, nd.NodeId);
             _lvWorkbookTable_SelectLineAndMove(lineId, nd.NodeId);
-            if (Evaluation.CurrentMode == EvaluationManager.Mode.SINGLE_MOVE)
+            if (Evaluation.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
             {
-                EvaluateActiveLineSelectedPositionEx(nd);
+                EvaluateActiveLineSelectedPositionEx();
             }
         }
 
@@ -1085,6 +1086,10 @@ namespace ChessForge
                 {
                     MainChessBoard.DisplayPosition(nd.Position);
                 }
+                if (Evaluation.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                {
+                    EvaluateActiveLineSelectedPositionEx();
+                }
             }
         }
 
@@ -1115,6 +1120,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void ChessForgeMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            StopEvaluation();
             if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN)
             {
                 WorkbookManager.PromptUserToConvertPGNToCHF();
@@ -1153,7 +1159,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MenuItem_EvaluatePosition(object sender, RoutedEventArgs e)
         {
-            EvaluateActiveLineSelectedPosition();
+            AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.CONTINUOUS);
+            EvaluateActiveLineSelectedPositionEx();
         }
 
         private void EvaluateActiveLineSelectedPosition()
@@ -1173,15 +1180,14 @@ namespace ChessForge
             }
             else
             {
-                // the position we want to show is the next element
-                int posIndex = moveIndex + 1;
+                int posIndex = moveIndex;
                 // check that the engine is available
-                if (EngineMessageProcessor.IsEngineAvailable())
+                if (EngineMessageProcessor.IsEngineAvailable)
                 {
                     // make an extra defensive check
                     if (posIndex < ActiveLine.GetPlyCount())
                     {
-                        AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.SINGLE_MOVE);
+                        AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.CONTINUOUS);
                         EngineMessageProcessor.RequestMoveEvaluation(posIndex);
                     }
                 }
@@ -1192,18 +1198,10 @@ namespace ChessForge
             }
         }
 
-        private void EvaluateActiveLineSelectedPositionEx(TreeNode nd)
+        private void EvaluateActiveLineSelectedPositionEx()
         {
-            if (nd == null)
-            {
-                nd = ActiveLine.GetSelectedTreeNode();
-            }
-
-            if (nd != null)
-            {
-                // stop the timer to prevent showing garbage after position is set but engine has not received our commands yet
-                EngineMessageProcessor.RequestPositionEvaluation(nd, Configuration.EngineMpv, 0);
-            }
+            // stop the timer to prevent showing garbage after position is set but engine has not received our commands yet
+            EngineMessageProcessor.RequestPositionEvaluation(ActiveLine.GetSelectedPlyNodeIndex(), Configuration.EngineMpv, 0);
         }
 
 
@@ -1217,14 +1215,14 @@ namespace ChessForge
 
             if (Evaluation.CurrentMode != EvaluationManager.Mode.IDLE)
             {
-                // there is an evaluation running right now so do not allow another one.
-                MessageBox.Show("Cannot start an evaluation while another one in progress.", "Move Evaluation", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
+                StopEvaluation();
             }
 
-            Evaluation.PositionIndex = 1;
+            int idx = ActiveLine.GetSelectedPlyNodeIndex();
+            Evaluation.PositionIndex = idx > 0 ? idx : 1;
+
             // we will start with the first move of the active line
-            if (EngineMessageProcessor.IsEngineAvailable())
+            if (EngineMessageProcessor.IsEngineAvailable)
             {
                 AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.LINE);
                 UiDgActiveLine.SelectedCells.Clear();
@@ -1316,7 +1314,7 @@ namespace ChessForge
             }
             else
             {
-                int posIndex = moveIndex + 1;
+                int posIndex = moveIndex;
                 TreeNode nd = ActiveLine.GetNodeAtIndex(posIndex);
                 BookmarkManager.AddBookmark(nd);
                 UiTabBookmarks.Focus();
@@ -1595,27 +1593,6 @@ namespace ChessForge
                 AppStateManager.SwapCommentBoxForEngineLines(false);
                 BoardCommentBox.RestoreTitleMessage();
             }
-        }
-
-        /// <summary>
-        /// Stops evaluation in response to the user clicking
-        /// the stop button.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgStop_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            EngineMessageProcessor.StopEngineEvaluation();
-            lock (LearningMode.EvalLock)
-            {
-                Evaluation.Reset();
-                AppStateManager.ResetEvaluationControls();
-                AppStateManager.ShowMoveEvaluationControls(false, false);
-                AppStateManager.SetupGuiForCurrentStates();
-                Timers.StopAll();
-            }
-
-            e.Handled = true;
         }
 
         /// <summary>
@@ -1936,7 +1913,7 @@ namespace ChessForge
             EngineMessageProcessor.StopEngineService();
             EngineMessageProcessor.CreateEngineService(this, _isDebugMode);
 
-            bool engineStarted = EngineMessageProcessor.Start();
+            bool engineStarted = EngineMessageProcessor.StartEngineService();
             if (!engineStarted)
             {
                 MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -2071,24 +2048,43 @@ namespace ChessForge
 
         private void UiImgEngineOn_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Evaluation.CurrentMode = EvaluationManager.Mode.IDLE;
-
             EngineMessageProcessor.StopEngineEvaluation();
 
             UiImgEngineOff.Visibility = Visibility.Visible;
             UiImgEngineOn.Visibility = Visibility.Collapsed;
+
+            StopEvaluation();
+
+            e.Handled = true;
+        }
+
+        public void StopEvaluation()
+        {
+            EngineMessageProcessor.StopEngineEvaluation();
+
+            // TODO: investigate why having a lock here leads to what appears to be a deadlock
+            //            lock (LearningMode.EvalLock)
+            {
+                Evaluation.Reset();
+                AppStateManager.ResetEvaluationControls();
+                AppStateManager.ShowMoveEvaluationControls(false, true);
+                AppStateManager.SetupGuiForCurrentStates();
+                Timers.StopAll();
+            }
         }
 
         private void UiImgEngineOff_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
             {
-                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.SINGLE_MOVE);
+                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.CONTINUOUS);
                 UiImgEngineOff.Visibility = Visibility.Collapsed;
                 UiImgEngineOn.Visibility = Visibility.Visible;
                 Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
-                EvaluateActiveLineSelectedPositionEx(null);
+                EvaluateActiveLineSelectedPositionEx();
             }
+
+            e.Handled = true;
         }
     }
 }

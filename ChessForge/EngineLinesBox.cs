@@ -135,9 +135,17 @@ namespace ChessForge
                         sMoveNo = "";
                     }
 
-                    return (lineNo + 1).ToString() + ". (" + eval + "): "
-                        + sMoveNo
-                        + BuildMoveSequence(line.Line);
+                    string moveSeq = BuildMoveSequence(line.Line);
+                    if (moveSeq.Length == 0)
+                    {
+                        return "";
+                    }
+                    else
+                    {
+                        return (lineNo + 1).ToString() + ". (" + eval + "): "
+                            + sMoveNo
+                            + BuildMoveSequence(line.Line);
+                    }
                 }
             }
             catch

@@ -84,6 +84,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets evaluation string on the node and move objects
+        /// </summary>
+        /// <param name="moveIndex"></param>
+        /// <param name="color"></param>
+        /// <param name="eval"></param>
+        public void SetEvaluation(int moveIndex, PieceColor color, string eval)
+        {
+            if (color == PieceColor.White)
+            {
+                GetMoveAtIndex(moveIndex).WhiteEval = eval;
+            }
+            else
+            {
+                GetMoveAtIndex(moveIndex).BlackEval = eval;
+            }
+            GetNodeForMove(moveIndex, color).EngineEvaluation = eval;
+            AppStateManager.IsDirty = true;
+        }
+
+        /// <summary>
         /// Binds a new line to this object and DataGrid control.
         /// </summary>
         /// <param name="line"></param>
@@ -165,7 +185,7 @@ namespace ChessForge
         public int GetSelectedPlyNodeIndex()
         {
             GetSelectedRowColumn(out int row, out int column);
-            return GetPlyNodeIndexFromRowColumn(row, column);
+            return GetNodeIndexFromRowColumn(row, column);
         }
 
         /// <summary>
@@ -336,11 +356,11 @@ namespace ChessForge
 
             if (IsSelectableCell(row, column))
             {
-                int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
+                int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
 
-                if (moveIndex + 1 < Line.GetPlyCount())
+                if (moveIndex < Line.GetPlyCount())
                 {
-                    TreeNode nd = Line.GetNodeAtIndex(moveIndex + 1);
+                    TreeNode nd = Line.GetNodeAtIndex(moveIndex);
 
                     if (_mainWin.ActiveLineReplay.IsReplayActive)
                     {
@@ -355,8 +375,13 @@ namespace ChessForge
                         //gameReplay.Stop();
                     }
 
+                    if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE)
+                    {
+                        _mainWin.StopEvaluation();
+                    }
+
                     _mainWin.DisplayPosition(nd.Position);
-                    _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), nd);
+                    _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), moveIndex);
                 }
             }
             else
@@ -389,7 +414,7 @@ namespace ChessForge
                 int selColumn = -1;
                 int selRow = -1;
 
-                int moveIndex;
+                int plyIndex;
 
                 switch (e.Key)
                 {
@@ -402,8 +427,8 @@ namespace ChessForge
                         selRow = column == _dgActiveLineWhitePlyColumn ? row : row + 1;
                         // if we went beyond the last move (because it is White's and Black cell is empty.)
                         // switch back to the White column
-                        moveIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1);
-                        if (moveIndex + 1 >= Line.GetPlyCount())
+                        plyIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
+                        if (plyIndex >= Line.GetPlyCount())
                         {
                             selColumn = _dgActiveLineWhitePlyColumn;
                         }
@@ -425,8 +450,8 @@ namespace ChessForge
                     _dgActiveLine.SelectedCells.Clear();
                     _dgActiveLine.SelectedCells.Add(cell);
 
-                    moveIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1);
-                    TreeNode nd = Line.GetNodeAtIndex(moveIndex + 1);
+                    plyIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
+                    TreeNode nd = Line.GetNodeAtIndex(plyIndex);
 
                     if (nd != null)
                     {
@@ -442,28 +467,11 @@ namespace ChessForge
                         {
                             _mainWin.DisplayPosition(nd.Position);
                         }
-                        _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), nd);
+                        _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), plyIndex);
                     }
                 }
                 e.Handled = true;
             }
-        }
-
-        /// <summary>
-        /// TODO: we do not need both this and the next functions. Rationalize here.
-        /// Returns the index of the Node for the ply
-        /// at a given row and column. 
-        /// </summary>
-        /// <param name="row"></param>
-        /// <param name="column"></param>
-        /// <returns></returns>
-        private int GetPlyNodeIndexFromRowColumn(int row, int column)
-        {
-            if (row < 0 || column < 0)
-                return -1;
-
-            int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
-            return moveIndex;
         }
 
         /// <summary>

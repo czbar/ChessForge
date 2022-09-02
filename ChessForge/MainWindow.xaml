@@ -474,7 +474,6 @@
         </RichTextBox>
         <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
         <ProgressBar x:Name="UiPbEngineThinking" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="6" Margin="10,13,0,0" Grid.Row="2" VerticalAlignment="Top" Width="160"/>
-        <Image x:Name="UiImgStop" Cursor="Hand" Grid.Column="1" Grid.Row="2" Margin="65,71,0,0" Source="Resources/Images/Stop.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="48" Height="48" RenderTransformOrigin="-1.186,-0.149" PreviewMouseLeftButtonDown="UiImgStop_PreviewMouseLeftButtonDown" />
         <Image x:Name="UiImgEngineOn" Cursor="Hand" Grid.Column="1" Grid.Row="2" Margin="65,40,0,0" Source="Resources/Images/switch-on-64.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="64" Height="64" Visibility="Collapsed" PreviewMouseLeftButtonDown="UiImgEngineOn_PreviewMouseLeftButtonDown" />
         <Image x:Name="UiImgEngineOff" Cursor="Hand" Grid.Column="1" Grid.Row="2" Margin="65,40,0,0" Source="Resources/Images/switch-off-64.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="64" Height="64" Visibility="Visible" PreviewMouseLeftButtonDown="UiImgEngineOff_PreviewMouseLeftButtonDown" />
         <Label x:Name="UiLblEvaluating" Grid.Column="1" Content="Evaluating: " HorizontalAlignment="Left" Margin="25,31,0,0" Grid.Row="2" VerticalAlignment="Top"/>

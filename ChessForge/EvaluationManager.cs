@@ -25,7 +25,7 @@ namespace ChessForge
             // No evaluation currently in progress
             IDLE,
             // DEPRECATED: a single move evaluation on request
-            SINGLE_MOVE,
+//            SINGLE_MOVE,
             // Evaluation of all moves in the Active Line is in progress, move by move automatically
             LINE,
             // Continuous (infinite) evaluation for the currently selected move in the Active Lines
@@ -146,22 +146,13 @@ namespace ChessForge
             lock (EvaluationLock)
             {
                 _currentMode = Mode.IDLE;
-                Position = null;
-                PositionEvaluation = "";
-                PositionIndex = 0;
+                _position = null;
+                _positionEvaluation = "";
+                _positionIndex = 0;
 
                 AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
             }
             AppStateManager.ShowEvaluationProgressControlsForCurrentStates();
-        }
-
-        /// <summary>
-        /// This will be called when in LINE evaluation or GAME mode
-        /// The progress bar timer must be reset. 
-        /// </summary>
-        public void PrepareToContinue()
-        {
-            AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
         }
 
         /// <summary>
@@ -200,13 +191,6 @@ namespace ChessForge
                     return _position;
                 }
             }
-            set
-            {
-                lock (EvaluationLock)
-                {
-                    _position = value;
-                }
-            }
         }
 
         /// <summary>
@@ -227,6 +211,10 @@ namespace ChessForge
                 lock (EvaluationLock)
                 {
                     _positionIndex = value;
+                    if (_positionIndex >= 0)
+                    {
+                        _position = AppStateManager.MainWin.ActiveLine.GetNodeAtIndex(_positionIndex).Position;
+                    }
                 }
             }
         }
