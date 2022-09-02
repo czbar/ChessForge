@@ -28,18 +28,18 @@ namespace EngineService
         /// After receiving a "stop" command, the engine enters the STOPPING state
         /// during which it will not accept any commands. It will await a 
         /// "best move" command to then go back to IDLE.
-        /// If the "best move" is not received within 500 milliseconds, the engine will enter
-        /// IDLE state too, assuming that the bestmove message is not coming and 
-        /// the engine is ready to receive commands.
+        /// If the "best move" is not received within 5000 milliseconds, the engine will enter
+        /// UNEXPECTED state and will require a restart.
         /// It is up to the client to check for this state and restart the engine
-        /// if appropariate.
+        /// if appropriate.
         /// </summary>
         public enum State
         {
             NOT_READY,
             IDLE,
             CALCULATING,
-            STOPPING
+            STOPPING,
+            UNEXPECTED
         }
 
         /// <summary>
@@ -67,8 +67,8 @@ namespace EngineService
         private static readonly int POLL_INTERVAL = 50;
 
         // A number of polls in the STOPPING state after which we decide that the engine will not send "bestmove". 
-        // We allow 500 ms which is rather generous.
-        private static readonly int MAX_POLL_COUNT_IN_STOPPING = (int)(500 / POLL_INTERVAL);
+        // We allow 5000 ms which is rather generous.
+        private static readonly int MAX_POLL_COUNT_IN_STOPPING = (int)(5000 / POLL_INTERVAL);
 
         // A lock object to use when reading engine messages
         private static object _lockEngineMessage = new object();
@@ -384,7 +384,7 @@ namespace EngineService
                         // we have not received "bestmove" message in a reasonable time,
                         // assume the engine is available but log the problem.
                         EngineLog.Message("ERROR: wait for bestmove timed out");
-                        HandleBestMove();
+                        _currentState = State.UNEXPECTED;
                     }
                 }
                 else
