@@ -175,16 +175,20 @@ namespace ChessForge
         /// </summary>
         public static FileType WorkbookFileType { get => _workbookFileType; }
 
-
         /// <summary>
         /// Main application window
         /// </summary>
         public static MainWindow MainWin { get => _mainWin; set => _mainWin = value; }
 
         /// <summary>
+        /// Reference to the ActiveLine object
+        /// </summary>
+        public static ActiveLineManager ActiveLine { get => MainWin.ActiveLine; }
+
+        /// <summary>
         /// A convenience reference to the Workbook.
         /// </summary>
-        public static WorkbookTree Workbook { get { return _mainWin.Workbook; } }
+        public static WorkbookTree Workbook { get => _mainWin.Workbook; }
 
         /// <summary>
         /// Current Learning Mode
