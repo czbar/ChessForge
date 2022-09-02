@@ -84,6 +84,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets evaluation string on the node and move objects
+        /// </summary>
+        /// <param name="moveIndex"></param>
+        /// <param name="color"></param>
+        /// <param name="eval"></param>
+        public void SetEvaluation(int moveIndex, PieceColor color, string eval)
+        {
+            GetMoveAtIndex(moveIndex).WhiteEval = eval;
+            GetNodeForMove(moveIndex, color).EngineEvaluation = eval;
+            AppStateManager.IsDirty = true;
+        }
+
+        /// <summary>
         /// Binds a new line to this object and DataGrid control.
         /// </summary>
         /// <param name="line"></param>
