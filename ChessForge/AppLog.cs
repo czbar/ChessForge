@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using GameTree;
+using System.Windows;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace ChessForge
 {
@@ -27,6 +31,7 @@ namespace ChessForge
         /// Logs a message adding a time stamp.
         /// </summary>
         /// <param name="msg"></param>
+        [Conditional("DEBUG")]
         public static void Message(string msg)
         {
             if (Configuration.DebugMode == 0)
@@ -42,6 +47,8 @@ namespace ChessForge
         /// <summary>
         /// Writes the logged messages out to a file.
         /// </summary>
+        /// <param name="logFileDistnct"></param>
+        [Conditional("DEBUG")]
         public static void Dump(string logFileDistnct)
         {
             StringBuilder sb = new StringBuilder();
@@ -65,6 +72,115 @@ namespace ChessForge
                 File.WriteAllText(filePath, sb.ToString());
             }
             catch { };
+            Log.Clear();
         }
+
+        /// <summary>
+        /// Writes out the WorkbookTree
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="tree"></param>
+        [Conditional("DEBUG")]
+        public static void DumpWorkbookTree(string filename, WorkbookTree tree)
+        {
+            if (filename == null)
+            {
+                filename = ".txt";
+            }
+
+            string outputFile = Path.Combine(App.AppPath, "workbooktree" + filename);
+
+
+            StringBuilder sb = new StringBuilder();
+
+            if (tree == null)
+            {
+                sb.Append("WorkbookTree reference is null.");
+            }
+            else
+            {
+                for (int i = 0; i < tree.Nodes.Count; i++)
+                {
+                    TreeNode nd = tree.Nodes[i];
+                    sb.Append("Node index = " + i.ToString() + Environment.NewLine);
+                    sb.Append("Node Id = " + nd.NodeId.ToString() + Environment.NewLine);
+                    sb.Append("Parent Node Id = " + (nd.Parent == null ? "-" : nd.Parent.NodeId.ToString()) + Environment.NewLine);
+                    sb.Append("Move alg = " + nd.LastMoveAlgebraicNotation + Environment.NewLine);
+                    sb.Append("DistanceToLeaf = " + nd.DistanceToLeaf.ToString() + Environment.NewLine);
+                    sb.Append("DistanceToFork = " + nd.DistanceToNextFork.ToString() + Environment.NewLine);
+                    for (int j = 0; j < nd.Children.Count; j++)
+                    {
+                        sb.Append("    Child " + j.ToString() + " Node Id = " + nd.Children[j].NodeId.ToString() + Environment.NewLine);
+                    }
+                    sb.Append(Environment.NewLine + Environment.NewLine);
+                }
+            }
+
+            try
+            {
+                File.WriteAllText(outputFile, sb.ToString());
+            }
+            catch
+            {
+                MessageBox.Show("DEBUG", "Error writing out Workbook Tree to " + outputFile, MessageBoxButton.OK, MessageBoxImage.Error);
+            };
+        }
+
+        /// <summary>
+        /// Writes out states and timers.
+        /// </summary>
+        /// <param name="filename"></param>
+        [Conditional("DEBUG")]
+        public static void DumpStatesAndTimers(string filename)
+        {
+            if (filename == null)
+            {
+                filename = ".txt";
+            }
+
+            string outputFile = Path.Combine(App.AppPath, "timers" + filename);
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("Application States" + Environment.NewLine);
+            sb.Append("==================" + Environment.NewLine);
+            sb.Append("Learning mode = " + AppStateManager.CurrentLearningMode.ToString() + Environment.NewLine);
+            sb.Append("IsTrainingInProgress = " + TrainingState.IsTrainingInProgress.ToString() + Environment.NewLine);
+            sb.Append("TrainingMode = " + TrainingState.CurrentMode.ToString() + Environment.NewLine);
+            sb.Append("EvaluationMode = " + AppStateManager.CurrentEvaluationMode.ToString() + Environment.NewLine);
+            sb.Append("GameState = " + EngineGame.CurrentState.ToString() + Environment.NewLine);
+
+            sb.Append(Environment.NewLine);
+
+            sb.Append("Timer States" + Environment.NewLine);
+            sb.Append("============" + Environment.NewLine);
+
+            AppTimers timers = AppStateManager.MainWin.Timers;
+
+            sb.Append(AppTimers.TimerId.CHECK_FOR_USER_MOVE.ToString() + "IsEnabled = " 
+                + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
+            sb.Append(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE.ToString() + "IsEnabled = " 
+                + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
+            sb.Append(AppTimers.TimerId.EVALUATION_LINE_DISPLAY.ToString() + "IsEnabled = " 
+                + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
+            sb.Append(AppTimers.TimerId.REQUEST_WORKBOOK_MOVE.ToString() + "IsEnabled = " 
+                + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
+            sb.Append(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU.ToString() + "IsEnabled = " 
+                + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
+            sb.Append(AppTimers.TimerId.FLASH_ANNOUNCEMENT.ToString() + "IsEnabled = " 
+                + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
+            sb.Append(AppTimers.TimerId.APP_START.ToString() + "IsEnabled = " 
+                + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
+
+            try
+            {
+                File.WriteAllText(outputFile, sb.ToString());
+            }
+            catch
+            {
+                MessageBox.Show("DEBUG", "Error writing out Workbook Tree to " + outputFile, MessageBoxButton.OK, MessageBoxImage.Error);
+            };
+        }
+
     }
 }
