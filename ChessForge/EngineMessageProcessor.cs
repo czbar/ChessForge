@@ -55,7 +55,7 @@ namespace ChessForge
         {
             _mainWin = mainWin;
 
-            ChessEngineService = new EngineService.EngineProcess(debugMode, App.AppPath);
+            ChessEngineService = new EngineService.EngineProcess();
             ChessEngineService.EngineMessage += EngineMessageReceived;
             ChessEngineService.Multipv = Configuration.EngineMpv;
         }
@@ -134,17 +134,20 @@ namespace ChessForge
         public static void MoveEvaluationFinished()
         {
             ClearMoveCandidates(false);
-            switch (AppStateManager.CurrentLearningMode)
+            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
             {
-                case LearningMode.Mode.ENGINE_GAME:
-                    MoveEvaluationFinishedInGame();
-                    break;
-                case LearningMode.Mode.TRAINING:
-                    MoveEvaluationFinishedInTraining();
-                    break;
-                case LearningMode.Mode.MANUAL_REVIEW:
-                    MoveEvaluationFinishedInManualReview();
-                    break;
+                // we are in a game
+                MoveEvaluationFinishedInGame();
+            }
+            else if (TrainingState.IsTrainingInProgress)
+            {
+                // eval request was made while in training (LearningMode can be GAME or TRAINING)
+                MoveEvaluationFinishedInTraining();
+            }
+            else
+            {
+                // eval request in MANUAL_REVIEW (could be for COMTINUOUS or LINE)
+                MoveEvaluationFinishedInManualReview();
             }
         }
 
@@ -158,7 +161,7 @@ namespace ChessForge
         {
             if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
             {
-                ProcessEngineGameMoveEvent();
+                ProcessEngineGameMove();
                 _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                 _mainWin.ResetEvaluationProgressBar();
 
@@ -166,6 +169,7 @@ namespace ChessForge
                 {
                     _mainWin.EngineTrainingGameMoveMade();
                 }
+                _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                 AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.IDLE);
             }
         }
@@ -181,6 +185,7 @@ namespace ChessForge
             // stop the timer, apply training mode specific handling 
             // NOTE do not reset Evaluation.CurrentMode as this will be done 
             // later down the chain
+            _mainWin.Evaluation.SetPositionToEvaluate(null);
             _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
             _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
             _mainWin.ResetEvaluationProgressBar();
@@ -268,7 +273,7 @@ namespace ChessForge
         /// the move from the list of candidates, show it on the board
         /// and display in the Engine Game Line view.
         /// </summary>
-        private static void ProcessEngineGameMoveEvent()
+        private static void ProcessEngineGameMove()
         {
             TreeNode nd = null;
             BoardPosition pos = null;
@@ -279,7 +284,7 @@ namespace ChessForge
             // from the "wrong" thread)
             _mainWin.Dispatcher.Invoke(() =>
             {
-                pos = EngineGame.ProcessEngineGameMove(out nd);
+                pos = EngineGame.ProcessEngineMove(out nd);
                 SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
                 _mainWin.BoardCommentBox.GameMoveMade(nd, false);
             });
@@ -371,6 +376,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public static void RequestMoveEvaluationInTraining(TreeNode nd)
         {
+            _mainWin.Evaluation.SetPositionToEvaluate(nd.Position);
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
             _mainWin.UpdateLastMoveTextBox(nd);
             AppStateManager.ShowMoveEvaluationControls(true, false);
