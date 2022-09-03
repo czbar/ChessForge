@@ -24,7 +24,6 @@ namespace ChessForge
             DUMMY,
             EVALUATION_LINE_DISPLAY,
             CHECK_FOR_USER_MOVE,
-            ENGINE_EVALUATION_STOP,
             CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE,
             REQUEST_WORKBOOK_MOVE,
             SHOW_TRAINING_PROGRESS_POPUP_MENU,
@@ -46,12 +45,6 @@ namespace ChessForge
         /// engine lines in the GUI.
         /// </summary>
         private Timer _evaluationLinesDisplayTimer;
-
-        /// <summary>
-        /// Triggers a Stop request to the engine. Used to control the time
-        /// the engine takes to evaluate since "go movetime" seems to act weirdly.
-        /// </summary>
-        private Timer _engineEvaluationStopTimer;
 
         /// <summary>
         /// This timer invokes the method checking if a user made their move and if so
@@ -120,10 +113,6 @@ namespace ChessForge
             InitEvaluationLinesDisplayTimer(gui);
             _dictTimers.Add(TimerId.EVALUATION_LINE_DISPLAY, _evaluationLinesDisplayTimer);
 
-            _engineEvaluationStopTimer = new Timer();
-            InitEngineEvaluationStopTimer();
-            _dictTimers.Add(TimerId.ENGINE_EVALUATION_STOP, _engineEvaluationStopTimer);
-
             _checkForUserMoveTimer = new Timer();
             InitCheckForUserMoveTimer();
             _dictTimers.Add(TimerId.CHECK_FOR_USER_MOVE, _checkForUserMoveTimer);
@@ -172,6 +161,16 @@ namespace ChessForge
         {
             _dictTimers[tt].Enabled = false;
             AppLog.Message("Stop timer:" + tt.ToString());
+        }
+
+        /// <summary>
+        /// Returns the IsEnabled status of a timer.
+        /// </summary>
+        /// <param name="tt"></param>
+        /// <returns></returns>
+        public bool IsEnabled(TimerId tt)
+        {
+            return _dictTimers.ContainsKey(tt) ? _dictTimers[tt].Enabled : false;
         }
 
         /// <summary>
@@ -237,17 +236,9 @@ namespace ChessForge
             _evaluationLinesDisplayTimer.Enabled = false;
         }
 
-        private void InitEngineEvaluationStopTimer()
-        {
-            _engineEvaluationStopTimer.Elapsed += new ElapsedEventHandler(EngineMessageProcessor.StopEngineEvaluation);
-            _engineEvaluationStopTimer.Interval = 1000;
-            _engineEvaluationStopTimer.Enabled = false;
-            _engineEvaluationStopTimer.AutoReset = false;
-        }
-
         private void InitCheckForUserMoveTimer()
         {
-            _checkForUserMoveTimer.Elapsed += new ElapsedEventHandler(_mainWin.ProcessUserMoveEvent);
+            _checkForUserMoveTimer.Elapsed += new ElapsedEventHandler(_mainWin.CheckForUserMoveTimerEvent);
             _checkForUserMoveTimer.Interval = 50;
             _checkForUserMoveTimer.Enabled = false;
         }
