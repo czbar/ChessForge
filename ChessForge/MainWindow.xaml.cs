@@ -1148,6 +1148,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void ChessForgeMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            AppLog.Message("Application Closing");
+
             StopEvaluation();
             if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN)
             {
