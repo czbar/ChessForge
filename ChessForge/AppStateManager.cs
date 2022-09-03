@@ -144,12 +144,6 @@ namespace ChessForge
                 File.WriteAllText(WorkbookFilePath, chfText);
                 _isDirty = false;
             }
-
-            if (Configuration.DebugMode > 2)
-            {
-                string fileName = "TreeDump_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".txt";
-                File.WriteAllText(fileName, DebugUtils.DumpWorkbookTree(AppStateManager.MainWin.Workbook));
-            }
         }
 
         /// <summary>

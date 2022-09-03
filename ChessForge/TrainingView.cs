@@ -903,7 +903,7 @@ namespace ChessForge
         {
             foreach (TreeNode nd in _otherMovesInWorkbook)
             {
-                para.Inlines.Add(CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true) + " ", _run_wb_move_ + nd.NodeId.ToString(), Brushes.Green));
+                para.Inlines.Add(CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true), _run_wb_move_ + nd.NodeId.ToString(), Brushes.Green));
                 Run r_semi = new Run("; ");
                 para.Inlines.Add(r_semi);
             }

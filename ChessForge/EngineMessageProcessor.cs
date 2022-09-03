@@ -117,16 +117,6 @@ namespace ChessForge
             SendCommand("stop");
         }
 
-        /// <summary>
-        /// Stops engine evaluation. Sends the "stop" command to the Engine.
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="e"></param>
-        public static void StopEngineEvaluation(object source, ElapsedEventArgs e)
-        {
-            SendCommand("stop");
-        }
-
         //*********************************************************************************
         //
         //         PREPARING PROCESSING OF MESSAGES RECEIVED FROM THE ENGINE

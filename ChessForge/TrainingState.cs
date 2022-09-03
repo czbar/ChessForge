@@ -27,19 +27,19 @@ namespace ChessForge
         /// </summary>
         public enum Mode
         {
-            UNKNOWN = 0x00,
+            UNKNOWN,
 
             // all is idle, awaiting the user to make a move
-            AWAITING_USER_TRAINING_MOVE = 0x01,
+            AWAITING_USER_TRAINING_MOVE,
 
             // user's move accepted, awaiting a workboook-based response
-            AWAITING_WORKBOOK_RESPONSE = 0x02,
+            AWAITING_WORKBOOK_RESPONSE,
 
             // the engine is evalauting a move or a line
-            ENGINE_EVALUATION_IN_PROGRESS = 0x04,
+            ENGINE_EVALUATION_IN_PROGRESS,
             
             // user move completed, the program will pick it up
-            USER_MOVE_COMPLETED = 0x08,
+            USER_MOVE_COMPLETED,
         }
 
         /// <summary>
