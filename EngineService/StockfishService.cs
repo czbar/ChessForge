@@ -119,13 +119,8 @@ namespace EngineService
         /// Creates the Engine Service object.
         /// </summary>
         /// <param name="debugMode"></param>
-        public EngineProcess(bool debugMode, string appPath)
+        public EngineProcess()
         {
-            _debugMode = debugMode;
-            if (_debugMode)
-            {
-                EngineLog.SetDebugMode(appPath);
-            }
         }
 
         /// <summary>
