@@ -1203,47 +1203,11 @@ namespace ChessForge
             EvaluateActiveLineSelectedPositionEx();
         }
 
-        private void EvaluateActiveLineSelectedPosition()
-        {
-            if (Evaluation.CurrentMode != EvaluationManager.Mode.IDLE)
-            {
-                // there is an evaluation running right now so do not allow another one.
-                // This menu item should be disabled if that's the case so we should never
-                // end up here but just in case ...
-                MessageBox.Show("Cannot start an evaluation while another one in progress.", "Move Evaluation", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-            int moveIndex = ActiveLine.GetSelectedPlyNodeIndex();
-            if (moveIndex < 0)
-            {
-                MessageBox.Show("Select a move to evaluate.", "Move Evaluation", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                int posIndex = moveIndex;
-                // check that the engine is available
-                if (EngineMessageProcessor.IsEngineAvailable)
-                {
-                    // make an extra defensive check
-                    if (posIndex < ActiveLine.GetPlyCount())
-                    {
-                        AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.CONTINUOUS);
-                        EngineMessageProcessor.RequestMoveEvaluation(posIndex);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Chess Engine is not available.", "Move Evaluation Failure", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-            }
-        }
-
         private void EvaluateActiveLineSelectedPositionEx()
         {
             // stop the timer to prevent showing garbage after position is set but engine has not received our commands yet
             EngineMessageProcessor.RequestPositionEvaluation(ActiveLine.GetSelectedPlyNodeIndex(), Configuration.EngineMpv, 0);
         }
-
 
         private void MenuItem_EvaluateLine(object sender, RoutedEventArgs e)
         {
