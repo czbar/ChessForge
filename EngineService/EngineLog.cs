@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,23 +20,6 @@ namespace EngineService
         // list of logged messages
         public static List<string> Log = new List<string>();
 
-        // debug mode flag
-        private static bool _isDebugMode = false;
-
-        // file to save the log file to
-        private static string _outputPath = "";
-
-        /// <summary>
-        /// Sets the debug mode and path to save the log to.
-        /// </summary>
-        /// <param name="appPath"></param>
-        [Conditional("DEBUG")]
-        public static void SetDebugMode(string appPath)
-        {
-            _isDebugMode = true;
-            _outputPath = appPath;
-        }
-
         /// <summary>
         /// Logs a single message
         /// </summary>
@@ -43,11 +27,6 @@ namespace EngineService
         [Conditional("DEBUG")]
         public static void Message(string msg)
         {
-            if (!_isDebugMode)
-            {
-                return;
-            }
-
             lock (AppLogLock)
             {
                 string timeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "  ";
@@ -59,32 +38,21 @@ namespace EngineService
         /// Dumps all logged messages to a file
         /// </summary>
         [Conditional("DEBUG")]
-        public static void Dump(string logFileDistinct)
+        public static void Dump(string filePath)
         {
-            if (!_isDebugMode)
-            {
-                return;
-            }
-
             try
             {
-                if (logFileDistinct != null)
-                {
-                    _outputPath = Path.Combine(_outputPath, "enginelog" + logFileDistinct);
-                }
-                else 
-                {
-                    _outputPath = Path.Combine(_outputPath, "enginelog.txt");
-                }
-
                 StringBuilder sb = new StringBuilder();
                 foreach (string s in Log)
                 {
                     sb.Append(s + Environment.NewLine);
                 }
-                File.WriteAllText(_outputPath, sb.ToString());
+                File.WriteAllText(filePath, sb.ToString());
             }
-            catch { };
+            catch (Exception ex)
+            {
+                throw ex;
+            };
             Log.Clear();
         }
     }

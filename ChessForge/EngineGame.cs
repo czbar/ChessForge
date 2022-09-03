@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameTree;
 using ChessPosition;
+using System.Windows;
 
 namespace ChessForge
 {
@@ -62,9 +63,9 @@ namespace ChessForge
                 // stop polling for the workbook move
                 _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
 
-                _mainWin.DisplayPosition(GetCurrentPosition());
-                SoundPlayer.PlayMoveSound(GetCurrentNode().LastMoveAlgebraicNotation);
-                _mainWin.ColorMoveSquares(GetCurrentNode().LastMoveEngineNotation);
+                _mainWin.DisplayPosition(GetLastPosition());
+                SoundPlayer.PlayMoveSound(GetLastGameNode().LastMoveAlgebraicNotation);
+                _mainWin.ColorMoveSquares(GetLastGameNode().LastMoveEngineNotation);
 
 
                 _mainWin.UiTrainingView.WorkbookMoveMade();
@@ -94,28 +95,34 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Processes engine move during a game.
+        /// Processes an engine move during a game.
+        /// Selects the move from the candidate moves supplied by the engine,
+        /// processes it, builds a new ply (TreeNode) and adds it to the
+        /// game line.
+        /// Also adds the is move to the Workbook.
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        public static BoardPosition ProcessEngineGameMove(out TreeNode nd)
+        public static BoardPosition ProcessEngineMove(out TreeNode nd)
         {
-            // debug exception
-            if (LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
-                throw (new Exception("ProcessEngineGameMove() called NOT during a game"));
+            string engMove = SelectMoveFromCandidates(false);
 
-            string engMove = SelectMove(false);
-            TreeNode curr = GetCurrentNode();
-
+            TreeNode curr = GetLastGameNode();
             BoardPosition pos = new BoardPosition(curr.Position);
 
             bool isCastle;
             string algMove = MoveUtils.EngineNotationToAlgebraic(engMove, ref pos, out isCastle);
 
+            if (string.IsNullOrEmpty(algMove) || algMove.StartsWith("?"))
+            {
+                MessageBox.Show("Failed to parse engine's move.", "Unexpected error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //TODO: offer the user to save debug info
+            }
+
             nd = new TreeNode(curr, algMove, _mainWin.Workbook.GetNewNodeId());
             nd.IsNewTrainingMove = curr.IsNewTrainingMove;
             nd.Position = pos;
-            nd.Position.ColorToMove = pos.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
+            nd.Position.ColorToMove = MoveUtils.ReverseColor(pos.ColorToMove);
             nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
             Line.AddPlyAndMove(nd);
             _mainWin.Workbook.AddNodeToParent(nd);
@@ -211,7 +218,7 @@ namespace ChessForge
         /// otherwise the last position in the GameLine.
         /// </summary>
         /// <returns></returns>
-        public static TreeNode GetCurrentNode()
+        public static TreeNode GetLastGameNode()
         {
             TreeNode nd = Line.GetLastNode();
             if (nd == null)
@@ -230,7 +237,7 @@ namespace ChessForge
         /// <returns></returns>
         public static PieceType GetPieceType(SquareCoords sq)
         {
-            return PositionUtils.GetPieceType(GetCurrentNode().Position.Board[sq.Xcoord, sq.Ycoord]);
+            return PositionUtils.GetPieceType(GetLastGameNode().Position.Board[sq.Xcoord, sq.Ycoord]);
         }
 
         /// <summary>
@@ -241,8 +248,8 @@ namespace ChessForge
         /// <returns></returns>
         public static PieceColor GetPieceColor(SquareCoords sq)
         {
-            TreeNode nd = GetCurrentNode();
-            return nd != null ? PositionUtils.GetPieceColor(GetCurrentNode().Position.Board[sq.Xcoord, sq.Ycoord]) : PieceColor.None;
+            TreeNode nd = GetLastGameNode();
+            return nd != null ? PositionUtils.GetPieceColor(GetLastGameNode().Position.Board[sq.Xcoord, sq.Ycoord]) : PieceColor.None;
         }
 
         /// <summary>
@@ -253,8 +260,8 @@ namespace ChessForge
         {
             get
             {
-                BoardPosition pos = GetCurrentPosition();
-                return pos != null ? GetCurrentPosition().ColorToMove : PieceColor.None;
+                BoardPosition pos = GetLastPosition();
+                return pos != null ? GetLastPosition().ColorToMove : PieceColor.None;
             }
         }
 
@@ -271,10 +278,14 @@ namespace ChessForge
             ReplaceCurrentWithWorkbookMove(nd);
         }
 
-        public static BoardPosition GetCurrentPosition()
+        /// <summary>
+        /// Obtains the latest position in the current game. 
+        /// </summary>
+        /// <returns></returns>
+        public static BoardPosition GetLastPosition()
         {
-            TreeNode nd = GetCurrentNode();
-            return nd != null ? GetCurrentNode().Position : null;
+            TreeNode nd = GetLastGameNode();
+            return nd != null ? GetLastGameNode().Position : null;
         }
 
         /// <summary>
@@ -286,7 +297,7 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                Line.AddPly(GetCurrentNode());
+                Line.AddPly(GetLastGameNode());
             });
         }
 
@@ -309,7 +320,7 @@ namespace ChessForge
         /// <param name="getBest"></param>
         /// <returns>The selected move in the engine notation
         /// e.g. c4d6 / c7c8Q / O-O </returns>
-        private static string SelectMove(bool getBest)
+        private static string SelectMoveFromCandidates(bool getBest)
         {
             if (EngineMessageProcessor.MoveCandidates.Count == 0)
             {

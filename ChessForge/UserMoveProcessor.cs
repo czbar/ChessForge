@@ -293,7 +293,7 @@ namespace ChessForge
             }
             else
             {
-                curr = EngineGame.GetCurrentNode();
+                curr = EngineGame.GetLastGameNode();
             }
 
             nd = AppStateManager.MainWin.Workbook.CreateNewChildNode(curr);

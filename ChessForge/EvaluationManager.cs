@@ -24,8 +24,6 @@ namespace ChessForge
         {
             // No evaluation currently in progress
             IDLE,
-            // DEPRECATED: a single move evaluation on request
-//            SINGLE_MOVE,
             // Evaluation of all moves in the Active Line is in progress, move by move automatically
             LINE,
             // Continuous (infinite) evaluation for the currently selected move in the Active Lines
@@ -181,6 +179,7 @@ namespace ChessForge
 
         /// <summary>
         /// The position being evaluated.
+        /// This property is read only.
         /// </summary>
         public BoardPosition Position
         {
@@ -191,6 +190,20 @@ namespace ChessForge
                     return _position;
                 }
             }
+        }
+
+        /// <summary>
+        /// Set position to evaluate.
+        /// We want to force the client to invoke SetPositionToEvaluate()
+        /// stating the intent that it is not part of the Active Line.
+        /// explicitly which is why the Position property is readonly.
+        /// The position index is therefore set to -1.
+        /// </summary>
+        /// <param name="Position"></param>
+        public void SetPositionToEvaluate(BoardPosition Position)
+        {
+            _position = Position;
+            _positionIndex = -1;
         }
 
         /// <summary>
