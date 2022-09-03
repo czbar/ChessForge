@@ -1037,9 +1037,9 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Obtains the current ActiveLine's lineId and move,
+        /// Obtains the current ActiveLine's LineId and move,
         /// and asks other view to select / re-select.
-        /// This is needed e.g. when the WorkbookTree is rubuilt after
+        /// This is needed e.g. when the WorkbookTree is rebuilt after
         /// adding nodes.
         /// </summary>
         public void RefreshSelectedActiveLineAndNode()
@@ -1179,17 +1179,24 @@ namespace ChessForge
         /// <param name="userRequested"></param>
         public void DumpDebugLogs(bool userRequested)
         {
-            string logFileName = null;
+            string distinct = null;
 
             if (userRequested)
             {
-                logFileName = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".txt";
-                AppLog.DumpWorkbookTree(logFileName, Workbook);
-                AppLog.DumpStatesAndTimers(logFileName);
+                distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                AppLog.DumpWorkbookTree(DebugUtils.BuildLogFileName(App.AppPath, "wktree", distinct), Workbook);
+                AppLog.DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
             }
 
-            AppLog.Dump(logFileName);
-            EngineLog.Dump(logFileName);
+            try
+            {
+                AppLog.Dump(DebugUtils.BuildLogFileName(App.AppPath, "applog", distinct));
+                EngineLog.Dump(DebugUtils.BuildLogFileName(App.AppPath, "engine", distinct));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Dump logs exception: " + ex.Message, "DEBUG", MessageBoxButton.OK, MessageBoxImage.Stop);
+            }
         }
 
 
@@ -1389,7 +1396,7 @@ namespace ChessForge
                 if (EngineGame.CurrentState == EngineGame.GameState.ENGINE_THINKING)
                 {
                     Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-                    EngineMessageProcessor.RequestEngineMove(EngineGame.GetCurrentPosition());
+                    EngineMessageProcessor.RequestEngineMove(EngineGame.GetLastPosition());
                 }
             }
         }
@@ -1549,10 +1556,12 @@ namespace ChessForge
         public void SetAppInTrainingMode(TreeNode startNode)
         {
             // Set up the training mode
+            StopEvaluation();
             LearningMode.CurrentMode = LearningMode.Mode.TRAINING;
             TrainingState.IsTrainingInProgress = true;
             TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_TRAINING_MOVE;
             AppStateManager.SetupGuiForCurrentStates();
+            Evaluation.CurrentMode = EvaluationManager.Mode.IDLE;
 
             LearningMode.TrainingSide = startNode.ColorToMove;
             MainChessBoard.DisplayPosition(startNode.Position);
@@ -1586,18 +1595,20 @@ namespace ChessForge
         {
             if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                EngineMessageProcessor.StopEngineEvaluation();
-                Evaluation.Reset();
+                if (WorkbookManager.PromptAndSaveWorkbook(false))
+                {
+                    EngineMessageProcessor.StopEngineEvaluation();
+                    Evaluation.Reset();
 
-                WorkbookManager.PromptAndSaveWorkbook(false);
-                TrainingState.IsTrainingInProgress = false;
-                MainChessBoard.RemoveMoveSquareColors();
-                LearningMode.CurrentMode = LearningMode.Mode.MANUAL_REVIEW;
-                AppStateManager.SetupGuiForCurrentStates();
+                    TrainingState.IsTrainingInProgress = false;
+                    MainChessBoard.RemoveMoveSquareColors();
+                    LearningMode.CurrentMode = LearningMode.Mode.MANUAL_REVIEW;
+                    AppStateManager.SetupGuiForCurrentStates();
 
-                ActiveLine.DisplayPositionForSelectedCell();
-                AppStateManager.SwapCommentBoxForEngineLines(false);
-                BoardCommentBox.RestoreTitleMessage();
+                    ActiveLine.DisplayPositionForSelectedCell();
+                    AppStateManager.SwapCommentBoxForEngineLines(false);
+                    BoardCommentBox.RestoreTitleMessage();
+                }
             }
         }
 

@@ -267,29 +267,14 @@ namespace ChessForge
         /// returns false if the user cancels. </returns>
         public static bool PromptAndSaveWorkbook(bool userRequest, bool isAppClosing = false)
         {
-            bool saved = false;
             MessageBoxResult res = MessageBoxResult.None;
 
             if (AppStateManager.MainWin.Workbook.HasTrainingMoves())
             {
-                res = MessageBox.Show("Merge and Save new moves from this session into the Workbook?", "Chess Forge Save Workbook",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (res == MessageBoxResult.Yes)
-                {
-                    AppStateManager.MainWin.Workbook.ClearTrainingFlags();
-                    AppStateManager.MainWin.Workbook.BuildLines();
-                    AppStateManager.SaveWorkbookFile();
-                    AppStateManager.MainWin.RebuildWorkbookView();
-                    AppStateManager.MainWin.RefreshSelectedActiveLineAndNode();
-                    saved = true;
-                }
-                else
-                {
-                    AppStateManager.MainWin.Workbook.RemoveTrainingMoves();
-                }
+                res = PromptAndSaveTrainingMoves(userRequest, isAppClosing);
             }
 
-            if (!saved)
+            if (res != MessageBoxResult.OK && res != MessageBoxResult.Cancel)
             {
                 // not saved yet
                 if (userRequest)
@@ -318,14 +303,48 @@ namespace ChessForge
             }
 
             AppStateManager.ConfigureSaveMenus();
-            if (res == MessageBoxResult.Yes || res == MessageBoxResult.No)
+
+            return res == MessageBoxResult.Yes || res == MessageBoxResult.No;
+        }
+
+        /// <summary>
+        /// Prompts for and saves training moves with the Workbook.
+        /// If this is invoked due to the app closing, the Cancel option is not offered.
+        /// </summary>
+        /// <param name="userRequest"></param>
+        /// <param name="isAppClosing"></param>
+        /// <returns></returns>
+        private static MessageBoxResult PromptAndSaveTrainingMoves(bool userRequest, bool isAppClosing)
+        {
+            MessageBoxResult res;
+
+            MessageBoxButton buttons;
+            if (!isAppClosing)
             {
-                return true;
+                buttons = MessageBoxButton.YesNoCancel;
             }
             else
             {
-                return false;
+                buttons = MessageBoxButton.YesNo;
             }
+
+            res = MessageBox.Show("Merge and Save new moves from this session into the Workbook?", "Chess Forge Save Workbook",
+                buttons, MessageBoxImage.Question);
+            if (res == MessageBoxResult.Yes)
+            {
+                AppStateManager.MainWin.Workbook.ClearTrainingFlags();
+                AppStateManager.MainWin.Workbook.BuildLines();
+                AppStateManager.SaveWorkbookFile();
+                AppStateManager.MainWin.RebuildWorkbookView();
+                AppStateManager.MainWin.RefreshSelectedActiveLineAndNode();
+            //    saved = true;
+            }
+            else if (res == MessageBoxResult.No)
+            {
+                AppStateManager.MainWin.Workbook.RemoveTrainingMoves();
+            }
+
+            return res;
         }
 
         /// <summary>
