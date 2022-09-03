@@ -274,7 +274,7 @@ namespace ChessForge
 
                 _otherMovesInWorkbook.Clear();
 
-                _userMove = EngineGame.GetCurrentNode();
+                _userMove = EngineGame.GetLastGameNode();
                 TreeNode parent = _userMove.Parent;
 
                 if (PositionUtils.IsCheckmate(_userMove.Position))
@@ -459,7 +459,7 @@ namespace ChessForge
         /// </summary>
         public void EngineMoveMade()
         {
-            AddMoveToEngineGamePara(EngineGame.GetCurrentNode(), false);
+            AddMoveToEngineGamePara(EngineGame.GetLastGameNode(), false);
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
@@ -469,7 +469,7 @@ namespace ChessForge
         /// </summary>
         public void UserMoveMade()
         {
-            AddMoveToEngineGamePara(EngineGame.GetCurrentNode(), true);
+            AddMoveToEngineGamePara(EngineGame.GetLastGameNode(), true);
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
@@ -785,7 +785,7 @@ namespace ChessForge
         /// </summary>
         private void BuildSecondPromptParagraph()
         {
-            TreeNode nd = EngineGame.GetCurrentNode();
+            TreeNode nd = EngineGame.GetLastGameNode();
 
             bool isMateCf = PositionUtils.IsCheckmate(nd.Position);
 
@@ -1029,6 +1029,7 @@ namespace ChessForge
                 {
                     _mainWin.Evaluation.ClearRunsToEvaluate();
                     AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.IDLE);
+                    _mainWin.Evaluation.SetPositionToEvaluate(null);
                 }
                 else
                 {
