@@ -39,6 +39,25 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Builds a ChessForge log file name
+        /// given the log type and distinct name part of any
+        /// </summary>
+        /// <returns></returns>
+        public static string BuildLogFileName(string dir, string logType, string distinctPart)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("chf_" + logType);
+            if (distinctPart != null)
+            {
+                sb.Append(distinctPart);
+            }
+            sb.Append(".txt");
+
+            return Path.Combine(dir, sb.ToString());
+        }
+
+        /// <summary>
         /// Prints the passed position to the Console in 
         /// a human readable format.
         /// </summary>

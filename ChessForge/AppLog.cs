@@ -49,7 +49,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="logFileDistnct"></param>
         [Conditional("DEBUG")]
-        public static void Dump(string logFileDistnct)
+        public static void Dump(string filePath)
         {
             StringBuilder sb = new StringBuilder();
             foreach (string s in Log)
@@ -58,16 +58,6 @@ namespace ChessForge
             }
             try
             {
-                string filePath = App.AppPath;
-                if (logFileDistnct != null)
-                {
-                    filePath = Path.Combine(filePath, "applog" + logFileDistnct);
-                }
-                else
-                {
-                    filePath = Path.Combine(filePath, "applog.txt");
-                }
-
                 // this may fail if we try to write to the system folder e.g. because the app was invoked via menu association.
                 File.WriteAllText(filePath, sb.ToString());
             }
@@ -78,19 +68,11 @@ namespace ChessForge
         /// <summary>
         /// Writes out the WorkbookTree
         /// </summary>
-        /// <param name="filename"></param>
+        /// <param name="filePath"></param>
         /// <param name="tree"></param>
         [Conditional("DEBUG")]
-        public static void DumpWorkbookTree(string filename, WorkbookTree tree)
+        public static void DumpWorkbookTree(string filePath, WorkbookTree tree)
         {
-            if (filename == null)
-            {
-                filename = ".txt";
-            }
-
-            string outputFile = Path.Combine(App.AppPath, "workbooktree" + filename);
-
-
             StringBuilder sb = new StringBuilder();
 
             if (tree == null)
@@ -118,28 +100,21 @@ namespace ChessForge
 
             try
             {
-                File.WriteAllText(outputFile, sb.ToString());
+                File.WriteAllText(filePath, sb.ToString());
             }
             catch
             {
-                MessageBox.Show("DEBUG", "Error writing out Workbook Tree to " + outputFile, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("DEBUG", "Error writing out Workbook Tree to " + filePath, MessageBoxButton.OK, MessageBoxImage.Error);
             };
         }
 
         /// <summary>
         /// Writes out states and timers.
         /// </summary>
-        /// <param name="filename"></param>
+        /// <param name="filePath"></param>
         [Conditional("DEBUG")]
-        public static void DumpStatesAndTimers(string filename)
+        public static void DumpStatesAndTimers(string filePath)
         {
-            if (filename == null)
-            {
-                filename = ".txt";
-            }
-
-            string outputFile = Path.Combine(App.AppPath, "timers" + filename);
-
             StringBuilder sb = new StringBuilder();
 
             sb.Append("Application States" + Environment.NewLine);
@@ -157,28 +132,28 @@ namespace ChessForge
 
             AppTimers timers = AppStateManager.MainWin.Timers;
 
-            sb.Append(AppTimers.TimerId.CHECK_FOR_USER_MOVE.ToString() + "IsEnabled = " 
+            sb.Append(AppTimers.TimerId.CHECK_FOR_USER_MOVE.ToString() + ": IsEnabled = " 
                 + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
-            sb.Append(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE.ToString() + "IsEnabled = " 
-                + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
-            sb.Append(AppTimers.TimerId.EVALUATION_LINE_DISPLAY.ToString() + "IsEnabled = " 
-                + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
-            sb.Append(AppTimers.TimerId.REQUEST_WORKBOOK_MOVE.ToString() + "IsEnabled = " 
-                + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
-            sb.Append(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU.ToString() + "IsEnabled = " 
-                + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
-            sb.Append(AppTimers.TimerId.FLASH_ANNOUNCEMENT.ToString() + "IsEnabled = " 
-                + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
-            sb.Append(AppTimers.TimerId.APP_START.ToString() + "IsEnabled = " 
-                + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
+            sb.Append(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE.ToString() + ": IsEnabled = " 
+                + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE).ToString() + Environment.NewLine);
+            sb.Append(AppTimers.TimerId.EVALUATION_LINE_DISPLAY.ToString() + ": IsEnabled = " 
+                + timers.IsEnabled(AppTimers.TimerId.EVALUATION_LINE_DISPLAY).ToString() + Environment.NewLine);
+            sb.Append(AppTimers.TimerId.REQUEST_WORKBOOK_MOVE.ToString() + ": IsEnabled = " 
+                + timers.IsEnabled(AppTimers.TimerId.REQUEST_WORKBOOK_MOVE).ToString() + Environment.NewLine);
+            sb.Append(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU.ToString() + ": IsEnabled = " 
+                + timers.IsEnabled(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU).ToString() + Environment.NewLine);
+            sb.Append(AppTimers.TimerId.FLASH_ANNOUNCEMENT.ToString() + ": IsEnabled = " 
+                + timers.IsEnabled(AppTimers.TimerId.FLASH_ANNOUNCEMENT).ToString() + Environment.NewLine);
+            sb.Append(AppTimers.TimerId.APP_START.ToString() + ": IsEnabled = " 
+                + timers.IsEnabled(AppTimers.TimerId.APP_START).ToString() + Environment.NewLine);
 
             try
             {
-                File.WriteAllText(outputFile, sb.ToString());
+                File.WriteAllText(filePath, sb.ToString());
             }
             catch
             {
-                MessageBox.Show("DEBUG", "Error writing out Workbook Tree to " + outputFile, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("DEBUG", "Error writing out Workbook Tree to " + filePath, MessageBoxButton.OK, MessageBoxImage.Error);
             };
         }
 
