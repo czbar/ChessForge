@@ -17,6 +17,7 @@ using System.Windows.Media.Animation;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Security.Policy;
+using System.Diagnostics;
 
 namespace ChessForge
 {
@@ -149,11 +150,38 @@ namespace ChessForge
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             UiDgActiveLine.ContextMenu = UiMnMainBoard;
+            AddDebugMenu();
 
             AppStateManager.CurrentLearningMode = LearningMode.Mode.IDLE;
             AppStateManager.SetupGuiForCurrentStates();
 
             Timers.Start(AppTimers.TimerId.APP_START);
+        }
+
+        [Conditional("DEBUG")]
+        private void AddDebugMenu()
+        {
+            MenuItem mnDebug = new MenuItem
+            {
+                Name = "DebugMenu"
+            };
+
+            mnDebug.Header = "Debug";
+            UiMainMenu.Items.Add(mnDebug);
+
+            MenuItem mnDebugDump = new MenuItem
+            {
+                Name = "DebugDumpMenu"
+            };
+
+            mnDebugDump.Header = "Dump";
+            mnDebug.Items.Add(mnDebugDump);
+            mnDebugDump.Click += UiMnDebugDump_Click;
+        }
+
+        private void UiMnDebugDump_Click(object sender, RoutedEventArgs e)
+        {
+            DumpDebugLogs(true);
         }
 
         // tracks the application start stage
@@ -1135,21 +1163,33 @@ namespace ChessForge
             }
             Timers.StopAll();
 
+            DumpDebugLogs(false);
+            Configuration.WriteOutConfiguration();
+        }
+
+        /// <summary>
+        /// Writes out all logs.
+        /// If userRequested == true, this was requested via the menu
+        /// and we dump everything with distinct file names.
+        /// Otherwise we only dump app and engine logs, ovewriting previous
+        /// logs.
+        /// </summary>
+        /// <param name="userRequested"></param>
+        public void DumpDebugLogs(bool userRequested)
+        {
             string logFileName = null;
-            if (Configuration.DebugMode > 0)
+
+            if (userRequested)
             {
-                string logFileDistinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".txt";
-                if (MessageBox.Show("Save logs with unique names ([name_]" + logFileDistinct + ") ?", "DEBUG",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    logFileName = logFileDistinct;
-                }
+                logFileName = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".txt";
+                AppLog.DumpWorkbookTree(logFileName, Workbook);
+                AppLog.DumpStatesAndTimers(logFileName);
             }
 
             AppLog.Dump(logFileName);
             EngineLog.Dump(logFileName);
-            Configuration.WriteOutConfiguration();
         }
+
 
         /// <summary>
         /// The user requested evaluation of the currently selected move.
@@ -1364,11 +1404,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        internal void ProcessUserMoveEvent(object source, ElapsedEventArgs e)
+        public void CheckForUserMoveTimerEvent(object source, ElapsedEventArgs e)
         {
             if (TrainingState.IsTrainingInProgress && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
             {
-                if ((TrainingState.CurrentMode & TrainingState.Mode.USER_MOVE_COMPLETED) != 0)
+                if ((TrainingState.CurrentMode == TrainingState.Mode.USER_MOVE_COMPLETED))
                 {
                     this.Dispatcher.Invoke(() =>
                     {
@@ -2062,15 +2102,11 @@ namespace ChessForge
         {
             EngineMessageProcessor.StopEngineEvaluation();
 
-            // TODO: investigate why having a lock here leads to what appears to be a deadlock
-            //            lock (LearningMode.EvalLock)
-            {
-                Evaluation.Reset();
-                AppStateManager.ResetEvaluationControls();
-                AppStateManager.ShowMoveEvaluationControls(false, true);
-                AppStateManager.SetupGuiForCurrentStates();
-                Timers.StopAll();
-            }
+            Evaluation.Reset();
+            AppStateManager.ResetEvaluationControls();
+            AppStateManager.ShowMoveEvaluationControls(false, true);
+            AppStateManager.SetupGuiForCurrentStates();
+            Timers.StopAll();
         }
 
         private void UiImgEngineOff_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
