@@ -26,9 +26,7 @@ namespace ChessForge
         public enum Mode : uint
         {
             /// <summary>
-            /// No workbook loaded, 
-            /// no session started,
-            /// the program is waiting.
+            /// No workbook loaded, no session started, the program is waiting.
             /// </summary>
             IDLE = 0x0001,
 
@@ -53,7 +51,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Lock object to use whan accessing evaluation related
+        /// Lock object to use when accessing evaluation related
         /// variables.
         /// </summary>
         public static object EvalLock = new object();
@@ -86,9 +84,9 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The current mode of the application.
+        /// The current Learning mode of the application.
         /// </summary>
-        public static Mode CurrentMode { get => _currentMode; set => _currentMode = value; }
+        public static Mode CurrentMode { get => _currentMode;}
 
         /// <summary>
         /// The previous mode of the application.

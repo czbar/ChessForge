@@ -267,6 +267,17 @@ namespace EngineService
         }
 
         /// <summary>
+        /// Returns true if the Message Poll timer
+        /// is currently enabled.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsMessagePollEnabled()
+        {
+            return _messagePollTimer.Enabled;
+        }
+
+
+        /// <summary>
         /// Writes out the command requested from SendCommand().
         /// If this is a "position" command, send the mpv command first.
         /// </summary>

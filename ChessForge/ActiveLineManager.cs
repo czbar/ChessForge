@@ -375,7 +375,7 @@ namespace ChessForge
                         //gameReplay.Stop();
                     }
 
-                    if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE)
+                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                     {
                         _mainWin.StopEvaluation();
                     }

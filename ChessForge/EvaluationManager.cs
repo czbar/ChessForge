@@ -9,6 +9,11 @@ using GameTree;
 
 namespace ChessForge
 {
+    /// <summary>
+    /// Manages the state of an Evaluation process performed
+    /// by the engine.
+    /// Only one evaluation can be performed at any given time.
+    /// </summary>
     public class EvaluationManager
     {
         /// <summary>
@@ -33,48 +38,75 @@ namespace ChessForge
         };
 
         // Current evaluation mode
-        private Mode _currentMode = Mode.IDLE;
+        private static Mode _currentMode = Mode.IDLE;
 
         // Position being evaluated
-        private BoardPosition _position;
+        private static BoardPosition _position;
 
         // Index of the position being evaluated in the ActiveLine
-        private int _positionIndex;
+        private static int _positionIndex;
 
         // Text value of the evaluation
-        private string _positionEvaluation = "";
+        private static string _positionEvaluation = "";
 
         // The list of Runs to evaluate when we are evaluating a line
         // in the Training mode.
-        private List<Run> _runsToEvaluate = new List<Run>();
+        private static List<Run> _runsToEvaluate = new List<Run>();
 
         // The lists of Nodes corresponding to the Runs in _runsToEvaluate
-        private List<TreeNode> _nodesToEvaluate = new List<TreeNode>();
+        private static List<TreeNode> _nodesToEvaluate = new List<TreeNode>();
 
         // Current index of the run to evaluate.
-        // If the evaluation has noit started yet it is set to -1.
-        private int _runToEvaluateIndex = -1;
+        // If the evaluation has not started yet it is set to -1.
+        private static int _runToEvaluateIndex = -1;
 
         /// <summary>
-        /// Adds a Run to the list of _runsToEvaluate.
-        /// At the same time, adds the corresponding Node
-        /// to the list of Nodes.
+        /// The current evaluation mode.
+        /// This property is read only.
+        /// Clients can set a new mode by calling ChangeCurrentMode
         /// </summary>
-        /// <param name="r"></param>
-        public void AddRunToEvaluate(Run r)
+        public static Mode CurrentMode
         {
-            int nodeId = GuiUtilities.GetNodeIdFromPrefixedString(r.Name);
-            TreeNode nd = AppStateManager.Workbook.GetNodeFromNodeId(nodeId);
-            
-            _nodesToEvaluate.Add(nd);
-            _runsToEvaluate.Add(r);
+            get { return _currentMode; }
+        }
+
+        /// <summary>
+        /// Switches to a new Evaluation mode.
+        /// Makes sure that app timers are appropriately
+        /// set of reset.
+        /// </summary>
+        /// <param name="mode"></param>
+        public static void ChangeCurrentMode(Mode mode)
+        {
+            _currentMode = mode;
+            switch (_currentMode)
+            {
+                case Mode.IDLE:
+                    AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    AppStateManager.MainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                    break;
+                case Mode.CONTINUOUS:
+                    AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    AppStateManager.MainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                    break;
+                case Mode.LINE:
+                    AppStateManager.MainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    AppStateManager.MainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                    break;
+                case Mode.ENGINE_GAME:
+                    AppStateManager.MainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    AppStateManager.MainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                    break;
+            }
+
+            AppStateManager.SetupGuiForCurrentStates();
         }
 
         /// <summary>
         /// Returns the Run currently being evaluated.
         /// </summary>
         /// <returns></returns>
-        public Run GetCurrentEvaluatedRun()
+        public static Run GetCurrentEvaluatedRun()
         {
             if (_runToEvaluateIndex < 0 || _runToEvaluateIndex >= _runsToEvaluate.Count)
             {
@@ -88,7 +120,7 @@ namespace ChessForge
         /// Returns the Node currently being evaluated.
         /// </summary>
         /// <returns></returns>
-        public TreeNode GetCurrentEvaluatedNode()
+        public static TreeNode GetCurrentEvaluatedNode()
         {
             if (_runToEvaluateIndex < 0 || _runToEvaluateIndex >= _runsToEvaluate.Count)
             {
@@ -105,7 +137,7 @@ namespace ChessForge
         /// the lists are reset.
         /// </summary>
         /// <returns></returns>
-        public TreeNode GetNextNodeToEvaluate()
+        public static TreeNode GetNextNodeToEvaluate()
         {
             _runToEvaluateIndex++;
             if (_runToEvaluateIndex < _nodesToEvaluate.Count)
@@ -120,10 +152,25 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Adds a Run to the list of _runsToEvaluate.
+        /// At the same time, adds the corresponding Node
+        /// to the list of Nodes.
+        /// </summary>
+        /// <param name="r"></param>
+        public static void AddRunToEvaluate(Run r)
+        {
+            int nodeId = GuiUtilities.GetNodeIdFromPrefixedString(r.Name);
+            TreeNode nd = AppStateManager.Workbook.GetNodeFromNodeId(nodeId);
+
+            _nodesToEvaluate.Add(nd);
+            _runsToEvaluate.Add(r);
+        }
+
+        /// <summary>
         /// Clears the list of Nodes and Runs.
         /// Resets the evaluation index.
         /// </summary>
-        public void ClearRunsToEvaluate()
+        public static void ClearRunsToEvaluate()
         {
             _runsToEvaluate.Clear();
             _nodesToEvaluate.Clear();
@@ -139,34 +186,24 @@ namespace ChessForge
         /// Reset the state to get ready for another
         /// evaluation run.
         /// </summary>
-        public void Reset()
+        public static void Reset()
         {
             lock (EvaluationLock)
             {
-                _currentMode = Mode.IDLE;
                 _position = null;
                 _positionEvaluation = "";
                 _positionIndex = 0;
 
-                AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                ChangeCurrentMode(Mode.IDLE);
             }
             AppStateManager.ShowEvaluationProgressControlsForCurrentStates();
-        }
-
-        /// <summary>
-        /// The current evaluation mode.
-        /// </summary>
-        public Mode CurrentMode
-        {
-            get { return _currentMode; }
-            set {_currentMode = value; }
         }
 
         /// <summary>
         /// Indicates whether any kind of evaluation is happening
         /// at the moment.
         /// </summary>
-        public bool IsRunning
+        public static bool IsRunning
         {
             get
             {
@@ -181,7 +218,7 @@ namespace ChessForge
         /// The position being evaluated.
         /// This property is read only.
         /// </summary>
-        public BoardPosition Position
+        public static BoardPosition Position
         {
             get
             {
@@ -200,7 +237,7 @@ namespace ChessForge
         /// The position index is therefore set to -1.
         /// </summary>
         /// <param name="Position"></param>
-        public void SetPositionToEvaluate(BoardPosition Position)
+        public static void SetPositionToEvaluate(BoardPosition Position)
         {
             _position = Position;
             _positionIndex = -1;
@@ -210,7 +247,7 @@ namespace ChessForge
         /// Evaluated position's index in the Active Line,
         /// if applicable.
         /// </summary>
-        public int PositionIndex
+        public static int PositionIndex
         {
             get
             {
@@ -235,7 +272,7 @@ namespace ChessForge
         /// <summary>
         /// Accessor for the position evaluation text value.
         /// </summary>
-        public string PositionEvaluation
+        public static string PositionEvaluation
         {
             get
             {

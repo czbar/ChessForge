@@ -190,7 +190,6 @@ namespace ChessForge
         public static LearningMode.Mode CurrentLearningMode
         {
             get { return LearningMode.CurrentMode; }
-            set { LearningMode.CurrentMode = value; }
         }
 
         /// <summary>
@@ -198,19 +197,7 @@ namespace ChessForge
         /// </summary>
         public static EvaluationManager.Mode CurrentEvaluationMode
         {
-            get { return MainWin.Evaluation.CurrentMode; }
-        }
-
-        /// <summary>
-        /// Adjusts the GUI to the changed Evaluation state.
-        /// The state of the GUI will depend on the Learning Mode
-        /// and Game State.
-        /// </summary>
-        /// <param name="mode"></param>
-        public static void SetCurrentEvaluationMode(EvaluationManager.Mode mode)
-        {
-            MainWin.Evaluation.CurrentMode = mode;
-            ShowEvaluationProgressControlsForCurrentStates();
+            get { return EvaluationManager.CurrentMode; }
         }
 
         /// <summary>
@@ -253,14 +240,14 @@ namespace ChessForge
 
             _mainWin.Timers.StopAll();
             _mainWin.ResetEngineThinkingGUI();
-            EngineGame.CurrentState = EngineGame.GameState.IDLE;
+            EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
 
             _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
             _mainWin.RemoveMoveSquareColors();
             WorkbookFilePath = "";
             UpdateAppTitleBar();
             SwapCommentBoxForEngineLines(false);
-            CurrentLearningMode = LearningMode.Mode.IDLE;
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
             SetupGuiForCurrentStates();
             if (updateCommentBox)
             {
@@ -382,7 +369,7 @@ namespace ChessForge
         {
             _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
 
-            if (TrainingState.IsTrainingInProgress)
+            if (TrainingSession.IsTrainingInProgress)
             {
                 _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
@@ -485,7 +472,7 @@ namespace ChessForge
         /// </summary>
         private static void ConfigureMenusForEngineGame()
         {
-            bool train = TrainingState.IsTrainingInProgress;
+            bool train = TrainingSession.IsTrainingInProgress;
 
             _mainWin.UiMnStartTraining.IsEnabled = !train;
             _mainWin.UiMnRestartTraining.IsEnabled = train;
@@ -542,7 +529,7 @@ namespace ChessForge
                     _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Collapsed;
                     break;
                 case LearningMode.Mode.ENGINE_GAME:
-                    if (TrainingState.IsTrainingInProgress)
+                    if (TrainingSession.IsTrainingInProgress)
                     {
                         _mainWin.UiMnciStartTraining.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
@@ -585,14 +572,14 @@ namespace ChessForge
         /// </summary>
         public static void ShowEvaluationProgressControlsForCurrentStates()
         {
-            bool eval = MainWin.Evaluation.IsRunning;
+            bool eval = EvaluationManager.IsRunning;
             bool game = EngineGame.CurrentState != EngineGame.GameState.IDLE;
 
             _mainWin.Dispatcher.Invoke(() =>
                 {
                     if (eval)
                     {
-                        if (MainWin.Evaluation.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                        if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
                         {
                             _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;
                             _mainWin.UiImgEngineOff.Visibility = Visibility.Collapsed;
@@ -725,7 +712,7 @@ namespace ChessForge
             _mainWin.UiDgEngineGame.Width = 160;
 
             // adjust tab controls position
-            if (TrainingState.IsTrainingInProgress)
+            if (TrainingSession.IsTrainingInProgress)
             {
                 _mainWin.UiTabCtrlTraining.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
 
@@ -842,7 +829,7 @@ namespace ChessForge
 
         public static void SetupGuiForTrainingBrowseMode()
         {
-            TrainingState.IsBrowseActive = true;
+            TrainingSession.IsBrowseActive = true;
             _mainWin.UiTabCtrlTraining.Margin = new Thickness(185, 5, 5, 5);
             _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
 
@@ -861,7 +848,7 @@ namespace ChessForge
         {
             if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING)
             {
-                TrainingState.IsBrowseActive = false;
+                TrainingSession.IsBrowseActive = false;
                 _mainWin.UiTabCtrlTraining.Margin = new Thickness(5, 5, 5, 5);
                 _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
                 _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;

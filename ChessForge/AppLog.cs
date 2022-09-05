@@ -120,8 +120,8 @@ namespace ChessForge
             sb.Append("Application States" + Environment.NewLine);
             sb.Append("==================" + Environment.NewLine);
             sb.Append("Learning mode = " + AppStateManager.CurrentLearningMode.ToString() + Environment.NewLine);
-            sb.Append("IsTrainingInProgress = " + TrainingState.IsTrainingInProgress.ToString() + Environment.NewLine);
-            sb.Append("TrainingMode = " + TrainingState.CurrentMode.ToString() + Environment.NewLine);
+            sb.Append("IsTrainingInProgress = " + TrainingSession.IsTrainingInProgress.ToString() + Environment.NewLine);
+            sb.Append("TrainingMode = " + TrainingSession.CurrentState.ToString() + Environment.NewLine);
             sb.Append("EvaluationMode = " + AppStateManager.CurrentEvaluationMode.ToString() + Environment.NewLine);
             sb.Append("GameState = " + EngineGame.CurrentState.ToString() + Environment.NewLine);
 
@@ -132,6 +132,9 @@ namespace ChessForge
 
             AppTimers timers = AppStateManager.MainWin.Timers;
 
+            bool isMessagePollEnabled = EngineMessageProcessor.ChessEngineService.IsMessagePollEnabled();
+            sb.Append("ENGINE MESSAGE POLL" + ": IsEnabled = "
+                + isMessagePollEnabled.ToString() + Environment.NewLine);
             sb.Append(AppTimers.TimerId.CHECK_FOR_USER_MOVE.ToString() + ": IsEnabled = " 
                 + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
             sb.Append(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE.ToString() + ": IsEnabled = " 

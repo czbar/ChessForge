@@ -100,6 +100,16 @@ namespace ChessForge
         public static bool IsEngineAvailable { get => ChessEngineService.IsEngineReady; }
 
         /// <summary>
+        /// Returns true if the Message Poll timer
+        /// is currently enabled.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsMessagePollEnabled()
+        {
+            return ChessEngineService.IsMessagePollEnabled();
+        }
+
+        /// <summary>
         /// Sends a command to the engine.
         /// </summary>
         /// <param name="cmd"></param>
@@ -134,12 +144,12 @@ namespace ChessForge
         public static void MoveEvaluationFinished()
         {
             ClearMoveCandidates(false);
-            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
             {
                 // we are in a game
                 MoveEvaluationFinishedInGame();
             }
-            else if (TrainingState.IsTrainingInProgress)
+            else if (TrainingSession.IsTrainingInProgress)
             {
                 // eval request was made while in training (LearningMode can be GAME or TRAINING)
                 MoveEvaluationFinishedInTraining();
@@ -159,18 +169,18 @@ namespace ChessForge
         /// </summary>
         private static void MoveEvaluationFinishedInGame()
         {
-            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
             {
                 ProcessEngineGameMove();
                 _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                 _mainWin.ResetEvaluationProgressBar();
 
-                if (TrainingState.IsTrainingInProgress)
+                if (TrainingSession.IsTrainingInProgress)
                 {
                     _mainWin.EngineTrainingGameMoveMade();
                 }
                 _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
-                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.IDLE);
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
             }
         }
 
@@ -185,7 +195,7 @@ namespace ChessForge
             // stop the timer, apply training mode specific handling 
             // NOTE do not reset Evaluation.CurrentMode as this will be done 
             // later down the chain
-            _mainWin.Evaluation.SetPositionToEvaluate(null);
+            EvaluationManager.SetPositionToEvaluate(null);
             _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
             _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
             _mainWin.ResetEvaluationProgressBar();
@@ -204,9 +214,9 @@ namespace ChessForge
         {
             lock (LearningMode.EvalLock)
             {
-                AppLog.Message("Move evaluation finished for index " + _mainWin.Evaluation.PositionIndex.ToString());
+                AppLog.Message("Move evaluation finished for index " + EvaluationManager.PositionIndex.ToString());
 
-                string eval = _mainWin.Evaluation.PositionEvaluation;
+                string eval = EvaluationManager.PositionEvaluation;
                 if (!string.IsNullOrEmpty(eval))
                 {
                     // if this is not checkmate, check the sign (for checkmate it is already there)
@@ -216,19 +226,19 @@ namespace ChessForge
                     }
                 }
 
-                bool isWhiteEval = (_mainWin.Evaluation.PositionIndex - 1) % 2 == 0;
-                int moveIndex = (_mainWin.Evaluation.PositionIndex - 1) / 2;
+                bool isWhiteEval = (EvaluationManager.PositionIndex - 1) % 2 == 0;
+                int moveIndex = (EvaluationManager.PositionIndex - 1) / 2;
 
-                if (_mainWin.Evaluation.PositionIndex <= 0)
+                if (EvaluationManager.PositionIndex <= 0)
                 {
-                    AppLog.Message("ERROR: MoveEvaluationFinishedInManualReview() - bad position index " + _mainWin.Evaluation.PositionIndex.ToString());
+                    AppLog.Message("ERROR: MoveEvaluationFinishedInManualReview() - bad position index " + EvaluationManager.PositionIndex.ToString());
                 }
                 else
                 {
                     AppStateManager.ActiveLine.SetEvaluation(moveIndex, isWhiteEval ? PieceColor.White : PieceColor.Black, eval);
                 }
 
-                if (_mainWin.Evaluation.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
+                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
                 {
                     _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                     _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
@@ -236,19 +246,19 @@ namespace ChessForge
 
                 if (ContinueLineEvaluation())
                 {
-                    AppLog.Message("Continue eval next move after index " + _mainWin.Evaluation.PositionIndex.ToString());
+                    AppLog.Message("Continue eval next move after index " + EvaluationManager.PositionIndex.ToString());
                     ClearMoveCandidates(false);
                     AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                    _mainWin.Evaluation.PositionIndex++;
-                    RequestMoveEvaluation(_mainWin.Evaluation.PositionIndex);
+                    EvaluationManager.PositionIndex++;
+                    RequestMoveEvaluation(EvaluationManager.PositionIndex);
 
                     _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                 }
                 else
                 {
-                    if (_mainWin.Evaluation.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
+                    if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
                     {
-                        _mainWin.Evaluation.Reset();
+                        EvaluationManager.Reset();
 
                         AppStateManager.ResetEvaluationControls();
                         AppStateManager.ShowMoveEvaluationControls(false, true);
@@ -265,7 +275,7 @@ namespace ChessForge
         /// <returns></returns>
         private static bool ContinueLineEvaluation()
         {
-            return _mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE && _mainWin.Evaluation.PositionIndex != _mainWin.ActiveLine.GetPlyCount() - 1;
+            return EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE && EvaluationManager.PositionIndex != _mainWin.ActiveLine.GetPlyCount() - 1;
         }
 
         /// <summary>
@@ -304,17 +314,17 @@ namespace ChessForge
 
             if (isMateCf)
             {
-                EngineGame.CurrentState = EngineGame.GameState.IDLE;
+                EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
                 _mainWin.BoardCommentBox.ReportCheckmate(false);
             }
             else if (isStalemate)
             {
-                EngineGame.CurrentState = EngineGame.GameState.IDLE;
+                EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
                 _mainWin.BoardCommentBox.ReportStalemate();
             }
             else
             {
-                EngineGame.CurrentState = EngineGame.GameState.USER_THINKING;
+                EngineGame.ChangeCurrentState(EngineGame.GameState.USER_THINKING);
                 _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
             }
         }
@@ -333,19 +343,18 @@ namespace ChessForge
         /// <param name="posIndex"></param>
         public static void RequestMoveEvaluation(int posIndex)
         {
-            _mainWin.Evaluation.PositionIndex = posIndex;
-            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.IDLE)
+            EvaluationManager.PositionIndex = posIndex;
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.IDLE)
             {
-                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.CONTINUOUS);
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
             }
 
             TreeNode nd = _mainWin.ActiveLine.GetNodeAtIndex(posIndex);
-//            _mainWin.Evaluation.Position = nd.Position;
-            _mainWin.DisplayPosition(_mainWin.Evaluation.Position);
+            _mainWin.DisplayPosition(EvaluationManager.Position);
 
             _mainWin.Dispatcher.Invoke(() =>
             {
-                if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && _mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE)
+                if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                 {
                     _mainWin.ActiveLine.SelectPly((int)nd.Parent.Position.MoveNumber, nd.Parent.Position.ColorToMove);
                     _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveLine.GetLineId(), posIndex);
@@ -355,7 +364,7 @@ namespace ChessForge
             AppStateManager.ShowMoveEvaluationControls(true);
             _mainWin.UpdateLastMoveTextBox(posIndex);
 
-            string fen = AppStateManager.PrepareMoveEvaluation(_mainWin.Evaluation.Position, true);
+            string fen = AppStateManager.PrepareMoveEvaluation(EvaluationManager.Position, true);
             RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
         }
 
@@ -376,7 +385,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public static void RequestMoveEvaluationInTraining(TreeNode nd)
         {
-            _mainWin.Evaluation.SetPositionToEvaluate(nd.Position);
+            EvaluationManager.SetPositionToEvaluate(nd.Position);
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
             _mainWin.UpdateLastMoveTextBox(nd);
             AppStateManager.ShowMoveEvaluationControls(true, false);
@@ -394,7 +403,7 @@ namespace ChessForge
         /// <param name="position"></param>
         public static void RequestEngineMove(BoardPosition position)
         {
-            AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.ENGINE_GAME);
+            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.ENGINE_GAME);
 
             string fen = AppStateManager.PrepareMoveEvaluation(position, false);
             RequestEngineEvaluation(fen, Configuration.EngineMpv, Configuration.EngineMoveTime);
@@ -427,7 +436,7 @@ namespace ChessForge
             string fen = FenParser.GenerateFenFromPosition(_mainWin.ActiveLine.GetNodeAtIndex(index).Position);
             SendCommand("position fen " + fen);
 
-            _mainWin.Evaluation.PositionIndex = index;
+            EvaluationManager.PositionIndex = index;
             if (movetime > 0)
             {
                 SendCommand(UciCommands.ENG_GO_MOVE_TIME + " " + movetime.ToString());
