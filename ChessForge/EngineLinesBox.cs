@@ -22,9 +22,6 @@ namespace ChessForge
         // progress bar for engine evaluation
         private ProgressBar _pbEngineEval;
 
-        // reference to EvaluationState object.
-        private EvaluationManager _evalState;
-
         /// <summary>
         /// Evaluation lines obtained from the engine.
         /// </summary>
@@ -39,13 +36,12 @@ namespace ChessForge
         /// <param name="textBox"></param>
         /// <param name="progBar"></param>
         /// <param name="evalState"></param>
-        public EngineLinesBox(MainWindow mainWin, TextBox textBox, ProgressBar progBar, EvaluationManager evalState)
+        public EngineLinesBox(MainWindow mainWin, TextBox textBox, ProgressBar progBar)
         {
             _mainWin = mainWin;
 
             _tbEvalLines = textBox;
             _pbEngineEval = progBar;
-            _evalState = evalState;
         }
 
         /// <summary>
@@ -67,7 +63,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void ShowEngineLines(object source, ElapsedEventArgs e)
         {
-            if (_evalState.CurrentMode != EvaluationManager.Mode.ENGINE_GAME && _evalState.Position != null)
+            if (EvaluationManager.CurrentMode != EvaluationManager.Mode.ENGINE_GAME && EvaluationManager.Position != null)
             {
                 Lines.Clear();
                 lock (EngineMessageProcessor.MoveCandidatesLock)
@@ -90,9 +86,9 @@ namespace ChessForge
                     _tbEvalLines.Text = sb.ToString();
                 });
 
-                if (Lines.Count > 0 && _evalState.Position != null)
+                if (Lines.Count > 0 && EvaluationManager.Position != null)
                 {
-                    _evalState.PositionEvaluation = GuiUtilities.BuildEvaluationText(Lines[0], _evalState.Position.ColorToMove);
+                    EvaluationManager.PositionEvaluation = GuiUtilities.BuildEvaluationText(Lines[0], EvaluationManager.Position.ColorToMove);
                 }
             }
 
@@ -112,12 +108,12 @@ namespace ChessForge
         {
             try
             {
-                if (line == null || _evalState.Position == null)
+                if (line == null || EvaluationManager.Position == null)
                 {
                     return " ";
                 }
 
-                string eval = GuiUtilities.BuildEvaluationText(line, _evalState.Position.ColorToMove);
+                string eval = GuiUtilities.BuildEvaluationText(line, EvaluationManager.Position.ColorToMove);
 
                 if (eval == "#")
                 {
@@ -126,10 +122,10 @@ namespace ChessForge
                 else
                 {
 
-                    uint moveNoToShow = _evalState.Position.ColorToMove == PieceColor.Black ?
-                        _evalState.Position.MoveNumber : (_evalState.Position.MoveNumber + 1);
+                    uint moveNoToShow = EvaluationManager.Position.ColorToMove == PieceColor.Black ?
+                        EvaluationManager.Position.MoveNumber : (EvaluationManager.Position.MoveNumber + 1);
 
-                    string sMoveNo = moveNoToShow.ToString() + (_evalState.Position.ColorToMove == PieceColor.White ? "." : "...");
+                    string sMoveNo = moveNoToShow.ToString() + (EvaluationManager.Position.ColorToMove == PieceColor.White ? "." : "...");
                     if (string.IsNullOrEmpty(line.Line))
                     {
                         sMoveNo = "";
@@ -170,7 +166,7 @@ namespace ChessForge
 
             StringBuilder sb = new StringBuilder();
             // make a copy of the position under evaluation
-            BoardPosition workingPosition = new BoardPosition(_evalState.Position);
+            BoardPosition workingPosition = new BoardPosition(EvaluationManager.Position);
             bool firstMove = true;
             try
             {

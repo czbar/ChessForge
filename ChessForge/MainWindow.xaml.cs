@@ -113,7 +113,7 @@ namespace ChessForge
             BoardCommentBox = new CommentBox(UiRtbBoardComment.Document, this);
             ActiveLine = new ActiveLineManager(UiDgActiveLine, this);
 
-            EngineLinesGUI = new EngineLinesBox(this, UiTbEngineLines, UiPbEngineThinking, EvaluationMgr);
+            EngineLinesGUI = new EngineLinesBox(this, UiTbEngineLines, UiPbEngineThinking);
             Timers = new AppTimers(EngineLinesGUI, this);
 
             Configuration.Initialize(this);
@@ -400,7 +400,7 @@ namespace ChessForge
                 return;
             }
 
-            if (EvaluationMgr.IsRunning)
+            if (EvaluationManager.IsRunning)
             {
                 BoardCommentBox.ShowFlashAnnouncement("Engine evaluation in progress!");
                 return;
@@ -1079,7 +1079,7 @@ namespace ChessForge
             TreeNode nd = ActiveLine.GetNodeAtIndex(index);
             _workbookView.SelectLineAndMove(lineId, nd.NodeId);
             _lvWorkbookTable_SelectLineAndMove(lineId, nd.NodeId);
-            if (EvaluationMgr.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
             {
                 EvaluateActiveLineSelectedPositionEx();
             }
@@ -1128,7 +1128,7 @@ namespace ChessForge
                 {
                     MainChessBoard.DisplayPosition(nd.Position);
                 }
-                if (EvaluationMgr.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
                 {
                     EvaluateActiveLineSelectedPositionEx();
                 }
@@ -1165,6 +1165,10 @@ namespace ChessForge
             AppLog.Message("Application Closing");
 
             StopEvaluation();
+
+            EngineMessageProcessor.ClearEngineStreamReaderOnAppExit();
+            EngineMessageProcessor.ChessEngineService.StopEngine();
+
             if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN)
             {
                 WorkbookManager.PromptUserToConvertPGNToCHF();
@@ -1246,20 +1250,20 @@ namespace ChessForge
                 return;
             }
 
-            if (EvaluationMgr.CurrentMode != EvaluationManager.Mode.IDLE)
+            if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
             {
                 StopEvaluation();
             }
 
             int idx = ActiveLine.GetSelectedPlyNodeIndex();
-            EvaluationMgr.PositionIndex = idx > 0 ? idx : 1;
+            EvaluationManager.PositionIndex = idx > 0 ? idx : 1;
 
             // we will start with the first move of the active line
             if (EngineMessageProcessor.IsEngineAvailable)
             {
                 AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.LINE);
                 UiDgActiveLine.SelectedCells.Clear();
-                EngineMessageProcessor.RequestMoveEvaluation(EvaluationMgr.PositionIndex);
+                EngineMessageProcessor.RequestMoveEvaluation(EvaluationManager.PositionIndex);
             }
             else
             {
@@ -1277,8 +1281,8 @@ namespace ChessForge
 
         public void UpdateLastMoveTextBox(int posIndex)
         {
-            string moveTxt = EvaluationMgr.Position.MoveNumber.ToString()
-                    + (EvaluationMgr.Position.ColorToMove == PieceColor.Black ? "." : "...")
+            string moveTxt = EvaluationManager.Position.MoveNumber.ToString()
+                    + (EvaluationManager.Position.ColorToMove == PieceColor.Black ? "." : "...")
                     + ActiveLine.GetNodeAtIndex(posIndex).LastMoveAlgebraicNotation;
 
             UpdateLastMoveTextBox(moveTxt);
@@ -1435,7 +1439,7 @@ namespace ChessForge
 
             MainChessBoard.RemoveMoveSquareColors();
 
-            EvaluationMgr.Reset();
+            EvaluationManager.Reset();
             EngineMessageProcessor.StopEngineEvaluation();
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
             EngineGame.CurrentState = EngineGame.GameState.IDLE;
@@ -1504,7 +1508,7 @@ namespace ChessForge
             {
                 StopEngineGame();
             }
-            else if (EvaluationMgr.IsRunning)
+            else if (EvaluationManager.IsRunning)
             {
                 EngineMessageProcessor.StopEngineEvaluation();
             }
@@ -1529,7 +1533,7 @@ namespace ChessForge
             {
                 StopEngineGame();
             }
-            else if (EvaluationMgr.IsRunning)
+            else if (EvaluationManager.IsRunning)
             {
                 EngineMessageProcessor.StopEngineEvaluation();
             }
@@ -1579,7 +1583,7 @@ namespace ChessForge
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             TrainingState.IsTrainingInProgress = true;
             TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_TRAINING_MOVE;
-            EvaluationMgr.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
             LearningMode.TrainingSide = startNode.ColorToMove;
             MainChessBoard.DisplayPosition(startNode.Position);
@@ -1616,7 +1620,7 @@ namespace ChessForge
                 if (WorkbookManager.PromptAndSaveWorkbook(false))
                 {
                     EngineMessageProcessor.StopEngineEvaluation();
-                    EvaluationMgr.Reset();
+                    EvaluationManager.Reset();
 
                     TrainingState.IsTrainingInProgress = false;
                     MainChessBoard.RemoveMoveSquareColors();
@@ -2117,7 +2121,7 @@ namespace ChessForge
         {
             EngineMessageProcessor.StopEngineEvaluation();
 
-            EvaluationMgr.Reset();
+            EvaluationManager.Reset();
             AppStateManager.ResetEvaluationControls();
             AppStateManager.ShowMoveEvaluationControls(false, true);
             AppStateManager.SetupGuiForCurrentStates();
