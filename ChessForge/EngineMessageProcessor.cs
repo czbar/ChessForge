@@ -100,6 +100,16 @@ namespace ChessForge
         public static bool IsEngineAvailable { get => ChessEngineService.IsEngineReady; }
 
         /// <summary>
+        /// Returns true if the Message Poll timer
+        /// is currently enabled.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsMessagePollEnabled()
+        {
+            return ChessEngineService.IsMessagePollEnabled();
+        }
+
+        /// <summary>
         /// Sends a command to the engine.
         /// </summary>
         /// <param name="cmd"></param>
