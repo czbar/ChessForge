@@ -1865,6 +1865,10 @@ namespace ChessForge
             });
         }
 
+        /// <summary>
+        /// Shade the "from" and "to" squares of the passed move.
+        /// </summary>
+        /// <param name="engCode"></param>
         public void ColorMoveSquares(string engCode)
         {
             this.Dispatcher.Invoke(() =>
@@ -1971,6 +1975,12 @@ namespace ChessForge
             dlg.ShowDialog();
         }
 
+        /// <summary>
+        /// The user requested to edit Workbook options.
+        /// The dialog will be shown.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiMnWorkbookOptions_Click(object sender, RoutedEventArgs e)
         {
             if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE)
@@ -1979,6 +1989,10 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Shows the Workbook options dialog.
+        /// </summary>
+        /// <returns></returns>
         private bool ShowWorkbookOptionsDialog()
         {
             WorkbookOptionsDialog dlg = new WorkbookOptionsDialog(Workbook)
@@ -2003,6 +2017,12 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// The user requested to edit Application options.
+        /// The dialog will be shown.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiMnApplicationOptions_Click(object sender, RoutedEventArgs e)
         {
             if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE)
@@ -2011,6 +2031,9 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Shows the Application Options dialog.
+        /// </summary>
         private void ShowApplicationOptionsDialog()
         {
             AppOptionsDialog dlg = new AppOptionsDialog
@@ -2076,11 +2099,38 @@ namespace ChessForge
             SetActiveLine(startLineId, startingNode);
         }
 
+        /// <summary>
+        /// The user requested export of the Workbook to PGN.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiMnExportPgn_Click(object sender, RoutedEventArgs e)
         {
             WorkbookManager.SaveWorkbookToPgn();
         }
 
+        /// <summary>
+        /// Stops any evaluation that is currently happening.
+        /// Resets evaluation state and adjusts the GUI accordingly. 
+        /// </summary>
+        public void StopEvaluation()
+        {
+            EngineMessageProcessor.StopEngineEvaluation();
+
+            Evaluation.Reset();
+            AppStateManager.ResetEvaluationControls();
+            AppStateManager.ShowMoveEvaluationControls(false, true);
+            AppStateManager.SetupGuiForCurrentStates();
+            Timers.StopAll();
+        }
+
+        /// <summary>
+        /// Handles the Evaluation toggle being clicked while in the ON mode.
+        /// Any evaluation in progress will be stopped.
+        /// to CONTINUOUS.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiImgEngineOn_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             EngineMessageProcessor.StopEngineEvaluation();
@@ -2093,17 +2143,13 @@ namespace ChessForge
             e.Handled = true;
         }
 
-        public void StopEvaluation()
-        {
-            EngineMessageProcessor.StopEngineEvaluation();
-
-            Evaluation.Reset();
-            AppStateManager.ResetEvaluationControls();
-            AppStateManager.ShowMoveEvaluationControls(false, true);
-            AppStateManager.SetupGuiForCurrentStates();
-            Timers.StopAll();
-        }
-
+        /// <summary>
+        /// Handles the Evaluation toggle being clicked while in the OFF mode.
+        /// If in MANUAL REVIEW mode, sets the current evaluation mode
+        /// to CONTINUOUS.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiImgEngineOff_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
