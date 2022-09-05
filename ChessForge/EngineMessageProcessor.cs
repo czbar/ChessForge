@@ -304,17 +304,17 @@ namespace ChessForge
 
             if (isMateCf)
             {
-                EngineGame.CurrentState = EngineGame.GameState.IDLE;
+                EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
                 _mainWin.BoardCommentBox.ReportCheckmate(false);
             }
             else if (isStalemate)
             {
-                EngineGame.CurrentState = EngineGame.GameState.IDLE;
+                EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
                 _mainWin.BoardCommentBox.ReportStalemate();
             }
             else
             {
-                EngineGame.CurrentState = EngineGame.GameState.USER_THINKING;
+                EngineGame.ChangeCurrentState(EngineGame.GameState.USER_THINKING);
                 _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
             }
         }
