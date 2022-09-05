@@ -573,10 +573,10 @@ namespace ChessForge
         {
             Run runEvaluated;
             TreeNode nodeEvaluated;
-            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE)
+            if (_mainWin.EvaluationMgr.CurrentMode == EvaluationManager.Mode.LINE)
             {
-                runEvaluated = _mainWin.Evaluation.GetCurrentEvaluatedRun();
-                nodeEvaluated = _mainWin.Evaluation.GetCurrentEvaluatedNode();
+                runEvaluated = _mainWin.EvaluationMgr.GetCurrentEvaluatedRun();
+                nodeEvaluated = _mainWin.EvaluationMgr.GetCurrentEvaluatedNode();
             }
             else
             {
@@ -615,7 +615,7 @@ namespace ChessForge
                 _mainWin.UiVbFloatingChessboard.Margin = new Thickness(_lastClickedPoint.X, _lastClickedPoint.Y - 165, 0, 0);
                 _mainWin.ShowFloatingChessboard(true);
 
-                if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE)
+                if (_mainWin.EvaluationMgr.CurrentMode == EvaluationManager.Mode.LINE)
                 {
                     RequestMoveEvaluation();
                 }
@@ -1022,14 +1022,14 @@ namespace ChessForge
         /// </summary>
         public void RequestMoveEvaluation()
         {
-            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE)
+            if (_mainWin.EvaluationMgr.CurrentMode == EvaluationManager.Mode.LINE)
             {
-                TreeNode nd = _mainWin.Evaluation.GetNextNodeToEvaluate();
+                TreeNode nd = _mainWin.EvaluationMgr.GetNextNodeToEvaluate();
                 if (nd == null)
                 {
-                    _mainWin.Evaluation.ClearRunsToEvaluate();
+                    _mainWin.EvaluationMgr.ClearRunsToEvaluate();
                     AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.IDLE);
-                    _mainWin.Evaluation.SetPositionToEvaluate(null);
+                    _mainWin.EvaluationMgr.SetPositionToEvaluate(null);
                 }
                 else
                 {
@@ -1053,7 +1053,7 @@ namespace ChessForge
         /// </summary>
         public void RequestLineEvaluation()
         {
-            _mainWin.Evaluation.ClearRunsToEvaluate();
+            _mainWin.EvaluationMgr.ClearRunsToEvaluate();
 
             // figure out whether this is for the Main Line or Engine Game
             Run firstRun = _lastClickedRun;
@@ -1106,7 +1106,7 @@ namespace ChessForge
                             {
                                 if (inl.Name.StartsWith(_run_line_move_) || inl.Name.StartsWith(_run_wb_move_))
                                 {
-                                    _mainWin.Evaluation.AddRunToEvaluate(inl as Run);
+                                    _mainWin.EvaluationMgr.AddRunToEvaluate(inl as Run);
                                 }
                             }
                         }
@@ -1135,7 +1135,7 @@ namespace ChessForge
 
                     if (started && inl.Name.StartsWith(_run_engine_game_move_))
                     {
-                        _mainWin.Evaluation.AddRunToEvaluate(inl as Run);
+                        _mainWin.EvaluationMgr.AddRunToEvaluate(inl as Run);
                     }
                 }
             }
@@ -1174,8 +1174,8 @@ namespace ChessForge
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
             // don't accept any clicks if evaluation is in progress
-            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.CONTINUOUS
-                || _mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE)
+            if (_mainWin.EvaluationMgr.CurrentMode == EvaluationManager.Mode.CONTINUOUS
+                || _mainWin.EvaluationMgr.CurrentMode == EvaluationManager.Mode.LINE)
             {
                 return;
             }

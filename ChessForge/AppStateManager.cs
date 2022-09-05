@@ -197,7 +197,7 @@ namespace ChessForge
         /// </summary>
         public static EvaluationManager.Mode CurrentEvaluationMode
         {
-            get { return MainWin.Evaluation.CurrentMode; }
+            get { return MainWin.EvaluationMgr.CurrentMode; }
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace ChessForge
         /// <param name="mode"></param>
         public static void SetCurrentEvaluationMode(EvaluationManager.Mode mode)
         {
-            MainWin.Evaluation.ChangeCurrentMode(mode);
+            MainWin.EvaluationMgr.ChangeCurrentMode(mode);
         }
 
         /// <summary>
@@ -583,14 +583,14 @@ namespace ChessForge
         /// </summary>
         public static void ShowEvaluationProgressControlsForCurrentStates()
         {
-            bool eval = MainWin.Evaluation.IsRunning;
+            bool eval = MainWin.EvaluationMgr.IsRunning;
             bool game = EngineGame.CurrentState != EngineGame.GameState.IDLE;
 
             _mainWin.Dispatcher.Invoke(() =>
                 {
                     if (eval)
                     {
-                        if (MainWin.Evaluation.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                        if (MainWin.EvaluationMgr.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
                         {
                             _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;
                             _mainWin.UiImgEngineOff.Visibility = Visibility.Collapsed;

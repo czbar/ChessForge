@@ -732,7 +732,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
-            if (_mainWin.Evaluation.CurrentMode == EvaluationManager.Mode.LINE)
+            if (_mainWin.EvaluationMgr.CurrentMode == EvaluationManager.Mode.LINE)
             {
                 _mainWin.StopEvaluation();
                 AppStateManager.SwapCommentBoxForEngineLines(false);

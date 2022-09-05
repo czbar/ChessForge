@@ -53,7 +53,7 @@ namespace ChessForge
 
         public EngineLinesBox EngineLinesGUI;
         AnimationState MoveAnimation = new AnimationState();
-        public EvaluationManager Evaluation;
+        public EvaluationManager EvaluationMgr;
 
         // The main chessboard of the application
         public ChessBoard MainChessBoard;
@@ -105,7 +105,7 @@ namespace ChessForge
 
             // Sets a public reference for access from other objects.
             EngineGame.SetMainWin(this);
-            Evaluation = new EvaluationManager();
+            EvaluationMgr = new EvaluationManager();
 
             InitializeComponent();
             SoundPlayer.Initialize();
@@ -113,7 +113,7 @@ namespace ChessForge
             BoardCommentBox = new CommentBox(UiRtbBoardComment.Document, this);
             ActiveLine = new ActiveLineManager(UiDgActiveLine, this);
 
-            EngineLinesGUI = new EngineLinesBox(this, UiTbEngineLines, UiPbEngineThinking, Evaluation);
+            EngineLinesGUI = new EngineLinesBox(this, UiTbEngineLines, UiPbEngineThinking, EvaluationMgr);
             Timers = new AppTimers(EngineLinesGUI, this);
 
             Configuration.Initialize(this);
@@ -400,7 +400,7 @@ namespace ChessForge
                 return;
             }
 
-            if (Evaluation.IsRunning)
+            if (EvaluationMgr.IsRunning)
             {
                 BoardCommentBox.ShowFlashAnnouncement("Engine evaluation in progress!");
                 return;
@@ -1079,7 +1079,7 @@ namespace ChessForge
             TreeNode nd = ActiveLine.GetNodeAtIndex(index);
             _workbookView.SelectLineAndMove(lineId, nd.NodeId);
             _lvWorkbookTable_SelectLineAndMove(lineId, nd.NodeId);
-            if (Evaluation.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+            if (EvaluationMgr.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
             {
                 EvaluateActiveLineSelectedPositionEx();
             }
@@ -1128,7 +1128,7 @@ namespace ChessForge
                 {
                     MainChessBoard.DisplayPosition(nd.Position);
                 }
-                if (Evaluation.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                if (EvaluationMgr.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
                 {
                     EvaluateActiveLineSelectedPositionEx();
                 }
@@ -1246,20 +1246,20 @@ namespace ChessForge
                 return;
             }
 
-            if (Evaluation.CurrentMode != EvaluationManager.Mode.IDLE)
+            if (EvaluationMgr.CurrentMode != EvaluationManager.Mode.IDLE)
             {
                 StopEvaluation();
             }
 
             int idx = ActiveLine.GetSelectedPlyNodeIndex();
-            Evaluation.PositionIndex = idx > 0 ? idx : 1;
+            EvaluationMgr.PositionIndex = idx > 0 ? idx : 1;
 
             // we will start with the first move of the active line
             if (EngineMessageProcessor.IsEngineAvailable)
             {
                 AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.LINE);
                 UiDgActiveLine.SelectedCells.Clear();
-                EngineMessageProcessor.RequestMoveEvaluation(Evaluation.PositionIndex);
+                EngineMessageProcessor.RequestMoveEvaluation(EvaluationMgr.PositionIndex);
             }
             else
             {
@@ -1277,8 +1277,8 @@ namespace ChessForge
 
         public void UpdateLastMoveTextBox(int posIndex)
         {
-            string moveTxt = Evaluation.Position.MoveNumber.ToString()
-                    + (Evaluation.Position.ColorToMove == PieceColor.Black ? "." : "...")
+            string moveTxt = EvaluationMgr.Position.MoveNumber.ToString()
+                    + (EvaluationMgr.Position.ColorToMove == PieceColor.Black ? "." : "...")
                     + ActiveLine.GetNodeAtIndex(posIndex).LastMoveAlgebraicNotation;
 
             UpdateLastMoveTextBox(moveTxt);
@@ -1435,7 +1435,7 @@ namespace ChessForge
 
             MainChessBoard.RemoveMoveSquareColors();
 
-            Evaluation.Reset();
+            EvaluationMgr.Reset();
             EngineMessageProcessor.StopEngineEvaluation();
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
             EngineGame.CurrentState = EngineGame.GameState.IDLE;
@@ -1504,7 +1504,7 @@ namespace ChessForge
             {
                 StopEngineGame();
             }
-            else if (Evaluation.IsRunning)
+            else if (EvaluationMgr.IsRunning)
             {
                 EngineMessageProcessor.StopEngineEvaluation();
             }
@@ -1529,7 +1529,7 @@ namespace ChessForge
             {
                 StopEngineGame();
             }
-            else if (Evaluation.IsRunning)
+            else if (EvaluationMgr.IsRunning)
             {
                 EngineMessageProcessor.StopEngineEvaluation();
             }
@@ -1579,7 +1579,7 @@ namespace ChessForge
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             TrainingState.IsTrainingInProgress = true;
             TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_TRAINING_MOVE;
-            Evaluation.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+            EvaluationMgr.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
             LearningMode.TrainingSide = startNode.ColorToMove;
             MainChessBoard.DisplayPosition(startNode.Position);
@@ -1616,7 +1616,7 @@ namespace ChessForge
                 if (WorkbookManager.PromptAndSaveWorkbook(false))
                 {
                     EngineMessageProcessor.StopEngineEvaluation();
-                    Evaluation.Reset();
+                    EvaluationMgr.Reset();
 
                     TrainingState.IsTrainingInProgress = false;
                     MainChessBoard.RemoveMoveSquareColors();
@@ -2117,7 +2117,7 @@ namespace ChessForge
         {
             EngineMessageProcessor.StopEngineEvaluation();
 
-            Evaluation.Reset();
+            EvaluationMgr.Reset();
             AppStateManager.ResetEvaluationControls();
             AppStateManager.ShowMoveEvaluationControls(false, true);
             AppStateManager.SetupGuiForCurrentStates();
