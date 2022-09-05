@@ -306,7 +306,7 @@ namespace ChessForge
                         {
                             // replace the TreeNode with the one from the Workbook so that
                             // we stay with the workbook as long as the user does.
-                            EngineGame.ReplaceCurrentWithWorkbookMove(child);
+                            EngineGame.ReplaceLastPly(child);
                             foundMove = child;
                             _userMove = child;
                         }
@@ -423,7 +423,7 @@ namespace ChessForge
 
             // user may have chosen a different move to what we originally had
             // TODO: after the re-think of the GUI that probably cannot happen (?)
-            EngineGame.ReplaceCurrentWithWorkbookMove(nodeId);
+            EngineGame.ReplaceLastPly(nodeId);
 
             TreeNode userChoiceNode = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
 
@@ -436,7 +436,7 @@ namespace ChessForge
             EngineGame.AddPlyToGame(nd);
 
             // The move will be visualized in response to CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE timer's elapsed event
-            EngineGame.TrainingWorkbookMoveMade = true;
+            EngineGame.IsTrainingWorkbookMoveMade = true;
             _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
             AppStateManager.SwapCommentBoxForEngineLines(false);
         }
