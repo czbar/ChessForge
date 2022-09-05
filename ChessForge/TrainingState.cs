@@ -8,13 +8,10 @@ using GameTree;
 namespace ChessForge
 {
     /// <summary>
-    /// Holds attributes of the current training state. 
+    /// Holds attributes of the current training session. 
     /// </summary>
     public class TrainingState
     {
-        private static bool _isTrainingInProgress;
-        private static bool _isBrowseActive;
-
         /// <summary>
         /// Object to lock examining of the user move vs Workbook.
         /// We will be setting a Training State to new value
@@ -25,9 +22,10 @@ namespace ChessForge
         /// <summary>
         /// Possible Training states.
         /// </summary>
-        public enum Mode
+        public enum State
         {
-            UNKNOWN,
+            // no training session is open
+            INACTIVE,
 
             // all is idle, awaiting the user to make a move
             AWAITING_USER_TRAINING_MOVE,
@@ -42,6 +40,15 @@ namespace ChessForge
             USER_MOVE_COMPLETED,
         }
 
+        // Flags if a Training Session is in progress
+        private static bool _isTrainingInProgress;
+
+        // Flags if the Browse view is active.
+        private static bool _isBrowseActive;
+
+        // The current state of the Training sessioin.
+        private static State _currentState;
+
         /// <summary>
         /// Whether a training session is in progress.
         /// </summary>
@@ -49,9 +56,9 @@ namespace ChessForge
         { get => _isTrainingInProgress; set => _isTrainingInProgress = value; }
 
         /// <summary>
-        /// The current mode of the application.
+        /// The current state of the Training session.
         /// </summary>
-        public static Mode CurrentMode { get; set; }
+        public static State CurrentState { get => _currentState; }
 
         /// <summary>
         /// Indicates if the user is using the Browsing view of the training lines. 
@@ -62,6 +69,15 @@ namespace ChessForge
         /// The current training line.
         /// </summary>
         public static List<TreeNode> TrainingLine = new List<TreeNode>();
+
+        /// <summary>
+        /// Sets the state of the Training session.
+        /// </summary>
+        /// <param name="state"></param>
+        public static void ChangeCurrentState(State state)
+        {
+            _currentState = state;
+        }
 
         /// <summary>
         /// Resets the current training line and sets

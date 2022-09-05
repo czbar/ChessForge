@@ -92,7 +92,7 @@ namespace ChessForge
 
                 // start polling for the user move
                 _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-                TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_TRAINING_MOVE;
+                TrainingState.ChangeCurrentState(TrainingState.State.AWAITING_USER_TRAINING_MOVE);
             }
         }
 
@@ -156,7 +156,7 @@ namespace ChessForge
         {
             if (TrainingState.IsTrainingInProgress && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
             {
-                TrainingState.CurrentMode = TrainingState.Mode.USER_MOVE_COMPLETED;
+                TrainingState.ChangeCurrentState(TrainingState.State.USER_MOVE_COMPLETED);
                 if (!endOfGame)
                 {
                     _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);

@@ -267,7 +267,7 @@ namespace ChessForge
         {
             lock (TrainingState.UserVsWorkbookMoveLock)
             {
-                if (TrainingState.CurrentMode != TrainingState.Mode.USER_MOVE_COMPLETED)
+                if (TrainingState.CurrentState != TrainingState.State.USER_MOVE_COMPLETED)
                     return;
 
                 RemoveIntroParas();
@@ -328,7 +328,7 @@ namespace ChessForge
                     if (foundMove != null && foundMove.Children.Count > 0)
                     {
                         // start the timer that will trigger a workbook response by RequestWorkbookResponse()
-                        TrainingState.CurrentMode = TrainingState.Mode.AWAITING_WORKBOOK_RESPONSE;
+                        TrainingState.ChangeCurrentState(TrainingState.State.AWAITING_WORKBOOK_RESPONSE);
                         _mainWin.Timers.Start(AppTimers.TimerId.REQUEST_WORKBOOK_MOVE);
                     }
                     else
@@ -362,7 +362,7 @@ namespace ChessForge
             TrainingState.RollbackTrainingLine(_lastClickedNode);
             EngineGame.RollbackGame(_lastClickedNode);
 
-            TrainingState.CurrentMode = TrainingState.Mode.USER_MOVE_COMPLETED;
+            TrainingState.ChangeCurrentState(TrainingState.State.USER_MOVE_COMPLETED);
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             AppStateManager.SetupGuiForCurrentStates();

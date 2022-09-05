@@ -460,7 +460,7 @@ namespace ChessForge
                     return false;
             }
             else if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
-                || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingState.CurrentMode == TrainingState.Mode.AWAITING_USER_TRAINING_MOVE && !TrainingState.IsBrowseActive)
+                || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingState.CurrentState == TrainingState.State.AWAITING_USER_TRAINING_MOVE && !TrainingState.IsBrowseActive)
             {
                 if (EngineGame.GetPieceColor(sqNorm) == EngineGame.ColorToMove)
                     return true;
@@ -496,7 +496,7 @@ namespace ChessForge
                 {
                     // double check that we are legitimately making a move
                     if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
-                        || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingState.CurrentMode == TrainingState.Mode.AWAITING_USER_TRAINING_MOVE
+                        || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingState.CurrentState == TrainingState.State.AWAITING_USER_TRAINING_MOVE
                         || LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
                     {
                         UserMoveProcessor.FinalizeUserMove(targetSquare);
@@ -1402,7 +1402,7 @@ namespace ChessForge
         {
             if (TrainingState.IsTrainingInProgress && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
             {
-                if ((TrainingState.CurrentMode == TrainingState.Mode.USER_MOVE_COMPLETED))
+                if ((TrainingState.CurrentState == TrainingState.State.USER_MOVE_COMPLETED))
                 {
                     this.Dispatcher.Invoke(() =>
                     {
@@ -1580,7 +1580,7 @@ namespace ChessForge
             StopEvaluation();
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             TrainingState.IsTrainingInProgress = true;
-            TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_TRAINING_MOVE;
+            TrainingState.ChangeCurrentState(TrainingState.State.AWAITING_USER_TRAINING_MOVE);
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
             LearningMode.TrainingSide = startNode.ColorToMove;
