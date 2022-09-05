@@ -201,17 +201,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Adjusts the GUI to the changed Evaluation state.
-        /// The state of the GUI will depend on the Learning Mode
-        /// and Game State.
-        /// </summary>
-        /// <param name="mode"></param>
-        public static void SetCurrentEvaluationMode(EvaluationManager.Mode mode)
-        {
-            EvaluationManager.ChangeCurrentMode(mode);
-        }
-
-        /// <summary>
         /// Current Game State.
         /// </summary>
         public static EngineGame.GameState CurrentGameState

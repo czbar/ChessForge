@@ -1231,7 +1231,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MenuItem_EvaluatePosition(object sender, RoutedEventArgs e)
         {
-            AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.CONTINUOUS);
+            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
             EvaluateActiveLineSelectedPositionEx();
         }
 
@@ -1260,7 +1260,7 @@ namespace ChessForge
             // we will start with the first move of the active line
             if (EngineMessageProcessor.IsEngineAvailable)
             {
-                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.LINE);
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE);
                 UiDgActiveLine.SelectedCells.Clear();
                 EngineMessageProcessor.RequestMoveEvaluation(EvaluationManager.PositionIndex);
             }
@@ -1513,7 +1513,7 @@ namespace ChessForge
             }
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-            AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.IDLE);
+            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
             AppStateManager.SwapCommentBoxForEngineLines(false);
 
@@ -2157,7 +2157,7 @@ namespace ChessForge
         {
             if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
             {
-                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.CONTINUOUS);
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
                 UiImgEngineOff.Visibility = Visibility.Collapsed;
                 UiImgEngineOn.Visibility = Visibility.Visible;
                 Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);

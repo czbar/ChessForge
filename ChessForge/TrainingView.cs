@@ -587,7 +587,7 @@ namespace ChessForge
             if (runEvaluated == null)
             {
                 // this should never happen but...
-                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.IDLE);
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
                 return;
             }
 
@@ -621,7 +621,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.IDLE);
+                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
                 }
             });
 
@@ -1028,7 +1028,7 @@ namespace ChessForge
                 if (nd == null)
                 {
                     EvaluationManager.ClearRunsToEvaluate();
-                    AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.IDLE);
+                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
                     EvaluationManager.SetPositionToEvaluate(null);
                 }
                 else
@@ -1038,7 +1038,7 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.CONTINUOUS);
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
                 EngineMessageProcessor.RequestMoveEvaluationInTraining(_lastClickedNode);
             }
         }
@@ -1065,13 +1065,13 @@ namespace ChessForge
                 {
                     // collect the Main Line's Runs to evaluate the moves
                     SetMainLineRunsToEvaluate(paraName, _lastClickedRun);
-                    AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.LINE);
+                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE);
                     RequestMoveEvaluation();
                 }
                 else if (paraName.StartsWith(_par_game_moves_))
                 {
                     SetGameRunsToEvaluate(parentPara, _lastClickedRun);
-                    AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.LINE);
+                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE);
                     RequestMoveEvaluation();
                 }
             }
