@@ -243,7 +243,7 @@ namespace ChessForge
         public void Initialize(TreeNode node)
         {
             _currentEngineGameMoveCount = 0;
-            TrainingState.ResetTrainingLine(node);
+            TrainingSession.ResetTrainingLine(node);
             Document.Blocks.Clear();
             InitParaDictionary();
 
@@ -265,9 +265,9 @@ namespace ChessForge
         /// </summary>
         public void ReportLastMoveVsWorkbook()
         {
-            lock (TrainingState.UserVsWorkbookMoveLock)
+            lock (TrainingSession.UserVsWorkbookMoveLock)
             {
-                if (TrainingState.CurrentState != TrainingState.State.USER_MOVE_COMPLETED)
+                if (TrainingSession.CurrentState != TrainingSession.State.USER_MOVE_COMPLETED)
                     return;
 
                 RemoveIntroParas();
@@ -328,7 +328,7 @@ namespace ChessForge
                     if (foundMove != null && foundMove.Children.Count > 0)
                     {
                         // start the timer that will trigger a workbook response by RequestWorkbookResponse()
-                        TrainingState.ChangeCurrentState(TrainingState.State.AWAITING_WORKBOOK_RESPONSE);
+                        TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_WORKBOOK_RESPONSE);
                         _mainWin.Timers.Start(AppTimers.TimerId.REQUEST_WORKBOOK_MOVE);
                     }
                     else
@@ -359,10 +359,10 @@ namespace ChessForge
         {
             _currentEngineGameMoveCount = 0;
 
-            TrainingState.RollbackTrainingLine(_lastClickedNode);
+            TrainingSession.RollbackTrainingLine(_lastClickedNode);
             EngineGame.RollbackGame(_lastClickedNode);
 
-            TrainingState.ChangeCurrentState(TrainingState.State.USER_MOVE_COMPLETED);
+            TrainingSession.ChangeCurrentState(TrainingSession.State.USER_MOVE_COMPLETED);
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             AppStateManager.SetupGuiForCurrentStates();
@@ -765,9 +765,9 @@ namespace ChessForge
         {
             StringBuilder sbInstruction = new StringBuilder();
             sbInstruction.Append("You will be making moves for");
-            sbInstruction.Append(TrainingState.StartPosition.ColorToMove == PieceColor.White ? " White " : " Black ");
+            sbInstruction.Append(TrainingSession.StartPosition.ColorToMove == PieceColor.White ? " White " : " Black ");
             sbInstruction.Append("and the program (a.k.a. the \"Coach\") will respond for");
-            sbInstruction.Append(TrainingState.StartPosition.ColorToMove == PieceColor.White ? " Black." : " White.");
+            sbInstruction.Append(TrainingSession.StartPosition.ColorToMove == PieceColor.White ? " Black." : " White.");
             sbInstruction.AppendLine();
             sbInstruction.Append("The Coach will comment on your every move based on the content of the Workbook.\n");
             sbInstruction.Append("\nRemember that you can:\n");

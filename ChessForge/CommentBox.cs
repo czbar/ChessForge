@@ -87,7 +87,7 @@ namespace ChessForge
                 {
                     AddNewParagraphToDoc("normal", "Wait for engine's response...");
                 }
-                else if (TrainingState.IsTrainingInProgress)
+                else if (TrainingSession.IsTrainingInProgress)
                 {
                     AddNewParagraphToDoc("normal", "Wait for a response...");
                 }
@@ -260,7 +260,7 @@ namespace ChessForge
                     {
                         txt = "You have checkmated the engine. Congratulations!";
                     }
-                    else if (TrainingState.IsTrainingInProgress)
+                    else if (TrainingSession.IsTrainingInProgress)
                     {
                         txt = "You have checkmated the coach. Congratulations!";
                     }

@@ -92,7 +92,7 @@ namespace ChessForge
 
                 // start polling for the user move
                 _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-                TrainingState.ChangeCurrentState(TrainingState.State.AWAITING_USER_TRAINING_MOVE);
+                TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
             }
         }
 
@@ -154,9 +154,9 @@ namespace ChessForge
         /// <param name="nd"></param>
         public static void SwitchToAwaitEngineMove(TreeNode nd, bool endOfGame)
         {
-            if (TrainingState.IsTrainingInProgress && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
+            if (TrainingSession.IsTrainingInProgress && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
             {
-                TrainingState.ChangeCurrentState(TrainingState.State.USER_MOVE_COMPLETED);
+                TrainingSession.ChangeCurrentState(TrainingSession.State.USER_MOVE_COMPLETED);
                 if (!endOfGame)
                 {
                     _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
@@ -164,7 +164,7 @@ namespace ChessForge
             }
             else
             {
-                if (TrainingState.IsTrainingInProgress)
+                if (TrainingSession.IsTrainingInProgress)
                 {
                     // this is a game during Training triggered by the user making a move not in Workbook.
                     // We know, therefore, that this is a new move.

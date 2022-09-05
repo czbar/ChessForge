@@ -460,7 +460,7 @@ namespace ChessForge
                     return false;
             }
             else if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
-                || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingState.CurrentState == TrainingState.State.AWAITING_USER_TRAINING_MOVE && !TrainingState.IsBrowseActive)
+                || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE && !TrainingSession.IsBrowseActive)
             {
                 if (EngineGame.GetPieceColor(sqNorm) == EngineGame.ColorToMove)
                     return true;
@@ -496,7 +496,7 @@ namespace ChessForge
                 {
                     // double check that we are legitimately making a move
                     if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
-                        || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingState.CurrentState == TrainingState.State.AWAITING_USER_TRAINING_MOVE
+                        || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE
                         || LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
                     {
                         UserMoveProcessor.FinalizeUserMove(targetSquare);
@@ -1400,9 +1400,9 @@ namespace ChessForge
         /// <param name="e"></param>
         public void CheckForUserMoveTimerEvent(object source, ElapsedEventArgs e)
         {
-            if (TrainingState.IsTrainingInProgress && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
+            if (TrainingSession.IsTrainingInProgress && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
             {
-                if ((TrainingState.CurrentState == TrainingState.State.USER_MOVE_COMPLETED))
+                if ((TrainingSession.CurrentState == TrainingSession.State.USER_MOVE_COMPLETED))
                 {
                     this.Dispatcher.Invoke(() =>
                     {
@@ -1579,8 +1579,8 @@ namespace ChessForge
             // Set up the training mode
             StopEvaluation();
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
-            TrainingState.IsTrainingInProgress = true;
-            TrainingState.ChangeCurrentState(TrainingState.State.AWAITING_USER_TRAINING_MOVE);
+            TrainingSession.IsTrainingInProgress = true;
+            TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
             LearningMode.TrainingSide = startNode.ColorToMove;
@@ -1620,7 +1620,7 @@ namespace ChessForge
                     EngineMessageProcessor.StopEngineEvaluation();
                     EvaluationManager.Reset();
 
-                    TrainingState.IsTrainingInProgress = false;
+                    TrainingSession.IsTrainingInProgress = false;
                     MainChessBoard.RemoveMoveSquareColors();
                     LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
                     AppStateManager.SetupGuiForCurrentStates();
@@ -1826,7 +1826,7 @@ namespace ChessForge
         {
             if (MessageBox.Show("Restart the training session?", "Chess Forge Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                SetAppInTrainingMode(TrainingState.StartPosition);
+                SetAppInTrainingMode(TrainingSession.StartPosition);
             }
         }
 

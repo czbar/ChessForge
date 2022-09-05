@@ -149,7 +149,7 @@ namespace ChessForge
                 // we are in a game
                 MoveEvaluationFinishedInGame();
             }
-            else if (TrainingState.IsTrainingInProgress)
+            else if (TrainingSession.IsTrainingInProgress)
             {
                 // eval request was made while in training (LearningMode can be GAME or TRAINING)
                 MoveEvaluationFinishedInTraining();
@@ -175,7 +175,7 @@ namespace ChessForge
                 _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                 _mainWin.ResetEvaluationProgressBar();
 
-                if (TrainingState.IsTrainingInProgress)
+                if (TrainingSession.IsTrainingInProgress)
                 {
                     _mainWin.EngineTrainingGameMoveMade();
                 }

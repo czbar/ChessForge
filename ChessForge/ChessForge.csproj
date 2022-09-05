@@ -119,7 +119,7 @@
       <DependentUpon>WorkbookOptionsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="TrainingView.cs" />
-    <Compile Include="TrainingState.cs" />
+    <Compile Include="TrainingSession.cs" />
     <Compile Include="UserMoveProcessor.cs" />
     <Compile Include="WorkbookView.cs" />
     <Compile Include="TreeTableCell.cs" />

@@ -10,7 +10,7 @@ namespace ChessForge
     /// <summary>
     /// Holds attributes of the current training session. 
     /// </summary>
-    public class TrainingState
+    public class TrainingSession
     {
         /// <summary>
         /// Object to lock examining of the user move vs Workbook.

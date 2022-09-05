@@ -369,7 +369,7 @@ namespace ChessForge
         {
             _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
 
-            if (TrainingState.IsTrainingInProgress)
+            if (TrainingSession.IsTrainingInProgress)
             {
                 _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
@@ -472,7 +472,7 @@ namespace ChessForge
         /// </summary>
         private static void ConfigureMenusForEngineGame()
         {
-            bool train = TrainingState.IsTrainingInProgress;
+            bool train = TrainingSession.IsTrainingInProgress;
 
             _mainWin.UiMnStartTraining.IsEnabled = !train;
             _mainWin.UiMnRestartTraining.IsEnabled = train;
@@ -529,7 +529,7 @@ namespace ChessForge
                     _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Collapsed;
                     break;
                 case LearningMode.Mode.ENGINE_GAME:
-                    if (TrainingState.IsTrainingInProgress)
+                    if (TrainingSession.IsTrainingInProgress)
                     {
                         _mainWin.UiMnciStartTraining.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
@@ -712,7 +712,7 @@ namespace ChessForge
             _mainWin.UiDgEngineGame.Width = 160;
 
             // adjust tab controls position
-            if (TrainingState.IsTrainingInProgress)
+            if (TrainingSession.IsTrainingInProgress)
             {
                 _mainWin.UiTabCtrlTraining.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
 
@@ -829,7 +829,7 @@ namespace ChessForge
 
         public static void SetupGuiForTrainingBrowseMode()
         {
-            TrainingState.IsBrowseActive = true;
+            TrainingSession.IsBrowseActive = true;
             _mainWin.UiTabCtrlTraining.Margin = new Thickness(185, 5, 5, 5);
             _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
 
@@ -848,7 +848,7 @@ namespace ChessForge
         {
             if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING)
             {
-                TrainingState.IsBrowseActive = false;
+                TrainingSession.IsBrowseActive = false;
                 _mainWin.UiTabCtrlTraining.Margin = new Thickness(5, 5, 5, 5);
                 _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
                 _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;

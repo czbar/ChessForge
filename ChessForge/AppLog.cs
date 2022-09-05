@@ -120,8 +120,8 @@ namespace ChessForge
             sb.Append("Application States" + Environment.NewLine);
             sb.Append("==================" + Environment.NewLine);
             sb.Append("Learning mode = " + AppStateManager.CurrentLearningMode.ToString() + Environment.NewLine);
-            sb.Append("IsTrainingInProgress = " + TrainingState.IsTrainingInProgress.ToString() + Environment.NewLine);
-            sb.Append("TrainingMode = " + TrainingState.CurrentState.ToString() + Environment.NewLine);
+            sb.Append("IsTrainingInProgress = " + TrainingSession.IsTrainingInProgress.ToString() + Environment.NewLine);
+            sb.Append("TrainingMode = " + TrainingSession.CurrentState.ToString() + Environment.NewLine);
             sb.Append("EvaluationMode = " + AppStateManager.CurrentEvaluationMode.ToString() + Environment.NewLine);
             sb.Append("GameState = " + EngineGame.CurrentState.ToString() + Environment.NewLine);
 
