@@ -103,8 +103,6 @@ namespace ChessForge
         {
             AppStateManager.MainWin = this;
 
-            // Sets a public reference for access from other objects.
-            EngineGame.SetMainWin(this);
             EvaluationMgr = new EvaluationManager();
 
             InitializeComponent();
@@ -1442,6 +1440,7 @@ namespace ChessForge
             EngineMessageProcessor.StopEngineEvaluation();
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
             EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
+
             Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
             AppStateManager.MainWin.Workbook.BuildLines();
