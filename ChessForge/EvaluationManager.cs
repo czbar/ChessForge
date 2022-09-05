@@ -159,7 +159,12 @@ namespace ChessForge
         public Mode CurrentMode
         {
             get { return _currentMode; }
-            set {_currentMode = value; }
+        }
+
+        public void ChangeCurrentMode(Mode mode)
+        {
+            _currentMode=mode;
+            AppStateManager.SetupGuiForCurrentStates();
         }
 
         /// <summary>
