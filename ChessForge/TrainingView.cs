@@ -342,7 +342,7 @@ namespace ChessForge
                         _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine has started. Wait for the engine\'s move...\n"));
                         _engineGameRootNode = _userMove;
                         // call RequestEngineResponse() directly so it invokes PlayEngine
-                        AppStateManager.CurrentLearningMode = LearningMode.Mode.ENGINE_GAME;
+                        LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
                         AppStateManager.SetupGuiForCurrentStates();
                         RequestEngineResponse();
                     }
@@ -364,7 +364,7 @@ namespace ChessForge
 
             TrainingState.CurrentMode = TrainingState.Mode.USER_MOVE_COMPLETED;
 
-            AppStateManager.CurrentLearningMode = LearningMode.Mode.TRAINING;
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             AppStateManager.SetupGuiForCurrentStates();
 
             _mainWin.BoardCommentBox.GameMoveMade(_lastClickedNode, true);

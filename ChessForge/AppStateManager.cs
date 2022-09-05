@@ -190,7 +190,6 @@ namespace ChessForge
         public static LearningMode.Mode CurrentLearningMode
         {
             get { return LearningMode.CurrentMode; }
-            set { LearningMode.CurrentMode = value; }
         }
 
         /// <summary>
@@ -209,8 +208,7 @@ namespace ChessForge
         /// <param name="mode"></param>
         public static void SetCurrentEvaluationMode(EvaluationManager.Mode mode)
         {
-            MainWin.Evaluation.CurrentMode = mode;
-            ShowEvaluationProgressControlsForCurrentStates();
+            MainWin.Evaluation.ChangeCurrentMode(mode);
         }
 
         /// <summary>
@@ -260,7 +258,7 @@ namespace ChessForge
             WorkbookFilePath = "";
             UpdateAppTitleBar();
             SwapCommentBoxForEngineLines(false);
-            CurrentLearningMode = LearningMode.Mode.IDLE;
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
             SetupGuiForCurrentStates();
             if (updateCommentBox)
             {

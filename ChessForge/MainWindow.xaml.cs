@@ -152,7 +152,7 @@ namespace ChessForge
             UiDgActiveLine.ContextMenu = UiMnMainBoard;
             AddDebugMenu();
 
-            AppStateManager.CurrentLearningMode = LearningMode.Mode.IDLE;
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
             AppStateManager.SetupGuiForCurrentStates();
 
             Timers.Start(AppTimers.TimerId.APP_START);
@@ -174,14 +174,28 @@ namespace ChessForge
                 Name = "DebugDumpMenu"
             };
 
-            mnDebugDump.Header = "Dump";
+            mnDebugDump.Header = "Dump All";
             mnDebug.Items.Add(mnDebugDump);
             mnDebugDump.Click += UiMnDebugDump_Click;
+
+            MenuItem mnDebugDumpStates = new MenuItem
+            {
+                Name = "DebugDumpStates"
+            };
+
+            mnDebugDumpStates.Header = "Dump States and Timers";
+            mnDebug.Items.Add(mnDebugDumpStates);
+            mnDebugDumpStates.Click += UiMnDebugDumpStates_Click;
         }
 
         private void UiMnDebugDump_Click(object sender, RoutedEventArgs e)
         {
             DumpDebugLogs(true);
+        }
+
+        private void UiMnDebugDumpStates_Click(object sender, RoutedEventArgs e)
+        {
+            DumpDebugStates();
         }
 
         // tracks the application start stage
@@ -1200,6 +1214,12 @@ namespace ChessForge
         }
 
 
+        public void DumpDebugStates()
+        {
+            string distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            AppLog.DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
+        }
+
         /// <summary>
         /// The user requested evaluation of the currently selected move.
         /// Check if there is an item currently selected. 
@@ -1417,7 +1437,7 @@ namespace ChessForge
 
             Evaluation.Reset();
             EngineMessageProcessor.StopEngineEvaluation();
-            LearningMode.CurrentMode = LearningMode.Mode.MANUAL_REVIEW;
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
             EngineGame.CurrentState = EngineGame.GameState.IDLE;
             Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
@@ -1489,8 +1509,7 @@ namespace ChessForge
                 EngineMessageProcessor.StopEngineEvaluation();
             }
 
-            AppStateManager.CurrentLearningMode = LearningMode.Mode.MANUAL_REVIEW;
-            AppStateManager.SetupGuiForCurrentStates();
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
             AppStateManager.SetCurrentEvaluationMode(EvaluationManager.Mode.IDLE);
 
             AppStateManager.SwapCommentBoxForEngineLines(false);
@@ -1557,11 +1576,10 @@ namespace ChessForge
         {
             // Set up the training mode
             StopEvaluation();
-            LearningMode.CurrentMode = LearningMode.Mode.TRAINING;
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             TrainingState.IsTrainingInProgress = true;
             TrainingState.CurrentMode = TrainingState.Mode.AWAITING_USER_TRAINING_MOVE;
-            AppStateManager.SetupGuiForCurrentStates();
-            Evaluation.CurrentMode = EvaluationManager.Mode.IDLE;
+            Evaluation.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
             LearningMode.TrainingSide = startNode.ColorToMove;
             MainChessBoard.DisplayPosition(startNode.Position);
@@ -1602,7 +1620,7 @@ namespace ChessForge
 
                     TrainingState.IsTrainingInProgress = false;
                     MainChessBoard.RemoveMoveSquareColors();
-                    LearningMode.CurrentMode = LearningMode.Mode.MANUAL_REVIEW;
+                    LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
                     AppStateManager.SetupGuiForCurrentStates();
 
                     ActiveLine.DisplayPositionForSelectedCell();
@@ -2047,7 +2065,7 @@ namespace ChessForge
 
             BoardCommentBox.ShowWorkbookTitle();
 
-            AppStateManager.CurrentLearningMode = LearningMode.Mode.MANUAL_REVIEW;
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
 
             AppStateManager.SetupGuiForCurrentStates();
             Workbook.CreateNew();
