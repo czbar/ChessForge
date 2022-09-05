@@ -233,26 +233,29 @@ namespace ChessForge
         {
             BookmarkManager.ClearBookmarksGui();
             IsDirty = false;
-            _mainWin.ActiveLine.Clear();
-            _mainWin.UiRtbWorkbookView.Document.Blocks.Clear();
-            _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
-            _mainWin.UiRtbTrainingBrowse.Document.Blocks.Clear();
-
-            _mainWin.Timers.StopAll();
-            _mainWin.ResetEngineThinkingGUI();
-            EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
-
-            _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
-            _mainWin.RemoveMoveSquareColors();
-            WorkbookFilePath = "";
-            UpdateAppTitleBar();
-            SwapCommentBoxForEngineLines(false);
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
-            SetupGuiForCurrentStates();
-            if (updateCommentBox)
+            _mainWin.Dispatcher.Invoke(() =>
             {
-                _mainWin.BoardCommentBox.OpenFile();
-            }
+                _mainWin.ActiveLine.Clear();
+                _mainWin.UiRtbWorkbookView.Document.Blocks.Clear();
+                _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
+                _mainWin.UiRtbTrainingBrowse.Document.Blocks.Clear();
+
+                _mainWin.Timers.StopAll();
+                _mainWin.ResetEngineThinkingGUI();
+                EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
+
+                _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+                _mainWin.RemoveMoveSquareColors();
+                WorkbookFilePath = "";
+                UpdateAppTitleBar();
+                SwapCommentBoxForEngineLines(false);
+                LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
+                SetupGuiForCurrentStates();
+                if (updateCommentBox)
+                {
+                    _mainWin.BoardCommentBox.OpenFile();
+                }
+            });
         }
 
         /// <summary>
@@ -290,43 +293,46 @@ namespace ChessForge
         /// </summary>
         private static void SetupGuiForManualReview()
         {
-            if (CurrentLearningMode == LearningMode.Mode.IDLE)
+            _mainWin.Dispatcher.Invoke(() =>
             {
-                _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
-            }
+                if (CurrentLearningMode == LearningMode.Mode.IDLE)
+                {
+                    _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
+                }
 
-            _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
 
-            _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
-            _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
+                _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
+                _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
 
-            _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
-            _mainWin.UiTabCtrlTraining.Visibility = Visibility.Hidden;
+                _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
+                _mainWin.UiTabCtrlTraining.Visibility = Visibility.Hidden;
 
-            _mainWin.UiTabWorkbook.Visibility = Visibility.Visible;
-            _mainWin.UiTabBookmarks.Visibility = Visibility.Visible;
+                _mainWin.UiTabWorkbook.Visibility = Visibility.Visible;
+                _mainWin.UiTabBookmarks.Visibility = Visibility.Visible;
 
-            _mainWin.UiTabTrainingProgress.Visibility = Visibility.Hidden;
-            _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Hidden;
+                _mainWin.UiTabTrainingProgress.Visibility = Visibility.Hidden;
+                _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Hidden;
 
-            // these tabs may have been disabled for the engine game
-            _mainWin.UiRtbWorkbookView.Opacity = 1;
-            _mainWin.UiRtbWorkbookView.IsEnabled = true;
+                // these tabs may have been disabled for the engine game
+                _mainWin.UiRtbWorkbookView.Opacity = 1;
+                _mainWin.UiRtbWorkbookView.IsEnabled = true;
 
-            _mainWin.UiTabBookmarks.Opacity = 1;
-            _mainWin.UiTabBookmarks.IsEnabled = true;
+                _mainWin.UiTabBookmarks.Opacity = 1;
+                _mainWin.UiTabBookmarks.IsEnabled = true;
 
-            _mainWin.UiBtnExitTraining.Visibility = Visibility.Collapsed;
-            _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
+                _mainWin.UiBtnExitTraining.Visibility = Visibility.Collapsed;
+                _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
 
-            ShowGuiActiveLine(true);
-            ShowEvaluationProgressControlsForCurrentStates();
+                ShowGuiActiveLine(true);
+                ShowEvaluationProgressControlsForCurrentStates();
 
-            ConfigureMenusForManualReview();
+                ConfigureMenusForManualReview();
+            });
         }
 
         /// <summary>
@@ -334,32 +340,35 @@ namespace ChessForge
         /// </summary>
         private static void SetupGuiForTraining()
         {
-            _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
 
-            _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
+                _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
-            _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
-            ShowGuiEngineGameLine(false);
+                _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                ShowGuiEngineGameLine(false);
 
-            _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
-            _mainWin.UiTabCtrlTraining.Visibility = Visibility.Visible;
+                _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
+                _mainWin.UiTabCtrlTraining.Visibility = Visibility.Visible;
 
-            _mainWin.UiTabWorkbook.Visibility = Visibility.Hidden;
-            _mainWin.UiTabBookmarks.Visibility = Visibility.Hidden;
+                _mainWin.UiTabWorkbook.Visibility = Visibility.Hidden;
+                _mainWin.UiTabBookmarks.Visibility = Visibility.Hidden;
 
-            _mainWin.UiTabTrainingProgress.Visibility = Visibility.Visible;
-            _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Visible;
+                _mainWin.UiTabTrainingProgress.Visibility = Visibility.Visible;
+                _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Visible;
 
-            // this tab may have been disabled for the engine game 
-            _mainWin.UiTabTrainingBrowse.Opacity = 1;
-            _mainWin.UiTabTrainingBrowse.IsEnabled = true;
+                // this tab may have been disabled for the engine game 
+                _mainWin.UiTabTrainingBrowse.Opacity = 1;
+                _mainWin.UiTabTrainingBrowse.IsEnabled = true;
 
-            _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
-            _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
+                _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
+                _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
 
-            ShowEvaluationProgressControlsForCurrentStates();
+                ShowEvaluationProgressControlsForCurrentStates();
 
-            ConfigureMenusForTraining();
+                ConfigureMenusForTraining();
+            });
         }
 
         /// <summary>
@@ -367,49 +376,52 @@ namespace ChessForge
         /// </summary>
         private static void SetupGuiForEngineGame()
         {
-            _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
-
-            if (TrainingSession.IsTrainingInProgress)
+            _mainWin.Dispatcher.Invoke(() =>
             {
-                _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
+                _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
 
-                _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
-                _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
+                if (TrainingSession.IsTrainingInProgress)
+                {
+                    _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
-                _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
-                _mainWin.UiTabWorkbook.Visibility = Visibility.Hidden;
-                _mainWin.UiTabBookmarks.Visibility = Visibility.Hidden;
+                    _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                    _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
 
-                _mainWin.UiTabCtrlTraining.Visibility = Visibility.Visible;
-                _mainWin.UiTabTrainingProgress.Visibility = Visibility.Visible;
-                _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Visible;
+                    _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
+                    _mainWin.UiTabWorkbook.Visibility = Visibility.Hidden;
+                    _mainWin.UiTabBookmarks.Visibility = Visibility.Hidden;
 
-                _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
-                _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
+                    _mainWin.UiTabCtrlTraining.Visibility = Visibility.Visible;
+                    _mainWin.UiTabTrainingProgress.Visibility = Visibility.Visible;
+                    _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Visible;
 
-                _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
-                _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
+                    _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
+                    _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
-                _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
-                _mainWin.UiTabWorkbook.Visibility = Visibility.Visible;
-                _mainWin.UiTabBookmarks.Visibility = Visibility.Visible;
+                    _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                    _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
 
-                _mainWin.UiTabCtrlTraining.Visibility = Visibility.Hidden;
-                _mainWin.UiTabTrainingProgress.Visibility = Visibility.Hidden;
-                _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Hidden;
+                    _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
+                    _mainWin.UiTabWorkbook.Visibility = Visibility.Visible;
+                    _mainWin.UiTabBookmarks.Visibility = Visibility.Visible;
 
-                _mainWin.UiBtnExitTraining.Visibility = Visibility.Collapsed;
-                _mainWin.UiBtnExitGame.Visibility = Visibility.Visible;
-            }
+                    _mainWin.UiTabCtrlTraining.Visibility = Visibility.Hidden;
+                    _mainWin.UiTabTrainingProgress.Visibility = Visibility.Hidden;
+                    _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Hidden;
 
-            ShowEvaluationProgressControlsForCurrentStates();
-            ShowGuiEngineGameLine(true);
+                    _mainWin.UiBtnExitTraining.Visibility = Visibility.Collapsed;
+                    _mainWin.UiBtnExitGame.Visibility = Visibility.Visible;
+                }
 
-            ConfigureMenusForEngineGame();
+                ShowEvaluationProgressControlsForCurrentStates();
+                ShowGuiEngineGameLine(true);
+
+                ConfigureMenusForEngineGame();
+            });
         }
 
         /// <summary>
@@ -418,29 +430,33 @@ namespace ChessForge
         /// </summary>
         public static void ConfigureSaveMenus()
         {
-            if (!string.IsNullOrEmpty(WorkbookFilePath) && IsDirty && WorkbookFileType == FileType.CHF)
+            _mainWin.Dispatcher.Invoke(() =>
             {
-                _mainWin.UiMnWorkbookSave.IsEnabled = true;
-                _mainWin.UiMnWorkbookSave.Header = "Save " + Path.GetFileName(WorkbookFilePath);
-            }
-            else
-            {
-                _mainWin.UiMnWorkbookSave.IsEnabled = false;
-                _mainWin.UiMnWorkbookSave.Header = "Save " + Path.GetFileName(WorkbookFilePath);
-            }
 
-            if (!string.IsNullOrEmpty(WorkbookFilePath))
-            {
-                _mainWin.UiMnWorkbookSaveAs.IsEnabled = true;
-                _mainWin.UiMnWorkbookSaveAs.Header = "Save " + Path.GetFileName(WorkbookFilePath) + " As...";
-                _mainWin.UiMnExportPgn.IsEnabled = true;
-            }
-            else
-            {
-                _mainWin.UiMnWorkbookSaveAs.IsEnabled = false;
-                _mainWin.UiMnWorkbookSaveAs.Header = "Save As...";
-                _mainWin.UiMnExportPgn.IsEnabled = false;
-            }
+                if (!string.IsNullOrEmpty(WorkbookFilePath) && IsDirty && WorkbookFileType == FileType.CHF)
+                {
+                    _mainWin.UiMnWorkbookSave.IsEnabled = true;
+                    _mainWin.UiMnWorkbookSave.Header = "Save " + Path.GetFileName(WorkbookFilePath);
+                }
+                else
+                {
+                    _mainWin.UiMnWorkbookSave.IsEnabled = false;
+                    _mainWin.UiMnWorkbookSave.Header = "Save " + Path.GetFileName(WorkbookFilePath);
+                }
+
+                if (!string.IsNullOrEmpty(WorkbookFilePath))
+                {
+                    _mainWin.UiMnWorkbookSaveAs.IsEnabled = true;
+                    _mainWin.UiMnWorkbookSaveAs.Header = "Save " + Path.GetFileName(WorkbookFilePath) + " As...";
+                    _mainWin.UiMnExportPgn.IsEnabled = true;
+                }
+                else
+                {
+                    _mainWin.UiMnWorkbookSaveAs.IsEnabled = false;
+                    _mainWin.UiMnWorkbookSaveAs.Header = "Save As...";
+                    _mainWin.UiMnExportPgn.IsEnabled = false;
+                }
+            });
         }
 
         /// <summary>
@@ -448,11 +464,14 @@ namespace ChessForge
         /// </summary>
         private static void ConfigureMenusForManualReview()
         {
-            _mainWin.UiMnStartTraining.IsEnabled = true;
-            _mainWin.UiMnRestartTraining.IsEnabled = false;
-            _mainWin.UiMnExitTraining.IsEnabled = false;
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                _mainWin.UiMnStartTraining.IsEnabled = true;
+                _mainWin.UiMnRestartTraining.IsEnabled = false;
+                _mainWin.UiMnExitTraining.IsEnabled = false;
 
-            _mainWin.UiMnciPlayEngine.IsEnabled = true;
+                _mainWin.UiMnciPlayEngine.IsEnabled = true;
+            });
         }
 
         /// <summary>
@@ -460,11 +479,14 @@ namespace ChessForge
         /// </summary>
         private static void ConfigureMenusForTraining()
         {
-            _mainWin.UiMnStartTraining.IsEnabled = false;
-            _mainWin.UiMnRestartTraining.IsEnabled = true;
-            _mainWin.UiMnExitTraining.IsEnabled = true;
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                _mainWin.UiMnStartTraining.IsEnabled = false;
+                _mainWin.UiMnRestartTraining.IsEnabled = true;
+                _mainWin.UiMnExitTraining.IsEnabled = true;
 
-            _mainWin.UiMnciPlayEngine.IsEnabled = false;
+                _mainWin.UiMnciPlayEngine.IsEnabled = false;
+            });
         }
 
         /// <summary>
@@ -474,11 +496,14 @@ namespace ChessForge
         {
             bool train = TrainingSession.IsTrainingInProgress;
 
-            _mainWin.UiMnStartTraining.IsEnabled = !train;
-            _mainWin.UiMnRestartTraining.IsEnabled = train;
-            _mainWin.UiMnExitTraining.IsEnabled = train;
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                _mainWin.UiMnStartTraining.IsEnabled = !train;
+                _mainWin.UiMnRestartTraining.IsEnabled = train;
+                _mainWin.UiMnExitTraining.IsEnabled = train;
 
-            _mainWin.UiMnciPlayEngine.IsEnabled = true;
+                _mainWin.UiMnciPlayEngine.IsEnabled = true;
+            });
         }
 
         /// <summary>
@@ -486,51 +511,31 @@ namespace ChessForge
         /// </summary>
         private static void ConfigureMainBoardContextMenu()
         {
-            switch (CurrentLearningMode)
+            _mainWin.Dispatcher.Invoke(() =>
             {
-                case LearningMode.Mode.MANUAL_REVIEW:
-                    _mainWin.UiMnciStartTraining.Visibility = Visibility.Visible;
-                    _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Visible;
-                    _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
-                    _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
+                switch (CurrentLearningMode)
+                {
+                    case LearningMode.Mode.MANUAL_REVIEW:
+                        _mainWin.UiMnciStartTraining.Visibility = Visibility.Visible;
+                        _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Visible;
+                        _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
 
-                    _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Visible;
+                        _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Visible;
 
-                    _mainWin.UiMnciEvalPos.Visibility = Visibility.Visible;
-                    _mainWin.UiMnciEvalLine.Visibility = Visibility.Visible;
+                        _mainWin.UiMnciEvalPos.Visibility = Visibility.Visible;
+                        _mainWin.UiMnciEvalLine.Visibility = Visibility.Visible;
 
-                    _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Visible;
+                        _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Visible;
 
-                    _mainWin.UiMnciReplay.Visibility = Visibility.Visible;
+                        _mainWin.UiMnciReplay.Visibility = Visibility.Visible;
 
-                    _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Visible;
+                        _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Visible;
 
-                    _mainWin.UiMnciPlayEngine.Visibility = Visibility.Visible;
-                    _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Collapsed;
-                    break;
-                case LearningMode.Mode.TRAINING:
-                    _mainWin.UiMnciStartTraining.Visibility = Visibility.Collapsed;
-                    _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
-                    _mainWin.UiMnciRestartTraining.Visibility = Visibility.Visible;
-                    _mainWin.UiMnciExitTraining.Visibility = Visibility.Visible;
-
-                    _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Collapsed;
-
-                    _mainWin.UiMnciEvalPos.Visibility = Visibility.Collapsed;
-                    _mainWin.UiMnciEvalLine.Visibility = Visibility.Collapsed;
-
-                    _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Collapsed;
-
-                    _mainWin.UiMnciReplay.Visibility = Visibility.Collapsed;
-
-                    _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Collapsed;
-
-                    _mainWin.UiMnciPlayEngine.Visibility = Visibility.Collapsed;
-                    _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Collapsed;
-                    break;
-                case LearningMode.Mode.ENGINE_GAME:
-                    if (TrainingSession.IsTrainingInProgress)
-                    {
+                        _mainWin.UiMnciPlayEngine.Visibility = Visibility.Visible;
+                        _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Collapsed;
+                        break;
+                    case LearningMode.Mode.TRAINING:
                         _mainWin.UiMnciStartTraining.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciRestartTraining.Visibility = Visibility.Visible;
@@ -538,32 +543,55 @@ namespace ChessForge
 
                         _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Collapsed;
 
+                        _mainWin.UiMnciEvalPos.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciEvalLine.Visibility = Visibility.Collapsed;
+
+                        _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Collapsed;
+
+                        _mainWin.UiMnciReplay.Visibility = Visibility.Collapsed;
+
+                        _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Collapsed;
+
+                        _mainWin.UiMnciPlayEngine.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        _mainWin.UiMnciStartTraining.Visibility = Visibility.Visible;
-                        _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
-                        _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
-                        _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
+                        break;
+                    case LearningMode.Mode.ENGINE_GAME:
+                        if (TrainingSession.IsTrainingInProgress)
+                        {
+                            _mainWin.UiMnciStartTraining.Visibility = Visibility.Collapsed;
+                            _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
+                            _mainWin.UiMnciRestartTraining.Visibility = Visibility.Visible;
+                            _mainWin.UiMnciExitTraining.Visibility = Visibility.Visible;
 
-                        _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Visible;
+                            _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Collapsed;
 
-                        _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Visible;
-                    }
+                            _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Collapsed;
+                        }
+                        else
+                        {
+                            _mainWin.UiMnciStartTraining.Visibility = Visibility.Visible;
+                            _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
+                            _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
+                            _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
 
-                    _mainWin.UiMnciEvalPos.Visibility = Visibility.Collapsed;
-                    _mainWin.UiMnciEvalLine.Visibility = Visibility.Collapsed;
+                            _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Visible;
 
-                    _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Collapsed;
+                            _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Visible;
+                        }
 
-                    _mainWin.UiMnciReplay.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciEvalPos.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciEvalLine.Visibility = Visibility.Collapsed;
 
-                    _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Collapsed;
 
-                    _mainWin.UiMnciPlayEngine.Visibility = Visibility.Collapsed;
-                    break;
-            }
+                        _mainWin.UiMnciReplay.Visibility = Visibility.Collapsed;
+
+                        _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Collapsed;
+
+                        _mainWin.UiMnciPlayEngine.Visibility = Visibility.Collapsed;
+                        break;
+                }
+            });
         }
 
         /// <summary>
@@ -576,113 +604,62 @@ namespace ChessForge
             bool game = EngineGame.CurrentState != EngineGame.GameState.IDLE;
 
             _mainWin.Dispatcher.Invoke(() =>
-                {
-                    if (eval)
-                    {
-                        if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
-                        {
-                            _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;
-                            _mainWin.UiImgEngineOff.Visibility = Visibility.Collapsed;
+             {
+                 if (eval)
+                 {
+                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                     {
+                         _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;
+                         _mainWin.UiImgEngineOff.Visibility = Visibility.Collapsed;
 
-                            _mainWin.UiMnciEvalLine.IsEnabled = true;
-                            _mainWin.UiMnciEvalPos.IsEnabled = false;
+                         _mainWin.UiMnciEvalLine.IsEnabled = true;
+                         _mainWin.UiMnciEvalPos.IsEnabled = false;
 
-                            _mainWin.UiPbEngineThinking.Visibility = Visibility.Collapsed;
+                         _mainWin.UiPbEngineThinking.Visibility = Visibility.Collapsed;
 
-                            _mainWin.UiLblEvaluating.Visibility = Visibility.Collapsed;
-                            _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Collapsed;
-                            _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Collapsed;
-                        }
-                        else
-                        {
-                            _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;
-                            _mainWin.UiImgEngineOff.Visibility = Visibility.Collapsed;
+                         _mainWin.UiLblEvaluating.Visibility = Visibility.Collapsed;
+                         _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Collapsed;
+                         _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Collapsed;
+                     }
+                     else
+                     {
+                         _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;
+                         _mainWin.UiImgEngineOff.Visibility = Visibility.Collapsed;
 
-                            _mainWin.UiMnciEvalLine.IsEnabled = false;
-                            _mainWin.UiMnciEvalPos.IsEnabled = false;
+                         _mainWin.UiMnciEvalLine.IsEnabled = false;
+                         _mainWin.UiMnciEvalPos.IsEnabled = false;
 
-                            _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
+                         _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
 
-                            if (game)
-                            {
-                                _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
-                                _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
-                                _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Visible;
-                            }
-                            else
-                            {
-                                _mainWin.UiLblEvaluating.Visibility = Visibility.Visible;
-                                _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Visible;
-                                _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        _mainWin.UiImgEngineOn.Visibility = Visibility.Collapsed;
-                        _mainWin.UiImgEngineOff.Visibility = Visibility.Visible;
+                         if (game)
+                         {
+                             _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
+                             _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
+                             _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Visible;
+                         }
+                         else
+                         {
+                             _mainWin.UiLblEvaluating.Visibility = Visibility.Visible;
+                             _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Visible;
+                             _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
+                         }
+                     }
+                 }
+                 else
+                 {
+                     _mainWin.UiImgEngineOn.Visibility = Visibility.Collapsed;
+                     _mainWin.UiImgEngineOff.Visibility = Visibility.Visible;
 
-                        _mainWin.UiMnciEvalLine.IsEnabled = true;
-                        _mainWin.UiMnciEvalPos.IsEnabled = true;
+                     _mainWin.UiMnciEvalLine.IsEnabled = true;
+                     _mainWin.UiMnciEvalPos.IsEnabled = true;
 
-                        _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
-                        _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
-                        _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
-                        _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
-                    }
-                });
+                     _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
+                     _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
+                     _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
+                     _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
+                 }
+             });
         }
-
-
-#if false
-        /// <summary>
-        /// Shows/hides evaluation progress controls depending on the
-        /// relevant states/modes in the application.
-        /// These are the controls showing the lines being evaluated,
-        /// what move is being evaluated and such.
-        /// In particular in the context of a game, whether in MANUAL_REVIEW or TRAINING
-        /// we do not want to show the lines being evaluated so that it feels like 
-        /// a "real" game.
-        /// </summary>
-        public static void ShowEvaluationProgressControls()
-        {
-            _mainWin.Dispatcher.Invoke(() =>
-            {
-                if (_mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.IDLE)
-                {
-                    _mainWin.UiImgStop.Visibility = Visibility.Hidden;
-                    _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
-
-                    _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
-                    _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
-
-                    _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
-                }
-                else if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME
-                        && (!TrainingState.IsTrainingInProgress || _mainWin.Evaluation.CurrentMode == EvaluationState.EvaluationMode.ENGINE_GAME))
-                {
-                    bool think = EngineGame.CurrentState == EngineGame.GameState.ENGINE_THINKING;
-                    _mainWin.UiImgStop.Visibility = think ? Visibility.Visible : Visibility.Hidden;
-                    _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
-
-                    _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
-                    _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
-
-                    _mainWin.UiLblEvalSecretMode.Visibility = think ? Visibility.Visible : Visibility.Hidden;
-                }
-                else
-                {
-                    _mainWin.UiImgStop.Visibility = Visibility.Visible;
-                    _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
-
-                    _mainWin.UiLblEvaluating.Visibility = Visibility.Visible;
-                    _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Visible;
-
-                    _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
-                }
-            });
-        }
-#endif
 
         /// <summary>
         /// Shows ActiveLine's DataGrid control.
@@ -692,14 +669,17 @@ namespace ChessForge
         /// <param name="includeEvals"></param>
         private static void ShowGuiActiveLine(bool includeEvals)
         {
-            _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
-            _mainWin.UiDgActiveLine.Columns[2].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
-            _mainWin.UiDgActiveLine.Columns[4].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
-            _mainWin.UiDgActiveLine.Width = includeEvals ? 260 : 160;
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
+                _mainWin.UiDgActiveLine.Columns[2].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
+                _mainWin.UiDgActiveLine.Columns[4].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
+                _mainWin.UiDgActiveLine.Width = includeEvals ? 260 : 160;
 
-            // adjust tab controls position
-            _mainWin.UiTabCtrlManualReview.Margin = includeEvals ? new Thickness(275, 5, 5, 5) : new Thickness(175, 5, 5, 5);
-            _mainWin.UiTabCtrlTraining.Margin = includeEvals ? new Thickness(185, 5, 5, 5) : new Thickness(5, 5, 5, 5);
+                // adjust tab controls position
+                _mainWin.UiTabCtrlManualReview.Margin = includeEvals ? new Thickness(275, 5, 5, 5) : new Thickness(175, 5, 5, 5);
+                _mainWin.UiTabCtrlTraining.Margin = includeEvals ? new Thickness(185, 5, 5, 5) : new Thickness(5, 5, 5, 5);
+            });
         }
 
         /// <summary>
@@ -708,28 +688,31 @@ namespace ChessForge
         /// <param name="show"></param>
         private static void ShowGuiEngineGameLine(bool show)
         {
-            _mainWin.UiDgEngineGame.Visibility = show ? Visibility.Visible : Visibility.Hidden;
-            _mainWin.UiDgEngineGame.Width = 160;
-
-            // adjust tab controls position
-            if (TrainingSession.IsTrainingInProgress)
+            _mainWin.Dispatcher.Invoke(() =>
             {
-                _mainWin.UiTabCtrlTraining.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
+                _mainWin.UiDgEngineGame.Visibility = show ? Visibility.Visible : Visibility.Hidden;
+                _mainWin.UiDgEngineGame.Width = 160;
 
-                _mainWin.UiTabTrainingBrowse.Opacity = 0.3;
-                _mainWin.UiTabTrainingBrowse.IsEnabled = false;
-            }
-            else
-            {
-                _mainWin.UiTabCtrlManualReview.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
+                // adjust tab controls position
+                if (TrainingSession.IsTrainingInProgress)
+                {
+                    _mainWin.UiTabCtrlTraining.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
 
-                _mainWin.UiTabWorkbook.Focus();
-                _mainWin.UiRtbWorkbookView.Opacity = 0.1;
-                _mainWin.UiRtbWorkbookView.IsEnabled = false;
+                    _mainWin.UiTabTrainingBrowse.Opacity = 0.3;
+                    _mainWin.UiTabTrainingBrowse.IsEnabled = false;
+                }
+                else
+                {
+                    _mainWin.UiTabCtrlManualReview.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
 
-                _mainWin.UiTabBookmarks.Opacity = 0.1;
-                _mainWin.UiTabBookmarks.IsEnabled = false;
-            }
+                    _mainWin.UiTabWorkbook.Focus();
+                    _mainWin.UiRtbWorkbookView.Opacity = 0.1;
+                    _mainWin.UiRtbWorkbookView.IsEnabled = false;
+
+                    _mainWin.UiTabBookmarks.Opacity = 0.1;
+                    _mainWin.UiTabBookmarks.IsEnabled = false;
+                }
+            });
         }
 
         /// <summary>
@@ -829,14 +812,17 @@ namespace ChessForge
 
         public static void SetupGuiForTrainingBrowseMode()
         {
-            TrainingSession.IsBrowseActive = true;
-            _mainWin.UiTabCtrlTraining.Margin = new Thickness(185, 5, 5, 5);
-            _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                TrainingSession.IsBrowseActive = true;
+                _mainWin.UiTabCtrlTraining.Margin = new Thickness(185, 5, 5, 5);
+                _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
 
-            _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
-            _mainWin.UiDgActiveLine.Columns[2].Visibility = Visibility.Collapsed;
-            _mainWin.UiDgActiveLine.Columns[4].Visibility = Visibility.Collapsed;
-            _mainWin.UiDgActiveLine.Width = 160;
+                _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
+                _mainWin.UiDgActiveLine.Columns[2].Visibility = Visibility.Collapsed;
+                _mainWin.UiDgActiveLine.Columns[4].Visibility = Visibility.Collapsed;
+                _mainWin.UiDgActiveLine.Width = 160;
+            });
         }
 
         /// <summary>
@@ -848,12 +834,15 @@ namespace ChessForge
         {
             if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING)
             {
-                TrainingSession.IsBrowseActive = false;
-                _mainWin.UiTabCtrlTraining.Margin = new Thickness(5, 5, 5, 5);
-                _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
-                _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                _mainWin.Dispatcher.Invoke(() =>
+                {
+                    TrainingSession.IsBrowseActive = false;
+                    _mainWin.UiTabCtrlTraining.Margin = new Thickness(5, 5, 5, 5);
+                    _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
+                    _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
 
-                _mainWin.DisplayPosition(EngineGame.GetLastPosition());
+                    _mainWin.DisplayPosition(EngineGame.GetLastPosition());
+                });
             }
         }
 
