@@ -31,8 +31,10 @@ namespace ChessForge
 
         /// <summary>
         /// Current state of the game.
+        /// This property is read only.
+        /// To set the value, clients need to call ChangeCurrentState.
         /// </summary>
-        public static GameState CurrentState;
+        public static GameState CurrentState { get => _gameState; }
 
         /// <summary>
         /// Position from which the game started.
@@ -40,6 +42,9 @@ namespace ChessForge
         /// Workbook Tree.
         /// </summary>
         private static TreeNode GameStartPosition;
+
+        // current game state
+        private static GameState _gameState;
 
         private static bool _trainingWorkbookMoveMade;
 
@@ -53,6 +58,15 @@ namespace ChessForge
         public static void SetMainWin(MainWindow mainWin)
         {
             _mainWin = mainWin;
+        }
+
+        /// <summary>
+        /// Changes the current state of the game.
+        /// </summary>
+        /// <param name="state"></param>
+        public static void ChangeCurrentState(GameState state)
+        {
+            _gameState = state;
         }
 
         public static void CheckForTrainingWorkbookMoveMade(object source, ElapsedEventArgs e)
@@ -84,7 +98,7 @@ namespace ChessForge
         /// <param name="IsEngineMove"></param>
         public static void InitializeGameObject(TreeNode startNode, bool IsEngineMove, bool IsTraining)
         {
-            CurrentState = IsEngineMove ? GameState.ENGINE_THINKING : GameState.USER_THINKING;
+            ChangeCurrentState(IsEngineMove ? GameState.ENGINE_THINKING : GameState.USER_THINKING);
             GameStartPosition = startNode;
 
             if (!IsTraining)
@@ -157,18 +171,18 @@ namespace ChessForge
                 }
                 if (endOfGame)
                 {
-                    CurrentState = GameState.IDLE;
+                    ChangeCurrentState(GameState.IDLE);
                 }
                 else
                 {
-                    CurrentState = GameState.ENGINE_THINKING;
+                    ChangeCurrentState(GameState.ENGINE_THINKING);
                 }
             }
         }
 
         private static void SwitchToAwaitUserMove(TreeNode nd)
         {
-            CurrentState = GameState.USER_THINKING;
+            ChangeCurrentState(GameState.USER_THINKING);
             _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
         }
 

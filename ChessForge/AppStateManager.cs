@@ -240,7 +240,7 @@ namespace ChessForge
 
             _mainWin.Timers.StopAll();
             _mainWin.ResetEngineThinkingGUI();
-            EngineGame.CurrentState = EngineGame.GameState.IDLE;
+            EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
 
             _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
             _mainWin.RemoveMoveSquareColors();

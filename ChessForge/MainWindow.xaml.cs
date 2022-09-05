@@ -1441,7 +1441,7 @@ namespace ChessForge
             EvaluationManager.Reset();
             EngineMessageProcessor.StopEngineEvaluation();
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-            EngineGame.CurrentState = EngineGame.GameState.IDLE;
+            EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
             Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
             AppStateManager.MainWin.Workbook.BuildLines();
