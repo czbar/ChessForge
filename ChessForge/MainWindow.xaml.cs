@@ -1166,7 +1166,6 @@ namespace ChessForge
 
             StopEvaluation();
 
-            EngineMessageProcessor.ClearEngineStreamReaderOnAppExit();
             EngineMessageProcessor.ChessEngineService.StopEngine();
 
             if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN)
