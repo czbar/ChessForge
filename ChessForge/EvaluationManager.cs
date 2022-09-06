@@ -207,10 +207,7 @@ namespace ChessForge
         {
             get
             {
-                lock (EvaluationLock)
-                {
-                    return CurrentMode != Mode.IDLE;
-                }
+                return CurrentMode != Mode.IDLE;
             }
         }
 
