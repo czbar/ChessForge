@@ -195,7 +195,11 @@ namespace ChessForge
             // NOTE do not reset Evaluation.CurrentMode as this will be done 
             // later down the chain
             _mainWin.ResetEvaluationProgressBar();
-            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+
+            if (EvaluationManager.CurrentMode != EvaluationManager.Mode.LINE)
+            {
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+            }
 
             EvaluationManager.SetPositionToEvaluate(null);
 
@@ -391,8 +395,24 @@ namespace ChessForge
             AppStateManager.ShowMoveEvaluationControls(true, false);
             AppStateManager.PrepareMoveEvaluation(fen, true);
 
-            int moveTime = AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME ?
-                Configuration.EngineMoveTime : Configuration.EngineEvaluationTime;
+            int moveTime;
+            switch (EvaluationManager.CurrentMode)
+            {
+                case EvaluationManager.Mode.ENGINE_GAME:
+                    moveTime = Configuration.EngineMoveTime;
+                    break;
+                case EvaluationManager.Mode.LINE:
+                    moveTime = Configuration.EngineEvaluationTime;
+                    break;
+                case EvaluationManager.Mode.CONTINUOUS:
+                    moveTime = 0;
+                    break;
+                default:
+                    AppLog.Message("ERROR: RequestMoveEvaluationInTraining() invalid mode: " + EvaluationManager.CurrentMode.ToString());
+                    moveTime = Configuration.EngineEvaluationTime;
+                    break;
+            }
+
             RequestEngineEvaluation(fen, Configuration.EngineMpv, moveTime);
         }
 
@@ -419,7 +439,14 @@ namespace ChessForge
         public static void RequestEngineEvaluation(string fen, int mpv, int movetime)
         {
             SendCommand("position fen " + fen);
-            SendCommand("go movetime " + movetime.ToString());
+            if (movetime > 0)
+            {
+                SendCommand("go movetime " + movetime.ToString());
+            }
+            else
+            {
+                SendCommand("go");
+            }
         }
 
         /// <summary>
