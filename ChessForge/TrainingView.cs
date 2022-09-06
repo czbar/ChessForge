@@ -567,7 +567,7 @@ namespace ChessForge
         /// <summary>
         /// This method will be invoked when we requested evaluation and got the results back.
         /// The EngineMessageProcessor has the results.
-        /// We can be in a MOVE or LINE evaluation mode.
+        /// We can be in a CONTINUOUS or LINE evaluation mode.
         /// </summary>
         public void ShowEvaluationResult()
         {
@@ -1027,8 +1027,8 @@ namespace ChessForge
                 TreeNode nd = EvaluationManager.GetNextNodeToEvaluate();
                 if (nd == null)
                 {
-                    EvaluationManager.ClearRunsToEvaluate();
                     EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                    EvaluationManager.ClearRunsToEvaluate();
                     EvaluationManager.SetPositionToEvaluate(null);
                 }
                 else
@@ -1174,10 +1174,15 @@ namespace ChessForge
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
             // don't accept any clicks if evaluation is in progress
-            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS
-                || EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
             {
+                _mainWin.BoardCommentBox.ShowFlashAnnouncement("Line evaluation is in progress!");
                 return;
+            }
+
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+            {
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
             }
 
             Run r = (Run)e.Source;
