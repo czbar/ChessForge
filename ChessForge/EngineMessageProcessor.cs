@@ -156,7 +156,7 @@ namespace ChessForge
             }
             else
             {
-                // eval request in MANUAL_REVIEW (could be for COMTINUOUS or LINE)
+                // eval request in MANUAL_REVIEW (could be for CONTINUOUS or LINE)
                 MoveEvaluationFinishedInManualReview();
             }
         }
@@ -179,7 +179,6 @@ namespace ChessForge
                 {
                     _mainWin.EngineTrainingGameMoveMade();
                 }
-                _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
             }
         }
@@ -195,10 +194,11 @@ namespace ChessForge
             // stop the timer, apply training mode specific handling 
             // NOTE do not reset Evaluation.CurrentMode as this will be done 
             // later down the chain
-            EvaluationManager.SetPositionToEvaluate(null);
             _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
             _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
             _mainWin.ResetEvaluationProgressBar();
+
+            EvaluationManager.SetPositionToEvaluate(null);
 
             _mainWin.MoveEvaluationFinishedInTraining();
         }
@@ -260,8 +260,8 @@ namespace ChessForge
                     {
                         EvaluationManager.Reset();
 
-                        AppStateManager.ResetEvaluationControls();
-                        AppStateManager.ShowMoveEvaluationControls(false, true);
+                        //AppStateManager.ResetEvaluationControls();
+                        //AppStateManager.ShowMoveEvaluationControls(false, true);
                     }
                 }
             }
@@ -361,7 +361,7 @@ namespace ChessForge
                 }
             });
 
-            AppStateManager.ShowMoveEvaluationControls(true);
+//            AppStateManager.ShowMoveEvaluationControls(true);
             _mainWin.UpdateLastMoveTextBox(posIndex);
 
             string fen = AppStateManager.PrepareMoveEvaluation(EvaluationManager.Position, true);
@@ -388,9 +388,10 @@ namespace ChessForge
             EvaluationManager.SetPositionToEvaluate(nd.Position);
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
             _mainWin.UpdateLastMoveTextBox(nd);
-            AppStateManager.ShowMoveEvaluationControls(true, false);
 
+            AppStateManager.ShowMoveEvaluationControls(true, false);
             AppStateManager.PrepareMoveEvaluation(fen, true);
+
             int moveTime = AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME ?
                 Configuration.EngineMoveTime : Configuration.EngineEvaluationTime;
             RequestEngineEvaluation(fen, Configuration.EngineMpv, moveTime);
