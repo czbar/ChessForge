@@ -194,9 +194,8 @@ namespace ChessForge
             // stop the timer, apply training mode specific handling 
             // NOTE do not reset Evaluation.CurrentMode as this will be done 
             // later down the chain
-            _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
-            _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
             _mainWin.ResetEvaluationProgressBar();
+            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
             EvaluationManager.SetPositionToEvaluate(null);
 
@@ -501,7 +500,7 @@ namespace ChessForge
         private static void ProcessBestMoveMessage(string message)
         {
             // make sure the last lines are shown before we stop the timer.
-            _mainWin.EngineLinesGUI.ShowEngineLines(null, null);
+            EngineLinesBox.ShowEngineLines(null, null);
 
             // tell the app that the evaluation has finished
             MoveEvaluationFinished();

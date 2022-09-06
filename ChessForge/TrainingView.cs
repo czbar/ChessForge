@@ -392,7 +392,7 @@ namespace ChessForge
                 }
                 else if (block is Paragraph)
                 {
-                    int nodeId = GuiUtilities.GetNodeIdFromPrefixedString(((Paragraph)block).Name);
+                    int nodeId = TextUtils.GetNodeIdFromPrefixedString(((Paragraph)block).Name);
                     TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
                     if (nd != null && nd.MoveNumber == move.MoveNumber && nd.ColorToMove == move.ColorToMove)
                     {
@@ -592,7 +592,7 @@ namespace ChessForge
             }
 
             // insert the evaluation result after the move.
-            List<MoveEvaluation> moveCandidates = _mainWin.EngineLinesGUI.Lines;
+            List<MoveEvaluation> moveCandidates = EngineLinesBox.Lines;
             if (moveCandidates.Count == 0)
                 return;
 
@@ -636,7 +636,7 @@ namespace ChessForge
         /// <returns></returns>
         private Run CreateEvaluationRun(MoveEvaluation eval, string runName)
         {
-            Run r_eval = new Run("(" + GuiUtilities.BuildEvaluationText(eval, _lastClickedNode.Position.ColorToMove) + ") ");
+            Run r_eval = new Run("(" + EvaluationManager.BuildEvaluationText(eval, _lastClickedNode.Position.ColorToMove) + ") ");
             r_eval.Name = runName;
             r_eval.FontWeight = FontWeights.Normal;
             r_eval.Foreground = Brushes.Black;
@@ -1247,7 +1247,7 @@ namespace ChessForge
                 return;
             }
 
-            int nodeId = GuiUtilities.GetNodeIdFromPrefixedString(r.Name);
+            int nodeId = TextUtils.GetNodeIdFromPrefixedString(r.Name);
             if (nodeId >= 0)
             {
                 Point pt = e.GetPosition(_mainWin.UiRtbTrainingProgress);

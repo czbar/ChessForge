@@ -17,26 +17,26 @@ namespace ChessForge
     public class EngineLinesBox
     {
         // Text box showing engine lines during evaluation
-        private TextBox _tbEvalLines;
+        private static TextBox _tbEvalLines;
 
         // progress bar for engine evaluation
-        private ProgressBar _pbEngineEval;
+        private static ProgressBar _pbEngineEval;
 
         /// <summary>
         /// Evaluation lines obtained from the engine.
         /// </summary>
-        public List<MoveEvaluation> Lines = new List<MoveEvaluation>();
+        public static List<MoveEvaluation> Lines = new List<MoveEvaluation>();
 
         // Application's Main Window
-        private MainWindow _mainWin;
+        private static MainWindow _mainWin;
 
         /// <summary>
-        /// Initialzes the object with GUI references.
+        /// Initializes the object with GUI references.
         /// </summary>
         /// <param name="textBox"></param>
         /// <param name="progBar"></param>
         /// <param name="evalState"></param>
-        public EngineLinesBox(MainWindow mainWin, TextBox textBox, ProgressBar progBar)
+        public static void Initialize(MainWindow mainWin, TextBox textBox, ProgressBar progBar)
         {
             _mainWin = mainWin;
 
@@ -47,7 +47,7 @@ namespace ChessForge
         /// <summary>
         /// Resets the evaluation progress bar to 0
         /// </summary>
-        public void ResetEvaluationProgressBar()
+        public static void ResetEvaluationProgressBar()
         {
             _pbEngineEval.Dispatcher.Invoke(() =>
             {
@@ -61,7 +61,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        public void ShowEngineLines(object source, ElapsedEventArgs e)
+        public static void ShowEngineLines(object source, ElapsedEventArgs e)
         {
             if (EvaluationManager.CurrentMode != EvaluationManager.Mode.ENGINE_GAME && EvaluationManager.Position != null)
             {
@@ -88,7 +88,7 @@ namespace ChessForge
 
                 if (Lines.Count > 0 && EvaluationManager.Position != null)
                 {
-                    EvaluationManager.PositionEvaluation = GuiUtilities.BuildEvaluationText(Lines[0], EvaluationManager.Position.ColorToMove);
+                    EvaluationManager.PositionEvaluation = EvaluationManager.BuildEvaluationText(Lines[0], EvaluationManager.Position.ColorToMove);
                 }
             }
 
@@ -104,7 +104,7 @@ namespace ChessForge
         /// <param name="lineNo"></param>
         /// <param name="line"></param>
         /// <returns></returns>
-        private string BuildLineText(int lineNo, MoveEvaluation line)
+        private static string BuildLineText(int lineNo, MoveEvaluation line)
         {
             try
             {
@@ -113,7 +113,7 @@ namespace ChessForge
                     return " ";
                 }
 
-                string eval = GuiUtilities.BuildEvaluationText(line, EvaluationManager.Position.ColorToMove);
+                string eval = EvaluationManager.BuildEvaluationText(line, EvaluationManager.Position.ColorToMove);
 
                 if (eval == "#")
                 {
@@ -160,7 +160,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
-        private string BuildMoveSequence(string line)
+        private static string BuildMoveSequence(string line)
         {
             string[] moves = line.Split(' ');
 
