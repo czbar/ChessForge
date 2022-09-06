@@ -853,7 +853,6 @@ namespace ChessForge
                 _mainWin.UiMnciEvalLine.IsEnabled = false;
                 _mainWin.UiMnciEvalPos.IsEnabled = false;
 
-                _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
                 _mainWin.UiPbEngineThinking.Minimum = 0;
                 int moveTime = AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME ?
                     Configuration.EngineMoveTime : Configuration.EngineEvaluationTime;
