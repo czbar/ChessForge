@@ -398,10 +398,10 @@ namespace EngineService
                     _pollCountInStopping = 0;
                 }
 
+                string message;
                 try
                 {
-                    string message;
-                    while ((message = _strmReader.ReadLine()) != null)
+                    while (_strmReader != null && (message = _strmReader.ReadLine()) != null)
                     {
                         if (message != null && !message.Contains("currmove"))
                         {
