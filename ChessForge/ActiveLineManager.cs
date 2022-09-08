@@ -91,6 +91,11 @@ namespace ChessForge
         /// <param name="eval"></param>
         public void SetEvaluation(int moveIndex, PieceColor color, string eval)
         {
+            if (moveIndex < 0 || moveIndex > Line.MoveList.Count)
+            {
+                return;
+            }
+
             if (color == PieceColor.White)
             {
                 GetMoveAtIndex(moveIndex).WhiteEval = eval;
