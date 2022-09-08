@@ -33,9 +33,6 @@ namespace ChessForge
             // user's move accepted, awaiting a workboook-based response
             AWAITING_WORKBOOK_RESPONSE,
 
-            // the engine is evalauting a move or a line
-            ENGINE_EVALUATION_IN_PROGRESS,
-            
             // user move completed, the program will pick it up
             USER_MOVE_COMPLETED,
         }

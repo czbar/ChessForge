@@ -194,6 +194,25 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Finds index of a Node in the Node/Ply list.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public int GetIndexForNode(TreeNode nd)
+        {
+            int index = -1;
+            for (int i = 0; i < NodeList.Count; i++)
+            {
+                if (NodeList[i].NodeId == nd.NodeId)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            return index;
+        }
+
+        /// <summary>
         /// Sets a new Node list and builds the move list.
         /// </summary>
         /// <param name="line"></param>

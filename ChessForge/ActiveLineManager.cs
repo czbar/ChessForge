@@ -50,7 +50,7 @@ namespace ChessForge
         {
             _dgActiveLine.SelectedCells.Clear();
             Line.MoveList.Clear();
-            Line.NodeList.Clear(); 
+            Line.NodeList.Clear();
         }
 
         /// <summary>
@@ -91,6 +91,11 @@ namespace ChessForge
         /// <param name="eval"></param>
         public void SetEvaluation(int moveIndex, PieceColor color, string eval)
         {
+            if (moveIndex < 0 || moveIndex > Line.MoveList.Count)
+            {
+                return;
+            }
+
             if (color == PieceColor.White)
             {
                 GetMoveAtIndex(moveIndex).WhiteEval = eval;
@@ -186,6 +191,16 @@ namespace ChessForge
         {
             GetSelectedRowColumn(out int row, out int column);
             return GetNodeIndexFromRowColumn(row, column);
+        }
+
+        /// <summary>
+        /// Finds index of a Node in the Node/Ply list.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public int GetIndexForNode(TreeNode nd)
+        {
+            return Line.GetIndexForNode(nd);
         }
 
         /// <summary>
@@ -341,6 +356,7 @@ namespace ChessForge
             }
         }
 
+        
         /// <summary>
         /// Intercepts the MouseDown event when occuring within the Active Line view.
         /// If the click was on a non-selectable column,
@@ -349,7 +365,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        internal void PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        public void PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out int row, out int column);
             _mainWin.BoardCommentBox.ShowWorkbookTitle();

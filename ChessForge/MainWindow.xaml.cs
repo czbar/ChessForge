@@ -51,7 +51,6 @@ namespace ChessForge
         // width and and height of a square in the main chessboard
         private const int squareSize = 80;
 
-        public EngineLinesBox EngineLinesGUI;
         AnimationState MoveAnimation = new AnimationState();
         public EvaluationManager EvaluationMgr;
 
@@ -111,8 +110,8 @@ namespace ChessForge
             BoardCommentBox = new CommentBox(UiRtbBoardComment.Document, this);
             ActiveLine = new ActiveLineManager(UiDgActiveLine, this);
 
-            EngineLinesGUI = new EngineLinesBox(this, UiTbEngineLines, UiPbEngineThinking);
-            Timers = new AppTimers(EngineLinesGUI, this);
+            EngineLinesBox.Initialize(this, UiTbEngineLines, UiPbEngineThinking);
+            Timers = new AppTimers(this);
 
             Configuration.Initialize(this);
             Configuration.StartDirectory = App.AppPath;
@@ -1079,7 +1078,7 @@ namespace ChessForge
             _lvWorkbookTable_SelectLineAndMove(lineId, nd.NodeId);
             if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
             {
-                EvaluateActiveLineSelectedPositionEx();
+                EvaluateActiveLineSelectedPosition(index);
             }
         }
 
@@ -1128,7 +1127,7 @@ namespace ChessForge
                 }
                 if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
                 {
-                    EvaluateActiveLineSelectedPositionEx();
+                    EvaluateActiveLineSelectedPosition(nd);
                 }
             }
         }
@@ -1230,13 +1229,27 @@ namespace ChessForge
         private void MenuItem_EvaluatePosition(object sender, RoutedEventArgs e)
         {
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
-            EvaluateActiveLineSelectedPositionEx();
+            EvaluateActiveLineSelectedPosition();
         }
 
-        private void EvaluateActiveLineSelectedPositionEx()
+        private void EvaluateActiveLineSelectedPosition()
         {
             // stop the timer to prevent showing garbage after position is set but engine has not received our commands yet
             EngineMessageProcessor.RequestPositionEvaluation(ActiveLine.GetSelectedPlyNodeIndex(), Configuration.EngineMpv, 0);
+        }
+
+        private void EvaluateActiveLineSelectedPosition(int index)
+        {
+            EngineMessageProcessor.RequestPositionEvaluation(index, Configuration.EngineMpv, 0);
+        }
+
+        private void EvaluateActiveLineSelectedPosition(TreeNode nd)
+        {
+            int index = ActiveLine.GetIndexForNode(nd);
+            if (index >= 0)
+            {
+                EngineMessageProcessor.RequestPositionEvaluation(index, Configuration.EngineMpv, 0);
+            }
         }
 
         private void MenuItem_EvaluateLine(object sender, RoutedEventArgs e)
@@ -1295,7 +1308,7 @@ namespace ChessForge
 
         public void ResetEvaluationProgressBar()
         {
-            EngineLinesGUI.ResetEvaluationProgressBar();
+            EngineLinesBox.ResetEvaluationProgressBar();
         }
 
         /// <summary>
@@ -1432,7 +1445,7 @@ namespace ChessForge
         {
             Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
 
-            ResetEngineThinkingGUI();
+            ResetEvaluationProgressBae();
 
             MainChessBoard.RemoveMoveSquareColors();
 
@@ -1453,7 +1466,12 @@ namespace ChessForge
             BoardCommentBox.RestoreTitleMessage();
         }
 
-        public void ResetEngineThinkingGUI()
+        /// <summary>
+        /// Resets the engine evaluation progress bar.
+        /// Sets its visibility to hidden.
+        /// and Maximum value to the appropriate engine time: move or evaluation.
+        /// </summary>
+        public void ResetEvaluationProgressBae()
         {
             UiPbEngineThinking.Dispatcher.Invoke(() =>
             {
@@ -2160,7 +2178,7 @@ namespace ChessForge
                 UiImgEngineOff.Visibility = Visibility.Collapsed;
                 UiImgEngineOn.Visibility = Visibility.Visible;
                 Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
-                EvaluateActiveLineSelectedPositionEx();
+                EvaluateActiveLineSelectedPosition();
             }
 
             e.Handled = true;
