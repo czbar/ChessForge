@@ -197,7 +197,7 @@ namespace ChessForge
 
                 ChangeCurrentMode(Mode.IDLE);
             }
-            AppStateManager.ShowEvaluationProgressControlsForCurrentStates();
+            AppStateManager.SetupGuiForCurrentStates();
         }
 
         /// <summary>

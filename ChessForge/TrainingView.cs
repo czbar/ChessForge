@@ -625,7 +625,7 @@ namespace ChessForge
                 }
             });
 
-            AppStateManager.ShowEvaluationProgressControlsForCurrentStates();
+            AppStateManager.SetupGuiForCurrentStates();
         }
 
         /// <summary>
