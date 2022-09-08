@@ -37,6 +37,51 @@ namespace GameTree
         public List<TreeNode> Children = new List<TreeNode>();
 
         /// <summary>
+        /// Id of the line this move belongs to.
+        /// It is in the form of integers separated by dots e.g. "1.2.1.3".
+        /// The "main" line will be of the form "1.1.1.1.1"
+        /// </summary>
+        public string LineId = "";
+
+        /// <summary>
+        /// Position for this node.
+        /// </summary>
+        public BoardPosition Position = new BoardPosition();
+
+        /// <summary>
+        /// Indicates whether this position is a bookmark.
+        /// </summary>
+        public bool IsBookmark = false;
+
+        /// <summary>
+        /// The number of Nodes to traverse before arriving at the next fork/branch/inode.
+        /// Special values:
+        /// -1  - means there is no next fork i.e. the branch leads directly to a leaf
+        ///  0  - an invalid / uninitialized value.
+        /// </summary>
+        public int DistanceToNextFork = 0;
+
+        /// <summary>
+        /// The number of Nodes to traverse before arriving at the leaf.
+        /// Special values.
+        ///  0 - this node is a leaf
+        /// -1 - there is a fork before we reach a leaf.
+        /// </summary>
+        public int DistanceToLeaf = -1;
+
+        /// <summary>
+        /// Index of the first character of this move
+        /// in the string shown in the game notation window.
+        /// </summary>
+        public int TextStart;
+
+        /// <summary>
+        /// Index of the last character of this move
+        /// in the string shown in the game notation window.
+        /// </summary>
+        public int TextEnd;
+
+        /// <summary>
         /// List of Chess Forge commands associated with the leadup move
         /// that we are not handling.
         /// We will preserve them in this list so that we will write them out.
@@ -57,6 +102,11 @@ namespace GameTree
         /// or added permanently.
         /// </summary>
         public bool IsNewUserMove = false;
+
+        /// <summary>
+        /// A "coach's" assessment string (a value for the [chf-coa] command)
+        /// </summary>
+        public string Assessment = null;
 
         /// <summary>
         /// A text comment associated with the leadup move
@@ -84,7 +134,7 @@ namespace GameTree
         public PieceColor ColorToMove => Position.ColorToMove;
 
         /// <summary>
-        /// The move leading to this psoition in algebraic notation (e.g. "d4", "Nbd2", "e8Q")
+        /// The move leading to this position in algebraic notation (e.g. "d4", "Nbd2", "e8Q")
         /// </summary>
         public string LastMoveAlgebraicNotation
         {
@@ -96,6 +146,10 @@ namespace GameTree
             }
         }
 
+        /// <summary>
+        /// The move leading to this position in algebraic notation 
+        /// inluding NAG (e.g. "d4!", "Nbd2?!", "e8Q+-")
+        /// </summary>
         public string LastMoveAlgebraicNotationWithNag
         {
             get { return _lastMoveAlgWithNag; }
@@ -190,51 +244,6 @@ namespace GameTree
                 return false;
             }
         }
-
-        /// <summary>
-        /// Id of the line this move belongs to.
-        /// It is in the form of integers separated by dots e.g. "1.2.1.3".
-        /// The "main" line will be of the form "1.1.1.1.1"
-        /// </summary>
-        public string LineId = "";
-
-        /// <summary>
-        /// The number of Nodes to traverse before arriving at the next fork/branch/inode.
-        /// Special values:
-        /// -1  - means there is no next fork i.e. the branch leads directly to a leaf
-        ///  0  - an invalid / uninitialized value.
-        /// </summary>
-        public int DistanceToNextFork = 0;
-
-        /// <summary>
-        /// The number of Nodes to traverse before arriving at the leaf.
-        /// Special values.
-        ///  0 - this node is a leaf
-        /// -1 - there is a fork before we reach a leaf.
-        /// </summary>
-        public int DistanceToLeaf = -1;
-
-        /// <summary>
-        /// Index of the first character of this move
-        /// in the string shown in the game notation window.
-        /// </summary>
-        public int TextStart;
-
-        /// <summary>
-        /// Index of the last character of this move
-        /// in the string shown in the game notation window.
-        /// </summary>
-        public int TextEnd;
-
-        /// <summary>
-        /// Position for this node.
-        /// </summary>
-        public BoardPosition Position = new BoardPosition();
-
-        /// <summary>
-        /// Indicates whether this position is a bookmark.
-        /// </summary>
-        public bool IsBookmark = false;
 
         /// <summary>
         /// Creates a new object as a child of the passed parent.

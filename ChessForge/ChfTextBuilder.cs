@@ -261,6 +261,7 @@ namespace ChessForge
 
                 sb.Append(" {");
 
+                // Process a Bookmark ChfCommand
                 if (nd.IsBookmark)
                 {
                     if (_fileType == AppStateManager.FileType.CHF)
@@ -274,6 +275,7 @@ namespace ChessForge
                     }
                 }
 
+                // Process an Evaluation ChfCommand
                 if (!string.IsNullOrEmpty(nd.EngineEvaluation))
                 {
                     if (_fileType == AppStateManager.FileType.CHF)
@@ -287,11 +289,24 @@ namespace ChessForge
                     }
                 }
 
+                // Process an Assessment ChfCommand
+                if (!string.IsNullOrEmpty(nd.Assessment))
+                {
+                    if (_fileType == AppStateManager.FileType.CHF)
+                    {
+                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.COACH_ASSESSMENT) + " " + nd.Assessment;
+                        sb.Append("[" + sCmd + "]");
+                    }
+                }
+
+                // Write out commands that we did not recognize but do not want to lose.
+                // E.g. we may ne running an earlier version of Chess Forge.
                 foreach (string cmd in nd.UnprocessedChfCommands)
                 {
                     sb.Append("[" + cmd + "]");
                 }
 
+                // Comment, if any
                 if (!string.IsNullOrEmpty(nd.Comment))
                 {
                     sb.Append(nd.Comment);
