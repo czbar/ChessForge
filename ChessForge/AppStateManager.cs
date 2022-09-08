@@ -241,7 +241,7 @@ namespace ChessForge
                 _mainWin.UiRtbTrainingBrowse.Document.Blocks.Clear();
 
                 _mainWin.Timers.StopAll();
-                _mainWin.ResetEngineThinkingGUI();
+                _mainWin.ResetEvaluationProgressBae();
                 EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
 
                 _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
@@ -283,10 +283,176 @@ namespace ChessForge
                     SetupGuiForEngineGame();
                     break;
             }
-            ShowEvaluationProgressControlsForCurrentStates();
+            ShowEvaluationControlsForCurrentStates();
             ConfigureMainBoardContextMenu();
             ConfigureSaveMenus();
         }
+        /// <summary>
+        /// Enables Move/Line evaluation menus.
+        /// Hides engine evaluation progress bar.
+        /// </summary>
+        public static void ResetEvaluationControls()
+        {
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                _mainWin.UiMnciEvalLine.IsEnabled = true;
+                _mainWin.UiMnciEvalPos.IsEnabled = true;
+                _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
+            });
+        }
+
+        /// <summary>
+        /// Preparations for move evaluation that are common for Position/Line 
+        /// evaluation as well as requesting engine move in a game.
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <param name="position"></param>
+        public static string PrepareMoveEvaluation(BoardPosition position, bool monitorLines)
+        {
+            string fen = FenParser.GenerateFenFromPosition(position);
+            return PrepareMoveEvaluation(fen, monitorLines);
+        }
+
+        /// <summary>
+        /// Preparations for move evaluation that are common for Position/Line 
+        /// evaluation as well as requesting engine move in a game.
+        /// </summary>
+        /// <param name="fen"></param>
+        /// <param name="monitorLines"></param>
+        /// <returns></returns>
+        public static string PrepareMoveEvaluation(string fen, bool monitorLines)
+        {
+            PrepareEvaluationControls();
+
+            // do not remove/stop EVALUATION_LINE_DISPLAY timer as it is responsible
+            // for keeping the progress bar active
+            _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+            _mainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+
+            return fen;
+        }
+
+        /// <summary>
+        /// Depending on the "showEngineLines" argument
+        /// shows either the Comment Box or the Engine Lines text box.
+        /// </summary>
+        /// <param name="showEngineLines"></param>
+        public static void SwapCommentBoxForEngineLines(bool showEngineLines)
+        {
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                _mainWin.UiRtbBoardComment.Visibility = showEngineLines ? Visibility.Hidden : Visibility.Visible;
+                _mainWin.UiTbEngineLines.Visibility = showEngineLines ? Visibility.Visible : Visibility.Hidden;
+                if (!showEngineLines)
+                {
+                    _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Sets visibility for the controls relevant to move evaluation modes.
+        /// NOTE: this is not applicable to move evaluation during a game.
+        /// Engine Lines TextBox replaces the Board Comment RichTextBox if
+        /// we are in the Position/Line evaluation mode.
+        /// </summary>
+        /// <param name="visible"></param>
+        /// <param name="keepLinesBox"></param>
+        public static void ShowMoveEvaluationControls(bool visible, bool keepLinesBox = false)
+        {
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                if (visible && CurrentEvaluationMode != EvaluationManager.Mode.ENGINE_GAME)
+                {
+                    _mainWin.UiRtbBoardComment.Visibility = Visibility.Hidden;
+                    _mainWin.UiTbEngineLines.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    if (!keepLinesBox)
+                    {
+                        _mainWin.UiRtbBoardComment.Visibility = Visibility.Visible;
+                        _mainWin.UiTbEngineLines.Visibility = Visibility.Hidden;
+                    }
+
+                }
+                ShowEvaluationControlsForCurrentStates();
+            });
+
+        }
+
+
+        public static void SetupGuiForTrainingBrowseMode()
+        {
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                TrainingSession.IsBrowseActive = true;
+                _mainWin.UiTabCtrlTraining.Margin = new Thickness(185, 5, 5, 5);
+                _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
+
+                _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
+                _mainWin.UiDgActiveLine.Columns[2].Visibility = Visibility.Collapsed;
+                _mainWin.UiDgActiveLine.Columns[4].Visibility = Visibility.Collapsed;
+                _mainWin.UiDgActiveLine.Width = 160;
+            });
+        }
+
+        /// <summary>
+        /// This will setup the GUI for the Training progress
+        /// unless we are in a game mode and the focus is here because
+        /// the user requested the context menu.
+        /// </summary>
+        public static void SetupGuiForTrainingProgressMode()
+        {
+            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING)
+            {
+                _mainWin.Dispatcher.Invoke(() =>
+                {
+                    TrainingSession.IsBrowseActive = false;
+                    _mainWin.UiTabCtrlTraining.Margin = new Thickness(5, 5, 5, 5);
+                    _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
+                    _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+
+                    _mainWin.DisplayPosition(EngineGame.GetLastPosition());
+                });
+            }
+        }
+
+        /// <summary>
+        /// Depending on what type of file we have and its state,
+        /// set the state of the menus.
+        /// </summary>
+        public static void ConfigureSaveMenus()
+        {
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+
+                if (!string.IsNullOrEmpty(WorkbookFilePath) && IsDirty && WorkbookFileType == FileType.CHF)
+                {
+                    _mainWin.UiMnWorkbookSave.IsEnabled = true;
+                    _mainWin.UiMnWorkbookSave.Header = "Save " + Path.GetFileName(WorkbookFilePath);
+                }
+                else
+                {
+                    _mainWin.UiMnWorkbookSave.IsEnabled = false;
+                    _mainWin.UiMnWorkbookSave.Header = "Save " + Path.GetFileName(WorkbookFilePath);
+                }
+
+                if (!string.IsNullOrEmpty(WorkbookFilePath))
+                {
+                    _mainWin.UiMnWorkbookSaveAs.IsEnabled = true;
+                    _mainWin.UiMnWorkbookSaveAs.Header = "Save " + Path.GetFileName(WorkbookFilePath) + " As...";
+                    _mainWin.UiMnExportPgn.IsEnabled = true;
+                }
+                else
+                {
+                    _mainWin.UiMnWorkbookSaveAs.IsEnabled = false;
+                    _mainWin.UiMnWorkbookSaveAs.Header = "Save As...";
+                    _mainWin.UiMnExportPgn.IsEnabled = false;
+                }
+            });
+        }
+
 
         /// <summary>
         /// Sets up GUI elements for the Manual Review mode.
@@ -329,7 +495,7 @@ namespace ChessForge
                 _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
 
                 ShowGuiActiveLine(true);
-                ShowEvaluationProgressControlsForCurrentStates();
+                ShowEvaluationControlsForCurrentStates();
 
                 ConfigureMenusForManualReview();
             });
@@ -365,7 +531,7 @@ namespace ChessForge
                 _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
                 _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
 
-                ShowEvaluationProgressControlsForCurrentStates();
+                ShowEvaluationControlsForCurrentStates();
 
                 ConfigureMenusForTraining();
             });
@@ -417,45 +583,10 @@ namespace ChessForge
                     _mainWin.UiBtnExitGame.Visibility = Visibility.Visible;
                 }
 
-                ShowEvaluationProgressControlsForCurrentStates();
+                ShowEvaluationControlsForCurrentStates();
                 ShowGuiEngineGameLine(true);
 
                 ConfigureMenusForEngineGame();
-            });
-        }
-
-        /// <summary>
-        /// Depending on what type of file we have and its state,
-        /// set the state of the menus.
-        /// </summary>
-        public static void ConfigureSaveMenus()
-        {
-            _mainWin.Dispatcher.Invoke(() =>
-            {
-
-                if (!string.IsNullOrEmpty(WorkbookFilePath) && IsDirty && WorkbookFileType == FileType.CHF)
-                {
-                    _mainWin.UiMnWorkbookSave.IsEnabled = true;
-                    _mainWin.UiMnWorkbookSave.Header = "Save " + Path.GetFileName(WorkbookFilePath);
-                }
-                else
-                {
-                    _mainWin.UiMnWorkbookSave.IsEnabled = false;
-                    _mainWin.UiMnWorkbookSave.Header = "Save " + Path.GetFileName(WorkbookFilePath);
-                }
-
-                if (!string.IsNullOrEmpty(WorkbookFilePath))
-                {
-                    _mainWin.UiMnWorkbookSaveAs.IsEnabled = true;
-                    _mainWin.UiMnWorkbookSaveAs.Header = "Save " + Path.GetFileName(WorkbookFilePath) + " As...";
-                    _mainWin.UiMnExportPgn.IsEnabled = true;
-                }
-                else
-                {
-                    _mainWin.UiMnWorkbookSaveAs.IsEnabled = false;
-                    _mainWin.UiMnWorkbookSaveAs.Header = "Save As...";
-                    _mainWin.UiMnExportPgn.IsEnabled = false;
-                }
             });
         }
 
@@ -598,10 +729,12 @@ namespace ChessForge
         /// Shows/hides the engine evaluation progress bar, labels,
         /// and the menu items for move and line evaluation.
         /// </summary>
-        public static void ShowEvaluationProgressControlsForCurrentStates()
+        private static void ShowEvaluationControlsForCurrentStates()
         {
             bool eval = EvaluationManager.IsRunning;
-            bool game = EngineGame.CurrentState != EngineGame.GameState.IDLE;
+            // hide eval info if this is a game AND we are not requesting eval durin game in Training mode
+            bool game = LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME &&
+                    (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME || EvaluationManager.CurrentMode == EvaluationManager.Mode.IDLE);
 
             _mainWin.Dispatcher.Invoke(() =>
              {
@@ -617,8 +750,8 @@ namespace ChessForge
 
                          _mainWin.UiPbEngineThinking.Visibility = Visibility.Collapsed;
 
-                         _mainWin.UiLblEvaluating.Visibility = Visibility.Collapsed;
-                         _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Collapsed;
+                         _mainWin.UiLblEvaluating.Visibility = Visibility.Visible;
+                         _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Visible;
                          _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Collapsed;
                      }
                      else
@@ -715,136 +848,6 @@ namespace ChessForge
             });
         }
 
-        /// <summary>
-        /// Enables Move/Line evaluation menus.
-        /// Hides engine evaluation progress bar.
-        /// </summary>
-        public static void ResetEvaluationControls()
-        {
-            _mainWin.Dispatcher.Invoke(() =>
-            {
-                _mainWin.UiMnciEvalLine.IsEnabled = true;
-                _mainWin.UiMnciEvalPos.IsEnabled = true;
-                _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
-            });
-        }
-
-        /// <summary>
-        /// Preparations for move evaluation that are common for Position/Line 
-        /// evaluation as well as requesting engine move in a game.
-        /// </summary>
-        /// <param name="mode"></param>
-        /// <param name="position"></param>
-        public static string PrepareMoveEvaluation(BoardPosition position, bool monitorLines)
-        {
-            string fen = FenParser.GenerateFenFromPosition(position);
-            return PrepareMoveEvaluation(fen, monitorLines);
-        }
-
-        /// <summary>
-        /// Preparations for move evaluation that are common for Position/Line 
-        /// evaluation as well as requesting engine move in a game.
-        /// </summary>
-        /// <param name="fen"></param>
-        /// <param name="monitorLines"></param>
-        /// <returns></returns>
-        public static string PrepareMoveEvaluation(string fen, bool monitorLines)
-        {
-            PrepareEvaluationControls();
-
-            // do not remove/stop EVALUATION_LINE_DISPLAY timer as it is responsible
-            // for keeping the progress bar active
-            _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
-            _mainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-
-            return fen;
-        }
-
-        /// <summary>
-        /// Depending on the "showEngineLines" argument
-        /// shows either the Comment Box or the Engine Lines text box.
-        /// </summary>
-        /// <param name="showEngineLines"></param>
-        public static void SwapCommentBoxForEngineLines(bool showEngineLines)
-        {
-            _mainWin.Dispatcher.Invoke(() =>
-            {
-                _mainWin.UiRtbBoardComment.Visibility = showEngineLines ? Visibility.Hidden : Visibility.Visible;
-                _mainWin.UiTbEngineLines.Visibility = showEngineLines ? Visibility.Visible : Visibility.Hidden;
-                if (!showEngineLines)
-                {
-                    _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                }
-            });
-        }
-
-        /// <summary>
-        /// Sets visibility for the controls relevant to move evaluation modes.
-        /// NOTE: this is not applicable to move evaluation during a game.
-        /// Engine Lines TextBox replaces the Board Comment RichTextBox if
-        /// we are in the Position/Line evaluation mode.
-        /// </summary>
-        /// <param name="visible"></param>
-        /// <param name="keepLinesBox"></param>
-        public static void ShowMoveEvaluationControls(bool visible, bool keepLinesBox = false)
-        {
-            _mainWin.Dispatcher.Invoke(() =>
-            {
-                if (visible && CurrentEvaluationMode != EvaluationManager.Mode.ENGINE_GAME)
-                {
-                    _mainWin.UiRtbBoardComment.Visibility = Visibility.Hidden;
-                    _mainWin.UiTbEngineLines.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    if (!keepLinesBox)
-                    {
-                        _mainWin.UiRtbBoardComment.Visibility = Visibility.Visible;
-                        _mainWin.UiTbEngineLines.Visibility = Visibility.Hidden;
-                    }
-
-                }
-                ShowEvaluationProgressControlsForCurrentStates();
-            });
-
-        }
-
-
-        public static void SetupGuiForTrainingBrowseMode()
-        {
-            _mainWin.Dispatcher.Invoke(() =>
-            {
-                TrainingSession.IsBrowseActive = true;
-                _mainWin.UiTabCtrlTraining.Margin = new Thickness(185, 5, 5, 5);
-                _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
-
-                _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
-                _mainWin.UiDgActiveLine.Columns[2].Visibility = Visibility.Collapsed;
-                _mainWin.UiDgActiveLine.Columns[4].Visibility = Visibility.Collapsed;
-                _mainWin.UiDgActiveLine.Width = 160;
-            });
-        }
-
-        /// <summary>
-        /// This will setup the GUI for the Training progress
-        /// unless we are in a game mode and the focus is here because
-        /// the user requested the context menu.
-        /// </summary>
-        public static void SetupGuiForTrainingProgressMode()
-        {
-            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING)
-            {
-                _mainWin.Dispatcher.Invoke(() =>
-                {
-                    TrainingSession.IsBrowseActive = false;
-                    _mainWin.UiTabCtrlTraining.Margin = new Thickness(5, 5, 5, 5);
-                    _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
-                    _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
-
-                    _mainWin.DisplayPosition(EngineGame.GetLastPosition());
-                });
-            }
-        }
 
         private static void PrepareEvaluationControls()
         {
