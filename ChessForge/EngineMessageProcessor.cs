@@ -262,9 +262,6 @@ namespace ChessForge
                     if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
                     {
                         EvaluationManager.Reset();
-
-                        //AppStateManager.ResetEvaluationControls();
-                        //AppStateManager.ShowMoveEvaluationControls(false, true);
                     }
                 }
             }
@@ -460,21 +457,27 @@ namespace ChessForge
             _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
             ClearMoveCandidates(true);
 
-            string fen = FenParser.GenerateFenFromPosition(_mainWin.ActiveLine.GetNodeAtIndex(index).Position);
-            SendCommand("position fen " + fen);
-
-            EvaluationManager.PositionIndex = index;
-            if (movetime > 0)
+            TreeNode nd = _mainWin.ActiveLine.GetNodeAtIndex(index);
+            if (nd != null)
             {
-                SendCommand(UciCommands.ENG_GO_MOVE_TIME + " " + movetime.ToString());
-            }
-            else
-            {
-                SendCommand(UciCommands.ENG_GO_INFINITE);
-            }
+                _mainWin.UpdateLastMoveTextBox(nd);
 
-            AppStateManager.ShowMoveEvaluationControls(true);
-            _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                string fen = FenParser.GenerateFenFromPosition(nd.Position);
+                SendCommand("position fen " + fen);
+
+                EvaluationManager.PositionIndex = index;
+                if (movetime > 0)
+                {
+                    SendCommand(UciCommands.ENG_GO_MOVE_TIME + " " + movetime.ToString());
+                }
+                else
+                {
+                    SendCommand(UciCommands.ENG_GO_INFINITE);
+                }
+
+                AppStateManager.ShowMoveEvaluationControls(true);
+                _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+            }
         }
 
         //*********************************************************************************
