@@ -1078,7 +1078,7 @@ namespace ChessForge
             _lvWorkbookTable_SelectLineAndMove(lineId, nd.NodeId);
             if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
             {
-                EvaluateActiveLineSelectedPositionEx();
+                EvaluateActiveLineSelectedPosition(index);
             }
         }
 
@@ -1127,7 +1127,7 @@ namespace ChessForge
                 }
                 if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
                 {
-                    EvaluateActiveLineSelectedPositionEx();
+                    EvaluateActiveLineSelectedPosition(nd);
                 }
             }
         }
@@ -1229,13 +1229,27 @@ namespace ChessForge
         private void MenuItem_EvaluatePosition(object sender, RoutedEventArgs e)
         {
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
-            EvaluateActiveLineSelectedPositionEx();
+            EvaluateActiveLineSelectedPosition();
         }
 
-        private void EvaluateActiveLineSelectedPositionEx()
+        private void EvaluateActiveLineSelectedPosition()
         {
             // stop the timer to prevent showing garbage after position is set but engine has not received our commands yet
             EngineMessageProcessor.RequestPositionEvaluation(ActiveLine.GetSelectedPlyNodeIndex(), Configuration.EngineMpv, 0);
+        }
+
+        private void EvaluateActiveLineSelectedPosition(int index)
+        {
+            EngineMessageProcessor.RequestPositionEvaluation(index, Configuration.EngineMpv, 0);
+        }
+
+        private void EvaluateActiveLineSelectedPosition(TreeNode nd)
+        {
+            int index = ActiveLine.GetIndexForNode(nd);
+            if (index >= 0)
+            {
+                EngineMessageProcessor.RequestPositionEvaluation(index, Configuration.EngineMpv, 0);
+            }
         }
 
         private void MenuItem_EvaluateLine(object sender, RoutedEventArgs e)
@@ -1431,7 +1445,7 @@ namespace ChessForge
         {
             Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
 
-            ResetEngineThinkingGUI();
+            ResetEvaluationProgressBae();
 
             MainChessBoard.RemoveMoveSquareColors();
 
@@ -1452,7 +1466,12 @@ namespace ChessForge
             BoardCommentBox.RestoreTitleMessage();
         }
 
-        public void ResetEngineThinkingGUI()
+        /// <summary>
+        /// Resets the engine evaluation progress bar.
+        /// Sets its visibility to hidden.
+        /// and Maximum value to the appropriate engine time: move or evaluation.
+        /// </summary>
+        public void ResetEvaluationProgressBae()
         {
             UiPbEngineThinking.Dispatcher.Invoke(() =>
             {
@@ -2159,7 +2178,7 @@ namespace ChessForge
                 UiImgEngineOff.Visibility = Visibility.Collapsed;
                 UiImgEngineOn.Visibility = Visibility.Visible;
                 Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
-                EvaluateActiveLineSelectedPositionEx();
+                EvaluateActiveLineSelectedPosition();
             }
 
             e.Handled = true;
