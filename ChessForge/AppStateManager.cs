@@ -240,9 +240,10 @@ namespace ChessForge
                 _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
                 _mainWin.UiRtbTrainingBrowse.Document.Blocks.Clear();
 
-                _mainWin.Timers.StopAll();
                 _mainWin.ResetEvaluationProgressBae();
+
                 EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
                 _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
                 _mainWin.RemoveMoveSquareColors();
@@ -781,7 +782,14 @@ namespace ChessForge
                  else
                  {
                      _mainWin.UiImgEngineOn.Visibility = Visibility.Collapsed;
-                     _mainWin.UiImgEngineOff.Visibility = Visibility.Visible;
+                     if (LearningMode.CurrentMode == LearningMode.Mode.IDLE)
+                     {
+                         _mainWin.UiImgEngineOff.Visibility = Visibility.Collapsed;
+                     }
+                     else
+                     {
+                         _mainWin.UiImgEngineOff.Visibility = Visibility.Visible;
+                     }
 
                      _mainWin.UiMnciEvalLine.IsEnabled = true;
                      _mainWin.UiMnciEvalPos.IsEnabled = true;
