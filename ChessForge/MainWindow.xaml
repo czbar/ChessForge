@@ -304,7 +304,7 @@
                     </Grid.ContextMenu>
                     <Grid x:Name="UiGridBookmarks" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="0"/>
                             <RowDefinition Height="270*"/>
                             <RowDefinition Height="270*"/>
                             <RowDefinition Height="270*"/>
@@ -315,9 +315,9 @@
                             <ColumnDefinition Width="220*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Canvas x:Name="UiCnvPaging" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"  >
+                        <Canvas x:Name="UiCnvPaging" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Visibility="Collapsed" >
                             <Image x:Name="UiImgLeftArrow" HorizontalAlignment="Left"  Margin="-80,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseDown="UiImgLeftArrow_PreviewMouseDown"  />
-                            <Label x:Name="UiLblBookmarkPage" Content="Page 1 of 3" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-50,-5,0,0" Width="100"  FontWeight="Bold"/>
+                            <Label x:Name="UiLblBookmarkPage" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-50,-5,0,0" Width="100"  FontWeight="Bold"/>
                             <Image x:Name="UiImgRightArrow" HorizontalAlignment="Right" Margin="0,0,-80,0" Source="Resources/Images/RightArrow.png" PreviewMouseDown="UiImgRightArrow_PreviewMouseDown"  />
                         </Canvas>
 
