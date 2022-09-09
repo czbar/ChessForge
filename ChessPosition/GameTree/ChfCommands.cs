@@ -19,7 +19,23 @@ namespace GameTree
         {
             NONE,
             BOOKMARK,
-            ENGINE_EVALUATION
+            ENGINE_EVALUATION,
+            COACH_ASSESSMENT,
+            COACH_COMMENT
+        }
+
+        /// <summary>
+        /// ID's of coach's assessments
+        /// </summary>
+        public enum Assessment
+        {
+            NONE,
+            BEST,
+            ONLY,
+            GREAT,
+            DUBIOUS,
+            MISTAKE,
+            BLUNDER
         }
 
         /// <summary>
@@ -29,6 +45,20 @@ namespace GameTree
         {
             ["%chf-bkm"] = Command.BOOKMARK,
             ["%chf-eev"] = Command.ENGINE_EVALUATION,
+            ["%chf-coa"] = Command.COACH_ASSESSMENT
+        };
+
+        /// <summary>
+        /// Map of assessment strings to assessment commands.
+        /// </summary>
+        private static Dictionary<string, Assessment> _dictAssessments = new Dictionary<string, Assessment>()
+        {
+            ["best"] = Assessment.BEST,
+            ["only"] = Assessment.ONLY,
+            ["great"] = Assessment.GREAT,
+            ["dubious"] = Assessment.DUBIOUS,
+            ["mistake"] = Assessment.MISTAKE,
+            ["blunder"] = Assessment.BLUNDER
         };
 
         /// <summary>
@@ -53,6 +83,30 @@ namespace GameTree
         public static string GetStringForCommand(Command cmd)
         {
             return _dictCommands.FirstOrDefault(x => x.Value == cmd).Key;
+        }
+
+        /// <summary>
+        /// Returns the Assessment id given a string.
+        /// </summary>
+        /// <param name="sCmd"></param>
+        /// <returns></returns>
+        public static Assessment GetAssessment(string sAss)
+        {
+            Assessment ass;
+            if (_dictAssessments.TryGetValue(sAss, out ass))
+                return ass;
+            else
+                return Assessment.NONE;
+        }
+
+        /// <summary>
+        /// Returns a string for a given Assessment Id.
+        /// </summary>
+        /// <param name="ass"></param>
+        /// <returns></returns>
+        public static string GetStringForAssessment(Assessment ass)
+        {
+            return _dictAssessments.FirstOrDefault(x => x.Value == ass).Key;
         }
 
     }

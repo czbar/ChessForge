@@ -110,7 +110,7 @@ namespace ChessForge
         /// <summary>
         /// Sorts bookmarks by round numbers and then
         /// color-to-move.
-        /// This method should be called after initilaization
+        /// This method should be called after initialization
         /// and any subsequents addition.
         /// </summary>
         public static void SortBookmarks()
@@ -129,6 +129,8 @@ namespace ChessForge
                 bv.Deactivate();
                 bv.SetOpacity(0.5);
             }
+            _mainWin.UiGridBookmarks.RowDefinitions[0].Height = new GridLength(0);
+            _mainWin.UiCnvPaging.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -233,7 +235,6 @@ namespace ChessForge
                 ResyncBookmarks(_currentPage);
             }
             AppStateManager.IsDirty = true;
-//            AppStateManager.SaveWorkbookFile();
         }
 
         /// <summary>
@@ -262,7 +263,6 @@ namespace ChessForge
 
             ClearBookmarksGui();
             AppStateManager.IsDirty = true;
-            //AppStateManager.SaveWorkbookFile();
         }
 
         /// <summary>

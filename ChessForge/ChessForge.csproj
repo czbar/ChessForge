@@ -82,6 +82,9 @@
     <Compile Include="AppOptionsDialog.xaml.cs">
       <DependentUpon>AppOptionsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AssessmentDialog.xaml.cs">
+      <DependentUpon>AssessmentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LearningMode.cs" />
     <Compile Include="AppStateManager.cs" />
     <Compile Include="AppTimers.cs" />
@@ -133,6 +136,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AppOptionsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AssessmentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
