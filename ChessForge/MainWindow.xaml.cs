@@ -1019,17 +1019,18 @@ namespace ChessForge
                     }
                 }
 
-                TreeNode firstNode = Workbook.GetFirstNodeInMainLine();
-                int startingNode = firstNode == null ? 0 : firstNode.NodeId;
-                string startLineId = Workbook.GetDefaultLineIdForNode(startingNode);
-                SetActiveLine(startLineId, startingNode);
+                //TreeNode firstNode = Workbook.GetFirstNodeInMainLine();
+                //int startingNode = firstNode == null ? 0 : firstNode.NodeId;
+                //string startLineId = Workbook.GetDefaultLineIdForNode(startingNode);
+                string startLineId = Workbook.GetDefaultLineIdForNode(0);
+                SetActiveLine(startLineId, 0);
                 UiRtbWorkbookView.Focus();
 
                 SetupDataInTreeView();
 
                 BookmarkManager.ShowBookmarks();
 
-                SelectLineAndMoveInWorkbookViews(startLineId, ActiveLine.GetSelectedPlyNodeIndex());
+                SelectLineAndMoveInWorkbookViews(startLineId, 0); // ActiveLine.GetSelectedPlyNodeIndex());
 
                 LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
             }
@@ -1058,7 +1059,7 @@ namespace ChessForge
         {
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
             string lineId = ActiveLine.GetLineId();
-            SelectLineAndMoveInWorkbookViews(lineId, ActiveLine.GetSelectedPlyNodeIndex());
+            SelectLineAndMoveInWorkbookViews(lineId, ActiveLine.GetSelectedPlyNodeIndex(true));
         }
 
         /// <summary>
@@ -1076,7 +1077,7 @@ namespace ChessForge
         {
             TreeNode nd = ActiveLine.GetNodeAtIndex(index);
             _workbookView.SelectLineAndMove(lineId, nd.NodeId);
-            _lvWorkbookTable_SelectLineAndMove(lineId, nd.NodeId);
+//            _lvWorkbookTable_SelectLineAndMove(lineId, nd.NodeId);
             if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
             {
                 EvaluateActiveLineSelectedPositionEx();
@@ -1236,7 +1237,7 @@ namespace ChessForge
         private void EvaluateActiveLineSelectedPositionEx()
         {
             // stop the timer to prevent showing garbage after position is set but engine has not received our commands yet
-            EngineMessageProcessor.RequestPositionEvaluation(ActiveLine.GetSelectedPlyNodeIndex(), Configuration.EngineMpv, 0);
+            EngineMessageProcessor.RequestPositionEvaluation(ActiveLine.GetSelectedPlyNodeIndex(true), Configuration.EngineMpv, 0);
         }
 
         private void MenuItem_EvaluateLine(object sender, RoutedEventArgs e)
@@ -1252,7 +1253,7 @@ namespace ChessForge
                 StopEvaluation();
             }
 
-            int idx = ActiveLine.GetSelectedPlyNodeIndex();
+            int idx = ActiveLine.GetSelectedPlyNodeIndex(true);
             EvaluationManager.PositionIndex = idx > 0 ? idx : 1;
 
             // we will start with the first move of the active line
@@ -1341,7 +1342,7 @@ namespace ChessForge
 
         private void UiMnciBookmarkPosition_Click(object sender, RoutedEventArgs e)
         {
-            int moveIndex = ActiveLine.GetSelectedPlyNodeIndex();
+            int moveIndex = ActiveLine.GetSelectedPlyNodeIndex(false);
             if (moveIndex < 0)
             {
                 return;
@@ -1738,8 +1739,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void WorkbookGrid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            _workbookView.LastClickedNodeId = -1;
-            _workbookView.EnableWorkbookMenus(UiCmnWorkbookRightClick, false);
+            if (_workbookView != null)
+            {
+                _workbookView.LastClickedNodeId = -1;
+                _workbookView.EnableWorkbookMenus(UiCmnWorkbookRightClick, false);
+            }
         }
 
         /// <summary>
