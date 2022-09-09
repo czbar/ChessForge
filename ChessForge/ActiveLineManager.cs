@@ -50,7 +50,7 @@ namespace ChessForge
         {
             _dgActiveLine.SelectedCells.Clear();
             Line.MoveList.Clear();
-            Line.NodeList.Clear(); 
+            Line.NodeList.Clear();
         }
 
         /// <summary>
@@ -179,13 +179,23 @@ namespace ChessForge
 
         /// <summary>
         /// Returns the index of the Node for the ply
-        /// currently selected in the Single Line View. 
+        /// currently selected in the Single Line View.
+        /// If no ply selected, returns either 0 or -1
+        /// depending on the bZeroOnNoSelection parameter
         /// </summary>
         /// <returns></returns>
-        public int GetSelectedPlyNodeIndex()
+        public int GetSelectedPlyNodeIndex(bool bZeroOnNoSelection)
         {
             GetSelectedRowColumn(out int row, out int column);
-            return GetNodeIndexFromRowColumn(row, column);
+            int index = GetNodeIndexFromRowColumn(row, column);
+            if (index >= 0)
+            {
+                return index;
+            }
+            else 
+            {
+                return bZeroOnNoSelection ? 0  : -1;
+            }
         }
 
         /// <summary>
@@ -409,41 +419,59 @@ namespace ChessForge
         /// <param name="e"></param>
         internal void PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (GetSelectedRowColumn(out int row, out int column))
+            GetSelectedRowColumn(out int row, out int column);
+
+            //if row and column == -1, it means there is no selection.
+            // if we have any moves (except the 0/null move) we will "fake" selection, if not we bail
+            if (row < 0 && column < 0)
             {
-                int selColumn = -1;
-                int selRow = -1;
-
-                int plyIndex;
-
-                switch (e.Key)
+                if (Line.GetPlyCount() == 1)
                 {
-                    case Key.Left:
-                        selColumn = column == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : _dgActiveLineWhitePlyColumn;
-                        selRow = column == _dgActiveLineWhitePlyColumn ? row - 1 : row;
-                        break;
-                    case Key.Right:
-                        selColumn = column == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : 1;
-                        selRow = column == _dgActiveLineWhitePlyColumn ? row : row + 1;
-                        // if we went beyond the last move (because it is White's and Black cell is empty.)
-                        // switch back to the White column
-                        plyIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
-                        if (plyIndex >= Line.GetPlyCount())
-                        {
-                            selColumn = _dgActiveLineWhitePlyColumn;
-                        }
-                        break;
-                    case Key.Up:
-                        selColumn = _dgActiveLineWhitePlyColumn;
-                        selRow = 0;
-                        break;
-                    case Key.Down:
-                        selRow = _dgActiveLine.Items.Count - 1;
-                        selColumn = (Line.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
-                        break;
+                    return;
                 }
+                else
+                {
+                    // fake that "0" move for the Black side is currently selected
+                    row = -1;
+                    column = _dgActiveLineBlackPlyColumn;
+                }
+            }
 
-                if (selRow >= 0 && selRow < _dgActiveLine.Items.Count)
+            int selColumn = -1;
+            int selRow = -1;
+
+            int plyIndex;
+
+            switch (e.Key)
+            {
+                case Key.Left:
+                    selColumn = column == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : _dgActiveLineWhitePlyColumn;
+                    selRow = column == _dgActiveLineWhitePlyColumn ? row - 1 : row;
+                    break;
+                case Key.Right:
+                    selColumn = column == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : 1;
+                    selRow = column == _dgActiveLineWhitePlyColumn ? row : row + 1;
+                    // if we went beyond the last move (because it is White's and Black cell is empty.)
+                    // switch back to the White column
+                    plyIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
+                    if (plyIndex >= Line.GetPlyCount())
+                    {
+                        selColumn = _dgActiveLineWhitePlyColumn;
+                    }
+                    break;
+                case Key.Up:
+                    selColumn = _dgActiveLineWhitePlyColumn;
+                    selRow = 0;
+                    break;
+                case Key.Down:
+                    selRow = _dgActiveLine.Items.Count - 1;
+                    selColumn = (Line.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
+                    break;
+            }
+
+            if (/*selRow >= 0 && */ selRow < _dgActiveLine.Items.Count)
+            {
+                if (selRow >= 0)
                 {
                     DataGridCellInfo cell = new DataGridCellInfo(_dgActiveLine.Items[selRow], _dgActiveLine.Columns[selColumn]);
                     _dgActiveLine.ScrollIntoView(_dgActiveLine.Items[selRow]);
@@ -451,27 +479,33 @@ namespace ChessForge
                     _dgActiveLine.SelectedCells.Add(cell);
 
                     plyIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
-                    TreeNode nd = Line.GetNodeAtIndex(plyIndex);
-
-                    if (nd != null)
-                    {
-                        if (_mainWin.ActiveLineReplay.IsReplayActive)
-                        {
-                            // request that the replay be stopped and the clicked
-                            // position shown, unless this mouse down
-                            // was part of double click (in which case the doble click
-                            // handler will override this.
-                            _mainWin.ActiveLineReplay.ShowPositionAndStop(nd);
-                        }
-                        else
-                        {
-                            _mainWin.DisplayPosition(nd.Position);
-                        }
-                        _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), plyIndex);
-                    }
                 }
-                e.Handled = true;
+                else
+                {
+                    _dgActiveLine.SelectedCells.Clear();
+                    plyIndex = 0;
+                }
+
+                TreeNode nd = Line.GetNodeAtIndex(plyIndex);
+
+                if (nd != null)
+                {
+                    if (_mainWin.ActiveLineReplay.IsReplayActive)
+                    {
+                        // request that the replay be stopped and the clicked
+                        // position shown, unless this mouse down
+                        // was part of double click (in which case the doble click
+                        // handler will override this.
+                        _mainWin.ActiveLineReplay.ShowPositionAndStop(nd);
+                    }
+                    else
+                    {
+                        _mainWin.DisplayPosition(nd.Position);
+                    }
+                    _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), plyIndex);
+                }
             }
+            e.Handled = true;
         }
 
         /// <summary>
