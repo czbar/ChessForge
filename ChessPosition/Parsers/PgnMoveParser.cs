@@ -86,7 +86,7 @@ namespace GameTree
 
             if (subStringToProcess[0] == '#')
             {
-                Move.IsMate = true;
+                Move.IsCheckmate = true;
                 return;
             }
 
@@ -110,7 +110,7 @@ namespace GameTree
             }
             if (subStringToProcess.Length == 3 && subStringToProcess[2] == '#')
             {
-                Move.IsMate = true;
+                Move.IsCheckmate = true;
             }
         }
 

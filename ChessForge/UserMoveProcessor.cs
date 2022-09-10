@@ -222,12 +222,10 @@ namespace ChessForge
                 if (PositionUtils.IsCheckmate(nd.Position))
                 {
                     nd.Position.IsCheckmate = true;
-//                    AppStateManager.MainWin.BoardCommentBox.ReportCheckmate(true);
                 }
                 else if (PositionUtils.IsStalemate(nd.Position))
                 {
                     nd.Position.IsStalemate = true;
-//                    AppStateManager.MainWin.BoardCommentBox.ReportStalemate();
                 }
 
                 //TODO: update Workbook, ActiveLine and Workbook View
