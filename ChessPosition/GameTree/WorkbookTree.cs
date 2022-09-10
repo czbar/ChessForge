@@ -483,15 +483,17 @@ namespace GameTree
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        public TreeNode GetIdenticalSibling(TreeNode nd)
+        public TreeNode GetIdenticalSibling(TreeNode nd, string engMove = null)
         {
             TreeNode ret = null;
+
+            string engNotation = engMove == null ? nd.LastMoveEngineNotation : engMove;
 
             if (nd.Parent != null)
             {
                 foreach (TreeNode sib in nd.Parent.Children)
                 {
-                    if (sib.LastMoveEngineNotation == nd.LastMoveEngineNotation)
+                    if (sib.LastMoveEngineNotation == engNotation)
                     {
                         ret = sib;
                         break;
