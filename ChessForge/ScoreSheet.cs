@@ -71,7 +71,7 @@ namespace ChessForge
         /// </summary>
         public void BuildMoveListFromPlyList()
         {
-            MoveList = PositionUtils.BuildViewListFromLine(NodeList);
+            MoveList = PositionUtils.BuildMoveListFromLine(NodeList);
         }
 
         /// <summary>
@@ -245,13 +245,13 @@ namespace ChessForge
             {
                 // previous move was by White
                 MoveWithEval move = MoveList[MoveList.Count - 1];
-                move.BlackPly = nd.LastMoveAlgebraicNotationWithNag;
+                move.BlackPly = MoveUtils.BuildPlyText(nd,true);
                 move.BlackEval = nd.EngineEvaluation;
             }
             else
             {
                 MoveWithEval move = new MoveWithEval();
-                move.WhitePly = nd.LastMoveAlgebraicNotationWithNag;
+                move.WhitePly = MoveUtils.BuildPlyText(nd, true);
                 move.WhiteEval = nd.EngineEvaluation;
                 move.Number = (MoveList.Count + 1).ToString() + ".";
                 MoveList.Add(move);
@@ -286,11 +286,11 @@ namespace ChessForge
             if (nd.Position.ColorToMove == PieceColor.White)
             {
                 // we are replacing Black's move
-                move.BlackPly = nd.LastMoveAlgebraicNotationWithNag;
+                move.BlackPly = MoveUtils.BuildPlyText(nd, true);
             }
             else
             {
-                move.WhitePly = nd.LastMoveAlgebraicNotationWithNag;
+                move.WhitePly = MoveUtils.BuildPlyText(nd, true);
             }
         }
     }

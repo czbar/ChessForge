@@ -240,6 +240,15 @@ namespace ChessForge
             }
 
             sb.Append(" " + nd.LastMoveAlgebraicNotation);
+            if (nd.Position.IsCheckmate)
+            {
+                sb.Append('#');
+            }
+            else if (nd.Position.IsCheck)
+            {
+                sb.Append('+');
+            }
+
             sb.Append(nd.Nags);
 
             sb.Append(BuildCommandAndCommentText(nd));

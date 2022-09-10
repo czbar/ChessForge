@@ -506,22 +506,6 @@ namespace ChessPosition
                     // a rook was captured so the side not-on-move is losing the castling right
                     UpdateCastlingRightsForRook(colorToProcess == PieceColor.White ? PieceColor.Black : PieceColor.White, move.Destination.Xcoord, move.Destination.Ycoord, ref pos);
                 }
-
-                //if (colorToProcess == PieceColor.White)
-                //{
-                //    if (move.CastlingType != 0)
-                //    {
-                //        // need the color of the side that moved on previous ply.
-                //        if (pos.ColorToMove == PieceColor.White)
-                //        {
-                //            pos.DynamicProperties &= unchecked((byte)~(Constants.BlackKingsideCastle | Constants.BlackQueensideCastle));
-                //        }
-                //        else
-                //        {
-                //            pos.DynamicProperties &= unchecked((byte)~(Constants.WhiteKingsideCastle | Constants.WhiteQueensideCastle));
-                //        }
-                //    }
-                //}
             }
         }
 
@@ -649,7 +633,13 @@ namespace ChessPosition
             }
         }
 
-        public static ObservableCollection<MoveWithEval> BuildViewListFromLine(ObservableCollection<TreeNode> line)
+        /// <summary>
+        /// Builds a list of MoveWithEval objects from the list of Nodes.
+        /// This useful in particular when building a ScoreSheet object.
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        public static ObservableCollection<MoveWithEval> BuildMoveListFromLine(ObservableCollection<TreeNode> line)
         {
             var game = new ObservableCollection<MoveWithEval>();
 
@@ -658,13 +648,13 @@ namespace ChessPosition
                 MoveWithEval move = new MoveWithEval();
                 // white
                 move.Number = line[i].Position.MoveNumber.ToString() + ".";
-                move.WhitePly = line[i].LastMoveAlgebraicNotationWithNag;
+                move.WhitePly = line[i].GetPlyText(true);
                 move.WhiteEval = line[i].EngineEvaluation;
 
                 // black
                 if (i + 1 < line.Count)
                 {
-                    move.BlackPly = line[i + 1].LastMoveAlgebraicNotationWithNag;
+                    move.BlackPly = line[i+1].GetPlyText(true);
                     move.BlackEval = line[i + 1].EngineEvaluation;
                 }
 
