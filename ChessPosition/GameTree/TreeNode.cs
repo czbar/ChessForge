@@ -142,7 +142,8 @@ namespace GameTree
             set
             {
                 _lastMoveAlg = value;
-                _lastMoveAlgWithNag = value;
+                if (string.IsNullOrEmpty(_lastMoveAlgWithNag))
+                    _lastMoveAlgWithNag = value;
             }
         }
 
@@ -339,22 +340,24 @@ namespace GameTree
         public string EngineEvaluation { get => _engEval; set => _engEval = value; }
 
         /// <summary>
-        /// Text to show if the move is displayed somewhere.
+        /// Text for the ply to show without the move number
+        /// with check / mate symbol and optionally with NAGs
         /// </summary>
         /// <returns></returns>
-        public string GetPlyText(bool standalone)
+        public string GetPlyText(bool withNags)
         {
             StringBuilder sb = new StringBuilder();
-            if (ColorToMove == PieceColor.Black)
-            {
-                sb.Append(MoveNumber.ToString() + ".");
-            }
-            else if (standalone)
-            {
-                sb.Append(MoveNumber.ToString() + "...");
-            }
-            sb.Append(LastMoveAlgebraicNotationWithNag);
 
+            sb.Append( withNags ? LastMoveAlgebraicNotationWithNag : LastMoveAlgebraicNotation);
+            
+            if (Position.IsCheckmate)
+            {
+                sb.Append('#');
+            }
+            else if (Position.IsCheck)
+            {
+                sb.Append('+');
+            }
             return sb.ToString();
         }
     }
