@@ -35,7 +35,7 @@ namespace ChessPosition
         public bool IsCheck;
 
         // Does the move's notation indicate a checkmate?
-        public bool IsMate;
+        public bool IsCheckmate;
 
         // If the move is promotion, what type of piece
         // are we promoting to.

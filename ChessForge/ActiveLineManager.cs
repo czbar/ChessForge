@@ -325,14 +325,13 @@ namespace ChessForge
                 return _mainWin.Workbook.Nodes[0];
             }
 
-
             if (GetSelectedRowColumn(out int row, out int column))
             {
                 return GetTreeNodeFromRowColumn(row, column);
             }
             else
             {
-                return null;
+                return _mainWin.Workbook.Nodes[0];
             }
         }
 

@@ -183,7 +183,7 @@ namespace ChessForge
         /// <returns></returns>
         private static bool ProcessMoveInGameMode(string move, out TreeNode nd, out bool isCastle)
         {
-            if (CreateNewPlyNode(move, out nd, out isCastle))
+            if (CreateNewPlyNode(move, out nd, out isCastle, out bool preExist))
             {
                 bool endOfGame = false;
                 if (PositionUtils.IsCheckmate(nd.Position))
@@ -217,17 +217,15 @@ namespace ChessForge
         /// <returns></returns>
         private static bool ProcessMoveInManualReviewMode(string move, out TreeNode nd, out bool isCastle)
         {
-            if (CreateNewPlyNode(move, out nd, out isCastle))
+            if (CreateNewPlyNode(move, out nd, out isCastle, out bool preExist ))
             {
                 if (PositionUtils.IsCheckmate(nd.Position))
                 {
                     nd.Position.IsCheckmate = true;
-//                    AppStateManager.MainWin.BoardCommentBox.ReportCheckmate(true);
                 }
                 else if (PositionUtils.IsStalemate(nd.Position))
                 {
                     nd.Position.IsStalemate = true;
-//                    AppStateManager.MainWin.BoardCommentBox.ReportStalemate();
                 }
 
                 //TODO: update Workbook, ActiveLine and Workbook View
@@ -235,7 +233,7 @@ namespace ChessForge
                 // and the move in the views
 
                 // if the move is new but has no siblings, "inherit" line id from the parent 
-                if (string.IsNullOrEmpty(nd.LineId) && !AppStateManager.MainWin.Workbook.NodeHasSiblings(nd.NodeId))
+                if (!preExist && string.IsNullOrEmpty(nd.LineId) && !AppStateManager.MainWin.Workbook.NodeHasSiblings(nd.NodeId))
                 {
                     nd.LineId = nd.Parent.LineId;
                 }
@@ -243,7 +241,7 @@ namespace ChessForge
                 // if we have LineId we are done
                 if (!string.IsNullOrEmpty(nd.LineId))
                 {
-                    if (nd.IsNewUserMove)
+                    if (nd.IsNewUserMove && !preExist)
                     {
                         AppStateManager.MainWin.AppendNodeToActiveLine(nd, false);
                         AppStateManager.MainWin.AddNewNodeToWorkbookView(nd);
@@ -282,9 +280,10 @@ namespace ChessForge
         /// <param name="nd"></param>
         /// <param name="isCastle"></param>
         /// <returns></returns>
-        private static bool CreateNewPlyNode(string move, out TreeNode nd, out bool isCastle)
+        private static bool CreateNewPlyNode(string move, out TreeNode nd, out bool isCastle, out bool preExist)
         {
             isCastle = false;
+            preExist = false;
 
             TreeNode curr;
             if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
@@ -330,12 +329,16 @@ namespace ChessForge
                 }
                 else
                 {
+#if false
                     // nd has en passant processed already
                     byte enPassant = nd.Position.EnPassantSquare;
                     byte inheritedEnPassant = nd.Position.InheritedEnPassantSquare;
                     nd = sib;
                     nd.Position.EnPassantSquare = enPassant;
                     nd.Position.InheritedEnPassantSquare = inheritedEnPassant;
+#endif
+                    preExist = true;
+                    nd = sib;
                 }
                 return true;
             }

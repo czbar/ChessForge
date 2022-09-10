@@ -137,12 +137,21 @@ namespace ChessForge
             }
 
             nd = new TreeNode(curr, algMove, _mainWin.Workbook.GetNewNodeId());
-            nd.IsNewTrainingMove = curr.IsNewTrainingMove;
-            nd.Position = pos;
-            nd.Position.ColorToMove = MoveUtils.ReverseColor(pos.ColorToMove);
-            nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
-            Line.AddPlyAndMove(nd);
-            _mainWin.Workbook.AddNodeToParent(nd);
+            TreeNode sib = AppStateManager.MainWin.Workbook.GetIdenticalSibling(nd, engMove);
+            if (sib == null)
+            {
+                nd.IsNewTrainingMove = curr.IsNewTrainingMove;
+                nd.Position = pos;
+                nd.Position.ColorToMove = MoveUtils.ReverseColor(pos.ColorToMove);
+                nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
+                _mainWin.Workbook.AddNodeToParent(nd);
+                Line.AddPlyAndMove(nd);
+            }
+            else
+            {
+                nd = sib;
+                Line.AddPlyAndMove(nd);
+            }
 
             return pos;
         }

@@ -1,4 +1,5 @@
-﻿using GameTree;
+﻿using ChessPosition;
+using GameTree;
 
 namespace ChessForge
 {
@@ -41,7 +42,8 @@ namespace ChessForge
         public void Activate()
         {
             _guiBoard.DisplayPosition(BookmarkData.Node.Position);
-            _guiBoard.SetLabelText(BookmarkData.Node.GetPlyText(true));
+//            _guiBoard.SetLabelText(BookmarkData.Node.GetPlyText(true));
+            _guiBoard.SetLabelText(MoveUtils.BuildSingleMoveText(BookmarkData.Node, true, true));
             SetOpacity(1);
         }
 

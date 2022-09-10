@@ -290,6 +290,7 @@ namespace GameTree
             PgnMoveParser pmp = new PgnMoveParser();
             pmp.ParseAlgebraic(algMove, parentSideToMove);
             MoveData move = pmp.Move;
+            algMove = StripCheckOrMateChar(algMove);
             if (DEBUG_MODE)
             {
                 DebugUtils.PrintMove(move, algMove);
@@ -297,6 +298,14 @@ namespace GameTree
 
             // create a new node
             TreeNode newNode = CreateNewNode(algMove, move, parentNode, parentSideToMove);
+            if (move.IsCheckmate)
+            {
+                newNode.Position.IsCheckmate = true;
+            }
+            else if (move.IsCheck)
+            {
+                newNode.Position.IsCheck = true;
+            }
 
             // Make the move on it
             MoveUtils.MakeMove(newNode.Position, move);
@@ -497,5 +506,25 @@ namespace GameTree
 
             return gtt;
         }
+
+        /// <summary>
+        /// Removes the last character of the algebraic notation if it
+        /// denotes a check or a mate.
+        /// This is so that these symbole are not duplicated when they get added
+        /// later on.
+        /// </summary>
+        /// <param name="algMove"></param>
+        /// <returns></returns>
+        private string StripCheckOrMateChar(string algMove)
+        {
+
+            if (algMove[algMove.Length - 1] == '#' || algMove[algMove.Length - 1] == '+')
+            {
+                return algMove.Substring(0, algMove.Length - 1);
+            }
+
+            return algMove;
+        }
+
     }
 }

@@ -108,15 +108,48 @@ namespace ChessPosition
         public static string BuildSingleMoveText(TreeNode nd, bool isStandalone, bool withNAGs = false)
         {
             string moveTxt = withNAGs ? nd.LastMoveAlgebraicNotationWithNag : nd.LastMoveAlgebraicNotation;
-            if (isStandalone)
+
+            StringBuilder sb = new StringBuilder();
+            if (nd.ColorToMove == PieceColor.Black)
             {
-                return nd.MoveNumber.ToString() + (nd.ColorToMove == PieceColor.White ? "... " : ". ") + moveTxt;
+                sb.Append(nd.MoveNumber.ToString() + ".");
+            }
+            else if (isStandalone)
+            {
+                sb.Append(nd.MoveNumber.ToString() + "...");
+            }
+            sb.Append(moveTxt);
+
+            if (nd.Position.IsCheckmate)
+            {
+                sb.Append('#');
+            }
+            else if (nd.Position.IsCheck)
+            {
+                sb.Append('+');
+            }
+            return sb.ToString();
+        }
+
+        // TODO: this a dupe of TreeNode.GetPlyText() - review!
+        public static string BuildPlyText(TreeNode nd, bool withNAGs = false)
+        {
+            string moveTxt = withNAGs ? nd.LastMoveAlgebraicNotationWithNag : nd.LastMoveAlgebraicNotation;
+
+            if (nd.Position.IsCheckmate)
+            {
+                return moveTxt + "#";
+            }
+            else if (nd.Position.IsCheck)
+            {
+                return moveTxt + "+";
             }
             else
             {
-                return (nd.ColorToMove == PieceColor.Black ? nd.MoveNumber.ToString() + "." : "") + moveTxt;
+                return moveTxt;
             }
         }
+
 
         public static void PerformCastling(BoardPosition position, MoveData move)
         {
