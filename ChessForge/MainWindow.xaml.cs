@@ -397,10 +397,18 @@ namespace ChessForge
                 return;
             }
 
-            if (EvaluationManager.IsRunning)
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
             {
-                BoardCommentBox.ShowFlashAnnouncement("Engine evaluation in progress!");
-                return;
+                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+                {
+                    BoardCommentBox.ShowFlashAnnouncement("Line evaluation in progress!");
+                    return;
+                }
+                else if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
+                {
+                    BoardCommentBox.ShowFlashAnnouncement("The engine is thinking!");
+                    return;
+                }
             }
 
             if (e.ChangedButton == MouseButton.Left)
@@ -437,6 +445,11 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Checks if the cliked piece is eleigible for making a move.
+        /// </summary>
+        /// <param name="sqNorm"></param>
+        /// <returns></returns>
         private bool CanMovePiece(SquareCoords sqNorm)
         {
             PieceColor pieceColor = MainChessBoard.GetPieceColor(sqNorm);
@@ -444,15 +457,12 @@ namespace ChessForge
             // in the Manual Review, the color of the piece on the main board must match the side on the move in the selected position
             if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
             {
-                TreeNode nd;
-                if (ActiveLine.GetPlyCount() > 1)
-                {
-                    nd = ActiveLine.GetSelectedTreeNode();
-                }
-                else
+                TreeNode nd = ActiveLine.GetSelectedTreeNode();
+                if (nd == null)
                 {
                     nd = Workbook.Nodes[0];
                 }
+
                 if (pieceColor != PieceColor.None && pieceColor == nd.ColorToMove)
                     return true;
                 else
@@ -1056,7 +1066,6 @@ namespace ChessForge
         /// </summary>
         public void RefreshSelectedActiveLineAndNode()
         {
-            TreeNode nd = ActiveLine.GetSelectedTreeNode();
             string lineId = ActiveLine.GetLineId();
             SelectLineAndMoveInWorkbookViews(lineId, ActiveLine.GetSelectedPlyNodeIndex(true));
         }
