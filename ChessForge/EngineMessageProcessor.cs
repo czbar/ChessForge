@@ -7,6 +7,7 @@ using GameTree;
 using ChessPosition;
 using System.IO;
 using EngineService;
+using System.Windows.Ink;
 
 namespace ChessForge
 {
@@ -314,6 +315,7 @@ namespace ChessForge
 
             if (isMateCf)
             {
+                nd.Position.IsCheckmate = true;
                 EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
                 _mainWin.BoardCommentBox.ReportCheckmate(false);
             }
