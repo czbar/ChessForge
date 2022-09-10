@@ -54,11 +54,11 @@ namespace ChessPosition
 
                     if (withNAG)
                     {
-                        sb.Append(" " + nd.LastMoveAlgebraicNotationWithNag);
+                        sb.Append(" " + MoveUtils.BuildSingleMoveText(nd, true, true));
                     }
                     else
                     {
-                        sb.Append(" " + nd.LastMoveAlgebraicNotation);
+                        sb.Append(" " + MoveUtils.BuildSingleMoveText(nd, true, false));
                     }
                 }
             }
