@@ -279,6 +279,7 @@ namespace ChessForge
 
                 if (PositionUtils.IsCheckmate(_userMove.Position))
                 {
+                    _userMove.Position.IsCheckmate = true;
                     BuildMoveParagraph(_userMove, true);
                     BuildCheckmateParagraph(_userMove, true);
                 }
@@ -314,7 +315,7 @@ namespace ChessForge
                         {
                             if (!child.IsNewTrainingMove)
                             {
-                                wbMoves.Append(child.GetPlyText(true));
+                                wbMoves.Append(MoveUtils.BuildSingleMoveText(child, false, true));
                                 wbMoves.Append("; ");
                                 _otherMovesInWorkbook.Add(child);
                             }
