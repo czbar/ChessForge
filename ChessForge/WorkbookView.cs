@@ -481,7 +481,7 @@ namespace ChessForge
             Run rParent = _dictNodeToRun[parent.NodeId];
             Paragraph para = _dictRunToParagraph[rParent];
 
-            Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, false));
+            Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, true));
             r.Name = "run_" + nd.NodeId.ToString();
             r.MouseDown += EventRunClicked;
 
@@ -638,6 +638,7 @@ namespace ChessForge
         private void BuildNodeText(TreeNode nd, bool includeNumber, Paragraph para)
         {
             StringBuilder sb = new StringBuilder();
+
             if (nd.Position.ColorToMove == PieceColor.Black)
             {
                 if (!includeNumber && nd.Position.MoveNumber != 1)
@@ -658,6 +659,14 @@ namespace ChessForge
             }
 
             sb.Append(nd.LastMoveAlgebraicNotationWithNag);
+            if (nd.Position.IsCheckmate)
+            {
+                sb.Append("#");
+            }
+            else if (nd.Position.IsCheck)
+            {
+                sb.Append("+");
+            }
 
             SolidColorBrush fontColor = null;
             if (IsFork(nd.Parent) && !nd.IsMainLine())
