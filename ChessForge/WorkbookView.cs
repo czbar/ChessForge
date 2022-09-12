@@ -492,7 +492,7 @@ namespace ChessForge
             Run rParent = _dictNodeToRun[parent.NodeId];
             Paragraph para = _dictRunToParagraph[rParent];
 
-            Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, true));
+            Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, false));
             r.Name = "run_" + nd.NodeId.ToString();
             r.MouseDown += EventRunClicked;
 
