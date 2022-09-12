@@ -81,6 +81,10 @@
                 <MenuItem x:Name="UiMnRestartTraining"  Header="Restart Training" Click="UiMnTrainRestartTraining_Click"/>
                 <MenuItem x:Name="UiMnExitTraining" Header="Exit Training" Click="MenuItem_StopTraining"/>
             </MenuItem>
+            <MenuItem Header="Edit" Margin="0,0,0,0">
+                <MenuItem Header="Coach's Assessment" Click="UiMnAssessmentDialog_Click" >
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="View" Margin="0,0,0,0">
                 <MenuItem Header="Flip Board" Click="MenuItem_FlipBoard" >
                     <MenuItem.Icon>
