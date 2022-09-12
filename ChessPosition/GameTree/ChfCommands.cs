@@ -32,7 +32,7 @@ namespace GameTree
             NONE,
             BEST,
             ONLY,
-            GREAT,
+            BRILLIANT,
             DUBIOUS,
             MISTAKE,
             BLUNDER
@@ -55,7 +55,7 @@ namespace GameTree
         {
             ["best"] = Assessment.BEST,
             ["only"] = Assessment.ONLY,
-            ["great"] = Assessment.GREAT,
+            ["brilliant"] = Assessment.BRILLIANT,
             ["dubious"] = Assessment.DUBIOUS,
             ["mistake"] = Assessment.MISTAKE,
             ["blunder"] = Assessment.BLUNDER
@@ -68,6 +68,9 @@ namespace GameTree
         /// <returns></returns>
         public static Command GetCommand(string sCmd)
         {
+            if (sCmd == null)
+                return Command.NONE;
+
             Command cmd;
             if (_dictCommands.TryGetValue(sCmd, out cmd))
                 return cmd;
@@ -92,6 +95,9 @@ namespace GameTree
         /// <returns></returns>
         public static Assessment GetAssessment(string sAss)
         {
+            if (sAss == null)
+                return ChfCommands.Assessment.NONE;
+
             Assessment ass;
             if (_dictAssessments.TryGetValue(sAss, out ass))
                 return ass;
