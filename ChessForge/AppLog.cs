@@ -88,6 +88,7 @@ namespace ChessForge
                     sb.Append("Node Id = " + nd.NodeId.ToString() + Environment.NewLine);
                     sb.Append("Parent Node Id = " + (nd.Parent == null ? "-" : nd.Parent.NodeId.ToString()) + Environment.NewLine);
                     sb.Append("Move alg = " + nd.LastMoveAlgebraicNotation + Environment.NewLine);
+                    sb.Append("Comment = " + (nd.Comment == null ? "" : nd.Comment)  + Environment.NewLine);
                     sb.Append("DistanceToLeaf = " + nd.DistanceToLeaf.ToString() + Environment.NewLine);
                     sb.Append("DistanceToFork = " + nd.DistanceToNextFork.ToString() + Environment.NewLine);
                     for (int j = 0; j < nd.Children.Count; j++)

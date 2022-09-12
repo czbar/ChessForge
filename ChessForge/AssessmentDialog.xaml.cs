@@ -36,12 +36,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="ass"></param>
         /// <param name="comment"></param>
-        public AssessmentDialog(ChfCommands.Assessment ass, string comment)
+        public AssessmentDialog(TreeNode nd)
         {
             InitializeComponent();
-            Assessment = ass;
+            Assessment = ChfCommands.GetAssessment(nd.Assessment);
             SetAssessmentRadioButtons();
-            Comment = comment ?? "";
+            UiTbComment.Text = nd.Comment ?? "";
         }
 
         /// <summary>
@@ -82,8 +82,8 @@ namespace ChessForge
                 Assessment = ChfCommands.Assessment.BLUNDER;
             else if (UiRbDubious.IsChecked == true)
                 Assessment = ChfCommands.Assessment.DUBIOUS;
-            else if (UiRbGreat.IsChecked == true)
-                Assessment = ChfCommands.Assessment.GREAT;
+            else if (UiRbBrilliant.IsChecked == true)
+                Assessment = ChfCommands.Assessment.BRILLIANT;
             else if (UiRbMistake.IsChecked == true)
                 Assessment = ChfCommands.Assessment.MISTAKE;
             else if (UiRbOnly.IsChecked == true)
@@ -109,8 +109,8 @@ namespace ChessForge
                 case ChfCommands.Assessment.DUBIOUS:
                     UiRbDubious.IsChecked = true;
                     break;
-                case ChfCommands.Assessment.GREAT:
-                    UiRbGreat.IsChecked = true;
+                case ChfCommands.Assessment.BRILLIANT:
+                    UiRbBrilliant.IsChecked = true;
                     break;
                 case ChfCommands.Assessment.MISTAKE:
                     UiRbMistake.IsChecked = true;

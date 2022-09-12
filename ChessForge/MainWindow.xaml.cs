@@ -2196,5 +2196,34 @@ namespace ChessForge
 
             e.Handled = true;
         }
+
+        public void UiMnAssessmentDialog_Click(object sender, RoutedEventArgs e)
+        {
+            // get the comment and assessment for the currently selected move
+            TreeNode nd = ActiveLine.GetSelectedTreeNode();
+            InvokeAssessmentDialog(nd);
+            _workbookView.InsertOrUpdateCommentRun(nd);
+        }
+
+        public void InvokeAssessmentDialog(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                AssessmentDialog dlg = new AssessmentDialog(nd)
+                {
+                    Left = ChessForgeMain.Left + 100,
+                    Top = ChessForgeMain.Top + 100,
+                    Topmost = true
+                };
+                dlg.ShowDialog();
+                if (dlg.ExitOk)
+                {
+                    nd.Assessment = ChfCommands.GetStringForAssessment(dlg.Assessment);
+                    nd.Comment = dlg.Comment;
+                    AppStateManager.IsDirty = true;
+                }
+            }
+        }
+
     }
 }

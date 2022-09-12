@@ -12,7 +12,7 @@
                 <RadioButton x:Name="UiRbNone" Content="[None]" HorizontalAlignment="Left" Margin="10,10,0,5"/>
                 <RadioButton x:Name="UiRbOnly" Content="Only Move" HorizontalAlignment="Left" Margin="10,5"/>
                 <RadioButton x:Name="UiRbBest" Content="Best" HorizontalAlignment="Left" Margin="10,5"/>
-                <RadioButton x:Name="UiRbGreat" Content="Great" HorizontalAlignment="Left" Margin="10,5"/>
+                <RadioButton x:Name="UiRbBrilliant" Content="Brilliant" HorizontalAlignment="Left" Margin="10,5"/>
                 <RadioButton x:Name="UiRbDubious" Content="Dubious" HorizontalAlignment="Left" Margin="10,5"/>
                 <RadioButton x:Name="UiRbMistake" Content="Mistake" HorizontalAlignment="Left" Margin="10,5"/>
                 <RadioButton x:Name="UiRbBlunder" Content="Blunder" HorizontalAlignment="Left" Margin="10,5"/>
