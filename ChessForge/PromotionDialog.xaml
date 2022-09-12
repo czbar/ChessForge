@@ -8,7 +8,7 @@
          WindowStyle="None"
          AllowsTransparency="True"
          Background="Transparent"
-        Title="PromotionDialog" Height="400" Width="80" PreviewMouseDown="_dlgPromotion_PreviewMouseDown">
+        Title="PromotionDialog" Height="400" Width="80" MouseDown="_dlgPromotion_MouseDown" MouseUp="_dlgPromotion_MouseUp" >
     <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="400"/>
