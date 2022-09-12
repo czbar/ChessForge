@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
 using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Controls.Primitives;
 
 namespace ChessForge
 {
@@ -95,9 +96,19 @@ namespace ChessForge
         private Dictionary<int, Run> _dictNodeToRun = new Dictionary<int, Run>();
 
         /// <summary>
+        /// Maps Node Ids to Comment Runs for quick access.
+        /// </summary>
+        private Dictionary<int, Run> _dictNodeToCommentRun = new Dictionary<int, Run>();
+
+        /// <summary>
         /// Maps Runs to Paragraphs for quick access.
         /// </summary>
         private Dictionary<Run, Paragraph> _dictRunToParagraph = new Dictionary<Run, Paragraph>();
+
+        /// <summary>
+        /// Maps Comment Runs to Paragraphs for quick access.
+        /// </summary>
+        private Dictionary<Run, Paragraph> _dictCommentRunToParagraph = new Dictionary<Run, Paragraph>();
 
         /// <summary>
         /// Current Paragraph level.
@@ -678,6 +689,7 @@ namespace ChessForge
             }
 
             AddRunToParagraph(nd, para, sb.ToString(), fontColor);
+            AddCommentRunToParagraph(nd, para);
         }
 
         /// <summary>
@@ -729,6 +741,69 @@ namespace ChessForge
             _dictRunToParagraph.Add(r, para);
 
             _lastAddedRun = r;
+        }
+
+        /// <summary>
+        /// Creates a "Comment Run" if there is an assessment or comment with the move.
+        /// Adds the run to the paragraph.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="para"></param>
+        private void AddCommentRunToParagraph(TreeNode nd, Paragraph para)
+        {
+            // check if there is anything to show
+            if (string.IsNullOrEmpty(nd.Comment) && ChfCommands.GetAssessment(nd.Assessment) == ChfCommands.Assessment.NONE)
+            {
+                return;
+            }
+
+            Run rNode = _dictNodeToRun[nd.NodeId];
+
+            Run r = new Run(BuildCommentRunText(nd));
+            r.Name = "run_" + nd.NodeId.ToString() + "_comment";
+            r.MouseDown += EventCommentRunClicked;
+
+            r.FontStyle = FontStyles.Italic;
+
+            r.Foreground = Brushes.Black;
+            r.FontWeight = FontWeights.Normal;
+
+            para.Inlines.InsertAfter(rNode, r);
+
+            _dictNodeToCommentRun.Add(nd.NodeId, r);
+            _dictCommentRunToParagraph.Add(r, para);
+        }
+
+        /// <summary>
+        /// Builds text for the Comment Run
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private string BuildCommentRunText(TreeNode nd)
+        {
+            if (string.IsNullOrEmpty(nd.Comment) && ChfCommands.GetAssessment(nd.Assessment) == ChfCommands.Assessment.NONE)
+            {
+                return "";
+            }
+
+            StringBuilder sb = new StringBuilder(" {");
+            if (ChfCommands.GetAssessment(nd.Assessment) != ChfCommands.Assessment.NONE)
+            {
+                sb.Append("[assess=" + "\"" + nd.Assessment + "\"]");
+            }
+
+            if (!string.IsNullOrEmpty(nd.Comment))
+            {
+                if (ChfCommands.GetAssessment(nd.Assessment) != ChfCommands.Assessment.NONE)
+                {
+                    sb.Append(' ');
+                }
+
+                sb.Append(nd.Comment);
+            }
+            sb.Append("}");
+
+            return sb.ToString();
         }
 
         /// <summary>
@@ -816,7 +891,72 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Colors the last run in the paragraph witht the color of the next (lower level)
+        /// A "comment run" was clicked.
+        /// Invoke the dialog and update the run as needed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventCommentRunClicked(object sender, MouseButtonEventArgs e)
+        {
+            Run r = (Run)e.Source;
+
+            int nodeId = GetNodeIdFromRunName(r.Name, RUN_NAME_PREFIX);
+            TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
+            _mainWin.InvokeAssessmentDialog(nd);
+            r.Text = BuildCommentRunText(nd);
+            if (string.IsNullOrEmpty(r.Text))
+            {
+                RemoveRunFromHostingParagraph(r);
+            }
+        }
+
+        /// <summary>
+        /// If the Comment run for the passed node already exists,
+        /// it will be updated.
+        /// If it does not exist, it will be created.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void InsertOrUpdateCommentRun(TreeNode nd)
+        {
+            Run r;
+            _dictNodeToRun.TryGetValue(nd.NodeId, out r);
+
+            if (r == null)
+            {
+                // something seriously wrong
+                AppLog.Message("ERROR: InsertOrUpdateCommentRun()- Run " + nd.NodeId.ToString() + " not found in _dictNodeToRun");
+                return;
+            }
+
+            Run r_comment;
+            _dictNodeToCommentRun.TryGetValue(nd.NodeId, out r_comment);
+
+            if (string.IsNullOrEmpty(nd.Comment) && ChfCommands.GetAssessment(nd.Assessment) == ChfCommands.Assessment.NONE)
+            {
+                // if the comment run existed, remove it
+                if (r_comment != null)
+                {
+                    RemoveRunFromHostingParagraph(r_comment);
+                }
+            }
+            else
+            {
+                // if the comment run existed update it
+                if (r_comment != null)
+                {
+                    r_comment.Text = BuildCommentRunText(nd);
+                }
+                // if did not exists, create it
+                else
+                {
+                    Paragraph para = r.Parent as Paragraph;
+                    AddCommentRunToParagraph(nd, para);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Colors the last run in the paragraph with the color of the next (lower level)
         /// paragraph's first char.
         /// The idea is to provide a more obvious visual hint as to where the fork is.
         /// </summary>
