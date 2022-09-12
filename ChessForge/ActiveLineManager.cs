@@ -457,6 +457,8 @@ namespace ChessForge
 
             int plyIndex;
 
+            bool ignore = false;
+
             switch (e.Key)
             {
                 case Key.Left:
@@ -478,49 +480,59 @@ namespace ChessForge
                     selColumn = _dgActiveLineWhitePlyColumn;
                     selRow = 0;
                     break;
+                case Key.Home:
+                    selRow = -1;
+                    break;
                 case Key.Down:
+                case Key.End:
                     selRow = _dgActiveLine.Items.Count - 1;
                     selColumn = (Line.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
                     break;
+                default:
+                    ignore = true;
+                    break;
             }
 
-            if (/*selRow >= 0 && */ selRow < _dgActiveLine.Items.Count)
+            if (!ignore)
             {
-                if (selRow >= 0)
+                if (/*selRow >= 0 && */ selRow < _dgActiveLine.Items.Count)
                 {
-                    DataGridCellInfo cell = new DataGridCellInfo(_dgActiveLine.Items[selRow], _dgActiveLine.Columns[selColumn]);
-                    _dgActiveLine.ScrollIntoView(_dgActiveLine.Items[selRow]);
-                    _dgActiveLine.SelectedCells.Clear();
-                    _dgActiveLine.SelectedCells.Add(cell);
-
-                    plyIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
-                }
-                else
-                {
-                    _dgActiveLine.SelectedCells.Clear();
-                    plyIndex = 0;
-                }
-
-                TreeNode nd = Line.GetNodeAtIndex(plyIndex);
-
-                if (nd != null)
-                {
-                    if (_mainWin.ActiveLineReplay.IsReplayActive)
+                    if (selRow >= 0)
                     {
-                        // request that the replay be stopped and the clicked
-                        // position shown, unless this mouse down
-                        // was part of double click (in which case the doble click
-                        // handler will override this.
-                        _mainWin.ActiveLineReplay.ShowPositionAndStop(nd);
+                        DataGridCellInfo cell = new DataGridCellInfo(_dgActiveLine.Items[selRow], _dgActiveLine.Columns[selColumn]);
+                        _dgActiveLine.ScrollIntoView(_dgActiveLine.Items[selRow]);
+                        _dgActiveLine.SelectedCells.Clear();
+                        _dgActiveLine.SelectedCells.Add(cell);
+
+                        plyIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
                     }
                     else
                     {
-                        _mainWin.DisplayPosition(nd.Position);
+                        _dgActiveLine.SelectedCells.Clear();
+                        plyIndex = 0;
                     }
-                    _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), plyIndex);
+
+                    TreeNode nd = Line.GetNodeAtIndex(plyIndex);
+
+                    if (nd != null)
+                    {
+                        if (_mainWin.ActiveLineReplay.IsReplayActive)
+                        {
+                            // request that the replay be stopped and the clicked
+                            // position shown, unless this mouse down
+                            // was part of double click (in which case the doble click
+                            // handler will override this.
+                            _mainWin.ActiveLineReplay.ShowPositionAndStop(nd);
+                        }
+                        else
+                        {
+                            _mainWin.DisplayPosition(nd.Position);
+                        }
+                        _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), plyIndex);
+                    }
                 }
+                e.Handled = true;
             }
-            e.Handled = true;
         }
 
         /// <summary>
