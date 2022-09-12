@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Documents;
@@ -165,6 +166,46 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns id encoded in the run name.
+        /// </summary>
+        /// <param name="runName"></param>
+        /// <param name="prefix"></param>
+        /// <returns></returns>
+        public int GetNodeIdFromRunName(string runName, string prefix)
+        {
+            int nodeId = -1;
+            if (runName != null && runName.StartsWith(prefix))
+            {
+                runName = runName.Substring(prefix.Length);
+                string[] tokens = runName.Split('_');
+                nodeId = int.Parse(tokens[0]);
+            }
+
+            return nodeId;
+        }
+
+        /// <summary>
+        /// Removes a Run from its hosting paragraph
+        /// </summary>
+        /// <param name="r"></param>
+        public void RemoveRunFromHostingParagraph(Run r)
+        {
+            Paragraph parent = r.Parent as Paragraph;
+            parent.Inlines.Remove(r);
+        }
+
+        /// <summary>
+        /// Insert a Run after a specified Run.
+        /// </summary>
+        /// <param name="runToIsert"></param>
+        /// <param name="insertAfter"></param>
+        public void InsertRun(Run runToIsert, Run insertAfter)
+        {
+            Paragraph parent = insertAfter.Parent as Paragraph;
+            parent.Inlines.InsertAfter(insertAfter, runToIsert);
+        }
+
+        /// <summary>
         /// Builds text for the paragraph displaying the "stem" line
         /// i.e. moves from the first one to the first fork.
         /// </summary>
@@ -175,7 +216,7 @@ namespace ChessForge
             StringBuilder sbPrefix = new StringBuilder();
             while (nd != null)
             {
-                if (nd.ColorToMove== PieceColor.Black)
+                if (nd.ColorToMove == PieceColor.Black)
                 {
                     sbPrefix.Insert(0, nd.MoveNumber.ToString() + "." + nd.LastMoveAlgebraicNotation);
                 }
