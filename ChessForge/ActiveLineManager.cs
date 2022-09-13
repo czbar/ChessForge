@@ -89,22 +89,26 @@ namespace ChessForge
         /// <param name="moveIndex"></param>
         /// <param name="color"></param>
         /// <param name="eval"></param>
-        public void SetEvaluation(int moveIndex, PieceColor color, string eval)
+        public void SetEvaluation(int nodeId, string eval)
         {
-            if (moveIndex < 0 || moveIndex > Line.MoveList.Count)
+            TreeNode nd = Line.GetNodeFromId(nodeId);
+
+            PieceColor color;
+            MoveWithEval mev = Line.GetMoveFromNodeId(nodeId, out color);
+
+            if (mev != null)
             {
-                return;
+                if (color == PieceColor.White)
+                {
+                    mev.WhiteEval = eval;
+                }
+                else
+                {
+                    mev.BlackEval = eval;
+                }
             }
 
-            if (color == PieceColor.White)
-            {
-                GetMoveAtIndex(moveIndex).WhiteEval = eval;
-            }
-            else
-            {
-                GetMoveAtIndex(moveIndex).BlackEval = eval;
-            }
-            GetNodeForMove(moveIndex, color).EngineEvaluation = eval;
+            nd.EngineEvaluation = eval;
             AppStateManager.IsDirty = true;
         }
 
