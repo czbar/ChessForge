@@ -570,28 +570,8 @@ namespace ChessForge
         /// The EngineMessageProcessor has the results.
         /// We can be in a CONTINUOUS or LINE evaluation mode.
         /// </summary>
-        public void ShowEvaluationResult()
+        public void ShowEvaluationResult(int nodeId)
         {
-            Run runEvaluated;
-            TreeNode nodeEvaluated;
-            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
-            {
-                runEvaluated = EvaluationManager.GetCurrentEvaluatedRun();
-                nodeEvaluated = EvaluationManager.GetCurrentEvaluatedNode();
-            }
-            else
-            {
-                runEvaluated = _lastClickedRun;
-                nodeEvaluated = _lastClickedNode;
-            }
-
-            if (runEvaluated == null)
-            {
-                // this should never happen but...
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-                return;
-            }
-
             // insert the evaluation result after the move.
             List<MoveEvaluation> moveCandidates = EngineLinesBox.Lines;
             if (moveCandidates.Count == 0)
@@ -599,30 +579,42 @@ namespace ChessForge
 
             _mainWin.Dispatcher.Invoke(() =>
             {
-                MoveEvaluation eval = moveCandidates[0];
-
-                Paragraph parent = runEvaluated.Parent as Paragraph;
-                string runEvalName = _run_move_eval_ + nodeEvaluated.NodeId.ToString();
-
-                // Remove previous evaluation if exists
-                var r_prev = parent.Inlines.FirstOrDefault(x => x.Name == runEvalName);
-                parent.Inlines.Remove(r_prev);
-
-                Run r_eval = CreateEvaluationRun(eval, runEvalName);
-
-                parent.Inlines.InsertAfter(runEvaluated, r_eval);
-
-                _mainWin.FloatingChessBoard.DisplayPosition(nodeEvaluated.Position);
-                _mainWin.UiVbFloatingChessboard.Margin = new Thickness(_lastClickedPoint.X, _lastClickedPoint.Y - 165, 0, 0);
-                _mainWin.ShowFloatingChessboard(true);
-
-                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+                Run runEvaluated = GetRunForNodeId(nodeId);
+                if (runEvaluated != null)
                 {
-                    RequestMoveEvaluation();
-                }
-                else
-                {
-                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                    Paragraph para = runEvaluated.Parent as Paragraph;
+                    if (para != null)
+                    {
+                        MoveEvaluation eval = moveCandidates[0];
+
+                        string runEvalName = _run_move_eval_ + nodeId.ToString();
+
+                        // Remove previous evaluation if exists
+                        var r_prev = para.Inlines.FirstOrDefault(x => x.Name == runEvalName);
+                        para.Inlines.Remove(r_prev);
+
+                        Run r_eval = CreateEvaluationRun(eval, runEvalName);
+
+                        para.Inlines.InsertAfter(runEvaluated, r_eval);
+
+                        TreeNode nodeEvaluated = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
+                        // show the last clicked node where our mouse is now 
+                        if (_lastClickedNode != null)
+                        {
+                            _mainWin.FloatingChessBoard.DisplayPosition(_lastClickedNode.Position);
+                            _mainWin.UiVbFloatingChessboard.Margin = new Thickness(_lastClickedPoint.X, _lastClickedPoint.Y - 165, 0, 0);
+                            _mainWin.ShowFloatingChessboard(true);
+                        }
+
+                        if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+                        {
+                            RequestMoveEvaluation();
+                        }
+                        else
+                        {
+                            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                        }
+                    }
                 }
             });
 
