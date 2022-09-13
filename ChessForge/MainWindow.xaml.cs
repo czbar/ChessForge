@@ -1326,10 +1326,10 @@ namespace ChessForge
         /// visible in the comment box, and display the response moves
         /// with their line evaluations in the Training tab.
         /// </summary>
-        public void MoveEvaluationFinishedInTraining()
+        public void MoveEvaluationFinishedInTraining(int nodeId)
         {
             AppStateManager.ShowMoveEvaluationControls(false, true);
-            UiTrainingView.ShowEvaluationResult();
+            UiTrainingView.ShowEvaluationResult(nodeId);
         }
 
         /// <summary>

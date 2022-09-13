@@ -650,12 +650,14 @@ namespace ChessPosition
                 move.Number = line[i].Position.MoveNumber.ToString() + ".";
                 move.WhitePly = line[i].GetPlyText(true);
                 move.WhiteEval = line[i].EngineEvaluation;
+                move.WhiteNodeId = line[i].NodeId;
 
                 // black
                 if (i + 1 < line.Count)
                 {
                     move.BlackPly = line[i+1].GetPlyText(true);
                     move.BlackEval = line[i + 1].EngineEvaluation;
+                    move.BlackNodeId = line[i].NodeId;
                 }
 
                 game.Add(move);

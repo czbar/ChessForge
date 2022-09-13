@@ -206,6 +206,31 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Assuming the format "[prefix]" + "_" + NodeId
+        /// find paragrpah that hosts a run for the Node with passed
+        /// NodeId.
+        /// </summary>
+        /// <returns></returns>
+        public Run GetRunForNodeId(int nodeId)
+        {
+            foreach (Block block in Document.Blocks)
+            {
+                if (block is Paragraph)
+                {
+                    foreach (var run in (block as Paragraph).Inlines)
+                    {
+                        if (run is Run && TextUtils.GetNodeIdFromPrefixedString(run.Name) == nodeId)
+                        {
+                            return run as Run;
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Builds text for the paragraph displaying the "stem" line
         /// i.e. moves from the first one to the first fork.
         /// </summary>

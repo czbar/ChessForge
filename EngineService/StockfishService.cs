@@ -15,7 +15,7 @@ namespace EngineService
     /// communicating with it.
     /// It is built as a DLL so that it can be easily tested independent of the main program.
     /// </summary>
-    public class EngineProcess : IEngineService
+    public class EngineProcess // : IEngineService
     {
         /// <summary>
         /// Once the engine process has started and "readyok" was received, the engine will be
@@ -100,20 +100,20 @@ namespace EngineService
         // the current state of the engine
         private State _currentState;
 
-        // if true, engine's messages will be logged
-        private bool _debugMode;
-
         // the timer polling for engine's messages
         private Timer _messagePollTimer = new Timer();
 
-        // a "position" command queued while in STOPPING mode
-        private string _queuedPositionCommand;
-
-        // a "go" command queued while in STOPPING mode
-        private string _queuedGoCommand;
-
         // number of lines to analyze
         private int _multipv = 5;
+
+        // a completed "go"+"position" command i.e. one for which we have receive a "bestmove" message
+        private GoFenCommand _goFenCompleted;
+
+        // a "go"+"position" command currently being calculated by the engine
+        private GoFenCommand _goFenCurrent;
+
+        // a "go"+"position" command that was received while there was another one being calculated.
+        private GoFenCommand _goFenQueued;
 
         /// <summary>
         /// Creates the Engine Service object.
@@ -152,9 +152,9 @@ namespace EngineService
                 // it will be stopped when ok is received
                 StartMessagePollTimer();
 
-                _strmWriter.WriteLine(UciCommands.ENG_UCI);
-                _strmWriter.WriteLine(UciCommands.ENG_ISREADY);
-                _strmWriter.WriteLine(UciCommands.ENG_UCI_NEW_GAME);
+                WriteOut(UciCommands.ENG_UCI);
+                WriteOut(UciCommands.ENG_ISREADY);
+                WriteOut(UciCommands.ENG_UCI_NEW_GAME);
 
                 IsEngineRunning = true;
                 _currentState = State.NOT_READY;
@@ -192,7 +192,55 @@ namespace EngineService
         }
 
         /// <summary>
-        /// Sends a command to the engine by writing to its standard stream.
+        /// Depending on the current state of the engine,
+        /// sends "go" and "position" commands or queues them.
+        /// </summary>
+        /// <param name="cmd"></param>
+        public void SendFenGoCommand(GoFenCommand cmd)
+        {
+            if (_currentState == State.IDLE)
+            {
+                GoFenCommand gfc = cmd;
+                // if there is a queued command send it first
+                if (_goFenQueued != null)
+                {
+                    gfc = _goFenQueued;
+                    _goFenQueued = cmd;
+                }
+
+                _goFenCurrent = gfc;
+                int mpv = gfc.Mpv <= 0 ? _multipv : gfc.Mpv;
+
+                WriteOut(UciCommands.ENG_SET_MULTIPV + " " + mpv.ToString());
+                WriteOut(UciCommands.ENG_POSITION_FEN + " " + gfc.Fen);
+                WriteOut(gfc.GoCommandString);
+                StartMessagePollTimer();
+
+                _currentState = State.CALCULATING;
+            }
+            else if (_currentState == State.CALCULATING)
+            {
+                // new request came in so queue it and stop the previous one
+                _currentState = State.STOPPING;
+                WriteOut(UciCommands.ENG_STOP);
+                _goFenQueued = cmd;
+            }
+            else
+            {
+                _goFenQueued = cmd;
+            }
+        }
+
+        /// <summary>
+        /// Sends the "stop" command to the engine.
+        /// </summary>
+        public void SendStopCommand()
+        {
+            SendCommand(UciCommands.ENG_STOP);
+        }
+
+        /// <summary>
+        /// Sends a command to the engine by writing to its standard input stream.
         /// Checks the type of the command versus the current state to determine
         /// whether it is ok to send the given command.
         /// </summary>
@@ -215,21 +263,7 @@ namespace EngineService
                         case State.NOT_READY:
                             break;
                         case State.IDLE:
-                            if (!command.StartsWith(UciCommands.ENG_STOP))
-                            {
-                                accept = true;
-                            }
-                            if (command.StartsWith(UciCommands.ENG_GO))
-                            {
-                                // we may have a queued "position" command
-                                if (!string.IsNullOrWhiteSpace(_queuedPositionCommand))
-                                {
-                                    WriteOutCommand(_queuedPositionCommand);
-                                    _queuedPositionCommand = null;
-                                }
-                                _queuedGoCommand = null;
-                                _currentState = State.CALCULATING;
-                            }
+                            accept = !command.StartsWith(UciCommands.ENG_STOP);
                             break;
                         case State.CALCULATING:
                             if (command.StartsWith(UciCommands.ENG_STOP))
@@ -237,18 +271,8 @@ namespace EngineService
                                 accept = true;
                                 _currentState = State.STOPPING;
                             }
-                            else if (IsPartEvaluationRequest(command))
-                            {
-                                // new request came in so queue it and stop the previous one
-                                _currentState = State.STOPPING;
-                                _strmWriter.WriteLine(UciCommands.ENG_STOP);
-                                WriteOutCommand(UciCommands.ENG_STOP);
-                                QueueCommand(command);
-                            }
                             break;
                         case State.STOPPING:
-                            // queue the command to send once we are back in IDLE mode.
-                            QueueCommand(command);
                             break;
                     }
 
@@ -256,7 +280,7 @@ namespace EngineService
                     {
                         // we are sending a command so enable message polling, if not enabled
                         StartMessagePollTimer();
-                        WriteOutCommand(command);
+                        WriteOut(command);
                     }
                     else
                     {
@@ -276,25 +300,6 @@ namespace EngineService
             return _messagePollTimer.Enabled;
         }
 
-
-        /// <summary>
-        /// Writes out the command requested from SendCommand().
-        /// If this is a "position" command, send the mpv command first.
-        /// </summary>
-        /// <param name="command"></param>
-        private void WriteOutCommand(string command)
-        {
-            if (!string.IsNullOrWhiteSpace(command))
-            {
-                if (command.StartsWith(UciCommands.ENG_POSITION))
-                {
-                    string optCmd = UciCommands.ENG_SET_MULTIPV + " " + _multipv.ToString();
-                    WriteOut(optCmd);
-                }
-                WriteOut(command);
-            }
-        }
-
         /// <summary>
         /// Writes directly to the engine.
         /// </summary>
@@ -303,42 +308,6 @@ namespace EngineService
         {
             _strmWriter.WriteLine(command);
             EngineLog.Message("Command sent: " + command + " : State=" + _currentState.ToString());
-        }
-
-        /// <summary>
-        /// Checks if the command is one the commands forming an evaluation 
-        /// requets i.e. a "go" or a "position" command.
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
-        private bool IsPartEvaluationRequest(string command)
-        {
-            return command != null && (command.StartsWith(UciCommands.ENG_POSITION) || command.StartsWith(UciCommands.ENG_GO));
-        }
-
-        /// <summary>
-        /// If the command could not be sent, we may have chosen to
-        /// queue it and send once we get into IDLE state.  
-        /// Only "position" and "go" commands can be queued.
-        /// There can only be at most one "position" and one "go" command. 
-        /// The newly received command of a given type overwrites the previous one.
-        /// </summary>
-        /// <param name="command"></param>
-        private void QueueCommand(string command)
-        {
-            if (!string.IsNullOrWhiteSpace(command))
-            {
-                if (command.StartsWith(UciCommands.ENG_POSITION))
-                {
-                    _queuedPositionCommand = command;
-                    EngineLog.Message("Queued command: " + command);
-                }
-                else if (command.StartsWith(UciCommands.ENG_GO))
-                {
-                    _queuedGoCommand = command;
-                    EngineLog.Message("Queued command: " + command);
-                }
-            }
         }
 
         /// <summary>
@@ -414,6 +383,7 @@ namespace EngineService
                             {
                                 if (message.StartsWith(UciCommands.ENG_BEST_MOVE))
                                 {
+                                    message = PrefixMessageWithNodeId(message);
                                     HandleBestMove();
                                 }
                                 EngineMessage?.Invoke(message);
@@ -438,6 +408,26 @@ namespace EngineService
         }
 
         /// <summary>
+        /// Invoked when "bestmove" was received, prefixes the message with the id of the
+        /// Node for which the evaluation was performed.
+        /// The EngineMessageReceived() handler will parse it and strip off before further
+        /// processing.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        private string PrefixMessageWithNodeId(string message)
+        {
+            if (_goFenCurrent != null)
+            {
+                return UciCommands.CHF_NODE_ID_PREFIX + _goFenCurrent.NodeId.ToString() + " " + message;
+            }
+            else
+            {
+                return message;
+            }
+        }
+
+        /// <summary>
         /// Handles the "readyok" message.
         /// </summary>
         private void HandleReadyOk()
@@ -454,29 +444,28 @@ namespace EngineService
         /// </summary>
         private void HandleBestMove()
         {
+            _goFenCompleted = _goFenCurrent;
+            _goFenCurrent = null;
+
             lock (_lockStateChange)
             {
                 bool stopPoll = true;
                 _currentState = State.IDLE;
-                // if we have queued commands, send them now
-                if (_queuedPositionCommand != null)
+
+                if (_goFenQueued != null)
                 {
-                    SendCommand(_queuedPositionCommand);
-                    _queuedPositionCommand = null;
-                }
-                if (_queuedGoCommand != null)
-                {
-                    SendCommand(_queuedGoCommand);
-                    _queuedGoCommand = null;
+                    _goFenCurrent = _goFenQueued;
+                    _goFenQueued = null;
+                    SendFenGoCommand(_goFenCurrent);
                     stopPoll = false;
                 }
+
                 if (stopPoll)
                 {
                     StopMessagePollTimer();
                 }
             }
         }
-
     }
 }
 

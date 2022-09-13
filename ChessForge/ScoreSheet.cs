@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using GameTree;
 using ChessPosition;
 using System.Windows;
+using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -191,6 +192,32 @@ namespace ChessForge
         public TreeNode GetNodeFromId(int nodeId)
         {
             return NodeList.FirstOrDefault(x => x.NodeId == nodeId);
+        }
+
+        /// <summary>
+        /// Gets the move (ply) from the Move List and its color.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public MoveWithEval GetMoveFromNodeId(int nodeId, out PieceColor color)
+        {
+            color = PieceColor.None;
+            foreach (MoveWithEval mv in MoveList)
+            {
+                if (mv.WhiteNodeId == nodeId)
+                {
+                    color = PieceColor.White;
+                    return mv;
+                }
+                else if (mv.BlackNodeId == nodeId)
+                {
+                    color = PieceColor.Black;
+                    return mv;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
