@@ -194,7 +194,7 @@ namespace ChessForge
 
             EvaluationManager.SetPositionToEvaluate(null);
 
-            _mainWin.MoveEvaluationFinishedInTraining();
+            _mainWin.MoveEvaluationFinishedInTraining(nodeId);
         }
 
         /// <summary>
