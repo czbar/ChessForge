@@ -14,11 +14,26 @@ namespace ChessPosition
     /// </summary>
     public class MoveWithEval : INotifyPropertyChanged
     {
-        // Move number
+        /// <summary>
+        /// Numer of the move (starting from 1) 
+        /// that this object represents.
+        /// </summary>
         public string Number { get; set; }
 
+        /// <summary>
+        /// Id of the Node for the White ply 
+        /// </summary>
+        public int WhiteNodeId;
 
+        /// <summary>
+        /// Id of the Node for the Blck ply 
+        /// </summary>
+        public int BlackNodeId;
+
+        // White's ply move notation
         private string _whitePly;
+
+        // Black's ply move notation
         private string _blackPly;
 
         // evaluation after White's move
@@ -27,7 +42,9 @@ namespace ChessPosition
         // evaluation after Black's move
         private string _blackEval;
 
-        // White's move in algebraic notation
+        /// <summary>
+        /// White's ply in algebraic notation.
+        /// </summary>
         public string WhitePly
         {
             get
@@ -44,7 +61,9 @@ namespace ChessPosition
             }
         }
 
-        // Black's move in algebraic notation
+        /// <summary>
+        /// Black's ply in algebraic notation.
+        /// </summary>
         public string BlackPly
         {
             get
