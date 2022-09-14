@@ -132,7 +132,7 @@ namespace ChessForge
         /// a game in progress i.e. AppState.Mode is or is not equal to GAME_VS_COMPUTER.
         /// To distinguish we need to check Evaluation.Mode.
         /// </summary>
-        public static void MoveEvaluationFinished(int nodeId)
+        public static void MoveEvaluationFinished(TreeNode nd)
         {
             ClearMoveCandidates(false);
             if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
@@ -143,12 +143,12 @@ namespace ChessForge
             else if (TrainingSession.IsTrainingInProgress)
             {
                 // eval request was made while in training (LearningMode can be GAME or TRAINING)
-                MoveEvaluationFinishedInTraining(nodeId);
+                MoveEvaluationFinishedInTraining(nd);
             }
             else
             {
                 // eval request in MANUAL_REVIEW (could be for CONTINUOUS or LINE)
-                MoveEvaluationFinishedInManualReview(nodeId);
+                MoveEvaluationFinishedInManualReview(nd);
             }
         }
 
@@ -180,21 +180,21 @@ namespace ChessForge
         /// The engine was evaluating the move on user's request not responding
         /// to the user's move in a game.
         /// </summary>
-        private static void MoveEvaluationFinishedInTraining(int nodeId)
+        private static void MoveEvaluationFinishedInTraining(TreeNode nd)
         {
             // stop the timer, apply training mode specific handling 
             // NOTE do not reset Evaluation.CurrentMode as this will be done 
             // later down the chain
             _mainWin.ResetEvaluationProgressBar();
 
-            if (EvaluationManager.CurrentMode != EvaluationManager.Mode.LINE)
-            {
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-            }
+            //if (EvaluationManager.CurrentMode != EvaluationManager.Mode.LINE && EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
+            //{
+            //    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+            //}
 
             EvaluationManager.SetPositionToEvaluate(null);
 
-            _mainWin.MoveEvaluationFinishedInTraining(nodeId);
+            _mainWin.MoveEvaluationFinishedInTraining(nd);
         }
 
         /// <summary>
@@ -204,13 +204,13 @@ namespace ChessForge
         /// in Active Line or a LINE evaluation where we ask for 
         /// evaluation move by move automatically.
         /// </summary>
-        private static void MoveEvaluationFinishedInManualReview(int nodeId)
+        private static void MoveEvaluationFinishedInManualReview(TreeNode nd)
         {
             lock (LearningMode.EvalLock)
             {
                 AppLog.Message("Move evaluation finished for index " + EvaluationManager.PositionIndex.ToString());
 
-                string eval = EvaluationManager.PositionEvaluation;
+                string eval = nd.EngineEvaluation;
                 if (!string.IsNullOrEmpty(eval))
                 {
                     // if this is not checkmate, check the sign (for checkmate it is already there)
@@ -229,7 +229,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    AppStateManager.ActiveLine.SetEvaluation(nodeId, eval);
+                    AppStateManager.ActiveLine.SetEvaluation(nd, eval);
                 }
 
                 if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
@@ -353,7 +353,7 @@ namespace ChessForge
                 }
             });
 
-//            AppStateManager.ShowMoveEvaluationControls(true);
+            AppStateManager.ShowMoveEvaluationControls(true);
             _mainWin.UpdateLastMoveTextBox(posIndex);
 
             string fen = AppStateManager.PrepareMoveEvaluation(EvaluationManager.Position, true);
@@ -527,10 +527,15 @@ namespace ChessForge
                     bool res = int.TryParse(tokens[1], out nodeId);
                     nodeId = res ? nodeId : -1;
                 }
-                
+            }
+
+            TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
+            if (nd != null)
+            {
+                nd.EngineEvaluation = EvaluationManager.BuildEvaluationText(EngineLinesBox.Lines[0], nd.Position.ColorToMove);
             }
             // tell the app that the evaluation has finished
-            MoveEvaluationFinished(nodeId);
+            MoveEvaluationFinished(nd);
         }
 
         /// <summary>

@@ -46,9 +46,6 @@ namespace ChessForge
         // Index of the position being evaluated in the ActiveLine
         private static int _positionIndex;
 
-        // Text value of the evaluation
-        private static string _positionEvaluation = "";
-
         // The list of Runs to evaluate when we are evaluating a line
         // in the Training mode.
         private static List<Run> _runsToEvaluate = new List<Run>();
@@ -192,7 +189,6 @@ namespace ChessForge
             lock (EvaluationLock)
             {
                 _position = null;
-                _positionEvaluation = "";
                 _positionIndex = 0;
 
                 ChangeCurrentMode(Mode.IDLE);
@@ -263,27 +259,6 @@ namespace ChessForge
                     {
                         _position = AppStateManager.MainWin.ActiveLine.GetNodeAtIndex(_positionIndex).Position;
                     }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Accessor for the position evaluation text value.
-        /// </summary>
-        public static string PositionEvaluation
-        {
-            get
-            {
-                lock (EvaluationLock)
-                {
-                    return _positionEvaluation;
-                }
-            }
-            set
-            {
-                lock (EvaluationLock)
-                {
-                    _positionEvaluation = value;
                 }
             }
         }
