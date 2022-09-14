@@ -572,11 +572,15 @@ namespace ChessForge
         /// </summary>
         public void ShowEvaluationResult(int nodeId)
         {
+            TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
             // insert the evaluation result after the move.
             List<MoveEvaluation> moveCandidates = EngineLinesBox.Lines;
-            if (moveCandidates.Count == 0)
+            if (moveCandidates.Count == 0 || nd == null)
+            {
                 return;
+            }
 
+            
             _mainWin.Dispatcher.Invoke(() =>
             {
                 Run runEvaluated = GetRunForNodeId(nodeId);
@@ -593,7 +597,7 @@ namespace ChessForge
                         var r_prev = para.Inlines.FirstOrDefault(x => x.Name == runEvalName);
                         para.Inlines.Remove(r_prev);
 
-                        Run r_eval = CreateEvaluationRun(eval, runEvalName);
+                        Run r_eval = CreateEvaluationRun(eval, runEvalName, nd);
 
                         para.Inlines.InsertAfter(runEvaluated, r_eval);
 
@@ -610,9 +614,21 @@ namespace ChessForge
                         {
                             RequestMoveEvaluation();
                         }
-                        else
+                        else if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
                         {
                             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                        }
+
+                        if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                        {
+                            if (_lastClickedNode == null)
+                            {
+                                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                            }
+                            else
+                            {
+                                EvaluationManager.SetPositionToEvaluate(_lastClickedNode.Position);
+                            }
                         }
                     }
                 }
@@ -627,9 +643,9 @@ namespace ChessForge
         /// <param name="eval"></param>
         /// <param name="runName"></param>
         /// <returns></returns>
-        private Run CreateEvaluationRun(MoveEvaluation eval, string runName)
+        private Run CreateEvaluationRun(MoveEvaluation eval, string runName, TreeNode nd)
         {
-            Run r_eval = new Run("(" + EvaluationManager.BuildEvaluationText(eval, _lastClickedNode.Position.ColorToMove) + ") ");
+            Run r_eval = new Run("(" + EvaluationManager.BuildEvaluationText(eval, nd.Position.ColorToMove) + ") ");
             r_eval.Name = runName;
             r_eval.FontWeight = FontWeights.Normal;
             r_eval.Foreground = Brushes.Black;
@@ -1166,39 +1182,29 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
-            // don't accept any clicks if evaluation is in progress
-            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
-            {
-                _mainWin.BoardCommentBox.ShowFlashAnnouncement("Line evaluation is in progress!");
-                return;
-            }
-
-            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
-            {
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-            }
-
             Run r = (Run)e.Source;
             if (string.IsNullOrEmpty(r.Name))
             {
                 return;
             }
 
+            //on Right Button we invoke the the Context Menu, on Left we don't but will continue with CONTINUOUS evaluation 
             if (e.ChangedButton == MouseButton.Right || e.ChangedButton == MouseButton.Left)
             {
+                bool found = false;
                 if (r.Name.StartsWith(_run_line_move_))
                 {
                     // a move in the main training line was clicked 
                     DetectLastClickedNode(r, _run_line_move_, e);
                     _moveContext = MoveContext.LINE;
-                    _mainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
+                    found = true;
                 }
                 else if (r.Name.StartsWith(_run_wb_move_))
                 {
                     // a workbook move in the comment was clicked 
                     DetectLastClickedNode(r, _run_wb_move_, e);
                     _moveContext = MoveContext.WORKBOOK_COMMENT;
-                    _mainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
+                    found = true;
                 }
                 else if (r.Name.StartsWith(_run_engine_game_move_))
                 {
@@ -1208,9 +1214,26 @@ namespace ChessForge
                     // otherwise it will be engine's turn.
                     DetectLastClickedNode(r, _run_engine_game_move_, e);
                     _moveContext = MoveContext.GAME;
-                    _mainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
+                    found = true;
+                }
+
+                if (found)
+                {
+                    if (e.ChangedButton == MouseButton.Right)
+                    {
+                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                        _mainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
+                    }
+                    else if (e.ChangedButton == MouseButton.Left)
+                    {
+                        if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                        {
+                            RequestMoveEvaluation();
+                        }
+                    }
                 }
             }
+
         }
 
         /// <summary>
