@@ -508,7 +508,15 @@ namespace ChessForge
                         || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE
                         || LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
                     {
-                        UserMoveProcessor.FinalizeUserMove(targetSquare);
+                        if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
+                        {
+                            BoardCommentBox.ShowFlashAnnouncement("Stop evaluations before making your move.");
+                            ReturnDraggedPiece(false);
+                        }
+                        else
+                        {
+                            UserMoveProcessor.FinalizeUserMove(targetSquare);
+                        }
                     }
                     else
                     {
@@ -2154,7 +2162,11 @@ namespace ChessForge
             AppStateManager.ResetEvaluationControls();
             AppStateManager.ShowMoveEvaluationControls(false, true);
             AppStateManager.SetupGuiForCurrentStates();
-            Timers.StopAll();
+
+            if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
+            {
+                Timers.StopAll();
+            }
         }
 
         /// <summary>
@@ -2166,8 +2178,6 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiImgEngineOn_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            EngineMessageProcessor.StopEngineEvaluation();
-
             UiImgEngineOff.Visibility = Visibility.Visible;
             UiImgEngineOn.Visibility = Visibility.Collapsed;
 
