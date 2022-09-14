@@ -187,10 +187,10 @@ namespace ChessForge
             // later down the chain
             _mainWin.ResetEvaluationProgressBar();
 
-            if (EvaluationManager.CurrentMode != EvaluationManager.Mode.LINE)
-            {
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-            }
+            //if (EvaluationManager.CurrentMode != EvaluationManager.Mode.LINE && EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
+            //{
+            //    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+            //}
 
             EvaluationManager.SetPositionToEvaluate(null);
 
@@ -353,7 +353,7 @@ namespace ChessForge
                 }
             });
 
-//            AppStateManager.ShowMoveEvaluationControls(true);
+            AppStateManager.ShowMoveEvaluationControls(true);
             _mainWin.UpdateLastMoveTextBox(posIndex);
 
             string fen = AppStateManager.PrepareMoveEvaluation(EvaluationManager.Position, true);
