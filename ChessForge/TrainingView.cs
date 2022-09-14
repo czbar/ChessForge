@@ -570,9 +570,8 @@ namespace ChessForge
         /// The EngineMessageProcessor has the results.
         /// We can be in a CONTINUOUS or LINE evaluation mode.
         /// </summary>
-        public void ShowEvaluationResult(int nodeId)
+        public void ShowEvaluationResult(TreeNode nd)
         {
-            TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
             // insert the evaluation result after the move.
             List<MoveEvaluation> moveCandidates = EngineLinesBox.Lines;
             if (moveCandidates.Count == 0 || nd == null)
@@ -583,7 +582,7 @@ namespace ChessForge
             
             _mainWin.Dispatcher.Invoke(() =>
             {
-                Run runEvaluated = GetRunForNodeId(nodeId);
+                Run runEvaluated = GetRunForNodeId(nd.NodeId);
                 if (runEvaluated != null)
                 {
                     Paragraph para = runEvaluated.Parent as Paragraph;
@@ -591,7 +590,7 @@ namespace ChessForge
                     {
                         MoveEvaluation eval = moveCandidates[0];
 
-                        string runEvalName = _run_move_eval_ + nodeId.ToString();
+                        string runEvalName = _run_move_eval_ + nd.NodeId.ToString();
 
                         // Remove previous evaluation if exists
                         var r_prev = para.Inlines.FirstOrDefault(x => x.Name == runEvalName);
@@ -601,7 +600,7 @@ namespace ChessForge
 
                         para.Inlines.InsertAfter(runEvaluated, r_eval);
 
-                        TreeNode nodeEvaluated = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
+                        TreeNode nodeEvaluated = nd;
                         // show the last clicked node where our mouse is now 
                         if (_lastClickedNode != null)
                         {

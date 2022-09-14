@@ -89,16 +89,12 @@ namespace ChessForge
         /// <param name="moveIndex"></param>
         /// <param name="color"></param>
         /// <param name="eval"></param>
-        public void SetEvaluation(int nodeId, string eval)
+        public void SetEvaluation(TreeNode nd, string eval)
         {
-            TreeNode nd = Line.GetNodeFromId(nodeId);
-
-            // nd can be "legitimately" null when the evaluation stopped because we clicked
-            // in the Workbook view on a different line.
             if (nd != null)
             {
                 PieceColor color;
-                MoveWithEval mev = Line.GetMoveFromNodeId(nodeId, out color);
+                MoveWithEval mev = Line.GetMoveFromNodeId(nd.NodeId, out color);
 
                 if (mev != null)
                 {
