@@ -83,7 +83,11 @@ namespace ChessForge
                         sb.Append(BuildLineText(i, Lines[i]));
                         sb.Append(Environment.NewLine);
                     }
-                    _tbEvalLines.Text = sb.ToString();
+                    string txt = sb.ToString();
+                    if (!string.IsNullOrWhiteSpace(txt))
+                    {
+                        _tbEvalLines.Text = sb.ToString();
+                    }
                 });
 
                 if (Lines.Count > 0 && EvaluationManager.Position != null)
