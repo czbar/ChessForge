@@ -89,11 +89,6 @@ namespace ChessForge
                         _tbEvalLines.Text = sb.ToString();
                     }
                 });
-
-                if (Lines.Count > 0 && EvaluationManager.Position != null)
-                {
-                    EvaluationManager.PositionEvaluation = EvaluationManager.BuildEvaluationText(Lines[0], EvaluationManager.Position.ColorToMove);
-                }
             }
 
             _pbEngineEval.Dispatcher.Invoke(() =>
