@@ -93,23 +93,28 @@ namespace ChessForge
         {
             TreeNode nd = Line.GetNodeFromId(nodeId);
 
-            PieceColor color;
-            MoveWithEval mev = Line.GetMoveFromNodeId(nodeId, out color);
-
-            if (mev != null)
+            // nd can be "legitimately" null when the evaluation stopped because we clicked
+            // in the Workbook view on a different line.
+            if (nd != null)
             {
-                if (color == PieceColor.White)
-                {
-                    mev.WhiteEval = eval;
-                }
-                else
-                {
-                    mev.BlackEval = eval;
-                }
-            }
+                PieceColor color;
+                MoveWithEval mev = Line.GetMoveFromNodeId(nodeId, out color);
 
-            nd.EngineEvaluation = eval;
-            AppStateManager.IsDirty = true;
+                if (mev != null)
+                {
+                    if (color == PieceColor.White)
+                    {
+                        mev.WhiteEval = eval;
+                    }
+                    else
+                    {
+                        mev.BlackEval = eval;
+                    }
+                }
+
+                nd.EngineEvaluation = eval;
+                AppStateManager.IsDirty = true;
+            }
         }
 
         /// <summary>
