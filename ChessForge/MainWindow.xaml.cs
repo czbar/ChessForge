@@ -515,6 +515,11 @@ namespace ChessForge
                         }
                         else
                         {
+                            // if not in a game, we can comfortably stop any evaluation happening
+                            if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
+                            {
+                                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                            }
                             UserMoveProcessor.FinalizeUserMove(targetSquare);
                         }
                     }
@@ -1093,7 +1098,7 @@ namespace ChessForge
         {
             TreeNode nd = ActiveLine.GetNodeAtIndex(index);
             _workbookView.SelectLineAndMove(lineId, nd.NodeId);
-//            _lvWorkbookTable_SelectLineAndMove(lineId, nd.NodeId);
+            //            _lvWorkbookTable_SelectLineAndMove(lineId, nd.NodeId);
             if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
             {
                 EvaluateActiveLineSelectedPosition(index);
