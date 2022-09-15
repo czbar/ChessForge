@@ -657,7 +657,7 @@ namespace ChessPosition
                 {
                     move.BlackPly = line[i+1].GetPlyText(true);
                     move.BlackEval = line[i + 1].EngineEvaluation;
-                    move.BlackNodeId = line[i].NodeId;
+                    move.BlackNodeId = line[i + 1].NodeId;
                 }
 
                 game.Add(move);
