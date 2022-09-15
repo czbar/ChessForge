@@ -280,6 +280,9 @@ namespace ChessForge
         /// <param name="colorToMove">Side on move</param>
         public void SelectPly(int moveNo, PieceColor colorToMove)
         {
+            // the under board message may not be relevant anymore
+            _mainWin.BoardCommentBox.RestoreTitleMessage();
+
             _dgActiveLine.SelectedCells.Clear();
             moveNo = Math.Max(moveNo, 0);
 
