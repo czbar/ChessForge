@@ -353,8 +353,22 @@ namespace ChessForge
             ReplayLine(row, column);
         }
 
+        /// <summary>
+        /// Automatically replays the currently selected line 
+        /// on the main chessboard.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
         public void ReplayLine(int row, int column = _dgActiveLineWhitePlyColumn)
         {
+            if (EvaluationManager.IsRunning)
+            {
+                EngineMessageProcessor.StopEngineEvaluation();
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+            }
+
+            AppStateManager.SwapCommentBoxForEngineLines(false);
+
             // if there is replay happening now, stop it
             if (_mainWin.ActiveLineReplay.IsReplayActive)
             {
