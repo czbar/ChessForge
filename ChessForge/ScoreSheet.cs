@@ -203,6 +203,14 @@ namespace ChessForge
         public MoveWithEval GetMoveFromNodeId(int nodeId, out PieceColor color)
         {
             color = PieceColor.None;
+
+            // note that we may get 0 passed here in some context (meaning the starting position)
+            // we don't want it to be "found" as the black ply past the last white ply! 
+            if (nodeId <= 0)
+            {
+                return null;
+            }
+
             foreach (MoveWithEval mv in MoveList)
             {
                 if (mv.WhiteNodeId == nodeId)

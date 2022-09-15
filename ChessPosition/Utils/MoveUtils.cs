@@ -107,6 +107,17 @@ namespace ChessPosition
         /// <returns></returns>
         public static string BuildSingleMoveText(TreeNode nd, bool isStandalone, bool withNAGs = false)
         {
+            if (nd == null)
+            {
+                return null;
+            }
+
+            if (nd.NodeId == 0)
+            {
+                // special case that may occur in evaluation
+                return "starting position";
+            }
+
             string moveTxt = withNAGs ? nd.LastMoveAlgebraicNotationWithNag : nd.LastMoveAlgebraicNotation;
 
             StringBuilder sb = new StringBuilder();

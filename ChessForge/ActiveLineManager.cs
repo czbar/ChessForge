@@ -280,6 +280,9 @@ namespace ChessForge
         /// <param name="colorToMove">Side on move</param>
         public void SelectPly(int moveNo, PieceColor colorToMove)
         {
+            // the under board message may not be relevant anymore
+            _mainWin.BoardCommentBox.RestoreTitleMessage();
+
             _dgActiveLine.SelectedCells.Clear();
             moveNo = Math.Max(moveNo, 0);
 
@@ -353,8 +356,22 @@ namespace ChessForge
             ReplayLine(row, column);
         }
 
+        /// <summary>
+        /// Automatically replays the currently selected line 
+        /// on the main chessboard.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
         public void ReplayLine(int row, int column = _dgActiveLineWhitePlyColumn)
         {
+            if (EvaluationManager.IsRunning)
+            {
+                EngineMessageProcessor.StopEngineEvaluation();
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+            }
+
+            AppStateManager.SwapCommentBoxForEngineLines(false);
+
             // if there is replay happening now, stop it
             if (_mainWin.ActiveLineReplay.IsReplayActive)
             {
