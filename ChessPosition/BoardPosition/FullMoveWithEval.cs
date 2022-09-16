@@ -95,6 +95,7 @@ namespace ChessPosition
                 if (value != _whiteEval)
                 {
                     _whiteEval = value;
+                    _whiteEval = AddPlusSign(_whiteEval);
                     NotifyPropertyChanged();
                 }
             }
@@ -115,6 +116,7 @@ namespace ChessPosition
                 if (value != _blackEval)
                 {
                     _blackEval = value;
+                    _blackEval = AddPlusSign(_blackEval);
                     NotifyPropertyChanged();
                 }
             }
@@ -124,6 +126,18 @@ namespace ChessPosition
         /// PropertChange event handler
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private string AddPlusSign(string val)
+        {
+            if (val != null && val.Length > 1 && Char.IsDigit(val[0]))
+            {
+                return "+" + val;
+            }
+            else
+            {
+                return val;
+            }
+        }
 
         /// <summary>
         /// Notifies the framework of the change in the bound data.
