@@ -266,7 +266,7 @@ namespace ChessForge
         private void InitFlashAnnouncementTimer()
         {
             _flashAnnouncementTimer.Elapsed += new ElapsedEventHandler(_mainWin.FlashAnnouncementTimeUp);
-            _flashAnnouncementTimer.Interval = 1000;
+            _flashAnnouncementTimer.Interval = 1800;
             _flashAnnouncementTimer.Enabled = false;
         }
 
