@@ -211,14 +211,6 @@ namespace ChessForge
                 AppLog.Message("Move evaluation finished for index " + EvaluationManager.PositionIndex.ToString());
 
                 string eval = nd.EngineEvaluation;
-                if (!string.IsNullOrEmpty(eval))
-                {
-                    // if this is not checkmate, check the sign (for checkmate it is already there)
-                    if (eval.IndexOf('#') < 0)
-                    {
-                        eval = (eval[0] == '-' ? "" : "+") + eval;
-                    }
-                }
 
                 bool isWhiteEval = (EvaluationManager.PositionIndex - 1) % 2 == 0;
                 int moveIndex = (EvaluationManager.PositionIndex - 1) / 2;
