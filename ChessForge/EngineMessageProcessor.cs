@@ -223,14 +223,7 @@ namespace ChessForge
                 bool isWhiteEval = (EvaluationManager.PositionIndex - 1) % 2 == 0;
                 int moveIndex = (EvaluationManager.PositionIndex - 1) / 2;
 
-                if (EvaluationManager.PositionIndex <= 0)
-                {
-                    AppLog.Message("ERROR: MoveEvaluationFinishedInManualReview() - bad position index " + EvaluationManager.PositionIndex.ToString());
-                }
-                else
-                {
-                    AppStateManager.ActiveLine.SetEvaluation(nd, eval);
-                }
+                AppStateManager.ActiveLine.SetEvaluation(nd, eval);
 
                 if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
                 {
