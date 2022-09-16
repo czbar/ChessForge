@@ -277,7 +277,14 @@ namespace ChessForge
             if (!line.IsMateDetected)
             {
                 int intEval = colorToMove == PieceColor.White ? line.ScoreCp : -1 * line.ScoreCp;
-                eval = (((double)intEval) / 100.0).ToString("F2");
+                if (intEval > 0)
+                {
+                    eval = "+" + (((double)intEval) / 100.0).ToString("F2");
+                }
+                else
+                {
+                    eval = (((double)intEval) / 100.0).ToString("F2");
+                }
             }
             else
             {

@@ -506,10 +506,6 @@ namespace ChessForge
             else
             {
                 text = MoveUtils.BuildSingleMoveText(nd, false) + " ";
-                if (_currentEngineGameMoveCount % 8 == 0)
-                {
-                    text = "\n          " + text;
-                }
             }
 
             Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
@@ -556,10 +552,6 @@ namespace ChessForge
                 nd = nd.Children[0];
                 _currentEngineGameMoveCount++;
                 text = MoveUtils.BuildSingleMoveText(nd, false) + " ";
-                if (_currentEngineGameMoveCount % 8 == 0)
-                {
-                    text = "\n          " + text;
-                }
                 Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
                 _paraCurrentEngineGame.Inlines.Add(gm);
             };

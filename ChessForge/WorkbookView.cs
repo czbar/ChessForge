@@ -323,6 +323,10 @@ namespace ChessForge
             // resets
             _dictNodeToRun.Clear();
             _dictRunToParagraph.Clear();
+            
+            _dictNodeToCommentRun.Clear();
+            _dictCommentRunToParagraph.Clear();
+
             _currParagraphLevel = 0;
 
             // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
@@ -787,10 +791,13 @@ namespace ChessForge
             }
 
             StringBuilder sb = new StringBuilder(" {");
+
+#if false  // TODO: we ant to reactivate is in a future "coach edit" mode or something like that
             if (ChfCommands.GetAssessment(nd.Assessment) != ChfCommands.Assessment.NONE)
             {
                 sb.Append("[assess=" + "\"" + nd.Assessment + "\"]");
             }
+#endif
 
             if (!string.IsNullOrEmpty(nd.Comment))
             {
