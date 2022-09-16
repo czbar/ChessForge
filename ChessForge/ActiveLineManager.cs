@@ -108,7 +108,6 @@ namespace ChessForge
                     }
                 }
 
-                nd.EngineEvaluation = eval;
                 AppStateManager.IsDirty = true;
             }
         }
