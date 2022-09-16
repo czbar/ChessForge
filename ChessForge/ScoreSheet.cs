@@ -282,12 +282,14 @@ namespace ChessForge
                 MoveWithEval move = MoveList[MoveList.Count - 1];
                 move.BlackPly = MoveUtils.BuildPlyText(nd,true);
                 move.BlackEval = nd.EngineEvaluation;
+                move.BlackNodeId = nd.NodeId;
             }
             else
             {
                 MoveWithEval move = new MoveWithEval();
                 move.WhitePly = MoveUtils.BuildPlyText(nd, true);
                 move.WhiteEval = nd.EngineEvaluation;
+                move.WhiteNodeId = nd.NodeId;
                 move.Number = (MoveList.Count + 1).ToString() + ".";
                 MoveList.Add(move);
             }
