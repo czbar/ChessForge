@@ -510,7 +510,7 @@ namespace ChessForge
                     {
                         if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
                         {
-                            BoardCommentBox.ShowFlashAnnouncement("Stop evaluations before making your move.");
+                            BoardCommentBox.ShowFlashAnnouncement("Stop evaluation before making your move.");
                             ReturnDraggedPiece(false);
                         }
                         else
