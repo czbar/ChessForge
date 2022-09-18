@@ -13,12 +13,6 @@ namespace ChessForge
     public class AnimationState
     {
         /// <summary>
-        /// The duration of time that the animation should take
-        /// (in milliseconds).
-        /// </summary>
-        public int MoveDuration = 250; 
-
-        /// <summary>
         /// Coordinates of the square the piece is moving to.
         /// </summary>
         public SquareCoords Destination;
