@@ -148,8 +148,15 @@ namespace ChessForge
             }
             else if (GamesHeaders.Count == 1)
             {
-                PgnGameParser pgp = new PgnGameParser(GamesHeaders[0].GameText, AppStateManager.MainWin.Workbook, out bool multi);
-                mergedGames = 1;
+                try
+                {
+                    PgnGameParser pgp = new PgnGameParser(GamesHeaders[0].GameText, AppStateManager.MainWin.Workbook, out bool multi);
+                    mergedGames = 1;
+                }
+                catch
+                {
+                    mergedGames = 0;
+                }
             }
 
             return mergedGames;
@@ -163,6 +170,9 @@ namespace ChessForge
         /// <returns></returns>
         private static int MergeGames()
         {
+            StringBuilder sbErrors = new StringBuilder();
+            int errorCount = 0;
+
             SelectGamesDialog dlg = new SelectGamesDialog();
             dlg.ShowDialog();
 
@@ -177,18 +187,44 @@ namespace ChessForge
                     {
                         if (mergedCount == 0)
                         {
-                            // special treatment for the first one
-                            PgnGameParser pgp = new PgnGameParser(GamesHeaders[i].GameText, AppStateManager.MainWin.Workbook, out bool multi);
-                            mergedCount++;
+                            try
+                            {
+                                // special treatment for the first one
+                                PgnGameParser pgp = new PgnGameParser(GamesHeaders[i].GameText, AppStateManager.MainWin.Workbook, out bool multi);
+                                mergedCount++;
+                            }
+                            catch(Exception ex)
+                            {
+                                sbErrors.Append("Game #" + (i+1).ToString() + " : " + GamesHeaders[i].Players);
+                                sbErrors.Append(Environment.NewLine);
+                                sbErrors.Append("     " + ex.Message);
+                                sbErrors.Append(Environment.NewLine);
+                                errorCount++;
+                            }
                         }
                         else
                         {
                             WorkbookTree workbook2 = new WorkbookTree();
-                            PgnGameParser pgp = new PgnGameParser(GamesHeaders[i].GameText, workbook2, out bool multi);
-                            AppStateManager.MainWin.Workbook = WorkbookTreeMerge.MergeWorkbooks(AppStateManager.MainWin.Workbook, workbook2);
-                            mergedCount++;
+                            try
+                            {
+                                PgnGameParser pgp = new PgnGameParser(GamesHeaders[i].GameText, workbook2, out bool multi);
+                                AppStateManager.MainWin.Workbook = WorkbookTreeMerge.MergeWorkbooks(AppStateManager.MainWin.Workbook, workbook2);
+                                mergedCount++;
+                            }
+                            catch (Exception ex)
+                            {
+                                sbErrors.Append("Game #" + (i + 1).ToString() + " : " + GamesHeaders[i].Players);
+                                sbErrors.Append(Environment.NewLine);
+                                sbErrors.Append("     " + ex.Message);
+                                sbErrors.Append(Environment.NewLine);
+                                errorCount++;
+                            }
                         }
                     }
+                }
+                if (errorCount > 0)
+                {
+                    ShowMergeErrors(errorCount, mergedCount, ref sbErrors);
                 }
                 return mergedCount;
             }
@@ -198,6 +234,17 @@ namespace ChessForge
                 //    MessageBoxButton.OK, MessageBoxImage.Information);
                 return 0;
             }
+        }
+
+        /// <summary>
+        /// Reports errors encountered while merging
+        /// </summary>
+        /// <param name="errorCount"></param>
+        /// <param name="mergedCount"></param>
+        private static void ShowMergeErrors(int errorCount, int mergedCount, ref StringBuilder sb)
+        {
+            TextBoxDialog dlg = new TextBoxDialog("Merge Errors", sb.ToString());
+            dlg.ShowDialog();
         }
 
         /// <summary>

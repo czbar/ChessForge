@@ -30,7 +30,8 @@ namespace GameTree
         /// </summary>
         /// <param name="alg"></param>
         /// <param name="color"></param>
-        public void ParseAlgebraic(string alg, PieceColor color)
+        /// <returns>Number of chars that do not belong to core algebraic notation</returns>
+        public int ParseAlgebraic(string alg, PieceColor color)
         {
             Move = new MoveData();
 
@@ -39,7 +40,7 @@ namespace GameTree
 
             if (CheckForCastling(alg))
             {
-                return;
+                return 0;
             }
 
             // the first character is a capital letter
@@ -56,62 +57,105 @@ namespace GameTree
             // get the destination Xcoord and any origin hints, if present
             subStringToProcess = CheckForOriginAndDestinationXcoord(subStringToProcess);
 
-            // now we are left with a digit representing the target Ycoord
-            // and possibly "=" followed by a promoted piece symbol
-            // There may also be a '+' character representing a check.
+            // Now we may be left with a digit representing the target Ycoord
+            // and/or suffixes (check, mate, promotions, ?, ! etc.)
             subStringToProcess = GetDestinationYcoord(subStringToProcess);
 
-            ProcessCheckAndPromotion(subStringToProcess);
+            return ProcessSuffixes(subStringToProcess);
         }
 
 
         /// <summary>
-        /// Processes the remaining part of the move string
-        /// that may contain a check ('+') or mate ('#') character
+        /// Processes the remaining part of the move string.
+        /// It may contain a check ('+') or mate ('#') character
         /// possibly preceded by a promotion ("=Q"). 
+        /// It may have non-coded NAGs (i.e. "?", "!" and such) at the end.
         /// </summary>
         /// <param name="subStringToProcess"></param>
-        private void ProcessCheckAndPromotion(string subStringToProcess)
+        /// <returns>Number of chars that do not belong to core algebraic notation</returns>
+        private int ProcessSuffixes(string subStringToProcess)
         {
             if (subStringToProcess.Length == 0)
             {
-                return;
+                return 0;
+            }
+
+            subStringToProcess = CheckForPromotion(subStringToProcess);
+            if (subStringToProcess.Length == 0)
+            {
+                return 0;
             }
 
             if (subStringToProcess[0] == '+')
             {
                 Move.IsCheck = true;
-                return;
+                if (subStringToProcess.Length > 1)
+                {
+                    subStringToProcess = subStringToProcess.Substring(1);
+                }
+                else
+                {
+                    return 0;
+                }
             }
 
             if (subStringToProcess[0] == '#')
             {
                 Move.IsCheckmate = true;
-                return;
+                if (subStringToProcess.Length > 1)
+                {
+                    subStringToProcess = subStringToProcess.Substring(1);
+                }
+                else
+                {
+                    return 0;
+                }
             }
 
-            // the only legal option left is a '=' character
-            // followed by a piece symbol indicating promotion
-            if (subStringToProcess[0] != '=')
+            return CheckForNags(subStringToProcess);
+        }
+
+        /// <summary>
+        /// Checks if the passed string contains promotion.
+        /// If so process it and return the remainder.
+        /// </summary>
+        /// <param name="subStringToProcess"></param>
+        /// <returns></returns>
+        private string CheckForPromotion(string substring)
+        {
+            if (substring[0] == '=' && substring.Length > 1)
             {
-                throw new Exception("Invalid char \'" + subStringToProcess[0] + "\' found in ProcessCheckAndPromotion().");
+                FenParser.FenCharToPiece.TryGetValue(substring[1], out Move.PromoteToPiece);
+                if (substring.Length > 2)
+                {
+                    return substring.Substring(2);
+                }
+                else
+                {
+                    return "";
+                }
+            }
+            else
+            {
+                return substring;
+            }
+        }
+
+        /// <summary>
+        /// Some version of PGN may have a NAG in an uncoded form
+        /// i.e. ?, !, ??, !!, !?, ?!
+        /// </summary>
+        /// <param name="substring"></param>
+        /// <returns>Number of chars that do not belong to core algebraic notation</returns>
+        private int CheckForNags(string substring)
+        {
+            int nagId = Constants.GetNagIdFromString(substring);
+            if (nagId > 0)
+            {
+                Move.Nag = "$" + nagId.ToString();
             }
 
-            if (subStringToProcess.Length < 2)
-            {
-                throw new Exception("Missing char for the piece to promote to in ProcessCheckAndPromotion().");
-            }
-
-            Move.PromoteToPiece = FenParser.FenCharToPiece[subStringToProcess[1]];
-
-            if (subStringToProcess.Length == 3 && subStringToProcess[2] == '+')
-            {
-                Move.IsCheck = true;
-            }
-            if (subStringToProcess.Length == 3 && subStringToProcess[2] == '#')
-            {
-                Move.IsCheckmate = true;
-            }
+            return substring.Length;
         }
 
         /// <summary>

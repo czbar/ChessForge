@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using ChessPosition;
+using System.Windows;
 
 namespace GameTree
 {
@@ -52,18 +53,25 @@ namespace GameTree
         /// <param name="workbook"></param>
         public PgnGameParser(string pgnGametext, WorkbookTree workbook, out bool multiGame, bool debugMode = false)
         {
-            multiGame = false;
-
-            if (debugMode)
+            try
             {
-                DEBUG_MODE = true;
+                multiGame = false;
+
+                if (debugMode)
+                {
+                    DEBUG_MODE = true;
+                }
+
+                ProcessRemainingGameText(workbook, pgnGametext);
+
+                if (_remainingGameText.IndexOf("[White") >= 0)
+                {
+                    multiGame = true;
+                }
             }
-
-            ProcessRemainingGameText(workbook, pgnGametext);
-
-            if (_remainingGameText.IndexOf("[White") >= 0)
+            catch
             {
-                multiGame = true;
+                throw;
             }
         }
 
@@ -245,10 +253,10 @@ namespace GameTree
                         previousNode = parentNode;
                         parentNode = newNode;
                         workbook.AddNode(parentNode);
-                        if (DEBUG_MODE)
-                        {
-                            DebugUtils.PrintPosition(newNode.Position);
-                        }
+                        //if (DEBUG_MODE)
+                        //{
+                        //    DebugUtils.PrintPosition(newNode.Position);
+                        //}
 
                         break;
                     case PgnTokenType.MoveNumber:
@@ -287,8 +295,16 @@ namespace GameTree
         {
             PieceColor parentSideToMove = parentNode.ColorToMove;
 
+            // check for bad PGN with '0-0' instead of 'O-O' castling
+            if (algMove.Length > 1 && algMove[0] == '0')
+            {
+                algMove = algMove.Replace('0', 'O');
+            }
+
             PgnMoveParser pmp = new PgnMoveParser();
-            pmp.ParseAlgebraic(algMove, parentSideToMove);
+            int suffixLen = pmp.ParseAlgebraic(algMove, parentSideToMove);
+            // remove suffix from algMove
+            algMove = algMove.Substring(0, algMove.Length - suffixLen);
             MoveData move = pmp.Move;
             algMove = StripCheckOrMateChar(algMove);
             if (DEBUG_MODE)
@@ -307,14 +323,45 @@ namespace GameTree
                 newNode.Position.IsCheck = true;
             }
 
-            // Make the move on it
-            MoveUtils.MakeMove(newNode.Position, move);
+            try
+            {
+                // Make the move on it
+                MoveUtils.MakeMove(newNode.Position, move);
+            }
+            catch
+            {
+                //MessageBox.Show("Failed to parse move " + newNode.MoveNumber.ToString() + ". " + algMove + " : " + ex.Message, 
+                //    "PGN Parsing Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw new Exception(BuildErrortext(newNode, algMove));
+            }
 
             // do the postprocessing
             PositionUtils.UpdateCastlingRights(ref newNode.Position, move, false);
             PositionUtils.SetEnpassantSquare(ref newNode.Position, move);
 
             return newNode;
+        }
+
+        /// <summary>
+        /// Builds text for a message reporting error in processing a move.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="algMove"></param>
+        /// <returns></returns>
+        private string BuildErrortext(TreeNode nd, string algMove)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Move " + nd.MoveNumber.ToString());
+            if (nd.ColorToMove == PieceColor.White)
+            {
+                sb.Append("...");
+            }
+            else
+            {
+                sb.Append(".");
+            }
+            sb.Append(algMove);
+            return sb.ToString();
         }
 
         /// <summary>
@@ -354,13 +401,49 @@ namespace GameTree
                 newNode.Position.HalfMove50Clock += 1;
             }
 
+            if (!string.IsNullOrEmpty(move.Nag))
+            {
+                newNode.AddNag(move.Nag);
+            }
+
             return newNode;
         }
 
-        private void ProcessMoveNumber(string token, TreeNode previousNode)
+        /// <summary>
+        /// Check that the move number is as expected.
+        /// We have seen corrupt/illegal PGNs with moves missing.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="previousNode"></param>
+        private void ProcessMoveNumber(string token, TreeNode parent)
         {
-            // TODO: move number should be checked that it is what is expected
-            // but otherwise this is spurious
+            // the token is in the format of integer followed by one or 3 dots
+            int dotPos = token.IndexOf('.');
+            string num = token.Substring(0, dotPos);
+            uint moveNo = uint.Parse(num);
+            int dotCount = token.Length - dotPos;
+
+            if (parent.ColorToMove == PieceColor.White && dotCount == 1 && moveNo == parent.MoveNumber + 1
+                || parent.ColorToMove == PieceColor.Black && dotCount == 3 && moveNo == parent.MoveNumber)
+            {
+                return;
+            }
+            else
+            {
+                throw new Exception(BuildMissingMoveErrorText(parent));
+            }
+        }
+
+        /// <summary>
+        /// Builds text for a message reporting a "missing move" error.
+        /// </summary>
+        /// <param name="ndParent"></param>
+        /// <returns></returns>
+        private string BuildMissingMoveErrorText(TreeNode ndParent)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Missing move after " + MoveUtils.BuildSingleMoveText(ndParent, true));
+            return sb.ToString();
         }
 
         /// <summary>
@@ -446,11 +529,20 @@ namespace GameTree
             }
             else
             {
-                // go to the next space or closing parenthesis
-                while (_remainingGameText[charPos] != ' ' && _remainingGameText[charPos] != ')' && charPos < _remainingGameText.Length)
+                // go to the next space or closing parenthesis or a dot
+                while (_remainingGameText[charPos] != ' ' && _remainingGameText[charPos] != ')' && _remainingGameText[charPos] != '.' && charPos < _remainingGameText.Length)
                 {
                     charPos++;
                 }
+                // if the last was a dot, check if there are more dots
+                if (_remainingGameText[charPos] == '.')
+                {
+                    while (_remainingGameText[charPos] == '.' && charPos < _remainingGameText.Length)
+                    {
+                        charPos++;
+                    }
+                }
+
                 token = _remainingGameText.Substring(tokenStartIndex, charPos - tokenStartIndex);
             }
 
@@ -474,11 +566,11 @@ namespace GameTree
             PgnTokenType gtt = PgnTokenType.Unknown;
 
             char c = token[0];
-            if (char.IsDigit(c))
+            if (char.IsDigit(c) && c != '0')  // guard against bad PGN with '0-0' instead of 'O-O' castling
             {
                 gtt = PgnTokenType.MoveNumber;
             }
-            else if (char.IsLetter(c))
+            else if (char.IsLetter(c) || c == '0')
             {
                 gtt = PgnTokenType.Move;
             }

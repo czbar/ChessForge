@@ -116,7 +116,6 @@ namespace ChessForge
             Configuration.Initialize(this);
             Configuration.StartDirectory = App.AppPath;
             Configuration.ReadConfigurationFile();
-            MoveAnimation.MoveDuration = Configuration.MoveSpeed;
             if (Configuration.IsMainWinPosValid())
             {
                 this.Left = Configuration.MainWinPos.Left;
@@ -711,8 +710,8 @@ namespace ChessForge
             if (img.RenderTransform != null)
                 img.RenderTransform = trans;
 
-            DoubleAnimation animX = new DoubleAnimation(0, dest.X - orig.X, TimeSpan.FromMilliseconds(MoveAnimation.MoveDuration));
-            DoubleAnimation animY = new DoubleAnimation(0, dest.Y - orig.Y, TimeSpan.FromMilliseconds(MoveAnimation.MoveDuration));
+            DoubleAnimation animX = new DoubleAnimation(0, dest.X - orig.X, TimeSpan.FromMilliseconds(Configuration.MoveSpeed));
+            DoubleAnimation animY = new DoubleAnimation(0, dest.Y - orig.Y, TimeSpan.FromMilliseconds(Configuration.MoveSpeed));
 
             LearningMode.CurrentTranslateTransform = trans;
             LearningMode.CurrentAnimationX = animX;
@@ -974,14 +973,22 @@ namespace ChessForge
                 if (AppStateManager.WorkbookFileType == AppStateManager.FileType.CHF)
                 {
                     string workbookText = File.ReadAllText(fileName);
-                    PgnGameParser pgnGame = new PgnGameParser(workbookText, Workbook, out bool isMulti, true);
+                    try
+                    {
+                        PgnGameParser pgnGame = new PgnGameParser(workbookText, Workbook, out bool isMulti, true);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Error processing the Workbook.", "CHF File", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
                 }
                 else
                 {
                     int gameCount = WorkbookManager.ReadPgnFile(fileName);
                     if (gameCount == 0)
                     {
-                        MessageBox.Show("No games to process.", "Input File", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("No games processed.", "Input File", MessageBoxButton.OK, MessageBoxImage.Error);
                         AppStateManager.WorkbookFilePath = "";
                         AppStateManager.UpdateAppTitleBar();
                         return;

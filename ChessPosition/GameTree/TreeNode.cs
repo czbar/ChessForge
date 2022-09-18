@@ -167,7 +167,7 @@ namespace GameTree
             if (nag.Length < 2 || nag[0] != '$')
                 return;
 
-            // insert space between NAGs so they re ready for writing out without further parsing
+            // insert space between NAGs so they are ready for writing out without further parsing
             Nags += " " + nag;
 
             int res;
