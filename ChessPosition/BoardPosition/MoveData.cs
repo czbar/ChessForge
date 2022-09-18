@@ -44,6 +44,9 @@ namespace ChessPosition
         // Does the move notation indicate a capture
         public bool IsCapture;
 
+        // A NAG string if an uncoded NAG was encountered during processing.
+        public string Nag;
+
         // Description of the error, if encountered.
         public string ErrorText = "";
 
