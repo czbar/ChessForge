@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static GameTree.ChfCommands;
 
 namespace ChessPosition
 {
@@ -85,9 +86,20 @@ namespace ChessPosition
                 };
 
 
+        /// <summary>
+        /// Returns a NAG id if the passed represents one.
+        /// Returns 0 otherwise.
+        /// </summary>
+        /// <param name="nag"></param>
+        /// <returns></returns>
+        public static int GetNagIdFromString(string nag)
+        {
+            return NagsDict.FirstOrDefault(x => x.Value == nag).Key;
+        }
+
 
         /// <summary>
-        /// Min and Max dimentsions of the chess board
+        /// Min and Max dimensions of the chess board
         /// when starting from 0.
         /// </summary>
         public const int MIN_ROW_NO = 0;
