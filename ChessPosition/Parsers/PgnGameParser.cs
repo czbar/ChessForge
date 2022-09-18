@@ -288,7 +288,9 @@ namespace GameTree
             PieceColor parentSideToMove = parentNode.ColorToMove;
 
             PgnMoveParser pmp = new PgnMoveParser();
-            pmp.ParseAlgebraic(algMove, parentSideToMove);
+            int suffixLen = pmp.ParseAlgebraic(algMove, parentSideToMove);
+            // remove suffix from algMove
+            algMove = algMove.Substring(0, algMove.Length - suffixLen);
             MoveData move = pmp.Move;
             algMove = StripCheckOrMateChar(algMove);
             if (DEBUG_MODE)
@@ -352,6 +354,11 @@ namespace GameTree
             else
             {
                 newNode.Position.HalfMove50Clock += 1;
+            }
+
+            if (!string.IsNullOrEmpty(move.Nag))
+            {
+                newNode.AddNag(move.Nag); 
             }
 
             return newNode;
