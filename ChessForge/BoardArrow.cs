@@ -159,7 +159,7 @@ namespace ChessForge
             Canvas.SetTop(_triangle, _endPoint.Y + 0);
             _triangle.RenderTransformOrigin = new Point(0.5,0);
             _triangle.RenderTransform = _rotateTrans;
-            Panel.SetZIndex(_triangle, 6);
+            Panel.SetZIndex(_triangle, Constants.ZIndex_BoardArrow);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace ChessForge
             Canvas.SetTop(_stem, _startPoint.Y - (_stem.Source.Height));
             _stem.RenderTransformOrigin = new Point(0.5, 1);
             _stem.RenderTransform = _transGroup;
-            Panel.SetZIndex(_stem, 6);
+            Panel.SetZIndex(_stem, Constants.ZIndex_BoardArrow);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace ChessForge
             Canvas.SetTop(_circle, _startPoint.Y - (_circle.Source.Height / 2));
             _circle.RenderTransformOrigin = new Point(0.5, 0.5);
             _circle.RenderTransform = _rotateTrans;
-            Panel.SetZIndex(_circle, 6);
+            Panel.SetZIndex(_circle, Constants.ZIndex_BoardArrow);
         }
     }
 }

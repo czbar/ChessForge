@@ -122,5 +122,12 @@ namespace ChessPosition
         /// </summary>
         public const byte Color = 0x80;
 
+        /// <summary>
+        /// Zindex values for the main chessboard artefacts
+        /// </summary>
+        public const int ZIndex_SquareMoveOverlay = 1;
+        public const int ZIndex_PieceOnBoard = 5;
+        public const int ZIndex_BoardArrow = 6;
+        public const int ZIndex_PieceInAnimation = 10;
     }
 }

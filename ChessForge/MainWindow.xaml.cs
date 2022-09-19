@@ -466,7 +466,7 @@ namespace ChessForge
                         ReturnDraggedPiece(false);
                     }
                 }
-                Canvas.SetZIndex(DraggedPiece.ImageControl, 0);
+                Canvas.SetZIndex(DraggedPiece.ImageControl, Constants.ZIndex_PieceOnBoard);
             }
         }
 
@@ -604,7 +604,7 @@ namespace ChessForge
 
             if (DraggedPiece.isDragInProgress)
             {
-                Canvas.SetZIndex(DraggedPiece.ImageControl, 10);
+                Canvas.SetZIndex(DraggedPiece.ImageControl, Constants.ZIndex_PieceInAnimation);
                 clickedPoint.X += UiImgMainChessboard.Margin.Left;
                 clickedPoint.Y += UiImgMainChessboard.Margin.Top;
 
@@ -640,7 +640,7 @@ namespace ChessForge
             MoveAnimation.Origin = origin;
             MoveAnimation.Destination = destination;
 
-            Canvas.SetZIndex(img, 1);
+            Canvas.SetZIndex(img, Constants.ZIndex_PieceInAnimation);
 
             Point orig = MainChessBoardUtils.GetSquareTopLeftPoint(origin);
             Point dest = MainChessBoardUtils.GetSquareTopLeftPoint(destination);
