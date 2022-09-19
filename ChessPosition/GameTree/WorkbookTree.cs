@@ -172,6 +172,12 @@ namespace GameTree
                             nd.Assessment = tokens[1];
                         }
                         break;
+                    case ChfCommands.Command.ARROWS:
+                        if (tokens.Length > 1)
+                        {
+                            nd.Arrows = tokens[1];
+                        }
+                        break;
                     default:
                         nd.AddUnprocessedChfCommand(command);
                         break;
