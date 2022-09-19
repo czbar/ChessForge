@@ -467,7 +467,7 @@ namespace GameTree
             // process any Chess Forge commands
             while (true)
             {
-                int commandStart = _remainingGameText.IndexOf("[%chf-", 0, endPos);
+                int commandStart = _remainingGameText.IndexOf("[%", 0, endPos);
                 if (commandStart < 0)
                     break;
 
