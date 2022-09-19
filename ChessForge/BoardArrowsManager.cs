@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,6 +30,54 @@ namespace ChessForge
         // end square for the arrow being drawn
         private static SquareCoords _endSquare;
 
+
+        /// <summary>
+        /// Resets the object and creates new arrows based 
+        /// on the passed coded string
+        /// </summary>
+        /// <param name="arrows"></param>
+        public static void Reset(string arrows)
+        {
+            Reset();
+            if (!string.IsNullOrWhiteSpace(arrows))
+            {
+                string[] tokens = arrows.Split(',');
+                foreach (string token in tokens)
+                {
+                    // should be exactly 5 chars
+                    if (token.Length == 5)
+                    {
+                        string color = GetColorName(token[0]);
+                        SquareCoords start = PositionUtils.ConvertAlgebraicToXY(token.Substring(1, 2));
+                        SquareCoords end = PositionUtils.ConvertAlgebraicToXY(token.Substring(3, 2));
+                        if (AppStateManager.MainWin.IsMainChessboardFlipped())
+                        {
+                            start.Flip();
+                            end.Flip();
+                        }
+                        StartArrowDraw(start, color);
+                        FinalizeArrow(end);
+                    }
+                }
+            }
+        }
+
+        private static string GetColorName(char c)
+        {
+            switch (c)
+            {
+                case 'G':
+                    return "green";
+                case 'B':
+                    return "blue";
+                case 'R':
+                    return "red";
+                case 'Y':
+                    return "yellow";
+                default:
+                    return "yellow";
+            }
+        }
 
         /// <summary>
         /// Removes all created arrows from the board
