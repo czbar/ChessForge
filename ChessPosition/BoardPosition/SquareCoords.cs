@@ -48,7 +48,7 @@ namespace ChessPosition
 
         /// <summary>
         /// Flips the coordinates to correspond to
-        /// a fliiped board;
+        /// a flipped board;
         /// </summary>
         public void Flip()
         {
