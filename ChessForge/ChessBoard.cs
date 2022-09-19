@@ -317,6 +317,8 @@ namespace ChessForge
             }
 
             _isFlipped = !_isFlipped;
+
+            BoardArrowsManager.Flip();
         }
 
         /// <summary>
