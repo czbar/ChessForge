@@ -390,6 +390,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the flipped state of the Main Chessboard
+        /// </summary>
+        /// <returns></returns>
+        public bool IsMainChessboardFlipped()
+        {
+            return MainChessBoard.IsFlipped;
+        }
+
+        /// <summary>
         /// Determined the color of the arrow to be drawn based
         /// on the special key pressed and calls to BoardArrowsManager
         /// to do the drawing.
@@ -1130,9 +1139,25 @@ namespace ChessForge
             SetActiveLine(line, selectedNodeId, displayPosition);
         }
 
-        public void DisplayPosition(BoardPosition position)
+        /// <summary>
+        /// Displays the position of the passed node
+        /// and any associated arrows or circles.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void DisplayPosition(TreeNode nd)
         {
-            MainChessBoard.DisplayPosition(position);
+            MainChessBoard.DisplayPosition(nd.Position);
+            BoardArrowsManager.Reset(nd.Arrows);
+        }
+
+        /// <summary>
+        /// Displays the passed position.
+        /// Will not show arrows and circles if associated with this position.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void DisplayPosition(BoardPosition pos)
+        {
+            MainChessBoard.DisplayPosition(pos);
         }
 
         public void RemoveMoveSquareColors()
