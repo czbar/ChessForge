@@ -324,63 +324,99 @@ namespace ChessForge
         {
             Point clickedPoint = e.GetPosition(UiImgMainChessboard);
             SquareCoords sq = MainChessBoardUtils.ClickedSquare(clickedPoint);
-
-            //if (Keyboard.IsKeyDown(Key.LeftShift))
-            //{
-            //    BoardArrow arrow = new BoardArrow(sq, new SquareCoords(5, 5));
-            //}
-
             if (sq == null)
             {
                 return;
             }
 
-            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+            if (e.ChangedButton == MouseButton.Right && GuiUtilities.IsSpecialKeyPressed())
             {
+                StartArrowDraw(sq);
+            }
+            else
+            {
+                if (e.ChangedButton != MouseButton.Right)
+                {
+                    BoardArrowsManager.Reset();
+                }
+
                 if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                 {
-                    BoardCommentBox.ShowFlashAnnouncement("Line evaluation in progress!");
-                    return;
+                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+                    {
+                        BoardCommentBox.ShowFlashAnnouncement("Line evaluation in progress!");
+                        return;
+                    }
+                    else if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
+                    {
+                        BoardCommentBox.ShowFlashAnnouncement("The engine is thinking!");
+                        return;
+                    }
                 }
-                else if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
+
+                if (e.ChangedButton == MouseButton.Left)
                 {
-                    BoardCommentBox.ShowFlashAnnouncement("The engine is thinking!");
-                    return;
+                    if (sq != null)
+                    {
+                        SquareCoords sqNorm = new SquareCoords(sq);
+                        if (MainChessBoard.IsFlipped)
+                        {
+                            sqNorm.Flip();
+                        }
+
+                        if (CanMovePiece(sqNorm))
+                        {
+                            DraggedPiece.isDragInProgress = true;
+                            DraggedPiece.Square = sq;
+
+                            DraggedPiece.ImageControl = MainChessBoardUtils.GetImageFromPoint(clickedPoint);
+                            Point ptLeftTop = MainChessBoardUtils.GetSquareTopLeftPoint(sq);
+                            DraggedPiece.ptDraggedPieceOrigin = ptLeftTop;
+
+                            // for the remainder, we need absolute point
+                            clickedPoint.X += UiImgMainChessboard.Margin.Left;
+                            clickedPoint.Y += UiImgMainChessboard.Margin.Top;
+                            DraggedPiece.ptStartDragLocation = clickedPoint;
+
+
+                            Point ptCenter = MainChessBoardUtils.GetSquareCenterPoint(sq);
+
+                            Canvas.SetLeft(DraggedPiece.ImageControl, ptLeftTop.X + (clickedPoint.X - ptCenter.X));
+                            Canvas.SetTop(DraggedPiece.ImageControl, ptLeftTop.Y + (clickedPoint.Y - ptCenter.Y));
+                        }
+                    }
                 }
             }
+        }
 
-            if (e.ChangedButton == MouseButton.Left)
+        /// <summary>
+        /// Determined the color of the arrow to be drawn based
+        /// on the special key pressed and calls to BoardArrowsManager
+        /// to do the drawing.
+        /// </summary>
+        /// <param name="sq"></param>
+        private void StartArrowDraw(SquareCoords sq)
+        {
+            string color = "yellow";
+
+            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
-                if (sq != null)
-                {
-                    SquareCoords sqNorm = new SquareCoords(sq);
-                    if (MainChessBoard.IsFlipped)
-                    {
-                        sqNorm.Flip();
-                    }
-
-                    if (CanMovePiece(sqNorm))
-                    {
-                        DraggedPiece.isDragInProgress = true;
-                        DraggedPiece.Square = sq;
-
-                        DraggedPiece.ImageControl = MainChessBoardUtils.GetImageFromPoint(clickedPoint);
-                        Point ptLeftTop = MainChessBoardUtils.GetSquareTopLeftPoint(sq);
-                        DraggedPiece.ptDraggedPieceOrigin = ptLeftTop;
-
-                        // for the remainder, we need absolute point
-                        clickedPoint.X += UiImgMainChessboard.Margin.Left;
-                        clickedPoint.Y += UiImgMainChessboard.Margin.Top;
-                        DraggedPiece.ptStartDragLocation = clickedPoint;
-
-
-                        Point ptCenter = MainChessBoardUtils.GetSquareCenterPoint(sq);
-
-                        Canvas.SetLeft(DraggedPiece.ImageControl, ptLeftTop.X + (clickedPoint.X - ptCenter.X));
-                        Canvas.SetTop(DraggedPiece.ImageControl, ptLeftTop.Y + (clickedPoint.Y - ptCenter.Y));
-                    }
-                }
+                color = "green";
             }
+            else if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            {
+                color = "red";
+            }
+            else if (Keyboard.IsKeyDown(Key.LeftAlt))
+            {
+                color = "blue";
+            }
+            else if (Keyboard.IsKeyDown(Key.RightAlt))
+            {
+                color = "yellow";
+            }
+
+            BoardArrowsManager.StartArrowDraw(sq, color);
         }
 
         /// <summary>
@@ -428,45 +464,55 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OnMouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (DraggedPiece.isDragInProgress)
+            Point clickedPoint = e.GetPosition(UiImgMainChessboard);
+            SquareCoords targetSquare = MainChessBoardUtils.ClickedSquare(clickedPoint);
+
+            if (BoardArrowsManager.IsArrowBuildInProgress)
             {
-                DraggedPiece.isDragInProgress = false;
-                Point clickedPoint = e.GetPosition(UiImgMainChessboard);
-                SquareCoords targetSquare = MainChessBoardUtils.ClickedSquare(clickedPoint);
-                if (targetSquare == null)
+                UiDgActiveLine.ContextMenu.IsOpen = false;
+                BoardArrowsManager.FinalizeArrow(targetSquare);
+                e.Handled = true;
+            }
+            else
+            {
+                if (DraggedPiece.isDragInProgress)
                 {
-                    // just put the piece back
-                    Canvas.SetLeft(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.X);
-                    Canvas.SetTop(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.Y);
-                }
-                else
-                {
-                    // double check that we are legitimately making a move
-                    if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
-                        || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE
-                        || LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
+                    DraggedPiece.isDragInProgress = false;
+                    if (targetSquare == null)
                     {
-                        if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
-                        {
-                            BoardCommentBox.ShowFlashAnnouncement("Stop evaluation before making your move.");
-                            ReturnDraggedPiece(false);
-                        }
-                        else
-                        {
-                            // if not in a game, we can comfortably stop any evaluation happening
-                            if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
-                            {
-                                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-                            }
-                            UserMoveProcessor.FinalizeUserMove(targetSquare);
-                        }
+                        // just put the piece back
+                        Canvas.SetLeft(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.X);
+                        Canvas.SetTop(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.Y);
                     }
                     else
                     {
-                        ReturnDraggedPiece(false);
+                        // double check that we are legitimately making a move
+                        if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
+                            || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE
+                            || LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
+                        {
+                            if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
+                            {
+                                BoardCommentBox.ShowFlashAnnouncement("Stop evaluation before making your move.");
+                                ReturnDraggedPiece(false);
+                            }
+                            else
+                            {
+                                // if not in a game, we can comfortably stop any evaluation happening
+                                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
+                                {
+                                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                                }
+                                UserMoveProcessor.FinalizeUserMove(targetSquare);
+                            }
+                        }
+                        else
+                        {
+                            ReturnDraggedPiece(false);
+                        }
                     }
+                    Canvas.SetZIndex(DraggedPiece.ImageControl, Constants.ZIndex_PieceOnBoard);
                 }
-                Canvas.SetZIndex(DraggedPiece.ImageControl, Constants.ZIndex_PieceOnBoard);
             }
         }
 
@@ -598,9 +644,30 @@ namespace ChessForge
             Canvas.SetTop(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.Y);
         }
 
+        /// <summary>
+        /// Handles move of the mouse.
+        /// This may be the user dragging the mouse to make a move
+        /// or to draw an arrow.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
             Point clickedPoint = e.GetPosition(UiImgMainChessboard);
+            SquareCoords sq = MainChessBoardUtils.ClickedSquare(clickedPoint);
+
+            // if right button is pressed we may be drawing an arrow
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                if (BoardArrowsManager.IsArrowBuildInProgress)
+                {
+                    BoardArrowsManager.UpdateArrowDraw(sq);
+                }
+            }
+            else
+            {
+                BoardArrowsManager.CancelArrowDraw();
+            }
 
             if (DraggedPiece.isDragInProgress)
             {
