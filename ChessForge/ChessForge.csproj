@@ -85,6 +85,7 @@
     <Compile Include="AssessmentDialog.xaml.cs">
       <DependentUpon>AssessmentDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BoardArrow.cs" />
     <Compile Include="LearningMode.cs" />
     <Compile Include="AppStateManager.cs" />
     <Compile Include="AppTimers.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="ListViewHelper.cs" />
     <Compile Include="CommentBox.cs" />
     <Compile Include="EngineLinesBox.cs" />
+    <Compile Include="MainChessBoardUtils.cs" />
     <Compile Include="MainWindow\MainWindowWorkbookTable.cs" />
     <Compile Include="GuiUtilities.cs" />
     <Compile Include="ActiveLineManager.cs" />
@@ -271,6 +273,10 @@
     <Resource Include="Resources\Images\icon_green.ico" />
     <Resource Include="Resources\Images\switch-off-64.png" />
     <Resource Include="Resources\Images\switch-on-64.png" />
+    <Resource Include="Resources\Images\ArrowCircleYellow.png" />
+    <Resource Include="Resources\Images\ArrowStemYellow.png" />
+    <Resource Include="Resources\Images\ArrowTriangleYellow.png" />
+    <Resource Include="Resources\Images\ArrowHalfCircleYellow.png" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
