@@ -129,7 +129,7 @@ namespace ChessForge
             {
                 // we had a key press or a single click indicating user's desire
                 // to switch to manual replay/review
-                _chessBoard.DisplayPosition(NodeToShowAfterStop.Position);
+                _mainWin.DisplayPosition(NodeToShowAfterStop);
                 StopRequested = false;
                 NodeToShowAfterStop = null;
                 Stop();
@@ -194,7 +194,7 @@ namespace ChessForge
             {
                 // if we are at the end of the line display the position
                 // there is nothing to animate
-                _chessBoard.DisplayPosition(_TreeLineToAnimate[index].Position);
+                _mainWin.DisplayPosition(_TreeLineToAnimate[index]);
                 // we are finished, clean up
                 FinalizeTreeLineAnimation();
                 return;
@@ -235,7 +235,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         private void RequestNodeAnimation(TreeNode nd)
         {
-            _chessBoard.DisplayPosition(nd.Parent.Position);
+            _mainWin.DisplayPosition(nd.Parent);
             _mainWin.RequestMoveAnimation(nd.Position.LastMove);
 
         }

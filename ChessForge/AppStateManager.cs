@@ -414,7 +414,7 @@ namespace ChessForge
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
 
-                    _mainWin.DisplayPosition(EngineGame.GetLastPosition());
+                    _mainWin.DisplayPosition(EngineGame.GetLastGameNode());
                 });
             }
         }

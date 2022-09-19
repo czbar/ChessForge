@@ -83,7 +83,7 @@ namespace ChessForge
                 // stop polling for the workbook move
                 _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
 
-                _mainWin.DisplayPosition(GetLastPosition());
+                _mainWin.DisplayPosition(GetLastGameNode());
                 SoundPlayer.PlayMoveSound(GetLastGameNode().LastMoveAlgebraicNotation);
                 _mainWin.ColorMoveSquares(GetLastGameNode().LastMoveEngineNotation);
 
@@ -292,7 +292,7 @@ namespace ChessForge
         public static void ReplaceLastPly(TreeNode nd)
         {
             Line.ReplaceLastPly(nd);
-            _mainWin.DisplayPosition(nd.Position);
+            _mainWin.DisplayPosition(nd);
             _mainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
         }
 
