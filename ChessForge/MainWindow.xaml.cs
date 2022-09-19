@@ -313,83 +313,22 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Get position of a chessboard's square
-        /// </summary>
-        /// <param name="sq">XY coordinates of the square</param>
-        /// <returns></returns>
-        private Point GetSquareTopLeftPoint(SquareCoords sq)
-        {
-            double left = squareSize * sq.Xcoord + UiImgMainChessboard.Margin.Left;
-            double top = squareSize * (7 - sq.Ycoord) + UiImgMainChessboard.Margin.Top;
-
-            return new Point(left, top);
-        }
-
-        /// <summary>
-        /// Get the center point of a chessboard's square
-        /// </summary>
-        /// <param name="sq">XY coordinates of the square</param>
-        /// <returns></returns>
-        private Point GetSquareCenterPoint(SquareCoords sq)
-        {
-            Point pt = GetSquareTopLeftPoint(sq);
-            return new Point(pt.X + squareSize / 2, pt.Y + squareSize / 2);
-        }
-
-        /// <summary>
-        /// Get Image control at a given point.
-        /// Invoked when the user clicks on the chessboard
-        /// preparing to make a move.
-        /// </summary>
-        /// <param name="p"></param>
-        /// <returns></returns>
-        private Image GetImageFromPoint(Point p)
-        {
-            SquareCoords sq = ClickedSquare(p);
-            if (sq == null)
-            {
-                return null;
-            }
-            else
-            {
-                return MainChessBoard.GetPieceImage(sq.Xcoord, sq.Ycoord, true);
-            }
-        }
-
-        /// <summary>
-        /// Get XY coordinates of clicked square.
-        /// </summary>
-        /// <param name="p">Location of the clicked point.</param>
-        /// <returns></returns>
-        private SquareCoords ClickedSquare(Point p)
-        {
-            double squareSide = UiImgMainChessboard.Width / 8.0;
-            double xPos = p.X / squareSide;
-            double yPos = p.Y / squareSide;
-
-            if (xPos > 0 && xPos < 8 && yPos > 0 && yPos < 8)
-            {
-                return new SquareCoords((int)xPos, 7 - (int)yPos);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
         /// The user pressed the mouse button over the board.
         /// If it is a left button it indicates the commencement of
         /// an intended move.
-        /// TODO: fix so this is only called when indded the click occured on the board.
+        /// TODO: fix so this is only called when indeed the click occured on the board.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-
             Point clickedPoint = e.GetPosition(UiImgMainChessboard);
-            SquareCoords sq = ClickedSquare(clickedPoint);
+            SquareCoords sq = MainChessBoardUtils.ClickedSquare(clickedPoint);
+
+            //if (Keyboard.IsKeyDown(Key.LeftShift))
+            //{
+            //    BoardArrow arrow = new BoardArrow(sq, new SquareCoords(5, 5));
+            //}
 
             if (sq == null)
             {
@@ -425,8 +364,8 @@ namespace ChessForge
                         DraggedPiece.isDragInProgress = true;
                         DraggedPiece.Square = sq;
 
-                        DraggedPiece.ImageControl = GetImageFromPoint(clickedPoint);
-                        Point ptLeftTop = GetSquareTopLeftPoint(sq);
+                        DraggedPiece.ImageControl = MainChessBoardUtils.GetImageFromPoint(clickedPoint);
+                        Point ptLeftTop = MainChessBoardUtils.GetSquareTopLeftPoint(sq);
                         DraggedPiece.ptDraggedPieceOrigin = ptLeftTop;
 
                         // for the remainder, we need absolute point
@@ -435,7 +374,7 @@ namespace ChessForge
                         DraggedPiece.ptStartDragLocation = clickedPoint;
 
 
-                        Point ptCenter = GetSquareCenterPoint(sq);
+                        Point ptCenter = MainChessBoardUtils.GetSquareCenterPoint(sq);
 
                         Canvas.SetLeft(DraggedPiece.ImageControl, ptLeftTop.X + (clickedPoint.X - ptCenter.X));
                         Canvas.SetTop(DraggedPiece.ImageControl, ptLeftTop.Y + (clickedPoint.Y - ptCenter.Y));
@@ -493,7 +432,7 @@ namespace ChessForge
             {
                 DraggedPiece.isDragInProgress = false;
                 Point clickedPoint = e.GetPosition(UiImgMainChessboard);
-                SquareCoords targetSquare = ClickedSquare(clickedPoint);
+                SquareCoords targetSquare = MainChessBoardUtils.ClickedSquare(clickedPoint);
                 if (targetSquare == null)
                 {
                     // just put the piece back
@@ -703,8 +642,8 @@ namespace ChessForge
 
             Canvas.SetZIndex(img, 1);
 
-            Point orig = GetSquareTopLeftPoint(origin);
-            Point dest = GetSquareTopLeftPoint(destination);
+            Point orig = MainChessBoardUtils.GetSquareTopLeftPoint(origin);
+            Point dest = MainChessBoardUtils.GetSquareTopLeftPoint(destination);
 
             TranslateTransform trans = new TranslateTransform();
             if (img.RenderTransform != null)
@@ -763,7 +702,7 @@ namespace ChessForge
 
             MainChessBoard.GetPieceImage(MoveAnimation.Destination.Xcoord, MoveAnimation.Destination.Ycoord, true).Source = MoveAnimation.Piece.Source;
 
-            Point orig = GetSquareTopLeftPoint(MoveAnimation.Origin);
+            Point orig = MainChessBoardUtils.GetSquareTopLeftPoint(MoveAnimation.Origin);
             //_pieces[AnimationOrigin.Xcoord, AnimationOrigin.Ycoord].Source = AnimationPiece.Source;
 
             Canvas.SetLeft(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), orig.X);
