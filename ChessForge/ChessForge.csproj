@@ -273,10 +273,10 @@
     <Resource Include="Resources\Images\icon_green.ico" />
     <Resource Include="Resources\Images\switch-off-64.png" />
     <Resource Include="Resources\Images\switch-on-64.png" />
-    <Resource Include="Resources\Images\ArrowCircle.png" />
-    <Resource Include="Resources\Images\ArrowStem.png" />
-    <Resource Include="Resources\Images\ArrowTriangle.png" />
-    <Resource Include="Resources\Images\ArrowHalfCircle.png" />
+    <Resource Include="Resources\Images\ArrowCircleYellow.png" />
+    <Resource Include="Resources\Images\ArrowStemYellow.png" />
+    <Resource Include="Resources\Images\ArrowTriangleYellow.png" />
+    <Resource Include="Resources\Images\ArrowHalfCircleYellow.png" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
