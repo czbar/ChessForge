@@ -129,6 +129,19 @@ namespace GameTree
         public string Nags = "";
 
         /// <summary>
+        /// Arrows drawn by the user in this position
+        /// separated by a comma.
+        /// Encoded as string: eg. Gd1d8,Gh3g2 (G for green)
+        /// </summary>
+        public string Arrows = "";
+
+        /// <summary>
+        /// Circles drawn by the user indicating squares of interest.
+        /// Encoded as string: e.g. Rf3,Re2 (R for red).
+        /// </summary>
+        public string Circles = "";
+
+        /// <summary>
         /// The color of the side on move in this position.
         /// </summary>
         public PieceColor ColorToMove => Position.ColorToMove;
