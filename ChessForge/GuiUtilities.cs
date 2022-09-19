@@ -13,6 +13,27 @@ namespace ChessForge
     public class GuiUtilities
     {
         /// <summary>
+        /// Determines if any of the special keys is pressed
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsSpecialKeyPressed()
+        {
+            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)
+                || Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)
+                || Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt)
+                )
+            {
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        /// <summary>
         /// Finds the the row and column for the cell
         /// clicked in DataGrid.
         /// </summary>

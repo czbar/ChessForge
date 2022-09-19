@@ -428,7 +428,7 @@ namespace ChessForge
 
             TreeNode userChoiceNode = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
 
-            _mainWin.DisplayPosition(userChoiceNode.Position);
+            _mainWin.DisplayPosition(userChoiceNode);
             _mainWin.ColorMoveSquares(_userMove.LastMoveEngineNotation);
 
             TreeNode nd = _mainWin.Workbook.SelectRandomChild(nodeId);
@@ -1161,7 +1161,7 @@ namespace ChessForge
                     EngineGame.RestartAtEngineMove(nd);
                     _mainWin.BoardCommentBox.GameMoveMade(nd, false);
                 }
-                _mainWin.DisplayPosition(nd.Position);
+                _mainWin.DisplayPosition(nd);
                 RebuildEngineGamePara(nd);
             }
         }

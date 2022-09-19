@@ -33,6 +33,12 @@ namespace ChessForge
     /// </summary>
     public class BoardArrow
     {
+        // square from which to start the arrow
+        private SquareCoords _startSquare;
+
+        // square at which the arrow ends
+        private SquareCoords _endSquare;
+
         // angle of the arrow
         private double _angle;
 
@@ -73,18 +79,60 @@ namespace ChessForge
         /// </summary>
         /// <param name="start">Start point of the arrow</param>
         /// <param name="end">End point of the arrow.</param>
-        public BoardArrow(SquareCoords start, SquareCoords end)
+        public BoardArrow(SquareCoords start, string color)
         {
-            _triangle.Source = ChessBoardArrows.OrangeTriangle;
+            _startSquare = new SquareCoords(start);
+
+            switch (color.ToLower())
+            {
+                case "red":
+                    _triangle.Source = ChessBoardArrows.RedTriangle;
+                    _stem.Source = ChessBoardArrows.RedStem;
+                    _circle.Source = ChessBoardArrows.RedHalfCircle;
+                    break;
+                case "green":
+                    _triangle.Source = ChessBoardArrows.GreenTriangle;
+                    _stem.Source = ChessBoardArrows.GreenStem;
+                    _circle.Source = ChessBoardArrows.GreenHalfCircle;
+                    break;
+                case "blue":
+                    _triangle.Source = ChessBoardArrows.BlueTriangle;
+                    _stem.Source = ChessBoardArrows.BlueStem;
+                    _circle.Source = ChessBoardArrows.BlueHalfCircle;
+                    break;
+                default:
+                    _triangle.Source = ChessBoardArrows.YellowTriangle;
+                    _stem.Source = ChessBoardArrows.YellowStem;
+                    _circle.Source = ChessBoardArrows.YellowHalfCircle;
+
+                    break;
+            }
+
             _triangle.Opacity = 0.5;
-
-            _stem.Source = ChessBoardArrows.OrangeStem;
             _stem.Opacity = 0.5;
-
-            _circle.Source = ChessBoardArrows.OrangeHalfCircle;
             _circle.Opacity = 0.5;
 
-            _startPoint = MainChessBoardUtils.GetSquareCenterPoint(start);
+        }
+
+        /// <summary>
+        /// Removes the arrow from the board.
+        /// </summary>
+        public void RemoveFromBoard()
+        {
+            AppStateManager.MainWin.MainCanvas.Children.Remove(_triangle);
+            AppStateManager.MainWin.MainCanvas.Children.Remove(_stem);
+            AppStateManager.MainWin.MainCanvas.Children.Remove(_circle);
+        }
+
+        /// <summary>
+        /// Draws all components of the arrow.
+        /// </summary>
+        /// <param name="end"></param>
+        public void DrawArrow(SquareCoords end)
+        {
+            _endSquare = new SquareCoords(end);
+
+            _startPoint = MainChessBoardUtils.GetSquareCenterPoint(_startSquare);
             _endPoint = MainChessBoardUtils.GetSquareCenterPoint(end);
 
             _angle = CalculateAngle(_startPoint, _endPoint);
@@ -95,6 +143,17 @@ namespace ChessForge
             CreateTransforms();
 
             Draw();
+        }
+
+        /// <summary>
+        /// Flips the arrow (called if the main chessboard flips)
+        /// </summary>
+        public void Flip()
+        {
+            _startSquare.Flip();
+            _endSquare.Flip();
+
+            DrawArrow(_endSquare);
         }
 
         /// <summary>
@@ -159,7 +218,7 @@ namespace ChessForge
             Canvas.SetTop(_triangle, _endPoint.Y + 0);
             _triangle.RenderTransformOrigin = new Point(0.5,0);
             _triangle.RenderTransform = _rotateTrans;
-            Panel.SetZIndex(_triangle, 6);
+            Panel.SetZIndex(_triangle, Constants.ZIndex_BoardArrow);
         }
 
         /// <summary>
@@ -173,7 +232,7 @@ namespace ChessForge
             Canvas.SetTop(_stem, _startPoint.Y - (_stem.Source.Height));
             _stem.RenderTransformOrigin = new Point(0.5, 1);
             _stem.RenderTransform = _transGroup;
-            Panel.SetZIndex(_stem, 6);
+            Panel.SetZIndex(_stem, Constants.ZIndex_BoardArrow);
         }
 
         /// <summary>
@@ -187,7 +246,7 @@ namespace ChessForge
             Canvas.SetTop(_circle, _startPoint.Y - (_circle.Source.Height / 2));
             _circle.RenderTransformOrigin = new Point(0.5, 0.5);
             _circle.RenderTransform = _rotateTrans;
-            Panel.SetZIndex(_circle, 6);
+            Panel.SetZIndex(_circle, Constants.ZIndex_BoardArrow);
         }
     }
 }

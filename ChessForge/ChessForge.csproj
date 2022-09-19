@@ -86,6 +86,7 @@
       <DependentUpon>AssessmentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="BoardArrow.cs" />
+    <Compile Include="BoardArrowsManager.cs" />
     <Compile Include="LearningMode.cs" />
     <Compile Include="AppStateManager.cs" />
     <Compile Include="AppTimers.cs" />
@@ -277,6 +278,15 @@
     <Resource Include="Resources\Images\ArrowStemYellow.png" />
     <Resource Include="Resources\Images\ArrowTriangleYellow.png" />
     <Resource Include="Resources\Images\ArrowHalfCircleYellow.png" />
+    <Resource Include="Resources\Images\ArrowHalfCircleBlue.png" />
+    <Resource Include="Resources\Images\ArrowHalfCircleGreen.png" />
+    <Resource Include="Resources\Images\ArrowHalfCircleRed.png" />
+    <Resource Include="Resources\Images\ArrowStemBlue.png" />
+    <Resource Include="Resources\Images\ArrowStemGreen.png" />
+    <Resource Include="Resources\Images\ArrowStemRed.png" />
+    <Resource Include="Resources\Images\ArrowTriangleBlue.png" />
+    <Resource Include="Resources\Images\ArrowTriangleGreen.png" />
+    <Resource Include="Resources\Images\ArrowTriangleRed.png" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

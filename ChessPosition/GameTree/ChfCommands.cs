@@ -21,7 +21,10 @@ namespace GameTree
             BOOKMARK,
             ENGINE_EVALUATION,
             COACH_ASSESSMENT,
-            COACH_COMMENT
+            COACH_COMMENT,
+
+            ARROWS,
+            CIRCLES
         }
 
         /// <summary>
@@ -45,7 +48,10 @@ namespace GameTree
         {
             ["%chf-bkm"] = Command.BOOKMARK,
             ["%chf-eev"] = Command.ENGINE_EVALUATION,
-            ["%chf-coa"] = Command.COACH_ASSESSMENT
+            ["%chf-coa"] = Command.COACH_ASSESSMENT,
+
+            ["%csl"] = Command.CIRCLES,
+            ["%cal"] = Command.ARROWS
         };
 
         /// <summary>

@@ -55,5 +55,15 @@ namespace ChessPosition
             Xcoord = 7 - Xcoord;
             Ycoord = 7 - Ycoord;
         }
+
+        /// <summary>
+        /// Returns true if the current coordinates correspond
+        /// to a square on the board.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsValid()
+        {
+            return Xcoord >= 0 && Xcoord <= 7 && Ycoord >= 0 && Ycoord <= 7;
+        }
     }
 }

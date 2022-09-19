@@ -79,7 +79,7 @@ namespace ChessForge
             TreeNode nd = GetNodeAtIndex(nodeIndex);
             if (nd != null)
             {
-                _mainWin.DisplayPosition(nd.Position);
+                _mainWin.DisplayPosition(nd);
             }
         }
 
@@ -426,7 +426,7 @@ namespace ChessForge
                         _mainWin.StopEvaluation();
                     }
 
-                    _mainWin.DisplayPosition(nd.Position);
+                    _mainWin.DisplayPosition(nd);
                     _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), moveIndex);
                 }
             }
@@ -547,7 +547,7 @@ namespace ChessForge
                         }
                         else
                         {
-                            _mainWin.DisplayPosition(nd.Position);
+                            _mainWin.DisplayPosition(nd);
                         }
                         _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), plyIndex);
                     }

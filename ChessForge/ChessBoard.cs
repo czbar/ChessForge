@@ -209,7 +209,7 @@ namespace ChessForge
             CanvasCtrl.Children.Add(img);
             Canvas.SetLeft(img, left);
             Canvas.SetTop(img, top);
-            Canvas.SetZIndex(img, 1);
+            Canvas.SetZIndex(img, Constants.ZIndex_SquareMoveOverlay);
         }
 
         /// <summary>
@@ -317,6 +317,8 @@ namespace ChessForge
             }
 
             _isFlipped = !_isFlipped;
+
+            BoardArrowsManager.Flip();
         }
 
         /// <summary>
@@ -489,7 +491,7 @@ namespace ChessForge
                     CanvasCtrl.Children.Add(Pieces[xPos, yPos]);
                     Canvas.SetLeft(Pieces[xPos, yPos], squareSize * xPos + BoardImgCtrl.Margin.Left);
                     Canvas.SetTop(Pieces[xPos, yPos], squareSize * (7 - yPos) + BoardImgCtrl.Margin.Top);
-                    Canvas.SetZIndex(Pieces[xPos, yPos], 5);
+                    Canvas.SetZIndex(Pieces[xPos, yPos], Constants.ZIndex_PieceOnBoard);
                 }
             }
             if (startPosition)

@@ -327,6 +327,8 @@ namespace ChessForge
             }
 
             TreeNode nd = _mainWin.ActiveLine.GetNodeAtIndex(posIndex);
+
+            //TODO: we want to pass the node rather than position (as to show Arrows if any). Check how to do this safely.
             _mainWin.DisplayPosition(EvaluationManager.Position);
 
             _mainWin.Dispatcher.Invoke(() =>

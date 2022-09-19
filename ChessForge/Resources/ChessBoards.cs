@@ -22,9 +22,20 @@ namespace ChessForge
     /// </summary>
     public class ChessBoardArrows
     {
-        public static BitmapImage OrangeTriangle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowTriangleYellow.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage OrangeStem = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowStemYellow.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage OrangeCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowCircleYellow.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage OrangeHalfCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowHalfCircleYellow.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage YellowTriangle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowTriangleYellow.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage YellowStem = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowStemYellow.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage YellowHalfCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowHalfCircleYellow.png", UriKind.RelativeOrAbsolute));
+
+        public static BitmapImage GreenTriangle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowTriangleGreen.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage GreenStem = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowStemGreen.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage GreenHalfCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowHalfCircleGreen.png", UriKind.RelativeOrAbsolute));
+
+        public static BitmapImage BlueTriangle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowTriangleBlue.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlueStem = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowStemBlue.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlueHalfCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowHalfCircleBlue.png", UriKind.RelativeOrAbsolute));
+
+        public static BitmapImage RedTriangle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowTriangleRed.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage RedStem = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowStemRed.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage RedHalfCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowHalfCircleRed.png", UriKind.RelativeOrAbsolute));
     }
 }
