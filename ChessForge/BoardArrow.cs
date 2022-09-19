@@ -33,11 +33,16 @@ namespace ChessForge
     /// </summary>
     public class BoardArrow
     {
+        /// <summary>
+        /// Name of the color for the arrow
+        /// </summary>
+        public string Color;
+
         // square from which to start the arrow
-        private SquareCoords _startSquare;
+        public SquareCoords StartSquare;
 
         // square at which the arrow ends
-        private SquareCoords _endSquare;
+        public SquareCoords EndSquare;
 
         // angle of the arrow
         private double _angle;
@@ -81,9 +86,11 @@ namespace ChessForge
         /// <param name="end">End point of the arrow.</param>
         public BoardArrow(SquareCoords start, string color)
         {
-            _startSquare = new SquareCoords(start);
+            Color = color.ToLower();
 
-            switch (color.ToLower())
+            StartSquare = new SquareCoords(start);
+
+            switch (Color)
             {
                 case "red":
                     _triangle.Source = ChessBoardArrows.RedTriangle;
@@ -130,9 +137,9 @@ namespace ChessForge
         /// <param name="end"></param>
         public void DrawArrow(SquareCoords end)
         {
-            _endSquare = new SquareCoords(end);
+            EndSquare = new SquareCoords(end);
 
-            _startPoint = MainChessBoardUtils.GetSquareCenterPoint(_startSquare);
+            _startPoint = MainChessBoardUtils.GetSquareCenterPoint(StartSquare);
             _endPoint = MainChessBoardUtils.GetSquareCenterPoint(end);
 
             _angle = CalculateAngle(_startPoint, _endPoint);
@@ -150,10 +157,10 @@ namespace ChessForge
         /// </summary>
         public void Flip()
         {
-            _startSquare.Flip();
-            _endSquare.Flip();
+            StartSquare.Flip();
+            EndSquare.Flip();
 
-            DrawArrow(_endSquare);
+            DrawArrow(EndSquare);
         }
 
         /// <summary>
