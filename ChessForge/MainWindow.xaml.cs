@@ -335,11 +335,6 @@ namespace ChessForge
             }
             else
             {
-                if (e.ChangedButton != MouseButton.Right)
-                {
-                    BoardArrowsManager.Reset();
-                }
-
                 if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                 {
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
@@ -362,6 +357,11 @@ namespace ChessForge
                         if (MainChessBoard.IsFlipped)
                         {
                             sqNorm.Flip();
+                        }
+
+                        if (MainChessBoard.GetPieceColor(sqNorm) == PieceColor.None)
+                        {
+                            BoardArrowsManager.Reset();
                         }
 
                         if (CanMovePiece(sqNorm))
@@ -429,6 +429,20 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Saves the Arrow positions string to the Node currently
+        /// hosted in the Main Chessboard.
+        /// </summary>
+        /// <param name="arrowsString"></param>
+        public void SaveArrowsStringInCurrentNode(string arrowsString)
+        {
+            TreeNode nd = MainChessBoard.DisplayedNode;
+            if (nd != null)
+            {
+                nd.Arrows = arrowsString;
+            }
+        }
+
+        /// <summary>
         /// Checks if the cliked piece is eleigible for making a move.
         /// </summary>
         /// <param name="sqNorm"></param>
@@ -479,7 +493,7 @@ namespace ChessForge
             if (BoardArrowsManager.IsArrowBuildInProgress)
             {
                 UiDgActiveLine.ContextMenu.IsOpen = false;
-                BoardArrowsManager.FinalizeArrow(targetSquare);
+                BoardArrowsManager.FinalizeArrow(targetSquare, true);
                 e.Handled = true;
             }
             else
@@ -1146,8 +1160,8 @@ namespace ChessForge
         /// <param name="nd"></param>
         public void DisplayPosition(TreeNode nd)
         {
-            MainChessBoard.DisplayPosition(nd.Position);
-            BoardArrowsManager.Reset(nd.Arrows);
+            MainChessBoard.DisplayPosition(nd);
+//            BoardArrowsManager.Reset(nd.Arrows);
         }
 
         /// <summary>
@@ -1157,7 +1171,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public void DisplayPosition(BoardPosition pos)
         {
-            MainChessBoard.DisplayPosition(pos);
+            MainChessBoard.DisplayPosition(null, pos);
         }
 
         public void RemoveMoveSquareColors()
@@ -1184,7 +1198,7 @@ namespace ChessForge
                 }
                 if (displayPosition)
                 {
-                    MainChessBoard.DisplayPosition(nd.Position);
+                    MainChessBoard.DisplayPosition(nd);
                 }
                 if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
                 {
@@ -1206,7 +1220,7 @@ namespace ChessForge
                 ActiveLine.SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
                 if (displayPosition)
                 {
-                    MainChessBoard.DisplayPosition(nd.Position);
+                    MainChessBoard.DisplayPosition(nd);
                 }
             }
         }
@@ -1668,7 +1682,7 @@ namespace ChessForge
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
             LearningMode.TrainingSide = startNode.ColorToMove;
-            MainChessBoard.DisplayPosition(startNode.Position);
+            MainChessBoard.DisplayPosition(startNode);
 
             _trainingBrowseRichTextBuilder.BuildFlowDocumentForWorkbook(startNode.NodeId);
 
