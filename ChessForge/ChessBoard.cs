@@ -324,7 +324,7 @@ namespace ChessForge
 
             _isFlipped = !_isFlipped;
 
-            BoardArrowsManager.Flip();
+            BoardShapesManager.Flip();
         }
 
         /// <summary>
@@ -366,12 +366,12 @@ namespace ChessForge
             if (node != null)
             {
                 _position = new BoardPosition(node.Position);
-                BoardArrowsManager.Reset(node.Arrows);
+                BoardShapesManager.Reset(node.Arrows, node.Circles);
             }
             else
             {
                 _position = new BoardPosition(pos);
-                BoardArrowsManager.Reset();
+                BoardShapesManager.Reset();
             }
 
             for (int xcoord = 0; xcoord < 8; xcoord++)

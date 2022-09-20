@@ -92,17 +92,17 @@ namespace ChessForge
 
             switch (Color)
             {
-                case "red":
+                case Constants.COLOR_RED:
                     _triangle.Source = ChessBoardArrows.RedTriangle;
                     _stem.Source = ChessBoardArrows.RedStem;
                     _circle.Source = ChessBoardArrows.RedHalfCircle;
                     break;
-                case "green":
+                case Constants.COLOR_GREEN:
                     _triangle.Source = ChessBoardArrows.GreenTriangle;
                     _stem.Source = ChessBoardArrows.GreenStem;
                     _circle.Source = ChessBoardArrows.GreenHalfCircle;
                     break;
-                case "blue":
+                case Constants.COLOR_BLUE:
                     _triangle.Source = ChessBoardArrows.BlueTriangle;
                     _stem.Source = ChessBoardArrows.BlueStem;
                     _circle.Source = ChessBoardArrows.BlueHalfCircle;
@@ -135,7 +135,7 @@ namespace ChessForge
         /// Draws all components of the arrow.
         /// </summary>
         /// <param name="end"></param>
-        public void DrawArrow(SquareCoords end)
+        public void Draw(SquareCoords end)
         {
             EndSquare = new SquareCoords(end);
 
@@ -160,7 +160,7 @@ namespace ChessForge
             StartSquare.Flip();
             EndSquare.Flip();
 
-            DrawArrow(EndSquare);
+            Draw(EndSquare);
         }
 
         /// <summary>

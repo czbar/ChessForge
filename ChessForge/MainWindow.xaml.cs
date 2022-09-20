@@ -329,7 +329,8 @@ namespace ChessForge
                 return;
             }
 
-            if (e.ChangedButton == MouseButton.Right && GuiUtilities.IsSpecialKeyPressed())
+            if (e.ChangedButton == MouseButton.Right && GuiUtilities.IsSpecialKeyPressed() 
+                && ActiveLine.GetSelectedTreeNode() != null && ActiveLine.GetSelectedTreeNode().NodeId != 0)
             {
                 StartArrowDraw(sq);
             }
@@ -361,7 +362,7 @@ namespace ChessForge
 
                         if (MainChessBoard.GetPieceColor(sqNorm) == PieceColor.None)
                         {
-                            BoardArrowsManager.Reset();
+                            BoardShapesManager.Reset();
                         }
 
                         if (CanMovePiece(sqNorm))
@@ -410,22 +411,22 @@ namespace ChessForge
 
             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
-                color = "green";
+                color = Constants.COLOR_GREEN;
             }
             else if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
             {
-                color = "red";
+                color = Constants.COLOR_RED;
             }
             else if (Keyboard.IsKeyDown(Key.LeftAlt))
             {
-                color = "blue";
+                color = Constants.COLOR_BLUE;
             }
             else if (Keyboard.IsKeyDown(Key.RightAlt))
             {
-                color = "yellow";
+                color = Constants.COLOR_YELLOW;
             }
 
-            BoardArrowsManager.StartArrowDraw(sq, color);
+            BoardShapesManager.StartShapeDraw(sq, color);
         }
 
         /// <summary>
@@ -439,6 +440,20 @@ namespace ChessForge
             if (nd != null)
             {
                 nd.Arrows = arrowsString;
+            }
+        }
+
+        /// <summary>
+        /// Saves the Circle positions string to the Node currently
+        /// hosted in the Main Chessboard.
+        /// </summary>
+        /// <param name="circlesString"></param>
+        public void SaveCirclesStringInCurrentNode(string circlesString)
+        {
+            TreeNode nd = MainChessBoard.DisplayedNode;
+            if (nd != null)
+            {
+                nd.Circles = circlesString;
             }
         }
 
@@ -490,10 +505,10 @@ namespace ChessForge
             Point clickedPoint = e.GetPosition(UiImgMainChessboard);
             SquareCoords targetSquare = MainChessBoardUtils.ClickedSquare(clickedPoint);
 
-            if (BoardArrowsManager.IsArrowBuildInProgress)
+            if (BoardShapesManager.IsShapeBuildInProgress)
             {
                 UiDgActiveLine.ContextMenu.IsOpen = false;
-                BoardArrowsManager.FinalizeArrow(targetSquare, true);
+                BoardShapesManager.FinalizeShape(targetSquare, true);
                 e.Handled = true;
             }
             else
@@ -682,14 +697,14 @@ namespace ChessForge
             // if right button is pressed we may be drawing an arrow
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                if (BoardArrowsManager.IsArrowBuildInProgress)
+                if (BoardShapesManager.IsShapeBuildInProgress)
                 {
-                    BoardArrowsManager.UpdateArrowDraw(sq);
+                    BoardShapesManager.UpdateShapeDraw(sq);
                 }
             }
             else
             {
-                BoardArrowsManager.CancelArrowDraw();
+                BoardShapesManager.CancelShapeDraw();
             }
 
             if (DraggedPiece.isDragInProgress)
