@@ -129,5 +129,23 @@ namespace ChessPosition
         public const int ZIndex_PieceOnBoard = 5;
         public const int ZIndex_BoardArrow = 6;
         public const int ZIndex_PieceInAnimation = 10;
+
+        /// <summary>
+        /// String for naming colors in contexts where using Brushes
+        /// would be an overkill.
+        /// The "CHAR"s are for external use in PGN so they cannot be changed to ensure
+        /// compatiblity with lichess's PGN extensions
+        /// </summary>
+        public const string COLOR_GREEN = "green";
+        public const char COLOR_GREEN_CHAR = 'G';
+
+        public const string COLOR_BLUE = "blue";
+        public const char COLOR_BLUE_CHAR = 'B';
+
+        public const string COLOR_RED = "red";
+        public const char COLOR_RED_CHAR = 'R';
+
+        public const string COLOR_YELLOW = "yellow";
+        public const char COLOR_YELLOW_CHAR = 'Y';
     }
 }
