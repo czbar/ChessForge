@@ -32,6 +32,16 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Calculate distance between 2 points.
+        /// </summary>
+        /// <param name="pStart"></param>
+        /// <param name="pEnd"></param>
+        /// <returns></returns>
+        public static double CalculateDistance(Point pStart, Point pEnd)
+        {
+            return Point.Subtract(pEnd, pStart).Length;
+        }
 
         /// <summary>
         /// Finds the the row and column for the cell

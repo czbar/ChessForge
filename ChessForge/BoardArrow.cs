@@ -143,7 +143,7 @@ namespace ChessForge
             _endPoint = MainChessBoardUtils.GetSquareCenterPoint(end);
 
             _angle = CalculateAngle(_startPoint, _endPoint);
-            _distance = CalculateDistance(_startPoint, _endPoint);
+            _distance = GuiUtilities.CalculateDistance(_startPoint, _endPoint);
 
             _scaleFactor = (_distance + 1 - _triangle.Source.Height) / _stem.Source.Height;
 
@@ -188,20 +188,6 @@ namespace ChessForge
             float yDiff = (float)(pStart.Y - pEnd.Y);
 
             return Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI;
-        }
-
-        /// <summary>
-        /// Calculates the distance between the centers of the start and end
-        /// squares. The arrow's length will be slightly shorter as it is not
-        /// supposed to reach the center of the end square (so it plays nicely
-        /// with other arrows that may be reaching there).
-        /// </summary>
-        /// <param name="pStart"></param>
-        /// <param name="pEnd"></param>
-        /// <returns></returns>
-        private double CalculateDistance(Point pStart, Point pEnd)
-        {
-            return Point.Subtract(pEnd, pStart).Length;
         }
 
         /// <summary>
