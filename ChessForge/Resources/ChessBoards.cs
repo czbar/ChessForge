@@ -38,4 +38,15 @@ namespace ChessForge
         public static BitmapImage RedStem = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowStemRed.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage RedHalfCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowHalfCircleRed.png", UriKind.RelativeOrAbsolute));
     }
+
+    /// <summary>
+    /// Images for the square selection circles on the board.
+    /// </summary>
+    public class ChessBoardCircles
+    {
+        public static BitmapImage YellowCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/CircleYellow.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage GreenCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/CircleGreen.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlueCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/CircleBlue.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage RedCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/CircleRed.png", UriKind.RelativeOrAbsolute));
+    }
 }
