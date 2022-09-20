@@ -158,9 +158,11 @@ namespace GameTree
                 switch (ChfCommands.GetCommand(cmdPrefix))
                 {
                     case ChfCommands.Command.BOOKMARK:
+                    case ChfCommands.Command.BOOKMARK_V2:
                         AddBookmark(nd);
                         break;
                     case ChfCommands.Command.ENGINE_EVALUATION:
+                    case ChfCommands.Command.ENGINE_EVALUATION_V2:
                         if (tokens.Length > 1)
                         {
                             nd.EngineEvaluation = tokens[1];
@@ -176,6 +178,12 @@ namespace GameTree
                         if (tokens.Length > 1)
                         {
                             nd.Arrows = tokens[1];
+                        }
+                        break;
+                    case ChfCommands.Command.CIRCLES:
+                        if (tokens.Length > 1)
+                        {
+                            nd.Circles = tokens[1];
                         }
                         break;
                     default:

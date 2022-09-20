@@ -103,7 +103,7 @@ namespace ChessForge
                         AppStateManager.MainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
                         if (nd != null)
                         {
-                            AppStateManager.MainWin.MainChessBoard.SetPosition(nd.Position, true);
+                            AppStateManager.MainWin.MainChessBoard.DisplayPosition(nd);
                         }
                     }
                     else

@@ -329,17 +329,13 @@ namespace ChessForge
                 return;
             }
 
-            if (e.ChangedButton == MouseButton.Right && GuiUtilities.IsSpecialKeyPressed())
+            if (e.ChangedButton == MouseButton.Right && GuiUtilities.IsSpecialKeyPressed() 
+                && ActiveLine.GetSelectedTreeNode() != null && ActiveLine.GetSelectedTreeNode().NodeId != 0)
             {
                 StartArrowDraw(sq);
             }
             else
             {
-                if (e.ChangedButton != MouseButton.Right)
-                {
-                    BoardArrowsManager.Reset();
-                }
-
                 if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                 {
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
@@ -362,6 +358,11 @@ namespace ChessForge
                         if (MainChessBoard.IsFlipped)
                         {
                             sqNorm.Flip();
+                        }
+
+                        if (MainChessBoard.GetPieceColor(sqNorm) == PieceColor.None)
+                        {
+                            BoardShapesManager.Reset();
                         }
 
                         if (CanMovePiece(sqNorm))
@@ -410,22 +411,50 @@ namespace ChessForge
 
             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
-                color = "green";
+                color = Constants.COLOR_GREEN;
             }
             else if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
             {
-                color = "red";
+                color = Constants.COLOR_RED;
             }
             else if (Keyboard.IsKeyDown(Key.LeftAlt))
             {
-                color = "blue";
+                color = Constants.COLOR_BLUE;
             }
             else if (Keyboard.IsKeyDown(Key.RightAlt))
             {
-                color = "yellow";
+                color = Constants.COLOR_YELLOW;
             }
 
-            BoardArrowsManager.StartArrowDraw(sq, color);
+            BoardShapesManager.StartShapeDraw(sq, color);
+        }
+
+        /// <summary>
+        /// Saves the Arrow positions string to the Node currently
+        /// hosted in the Main Chessboard.
+        /// </summary>
+        /// <param name="arrowsString"></param>
+        public void SaveArrowsStringInCurrentNode(string arrowsString)
+        {
+            TreeNode nd = MainChessBoard.DisplayedNode;
+            if (nd != null)
+            {
+                nd.Arrows = arrowsString;
+            }
+        }
+
+        /// <summary>
+        /// Saves the Circle positions string to the Node currently
+        /// hosted in the Main Chessboard.
+        /// </summary>
+        /// <param name="circlesString"></param>
+        public void SaveCirclesStringInCurrentNode(string circlesString)
+        {
+            TreeNode nd = MainChessBoard.DisplayedNode;
+            if (nd != null)
+            {
+                nd.Circles = circlesString;
+            }
         }
 
         /// <summary>
@@ -476,10 +505,10 @@ namespace ChessForge
             Point clickedPoint = e.GetPosition(UiImgMainChessboard);
             SquareCoords targetSquare = MainChessBoardUtils.ClickedSquare(clickedPoint);
 
-            if (BoardArrowsManager.IsArrowBuildInProgress)
+            if (BoardShapesManager.IsShapeBuildInProgress)
             {
                 UiDgActiveLine.ContextMenu.IsOpen = false;
-                BoardArrowsManager.FinalizeArrow(targetSquare);
+                BoardShapesManager.FinalizeShape(targetSquare, true);
                 e.Handled = true;
             }
             else
@@ -668,14 +697,14 @@ namespace ChessForge
             // if right button is pressed we may be drawing an arrow
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                if (BoardArrowsManager.IsArrowBuildInProgress)
+                if (BoardShapesManager.IsShapeBuildInProgress)
                 {
-                    BoardArrowsManager.UpdateArrowDraw(sq);
+                    BoardShapesManager.UpdateShapeDraw(sq);
                 }
             }
             else
             {
-                BoardArrowsManager.CancelArrowDraw();
+                BoardShapesManager.CancelShapeDraw();
             }
 
             if (DraggedPiece.isDragInProgress)
@@ -1146,8 +1175,8 @@ namespace ChessForge
         /// <param name="nd"></param>
         public void DisplayPosition(TreeNode nd)
         {
-            MainChessBoard.DisplayPosition(nd.Position);
-            BoardArrowsManager.Reset(nd.Arrows);
+            MainChessBoard.DisplayPosition(nd);
+//            BoardArrowsManager.Reset(nd.Arrows);
         }
 
         /// <summary>
@@ -1157,7 +1186,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public void DisplayPosition(BoardPosition pos)
         {
-            MainChessBoard.DisplayPosition(pos);
+            MainChessBoard.DisplayPosition(null, pos);
         }
 
         public void RemoveMoveSquareColors()
@@ -1184,7 +1213,7 @@ namespace ChessForge
                 }
                 if (displayPosition)
                 {
-                    MainChessBoard.DisplayPosition(nd.Position);
+                    MainChessBoard.DisplayPosition(nd);
                 }
                 if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
                 {
@@ -1206,7 +1235,7 @@ namespace ChessForge
                 ActiveLine.SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
                 if (displayPosition)
                 {
-                    MainChessBoard.DisplayPosition(nd.Position);
+                    MainChessBoard.DisplayPosition(nd);
                 }
             }
         }
@@ -1668,7 +1697,7 @@ namespace ChessForge
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
             LearningMode.TrainingSide = startNode.ColorToMove;
-            MainChessBoard.DisplayPosition(startNode.Position);
+            MainChessBoard.DisplayPosition(startNode);
 
             _trainingBrowseRichTextBuilder.BuildFlowDocumentForWorkbook(startNode.NodeId);
 

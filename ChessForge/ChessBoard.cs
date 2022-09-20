@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using ChessPosition;
+using GameTree;
 
 namespace ChessForge
 {
@@ -14,6 +15,11 @@ namespace ChessForge
     /// </summary>
     public class ChessBoard
     {
+        /// <summary>
+        /// The node represented on the board.
+        /// </summary>
+        public TreeNode DisplayedNode;
+
         /// <summary>
         /// Images for White pieces.
         /// </summary>
@@ -318,7 +324,7 @@ namespace ChessForge
 
             _isFlipped = !_isFlipped;
 
-            BoardArrowsManager.Flip();
+            BoardShapesManager.Flip();
         }
 
         /// <summary>
@@ -338,12 +344,35 @@ namespace ChessForge
 
         /// <summary>
         /// Sets up the position on the board
-        /// reflecting the passed Position object.
+        /// reflecting the passed TreeNode object.
         /// </summary>
         /// <param name="pos"></param>
-        public void DisplayPosition(BoardPosition pos)
+        public void DisplayPosition(TreeNode node)
         {
-            _position = new BoardPosition(pos);
+            DisplayedNode = node;
+
+            _position = new BoardPosition(node.Position);
+            DisplayPosition(node, node.Position);
+        }
+
+        /// <summary>
+        /// Sets up the position on the board
+        /// reflecting the passed TreeNode or BoardPosition object.
+        /// </summary>
+        /// <param name="pos"></param>
+        public void DisplayPosition(TreeNode node, BoardPosition pos = null)
+        {
+            DisplayedNode = node;
+            if (node != null)
+            {
+                _position = new BoardPosition(node.Position);
+                BoardShapesManager.Reset(node.Arrows, node.Circles);
+            }
+            else
+            {
+                _position = new BoardPosition(pos);
+                BoardShapesManager.Reset();
+            }
 
             for (int xcoord = 0; xcoord < 8; xcoord++)
             {
@@ -354,24 +383,6 @@ namespace ChessForge
             }
 
             RemoveMoveSquareColors();
-        }
-
-        /// <summary>
-        /// Sets the position object.
-        /// If display == true, shows the position in the GUI.
-        /// </summary>
-        /// <param name="pos"></param>
-        /// <param name="display"></param>
-        public void SetPosition(BoardPosition pos, bool display)
-        {
-            if (display)
-            {
-                DisplayPosition(pos);
-            }
-            else
-            {
-                _position = new BoardPosition(pos);
-            }
         }
 
         /// <summary>
@@ -398,7 +409,7 @@ namespace ChessForge
         public void DisplayStartingPosition()
         {
             _position = PositionUtils.SetupStartingPosition();
-            DisplayPosition(_position);
+            DisplayPosition(null, _position);
         }
 
         /// <summary>

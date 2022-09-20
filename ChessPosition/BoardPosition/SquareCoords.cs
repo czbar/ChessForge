@@ -65,5 +65,16 @@ namespace ChessPosition
         {
             return Xcoord >= 0 && Xcoord <= 7 && Ycoord >= 0 && Ycoord <= 7;
         }
+
+        /// <summary>
+        /// Returns true if the two passed objects represent the same square.
+        /// </summary>
+        /// <param name="sc1"></param>
+        /// <param name="sc2"></param>
+        /// <returns></returns>
+        public static bool AreSameCoords(SquareCoords sc1, SquareCoords sc2)
+        {
+            return sc1.Xcoord == sc2.Xcoord && sc1.Ycoord == sc2.Ycoord;
+        }
     }
 }

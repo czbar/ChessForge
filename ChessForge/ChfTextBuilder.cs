@@ -264,7 +264,12 @@ namespace ChessForge
         /// <returns></returns>
         private static string BuildCommandAndCommentText(TreeNode nd)
         {
-            if (nd.IsBookmark || !string.IsNullOrEmpty(nd.Comment) || !string.IsNullOrEmpty(nd.EngineEvaluation) || nd.UnprocessedChfCommands.Count > 0)
+            if (nd.IsBookmark 
+                || !string.IsNullOrEmpty(nd.Comment) 
+                || !string.IsNullOrEmpty(nd.EngineEvaluation)
+                || !string.IsNullOrEmpty(nd.Arrows)
+                || !string.IsNullOrEmpty(nd.Circles)
+                || nd.UnprocessedChfCommands.Count > 0)
             {
                 StringBuilder sb = new StringBuilder();
 
@@ -275,7 +280,7 @@ namespace ChessForge
                 {
                     if (_fileType == AppStateManager.FileType.CHF)
                     {
-                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.BOOKMARK);
+                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.BOOKMARK_V2);
                         sb.Append("[" + sCmd + "]");
                     }
                     else if (Configuration.PgnExportBookmarks)
@@ -289,7 +294,7 @@ namespace ChessForge
                 {
                     if (_fileType == AppStateManager.FileType.CHF)
                     {
-                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ENGINE_EVALUATION) + " " + nd.EngineEvaluation;
+                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ENGINE_EVALUATION_V2) + " " + nd.EngineEvaluation;
                         sb.Append("[" + sCmd + "]");
                     }
                     else if (Configuration.PgnExportEvaluations)
@@ -304,6 +309,26 @@ namespace ChessForge
                     if (_fileType == AppStateManager.FileType.CHF)
                     {
                         string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.COACH_ASSESSMENT) + " " + nd.Assessment;
+                        sb.Append("[" + sCmd + "]");
+                    }
+                }
+
+                // Process the Arrows string
+                if (!string.IsNullOrEmpty(nd.Arrows))
+                {
+                    if (_fileType == AppStateManager.FileType.CHF)
+                    {
+                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ARROWS) + " " + nd.Arrows;
+                        sb.Append("[" + sCmd + "]");
+                    }
+                }
+
+                // Process the Circles string
+                if (!string.IsNullOrEmpty(nd.Circles))
+                {
+                    if (_fileType == AppStateManager.FileType.CHF)
+                    {
+                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.CIRCLES) + " " + nd.Circles;
                         sb.Append("[" + sCmd + "]");
                     }
                 }
