@@ -329,8 +329,7 @@ namespace ChessForge
                 return;
             }
 
-            if (e.ChangedButton == MouseButton.Right && GuiUtilities.IsSpecialKeyPressed() 
-                && ActiveLine.GetSelectedTreeNode() != null && ActiveLine.GetSelectedTreeNode().NodeId != 0)
+            if (e.ChangedButton == MouseButton.Right && GuiUtilities.IsSpecialKeyPressed())
             {
                 StartArrowDraw(sq);
             }
