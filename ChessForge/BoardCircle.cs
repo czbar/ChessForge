@@ -52,7 +52,7 @@ namespace ChessForge
                     break;
             }
 
-            _circle.Opacity = 0.5;
+            _circle.Opacity = 0.7;
         }
 
         /// <summary>
