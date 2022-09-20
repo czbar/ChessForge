@@ -185,7 +185,6 @@ namespace GameTree
             TreeNode rootNode = new TreeNode(null, "", _runningNodeId);
             _runningNodeId++;
 
-            //            WorkbookTree.SetupStartingPosition(ref rootNode);
             rootNode.Position = PositionUtils.SetupStartingPosition();
             workbook.AddNode(rootNode);
 

@@ -42,6 +42,10 @@ namespace ChessForge
             if (workbook.Nodes.Count > 0)
             {
                 TreeNode root = workbook.Nodes[0];
+                
+                // There may be a comment or command before the first move. Add if so.
+                _fileText.Append(BuildCommandAndCommentText(root));
+
                 BuildTreeLineText(root);
             }
 

@@ -1,6 +1,7 @@
 ﻿using ChessPosition;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Principal;
@@ -23,6 +24,9 @@ namespace ChessForge
 
         // flags if there is a new arrow being built
         private static bool _isShapeBuildInProgress;
+
+        // flags if the shape build is started tentatively
+        private static bool _isShapeBuildTentative;
 
         // Arrow currently being drawn
         private static BoardArrow _arrowInProgress;
@@ -52,7 +56,7 @@ namespace ChessForge
                 {
                     if (DecodeArrowsString(token, out string color, out SquareCoords start, out SquareCoords end))
                     {
-                        StartShapeDraw(start, color);
+                        StartShapeDraw(start, color, false);
                         FinalizeShape(end, false);
                     }
                 }
@@ -65,7 +69,7 @@ namespace ChessForge
                 {
                     if (DecodeCirclesString(token, out string color, out SquareCoords square))
                     {
-                        StartShapeDraw(square, color);
+                        StartShapeDraw(square, color, false);
                         FinalizeShape(square, false);
                     }
                 }
@@ -103,6 +107,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        // Flags if there is a new arrow being built
+        /// </summary>
+        public static bool IsShapeBuildTentative
+        {
+            get => _isShapeBuildTentative;
+            set => _isShapeBuildTentative = value;
+        }
+
+        /// <summary>
         /// Flips the shapes (called when the board flips)
         /// </summary>
         public static void Flip()
@@ -123,10 +136,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="start"></param>
         /// <param name="color"></param>
-        public static void StartShapeDraw(SquareCoords start, string color)
+        public static void StartShapeDraw(SquareCoords start, string color, bool isTentative)
         {
             _startSquare = new SquareCoords(start);
             _isShapeBuildInProgress = true;
+            _isShapeBuildTentative = isTentative;
+
             _arrowInProgress = new BoardArrow(start, color);
             _circleInProgress = new BoardCircle(start, color);
         }
@@ -142,12 +157,30 @@ namespace ChessForge
 
             if (SquareCoords.AreSameCoords(_startSquare, _endSquare))
             {
-                _boardCircles.Add(_circleInProgress);
+                RemoveDuplicate(_circleInProgress, out bool isSameColor);
+                if (isSameColor)
+                {
+                    _circleInProgress.RemoveFromBoard();
+                }
+                else
+                {
+                    _boardCircles.Add(_circleInProgress);
+                }
+
                 _arrowInProgress.RemoveFromBoard();
             }
             else
             {
-                _boardArrows.Add(_arrowInProgress);
+                RemoveDuplicate(_arrowInProgress, out bool isSameColor);
+                if (isSameColor)
+                {
+                    _arrowInProgress.RemoveFromBoard();
+                }
+                else
+                {
+                    _boardArrows.Add(_arrowInProgress);
+                }
+
                 _circleInProgress.RemoveFromBoard();
             }
             CancelShapeDraw();
@@ -191,8 +224,71 @@ namespace ChessForge
             _startSquare = null;
             _endSquare = null;
             _isShapeBuildInProgress = false;
+            _isShapeBuildTentative = false;
             _arrowInProgress = null;
             _circleInProgress = null;
+        }
+
+        /// <summary>
+        /// Checks if already have an arrow with the same start and end.
+        /// If so, checks the color. If the color is the same, we will remove both
+        /// arrows from the board, if not we delete the duplicate and replace it
+        /// with the new one.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <param name="isSameColor"></param>
+        /// <returns></returns>
+        private static bool RemoveDuplicate(BoardArrow arr, out bool isSameColor)
+        {
+            isSameColor = false;
+
+            bool found = false;
+
+            for (int i = 0; i < _boardArrows.Count; i++)
+            {
+                BoardArrow b = _boardArrows[i];
+                if (SquareCoords.AreSameCoords(b.StartSquare, arr.StartSquare) && SquareCoords.AreSameCoords(b.EndSquare, arr.EndSquare))
+                {
+                    isSameColor = b.Color == arr.Color;
+                    b.RemoveFromBoard();
+                    _boardArrows.RemoveAt(i);
+                    found = true;
+                    break;
+                }
+            }
+
+            return found;
+        }
+
+        /// <summary>
+        /// Checks if already have a circle with the same start and end.
+        /// If so, checks the color. If the color is the same, we will remove both
+        /// arrows from the board, if not we delete the duplicate and replace it
+        /// with the new one.
+        /// </summary>
+        /// <param name="cir"></param>
+        /// <param name="isSameColor"></param>
+        /// <returns></returns>
+        private static bool RemoveDuplicate(BoardCircle cir, out bool isSameColor)
+        {
+            isSameColor = false;
+
+            bool found = false;
+
+            for (int i = 0; i < _boardCircles.Count; i++)
+            {
+                BoardCircle b = _boardCircles[i];
+                if (SquareCoords.AreSameCoords(b.Square, cir.Square))
+                {
+                    isSameColor = b.Color == cir.Color;
+                    b.RemoveFromBoard();
+                    _boardCircles.RemoveAt(i);
+                    found = true;
+                    break;
+                }
+            }
+
+            return found;
         }
 
         /// <summary>
