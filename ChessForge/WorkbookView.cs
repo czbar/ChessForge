@@ -349,7 +349,7 @@ namespace ChessForge
                 }
             }
 
-            // start be creating a level 1 paragraph.
+            // start by creating a level 1 paragraph.
             Paragraph para = CreateParagraph("0");
             Document.Blocks.Add(para);
 
@@ -697,15 +697,17 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates an "invisible" run for the starting position.
+        /// Creates a run with no move for the starting position.
         /// This is necessary so that we have parent for the first move
         /// when starting a new Workbook.
+        /// Also, there may be a comment that we want to show before the first move.
         /// </summary>
         /// <param name="para"></param>
         private void CreateStartingNode(Paragraph para)
         {
             TreeNode nd = _mainWin.Workbook.Nodes[0];
             AddRunToParagraph(nd, para, "", Brushes.White);
+            AddCommentRunToParagraph(nd, para);
         }
 
         /// <summary>
@@ -767,7 +769,7 @@ namespace ChessForge
             r.Name = "run_" + nd.NodeId.ToString() + "_comment";
             r.MouseDown += EventCommentRunClicked;
 
-            r.FontStyle = FontStyles.Italic;
+            r.FontStyle = FontStyles.Normal;
 
             r.Foreground = Brushes.Black;
             r.FontWeight = FontWeights.Normal;
@@ -791,14 +793,6 @@ namespace ChessForge
             }
 
             StringBuilder sb = new StringBuilder(" {");
-
-#if false  // TODO: we ant to reactivate is in a future "coach edit" mode or something like that
-            if (ChfCommands.GetAssessment(nd.Assessment) != ChfCommands.Assessment.NONE)
-            {
-                sb.Append("[assess=" + "\"" + nd.Assessment + "\"]");
-            }
-#endif
-
             if (!string.IsNullOrEmpty(nd.Comment))
             {
                 if (ChfCommands.GetAssessment(nd.Assessment) != ChfCommands.Assessment.NONE)
@@ -810,6 +804,11 @@ namespace ChessForge
             }
             sb.Append("}");
 
+            // if this is a root node add a space because the first move does not have it in front.
+            if (nd.NodeId == 0)
+            {
+                sb.Append(" ");
+            }
             return sb.ToString();
         }
 
