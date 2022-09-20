@@ -87,6 +87,11 @@ namespace ChessForge
         private bool _isDebugMode = false;
 
         /// <summary>
+        /// Coordinates of the last right-clicked point
+        /// </summary>
+        private Point? _lastRightClickedPoint;
+
+        /// <summary>
         /// Collection of timers for this application.
         /// </summary>
         public AppTimers Timers;
@@ -329,12 +334,17 @@ namespace ChessForge
                 return;
             }
 
-            if (e.ChangedButton == MouseButton.Right && GuiUtilities.IsSpecialKeyPressed())
+            if (e.ChangedButton == MouseButton.Right)
             {
-                StartArrowDraw(sq);
+                _lastRightClickedPoint = clickedPoint;
+                // if no special key was pressed we consider this tentative
+                // since we need to resolve between shape building and context menu
+                bool isDrawTentative = !GuiUtilities.IsSpecialKeyPressed();
+                StartShapeDraw(sq, isDrawTentative);
             }
             else
             {
+                _lastRightClickedPoint = null;
                 if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                 {
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
@@ -404,28 +414,28 @@ namespace ChessForge
         /// to do the drawing.
         /// </summary>
         /// <param name="sq"></param>
-        private void StartArrowDraw(SquareCoords sq)
+        private void StartShapeDraw(SquareCoords sq, bool isTentative)
         {
             string color = "yellow";
 
             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
-                color = Constants.COLOR_GREEN;
+                color = Constants.COLOR_YELLOW;
             }
             else if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
             {
                 color = Constants.COLOR_RED;
             }
-            else if (Keyboard.IsKeyDown(Key.LeftAlt))
+            else if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
             {
                 color = Constants.COLOR_BLUE;
             }
-            else if (Keyboard.IsKeyDown(Key.RightAlt))
+            else
             {
-                color = Constants.COLOR_YELLOW;
+                color = Constants.COLOR_GREEN;
             }
 
-            BoardShapesManager.StartShapeDraw(sq, color);
+            BoardShapesManager.StartShapeDraw(sq, color, isTentative);
         }
 
         /// <summary>
@@ -504,11 +514,9 @@ namespace ChessForge
             Point clickedPoint = e.GetPosition(UiImgMainChessboard);
             SquareCoords targetSquare = MainChessBoardUtils.ClickedSquare(clickedPoint);
 
-            if (BoardShapesManager.IsShapeBuildInProgress)
+            if (e.ChangedButton == MouseButton.Right)
             {
-                UiDgActiveLine.ContextMenu.IsOpen = false;
-                BoardShapesManager.FinalizeShape(targetSquare, true);
-                e.Handled = true;
+                HandleMouseUpRightButton(targetSquare, e);
             }
             else
             {
@@ -550,6 +558,18 @@ namespace ChessForge
                     }
                     Canvas.SetZIndex(DraggedPiece.ImageControl, Constants.ZIndex_PieceOnBoard);
                 }
+            }
+        }
+
+        private void HandleMouseUpRightButton(SquareCoords targetSquare, MouseButtonEventArgs e)
+        {
+            if (BoardShapesManager.IsShapeBuildInProgress && !BoardShapesManager.IsShapeBuildTentative)
+            {
+                BoardShapesManager.FinalizeShape(targetSquare, true);
+                _lastRightClickedPoint = null;
+                
+                // we have been building a shape so ensure context menu does not pop up
+                e.Handled = true;
             }
         }
 
@@ -690,33 +710,72 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            Point clickedPoint = e.GetPosition(UiImgMainChessboard);
-            SquareCoords sq = MainChessBoardUtils.ClickedSquare(clickedPoint);
+            Point mousePoint = e.GetPosition(UiImgMainChessboard);
+            SquareCoords sq = MainChessBoardUtils.ClickedSquare(mousePoint);
 
             // if right button is pressed we may be drawing an arrow
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                if (BoardShapesManager.IsShapeBuildInProgress)
+                HandleMouseMoveRightButton(sq, mousePoint);
+            }
+            else
+            {
+                _lastRightClickedPoint = null;
+                BoardShapesManager.CancelShapeDraw();
+                if (DraggedPiece.isDragInProgress)
+                {
+                    Canvas.SetZIndex(DraggedPiece.ImageControl, Constants.ZIndex_PieceInAnimation);
+                    mousePoint.X += UiImgMainChessboard.Margin.Left;
+                    mousePoint.Y += UiImgMainChessboard.Margin.Top;
+
+                    Canvas.SetLeft(DraggedPiece.ImageControl, mousePoint.X - squareSize / 2);
+                    Canvas.SetTop(DraggedPiece.ImageControl, mousePoint.Y - squareSize / 2);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles mouse move event with Right Button pressed
+        /// A shape building would have been started by a right click
+        /// with or without special key being pressed.
+        /// </summary>
+        private void HandleMouseMoveRightButton(SquareCoords sq, Point ptCurrent)
+        {
+            if (BoardShapesManager.IsShapeBuildInProgress)
+            {
+                bool proceed = true;
+
+                // check if we are tentative
+                if (BoardShapesManager.IsShapeBuildTentative)
+                {
+                    if (_lastRightClickedPoint == null)
+                    {
+                        _lastRightClickedPoint = null;
+                        BoardShapesManager.CancelShapeDraw();
+                        proceed = false;
+                    }
+                    else
+                    {
+                        // check if we should proceed or let context menu show
+                        if (Math.Abs(GuiUtilities.CalculateDistance(_lastRightClickedPoint.Value, ptCurrent)) > 5)
+                        {
+                            BoardShapesManager.IsShapeBuildTentative = false;
+                            proceed = true;
+                        }
+                        else
+                        {
+                            proceed = false;
+                        }
+                    }
+                }
+
+                if (proceed)
                 {
                     BoardShapesManager.UpdateShapeDraw(sq);
                 }
             }
-            else
-            {
-                BoardShapesManager.CancelShapeDraw();
-            }
-
-            if (DraggedPiece.isDragInProgress)
-            {
-                Canvas.SetZIndex(DraggedPiece.ImageControl, Constants.ZIndex_PieceInAnimation);
-                clickedPoint.X += UiImgMainChessboard.Margin.Left;
-                clickedPoint.Y += UiImgMainChessboard.Margin.Top;
-
-                Canvas.SetLeft(DraggedPiece.ImageControl, clickedPoint.X - squareSize / 2);
-                Canvas.SetTop(DraggedPiece.ImageControl, clickedPoint.Y - squareSize / 2);
-            }
-
         }
+
 
         /// <summary>
         /// Move animation requested as part of auto-replay.
@@ -1175,7 +1234,7 @@ namespace ChessForge
         public void DisplayPosition(TreeNode nd)
         {
             MainChessBoard.DisplayPosition(nd);
-//            BoardArrowsManager.Reset(nd.Arrows);
+            //            BoardArrowsManager.Reset(nd.Arrows);
         }
 
         /// <summary>
