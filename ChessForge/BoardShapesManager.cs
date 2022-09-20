@@ -25,6 +25,9 @@ namespace ChessForge
         // flags if there is a new arrow being built
         private static bool _isShapeBuildInProgress;
 
+        // flags if the shape build is started tentatively
+        private static bool _isShapeBuildTentative;
+
         // Arrow currently being drawn
         private static BoardArrow _arrowInProgress;
 
@@ -53,7 +56,7 @@ namespace ChessForge
                 {
                     if (DecodeArrowsString(token, out string color, out SquareCoords start, out SquareCoords end))
                     {
-                        StartShapeDraw(start, color);
+                        StartShapeDraw(start, color, false);
                         FinalizeShape(end, false);
                     }
                 }
@@ -66,7 +69,7 @@ namespace ChessForge
                 {
                     if (DecodeCirclesString(token, out string color, out SquareCoords square))
                     {
-                        StartShapeDraw(square, color);
+                        StartShapeDraw(square, color, false);
                         FinalizeShape(square, false);
                     }
                 }
@@ -104,6 +107,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        // Flags if there is a new arrow being built
+        /// </summary>
+        public static bool IsShapeBuildTentative
+        {
+            get => _isShapeBuildTentative;
+            set => _isShapeBuildTentative = value;
+        }
+
+        /// <summary>
         /// Flips the shapes (called when the board flips)
         /// </summary>
         public static void Flip()
@@ -124,10 +136,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="start"></param>
         /// <param name="color"></param>
-        public static void StartShapeDraw(SquareCoords start, string color)
+        public static void StartShapeDraw(SquareCoords start, string color, bool isTentative)
         {
             _startSquare = new SquareCoords(start);
             _isShapeBuildInProgress = true;
+            _isShapeBuildTentative = isTentative;
+
             _arrowInProgress = new BoardArrow(start, color);
             _circleInProgress = new BoardCircle(start, color);
         }
@@ -210,6 +224,7 @@ namespace ChessForge
             _startSquare = null;
             _endSquare = null;
             _isShapeBuildInProgress = false;
+            _isShapeBuildTentative = false;
             _arrowInProgress = null;
             _circleInProgress = null;
         }
