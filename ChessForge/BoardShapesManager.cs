@@ -1,6 +1,7 @@
 ﻿using ChessPosition;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Principal;
@@ -142,12 +143,30 @@ namespace ChessForge
 
             if (SquareCoords.AreSameCoords(_startSquare, _endSquare))
             {
-                _boardCircles.Add(_circleInProgress);
+                RemoveDuplicate(_circleInProgress, out bool isSameColor);
+                if (isSameColor)
+                {
+                    _circleInProgress.RemoveFromBoard();
+                }
+                else
+                {
+                    _boardCircles.Add(_circleInProgress);
+                }
+
                 _arrowInProgress.RemoveFromBoard();
             }
             else
             {
-                _boardArrows.Add(_arrowInProgress);
+                RemoveDuplicate(_arrowInProgress, out bool isSameColor);
+                if (isSameColor)
+                {
+                    _arrowInProgress.RemoveFromBoard();
+                }
+                else
+                {
+                    _boardArrows.Add(_arrowInProgress);
+                }
+
                 _circleInProgress.RemoveFromBoard();
             }
             CancelShapeDraw();
@@ -193,6 +212,68 @@ namespace ChessForge
             _isShapeBuildInProgress = false;
             _arrowInProgress = null;
             _circleInProgress = null;
+        }
+
+        /// <summary>
+        /// Checks if already have an arrow with the same start and end.
+        /// If so, checks the color. If the color is the same, we will remove both
+        /// arrows from the board, if not we delete the duplicate and replace it
+        /// with the new one.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <param name="isSameColor"></param>
+        /// <returns></returns>
+        private static bool RemoveDuplicate(BoardArrow arr, out bool isSameColor)
+        {
+            isSameColor = false;
+
+            bool found = false;
+
+            for (int i = 0; i < _boardArrows.Count; i++)
+            {
+                BoardArrow b = _boardArrows[i];
+                if (SquareCoords.AreSameCoords(b.StartSquare, arr.StartSquare) && SquareCoords.AreSameCoords(b.EndSquare, arr.EndSquare))
+                {
+                    isSameColor = b.Color == arr.Color;
+                    b.RemoveFromBoard();
+                    _boardArrows.RemoveAt(i);
+                    found = true;
+                    break;
+                }
+            }
+
+            return found;
+        }
+
+        /// <summary>
+        /// Checks if already have a circle with the same start and end.
+        /// If so, checks the color. If the color is the same, we will remove both
+        /// arrows from the board, if not we delete the duplicate and replace it
+        /// with the new one.
+        /// </summary>
+        /// <param name="cir"></param>
+        /// <param name="isSameColor"></param>
+        /// <returns></returns>
+        private static bool RemoveDuplicate(BoardCircle cir, out bool isSameColor)
+        {
+            isSameColor = false;
+
+            bool found = false;
+
+            for (int i = 0; i < _boardCircles.Count; i++)
+            {
+                BoardCircle b = _boardCircles[i];
+                if (SquareCoords.AreSameCoords(b.Square, cir.Square))
+                {
+                    isSameColor = b.Color == cir.Color;
+                    b.RemoveFromBoard();
+                    _boardCircles.RemoveAt(i);
+                    found = true;
+                    break;
+                }
+            }
+
+            return found;
         }
 
         /// <summary>
