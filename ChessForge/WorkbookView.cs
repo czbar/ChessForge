@@ -795,10 +795,10 @@ namespace ChessForge
             StringBuilder sb = new StringBuilder(" {");
             if (!string.IsNullOrEmpty(nd.Comment))
             {
-                if (ChfCommands.GetAssessment(nd.Assessment) != ChfCommands.Assessment.NONE)
-                {
-                    sb.Append(' ');
-                }
+                //if (ChfCommands.GetAssessment(nd.Assessment) != ChfCommands.Assessment.NONE)
+                //{
+                //    sb.Append(' ');
+                //}
 
                 sb.Append(nd.Comment);
             }
