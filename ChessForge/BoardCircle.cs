@@ -79,7 +79,7 @@ namespace ChessForge
         public void Flip()
         {
             Square.Flip();
-            Draw();
+            Draw(Square);
         }
 
         /// <summary>
