@@ -93,7 +93,7 @@ namespace ChessForge
             }
             _boardCircles.Clear();
 
-            CancelShapeDraw();
+            CancelShapeDraw(true);
             _isShapeBuildInProgress = false;
         }
 
@@ -152,6 +152,12 @@ namespace ChessForge
         /// <param name="current"></param>
         public static void FinalizeShape(SquareCoords current, bool isNew)
         {
+            if (current == null)
+            {
+                CancelShapeDraw(true);
+                return;
+            }
+
             _endSquare = new SquareCoords(current);
             UpdateShapeDraw(current);
 
@@ -183,7 +189,7 @@ namespace ChessForge
 
                 _circleInProgress.RemoveFromBoard();
             }
-            CancelShapeDraw();
+            CancelShapeDraw(false);
 
             SaveShapesStrings();
             if (isNew)
@@ -198,33 +204,53 @@ namespace ChessForge
         /// <param name="current"></param>
         public static void UpdateShapeDraw(SquareCoords current)
         {
-            if (!_isShapeBuildInProgress || !current.IsValid())
+            try
             {
-                return;
-            }
+                if (!_isShapeBuildInProgress)
+                {
+                    return;
+                }
+                else if (current == null || !current.IsValid())
+                {
+                    CancelShapeDraw(true);
+                    return;
+                }
 
-            //is this an arrow or a circle
-            if (SquareCoords.AreSameCoords(current, _startSquare))
-            {
-                _circleInProgress.Draw(current);
-                _arrowInProgress.RemoveFromBoard();
+                //is this an arrow or a circle
+                if (SquareCoords.AreSameCoords(current, _startSquare))
+                {
+                    _circleInProgress.Draw(current);
+                    _arrowInProgress.RemoveFromBoard();
+                }
+                else
+                {
+                    _arrowInProgress.Draw(current);
+                    _circleInProgress.RemoveFromBoard();
+                }
             }
-            else
-            {
-                _arrowInProgress.Draw(current);
-                _circleInProgress.RemoveFromBoard();
-            }
+            catch { }
         }
 
         /// <summary>
         /// Cancels the shape currently being drawn.
         /// </summary>
-        public static void CancelShapeDraw()
+        public static void CancelShapeDraw(bool removeCurrent)
         {
             _startSquare = null;
             _endSquare = null;
             _isShapeBuildInProgress = false;
             _isShapeBuildTentative = false;
+
+            if (_arrowInProgress != null && removeCurrent)
+            {
+                _arrowInProgress.RemoveFromBoard();
+            }
+
+            if (_circleInProgress != null && removeCurrent)
+            {
+                _circleInProgress.RemoveFromBoard();
+            }
+
             _arrowInProgress = null;
             _circleInProgress = null;
         }
