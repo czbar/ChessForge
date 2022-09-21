@@ -37,7 +37,7 @@
         <Label x:Name="_lblGameInProgress" Grid.Column="1" Content="Game in Progress" Visibility="Hidden"
                HorizontalAlignment="Left" Margin="75,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="159" FontWeight="Bold" FontSize="14"/>
         <Viewbox x:Name="MainBoard" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680">
-            <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680">
+            <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680" ContextMenuOpening="MainCanvas_ContextMenuOpening">
                 <Canvas.ContextMenu>
                     <ContextMenu  x:Name="UiMnMainBoard">
                         <MenuItem x:Name="UiMnciStartTrainingHere"  Header="Start Training from Here" Click="UiMnciStartTrainingHere_Click" />

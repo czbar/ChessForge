@@ -74,6 +74,11 @@ namespace ChessForge
                     }
                 }
             }
+
+            if (SaveShapesStrings())
+            {
+                AppStateManager.IsDirty = true;
+            }
         }
 
         /// <summary>
@@ -95,6 +100,11 @@ namespace ChessForge
 
             CancelShapeDraw(true);
             _isShapeBuildInProgress = false;
+
+            if (SaveShapesStrings())
+            {
+                AppStateManager.IsDirty = true;
+            }
         }
 
         /// <summary>
@@ -191,8 +201,8 @@ namespace ChessForge
             }
             CancelShapeDraw(false);
 
-            SaveShapesStrings();
-            if (isNew)
+            bool isChanged = SaveShapesStrings();
+            if (isNew || isChanged)
             {
                 AppStateManager.IsDirty = true;
             }
@@ -270,19 +280,26 @@ namespace ChessForge
 
             bool found = false;
 
+            // due to bugs, there may be more than one dupe so identify before deleting
+            List<BoardArrow> toRemove = new List<BoardArrow>();
+
             for (int i = 0; i < _boardArrows.Count; i++)
             {
                 BoardArrow b = _boardArrows[i];
                 if (SquareCoords.AreSameCoords(b.StartSquare, arr.StartSquare) && SquareCoords.AreSameCoords(b.EndSquare, arr.EndSquare))
                 {
                     isSameColor = b.Color == arr.Color;
-                    b.RemoveFromBoard();
-                    _boardArrows.RemoveAt(i);
+                    toRemove.Add(b);
                     found = true;
                     break;
                 }
             }
 
+            foreach (BoardArrow b in toRemove)
+            {
+                b.RemoveFromBoard();
+                _boardArrows.Remove(b);
+            }
             return found;
         }
 
@@ -301,17 +318,25 @@ namespace ChessForge
 
             bool found = false;
 
+            // due to bugs, there may be more than one dupe so identify before deleting
+            List<BoardCircle> toRemove = new List<BoardCircle>();
+
             for (int i = 0; i < _boardCircles.Count; i++)
             {
                 BoardCircle b = _boardCircles[i];
                 if (SquareCoords.AreSameCoords(b.Square, cir.Square))
                 {
                     isSameColor = b.Color == cir.Color;
-                    b.RemoveFromBoard();
-                    _boardCircles.RemoveAt(i);
+                    toRemove.Add(b);
                     found = true;
                     break;
                 }
+            }
+
+            foreach (BoardCircle b in toRemove)
+            {
+                b.RemoveFromBoard();
+                _boardCircles.Remove(b);
             }
 
             return found;
@@ -320,10 +345,12 @@ namespace ChessForge
         /// <summary>
         /// Saves the shape positions to the Node.
         /// </summary>
-        private static void SaveShapesStrings()
+        private static bool SaveShapesStrings()
         {
-            AppStateManager.MainWin.SaveArrowsStringInCurrentNode(CodeArrowsString());
-            AppStateManager.MainWin.SaveCirclesStringInCurrentNode(CodeCirclesString());
+            bool arrRes = AppStateManager.MainWin.SaveArrowsStringInCurrentNode(CodeArrowsString());
+            bool cirRes = AppStateManager.MainWin.SaveCirclesStringInCurrentNode(CodeCirclesString());
+
+            return arrRes || cirRes;
         }
 
         /// <summary>
