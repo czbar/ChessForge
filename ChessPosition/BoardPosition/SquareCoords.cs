@@ -42,8 +42,11 @@ namespace ChessPosition
         /// <param name="sq"></param>
         public SquareCoords(SquareCoords sq)
         {
-            Ycoord = sq.Ycoord;
-            Xcoord = sq.Xcoord;
+            if (sq != null)
+            {
+                Ycoord = sq.Ycoord;
+                Xcoord = sq.Xcoord;
+            }
         }
 
         /// <summary>
