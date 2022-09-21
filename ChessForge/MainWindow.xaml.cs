@@ -443,12 +443,25 @@ namespace ChessForge
         /// hosted in the Main Chessboard.
         /// </summary>
         /// <param name="arrowsString"></param>
-        public void SaveArrowsStringInCurrentNode(string arrowsString)
+        /// <return>whether the new string is different</return>
+        public bool SaveArrowsStringInCurrentNode(string arrowsString)
         {
-            TreeNode nd = MainChessBoard.DisplayedNode;
-            if (nd != null)
+            if (MainChessBoard != null)
             {
-                nd.Arrows = arrowsString;
+                TreeNode nd = MainChessBoard.DisplayedNode;
+                if (nd != null && nd.Arrows != arrowsString)
+                {
+                    nd.Arrows = arrowsString;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -457,12 +470,24 @@ namespace ChessForge
         /// hosted in the Main Chessboard.
         /// </summary>
         /// <param name="circlesString"></param>
-        public void SaveCirclesStringInCurrentNode(string circlesString)
+        public bool SaveCirclesStringInCurrentNode(string circlesString)
         {
-            TreeNode nd = MainChessBoard.DisplayedNode;
-            if (nd != null)
+            if (MainChessBoard != null)
             {
-                nd.Circles = circlesString;
+                TreeNode nd = MainChessBoard.DisplayedNode;
+                if (nd != null && nd.Circles != circlesString)
+                {
+                    nd.Circles = circlesString;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -543,8 +568,11 @@ namespace ChessForge
                             }
                             else
                             {
-                                // if not in a game, we can comfortably stop any evaluation happening
-                                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
+                                // we made a move and we are not in a game,
+                                // so we can switch off all evaluations except if we are in the CONTINUOUS
+                                // mode in MANUAL REVIEW
+                                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE
+                                    && (LearningMode.CurrentMode != LearningMode.Mode.MANUAL_REVIEW || EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS))
                                 {
                                     EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
                                 }
@@ -567,7 +595,7 @@ namespace ChessForge
             {
                 BoardShapesManager.FinalizeShape(targetSquare, true);
                 _lastRightClickedPoint = null;
-                
+
                 // we have been building a shape so ensure context menu does not pop up
                 e.Handled = true;
             }
@@ -721,7 +749,10 @@ namespace ChessForge
             else
             {
                 _lastRightClickedPoint = null;
-                BoardShapesManager.CancelShapeDraw();
+                if (BoardShapesManager.IsShapeBuildInProgress)
+                {
+                    BoardShapesManager.CancelShapeDraw(true);
+                }
                 if (DraggedPiece.isDragInProgress)
                 {
                     Canvas.SetZIndex(DraggedPiece.ImageControl, Constants.ZIndex_PieceInAnimation);
@@ -750,8 +781,7 @@ namespace ChessForge
                 {
                     if (_lastRightClickedPoint == null)
                     {
-                        _lastRightClickedPoint = null;
-                        BoardShapesManager.CancelShapeDraw();
+                        BoardShapesManager.CancelShapeDraw(true);
                         proceed = false;
                     }
                     else
@@ -760,6 +790,7 @@ namespace ChessForge
                         if (Math.Abs(GuiUtilities.CalculateDistance(_lastRightClickedPoint.Value, ptCurrent)) > 5)
                         {
                             BoardShapesManager.IsShapeBuildTentative = false;
+                            _lastRightClickedPoint = null;
                             proceed = true;
                         }
                         else
@@ -2370,5 +2401,13 @@ namespace ChessForge
             }
         }
 
+        private void MainCanvas_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            _lastRightClickedPoint = null;
+            if (BoardShapesManager.IsShapeBuildInProgress)
+            {
+                BoardShapesManager.CancelShapeDraw(true);
+            }
+        }
     }
 }

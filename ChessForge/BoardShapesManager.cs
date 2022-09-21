@@ -74,6 +74,11 @@ namespace ChessForge
                     }
                 }
             }
+
+            if (SaveShapesStrings())
+            {
+                AppStateManager.IsDirty = true;
+            }
         }
 
         /// <summary>
@@ -93,8 +98,13 @@ namespace ChessForge
             }
             _boardCircles.Clear();
 
-            CancelShapeDraw();
+            CancelShapeDraw(true);
             _isShapeBuildInProgress = false;
+
+            if (SaveShapesStrings())
+            {
+                AppStateManager.IsDirty = true;
+            }
         }
 
         /// <summary>
@@ -152,6 +162,12 @@ namespace ChessForge
         /// <param name="current"></param>
         public static void FinalizeShape(SquareCoords current, bool isNew)
         {
+            if (current == null)
+            {
+                CancelShapeDraw(true);
+                return;
+            }
+
             _endSquare = new SquareCoords(current);
             UpdateShapeDraw(current);
 
@@ -183,10 +199,10 @@ namespace ChessForge
 
                 _circleInProgress.RemoveFromBoard();
             }
-            CancelShapeDraw();
+            CancelShapeDraw(false);
 
-            SaveShapesStrings();
-            if (isNew)
+            bool isChanged = SaveShapesStrings();
+            if (isNew || isChanged)
             {
                 AppStateManager.IsDirty = true;
             }
@@ -198,33 +214,53 @@ namespace ChessForge
         /// <param name="current"></param>
         public static void UpdateShapeDraw(SquareCoords current)
         {
-            if (!_isShapeBuildInProgress || !current.IsValid())
+            try
             {
-                return;
-            }
+                if (!_isShapeBuildInProgress)
+                {
+                    return;
+                }
+                else if (current == null || !current.IsValid())
+                {
+                    CancelShapeDraw(true);
+                    return;
+                }
 
-            //is this an arrow or a circle
-            if (SquareCoords.AreSameCoords(current, _startSquare))
-            {
-                _circleInProgress.Draw(current);
-                _arrowInProgress.RemoveFromBoard();
+                //is this an arrow or a circle
+                if (SquareCoords.AreSameCoords(current, _startSquare))
+                {
+                    _circleInProgress.Draw(current);
+                    _arrowInProgress.RemoveFromBoard();
+                }
+                else
+                {
+                    _arrowInProgress.Draw(current);
+                    _circleInProgress.RemoveFromBoard();
+                }
             }
-            else
-            {
-                _arrowInProgress.Draw(current);
-                _circleInProgress.RemoveFromBoard();
-            }
+            catch { }
         }
 
         /// <summary>
         /// Cancels the shape currently being drawn.
         /// </summary>
-        public static void CancelShapeDraw()
+        public static void CancelShapeDraw(bool removeCurrent)
         {
             _startSquare = null;
             _endSquare = null;
             _isShapeBuildInProgress = false;
             _isShapeBuildTentative = false;
+
+            if (_arrowInProgress != null && removeCurrent)
+            {
+                _arrowInProgress.RemoveFromBoard();
+            }
+
+            if (_circleInProgress != null && removeCurrent)
+            {
+                _circleInProgress.RemoveFromBoard();
+            }
+
             _arrowInProgress = null;
             _circleInProgress = null;
         }
@@ -244,19 +280,26 @@ namespace ChessForge
 
             bool found = false;
 
+            // due to bugs, there may be more than one dupe so identify before deleting
+            List<BoardArrow> toRemove = new List<BoardArrow>();
+
             for (int i = 0; i < _boardArrows.Count; i++)
             {
                 BoardArrow b = _boardArrows[i];
                 if (SquareCoords.AreSameCoords(b.StartSquare, arr.StartSquare) && SquareCoords.AreSameCoords(b.EndSquare, arr.EndSquare))
                 {
                     isSameColor = b.Color == arr.Color;
-                    b.RemoveFromBoard();
-                    _boardArrows.RemoveAt(i);
+                    toRemove.Add(b);
                     found = true;
                     break;
                 }
             }
 
+            foreach (BoardArrow b in toRemove)
+            {
+                b.RemoveFromBoard();
+                _boardArrows.Remove(b);
+            }
             return found;
         }
 
@@ -275,17 +318,25 @@ namespace ChessForge
 
             bool found = false;
 
+            // due to bugs, there may be more than one dupe so identify before deleting
+            List<BoardCircle> toRemove = new List<BoardCircle>();
+
             for (int i = 0; i < _boardCircles.Count; i++)
             {
                 BoardCircle b = _boardCircles[i];
                 if (SquareCoords.AreSameCoords(b.Square, cir.Square))
                 {
                     isSameColor = b.Color == cir.Color;
-                    b.RemoveFromBoard();
-                    _boardCircles.RemoveAt(i);
+                    toRemove.Add(b);
                     found = true;
                     break;
                 }
+            }
+
+            foreach (BoardCircle b in toRemove)
+            {
+                b.RemoveFromBoard();
+                _boardCircles.Remove(b);
             }
 
             return found;
@@ -294,10 +345,12 @@ namespace ChessForge
         /// <summary>
         /// Saves the shape positions to the Node.
         /// </summary>
-        private static void SaveShapesStrings()
+        private static bool SaveShapesStrings()
         {
-            AppStateManager.MainWin.SaveArrowsStringInCurrentNode(CodeArrowsString());
-            AppStateManager.MainWin.SaveCirclesStringInCurrentNode(CodeCirclesString());
+            bool arrRes = AppStateManager.MainWin.SaveArrowsStringInCurrentNode(CodeArrowsString());
+            bool cirRes = AppStateManager.MainWin.SaveCirclesStringInCurrentNode(CodeCirclesString());
+
+            return arrRes || cirRes;
         }
 
         /// <summary>
