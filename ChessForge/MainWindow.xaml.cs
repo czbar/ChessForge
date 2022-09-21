@@ -543,8 +543,11 @@ namespace ChessForge
                             }
                             else
                             {
-                                // if not in a game, we can comfortably stop any evaluation happening
-                                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
+                                // we made a move and we are not in a game,
+                                // so we can switch off all evaluations except if we are in the CONTINUOUS
+                                // mode in MANUAL REVIEW
+                                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE 
+                                    && (LearningMode.CurrentMode != LearningMode.Mode.MANUAL_REVIEW || EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS))
                                 {
                                     EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
                                 }
@@ -721,7 +724,10 @@ namespace ChessForge
             else
             {
                 _lastRightClickedPoint = null;
-                BoardShapesManager.CancelShapeDraw();
+                if (BoardShapesManager.IsShapeBuildInProgress)
+                {
+                    BoardShapesManager.CancelShapeDraw(true);
+                }
                 if (DraggedPiece.isDragInProgress)
                 {
                     Canvas.SetZIndex(DraggedPiece.ImageControl, Constants.ZIndex_PieceInAnimation);
@@ -751,7 +757,7 @@ namespace ChessForge
                     if (_lastRightClickedPoint == null)
                     {
                         _lastRightClickedPoint = null;
-                        BoardShapesManager.CancelShapeDraw();
+                        BoardShapesManager.CancelShapeDraw(true);
                         proceed = false;
                     }
                     else
