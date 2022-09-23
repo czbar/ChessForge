@@ -2401,12 +2401,34 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Invoked before the context menu shows.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainCanvas_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             _lastRightClickedPoint = null;
             if (BoardShapesManager.IsShapeBuildInProgress)
             {
                 BoardShapesManager.CancelShapeDraw(true);
+            }
+        }
+
+        /// <summary>
+        /// Handles the mouse wheel event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ChessForgeMain_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                ActiveLine.HandleKeyDown(Key.Left);
+            }
+            else if (e.Delta < 0)
+            {
+                ActiveLine.HandleKeyDown(Key.Right);
             }
         }
     }

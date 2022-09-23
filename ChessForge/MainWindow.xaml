@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="Chess Forge" Height="900" Width="1676" Loaded="Window_Loaded" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" Closing="ChessForgeMain_Closing">
+        Title="Chess Forge" Height="900" Width="1676" Loaded="Window_Loaded" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" Closing="ChessForgeMain_Closing" PreviewMouseWheel="ChessForgeMain_PreviewMouseWheel">
 
     <Window.Resources>
         <ContextMenu x:Key="_cmTrainingView">
