@@ -318,88 +318,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The user pressed the mouse button over the board.
-        /// If it is a left button it indicates the commencement of
-        /// an intended move.
-        /// TODO: fix so this is only called when indeed the click occured on the board.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Point clickedPoint = e.GetPosition(UiImgMainChessboard);
-            SquareCoords sq = MainChessBoardUtils.ClickedSquare(clickedPoint);
-            if (sq == null)
-            {
-                return;
-            }
-
-            if (e.ChangedButton == MouseButton.Right)
-            {
-                _lastRightClickedPoint = clickedPoint;
-                // if no special key was pressed we consider this tentative
-                // since we need to resolve between shape building and context menu
-                bool isDrawTentative = !GuiUtilities.IsSpecialKeyPressed();
-                StartShapeDraw(sq, isDrawTentative);
-            }
-            else
-            {
-                _lastRightClickedPoint = null;
-                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
-                {
-                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
-                    {
-                        BoardCommentBox.ShowFlashAnnouncement("Line evaluation in progress!");
-                        return;
-                    }
-                    else if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
-                    {
-                        BoardCommentBox.ShowFlashAnnouncement("The engine is thinking!");
-                        return;
-                    }
-                }
-
-                if (e.ChangedButton == MouseButton.Left)
-                {
-                    if (sq != null)
-                    {
-                        SquareCoords sqNorm = new SquareCoords(sq);
-                        if (MainChessBoard.IsFlipped)
-                        {
-                            sqNorm.Flip();
-                        }
-
-                        if (MainChessBoard.GetPieceColor(sqNorm) == PieceColor.None)
-                        {
-                            BoardShapesManager.Reset();
-                        }
-
-                        if (CanMovePiece(sqNorm))
-                        {
-                            DraggedPiece.isDragInProgress = true;
-                            DraggedPiece.Square = sq;
-
-                            DraggedPiece.ImageControl = MainChessBoardUtils.GetImageFromPoint(clickedPoint);
-                            Point ptLeftTop = MainChessBoardUtils.GetSquareTopLeftPoint(sq);
-                            DraggedPiece.ptDraggedPieceOrigin = ptLeftTop;
-
-                            // for the remainder, we need absolute point
-                            clickedPoint.X += UiImgMainChessboard.Margin.Left;
-                            clickedPoint.Y += UiImgMainChessboard.Margin.Top;
-                            DraggedPiece.ptStartDragLocation = clickedPoint;
-
-
-                            Point ptCenter = MainChessBoardUtils.GetSquareCenterPoint(sq);
-
-                            Canvas.SetLeft(DraggedPiece.ImageControl, ptLeftTop.X + (clickedPoint.X - ptCenter.X));
-                            Canvas.SetTop(DraggedPiece.ImageControl, ptLeftTop.Y + (clickedPoint.Y - ptCenter.Y));
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Returns the flipped state of the Main Chessboard
         /// </summary>
         /// <returns></returns>
@@ -492,7 +410,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Checks if the cliked piece is eleigible for making a move.
+        /// Checks if the clicked piece is eleigible for making a move.
         /// </summary>
         /// <param name="sqNorm"></param>
         /// <returns></returns>
@@ -525,79 +443,6 @@ namespace ChessForge
             else
             {
                 return false;
-            }
-        }
-
-        /// <summary>
-        /// Depending on the Application and/or Training mode,
-        /// this may have been the user completing a move.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            Point clickedPoint = e.GetPosition(UiImgMainChessboard);
-            SquareCoords targetSquare = MainChessBoardUtils.ClickedSquare(clickedPoint);
-
-            if (e.ChangedButton == MouseButton.Right)
-            {
-                HandleMouseUpRightButton(targetSquare, e);
-            }
-            else
-            {
-                if (DraggedPiece.isDragInProgress)
-                {
-                    DraggedPiece.isDragInProgress = false;
-                    if (targetSquare == null)
-                    {
-                        // just put the piece back
-                        Canvas.SetLeft(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.X);
-                        Canvas.SetTop(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.Y);
-                    }
-                    else
-                    {
-                        // double check that we are legitimately making a move
-                        if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
-                            || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE
-                            || LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
-                        {
-                            if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
-                            {
-                                BoardCommentBox.ShowFlashAnnouncement("Stop evaluation before making your move.");
-                                ReturnDraggedPiece(false);
-                            }
-                            else
-                            {
-                                // we made a move and we are not in a game,
-                                // so we can switch off all evaluations except if we are in the CONTINUOUS
-                                // mode in MANUAL REVIEW
-                                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE
-                                    && (LearningMode.CurrentMode != LearningMode.Mode.MANUAL_REVIEW || EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS))
-                                {
-                                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-                                }
-                                UserMoveProcessor.FinalizeUserMove(targetSquare);
-                            }
-                        }
-                        else
-                        {
-                            ReturnDraggedPiece(false);
-                        }
-                    }
-                    Canvas.SetZIndex(DraggedPiece.ImageControl, Constants.ZIndex_PieceOnBoard);
-                }
-            }
-        }
-
-        private void HandleMouseUpRightButton(SquareCoords targetSquare, MouseButtonEventArgs e)
-        {
-            if (BoardShapesManager.IsShapeBuildInProgress && !BoardShapesManager.IsShapeBuildTentative)
-            {
-                BoardShapesManager.FinalizeShape(targetSquare, true);
-                _lastRightClickedPoint = null;
-
-                // we have been building a shape so ensure context menu does not pop up
-                e.Handled = true;
             }
         }
 
@@ -728,85 +573,6 @@ namespace ChessForge
             Canvas.SetLeft(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.X);
             Canvas.SetTop(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.Y);
         }
-
-        /// <summary>
-        /// Handles move of the mouse.
-        /// This may be the user dragging the mouse to make a move
-        /// or to draw an arrow.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnMouseMove(object sender, MouseEventArgs e)
-        {
-            Point mousePoint = e.GetPosition(UiImgMainChessboard);
-            SquareCoords sq = MainChessBoardUtils.ClickedSquare(mousePoint);
-
-            // if right button is pressed we may be drawing an arrow
-            if (e.RightButton == MouseButtonState.Pressed)
-            {
-                HandleMouseMoveRightButton(sq, mousePoint);
-            }
-            else
-            {
-                _lastRightClickedPoint = null;
-                if (BoardShapesManager.IsShapeBuildInProgress)
-                {
-                    BoardShapesManager.CancelShapeDraw(true);
-                }
-                if (DraggedPiece.isDragInProgress)
-                {
-                    Canvas.SetZIndex(DraggedPiece.ImageControl, Constants.ZIndex_PieceInAnimation);
-                    mousePoint.X += UiImgMainChessboard.Margin.Left;
-                    mousePoint.Y += UiImgMainChessboard.Margin.Top;
-
-                    Canvas.SetLeft(DraggedPiece.ImageControl, mousePoint.X - squareSize / 2);
-                    Canvas.SetTop(DraggedPiece.ImageControl, mousePoint.Y - squareSize / 2);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Handles mouse move event with Right Button pressed
-        /// A shape building would have been started by a right click
-        /// with or without special key being pressed.
-        /// </summary>
-        private void HandleMouseMoveRightButton(SquareCoords sq, Point ptCurrent)
-        {
-            if (BoardShapesManager.IsShapeBuildInProgress)
-            {
-                bool proceed = true;
-
-                // check if we are tentative
-                if (BoardShapesManager.IsShapeBuildTentative)
-                {
-                    if (_lastRightClickedPoint == null)
-                    {
-                        BoardShapesManager.CancelShapeDraw(true);
-                        proceed = false;
-                    }
-                    else
-                    {
-                        // check if we should proceed or let context menu show
-                        if (Math.Abs(GuiUtilities.CalculateDistance(_lastRightClickedPoint.Value, ptCurrent)) > 5)
-                        {
-                            BoardShapesManager.IsShapeBuildTentative = false;
-                            _lastRightClickedPoint = null;
-                            proceed = true;
-                        }
-                        else
-                        {
-                            proceed = false;
-                        }
-                    }
-                }
-
-                if (proceed)
-                {
-                    BoardShapesManager.UpdateShapeDraw(sq);
-                }
-            }
-        }
-
 
         /// <summary>
         /// Move animation requested as part of auto-replay.
@@ -1671,19 +1437,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Ensure that Workbook Tree's ListView allows
-        /// mouse wheel scrolling.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiScvWorkbookTable_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            ScrollViewer scv = (ScrollViewer)sender;
-            scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
-            e.Handled = true;
-        }
-
-        /// <summary>
         /// A key pressed event has been received.
         /// </summary>
         /// <param name="sender"></param>
@@ -1859,16 +1612,6 @@ namespace ChessForge
             BoardCommentBox.HideFlashAnnouncement();
         }
 
-        /// <summary>
-        /// Hides the floating board if shown
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiRtbTrainingProgress_PreviewMouseMove(object sender, MouseEventArgs e)
-        {
-            ShowFloatingChessboard(false);
-        }
-
         public void ShowFloatingChessboard(bool visible)
         {
             this.Dispatcher.Invoke(() =>
@@ -1892,63 +1635,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Handles left click on any of the Bookmark chessboards.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiCnvBookmark_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (sender is Canvas canvas)
-            {
-                BookmarkManager.ChessboardClickedEvent(canvas.Name, _cmBookmarks, e);
-            }
-        }
-
-        /// <summary>
-        /// A bookmark view was clicked somewhere.
-        /// We disable the bookmark menu in case the click was not on a bookmark.
-        /// The event is then handled by a bookmark handler, if the click was on
-        /// a bookmark and the menus will be enabled accordingly.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BookmarkGrid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            BookmarkManager.ClickedIndex = -1;
-            BookmarkManager.EnableBookmarkMenus(_cmBookmarks, false);
-        }
-
-        /// <summary>
-        /// Allows the user to add a bookmark by re-directing them to the Workbook view 
-        /// and advising on the procedure. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnAddBookmark_Click(object sender, RoutedEventArgs e)
-        {
-            UiTabWorkbook.Focus();
-            MessageBox.Show("Right-click a move and select \"Add to Bookmarks\" from the popup-menu", "Chess Forge Training", MessageBoxButton.OK);
-        }
-
-        /// <summary>
-        /// Handles a mouse click in the Workbook's grid. At this point
-        /// we disable node specific menu items in case no node was clicked.
-        /// If a node was clicked, it will be corrected when the event is handled
-        /// in the Run's OnClick handler.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void WorkbookGrid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (_workbookView != null)
-            {
-                _workbookView.LastClickedNodeId = -1;
-                _workbookView.EnableWorkbookMenus(UiCmnWorkbookRightClick, false);
-            }
-        }
-
-        /// <summary>
-        /// Adds the lst clicked node to bookmarks.
+        /// Adds the last clicked node to bookmarks.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1966,7 +1653,6 @@ namespace ChessForge
             else
             {
                 AppStateManager.IsDirty = true;
-                // AppStateManager.SaveWorkbookFile();
                 UiTabBookmarks.Focus();
             }
         }
@@ -2040,16 +1726,6 @@ namespace ChessForge
             ActiveLine.PreviewKeyDown(sender, e);
         }
 
-        private void ViewActiveLine_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            ActiveLine.PreviewMouseDown(sender, e);
-        }
-
-        private void ViewActiveLine_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            ActiveLine.MouseDoubleClick(sender, e);
-        }
-
         /// <summary>
         /// Auto-replays the current Active Line on a menu request.
         /// </summary>
@@ -2091,20 +1767,6 @@ namespace ChessForge
         private void UiTabItemTrainingBrowse_GotFocus(object sender, RoutedEventArgs e) { AppStateManager.SetupGuiForTrainingBrowseMode(); }
 
         private void UiRtbTrainingProgress_GotFocus(object sender, RoutedEventArgs e) { AppStateManager.SetupGuiForTrainingProgressMode(); }
-
-        private void UiImgLeftArrow_PreviewMouseDown(object sender, MouseButtonEventArgs e) { BookmarkManager.PageDown(); }
-
-        private void UiImgRightArrow_PreviewMouseDown(object sender, MouseButtonEventArgs e) { BookmarkManager.PageUp(); }
-
-        private void UiDgEngineGame_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-        }
-
-        private void UiDgEngineGame_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-        }
 
         private void UiBtnExitTraining_Click(object sender, RoutedEventArgs e)
         {
@@ -2335,44 +1997,6 @@ namespace ChessForge
             }
         }
 
-        /// <summary>
-        /// Handles the Evaluation toggle being clicked while in the ON mode.
-        /// Any evaluation in progress will be stopped.
-        /// to CONTINUOUS.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgEngineOn_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            UiImgEngineOff.Visibility = Visibility.Visible;
-            UiImgEngineOn.Visibility = Visibility.Collapsed;
-
-            StopEvaluation();
-
-            e.Handled = true;
-        }
-
-        /// <summary>
-        /// Handles the Evaluation toggle being clicked while in the OFF mode.
-        /// If in MANUAL REVIEW mode, sets the current evaluation mode
-        /// to CONTINUOUS.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgEngineOff_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
-            {
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
-                UiImgEngineOff.Visibility = Visibility.Collapsed;
-                UiImgEngineOn.Visibility = Visibility.Visible;
-                Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
-                EvaluateActiveLineSelectedPosition();
-            }
-
-            e.Handled = true;
-        }
-
         public void UiMnAssessmentDialog_Click(object sender, RoutedEventArgs e)
         {
             // get the comment and assessment for the currently selected move
@@ -2416,20 +2040,16 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Handles the mouse wheel event
+        /// Allows the user to add a bookmark by re-directing them to the Workbook view 
+        /// and advising on the procedure. 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ChessForgeMain_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private void UiMnAddBookmark_Click(object sender, RoutedEventArgs e)
         {
-            if (e.Delta > 0)
-            {
-                ActiveLine.HandleKeyDown(Key.Left);
-            }
-            else if (e.Delta < 0)
-            {
-                ActiveLine.HandleKeyDown(Key.Right);
-            }
+            UiTabWorkbook.Focus();
+            MessageBox.Show("Right-click a move and select \"Add to Bookmarks\" from the popup-menu", "Chess Forge Training", MessageBoxButton.OK);
         }
+
     }
 }
