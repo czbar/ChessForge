@@ -46,7 +46,7 @@
     <Compile Include="GoFenCommand.cs" />
     <Compile Include="IEngineService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StockfishService.cs" />
+    <Compile Include="EngineProcess.cs" />
     <Compile Include="UciCommands.cs" />
   </ItemGroup>
   <ItemGroup>

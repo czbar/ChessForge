@@ -15,7 +15,7 @@ namespace EngineService
     /// communicating with it.
     /// It is built as a DLL so that it can be easily tested independent of the main program.
     /// </summary>
-    public class EngineProcess // : IEngineService
+    public class EngineProcess
     {
         /// <summary>
         /// Once the engine process has started and "readyok" was received, the engine will be
