@@ -618,7 +618,7 @@ namespace ChessForge
                             }
                             else
                             {
-                                EvaluationManager.SetPositionToEvaluate(_lastClickedNode.Position);
+                                EvaluationManager.SetSingleNodeToEvaluate(_lastClickedNode);
                             }
                         }
                     }
@@ -1024,12 +1024,12 @@ namespace ChessForge
         {
             if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
             {
-                TreeNode nd = EvaluationManager.GetNextNodeToEvaluate();
+                TreeNode nd = EvaluationManager.GetNextLineNodeToEvaluate();
                 if (nd == null)
                 {
                     EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-                    EvaluationManager.ClearRunsToEvaluate();
-                    EvaluationManager.SetPositionToEvaluate(null);
+                    EvaluationManager.ResetLineNodesToEvaluate();
+                    EvaluationManager.SetSingleNodeToEvaluate(null);
                 }
                 else
                 {
@@ -1053,28 +1053,30 @@ namespace ChessForge
         /// </summary>
         public void RequestLineEvaluation()
         {
-            EvaluationManager.ClearRunsToEvaluate();
-
-            // figure out whether this is for the Main Line or Engine Game
-            Run firstRun = _lastClickedRun;
-            Paragraph parentPara = firstRun.Parent as Paragraph;
-            if (firstRun != null)
+            AppStateManager.MainWin.Dispatcher.Invoke(() =>
             {
-                string paraName = parentPara.Name;
-                if (paraName.StartsWith(_par_line_moves_))
+                EvaluationManager.ResetLineNodesToEvaluate();
+
+                // figure out whether this is for the Main Line or Engine Game
+                Run firstRun = _lastClickedRun;
+                Paragraph parentPara = firstRun.Parent as Paragraph;
+                if (firstRun != null)
                 {
-                    // collect the Main Line's Runs to evaluate the moves
-                    SetMainLineRunsToEvaluate(paraName, _lastClickedRun);
-                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE);
-                    RequestMoveEvaluation();
+                    string paraName = parentPara.Name;
+                    if (paraName.StartsWith(_par_line_moves_))
+                    {
+                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, EvaluationManager.LineSource.TRAINING_LINE);
+                        SetMainLineRunsToEvaluate(paraName, _lastClickedRun);
+                        RequestMoveEvaluation();
+                    }
+                    else if (paraName.StartsWith(_par_game_moves_))
+                    {
+                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, EvaluationManager.LineSource.TRAINING_LINE);
+                        SetGameRunsToEvaluate(parentPara, _lastClickedRun);
+                        RequestMoveEvaluation();
+                    }
                 }
-                else if (paraName.StartsWith(_par_game_moves_))
-                {
-                    SetGameRunsToEvaluate(parentPara, _lastClickedRun);
-                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE);
-                    RequestMoveEvaluation();
-                }
-            }
+            });
         }
 
         /// <summary>
@@ -1106,7 +1108,7 @@ namespace ChessForge
                             {
                                 if (inl.Name.StartsWith(_run_line_move_) || inl.Name.StartsWith(_run_wb_move_))
                                 {
-                                    EvaluationManager.AddRunToEvaluate(inl as Run);
+                                    EvaluationManager.AddLineRunToEvaluate(inl as Run);
                                 }
                             }
                         }
@@ -1135,7 +1137,7 @@ namespace ChessForge
 
                     if (started && inl.Name.StartsWith(_run_engine_game_move_))
                     {
-                        EvaluationManager.AddRunToEvaluate(inl as Run);
+                        EvaluationManager.AddLineRunToEvaluate(inl as Run);
                     }
                 }
             }
