@@ -177,37 +177,46 @@ namespace ChessForge
 
             StringBuilder sb = new StringBuilder();
             // make a copy of the position under evaluation
-            BoardPosition workingPosition = new BoardPosition(EvaluationManager.GetEvaluatedNode().Position);
-            bool firstMove = true;
-            try
+            TreeNode nd = EvaluationManager.GetEvaluatedNode();
+            if (nd != null)
             {
-                foreach (string move in moves)
+                BoardPosition workingPosition = new BoardPosition(nd.Position);
+                bool firstMove = true;
+                try
                 {
-                    if (workingPosition.ColorToMove == PieceColor.White && !firstMove)
+                    foreach (string move in moves)
                     {
-                        sb.Append(workingPosition.MoveNumber.ToString() + ".");
-                    }
-                    firstMove = false;
-                    bool isCastle;
-                    sb.Append(MoveUtils.EngineNotationToAlgebraic(move, ref workingPosition, out isCastle));
-                    // invert colors
-                    workingPosition.ColorToMove = workingPosition.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
-                    sb.Append(" ");
-                    if (workingPosition.ColorToMove == PieceColor.White)
-                    {
-                        workingPosition.MoveNumber++;
+                        if (workingPosition.ColorToMove == PieceColor.White && !firstMove)
+                        {
+                            sb.Append(workingPosition.MoveNumber.ToString() + ".");
+                        }
+                        firstMove = false;
+                        bool isCastle;
+                        sb.Append(MoveUtils.EngineNotationToAlgebraic(move, ref workingPosition, out isCastle));
+                        // invert colors
+                        workingPosition.ColorToMove = workingPosition.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
+                        sb.Append(" ");
+                        if (workingPosition.ColorToMove == PieceColor.White)
+                        {
+                            workingPosition.MoveNumber++;
+                        }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                if (Configuration.DebugMode != 0)
+                catch (Exception ex)
                 {
-                    AppLog.Message("Exception in BuildMoveSequence(): " + ex.Message);
+                    if (Configuration.DebugMode != 0)
+                    {
+                        AppLog.Message("Exception in BuildMoveSequence(): " + ex.Message);
+                    }
                 }
-            }
 
-            return sb.ToString();
+                return sb.ToString();
+            }
+            else
+            {
+                AppLog.Message("Error in BuildMoveSequence(): EvaluationManager.GetEvaluatedNode() returned null.");
+                return "";
+            }
         }
     }
 }
