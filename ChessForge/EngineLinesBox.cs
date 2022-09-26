@@ -6,6 +6,7 @@ using System.Timers;
 using System.Text;
 using ChessPosition;
 using GameTree;
+using System.Windows.Shapes;
 
 namespace ChessForge
 {
@@ -63,32 +64,42 @@ namespace ChessForge
         /// <param name="e"></param>
         public static void ShowEngineLines(object source, ElapsedEventArgs e)
         {
-            if (EvaluationManager.CurrentMode != EvaluationManager.Mode.ENGINE_GAME && EvaluationManager.Position != null)
+            try
             {
-                Lines.Clear();
-                lock (EngineMessageProcessor.MoveCandidatesLock)
+                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.ENGINE_GAME && EvaluationManager.GetEvaluatedNode() != null)
                 {
-                    // make a copy of Move candidates so we can release the lock asap
-                    foreach (MoveEvaluation me in EngineMessageProcessor.MoveCandidates)
+                    Lines.Clear();
+                    lock (EngineMessageProcessor.MoveCandidatesLock)
                     {
-                        Lines.Add(new MoveEvaluation(me));
+                        // make a copy of Move candidates so we can release the lock asap
+                        foreach (MoveEvaluation me in EngineMessageProcessor.MoveCandidates)
+                        {
+                            Lines.Add(new MoveEvaluation(me));
+                        }
                     }
-                }
 
-                StringBuilder sb = new StringBuilder();
-                _tbEvalLines.Dispatcher.Invoke(() =>
+                    StringBuilder sb = new StringBuilder();
+                    _tbEvalLines.Dispatcher.Invoke(() =>
+                    {
+                        for (int i = 0; i < Lines.Count; i++)
+                        {
+                            sb.Append(BuildLineText(i, Lines[i]));
+                            sb.Append(Environment.NewLine);
+                        }
+                        string txt = sb.ToString();
+                        if (!string.IsNullOrWhiteSpace(txt))
+                        {
+                            _tbEvalLines.Text = sb.ToString();
+                        }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Configuration.DebugMode != 0)
                 {
-                    for (int i = 0; i < Lines.Count; i++)
-                    {
-                        sb.Append(BuildLineText(i, Lines[i]));
-                        sb.Append(Environment.NewLine);
-                    }
-                    string txt = sb.ToString();
-                    if (!string.IsNullOrWhiteSpace(txt))
-                    {
-                        _tbEvalLines.Text = sb.ToString();
-                    }
-                });
+                    AppLog.Message("ShowEngineLines(): " + ex.Message);
+                }
             }
 
             _pbEngineEval.Dispatcher.Invoke(() =>
@@ -107,12 +118,13 @@ namespace ChessForge
         {
             try
             {
-                if (line == null || EvaluationManager.Position == null)
+                BoardPosition position = EvaluationManager.GetEvaluatedNode().Position;
+                if (line == null || position == null)
                 {
                     return " ";
                 }
 
-                string eval = EvaluationManager.BuildEvaluationText(line, EvaluationManager.Position.ColorToMove);
+                string eval = EvaluationManager.BuildEvaluationText(line, position.ColorToMove);
 
                 if (eval == "#")
                 {
@@ -121,10 +133,10 @@ namespace ChessForge
                 else
                 {
 
-                    uint moveNoToShow = EvaluationManager.Position.ColorToMove == PieceColor.Black ?
-                        EvaluationManager.Position.MoveNumber : (EvaluationManager.Position.MoveNumber + 1);
+                    uint moveNoToShow = position.ColorToMove == PieceColor.Black ?
+                        position.MoveNumber : (position.MoveNumber + 1);
 
-                    string sMoveNo = moveNoToShow.ToString() + (EvaluationManager.Position.ColorToMove == PieceColor.White ? "." : "...");
+                    string sMoveNo = moveNoToShow.ToString() + (position.ColorToMove == PieceColor.White ? "." : "...");
                     if (string.IsNullOrEmpty(line.Line))
                     {
                         sMoveNo = "";
@@ -165,7 +177,7 @@ namespace ChessForge
 
             StringBuilder sb = new StringBuilder();
             // make a copy of the position under evaluation
-            BoardPosition workingPosition = new BoardPosition(EvaluationManager.Position);
+            BoardPosition workingPosition = new BoardPosition(EvaluationManager.GetEvaluatedNode().Position);
             bool firstMove = true;
             try
             {

@@ -88,6 +88,9 @@
     <Compile Include="BoardArrow.cs" />
     <Compile Include="BoardShapesManager.cs" />
     <Compile Include="BoardCircle.cs" />
+    <Compile Include="EvaluationActiveLine.cs" />
+    <Compile Include="EvaluationLine.cs" />
+    <Compile Include="EvaluationTrainingLine.cs" />
     <Compile Include="LearningMode.cs" />
     <Compile Include="AppStateManager.cs" />
     <Compile Include="AppTimers.cs" />
