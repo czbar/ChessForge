@@ -16,11 +16,17 @@
             <MenuItem x:Name="_mnTrainEvalLine" Header="Evaluate Line" Click="UiMnTrainEvalLine_Click" />
             <Separator x:Name="_mnTrainSepar_2" />
             <MenuItem x:Name="_mnTrainRestartTraining" Header="Restart Training" Click="UiMnTrainRestartTraining_Click" />
-            <MenuItem x:Name="_mnTrainExitTraining" Header="Exit Training"  Click="MenuItem_StopTraining" />
+            <MenuItem x:Name="_mnTrainExitTraining" Header="Exit Training"  Click="UiMnStopTraining_Click" />
         </ContextMenu>
     </Window.Resources>
 
-
+    <Window.CommandBindings>
+        <CommandBinding Command="local:CustomCommands.FlipBoard" Executed="UiMnFlipBoard_Click"/>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="F" Modifiers="Control" Command="local:CustomCommands.FlipBoard"/>
+    </Window.InputBindings>
+    
     <Grid x:Name="_gridMain" ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -40,20 +46,20 @@
             <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680" ContextMenuOpening="MainCanvas_ContextMenuOpening">
                 <Canvas.ContextMenu>
                     <ContextMenu  x:Name="UiMnMainBoard">
-                        <MenuItem x:Name="UiMnciStartTrainingHere"  Header="Start Training from Here" Click="UiMnciStartTrainingHere_Click" />
-                        <MenuItem x:Name="UiMnciStartTraining"  Header="Start Training from a Bookmark" Click="MenuItem_StartTraining"/>
+                        <MenuItem x:Name="UiMnciStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
+                        <MenuItem x:Name="UiMnciStartTraining"  Header="Start Training from a Bookmark" Click="UiMnStartTraining_Click"/>
                         <MenuItem x:Name="UiMnciRestartTraining"  Header="Restart Training" Click="UiMnTrainRestartTraining_Click"/>
-                        <MenuItem x:Name="UiMnciExitTraining" Header="Exit Training" Click="MenuItem_StopTraining"/>
+                        <MenuItem x:Name="UiMnciExitTraining" Header="Exit Training" Click="UiMnStopTraining_Click"/>
                         <Separator x:Name="UiMncMainBoardSepar_1" />
-                        <MenuItem x:Name="UiMnciEvalPos" Header="Evaluate Position" Click="MenuItem_EvaluatePosition" />
-                        <MenuItem x:Name="UiMnciEvalLine" Header="Evaluate Line" Click="MenuItem_EvaluateLine" />
+                        <MenuItem x:Name="UiMnciEvalPos" Header="Evaluate Position" Click="UiMnEvaluatePosition_Click" />
+                        <MenuItem x:Name="UiMnciEvalLine" Header="Evaluate Line" Click="UiMnEvaluateLine_Click" />
                         <Separator x:Name="UiMncMainBoardSepar_2" />
-                        <MenuItem x:Name="UiMnciBookmarkPosition" Header="Bookmark This Position" Click="UiMnciBookmarkPosition_Click" />
+                        <MenuItem x:Name="UiMnciBookmarkPosition" Header="Bookmark This Position" Click="UiMnBookmarkPosition_Click" />
                         <Separator x:Name="UiMncMainBoardSepar_4" />
-                        <MenuItem x:Name="UiMnciReplay" Header="Replay"  Click="MenuItem_ReplayLine"/>
+                        <MenuItem x:Name="UiMnciReplay" Header="Replay"  Click="UiMnReplayLine_Clicked"/>
                         <Separator x:Name="UiMncMainBoardSepar_3" />
-                        <MenuItem x:Name="UiMnciPlayEngine" Header="Play Against Computer " Click="Menu_PlayEngine" />
-                        <MenuItem x:Name="UiMnciExitEngineGame" Header="Exit Game " Click="UiMnciExitEngineGame_Click" />
+                        <MenuItem x:Name="UiMnciPlayEngine" Header="Play Against Computer " Click="UiMnPlayEngine_Click" />
+                        <MenuItem x:Name="UiMnciExitEngineGame" Header="Exit Game " Click="UiMnExitEngineGame_Click" />
                     </ContextMenu>
                 </Canvas.ContextMenu>
                 <Canvas.Background>
@@ -67,7 +73,7 @@
             <!-- Game menu -->
             <MenuItem x:Name ="MenuFile"  Header="File" Margin="0,0,0,0" >
                 <MenuItem x:Name="UiMnNewWorkbook" Header="New Workbook" Click="UiMnNewWorkbook_Click" />
-                <MenuItem x:Name="UiMnLoadWorkbook" Header="Open Workbook" Click="Menu_LoadWorkbook"/>
+                <MenuItem x:Name="UiMnOpenWorkbook" Header="Open Workbook" Click="UiMnOpenWorkbook_Click"/>
                 <MenuItem x:Name="UiMnCloseWorkbook" Header="Close Workbook" Click="UiMnCloseWorkbook_Click" />
                 <Separator />
                 <MenuItem x:Name="UiMnWorkbookSave" Header="Save" Click="UiMnWorkbookSave_Click" />
@@ -77,16 +83,16 @@
                 <Separator />
             </MenuItem>
             <MenuItem Header="Training" Margin="0,0,0,0">
-                <MenuItem x:Name="UiMnStartTraining"  Header="Start New Session" Click="MenuItem_StartTraining"/>
+                <MenuItem x:Name="UiMnStartTraining"  Header="Start New Session" Click="UiMnStartTraining_Click"/>
                 <MenuItem x:Name="UiMnRestartTraining"  Header="Restart Training" Click="UiMnTrainRestartTraining_Click"/>
-                <MenuItem x:Name="UiMnExitTraining" Header="Exit Training" Click="MenuItem_StopTraining"/>
+                <MenuItem x:Name="UiMnExitTraining" Header="Exit Training" Click="UiMnStopTraining_Click"/>
             </MenuItem>
             <MenuItem Header="Edit" Margin="0,0,0,0">
                 <MenuItem Header="Coach's Assessment" Click="UiMnAssessmentDialog_Click" >
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="View" Margin="0,0,0,0">
-                <MenuItem Header="Flip Board" Click="MenuItem_FlipBoard" >
+                <MenuItem Header="Flip Board" Click="UiMnFlipBoard_Click" InputGestureText="Ctrl+F" >
                     <MenuItem.Icon>
                         <Image Source="Resources/Images/flip_board.png"/>
                     </MenuItem.Icon>
@@ -163,7 +169,7 @@
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookView_OnPreviewMouseDown">
                     <Grid.ContextMenu>
                         <ContextMenu x:Name="UiCmnWorkbookRightClick">
-                            <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnciStartTrainingHere_Click" />
+                            <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
                             <Separator />
                             <MenuItem x:Name="UiMnPromoteLine" Header="Promote Line" Click="UiMnPromoteLine_Click" />
                             <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnDeleteMovesFromHere_Click" />
@@ -171,8 +177,8 @@
                             <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Bookmark This Position" Click="UiMnWorkbookSelectAsBookmark_Click" />
                             <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="Bookmark All Options Here" Click="UiMnWorkbookBookmarkAlternatives_Click" />
                             <Separator />
-                            <MenuItem x:Name="_mnWorkbookEvalMove" Header="Evaluate Position"  Click="MenuItem_EvaluatePosition" />
-                            <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line"  Click="MenuItem_EvaluateLine" />
+                            <MenuItem x:Name="_mnWorkbookEvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
+                            <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
                         </ContextMenu>
                     </Grid.ContextMenu>
                     <RichTextBox x:Name="UiRtbWorkbookView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"

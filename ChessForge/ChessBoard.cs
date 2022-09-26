@@ -366,12 +366,12 @@ namespace ChessForge
             if (node != null)
             {
                 _position = new BoardPosition(node.Position);
-                BoardShapesManager.Reset(node.Arrows, node.Circles);
+                BoardShapesManager.Reset(node.Arrows, node.Circles, false);
             }
             else
             {
                 _position = new BoardPosition(pos);
-                BoardShapesManager.Reset();
+                BoardShapesManager.Reset(false);
             }
 
             for (int xcoord = 0; xcoord < 8; xcoord++)

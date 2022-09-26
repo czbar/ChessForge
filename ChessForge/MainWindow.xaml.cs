@@ -189,16 +189,6 @@ namespace ChessForge
             mnDebugDumpStates.Click += UiMnDebugDumpStates_Click;
         }
 
-        private void UiMnDebugDump_Click(object sender, RoutedEventArgs e)
-        {
-            DumpDebugLogs(true);
-        }
-
-        private void UiMnDebugDumpStates_Click(object sender, RoutedEventArgs e)
-        {
-            DumpDebugStates();
-        }
-
         // tracks the application start stage
         private int _appStartStage = 0;
 
@@ -310,7 +300,7 @@ namespace ChessForge
                     {
                         mi.Header = fileName;
                         MenuFile.Items.Add(mi);
-                        mi.Click += OpenWorkbookFile;
+                        mi.Click += OpenRecentWorkbookFile;
                     }
                 }
                 catch { };
@@ -508,244 +498,6 @@ namespace ChessForge
             }
 
             return leftTop;
-        }
-
-        /// <summary>
-        /// Completes a castling move. King would have already been moved.
-        /// </summary>
-        /// <param name="move"></param>
-        public void MoveCastlingRook(string move)
-        {
-            SquareCoords orig = null;
-            SquareCoords dest = null;
-            switch (move)
-            {
-                case "e1g1":
-                    orig = !MainChessBoard.IsFlipped ? new SquareCoords(7, 0) : new SquareCoords(0, 7);
-                    dest = !MainChessBoard.IsFlipped ? new SquareCoords(5, 0) : new SquareCoords(2, 7);
-                    break;
-                case "e8g8":
-                    orig = !MainChessBoard.IsFlipped ? new SquareCoords(7, 7) : new SquareCoords(0, 0);
-                    dest = !MainChessBoard.IsFlipped ? new SquareCoords(5, 7) : new SquareCoords(2, 0);
-                    break;
-                case "e1c1":
-                    orig = !MainChessBoard.IsFlipped ? new SquareCoords(0, 0) : new SquareCoords(7, 7);
-                    dest = !MainChessBoard.IsFlipped ? new SquareCoords(3, 0) : new SquareCoords(4, 7);
-                    break;
-                case "e8c8":
-                    orig = !MainChessBoard.IsFlipped ? new SquareCoords(0, 7) : new SquareCoords(7, 0);
-                    dest = !MainChessBoard.IsFlipped ? new SquareCoords(3, 7) : new SquareCoords(4, 0);
-                    break;
-            }
-
-            MovePiece(orig, dest);
-        }
-
-        /// <summary>
-        /// Moving a piece from square to square.
-        /// </summary>
-        /// <param name="orig"></param>
-        /// <param name="dest"></param>
-        private void MovePiece(SquareCoords orig, SquareCoords dest)
-        {
-            if (orig == null || dest == null)
-                return;
-
-            MainChessBoard.GetPieceImage(dest.Xcoord, dest.Ycoord, true).Source = MainChessBoard.GetPieceImage(orig.Xcoord, orig.Ycoord, true).Source;
-            MainChessBoard.GetPieceImage(orig.Xcoord, orig.Ycoord, true).Source = null;
-        }
-
-        /// <summary>
-        /// Returns the dragged piece's Image control to
-        /// the square it started from.
-        /// If clearImage == true, the image in the control
-        /// will be cleared (e.g. because the move was successfully
-        /// executed and the image has been transferred to the control
-        /// on the target square.
-        /// </summary>
-        /// <param name="clearImage"></param>
-        public void ReturnDraggedPiece(bool clearImage)
-        {
-            if (clearImage)
-            {
-                DraggedPiece.ImageControl.Source = null;
-            }
-            Canvas.SetLeft(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.X);
-            Canvas.SetTop(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.Y);
-        }
-
-        /// <summary>
-        /// Move animation requested as part of auto-replay.
-        /// As such we need to flip the coordinates if
-        /// the board is flipped.
-        /// </summary>
-        /// <param name="move"></param>
-        public void RequestMoveAnimation(MoveUI move)
-        {
-            SquareCoords origin = MainChessBoard.FlipCoords(move.Origin);
-            SquareCoords destination = MainChessBoard.FlipCoords(move.Destination);
-            AnimateMove(origin, destination);
-        }
-
-        /// <summary>
-        /// Caller must handle a possible flipped stated of the board.
-        /// </summary>
-        /// <param name="origin"></param>
-        /// <param name="destination"></param>
-        private void AnimateMove(SquareCoords origin, SquareCoords destination)
-        {
-            // caller already accounted for a possible flipped board so call with ignoreFlip = true
-            Image img = MainChessBoard.GetPieceImage(origin.Xcoord, origin.Ycoord, true);
-            MoveAnimation.Piece = img;
-            MoveAnimation.Origin = origin;
-            MoveAnimation.Destination = destination;
-
-            Canvas.SetZIndex(img, Constants.ZIndex_PieceInAnimation);
-
-            Point orig = MainChessBoardUtils.GetSquareTopLeftPoint(origin);
-            Point dest = MainChessBoardUtils.GetSquareTopLeftPoint(destination);
-
-            TranslateTransform trans = new TranslateTransform();
-            if (img.RenderTransform != null)
-                img.RenderTransform = trans;
-
-            DoubleAnimation animX = new DoubleAnimation(0, dest.X - orig.X, TimeSpan.FromMilliseconds(Configuration.MoveSpeed));
-            DoubleAnimation animY = new DoubleAnimation(0, dest.Y - orig.Y, TimeSpan.FromMilliseconds(Configuration.MoveSpeed));
-
-            LearningMode.CurrentTranslateTransform = trans;
-            LearningMode.CurrentAnimationX = animX;
-            LearningMode.CurrentAnimationY = animY;
-
-            animX.Completed += new EventHandler(MoveAnimationCompleted);
-            trans.BeginAnimation(TranslateTransform.XProperty, animX);
-            trans.BeginAnimation(TranslateTransform.YProperty, animY);
-
-        }
-
-        /// <summary>
-        /// Stops move animation if there is one in progress.
-        /// </summary>
-        public void StopMoveAnimation()
-        {
-            // TODO Apparently, there are 2 methods to stop animation.
-            // Method 1 below keeps the animated image at the spot it was when the stop request came.
-            // Method 2 returns it to the initial position.
-            // Neither works fully to our satisfaction. They seem to not be exiting immediately and are leaving some garbage
-            // behind which prevents us from immediatey changing the speed of animation on user's request 
-            if (LearningMode.CurrentAnimationX != null && LearningMode.CurrentAnimationY != null && LearningMode.CurrentTranslateTransform != null)
-            {
-                // *** Method 1.
-                //AppState.CurrentAnimationX.BeginTime = null;
-                //AppState.CurrentAnimationY.BeginTime = null;
-                //AppState.CurrentTranslateTransform.BeginAnimation(TranslateTransform.XProperty, AppState.CurrentAnimationX);
-                //AppState.CurrentTranslateTransform.BeginAnimation(TranslateTransform.YProperty, AppState.CurrentAnimationY);
-
-                // *** Method 2.
-                LearningMode.CurrentTranslateTransform.BeginAnimation(TranslateTransform.XProperty, null);
-                LearningMode.CurrentTranslateTransform.BeginAnimation(TranslateTransform.YProperty, null);
-            }
-        }
-
-        /// <summary>
-        /// Called when animation completes.
-        /// The coords saved in the MoveAnimation object
-        /// are absolute as a possible flipped state of the board was
-        /// taken into account at the start fo the animation.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MoveAnimationCompleted(object sender, EventArgs e)
-        {
-            LearningMode.CurrentTranslateTransform = null;
-            LearningMode.CurrentAnimationX = null;
-            LearningMode.CurrentAnimationY = null;
-
-            MainChessBoard.GetPieceImage(MoveAnimation.Destination.Xcoord, MoveAnimation.Destination.Ycoord, true).Source = MoveAnimation.Piece.Source;
-
-            Point orig = MainChessBoardUtils.GetSquareTopLeftPoint(MoveAnimation.Origin);
-            //_pieces[AnimationOrigin.Xcoord, AnimationOrigin.Ycoord].Source = AnimationPiece.Source;
-
-            Canvas.SetLeft(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), orig.X);
-            Canvas.SetTop(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), orig.Y);
-
-            //TODO: there should be a better way than having to recreate the image control.
-            //   but it seems the image would no longer show (tested when not removing
-            //   the image from the origin square, the image won't show seemingly due to
-            // RenderTransfrom being set.)
-            //
-            // This seems to work but re-shows the last moved piece on its origin square???
-            // _pieces[AnimationOrigin.Xcoord, AnimationOrigin.Ycoord].RenderTransform = null;
-            //
-
-            Image old = MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true);
-            MainCanvas.Children.Remove(old);
-            MainChessBoard.SetPieceImage(new Image(), MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true);
-            MainCanvas.Children.Add(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true));
-            Canvas.SetLeft(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), squareSize * MoveAnimation.Origin.Xcoord + UiImgMainChessboard.Margin.Left);
-            Canvas.SetTop(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), squareSize * (7 - MoveAnimation.Origin.Ycoord) + UiImgMainChessboard.Margin.Top);
-
-            ActiveLineReplay.PrepareNextMoveForAnimation(ActiveLineReplay.LastAnimatedMoveIndex, false);
-        }
-
-        private void OpenWorkbookFile(object sender, RoutedEventArgs e)
-        {
-            if (ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
-            {
-                string menuItemName = ((MenuItem)e.Source).Name;
-                string path = Configuration.GetRecentFile(menuItemName);
-                ReadWorkbookFile(path, false);
-            }
-        }
-
-        /// <summary>
-        /// Loads a new Workbook file.
-        /// If the application is NOT in the IDLE mode, it will ask the user:
-        /// - to close/cancel/save/put_aside the current tree (TODO: TO BE IMPLEMENTED)
-        /// - stop a game against the engine, if in progress
-        /// - stop any engine evaluations if in progress (TODO: it should be allowed to continue background analysis in a separate low-pri thread).
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Menu_LoadWorkbook(object sender, RoutedEventArgs e)
-        {
-            if (ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
-            {
-                OpenFileDialog openFileDialog = new OpenFileDialog
-                {
-                    Multiselect = false,
-                    Filter = "Workbooks (*.chf); PGN (*.pgn)|*.chf;*.pgn|All files (*.*)|*.*"
-                };
-
-                string initDir;
-                if (!string.IsNullOrEmpty(Configuration.LastOpenDirectory))
-                {
-                    initDir = Configuration.LastOpenDirectory;
-                }
-                else
-                {
-                    initDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                }
-
-                openFileDialog.InitialDirectory = initDir;
-
-                bool? result;
-
-                try
-                {
-                    result = openFileDialog.ShowDialog();
-                }
-                catch
-                {
-                    openFileDialog.InitialDirectory = "";
-                    result = openFileDialog.ShowDialog();
-                };
-
-                if (result == true)
-                {
-                    Configuration.LastOpenDirectory = Path.GetDirectoryName(openFileDialog.FileName);
-                    ReadWorkbookFile(openFileDialog.FileName, false);
-                }
-            }
         }
 
         /// <summary>
@@ -1031,7 +783,6 @@ namespace ChessForge
         public void DisplayPosition(TreeNode nd)
         {
             MainChessBoard.DisplayPosition(nd);
-            //            BoardArrowsManager.Reset(nd.Arrows);
         }
 
         /// <summary>
@@ -1096,39 +847,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Tidy up upon application closing.
-        /// Stop all timers, write out any logs,
-        /// save any unsaved bits.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ChessForgeMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            AppLog.Message("Application Closing");
-
-            StopEvaluation();
-
-            EngineMessageProcessor.ChessEngineService.StopEngine();
-
-            if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN)
-            {
-                WorkbookManager.PromptUserToConvertPGNToCHF();
-            }
-            else
-            {
-                if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE
-                    && AppStateManager.IsDirty || (Workbook != null && Workbook.HasTrainingMoves()))
-                {
-                    WorkbookManager.PromptAndSaveWorkbook(false, true);
-                }
-            }
-            Timers.StopAll();
-
-            DumpDebugLogs(false);
-            Configuration.WriteOutConfiguration();
-        }
-
-        /// <summary>
         /// Writes out all logs.
         /// If userRequested == true, this was requested via the menu
         /// and we dump everything with distinct file names.
@@ -1165,18 +883,6 @@ namespace ChessForge
             AppLog.DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
         }
 
-        /// <summary>
-        /// The user requested evaluation of the currently selected move.
-        /// Check if there is an item currently selected. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_EvaluatePosition(object sender, RoutedEventArgs e)
-        {
-            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
-            EvaluateActiveLineSelectedPosition();
-        }
-
         private void EvaluateActiveLineSelectedPosition()
         {
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
@@ -1194,40 +900,6 @@ namespace ChessForge
             EvaluationManager.SetSingleNodeToEvaluate(nd);
             EngineMessageProcessor.RequestPositionEvaluation(nd, Configuration.EngineMpv, 0);
         }
-
-        private void MenuItem_EvaluateLine(object sender, RoutedEventArgs e)
-        {
-            // a defensive check
-            if (ActiveLine.GetPlyCount() == 0)
-            {
-                return;
-            }
-
-            if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
-            {
-                StopEvaluation();
-            }
-
-            // we will start with the first move of the active line
-            if (EngineMessageProcessor.IsEngineAvailable)
-            {
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, EvaluationManager.LineSource.ACTIVE_LINE);
-
-                int idx = ActiveLine.GetSelectedPlyNodeIndex(true);
-                TreeNode nd = ActiveLine.GetSelectedTreeNode();
-                EvaluationManager.SetStartNodeIndex(idx > 0 ? idx : 1);
-
-                UiDgActiveLine.SelectedCells.Clear();
-
-
-                EngineMessageProcessor.RequestMoveEvaluation(idx, nd);
-            }
-            else
-            {
-                MessageBox.Show("Chess Engine is not available.", "Move Evaluation Failure", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-
 
         public void UpdateLastMoveTextBox(TreeNode nd)
         {
@@ -1272,52 +944,6 @@ namespace ChessForge
         {
             AppStateManager.ShowMoveEvaluationControls(false, true);
             UiTrainingView.ShowEvaluationResult(nd);
-        }
-
-        /// <summary>
-        /// The user requests a game against the computer starting from the current position
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Menu_PlayEngine(object sender, RoutedEventArgs e)
-        {
-            // check that there is a move selected in the _dgMainLineView so
-            // that we have somewhere to start
-            TreeNode nd = ActiveLine.GetSelectedTreeNode();
-            if (nd != null)
-            {
-                StartEngineGame(nd, false);
-                if (nd.ColorToMove == PieceColor.White && !MainChessBoard.IsFlipped || nd.ColorToMove == PieceColor.Black && MainChessBoard.IsFlipped)
-                {
-                    MainChessBoard.FlipBoard();
-                }
-            }
-            else
-            {
-                MessageBox.Show("Select the move from which to start.", "Computer Game", MessageBoxButton.OK);
-            }
-        }
-
-        private void UiMnciExitEngineGame_Click(object sender, RoutedEventArgs e)
-        {
-            StopEngineGame();
-        }
-
-
-        private void UiMnciBookmarkPosition_Click(object sender, RoutedEventArgs e)
-        {
-            int moveIndex = ActiveLine.GetSelectedPlyNodeIndex(false);
-            if (moveIndex < 0)
-            {
-                return;
-            }
-            else
-            {
-                int posIndex = moveIndex;
-                TreeNode nd = ActiveLine.GetNodeAtIndex(posIndex);
-                BookmarkManager.AddBookmark(nd);
-                UiTabBookmarks.Focus();
-            }
         }
 
         /// <summary>
@@ -1452,66 +1078,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Re-directs the user to the bookmark page where they can
-        /// select a bookmarked position.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_StartTraining(object sender, RoutedEventArgs e)
-        {
-            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
-            {
-                StopEngineGame();
-            }
-            else if (EvaluationManager.IsRunning)
-            {
-                EngineMessageProcessor.StopEngineEvaluation();
-            }
-
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-
-            AppStateManager.SwapCommentBoxForEngineLines(false);
-
-            UiTabBookmarks.Focus();
-        }
-
-        /// <summary>
-        /// A request from the menu to start training at the currently selected position.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnciStartTrainingHere_Click(object sender, RoutedEventArgs e)
-        {
-            // do some housekeeping just in case
-            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
-            {
-                StopEngineGame();
-            }
-            else if (EvaluationManager.IsRunning)
-            {
-                EngineMessageProcessor.StopEngineEvaluation();
-            }
-
-            TreeNode nd = ActiveLine.GetSelectedTreeNode();
-            if (nd != null)
-            {
-                if (!BookmarkManager.IsBookmarked(nd.NodeId))
-                {
-                    if (MessageBox.Show("Do you want to bookmark this move?", "Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                    {
-                        BookmarkManager.AddBookmark(nd);
-                    }
-                }
-                SetAppInTrainingMode(nd);
-            }
-            else
-            {
-                MessageBox.Show("No move selected to start training from.", "Training", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-        }
-
-        /// <summary>
         /// Starts a training session from the specified bookmark position.
         /// </summary>
         /// <param name="bookmarkIndex"></param>
@@ -1563,42 +1129,6 @@ namespace ChessForge
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
         }
 
-        /// <summary>
-        /// Exits the Training session, if confirmed by the user.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_StopTraining(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                if (WorkbookManager.PromptAndSaveWorkbook(false))
-                {
-                    EngineMessageProcessor.StopEngineEvaluation();
-                    EvaluationManager.Reset();
-
-                    TrainingSession.IsTrainingInProgress = false;
-                    MainChessBoard.RemoveMoveSquareColors();
-                    LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-                    AppStateManager.SetupGuiForCurrentStates();
-
-                    ActiveLine.DisplayPositionForSelectedCell();
-                    AppStateManager.SwapCommentBoxForEngineLines(false);
-                    BoardCommentBox.RestoreTitleMessage();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Flips the main chess board upside down.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_FlipBoard(object sender, RoutedEventArgs e)
-        {
-            MainChessBoard.FlipBoard();
-        }
-
         public void InvokeRequestWorkbookResponse(object source, ElapsedEventArgs e)
         {
             UiTrainingView.RequestWorkbookResponse();
@@ -1623,119 +1153,13 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Handles a context menu event to start training
-        /// from the recently clicked bookmark.
+        /// The user pressed a key to be handled by Active Line.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnTrainFromBookmark_Click(object sender, RoutedEventArgs e)
-        {
-            if (BookmarkManager.ClickedIndex >= 0)
-            {
-                SetAppInTrainingMode(BookmarkManager.ClickedIndex);
-            }
-        }
-
-        /// <summary>
-        /// Adds the last clicked node to bookmarks.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnWorkbookSelectAsBookmark_Click(object sender, RoutedEventArgs e)
-        {
-            int ret = BookmarkManager.AddBookmark(_workbookView.LastClickedNodeId);
-            if (ret == 1)
-            {
-                MessageBox.Show("This bookmark already exists.", "Training Bookmarks", MessageBoxButton.OK);
-            }
-            else if (ret == -1)
-            {
-                MessageBox.Show("Failed to add the bookmark.", "Training Bookmarks", MessageBoxButton.OK);
-            }
-            else
-            {
-                AppStateManager.IsDirty = true;
-                UiTabBookmarks.Focus();
-            }
-        }
-
-        /// <summary>
-        /// Adds the last click node, and all its siblings to bookmarks
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnWorkbookBookmarkAlternatives_Click(object sender, RoutedEventArgs e)
-        {
-            int ret = BookmarkManager.AddAllSiblingsToBookmarks(_workbookView.LastClickedNodeId);
-            if (ret == 1)
-            {
-                MessageBox.Show("Bookmarks already exist.", "Training Bookmarks", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }
-            else if (ret == -1)
-            {
-                MessageBox.Show("Failed to add the bookmarks.", "Training Bookmarks", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }
-            else
-            {
-                AppStateManager.IsDirty = true;
-                UiTabBookmarks.Focus();
-            }
-        }
-
-        private void UiMnGenerateBookmark_Click(object sender, RoutedEventArgs e) { BookmarkManager.GenerateBookmarks(); }
-
-        private void UiMnDeleteBookmark_Click(object sender, RoutedEventArgs e) { BookmarkManager.DeleteBookmark(); }
-
-        private void UiMnDeleteAllBookmarks_Click(object sender, RoutedEventArgs e) { BookmarkManager.DeleteAllBookmarks(); }
-
-        private void UiMnTrainRestartGame_Click(object sender, RoutedEventArgs e)
-        {
-            UiTrainingView.RestartGameAfter(sender, e);
-        }
-
-        private void UiMnTrainSwitchToWorkbook_Click(object sender, RoutedEventArgs e)
-        {
-            UiTrainingView.RollbackToWorkbookMove();
-        }
-
-        private void UiMnTrainEvalMove_Click(object sender, RoutedEventArgs e)
-        {
-            UiTrainingView.RequestMoveEvaluation();
-        }
-
-
-        private void UiMnTrainEvalLine_Click(object sender, RoutedEventArgs e)
-        {
-            UiTrainingView.RequestLineEvaluation();
-        }
-
-        /// <summary>
-        /// Restarts training from the same position/bookmark
-        /// that we started the current session with.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnTrainRestartTraining_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("Restart the training session?", "Chess Forge Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                SetAppInTrainingMode(TrainingSession.StartPosition);
-            }
-        }
-
         private void ViewActiveLine_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             ActiveLine.PreviewKeyDown(sender, e);
-        }
-
-        /// <summary>
-        /// Auto-replays the current Active Line on a menu request.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_ReplayLine(object sender, RoutedEventArgs e)
-        {
-            ActiveLine.ReplayLine(0);
         }
 
         /// <summary>
@@ -1766,54 +1190,6 @@ namespace ChessForge
             });
         }
 
-        private void UiTabItemTrainingBrowse_GotFocus(object sender, RoutedEventArgs e) { AppStateManager.SetupGuiForTrainingBrowseMode(); }
-
-        private void UiRtbTrainingProgress_GotFocus(object sender, RoutedEventArgs e) { AppStateManager.SetupGuiForTrainingProgressMode(); }
-
-        private void UiBtnExitTraining_Click(object sender, RoutedEventArgs e)
-        {
-            MenuItem_StopTraining(sender, e);
-        }
-
-        private void UiBtnExitGame_Click(object sender, RoutedEventArgs e)
-        {
-            StopEngineGame();
-        }
-
-        private void UiMnPromoteLine_Click(object sender, RoutedEventArgs e)
-        {
-            _workbookView.PromoteCurrentLine();
-        }
-
-        private void UiMnDeleteMovesFromHere_Click(object sender, RoutedEventArgs e)
-        {
-            _workbookView.DeleteRemainingMoves();
-        }
-
-        private void UiMnWorkbookSave_Click(object sender, RoutedEventArgs e)
-        {
-            WorkbookManager.PromptAndSaveWorkbook(true);
-        }
-
-        private void UiMnWorkbookSaveAs_Click(object sender, RoutedEventArgs e)
-        {
-            WorkbookManager.SaveWorkbookToNewFile(AppStateManager.WorkbookFilePath, false);
-        }
-
-        /// <summary>
-        /// View->Select Engine... menu item clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnSelectEngine_Click(object sender, RoutedEventArgs e)
-        {
-            string searchPath = Path.GetDirectoryName(Configuration.EngineExePath);
-            if (!string.IsNullOrEmpty(Configuration.SelectEngineExecutable(searchPath)))
-            {
-                ReloadEngine();
-            }
-        }
-
         /// <summary>
         /// Stops and restarts the engine.
         /// </summary>
@@ -1832,31 +1208,6 @@ namespace ChessForge
             else
             {
                 return true;
-            }
-        }
-
-        /// <summary>
-        /// User clicked Help->About
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnHelpAbout_Click(object sender, RoutedEventArgs e)
-        {
-            AboutBoxDialog dlg = new AboutBoxDialog();
-            dlg.ShowDialog();
-        }
-
-        /// <summary>
-        /// The user requested to edit Workbook options.
-        /// The dialog will be shown.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnWorkbookOptions_Click(object sender, RoutedEventArgs e)
-        {
-            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE)
-            {
-                ShowWorkbookOptionsDialog();
             }
         }
 
@@ -1889,20 +1240,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The user requested to edit Application options.
-        /// The dialog will be shown.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnApplicationOptions_Click(object sender, RoutedEventArgs e)
-        {
-            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE)
-            {
-                ShowApplicationOptionsDialog();
-            }
-        }
-
-        /// <summary>
         /// Shows the Application Options dialog.
         /// </summary>
         private void ShowApplicationOptionsDialog()
@@ -1927,60 +1264,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates a new Workbook.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnNewWorkbook_Click(object sender, RoutedEventArgs e)
-        {
-            if (!WorkbookManager.AskToCloseWorkbook())
-            {
-                return;
-            }
-
-            // prepare document
-            AppStateManager.RestartInIdleMode(false);
-            Workbook = new WorkbookTree();
-            _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
-            _trainingBrowseRichTextBuilder = new WorkbookView(UiRtbTrainingBrowse.Document, this);
-
-            // ask for the options
-            if (!ShowWorkbookOptionsDialog())
-            {
-                // user abandoned
-                return;
-            }
-
-            if (!WorkbookManager.SaveWorkbookToNewFile(null, false))
-            {
-                AppStateManager.RestartInIdleMode(false);
-                return;
-            }
-
-            BoardCommentBox.ShowWorkbookTitle();
-
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-
-            AppStateManager.SetupGuiForCurrentStates();
-            Workbook.CreateNew();
-            UiTabWorkbook.Focus();
-            _workbookView.BuildFlowDocumentForWorkbook();
-            int startingNode = 0;
-            string startLineId = Workbook.GetDefaultLineIdForNode(startingNode);
-            SetActiveLine(startLineId, startingNode);
-        }
-
-        /// <summary>
-        /// The user requested export of the Workbook to PGN.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnExportPgn_Click(object sender, RoutedEventArgs e)
-        {
-            WorkbookManager.SaveWorkbookToPgn();
-        }
-
-        /// <summary>
         /// Stops any evaluation that is currently happening.
         /// Resets evaluation state and adjusts the GUI accordingly. 
         /// </summary>
@@ -1999,14 +1282,10 @@ namespace ChessForge
             }
         }
 
-        public void UiMnAssessmentDialog_Click(object sender, RoutedEventArgs e)
-        {
-            // get the comment and assessment for the currently selected move
-            TreeNode nd = ActiveLine.GetSelectedTreeNode();
-            InvokeAssessmentDialog(nd);
-            _workbookView.InsertOrUpdateCommentRun(nd);
-        }
-
+        /// <summary>
+        /// Invokes the Move Assessment dialog.
+        /// </summary>
+        /// <param name="nd"></param>
         public void InvokeAssessmentDialog(TreeNode nd)
         {
             if (nd != null)
@@ -2039,18 +1318,6 @@ namespace ChessForge
             {
                 BoardShapesManager.CancelShapeDraw(true);
             }
-        }
-
-        /// <summary>
-        /// Allows the user to add a bookmark by re-directing them to the Workbook view 
-        /// and advising on the procedure. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnAddBookmark_Click(object sender, RoutedEventArgs e)
-        {
-            UiTabWorkbook.Focus();
-            MessageBox.Show("Right-click a move and select \"Add to Bookmarks\" from the popup-menu", "Chess Forge Training", MessageBoxButton.OK);
         }
 
     }

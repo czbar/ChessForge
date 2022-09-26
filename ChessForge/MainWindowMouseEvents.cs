@@ -75,7 +75,7 @@ namespace ChessForge
 
                         if (MainChessBoard.GetPieceColor(sqNorm) == PieceColor.None)
                         {
-                            BoardShapesManager.Reset();
+                            BoardShapesManager.Reset(true);
                         }
 
                         if (CanMovePiece(sqNorm))
@@ -252,7 +252,7 @@ namespace ChessForge
         {
             if (BoardShapesManager.IsShapeBuildInProgress && !BoardShapesManager.IsShapeBuildTentative)
             {
-                BoardShapesManager.FinalizeShape(targetSquare, true);
+                BoardShapesManager.FinalizeShape(targetSquare, true, true);
                 _lastRightClickedPoint = null;
 
                 // we have been building a shape so ensure context menu does not pop up

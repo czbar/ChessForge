@@ -88,6 +88,7 @@
     <Compile Include="BoardArrow.cs" />
     <Compile Include="BoardShapesManager.cs" />
     <Compile Include="BoardCircle.cs" />
+    <Compile Include="CustomCommands.cs" />
     <Compile Include="EvaluationActiveLine.cs" />
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
@@ -107,7 +108,9 @@
     <Compile Include="CommentBox.cs" />
     <Compile Include="EngineLinesBox.cs" />
     <Compile Include="MainChessBoardUtils.cs" />
+    <Compile Include="MainWindowMenuEvents.cs" />
     <Compile Include="MainWindowMouseEvents.cs" />
+    <Compile Include="MainWindowMoveAnimation.cs" />
     <Compile Include="MainWindow\MainWindowWorkbookTable.cs" />
     <Compile Include="GuiUtilities.cs" />
     <Compile Include="ActiveLineManager.cs" />
