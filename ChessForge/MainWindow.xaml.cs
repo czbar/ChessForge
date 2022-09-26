@@ -1007,7 +1007,7 @@ namespace ChessForge
             //            _lvWorkbookTable_SelectLineAndMove(lineId, nd.NodeId);
             if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
             {
-                EvaluateActiveLineSelectedPosition(index);
+                EvaluateActiveLineSelectedPosition(nd);
             }
         }
 
@@ -1179,22 +1179,20 @@ namespace ChessForge
 
         private void EvaluateActiveLineSelectedPosition()
         {
+            TreeNode nd = ActiveLine.GetSelectedTreeNode();
+            if (nd == null)
+            {
+                nd = Workbook.Nodes[0];
+            }
+            EvaluationManager.SetSingleNodeToEvaluate(nd);
             // stop the timer to prevent showing garbage after position is set but engine has not received our commands yet
-            EngineMessageProcessor.RequestPositionEvaluation(ActiveLine.GetSelectedPlyNodeIndex(true), Configuration.EngineMpv, 0);
-        }
-
-        private void EvaluateActiveLineSelectedPosition(int index)
-        {
-            EngineMessageProcessor.RequestPositionEvaluation(index, Configuration.EngineMpv, 0);
+            EngineMessageProcessor.RequestPositionEvaluation(nd, Configuration.EngineMpv, 0);
         }
 
         private void EvaluateActiveLineSelectedPosition(TreeNode nd)
         {
-            int index = ActiveLine.GetIndexForNode(nd);
-            if (index >= 0)
-            {
-                EngineMessageProcessor.RequestPositionEvaluation(index, Configuration.EngineMpv, 0);
-            }
+            EvaluationManager.SetSingleNodeToEvaluate(nd);
+            EngineMessageProcessor.RequestPositionEvaluation(nd, Configuration.EngineMpv, 0);
         }
 
         private void MenuItem_EvaluateLine(object sender, RoutedEventArgs e)
@@ -1210,15 +1208,19 @@ namespace ChessForge
                 StopEvaluation();
             }
 
-            int idx = ActiveLine.GetSelectedPlyNodeIndex(true);
-            EvaluationManager.PositionIndex = idx > 0 ? idx : 1;
-
             // we will start with the first move of the active line
             if (EngineMessageProcessor.IsEngineAvailable)
             {
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE);
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, EvaluationManager.LineSource.ACTIVE_LINE);
+
+                int idx = ActiveLine.GetSelectedPlyNodeIndex(true);
+                TreeNode nd = ActiveLine.GetSelectedTreeNode();
+                EvaluationManager.SetStartNodeIndex(idx > 0 ? idx : 1);
+
                 UiDgActiveLine.SelectedCells.Clear();
-                EngineMessageProcessor.RequestMoveEvaluation(EvaluationManager.PositionIndex);
+
+
+                EngineMessageProcessor.RequestMoveEvaluation(idx, nd);
             }
             else
             {
@@ -1236,8 +1238,8 @@ namespace ChessForge
 
         public void UpdateLastMoveTextBox(int posIndex)
         {
-            string moveTxt = EvaluationManager.Position.MoveNumber.ToString()
-                    + (EvaluationManager.Position.ColorToMove == PieceColor.Black ? "." : "...")
+            string moveTxt = EvaluationManager.GetEvaluatedNode().Position.MoveNumber.ToString()
+                    + (EvaluationManager.GetEvaluatedNode().Position.ColorToMove == PieceColor.Black ? "." : "...")
                     + ActiveLine.GetNodeAtIndex(posIndex).LastMoveAlgebraicNotation;
 
             UpdateLastMoveTextBox(moveTxt);
