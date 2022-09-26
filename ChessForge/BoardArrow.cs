@@ -126,9 +126,12 @@ namespace ChessForge
         /// </summary>
         public void RemoveFromBoard()
         {
-            AppStateManager.MainWin.MainCanvas.Children.Remove(_triangle);
-            AppStateManager.MainWin.MainCanvas.Children.Remove(_stem);
-            AppStateManager.MainWin.MainCanvas.Children.Remove(_circle);
+            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            {
+                AppStateManager.MainWin.MainCanvas.Children.Remove(_triangle);
+                AppStateManager.MainWin.MainCanvas.Children.Remove(_stem);
+                AppStateManager.MainWin.MainCanvas.Children.Remove(_circle);
+            });
         }
 
         /// <summary>
@@ -137,19 +140,22 @@ namespace ChessForge
         /// <param name="end"></param>
         public void Draw(SquareCoords end)
         {
-            EndSquare = new SquareCoords(end);
+            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            {
+                EndSquare = new SquareCoords(end);
 
-            _startPoint = MainChessBoardUtils.GetSquareCenterPoint(StartSquare);
-            _endPoint = MainChessBoardUtils.GetSquareCenterPoint(end);
+                _startPoint = MainChessBoardUtils.GetSquareCenterPoint(StartSquare);
+                _endPoint = MainChessBoardUtils.GetSquareCenterPoint(end);
 
-            _angle = CalculateAngle(_startPoint, _endPoint);
-            _distance = GuiUtilities.CalculateDistance(_startPoint, _endPoint);
+                _angle = CalculateAngle(_startPoint, _endPoint);
+                _distance = GuiUtilities.CalculateDistance(_startPoint, _endPoint);
 
-            _scaleFactor = (_distance + 1 - _triangle.Source.Height) / _stem.Source.Height;
+                _scaleFactor = (_distance + 1 - _triangle.Source.Height) / _stem.Source.Height;
 
-            CreateTransforms();
+                CreateTransforms();
 
-            Draw();
+                Draw();
+            });
         }
 
         /// <summary>
@@ -195,9 +201,12 @@ namespace ChessForge
         /// </summary>
         private void Draw()
         {
-            DrawTriangle();
-            DrawStem();
-            DrawCircle();
+            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            {
+                DrawTriangle();
+                DrawStem();
+                DrawCircle();
+            });
         }
 
         /// <summary>
