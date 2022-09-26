@@ -46,9 +46,9 @@ namespace ChessForge
         /// on the passed coded string
         /// </summary>
         /// <param name="arrows"></param>
-        public static void Reset(string arrows, string circles)
+        public static void Reset(string arrows, string circles, bool markDirty)
         {
-            Reset();
+            Reset(markDirty);
             if (!string.IsNullOrWhiteSpace(arrows))
             {
                 string[] tokens = arrows.Split(',');
@@ -57,7 +57,7 @@ namespace ChessForge
                     if (DecodeArrowsString(token, out string color, out SquareCoords start, out SquareCoords end))
                     {
                         StartShapeDraw(start, color, false);
-                        FinalizeShape(end, false);
+                        FinalizeShape(end, false, markDirty);
                     }
                 }
             }
@@ -70,12 +70,12 @@ namespace ChessForge
                     if (DecodeCirclesString(token, out string color, out SquareCoords square))
                     {
                         StartShapeDraw(square, color, false);
-                        FinalizeShape(square, false);
+                        FinalizeShape(square, false, markDirty);
                     }
                 }
             }
 
-            if (SaveShapesStrings())
+            if (SaveShapesStrings() && markDirty)
             {
                 AppStateManager.IsDirty = true;
             }
@@ -84,7 +84,7 @@ namespace ChessForge
         /// <summary>
         /// Removes all created arrows and circles from the board
         /// </summary>
-        public static void Reset()
+        public static void Reset(bool markDirty)
         {
             AppStateManager.MainWin.Dispatcher.Invoke(() =>
             {
@@ -103,7 +103,7 @@ namespace ChessForge
                 CancelShapeDraw(true);
                 _isShapeBuildInProgress = false;
 
-                if (SaveShapesStrings())
+                if (SaveShapesStrings() && markDirty)
                 {
                     AppStateManager.IsDirty = true;
                 }
@@ -166,7 +166,7 @@ namespace ChessForge
         /// Finishes drawing the shape and saves it in the list.
         /// </summary>
         /// <param name="current"></param>
-        public static void FinalizeShape(SquareCoords current, bool isNew)
+        public static void FinalizeShape(SquareCoords current, bool isNew, bool markDirty)
         {
             AppStateManager.MainWin.Dispatcher.Invoke(() =>
             {
@@ -210,7 +210,7 @@ namespace ChessForge
                 CancelShapeDraw(false);
 
                 bool isChanged = SaveShapesStrings();
-                if (isNew || isChanged)
+                if ((isNew || isChanged) && markDirty)
                 {
                     AppStateManager.IsDirty = true;
                 }
