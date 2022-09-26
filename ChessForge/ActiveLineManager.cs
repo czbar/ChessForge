@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ChessPosition;
@@ -453,79 +454,56 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        internal void PreviewKeyDown(object sender, KeyEventArgs e)
+        public void PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            GetSelectedRowColumn(out int row, out int column);
+            if (HandleKeyDown(e.Key))
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Handles the KeyDown event
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool HandleKeyDown(Key key)
+        {
+            bool handled = false;
+            
+            GetSelectedRowColumn(out int currRow, out int currColumn);
 
             //if row and column == -1, it means there is no selection.
             // if we have any moves (except the 0/null move) we will "fake" selection, if not we bail
-            if (row < 0 && column < 0)
+            if (currRow < 0 && currColumn < 0)
             {
                 if (Line.GetPlyCount() == 1)
                 {
-                    return;
+                    return false;
                 }
                 else
                 {
                     // fake that "0" move for the Black side is currently selected
-                    row = -1;
-                    column = _dgActiveLineBlackPlyColumn;
+                    currRow = -1;
+                    currColumn = _dgActiveLineBlackPlyColumn;
                 }
             }
 
-            int selColumn = -1;
-            int selRow = -1;
+            bool validKey = CalculatePostKeyDownSelection(key, currRow, currColumn, out int postKeyDownRow, out int postKeyDownColumn);
 
-            int plyIndex;
-
-            bool ignore = false;
-
-            switch (e.Key)
+            if (validKey)
             {
-                case Key.Left:
-                    selColumn = column == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : _dgActiveLineWhitePlyColumn;
-                    selRow = column == _dgActiveLineWhitePlyColumn ? row - 1 : row;
-                    break;
-                case Key.Right:
-                    selColumn = column == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : 1;
-                    selRow = column == _dgActiveLineWhitePlyColumn ? row : row + 1;
-                    // if we went beyond the last move (because it is White's and Black cell is empty.)
-                    // switch back to the White column
-                    plyIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
-                    if (plyIndex >= Line.GetPlyCount())
-                    {
-                        selColumn = _dgActiveLineWhitePlyColumn;
-                    }
-                    break;
-                case Key.Up:
-                    selColumn = _dgActiveLineWhitePlyColumn;
-                    selRow = 0;
-                    break;
-                case Key.Home:
-                    selRow = -1;
-                    break;
-                case Key.Down:
-                case Key.End:
-                    selRow = _dgActiveLine.Items.Count - 1;
-                    selColumn = (Line.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
-                    break;
-                default:
-                    ignore = true;
-                    break;
-            }
-
-            if (!ignore)
-            {
-                if (/*selRow >= 0 && */ selRow < _dgActiveLine.Items.Count)
+                int plyIndex;
+                if (postKeyDownRow < _dgActiveLine.Items.Count)
                 {
-                    if (selRow >= 0)
+                    if (postKeyDownRow >= 0)
                     {
-                        DataGridCellInfo cell = new DataGridCellInfo(_dgActiveLine.Items[selRow], _dgActiveLine.Columns[selColumn]);
-                        _dgActiveLine.ScrollIntoView(_dgActiveLine.Items[selRow]);
+                        DataGridCellInfo cell = new DataGridCellInfo(_dgActiveLine.Items[postKeyDownRow], _dgActiveLine.Columns[postKeyDownColumn]);
+                        _dgActiveLine.ScrollIntoView(_dgActiveLine.Items[postKeyDownRow]);
                         _dgActiveLine.SelectedCells.Clear();
                         _dgActiveLine.SelectedCells.Add(cell);
 
-                        plyIndex = (selRow * 2) + (selColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
+                        plyIndex = (postKeyDownRow * 2) + (postKeyDownColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
                     }
                     else
                     {
@@ -552,8 +530,64 @@ namespace ChessForge
                         _mainWin.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), plyIndex);
                     }
                 }
-                e.Handled = true;
+                handled = true;
             }
+
+            return handled;
+        }
+
+        /// <summary>
+        /// Returns the new selected row and column based on the current selection 
+        /// and the key the user pressed.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="currRow"></param>
+        /// <param name="currColumn"></param>
+        /// <param name="postKeyDownRow"></param>
+        /// <param name="postKeyDownColumn"></param>
+        /// <returns></returns>
+        private bool CalculatePostKeyDownSelection(Key key, int currRow, int currColumn, out int postKeyDownRow, out int postKeyDownColumn)
+        {
+            bool validKey = true;
+
+            postKeyDownColumn = -1;
+            postKeyDownRow = -1;
+
+            switch (key)
+            {
+                case Key.Left:
+                    postKeyDownColumn = currColumn == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : _dgActiveLineWhitePlyColumn;
+                    postKeyDownRow = currColumn == _dgActiveLineWhitePlyColumn ? currRow - 1 : currRow;
+                    break;
+                case Key.Right:
+                    postKeyDownColumn = currColumn == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : 1;
+                    postKeyDownRow = currColumn == _dgActiveLineWhitePlyColumn ? currRow : currRow + 1;
+                    // if we went beyond the last move (because it is White's and Black cell is empty.)
+                    // switch back to the White column
+                    int selectedPlyIndex = (postKeyDownRow * 2) + (postKeyDownColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
+                    if (selectedPlyIndex >= Line.GetPlyCount())
+                    {
+                        postKeyDownColumn = _dgActiveLineWhitePlyColumn;
+                    }
+                    break;
+                case Key.Up:
+                    postKeyDownColumn = _dgActiveLineWhitePlyColumn;
+                    postKeyDownRow = 0;
+                    break;
+                case Key.Home:
+                    postKeyDownRow = -1;
+                    break;
+                case Key.Down:
+                case Key.End:
+                    postKeyDownRow = _dgActiveLine.Items.Count - 1;
+                    postKeyDownColumn = (Line.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
+                    break;
+                default:
+                    validKey = false;
+                    break;
+            }
+
+            return validKey;
         }
 
         /// <summary>

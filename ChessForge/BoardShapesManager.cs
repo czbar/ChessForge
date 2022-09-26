@@ -86,25 +86,28 @@ namespace ChessForge
         /// </summary>
         public static void Reset()
         {
-            foreach (BoardArrow arrow in _boardArrows)
+            AppStateManager.MainWin.Dispatcher.Invoke(() =>
             {
-                arrow.RemoveFromBoard();
-            }
-            _boardArrows.Clear();
+                foreach (BoardArrow arrow in _boardArrows)
+                {
+                    arrow.RemoveFromBoard();
+                }
+                _boardArrows.Clear();
 
-            foreach (BoardCircle circle in _boardCircles)
-            {
-                circle.RemoveFromBoard();
-            }
-            _boardCircles.Clear();
+                foreach (BoardCircle circle in _boardCircles)
+                {
+                    circle.RemoveFromBoard();
+                }
+                _boardCircles.Clear();
 
-            CancelShapeDraw(true);
-            _isShapeBuildInProgress = false;
+                CancelShapeDraw(true);
+                _isShapeBuildInProgress = false;
 
-            if (SaveShapesStrings())
-            {
-                AppStateManager.IsDirty = true;
-            }
+                if (SaveShapesStrings())
+                {
+                    AppStateManager.IsDirty = true;
+                }
+            });
         }
 
         /// <summary>
@@ -152,8 +155,11 @@ namespace ChessForge
             _isShapeBuildInProgress = true;
             _isShapeBuildTentative = isTentative;
 
-            _arrowInProgress = new BoardArrow(start, color);
-            _circleInProgress = new BoardCircle(start, color);
+            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            {
+                _arrowInProgress = new BoardArrow(start, color);
+                _circleInProgress = new BoardCircle(start, color);
+            });
         }
 
         /// <summary>
@@ -162,50 +168,53 @@ namespace ChessForge
         /// <param name="current"></param>
         public static void FinalizeShape(SquareCoords current, bool isNew)
         {
-            if (current == null)
+            AppStateManager.MainWin.Dispatcher.Invoke(() =>
             {
-                CancelShapeDraw(true);
-                return;
-            }
-
-            _endSquare = new SquareCoords(current);
-            UpdateShapeDraw(current);
-
-            if (SquareCoords.AreSameCoords(_startSquare, _endSquare))
-            {
-                RemoveDuplicate(_circleInProgress, out bool isSameColor);
-                if (isSameColor)
+                if (current == null)
                 {
-                    _circleInProgress.RemoveFromBoard();
-                }
-                else
-                {
-                    _boardCircles.Add(_circleInProgress);
+                    CancelShapeDraw(true);
+                    return;
                 }
 
-                _arrowInProgress.RemoveFromBoard();
-            }
-            else
-            {
-                RemoveDuplicate(_arrowInProgress, out bool isSameColor);
-                if (isSameColor)
+                _endSquare = new SquareCoords(current);
+                UpdateShapeDraw(current);
+
+                if (SquareCoords.AreSameCoords(_startSquare, _endSquare))
                 {
+                    RemoveDuplicate(_circleInProgress, out bool isSameColor);
+                    if (isSameColor)
+                    {
+                        _circleInProgress.RemoveFromBoard();
+                    }
+                    else
+                    {
+                        _boardCircles.Add(_circleInProgress);
+                    }
+
                     _arrowInProgress.RemoveFromBoard();
                 }
                 else
                 {
-                    _boardArrows.Add(_arrowInProgress);
+                    RemoveDuplicate(_arrowInProgress, out bool isSameColor);
+                    if (isSameColor)
+                    {
+                        _arrowInProgress.RemoveFromBoard();
+                    }
+                    else
+                    {
+                        _boardArrows.Add(_arrowInProgress);
+                    }
+
+                    _circleInProgress.RemoveFromBoard();
                 }
+                CancelShapeDraw(false);
 
-                _circleInProgress.RemoveFromBoard();
-            }
-            CancelShapeDraw(false);
-
-            bool isChanged = SaveShapesStrings();
-            if (isNew || isChanged)
-            {
-                AppStateManager.IsDirty = true;
-            }
+                bool isChanged = SaveShapesStrings();
+                if (isNew || isChanged)
+                {
+                    AppStateManager.IsDirty = true;
+                }
+            });
         }
 
         /// <summary>

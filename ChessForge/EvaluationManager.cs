@@ -17,6 +17,11 @@ namespace ChessForge
     public class EvaluationManager
     {
         /// <summary>
+        /// Lock object to use when accessing this object's data
+        /// </summary>
+        public static object EvaluationLock = new object();
+
+        /// <summary>
         /// There can only be no or one evaluation happening
         /// at any given time.
         /// The EvaluationMode defines whether the evaluation is
@@ -37,25 +42,25 @@ namespace ChessForge
             ENGINE_GAME,
         };
 
+        /// <summary>
+        /// What type of Line are we evaluating when if the LINE mode.
+        /// </summary>
+        public enum LineSource
+        {
+            NONE,
+            ACTIVE_LINE,
+            TRAINING_LINE,
+            MODEL_GAME_LINE
+        }
+
+        // an object of the EvaluationLine-drived class for the line being evaluated
+        private static EvaluationLine _evaluationLine;
+
         // Current evaluation mode
         private static Mode _currentMode = Mode.IDLE;
 
-        // Position being evaluated
-        private static BoardPosition _position;
-
-        // Index of the position being evaluated in the ActiveLine
-        private static int _positionIndex;
-
-        // The list of Runs to evaluate when we are evaluating a line
-        // in the Training mode.
-        private static List<Run> _runsToEvaluate = new List<Run>();
-
-        // The lists of Nodes corresponding to the Runs in _runsToEvaluate
-        private static List<TreeNode> _nodesToEvaluate = new List<TreeNode>();
-
-        // Current index of the run to evaluate.
-        // If the evaluation has not started yet it is set to -1.
-        private static int _runToEvaluateIndex = -1;
+        // TreeNode being evaluated if the mode is not LINE
+        private static TreeNode _evaluatedSingleNode;
 
         /// <summary>
         /// The current evaluation mode.
@@ -67,13 +72,88 @@ namespace ChessForge
             get { return _currentMode; }
         }
 
+        public static TreeNode GetEvaluatedNode()
+        {
+            if (_currentMode != Mode.LINE)
+            {
+                return _evaluatedSingleNode;
+            }
+            else
+            {
+                return _evaluationLine.GetCurrentEvaluatedNode();
+            }
+        }
+
+        /// <summary>
+        /// Returns the node being currently slated for evaluation.
+        /// If we are evaluating a training line it will be taken from
+        /// the TrainingLine list, if we are evaluating the Active Line
+        /// it will be taken from there based on the current position index.
+        /// </summary>
+        /// <returns></returns>
+        public static TreeNode GetCurrentEvaluatedLineNode()
+        {
+            return _evaluationLine.GetNextNodeToEvaluate();
+        }
+
+        /// <summary>
+        /// Sets the index in the list of nodes from which to start evaluation.
+        /// </summary>
+        /// <param name="index"></param>
+        public static void SetStartNodeIndex(int index)
+        {
+            _evaluationLine.SetStartNodeIndex(index);
+        }
+
+        public static int GetLineNodeIndex()
+        {
+            return _evaluationLine.GetNodeIndex();
+        }
+
+        public static bool IsLastPositionIndex()
+        {
+            return _evaluationLine.IsLastPositionIndex();
+        }
+
+        /// <summary>
+        /// Gets next move to evaluate and makes it current.
+        /// </summary>
+        /// <returns></returns>
+        public static TreeNode GetNextLineNodeToEvaluate()
+        {
+            return _evaluationLine.GetNextNodeToEvaluate();
+        }
+
+        /// <summary>
+        /// Resets the lists of evaluated nodes. 
+        /// </summary>
+        public static void ResetLineNodesToEvaluate()
+        {
+            if (_evaluationLine != null)
+            {
+                _evaluationLine.ResetsNodesToEvaluate();
+            }
+        }
+
+        /// <summary>
+        /// Adds a run to the list of evaluated nodes and runs if
+        /// we are evaluating a Training Line.
+        /// </summary>
+        /// <param name="r"></param>
+        public static void AddLineRunToEvaluate(Run r)
+        {
+            _evaluationLine.AddRunToEvaluate(r);
+        }
+
         /// <summary>
         /// Switches to a new Evaluation mode.
-        /// Makes sure that app timers are appropriately
-        /// set of reset.
+        /// Makes sure that the app timers are appropriately set or reset.
+        /// If the mode is LINE, the lineSource argument must be set to a value
+        /// other then LineSource.NONE
         /// </summary>
         /// <param name="mode"></param>
-        public static void ChangeCurrentMode(Mode mode)
+        /// <param name="lineSource"></param>
+        public static void ChangeCurrentMode(Mode mode, LineSource lineSource = LineSource.NONE)
         {
             _currentMode = mode;
             switch (_currentMode)
@@ -88,6 +168,18 @@ namespace ChessForge
                     AppStateManager.MainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                     break;
                 case Mode.LINE:
+                    switch (lineSource)
+                    {
+                        case LineSource.TRAINING_LINE:
+                            _evaluationLine = new EvaluationTrainingLine();
+                            break;
+                        case LineSource.ACTIVE_LINE:
+                            _evaluationLine = new EvaluationActiveLine();
+                            break;
+                        default:
+                            DebugUtils.ShowDebugMessage("ERROR: Line evaluation requested with no Line Type provided");
+                            break;
+                    }
                     AppStateManager.MainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                     AppStateManager.MainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                     break;
@@ -101,95 +193,14 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Returns the Run currently being evaluated.
-        /// </summary>
-        /// <returns></returns>
-        public static Run GetCurrentEvaluatedRun()
-        {
-            if (_runToEvaluateIndex < 0 || _runToEvaluateIndex >= _runsToEvaluate.Count)
-            {
-                return null;
-            }
-
-            return _runsToEvaluate[_runToEvaluateIndex];
-        }
-
-        /// <summary>
-        /// Returns the Node currently being evaluated.
-        /// </summary>
-        /// <returns></returns>
-        public static TreeNode GetCurrentEvaluatedNode()
-        {
-            if (_runToEvaluateIndex < 0 || _runToEvaluateIndex >= _runsToEvaluate.Count)
-            {
-                return null;
-            }
-
-            return _nodesToEvaluate[_runToEvaluateIndex];
-        }
-
-        /// <summary>
-        /// Returns the next node to evaluate
-        /// or null if we reached the end of the list.
-        /// If there are no more Nodes to evaluate,
-        /// the lists are reset.
-        /// </summary>
-        /// <returns></returns>
-        public static TreeNode GetNextNodeToEvaluate()
-        {
-            _runToEvaluateIndex++;
-            if (_runToEvaluateIndex < _nodesToEvaluate.Count)
-            {
-                return _nodesToEvaluate[_runToEvaluateIndex];
-            }
-            else
-            {
-                ClearRunsToEvaluate();
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Adds a Run to the list of _runsToEvaluate.
-        /// At the same time, adds the corresponding Node
-        /// to the list of Nodes.
-        /// </summary>
-        /// <param name="r"></param>
-        public static void AddRunToEvaluate(Run r)
-        {
-            int nodeId = TextUtils.GetNodeIdFromPrefixedString(r.Name);
-            TreeNode nd = AppStateManager.Workbook.GetNodeFromNodeId(nodeId);
-
-            _nodesToEvaluate.Add(nd);
-            _runsToEvaluate.Add(r);
-        }
-
-        /// <summary>
-        /// Clears the list of Nodes and Runs.
-        /// Resets the evaluation index.
-        /// </summary>
-        public static void ClearRunsToEvaluate()
-        {
-            _runsToEvaluate.Clear();
-            _nodesToEvaluate.Clear();
-            _runToEvaluateIndex = -1;
-        }
-
-        /// <summary>
-        /// Lock object to use when accessing this object's data
-        /// </summary>
-        public static object EvaluationLock = new object();
-
-        /// <summary>
-        /// Reset the state to get ready for another
-        /// evaluation run.
+        /// Reset the state to get ready for another evaluation run.
         /// </summary>
         public static void Reset()
         {
             lock (EvaluationLock)
             {
-                _position = null;
-                _positionIndex = 0;
+                //_position = null;
+                //_positionIndex = 0;
 
                 ChangeCurrentMode(Mode.IDLE);
             }
@@ -209,59 +220,39 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The position being evaluated.
-        /// This property is read only.
-        /// </summary>
-        public static BoardPosition Position
-        {
-            get
-            {
-                lock (EvaluationLock)
-                {
-                    return _position;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Set position to evaluate.
-        /// We want to force the client to invoke SetPositionToEvaluate()
-        /// stating the intent that it is not part of the Active Line.
-        /// explicitly which is why the Position property is readonly.
-        /// The position index is therefore set to -1.
+        /// Sets position to evaluate that is not part of LINE evaluation.
         /// </summary>
         /// <param name="Position"></param>
-        public static void SetPositionToEvaluate(BoardPosition Position)
+        public static void SetSingleNodeToEvaluate(TreeNode nd)
         {
-            _position = Position;
-            _positionIndex = -1;
+            _evaluatedSingleNode = nd;
         }
 
         /// <summary>
         /// Evaluated position's index in the Active Line,
         /// if applicable.
         /// </summary>
-        public static int PositionIndex
-        {
-            get
-            {
-                lock (EvaluationLock)
-                {
-                    return _positionIndex;
-                }
-            }
-            set
-            {
-                lock (EvaluationLock)
-                {
-                    _positionIndex = value;
-                    if (_positionIndex >= 0)
-                    {
-                        _position = AppStateManager.MainWin.ActiveLine.GetNodeAtIndex(_positionIndex).Position;
-                    }
-                }
-            }
-        }
+        //public static int PositionIndex
+        //{
+        //    get
+        //    {
+        //        lock (EvaluationLock)
+        //        {
+        //            return _positionIndex;
+        //        }
+        //    }
+        //    set
+        //    {
+        //        lock (EvaluationLock)
+        //        {
+        //            _positionIndex = value;
+        //            if (_positionIndex >= 0)
+        //            {
+        //                _position = AppStateManager.MainWin.ActiveLine.GetNodeAtIndex(_positionIndex).Position;
+        //            }
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Builds evaluation text ready to be included in a GUI element.
@@ -302,6 +293,5 @@ namespace ChessForge
 
             return eval;
         }
-
     }
 }

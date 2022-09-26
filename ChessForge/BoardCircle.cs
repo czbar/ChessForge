@@ -60,7 +60,10 @@ namespace ChessForge
         /// </summary>
         public void RemoveFromBoard()
         {
-            AppStateManager.MainWin.MainCanvas.Children.Remove(_circle);
+            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            {
+                AppStateManager.MainWin.MainCanvas.Children.Remove(_circle);
+            });
         }
 
         /// <summary>
@@ -87,11 +90,14 @@ namespace ChessForge
         /// </summary>
         private void Draw()
         {
-            AppStateManager.MainWin.MainCanvas.Children.Remove(_circle);
-            AppStateManager.MainWin.MainCanvas.Children.Add(_circle);
-            Canvas.SetLeft(_circle, _centerPoint.X - (_circle.Source.Width / 2));
-            Canvas.SetTop(_circle, _centerPoint.Y - (_circle.Source.Height / 2));
-            Panel.SetZIndex(_circle, Constants.ZIndex_BoardArrow);
+            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            {
+                AppStateManager.MainWin.MainCanvas.Children.Remove(_circle);
+                AppStateManager.MainWin.MainCanvas.Children.Add(_circle);
+                Canvas.SetLeft(_circle, _centerPoint.X - (_circle.Source.Width / 2));
+                Canvas.SetTop(_circle, _centerPoint.Y - (_circle.Source.Height / 2));
+                Panel.SetZIndex(_circle, Constants.ZIndex_BoardArrow);
+            });
         }
     }
 }
