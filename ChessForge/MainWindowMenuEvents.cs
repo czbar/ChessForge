@@ -737,6 +737,16 @@ namespace ChessForge
         //*********************
 
         /// <summary>
+        /// Auto-replays the current Active Line on a menu request.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnReplayLine_Clicked(object sender, RoutedEventArgs e)
+        {
+            ActiveLine.ReplayLine(0);
+        }
+
+        /// <summary>
         /// Flips the main chess board upside down.
         /// </summary>
         /// <param name="sender"></param>

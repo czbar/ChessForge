@@ -960,7 +960,6 @@ namespace ChessForge
         public void DisplayPosition(TreeNode nd)
         {
             MainChessBoard.DisplayPosition(nd);
-            //            BoardArrowsManager.Reset(nd.Arrows);
         }
 
         /// <summary>
@@ -1338,16 +1337,6 @@ namespace ChessForge
         private void ViewActiveLine_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             ActiveLine.PreviewKeyDown(sender, e);
-        }
-
-        /// <summary>
-        /// Auto-replays the current Active Line on a menu request.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_ReplayLine(object sender, RoutedEventArgs e)
-        {
-            ActiveLine.ReplayLine(0);
         }
 
         /// <summary>

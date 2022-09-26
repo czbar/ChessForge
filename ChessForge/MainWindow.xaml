@@ -50,7 +50,7 @@
                         <Separator x:Name="UiMncMainBoardSepar_2" />
                         <MenuItem x:Name="UiMnciBookmarkPosition" Header="Bookmark This Position" Click="UiMnBookmarkPosition_Click" />
                         <Separator x:Name="UiMncMainBoardSepar_4" />
-                        <MenuItem x:Name="UiMnciReplay" Header="Replay"  Click="MenuItem_ReplayLine"/>
+                        <MenuItem x:Name="UiMnciReplay" Header="Replay"  Click="UiMnReplayLine_Clicked"/>
                         <Separator x:Name="UiMncMainBoardSepar_3" />
                         <MenuItem x:Name="UiMnciPlayEngine" Header="Play Against Computer " Click="UiMnPlayEngine_Click" />
                         <MenuItem x:Name="UiMnciExitEngineGame" Header="Exit Game " Click="UiMnExitEngineGame_Click" />
