@@ -8,6 +8,7 @@ using ChessPosition;
 using System.IO;
 using EngineService;
 using System.Windows.Ink;
+using System.Windows;
 
 namespace ChessForge
 {
@@ -187,12 +188,7 @@ namespace ChessForge
             // later down the chain
             _mainWin.ResetEvaluationProgressBar();
 
-            //if (EvaluationManager.CurrentMode != EvaluationManager.Mode.LINE && EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
-            //{
-            //    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-            //}
-
-            EvaluationManager.SetPositionToEvaluate(null);
+            EvaluationManager.SetSingleNodeToEvaluate(null);
 
             _mainWin.MoveEvaluationFinishedInTraining(nd);
         }
@@ -206,14 +202,15 @@ namespace ChessForge
         /// </summary>
         private static void MoveEvaluationFinishedInManualReview(TreeNode nd)
         {
+            int index = AppStateManager.ActiveLine.GetIndexForNode(nd);
             lock (LearningMode.EvalLock)
             {
-                AppLog.Message("Move evaluation finished for index " + EvaluationManager.PositionIndex.ToString());
+                AppLog.Message("Move evaluation finished for index " + index.ToString());
 
                 string eval = nd.EngineEvaluation;
 
-                bool isWhiteEval = (EvaluationManager.PositionIndex - 1) % 2 == 0;
-                int moveIndex = (EvaluationManager.PositionIndex - 1) / 2;
+                bool isWhiteEval = (index - 1) % 2 == 0;
+                int moveIndex = (index - 1) / 2;
 
                 AppStateManager.ActiveLine.SetEvaluation(nd, eval);
 
@@ -225,11 +222,10 @@ namespace ChessForge
 
                 if (ContinueLineEvaluation())
                 {
-                    AppLog.Message("Continue eval next move after index " + EvaluationManager.PositionIndex.ToString());
+                    AppLog.Message("Continue evaluation next move after index " + index.ToString());
                     ClearMoveCandidates(false);
                     AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                    EvaluationManager.PositionIndex++;
-                    RequestMoveEvaluation(EvaluationManager.PositionIndex);
+                    RequestMoveEvaluation(index, EvaluationManager.GetNextLineNodeToEvaluate());
 
                     _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                 }
@@ -251,7 +247,8 @@ namespace ChessForge
         /// <returns></returns>
         private static bool ContinueLineEvaluation()
         {
-            return EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE && EvaluationManager.PositionIndex != _mainWin.ActiveLine.GetPlyCount() - 1;
+            return EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE
+                && !EvaluationManager.IsLastPositionIndex();
         }
 
         /// <summary>
@@ -318,32 +315,29 @@ namespace ChessForge
         /// NOTE: does not start evaluation when making a move during a user vs engine game.
         /// </summary>
         /// <param name="posIndex"></param>
-        public static void RequestMoveEvaluation(int posIndex)
+        public static void RequestMoveEvaluation(int nodeIndex, TreeNode nd)
         {
-            EvaluationManager.PositionIndex = posIndex;
-            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.IDLE)
-            {
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
-            }
-
-            TreeNode nd = _mainWin.ActiveLine.GetNodeAtIndex(posIndex);
-
-            //TODO: we want to pass the node rather than position (as to show Arrows if any). Check how to do this safely.
-            _mainWin.DisplayPosition(EvaluationManager.Position);
-
             _mainWin.Dispatcher.Invoke(() =>
             {
+                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.IDLE)
+                {
+                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
+                }
+
+                //TODO: we want to pass the node rather than position (as to show Arrows if any). Check how to do this safely.
+                _mainWin.DisplayPosition(nd);
+
                 if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                 {
                     _mainWin.ActiveLine.SelectPly((int)nd.Parent.Position.MoveNumber, nd.Parent.Position.ColorToMove);
-                    _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveLine.GetLineId(), posIndex);
+                    _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveLine.GetLineId(), nodeIndex);
                 }
             });
 
             AppStateManager.ShowMoveEvaluationControls(true);
-            _mainWin.UpdateLastMoveTextBox(posIndex);
+            _mainWin.UpdateLastMoveTextBox(nodeIndex);
 
-            string fen = AppStateManager.PrepareMoveEvaluation(EvaluationManager.Position, true);
+            string fen = AppStateManager.PrepareMoveEvaluation(EvaluationManager.GetEvaluatedNode().Position, true);
             RequestEngineEvaluation(nd, fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
         }
 
@@ -364,7 +358,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public static void RequestMoveEvaluationInTraining(TreeNode nd)
         {
-            EvaluationManager.SetPositionToEvaluate(nd.Position);
+            EvaluationManager.SetSingleNodeToEvaluate(nd);
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
             _mainWin.UpdateLastMoveTextBox(nd);
 
@@ -431,15 +425,14 @@ namespace ChessForge
         /// <param name="index">Index of the position in the main line</param>
         /// <param name="mpv"></param>
         /// <param name="movetime"></param>
-        public static void RequestPositionEvaluation(int index, int mpv, int movetime)
+        public static void RequestPositionEvaluation(TreeNode nd, int mpv, int movetime)
         {
             _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
             ClearMoveCandidates(true);
 
-            TreeNode nd = _mainWin.ActiveLine.GetNodeAtIndex(index);
+            //            TreeNode nd = _mainWin.ActiveLine.GetNodeAtIndex(index);
             if (nd != null)
             {
-                EvaluationManager.PositionIndex = index;
                 _mainWin.UpdateLastMoveTextBox(nd);
 
                 string fen = FenParser.GenerateFenFromPosition(nd.Position);
@@ -474,21 +467,28 @@ namespace ChessForge
         /// <param name="message"></param>
         private static void EngineMessageReceived(string message)
         {
-            if (message == null)
-                return;
+            try
+            {
+                if (message == null)
+                    return;
 
-            if (message.StartsWith("info"))
-            {
-                ProcessInfoMessage(message);
+                if (message.StartsWith("info"))
+                {
+                    ProcessInfoMessage(message);
+                }
+                else if (message.StartsWith(UciCommands.ENG_BEST_MOVE) || message.StartsWith(UciCommands.CHF_NODE_ID_PREFIX))
+                {
+                    ProcessBestMoveMessage(message);
+                }
+                else if (message.StartsWith(UciCommands.ENG_ID_NAME))
+                {
+                    string engineName = message.Substring(UciCommands.ENG_ID_NAME.Length).Trim();
+                    AppStateManager.EngineName = engineName;
+                }
             }
-            else if (message.StartsWith(UciCommands.ENG_BEST_MOVE) || message.StartsWith(UciCommands.CHF_NODE_ID_PREFIX))
+            catch (Exception ex)
             {
-                ProcessBestMoveMessage(message);
-            }
-            else if (message.StartsWith(UciCommands.ENG_ID_NAME))
-            {
-                string engineName = message.Substring(UciCommands.ENG_ID_NAME.Length).Trim();
-                AppStateManager.EngineName = engineName;
+                MessageBox.Show("Error processing engine message: " + ex.Message, "Chess Forge ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -500,29 +500,36 @@ namespace ChessForge
         /// <param name="message"></param>
         private static void ProcessBestMoveMessage(string message)
         {
-            // make sure the last lines are shown before we stop the timer.
-            EngineLinesBox.ShowEngineLines(null, null);
-
-            // if there is a NodeId prefix, get it 
-            int nodeId = -1;
-            if (message.StartsWith(UciCommands.CHF_NODE_ID_PREFIX))
+            try
             {
-                string nodeIdPrefix = message.Split(' ')[0];
-                string[] tokens = nodeIdPrefix.Split('=');
-                if (tokens.Length > 1)
+                // make sure the last lines are shown before we stop the timer.
+                EngineLinesBox.ShowEngineLines(null, null);
+
+                // if there is a NodeId prefix, get it 
+                int nodeId = -1;
+                if (message.StartsWith(UciCommands.CHF_NODE_ID_PREFIX))
                 {
-                    bool res = int.TryParse(tokens[1], out nodeId);
-                    nodeId = res ? nodeId : -1;
+                    string nodeIdPrefix = message.Split(' ')[0];
+                    string[] tokens = nodeIdPrefix.Split('=');
+                    if (tokens.Length > 1)
+                    {
+                        bool res = int.TryParse(tokens[1], out nodeId);
+                        nodeId = res ? nodeId : -1;
+                    }
                 }
-            }
 
-            TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
-            if (nd != null)
-            {
-                nd.EngineEvaluation = EvaluationManager.BuildEvaluationText(EngineLinesBox.Lines[0], nd.Position.ColorToMove);
+                TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
+                if (nd != null)
+                {
+                    nd.EngineEvaluation = EvaluationManager.BuildEvaluationText(EngineLinesBox.Lines[0], nd.Position.ColorToMove);
+                }
+                // tell the app that the evaluation has finished
+                MoveEvaluationFinished(nd);
             }
-            // tell the app that the evaluation has finished
-            MoveEvaluationFinished(nd);
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error processing \"bestmove\" message: " + ex.Message, "Chess Forge ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         /// <summary>
