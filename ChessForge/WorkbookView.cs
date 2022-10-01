@@ -88,7 +88,7 @@ namespace ChessForge
         /// <summary>
         /// The main Workbook tree.
         /// </summary>
-        private WorkbookTree _workbook;
+        private VariationTree _workbook;
 
         /// <summary>
         /// Maps Node Ids to Runs for quick access.

@@ -194,7 +194,7 @@ namespace ChessForge
 
             // prepare document
             AppStateManager.RestartInIdleMode(false);
-            Workbook = new WorkbookTree();
+            Workbook = new VariationTree();
             _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
             _trainingBrowseRichTextBuilder = new WorkbookView(UiRtbTrainingBrowse.Document, this);
 

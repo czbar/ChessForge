@@ -204,7 +204,7 @@ namespace ChessForge
                         }
                         else
                         {
-                            WorkbookTree workbook2 = new WorkbookTree();
+                            VariationTree workbook2 = new VariationTree();
                             try
                             {
                                 PgnGameParser pgp = new PgnGameParser(GamesHeaders[i].GameText, workbook2, out bool multi);
@@ -230,8 +230,6 @@ namespace ChessForge
             }
             else
             {
-                //MessageBox.Show("The Workbook will be created from the first game only.", "Chess Forge Workbook",
-                //    MessageBoxButton.OK, MessageBoxImage.Information);
                 return 0;
             }
         }

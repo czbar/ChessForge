@@ -17,7 +17,7 @@ namespace ChessForge
         private int _number;
 
         // Variation Trees constituting this chapter.
-        private List<WorkbookTree> _variationTrees = new List<WorkbookTree>();
+        private List<VariationTree> _variationTrees = new List<VariationTree>();
 
         /// <summary>
         /// Number of this chapter.

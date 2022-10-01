@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 namespace ChessForge
 {
     /// <summary>
-    /// Holds references to all components of a Workbook.
-    /// A workbook consists of one or more chapters.
-    /// Each chapter, in turn, holds one or more Variation Tree.
+    /// A Workbook is the highest level ChessForge data entity
+    /// and there can only be one open at any time. 
+    /// 
+    /// A workbook consists of one or more chapters;
+    /// Each chapter can hold one or more Variation Tree.
     /// </summary>
     public class Workbook
     {

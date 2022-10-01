@@ -17,7 +17,7 @@ namespace ChessForge
         private static StringBuilder _fileText;
 
         // convenience reference to the Workbook
-        private static WorkbookTree _workbook;
+        private static VariationTree _workbook;
 
         /// <summary>
         /// The type of the file the output text is for.
@@ -28,7 +28,7 @@ namespace ChessForge
         /// <summary>
         /// Builds text of the complete Workbook.
         /// </summary>
-        public static string BuildText(WorkbookTree workbook, AppStateManager.FileType type = AppStateManager.FileType.CHF)
+        public static string BuildText(VariationTree workbook, AppStateManager.FileType type = AppStateManager.FileType.CHF)
         {
             _workbook = workbook;
             _fileType = type;

@@ -71,7 +71,7 @@ namespace ChessForge
         /// <param name="filePath"></param>
         /// <param name="tree"></param>
         [Conditional("DEBUG")]
-        public static void DumpWorkbookTree(string filePath, WorkbookTree tree)
+        public static void DumpWorkbookTree(string filePath, VariationTree tree)
         {
             StringBuilder sb = new StringBuilder();
 

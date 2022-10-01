@@ -22,7 +22,7 @@ namespace ChessPositionTest
         /// <summary>
         /// Tree to build.
         /// </summary>
-        private static WorkbookTree _treeOut;
+        private static VariationTree _treeOut;
 
         /// <summary>
         /// Tessts aspects of variation trees and text parsing.
@@ -41,10 +41,10 @@ namespace ChessPositionTest
         /// </summary>
         private static void TestTreeMerge()
         {
-            WorkbookTree tree1 = BuildTreeFromFile("../../../ChessPositionTest/TestData/TestMerge_1.pgn");
-            WorkbookTree tree2 = BuildTreeFromFile("../../../ChessPositionTest/TestData/TestMerge_2.pgn");
+            VariationTree tree1 = BuildTreeFromFile("../../../ChessPositionTest/TestData/TestMerge_1.pgn");
+            VariationTree tree2 = BuildTreeFromFile("../../../ChessPositionTest/TestData/TestMerge_2.pgn");
 
-            _treeOut = new WorkbookTree();
+            _treeOut = new VariationTree();
             _treeOut.AddNode(new TreeNode(null, "", 0));
 
             MergeTrees(tree1.Nodes[0], tree2.Nodes[0], _treeOut.Nodes[0]);
@@ -56,9 +56,9 @@ namespace ChessPositionTest
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        private static WorkbookTree BuildTreeFromFile(string fileName)
+        private static VariationTree BuildTreeFromFile(string fileName)
         {
-            WorkbookTree tree = new WorkbookTree();
+            VariationTree tree = new VariationTree();
             string gameText = File.ReadAllText(fileName);
             PgnGameParser pgnGame = new PgnGameParser(gameText, tree, out bool multi, true);
 
@@ -154,7 +154,7 @@ namespace ChessPositionTest
         /// </summary>
         private static void TestPgnGameParser()
         {
-            WorkbookTree variationTree = new WorkbookTree();
+            VariationTree variationTree = new VariationTree();
             string gameText = File.ReadAllText("../../../ChessPositionTest/TestData/GameTreeTest_1.pgn");
             PgnGameParser pgnGame = new PgnGameParser(gameText, variationTree, out bool multi, true);
             PrintVariationTree(variationTree);
@@ -215,7 +215,7 @@ namespace ChessPositionTest
         /// Prints the entire tree to STDOUT
         /// </summary>
         /// <param name="tree"></param>
-        private static void PrintVariationTree(WorkbookTree tree)
+        private static void PrintVariationTree(VariationTree tree)
         {
             Console.WriteLine("");
             Console.WriteLine("VARIATION TREE");
