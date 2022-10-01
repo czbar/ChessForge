@@ -88,6 +88,7 @@
     <Compile Include="BoardArrow.cs" />
     <Compile Include="BoardShapesManager.cs" />
     <Compile Include="BoardCircle.cs" />
+    <Compile Include="Chapter.cs" />
     <Compile Include="CustomCommands.cs" />
     <Compile Include="EvaluationActiveLine.cs" />
     <Compile Include="EvaluationLine.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="TextBoxDialog.xaml.cs">
       <DependentUpon>TextBoxDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Workbook.cs" />
     <Compile Include="WorkbookManager.cs" />
     <Compile Include="WorkbookOptionsDialog.xaml.cs">
       <DependentUpon>WorkbookOptionsDialog.xaml</DependentUpon>
