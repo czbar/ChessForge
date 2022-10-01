@@ -235,16 +235,23 @@ namespace ChessForge
         /// <returns></returns>
         public int GetIndexForNode(TreeNode nd)
         {
-            int index = -1;
-            for (int i = 0; i < NodeList.Count; i++)
+            if (nd != null)
             {
-                if (NodeList[i].NodeId == nd.NodeId)
+                int index = -1;
+                for (int i = 0; i < NodeList.Count; i++)
                 {
-                    index = i;
-                    break;
+                    if (NodeList[i].NodeId == nd.NodeId)
+                    {
+                        index = i;
+                        break;
+                    }
                 }
+                return index;
             }
-            return index;
+            else
+            {
+                return -1;
+            }
         }
 
         /// <summary>
