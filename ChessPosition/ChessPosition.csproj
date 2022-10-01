@@ -51,7 +51,7 @@
     <Compile Include="GameTree\ChfCommands.cs" />
     <Compile Include="GameTree\PlyForTreeView.cs" />
     <Compile Include="GameTree\RichTextPara.cs" />
-    <Compile Include="GameTree\WorkbookTree.cs" />
+    <Compile Include="GameTree\VariationTree.cs" />
     <Compile Include="GameTree\TreeNode.cs" />
     <Compile Include="GameTree\VariationLine.cs" />
     <Compile Include="GameTree\WorkbookTreeMerge.cs" />

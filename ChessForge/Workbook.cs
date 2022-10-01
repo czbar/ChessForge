@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChessPosition;
+using GameTree;
 
 namespace ChessForge
 {
@@ -10,10 +12,11 @@ namespace ChessForge
     /// A Workbook is the highest level ChessForge data entity
     /// and there can only be one open at any time. 
     /// 
-    /// A workbook consists of one or more chapters;
+    /// A Workbook consists of one or more chapters;
     /// Each chapter can hold one or more Variation Tree.
     /// </summary>
     public class Workbook
     {
+        public List<Chapter> Chapters;
     }
 }
