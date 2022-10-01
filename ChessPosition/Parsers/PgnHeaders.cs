@@ -53,14 +53,21 @@ namespace ChessPosition.Parsers
         private const string RESULT = "Result";
 
         /// <summary>
-        /// Has no meaning in ChessForge but will be included in
-        /// output files to keep some PGN viewers happy
+        /// Date in the yyyy.MM.dd format.
+        /// </summary>
+        private const string DATE = "Date";
+
+        /// <summary>
+        /// Store White's name in model games 
+        /// and dummy values in non-game Variation Trees
+        /// to keep some PGN viewers happy.
         /// </summary>
         private const string WHITE = "White";
 
         /// <summary>
-        /// Has no meaning in ChessForge but will be included in
-        /// output files to keep some PGN viewers happy
+        /// Store Black's name in model games 
+        /// and dummy values in non-game Variation Trees
+        /// to keep some PGN viewers happy.
         /// </summary>
         private const string BLACK = "Black";
 
