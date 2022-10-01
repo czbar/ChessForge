@@ -203,37 +203,40 @@ namespace ChessForge
         private static void MoveEvaluationFinishedInManualReview(TreeNode nd)
         {
             int index = AppStateManager.ActiveLine.GetIndexForNode(nd);
-            lock (LearningMode.EvalLock)
+            if (index >= 0)
             {
-                AppLog.Message("Move evaluation finished for index " + index.ToString());
-
-                string eval = nd.EngineEvaluation;
-
-                bool isWhiteEval = (index - 1) % 2 == 0;
-                int moveIndex = (index - 1) / 2;
-
-                AppStateManager.ActiveLine.SetEvaluation(nd, eval);
-
-                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
+                lock (LearningMode.EvalLock)
                 {
-                    _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
-                    _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                }
+                    AppLog.Message("Move evaluation finished for index " + index.ToString());
 
-                if (ContinueLineEvaluation())
-                {
-                    AppLog.Message("Continue evaluation next move after index " + index.ToString());
-                    ClearMoveCandidates(false);
-                    AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                    RequestMoveEvaluation(index, EvaluationManager.GetNextLineNodeToEvaluate());
+                    string eval = nd.EngineEvaluation;
 
-                    _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
-                }
-                else
-                {
+                    bool isWhiteEval = (index - 1) % 2 == 0;
+                    int moveIndex = (index - 1) / 2;
+
+                    AppStateManager.ActiveLine.SetEvaluation(nd, eval);
+
                     if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
                     {
-                        EvaluationManager.Reset();
+                        _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                        _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    }
+
+                    if (ContinueLineEvaluation())
+                    {
+                        AppLog.Message("Continue evaluation next move after index " + index.ToString());
+                        ClearMoveCandidates(false);
+                        AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                        RequestMoveEvaluation(index, EvaluationManager.GetNextLineNodeToEvaluate());
+
+                        _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                    }
+                    else
+                    {
+                        if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
+                        {
+                            EvaluationManager.Reset();
+                        }
                     }
                 }
             }

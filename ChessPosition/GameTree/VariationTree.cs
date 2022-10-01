@@ -12,12 +12,9 @@ using System.Xml.Linq;
 namespace GameTree
 {
     /// <summary>
-    /// The complete Workbook tree in the current
-    /// session.
-    /// This is the highest level ChessForge data entity
-    /// and there can only be one open at any time. 
+    /// This object is used to for storing analysis trees, games and combinations. 
     /// </summary>
-    public class WorkbookTree
+    public class VariationTree
     {
         /// <summary>
         /// The complete list of Nodes for the current Workbook.

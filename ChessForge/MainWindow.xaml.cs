@@ -79,7 +79,7 @@ namespace ChessForge
         /// The complete tree of the currently
         /// loaded workbook (from the PGN or CHF file)
         /// </summary>
-        public WorkbookTree Workbook;
+        public VariationTree Workbook;
 
         /// <summary>
         /// Determines if the program is running in Debug mode.
@@ -617,7 +617,7 @@ namespace ChessForge
                 AppStateManager.WorkbookFilePath = fileName;
                 AppStateManager.UpdateAppTitleBar();
 
-                Workbook = new WorkbookTree();
+                Workbook = new VariationTree();
                 BookmarkManager.ClearBookmarksGui();
                 UiRtbWorkbookView.Document.Blocks.Clear();
 

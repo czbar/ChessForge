@@ -12,7 +12,7 @@ namespace ChessPosition.GameTree
     public class WorkbookTreeMerge
     {
         // the Workbook that will be built and returned
-        private static WorkbookTree _mergedTree;
+        private static VariationTree _mergedTree;
 
         /// <summary>
         /// Helper dictionaries to hold distinct nodes at a given tree level. 
@@ -33,10 +33,10 @@ namespace ChessPosition.GameTree
         /// <param name="tree1"></param>
         /// <param name="tree2"></param>
         /// <returns></returns>
-        public static WorkbookTree MergeWorkbooks(WorkbookTree tree1, WorkbookTree tree2)
+        public static VariationTree MergeWorkbooks(VariationTree tree1, VariationTree tree2)
         {
             // create a new Workbook and create a root Node
-            _mergedTree = new WorkbookTree();
+            _mergedTree = new VariationTree();
             _mergedTree.CreateNew();
 
             MergeTrees(tree1.Nodes[0], tree2.Nodes[0], _mergedTree.Nodes[0]);

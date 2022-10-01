@@ -51,13 +51,14 @@
     <Compile Include="GameTree\ChfCommands.cs" />
     <Compile Include="GameTree\PlyForTreeView.cs" />
     <Compile Include="GameTree\RichTextPara.cs" />
-    <Compile Include="GameTree\WorkbookTree.cs" />
+    <Compile Include="GameTree\VariationTree.cs" />
     <Compile Include="GameTree\TreeNode.cs" />
     <Compile Include="GameTree\VariationLine.cs" />
     <Compile Include="GameTree\WorkbookTreeMerge.cs" />
     <Compile Include="Parsers\FenParser.cs" />
     <Compile Include="Parsers\GameMetadata.cs" />
     <Compile Include="Parsers\PgnGameParser.cs" />
+    <Compile Include="Parsers\PgnHeaders.cs" />
     <Compile Include="Parsers\PgnMoveParser.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\DebugUtils.cs" />

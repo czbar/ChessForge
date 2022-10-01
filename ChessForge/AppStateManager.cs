@@ -182,7 +182,7 @@ namespace ChessForge
         /// <summary>
         /// A convenience reference to the Workbook.
         /// </summary>
-        public static WorkbookTree Workbook { get => _mainWin.Workbook; }
+        public static VariationTree Workbook { get => _mainWin.Workbook; }
 
         /// <summary>
         /// Current Learning Mode
