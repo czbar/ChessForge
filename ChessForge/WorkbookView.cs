@@ -223,7 +223,7 @@ namespace ChessForge
                             menuItem.IsEnabled = isEnabled;
                             break;
                         case "_mnWorkbookBookmarkAlternatives":
-                            if (_mainWin.Workbook.NodeHasSiblings(LastClickedNodeId))
+                            if (_mainWin.StudyTree.NodeHasSiblings(LastClickedNodeId))
                             {
                                 menuItem.Visibility = Visibility.Visible;
                                 menuItem.IsEnabled = isEnabled;
@@ -318,7 +318,7 @@ namespace ChessForge
         public void BuildFlowDocumentForWorkbook(int rootNodeId = 0, bool includeStem = true)
         {
             Document.Blocks.Clear();
-            _workbook = _mainWin.Workbook;
+            _workbook = _mainWin.StudyTree;
 
             // resets
             _dictNodeToRun.Clear();
@@ -705,7 +705,7 @@ namespace ChessForge
         /// <param name="para"></param>
         private void CreateStartingNode(Paragraph para)
         {
-            TreeNode nd = _mainWin.Workbook.Nodes[0];
+            TreeNode nd = _mainWin.StudyTree.Nodes[0];
             AddRunToParagraph(nd, para, "", Brushes.White);
             AddCommentRunToParagraph(nd, para);
         }
@@ -907,7 +907,7 @@ namespace ChessForge
             Run r = (Run)e.Source;
 
             int nodeId = GetNodeIdFromRunName(r.Name, RUN_NAME_PREFIX);
-            TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
+            TreeNode nd = _mainWin.StudyTree.GetNodeFromNodeId(nodeId);
             _mainWin.InvokeAssessmentDialog(nd);
             r.Text = BuildCommentRunText(nd);
             if (string.IsNullOrEmpty(r.Text))

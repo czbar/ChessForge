@@ -140,7 +140,7 @@ namespace ChessForge
 
             if (WorkbookFileType == FileType.CHF)
             {
-                string chfText = ChfTextBuilder.BuildText(AppStateManager.MainWin.Workbook);
+                string chfText = ChfTextBuilder.BuildText(AppStateManager.MainWin.StudyTree);
                 File.WriteAllText(WorkbookFilePath, chfText);
                 _isDirty = false;
             }
@@ -154,7 +154,7 @@ namespace ChessForge
         {
             try
             {
-                string chfText = ChfTextBuilder.BuildText(AppStateManager.MainWin.Workbook, FileType.PGN);
+                string chfText = ChfTextBuilder.BuildText(AppStateManager.MainWin.StudyTree, FileType.PGN);
                 File.WriteAllText(fileName, chfText);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace ChessForge
         /// <summary>
         /// A convenience reference to the Workbook.
         /// </summary>
-        public static VariationTree Workbook { get => _mainWin.Workbook; }
+        public static VariationTree Workbook { get => _mainWin.StudyTree; }
 
         /// <summary>
         /// Current Learning Mode

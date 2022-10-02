@@ -330,7 +330,7 @@ namespace ChessForge
             if (GetPlyCount() == 1)
             {
                 // game with no moves
-                return _mainWin.Workbook.Nodes[0];
+                return _mainWin.StudyTree.Nodes[0];
             }
 
             if (GetSelectedRowColumn(out int row, out int column))
@@ -339,7 +339,7 @@ namespace ChessForge
             }
             else
             {
-                return _mainWin.Workbook.Nodes[0];
+                return _mainWin.StudyTree.Nodes[0];
             }
         }
 
