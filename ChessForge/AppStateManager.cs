@@ -2,11 +2,9 @@
 using System.IO;
 using System.Windows;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ChessPosition;
 using GameTree;
+using Path = System.IO.Path;
 
 namespace ChessForge
 {
@@ -42,8 +40,9 @@ namespace ChessForge
         public enum FileType
         {
             NONE,
-            CHF,
-            PGN
+            LEGACY_CHF,
+            CHESS_FORGE_PGN,
+            GENERIC_PGN
         }
 
         /// <summary>
@@ -90,13 +89,64 @@ namespace ChessForge
                 }
                 else if (Path.GetExtension(_workbookFilePath).ToLower() == ".chf")
                 {
-                    _workbookFileType = FileType.CHF;
+                    _workbookFileType = FileType.LEGACY_CHF;
                 }
                 else
                 {
-                    _workbookFileType = FileType.PGN;
+                    _workbookFileType = FileType.CHESS_FORGE_PGN;
                 }
             }
+        }
+
+        /// <summary>
+        /// Determines the type of the file based on its extension
+        /// (chf or pgn) and its first header. 
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public static FileType DetermineFileType(string path)
+        {
+            FileType ft = FileType.NONE;
+            try
+            {
+                if (Path.GetExtension(_workbookFilePath).ToLower() == ".chf")
+                {
+                    ft = FileType.LEGACY_CHF;
+                }
+                else if (Path.GetExtension(_workbookFilePath).ToLower() == ".pgn")
+                {
+                    using (StreamReader sr = new StreamReader(path))
+                    {
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            if (!string.IsNullOrWhiteSpace(line))
+                            {
+                                string name = PgnHeaders.ParsePgnHeaderLine(line, out string value);
+                                if (name == PgnHeaders.NAME_WORKBOOK_TITLE)
+                                {
+                                    ft = FileType.CHESS_FORGE_PGN;
+                                }
+                                else
+                                {
+                                    ft = FileType.GENERIC_PGN;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    ft = FileType.NONE;
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugUtils.ShowDebugMessage("Exception in DetermineFileType(): " + ex.Message);
+            }
+
+            return ft;
         }
 
         /// <summary>
@@ -138,9 +188,10 @@ namespace ChessForge
             if (checkDirty && !IsDirty)
                 return;
 
-            if (WorkbookFileType == FileType.CHF)
+            if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
             {
-                string chfText = ChfTextBuilder.BuildText(AppStateManager.MainWin.StudyTree);
+                //string chfText = ChfTextBuilder.BuildText(AppStateManager.MainWin.StudyTree);
+                string chfText = ChfTextBuilder.BuildWorkbookText();
                 File.WriteAllText(WorkbookFilePath, chfText);
                 _isDirty = false;
             }
@@ -154,7 +205,7 @@ namespace ChessForge
         {
             try
             {
-                string chfText = ChfTextBuilder.BuildText(AppStateManager.MainWin.StudyTree, FileType.PGN);
+                string chfText = ChfTextBuilder.BuildText(AppStateManager.MainWin.StudyTree, FileType.CHESS_FORGE_PGN);
                 File.WriteAllText(fileName, chfText);
             }
             catch (Exception ex)
@@ -428,7 +479,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
 
-                if (!string.IsNullOrEmpty(WorkbookFilePath) && IsDirty && WorkbookFileType == FileType.CHF)
+                if (!string.IsNullOrEmpty(WorkbookFilePath) && IsDirty && WorkbookFileType == FileType.LEGACY_CHF)
                 {
                     _mainWin.UiMnWorkbookSave.IsEnabled = true;
                     _mainWin.UiMnWorkbookSave.Header = "Save " + Path.GetFileName(WorkbookFilePath);
