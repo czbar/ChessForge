@@ -711,8 +711,6 @@ namespace ChessForge
             SetActiveLine(startLineId, 0);
             UiRtbWorkbookView.Focus();
 
-            SetupDataInTreeView();
-
             BookmarkManager.ShowBookmarks();
 
             SelectLineAndMoveInWorkbookViews(startLineId, 0); // ActiveLine.GetSelectedPlyNodeIndex());
