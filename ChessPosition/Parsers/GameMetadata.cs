@@ -102,7 +102,7 @@ namespace ChessPosition.GameTree
         /// <summary>
         /// Text of the game
         /// </summary>
-        public string GameText {get; set;}
+        public string GameText { get; set; }
 
         /// <summary>
         /// Accessor to _isSelected.
@@ -128,14 +128,7 @@ namespace ChessPosition.GameTree
         public string GetHeaderValue(string name)
         {
             var header = _headers.Where(kvp => kvp.Key == name).FirstOrDefault();
-            if (!header.Equals(default(KeyValuePair<string, string>)))
-            {
-                return null;
-            }
-            else
-            {
-                return header.Key;
-            }
+            return header.Value;
         }
 
         /// <summary>
