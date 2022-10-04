@@ -5,6 +5,8 @@ using System.Text;
 using System.Windows;
 using GameTree;
 using ChessPosition;
+using System.Windows.Controls;
+using ChessPosition.GameTree;
 
 namespace ChessForge
 {
@@ -19,19 +21,220 @@ namespace ChessForge
         // convenience reference to the Workbook
         private static VariationTree _workbook;
 
+        // convenience reference to the Workbook
+        private static Workbook _wb;
+
         /// <summary>
-        /// The type of the file the output text is for.
-        /// Supported types are CHF and PGN
+        /// Builds text to write out to the PGN file for the entire Workbook.
+        /// The file consists of:
+        /// 1. Dummy "game" to indicate that this is a Chess Forge file
+        ///    with headers containing the Workbook title, Training Side
+        ///    and other attributes if needed.
+        /// 2. Chapters, where each chapter incudes:
+        ///    a) Mandatory Study Tree
+        ///    b) optional Model Games
+        ///    c) optional Exercises
         /// </summary>
-        private static AppStateManager.FileType _fileType;
+        /// <returns></returns>
+        public static string BuildWorkbookText()
+        {
+            _wb = WorkbookManager.SessionWorkbook;
+
+            StringBuilder sbOut = new StringBuilder();
+            sbOut.Append(BuildWorkbookPrefaceText());
+
+            _fileText = new StringBuilder();
+            for (int i = 0; i < _wb.Chapters.Count; i++)
+            {
+                sbOut.Append(BuildChapterText(_wb.Chapters[i], i + 1));
+                _fileText.Clear();
+            }
+
+            return sbOut.ToString();
+        }
+
+        /// <summary>
+        /// Builds a dummy game with Workbook headers,
+        /// a comment if applicable and the game body consisting of
+        /// the '*' character.
+        /// </summary>
+        /// <returns></returns>
+        private static string BuildWorkbookPrefaceText()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            // workbook headers
+            sb.AppendLine(PgnHeaders.GetWorkbookTitleText(_wb.Title));
+            sb.AppendLine(PgnHeaders.GetTrainingSideText(_wb.TrainingSide));
+            if (_wb.LastUpdate != null)
+            {
+                sb.AppendLine(PgnHeaders.GetDateText(_wb.LastUpdate));
+            }
+            sb.AppendLine(PgnHeaders.GetWorkbookWhiteText());
+            sb.AppendLine(PgnHeaders.GetWorkbookBlackText());
+            sb.AppendLine(PgnHeaders.GetLineResultHeader());
+
+            if (!string.IsNullOrWhiteSpace(_wb.Description))
+            {
+                sb.AppendLine(BuildCommentText(_wb.Description));
+            }
+            sb.AppendLine();
+            sb.AppendLine("*");
+            sb.AppendLine();
+
+            return sb.ToString();
+        }
+
+        private static string BuildCommentText(string comment)
+        {
+            if (string.IsNullOrEmpty(comment))
+            {
+                return "";
+            }
+            else
+            {
+                return "{" + comment + "}";
+            }
+        }
+
+        /// <summary>
+        /// Builds text for the entire chapter.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="chapterNo"></param>
+        /// <returns></returns>
+        private static string BuildChapterText(Chapter chapter, int chapterNo)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(BuildStudyTreeText(chapter, chapterNo));
+            sb.Append(BuildModelGamesText(chapter, chapterNo));
+            sb.Append(BuildExercisesText(chapter, chapterNo));
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Builds text for the Study Tree in the chapter.
+        /// A study tree is optional in a chapter.
+        /// If it is not initialized or only contains Node 0,
+        /// it will not be included in the output at all.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="chapterNo"></param>
+        /// <returns></returns>
+        private static string BuildStudyTreeText(Chapter chapter, int chapterNo)
+        {
+            VariationTree tree = chapter.StudyTree;
+            if (tree != null && tree.Nodes.Count > 1)
+            {
+                string headerText = BuildStudyTreeHeaderText(chapter, chapterNo);
+
+                TreeNode root = tree.Nodes[0];
+
+                // There may be a comment or command before the first move. Add if so.
+                _fileText.Append(BuildCommandAndCommentText(root));
+
+                StringBuilder sb = new StringBuilder();
+                sb.Append(BuildTreeLineText(root));
+
+                StringBuilder sbOutput = new StringBuilder();
+                sbOutput.Append(headerText + DivideLine(sb.ToString(), 80));
+
+                // add terminating character
+                sbOutput.Append(" *");
+                sbOutput.AppendLine();
+                return sbOutput.ToString();
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        private static string BuildStudyTreeHeaderText(Chapter chapter, int chapterNo)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(BuildCommonGameHeaderText(chapter, chapterNo));
+            
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_CONTENT_TYPE, PgnHeaders.VALUE_STUDY_TREE));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_WHITE, "Chess Forge"));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_BLACK, "Study Tree"));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_RESULT, "*"));
+            sb.AppendLine("");
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Build text for all Model Games in the chapter.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="chapterNo"></param>
+        /// <returns></returns>
+        private static string BuildModelGamesText(Chapter chapter, int chapterNo)
+        {
+            StringBuilder sb = new StringBuilder();
+
+
+            return sb.ToString();
+        }
+
+        private static string BuildModelGameText(Chapter chapter, int chapterNo, GameMetadata gm)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(BuildCommonGameHeaderText(chapter, chapterNo));
+
+            return sb.ToString();
+        }
+
+        private static string BuildModelGameHeaderText(Chapter chapter, int chapterNo)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(BuildCommonGameHeaderText(chapter, chapterNo));
+
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_CONTENT_TYPE, PgnHeaders.VALUE_STUDY_TREE));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_WHITE, "Chess Forge"));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_BLACK, "Study Tree"));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_RESULT, "*"));
+
+            return sb.ToString();
+        }
+
+
+        /// <summary>
+        /// Builds text for all the exercises in the chapter.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="chapterNo"></param>
+        /// <returns></returns>
+        private static string BuildExercisesText(Chapter chapter, int chapterNo)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            return sb.ToString();
+        }
+
+
+        private static string BuildCommonGameHeaderText(Chapter chapter, int chapterNo)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_EVENT, chapter.Title));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_CHAPTER_NUMBER, chapterNo.ToString()));
+
+            return sb.ToString();
+        }
+
 
         /// <summary>
         /// Builds text of the complete Workbook.
         /// </summary>
-        public static string BuildText(VariationTree workbook, AppStateManager.FileType type = AppStateManager.FileType.CHF)
+        public static string BuildText(VariationTree workbook, AppStateManager.FileType type = AppStateManager.FileType.LEGACY_CHF)
         {
             _workbook = workbook;
-            _fileType = type;
             _fileText = new StringBuilder();
 
             BuildHeaders();
@@ -42,7 +245,7 @@ namespace ChessForge
             if (workbook.Nodes.Count > 0)
             {
                 TreeNode root = workbook.Nodes[0];
-                
+
                 // There may be a comment or command before the first move. Add if so.
                 _fileText.Append(BuildCommandAndCommentText(root));
 
@@ -50,7 +253,7 @@ namespace ChessForge
             }
 
             sbOutput.Append(DivideLine(_fileText.ToString(), 80));
-            
+
             // add terminating character
             sbOutput.Append(" *");
             sbOutput.AppendLine();
@@ -84,7 +287,7 @@ namespace ChessForge
                 }
 
                 // find the last space before the maxChars limit
-                lastSpaceIdx = inp.LastIndexOf(' ', Math.Min(startIdx + maxChars, inp.Length -1), maxChars);
+                lastSpaceIdx = inp.LastIndexOf(' ', Math.Min(startIdx + maxChars, inp.Length - 1), maxChars);
 
                 if (lastSpaceIdx == -1)
                 {
@@ -121,23 +324,12 @@ namespace ChessForge
         /// </summary>
         private static void BuildHeaders()
         {
-            if (_fileType == AppStateManager.FileType.CHF)
-            {
-                BuildHeader(_workbook.HEADER_TITLE);
-                BuildHeader(_workbook.HEADER_DATE, DateTime.Now.ToString("yyyy.MM.dd"));
-                BuildHeader(_workbook.HEADER_TRAINING_SIDE);
-                BuildHeader(_workbook.HEADER_WHITE, "Chess Forge");
-                BuildHeader(_workbook.HEADER_BLACK, "Workbook File");
-                BuildHeader(_workbook.HEADER_RESULT, "*");
-            }
-            else
-            {  // PGN export
-                BuildHeader(_workbook.HEADER_EVENT, "Chess Forge Export");
-                BuildHeader(_workbook.HEADER_DATE, DateTime.Now.ToString("yyyy.MM.dd"));
-                BuildHeader(_workbook.HEADER_WHITE, _workbook.Title);
-                BuildHeader(_workbook.HEADER_BLACK, "Workbook");
-                BuildHeader(_workbook.HEADER_RESULT, "*");
-            }
+            BuildHeader(_workbook.HEADER_TITLE);
+            BuildHeader(_workbook.HEADER_DATE, DateTime.Now.ToString("yyyy.MM.dd"));
+            BuildHeader(_workbook.HEADER_TRAINING_SIDE);
+            BuildHeader(_workbook.HEADER_WHITE, "Chess Forge");
+            BuildHeader(_workbook.HEADER_BLACK, "Workbook File");
+            BuildHeader(_workbook.HEADER_RESULT, "*");
             _fileText.AppendLine();
         }
 
@@ -169,7 +361,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        private static void BuildTreeLineText(TreeNode nd, bool includeNumber = false)
+        private static string BuildTreeLineText(TreeNode nd, bool includeNumber = false)
         {
             while (true)
             {
@@ -177,7 +369,7 @@ namespace ChessForge
                 // print it and return 
                 if (nd.Children.Count == 0)
                 {
-                    return;
+                    return _fileText.ToString();
                 }
 
                 // if the node has 1 child, print it,
@@ -188,7 +380,7 @@ namespace ChessForge
                     TreeNode child = nd.Children[0];
                     BuildNodeText(child, includeNumber);
                     BuildTreeLineText(child);
-                    return;
+                    return _fileText.ToString();
                 }
 
                 // if the node has more than 1 child
@@ -211,7 +403,7 @@ namespace ChessForge
                     }
 
                     BuildTreeLineText(nd.Children[0], true);
-                    return;
+                    return _fileText.ToString();
                 }
             }
         }
@@ -268,8 +460,8 @@ namespace ChessForge
         /// <returns></returns>
         private static string BuildCommandAndCommentText(TreeNode nd)
         {
-            if (nd.IsBookmark 
-                || !string.IsNullOrEmpty(nd.Comment) 
+            if (nd.IsBookmark
+                || !string.IsNullOrEmpty(nd.Comment)
                 || !string.IsNullOrEmpty(nd.EngineEvaluation)
                 || !string.IsNullOrEmpty(nd.Arrows)
                 || !string.IsNullOrEmpty(nd.Circles)
@@ -282,59 +474,39 @@ namespace ChessForge
                 // Process a Bookmark ChfCommand
                 if (nd.IsBookmark)
                 {
-                    if (_fileType == AppStateManager.FileType.CHF)
-                    {
-                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.BOOKMARK_V2);
-                        sb.Append("[" + sCmd + "]");
-                    }
-                    else if (Configuration.PgnExportBookmarks)
-                    {
-                        sb.Append("[ChF bookmark]");
-                    }
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.BOOKMARK_V2);
+                    sb.Append("[" + sCmd + "]");
                 }
 
                 // Process an Evaluation ChfCommand
                 if (!string.IsNullOrEmpty(nd.EngineEvaluation))
                 {
-                    if (_fileType == AppStateManager.FileType.CHF)
-                    {
-                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ENGINE_EVALUATION_V2) + " " + nd.EngineEvaluation;
-                        sb.Append("[" + sCmd + "]");
-                    }
-                    else if (Configuration.PgnExportEvaluations)
-                    {
-                        sb.Append("[ChF eval " + nd.EngineEvaluation +"]");
-                    }
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ENGINE_EVALUATION_V2) + " " + nd.EngineEvaluation;
+                    sb.Append("[" + sCmd + "]");
                 }
 
                 // Process an Assessment ChfCommand
-                if (!string.IsNullOrEmpty(nd.Assessment))
-                {
-                    if (_fileType == AppStateManager.FileType.CHF)
-                    {
-                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.COACH_ASSESSMENT) + " " + nd.Assessment;
-                        sb.Append("[" + sCmd + "]");
-                    }
-                }
+                //if (!string.IsNullOrEmpty(nd.Assessment))
+                //{
+                //    if (_fileType == AppStateManager.FileType.PGN)
+                //    {
+                //        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.COACH_ASSESSMENT) + " " + nd.Assessment;
+                //        sb.Append("[" + sCmd + "]");
+                //    }
+                //}
 
                 // Process the Arrows string
                 if (!string.IsNullOrEmpty(nd.Arrows))
                 {
-                    if (_fileType == AppStateManager.FileType.CHF)
-                    {
-                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ARROWS) + " " + nd.Arrows;
-                        sb.Append("[" + sCmd + "]");
-                    }
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ARROWS) + " " + nd.Arrows;
+                    sb.Append("[" + sCmd + "]");
                 }
 
                 // Process the Circles string
                 if (!string.IsNullOrEmpty(nd.Circles))
                 {
-                    if (_fileType == AppStateManager.FileType.CHF)
-                    {
-                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.CIRCLES) + " " + nd.Circles;
-                        sb.Append("[" + sCmd + "]");
-                    }
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.CIRCLES) + " " + nd.Circles;
+                    sb.Append("[" + sCmd + "]");
                 }
 
                 // Write out commands that we did not recognize but do not want to lose.
