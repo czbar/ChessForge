@@ -882,8 +882,6 @@ namespace ChessForge
             r.Background = _brushSelectedMoveBkg;
             r.Foreground = _brushSelectedMoveFore;
 
-            _mainWin._lvWorkbookTable_SelectLineAndMove(lineId, nodeId);
-
             // this is a right click offer the context menu
             if (e.ChangedButton == MouseButton.Right)
             {

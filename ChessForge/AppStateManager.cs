@@ -267,7 +267,6 @@ namespace ChessForge
                 _mainWin.ActiveLine.Clear();
                 _mainWin.UiRtbWorkbookView.Document.Blocks.Clear();
                 _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
-                _mainWin.UiRtbTrainingBrowse.Document.Blocks.Clear();
 
                 _mainWin.ResetEvaluationProgressBae();
 
@@ -510,7 +509,6 @@ namespace ChessForge
                 _mainWin.UiTabBookmarks.Visibility = Visibility.Visible;
 
                 _mainWin.UiTabTrainingProgress.Visibility = Visibility.Hidden;
-                _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Hidden;
 
                 // these tabs may have been disabled for the engine game
                 _mainWin.UiRtbWorkbookView.Opacity = 1;
@@ -550,11 +548,6 @@ namespace ChessForge
                 _mainWin.UiTabBookmarks.Visibility = Visibility.Hidden;
 
                 _mainWin.UiTabTrainingProgress.Visibility = Visibility.Visible;
-                _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Visible;
-
-                // this tab may have been disabled for the engine game 
-                _mainWin.UiTabTrainingBrowse.Opacity = 1;
-                _mainWin.UiTabTrainingBrowse.IsEnabled = true;
 
                 _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
                 _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
@@ -587,7 +580,6 @@ namespace ChessForge
 
                     _mainWin.UiTabCtrlTraining.Visibility = Visibility.Visible;
                     _mainWin.UiTabTrainingProgress.Visibility = Visibility.Visible;
-                    _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Visible;
 
                     _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
                     _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
@@ -605,7 +597,6 @@ namespace ChessForge
 
                     _mainWin.UiTabCtrlTraining.Visibility = Visibility.Hidden;
                     _mainWin.UiTabTrainingProgress.Visibility = Visibility.Hidden;
-                    _mainWin.UiTabTrainingBrowse.Visibility = Visibility.Hidden;
 
                     _mainWin.UiBtnExitTraining.Visibility = Visibility.Collapsed;
                     _mainWin.UiBtnExitGame.Visibility = Visibility.Visible;
@@ -865,9 +856,6 @@ namespace ChessForge
                 if (TrainingSession.IsTrainingInProgress)
                 {
                     _mainWin.UiTabCtrlTraining.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
-
-                    _mainWin.UiTabTrainingBrowse.Opacity = 0.3;
-                    _mainWin.UiTabTrainingBrowse.IsEnabled = false;
                 }
                 else
                 {

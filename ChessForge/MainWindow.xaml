@@ -123,7 +123,7 @@
         </DataGrid>
         <TabControl x:Name="UiTabCtrlTraining" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" 
                     VerticalAlignment="Top" Grid.RowSpan="1" Visibility="Hidden">
-            <TabItem x:Name="UiTabTrainingProgress"  Header="Progress">
+            <TabItem x:Name="UiTabTrainingProgress"  Header="Training">
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox x:Name="UiRtbTrainingProgress" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
@@ -146,11 +146,13 @@
                     </Viewbox>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="UiTabTrainingBrowse"  Header="Browse" GotFocus="UiTabItemTrainingBrowse_GotFocus" >
-                <Grid Background="#FFE5E5E5">
-                    <RichTextBox x:Name="UiRtbTrainingBrowse" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+        </TabControl>
+        <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1">
+            <TabItem x:Name="UiTabChapters"  Header="Chapters" >
+                <Grid Background="#FFE5E5E5" >
+                    <RichTextBox x:Name="UiRtbChaptersView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                 IsReadOnly="True" MinHeight="640">
+                                   Height="640" MinHeight="500" IsReadOnly="True" >
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0" />
@@ -161,9 +163,7 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-        </TabControl>
-        <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1">
-            <TabItem x:Name="UiTabWorkbook"  Header="Workbook" >
+            <TabItem x:Name="UiTabWorkbook"  Header="Study" >
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookView_OnPreviewMouseDown">
                     <Grid.ContextMenu>
                         <ContextMenu x:Name="UiCmnWorkbookRightClick">
@@ -195,109 +195,37 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="TabItemTable" Header="Table" Visibility="Collapsed">
-                <DockPanel >
-                    <TextBox x:Name="_tbWorkbookTable" DockPanel.Dock="Top" BorderThickness="0,0,0,0" IsEnabled="False" Height="30" Margin="5,5,0,0" TextAlignment="Center" Text="" HorizontalAlignment="Left" FontSize="14" FontWeight="Bold"/>
-                    <ScrollViewer x:Name="_scvWorkbookTable" DockPanel.Dock="Bottom" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" PreviewMouseWheel="WorkbookView_OnPreviewMouseWheel" >
-                        <StackPanel>
-                            <ListView x:Name="_lvWorkbookTable" SelectionMode="Multiple" ItemsSource="{Binding}" Margin="0,0,0,0" 
-                                      SelectionChanged="_lvWorkbookTable_SelectionChanged" PreviewMouseDown="_lvWorkbookTable_PreviewMouseDown" 
-                                      GotFocus="_lvWorkbookTable_GotFocus"  
-                                       >
-                                <ListView.Resources>
-                                    <DataTemplate x:Key="WorkbookTable" x:Name="WorkbookTableTemplate">
-                                        <Border BorderBrush="#FF000000" BorderThickness="0,0,0.5,0" Margin="-1,-1,-10,-1">
-                                            <StackPanel Margin="1,1,8,1">
-                                                <TextBlock Text="{Binding Moves[0]}" TextAlignment="Left">
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="TextBlock">
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding GrayOut}" Value="1">
-                                                                    <Setter Property="Opacity" Value="0.4"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding HasToolTip}" Value="1">
-                                                                    <Setter Property="ToolTip">
-                                                                        <Setter.Value>
-                                                                            <UniformGrid Columns="1">
-                                                                                <TextBlock Text="{Binding ToolTip}"/>
-                                                                            </UniformGrid>
-                                                                        </Setter.Value>
-                                                                    </Setter>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
-                                            </StackPanel>
-                                        </Border>
-                                    </DataTemplate>
-                                    <SolidColorBrush x:Key="OddMoveBkg" Color="#EBEFF3" Opacity="100" />
-                                    <SolidColorBrush x:Key="EvenMoveBkg"  Color="#D2DDEC" Opacity="100"  />
-                                    <ControlTemplate x:Key="EvenWhiteMove" TargetType='{x:Type ListViewItem}'>
-                                        <StackPanel Background="{DynamicResource EvenMoveBkg}" >
-                                            <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
-                                            <Border BorderThickness="0" BorderBrush="Black" />
-                                        </StackPanel>
-                                    </ControlTemplate>
-                                    <ControlTemplate x:Key="EvenBlackMove" TargetType='{x:Type ListViewItem}'>
-                                        <StackPanel Background="{DynamicResource EvenMoveBkg}" >
-                                            <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
-                                            <Border BorderThickness="0.5" BorderBrush="Black" />
-                                        </StackPanel>
-                                    </ControlTemplate>
-                                    <ControlTemplate x:Key="OddWhiteMove" TargetType='{x:Type ListViewItem}'>
-                                        <StackPanel Background="{DynamicResource OddMoveBkg}" >
-                                            <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
-                                            <Border BorderThickness="0.5" BorderBrush="LightGray" />
-                                        </StackPanel>
-                                    </ControlTemplate>
-                                    <ControlTemplate x:Key="OddBlackMove" TargetType='{x:Type ListViewItem}'>
-                                        <StackPanel Background="{DynamicResource OddMoveBkg}" >
-                                            <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
-                                            <Border BorderThickness="0.5" BorderBrush="Black" />
-                                        </StackPanel>
-                                    </ControlTemplate>
-                                    <ControlTemplate x:Key="CustomBorder" TargetType='{x:Type ListViewItem}'/>
-                                </ListView.Resources>
-                                <ListView.View>
-                                    <GridView x:Name="_gvWorkbookTable">
-                                        <GridView.ColumnHeaderContainerStyle>
-                                            <Style TargetType="{x:Type GridViewColumnHeader}">
-                                                <Setter Property="Visibility" Value="Visible" />
-                                                <Setter Property="Background" Value="White" />
-                                            </Style>
-                                        </GridView.ColumnHeaderContainerStyle>
-                                    </GridView>
-                                </ListView.View>
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListViewItem}"  >
-                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                                        <Style.Triggers>
-                                            <Trigger Property="IsSelected" Value="true" >
-                                                <Setter Property="FontWeight" Value="Bold" />
-                                            </Trigger>
-                                            <DataTrigger Binding="{Binding RowType}" Value="0">
-                                                <Setter Property="Template" Value="{StaticResource EvenWhiteMove}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding RowType}" Value="1">
-                                                <Setter Property="Template" Value="{StaticResource EvenBlackMove}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding RowType}" Value="2">
-                                                <Setter Property="Template" Value="{StaticResource OddWhiteMove}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding RowType}" Value="3">
-                                                <Setter Property="Template" Value="{StaticResource OddBlackMove}"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ListView.ItemContainerStyle>
-                            </ListView>
-                        </StackPanel>
-                    </ScrollViewer>
-                </DockPanel>
+            <TabItem x:Name="UiTabGames"  Header="Games" >
+                <Grid Background="#FFE5E5E5" >
+                    <RichTextBox x:Name="UiRtbGamesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                   Height="640" MinHeight="500" IsReadOnly="True" >
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="0" />
+                            </Style>
+                        </RichTextBox.Resources>
+                        <FlowDocument>
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
             </TabItem>
-            <TabItem x:Name="UiTabBookmarks" Header="Training Bookmarks">
+            <TabItem x:Name="UiTabExercises"  Header="Exercises" >
+                <Grid Background="#FFE5E5E5" >
+                    <RichTextBox x:Name="UiRtbExercisesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                   Height="640" MinHeight="500" IsReadOnly="True" >
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="0" />
+                            </Style>
+                        </RichTextBox.Resources>
+                        <FlowDocument>
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="UiTabBookmarks" Header="Bookmarks">
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown">
                     <Grid.ContextMenu>
                         <ContextMenu x:Name="_cmBookmarks">
