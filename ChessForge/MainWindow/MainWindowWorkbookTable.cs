@@ -205,8 +205,8 @@ namespace ChessForge
         private string BuildLineRemainder(int vlIdx, int moveIdx)
         {
             StringBuilder sb = new StringBuilder();
-            VariationLine vlWhite = StudyTree.VariationLines[vlIdx - 1];
-            VariationLine vlBlack = StudyTree.VariationLines[vlIdx];
+            VariationLine vlWhite = ActiveVariationTree.VariationLines[vlIdx - 1];
+            VariationLine vlBlack = ActiveVariationTree.VariationLines[vlIdx];
 
             // we start with White and have to watch for ending on a null Black move
             for (int i = moveIdx - 1; i < vlWhite.Plies.Count; i++)
@@ -321,14 +321,14 @@ namespace ChessForge
 
                     // get nodeId
                     int variationLineIndex = ttr.VariationLineNumber * 2 + (ttr.RowColor == Strings.ROW_COLOR_WHITE ? 0 : 1);
-                    int moveInVariation = (StudyTree.Stem.Count - 1) / 2 + column;
+                    int moveInVariation = (ActiveVariationTree.Stem.Count - 1) / 2 + column;
 
-                    if (variationLineIndex > StudyTree.VariationLines.Count - 1)
+                    if (variationLineIndex > ActiveVariationTree.VariationLines.Count - 1)
                     {
                         return false;
                     }
 
-                    VariationLine vl = StudyTree.VariationLines[variationLineIndex];
+                    VariationLine vl = ActiveVariationTree.VariationLines[variationLineIndex];
                     if (moveInVariation > vl.Plies.Count - 1)
                     {
                         return false;
@@ -336,7 +336,7 @@ namespace ChessForge
 
                     PlyForTreeView ptv = vl.Plies[moveInVariation];
                     // the line is uniquely identified by the last move in it
-                    var line = StudyTree.SelectLine(vl.Plies[vl.Plies.Count - 1].LineId);
+                    var line = ActiveVariationTree.SelectLine(vl.Plies[vl.Plies.Count - 1].LineId);
                     SetActiveLine(line, ptv.NodeId);
                 }
                 else

@@ -136,15 +136,15 @@ namespace ChessForge
                 MessageBox.Show("Failed to parse engine's move.", "Unexpected error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            nd = new TreeNode(curr, algMove, _mainWin.StudyTree.GetNewNodeId());
-            TreeNode sib = AppStateManager.MainWin.StudyTree.GetIdenticalSibling(nd, engMove);
+            nd = new TreeNode(curr, algMove, _mainWin.ActiveVariationTree.GetNewNodeId());
+            TreeNode sib = AppStateManager.MainWin.ActiveVariationTree.GetIdenticalSibling(nd, engMove);
             if (sib == null)
             {
                 nd.IsNewTrainingMove = curr.IsNewTrainingMove;
                 nd.Position = pos;
                 nd.Position.ColorToMove = MoveUtils.ReverseColor(pos.ColorToMove);
                 nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
-                _mainWin.StudyTree.AddNodeToParent(nd);
+                _mainWin.ActiveVariationTree.AddNodeToParent(nd);
                 Line.AddPlyAndMove(nd);
             }
             else
@@ -178,7 +178,7 @@ namespace ChessForge
                     // this is a game during Training triggered by the user making a move not in Workbook.
                     // We know, therefore, that this is a new move.
                     nd.IsNewTrainingMove = true;
-                    nd.NodeId = _mainWin.StudyTree.GetNewNodeId();
+                    nd.NodeId = _mainWin.ActiveVariationTree.GetNewNodeId();
                     _mainWin.UiTrainingView.UserMoveMade();
                 }
                 if (endOfGame)
@@ -200,7 +200,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public static void RestartAtUserMove(TreeNode nd)
         {
-            _mainWin.StudyTree.RemoveTailAfter(nd);
+            _mainWin.ActiveVariationTree.RemoveTailAfter(nd);
             Line.RollbackToNode(nd);
             SwitchToAwaitEngineMove(nd, false);
         }
@@ -213,7 +213,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public static void RestartAtEngineMove(TreeNode nd)
         {
-            _mainWin.StudyTree.RemoveTailAfter(nd);
+            _mainWin.ActiveVariationTree.RemoveTailAfter(nd);
             Line.RollbackToNode(nd);
             SwitchToAwaitUserMove(nd);
         }
@@ -303,7 +303,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public static void ReplaceLastPly(int nodeId)
         {
-            TreeNode nd = _mainWin.StudyTree.GetNodeFromNodeId(nodeId);
+            TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
             ReplaceLastPly(nd);
         }
 

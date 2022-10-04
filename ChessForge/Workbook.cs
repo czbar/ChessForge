@@ -49,14 +49,14 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Returns the active Study Tree which
-        /// is the Study Tree of the active chapter.
+        /// Returns the Active Tree which
+        /// is the Active Tree of the active chapter.
         /// </summary>
-        public VariationTree ActiveStudyTree
+        public VariationTree ActiveVariationTree
         {
             get
             {
-                return _activeChapter.StudyTree;
+                return _activeChapter.ActiveVariationTree;
             }
         }
 
@@ -84,7 +84,8 @@ namespace ChessForge
         /// </summary>
         public string Title
         {
-            get => _title; set => _title = value;
+            get => _title;
+            set => _title = value;
         }
 
         /// <summary>

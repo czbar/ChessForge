@@ -291,7 +291,7 @@ namespace ChessForge
                 else
                 {
                     // double check that we have the parent in our Workbook
-                    if (_mainWin.StudyTree.GetNodeFromNodeId(parent.NodeId) == null)
+                    if (_mainWin.ActiveVariationTree.GetNodeFromNodeId(parent.NodeId) == null)
                     {
                         // we are "out of the book" in our training so there is nothing to report
                         DebugUtils.ShowDebugMessage("ReportLastMoveVsWorkbook() : parent not found");
@@ -394,7 +394,7 @@ namespace ChessForge
                 else if (block is Paragraph)
                 {
                     int nodeId = TextUtils.GetNodeIdFromPrefixedString(((Paragraph)block).Name);
-                    TreeNode nd = _mainWin.StudyTree.GetNodeFromNodeId(nodeId);
+                    TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
                     if (nd != null && nd.MoveNumber == move.MoveNumber && nd.ColorToMove == move.ColorToMove)
                     {
                         found = true;
@@ -426,12 +426,12 @@ namespace ChessForge
             // TODO: after the re-think of the GUI that probably cannot happen (?)
             EngineGame.ReplaceLastPly(nodeId);
 
-            TreeNode userChoiceNode = _mainWin.StudyTree.GetNodeFromNodeId(nodeId);
+            TreeNode userChoiceNode = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
 
             _mainWin.DisplayPosition(userChoiceNode);
             _mainWin.ColorMoveSquares(_userMove.LastMoveEngineNotation);
 
-            TreeNode nd = _mainWin.StudyTree.SelectRandomChild(nodeId);
+            TreeNode nd = _mainWin.ActiveVariationTree.SelectRandomChild(nodeId);
 
             // Selecting a random response to the user's choice from the Workbook
             EngineGame.AddPlyToGame(nd);
@@ -1239,7 +1239,7 @@ namespace ChessForge
         private void DetectLastClickedNode(Run r, string prefix, MouseButtonEventArgs e)
         {
             int nodeId = GetNodeIdFromObjectName(r.Name, prefix);
-            TreeNode nd = _mainWin.StudyTree.GetNodeFromNodeId(nodeId);
+            TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
             SetLastClicked(nd, r, e);
         }
 
@@ -1265,7 +1265,7 @@ namespace ChessForge
             if (nodeId >= 0)
             {
                 Point pt = e.GetPosition(_mainWin.UiRtbTrainingProgress);
-                _mainWin.FloatingChessBoard.DisplayPosition(_mainWin.StudyTree.GetNodeFromNodeId(nodeId));
+                _mainWin.FloatingChessBoard.DisplayPosition(_mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId));
                 int yOffset = r.Name.StartsWith(_run_stem_move_) ? 25 : -165;
                 _mainWin.UiVbFloatingChessboard.Margin = new Thickness(pt.X, pt.Y + yOffset, 0, 0);
                 _mainWin.ShowFloatingChessboard(true);
