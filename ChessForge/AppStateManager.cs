@@ -198,23 +198,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Export the Workbook to a PGN file.
-        /// </summary>
-        /// <param name="fileName"></param>
-        public static void ExportToPgn(string fileName)
-        {
-            try
-            {
-                string chfText = ChfTextBuilder.BuildText(AppStateManager.MainWin.StudyTree, FileType.CHESS_FORGE_PGN);
-                File.WriteAllText(fileName, chfText);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Export failed: " + ex.Message, "File Error", MessageBoxButton.OK, MessageBoxImage.Stop);
-            }
-        }
-
-        /// <summary>
         /// Type of the file currently open as
         /// the Workbook.
         /// </summary>
@@ -229,11 +212,6 @@ namespace ChessForge
         /// Reference to the ActiveLine object
         /// </summary>
         public static ActiveLineManager ActiveLine { get => MainWin.ActiveLine; }
-
-        /// <summary>
-        /// A convenience reference to the Workbook.
-        /// </summary>
-        public static VariationTree Workbook { get => _mainWin.StudyTree; }
 
         /// <summary>
         /// Current Learning Mode
@@ -494,13 +472,11 @@ namespace ChessForge
                 {
                     _mainWin.UiMnWorkbookSaveAs.IsEnabled = true;
                     _mainWin.UiMnWorkbookSaveAs.Header = "Save " + Path.GetFileName(WorkbookFilePath) + " As...";
-                    _mainWin.UiMnExportPgn.IsEnabled = true;
                 }
                 else
                 {
                     _mainWin.UiMnWorkbookSaveAs.IsEnabled = false;
                     _mainWin.UiMnWorkbookSaveAs.Header = "Save As...";
-                    _mainWin.UiMnExportPgn.IsEnabled = false;
                 }
             });
         }

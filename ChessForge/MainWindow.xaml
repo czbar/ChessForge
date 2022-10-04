@@ -79,8 +79,6 @@
                 <MenuItem x:Name="UiMnWorkbookSave" Header="Save" Click="UiMnWorkbookSave_Click" />
                 <MenuItem x:Name="UiMnWorkbookSaveAs" Header="Save As ..." Click="UiMnWorkbookSaveAs_Click" />
                 <Separator />
-                <MenuItem x:Name="UiMnExportPgn" Header="Export Workbook as PGN ..." Click="UiMnExportPgn_Click" />
-                <Separator />
             </MenuItem>
             <MenuItem Header="Training" Margin="0,0,0,0">
                 <MenuItem x:Name="UiMnStartTraining"  Header="Start New Session" Click="UiMnStartTraining_Click"/>
