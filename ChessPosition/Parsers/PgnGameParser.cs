@@ -76,8 +76,25 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Parses a single PGN game
+        /// </summary>
+        /// <param name="pgnGametext"></param>
+        /// <param name="gameTree"></param>
+        public PgnGameParser(string pgnGametext, VariationTree gameTree)
+        {
+            try
+            {
+                ProcessRemainingGameText(gameTree, pgnGametext);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Exception in PgnGameParser: " + ex.Message);
+            }
+        }
+
+        /// <summary>
         /// This method may be invoked to process another game in the 
-        /// file in which we have already processed the firts game. 
+        /// file in which we have already processed the first game. 
         /// </summary>
         /// <param name="workbook"></param>
         private void ProcessRemainingGameText(VariationTree workbook, string pgnGametext)
