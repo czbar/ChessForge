@@ -94,7 +94,7 @@ namespace ChessForge
         public override void AddRunToEvaluate(Run r)
         {
             int nodeId = TextUtils.GetNodeIdFromPrefixedString(r.Name);
-            TreeNode nd = AppStateManager.Workbook.GetNodeFromNodeId(nodeId);
+            TreeNode nd = AppStateManager.MainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
 
             _nodesToEvaluate.Add(nd);
             _runsToEvaluate.Add(r);
