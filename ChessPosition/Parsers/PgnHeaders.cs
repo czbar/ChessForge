@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace ChessPosition.Parsers
+namespace ChessPosition
 {
     /// <summary>
     /// Handles PGN headers for either the Workbook
@@ -24,7 +24,7 @@ namespace ChessPosition.Parsers
         /// If absent, the file will be considered a third-party PGN.
         /// The value will be considered to be the Workbook's title.
         /// </summary>
-        private const string TITLE = "ChessForgeWorkbook";
+        public const string NAME_WORKBOOK_TITLE = "ChessForgeWorkbook";
 
         /// <summary>
         /// Determines which side is the default training side in 
@@ -32,113 +32,153 @@ namespace ChessPosition.Parsers
         /// This is part of the first set of headers (i.e. for the entire Workbook)
         /// only.
         /// </summary>
-        private const string TRAINING_SIDE = "TrainingSide";
+        public const string NAME_TRAINING_SIDE = "TrainingSide";
 
         /// <summary>
         /// In Chess Forge this header is repurposed as a chapter's title.
         /// </summary>
-        private const string EVENT = "Event";
+        public const string NAME_EVENT = "Event";
+
+        /// <summary>
+        /// Position in the FEN format.
+        /// </summary>
+        public const string NAME_FEN = "Fen";
 
         /// <summary>
         /// The number of a chapter. The same number may appear in multiple
         /// Variation Trees thus organizing them into chapters.
         /// </summary>
-        private const string CHAPTER_NUMBER = "ChapterNumber";
+        public const string NAME_CHAPTER_NUMBER = "ChapterNumber";
+
+        /// <summary>
+        /// Type of the game which can be "Study Tree", "Model Game" or "Exercise".
+        /// </summary>
+        public const string NAME_CONTENT_TYPE = "ContentType";
 
         /// <summary>
         /// Basically, the same meaning as in the standard PGN.
         /// It will be "*" for the chapter's variation tree or
         /// game result for games and combinations.
         /// </summary>
-        private const string RESULT = "Result";
+        public const string NAME_RESULT = "Result";
 
         /// <summary>
         /// Date in the yyyy.MM.dd format.
         /// </summary>
-        private const string DATE = "Date";
+        public const string NAME_DATE = "Date";
 
         /// <summary>
         /// Store White's name in model games 
         /// and dummy values in non-game Variation Trees
         /// to keep some PGN viewers happy.
         /// </summary>
-        private const string WHITE = "White";
+        public const string NAME_WHITE = "White";
 
         /// <summary>
         /// Store Black's name in model games 
         /// and dummy values in non-game Variation Trees
         /// to keep some PGN viewers happy.
         /// </summary>
-        private const string BLACK = "Black";
+        public const string NAME_BLACK = "Black";
+
+        public const string VALUE_WHITE = "White";
+        public const string VALUE_BLACK = "Black";
+        public const string VALUE_NO_COLOR = "None";
+
+        public const string VALUE_STUDY_TREE = "Study Tree";
+        public const string VALUE_MODEL_GAME = "Model Game";
+        public const string VALUE_EXERCISE = "Exercise";
+
+        public static string GetWorkbookTitleText(string title)
+        {
+            return BuildHeaderLine(NAME_WORKBOOK_TITLE, title);
+        }
 
         /// <summary>
-        /// Saves header's name and value. 
+        /// Checks if the passed string looks like a header line and if so
+        /// returns the name and value of the header.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        public void SetHeaderVlaue(string name, string value)
+        /// <param name=""></param>
+        /// <returns>Null if this is not a header line otherwise the name of the header.</returns>
+        public static string ParsePgnHeaderLine(string line, out string val)
         {
-            var header = _headers.Where(kvp => kvp.Key == name).FirstOrDefault();
-            if (!header.Equals(default(KeyValuePair<string, string>)))
+            string header = null;
+            val = "";
+            line = line.Trim();
+
+            if (line.Length > 0 && line[0] == '[' && line[line.Length - 1] == ']')
             {
-                _headers.Remove(header);
+                line = line.Substring(1, line.Length - 2);
+                string[] tokens = line.Split('\"');
+                if (tokens.Length >= 2)
+                {
+                    header = tokens[0].Trim();
+                    val = tokens[1].Trim();
+                }
             }
 
-            header = new KeyValuePair<string, string>(name, value);
-            _headers.Add(header);
+            return header;
         }
 
-        /// <summary>
-        /// Returns the title of the Workbook
-        /// </summary>
-        /// <returns></returns>
-        public string GetWorkbookTitle()
-        {
-            return _headers.Where(kvp => kvp.Key == TITLE).FirstOrDefault().Value;
-        }
 
-        /// <summary>
-        /// Returns the title of the chapter.
-        /// </summary>
-        /// <returns></returns>
-        public string GetChapterTitle()
+        public static string GetTrainingSideText(PieceColor color)
         {
-            return _headers.Where(kvp => kvp.Key == EVENT).FirstOrDefault().Value;
-        }
-
-        /// <summary>
-        /// Returns the result of a tree/game/combinattion
-        /// </summary>
-        /// <returns></returns>
-        public string GetResult()
-        {
-            return _headers.Where(kvp => kvp.Key == RESULT).FirstOrDefault().Value;
-        }
-
-        /// <summary>
-        /// Returns the training side value.
-        /// </summary>
-        /// <returns></returns>
-        public string GetTrainingSide()
-        {
-            return _headers.Where(kvp => kvp.Key == TRAINING_SIDE).FirstOrDefault().Value;
-        }
-
-        /// <summary>
-        /// Returns the number of the chapter or 0 if not found or invalid.
-        /// </summary>
-        /// <returns></returns>
-        public int GetChapterNumber()
-        {
-            string sChapterNo = _headers.Where(kvp => kvp.Key == CHAPTER_NUMBER).FirstOrDefault().Value;
-            if (int.TryParse(sChapterNo, out int chapterNumber))
+            string sColor;
+            switch (color)
             {
-                return chapterNumber;
+                case PieceColor.White:
+                    sColor = NAME_WHITE;
+                    break;
+                case PieceColor.Black:
+                    sColor = NAME_BLACK;
+                    break;
+                default:
+                    sColor = VALUE_NO_COLOR;
+                    break;
+
             }
-            else
+            return BuildHeaderLine(NAME_TRAINING_SIDE, sColor);
+        }
+
+        public static string GetDateText(DateTime? dt)
+        {
+            if (dt == null)
             {
-                return 0;
+                return "";
             }
+
+            return BuildHeaderLine(NAME_DATE, dt.Value.ToString("yyyy.MM.dd"));
+        }
+
+        public static string GetWorkbookWhiteText()
+        {
+            return BuildHeaderLine(NAME_WHITE, "Chess Forge");
+        }
+
+        public static string GetWorkbookBlackText()
+        {
+            return BuildHeaderLine(NAME_BLACK, "Workbook File");
+        }
+
+        public static string GetLineResultHeader()
+        {
+            return BuildHeaderLine(NAME_RESULT, "*");
+        }
+
+
+        public static string BuildHeaderLine(string key, string value)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                return "";
+            }
+
+            return "[" + key + " \"" + (value ?? "") + "\"]";
+        }
+
+        private static string BuildHeaderLine(KeyValuePair<string, string> header)
+        {
+            return BuildHeaderLine(header.Key, header.Value);
         }
     }
 }

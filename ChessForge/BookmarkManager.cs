@@ -32,7 +32,7 @@ namespace ChessForge
         private static int _maxPage
         {
             get {
-                int bm_count = _mainWin.Workbook.Bookmarks.Count;
+                int bm_count = _mainWin.StudyTree.Bookmarks.Count;
                 if (bm_count <= BOOKMARKS_PER_PAGE)
                     return 1;
                 else
@@ -97,12 +97,12 @@ namespace ChessForge
         {
             SortBookmarks();
 
-            for (int i = 0; i < _mainWin.Workbook.Bookmarks.Count; i++)
+            for (int i = 0; i < _mainWin.StudyTree.Bookmarks.Count; i++)
             {
                 if (i >= Bookmarks.Count)
                     break;
 
-                Bookmarks[i].BookmarkData = _mainWin.Workbook.Bookmarks[i];
+                Bookmarks[i].BookmarkData = _mainWin.StudyTree.Bookmarks[i];
                 Bookmarks[i].Activate();
             }
         }
@@ -115,7 +115,7 @@ namespace ChessForge
         /// </summary>
         public static void SortBookmarks()
         {
-            _mainWin.Workbook.Bookmarks.Sort();
+            _mainWin.StudyTree.Bookmarks.Sort();
             ResyncBookmarks(_currentPage);
         }
 
@@ -141,7 +141,7 @@ namespace ChessForge
         /// <returns></returns>
         public static bool IsBookmarked(int nodeId)
         {
-            return (_mainWin.Workbook.IsBookmarked(nodeId));
+            return (_mainWin.StudyTree.IsBookmarked(nodeId));
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace ChessForge
             if (nd != null)
             {
                 //add to the list in the Workbook
-                if (_mainWin.Workbook.AddBookmark(nd, true) == 0)
+                if (_mainWin.StudyTree.AddBookmark(nd, true) == 0)
                 {
                     SortBookmarks();
                     ResyncBookmarks(_currentPage);
@@ -179,7 +179,7 @@ namespace ChessForge
         /// <returns>0 on success, 1 if already exists, -1 on failure</returns>
         public static int AddBookmark(int nodeId)
         {
-            TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
+            TreeNode nd = _mainWin.StudyTree.GetNodeFromNodeId(nodeId);
             return AddBookmark(nd);
         }
 
@@ -192,7 +192,7 @@ namespace ChessForge
         {
             int res = 1;
 
-            TreeNode nd = _mainWin.Workbook.GetNodeFromNodeId(nodeId);
+            TreeNode nd = _mainWin.StudyTree.GetNodeFromNodeId(nodeId);
 
             TreeNode parent = nd.Parent;
             if (parent != null)
@@ -227,7 +227,7 @@ namespace ChessForge
             TreeNode nd = Bookmarks[ClickedIndex].BookmarkData.Node;
             if (nd != null)
             {
-                _mainWin.Workbook.DeleteBookmark(nd);
+                _mainWin.StudyTree.DeleteBookmark(nd);
                 if (_currentPage > _maxPage)
                 {
                     _currentPage = _maxPage;
@@ -242,7 +242,7 @@ namespace ChessForge
         /// </summary>
         public static void DeleteAllBookmarks(bool askUser = true)
         {
-            if (askUser && _mainWin.Workbook.Bookmarks.Count > 0)
+            if (askUser && _mainWin.StudyTree.Bookmarks.Count > 0)
             {
                 if (MessageBox.Show("This will delete all Bookmarks. Proceed?"
                     , "Training Bookmarks", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
@@ -255,7 +255,7 @@ namespace ChessForge
             {
                 if (bm.BookmarkData != null && bm.BookmarkData.Node != null)
                 {
-                    _mainWin.Workbook.DeleteBookmark(bm.BookmarkData.Node);
+                    _mainWin.StudyTree.DeleteBookmark(bm.BookmarkData.Node);
                     bm.BookmarkData.Node.IsBookmark = false;
                     bm.BookmarkData = null;
                 }
@@ -330,7 +330,7 @@ namespace ChessForge
         /// </summary>
         public static void GenerateBookmarks()
         {
-            if (_mainWin.Workbook.Bookmarks.Count > 0)
+            if (_mainWin.StudyTree.Bookmarks.Count > 0)
             {
                 if (MessageBox.Show("Generated bookmarks will replace the ones in the Workbook. Proceed?"
                     , "Training Bookmarks", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
@@ -340,7 +340,7 @@ namespace ChessForge
             }
 
             DeleteAllBookmarks(false);
-            _mainWin.Workbook.GenerateBookmarks();
+            _mainWin.StudyTree.GenerateBookmarks();
             _mainWin.UiTabBookmarks.Focus();
             ShowBookmarks();
         }
@@ -380,10 +380,10 @@ namespace ChessForge
                             menuItem.IsEnabled = isEnabled;
                             break;
                         case "_mnDeleteAllBookmarks":
-                            menuItem.IsEnabled = _mainWin.Workbook.Bookmarks.Count > 0;
+                            menuItem.IsEnabled = _mainWin.StudyTree.Bookmarks.Count > 0;
                             break;
                         case "_mnGenerateBookmark":
-                            menuItem.Visibility = _mainWin.Workbook.Bookmarks.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+                            menuItem.Visibility = _mainWin.StudyTree.Bookmarks.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
                             break;
                     }
                 }
@@ -396,7 +396,7 @@ namespace ChessForge
         /// </summary>
         public static void ResyncBookmarks(int pageNo)
         {
-            int count = _mainWin.Workbook.Bookmarks.Count;
+            int count = _mainWin.StudyTree.Bookmarks.Count;
 
             int start = (pageNo - 1) * BOOKMARKS_PER_PAGE;
             int end = pageNo * BOOKMARKS_PER_PAGE - 1;
@@ -405,7 +405,7 @@ namespace ChessForge
             {
                 if (i < count)
                 {
-                    Bookmarks[i - start].BookmarkData = _mainWin.Workbook.Bookmarks[i];
+                    Bookmarks[i - start].BookmarkData = _mainWin.StudyTree.Bookmarks[i];
                     Bookmarks[i - start].Activate();
                 }
                 else
@@ -425,7 +425,7 @@ namespace ChessForge
         /// </summary>
         private static void ShowPageControls()
         {
-            int bm_count = _mainWin.Workbook.Bookmarks.Count;
+            int bm_count = _mainWin.StudyTree.Bookmarks.Count;
             if (bm_count <= BOOKMARKS_PER_PAGE)
             {
                 _mainWin.UiGridBookmarks.RowDefinitions[0].Height = new GridLength(0);

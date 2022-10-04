@@ -194,8 +194,8 @@ namespace ChessForge
         {
             Document.Blocks.Clear();
 
-            string title = _mainWin.Workbook.Title;
-            if (string.IsNullOrEmpty(_mainWin.Workbook.Title))
+            string title = _mainWin.StudyTree.Title;
+            if (string.IsNullOrEmpty(_mainWin.StudyTree.Title))
             {
                 title = "Untitled Workbook";
             }
@@ -210,7 +210,7 @@ namespace ChessForge
         /// </summary>
         public void RestoreTitleMessage()
         {
-            if (_mainWin.Workbook != null)
+            if (_mainWin.StudyTree != null)
             {
                 ShowWorkbookTitle();
             }

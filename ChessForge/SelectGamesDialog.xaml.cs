@@ -32,7 +32,7 @@ namespace ChessForge
         public SelectGamesDialog()
         {
             InitializeComponent();
-            UiLvGames.ItemsSource = WorkbookManager.GamesHeaders;
+            UiLvGames.ItemsSource = WorkbookManager.GameList;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCbSelectAll_Checked(object sender, RoutedEventArgs e)
         {
-            foreach (var item in WorkbookManager.GamesHeaders)
+            foreach (var item in WorkbookManager.GameList)
             {
                 item.IsSelected = true;
             }
@@ -55,7 +55,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCbSelectAll_Unchecked(object sender, RoutedEventArgs e)
         {
-            foreach (var item in WorkbookManager.GamesHeaders)
+            foreach (var item in WorkbookManager.GameList)
             {
                 item.IsSelected = false;
             }
