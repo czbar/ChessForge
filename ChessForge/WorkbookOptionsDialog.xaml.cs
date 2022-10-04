@@ -24,7 +24,7 @@ namespace ChessForge
         /// <summary>
         /// Creates the dialog, initializes controls
         /// </summary>
-        public WorkbookOptionsDialog(VariationTree _workbook)
+        public WorkbookOptionsDialog(Workbook _workbook)
         {
             InitializeComponent();
             WorkbookTitle = _workbook.Title;
