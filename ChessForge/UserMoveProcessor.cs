@@ -233,7 +233,7 @@ namespace ChessForge
                 // and the move in the views
 
                 // if the move is new but has no siblings, "inherit" line id from the parent 
-                if (!preExist && string.IsNullOrEmpty(nd.LineId) && !AppStateManager.MainWin.StudyTree.NodeHasSiblings(nd.NodeId))
+                if (!preExist && string.IsNullOrEmpty(nd.LineId) && !AppStateManager.MainWin.ActiveVariationTree.NodeHasSiblings(nd.NodeId))
                 {
                     nd.LineId = nd.Parent.LineId;
                 }
@@ -258,7 +258,7 @@ namespace ChessForge
                     // new move for which we need a new line id
                     // if it is new and has siblings, rebuild line ids
                     // Workbook view will need a full update unless TODO this node AND its parent have no siblings
-                    AppStateManager.MainWin.StudyTree.SetLineIdForNewNode(nd);
+                    AppStateManager.MainWin.ActiveVariationTree.SetLineIdForNewNode(nd);
                     //AppStateManager.MainWin.ActiveLine.Line.AddPlyAndMove(nd);
                     AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
                     AppStateManager.MainWin.RebuildWorkbookView();
@@ -295,7 +295,7 @@ namespace ChessForge
                 curr = EngineGame.GetLastGameNode();
             }
 
-            nd = AppStateManager.MainWin.StudyTree.CreateNewChildNode(curr);
+            nd = AppStateManager.MainWin.ActiveVariationTree.CreateNewChildNode(curr);
             string algMove;
             try
             {
@@ -312,7 +312,7 @@ namespace ChessForge
                 nd.Position.ColorToMove = nd.Position.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
                 nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
                 nd.LastMoveAlgebraicNotation = algMove;
-                TreeNode sib = AppStateManager.MainWin.StudyTree.GetIdenticalSibling(nd);
+                TreeNode sib = AppStateManager.MainWin.ActiveVariationTree.GetIdenticalSibling(nd);
                 if (sib == null)
                 {
                     // if this is a new move, mark as such and add to Workbook
@@ -325,7 +325,7 @@ namespace ChessForge
                     {
                         nd.IsNewTrainingMove = true;
                     }
-                    AppStateManager.MainWin.StudyTree.AddNodeToParent(nd);
+                    AppStateManager.MainWin.ActiveVariationTree.AddNodeToParent(nd);
                 }
                 else
                 {

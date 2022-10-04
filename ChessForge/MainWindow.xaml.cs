@@ -90,11 +90,11 @@ namespace ChessForge
         /// <summary>
         /// The variation tree currently being processed
         /// </summary>
-        public VariationTree StudyTree
+        public VariationTree ActiveVariationTree
         {
             get
             {
-                return SessionWorkbook.ActiveStudyTree;
+                return SessionWorkbook.ActiveVariationTree;
             }
         }
 
@@ -431,7 +431,7 @@ namespace ChessForge
                 TreeNode nd = ActiveLine.GetSelectedTreeNode();
                 if (nd == null)
                 {
-                    nd = StudyTree.Nodes[0];
+                    nd = ActiveVariationTree.Nodes[0];
                 }
 
                 if (pieceColor != PieceColor.None && pieceColor == nd.ColorToMove)
@@ -669,12 +669,12 @@ namespace ChessForge
             AppStateManager.UpdateAppTitleBar();
             BoardCommentBox.ShowWorkbookTitle();
 
-            if (StudyTree.TrainingSide == PieceColor.None)
+            if (SessionWorkbook.TrainingSide == PieceColor.None)
             {
                 ShowWorkbookOptionsDialog();
             }
 
-            if (StudyTree.TrainingSide == PieceColor.White && MainChessBoard.IsFlipped || StudyTree.TrainingSide == PieceColor.Black && !MainChessBoard.IsFlipped)
+            if (SessionWorkbook.TrainingSide == PieceColor.White && MainChessBoard.IsFlipped || SessionWorkbook.TrainingSide == PieceColor.Black && !MainChessBoard.IsFlipped)
             {
                 MainChessBoard.FlipBoard();
             }
@@ -685,13 +685,13 @@ namespace ChessForge
 
             _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
             _trainingBrowseRichTextBuilder = new WorkbookView(UiRtbTrainingBrowse.Document, this);
-            if (StudyTree.Nodes.Count == 0)
+            if (ActiveVariationTree.Nodes.Count == 0)
             {
-                StudyTree.CreateNew();
+                ActiveVariationTree.CreateNew();
             }
             else
             {
-                StudyTree.BuildLines();
+                ActiveVariationTree.BuildLines();
             }
             UiTabWorkbook.Focus();
 
@@ -707,7 +707,7 @@ namespace ChessForge
             //    }
             //}
 
-            string startLineId = StudyTree.GetDefaultLineIdForNode(0);
+            string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
             SetActiveLine(startLineId, 0);
             UiRtbWorkbookView.Focus();
 
@@ -770,7 +770,7 @@ namespace ChessForge
 
         public void SetActiveLine(string lineId, int selectedNodeId, bool displayPosition = true)
         {
-            ObservableCollection<TreeNode> line = StudyTree.SelectLine(lineId);
+            ObservableCollection<TreeNode> line = ActiveVariationTree.SelectLine(lineId);
             SetActiveLine(line, selectedNodeId, displayPosition);
         }
 
@@ -860,7 +860,7 @@ namespace ChessForge
             if (userRequested)
             {
                 distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                AppLog.DumpWorkbookTree(DebugUtils.BuildLogFileName(App.AppPath, "wktree", distinct), StudyTree);
+                AppLog.DumpWorkbookTree(DebugUtils.BuildLogFileName(App.AppPath, "wktree", distinct), ActiveVariationTree);
                 AppLog.DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
             }
 
@@ -887,7 +887,7 @@ namespace ChessForge
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
             if (nd == null)
             {
-                nd = StudyTree.Nodes[0];
+                nd = ActiveVariationTree.Nodes[0];
             }
             EvaluationManager.SetSingleNodeToEvaluate(nd);
             // stop the timer to prevent showing garbage after position is set but engine has not received our commands yet
@@ -1033,7 +1033,7 @@ namespace ChessForge
 
             Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
-            AppStateManager.MainWin.StudyTree.BuildLines();
+            AppStateManager.MainWin.ActiveVariationTree.BuildLines();
             RebuildWorkbookView();
 
             AppStateManager.SetupGuiForCurrentStates();
@@ -1082,12 +1082,12 @@ namespace ChessForge
         /// <param name="bookmarkIndex"></param>
         public void SetAppInTrainingMode(int bookmarkIndex)
         {
-            if (bookmarkIndex >= StudyTree.Bookmarks.Count)
+            if (bookmarkIndex >= ActiveVariationTree.Bookmarks.Count)
             {
                 return;
             }
 
-            TreeNode startNode = StudyTree.Bookmarks[bookmarkIndex].Node;
+            TreeNode startNode = ActiveVariationTree.Bookmarks[bookmarkIndex].Node;
             SetAppInTrainingMode(startNode);
 
         }
@@ -1216,7 +1216,7 @@ namespace ChessForge
         /// <returns></returns>
         private bool ShowWorkbookOptionsDialog()
         {
-            WorkbookOptionsDialog dlg = new WorkbookOptionsDialog(StudyTree)
+            WorkbookOptionsDialog dlg = new WorkbookOptionsDialog(SessionWorkbook)
             {
                 Left = ChessForgeMain.Left + 100,
                 Top = ChessForgeMain.Top + 100,
@@ -1226,10 +1226,10 @@ namespace ChessForge
 
             if (dlg.ExitOK)
             {
-                StudyTree.TrainingSide = dlg.TrainingSide;
-                StudyTree.Title = dlg.WorkbookTitle;
+                SessionWorkbook.TrainingSide = dlg.TrainingSide;
+                SessionWorkbook.Title = dlg.WorkbookTitle;
                 AppStateManager.SaveWorkbookFile();
-                MainChessBoard.FlipBoard(StudyTree.TrainingSide);
+                MainChessBoard.FlipBoard(SessionWorkbook.TrainingSide);
                 return true;
             }
             else

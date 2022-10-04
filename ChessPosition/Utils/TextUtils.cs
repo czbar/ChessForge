@@ -89,5 +89,30 @@ namespace ChessPosition
             return nodeId;
         }
 
+        /// <summary>
+        /// Returns the PieceColor value corresponding to the passed string.
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public static PieceColor ConvertStringToPieceColor(string color)
+        {
+            if (string.IsNullOrWhiteSpace(color))
+            {
+                return PieceColor.None;
+            }
+
+            if (color.ToLower() == "white")
+            {
+                return PieceColor.White;
+            }
+            else if (color.ToLower() == "black")
+            {
+                return PieceColor.Black;
+            }
+            else
+            {
+                return PieceColor.None;
+            }
+        }
     }
 }

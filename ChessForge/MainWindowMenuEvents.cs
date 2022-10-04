@@ -85,16 +85,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The user requested export of the Workbook to PGN.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnExportPgn_Click(object sender, RoutedEventArgs e)
-        {
-            WorkbookManager.SaveWorkbookToPgn();
-        }
-
-        /// <summary>
         /// Request to open the Move Assessment dialog.
         /// </summary>
         /// <param name="sender"></param>
@@ -142,17 +132,10 @@ namespace ChessForge
 
             EngineMessageProcessor.ChessEngineService.StopEngine();
 
-            if (AppStateManager.WorkbookFileType == AppStateManager.FileType.CHESS_FORGE_PGN)
+            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE
+                && AppStateManager.IsDirty || (ActiveVariationTree != null && ActiveVariationTree.HasTrainingMoves()))
             {
-                WorkbookManager.PromptUserToConvertPGNToCHF();
-            }
-            else
-            {
-                if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE
-                    && AppStateManager.IsDirty || (StudyTree != null && StudyTree.HasTrainingMoves()))
-                {
-                    WorkbookManager.PromptAndSaveWorkbook(false, true);
-                }
+                WorkbookManager.PromptAndSaveWorkbook(false, true);
             }
             Timers.StopAll();
 
@@ -216,11 +199,11 @@ namespace ChessForge
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
 
             AppStateManager.SetupGuiForCurrentStates();
-            StudyTree.CreateNew();
+            //StudyTree.CreateNew();
             UiTabWorkbook.Focus();
             _workbookView.BuildFlowDocumentForWorkbook();
             int startingNode = 0;
-            string startLineId = StudyTree.GetDefaultLineIdForNode(startingNode);
+            string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(startingNode);
             SetActiveLine(startLineId, startingNode);
         }
 

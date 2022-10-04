@@ -224,7 +224,7 @@ namespace ChessForge
             {
                 try
                 {
-                    PgnGameParser pgp = new PgnGameParser(GameList[0].GameText, AppStateManager.MainWin.StudyTree, out bool multi);
+                    PgnGameParser pgp = new PgnGameParser(GameList[0].GameText, AppStateManager.MainWin.ActiveVariationTree, out bool multi);
                     mergedGames = 1;
                 }
                 catch
@@ -345,6 +345,7 @@ namespace ChessForge
             SessionWorkbook.Description = preface.Nodes[0].Comment;
 
             SessionWorkbook.Title = GameList[0].GetHeaderValue(PgnHeaders.NAME_WORKBOOK_TITLE);
+            SessionWorkbook.TrainingSide = TextUtils.ConvertStringToPieceColor(GameList[0].GetHeaderValue(PgnHeaders.NAME_TRAINING_SIDE));
 
             ProcessGames();
         }
@@ -433,7 +434,7 @@ namespace ChessForge
                             try
                             {
                                 // special treatment for the first one
-                                PgnGameParser pgp = new PgnGameParser(GameList[i].GameText, AppStateManager.MainWin.StudyTree, out bool multi);
+                                PgnGameParser pgp = new PgnGameParser(GameList[i].GameText, AppStateManager.MainWin.ActiveVariationTree, out bool multi);
                                 mergedCount++;
                             }
                             catch (Exception ex)
@@ -488,28 +489,6 @@ namespace ChessForge
             dlg.ShowDialog();
         }
 
-        /// <summary>
-        /// Prompts the user to decide whether they want to convert/save 
-        /// PGN file as a CHF Workbook.
-        /// Invoked when the app or the Workbook is being closed.
-        /// </summary>
-        /// <returns></returns>
-        public static int PromptUserToConvertPGNToCHF()
-        {
-            bool hasBookmarks = AppStateManager.MainWin.StudyTree.Bookmarks.Count > 0;
-
-            string msg = "Your edits " + (hasBookmarks ? "and bookmarks " : "")
-                + "will be lost unless you save this Workbook as a ChessForge (.chf) file.\n\n Convert and save?";
-            if (MessageBox.Show(msg, "Chess Forge File Closing", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                WorkbookManager.SaveWorkbookToNewFile(AppStateManager.WorkbookFilePath, true);
-                return 0;
-            }
-            else
-            {
-                return -1;
-            }
-        }
 
         /// <summary>
         /// This function will be called when:
@@ -531,7 +510,7 @@ namespace ChessForge
         {
             MessageBoxResult res = MessageBoxResult.None;
 
-            if (AppStateManager.MainWin.StudyTree.HasTrainingMoves())
+            if (AppStateManager.MainWin.ActiveVariationTree.HasTrainingMoves())
             {
                 res = PromptAndSaveTrainingMoves(userRequest, isAppClosing);
             }
@@ -594,8 +573,8 @@ namespace ChessForge
                 buttons, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                AppStateManager.MainWin.StudyTree.ClearTrainingFlags();
-                AppStateManager.MainWin.StudyTree.BuildLines();
+                AppStateManager.MainWin.ActiveVariationTree.ClearTrainingFlags();
+                AppStateManager.MainWin.ActiveVariationTree.BuildLines();
                 AppStateManager.SaveWorkbookFile();
                 AppStateManager.MainWin.RebuildWorkbookView();
                 AppStateManager.MainWin.RefreshSelectedActiveLineAndNode();
@@ -603,7 +582,7 @@ namespace ChessForge
             }
             else if (res == MessageBoxResult.No)
             {
-                AppStateManager.MainWin.StudyTree.RemoveTrainingMoves();
+                AppStateManager.MainWin.ActiveVariationTree.RemoveTrainingMoves();
             }
 
             return res;
@@ -693,9 +672,9 @@ namespace ChessForge
             {
                 saveDlg.FileName = Path.GetFileNameWithoutExtension(chfFileName) + ".pgn";
             }
-            else if (!typeConversion && !string.IsNullOrWhiteSpace(AppStateManager.MainWin.StudyTree.Title))
+            else if (!typeConversion && !string.IsNullOrWhiteSpace(AppStateManager.MainWin.SessionWorkbook.Title))
             {
-                saveDlg.FileName = AppStateManager.MainWin.StudyTree.Title + ".pgn";
+                saveDlg.FileName = AppStateManager.MainWin.SessionWorkbook.Title + ".pgn";
             }
 
             saveDlg.OverwritePrompt = true;
@@ -746,9 +725,9 @@ namespace ChessForge
             {
                 saveDlg.FileName = Path.GetFileNameWithoutExtension(pgnFileName) + ".chf";
             }
-            else if (!typeConversion && !string.IsNullOrWhiteSpace(AppStateManager.MainWin.StudyTree.Title))
+            else if (!typeConversion && !string.IsNullOrWhiteSpace(AppStateManager.MainWin.SessionWorkbook.Title))
             {
-                saveDlg.FileName = AppStateManager.MainWin.StudyTree.Title + ".chf";
+                saveDlg.FileName = AppStateManager.MainWin.SessionWorkbook.Title + ".chf";
             }
 
             saveDlg.OverwritePrompt = true;
@@ -756,36 +735,6 @@ namespace ChessForge
             {
                 string chfFileName = saveDlg.FileName;
                 AppStateManager.SaveWorkbookToNewFile(pgnFileName, chfFileName, typeConversion);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Saves current workbook to a PGN file.
-        /// </summary>
-        /// <returns></returns>
-        public static bool SaveWorkbookToPgn()
-        {
-            SaveFileDialog saveDlg = new SaveFileDialog
-            {
-                Filter = "PGN files (*.pgn)|*.pgn",
-                Title = "Export Workbook to a PGN file"
-            };
-
-            if (!string.IsNullOrEmpty(AppStateManager.WorkbookFilePath))
-            {
-                saveDlg.FileName = Path.GetFileNameWithoutExtension(AppStateManager.WorkbookFilePath) + ".pgn";
-            }
-
-            saveDlg.OverwritePrompt = true;
-            if (saveDlg.ShowDialog() == true)
-            {
-                string pgnFileName = saveDlg.FileName;
-                AppStateManager.ExportToPgn(pgnFileName);
                 return true;
             }
             else

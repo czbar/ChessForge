@@ -79,8 +79,8 @@ namespace ChessForge
         /// </summary>
         public static PieceColor TrainingSide
         {
-            get { return AppStateManager.MainWin.StudyTree.TrainingSide; }
-            set { AppStateManager.MainWin.StudyTree.TrainingSide = value; }
+            get { return AppStateManager.MainWin.SessionWorkbook.TrainingSide; }
+            set { AppStateManager.MainWin.SessionWorkbook.TrainingSide = value; }
         }
 
         /// <summary>

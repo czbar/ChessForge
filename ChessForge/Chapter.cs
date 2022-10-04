@@ -20,12 +20,35 @@ namespace ChessForge
         // title of this chapter
         private string _title;
 
+        // VariationTree to be used when this chapter becomes active.
+        private VariationTree _activeTree;
+
+        /// <summary>
+        /// Returns Tree "active" in this chapter.
+        /// If none set, StudyTree is returned as default.
+        /// </summary>
+        public VariationTree ActiveVariationTree
+        {
+            get
+            {
+                if (_activeTree != null)
+                {
+                    return _activeTree;
+                }
+                else
+                {
+                    return StudyTree;
+                }
+            }
+        }
+
+
         /// <summary>
         /// Number of this chapter.
         /// </summary>
         public int Number
         {
-            get => _number; 
+            get => _number;
             set => _number = value;
         }
 
@@ -35,7 +58,7 @@ namespace ChessForge
         /// </summary>
         public string Title
         {
-            get 
+            get
             {
                 if (string.IsNullOrWhiteSpace(_title))
                 {

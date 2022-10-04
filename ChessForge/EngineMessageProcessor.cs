@@ -351,7 +351,7 @@ namespace ChessForge
         /// <param name="nodeId"></param>
         public static void RequestMoveEvaluationInTraining(int nodeId)
         {
-            TreeNode nd = _mainWin.StudyTree.GetNodeFromNodeId(nodeId);
+            TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
             RequestMoveEvaluationInTraining(nd);
         }
 
@@ -521,7 +521,7 @@ namespace ChessForge
                     }
                 }
 
-                TreeNode nd = _mainWin.StudyTree.GetNodeFromNodeId(nodeId);
+                TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
                 if (nd != null)
                 {
                     nd.EngineEvaluation = EvaluationManager.BuildEvaluationText(EngineLinesBox.Lines[0], nd.Position.ColorToMove);

@@ -86,9 +86,9 @@ namespace ChessForge
         private FontStyle _intraForkFontStyle = FontStyles.Italic;
 
         /// <summary>
-        /// The main Workbook tree.
+        /// The variation tree shown in the view.
         /// </summary>
-        private VariationTree _workbook;
+        private VariationTree _variationTree;
 
         /// <summary>
         /// Maps Node Ids to Runs for quick access.
@@ -171,12 +171,12 @@ namespace ChessForge
         /// </summary>
         public void PromoteCurrentLine()
         {
-            TreeNode nd = _workbook.GetNodeFromNodeId(_lastClickedNodeId);
+            TreeNode nd = _variationTree.GetNodeFromNodeId(_lastClickedNodeId);
             // TODO: it would be more precise to get the last move of the line being promoted and set it as line id
             // otherwise we end up selecting a different line that the one we are promoting.
             // However, with the current GUI logic, the selected line changes when the user right-clicks on the
             // move to promote the line, so the end result wouldn't change. But it may if we change that other logic.
-            _workbook.PromoteLine(nd);
+            _variationTree.PromoteLine(nd);
             _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
             BuildFlowDocumentForWorkbook();
             _mainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
@@ -188,10 +188,10 @@ namespace ChessForge
         /// </summary>
         public void DeleteRemainingMoves()
         {
-            TreeNode nd = _workbook.GetNodeFromNodeId(_lastClickedNodeId);
+            TreeNode nd = _variationTree.GetNodeFromNodeId(_lastClickedNodeId);
             TreeNode parent = nd.Parent;
-            _workbook.DeleteRemainingMoves(nd);
-            _workbook.BuildLines();
+            _variationTree.DeleteRemainingMoves(nd);
+            _variationTree.BuildLines();
             _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
             BookmarkManager.ResyncBookmarks(1);
             BuildFlowDocumentForWorkbook();
@@ -223,7 +223,7 @@ namespace ChessForge
                             menuItem.IsEnabled = isEnabled;
                             break;
                         case "_mnWorkbookBookmarkAlternatives":
-                            if (_mainWin.StudyTree.NodeHasSiblings(LastClickedNodeId))
+                            if (_mainWin.ActiveVariationTree.NodeHasSiblings(LastClickedNodeId))
                             {
                                 menuItem.Visibility = Visibility.Visible;
                                 menuItem.IsEnabled = isEnabled;
@@ -260,7 +260,7 @@ namespace ChessForge
                 _selectedRun.Foreground = _selectedRunFore;
             }
 
-            ObservableCollection<TreeNode> lineToSelect = _workbook.SelectLine(lineId);
+            ObservableCollection<TreeNode> lineToSelect = _variationTree.SelectLine(lineId);
             foreach (TreeNode nd in lineToSelect)
             {
                 if (nd.NodeId != 0)
@@ -318,7 +318,7 @@ namespace ChessForge
         public void BuildFlowDocumentForWorkbook(int rootNodeId = 0, bool includeStem = true)
         {
             Document.Blocks.Clear();
-            _workbook = _mainWin.StudyTree;
+            _variationTree = _mainWin.ActiveVariationTree;
 
             // resets
             _dictNodeToRun.Clear();
@@ -337,11 +337,11 @@ namespace ChessForge
             TreeNode root;
             if (rootNodeId == 0)
             {
-                root = _workbook.Nodes[0];
+                root = _variationTree.Nodes[0];
             }
             else
             {
-                root = _workbook.GetNodeFromNodeId(rootNodeId);
+                root = _variationTree.GetNodeFromNodeId(rootNodeId);
                 if (includeStem)
                 {
                     Paragraph paraStem = BuildWorkbookStemLine(root);
@@ -367,13 +367,13 @@ namespace ChessForge
         /// </summary>
         private void SetNodeDistances()
         {
-            foreach (TreeNode nd in _workbook.Nodes)
+            foreach (TreeNode nd in _variationTree.Nodes)
             {
                 nd.DistanceToLeaf = -1;
                 nd.DistanceToNextFork = 0;
             }
 
-            foreach (TreeNode nd in _workbook.Nodes)
+            foreach (TreeNode nd in _variationTree.Nodes)
             {
                 // if the node is a leaf start traversing
                 if (IsLeaf(nd))
@@ -705,7 +705,7 @@ namespace ChessForge
         /// <param name="para"></param>
         private void CreateStartingNode(Paragraph para)
         {
-            TreeNode nd = _mainWin.StudyTree.Nodes[0];
+            TreeNode nd = _mainWin.ActiveVariationTree.Nodes[0];
             AddRunToParagraph(nd, para, "", Brushes.White);
             AddCommentRunToParagraph(nd, para);
         }
@@ -856,10 +856,10 @@ namespace ChessForge
             if (r.Name != null && r.Name.StartsWith(RUN_NAME_PREFIX))
             {
                 nodeId = int.Parse(r.Name.Substring(RUN_NAME_PREFIX.Length));
-                TreeNode foundNode = _workbook.GetNodeFromNodeId(nodeId);
+                TreeNode foundNode = _variationTree.GetNodeFromNodeId(nodeId);
                 lineId = foundNode.LineId;
-                lineId = _workbook.GetDefaultLineIdForNode(nodeId);
-                ObservableCollection<TreeNode> lineToSelect = _workbook.SelectLine(lineId);
+                lineId = _variationTree.GetDefaultLineIdForNode(nodeId);
+                ObservableCollection<TreeNode> lineToSelect = _variationTree.SelectLine(lineId);
                 foreach (TreeNode nd in lineToSelect)
                 {
                     if (nd.NodeId != 0)
@@ -907,7 +907,7 @@ namespace ChessForge
             Run r = (Run)e.Source;
 
             int nodeId = GetNodeIdFromRunName(r.Name, RUN_NAME_PREFIX);
-            TreeNode nd = _mainWin.StudyTree.GetNodeFromNodeId(nodeId);
+            TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
             _mainWin.InvokeAssessmentDialog(nd);
             r.Text = BuildCommentRunText(nd);
             if (string.IsNullOrEmpty(r.Text))
