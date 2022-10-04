@@ -123,7 +123,7 @@
         </DataGrid>
         <TabControl x:Name="UiTabCtrlTraining" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" 
                     VerticalAlignment="Top" Grid.RowSpan="1" Visibility="Hidden">
-            <TabItem x:Name="UiTabTrainingProgress"  Header="Progress">
+            <TabItem x:Name="UiTabTrainingProgress"  Header="Training">
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox x:Name="UiRtbTrainingProgress" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
@@ -148,7 +148,22 @@
             </TabItem>
         </TabControl>
         <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1">
-            <TabItem x:Name="UiTabWorkbook"  Header="Workbook" >
+            <TabItem x:Name="UiTabChapters"  Header="Chapters" >
+                <Grid Background="#FFE5E5E5" >
+                    <RichTextBox x:Name="UiRtbChaptersView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                   Height="640" MinHeight="500" IsReadOnly="True" >
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="0" />
+                            </Style>
+                        </RichTextBox.Resources>
+                        <FlowDocument>
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="UiTabWorkbook"  Header="Study" >
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookView_OnPreviewMouseDown">
                     <Grid.ContextMenu>
                         <ContextMenu x:Name="UiCmnWorkbookRightClick">
@@ -180,7 +195,37 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="UiTabBookmarks" Header="Training Bookmarks">
+            <TabItem x:Name="UiTabGames"  Header="Games" >
+                <Grid Background="#FFE5E5E5" >
+                    <RichTextBox x:Name="UiRtbGamesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                   Height="640" MinHeight="500" IsReadOnly="True" >
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="0" />
+                            </Style>
+                        </RichTextBox.Resources>
+                        <FlowDocument>
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="UiTabExercises"  Header="Exercises" >
+                <Grid Background="#FFE5E5E5" >
+                    <RichTextBox x:Name="UiRtbExercisesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                   Height="640" MinHeight="500" IsReadOnly="True" >
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="0" />
+                            </Style>
+                        </RichTextBox.Resources>
+                        <FlowDocument>
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="UiTabBookmarks" Header="Bookmarks">
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown">
                     <Grid.ContextMenu>
                         <ContextMenu x:Name="_cmBookmarks">
