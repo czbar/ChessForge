@@ -179,7 +179,6 @@ namespace ChessForge
             AppStateManager.RestartInIdleMode(false);
             WorkbookManager.CreateNewWorkbook();
             _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
-            _trainingBrowseRichTextBuilder = new WorkbookView(UiRtbTrainingBrowse.Document, this);
 
             // ask for the options
             if (!ShowWorkbookOptionsDialog())

@@ -146,21 +146,6 @@
                     </Viewbox>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="UiTabTrainingBrowse"  Header="Browse" GotFocus="UiTabItemTrainingBrowse_GotFocus" >
-                <Grid Background="#FFE5E5E5">
-                    <RichTextBox x:Name="UiRtbTrainingBrowse" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                 IsReadOnly="True" MinHeight="640">
-                        <RichTextBox.Resources>
-                            <Style TargetType="{x:Type Paragraph}">
-                                <Setter Property="Margin" Value="0" />
-                            </Style>
-                        </RichTextBox.Resources>
-                        <FlowDocument>
-                        </FlowDocument>
-                    </RichTextBox>
-                </Grid>
-            </TabItem>
         </TabControl>
         <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1">
             <TabItem x:Name="UiTabWorkbook"  Header="Workbook" >

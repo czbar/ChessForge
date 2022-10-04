@@ -684,7 +684,6 @@ namespace ChessForge
             BoardCommentBox.ShowWorkbookTitle();
 
             _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
-            _trainingBrowseRichTextBuilder = new WorkbookView(UiRtbTrainingBrowse.Document, this);
             if (ActiveVariationTree.Nodes.Count == 0)
             {
                 ActiveVariationTree.CreateNew();
