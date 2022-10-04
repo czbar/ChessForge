@@ -38,13 +38,6 @@ namespace ChessForge
         private WorkbookView _workbookView;
 
         /// <summary>
-        /// The RichTextBox based view of the lines
-        /// starting from the Bookmark position being
-        /// trained from.
-        /// </summary>
-        private WorkbookView _trainingBrowseRichTextBuilder;
-
-        /// <summary>
         /// The RichTextBox based training view
         /// </summary>
         public TrainingView UiTrainingView;
@@ -1104,8 +1097,6 @@ namespace ChessForge
 
             LearningMode.TrainingSide = startNode.ColorToMove;
             MainChessBoard.DisplayPosition(startNode);
-
-            _trainingBrowseRichTextBuilder.BuildFlowDocumentForWorkbook(startNode.NodeId);
 
             UiTrainingView = new TrainingView(UiRtbTrainingProgress.Document, this);
             UiTrainingView.Initialize(startNode);
