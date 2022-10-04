@@ -142,14 +142,14 @@ namespace ChessForge
 
             EngineMessageProcessor.ChessEngineService.StopEngine();
 
-            if (AppStateManager.WorkbookFileType == AppStateManager.FileType.PGN)
+            if (AppStateManager.WorkbookFileType == AppStateManager.FileType.CHESS_FORGE_PGN)
             {
                 WorkbookManager.PromptUserToConvertPGNToCHF();
             }
             else
             {
                 if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE
-                    && AppStateManager.IsDirty || (Workbook != null && Workbook.HasTrainingMoves()))
+                    && AppStateManager.IsDirty || (StudyTree != null && StudyTree.HasTrainingMoves()))
                 {
                     WorkbookManager.PromptAndSaveWorkbook(false, true);
                 }
@@ -194,7 +194,7 @@ namespace ChessForge
 
             // prepare document
             AppStateManager.RestartInIdleMode(false);
-            Workbook = new VariationTree();
+            WorkbookManager.CreateNewWorkbook();
             _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
             _trainingBrowseRichTextBuilder = new WorkbookView(UiRtbTrainingBrowse.Document, this);
 
@@ -216,11 +216,11 @@ namespace ChessForge
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
 
             AppStateManager.SetupGuiForCurrentStates();
-            Workbook.CreateNew();
+            StudyTree.CreateNew();
             UiTabWorkbook.Focus();
             _workbookView.BuildFlowDocumentForWorkbook();
             int startingNode = 0;
-            string startLineId = Workbook.GetDefaultLineIdForNode(startingNode);
+            string startLineId = StudyTree.GetDefaultLineIdForNode(startingNode);
             SetActiveLine(startLineId, startingNode);
         }
 
