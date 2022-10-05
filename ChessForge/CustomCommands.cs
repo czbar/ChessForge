@@ -13,5 +13,6 @@ namespace ChessForge
     public static class CustomCommands
     {
         public static RoutedCommand FlipBoard = new RoutedCommand();
+        public static RoutedCommand SaveWorkbook = new RoutedCommand();
     }
 }

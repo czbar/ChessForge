@@ -22,9 +22,11 @@
 
     <Window.CommandBindings>
         <CommandBinding Command="local:CustomCommands.FlipBoard" Executed="UiMnFlipBoard_Click"/>
+        <CommandBinding Command="local:CustomCommands.SaveWorkbook" Executed="CustomCommand_SaveWorkbook"/>
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Key="F" Modifiers="Control" Command="local:CustomCommands.FlipBoard"/>
+        <KeyBinding Key="S" Modifiers="Control" Command="local:CustomCommands.SaveWorkbook"/>
     </Window.InputBindings>
     
     <Grid x:Name="_gridMain" ShowGridLines="False">
@@ -76,7 +78,7 @@
                 <MenuItem x:Name="UiMnOpenWorkbook" Header="Open Workbook" Click="UiMnOpenWorkbook_Click"/>
                 <MenuItem x:Name="UiMnCloseWorkbook" Header="Close Workbook" Click="UiMnCloseWorkbook_Click" />
                 <Separator />
-                <MenuItem x:Name="UiMnWorkbookSave" Header="Save" Click="UiMnWorkbookSave_Click" />
+                <MenuItem x:Name="UiMnWorkbookSave" Header="Save" Click="UiMnWorkbookSave_Click" InputGestureText="Ctrl+S" />
                 <MenuItem x:Name="UiMnWorkbookSaveAs" Header="Save As ..." Click="UiMnWorkbookSaveAs_Click" />
                 <Separator />
             </MenuItem>

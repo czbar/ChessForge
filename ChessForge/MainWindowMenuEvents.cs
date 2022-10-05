@@ -739,5 +739,20 @@ namespace ChessForge
             MainChessBoard.FlipBoard();
         }
 
+        /// <summary>
+        /// CTRL+S shortcut for saving workbook.
+        /// Executes only if the corresponding menu item is enabled
+        /// in order to honor the program's logic.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CustomCommand_SaveWorkbook(object sender, RoutedEventArgs e)
+        {
+            if (UiMnWorkbookSave.IsEnabled == true)
+            {
+                UiMnWorkbookSave_Click(sender, e);
+            }
+        }
+
     }
 }
