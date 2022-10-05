@@ -1270,16 +1270,16 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Invokes the Move Assessment dialog.
+        /// Invokes the Annotations dialog.
         /// </summary>
         /// <param name="nd"></param>
-        public bool InvokeAssessmentDialog(TreeNode nd)
+        public bool InvokeAnnotationsDialog(TreeNode nd)
         {
             bool changed = false;
 
             if (nd != null)
             {
-                AssessmentDialog dlg = new AssessmentDialog(nd)
+                AnnotationsDialog dlg = new AnnotationsDialog(nd)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,

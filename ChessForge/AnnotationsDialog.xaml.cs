@@ -11,9 +11,9 @@ using System.Windows.Data;
 namespace ChessForge
 {
     /// <summary>
-    /// Interaction logic for AssessmentDialog.xaml
+    /// Interaction logic for AnnotationsDialog.xaml
     /// </summary>
-    public partial class AssessmentDialog : Window
+    public partial class AnnotationsDialog : Window
     {
         /// <summary>
         /// Comment for the move for which this dialog was invoked.
@@ -36,7 +36,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="ass"></param>
         /// <param name="comment"></param>
-        public AssessmentDialog(TreeNode nd)
+        public AnnotationsDialog(TreeNode nd)
         {
             InitializeComponent();
             SetPositionButtons(nd.Nags);
@@ -73,7 +73,7 @@ namespace ChessForge
 
 
         /// <summary>
-        /// Checks the radio button coresponding to the passed Assessment value
+        /// Checks the radio button coresponding to the Move NAG value.
         /// </summary>
         private void SetMoveButtons(string nags)
         {

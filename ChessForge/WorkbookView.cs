@@ -764,7 +764,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates a "Comment Run" if there is an assessment or comment with the move.
+        /// Creates a "Comment Run" if there is a comment with the move.
         /// Adds the run to the paragraph.
         /// </summary>
         /// <param name="nd"></param>
@@ -811,7 +811,7 @@ namespace ChessForge
                 {
                     int nodeId = GetNodeIdFromRunName(r.Name, RUN_NAME_PREFIX);
                     TreeNode nd = _variationTree.GetNodeFromNodeId(nodeId);
-                    if (_mainWin.InvokeAssessmentDialog(nd))
+                    if (_mainWin.InvokeAnnotationsDialog(nd))
                     {
                         InsertOrUpdateCommentRun(nd);
                     }
@@ -906,7 +906,7 @@ namespace ChessForge
 
                 int nodeId = GetNodeIdFromRunName(r.Name, RUN_NAME_PREFIX);
                 TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
-                if (_mainWin.InvokeAssessmentDialog(nd))
+                if (_mainWin.InvokeAnnotationsDialog(nd))
                 {
                     r.Text = BuildCommentRunText(nd);
                     if (string.IsNullOrEmpty(r.Text))
@@ -995,11 +995,6 @@ namespace ChessForge
             StringBuilder sb = new StringBuilder(" {");
             if (!string.IsNullOrEmpty(nd.Comment))
             {
-                //if (ChfCommands.GetAssessment(nd.Assessment) != ChfCommands.Assessment.NONE)
-                //{
-                //    sb.Append(' ');
-                //}
-
                 sb.Append(nd.Comment);
             }
             sb.Append("}");

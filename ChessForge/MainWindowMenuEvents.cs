@@ -85,15 +85,14 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Request to open the Move Assessment dialog.
+        /// Request to open the Annotations dialog.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnAssessmentDialog_Click(object sender, RoutedEventArgs e)
+        private void UiMnAnnotationsDialog_Click(object sender, RoutedEventArgs e)
         {
-            // get the comment and assessment for the currently selected move
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
-            if (InvokeAssessmentDialog(nd))
+            if (InvokeAnnotationsDialog(nd))
             {
                 _workbookView.InsertOrUpdateCommentRun(nd);
             }

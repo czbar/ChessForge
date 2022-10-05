@@ -86,7 +86,7 @@
                 <MenuItem x:Name="UiMnExitTraining" Header="Exit Training" Click="UiMnStopTraining_Click"/>
             </MenuItem>
             <MenuItem Header="Edit" Margin="0,0,0,0">
-                <MenuItem Header="Annotations" Click="UiMnAssessmentDialog_Click" >
+                <MenuItem Header="Annotations" Click="UiMnAnnotationsDialog_Click" >
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="View" Margin="0,0,0,0">
