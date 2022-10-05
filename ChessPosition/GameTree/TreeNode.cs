@@ -104,11 +104,6 @@ namespace GameTree
         public bool IsNewUserMove = false;
 
         /// <summary>
-        /// A "coach's" assessment string (a value for the [chf-coa] command)
-        /// </summary>
-        public string Assessment = null;
-
-        /// <summary>
         /// A text comment associated with the leadup move
         /// </summary>
         public string Comment = null;
@@ -172,6 +167,7 @@ namespace GameTree
 
         /// <summary>
         /// Adds a nag string to the NAG string for this node.
+        /// Updates LastMoveAlgebraicNotationWithNag. 
         /// </summary>
         /// <param name="nag"></param>
         public void AddNag(string nag)
@@ -197,6 +193,26 @@ namespace GameTree
                     {
                         LastMoveAlgebraicNotationWithNag += nagStr;
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets a new value for the NAGs string
+        /// Updates LastMoveAlgebraicNotationWithNag. 
+        /// </summary>
+        /// <param name="nags"></param>
+        public void SetNags(string nags)
+        {
+            LastMoveAlgebraicNotationWithNag = LastMoveAlgebraicNotation;
+
+            Nags = "";
+            if (!string.IsNullOrWhiteSpace(nags))
+            {
+                string[] tokens = nags.Trim().Split(' ');
+                foreach (string token in tokens)
+                {
+                    AddNag(token);
                 }
             }
         }
