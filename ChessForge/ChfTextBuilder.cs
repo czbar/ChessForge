@@ -485,16 +485,6 @@ namespace ChessForge
                     sb.Append("[" + sCmd + "]");
                 }
 
-                // Process an Assessment ChfCommand
-                //if (!string.IsNullOrEmpty(nd.Assessment))
-                //{
-                //    if (_fileType == AppStateManager.FileType.PGN)
-                //    {
-                //        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.COACH_ASSESSMENT) + " " + nd.Assessment;
-                //        sb.Append("[" + sCmd + "]");
-                //    }
-                //}
-
                 // Process the Arrows string
                 if (!string.IsNullOrEmpty(nd.Arrows))
                 {
