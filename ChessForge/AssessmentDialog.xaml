@@ -5,21 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="Coach's Assessment and Comment" Height="350" Width="630">
+        Title="Annotations" Height="350" Width="630">
     <Grid Margin="0,0,0,0">
-        <GroupBox x:Name="UiGbAssessment" Header="Move Assessment" Margin="34,30" Width="144" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <GroupBox x:Name="UiGbMove" Header="Move" Margin="28,15" Width="65" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top">
             <StackPanel Margin="0,0,0,0" HorizontalAlignment="Center" >
-                <RadioButton x:Name="UiRbNone" Content="[None]" HorizontalAlignment="Left" Margin="10,10,0,5"/>
-                <RadioButton x:Name="UiRbOnly" Content="Only Move" HorizontalAlignment="Left" Margin="10,5"/>
-                <RadioButton x:Name="UiRbBest" Content="Best" HorizontalAlignment="Left" Margin="10,5"/>
-                <RadioButton x:Name="UiRbBrilliant" Content="Brilliant" HorizontalAlignment="Left" Margin="10,5"/>
-                <RadioButton x:Name="UiRbDubious" Content="Dubious" HorizontalAlignment="Left" Margin="10,5"/>
-                <RadioButton x:Name="UiRbMistake" Content="Mistake" HorizontalAlignment="Left" Margin="10,5"/>
-                <RadioButton x:Name="UiRbBlunder" Content="Blunder" HorizontalAlignment="Left" Margin="10,5"/>
+                <RadioButton x:Name="UiRbGreat" GroupName="glyph" Content="!!" HorizontalAlignment="Left" Margin="10,5"/>
+                <RadioButton x:Name="UiRbGood" GroupName="glyph" Content="!" HorizontalAlignment="Left" Margin="10,5"/>
+                <RadioButton x:Name="UiRbInteresting" GroupName="glyph" Content="!?" HorizontalAlignment="Left" Margin="10,5"/>
+                <RadioButton x:Name="UiRbDubious" GroupName="glyph" Content="?!" HorizontalAlignment="Left" Margin="10,5"/>
+                <RadioButton x:Name="UiRbMistake" GroupName="glyph" Content="?" HorizontalAlignment="Left" Margin="10,5"/>
+                <RadioButton x:Name="UiRbBlunder" GroupName="glyph" Content="??" HorizontalAlignment="Left" Margin="10,5"/>
+                <Button x:Name="UiBtnClearGlyph" Margin="0,57" Content="Clear" Click="UiBtnClearMove_Click"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="UiGbComment" Header="Comment" Margin="203,30,0,0" Width="400" Height="204" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBox x:Name="UiTbComment" HorizontalAlignment="Left" Margin="14,10" TextWrapping="Wrap" Text="" Width="360" Height="156" VerticalAlignment="Top" />
+        <GroupBox x:Name="UiGbPosition" Header="Position" Margin="108,15" Width="65" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <StackPanel Margin="0,0,0,0" HorizontalAlignment="Center" >
+                <RadioButton x:Name="UiRbWhiteWin" GroupName="eval" Content="+" HorizontalAlignment="Left" Margin="10,5"/>
+                <RadioButton x:Name="UiRbWhiteBetter" GroupName="eval" Content="+" HorizontalAlignment="Left" Margin="10,5"/>
+                <RadioButton x:Name="UiRbWhiteEdge" GroupName="eval" Content="+" HorizontalAlignment="Left" Margin="10,5"/>
+                <RadioButton x:Name="UiRbEqual" GroupName="eval" Content="-" HorizontalAlignment="Left" Margin="10,5"/>
+                <RadioButton x:Name="UiRbUnclear" GroupName="eval" Content="-" HorizontalAlignment="Left" Margin="10,5"/>
+                <RadioButton x:Name="UiRbBlackEdge" GroupName="eval" Content="-" HorizontalAlignment="Left" Margin="10,5"/>
+                <RadioButton x:Name="UiRbBlackBetter" GroupName="eval" Content="-" HorizontalAlignment="Left" Margin="10,5"/>
+                <RadioButton x:Name="UiRbBlackWin" GroupName="eval" Content="-" HorizontalAlignment="Left" Margin="10,5"/>
+                <Button x:Name="UiBtnClearEval" Margin="0,7" Content="Clear" Click="UiBtnClearPosition_Click"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="UiGbComment" Header="Comment" Margin="201,15,0,0" Width="400" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBox x:Name="UiTbComment" HorizontalAlignment="Left" Margin="14,10" TextWrapping="Wrap" Text="" Width="360" Height="202" VerticalAlignment="Top" />
         </GroupBox>
         <Button x:Name="UiBtnOk" Content="OK" Width="80" HorizontalAlignment="Center" Margin="0,280,100,0" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
         <Button x:Name="UiBtnCancel" Content="Cancel" Width="80" HorizontalAlignment="Center" Margin="100,280,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
