@@ -93,8 +93,10 @@ namespace ChessForge
         {
             // get the comment and assessment for the currently selected move
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
-            InvokeAssessmentDialog(nd);
-            _workbookView.InsertOrUpdateCommentRun(nd);
+            if (InvokeAssessmentDialog(nd))
+            {
+                _workbookView.InsertOrUpdateCommentRun(nd);
+            }
         }
 
         /// <summary>
