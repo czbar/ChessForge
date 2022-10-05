@@ -22,8 +22,6 @@ namespace GameTree
             BOOKMARK_V2,
             ENGINE_EVALUATION,
             ENGINE_EVALUATION_V2,
-            COACH_ASSESSMENT,
-            COACH_COMMENT,
 
             ARROWS,
             CIRCLES
