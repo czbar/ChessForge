@@ -64,7 +64,7 @@ namespace ChessPosition
                 };
 
         /// <summary>
-        /// Maps Numeric Annotaion Glyphs codes to Unicode characters. 
+        /// Maps Numeric Annotation Glyphs codes to Unicode characters. 
         /// </summary>
         public static Dictionary<int, string> NagsDict
                 = new Dictionary<int, string>()
@@ -77,6 +77,7 @@ namespace ChessPosition
                     [6] = "?!",
                     [11] = "=",
                     [12] = "=",
+                    [13] = '\u221E'.ToString(), // '∞'
                     [14] = '\u2A72'.ToString(), // '⩲',
                     [15] = '\u2A71'.ToString(), // '⩱',
                     [16] = '\u00B1'.ToString(), // '±',

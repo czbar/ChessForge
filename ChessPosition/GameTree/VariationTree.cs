@@ -165,12 +165,6 @@ namespace GameTree
                             nd.EngineEvaluation = tokens[1];
                         }
                         break;
-                    case ChfCommands.Command.COACH_ASSESSMENT:
-                        if (tokens.Length > 1)
-                        {
-                            nd.Assessment = tokens[1];
-                        }
-                        break;
                     case ChfCommands.Command.ARROWS:
                         if (tokens.Length > 1)
                         {

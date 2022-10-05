@@ -542,7 +542,7 @@ namespace ChessForge
                 if (GetNodeType(nd) == NodeType.ISOLATED || GetNodeType(nd) == NodeType.LEAF)
                 {
                     TreeNode child = nd.Children[0];
-                    BuildNodeText(child, includeNumber, para);
+                    BuildNodeTextAndAddToPara(child, includeNumber, para);
                     BuildTreeLineText(child, para, false);
                     return;
                 }
@@ -559,7 +559,7 @@ namespace ChessForge
                     bool multi = (nodeType == NodeType.FORK_WITH_FORK_LINES) || nd.Children.Count > 2;
 
                     // the first child remains at the same level as the parent
-                    BuildNodeText(nd.Children[0], includeNumber, para);
+                    BuildNodeTextAndAddToPara(nd.Children[0], includeNumber, para);
 
                     bool specialTopLineCase = false;
 
@@ -599,7 +599,7 @@ namespace ChessForge
                             }
                         }
 
-                        BuildNodeText(nd.Children[i], true, para2);
+                        BuildNodeTextAndAddToPara(nd.Children[i], true, para2);
                         BuildTreeLineText(nd.Children[i], para2, false);
 
                         if (multi && i == nd.Children.Count - 1)
@@ -646,11 +646,35 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds text of an individual node (ply).
+        /// Builds text of an individual node (ply),
+        /// creates a new Run and adds it to the paragraph.
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        private void BuildNodeText(TreeNode nd, bool includeNumber, Paragraph para)
+        private void BuildNodeTextAndAddToPara(TreeNode nd, bool includeNumber, Paragraph para)
+        {
+            string nodeText = BuildNodeText(nd, includeNumber);
+
+            SolidColorBrush fontColor = null;
+            if (IsFork(nd.Parent) && !nd.IsMainLine())
+            {
+                if (!nd.IsFirstChild())
+                {
+                    fontColor = GetParaAttrs(_currParagraphLevel.ToString()).FirstCharColor;
+                }
+            }
+
+            AddRunToParagraph(nd, para, nodeText, fontColor);
+            AddCommentRunToParagraph(nd, para);
+        }
+
+        /// <summary>
+        /// Builds text for the passed Node.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="includeNumber"></param>
+        /// <returns></returns>
+        private string BuildNodeText(TreeNode nd, bool includeNumber)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -683,17 +707,7 @@ namespace ChessForge
                 sb.Append("+");
             }
 
-            SolidColorBrush fontColor = null;
-            if (IsFork(nd.Parent) && !nd.IsMainLine())
-            {
-                if (!nd.IsFirstChild())
-                {
-                    fontColor = GetParaAttrs(_currParagraphLevel.ToString()).FirstCharColor;
-                }
-            }
-
-            AddRunToParagraph(nd, para, sb.ToString(), fontColor);
-            AddCommentRunToParagraph(nd, para);
+            return sb.ToString();
         }
 
         /// <summary>
@@ -750,7 +764,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates a "Comment Run" if there is an assessment or comment with the move.
+        /// Creates a "Comment Run" if there is a comment with the move.
         /// Adds the run to the paragraph.
         /// </summary>
         /// <param name="nd"></param>
@@ -758,7 +772,7 @@ namespace ChessForge
         private void AddCommentRunToParagraph(TreeNode nd, Paragraph para)
         {
             // check if there is anything to show
-            if (string.IsNullOrEmpty(nd.Comment) && ChfCommands.GetAssessment(nd.Assessment) == ChfCommands.Assessment.NONE)
+            if (string.IsNullOrEmpty(nd.Comment))
             {
                 return;
             }
@@ -781,38 +795,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds text for the Comment Run
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <returns></returns>
-        private string BuildCommentRunText(TreeNode nd)
-        {
-            if (string.IsNullOrEmpty(nd.Comment) && ChfCommands.GetAssessment(nd.Assessment) == ChfCommands.Assessment.NONE)
-            {
-                return "";
-            }
-
-            StringBuilder sb = new StringBuilder(" {");
-            if (!string.IsNullOrEmpty(nd.Comment))
-            {
-                //if (ChfCommands.GetAssessment(nd.Assessment) != ChfCommands.Assessment.NONE)
-                //{
-                //    sb.Append(' ');
-                //}
-
-                sb.Append(nd.Comment);
-            }
-            sb.Append("}");
-
-            // if this is a root node add a space because the first move does not have it in front.
-            if (nd.NodeId == 0)
-            {
-                sb.Append(" ");
-            }
-            return sb.ToString();
-        }
-
-        /// <summary>
         /// Event handler invoked when a Run was clicked.
         /// In response, we highlight the line to which this Run belongs
         /// (selecting the top branch for the part of the line beyond
@@ -822,75 +804,91 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
-            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+            if (e.ClickCount == 2)
             {
-                _mainWin.StopEvaluation();
-                AppStateManager.SwapCommentBoxForEngineLines(false);
-            }
-
-            if (_selectedRun != null)
-            {
-                _selectedRun.Background = _selectedRunBkg;
-                _selectedRun.Foreground = _selectedRunFore;
-            }
-
-            foreach (TreeNode nd in _mainWin.ActiveLine.Line.NodeList)
-            {
-                if (nd.NodeId != 0)
+                Run r = (Run)e.Source;
+                if (r != null)
                 {
-                    Run run;
-                    // if we are dealing with a subtree, we may not have 
-                    // all nodes from the line.
-                    if (_dictNodeToRun.TryGetValue(nd.NodeId, out run))
+                    int nodeId = GetNodeIdFromRunName(r.Name, RUN_NAME_PREFIX);
+                    TreeNode nd = _variationTree.GetNodeFromNodeId(nodeId);
+                    if (_mainWin.InvokeAnnotationsDialog(nd))
                     {
-                        _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
+                        InsertOrUpdateCommentRun(nd);
                     }
                 }
             }
-
-            Run r = (Run)e.Source;
-            _selectedRun = r;
-
-            string lineId = "";
-            int nodeId = -1;
-            if (r.Name != null && r.Name.StartsWith(RUN_NAME_PREFIX))
+            else
             {
-                nodeId = int.Parse(r.Name.Substring(RUN_NAME_PREFIX.Length));
-                TreeNode foundNode = _variationTree.GetNodeFromNodeId(nodeId);
-                lineId = foundNode.LineId;
-                lineId = _variationTree.GetDefaultLineIdForNode(nodeId);
-                ObservableCollection<TreeNode> lineToSelect = _variationTree.SelectLine(lineId);
-                foreach (TreeNode nd in lineToSelect)
+                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+                {
+                    _mainWin.StopEvaluation();
+                    AppStateManager.SwapCommentBoxForEngineLines(false);
+                }
+
+                if (_selectedRun != null)
+                {
+                    _selectedRun.Background = _selectedRunBkg;
+                    _selectedRun.Foreground = _selectedRunFore;
+                }
+
+                foreach (TreeNode nd in _mainWin.ActiveLine.Line.NodeList)
                 {
                     if (nd.NodeId != 0)
                     {
                         Run run;
+                        // if we are dealing with a subtree, we may not have 
+                        // all nodes from the line.
                         if (_dictNodeToRun.TryGetValue(nd.NodeId, out run))
                         {
-                            _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
+                            _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
                         }
                     }
                 }
 
-                _mainWin.SetActiveLine(lineToSelect, nodeId);
-                LearningMode.ActiveLineId = lineId;
-            }
+                Run r = (Run)e.Source;
+                _selectedRun = r;
 
-            _selectedRunBkg = (SolidColorBrush)r.Background;
-            _selectedRunFore = (SolidColorBrush)r.Foreground;
+                string lineId = "";
+                int nodeId = -1;
+                if (r.Name != null && r.Name.StartsWith(RUN_NAME_PREFIX))
+                {
+                    nodeId = int.Parse(r.Name.Substring(RUN_NAME_PREFIX.Length));
+                    TreeNode foundNode = _variationTree.GetNodeFromNodeId(nodeId);
+                    lineId = foundNode.LineId;
+                    lineId = _variationTree.GetDefaultLineIdForNode(nodeId);
+                    ObservableCollection<TreeNode> lineToSelect = _variationTree.SelectLine(lineId);
+                    foreach (TreeNode nd in lineToSelect)
+                    {
+                        if (nd.NodeId != 0)
+                        {
+                            Run run;
+                            if (_dictNodeToRun.TryGetValue(nd.NodeId, out run))
+                            {
+                                _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
+                            }
+                        }
+                    }
 
-            r.Background = _brushSelectedMoveBkg;
-            r.Foreground = _brushSelectedMoveFore;
+                    _mainWin.SetActiveLine(lineToSelect, nodeId);
+                    LearningMode.ActiveLineId = lineId;
+                }
 
-            // this is a right click offer the context menu
-            if (e.ChangedButton == MouseButton.Right)
-            {
-                _lastClickedNodeId = nodeId;
-                EnableWorkbookMenus(_mainWin.UiCmnWorkbookRightClick, true);
-            }
-            else
-            {
-                _lastClickedNodeId = -1;
+                _selectedRunBkg = (SolidColorBrush)r.Background;
+                _selectedRunFore = (SolidColorBrush)r.Foreground;
+
+                r.Background = _brushSelectedMoveBkg;
+                r.Foreground = _brushSelectedMoveFore;
+
+                // this is a right click offer the context menu
+                if (e.ChangedButton == MouseButton.Right)
+                {
+                    _lastClickedNodeId = nodeId;
+                    EnableWorkbookMenus(_mainWin.UiCmnWorkbookRightClick, true);
+                }
+                else
+                {
+                    _lastClickedNodeId = -1;
+                }
             }
         }
 
@@ -902,22 +900,28 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventCommentRunClicked(object sender, MouseButtonEventArgs e)
         {
-            Run r = (Run)e.Source;
-
-            int nodeId = GetNodeIdFromRunName(r.Name, RUN_NAME_PREFIX);
-            TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
-            _mainWin.InvokeAssessmentDialog(nd);
-            r.Text = BuildCommentRunText(nd);
-            if (string.IsNullOrEmpty(r.Text))
+            if (e.ClickCount == 2)
             {
-                RemoveRunFromHostingParagraph(r);
+                Run r = (Run)e.Source;
+
+                int nodeId = GetNodeIdFromRunName(r.Name, RUN_NAME_PREFIX);
+                TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
+                if (_mainWin.InvokeAnnotationsDialog(nd))
+                {
+                    r.Text = BuildCommentRunText(nd);
+                    if (string.IsNullOrEmpty(r.Text))
+                    {
+                        RemoveRunFromHostingParagraph(r);
+                    }
+                }
             }
         }
 
         /// <summary>
-        /// If the Comment run for the passed node already exists,
-        /// it will be updated.
+        /// If the Comment run for the passed node already exists, it will be updated.
         /// If it does not exist, it will be created.
+        /// This also updates the run's text itself and move NAGs may have changed
+        /// before this method was called.
         /// </summary>
         /// <param name="nd"></param>
         public void InsertOrUpdateCommentRun(TreeNode nd)
@@ -932,10 +936,12 @@ namespace ChessForge
                 return;
             }
 
+            r.Text = BuildNodeText(nd, IsMoveTextWithNumber(r.Text));
+
             Run r_comment;
             _dictNodeToCommentRun.TryGetValue(nd.NodeId, out r_comment);
 
-            if (string.IsNullOrEmpty(nd.Comment) && ChfCommands.GetAssessment(nd.Assessment) == ChfCommands.Assessment.NONE)
+            if (string.IsNullOrEmpty(nd.Comment))
             {
                 // if the comment run existed, remove it
                 if (r_comment != null)
@@ -957,6 +963,48 @@ namespace ChessForge
                     AddCommentRunToParagraph(nd, para);
                 }
             }
+        }
+
+        /// <summary>
+        /// Checks if the move's text is prefixed by move number.
+        /// </summary>
+        /// <param name="txt"></param>
+        /// <returns></returns>
+        private bool IsMoveTextWithNumber(string txt)
+        {
+            if (string.IsNullOrWhiteSpace(txt))
+            {
+                return false;
+            }
+
+            return Char.IsDigit(txt.Trim()[0]);
+        }
+
+        /// <summary>
+        /// Builds text for the Comment Run
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private string BuildCommentRunText(TreeNode nd)
+        {
+            if (string.IsNullOrEmpty(nd.Comment))
+            {
+                return "";
+            }
+
+            StringBuilder sb = new StringBuilder(" {");
+            if (!string.IsNullOrEmpty(nd.Comment))
+            {
+                sb.Append(nd.Comment);
+            }
+            sb.Append("}");
+
+            // if this is a root node add a space because the first move does not have it in front.
+            if (nd.NodeId == 0)
+            {
+                sb.Append(" ");
+            }
+            return sb.ToString();
         }
 
         /// <summary>

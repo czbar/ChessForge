@@ -1270,14 +1270,16 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Invokes the Move Assessment dialog.
+        /// Invokes the Annotations dialog.
         /// </summary>
         /// <param name="nd"></param>
-        public void InvokeAssessmentDialog(TreeNode nd)
+        public bool InvokeAnnotationsDialog(TreeNode nd)
         {
+            bool changed = false;
+
             if (nd != null)
             {
-                AssessmentDialog dlg = new AssessmentDialog(nd)
+                AnnotationsDialog dlg = new AnnotationsDialog(nd)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -1286,11 +1288,17 @@ namespace ChessForge
                 dlg.ShowDialog();
                 if (dlg.ExitOk)
                 {
-                    nd.Assessment = ChfCommands.GetStringForAssessment(dlg.Assessment);
-                    nd.Comment = dlg.Comment;
-                    AppStateManager.IsDirty = true;
+                    if (nd.Comment != dlg.Comment || nd.Nags != dlg.Nags)
+                    {
+                        changed = true;
+                        nd.Comment = dlg.Comment;
+                        nd.SetNags(dlg.Nags);
+                        AppStateManager.IsDirty = true;
+                    }
                 }
             }
+
+            return changed;
         }
 
         /// <summary>
