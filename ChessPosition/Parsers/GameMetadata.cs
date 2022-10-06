@@ -163,7 +163,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public string GetChapterTitle()
         {
-            return _headers.Where(kvp => kvp.Key == PgnHeaders.NAME_EVENT).FirstOrDefault().Value;
+            return _headers.Where(kvp => kvp.Key == PgnHeaders.NAME_CHAPTER_TITLE).FirstOrDefault().Value;
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public int GetChapterNumber()
         {
-            string sChapterNo = _headers.Where(kvp => kvp.Key == PgnHeaders.NAME_CHAPTER_NUMBER).FirstOrDefault().Value;
+            string sChapterNo = _headers.Where(kvp => kvp.Key == PgnHeaders.NAME_CHAPTER_ID).FirstOrDefault().Value;
             if (int.TryParse(sChapterNo, out int chapterNumber))
             {
                 return chapterNumber;

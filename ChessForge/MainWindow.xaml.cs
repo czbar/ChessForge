@@ -38,6 +38,11 @@ namespace ChessForge
         private WorkbookView _workbookView;
 
         /// <summary>
+        /// The RichTextBox based Chapters view
+        /// </summary>
+        private ChaptersView _chaptersView;
+
+        /// <summary>
         /// The RichTextBox based training view
         /// </summary>
         public TrainingView UiTrainingView;
@@ -688,6 +693,8 @@ namespace ChessForge
             UiTabWorkbook.Focus();
 
             _workbookView.BuildFlowDocumentForWorkbook();
+
+
             //if (StudyTree.Bookmarks.Count == 0 && isOrigPgn)
             //{
             //    var res = AskToGenerateBookmarks();
@@ -707,7 +714,16 @@ namespace ChessForge
 
             SelectLineAndMoveInWorkbookViews(startLineId, 0); // ActiveLine.GetSelectedPlyNodeIndex());
 
+            InitializeChaptersView();
+
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
+        }
+
+        private void InitializeChaptersView()
+        {
+            _chaptersView = new ChaptersView(UiRtbChaptersView.Document, this);
+            _chaptersView.BuildFlowDocumentForChaptersView();
+
         }
 
         /// <summary>
@@ -1218,6 +1234,7 @@ namespace ChessForge
                 SessionWorkbook.Title = dlg.WorkbookTitle;
                 AppStateManager.SaveWorkbookFile();
                 MainChessBoard.FlipBoard(SessionWorkbook.TrainingSide);
+                _chaptersView.BuildFlowDocumentForChaptersView();
                 return true;
             }
             else

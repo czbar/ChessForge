@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Controls;
 
 namespace ChessForge
@@ -33,7 +34,7 @@ namespace ChessForge
                 OpenFileDialog openFileDialog = new OpenFileDialog
                 {
                     Multiselect = false,
-                    Filter = "Workbooks (*.chf); PGN (*.pgn)|*.chf;*.pgn|All files (*.*)|*.*"
+                    Filter = "Workbooks (*.pgn)|*.pgn;*.pgn|Legacy CHF (*.chf)|*.chf"
                 };
 
                 string initDir;
@@ -151,7 +152,16 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnWorkbookSave_Click(object sender, RoutedEventArgs e)
         {
-            WorkbookManager.PromptAndSaveWorkbook(true);
+            this.Cursor = Cursors.Wait;
+            try
+            {
+                WorkbookManager.PromptAndSaveWorkbook(true);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Error in PromptAndSaveWorkbook(): " + ex.Message);
+            }
+            this.Cursor = Cursors.Arrow;
         }
 
         /// <summary>
@@ -737,6 +747,21 @@ namespace ChessForge
         private void UiMnFlipBoard_Click(object sender, RoutedEventArgs e)
         {
             MainChessBoard.FlipBoard();
+        }
+
+        /// <summary>
+        /// CTRL+S shortcut for saving workbook.
+        /// Executes only if the corresponding menu item is enabled
+        /// in order to honor the program's logic.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CustomCommand_SaveWorkbook(object sender, RoutedEventArgs e)
+        {
+            if (UiMnWorkbookSave.IsEnabled == true)
+            {
+                UiMnWorkbookSave_Click(sender, e);
+            }
         }
 
     }

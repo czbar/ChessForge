@@ -98,6 +98,15 @@ namespace ChessPosition
             return NagsDict.FirstOrDefault(x => x.Value == nag).Key;
         }
 
+        /// <summary>
+        /// Character to use as an "expand" symbol in the tree/table views.
+        /// </summary>
+        public const char CharExpand = '\u229E';
+
+        /// <summary>
+        /// Character to use as an "collapse" symbol in the tree/table views.
+        /// </summary>
+        public const char CharCollapse = '\u229F';
 
         /// <summary>
         /// Min and Max dimensions of the chess board

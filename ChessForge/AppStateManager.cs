@@ -40,7 +40,7 @@ namespace ChessForge
         public enum FileType
         {
             NONE,
-            LEGACY_CHF,
+//            LEGACY_CHF,
             CHESS_FORGE_PGN,
             GENERIC_PGN
         }
@@ -87,10 +87,10 @@ namespace ChessForge
                 {
                     _workbookFileType = FileType.NONE;
                 }
-                else if (Path.GetExtension(_workbookFilePath).ToLower() == ".chf")
-                {
-                    _workbookFileType = FileType.LEGACY_CHF;
-                }
+                //else if (Path.GetExtension(_workbookFilePath).ToLower() == ".chf")
+                //{
+                //    _workbookFileType = FileType.LEGACY_CHF;
+                //}
                 else
                 {
                     _workbookFileType = FileType.CHESS_FORGE_PGN;
@@ -104,50 +104,50 @@ namespace ChessForge
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        public static FileType DetermineFileType(string path)
-        {
-            FileType ft = FileType.NONE;
-            try
-            {
-                if (Path.GetExtension(_workbookFilePath).ToLower() == ".chf")
-                {
-                    ft = FileType.LEGACY_CHF;
-                }
-                else if (Path.GetExtension(_workbookFilePath).ToLower() == ".pgn")
-                {
-                    using (StreamReader sr = new StreamReader(path))
-                    {
-                        string line;
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            if (!string.IsNullOrWhiteSpace(line))
-                            {
-                                string name = PgnHeaders.ParsePgnHeaderLine(line, out string value);
-                                if (name == PgnHeaders.NAME_WORKBOOK_TITLE)
-                                {
-                                    ft = FileType.CHESS_FORGE_PGN;
-                                }
-                                else
-                                {
-                                    ft = FileType.GENERIC_PGN;
-                                }
-                                break;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    ft = FileType.NONE;
-                }
-            }
-            catch (Exception ex)
-            {
-                DebugUtils.ShowDebugMessage("Exception in DetermineFileType(): " + ex.Message);
-            }
+        //public static FileType DetermineFileType(string path)
+        //{
+        //    FileType ft = FileType.NONE;
+        //    try
+        //    {
+        //        if (Path.GetExtension(_workbookFilePath).ToLower() == ".chf")
+        //        {
+        //            ft = FileType.LEGACY_CHF;
+        //        }
+        //        else if (Path.GetExtension(_workbookFilePath).ToLower() == ".pgn")
+        //        {
+        //            using (StreamReader sr = new StreamReader(path))
+        //            {
+        //                string line;
+        //                while ((line = sr.ReadLine()) != null)
+        //                {
+        //                    if (!string.IsNullOrWhiteSpace(line))
+        //                    {
+        //                        string name = PgnHeaders.ParsePgnHeaderLine(line, out string value);
+        //                        if (name == PgnHeaders.NAME_WORKBOOK_TITLE)
+        //                        {
+        //                            ft = FileType.CHESS_FORGE_PGN;
+        //                        }
+        //                        else
+        //                        {
+        //                            ft = FileType.GENERIC_PGN;
+        //                        }
+        //                        break;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            ft = FileType.NONE;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        DebugUtils.ShowDebugMessage("Exception in DetermineFileType(): " + ex.Message);
+        //    }
 
-            return ft;
-        }
+        //    return ft;
+        //}
 
         /// <summary>
         /// Saves the Workbook to a new file, updates the title bar
@@ -265,6 +265,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 _mainWin.ActiveLine.Clear();
+                _mainWin.UiRtbChaptersView.Document.Blocks.Clear();
                 _mainWin.UiRtbWorkbookView.Document.Blocks.Clear();
                 _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
 
@@ -456,7 +457,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
 
-                if (!string.IsNullOrEmpty(WorkbookFilePath) && IsDirty && WorkbookFileType == FileType.LEGACY_CHF)
+                if (!string.IsNullOrEmpty(WorkbookFilePath) && IsDirty)
                 {
                     _mainWin.UiMnWorkbookSave.IsEnabled = true;
                     _mainWin.UiMnWorkbookSave.Header = "Save " + Path.GetFileName(WorkbookFilePath);

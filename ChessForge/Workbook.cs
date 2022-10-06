@@ -84,8 +84,28 @@ namespace ChessForge
         /// </summary>
         public string Title
         {
-            get => _title;
+            get
+            {
+                if (string.IsNullOrEmpty(_title))
+                {
+                    return "Untitled Workbook";
+                }
+                else
+                {
+                    return _title;
+                }
+            }
             set => _title = value;
+        }
+
+        /// <summary>
+        /// Returns the Chapter object with the passed id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Chapter GetChapter(int id)
+        {
+            return Chapters.FirstOrDefault(ch => ch.Id == id);
         }
 
         /// <summary>
@@ -96,7 +116,7 @@ namespace ChessForge
         {
             Chapter chapter = new Chapter();
             chapter.StudyTree = new VariationTree();
-            chapter.Number = Chapters.Count;
+            chapter.Id = Chapters.Count;
 
             Chapters.Add(chapter);
             _activeChapter = chapter;
@@ -111,7 +131,7 @@ namespace ChessForge
         {
             Chapter chapter = new Chapter();
             chapter.StudyTree = tree;
-            chapter.Number = 1;
+            chapter.Id = 1;
 
             Chapters.Add(chapter);
             _activeChapter = chapter;
@@ -119,6 +139,29 @@ namespace ChessForge
             TrainingSide = tree.TrainingSide;
 
             return chapter;
+        }
+
+        /// <summary>
+        /// Returns the expand/collapse status of the chapter in the ChaptersView.
+        /// If true the chapter view is expanded, if false, the chapter view is collapsed,
+        /// null if chapter not found.
+        /// </summary>
+        /// <param name="chapterId"></param>
+        /// <returns></returns>
+        public bool? IsChapterViewExpanded(int chapterId)
+        {
+            bool? ret = null;
+
+            foreach (Chapter chapter in Chapters)
+            {
+                if (chapter.Id == chapterId)
+                {
+                    ret = chapter.IsViewExpanded;
+                    break;
+                }
+            }
+
+            return ret;
         }
     }
 }
