@@ -37,7 +37,7 @@ namespace ChessPosition
         /// <summary>
         /// In Chess Forge this header is repurposed as a chapter's title.
         /// </summary>
-        public const string NAME_EVENT = "Event";
+        public const string NAME_EVENT_ = "Event";
 
         /// <summary>
         /// Position in the FEN format.
@@ -48,7 +48,13 @@ namespace ChessPosition
         /// The number of a chapter. The same number may appear in multiple
         /// Variation Trees thus organizing them into chapters.
         /// </summary>
-        public const string NAME_CHAPTER_NUMBER = "ChapterNumber";
+        public const string NAME_CHAPTER_ID = "ChapterId";
+
+        /// <summary>
+        /// The number of a chapter. The same number may appear in multiple
+        /// Variation Trees thus organizing them into chapters.
+        /// </summary>
+        public const string NAME_CHAPTER_TITLE = "ChapterTitle";
 
         /// <summary>
         /// Type of the game which can be "Study Tree", "Model Game" or "Exercise".

@@ -222,8 +222,8 @@ namespace ChessForge
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_EVENT, chapter.Title));
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_CHAPTER_NUMBER, chapterNo.ToString()));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_CHAPTER_ID, chapterNo.ToString()));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_CHAPTER_TITLE, chapter.Title));
 
             return sb.ToString();
         }

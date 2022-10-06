@@ -363,7 +363,7 @@ namespace ChessForge
                 GameMetadata gm = GameList[i];
 
                 string contentType = gm.GetHeaderValue(PgnHeaders.NAME_CONTENT_TYPE);
-                string sChapter = gm.GetHeaderValue(PgnHeaders.NAME_CHAPTER_NUMBER);
+                string sChapter = gm.GetHeaderValue(PgnHeaders.NAME_CHAPTER_ID);
                 if (IsNextChapter(chapter, i, chapterNo, sChapter))
                 {
                     chapter = SessionWorkbook.CreateNewChapter();
