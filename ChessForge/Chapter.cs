@@ -15,13 +15,16 @@ namespace ChessForge
     public class Chapter
     {
         // number of this chapter
-        private int _number;
+        private int _id;
 
         // title of this chapter
         private string _title;
 
         // VariationTree to be used when this chapter becomes active.
         private VariationTree _activeTree;
+
+        // whether the chapter is expanded in the ChaptersView
+        private bool _isViewExpanded;
 
         /// <summary>
         /// Returns Tree "active" in this chapter.
@@ -46,10 +49,10 @@ namespace ChessForge
         /// <summary>
         /// Number of this chapter.
         /// </summary>
-        public int Number
+        public int Id
         {
-            get => _number;
-            set => _number = value;
+            get => _id;
+            set => _id = value;
         }
 
         /// <summary>
@@ -70,6 +73,15 @@ namespace ChessForge
                 }
             }
             set => _title = value;
+        }
+
+        /// <summary>
+        /// Flag indictating whether this chapter is expanded in the ChaptersView
+        /// </summary>
+        public bool IsViewExpanded
+        {
+            get => _isViewExpanded;
+            set => _isViewExpanded = value;
         }
 
         /// <summary>
