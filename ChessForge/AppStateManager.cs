@@ -265,6 +265,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 _mainWin.ActiveLine.Clear();
+                _mainWin.UiRtbChaptersView.Document.Blocks.Clear();
                 _mainWin.UiRtbWorkbookView.Document.Blocks.Clear();
                 _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
 
