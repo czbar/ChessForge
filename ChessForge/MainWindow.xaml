@@ -151,7 +151,17 @@
         </TabControl>
         <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1">
             <TabItem x:Name="UiTabChapters"  Header="Chapters" >
-                <Grid Background="#FFE5E5E5" >
+                <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" >
+                    <Grid.ContextMenu>
+                        <ContextMenu x:Name="_cmChapters">
+                            <MenuItem x:Name="_mnSelectChapter" Header="Open This Chapter" Click="UiMnSelectChapter_Click" />
+                            <MenuItem x:Name="_mnRenameChapter" Header="Rename This Chapter" Click="UiMnRenameChapter_Click" />
+                            <Separator />
+                            <MenuItem x:Name="_mnAddChapter" Header="Create New Chapter" Click="UiMnAddChapter_Click"  />
+                            <Separator />
+                            <MenuItem x:Name="_mnDeleteChapter" Header="Delete This Chapter" Click="UiMnDeleteChapter_Click" />
+                        </ContextMenu>
+                    </Grid.ContextMenu>
                     <RichTextBox x:Name="UiRtbChaptersView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True" >

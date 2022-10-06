@@ -339,7 +339,7 @@ namespace ChessForge
         //**************************************************************
 
         /// <summary>
-        /// Handles left click on any of the Bookmark chessboards.
+        /// Handles a mouse click on any of the Bookmark chessboards.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -352,7 +352,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// A bookmark view was clicked somewhere.
+        /// The Bookmarks view was clicked somewhere.
         /// We disable the bookmark menu in case the click was not on a bookmark.
         /// The event is then handled by a bookmark handler, if the click was on
         /// a bookmark and the menus will be enabled accordingly.
@@ -385,6 +385,46 @@ namespace ChessForge
             BookmarkManager.PageUp();
         }
 
+        //**************************************************************
+        //
+        //  CHAPTERS VIEW mouse events 
+        // 
+        //**************************************************************
+
+        /// <summary>
+        /// The Chapters view was clicked somewhere.
+        /// Here we configured the context menu items as if no chapter was clicked.
+        /// If any chapter line was clicked the menus will be re-configured
+        /// accordingly in the event handler for the the Chapter related Run..
+        /// All the above happens before the context menu is invoked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Chapters_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            WorkbookManager.LastClickedChapterId = -1;
+            WorkbookManager.EnableChaptersMenus(_cmChapters, false);
+        }
+
+        private void UiMnSelectChapter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UiMnRenameChapter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UiMnAddChapter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UiMnDeleteChapter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
 
         //**************************************************************

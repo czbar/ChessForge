@@ -58,7 +58,7 @@ namespace ChessForge
         /// respective list.
         /// </summary>
         private readonly string _run_chapter_expand_char_ = "_run_chapter_expand_char_";
-        private readonly string _run_chapter_ = "_run_chapter_";
+        private readonly string _run_chapter_title_ = "_run_chapter_title_";
         private readonly string _run_study_tree_ = "study_tree_";
         private readonly string _run_model_game_ = "model_game_";
         private readonly string _run_exercise_ = "exercise_";
@@ -126,7 +126,8 @@ namespace ChessForge
                 para.Inlines.Add(rExpandChar);
 
                 Run rTitle = CreateRun(STYLE_CHAPTER_TITLE, chapter.Title);
-                rTitle.Name = _run_chapter_ + chapter.Id.ToString();
+                rTitle.Name = _run_chapter_title_ + chapter.Id.ToString();
+                rTitle.MouseDown += EventChapterRunClicked;
                 para.Inlines.Add(rTitle);
 
                 para.Inlines.Add(new Run("\n"));
@@ -151,8 +152,19 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventRunClicked(object sender, MouseButtonEventArgs e)
+        private void EventChapterRunClicked(object sender, MouseButtonEventArgs e)
         {
+            try
+            {
+                Run r = (Run)e.Source;
+                int chapterId = GetNodeIdFromRunName(r.Name, _run_chapter_title_);
+                WorkbookManager.LastClickedChapterId = chapterId;
+                WorkbookManager.EnableChaptersMenus(_mainWin._cmChapters, true);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventExpandSymbolClicked(): " + ex.Message);
+            }
         }
 
         /// <summary>

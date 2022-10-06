@@ -9,6 +9,7 @@ using ChessPosition.GameTree;
 using System.Collections.ObjectModel;
 using GameTree;
 using ChessPosition;
+using System.Windows.Controls;
 
 namespace ChessForge
 {
@@ -21,6 +22,11 @@ namespace ChessForge
         /// Workbook for the current session.
         /// </summary>
         public static Workbook SessionWorkbook;
+
+        /// <summary>
+        /// Id of the chapter which was last clicked in the Chapters view.
+        /// </summary>
+        public static int LastClickedChapterId = -1;
 
         /// <summary>
         /// The list of game metadata from the currently read PGN file.
@@ -308,6 +314,48 @@ namespace ChessForge
             }
 
             return GameList.Count;
+        }
+
+        /// <summary>
+        /// Manages state of the Chapters context menu.
+        /// The isEnabled argument is true if the user's last click
+        /// was on a chapter rather than elsewhere in the view.
+        /// Some items are enabled according to the value of isEnable
+        /// while some have a different logic (e.g. Delete Chapter
+        /// is only enabled if there is more than one chapter in the workbook.
+        /// </summary>
+        /// <param name="cmn"></param>
+        /// <param name="isEnabled"></param>
+        public static void EnableChaptersMenus(ContextMenu cmn, bool isEnabled)
+        {
+            // ClickedIndex should be in sync with isEnabled but double check just in case
+            if (LastClickedChapterId < 0)
+            {
+                isEnabled = false;
+            }
+
+            foreach (var item in cmn.Items)
+            {
+                if (item is MenuItem)
+                {
+                    MenuItem menuItem = item as MenuItem;
+                    switch (menuItem.Name)
+                    {
+                        case "_mnSelectChapter":
+                            menuItem.IsEnabled = isEnabled;
+                            break;
+                        case "_mnRenameChapter":
+                            menuItem.IsEnabled = isEnabled;
+                            break;
+                        case "_mnAddChapter":
+                            menuItem.IsEnabled = true;
+                            break;
+                        case "_mnDeleteChapter":
+                            menuItem.IsEnabled = SessionWorkbook.Chapters.Count > 1;
+                            break;
+                    }
+                }
+            }
         }
 
         /// <summary>
