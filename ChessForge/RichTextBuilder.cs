@@ -89,6 +89,28 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Creates a new Run with the requested style and text.
+        /// </summary>
+        /// <param name="style"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public Run CreateRun(string style, string text)
+        {
+            RichTextPara attrs = GetParaAttrs(style);
+
+            Run r = new Run
+            {
+                FontSize = attrs.FontSize,
+                FontWeight = attrs.FontWeight,
+                Foreground = attrs.ForegroundColor
+            };
+
+            r.Text = text;
+
+            return r;
+        }
+
+        /// <summary>
         /// Creates a paragraph, sets its text and inserts it
         /// into the Document.
         /// </summary>
