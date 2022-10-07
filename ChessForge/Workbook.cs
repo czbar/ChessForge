@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ChessPosition;
+using ChessPosition.GameTree;
 using GameTree;
 
 namespace ChessForge
@@ -44,8 +45,52 @@ namespace ChessForge
         /// </summary>
         public Chapter ActiveChapter
         {
-            get => _activeChapter;
+            get
+            {
+                if (_activeChapter == null)
+                {
+                    return Chapters[0];
+                }
+                return _activeChapter;
+            }
             set => _activeChapter = value;
+        }
+
+        /// <summary>
+        /// Sets Active Chapter and Tree given the index of the chapter in the Chapters list.
+        /// </summary>
+        /// <param name="chapterIndex">index of the requested chapter in the Chapters list.</param>
+        /// <param name="gameType"></param>
+        /// <param name="gameIndex">index in the list of elements of the requested type i.e. Model Games or Exercises </param>
+        public void SetActiveChapterTreeByIndex(int chapterIndex, GameMetadata.GameType gameType, int gameIndex = 0)
+        {
+            if (chapterIndex < 0 || chapterIndex >= Chapters.Count)
+            {
+                return;
+            }
+
+            _activeChapter = Chapters[chapterIndex];
+            _activeChapter.SetActiveVariationTree(gameType, gameIndex);
+        }
+
+        /// <summary>
+        /// Sets Active Chapter and Tree given the Id of the chapter.
+        /// </summary>
+        /// <param name="chapterId"></param>
+        /// <param name="gameType"></param>
+        /// <param name="gameIndex"></param>
+        public void SetActiveChapterTreeById(int chapterId, GameMetadata.GameType gameType, int gameIndex = 0)
+        {
+            foreach (Chapter chapter in Chapters)
+            {
+                if (chapter.Id == chapterId)
+                {
+                    _activeChapter = chapter;
+                    _activeChapter.SetActiveVariationTree(gameType, gameIndex);
+                    break;
+                }
+            }
+
         }
 
         /// <summary>
@@ -116,10 +161,13 @@ namespace ChessForge
         {
             Chapter chapter = new Chapter();
             chapter.StudyTree = new VariationTree();
-            chapter.Id = Chapters.Count;
+            chapter.StudyTree.CreateNew();
+            //TODO: we need to have a chapter specific version of SetupGuiForNewSession 
+            chapter.Id = Chapters.Count + 1;
 
             Chapters.Add(chapter);
             _activeChapter = chapter;
+
             return chapter;
         }
 

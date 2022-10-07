@@ -10,11 +10,12 @@ using System.Windows.Documents;
 using ChessPosition;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using ChessPosition.GameTree;
 
 namespace ChessForge
 {
     /// <summary>
-    /// Manages text and events in the Chaptesr view.
+    /// Manages text and events in the Chapters view.
     /// The view is hosted in a RichTextBox.
     /// </summary>
     public class ChaptersView : RichTextBuilder
@@ -58,7 +59,7 @@ namespace ChessForge
         /// respective list.
         /// </summary>
         private readonly string _run_chapter_expand_char_ = "_run_chapter_expand_char_";
-        private readonly string _run_chapter_ = "_run_chapter_";
+        private readonly string _run_chapter_title_ = "_run_chapter_title_";
         private readonly string _run_study_tree_ = "study_tree_";
         private readonly string _run_model_game_ = "model_game_";
         private readonly string _run_exercise_ = "exercise_";
@@ -96,6 +97,44 @@ namespace ChessForge
                 Document.Blocks.Add(para);
                 _dictChapterParas[chapter.Id] = para;
             }
+
+            HighlightActiveChapter();
+        }
+
+        /// <summary>
+        /// Highlights the title of the ActiveChapter.
+        /// </summary>
+        public void HighlightActiveChapter()
+        {
+            try
+            {
+                int activeChapterId = WorkbookManager.SessionWorkbook.ActiveChapter.Id;
+                // iterate over the runs with chapter name and set the font for the active one to bold
+                foreach (Block b in Document.Blocks)
+                {
+                    if (b is Paragraph)
+                    {
+                        foreach (Inline r in ((Paragraph)b).Inlines)
+                        {
+                            int chapterId = GetNodeIdFromRunName((r as Run).Name, _run_chapter_title_);
+                            if (chapterId >= 0)
+                            {
+                                if (chapterId == activeChapterId)
+                                {
+                                    (r as Run).FontWeight = FontWeights.Bold;
+                                }
+                                else
+                                {
+                                    (r as Run).FontWeight = FontWeights.Normal;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -126,13 +165,17 @@ namespace ChessForge
                 para.Inlines.Add(rExpandChar);
 
                 Run rTitle = CreateRun(STYLE_CHAPTER_TITLE, chapter.Title);
-                rTitle.Name = _run_chapter_ + chapter.Id.ToString();
+                if (chapter.Id == WorkbookManager.SessionWorkbook.ActiveChapter.Id)
+                {
+                    rTitle.FontWeight = FontWeights.Bold;
+                }
+                rTitle.Name = _run_chapter_title_ + chapter.Id.ToString();
+                rTitle.MouseDown += EventChapterRunClicked;
                 para.Inlines.Add(rTitle);
-
-                para.Inlines.Add(new Run("\n"));
 
                 if (chapter.IsViewExpanded)
                 {
+                    para.Inlines.Add(new Run("\n"));
                     Run rStudy = CreateRun(STYLE_STUDY_TREE, "        Study Tree");
                     rStudy.Name = _run_study_tree_ + "1";
                     para.Inlines.Add(rStudy);
@@ -151,8 +194,31 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventRunClicked(object sender, MouseButtonEventArgs e)
+        private void EventChapterRunClicked(object sender, MouseButtonEventArgs e)
         {
+            try
+            {
+                Run r = (Run)e.Source;
+                int chapterId = GetNodeIdFromRunName(r.Name, _run_chapter_title_);
+                if (chapterId >= 0)
+                {
+                    WorkbookManager.LastClickedChapterId = chapterId;
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameMetadata.GameType.STUDY_TREE);
+                        HighlightActiveChapter();
+                        _mainWin.SetupGuiForActiveStudyTree();
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        WorkbookManager.EnableChaptersMenus(_mainWin._cmChapters, true);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventChapterRunClicked(): " + ex.Message);
+            }
         }
 
         /// <summary>

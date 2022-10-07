@@ -19,7 +19,7 @@ namespace ChessForge
     /// Manages text and events in the main Workbook view.
     /// The view is built in a RichTextBox.
     /// </summary>
-    public class WorkbookView : RichTextBuilder
+    public class VariationTreeView : RichTextBuilder
     {
         // Application's Main Window
         private MainWindow _mainWin;
@@ -33,7 +33,7 @@ namespace ChessForge
         /// a call to the base class's constructor.
         /// </summary>
         /// <param name="doc"></param>
-        public WorkbookView(FlowDocument doc, MainWindow mainWin) : base(doc)
+        public VariationTreeView(FlowDocument doc, MainWindow mainWin) : base(doc)
         {
             _mainWin = mainWin;
         }
@@ -857,6 +857,7 @@ namespace ChessForge
                     lineId = foundNode.LineId;
                     lineId = _variationTree.GetDefaultLineIdForNode(nodeId);
                     ObservableCollection<TreeNode> lineToSelect = _variationTree.SelectLine(lineId);
+                    WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nodeId);
                     foreach (TreeNode nd in lineToSelect)
                     {
                         if (nd.NodeId != 0)

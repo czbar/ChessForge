@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ChessPosition;
 using System.Xml.Linq;
+using System.Reflection;
+using System.Windows.Shapes;
 
 namespace GameTree
 {
@@ -37,6 +39,42 @@ namespace GameTree
 
         // a list of nodes from a subtree
         private List<TreeNode> _subTree = new List<TreeNode>();
+
+        // selected Line Id
+        private string _selectedLineId = "";
+
+        // selected Node Id
+        private int _selectedNodeId = -1;
+
+        /// <summary>
+        /// Selected Line Id as set from the interface. 
+        /// </summary>
+        public string SelectedLineId
+        {
+            get => _selectedLineId;
+            set => _selectedLineId = value;
+        }
+
+        /// <summary>
+        /// Selected Node Id as set from the interface. 
+        /// </summary>
+        public int SelectedNodeId
+        {
+            get => _selectedNodeId;
+            set => _selectedNodeId = value;
+        }
+
+        /// <summary>
+        /// Sets the line and mode selected in the GUI.
+        /// This is to persist the state while the user switches between views.
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <param name="nodeId"></param>
+        public void SetSelectedLineAndMove(string lineId, int nodeId)
+        {
+            _selectedLineId = lineId;
+            _selectedNodeId = nodeId;
+        }
 
         /// <summary>
         /// Title of this Workbook to show in the GUI
@@ -88,7 +126,6 @@ namespace GameTree
                 }
             }
         }
-
         /// <summary>
         /// "Stem" of this tree i.e., the starting moves up until the first fork.
         /// </summary>
