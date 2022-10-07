@@ -19,6 +19,7 @@ using System.Windows.Threading;
 using System.Security.Policy;
 using System.Diagnostics;
 using static ChessForge.AppStateManager;
+using ChessPosition.GameTree;
 
 namespace ChessForge
 {
@@ -630,6 +631,7 @@ namespace ChessForge
                     case ".pgn":
                         WorkbookManager.ReadPgnFileV2(fileName);
                         WorkbookManager.PrepareWorkbook();
+                        WorkbookManager.AssignChaptersIds();
                         acceptFile = true;
                         break;
                     default:
@@ -664,6 +666,9 @@ namespace ChessForge
             // if we are here, the WorkbookFileName must have been updated
             // and the WorkbookFileType was set to CHESS_FORGE_PGN 
 
+            // if this is a new session we will set ActiveChapter to the first chapter
+            // and Active Tree to the Study Tree in that chapter.
+            WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(0, GameMetadata.GameType.STUDY_TREE);
             AppStateManager.UpdateAppTitleBar();
             BoardCommentBox.ShowWorkbookTitle();
 
@@ -680,7 +685,20 @@ namespace ChessForge
             WorkbookManager.UpdateRecentFilesList(fileName);
 
             BoardCommentBox.ShowWorkbookTitle();
+            InitializeChaptersView();
 
+            SetupGuiForActiveStudyTree();
+
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
+        }
+
+        /// <summary>
+        /// Sets up the data and GUI for the ActiveStudyTree.
+        /// This method will be called e.g. when opening a new
+        /// Workbook and initializing the view.
+        /// </summary>
+        public void SetupGuiForActiveStudyTree()
+        {
             _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
             if (ActiveVariationTree.Nodes.Count == 0)
             {
@@ -694,31 +712,19 @@ namespace ChessForge
 
             _workbookView.BuildFlowDocumentForWorkbook();
 
-
-            //if (StudyTree.Bookmarks.Count == 0 && isOrigPgn)
-            //{
-            //    var res = AskToGenerateBookmarks();
-            //    if (res == MessageBoxResult.Yes)
-            //    {
-            //        StudyTree.GenerateBookmarks();
-            //        UiTabBookmarks.Focus();
-            //        AppStateManager.IsDirty = true;
-            //    }
-            //}
-
             string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
             SetActiveLine(startLineId, 0);
             UiRtbWorkbookView.Focus();
 
             BookmarkManager.ShowBookmarks();
 
-            SelectLineAndMoveInWorkbookViews(startLineId, 0); // ActiveLine.GetSelectedPlyNodeIndex());
+            SelectLineAndMoveInWorkbookViews(startLineId, 0);
 
-            InitializeChaptersView();
-
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
         }
 
+        /// <summary>
+        /// Initializes the ChaptersView
+        /// </summary>
         private void InitializeChaptersView()
         {
             _chaptersView = new ChaptersView(UiRtbChaptersView.Document, this);
@@ -1266,6 +1272,34 @@ namespace ChessForge
                 }
             }
         }
+
+        /// <summary>
+        /// Shows the Chapter Title options dialog.
+        /// </summary>
+        /// <returns></returns>
+        private bool ShowChapterTitleDialog(Chapter chapter)
+        {
+            ChapterTitleDialog dlg = new ChapterTitleDialog(chapter)
+            {
+                Left = ChessForgeMain.Left + 100,
+                Top = ChessForgeMain.Top + 100,
+                Topmost = true
+            };
+            dlg.ShowDialog();
+
+            if (dlg.ExitOK)
+            {
+                chapter.Title = dlg.ChapterTitle;
+                _chaptersView.BuildFlowDocumentForChaptersView();
+                AppStateManager.IsDirty = true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         /// <summary>
         /// Stops any evaluation that is currently happening.
