@@ -857,6 +857,7 @@ namespace ChessForge
                     lineId = foundNode.LineId;
                     lineId = _variationTree.GetDefaultLineIdForNode(nodeId);
                     ObservableCollection<TreeNode> lineToSelect = _variationTree.SelectLine(lineId);
+                    WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nodeId);
                     foreach (TreeNode nd in lineToSelect)
                     {
                         if (nd.NodeId != 0)
