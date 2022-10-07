@@ -189,7 +189,7 @@ namespace ChessForge
             // prepare document
             AppStateManager.RestartInIdleMode(false);
             WorkbookManager.CreateNewWorkbook();
-            _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
+            _workbookView = new VariationTreeView(UiRtbWorkbookView.Document, this);
 
             // ask for the options
             if (!ShowWorkbookOptionsDialog())

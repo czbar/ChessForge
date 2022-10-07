@@ -143,7 +143,7 @@
     <Compile Include="TrainingView.cs" />
     <Compile Include="TrainingSession.cs" />
     <Compile Include="UserMoveProcessor.cs" />
-    <Compile Include="WorkbookView.cs" />
+    <Compile Include="VariationTreeView.cs" />
     <Compile Include="TreeTableCell.cs" />
     <Compile Include="TreeTableRow.cs" />
     <Compile Include="ChfTextBuilder.cs" />

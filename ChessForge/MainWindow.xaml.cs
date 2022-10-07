@@ -36,7 +36,7 @@ namespace ChessForge
         /// <summary>
         /// The RichTextBox based full Workbook view
         /// </summary>
-        private WorkbookView _workbookView;
+        private VariationTreeView _workbookView;
 
         /// <summary>
         /// The RichTextBox based Chapters view
@@ -699,7 +699,7 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForActiveStudyTree()
         {
-            _workbookView = new WorkbookView(UiRtbWorkbookView.Document, this);
+            _workbookView = new VariationTreeView(UiRtbWorkbookView.Document, this);
             if (ActiveVariationTree.Nodes.Count == 0)
             {
                 ActiveVariationTree.CreateNew();
