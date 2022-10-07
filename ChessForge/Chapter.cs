@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ChessPosition.GameTree.GameMetadata;
 
 namespace ChessForge
 {
@@ -45,6 +46,32 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Sets the ActiveVariationTree based on the passed type and index.
+        /// </summary>
+        /// <param name="gameType"></param>
+        /// <param name="gameIndex"></param>
+        public void SetActiveVariationTree(GameMetadata.GameType gameType, int gameIndex = 0)
+        {
+            switch (gameType)
+            {
+                case GameType.STUDY_TREE:
+                    _activeTree = StudyTree;
+                    break;
+                case GameType.MODEL_GAME:
+                    if (gameIndex >= 0 && gameIndex < ModelGames.Count)
+                    {
+                        _activeTree = ModelGames[gameIndex];
+                    }
+                    break;
+                case GameType.EXERCISE:
+                    if (gameIndex >= 0 && gameIndex < Exercises.Count)
+                    {
+                        _activeTree = Exercises[gameIndex];
+                    }
+                    break;
+            }
+        }
 
         /// <summary>
         /// Number of this chapter.
@@ -65,7 +92,7 @@ namespace ChessForge
             {
                 if (string.IsNullOrWhiteSpace(_title))
                 {
-                    return "Untitled Chapter";
+                    return "Chapter " + Id.ToString();
                 }
                 else
                 {
