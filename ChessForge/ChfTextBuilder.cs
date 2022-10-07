@@ -18,11 +18,11 @@ namespace ChessForge
         // keeps output text as it is being built
         private static StringBuilder _fileText;
 
-        // convenience reference to the Workbook
-        private static VariationTree _workbook;
+        // convenience reference to the Variation Tree
+        private static VariationTree _variationTree;
 
         // convenience reference to the Workbook
-        private static Workbook _wb;
+        private static Workbook _workbook;
 
         /// <summary>
         /// Builds text to write out to the PGN file for the entire Workbook.
@@ -38,15 +38,15 @@ namespace ChessForge
         /// <returns></returns>
         public static string BuildWorkbookText()
         {
-            _wb = WorkbookManager.SessionWorkbook;
+            _workbook = WorkbookManager.SessionWorkbook;
 
             StringBuilder sbOut = new StringBuilder();
             sbOut.Append(BuildWorkbookPrefaceText());
 
             _fileText = new StringBuilder();
-            for (int i = 0; i < _wb.Chapters.Count; i++)
+            for (int i = 0; i < _workbook.Chapters.Count; i++)
             {
-                sbOut.Append(BuildChapterText(_wb.Chapters[i], i + 1));
+                sbOut.Append(BuildChapterText(_workbook.Chapters[i], i + 1));
                 _fileText.Clear();
             }
 
@@ -64,19 +64,19 @@ namespace ChessForge
             StringBuilder sb = new StringBuilder();
 
             // workbook headers
-            sb.AppendLine(PgnHeaders.GetWorkbookTitleText(_wb.Title));
-            sb.AppendLine(PgnHeaders.GetTrainingSideText(_wb.TrainingSide));
-            if (_wb.LastUpdate != null)
+            sb.AppendLine(PgnHeaders.GetWorkbookTitleText(_workbook.Title));
+            sb.AppendLine(PgnHeaders.GetTrainingSideText(_workbook.TrainingSide));
+            if (_workbook.LastUpdate != null)
             {
-                sb.AppendLine(PgnHeaders.GetDateText(_wb.LastUpdate));
+                sb.AppendLine(PgnHeaders.GetDateText(_workbook.LastUpdate));
             }
             sb.AppendLine(PgnHeaders.GetWorkbookWhiteText());
             sb.AppendLine(PgnHeaders.GetWorkbookBlackText());
             sb.AppendLine(PgnHeaders.GetLineResultHeader());
 
-            if (!string.IsNullOrWhiteSpace(_wb.Description))
+            if (!string.IsNullOrWhiteSpace(_workbook.Description))
             {
-                sb.AppendLine(BuildCommentText(_wb.Description));
+                sb.AppendLine(BuildCommentText(_workbook.Description));
             }
             sb.AppendLine();
             sb.AppendLine("*");
@@ -85,6 +85,11 @@ namespace ChessForge
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Formats comment text.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         private static string BuildCommentText(string comment)
         {
             if (string.IsNullOrEmpty(comment))
@@ -235,9 +240,9 @@ namespace ChessForge
         /// <summary>
         /// Builds text of the complete Workbook.
         /// </summary>
-        public static string BuildText(VariationTree workbook)
+        public static string BuildText(VariationTree tree)
         {
-            _workbook = workbook;
+            _variationTree = tree;
             _fileText = new StringBuilder();
 
             BuildHeaders();
@@ -245,9 +250,9 @@ namespace ChessForge
             StringBuilder sbOutput = new StringBuilder(_fileText.ToString());
 
             _fileText.Clear();
-            if (workbook.Nodes.Count > 0)
+            if (tree.Nodes.Count > 0)
             {
-                TreeNode root = workbook.Nodes[0];
+                TreeNode root = tree.Nodes[0];
 
                 // There may be a comment or command before the first move. Add if so.
                 _fileText.Append(BuildCommandAndCommentText(root));
@@ -327,12 +332,12 @@ namespace ChessForge
         /// </summary>
         private static void BuildHeaders()
         {
-            BuildHeader(_workbook.HEADER_TITLE);
-            BuildHeader(_workbook.HEADER_DATE, DateTime.Now.ToString("yyyy.MM.dd"));
-            BuildHeader(_workbook.HEADER_TRAINING_SIDE);
-            BuildHeader(_workbook.HEADER_WHITE, "Chess Forge");
-            BuildHeader(_workbook.HEADER_BLACK, "Workbook File");
-            BuildHeader(_workbook.HEADER_RESULT, "*");
+            BuildHeader(_variationTree.HEADER_TITLE);
+            BuildHeader(_variationTree.HEADER_DATE, DateTime.Now.ToString("yyyy.MM.dd"));
+            BuildHeader(_variationTree.HEADER_TRAINING_SIDE);
+            BuildHeader(_variationTree.HEADER_WHITE, "Chess Forge");
+            BuildHeader(_variationTree.HEADER_BLACK, "Workbook File");
+            BuildHeader(_variationTree.HEADER_RESULT, "*");
             _fileText.AppendLine();
         }
 
@@ -345,7 +350,7 @@ namespace ChessForge
             string val;
             if (value == null)
             {
-                _workbook.Headers.TryGetValue(key, out val);
+                _variationTree.Headers.TryGetValue(key, out val);
             }
             else
             {
