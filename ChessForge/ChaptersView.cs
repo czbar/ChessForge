@@ -202,11 +202,17 @@ namespace ChessForge
                 int chapterId = GetNodeIdFromRunName(r.Name, _run_chapter_title_);
                 if (chapterId >= 0)
                 {
-                    WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameMetadata.GameType.STUDY_TREE);
                     WorkbookManager.LastClickedChapterId = chapterId;
-                    HighlightActiveChapter();
-                    _mainWin.SetupGuiForActiveStudyTree();
-                    WorkbookManager.EnableChaptersMenus(_mainWin._cmChapters, true);
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameMetadata.GameType.STUDY_TREE);
+                        HighlightActiveChapter();
+                        _mainWin.SetupGuiForActiveStudyTree();
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        WorkbookManager.EnableChaptersMenus(_mainWin._cmChapters, true);
+                    }
                 }
             }
             catch (Exception ex)
