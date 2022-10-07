@@ -36,10 +36,10 @@ namespace ChessForge
         /// <summary>
         /// Creates and stores a new Workbook object.
         /// </summary>
-        public static void CreateNewWorkbook(string fileName)
-        {
-            SessionWorkbook = new Workbook();
-        }
+        //public static void CreateNewWorkbook(string fileName)
+        //{
+        //    SessionWorkbook = new Workbook();
+        //}
 
         /// <summary>
         /// Creates and stores a new Workbook object.
@@ -48,6 +48,15 @@ namespace ChessForge
         {
             SessionWorkbook = new Workbook();
             SessionWorkbook.CreateNewChapter();
+            AssignChaptersIds();
+        }
+
+        public static void AssignChaptersIds()
+        {
+            for (int i = 0; i < SessionWorkbook.Chapters.Count; i++)
+            {
+                SessionWorkbook.Chapters[i].Id = i + 1;
+            }
         }
 
         /// <summary>
