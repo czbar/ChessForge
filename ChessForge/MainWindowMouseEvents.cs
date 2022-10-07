@@ -416,9 +416,23 @@ namespace ChessForge
 
         }
 
+        /// <summary>
+        /// Creates a new Chapter and adds it to the Workbook.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiMnAddChapter_Click(object sender, RoutedEventArgs e)
         {
-
+            Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
+            if (ShowChapterTitleDialog(chapter))
+            {
+                AppStateManager.IsDirty = true;
+            }
+            else
+            {
+                // remove the just created Chapter
+                SessionWorkbook.Chapters.Remove(chapter);
+            }
         }
 
         private void UiMnDeleteChapter_Click(object sender, RoutedEventArgs e)
