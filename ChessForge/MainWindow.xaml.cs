@@ -712,13 +712,24 @@ namespace ChessForge
 
             _workbookView.BuildFlowDocumentForWorkbook();
 
-            string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
-            SetActiveLine(startLineId, 0);
+            string startLineId;
+            int startNodeId = 0;
+
+            if (!string.IsNullOrEmpty(ActiveVariationTree.SelectedLineId) && ActiveVariationTree.SelectedNodeId >= 0)
+            {
+                startLineId = ActiveVariationTree.SelectedLineId;
+                startNodeId = ActiveVariationTree.SelectedNodeId;
+            }
+            else
+            {
+                startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
+            }
+            SetActiveLine(startLineId, startNodeId);
             UiRtbWorkbookView.Focus();
 
             BookmarkManager.ShowBookmarks();
 
-            SelectLineAndMoveInWorkbookViews(startLineId, 0);
+            SelectLineAndMoveInWorkbookViews(startLineId, startNodeId);
 
         }
 
@@ -763,11 +774,16 @@ namespace ChessForge
             _workbookView.AddNewNode(nd);
         }
 
+        /// <summary>
+        /// Selects a line and move in the VariationTree view.
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <param name="index"></param>
         public void SelectLineAndMoveInWorkbookViews(string lineId, int index)
         {
             TreeNode nd = ActiveLine.GetNodeAtIndex(index);
+            WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nd.NodeId);
             _workbookView.SelectLineAndMove(lineId, nd.NodeId);
-            //            _lvWorkbookTable_SelectLineAndMove(lineId, nd.NodeId);
             if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
             {
                 EvaluateActiveLineSelectedPosition(nd);
