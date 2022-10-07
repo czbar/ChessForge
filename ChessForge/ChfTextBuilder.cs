@@ -110,6 +110,9 @@ namespace ChessForge
             sb.Append(BuildModelGamesText(chapter, chapterNo));
             sb.Append(BuildExercisesText(chapter, chapterNo));
 
+            sb.AppendLine();
+            sb.AppendLine();
+
             return sb.ToString();
         }
 
@@ -125,7 +128,7 @@ namespace ChessForge
         private static string BuildStudyTreeText(Chapter chapter, int chapterNo)
         {
             VariationTree tree = chapter.StudyTree;
-            if (tree != null && tree.Nodes.Count > 1)
+            if (tree != null && tree.Nodes.Count >= 1)
             {
                 string headerText = BuildStudyTreeHeaderText(chapter, chapterNo);
 
