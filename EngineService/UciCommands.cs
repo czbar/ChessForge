@@ -23,7 +23,7 @@
         // prefix in the engine's message naming itself
         public const string ENG_ID_NAME = "id name";
 
-        // spacial ChessForge constant
+        // special ChessForge constant
         public const string CHF_NODE_ID_PREFIX = "NodeId=";
     }
 }
