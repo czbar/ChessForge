@@ -62,8 +62,21 @@ namespace ChessForge
         /// <returns></returns>
         public Chapter SelectDefaultActiveChapter()
         {
+            if (Chapters.Count == 0)
+            {
+                CreateDefaultChapter();
+            }
             _activeChapter = Chapters[0];
             return _activeChapter;
+        }
+
+        /// <summary>
+        /// Creates a new "default" chapter
+        /// </summary>
+        /// <returns></returns>
+        public Chapter CreateDefaultChapter()
+        {
+            return CreateNewChapter();
         }
 
         /// <summary>
@@ -111,6 +124,10 @@ namespace ChessForge
         {
             get
             {
+                if (_activeChapter == null)
+                {
+                    SelectDefaultActiveChapter();
+                }
                 return _activeChapter.ActiveVariationTree;
             }
         }
