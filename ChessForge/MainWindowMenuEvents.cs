@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using ChessPosition.GameTree;
 
 namespace ChessForge
 {
@@ -64,7 +65,7 @@ namespace ChessForge
                 if (result == true)
                 {
                     Configuration.LastOpenDirectory = Path.GetDirectoryName(openFileDialog.FileName);
-                    ReadWorkbookFile(openFileDialog.FileName, false);
+                    ReadWorkbookFile(openFileDialog.FileName, false, ref WorkbookManager.VariationTreeList);
                 }
             }
         }
@@ -81,7 +82,7 @@ namespace ChessForge
             {
                 string menuItemName = ((MenuItem)e.Source).Name;
                 string path = Configuration.GetRecentFile(menuItemName);
-                ReadWorkbookFile(path, false);
+                ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
             }
         }
 
@@ -323,6 +324,97 @@ namespace ChessForge
         private void UiBtnExitGame_Click(object sender, RoutedEventArgs e)
         {
             StopEngineGame();
+        }
+
+
+        //**************************************************************
+        //
+        //  CHAPTERS VIEW 
+        // 
+        //**************************************************************
+
+        /// <summary>
+        /// The Chapters view was clicked somewhere.
+        /// Here we configured the context menu items as if no chapter was clicked.
+        /// If any chapter line was clicked the menus will be re-configured
+        /// accordingly in the event handler for the the Chapter related Run..
+        /// All the above happens before the context menu is invoked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Chapters_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            WorkbookManager.LastClickedChapterId = -1;
+            WorkbookManager.EnableChaptersMenus(_cmChapters, false);
+        }
+
+        /// <summary>
+        /// Selects the clicked Chapter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnSelectChapter_Click(object sender, RoutedEventArgs e)
+        {
+            SelectChapter(WorkbookManager.LastClickedChapterId);
+        }
+
+        /// <summary>
+        /// Invokes the Chapter Title dialog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnRenameChapter_Click(object sender, RoutedEventArgs e)
+        {
+            Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
+            if (chapter != null && ShowChapterTitleDialog(chapter))
+            {
+                SetupGuiForActiveStudyTree();
+                AppStateManager.IsDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// Creates a new Chapter and adds it to the Workbook.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnAddChapter_Click(object sender, RoutedEventArgs e)
+        {
+            Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
+            if (ShowChapterTitleDialog(chapter))
+            {
+                AppStateManager.IsDirty = true;
+            }
+            else
+            {
+                // remove the just created Chapter
+                SessionWorkbook.Chapters.Remove(chapter);
+            }
+        }
+
+        /// <summary>
+        /// Deletes the entire chapter from the Workbook.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnDeleteChapter_Click(object sender, RoutedEventArgs e)
+        {
+            Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
+            if (chapter != null)
+            {
+                var res = MessageBox.Show("Deleting chapter \"" + chapter.Title + ". Are you sure?", "Delete Chapter", MessageBoxButton.YesNoCancel );
+                if (res == MessageBoxResult.Yes)
+                {
+                    WorkbookManager.SessionWorkbook.Chapters.Remove(chapter);
+                    if (chapter.Id == WorkbookManager.SessionWorkbook.ActiveChapter.Id)
+                    {
+                        WorkbookManager.SessionWorkbook.SelectDefaultActiveChapter();
+                    }
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    SetupGuiForActiveStudyTree();
+                    AppStateManager.IsDirty = true;
+                }
+            }
         }
 
 

@@ -258,7 +258,7 @@ namespace ChessForge
                         {
                             try
                             {
-                                ReadWorkbookFile(cmdLineFile, true);
+                                ReadWorkbookFile(cmdLineFile, true, ref WorkbookManager.VariationTreeList);
                                 success = true;
                             }
                             catch
@@ -275,7 +275,7 @@ namespace ChessForge
                             {
                                 try
                                 {
-                                    ReadWorkbookFile(lastWorkbookFile, true);
+                                    ReadWorkbookFile(lastWorkbookFile, true, ref WorkbookManager.VariationTreeList);
                                 }
                                 catch
                                 {
@@ -293,6 +293,20 @@ namespace ChessForge
             if (_appStartStage == 2)
             {
                 Timers.Stop(AppTimers.TimerId.APP_START);
+            }
+        }
+
+        /// <summary>
+        /// Selects the chapter.
+        /// </summary>
+        /// <param name="chapterId"></param>
+        public void SelectChapter(int chapterId)
+        {
+            if (chapterId >= 0)
+            {
+                WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameMetadata.GameType.STUDY_TREE);
+                _chaptersView.HighlightActiveChapter();
+                SetupGuiForActiveStudyTree();
             }
         }
 
@@ -605,7 +619,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="fileName">path to the file</param>
         /// <param name="isLastOpen">were we asked to open the file that was open last in the previous session</param>
-        private void ReadWorkbookFile(string fileName, bool isLastOpen)
+        private void ReadWorkbookFile(string fileName, bool isLastOpen, ref ObservableCollection<GameMetadata> GameList)
         {
             try
             {
@@ -629,8 +643,8 @@ namespace ChessForge
                         acceptFile = WorkbookManager.ReadLegacyChfFile(fileName);
                         break;
                     case ".pgn":
-                        WorkbookManager.ReadPgnFileV2(fileName);
-                        WorkbookManager.PrepareWorkbook();
+                        WorkbookManager.ReadPgnFile(fileName, ref GameList);
+                        WorkbookManager.PrepareWorkbook(ref GameList);
                         WorkbookManager.AssignChaptersIds();
                         acceptFile = true;
                         break;

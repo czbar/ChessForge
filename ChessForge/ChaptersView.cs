@@ -205,9 +205,7 @@ namespace ChessForge
                     WorkbookManager.LastClickedChapterId = chapterId;
                     if (e.ChangedButton == MouseButton.Left)
                     {
-                        WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameMetadata.GameType.STUDY_TREE);
-                        HighlightActiveChapter();
-                        _mainWin.SetupGuiForActiveStudyTree();
+                        _mainWin.SelectChapter(chapterId);
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
@@ -233,7 +231,7 @@ namespace ChessForge
             {
                 Run r = (Run)e.Source;
                 int chapterId = GetNodeIdFromRunName(r.Name, _run_chapter_expand_char_);
-                Chapter chapter = WorkbookManager.SessionWorkbook.GetChapter(chapterId);
+                Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
                 bool? isExpanded = chapter.IsViewExpanded;
 
                 if (isExpanded == true)

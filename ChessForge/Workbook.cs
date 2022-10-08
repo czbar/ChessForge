@@ -49,11 +49,34 @@ namespace ChessForge
             {
                 if (_activeChapter == null)
                 {
-                    return Chapters[0];
+                    return SelectDefaultActiveChapter();
                 }
                 return _activeChapter;
             }
             set => _activeChapter = value;
+        }
+
+        /// <summary>
+        /// Selects the default (first in the list) chapter as ActiveChapter
+        /// </summary>
+        /// <returns></returns>
+        public Chapter SelectDefaultActiveChapter()
+        {
+            if (Chapters.Count == 0)
+            {
+                CreateDefaultChapter();
+            }
+            _activeChapter = Chapters[0];
+            return _activeChapter;
+        }
+
+        /// <summary>
+        /// Creates a new "default" chapter
+        /// </summary>
+        /// <returns></returns>
+        public Chapter CreateDefaultChapter()
+        {
+            return CreateNewChapter();
         }
 
         /// <summary>
@@ -101,6 +124,10 @@ namespace ChessForge
         {
             get
             {
+                if (_activeChapter == null)
+                {
+                    SelectDefaultActiveChapter();
+                }
                 return _activeChapter.ActiveVariationTree;
             }
         }
@@ -148,7 +175,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Chapter GetChapter(int id)
+        public Chapter GetChapterById(int id)
         {
             return Chapters.FirstOrDefault(ch => ch.Id == id);
         }

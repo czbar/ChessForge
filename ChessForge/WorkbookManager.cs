@@ -29,17 +29,10 @@ namespace ChessForge
         public static int LastClickedChapterId = -1;
 
         /// <summary>
-        /// The list of game metadata from the currently read PGN file.
+        /// The list of Variation Trees (a.k.a. PGN Games) for the SessionWorkbook.
+        /// This includes all types i.e. Study Tree, Model Games and Exercises.
         /// </summary>
-        public static ObservableCollection<GameMetadata> GameList = new ObservableCollection<GameMetadata>();
-
-        /// <summary>
-        /// Creates and stores a new Workbook object.
-        /// </summary>
-        //public static void CreateNewWorkbook(string fileName)
-        //{
-        //    SessionWorkbook = new Workbook();
-        //}
+        public static ObservableCollection<GameMetadata> VariationTreeList = new ObservableCollection<GameMetadata>();
 
         /// <summary>
         /// Creates and stores a new Workbook object.
@@ -51,6 +44,10 @@ namespace ChessForge
             AssignChaptersIds();
         }
 
+        /// <summary>
+        /// Assigns Chapter Ids per their position on the Chapters list.
+        /// The first chapter gets the id of 1.
+        /// </summary>
         public static void AssignChaptersIds()
         {
             for (int i = 0; i < SessionWorkbook.Chapters.Count; i++)
@@ -65,7 +62,7 @@ namespace ChessForge
         /// header in the first game.
         /// </summary>
         /// <returns></returns>
-        public static bool IsChessForgeWorkbook()
+        public static bool IsChessForgeWorkbook(ref ObservableCollection<GameMetadata> GameList)
         {
             if (GameList.Count > 0)
             {
@@ -151,113 +148,12 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Reads a PGN file that may have 1 or multiple games in it.
-        /// If there are multiple games, the user will be asked to select
-        /// games for merging into a Workbook.
-        /// Returns true if at least one game was found in the file.
-        /// </summary>
-        public static int ReadPgnFile(string path)
-        {
-            GameList.Clear();
-
-            // read line by line, fishing for lines with PGN headers i.e. beginning with "[" followed by a keyword.
-            // Note we may accidentally hit a comment formatted that way, so make sure that the last char on the line is "]".
-            GameMetadata gm = new GameMetadata();
-            gm.FirstLineInFile = 1;
-
-            using (StreamReader sr = new StreamReader(path))
-            {
-                StringBuilder gameText = new StringBuilder();
-                int lineNo = 0;
-                bool headerLine = true;
-
-                while (sr.Peek() >= 0)
-                {
-                    lineNo++;
-                    headerLine = true;
-
-                    string line = sr.ReadLine();
-                    string header = PgnHeaders.ParsePgnHeaderLine(line, out string val);
-                    switch (header)
-                    {
-                        case "Event":
-                            gm.Event = val;
-                            break;
-                        case "Site":
-                            gm.Site = val;
-                            break;
-                        case "Date":
-                            gm.Date = val;
-                            break;
-                        case "Round":
-                            gm.Round = val;
-                            break;
-                        case "White":
-                            gm.White = val;
-                            break;
-                        case "Black":
-                            gm.Black = val;
-                            break;
-                        case "Result":
-                            gm.Result = val;
-                            break;
-                        default:
-                            headerLine = false;
-                            // if no header then this is the end of the header lines if we do have any data
-                            if (header.Length == 0 && (gm.White != null || gm.Black != null || gm.Result != null))
-                            {
-                                GameList.Add(gm);
-                                gm = new GameMetadata();
-                            }
-                            break;
-                    }
-                    if (headerLine == true && gm.FirstLineInFile == 0)
-                    {
-                        gm.FirstLineInFile = lineNo - 1;
-                        // added game text to the PREVIOUS game object 
-                        GameList[GameList.Count - 1].GameText = gameText.ToString();
-                        gameText.Clear();
-                    }
-
-                    gameText.AppendLine(line);
-                }
-
-                if (GameList.Count > 0)
-                {
-                    // add game text to the last object
-                    GameList[GameList.Count - 1].GameText = gameText.ToString();
-                }
-            }
-
-            int mergedGames = 0;
-            // if there is more than 1 game, ask the user to select
-            if (GameList.Count > 1)
-            {
-                mergedGames = MergeGames();
-            }
-            else if (GameList.Count == 1)
-            {
-                try
-                {
-                    PgnGameParser pgp = new PgnGameParser(GameList[0].GameText, AppStateManager.MainWin.ActiveVariationTree, out bool multi);
-                    mergedGames = 1;
-                }
-                catch
-                {
-                    mergedGames = 0;
-                }
-            }
-
-            return mergedGames;
-        }
-
-        /// <summary>
         /// Parses a PGN file that may be a Chess Forge PGN or a generic PGN.
         /// The file is split into games that are stored with the headers
         /// and content separated.
         /// Returns the number of games in the file.
         /// </summary>
-        public static int ReadPgnFileV2(string path)
+        public static int ReadPgnFile(string path, ref ObservableCollection<GameMetadata> GameList)
         {
             GameList.Clear();
 
@@ -375,11 +271,11 @@ namespace ChessForge
         /// - merge selected games into a single Study Tree,
         /// - create chapters out of selected games.
         /// </summary>
-        public static void PrepareWorkbook()
+        public static void PrepareWorkbook(ref ObservableCollection<GameMetadata> GameList)
         {
-            if (IsChessForgeWorkbook())
+            if (IsChessForgeWorkbook(ref GameList))
             {
-                CreateWorkbookFromGameList();
+                CreateWorkbookFromGameList(ref GameList);
             }
             else
             {
@@ -391,7 +287,7 @@ namespace ChessForge
         /// Creates the Workbook object and populates it based on
         /// the content of the GameList.
         /// </summary>
-        private static void CreateWorkbookFromGameList()
+        private static void CreateWorkbookFromGameList(ref ObservableCollection<GameMetadata> GameList)
         {
             // the first "game" identifies the file as Chess Forge Workbook
             // while the rest are Study Trees, Model Games and Exercises.
@@ -404,13 +300,13 @@ namespace ChessForge
             SessionWorkbook.Title = GameList[0].GetHeaderValue(PgnHeaders.NAME_WORKBOOK_TITLE);
             SessionWorkbook.TrainingSide = TextUtils.ConvertStringToPieceColor(GameList[0].GetHeaderValue(PgnHeaders.NAME_TRAINING_SIDE));
 
-            ProcessGames();
+            ProcessGames(ref WorkbookManager.VariationTreeList);
         }
 
         /// <summary>
         /// Processes all games in the file creating chapters as required.
         /// </summary>
-        private static void ProcessGames()
+        private static void ProcessGames(ref ObservableCollection<GameMetadata> GameList)
         {
             int? chapterNo = null;
             Chapter chapter = null;
@@ -421,7 +317,7 @@ namespace ChessForge
 
                 string contentType = gm.GetHeaderValue(PgnHeaders.NAME_CONTENT_TYPE);
                 string sChapter = gm.GetHeaderValue(PgnHeaders.NAME_CHAPTER_ID);
-                if (IsNextChapter(chapter, i, chapterNo, sChapter))
+                if (IsNextChapter(chapter, i, chapterNo, sChapter, ref GameList))
                 {
                     chapter = SessionWorkbook.CreateNewChapter();
                     chapter.AddGame(gm);
@@ -446,7 +342,7 @@ namespace ChessForge
         /// <param name="chapterNumber"></param>
         /// <param name="sChapterNumber"></param>
         /// <returns></returns>
-        private static bool IsNextChapter(Chapter chapter, int gameIndex, int? chapterNumber, string sChapterNumber)
+        private static bool IsNextChapter(Chapter chapter, int gameIndex, int? chapterNumber, string sChapterNumber, ref ObservableCollection<GameMetadata> GameList)
         {
             if (chapter == null || GameList[gameIndex].IsStudyTree() && chapter.StudyTree != null)
             {
@@ -469,12 +365,12 @@ namespace ChessForge
         /// canceled the selection dialog.
         /// </summary>
         /// <returns></returns>
-        private static int MergeGames()
+        private static int MergeGames(ObservableCollection<GameMetadata> GameList)
         {
             StringBuilder sbErrors = new StringBuilder();
             int errorCount = 0;
 
-            SelectGamesDialog dlg = new SelectGamesDialog();
+            SelectGamesDialog dlg = new SelectGamesDialog(ref GameList);
             dlg.ShowDialog();
 
             int mergedCount = 0;
@@ -759,7 +655,7 @@ namespace ChessForge
         {
             SaveFileDialog saveDlg = new SaveFileDialog
             {
-                Filter = "chf Workbook files (*.chf)|*.chf"
+                Filter = "Workbook files (*.pgn)|*.pgn"
             };
 
             if (typeConversion)
@@ -776,15 +672,6 @@ namespace ChessForge
                 {
                     saveDlg.Title = " Save New Workbook As...";
                 }
-            }
-
-            if (!string.IsNullOrEmpty(pgnFileName))
-            {
-                saveDlg.FileName = Path.GetFileNameWithoutExtension(pgnFileName) + ".chf";
-            }
-            else if (!typeConversion && !string.IsNullOrWhiteSpace(AppStateManager.MainWin.SessionWorkbook.Title))
-            {
-                saveDlg.FileName = AppStateManager.MainWin.SessionWorkbook.Title + ".chf";
             }
 
             saveDlg.OverwritePrompt = true;

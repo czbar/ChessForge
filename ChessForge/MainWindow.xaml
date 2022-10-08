@@ -175,68 +175,6 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="UiTabWorkbook"  Header="Study" >
-                <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookView_OnPreviewMouseDown">
-                    <Grid.ContextMenu>
-                        <ContextMenu x:Name="UiCmnWorkbookRightClick">
-                            <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
-                            <Separator />
-                            <MenuItem x:Name="UiMnPromoteLine" Header="Promote Line" Click="UiMnPromoteLine_Click" />
-                            <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnDeleteMovesFromHere_Click" />
-                            <Separator />
-                            <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Bookmark This Position" Click="UiMnWorkbookSelectAsBookmark_Click" />
-                            <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="Bookmark All Options Here" Click="UiMnWorkbookBookmarkAlternatives_Click" />
-                            <Separator />
-                            <MenuItem x:Name="_mnWorkbookEvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
-                            <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
-                        </ContextMenu>
-                    </Grid.ContextMenu>
-                    <RichTextBox x:Name="UiRtbWorkbookView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="640" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbWorkbookFull_PreviewKeyDown">
-                        <RichTextBox.Resources>
-                            <Style TargetType="{x:Type Paragraph}">
-                                <Setter Property="Margin" Value="0" />
-                            </Style>
-                            <SolidColorBrush x:Key="WorkbookBackgroundBrush" Color="White"/>
-                            <SolidColorBrush x:Key="WorkbookHighlightBrush" Color="LightSkyBlue"/>
-                            <SolidColorBrush x:Key="WorkbookLineHighlightBrush" Color="Yellow"/>
-                        </RichTextBox.Resources>
-                        <FlowDocument>
-                        </FlowDocument>
-                    </RichTextBox>
-                </Grid>
-            </TabItem>
-            <TabItem x:Name="UiTabGames"  Header="Games" >
-                <Grid Background="#FFE5E5E5" >
-                    <RichTextBox x:Name="UiRtbGamesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="640" MinHeight="500" IsReadOnly="True" >
-                        <RichTextBox.Resources>
-                            <Style TargetType="{x:Type Paragraph}">
-                                <Setter Property="Margin" Value="0" />
-                            </Style>
-                        </RichTextBox.Resources>
-                        <FlowDocument>
-                        </FlowDocument>
-                    </RichTextBox>
-                </Grid>
-            </TabItem>
-            <TabItem x:Name="UiTabExercises"  Header="Exercises" >
-                <Grid Background="#FFE5E5E5" >
-                    <RichTextBox x:Name="UiRtbExercisesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="640" MinHeight="500" IsReadOnly="True" >
-                        <RichTextBox.Resources>
-                            <Style TargetType="{x:Type Paragraph}">
-                                <Setter Property="Margin" Value="0" />
-                            </Style>
-                        </RichTextBox.Resources>
-                        <FlowDocument>
-                        </FlowDocument>
-                    </RichTextBox>
-                </Grid>
-            </TabItem>
             <TabItem x:Name="UiTabBookmarks" Header="Bookmarks">
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown">
                     <Grid.ContextMenu>
@@ -371,6 +309,68 @@
                         </Viewbox>
 
                     </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="UiTabWorkbook"  Header="Study" >
+                <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookView_OnPreviewMouseDown">
+                    <Grid.ContextMenu>
+                        <ContextMenu x:Name="UiCmnWorkbookRightClick">
+                            <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
+                            <Separator />
+                            <MenuItem x:Name="UiMnPromoteLine" Header="Promote Line" Click="UiMnPromoteLine_Click" />
+                            <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnDeleteMovesFromHere_Click" />
+                            <Separator />
+                            <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Bookmark This Position" Click="UiMnWorkbookSelectAsBookmark_Click" />
+                            <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="Bookmark All Options Here" Click="UiMnWorkbookBookmarkAlternatives_Click" />
+                            <Separator />
+                            <MenuItem x:Name="_mnWorkbookEvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
+                            <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
+                        </ContextMenu>
+                    </Grid.ContextMenu>
+                    <RichTextBox x:Name="UiRtbWorkbookView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                   Height="640" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbWorkbookFull_PreviewKeyDown">
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="0" />
+                            </Style>
+                            <SolidColorBrush x:Key="WorkbookBackgroundBrush" Color="White"/>
+                            <SolidColorBrush x:Key="WorkbookHighlightBrush" Color="LightSkyBlue"/>
+                            <SolidColorBrush x:Key="WorkbookLineHighlightBrush" Color="Yellow"/>
+                        </RichTextBox.Resources>
+                        <FlowDocument>
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="UiTabGames"  Header="Games" >
+                <Grid Background="#FFE5E5E5" >
+                    <RichTextBox x:Name="UiRtbGamesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                   Height="640" MinHeight="500" IsReadOnly="True" >
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="0" />
+                            </Style>
+                        </RichTextBox.Resources>
+                        <FlowDocument>
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="UiTabExercises"  Header="Exercises" >
+                <Grid Background="#FFE5E5E5" >
+                    <RichTextBox x:Name="UiRtbExercisesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                   Height="640" MinHeight="500" IsReadOnly="True" >
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="0" />
+                            </Style>
+                        </RichTextBox.Resources>
+                        <FlowDocument>
+                        </FlowDocument>
+                    </RichTextBox>
                 </Grid>
             </TabItem>
         </TabControl>

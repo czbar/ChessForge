@@ -146,8 +146,7 @@ namespace GameTree
         public ObservableCollection<VariationLine> VariationLines = new ObservableCollection<VariationLine>();
 
         /// <summary>
-        /// Creates a new WorkbookTree.
-        /// Creates a root node and inserts in the tree. 
+        /// Creates a new Tree with the root node at the statrting position. 
         /// </summary>
         public void CreateNew()
         {
@@ -156,6 +155,22 @@ namespace GameTree
 
             TreeNode root = new TreeNode(null, "", 0);
             root.Position = PositionUtils.SetupStartingPosition();
+            AddNode(root);
+            BuildLines();
+        }
+
+        /// <summary>
+        /// Creates a new Tree starting from the position
+        /// passed in the fen string.
+        /// </summary>
+        /// <param name="fen"></param>
+        public void CreateNew(string fen)
+        {
+            VariationLines.Clear();
+            Nodes.Clear();
+
+            TreeNode root = new TreeNode(null, "", 0);
+            FenParser.ParseFenIntoBoard(fen, ref root.Position);
             AddNode(root);
             BuildLines();
         }

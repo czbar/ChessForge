@@ -87,10 +87,6 @@ namespace ChessForge
                 {
                     _workbookFileType = FileType.NONE;
                 }
-                //else if (Path.GetExtension(_workbookFilePath).ToLower() == ".chf")
-                //{
-                //    _workbookFileType = FileType.LEGACY_CHF;
-                //}
                 else
                 {
                     _workbookFileType = FileType.CHESS_FORGE_PGN;

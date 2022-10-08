@@ -385,61 +385,6 @@ namespace ChessForge
             BookmarkManager.PageUp();
         }
 
-        //**************************************************************
-        //
-        //  CHAPTERS VIEW mouse events 
-        // 
-        //**************************************************************
-
-        /// <summary>
-        /// The Chapters view was clicked somewhere.
-        /// Here we configured the context menu items as if no chapter was clicked.
-        /// If any chapter line was clicked the menus will be re-configured
-        /// accordingly in the event handler for the the Chapter related Run..
-        /// All the above happens before the context menu is invoked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Chapters_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            WorkbookManager.LastClickedChapterId = -1;
-            WorkbookManager.EnableChaptersMenus(_cmChapters, false);
-        }
-
-        private void UiMnSelectChapter_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void UiMnRenameChapter_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// Creates a new Chapter and adds it to the Workbook.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnAddChapter_Click(object sender, RoutedEventArgs e)
-        {
-            Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
-            if (ShowChapterTitleDialog(chapter))
-            {
-                AppStateManager.IsDirty = true;
-            }
-            else
-            {
-                // remove the just created Chapter
-                SessionWorkbook.Chapters.Remove(chapter);
-            }
-        }
-
-        private void UiMnDeleteChapter_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
 
         //**************************************************************
         //

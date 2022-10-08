@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ChessPosition.GameTree;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -26,13 +28,19 @@ namespace ChessForge
         public bool Result = false;
 
         /// <summary>
+        /// The list of games to process.
+        /// </summary>
+        private ObservableCollection<GameMetadata> _gameList;
+
+        /// <summary>
         /// Creates the dialog object. Sets ItemsSource for the ListView
         /// to GamesHeaders list.
         /// </summary>
-        public SelectGamesDialog()
+        public SelectGamesDialog(ref ObservableCollection<GameMetadata> GameList)
         {
             InitializeComponent();
-            UiLvGames.ItemsSource = WorkbookManager.GameList;
+            UiLvGames.ItemsSource = GameList;
+            _gameList = GameList;
         }
 
         /// <summary>
@@ -42,7 +50,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCbSelectAll_Checked(object sender, RoutedEventArgs e)
         {
-            foreach (var item in WorkbookManager.GameList)
+            foreach (var item in _gameList)
             {
                 item.IsSelected = true;
             }
@@ -55,7 +63,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCbSelectAll_Unchecked(object sender, RoutedEventArgs e)
         {
-            foreach (var item in WorkbookManager.GameList)
+            foreach (var item in _gameList)
             {
                 item.IsSelected = false;
             }
