@@ -65,7 +65,7 @@ namespace ChessForge
                 if (result == true)
                 {
                     Configuration.LastOpenDirectory = Path.GetDirectoryName(openFileDialog.FileName);
-                    ReadWorkbookFile(openFileDialog.FileName, false);
+                    ReadWorkbookFile(openFileDialog.FileName, false, ref WorkbookManager.VariationTreeList);
                 }
             }
         }
@@ -82,7 +82,7 @@ namespace ChessForge
             {
                 string menuItemName = ((MenuItem)e.Source).Name;
                 string path = Configuration.GetRecentFile(menuItemName);
-                ReadWorkbookFile(path, false);
+                ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
             }
         }
 
