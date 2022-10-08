@@ -743,7 +743,8 @@ namespace ChessForge
 
             BookmarkManager.ShowBookmarks();
 
-            SelectLineAndMoveInWorkbookViews(startLineId, startNodeId);
+            int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
+            SelectLineAndMoveInWorkbookViews(startLineId, nodeIndex);
 
         }
 
@@ -796,11 +797,14 @@ namespace ChessForge
         public void SelectLineAndMoveInWorkbookViews(string lineId, int index)
         {
             TreeNode nd = ActiveLine.GetNodeAtIndex(index);
-            WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nd.NodeId);
-            _workbookView.SelectLineAndMove(lineId, nd.NodeId);
-            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+            if (nd != null)
             {
-                EvaluateActiveLineSelectedPosition(nd);
+                WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nd.NodeId);
+                _workbookView.SelectLineAndMove(lineId, nd.NodeId);
+                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                {
+                    EvaluateActiveLineSelectedPosition(nd);
+                }
             }
         }
 
