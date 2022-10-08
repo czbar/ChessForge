@@ -297,6 +297,20 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Selects the chapter.
+        /// </summary>
+        /// <param name="chapterId"></param>
+        public void SelectChapter(int chapterId)
+        {
+            if (chapterId >= 0)
+            {
+                WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameMetadata.GameType.STUDY_TREE);
+                _chaptersView.HighlightActiveChapter();
+                SetupGuiForActiveStudyTree();
+            }
+        }
+
+        /// <summary>
         /// Creates menu items for the Recent Files and 
         /// adds them to the File menu.
         /// </summary>
