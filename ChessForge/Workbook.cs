@@ -49,11 +49,21 @@ namespace ChessForge
             {
                 if (_activeChapter == null)
                 {
-                    return Chapters[0];
+                    return SelectDefaultActiveChapter();
                 }
                 return _activeChapter;
             }
             set => _activeChapter = value;
+        }
+
+        /// <summary>
+        /// Selects the default (first in the list) chapter as ActiveChapter
+        /// </summary>
+        /// <returns></returns>
+        public Chapter SelectDefaultActiveChapter()
+        {
+            _activeChapter = Chapters[0];
+            return _activeChapter;
         }
 
         /// <summary>
@@ -148,7 +158,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Chapter GetChapter(int id)
+        public Chapter GetChapterById(int id)
         {
             return Chapters.FirstOrDefault(ch => ch.Id == id);
         }
