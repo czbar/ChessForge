@@ -36,14 +36,6 @@ namespace ChessForge
         /// <summary>
         /// Creates and stores a new Workbook object.
         /// </summary>
-        //public static void CreateNewWorkbook(string fileName)
-        //{
-        //    SessionWorkbook = new Workbook();
-        //}
-
-        /// <summary>
-        /// Creates and stores a new Workbook object.
-        /// </summary>
         public static void CreateNewWorkbook()
         {
             SessionWorkbook = new Workbook();
@@ -51,6 +43,10 @@ namespace ChessForge
             AssignChaptersIds();
         }
 
+        /// <summary>
+        /// Assigns Chapter Ids per their position on the Chapters list.
+        /// The first chapter gets the id of 1.
+        /// </summary>
         public static void AssignChaptersIds()
         {
             for (int i = 0; i < SessionWorkbook.Chapters.Count; i++)
@@ -777,15 +773,6 @@ namespace ChessForge
                     saveDlg.Title = " Save New Workbook As...";
                 }
             }
-
-            //if (!string.IsNullOrEmpty(pgnFileName))
-            //{
-            //    saveDlg.FileName = Path.GetFileNameWithoutExtension(pgnFileName) + ".chf";
-            //}
-            //else if (!typeConversion && !string.IsNullOrWhiteSpace(AppStateManager.MainWin.SessionWorkbook.Title))
-            //{
-            //    saveDlg.FileName = AppStateManager.MainWin.SessionWorkbook.Title + ".chf";
-            //}
 
             saveDlg.OverwritePrompt = true;
             if (saveDlg.ShowDialog() == true)
