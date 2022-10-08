@@ -322,6 +322,8 @@ namespace ChessForge
                     chapter = SessionWorkbook.CreateNewChapter();
                     chapter.AddGame(gm);
                 }
+                string sChapterTitle = gm.GetHeaderValue(PgnHeaders.NAME_CHAPTER_TITLE);
+                chapter.Title = sChapterTitle;
             }
         }
 
