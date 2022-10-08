@@ -759,7 +759,7 @@ namespace ChessForge
         {
             SaveFileDialog saveDlg = new SaveFileDialog
             {
-                Filter = "chf Workbook files (*.chf)|*.chf"
+                Filter = "Workbook files (*.pgn)|*.pgn"
             };
 
             if (typeConversion)
@@ -778,14 +778,14 @@ namespace ChessForge
                 }
             }
 
-            if (!string.IsNullOrEmpty(pgnFileName))
-            {
-                saveDlg.FileName = Path.GetFileNameWithoutExtension(pgnFileName) + ".chf";
-            }
-            else if (!typeConversion && !string.IsNullOrWhiteSpace(AppStateManager.MainWin.SessionWorkbook.Title))
-            {
-                saveDlg.FileName = AppStateManager.MainWin.SessionWorkbook.Title + ".chf";
-            }
+            //if (!string.IsNullOrEmpty(pgnFileName))
+            //{
+            //    saveDlg.FileName = Path.GetFileNameWithoutExtension(pgnFileName) + ".chf";
+            //}
+            //else if (!typeConversion && !string.IsNullOrWhiteSpace(AppStateManager.MainWin.SessionWorkbook.Title))
+            //{
+            //    saveDlg.FileName = AppStateManager.MainWin.SessionWorkbook.Title + ".chf";
+            //}
 
             saveDlg.OverwritePrompt = true;
             if (saveDlg.ShowDialog() == true)
