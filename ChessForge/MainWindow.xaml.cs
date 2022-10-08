@@ -643,7 +643,7 @@ namespace ChessForge
                         acceptFile = WorkbookManager.ReadLegacyChfFile(fileName);
                         break;
                     case ".pgn":
-                        WorkbookManager.ReadPgnFileV2(fileName, ref GameList);
+                        WorkbookManager.ReadPgnFile(fileName, ref GameList);
                         WorkbookManager.PrepareWorkbook(ref GameList);
                         WorkbookManager.AssignChaptersIds();
                         acceptFile = true;

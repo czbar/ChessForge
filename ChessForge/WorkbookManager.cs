@@ -153,7 +153,7 @@ namespace ChessForge
         /// and content separated.
         /// Returns the number of games in the file.
         /// </summary>
-        public static int ReadPgnFileV2(string path, ref ObservableCollection<GameMetadata> GameList)
+        public static int ReadPgnFile(string path, ref ObservableCollection<GameMetadata> GameList)
         {
             GameList.Clear();
 
