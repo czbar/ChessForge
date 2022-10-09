@@ -34,7 +34,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public string GetWorkbookTitle()
         {
-            return _headers.Where(kvp => kvp.Key == PgnHeaders.NAME_WORKBOOK_TITLE).FirstOrDefault().Value;
+            return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_WORKBOOK_TITLE).FirstOrDefault().Value;
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public string GetChapterTitle()
         {
-            return _headers.Where(kvp => kvp.Key == PgnHeaders.NAME_CHAPTER_TITLE).FirstOrDefault().Value;
+            return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_CHAPTER_TITLE).FirstOrDefault().Value;
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public string GetWhitePlayer(out string key, string value = null)
         {
-            string headerKey = PgnHeaders.NAME_WHITE;
+            string headerKey = PgnHeaders.KEY_WHITE;
             key = headerKey;
 
             if (value == null)
@@ -71,7 +71,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public string GetBlackPlayer(out string key, string value = null)
         {
-            string headerKey = PgnHeaders.NAME_BLACK;
+            string headerKey = PgnHeaders.KEY_BLACK;
             key = headerKey;
 
             if (value == null)
@@ -90,7 +90,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public string GetDate(out string key, string value = null)
         {
-            string headerKey = PgnHeaders.NAME_DATE;
+            string headerKey = PgnHeaders.KEY_DATE;
             key = headerKey;
 
             if (value == null)
@@ -109,7 +109,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public string GetResult(out string key)
         {
-            string headerKey = PgnHeaders.NAME_RESULT;
+            string headerKey = PgnHeaders.KEY_RESULT;
             key = headerKey;
 
             string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
@@ -127,7 +127,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public string GetChapterId()
         {
-            return _headers.Where(kvp => kvp.Key == PgnHeaders.NAME_CHAPTER_ID).FirstOrDefault().Value;
+            return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_CHAPTER_ID).FirstOrDefault().Value;
         }
 
 
@@ -137,7 +137,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public string GetLegacyTitle()
         {
-            return _headers.Where(kvp => kvp.Key == PgnHeaders.NAME_LEGACY_TITLE).FirstOrDefault().Value;
+            return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_LEGACY_TITLE).FirstOrDefault().Value;
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public string GetTrainingSide(out string key)
         {
-            string headerKey = PgnHeaders.NAME_TRAINING_SIDE;
+            string headerKey = PgnHeaders.KEY_TRAINING_SIDE;
 
             key = headerKey;
             return _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
@@ -158,7 +158,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public string GetContentType(out string key, string value = null)
         {
-            string headerKey = PgnHeaders.NAME_CONTENT_TYPE;
+            string headerKey = PgnHeaders.KEY_CONTENT_TYPE;
             key = headerKey;
 
             if (value == null)
@@ -177,7 +177,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public string GetFenString()
         {
-            return _headers.Where(kvp => kvp.Key == PgnHeaders.NAME_FEN).FirstOrDefault().Value;
+            return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_FEN_STRING).FirstOrDefault().Value;
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public int GetChapterNumber()
         {
-            string sChapterNo = _headers.Where(kvp => kvp.Key == PgnHeaders.NAME_CHAPTER_ID).FirstOrDefault().Value;
+            string sChapterNo = _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_CHAPTER_ID).FirstOrDefault().Value;
             if (int.TryParse(sChapterNo, out int chapterNumber))
             {
                 return chapterNumber;

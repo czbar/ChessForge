@@ -214,10 +214,10 @@ namespace ChessForge
 
             sb.Append(BuildCommonGameHeaderText(chapter, chapterNo));
 
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_CONTENT_TYPE, PgnHeaders.VALUE_STUDY_TREE));
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_WHITE, "Chess Forge"));
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_BLACK, "Study Tree"));
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_RESULT, "*"));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_STUDY_TREE));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_WHITE, "Chess Forge"));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK, "Study Tree"));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_RESULT, "*"));
 
             return sb.ToString();
         }
@@ -241,8 +241,8 @@ namespace ChessForge
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_CHAPTER_ID, chapterNo.ToString()));
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_CHAPTER_TITLE, chapter.Title));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CHAPTER_ID, chapterNo.ToString()));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CHAPTER_TITLE, chapter.Title));
 
             return sb.ToString();
         }

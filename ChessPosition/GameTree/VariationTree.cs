@@ -83,7 +83,7 @@ namespace GameTree
             }
             set
             {
-                Header.SetHeaderValue(PgnHeaders.NAME_LEGACY_TITLE, value);
+                Header.SetHeaderValue(PgnHeaders.KEY_LEGACY_TITLE, value);
             }
         }
 
@@ -108,15 +108,15 @@ namespace GameTree
             {
                 if (value == PieceColor.White)
                 {
-                    Header.SetHeaderValue(PgnHeaders.NAME_TRAINING_SIDE, "white");
+                    Header.SetHeaderValue(PgnHeaders.KEY_TRAINING_SIDE, "white");
                 }
                 else if (value == PieceColor.Black)
                 {
-                    Header.SetHeaderValue(PgnHeaders.NAME_TRAINING_SIDE, "black");
+                    Header.SetHeaderValue(PgnHeaders.KEY_TRAINING_SIDE, "black");
                 }
                 else
                 {
-                    Header.SetHeaderValue(PgnHeaders.NAME_TRAINING_SIDE, "none");
+                    Header.SetHeaderValue(PgnHeaders.KEY_TRAINING_SIDE, "none");
                 }
             }
         }

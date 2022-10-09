@@ -24,7 +24,7 @@ namespace ChessPosition
         /// If absent, the file will be considered a third-party PGN.
         /// The value will be considered to be the Workbook's title.
         /// </summary>
-        public const string NAME_WORKBOOK_TITLE = "ChessForgeWorkbook";
+        public const string KEY_WORKBOOK_TITLE = "ChessForgeWorkbook";
 
         /// <summary>
         /// Determines which side is the default training side in 
@@ -32,60 +32,65 @@ namespace ChessPosition
         /// This is part of the first set of headers (i.e. for the entire Workbook)
         /// only.
         /// </summary>
-        public const string NAME_TRAINING_SIDE = "TrainingSide";
+        public const string KEY_TRAINING_SIDE = "TrainingSide";
 
         /// <summary>
         /// In Chess Forge this header is repurposed as a chapter's title.
         /// </summary>
-        public const string NAME_EVENT_ = "Event";
+        public const string KEY_EVENT_ = "Event";
 
         /// <summary>
         /// Position in the FEN format.
         /// </summary>
-        public const string NAME_FEN = "Fen";
+        public const string KEY_FEN_STRING = "Fen";
 
         /// <summary>
         /// The number of a chapter. The same number may appear in multiple
         /// Variation Trees thus organizing them into chapters.
         /// </summary>
-        public const string NAME_CHAPTER_ID = "ChapterId";
+        public const string KEY_CHAPTER_ID = "ChapterId";
 
         /// <summary>
         /// The number of a chapter. The same number may appear in multiple
         /// Variation Trees thus organizing them into chapters.
         /// </summary>
-        public const string NAME_CHAPTER_TITLE = "ChapterTitle";
+        public const string KEY_CHAPTER_TITLE = "ChapterTitle";
+
+        /// <summary>
+        /// Legacy Title line from CHF files
+        /// </summary>
+        public const string KEY_LEGACY_TITLE = "Title";
 
         /// <summary>
         /// Type of the game which can be "Study Tree", "Model Game" or "Exercise".
         /// </summary>
-        public const string NAME_CONTENT_TYPE = "ContentType";
+        public const string KEY_CONTENT_TYPE = "ContentType";
 
         /// <summary>
         /// Basically, the same meaning as in the standard PGN.
         /// It will be "*" for the chapter's variation tree or
         /// game result for games and combinations.
         /// </summary>
-        public const string NAME_RESULT = "Result";
+        public const string KEY_RESULT = "Result";
 
         /// <summary>
         /// Date in the yyyy.MM.dd format.
         /// </summary>
-        public const string NAME_DATE = "Date";
+        public const string KEY_DATE = "Date";
 
         /// <summary>
         /// Store White's name in model games 
         /// and dummy values in non-game Variation Trees
         /// to keep some PGN viewers happy.
         /// </summary>
-        public const string NAME_WHITE = "White";
+        public const string KEY_WHITE = "White";
 
         /// <summary>
         /// Store Black's name in model games 
         /// and dummy values in non-game Variation Trees
         /// to keep some PGN viewers happy.
         /// </summary>
-        public const string NAME_BLACK = "Black";
+        public const string KEY_BLACK = "Black";
 
         public const string VALUE_WHITE = "White";
         public const string VALUE_BLACK = "Black";
@@ -97,7 +102,7 @@ namespace ChessPosition
 
         public static string GetWorkbookTitleText(string title)
         {
-            return BuildHeaderLine(NAME_WORKBOOK_TITLE, title);
+            return BuildHeaderLine(KEY_WORKBOOK_TITLE, title);
         }
 
         /// <summary>
@@ -133,17 +138,17 @@ namespace ChessPosition
             switch (color)
             {
                 case PieceColor.White:
-                    sColor = NAME_WHITE;
+                    sColor = KEY_WHITE;
                     break;
                 case PieceColor.Black:
-                    sColor = NAME_BLACK;
+                    sColor = KEY_BLACK;
                     break;
                 default:
                     sColor = VALUE_NO_COLOR;
                     break;
 
             }
-            return BuildHeaderLine(NAME_TRAINING_SIDE, sColor);
+            return BuildHeaderLine(KEY_TRAINING_SIDE, sColor);
         }
 
         public static string GetDateText(DateTime? dt)
@@ -153,22 +158,22 @@ namespace ChessPosition
                 return "";
             }
 
-            return BuildHeaderLine(NAME_DATE, dt.Value.ToString("yyyy.MM.dd"));
+            return BuildHeaderLine(KEY_DATE, dt.Value.ToString("yyyy.MM.dd"));
         }
 
         public static string GetWorkbookWhiteText()
         {
-            return BuildHeaderLine(NAME_WHITE, "Chess Forge");
+            return BuildHeaderLine(KEY_WHITE, "Chess Forge");
         }
 
         public static string GetWorkbookBlackText()
         {
-            return BuildHeaderLine(NAME_BLACK, "Workbook File");
+            return BuildHeaderLine(KEY_BLACK, "Workbook File");
         }
 
         public static string GetLineResultHeader()
         {
-            return BuildHeaderLine(NAME_RESULT, "*");
+            return BuildHeaderLine(KEY_RESULT, "*");
         }
 
 
