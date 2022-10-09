@@ -21,9 +21,14 @@ namespace ChessForge
         public static int MoveSpeed = 200;
 
         /// <summary>
-        /// Last directory from which a PGN file was read.
+        /// Last directory from which a Workbook PGN file was read.
         /// </summary>
         public static string LastOpenDirectory = "";
+
+        /// <summary>
+        /// Last directory from which a a PGN file for import was read.
+        /// </summary>
+        public static string LastImportDirectory = "";
 
         /// <summary>
         /// Last read Workbook file.
@@ -88,6 +93,7 @@ namespace ChessForge
 
         private const string CFG_MOVE_SPEED = "MoveSpeed";
         private const string CFG_LAST_DIRECTORY = "LastDirectory";
+        private const string CFG_LAST_IMPORT_DIRECTORY = "LastImportDirectory";
         private const string CFG_LAST_FILE = "LastFile";
         private const string CFG_RECENT_FILES = "RecentFiles";
         private const string CFG_MAIN_WINDOW_POS = "MainWindowPosition";
@@ -185,6 +191,7 @@ namespace ChessForge
 
             MoveSpeed = 200;
             LastOpenDirectory = "";
+            LastImportDirectory = "";
             LastWorkbookFile = "";
         }
 
@@ -225,6 +232,7 @@ namespace ChessForge
 
                 sb.Append(CFG_MOVE_SPEED + "=" + MoveSpeed.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_DIRECTORY + "=" + LastOpenDirectory.ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_IMPORT_DIRECTORY + "=" + LastImportDirectory.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_FILE + "=" + LastWorkbookFile.ToString() + Environment.NewLine);
 
                 sb.Append(Environment.NewLine);
@@ -450,6 +458,9 @@ namespace ChessForge
                             break;
                         case CFG_LAST_DIRECTORY:
                             LastOpenDirectory = value;
+                            break;
+                        case CFG_LAST_IMPORT_DIRECTORY:
+                            LastImportDirectory = value;
                             break;
                         case CFG_LAST_FILE:
                             LastWorkbookFile = value;
