@@ -417,6 +417,25 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Requests import of Model Games from a PGN file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnImportModelGames_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Requests import of Exercises from a PGN file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnImportExercises_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         //**********************
         //

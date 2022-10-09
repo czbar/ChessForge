@@ -154,10 +154,13 @@
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" >
                     <Grid.ContextMenu>
                         <ContextMenu x:Name="_cmChapters">
+                            <MenuItem x:Name="_mnAddChapter" Header="Create New Chapter" Click="UiMnAddChapter_Click"  />
+                            <Separator />
                             <MenuItem x:Name="_mnSelectChapter" Header="Open This Chapter" Click="UiMnSelectChapter_Click" />
                             <MenuItem x:Name="_mnRenameChapter" Header="Rename This Chapter" Click="UiMnRenameChapter_Click" />
                             <Separator />
-                            <MenuItem x:Name="_mnAddChapter" Header="Create New Chapter" Click="UiMnAddChapter_Click"  />
+                            <MenuItem x:Name="_mnImportModelGames" Header="Import Model Games" Click="_mnImportModelGames_Click" />
+                            <MenuItem x:Name="_mnImportExercises" Header="Import Exercises" Click="_mnImportExercises_Click" />
                             <Separator />
                             <MenuItem x:Name="_mnDeleteChapter" Header="Delete This Chapter" Click="UiMnDeleteChapter_Click" />
                         </ContextMenu>
