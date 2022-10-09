@@ -219,6 +219,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Finds index of a Node with the given NodeId in the Node/Ply list.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        public int GetIndexForNode(int nodeId)
+        {
+            return Line.GetIndexForNode(nodeId);
+        }
+
+        /// <summary>
         /// Calculates the index of a node give the node's
         /// row and column.
         /// </summary>

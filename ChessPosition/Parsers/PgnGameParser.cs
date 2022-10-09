@@ -22,7 +22,7 @@ namespace GameTree
         private int _runningNodeId = 0;
 
         // the workbook for which this parser was called
-        private VariationTree _workbook;
+        private VariationTree _tree;
 
         /// <summary>
         /// Types of PGN/CHF token
@@ -99,7 +99,7 @@ namespace GameTree
         /// <param name="workbook"></param>
         private void ProcessRemainingGameText(VariationTree workbook, string pgnGametext)
         {
-            _workbook = workbook;
+            _tree = workbook;
             _runningNodeId = 0;
             _remainingGameText = ReadHeaders(pgnGametext);
             ParseWorkbookText(workbook);
@@ -180,7 +180,7 @@ namespace GameTree
                 string[] tokens = line.Split('\"');
                 if (tokens.Length >= 2)
                 {
-                    _workbook.Headers.Add(tokens[0].Trim(), tokens[1].Trim());
+                    _tree.Header.SetHeaderValue(tokens[0].Trim(), tokens[1].Trim());
                 }
             }
         }
@@ -491,7 +491,7 @@ namespace GameTree
                 if (commandEnd > 0)
                 {
                     string command = _remainingGameText.Substring(commandStart + 1, commandEnd - (commandStart + 1));
-                    _workbook.AddChfCommand(node, command);
+                    _tree.AddChfCommand(node, command);
                     _remainingGameText = _remainingGameText.Substring(commandEnd + 1);
                     endPos = endPos - (commandEnd + 1);
                 }

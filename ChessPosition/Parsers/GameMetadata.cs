@@ -32,12 +32,6 @@ namespace ChessPosition.GameTree
             GENERIC_EXERCISE
         }
 
-        /// <summary>
-        /// The list of headers. 
-        /// </summary>
-        private List<KeyValuePair<string, string>> _headers = new List<KeyValuePair<string, string>>();
-
-
         // whether this game is selected in the GUI
         private bool _isSelected;
 
@@ -51,13 +45,18 @@ namespace ChessPosition.GameTree
         }
 
         /// <summary>
+        /// The header data for this game. 
+        /// </summary>
+        public GameHeader Header = new GameHeader();
+
+        /// <summary>
         /// Checks if there is at least one header processed 
         /// for this game.
         /// </summary>
         /// <returns></returns>
         public bool HasAnyHeader()
         {
-            return _headers.Count > 0;
+            return Header.HasAnyHeader();
         }
 
         /// <summary>
@@ -66,7 +65,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public bool IsStudyTree()
         {
-            return GetHeaderValue(PgnHeaders.NAME_CONTENT_TYPE) == PgnHeaders.VALUE_STUDY_TREE;
+            return Header.GetContentType(out _) == PgnHeaders.VALUE_STUDY_TREE;
         }
 
         /// <summary>
@@ -78,7 +77,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public GameType GetContentType()
         {
-            string value = GetHeaderValue(PgnHeaders.NAME_CONTENT_TYPE);
+            string value = Header.GetContentType(out _);
             switch (value)
             {
                 case PgnHeaders.VALUE_STUDY_TREE:
@@ -88,7 +87,7 @@ namespace ChessPosition.GameTree
                 case PgnHeaders.VALUE_EXERCISE:
                     return GameType.EXERCISE;
                 default:
-                    if (!string.IsNullOrWhiteSpace(GetHeaderValue(PgnHeaders.NAME_FEN)))
+                    if (!string.IsNullOrWhiteSpace(Header.GetFenString()))
                     {
                         return GameType.EXERCISE;
                     }
@@ -120,68 +119,12 @@ namespace ChessPosition.GameTree
         }
 
         /// <summary>
-        /// Returns the value of header with a given name.
-        /// Null if header not found.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public string GetHeaderValue(string name)
-        {
-            var header = _headers.Where(kvp => kvp.Key == name).FirstOrDefault();
-            return header.Value;
-        }
-
-        /// <summary>
-        /// Saves header's name and value. 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        public void SetHeaderValue(string name, string value)
-        {
-            var header = _headers.Where(kvp => kvp.Key == name).FirstOrDefault();
-            if (!header.Equals(default(KeyValuePair<string, string>)))
-            {
-                _headers.Remove(header);
-            }
-
-            header = new KeyValuePair<string, string>(name, value);
-            _headers.Add(header);
-        }
-
-        /// <summary>
         /// Returns the title of the Workbook
         /// </summary>
         /// <returns></returns>
         public string GetWorkbookTitle()
         {
-            return _headers.Where(kvp => kvp.Key == PgnHeaders.NAME_WORKBOOK_TITLE).FirstOrDefault().Value;
-        }
-
-        /// <summary>
-        /// Returns the title of the chapter.
-        /// </summary>
-        /// <returns></returns>
-        public string GetChapterTitle()
-        {
-            return _headers.Where(kvp => kvp.Key == PgnHeaders.NAME_CHAPTER_TITLE).FirstOrDefault().Value;
-        }
-
-        /// <summary>
-        /// Returns the result of a tree/game/combinattion
-        /// </summary>
-        /// <returns></returns>
-        public string GetResult()
-        {
-            return _headers.Where(kvp => kvp.Key == PgnHeaders.NAME_RESULT).FirstOrDefault().Value;
-        }
-
-        /// <summary>
-        /// Returns the training side value.
-        /// </summary>
-        /// <returns></returns>
-        public string GetTrainingSide()
-        {
-            return _headers.Where(kvp => kvp.Key == PgnHeaders.NAME_TRAINING_SIDE).FirstOrDefault().Value;
+            return Header.GetWorkbookTitle();
         }
 
         /// <summary>
@@ -190,41 +133,15 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public int GetChapterNumber()
         {
-            string sChapterNo = _headers.Where(kvp => kvp.Key == PgnHeaders.NAME_CHAPTER_ID).FirstOrDefault().Value;
-            if (int.TryParse(sChapterNo, out int chapterNumber))
-            {
-                return chapterNumber;
-            }
-            else
-            {
-                return 0;
-            }
+            return Header.GetChapterNumber();
         }
 
-        //
-        // PGN header names that Chess Forge recognizes.
-        //
-        public string WorkbookTitle { get; set; }
-
-        public string TrainingSide { get; set; }
-
-        public string ContentType { get; set; }
-
-        public string ChapterNo { get; set; }
-
         public string Event { get; set; }
-
-        public string Site { get; set; }
-
-        public string Date { get; set; }
-
         public string Round { get; set; }
 
         public string White { get; set; }
 
         public string Black { get; set; }
-
-        public string Result { get; set; }
 
         /// <summary>
         /// Index of the first line in the PGN file where this game starts

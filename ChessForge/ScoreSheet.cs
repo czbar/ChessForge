@@ -44,11 +44,11 @@ namespace ChessForge
         public void SetLineToNode(TreeNode targetNode)
         {
             NodeList = new ObservableCollection<TreeNode>();
-            
+
             TreeNode nd = targetNode;
             while (nd != null)
             {
-                NodeList.Insert(0,nd);
+                NodeList.Insert(0, nd);
                 nd = nd.Parent;
             }
         }
@@ -255,6 +255,25 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Finds index of a Node with the given NodeId in the Node/Ply list.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        public int GetIndexForNode(int nodeId)
+        {
+            int index = -1;
+            for (int i = 0; i < NodeList.Count; i++)
+            {
+                if (NodeList[i].NodeId == nodeId)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            return index;
+        }
+
+        /// <summary>
         /// Sets a new Node list and builds the move list.
         /// </summary>
         /// <param name="line"></param>
@@ -287,7 +306,7 @@ namespace ChessForge
             {
                 // previous move was by White
                 MoveWithEval move = MoveList[MoveList.Count - 1];
-                move.BlackPly = MoveUtils.BuildPlyText(nd,true);
+                move.BlackPly = MoveUtils.BuildPlyText(nd, true);
                 move.BlackEval = nd.EngineEvaluation;
                 move.BlackNodeId = nd.NodeId;
             }
@@ -324,7 +343,7 @@ namespace ChessForge
         public void ReplaceLastPly(TreeNode nd)
         {
             NodeList[NodeList.Count - 1] = nd;
-            
+
             MoveWithEval move = MoveList[MoveList.Count - 1];
 
             if (nd.Position.ColorToMove == PieceColor.White)

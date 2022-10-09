@@ -30,10 +30,11 @@ namespace ChessForge
 
         private static readonly string STYLE_WORKBOOK_TITLE = "workbook_title";
         private static readonly string STYLE_CHAPTER_TITLE = "chapter_title";
-        private static readonly string STYLE_STUDY_TREE = "study_tree";
+        private static readonly string STYLE_SUBHEADER = "subheader";
         private static readonly string STYLE_MODEL_GAME = "model_game";
         private static readonly string STYLE_EXERCISE = "exercise";
 
+        private const string SUBHEADER_INDENT = "        ";
         /// <summary>
         /// Layout definitions for paragrahs at different levels.
         /// </summary>
@@ -41,7 +42,7 @@ namespace ChessForge
         {
             [STYLE_WORKBOOK_TITLE] = new RichTextPara(0, 10, 18, FontWeights.Bold, null, TextAlignment.Left),
             [STYLE_CHAPTER_TITLE] = new RichTextPara(10, 10, 16, FontWeights.Normal, null, TextAlignment.Left),
-            [STYLE_STUDY_TREE] = new RichTextPara(40, 10, 14, FontWeights.Normal, null, TextAlignment.Left),
+            [STYLE_SUBHEADER] = new RichTextPara(40, 10, 14, FontWeights.Normal, null, TextAlignment.Left),
             [STYLE_MODEL_GAME] = new RichTextPara(70, 5, 14, FontWeights.Normal, null, TextAlignment.Left),
             [STYLE_EXERCISE] = new RichTextPara(90, 5, 14, FontWeights.Normal, null, TextAlignment.Left),
             ["default"] = new RichTextPara(140, 5, 11, FontWeights.Normal, null, TextAlignment.Left),
@@ -59,10 +60,15 @@ namespace ChessForge
         /// respective list.
         /// </summary>
         private readonly string _run_chapter_expand_char_ = "_run_chapter_expand_char_";
+        private readonly string _run_model_games_expand_char_ = "_run_model_games_expand_char_";
+        private readonly string _run_exercises_expand_char_ = "_run_exercises_expand_char_";
+
         private readonly string _run_chapter_title_ = "_run_chapter_title_";
         private readonly string _run_study_tree_ = "study_tree_";
-        private readonly string _run_model_game_ = "model_game_";
-        private readonly string _run_exercise_ = "exercise_";
+        private readonly string _run_model_games_header_ = "_run_model_games_";
+        private readonly string _run_model_game_ = "_run_model_game_";
+        private readonly string _run_exercises_header_ = "_run_exercises_";
+        private readonly string _run_exercise_ = "_run_exercise_";
 
         /// <summary>
         /// Names and prefixes for the Paragraphs.
@@ -175,10 +181,9 @@ namespace ChessForge
 
                 if (chapter.IsViewExpanded)
                 {
-                    para.Inlines.Add(new Run("\n"));
-                    Run rStudy = CreateRun(STYLE_STUDY_TREE, "        Study Tree");
-                    rStudy.Name = _run_study_tree_ + "1";
-                    para.Inlines.Add(rStudy);
+                    InsertStudyRun(para);
+                    InsertModelGamesRun(para, chapter);
+                    InsertExercisesRun(para, chapter);
                 }
 
                 return para;
@@ -187,6 +192,78 @@ namespace ChessForge
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Inserts a Run representing the Study of the Chapter.
+        /// There is always precisely one run in each chapter.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        private Run InsertStudyRun(Paragraph para)
+        {
+            para.Inlines.Add(new Run("\n"));
+            Run r = CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT + "Study Tree");
+            r.Name = _run_study_tree_;
+            para.Inlines.Add(r);
+            return r;
+        }
+
+        /// <summary>
+        /// Inserts the Model Games subheader
+        /// and model games titles
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        private Run InsertModelGamesRun(Paragraph para, Chapter chapter)
+        {
+            InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
+
+            para.Inlines.Add(new Run("\n"));
+            Run r = CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT + "Model Games");
+            r.Name = _run_model_games_header_;
+            para.Inlines.Add(r);
+            return r;
+        }
+
+        /// <summary>
+        /// Inserts a Run with the Expand/Collapse symbol.
+        /// If hasContent is false, no symbol will be inserted.
+        /// </summary>
+        /// <param name="isExpanded"></param>
+        /// <param name="hasContent"></param>
+        /// <returns></returns>
+        private Run InsertExpandCollapseSymbolRun(Paragraph para, string prefix, bool isExpanded, bool hasContent)
+        {
+            if (hasContent)
+            {
+                char expandCollapse = isExpanded ? Constants.CharCollapse : Constants.CharExpand;
+                Run rExpandChar = CreateRun(STYLE_SUBHEADER, expandCollapse.ToString() + " ");
+                rExpandChar.Name = prefix;
+                rExpandChar.MouseDown += EventExpandSymbolClicked;
+                para.Inlines.Add(rExpandChar);
+
+                return rExpandChar;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Inserts the Model Games subheader
+        /// and model games titles
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        private Run InsertExercisesRun(Paragraph para, Chapter chapter)
+        {
+            para.Inlines.Add(new Run("\n"));
+            Run r = CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT + "Exercises");
+            r.Name = _run_exercises_header_;
+            para.Inlines.Add(r);
+            return r;
         }
 
         /// <summary>

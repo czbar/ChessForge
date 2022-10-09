@@ -10,6 +10,8 @@ using ChessPosition;
 using System.Xml.Linq;
 using System.Reflection;
 using System.Windows.Shapes;
+using System.Runtime.Remoting.Messaging;
+using ChessPosition.GameTree;
 
 namespace GameTree
 {
@@ -24,19 +26,10 @@ namespace GameTree
         public List<TreeNode> Nodes = new List<TreeNode>();
 
         /// <summary>
-        /// Workbook headers as Name/Value pair.
+        /// Header lines of the game/tree
         /// </summary>
-        public Dictionary<string, string> Headers = new Dictionary<string, string>();
-
-        // Headers dictionary keys
-        public readonly string HEADER_TRAINING_SIDE = "TrainingSide";
-        public readonly string HEADER_TITLE = "Title";
-        public readonly string HEADER_WHITE = "White";
-        public readonly string HEADER_BLACK = "Black";
-        public readonly string HEADER_DATE = "Date";
-        public readonly string HEADER_RESULT = "Result";
-        public readonly string HEADER_EVENT = "Event";
-
+        public GameHeader Header = new GameHeader();
+        
         // a list of nodes from a subtree
         private List<TreeNode> _subTree = new List<TreeNode>();
 
@@ -77,19 +70,20 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Title of this Workbook to show in the GUI
+        /// Title of this VariationTree
         /// </summary>
         public string Title
         {
             get
             {
-                string title;
-                Headers.TryGetValue(HEADER_TITLE, out title);
-                return title ?? "";
+                //string title;
+                //Headers.TryGetValue(PgnHeaders.NAME_LEGACY_TITLE, out title);
+                //return title ?? "";
+                return Header.GetLegacyTitle();
             }
             set
             {
-                Headers[HEADER_TITLE] = value;
+                Header.SetHeaderValue(PgnHeaders.KEY_LEGACY_TITLE, value);
             }
         }
 
@@ -100,8 +94,8 @@ namespace GameTree
         {
             get
             {
-                string trainingSide;
-                if (Headers.TryGetValue(HEADER_TRAINING_SIDE, out trainingSide))
+                string trainingSide = Header.GetTrainingSide(out _);
+                if (!string.IsNullOrEmpty(trainingSide))
                 {
                     return (trainingSide.Trim().ToLower() == "black" ? PieceColor.Black : PieceColor.White);
                 }
@@ -114,15 +108,15 @@ namespace GameTree
             {
                 if (value == PieceColor.White)
                 {
-                    Headers[HEADER_TRAINING_SIDE] = "white";
+                    Header.SetHeaderValue(PgnHeaders.KEY_TRAINING_SIDE, "white");
                 }
                 else if (value == PieceColor.Black)
                 {
-                    Headers[HEADER_TRAINING_SIDE] = "black";
+                    Header.SetHeaderValue(PgnHeaders.KEY_TRAINING_SIDE, "black");
                 }
                 else
                 {
-                    Headers[HEADER_TRAINING_SIDE] = "none";
+                    Header.SetHeaderValue(PgnHeaders.KEY_TRAINING_SIDE, "none");
                 }
             }
         }

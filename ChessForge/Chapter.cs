@@ -27,6 +27,12 @@ namespace ChessForge
         // whether the chapter is expanded in the ChaptersView
         private bool _isViewExpanded;
 
+        // whether the Model Games list is expanded in the ChaptersView
+        private bool _isModelGamesListExpanded;
+
+        // whether the Exercises list is expanded in the ChaptersView
+        private bool _isExercisesListExpanded;
+
         /// <summary>
         /// Returns Tree "active" in this chapter.
         /// If none set, StudyTree is returned as default.
@@ -109,6 +115,46 @@ namespace ChessForge
         {
             get => _isViewExpanded;
             set => _isViewExpanded = value;
+        }
+
+        /// <summary>
+        /// Flag indictating whether the Model Games list is expanded in the ChaptersView
+        /// </summary>
+        public bool IsModelGamesListExpanded
+        {
+            get => _isModelGamesListExpanded;
+            set => _isModelGamesListExpanded = value;
+        }
+
+        /// <summary>
+        /// Flag indictating whether the Model Games list is expanded in the ChaptersView
+        /// </summary>
+        public bool IsExercisesListExpanded
+        {
+            get => _isExercisesListExpanded;
+            set => _isExercisesListExpanded = value;
+        }
+
+        /// <summary>
+        /// Returns true if the chapter has at least one Model Game
+        /// </summary>
+        public bool HasAnyModelGame
+        {
+            get
+            {
+                return ModelGames.Count > 0;
+            }
+        }
+
+        /// <summary>
+        /// Returns true if the chapter has at least one Exercise
+        /// </summary>
+        public bool HasAnyExercise
+        {
+            get
+            {
+                return Exercises.Count > 0;
+            }
         }
 
         /// <summary>
