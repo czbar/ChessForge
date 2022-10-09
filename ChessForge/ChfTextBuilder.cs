@@ -163,12 +163,23 @@ namespace ChessForge
         {
             StringBuilder sb = new StringBuilder();
 
+            string key = "";
+            string value;
+
             sb.Append(BuildCommonGameHeaderText(chapter, chapterNo));
-            
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_CONTENT_TYPE, PgnHeaders.VALUE_STUDY_TREE));
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_WHITE, "Chess Forge"));
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_BLACK, "Study Tree"));
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.NAME_RESULT, "*"));
+
+            value = _variationTree.Header.GetContentType(out key, PgnHeaders.VALUE_STUDY_TREE);
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(key, value));
+
+            value = _variationTree.Header.GetWhitePlayer(out key, "Chess Forge");
+            PgnHeaders.BuildHeaderLine(key, value);
+
+            value = _variationTree.Header.GetBlackPlayer(out key, "Study Tree");
+            PgnHeaders.BuildHeaderLine(key, value);
+
+            value = _variationTree.Header.GetResult(out key);
+            PgnHeaders.BuildHeaderLine(key, value);
+
             sb.AppendLine("");
 
             return sb.ToString();
@@ -238,38 +249,6 @@ namespace ChessForge
 
 
         /// <summary>
-        /// Builds text of the complete Workbook.
-        /// </summary>
-        public static string BuildText(VariationTree tree)
-        {
-            _variationTree = tree;
-            _fileText = new StringBuilder();
-
-            BuildHeaders();
-
-            StringBuilder sbOutput = new StringBuilder(_fileText.ToString());
-
-            _fileText.Clear();
-            if (tree.Nodes.Count > 0)
-            {
-                TreeNode root = tree.Nodes[0];
-
-                // There may be a comment or command before the first move. Add if so.
-                _fileText.Append(BuildCommandAndCommentText(root));
-
-                BuildTreeLineText(root);
-            }
-
-            sbOutput.Append(DivideLine(_fileText.ToString(), 80));
-
-            // add terminating character
-            sbOutput.Append(" *");
-            sbOutput.AppendLine();
-
-            return sbOutput.ToString();
-        }
-
-        /// <summary>
         /// Divides a line into multiple lines no longer than maxChars
         /// </summary>
         /// <param name="inp"></param>
@@ -332,12 +311,27 @@ namespace ChessForge
         /// </summary>
         private static void BuildHeaders()
         {
-            BuildHeader(_variationTree.HEADER_TITLE);
-            BuildHeader(_variationTree.HEADER_DATE, DateTime.Now.ToString("yyyy.MM.dd"));
-            BuildHeader(_variationTree.HEADER_TRAINING_SIDE);
-            BuildHeader(_variationTree.HEADER_WHITE, "Chess Forge");
-            BuildHeader(_variationTree.HEADER_BLACK, "Workbook File");
-            BuildHeader(_variationTree.HEADER_RESULT, "*");
+            string key = "";
+            string value;
+
+            value = _variationTree.Header.GetLegacyTitle();
+            BuildHeader(key, value);
+
+            value = _variationTree.Header.GetDate(out key, DateTime.Now.ToString("yyyy.MM.dd"));
+            BuildHeader(key, value);
+
+            value = _variationTree.Header.GetTrainingSide(out key);
+            BuildHeader(key, value);
+
+            value = _variationTree.Header.GetWhitePlayer(out key, "Chess Forge");
+            BuildHeader(key, value);
+
+            value = _variationTree.Header.GetBlackPlayer(out key, "Workbook File");
+            BuildHeader(key, value);
+
+            value = _variationTree.Header.GetResult(out key);
+            BuildHeader(key, value);
+
             _fileText.AppendLine();
         }
 
@@ -345,19 +339,10 @@ namespace ChessForge
         /// Build text for a single header.
         /// </summary>
         /// <param name="key"></param>
-        private static void BuildHeader(string key, string value = null)
+        private static void BuildHeader(string key, string value)
         {
-            string val;
-            if (value == null)
-            {
-                _variationTree.Headers.TryGetValue(key, out val);
-            }
-            else
-            {
-                val = value;
-            }
             _fileText.Append("[" + key + " \"");
-            _fileText.Append(val ?? "");
+            _fileText.Append(value ?? "");
             _fileText.Append("\"]");
             _fileText.AppendLine();
         }

@@ -151,11 +151,12 @@ namespace ChessForge
         /// Parses a PGN file that may be a Chess Forge PGN or a generic PGN.
         /// The file is split into games that are stored with the headers
         /// and content separated.
+        /// This method does not check the validity of the text of the game. 
         /// Returns the number of games in the file.
         /// </summary>
-        public static int ReadPgnFile(string path, ref ObservableCollection<GameMetadata> GameList)
+        public static int ReadPgnFile(string path, ref ObservableCollection<GameMetadata> games)
         {
-            GameList.Clear();
+            games.Clear();
 
             // read line by line, fishing for lines with PGN headers i.e. beginning with "[" followed by a keyword.
             // Note we may accidentally hit a comment formatted that way, so make sure that the last char on the line is "]".
@@ -180,7 +181,7 @@ namespace ChessForge
                         // ignore headers with no name
                         if (header.Length > 0)
                         {
-                            gm.SetHeaderValue(header, val);
+                            gm.Header.SetHeaderValue(header, val);
                         }
                     }
                     else
@@ -190,7 +191,7 @@ namespace ChessForge
                         // if we do have any header data we add a new game to the list
                         if (gm.HasAnyHeader())
                         {
-                            GameList.Add(gm);
+                            games.Add(gm);
                             gm = new GameMetadata();
                         }
                     }
@@ -201,7 +202,7 @@ namespace ChessForge
                     {
                         gm.FirstLineInFile = lineNo - 1;
                         // add game text to the previous game object 
-                        GameList[GameList.Count - 1].GameText = gameText.ToString();
+                        games[games.Count - 1].GameText = gameText.ToString();
                         gameText.Clear();
                     }
 
@@ -211,14 +212,14 @@ namespace ChessForge
                     }
                 }
 
-                if (GameList.Count > 0)
+                if (games.Count > 0)
                 {
                     // add game text to the last object
-                    GameList[GameList.Count - 1].GameText = gameText.ToString();
+                    games[games.Count - 1].GameText = gameText.ToString();
                 }
             }
 
-            return GameList.Count;
+            return games.Count;
         }
 
         /// <summary>
@@ -297,8 +298,8 @@ namespace ChessForge
             PgnGameParser pp = new PgnGameParser(GameList[0].GameText, preface);
             SessionWorkbook.Description = preface.Nodes[0].Comment;
 
-            SessionWorkbook.Title = GameList[0].GetHeaderValue(PgnHeaders.NAME_WORKBOOK_TITLE);
-            SessionWorkbook.TrainingSide = TextUtils.ConvertStringToPieceColor(GameList[0].GetHeaderValue(PgnHeaders.NAME_TRAINING_SIDE));
+            SessionWorkbook.Title = GameList[0].GetWorkbookTitle();
+            SessionWorkbook.TrainingSide = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetTrainingSide(out _));
 
             ProcessGames(ref WorkbookManager.VariationTreeList);
         }
@@ -315,14 +316,14 @@ namespace ChessForge
             {
                 GameMetadata gm = GameList[i];
 
-                string contentType = gm.GetHeaderValue(PgnHeaders.NAME_CONTENT_TYPE);
-                string sChapter = gm.GetHeaderValue(PgnHeaders.NAME_CHAPTER_ID);
+                GameMetadata.GameType contentType = gm.GetContentType();
+                string sChapter = gm.Header.GetChapterId();
                 if (IsNextChapter(chapter, i, chapterNo, sChapter, ref GameList))
                 {
                     chapter = SessionWorkbook.CreateNewChapter();
                     chapter.AddGame(gm);
                 }
-                string sChapterTitle = gm.GetHeaderValue(PgnHeaders.NAME_CHAPTER_TITLE);
+                string sChapterTitle = gm.Header.GetChapterTitle();
                 chapter.Title = sChapterTitle;
             }
         }
