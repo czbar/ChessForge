@@ -159,8 +159,8 @@
                             <MenuItem x:Name="_mnSelectChapter" Header="Open This Chapter" Click="UiMnSelectChapter_Click" />
                             <MenuItem x:Name="_mnRenameChapter" Header="Rename This Chapter" Click="UiMnRenameChapter_Click" />
                             <Separator />
-                            <MenuItem x:Name="_mnImportModelGames" Header="Import Model Games" Click="_mnImportModelGames_Click" />
-                            <MenuItem x:Name="_mnImportExercises" Header="Import Exercises" Click="_mnImportExercises_Click" />
+                            <MenuItem x:Name="_mnImportModelGames" Header="Import Model Games" Click="UiMnImportModelGames_Click" />
+                            <MenuItem x:Name="_mnImportExercises" Header="Import Exercises" Click="UiMnImportExercises_Click" />
                             <Separator />
                             <MenuItem x:Name="_mnDeleteChapter" Header="Delete This Chapter" Click="UiMnDeleteChapter_Click" />
                         </ContextMenu>
