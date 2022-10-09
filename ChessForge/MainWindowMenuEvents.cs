@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 using ChessPosition.GameTree;
+using System.Collections.ObjectModel;
+using ChessForge;
 
 namespace ChessForge
 {
@@ -402,7 +404,7 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
             if (chapter != null)
             {
-                var res = MessageBox.Show("Deleting chapter \"" + chapter.Title + ". Are you sure?", "Delete Chapter", MessageBoxButton.YesNoCancel );
+                var res = MessageBox.Show("Deleting chapter \"" + chapter.Title + ". Are you sure?", "Delete Chapter", MessageBoxButton.YesNoCancel);
                 if (res == MessageBoxResult.Yes)
                 {
                     WorkbookManager.SessionWorkbook.Chapters.Remove(chapter);
@@ -424,7 +426,19 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportModelGames_Click(object sender, RoutedEventArgs e)
         {
-
+            string fileName = SelectPgnFile();
+            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+            {
+                ObservableCollection<GameMetadata> games = new ObservableCollection<GameMetadata>();
+                int gameCount = WorkbookManager.ReadPgnFile(fileName, ref games);
+                if (gameCount > 0)
+                {
+                }
+                else
+                {
+                    MessageBox.Show("No games found in " + fileName, "Import PGN", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
         }
 
         /// <summary>
@@ -434,8 +448,57 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportExercises_Click(object sender, RoutedEventArgs e)
         {
-
         }
+
+        /// <summary>
+        /// Shows the OpenFileDialog to let the user
+        /// select a PGN file.
+        /// </summary>
+        /// <returns></returns>
+        private string SelectPgnFile()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Multiselect = false,
+                Filter = "Game files (*.pgn)|*.pgn;*.pgn|All files (*.*)|*.*"
+            };
+
+            string initDir;
+            if (!string.IsNullOrEmpty(Configuration.LastImportDirectory))
+            {
+                initDir = Configuration.LastImportDirectory;
+            }
+            else
+            {
+                initDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            }
+
+            openFileDialog.InitialDirectory = initDir;
+
+            bool? result;
+
+            try
+            {
+                result = openFileDialog.ShowDialog();
+            }
+            catch
+            {
+                openFileDialog.InitialDirectory = "";
+                result = openFileDialog.ShowDialog();
+            };
+
+            if (result == true)
+            {
+                Configuration.LastImportDirectory = Path.GetDirectoryName(openFileDialog.FileName);
+                ReadWorkbookFile(openFileDialog.FileName, false, ref WorkbookManager.VariationTreeList);
+                return openFileDialog.FileName;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
 
         //**********************
         //
@@ -749,7 +812,7 @@ namespace ChessForge
 
         //**********************
         //
-        //  TREE OPRATIONS
+        //  TREE OPERATIONS
         // 
         //**********************
 
