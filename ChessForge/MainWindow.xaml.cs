@@ -629,8 +629,6 @@ namespace ChessForge
                 }
 
                 AppStateManager.RestartInIdleMode(false);
-                //WorkbookManager.CreateNewWorkbook(fileName);
-
                 AppStateManager.WorkbookFilePath = fileName;
                 BoardCommentBox.ReadingFile();
 
