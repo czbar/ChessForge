@@ -166,7 +166,7 @@
                         </ContextMenu>
                     </Grid.ContextMenu>
                     <RichTextBox x:Name="UiRtbChaptersView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
                                    Height="640" MinHeight="500" IsReadOnly="True" >
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
