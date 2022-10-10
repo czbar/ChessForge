@@ -266,6 +266,7 @@ namespace ChessForge
                     para.Inlines.Add(new Run("\n"));
                     Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + chapter.ModelGames[i].Header.BuildGameHeaderLine());
                     rGame.Name = _run_model_game_ + i.ToString();
+                    rGame.MouseDown += EventModelGameRunClicked;
                     para.Inlines.Add(rGame);
                 }
             }
@@ -314,7 +315,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Event handler invoked when a Run was clicked.
+        /// Event handler invoked when a Chapter Run was clicked.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -341,6 +342,37 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("Exception in EventChapterRunClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Event handler invoked when a Model Game Run was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventModelGameRunClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                Run r = (Run)e.Source;
+                int gameIndex = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapter != null && gameIndex >= 0 && gameIndex < chapter.ModelGames.Count)
+                {
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        _mainWin.SelectModelGame(gameIndex);
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        //WorkbookManager.EnableModelGamesMenus(_mainWin._cmChapters, true);
+                        //_mainWin.SelectModelGame(chapterId, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventModelGameRunClicked(): " + ex.Message);
             }
         }
 
