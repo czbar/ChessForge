@@ -321,7 +321,14 @@ namespace ChessForge
                 if (IsNextChapter(chapter, i, chapterNo, sChapter, ref GameList))
                 {
                     chapter = SessionWorkbook.CreateNewChapter();
-                    chapter.AddGame(gm);
+                    try
+                    {
+                        chapter.AddGame(gm);
+                    }
+                    catch (Exception ex)
+                    {
+                        //TODO: report errors
+                    }
                 }
                 string sChapterTitle = gm.Header.GetChapterTitle();
                 chapter.Title = sChapterTitle;
@@ -395,7 +402,7 @@ namespace ChessForge
                             }
                             catch (Exception ex)
                             {
-                                sbErrors.Append("Game #" + (i + 1).ToString() + " : " + GameList[i].Players);
+                                sbErrors.Append("Game #" + (i + 1).ToString() + " : " + GameList[i].Header.BuildGameHeaderLine());
                                 sbErrors.Append(Environment.NewLine);
                                 sbErrors.Append("     " + ex.Message);
                                 sbErrors.Append(Environment.NewLine);
@@ -413,7 +420,7 @@ namespace ChessForge
                             }
                             catch (Exception ex)
                             {
-                                sbErrors.Append("Game #" + (i + 1).ToString() + " : " + GameList[i].Players);
+                                sbErrors.Append("Game #" + (i + 1).ToString() + " : " + GameList[i].Header.BuildGameHeaderLine());
                                 sbErrors.Append(Environment.NewLine);
                                 sbErrors.Append("     " + ex.Message);
                                 sbErrors.Append(Environment.NewLine);
