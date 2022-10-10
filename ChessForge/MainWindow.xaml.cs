@@ -36,7 +36,7 @@ namespace ChessForge
         /// <summary>
         /// The RichTextBox based full Workbook view
         /// </summary>
-        private VariationTreeView _workbookView;
+        private VariationTreeView _studyTreeView;
 
         /// <summary>
         /// The RichTextBox based Chapters view
@@ -300,13 +300,13 @@ namespace ChessForge
         /// Selects the chapter.
         /// </summary>
         /// <param name="chapterId"></param>
-        public void SelectChapter(int chapterId)
+        public void SelectChapter(int chapterId, bool focusOnStudyTree)
         {
             if (chapterId >= 0)
             {
                 WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameMetadata.GameType.STUDY_TREE);
                 _chaptersView.HighlightActiveChapter();
-                SetupGuiForActiveStudyTree();
+                SetupGuiForActiveStudyTree(focusOnStudyTree);
             }
         }
 
@@ -699,7 +699,7 @@ namespace ChessForge
             BoardCommentBox.ShowWorkbookTitle();
             InitializeChaptersView();
 
-            SetupGuiForActiveStudyTree();
+            SetupGuiForActiveStudyTree(true);
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
         }
@@ -709,9 +709,9 @@ namespace ChessForge
         /// This method will be called e.g. when opening a new
         /// Workbook and initializing the view.
         /// </summary>
-        public void SetupGuiForActiveStudyTree()
+        public void SetupGuiForActiveStudyTree(bool focusOnStudyTree)
         {
-            _workbookView = new VariationTreeView(UiRtbWorkbookView.Document, this);
+            _studyTreeView = new VariationTreeView(UiRtbWorkbookView.Document, this);
             if (ActiveVariationTree.Nodes.Count == 0)
             {
                 ActiveVariationTree.CreateNew();
@@ -720,9 +720,8 @@ namespace ChessForge
             {
                 ActiveVariationTree.BuildLines();
             }
-            UiTabWorkbook.Focus();
 
-            _workbookView.BuildFlowDocumentForWorkbook();
+            _studyTreeView.BuildFlowDocumentForWorkbook();
 
             string startLineId;
             int startNodeId = 0;
@@ -737,7 +736,12 @@ namespace ChessForge
                 startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
             }
             SetActiveLine(startLineId, startNodeId);
-            UiRtbWorkbookView.Focus();
+
+            if (focusOnStudyTree)
+            {
+                UiTabWorkbook.Focus();
+                UiRtbWorkbookView.Focus();
+            }
 
             BookmarkManager.ShowBookmarks();
 
@@ -761,7 +765,7 @@ namespace ChessForge
         /// </summary>
         public void RebuildWorkbookView()
         {
-            _workbookView.BuildFlowDocumentForWorkbook();
+            _studyTreeView.BuildFlowDocumentForWorkbook();
         }
 
         /// <summary>
@@ -784,7 +788,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public void AddNewNodeToWorkbookView(TreeNode nd)
         {
-            _workbookView.AddNewNode(nd);
+            _studyTreeView.AddNewNode(nd);
         }
 
         /// <summary>
@@ -798,7 +802,7 @@ namespace ChessForge
             if (nd != null)
             {
                 WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nd.NodeId);
-                _workbookView.SelectLineAndMove(lineId, nd.NodeId);
+                _studyTreeView.SelectLineAndMove(lineId, nd.NodeId);
                 if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
                 {
                     EvaluateActiveLineSelectedPosition(nd);
