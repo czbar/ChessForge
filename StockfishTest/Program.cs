@@ -64,23 +64,6 @@ namespace StockfishTest
             {
                 engine.SendCommand("setoption name multipv value 1");
             }
-
-            
-
-        }
-
-        private static void EvaluatePgnGame()
-        {
-            VariationTree variationTree = new VariationTree();
-            string gameText = File.ReadAllText("../../../ChessPositionTest/TestData/GameShort.pgn");
-            PgnGameParser pgnGame = new PgnGameParser(gameText, variationTree, out bool multi, false);
-            EvaluateVariationTree(variationTree);
-        }
-
-        private static void EvaluateVariationTree(VariationTree tree)
-        {
-            TreeNode root = tree.Nodes[0];
-            EvaluateTreeLine(root);
         }
 
         private static void EvaluateTreeLine(TreeNode nd, bool includeNumber = false)
