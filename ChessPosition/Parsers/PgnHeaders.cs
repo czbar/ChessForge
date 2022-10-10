@@ -35,9 +35,14 @@ namespace ChessPosition
         public const string KEY_TRAINING_SIDE = "TrainingSide";
 
         /// <summary>
-        /// In Chess Forge this header is repurposed as a chapter's title.
+        /// Event Name.
         /// </summary>
-        public const string KEY_EVENT_ = "Event";
+        public const string KEY_EVENT = "Event";
+
+        /// <summary>
+        /// Event round number.
+        /// </summary>
+        public const string KEY_ROUND = "Round";
 
         /// <summary>
         /// Position in the FEN format.
