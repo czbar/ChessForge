@@ -241,7 +241,7 @@ namespace ChessForge
                 {
                     foreach (var run in (block as Paragraph).Inlines)
                     {
-                        if (run is Run && TextUtils.GetNodeIdFromPrefixedString(run.Name) == nodeId)
+                        if (run is Run && TextUtils.GetIdFromPrefixedString(run.Name) == nodeId)
                         {
                             return run as Run;
                         }

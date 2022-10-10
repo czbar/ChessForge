@@ -29,6 +29,32 @@ namespace ChessPosition.GameTree
         }
 
         /// <summary>
+        /// Builds text for the column with the name of the game.
+        /// </summary>
+        public string BuildGameHeaderLine()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            string white = GetWhitePlayer(out _);
+            string black = GetBlackPlayer(out _);
+            sb.Append((white ?? "NN") + " - " + (black ?? "NN"));
+
+            string eventName = GetEventName(out _);
+            if (!string.IsNullOrEmpty(eventName) && eventName != "?")
+            {
+                sb.Append(" at " + eventName + "");
+            }
+
+            string round = GetRound(out _);
+            if (!string.IsNullOrEmpty(round) && round != "?")
+            {
+                sb.Append(" Rd." + round + " ");
+            }
+            return sb.ToString();
+        }
+
+
+        /// <summary>
         /// Returns the title of the Workbook
         /// </summary>
         /// <returns></returns>
@@ -104,12 +130,42 @@ namespace ChessPosition.GameTree
         }
 
         /// <summary>
-        /// Returns the result of a tree/game/combinattion
+        /// Returns the result of a tree/game/exercise
         /// </summary>
         /// <returns></returns>
         public string GetResult(out string key)
         {
             string headerKey = PgnHeaders.KEY_RESULT;
+            key = headerKey;
+
+            string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            if (string.IsNullOrEmpty(value))
+            {
+                value = "*";
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Returns the Round number
+        /// </summary>
+        /// <returns></returns>
+        public string GetRound(out string key)
+        {
+            string headerKey = PgnHeaders.KEY_ROUND;
+            key = headerKey;
+
+            return _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+        }
+
+        /// <summary>
+        /// Returns the Event Name
+        /// </summary>
+        /// <returns></returns>
+        public string GetEventName(out string key)
+        {
+            string headerKey = PgnHeaders.KEY_EVENT;
             key = headerKey;
 
             string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;

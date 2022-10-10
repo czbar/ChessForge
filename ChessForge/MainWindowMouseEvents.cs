@@ -294,10 +294,10 @@ namespace ChessForge
         /// <param name="e"></param>
         private void WorkbookView_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (_workbookView != null)
+            if (_studyTreeView != null)
             {
-                _workbookView.LastClickedNodeId = -1;
-                _workbookView.EnableWorkbookMenus(UiCmnWorkbookRightClick, false);
+                _studyTreeView.LastClickedNodeId = -1;
+                _studyTreeView.EnableWorkbookMenus(UiCmnWorkbookRightClick, false);
             }
         }
 

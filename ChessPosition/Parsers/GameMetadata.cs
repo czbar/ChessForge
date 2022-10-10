@@ -104,6 +104,17 @@ namespace ChessPosition.GameTree
         public string GameText { get; set; }
 
         /// <summary>
+        /// The property that binds in the SelectGames ListView control.
+        /// </summary>
+        public string GameTitle
+        {
+            get
+            {
+                return Header.BuildGameHeaderLine();
+            }
+        }
+
+        /// <summary>
         /// Accessor to _isSelected.
         /// This is the only property that can be changed
         /// from the GUI.
@@ -136,39 +147,11 @@ namespace ChessPosition.GameTree
             return Header.GetChapterNumber();
         }
 
-        public string Event { get; set; }
-        public string Round { get; set; }
-
-        public string White { get; set; }
-
-        public string Black { get; set; }
-
         /// <summary>
         /// Index of the first line in the PGN file where this game starts
         /// (to be precise, the first empty line after the previous game)
         /// </summary>
         public int FirstLineInFile { get; set; }
-
-        /// <summary>
-        /// Builds text for the column with the name of the game.
-        /// </summary>
-        public string Players
-        {
-            get
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(White + " - " + Black);
-                if (!string.IsNullOrEmpty(Event) && Event != "?")
-                {
-                    sb.Append(" at " + Event + "");
-                }
-                if (!string.IsNullOrEmpty(Round) && Round != "?")
-                {
-                    sb.Append(" Rd." + Round + " ");
-                }
-                return sb.ToString();
-            }
-        }
 
         /// <summary>
         /// PropertChange event handler

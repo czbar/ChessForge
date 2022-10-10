@@ -333,7 +333,7 @@ namespace ChessForge
                 if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                 {
                     _mainWin.ActiveLine.SelectPly((int)nd.Parent.Position.MoveNumber, nd.Parent.Position.ColorToMove);
-                    _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveLine.GetLineId(), nodeIndex);
+                    _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, _mainWin.ActiveLine.GetLineId(), nodeIndex);
                 }
             });
 

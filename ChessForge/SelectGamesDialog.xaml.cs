@@ -36,11 +36,11 @@ namespace ChessForge
         /// Creates the dialog object. Sets ItemsSource for the ListView
         /// to GamesHeaders list.
         /// </summary>
-        public SelectGamesDialog(ref ObservableCollection<GameMetadata> GameList)
+        public SelectGamesDialog(ref ObservableCollection<GameMetadata> gameList)
         {
+            _gameList = gameList;
             InitializeComponent();
-            UiLvGames.ItemsSource = GameList;
-            _gameList = GameList;
+            UiLvGames.ItemsSource = gameList;
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            Result=false;
+            Result = false;
             Close();
         }
     }

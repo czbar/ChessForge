@@ -86,7 +86,7 @@ namespace ChessForge
             try
             {
                 string studyText = File.ReadAllText(fileName);
-                VariationTree tree = new VariationTree();
+                VariationTree tree = new VariationTree(GameMetadata.GameType.STUDY_TREE);
 
                 // parse the variation tree and create a new chapter.
                 PgnGameParser pgnGame = new PgnGameParser(studyText, tree, out bool isMulti, true);
@@ -294,7 +294,7 @@ namespace ChessForge
             // while the rest are Study Trees, Model Games and Exercises.
             SessionWorkbook = new Workbook();
 
-            VariationTree preface = new VariationTree();
+            VariationTree preface = new VariationTree(GameMetadata.GameType.STUDY_TREE);
             PgnGameParser pp = new PgnGameParser(GameList[0].GameText, preface);
             SessionWorkbook.Description = preface.Nodes[0].Comment;
 
@@ -321,7 +321,14 @@ namespace ChessForge
                 if (IsNextChapter(chapter, i, chapterNo, sChapter, ref GameList))
                 {
                     chapter = SessionWorkbook.CreateNewChapter();
-                    chapter.AddGame(gm);
+                    try
+                    {
+                        chapter.AddGame(gm);
+                    }
+                    catch (Exception ex)
+                    {
+                        //TODO: report errors
+                    }
                 }
                 string sChapterTitle = gm.Header.GetChapterTitle();
                 chapter.Title = sChapterTitle;
@@ -395,7 +402,7 @@ namespace ChessForge
                             }
                             catch (Exception ex)
                             {
-                                sbErrors.Append("Game #" + (i + 1).ToString() + " : " + GameList[i].Players);
+                                sbErrors.Append("Game #" + (i + 1).ToString() + " : " + GameList[i].Header.BuildGameHeaderLine());
                                 sbErrors.Append(Environment.NewLine);
                                 sbErrors.Append("     " + ex.Message);
                                 sbErrors.Append(Environment.NewLine);
@@ -404,7 +411,7 @@ namespace ChessForge
                         }
                         else
                         {
-                            VariationTree workbook2 = new VariationTree();
+                            VariationTree workbook2 = new VariationTree(GameMetadata.GameType.STUDY_TREE);
                             try
                             {
                                 PgnGameParser pgp = new PgnGameParser(GameList[i].GameText, workbook2, out bool multi);
@@ -413,7 +420,7 @@ namespace ChessForge
                             }
                             catch (Exception ex)
                             {
-                                sbErrors.Append("Game #" + (i + 1).ToString() + " : " + GameList[i].Players);
+                                sbErrors.Append("Game #" + (i + 1).ToString() + " : " + GameList[i].Header.BuildGameHeaderLine());
                                 sbErrors.Append(Environment.NewLine);
                                 sbErrors.Append("     " + ex.Message);
                                 sbErrors.Append(Environment.NewLine);
