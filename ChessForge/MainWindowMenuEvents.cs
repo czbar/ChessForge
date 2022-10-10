@@ -985,5 +985,15 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Calls the Internet browser to open the ChessForge Wiki page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnHelpWiki_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki");
+        }
+
     }
 }
