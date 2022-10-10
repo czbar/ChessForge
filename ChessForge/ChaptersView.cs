@@ -34,9 +34,11 @@ namespace ChessForge
         private static readonly string STYLE_MODEL_GAME = "model_game";
         private static readonly string STYLE_EXERCISE = "exercise";
 
-        private const string SUBHEADER_INDENT = "        ";
+        private const string SUBHEADER_INDENT        = "        ";
+        private const string SUBHEADER_DOUBLE_INDENT = "            ";
+
         /// <summary>
-        /// Layout definitions for paragrahs at different levels.
+        /// Layout definitions for paragraphs at different levels.
         /// </summary>
         private Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
@@ -93,6 +95,7 @@ namespace ChessForge
         public void BuildFlowDocumentForChaptersView()
         {
             Document.Blocks.Clear();
+            Document.PageWidth = 2000; // prevent word wrap
             _dictChapterParas.Clear();
 
             AddNewParagraphToDoc(STYLE_WORKBOOK_TITLE, WorkbookManager.SessionWorkbook.Title);
@@ -144,6 +147,32 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Identifies Paragraph for the chapter and then
+        /// calls BuildChapterParagraph.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        public Paragraph RebuildChapterParagraph(Chapter chapter)
+        {
+            Paragraph para = null; ;
+
+            foreach (Block b in Document.Blocks)
+            {
+                if (b is Paragraph)
+                {
+                    int id = TextUtils.GetIdFromPrefixedString((b as Paragraph).Name);
+                    if (id == chapter.Id)
+                    {
+                        para = b as Paragraph;
+                        break;
+                    }
+                }
+            }
+
+            return BuildChapterParagraph(chapter, para);
+        }
+
+        /// <summary>
         /// Builds a paragraph for a single chapter
         /// </summary>
         /// <param name="chapter"></param>
@@ -151,11 +180,17 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph BuildChapterParagraph(Chapter chapter, Paragraph para = null)
         {
+            if (chapter == null)
+            {
+                return null;
+            }
+
             try
             {
                 if (para == null)
                 {
                     para = AddNewParagraphToDoc(STYLE_CHAPTER_TITLE, "");
+                    _dictChapterParas[chapter.Id] = para;
                 }
                 else
                 {
@@ -167,7 +202,7 @@ namespace ChessForge
                 char expandCollapse = chapter.IsViewExpanded ? Constants.CharCollapse : Constants.CharExpand;
                 Run rExpandChar = CreateRun(STYLE_CHAPTER_TITLE, expandCollapse.ToString() + " ");
                 rExpandChar.Name = _run_chapter_expand_char_ + chapter.Id.ToString();
-                rExpandChar.MouseDown += EventExpandSymbolClicked;
+                rExpandChar.MouseDown += EventChapterExpandSymbolClicked;
                 para.Inlines.Add(rExpandChar);
 
                 Run rTitle = CreateRun(STYLE_CHAPTER_TITLE, chapter.Title);
@@ -182,7 +217,7 @@ namespace ChessForge
                 if (chapter.IsViewExpanded)
                 {
                     InsertStudyRun(para);
-                    InsertModelGamesRun(para, chapter);
+                    InsertModelGamesRuns(para, chapter);
                     InsertExercisesRun(para, chapter);
                 }
 
@@ -215,14 +250,26 @@ namespace ChessForge
         /// </summary>
         /// <param name="para"></param>
         /// <returns></returns>
-        private Run InsertModelGamesRun(Paragraph para, Chapter chapter)
+        private Run InsertModelGamesRuns(Paragraph para, Chapter chapter)
         {
-            InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
-
             para.Inlines.Add(new Run("\n"));
-            Run r = CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT + "Model Games");
+            para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT));
+            InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
+            Run r = CreateRun(STYLE_SUBHEADER, "Model Games");
             r.Name = _run_model_games_header_;
             para.Inlines.Add(r);
+
+            if (chapter.IsModelGamesListExpanded)
+            {
+                for (int i = 0; i < chapter.ModelGames.Count; i++)
+                {
+                    para.Inlines.Add(new Run("\n"));
+                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + chapter.ModelGames[i].Header.BuildGameHeaderLine());
+                    rGame.Name = _run_model_game_ + i.ToString();
+                    para.Inlines.Add(rGame);
+                }
+            }
+
             return r;
         }
 
@@ -239,8 +286,8 @@ namespace ChessForge
             {
                 char expandCollapse = isExpanded ? Constants.CharCollapse : Constants.CharExpand;
                 Run rExpandChar = CreateRun(STYLE_SUBHEADER, expandCollapse.ToString() + " ");
-                rExpandChar.Name = prefix;
-                rExpandChar.MouseDown += EventExpandSymbolClicked;
+                rExpandChar.Name = prefix + WorkbookManager.SessionWorkbook.ActiveChapter.Id;
+                rExpandChar.MouseDown += EventModelGamesExpandSymbolClicked;
                 para.Inlines.Add(rExpandChar);
 
                 return rExpandChar;
@@ -282,11 +329,12 @@ namespace ChessForge
                     WorkbookManager.LastClickedChapterId = chapterId;
                     if (e.ChangedButton == MouseButton.Left)
                     {
-                        _mainWin.SelectChapter(chapterId);
+                        _mainWin.SelectChapter(chapterId, true);
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
                         WorkbookManager.EnableChaptersMenus(_mainWin._cmChapters, true);
+                        _mainWin.SelectChapter(chapterId, false);
                     }
                 }
             }
@@ -297,12 +345,38 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// An expand/collapse character was clicked.
+        /// An expand/collapse character on the Model Games list was clicked.
         /// Establish which chapter this is for, check its expand/collapse status and flip it.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventExpandSymbolClicked(object sender, MouseButtonEventArgs e)
+        private void EventModelGamesExpandSymbolClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Run r = (Run)e.Source;
+                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                if (chapter.Id != WorkbookManager.SessionWorkbook.ActiveChapter.Id)
+                {
+                    _mainWin.SelectChapter(chapterId, false);
+                }
+                chapter.IsModelGamesListExpanded = !chapter.IsModelGamesListExpanded; 
+                BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventExpandSymbolClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// An expand/collapse character for the chapter was clicked.
+        /// Establish which chapter this is for, check its expand/collapse status and flip it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventChapterExpandSymbolClicked(object sender, MouseButtonEventArgs e)
         {
             try
             {
