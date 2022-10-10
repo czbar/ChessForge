@@ -393,7 +393,7 @@ namespace ChessForge
                 }
                 else if (block is Paragraph)
                 {
-                    int nodeId = TextUtils.GetNodeIdFromPrefixedString(((Paragraph)block).Name);
+                    int nodeId = TextUtils.GetIdFromPrefixedString(((Paragraph)block).Name);
                     TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
                     if (nd != null && nd.MoveNumber == move.MoveNumber && nd.ColorToMove == move.ColorToMove)
                     {
@@ -1261,7 +1261,7 @@ namespace ChessForge
                 return;
             }
 
-            int nodeId = TextUtils.GetNodeIdFromPrefixedString(r.Name);
+            int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
             if (nodeId >= 0)
             {
                 Point pt = e.GetPosition(_mainWin.UiRtbTrainingProgress);
