@@ -179,7 +179,7 @@ namespace ChessForge
             _variationTree.PromoteLine(nd);
             _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
             BuildFlowDocumentForWorkbook();
-            _mainWin.SelectLineAndMoveInWorkbookViews(nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
+            _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
             AppStateManager.IsDirty = true;
         }
 
@@ -195,7 +195,7 @@ namespace ChessForge
             _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
             BookmarkManager.ResyncBookmarks(1);
             BuildFlowDocumentForWorkbook();
-            _mainWin.SelectLineAndMoveInWorkbookViews(parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true));
+            _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true));
             AppStateManager.IsDirty = true;
         }
 
