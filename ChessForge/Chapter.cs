@@ -174,14 +174,22 @@ namespace ChessForge
         public List<VariationTree> Exercises = new List<VariationTree>();
 
         /// <summary>
-        /// Adds new game to this chapter.
+        /// Adds a new game to this chapter.
+        /// The caller must handle exceptions.
         /// </summary>
         /// <param name="gm"></param>
-        public void AddGame(GameMetadata gm)
+        public void AddGame(GameMetadata gm, GameMetadata.GameType typ = GameType.INVALID)
         {
             VariationTree tree = new VariationTree();
+
             PgnGameParser pp = new PgnGameParser(gm.GameText, tree);
-            GameMetadata.GameType typ = gm.GetContentType();
+
+            tree.Header = gm.Header;
+
+            if (typ == GameType.INVALID)
+            {
+                typ = gm.GetContentType();
+            }
             switch (typ)
             {
                 case GameMetadata.GameType.STUDY_TREE:
