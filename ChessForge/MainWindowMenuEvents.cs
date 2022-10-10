@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using ChessPosition.GameTree;
 using System.Collections.ObjectModel;
 using ChessForge;
+using System.Text;
 
 namespace ChessForge
 {
@@ -98,7 +99,7 @@ namespace ChessForge
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
             if (InvokeAnnotationsDialog(nd))
             {
-                _workbookView.InsertOrUpdateCommentRun(nd);
+                _studyTreeView.InsertOrUpdateCommentRun(nd);
             }
         }
 
@@ -192,7 +193,7 @@ namespace ChessForge
             // prepare document
             AppStateManager.RestartInIdleMode(false);
             WorkbookManager.CreateNewWorkbook();
-            _workbookView = new VariationTreeView(UiRtbWorkbookView.Document, this);
+            _studyTreeView = new VariationTreeView(UiRtbWorkbookView.Document, this);
 
             // ask for the options
             if (!ShowWorkbookOptionsDialog())
@@ -214,7 +215,7 @@ namespace ChessForge
             AppStateManager.SetupGuiForCurrentStates();
             //StudyTree.CreateNew();
             UiTabWorkbook.Focus();
-            _workbookView.BuildFlowDocumentForWorkbook();
+            _studyTreeView.BuildFlowDocumentForWorkbook();
             int startingNode = 0;
             string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(startingNode);
             SetActiveLine(startLineId, startingNode);
@@ -357,7 +358,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnSelectChapter_Click(object sender, RoutedEventArgs e)
         {
-            SelectChapter(WorkbookManager.LastClickedChapterId);
+            SelectChapter(WorkbookManager.LastClickedChapterId, true);
         }
 
         /// <summary>
@@ -370,7 +371,7 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
             if (chapter != null && ShowChapterTitleDialog(chapter))
             {
-                SetupGuiForActiveStudyTree();
+                SetupGuiForActiveStudyTree(false);
                 AppStateManager.IsDirty = true;
             }
         }
@@ -413,7 +414,7 @@ namespace ChessForge
                         WorkbookManager.SessionWorkbook.SelectDefaultActiveChapter();
                     }
                     _chaptersView.BuildFlowDocumentForChaptersView();
-                    SetupGuiForActiveStudyTree();
+                    SetupGuiForActiveStudyTree(false);
                     AppStateManager.IsDirty = true;
                 }
             }
@@ -426,17 +427,64 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportModelGames_Click(object sender, RoutedEventArgs e)
         {
-            string fileName = SelectPgnFile();
-            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+            if (WorkbookManager.SessionWorkbook.ActiveChapter != null)
             {
-                ObservableCollection<GameMetadata> games = new ObservableCollection<GameMetadata>();
-                int gameCount = WorkbookManager.ReadPgnFile(fileName, ref games);
-                if (gameCount > 0)
+                string fileName = SelectPgnFile();
+                if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
                 {
-                }
-                else
-                {
-                    MessageBox.Show("No games found in " + fileName, "Import PGN", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    ObservableCollection<GameMetadata> games = new ObservableCollection<GameMetadata>();
+                    int gameCount = WorkbookManager.ReadPgnFile(fileName, ref games);
+                    if (gameCount > 0)
+                    {
+                        StringBuilder sbErrors = new StringBuilder();
+                        int errorCount = 0;
+
+                        SelectGamesDialog dlg = new SelectGamesDialog(ref games);
+                        dlg.ShowDialog();
+                        if (dlg.Result)
+                        {
+                            this.Cursor = Cursors.Wait;
+                            try
+                            {
+                                for (int i = 0; i < games.Count; i++)
+                                {
+                                    if (games[i].IsSelected)
+                                    {
+                                        try
+                                        {
+                                            chapter.AddGame(games[i], GameMetadata.GameType.MODEL_GAME);
+                                            AppStateManager.IsDirty = true;
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            errorCount++;
+                                            sbErrors.Append(TextUtils.BuildGameProcessingErrorText(games[i], i + 1, ex.Message));
+                                        }
+                                    }
+                                }
+
+                                chapter.IsViewExpanded= true;
+                                chapter.IsModelGamesListExpanded = true;
+
+                                _chaptersView.RebuildChapterParagraph(WorkbookManager.SessionWorkbook.ActiveChapter);
+                            }
+                            catch
+                            {
+                            }
+                            this.Cursor = Cursors.Arrow;
+                        }
+                        else
+                        {
+                            MessageBox.Show("No games found in " + fileName, "Import PGN", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+
+                        if (errorCount > 0)
+                        {
+                            TextBoxDialog tbDlg = new TextBoxDialog("PGN Parsing Errors", sbErrors.ToString());
+                            tbDlg.Show();
+                        }
+                    }
                 }
             }
         }
@@ -490,7 +538,6 @@ namespace ChessForge
             if (result == true)
             {
                 Configuration.LastImportDirectory = Path.GetDirectoryName(openFileDialog.FileName);
-                ReadWorkbookFile(openFileDialog.FileName, false, ref WorkbookManager.VariationTreeList);
                 return openFileDialog.FileName;
             }
             else
@@ -566,7 +613,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnWorkbookBookmarkAlternatives_Click(object sender, RoutedEventArgs e)
         {
-            int ret = BookmarkManager.AddAllSiblingsToBookmarks(_workbookView.LastClickedNodeId);
+            int ret = BookmarkManager.AddAllSiblingsToBookmarks(_studyTreeView.LastClickedNodeId);
             if (ret == 1)
             {
                 MessageBox.Show("Bookmarks already exist.", "Training Bookmarks", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -589,7 +636,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnWorkbookSelectAsBookmark_Click(object sender, RoutedEventArgs e)
         {
-            int ret = BookmarkManager.AddBookmark(_workbookView.LastClickedNodeId);
+            int ret = BookmarkManager.AddBookmark(_studyTreeView.LastClickedNodeId);
             if (ret == 1)
             {
                 MessageBox.Show("This bookmark already exists.", "Training Bookmarks", MessageBoxButton.OK);
@@ -823,7 +870,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnPromoteLine_Click(object sender, RoutedEventArgs e)
         {
-            _workbookView.PromoteCurrentLine();
+            _studyTreeView.PromoteCurrentLine();
         }
 
         /// <summary>
@@ -833,7 +880,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnDeleteMovesFromHere_Click(object sender, RoutedEventArgs e)
         {
-            _workbookView.DeleteRemainingMoves();
+            _studyTreeView.DeleteRemainingMoves();
         }
 
 
