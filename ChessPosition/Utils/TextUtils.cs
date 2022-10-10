@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChessPosition.GameTree;
 using GameTree;
 
 namespace ChessPosition
@@ -68,12 +69,12 @@ namespace ChessPosition
 
         /// <summary>
         /// Extracts the integer value from a string that has it
-        /// as a suffix.
+        /// as a suffix following the last underscore.
         /// </summary>
         /// <param name="s"></param>
         /// <param name="lastChar"></param>
         /// <returns></returns>
-        public static int GetNodeIdFromPrefixedString(string s, char lastChar = '_')
+        public static int GetIdFromPrefixedString(string s, char lastChar = '_')
         {
             int nodeId = -1;
 
@@ -113,6 +114,28 @@ namespace ChessPosition
             {
                 return PieceColor.None;
             }
+        }
+
+        /// <summary>
+        /// Builds a line of text for display in the processing errors list.
+        /// </summary>
+        /// <param name="gm"></param>
+        /// <param name="gameNo"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static string BuildGameProcessingErrorText(GameMetadata gm, int gameNo, string message)
+        {
+            StringBuilder sbErrors = new StringBuilder();
+
+            if (gm != null)
+            {
+                sbErrors.Append("Game #" + gameNo.ToString() + " : " + gm.Header.BuildGameHeaderLine());
+                sbErrors.Append(Environment.NewLine);
+                sbErrors.Append("     " + message);
+                sbErrors.Append(Environment.NewLine);
+            }
+
+            return sbErrors.ToString();
         }
     }
 }
