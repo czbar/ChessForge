@@ -161,7 +161,7 @@ namespace ChessForge
         /// The analysis tree of the chapter. There is exactly one
         /// analysis tree in a chapter.
         /// </summary>
-        public VariationTree StudyTree = new VariationTree();
+        public VariationTree StudyTree = new VariationTree(GameMetadata.GameType.STUDY_TREE);
 
         /// <summary>
         /// The list of Model Games
@@ -180,16 +180,16 @@ namespace ChessForge
         /// <param name="gm"></param>
         public void AddGame(GameMetadata gm, GameMetadata.GameType typ = GameType.INVALID)
         {
-            VariationTree tree = new VariationTree();
-
+            VariationTree tree = new VariationTree(typ);
             PgnGameParser pp = new PgnGameParser(gm.GameText, tree);
-
             tree.Header = gm.Header;
 
             if (typ == GameType.INVALID)
             {
                 typ = gm.GetContentType();
             }
+            tree.ContentType = typ;
+
             switch (typ)
             {
                 case GameMetadata.GameType.STUDY_TREE:

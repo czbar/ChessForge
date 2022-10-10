@@ -187,7 +187,7 @@ namespace ChessForge
         public Chapter CreateNewChapter()
         {
             Chapter chapter = new Chapter();
-            chapter.StudyTree = new VariationTree();
+            chapter.StudyTree = new VariationTree(GameMetadata.GameType.STUDY_TREE);
             chapter.StudyTree.CreateNew();
             //TODO: we need to have a chapter specific version of SetupGuiForNewSession 
             chapter.Id = Chapters.Count + 1;

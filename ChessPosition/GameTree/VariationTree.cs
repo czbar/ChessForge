@@ -20,6 +20,25 @@ namespace GameTree
     /// </summary>
     public class VariationTree
     {
+        public VariationTree(GameMetadata.GameType contentType)
+        {
+            _contentType = contentType;
+        }
+
+        private GameMetadata.GameType _contentType = GameMetadata.GameType.INVALID;
+
+        public GameMetadata.GameType ContentType
+        {
+            get
+            {
+                return _contentType;
+            }
+            set
+            {
+                _contentType = value;
+            }
+        }
+
         /// <summary>
         /// The complete list of Nodes for the current Workbook.
         /// </summary>
