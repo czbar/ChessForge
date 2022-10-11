@@ -264,7 +264,7 @@ namespace ChessForge
                 for (int i = 0; i < chapter.ModelGames.Count; i++)
                 {
                     para.Inlines.Add(new Run("\n"));
-                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + chapter.ModelGames[i].Header.BuildGameHeaderLine());
+                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i+1).ToString() + ". " + chapter.ModelGames[i].Header.BuildGameHeaderLine());
                     rGame.Name = _run_model_game_ + i.ToString();
                     rGame.MouseDown += EventModelGameRunClicked;
                     para.Inlines.Add(rGame);
@@ -330,7 +330,10 @@ namespace ChessForge
                     WorkbookManager.LastClickedChapterId = chapterId;
                     if (e.ChangedButton == MouseButton.Left)
                     {
-                        _mainWin.SelectChapter(chapterId, true);
+                        if (e.ClickCount == 2)
+                        {
+                            _mainWin.SelectChapter(chapterId, true);
+                        }
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
