@@ -1,4 +1,5 @@
 ﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -498,6 +499,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabStudyTree_GotFocus(object sender, RoutedEventArgs e)
         {
+            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+            if (chapter != null)
+            {
+                chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.GameType.STUDY_TREE);
+            }
             RestoreSelectedLineAndMoveInActiveView();
         }
 
@@ -509,6 +515,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabModelGames_GotFocus(object sender, RoutedEventArgs e)
         {
+            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+            if (chapter != null)
+            {
+                chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.GameType.MODEL_GAME, chapter.ActiveModelGameIndex);
+            }
             RestoreSelectedLineAndMoveInActiveView();
         }
 
@@ -520,6 +531,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabExercises_GotFocus(object sender, RoutedEventArgs e)
         {
+            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+            if (chapter != null)
+            {
+                chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.GameType.EXERCISE, chapter.ActiveExerciseIndex);
+            }
             RestoreSelectedLineAndMoveInActiveView();
         }
 
