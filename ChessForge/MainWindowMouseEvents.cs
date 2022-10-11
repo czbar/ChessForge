@@ -483,5 +483,45 @@ namespace ChessForge
             e.Handled = true;
         }
 
+
+        //**************************************************************
+        //
+        //  VIEW FOCUS 
+        // 
+        //**************************************************************
+
+        /// <summary>
+        /// The Study Tree view got focus.
+        /// Select the last selected line and move and display position.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabStudyTree_GotFocus(object sender, RoutedEventArgs e)
+        {
+            RestoreSelectedLineAndMoveInActiveView();
+        }
+
+        /// <summary>
+        /// The Model Games view got focus.
+        /// Select the last selected line and move and display position.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabModelGames_GotFocus(object sender, RoutedEventArgs e)
+        {
+            RestoreSelectedLineAndMoveInActiveView();
+        }
+
+        /// <summary>
+        /// The Exercises view got focus.
+        /// Select the last selected line and move and display position.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabExercises_GotFocus(object sender, RoutedEventArgs e)
+        {
+            RestoreSelectedLineAndMoveInActiveView();
+        }
+
     }
 }
