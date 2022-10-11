@@ -77,6 +77,17 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Selected node.
+        /// </summary>
+        public TreeNode SelectedNode
+        {
+            get
+            {
+                return GetNodeFromNodeId(SelectedNodeId);
+            }
+        }
+
+        /// <summary>
         /// Sets the line and mode selected in the GUI.
         /// This is to persist the state while the user switches between views.
         /// </summary>
