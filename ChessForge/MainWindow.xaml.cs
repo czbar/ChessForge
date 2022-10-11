@@ -346,10 +346,34 @@ namespace ChessForge
             if (chapterId >= 0)
             {
                 WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameMetadata.GameType.STUDY_TREE);
+                ClearTabViews();
                 _chaptersView.HighlightActiveChapter();
                 SetupGuiForActiveStudyTree(focusOnStudyTree);
             }
         }
+
+        /// <summary>
+        /// Clears the TreeViews' douments in the tab control.
+        /// </summary>
+        private void ClearTabViews()
+        {
+            ClearTreeView(_studyTreeView);
+            ClearTreeView(_modelGameTreeView);
+            ClearTreeView(_exerciseTreeView);
+        }
+
+        /// <summary>
+        /// Clears the passed VariationTreeView
+        /// </summary>
+        /// <param name="view"></param>
+        private void ClearTreeView(VariationTreeView view)
+        {
+            if (view != null)
+            {
+                view.Clear();
+            }
+        }
+
 
         /// <summary>
         /// Select and activate view for the model game in the ActiveChapter
