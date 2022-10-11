@@ -408,21 +408,6 @@ namespace ChessForge
         }
 
 
-        public static void SetupGuiForTrainingBrowseMode()
-        {
-            _mainWin.Dispatcher.Invoke(() =>
-            {
-                TrainingSession.IsBrowseActive = true;
-                _mainWin.UiTabCtrlTraining.Margin = new Thickness(185, 5, 5, 5);
-                _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
-
-                _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
-                _mainWin.UiDgActiveLine.Columns[2].Visibility = Visibility.Collapsed;
-                _mainWin.UiDgActiveLine.Columns[4].Visibility = Visibility.Collapsed;
-                _mainWin.UiDgActiveLine.Width = 160;
-            });
-        }
-
         /// <summary>
         /// This will setup the GUI for the Training progress
         /// unless we are in a game mode and the focus is here because

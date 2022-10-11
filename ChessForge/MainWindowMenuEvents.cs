@@ -827,16 +827,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Training Browse tab received focus.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiTabItemTrainingBrowse_GotFocus(object sender, RoutedEventArgs e)
-        {
-            AppStateManager.SetupGuiForTrainingBrowseMode();
-        }
-
-        /// <summary>
         /// Training View received focus.
         /// </summary>
         /// <param name="sender"></param>
