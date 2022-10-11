@@ -312,22 +312,32 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Clears the document and relevant structrue.
+        /// </summary>
+        public void Clear()
+        {
+            Document.Blocks.Clear();
+
+            // resets
+            _dictNodeToRun.Clear();
+            _dictRunToParagraph.Clear();
+
+            _dictNodeToCommentRun.Clear();
+            _dictCommentRunToParagraph.Clear();
+
+            _currParagraphLevel = 0;
+        }
+
+        /// <summary>
         /// Builds the FlowDocument from the entire Workbook tree for the RichTextBox to display.
         /// Inserts dummy (no text) run for the starting position (NodeId == 0)
         /// </summary>
         public void BuildFlowDocumentForWorkbook(int rootNodeId = 0, bool includeStem = true)
         {
-            Document.Blocks.Clear();
+            Clear();
+
             _variationTree = _mainWin.ActiveVariationTree;
 
-            // resets
-            _dictNodeToRun.Clear();
-            _dictRunToParagraph.Clear();
-            
-            _dictNodeToCommentRun.Clear();
-            _dictCommentRunToParagraph.Clear();
-
-            _currParagraphLevel = 0;
 
             // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
             // and note the distances in the Nodes so that we can use them when creating the document
