@@ -180,7 +180,7 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="UiTabWorkbook"  Header="Study" >
+            <TabItem x:Name="UiTabStudyTree"  Header="Study" >
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookView_OnPreviewMouseDown">
                     <Grid.ContextMenu>
                         <ContextMenu x:Name="UiCmnWorkbookRightClick">
@@ -196,7 +196,7 @@
                             <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
                         </ContextMenu>
                     </Grid.ContextMenu>
-                    <RichTextBox x:Name="UiRtbWorkbookView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                    <RichTextBox x:Name="UiRtbStudyTreeView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbWorkbookFull_PreviewKeyDown">
                         <RichTextBox.Resources>
@@ -348,9 +348,9 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="UiTabGames"  Header="Games" >
+            <TabItem x:Name="UiTabModelGames"  Header="Games" >
                 <Grid Background="#FFE5E5E5" >
-                    <RichTextBox x:Name="UiRtbGamesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                    <RichTextBox x:Name="UiRtbModelGamesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True" >
                         <RichTextBox.Resources>

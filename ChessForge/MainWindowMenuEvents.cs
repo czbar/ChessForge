@@ -193,7 +193,7 @@ namespace ChessForge
             // prepare document
             AppStateManager.RestartInIdleMode(false);
             WorkbookManager.CreateNewWorkbook();
-            _studyTreeView = new VariationTreeView(UiRtbWorkbookView.Document, this);
+            _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this);
 
             // ask for the options
             if (!ShowWorkbookOptionsDialog())
@@ -214,7 +214,7 @@ namespace ChessForge
 
             AppStateManager.SetupGuiForCurrentStates();
             //StudyTree.CreateNew();
-            UiTabWorkbook.Focus();
+            UiTabStudyTree.Focus();
             _studyTreeView.BuildFlowDocumentForWorkbook();
             int startingNode = 0;
             string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(startingNode);
@@ -582,7 +582,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnAddBookmark_Click(object sender, RoutedEventArgs e)
         {
-            UiTabWorkbook.Focus();
+            UiTabStudyTree.Focus();
             MessageBox.Show("Right-click a move and select \"Add to Bookmarks\" from the popup-menu", "Chess Forge Training", MessageBoxButton.OK);
         }
 

@@ -754,7 +754,7 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForActiveStudyTree(bool focusOnStudyTree)
         {
-            _studyTreeView = new VariationTreeView(UiRtbWorkbookView.Document, this);
+            _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this);
             if (ActiveVariationTree.Nodes.Count == 0)
             {
                 ActiveVariationTree.CreateNew();
@@ -782,8 +782,8 @@ namespace ChessForge
 
             if (focusOnStudyTree)
             {
-                UiTabWorkbook.Focus();
-                UiRtbWorkbookView.Focus();
+                UiTabStudyTree.Focus();
+                UiRtbStudyTreeView.Focus();
             }
 
             BookmarkManager.ShowBookmarks();
@@ -799,7 +799,7 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForActiveModelGame(int gameIndex, bool focusOnModelGame)
         {
-            _modelGameTreeView = new VariationTreeView(UiRtbGamesView.Document, this);
+            _modelGameTreeView = new VariationTreeView(UiRtbModelGamesView.Document, this);
             if (ActiveVariationTree.Nodes.Count == 0)
             {
                 ActiveVariationTree.CreateNew();
@@ -827,8 +827,8 @@ namespace ChessForge
 
             if (focusOnModelGame)
             {
-                UiTabGames.Focus();
-                UiRtbGamesView.Focus();
+                UiTabModelGames.Focus();
+                UiRtbModelGamesView.Focus();
             }
 
             //BookmarkManager.ShowBookmarks();

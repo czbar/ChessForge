@@ -262,7 +262,7 @@ namespace ChessForge
             {
                 _mainWin.ActiveLine.Clear();
                 _mainWin.UiRtbChaptersView.Document.Blocks.Clear();
-                _mainWin.UiRtbWorkbookView.Document.Blocks.Clear();
+                _mainWin.UiRtbStudyTreeView.Document.Blocks.Clear();
                 _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
 
                 _mainWin.ResetEvaluationProgressBae();
@@ -502,14 +502,14 @@ namespace ChessForge
                 _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
                 _mainWin.UiTabCtrlTraining.Visibility = Visibility.Hidden;
 
-                _mainWin.UiTabWorkbook.Visibility = Visibility.Visible;
+                _mainWin.UiTabStudyTree.Visibility = Visibility.Visible;
                 _mainWin.UiTabBookmarks.Visibility = Visibility.Visible;
 
                 _mainWin.UiTabTrainingProgress.Visibility = Visibility.Hidden;
 
                 // these tabs may have been disabled for the engine game
-                _mainWin.UiRtbWorkbookView.Opacity = 1;
-                _mainWin.UiRtbWorkbookView.IsEnabled = true;
+                _mainWin.UiRtbStudyTreeView.Opacity = 1;
+                _mainWin.UiRtbStudyTreeView.IsEnabled = true;
 
                 _mainWin.UiTabBookmarks.Opacity = 1;
                 _mainWin.UiTabBookmarks.IsEnabled = true;
@@ -541,7 +541,7 @@ namespace ChessForge
                 _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
                 _mainWin.UiTabCtrlTraining.Visibility = Visibility.Visible;
 
-                _mainWin.UiTabWorkbook.Visibility = Visibility.Hidden;
+                _mainWin.UiTabStudyTree.Visibility = Visibility.Hidden;
                 _mainWin.UiTabBookmarks.Visibility = Visibility.Hidden;
 
                 _mainWin.UiTabTrainingProgress.Visibility = Visibility.Visible;
@@ -572,7 +572,7 @@ namespace ChessForge
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
 
                     _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
-                    _mainWin.UiTabWorkbook.Visibility = Visibility.Hidden;
+                    _mainWin.UiTabStudyTree.Visibility = Visibility.Hidden;
                     _mainWin.UiTabBookmarks.Visibility = Visibility.Hidden;
 
                     _mainWin.UiTabCtrlTraining.Visibility = Visibility.Visible;
@@ -589,7 +589,7 @@ namespace ChessForge
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
 
                     _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
-                    _mainWin.UiTabWorkbook.Visibility = Visibility.Visible;
+                    _mainWin.UiTabStudyTree.Visibility = Visibility.Visible;
                     _mainWin.UiTabBookmarks.Visibility = Visibility.Visible;
 
                     _mainWin.UiTabCtrlTraining.Visibility = Visibility.Hidden;
@@ -858,9 +858,9 @@ namespace ChessForge
                 {
                     _mainWin.UiTabCtrlManualReview.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
 
-                    _mainWin.UiTabWorkbook.Focus();
-                    _mainWin.UiRtbWorkbookView.Opacity = 0.1;
-                    _mainWin.UiRtbWorkbookView.IsEnabled = false;
+                    _mainWin.UiTabStudyTree.Focus();
+                    _mainWin.UiRtbStudyTreeView.Opacity = 0.1;
+                    _mainWin.UiRtbStudyTreeView.IsEnabled = false;
 
                     _mainWin.UiTabBookmarks.Opacity = 0.1;
                     _mainWin.UiTabBookmarks.IsEnabled = false;
