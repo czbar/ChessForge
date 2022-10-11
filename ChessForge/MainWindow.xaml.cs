@@ -71,6 +71,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the selections in the ActiveTreeView as they were stored last.
+        /// </summary>
+        public void RestoreSelectedLineAndMoveInActiveView()
+        {
+            ActiveTreeView.SelectLineAndMove(WorkbookManager.SessionWorkbook.ActiveVariationTree.SelectedLineId, WorkbookManager.SessionWorkbook.ActiveVariationTree.SelectedNodeId);
+            DisplayPosition(WorkbookManager.SessionWorkbook.ActiveVariationTree.SelectedNode);
+        }
+
+        /// <summary>
         /// The RichTextBox based Chapters view
         /// </summary>
         private ChaptersView _chaptersView;
@@ -769,15 +778,15 @@ namespace ChessForge
             string startLineId;
             int startNodeId = 0;
 
-            if (!string.IsNullOrEmpty(ActiveVariationTree.SelectedLineId) && ActiveVariationTree.SelectedNodeId >= 0)
-            {
-                startLineId = ActiveVariationTree.SelectedLineId;
-                startNodeId = ActiveVariationTree.SelectedNodeId;
-            }
-            else
-            {
+            //if (!string.IsNullOrEmpty(ActiveVariationTree.SelectedLineId) && ActiveVariationTree.SelectedNodeId >= 0)
+            //{
+            //    startLineId = ActiveVariationTree.SelectedLineId;
+            //    startNodeId = ActiveVariationTree.SelectedNodeId;
+            //}
+            //else
+            //{
                 startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
-            }
+            //}
             SetActiveLine(startLineId, startNodeId);
 
             if (focusOnStudyTree)
@@ -1488,6 +1497,5 @@ namespace ChessForge
                 BoardShapesManager.CancelShapeDraw(true);
             }
         }
-
     }
 }
