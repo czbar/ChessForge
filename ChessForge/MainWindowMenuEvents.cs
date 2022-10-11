@@ -371,7 +371,7 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
             if (chapter != null && ShowChapterTitleDialog(chapter))
             {
-                SetupGuiForActiveStudyTree(false);
+//                SetupGuiForActiveStudyTree(false);
                 AppStateManager.IsDirty = true;
             }
         }
