@@ -47,7 +47,7 @@ namespace ChessPosition
         /// <summary>
         /// Position in the FEN format.
         /// </summary>
-        public const string KEY_FEN_STRING = "Fen";
+        public const string KEY_FEN_STRING = "FEN";
 
         /// <summary>
         /// The number of a chapter. The same number may appear in multiple
