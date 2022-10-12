@@ -18,7 +18,7 @@ namespace GameTree
         // id of the node currently being processed
         private int _runningNodeId = 0;
 
-        // the workbook for which this parser was called
+        // the tree for which this parser was called
         private VariationTree _tree;
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace GameTree
         /// <summary>
         /// The constructor takes the entire game notation as a string.
         /// </summary>
-        /// <param name="workbook"></param>
-        public PgnGameParser(string pgnGametext, VariationTree workbook, out bool multiGame, bool debugMode = false)
+        /// <param name="tree"></param>
+        public PgnGameParser(string pgnGametext, VariationTree tree, out bool multiGame, bool debugMode = false)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace GameTree
                     DEBUG_MODE = true;
                 }
 
-                ProcessPgnGameText(workbook, pgnGametext);
+                ProcessPgnGameText(tree, pgnGametext);
 
                 if (_remainingGameText.IndexOf("[White") >= 0)
                 {
@@ -93,13 +93,13 @@ namespace GameTree
         /// This method may be invoked to process another game in the 
         /// file in which we have already processed the first game. 
         /// </summary>
-        /// <param name="workbook"></param>
-        private void ProcessPgnGameText(VariationTree workbook, string pgnGametext, string fen = null)
+        /// <param name="tree"></param>
+        private void ProcessPgnGameText(VariationTree tree, string pgnGametext, string fen = null)
         {
-            _tree = workbook;
+            _tree = tree;
             _runningNodeId = 0;
             _remainingGameText = ReadHeaders(pgnGametext);
-            ParsePgnTreeText(workbook, fen);
+            ParsePgnTreeText(tree, fen);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace GameTree
 
         /// <summary>
         /// Checks if the passed string matches any of the
-        /// strings that mark the end of the game/workbook text.
+        /// strings that mark the end of the game/tree text.
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
@@ -254,8 +254,8 @@ namespace GameTree
         /// Parses a branch of the tree.
         /// </summary>
         /// <param name="parentNode"></param>
-        /// <param name="workbook"></param>
-        private void ParseBranch(TreeNode parentNode, VariationTree workbook)
+        /// <param name="tree"></param>
+        private void ParseBranch(TreeNode parentNode, VariationTree tree)
         {
             string token;
 
@@ -272,7 +272,7 @@ namespace GameTree
                 {
                     // if this is a new branch then invoke this method again
                     case PgnTokenType.BranchStart:
-                        ParseBranch(previousNode, workbook);
+                        ParseBranch(previousNode, tree);
                         break;
                     case PgnTokenType.BranchEnd:
                         return;
@@ -287,7 +287,7 @@ namespace GameTree
                         parentNode.AddChild(newNode);
                         previousNode = parentNode;
                         parentNode = newNode;
-                        workbook.AddNode(parentNode);
+                        tree.AddNode(parentNode);
                         //if (DEBUG_MODE)
                         //{
                         //    DebugUtils.PrintPosition(newNode.Position);
@@ -299,7 +299,7 @@ namespace GameTree
                         break;
                     case PgnTokenType.NAG:
                         // add to the last processed move
-                        AddNAGtoLastMove(workbook, token);
+                        AddNAGtoLastMove(tree, token);
                         break;
                 }
             }
@@ -308,11 +308,11 @@ namespace GameTree
         /// <summary>
         /// Adds an encountered NAG character to the last processed move.
         /// </summary>
-        /// <param name="workbook"></param>
+        /// <param name="tree"></param>
         /// <param name="nag"></param>
-        private void AddNAGtoLastMove(VariationTree workbook, string nag)
+        private void AddNAGtoLastMove(VariationTree tree, string nag)
         {
-            TreeNode nd = workbook.Nodes[workbook.Nodes.Count - 1];
+            TreeNode nd = tree.Nodes[tree.Nodes.Count - 1];
             nd.AddNag(nag);
         }
 
