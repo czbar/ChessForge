@@ -398,6 +398,18 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Select and activate view for the exercise in the ActiveChapter
+        /// at the passed index.
+        /// </summary>
+        /// <param name="gameIndex"></param>
+        public void SelectExercise(int gameIndex)
+        {
+            WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = gameIndex;
+            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.GameType.EXERCISE, gameIndex);
+            SetupGuiForActiveExercise(gameIndex, true);
+        }
+
+        /// <summary>
         /// Creates menu items for the Recent Files and 
         /// adds them to the File menu.
         /// </summary>
@@ -893,6 +905,58 @@ namespace ChessForge
 
             int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
             SelectLineAndMoveInWorkbookViews(_modelGameTreeView, startLineId, nodeIndex);
+        }
+
+        /// <summary>
+        /// Sets up the data and GUI for the ActiveTree of Exercise Game.
+        /// This method will be called e.g. when opening a new
+        /// Workbook and initializing the view.
+        /// </summary>
+        public void SetupGuiForActiveExercise(int gameIndex, bool focusOnExercise)
+        {
+            _exerciseTreeView = new VariationTreeView(UiRtbExercisesView.Document, this);
+            if (ActiveVariationTree.Nodes.Count == 0)
+            {
+                ActiveVariationTree.CreateNew();
+            }
+            else
+            {
+                ActiveVariationTree.BuildLines();
+            }
+
+            _exerciseTreeView.BuildFlowDocumentForWorkbook();
+
+            string startLineId;
+            int startNodeId = 0;
+
+            if (!string.IsNullOrEmpty(ActiveVariationTree.SelectedLineId) && ActiveVariationTree.SelectedNodeId >= 0)
+            {
+                startLineId = ActiveVariationTree.SelectedLineId;
+                startNodeId = ActiveVariationTree.SelectedNodeId;
+            }
+            else
+            {
+                startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
+            }
+
+            ActiveVariationTree.SelectedLineId = startLineId;
+            ActiveVariationTree.SelectedNodeId = startNodeId;
+
+            if (focusOnExercise)
+            {
+                UiTabExercises.Focus();
+                UiRtbExercisesView.Focus();
+            }
+            else
+            {
+                // in the above branch this will be executed by the Focus() methods.
+                SetActiveLine(startLineId, startNodeId);
+            }
+
+            //BookmarkManager.ShowBookmarks();
+
+            int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
+            SelectLineAndMoveInWorkbookViews(_exerciseTreeView, startLineId, nodeIndex);
         }
 
         /// <summary>

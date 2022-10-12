@@ -427,6 +427,21 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportModelGames_Click(object sender, RoutedEventArgs e)
         {
+            ImportGamesFromPgn(GameMetadata.GameType.MODEL_GAME);
+        }
+
+        /// <summary>
+        /// Requests import of Exercises from a PGN file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnImportExercises_Click(object sender, RoutedEventArgs e)
+        {
+            ImportGamesFromPgn(GameMetadata.GameType.EXERCISE);
+        }
+
+        private void ImportGamesFromPgn(GameMetadata.GameType contentType)
+        {
             if (WorkbookManager.SessionWorkbook.ActiveChapter != null)
             {
                 string fileName = SelectPgnFile();
@@ -453,7 +468,7 @@ namespace ChessForge
                                     {
                                         try
                                         {
-                                            chapter.AddGame(games[i], GameMetadata.GameType.MODEL_GAME);
+                                            chapter.AddGame(games[i], contentType);
                                             AppStateManager.IsDirty = true;
                                         }
                                         catch (Exception ex)
@@ -464,8 +479,16 @@ namespace ChessForge
                                     }
                                 }
 
-                                chapter.IsViewExpanded= true;
-                                chapter.IsModelGamesListExpanded = true;
+                                chapter.IsViewExpanded = true;
+                                switch (contentType)
+                                {
+                                    case GameMetadata.GameType.MODEL_GAME:
+                                        chapter.IsModelGamesListExpanded = true;
+                                        break;
+                                    case GameMetadata.GameType.EXERCISE:
+                                        chapter.IsExercisesListExpanded = true;
+                                        break;
+                                }
 
                                 _chaptersView.RebuildChapterParagraph(WorkbookManager.SessionWorkbook.ActiveChapter);
                             }
@@ -487,15 +510,6 @@ namespace ChessForge
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Requests import of Exercises from a PGN file
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnImportExercises_Click(object sender, RoutedEventArgs e)
-        {
         }
 
         /// <summary>
