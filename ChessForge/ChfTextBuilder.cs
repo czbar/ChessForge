@@ -190,6 +190,7 @@ namespace ChessForge
                 sbOutput.AppendLine();
                 sbOutput.AppendLine();
 
+                sb.Clear();
                 _fileText.Clear();
             }
 

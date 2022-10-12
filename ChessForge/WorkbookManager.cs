@@ -309,7 +309,6 @@ namespace ChessForge
         /// </summary>
         private static void ProcessGames(ref ObservableCollection<GameMetadata> GameList)
         {
-            int? chapterNo = null;
             Chapter chapter = null;
 
             for (int i = 1; i < GameList.Count; i++)
@@ -318,20 +317,20 @@ namespace ChessForge
 
                 GameMetadata.GameType contentType = gm.GetContentType();
                 string sChapter = gm.Header.GetChapterId();
-                if (IsNextChapter(chapter, i, chapterNo, sChapter, ref GameList))
+                if (IsNextChapter(chapter, i, sChapter, ref GameList))
                 {
                     chapter = SessionWorkbook.CreateNewChapter();
-                    try
-                    {
-                        chapter.AddGame(gm);
-                    }
-                    catch (Exception ex)
-                    {
-                        //TODO: report errors
-                    }
+                    chapter.Title = gm.Header.GetChapterTitle();
                 }
-                string sChapterTitle = gm.Header.GetChapterTitle();
-                chapter.Title = sChapterTitle;
+
+                try
+                {
+                    chapter.AddGame(gm);
+                }
+                catch (Exception ex)
+                {
+                    //TODO: report errors
+                }
             }
         }
 
@@ -349,10 +348,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="gameIndex"></param>
-        /// <param name="chapterNumber"></param>
         /// <param name="sChapterNumber"></param>
         /// <returns></returns>
-        private static bool IsNextChapter(Chapter chapter, int gameIndex, int? chapterNumber, string sChapterNumber, ref ObservableCollection<GameMetadata> GameList)
+        private static bool IsNextChapter(Chapter chapter, int gameIndex, string sChapterNumber, ref ObservableCollection<GameMetadata> GameList)
         {
             if (chapter == null || GameList[gameIndex].IsStudyTree() && chapter.StudyTree != null)
             {
@@ -361,7 +359,7 @@ namespace ChessForge
 
             if (int.TryParse(sChapterNumber, out int no))
             {
-                return no != chapterNumber;
+                return no != chapter.Id;
             }
             else
             {

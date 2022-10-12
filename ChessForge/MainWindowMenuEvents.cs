@@ -193,7 +193,7 @@ namespace ChessForge
             // prepare document
             AppStateManager.RestartInIdleMode(false);
             WorkbookManager.CreateNewWorkbook();
-            _studyTreeView = new VariationTreeView(UiRtbWorkbookView.Document, this);
+            _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this);
 
             // ask for the options
             if (!ShowWorkbookOptionsDialog())
@@ -214,7 +214,7 @@ namespace ChessForge
 
             AppStateManager.SetupGuiForCurrentStates();
             //StudyTree.CreateNew();
-            UiTabWorkbook.Focus();
+            UiTabStudyTree.Focus();
             _studyTreeView.BuildFlowDocumentForWorkbook();
             int startingNode = 0;
             string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(startingNode);
@@ -371,7 +371,7 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
             if (chapter != null && ShowChapterTitleDialog(chapter))
             {
-                SetupGuiForActiveStudyTree(false);
+//                SetupGuiForActiveStudyTree(false);
                 AppStateManager.IsDirty = true;
             }
         }
@@ -582,7 +582,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnAddBookmark_Click(object sender, RoutedEventArgs e)
         {
-            UiTabWorkbook.Focus();
+            UiTabStudyTree.Focus();
             MessageBox.Show("Right-click a move and select \"Add to Bookmarks\" from the popup-menu", "Chess Forge Training", MessageBoxButton.OK);
         }
 
@@ -827,16 +827,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Training Browse tab received focus.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiTabItemTrainingBrowse_GotFocus(object sender, RoutedEventArgs e)
-        {
-            AppStateManager.SetupGuiForTrainingBrowseMode();
-        }
-
-        /// <summary>
         /// Training View received focus.
         /// </summary>
         /// <param name="sender"></param>
@@ -983,6 +973,16 @@ namespace ChessForge
             {
                 UiMnWorkbookSave_Click(sender, e);
             }
+        }
+
+        /// <summary>
+        /// Calls the Internet browser to open the ChessForge Wiki page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnHelpWiki_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki");
         }
 
     }

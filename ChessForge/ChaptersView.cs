@@ -254,7 +254,7 @@ namespace ChessForge
         {
             para.Inlines.Add(new Run("\n"));
             para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT));
-            InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
+            InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.Id, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
             Run r = CreateRun(STYLE_SUBHEADER, "Model Games");
             r.Name = _run_model_games_header_;
             para.Inlines.Add(r);
@@ -264,7 +264,7 @@ namespace ChessForge
                 for (int i = 0; i < chapter.ModelGames.Count; i++)
                 {
                     para.Inlines.Add(new Run("\n"));
-                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + chapter.ModelGames[i].Header.BuildGameHeaderLine());
+                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i+1).ToString() + ". " + chapter.ModelGames[i].Header.BuildGameHeaderLine());
                     rGame.Name = _run_model_game_ + i.ToString();
                     rGame.MouseDown += EventModelGameRunClicked;
                     para.Inlines.Add(rGame);
@@ -281,13 +281,13 @@ namespace ChessForge
         /// <param name="isExpanded"></param>
         /// <param name="hasContent"></param>
         /// <returns></returns>
-        private Run InsertExpandCollapseSymbolRun(Paragraph para, string prefix, bool isExpanded, bool hasContent)
+        private Run InsertExpandCollapseSymbolRun(Paragraph para, string prefix, int chapterId, bool isExpanded, bool hasContent)
         {
             if (hasContent)
             {
                 char expandCollapse = isExpanded ? Constants.CharCollapse : Constants.CharExpand;
                 Run rExpandChar = CreateRun(STYLE_SUBHEADER, expandCollapse.ToString() + " ");
-                rExpandChar.Name = prefix + WorkbookManager.SessionWorkbook.ActiveChapter.Id;
+                rExpandChar.Name = prefix + chapterId;
                 rExpandChar.MouseDown += EventModelGamesExpandSymbolClicked;
                 para.Inlines.Add(rExpandChar);
 
@@ -330,7 +330,10 @@ namespace ChessForge
                     WorkbookManager.LastClickedChapterId = chapterId;
                     if (e.ChangedButton == MouseButton.Left)
                     {
-                        _mainWin.SelectChapter(chapterId, true);
+                        if (e.ClickCount == 2)
+                        {
+                            _mainWin.SelectChapter(chapterId, true);
+                        }
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {

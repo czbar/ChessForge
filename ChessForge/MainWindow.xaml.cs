@@ -71,6 +71,25 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the selections in the ActiveTreeView as they were stored last.
+        /// </summary>
+        public void RestoreSelectedLineAndMoveInActiveView()
+        {
+            VariationTree tree = WorkbookManager.SessionWorkbook.ActiveVariationTree;
+            if (tree != null)
+            {
+                string lineId = tree.SelectedLineId;
+                int nodeId = tree.SelectedNodeId;
+                ActiveTreeView.SelectLineAndMove(lineId, nodeId);
+
+                ObservableCollection<TreeNode> lineToSelect = tree.SelectLine(lineId);
+                SetActiveLine(lineToSelect, nodeId);
+
+                DisplayPosition(tree.SelectedNode);
+            }
+        }
+
+        /// <summary>
         /// The RichTextBox based Chapters view
         /// </summary>
         private ChaptersView _chaptersView;
@@ -337,10 +356,34 @@ namespace ChessForge
             if (chapterId >= 0)
             {
                 WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameMetadata.GameType.STUDY_TREE);
+                ClearTabViews();
                 _chaptersView.HighlightActiveChapter();
                 SetupGuiForActiveStudyTree(focusOnStudyTree);
             }
         }
+
+        /// <summary>
+        /// Clears the TreeViews' douments in the tab control.
+        /// </summary>
+        private void ClearTabViews()
+        {
+            ClearTreeView(_studyTreeView);
+            ClearTreeView(_modelGameTreeView);
+            ClearTreeView(_exerciseTreeView);
+        }
+
+        /// <summary>
+        /// Clears the passed VariationTreeView
+        /// </summary>
+        /// <param name="view"></param>
+        private void ClearTreeView(VariationTreeView view)
+        {
+            if (view != null)
+            {
+                view.Clear();
+            }
+        }
+
 
         /// <summary>
         /// Select and activate view for the model game in the ActiveChapter
@@ -349,6 +392,7 @@ namespace ChessForge
         /// <param name="gameIndex"></param>
         public void SelectModelGame(int gameIndex)
         {
+            WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
             WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.GameType.MODEL_GAME, gameIndex);
             SetupGuiForActiveModelGame(gameIndex, true);
         }
@@ -754,7 +798,7 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForActiveStudyTree(bool focusOnStudyTree)
         {
-            _studyTreeView = new VariationTreeView(UiRtbWorkbookView.Document, this);
+            _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this);
             if (ActiveVariationTree.Nodes.Count == 0)
             {
                 ActiveVariationTree.CreateNew();
@@ -769,21 +813,28 @@ namespace ChessForge
             string startLineId;
             int startNodeId = 0;
 
-            if (!string.IsNullOrEmpty(ActiveVariationTree.SelectedLineId) && ActiveVariationTree.SelectedNodeId >= 0)
-            {
-                startLineId = ActiveVariationTree.SelectedLineId;
-                startNodeId = ActiveVariationTree.SelectedNodeId;
-            }
-            else
-            {
-                startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
-            }
-            SetActiveLine(startLineId, startNodeId);
+            //if (!string.IsNullOrEmpty(ActiveVariationTree.SelectedLineId) && ActiveVariationTree.SelectedNodeId >= 0)
+            //{
+            //    startLineId = ActiveVariationTree.SelectedLineId;
+            //    startNodeId = ActiveVariationTree.SelectedNodeId;
+            //}
+            //else
+            //{
+            startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
+            //}
+
+            ActiveVariationTree.SelectedLineId = startLineId;
+            ActiveVariationTree.SelectedNodeId = startNodeId;
 
             if (focusOnStudyTree)
             {
-                UiTabWorkbook.Focus();
-                UiRtbWorkbookView.Focus();
+                UiTabStudyTree.Focus();
+                UiRtbStudyTreeView.Focus();
+            }
+            else
+            {
+                // in the above branch this will be executed by the Focus() methods.
+                SetActiveLine(startLineId, startNodeId);
             }
 
             BookmarkManager.ShowBookmarks();
@@ -799,7 +850,7 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForActiveModelGame(int gameIndex, bool focusOnModelGame)
         {
-            _modelGameTreeView = new VariationTreeView(UiRtbGamesView.Document, this);
+            _modelGameTreeView = new VariationTreeView(UiRtbModelGamesView.Document, this);
             if (ActiveVariationTree.Nodes.Count == 0)
             {
                 ActiveVariationTree.CreateNew();
@@ -823,12 +874,19 @@ namespace ChessForge
             {
                 startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
             }
-            SetActiveLine(startLineId, startNodeId);
+
+            ActiveVariationTree.SelectedLineId = startLineId;
+            ActiveVariationTree.SelectedNodeId = startNodeId;
 
             if (focusOnModelGame)
             {
-                UiTabGames.Focus();
-                UiRtbGamesView.Focus();
+                UiTabModelGames.Focus();
+                UiRtbModelGamesView.Focus();
+            }
+            else
+            {
+                // in the above branch this will be executed by the Focus() methods.
+                SetActiveLine(startLineId, startNodeId);
             }
 
             //BookmarkManager.ShowBookmarks();
@@ -1488,6 +1546,5 @@ namespace ChessForge
                 BoardShapesManager.CancelShapeDraw(true);
             }
         }
-
     }
 }

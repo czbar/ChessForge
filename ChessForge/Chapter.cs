@@ -24,6 +24,12 @@ namespace ChessForge
         // VariationTree to be used when this chapter becomes active.
         private VariationTree _activeTree;
 
+        // index of the currently shown game in the Model Games list
+        private int _activeModelGameIndex = -1;
+
+        // index of the currently shown exercise in the Exercises list
+        private int _activeExerciseIndex = -1;
+
         // whether the chapter is expanded in the ChaptersView
         private bool _isViewExpanded;
 
@@ -32,6 +38,26 @@ namespace ChessForge
 
         // whether the Exercises list is expanded in the ChaptersView
         private bool _isExercisesListExpanded;
+
+        /// <summary>
+        // Index of the currently shown Game in the Model Games list
+        /// </summary>
+        public int ActiveModelGameIndex
+        {
+            get => _activeModelGameIndex; 
+            set => _activeModelGameIndex = value;
+        }
+
+
+        /// <summary>
+        // Index of the currently shown Exercise in the Exercises list
+        /// </summary>
+        public int ActiveExerciseIndex
+        {
+            get => _activeExerciseIndex;
+            set => _activeExerciseIndex = value;
+        }
+
 
         /// <summary>
         /// Returns Tree "active" in this chapter.

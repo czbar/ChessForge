@@ -349,10 +349,13 @@ namespace ChessForge
         /// <param name="pos"></param>
         public void DisplayPosition(TreeNode node)
         {
-            DisplayedNode = node;
+            if (node != null)
+            {
+                DisplayedNode = node;
 
-            _position = new BoardPosition(node.Position);
-            DisplayPosition(node, node.Position);
+                _position = new BoardPosition(node.Position);
+                DisplayPosition(node, node.Position);
+            }
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -481,6 +482,61 @@ namespace ChessForge
             }
 
             e.Handled = true;
+        }
+
+
+        //**************************************************************
+        //
+        //  VIEW FOCUS 
+        // 
+        //**************************************************************
+
+        /// <summary>
+        /// The Study Tree view got focus.
+        /// Select the last selected line and move and display position.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabStudyTree_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+            if (chapter != null)
+            {
+                chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.GameType.STUDY_TREE);
+            }
+            RestoreSelectedLineAndMoveInActiveView();
+        }
+
+        /// <summary>
+        /// The Model Games view got focus.
+        /// Select the last selected line and move and display position.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabModelGames_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+            if (chapter != null)
+            {
+                chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.GameType.MODEL_GAME, chapter.ActiveModelGameIndex);
+            }
+            RestoreSelectedLineAndMoveInActiveView();
+        }
+
+        /// <summary>
+        /// The Exercises view got focus.
+        /// Select the last selected line and move and display position.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabExercises_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+            if (chapter != null)
+            {
+                chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.GameType.EXERCISE, chapter.ActiveExerciseIndex);
+            }
+            RestoreSelectedLineAndMoveInActiveView();
         }
 
     }
