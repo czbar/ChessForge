@@ -338,6 +338,11 @@ namespace ChessForge
 
             _variationTree = _mainWin.ActiveVariationTree;
 
+            Paragraph titlePara = BuildPageHeader();
+            if (titlePara != null)
+            {
+                Document.Blocks.Add(titlePara);
+            }
 
             // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
             // and note the distances in the Nodes so that we can use them when creating the document
@@ -370,6 +375,46 @@ namespace ChessForge
 
             RemoveEmptyParagraphs();
         }
+
+        /// <summary>
+        /// Builds the top paragraph for the page if applicable.
+        /// </summary>
+        /// <returns></returns>
+        private Paragraph BuildPageHeader()
+        {
+            Paragraph para = null;
+
+            if (_variationTree != null)
+            {
+                if (_variationTree.Header.GetContentType(out _) == PgnHeaders.VALUE_MODEL_GAME)
+                {
+                    para = CreateParagraph("0");
+
+                    Run rWhiteSquare = CreateRun("0", (Constants.CharWhiteSquare.ToString() + " "));
+                    rWhiteSquare.FontWeight = FontWeights.Normal;
+                    para.Inlines.Add(rWhiteSquare);
+
+                    Run rWhite = CreateRun("0", (_variationTree.Header.GetWhitePlayer(out _) ?? "NN") + "\n");
+                    para.Inlines.Add(rWhite);
+
+                    Run rBlackSquare = CreateRun("0", (Constants.CharBlackSquare.ToString() + " "));
+                    rBlackSquare.FontWeight = FontWeights.Normal;
+                    para.Inlines.Add(rBlackSquare);
+
+                    Run rBlack = CreateRun("0", (_variationTree.Header.GetBlackPlayer(out _) ?? "NN") + "\n");
+                    para.Inlines.Add(rBlack);
+
+                    if (!string.IsNullOrEmpty(_variationTree.Header.GetEventName(out _)))
+                    {
+                        Run rEvent = CreateRun("1", "    " + _variationTree.Header.GetEventName(out _) + "\n");
+                        para.Inlines.Add(rEvent);
+                    }
+                }
+            }
+
+            return para;
+        }
+
 
         /// <summary>
         /// Traverses the tree back from each leaf populating the DistanceToFork
