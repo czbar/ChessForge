@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using ChessPosition;
+using System;
 using System.IO;
+using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using ChessPosition;
-using System.Windows;
 
 namespace GameTree
 {
@@ -62,7 +59,7 @@ namespace GameTree
                     DEBUG_MODE = true;
                 }
 
-                ProcessRemainingGameText(workbook, pgnGametext);
+                ProcessPgnGameText(workbook, pgnGametext);
 
                 if (_remainingGameText.IndexOf("[White") >= 0)
                 {
@@ -80,11 +77,11 @@ namespace GameTree
         /// </summary>
         /// <param name="pgnGametext"></param>
         /// <param name="gameTree"></param>
-        public PgnGameParser(string pgnGametext, VariationTree gameTree)
+        public PgnGameParser(string pgnGametext, VariationTree gameTree, string fen = null)
         {
             try
             {
-                ProcessRemainingGameText(gameTree, pgnGametext);
+                ProcessPgnGameText(gameTree, pgnGametext, fen);
             }
             catch (Exception ex)
             {
@@ -97,12 +94,12 @@ namespace GameTree
         /// file in which we have already processed the first game. 
         /// </summary>
         /// <param name="workbook"></param>
-        private void ProcessRemainingGameText(VariationTree workbook, string pgnGametext)
+        private void ProcessPgnGameText(VariationTree workbook, string pgnGametext, string fen = null)
         {
             _tree = workbook;
             _runningNodeId = 0;
             _remainingGameText = ReadHeaders(pgnGametext);
-            ParseWorkbookText(workbook);
+            ParsePgnTreeText(workbook, fen);
         }
 
         /// <summary>
@@ -195,15 +192,22 @@ namespace GameTree
         /// "N..." where N is the last White move number.
         /// Branches can be found after any move and are surrounded by parenthesis '(' and ')'.
         /// </summary>
-        /// <param name="workbook"></param>
-        private void ParseWorkbookText(VariationTree workbook)
+        /// <param name="tree"></param>
+        private void ParsePgnTreeText(VariationTree tree, string fen)
         {
             // create a root node
             TreeNode rootNode = new TreeNode(null, "", _runningNodeId);
             _runningNodeId++;
 
-            rootNode.Position = PositionUtils.SetupStartingPosition();
-            workbook.AddNode(rootNode);
+            if (string.IsNullOrEmpty(fen))
+            {
+                rootNode.Position = PositionUtils.SetupStartingPosition();
+            }
+            else
+            {
+                FenParser.ParseFenIntoBoard(fen, ref rootNode.Position);
+            }
+            tree.AddNode(rootNode);
 
             if (DEBUG_MODE)
             {
@@ -211,7 +215,7 @@ namespace GameTree
             }
 
             //TreeNode
-            ParseBranch(rootNode, workbook);
+            ParseBranch(rootNode, tree);
         }
 
         /// <summary>
