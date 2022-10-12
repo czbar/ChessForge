@@ -126,7 +126,8 @@ namespace GameTree
 
                     if (!readingHeaders)
                     {
-                        sb.Append(line + " ");
+//                        sb.Append(line + " ");
+                        sb.Append(line);
                     }
                 }
             }
@@ -564,12 +565,12 @@ namespace GameTree
             else
             {
                 // go to the next space or closing parenthesis or a dot
-                while (_remainingGameText[charPos] != ' ' && _remainingGameText[charPos] != ')' && _remainingGameText[charPos] != '.' && charPos < _remainingGameText.Length)
+                while (charPos < _remainingGameText.Length && _remainingGameText[charPos] != ' ' && _remainingGameText[charPos] != ')' && _remainingGameText[charPos] != '.')
                 {
                     charPos++;
                 }
                 // if the last was a dot, check if there are more dots
-                if (_remainingGameText[charPos] == '.')
+                if (charPos < _remainingGameText.Length && _remainingGameText[charPos] == '.')
                 {
                     while (_remainingGameText[charPos] == '.' && charPos < _remainingGameText.Length)
                     {
