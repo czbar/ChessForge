@@ -207,7 +207,7 @@ namespace ChessForge
         public void AddGame(GameMetadata gm, GameMetadata.GameType typ = GameType.INVALID)
         {
             VariationTree tree = new VariationTree(typ);
-            PgnGameParser pp = new PgnGameParser(gm.GameText, tree);
+            PgnGameParser pp = new PgnGameParser(gm.GameText, tree, gm.Header.GetFenString());
             tree.Header = gm.Header;
 
             if (typ == GameType.INVALID)

@@ -34,7 +34,7 @@ namespace ChessForge
         private static readonly string STYLE_MODEL_GAME = "model_game";
         private static readonly string STYLE_EXERCISE = "exercise";
 
-        private const string SUBHEADER_INDENT        = "        ";
+        private const string SUBHEADER_INDENT = "        ";
         private const string SUBHEADER_DOUBLE_INDENT = "            ";
 
         /// <summary>
@@ -216,9 +216,9 @@ namespace ChessForge
 
                 if (chapter.IsViewExpanded)
                 {
-                    InsertStudyRun(para);
+                    InsertStudyRun(para, chapter);
                     InsertModelGamesRuns(para, chapter);
-                    InsertExercisesRun(para, chapter);
+                    InsertExercisesRuns(para, chapter);
                 }
 
                 return para;
@@ -235,11 +235,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="para"></param>
         /// <returns></returns>
-        private Run InsertStudyRun(Paragraph para)
+        private Run InsertStudyRun(Paragraph para, Chapter chapter)
         {
             para.Inlines.Add(new Run("\n"));
             Run r = CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT + "Study Tree");
-            r.Name = _run_study_tree_;
+            r.Name = _run_study_tree_ + chapter.Id.ToString();
+            r.MouseDown += EventStudyTreeRunClicked;
             para.Inlines.Add(r);
             return r;
         }
@@ -254,7 +255,7 @@ namespace ChessForge
         {
             para.Inlines.Add(new Run("\n"));
             para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT));
-            InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.Id, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
+            InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.Id, GameMetadata.GameType.MODEL_GAME, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
             Run r = CreateRun(STYLE_SUBHEADER, "Model Games");
             r.Name = _run_model_games_header_;
             para.Inlines.Add(r);
@@ -264,9 +265,39 @@ namespace ChessForge
                 for (int i = 0; i < chapter.ModelGames.Count; i++)
                 {
                     para.Inlines.Add(new Run("\n"));
-                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i+1).ToString() + ". " + chapter.ModelGames[i].Header.BuildGameHeaderLine());
+                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.ModelGames[i].Header.BuildGameHeaderLine());
                     rGame.Name = _run_model_game_ + i.ToString();
                     rGame.MouseDown += EventModelGameRunClicked;
+                    para.Inlines.Add(rGame);
+                }
+            }
+
+            return r;
+        }
+
+        /// <summary>
+        /// Inserts the Exercise subheader
+        /// and Exercise titles
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        private Run InsertExercisesRuns(Paragraph para, Chapter chapter)
+        {
+            para.Inlines.Add(new Run("\n"));
+            para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT));
+            InsertExpandCollapseSymbolRun(para, _run_exercises_expand_char_, chapter.Id, GameMetadata.GameType.EXERCISE, chapter.IsExercisesListExpanded, chapter.HasAnyExercise);
+            Run r = CreateRun(STYLE_SUBHEADER, "Exercises");
+            r.Name = _run_exercises_header_;
+            para.Inlines.Add(r);
+
+            if (chapter.IsExercisesListExpanded)
+            {
+                for (int i = 0; i < chapter.Exercises.Count; i++)
+                {
+                    para.Inlines.Add(new Run("\n"));
+                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.Exercises[i].Header.BuildGameHeaderLine());
+                    rGame.Name = _run_exercise_ + i.ToString();
+                    rGame.MouseDown += EventExerciseRunClicked;
                     para.Inlines.Add(rGame);
                 }
             }
@@ -281,14 +312,23 @@ namespace ChessForge
         /// <param name="isExpanded"></param>
         /// <param name="hasContent"></param>
         /// <returns></returns>
-        private Run InsertExpandCollapseSymbolRun(Paragraph para, string prefix, int chapterId, bool isExpanded, bool hasContent)
+        private Run InsertExpandCollapseSymbolRun(Paragraph para, string prefix, int chapterId, GameMetadata.GameType contentType, bool isExpanded, bool hasContent)
         {
             if (hasContent)
             {
                 char expandCollapse = isExpanded ? Constants.CharCollapse : Constants.CharExpand;
                 Run rExpandChar = CreateRun(STYLE_SUBHEADER, expandCollapse.ToString() + " ");
                 rExpandChar.Name = prefix + chapterId;
-                rExpandChar.MouseDown += EventModelGamesExpandSymbolClicked;
+                switch (contentType)
+                {
+                    case GameMetadata.GameType.MODEL_GAME:
+                        rExpandChar.MouseDown += EventModelGamesExpandSymbolClicked;
+                        break;
+                    case GameMetadata.GameType.EXERCISE:
+                        rExpandChar.MouseDown += EventExercisesExpandSymbolClicked;
+                        break;
+                }
+
                 para.Inlines.Add(rExpandChar);
 
                 return rExpandChar;
@@ -297,21 +337,6 @@ namespace ChessForge
             {
                 return null;
             }
-        }
-
-        /// <summary>
-        /// Inserts the Model Games subheader
-        /// and model games titles
-        /// </summary>
-        /// <param name="para"></param>
-        /// <returns></returns>
-        private Run InsertExercisesRun(Paragraph para, Chapter chapter)
-        {
-            para.Inlines.Add(new Run("\n"));
-            Run r = CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT + "Exercises");
-            r.Name = _run_exercises_header_;
-            para.Inlines.Add(r);
-            return r;
         }
 
         /// <summary>
@@ -327,12 +352,17 @@ namespace ChessForge
                 int chapterId = GetNodeIdFromRunName(r.Name, _run_chapter_title_);
                 if (chapterId >= 0)
                 {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
                     WorkbookManager.LastClickedChapterId = chapterId;
                     if (e.ChangedButton == MouseButton.Left)
                     {
                         if (e.ClickCount == 2)
                         {
                             _mainWin.SelectChapter(chapterId, true);
+                        }
+                        else
+                        {
+                            ExpandChapterList(chapter);
                         }
                     }
                     else if (e.ChangedButton == MouseButton.Right)
@@ -345,6 +375,38 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("Exception in EventChapterRunClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Event handler invoked when a Study Tree was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventStudyTreeRunClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Run r = (Run)e.Source;
+                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapterId >= 0)
+                {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                    WorkbookManager.LastClickedChapterId = chapterId;
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        _mainWin.SelectChapter(chapterId, true);
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        WorkbookManager.EnableChaptersMenus(_mainWin._cmChapters, true);
+                        _mainWin.SelectChapter(chapterId, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventStudyTreeRunClicked(): " + ex.Message);
             }
         }
 
@@ -380,6 +442,38 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Event handler invoked when an Exercise Run was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventExerciseRunClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                Run r = (Run)e.Source;
+                int gameIndex = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapter != null && gameIndex >= 0 && gameIndex < chapter.Exercises.Count)
+                {
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        _mainWin.SelectExercise(gameIndex);
+                        _mainWin.ExerciseChessBoard.DisplayPosition(WorkbookManager.SessionWorkbook.ActiveVariationTree.Nodes[0]);
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        //WorkbookManager.EnableExercisesMenus(_mainWin._cmChapters, true);
+                        //_mainWin.SelectExercise(chapterId, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventExerciseRunClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
         /// An expand/collapse character on the Model Games list was clicked.
         /// Establish which chapter this is for, check its expand/collapse status and flip it.
         /// </summary>
@@ -396,12 +490,38 @@ namespace ChessForge
                 {
                     _mainWin.SelectChapter(chapterId, false);
                 }
-                chapter.IsModelGamesListExpanded = !chapter.IsModelGamesListExpanded; 
+                chapter.IsModelGamesListExpanded = !chapter.IsModelGamesListExpanded;
                 BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
             }
             catch (Exception ex)
             {
                 AppLog.Message("Exception in EventExpandSymbolClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// An expand/collapse character on the Exercises list was clicked.
+        /// Establish which chapter this is for, check its expand/collapse status and flip it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventExercisesExpandSymbolClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Run r = (Run)e.Source;
+                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                if (chapter.Id != WorkbookManager.SessionWorkbook.ActiveChapter.Id)
+                {
+                    _mainWin.SelectChapter(chapterId, false);
+                }
+                chapter.IsExercisesListExpanded = !chapter.IsExercisesListExpanded;
+                BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventExercisesExpandSymbolClicked(): " + ex.Message);
             }
         }
 
@@ -418,23 +538,33 @@ namespace ChessForge
                 Run r = (Run)e.Source;
                 int chapterId = GetNodeIdFromRunName(r.Name, _run_chapter_expand_char_);
                 Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
-                bool? isExpanded = chapter.IsViewExpanded;
-
-                if (isExpanded == true)
-                {
-                    chapter.IsViewExpanded = false;
-                }
-                else if (isExpanded == false)
-                {
-                    chapter.IsViewExpanded = true;
-                }
-
-                BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
+                ExpandChapterList(chapter);
             }
             catch (Exception ex)
             {
                 AppLog.Message("Exception in EventExpandSymbolClicked(): " + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Expands or collapses the list of chapters depending
+        /// on its current state.
+        /// </summary>
+        /// <param name="chapter"></param>
+        private void ExpandChapterList(Chapter chapter)
+        {
+            bool? isExpanded = chapter.IsViewExpanded;
+
+            if (isExpanded == true)
+            {
+                chapter.IsViewExpanded = false;
+            }
+            else if (isExpanded == false)
+            {
+                chapter.IsViewExpanded = true;
+            }
+
+            BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
         }
     }
 }

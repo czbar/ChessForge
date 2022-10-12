@@ -110,7 +110,7 @@ namespace ChessForge
             StringBuilder sb = new StringBuilder();
             sb.Append(BuildStudyTreeText(chapter, chapterNo));
             sb.Append(BuildModelGamesText(chapter));
-            sb.Append(BuildExercisesText(chapter, chapterNo));
+            sb.Append(BuildExercisesText(chapter));
 
             sb.AppendLine();
             sb.AppendLine();
@@ -197,6 +197,44 @@ namespace ChessForge
             return sbOutput.ToString();
         }
 
+        /// <summary>
+        /// Build text for all Exercises in the chapter.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="chapterNo"></param>
+        /// <returns></returns>
+        private static string BuildExercisesText(Chapter chapter)
+        {
+            _fileText.Clear();
+
+            StringBuilder sb = new StringBuilder();
+            StringBuilder sbOutput = new StringBuilder();
+
+            foreach (VariationTree tree in chapter.Exercises)
+            {
+                string headerText = BuildExercisesHeaderText(chapter, tree);
+
+                TreeNode root = tree.Nodes[0];
+
+                // There may be a comment or command before the first move. Add if so.
+                _fileText.Append(BuildCommandAndCommentText(root));
+
+                sb.Append(BuildTreeLineText(root));
+
+                sbOutput.Append(headerText + DivideLine(sb.ToString(), 80));
+
+                // add result
+                sbOutput.Append(" " + tree.Header.GetResult(out _));
+                sbOutput.AppendLine();
+                sbOutput.AppendLine();
+
+                sb.Clear();
+                _fileText.Clear();
+            }
+
+            return sbOutput.ToString();
+        }
+
         private static string BuildStudyTreeHeaderText(Chapter chapter, int chapterNo)
         {
             StringBuilder sb = new StringBuilder();
@@ -260,13 +298,42 @@ namespace ChessForge
         /// <param name="chapter"></param>
         /// <param name="chapterNo"></param>
         /// <returns></returns>
-        private static string BuildExercisesText(Chapter chapter, int chapterNo)
+        private static string BuildExercisesHeaderText(Chapter chapter, VariationTree tree)
         {
             StringBuilder sb = new StringBuilder();
 
+            sb.Append(BuildCommonGameHeaderText(chapter, chapter.Id));
+
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_EXERCISE));
+
+            BoardPosition pos = new BoardPosition(tree.Nodes[0].Position);
+            UpShiftOnePly(ref pos);
+
+            string fen = FenParser.GenerateFenFromPosition(pos);
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_FEN_STRING, fen));
+
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_EVENT, tree.Header.GetEventName(out _)));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_DATE, tree.Header.GetDate(out _)));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_WHITE, tree.Header.GetWhitePlayer(out _)));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK, tree.Header.GetBlackPlayer(out _)));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_RESULT, tree.Header.GetResult(out _)));            
+
+            sb.AppendLine();
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Shifts the move number up if White is on move.
+        /// This is required when saving the position as FEN.
+        /// </summary>
+        /// <param name="pos"></param>
+        private static void UpShiftOnePly(ref BoardPosition pos)
+        {
+            if (pos.ColorToMove == PieceColor.White)
+            {
+                pos.MoveNumber += 1;
+            }
+        }
 
         private static string BuildCommonGameHeaderText(Chapter chapter, int chapterNo)
         {
