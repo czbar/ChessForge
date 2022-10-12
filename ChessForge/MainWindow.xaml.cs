@@ -108,6 +108,9 @@ namespace ChessForge
         // The main chessboard of the application
         public ChessBoard MainChessBoard;
 
+        // The Chessboard for Exercise view.
+        public ChessBoard ExerciseChessBoard;
+
         /// <summary>
         /// Chessboard shown over moves in different views
         /// </summary>
@@ -199,6 +202,8 @@ namespace ChessForge
             // main chess board
             MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true);
             FloatingChessBoard = new ChessBoard(_cnvFloat, _imgFloatingBoard, null, true);
+            ExerciseChessBoard = new ChessBoard(UiCnvExcercise, UiImgExercise, null, false);
+
 
             BookmarkManager.InitBookmarksGui(this);
 
@@ -1610,5 +1615,6 @@ namespace ChessForge
                 BoardShapesManager.CancelShapeDraw(true);
             }
         }
+
     }
 }
