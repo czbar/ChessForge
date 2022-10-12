@@ -109,6 +109,16 @@ namespace ChessPosition
         public const char CharCollapse = '\u229F';
 
         /// <summary>
+        /// Character for a White Square to use as a White side indication in the Game view.
+        /// </summary>
+        public const char CharWhiteSquare = '\u2B1C';
+
+        /// <summary>
+        /// Character for a Black Square to use as a Black side indication in the Game view.
+        /// </summary>
+        public const char CharBlackSquare = '\u2B1B';
+
+        /// <summary>
         /// Min and Max dimensions of the chess board
         /// when starting from 0.
         /// </summary>
