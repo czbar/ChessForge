@@ -206,6 +206,7 @@ namespace GameTree
             else
             {
                 FenParser.ParseFenIntoBoard(fen, ref rootNode.Position);
+                BackShiftOnePly(ref rootNode);
             }
             tree.AddNode(rootNode);
 
@@ -216,6 +217,19 @@ namespace GameTree
 
             //TreeNode
             ParseBranch(rootNode, tree);
+        }
+
+        /// <summary>
+        /// Shifts the Move Number down by one.
+        /// This is required when we adjust the position from the passed FEN.
+        /// </summary>
+        /// <param name="nd"></param>
+        private void BackShiftOnePly(ref TreeNode nd)
+        {
+            if (nd.ColorToMove == PieceColor.White)
+            {
+                nd.MoveNumber -= 1;
+            }
         }
 
         /// <summary>
