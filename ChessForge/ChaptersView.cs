@@ -216,7 +216,7 @@ namespace ChessForge
 
                 if (chapter.IsViewExpanded)
                 {
-                    InsertStudyRun(para);
+                    InsertStudyRun(para, chapter);
                     InsertModelGamesRuns(para, chapter);
                     InsertExercisesRuns(para, chapter);
                 }
@@ -235,11 +235,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="para"></param>
         /// <returns></returns>
-        private Run InsertStudyRun(Paragraph para)
+        private Run InsertStudyRun(Paragraph para, Chapter chapter)
         {
             para.Inlines.Add(new Run("\n"));
             Run r = CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT + "Study Tree");
-            r.Name = _run_study_tree_;
+            r.Name = _run_study_tree_ + chapter.Id.ToString();
+            r.MouseDown += EventStudyTreeRunClicked;
             para.Inlines.Add(r);
             return r;
         }
@@ -351,12 +352,17 @@ namespace ChessForge
                 int chapterId = GetNodeIdFromRunName(r.Name, _run_chapter_title_);
                 if (chapterId >= 0)
                 {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
                     WorkbookManager.LastClickedChapterId = chapterId;
                     if (e.ChangedButton == MouseButton.Left)
                     {
                         if (e.ClickCount == 2)
                         {
                             _mainWin.SelectChapter(chapterId, true);
+                        }
+                        else
+                        {
+                            ExpandChapterList(chapter);
                         }
                     }
                     else if (e.ChangedButton == MouseButton.Right)
@@ -369,6 +375,38 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("Exception in EventChapterRunClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Event handler invoked when a Study Tree was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventStudyTreeRunClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Run r = (Run)e.Source;
+                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapterId >= 0)
+                {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                    WorkbookManager.LastClickedChapterId = chapterId;
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        _mainWin.SelectChapter(chapterId, true);
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        WorkbookManager.EnableChaptersMenus(_mainWin._cmChapters, true);
+                        _mainWin.SelectChapter(chapterId, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventStudyTreeRunClicked(): " + ex.Message);
             }
         }
 
@@ -500,23 +538,33 @@ namespace ChessForge
                 Run r = (Run)e.Source;
                 int chapterId = GetNodeIdFromRunName(r.Name, _run_chapter_expand_char_);
                 Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
-                bool? isExpanded = chapter.IsViewExpanded;
-
-                if (isExpanded == true)
-                {
-                    chapter.IsViewExpanded = false;
-                }
-                else if (isExpanded == false)
-                {
-                    chapter.IsViewExpanded = true;
-                }
-
-                BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
+                ExpandChapterList(chapter);
             }
             catch (Exception ex)
             {
                 AppLog.Message("Exception in EventExpandSymbolClicked(): " + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Expands or collapses the list of chapters depending
+        /// on its current state.
+        /// </summary>
+        /// <param name="chapter"></param>
+        private void ExpandChapterList(Chapter chapter)
+        {
+            bool? isExpanded = chapter.IsViewExpanded;
+
+            if (isExpanded == true)
+            {
+                chapter.IsViewExpanded = false;
+            }
+            else if (isExpanded == false)
+            {
+                chapter.IsViewExpanded = true;
+            }
+
+            BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
         }
     }
 }
