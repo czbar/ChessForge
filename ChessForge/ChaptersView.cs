@@ -504,7 +504,6 @@ namespace ChessForge
                     if (e.ChangedButton == MouseButton.Left)
                     {
                         _mainWin.SelectModelGame(gameIndex);
-                        _mainWin.MainChessBoard.FlipBoard(PieceColor.White);
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
@@ -543,7 +542,6 @@ namespace ChessForge
                     if (e.ChangedButton == MouseButton.Left)
                     {
                         _mainWin.SelectExercise(gameIndex);
-                        _mainWin.MainChessBoard.FlipBoard(PieceColor.White);
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
