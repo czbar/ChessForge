@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ChessPosition;
 using GameTree;
@@ -100,6 +101,21 @@ namespace ChessForge
         private SquareCoords _coloredSquareFrom = new SquareCoords(-1, -1);
 
         /// <summary>
+        /// Whether to show corrdinates
+        /// </summary>
+        private bool _includeCoords;
+
+        /// <summary>
+        /// Labels for vertical coordinates
+        /// </summary>
+        private Label[] _vertCoords = new Label[8];
+
+        /// <summary>
+        /// Labels for horizontal coordinates
+        /// </summary>
+        private Label[] _horizCoords = new Label[8];
+
+        /// <summary>
         /// Coordinates of the square with an active overlay, 
         /// representing the move's destination.
         /// </summary>
@@ -113,13 +129,72 @@ namespace ChessForge
         /// <param name="BoardCtrl"></param>
         /// <param name="labelCtrl"></param>
         /// <param name="startPos"></param>
-        public ChessBoard(Canvas cnv, Image BoardCtrl, Label labelCtrl, bool startPos)
+        public ChessBoard(Canvas cnv, Image BoardCtrl, Label labelCtrl, bool startPos, bool includeCoords)
         {
             CanvasCtrl = cnv;
             BoardImgCtrl = BoardCtrl;
             LabelCtrl = labelCtrl;
+            _includeCoords = includeCoords;
+
+            InitializeCoordinateLabels();
 
             Initialize(startPos);
+        }
+
+        /// <summary>
+        /// Creates the coordinates labels.
+        /// </summary>
+        private void InitializeCoordinateLabels()
+        {
+            if (!_includeCoords)
+            {
+                return;
+            }
+
+            for (int i = 0; i <= 7; i++)
+            {
+                Label lbl = _vertCoords[i] = new Label();
+                lbl.Width = 20;
+                lbl.Height = 28;
+                lbl.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+                lbl.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
+                lbl.FontSize = 12;
+                lbl.Foreground = Brushes.White;
+
+                CanvasCtrl.Children.Add(lbl);
+                Canvas.SetLeft(lbl, 0);
+                Canvas.SetTop(lbl, 45 + (i*80));
+            }
+
+            for (int i = 0; i <= 7; i++)
+            {
+                Label lbl = _horizCoords[i] = new Label();
+                lbl.Width = 20;
+                lbl.Height = 28;
+                lbl.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+                lbl.VerticalContentAlignment = System.Windows.VerticalAlignment.Bottom;
+                lbl.FontSize = 12;
+                lbl.Foreground = Brushes.White;
+
+                CanvasCtrl.Children.Add(lbl);
+                Canvas.SetLeft(lbl, 45 + (i * 80));
+                Canvas.SetBottom(lbl, -2);
+            }
+
+            SetCoordinateLabelsText(false);
+        }
+
+        /// <summary>
+        /// Sets coordinates labels text.
+        /// </summary>
+        /// <param name="isFlipped"></param>
+        private void SetCoordinateLabelsText(bool isFlipped)
+        {
+            for (int i = 0; i <= 7; i++)
+            {
+                _vertCoords[i].Content = isFlipped ? (char)('1' + i) : (char)('1' + (7 - i));
+                _horizCoords[i].Content = isFlipped ? (char)('a' + (7 - i)) : (char)('a' + i);
+            }
         }
 
         /// <summary>
@@ -323,6 +398,8 @@ namespace ChessForge
             }
 
             _isFlipped = !_isFlipped;
+
+            SetCoordinateLabelsText(_isFlipped);
 
             BoardShapesManager.Flip();
         }
