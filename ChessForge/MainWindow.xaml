@@ -219,7 +219,7 @@
                             <MenuItem x:Name="_mnTrainFromBookmark" Header="Start Training from This Bookmark" Click="UiMnTrainFromBookmark_Click" />
                             <Separator />
                             <MenuItem x:Name="_mnGenerateBookmark" Header="Generate Bookmarks" Click="UiMnGenerateBookmark_Click" />
-                            <MenuItem x:Name="_mnAddBookmark" Header="Go to Workbook to Add a Bookmark" Click="UiMnAddBookmark_Click" />
+                            <MenuItem x:Name="_mnAddBookmark" Header="Go to Study to Add a Bookmark" Click="UiMnAddBookmark_Click" />
                             <Separator />
                             <MenuItem x:Name="_mnDeleteBookmark" Header="Delete This Bookmark" Click="UiMnDeleteBookmark_Click" />
                             <MenuItem x:Name="_mnDeleteAllBookmarks" Header="Delete All Bookmarks" Click="UiMnDeleteAllBookmarks_Click" />
