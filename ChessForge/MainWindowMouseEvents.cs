@@ -561,12 +561,28 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabModelGames_GotFocus(object sender, RoutedEventArgs e)
         {
+            bool? boardFlipped = WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped;
+            if (boardFlipped != null)
+            {
+                MainChessBoard.FlipBoard(boardFlipped.Value);
+            }
+
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             if (chapter != null)
             {
                 chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.ContentType.MODEL_GAME, chapter.ActiveModelGameIndex);
             }
             RestoreSelectedLineAndMoveInActiveView();
+        }
+
+        /// <summary>
+        /// Persists the board's flipped state.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabModelGames_LostFocus(object sender, RoutedEventArgs e)
+        {
+            WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped = MainChessBoard.IsFlipped;
         }
 
         /// <summary>
@@ -577,6 +593,12 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabExercises_GotFocus(object sender, RoutedEventArgs e)
         {
+            bool? boardFlipped = WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped;
+            if (boardFlipped != null)
+            {
+                MainChessBoard.FlipBoard(boardFlipped.Value);
+            }
+
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             if (chapter != null)
             {
@@ -584,6 +606,17 @@ namespace ChessForge
             }
             RestoreSelectedLineAndMoveInActiveView();
         }
+
+        /// <summary>
+        /// Persists the board's flipped state.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabExercises_LostFocus(object sender, RoutedEventArgs e)
+        {
+            WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = MainChessBoard.IsFlipped;
+        }
+
 
     }
 }

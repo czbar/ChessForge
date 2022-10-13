@@ -395,6 +395,10 @@ namespace ChessForge
         {
             WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
             WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.MODEL_GAME, gameIndex);
+            
+            MainChessBoard.FlipBoard(false);
+            WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped = null;
+
             SetupGuiForActiveModelGame(gameIndex, true);
         }
 
@@ -407,6 +411,10 @@ namespace ChessForge
         {
             WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = gameIndex;
             WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.EXERCISE, gameIndex);
+            
+            MainChessBoard.FlipBoard(false);
+            WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = null;
+
             SetupGuiForActiveExercise(gameIndex, true);
         }
 
