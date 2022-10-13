@@ -212,7 +212,7 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="UiTabBookmarks" Header="Bookmarks">
+            <TabItem x:Name="UiTabBookmarks" Header="Bookmarks" GotFocus="UiTabBookmarks_GotFocus" LostFocus="UiTabBookmarks_LostFocus">
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown">
                     <Grid.ContextMenu>
                         <ContextMenu x:Name="_cmBookmarks">

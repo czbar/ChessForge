@@ -427,7 +427,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportModelGames_Click(object sender, RoutedEventArgs e)
         {
-            ImportGamesFromPgn(GameMetadata.GameType.MODEL_GAME);
+            ImportGamesFromPgn(GameMetadata.ContentType.MODEL_GAME);
         }
 
         /// <summary>
@@ -437,10 +437,10 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportExercises_Click(object sender, RoutedEventArgs e)
         {
-            ImportGamesFromPgn(GameMetadata.GameType.EXERCISE);
+            ImportGamesFromPgn(GameMetadata.ContentType.EXERCISE);
         }
 
-        private void ImportGamesFromPgn(GameMetadata.GameType contentType)
+        private void ImportGamesFromPgn(GameMetadata.ContentType contentType)
         {
             if (WorkbookManager.SessionWorkbook.ActiveChapter != null)
             {
@@ -482,10 +482,10 @@ namespace ChessForge
                                 chapter.IsViewExpanded = true;
                                 switch (contentType)
                                 {
-                                    case GameMetadata.GameType.MODEL_GAME:
+                                    case GameMetadata.ContentType.MODEL_GAME:
                                         chapter.IsModelGamesListExpanded = true;
                                         break;
-                                    case GameMetadata.GameType.EXERCISE:
+                                    case GameMetadata.ContentType.EXERCISE:
                                         chapter.IsExercisesListExpanded = true;
                                         break;
                                 }

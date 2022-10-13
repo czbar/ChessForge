@@ -21,7 +21,7 @@ namespace ChessPosition.GameTree
         /// In a non Chess Forge, we only expect GENERIC_GAME
         /// and GENERIC_EXERCISE
         /// </summary>
-        public enum GameType
+        public enum ContentType
         {
             INVALID,
             WORKBOOK_PREFACE,
@@ -75,25 +75,25 @@ namespace ChessPosition.GameTree
         /// we have a FEN header Making it an "Exercise".
         /// </summary>
         /// <returns></returns>
-        public GameType GetContentType()
+        public ContentType GetContentType()
         {
             string value = Header.GetContentType(out _);
             switch (value)
             {
                 case PgnHeaders.VALUE_STUDY_TREE:
-                    return GameType.STUDY_TREE;
+                    return ContentType.STUDY_TREE;
                 case PgnHeaders.VALUE_MODEL_GAME:
-                    return GameType.MODEL_GAME;
+                    return ContentType.MODEL_GAME;
                 case PgnHeaders.VALUE_EXERCISE:
-                    return GameType.EXERCISE;
+                    return ContentType.EXERCISE;
                 default:
                     if (!string.IsNullOrWhiteSpace(Header.GetFenString()))
                     {
-                        return GameType.EXERCISE;
+                        return ContentType.EXERCISE;
                     }
                     else
                     {
-                        return GameType.MODEL_GAME;
+                        return ContentType.MODEL_GAME;
                     }
             }
         }

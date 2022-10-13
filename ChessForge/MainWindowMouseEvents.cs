@@ -499,6 +499,36 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabStudyTree_GotFocus(object sender, RoutedEventArgs e)
         {
+            SetStudyStateOnFocus();
+        }
+
+
+        /// <summary>
+        /// Persists the board's flipped state when the Study Tree view loses focus.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabStudyTree_LostFocus(object sender, RoutedEventArgs e)
+        {
+            WorkbookManager.SessionWorkbook.IsStudyBoardFlipped = MainChessBoard.IsFlipped;
+        }
+
+        /// <summary>
+        /// Set the board and the active line as if thios was a study view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabBookmarks_GotFocus(object sender, RoutedEventArgs e)
+        {
+            SetStudyStateOnFocus();
+        }
+
+        /// <summary>
+        /// Sets the board orientation and active line according
+        /// the last StudyTree state.
+        /// </summary>
+        private void SetStudyStateOnFocus()
+        {
             bool? boardFlipped = WorkbookManager.SessionWorkbook.IsStudyBoardFlipped;
             if (boardFlipped != null)
             {
@@ -508,19 +538,17 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             if (chapter != null)
             {
-                chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.GameType.STUDY_TREE);
+                chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.ContentType.STUDY_TREE);
             }
             RestoreSelectedLineAndMoveInActiveView();
         }
 
-
         /// <summary>
-        /// Persists the board's flipped state when the Study Tree view loses
-        /// focus.
+        /// Persists the board's flipped state.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiTabStudyTree_LostFocus(object sender, RoutedEventArgs e)
+        private void UiTabBookmarks_LostFocus(object sender, RoutedEventArgs e)
         {
             WorkbookManager.SessionWorkbook.IsStudyBoardFlipped = MainChessBoard.IsFlipped;
         }
@@ -536,7 +564,7 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             if (chapter != null)
             {
-                chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.GameType.MODEL_GAME, chapter.ActiveModelGameIndex);
+                chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.ContentType.MODEL_GAME, chapter.ActiveModelGameIndex);
             }
             RestoreSelectedLineAndMoveInActiveView();
         }
@@ -552,7 +580,7 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             if (chapter != null)
             {
-                chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.GameType.EXERCISE, chapter.ActiveExerciseIndex);
+                chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.ContentType.EXERCISE, chapter.ActiveExerciseIndex);
             }
             RestoreSelectedLineAndMoveInActiveView();
         }

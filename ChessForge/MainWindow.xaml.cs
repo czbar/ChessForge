@@ -55,14 +55,14 @@ namespace ChessForge
         {
             get
             {
-                GameMetadata.GameType gt = WorkbookManager.SessionWorkbook.ActiveVariationTree.ContentType;
+                GameMetadata.ContentType gt = WorkbookManager.SessionWorkbook.ActiveVariationTree.ContentType;
                 switch (gt)
                 {
-                    case GameMetadata.GameType.STUDY_TREE:
+                    case GameMetadata.ContentType.STUDY_TREE:
                         return _studyTreeView;
-                    case GameMetadata.GameType.MODEL_GAME:
+                    case GameMetadata.ContentType.MODEL_GAME:
                         return _modelGameTreeView;
-                    case GameMetadata.GameType.EXERCISE:
+                    case GameMetadata.ContentType.EXERCISE:
                         return _exerciseTreeView;
                     default:
                         return null;
@@ -356,7 +356,7 @@ namespace ChessForge
         {
             if (chapterId >= 0)
             {
-                WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameMetadata.GameType.STUDY_TREE);
+                WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameMetadata.ContentType.STUDY_TREE);
                 ClearTabViews();
                 _chaptersView.HighlightActiveChapter();
                 SetupGuiForActiveStudyTree(focusOnStudyTree);
@@ -394,7 +394,7 @@ namespace ChessForge
         public void SelectModelGame(int gameIndex)
         {
             WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
-            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.GameType.MODEL_GAME, gameIndex);
+            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.MODEL_GAME, gameIndex);
             SetupGuiForActiveModelGame(gameIndex, true);
         }
 
@@ -406,7 +406,7 @@ namespace ChessForge
         public void SelectExercise(int gameIndex)
         {
             WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = gameIndex;
-            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.GameType.EXERCISE, gameIndex);
+            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.EXERCISE, gameIndex);
             SetupGuiForActiveExercise(gameIndex, true);
         }
 
@@ -780,7 +780,7 @@ namespace ChessForge
 
             // if this is a new session we will set ActiveChapter to the first chapter
             // and Active Tree to the Study Tree in that chapter.
-            WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(0, GameMetadata.GameType.STUDY_TREE);
+            WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(0, GameMetadata.ContentType.STUDY_TREE);
             AppStateManager.UpdateAppTitleBar();
             BoardCommentBox.ShowWorkbookTitle();
 

@@ -20,14 +20,14 @@ namespace GameTree
     /// </summary>
     public class VariationTree
     {
-        public VariationTree(GameMetadata.GameType contentType)
+        public VariationTree(GameMetadata.ContentType contentType)
         {
             _contentType = contentType;
         }
 
-        private GameMetadata.GameType _contentType = GameMetadata.GameType.INVALID;
+        private GameMetadata.ContentType _contentType = GameMetadata.ContentType.INVALID;
 
-        public GameMetadata.GameType ContentType
+        public GameMetadata.ContentType ContentType
         {
             get
             {

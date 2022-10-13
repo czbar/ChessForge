@@ -86,7 +86,7 @@ namespace ChessForge
             try
             {
                 string studyText = File.ReadAllText(fileName);
-                VariationTree tree = new VariationTree(GameMetadata.GameType.STUDY_TREE);
+                VariationTree tree = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
 
                 // parse the variation tree and create a new chapter.
                 PgnGameParser pgnGame = new PgnGameParser(studyText, tree, out bool isMulti, true);
@@ -294,7 +294,7 @@ namespace ChessForge
             // while the rest are Study Trees, Model Games and Exercises.
             SessionWorkbook = new Workbook();
 
-            VariationTree preface = new VariationTree(GameMetadata.GameType.STUDY_TREE);
+            VariationTree preface = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
             PgnGameParser pp = new PgnGameParser(GameList[0].GameText, preface);
             SessionWorkbook.Description = preface.Nodes[0].Comment;
 
@@ -315,7 +315,7 @@ namespace ChessForge
             {
                 GameMetadata gm = GameList[i];
 
-                GameMetadata.GameType contentType = gm.GetContentType();
+                GameMetadata.ContentType contentType = gm.GetContentType();
                 string sChapter = gm.Header.GetChapterId();
                 if (IsNextChapter(chapter, i, sChapter, ref GameList))
                 {
@@ -409,7 +409,7 @@ namespace ChessForge
                         }
                         else
                         {
-                            VariationTree workbook2 = new VariationTree(GameMetadata.GameType.STUDY_TREE);
+                            VariationTree workbook2 = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
                             try
                             {
                                 PgnGameParser pgp = new PgnGameParser(GameList[i].GameText, workbook2, out bool multi);
