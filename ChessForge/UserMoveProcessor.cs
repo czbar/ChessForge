@@ -66,11 +66,11 @@ namespace ChessForge
                         {
                             if (nd.ColorToMove == PieceColor.Black)
                             {
-                                imgSrc = ChessBoard.GetWhitePieceRegImg(promoteTo);
+                                imgSrc = AppStateManager.MainWin.MainChessBoard.GetWhitePieceRegImg(promoteTo);
                             }
                             else
                             {
-                                imgSrc = ChessBoard.GetBlackPieceRegImg(promoteTo);
+                                imgSrc = AppStateManager.MainWin.MainChessBoard.GetBlackPieceRegImg(promoteTo);
                             }
                         }
                         AppStateManager.MainWin.MainChessBoard.GetPieceImage(destSquare.Xcoord, destSquare.Ycoord, true).Source = imgSrc;
