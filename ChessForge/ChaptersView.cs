@@ -543,7 +543,6 @@ namespace ChessForge
                     if (e.ChangedButton == MouseButton.Left)
                     {
                         _mainWin.SelectExercise(gameIndex);
-                        _mainWin.ExerciseChessBoard.DisplayPosition(WorkbookManager.SessionWorkbook.ActiveVariationTree.Nodes[0]);
                         _mainWin.MainChessBoard.FlipBoard(PieceColor.White);
                     }
                     else if (e.ChangedButton == MouseButton.Right)
