@@ -154,6 +154,21 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the Content Type of the currently shown Tree.
+        /// </summary>
+        public GameMetadata.ContentType ActiveContentType
+        {
+            get
+            {
+                if (_activeChapter == null)
+                {
+                    SelectDefaultActiveChapter();
+                }
+                return ActiveVariationTree.ContentType;
+            }
+        }
+
+        /// <summary>
         /// Workbook's last update date.
         /// </summary>
         public DateTime? LastUpdate
