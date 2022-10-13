@@ -93,6 +93,7 @@
     <Compile Include="ChapterTitleDialog.xaml.cs">
       <DependentUpon>ChapterTitleDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ChessBoardSmall.cs" />
     <Compile Include="CustomCommands.cs" />
     <Compile Include="EvaluationActiveLine.cs" />
     <Compile Include="EvaluationLine.cs" />
@@ -308,6 +309,7 @@
     <Resource Include="Resources\Images\CircleGreen.png" />
     <Resource Include="Resources\Images\CircleRed.png" />
     <Resource Include="Resources\Images\CircleYellow.png" />
+    <Resource Include="Resources\Images\ChessBoardBlueSmall.png" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -180,7 +180,7 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="UiTabStudyTree"  Header="Study" GotFocus="UiTabStudyTree_GotFocus" >
+            <TabItem x:Name="UiTabStudyTree"  Header="Study" GotFocus="UiTabStudyTree_GotFocus" LostFocus="UiTabStudyTree_LostFocus" >
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookView_OnPreviewMouseDown">
                     <Grid.ContextMenu>
                         <ContextMenu x:Name="UiCmnWorkbookRightClick">
@@ -198,7 +198,7 @@
                     </Grid.ContextMenu>
                     <RichTextBox x:Name="UiRtbStudyTreeView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="640" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbWorkbookFull_PreviewKeyDown">
+                                   Height="640" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbStudyTree_PreviewKeyDown">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0" />
@@ -348,7 +348,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="UiTabModelGames"  Header="Games" GotFocus="UiTabModelGames_GotFocus" >
+            <TabItem x:Name="UiTabModelGames"  Header="Games" GotFocus="UiTabModelGames_GotFocus" PreviewKeyDown="UiTabModelGames_PreviewKeyDown" >
                 <Grid Background="#FFE5E5E5" >
                     <RichTextBox x:Name="UiRtbModelGamesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
@@ -363,17 +363,9 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="UiTabExercises"  Header="Exercises" GotFocus="UiTabExercises_GotFocus" >
+            <TabItem x:Name="UiTabExercises"  Header="Exercises" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" >
                 <Grid Background="White" >
-                    <Viewbox x:Name="_vbExcercise" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Margin="20,10,10,10" VerticalAlignment="Top" Height="180" Width="180" >
-                        <Canvas x:Name="UiCnvExcercise" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
-                            <Canvas.Background>
-                                <SolidColorBrush Color="White"/>
-                            </Canvas.Background>
-                            <Image x:Name="UiImgExercise" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
-                        </Canvas>
-                    </Viewbox>
-                    <RichTextBox x:Name="UiRtbExercisesView" HorizontalAlignment="Left" Margin="2,220,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                    <RichTextBox x:Name="UiRtbExercisesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True"  BorderThickness="0">
                         <RichTextBox.Resources>

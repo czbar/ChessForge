@@ -211,7 +211,7 @@ namespace ChessForge
                     rTitle.FontWeight = FontWeights.Bold;
                 }
                 rTitle.Name = _run_chapter_title_ + chapter.Id.ToString();
-                rTitle.MouseDown += EventChapterRunClicked;
+                rTitle.MouseDown += EventChapterHeaderClicked;
                 para.Inlines.Add(rTitle);
 
                 if (chapter.IsViewExpanded)
@@ -240,7 +240,7 @@ namespace ChessForge
             para.Inlines.Add(new Run("\n"));
             Run r = CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT + "Study Tree");
             r.Name = _run_study_tree_ + chapter.Id.ToString();
-            r.MouseDown += EventStudyTreeRunClicked;
+            r.MouseDown += EventStudyTreeHeaderClicked;
             para.Inlines.Add(r);
             return r;
         }
@@ -257,7 +257,8 @@ namespace ChessForge
             para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT));
             InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.Id, GameMetadata.GameType.MODEL_GAME, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
             Run r = CreateRun(STYLE_SUBHEADER, "Model Games");
-            r.Name = _run_model_games_header_;
+            r.Name = _run_model_games_header_ + chapter.Id.ToString();
+            r.MouseDown += EventModelGamesHeaderClicked;
             para.Inlines.Add(r);
 
             if (chapter.IsModelGamesListExpanded)
@@ -287,7 +288,8 @@ namespace ChessForge
             para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT));
             InsertExpandCollapseSymbolRun(para, _run_exercises_expand_char_, chapter.Id, GameMetadata.GameType.EXERCISE, chapter.IsExercisesListExpanded, chapter.HasAnyExercise);
             Run r = CreateRun(STYLE_SUBHEADER, "Exercises");
-            r.Name = _run_exercises_header_;
+            r.Name = _run_exercises_header_ + chapter.Id.ToString();
+            r.MouseDown += EventExercisesHeaderClicked;
             para.Inlines.Add(r);
 
             if (chapter.IsExercisesListExpanded)
@@ -344,7 +346,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventChapterRunClicked(object sender, MouseButtonEventArgs e)
+        private void EventChapterHeaderClicked(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -379,11 +381,79 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Event handler invoked when the Model Games header was clicked.
+        /// On left click, expend/collapse the list.
+        /// On right click select chapter and show the context menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventModelGamesHeaderClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Run r = (Run)e.Source;
+                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapterId >= 0)
+                {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                    WorkbookManager.LastClickedChapterId = chapterId;
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        ExpandModelGamesList(chapter);
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        WorkbookManager.EnableChaptersMenus(_mainWin._cmChapters, true);
+                        _mainWin.SelectChapter(chapterId, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventModelGamesHeaderClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Event handler invoked when the Exercises header was clicked.
+        /// On left click, expend/collapse the list.
+        /// On right click select chapter and show the context menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventExercisesHeaderClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Run r = (Run)e.Source;
+                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapterId >= 0)
+                {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                    WorkbookManager.LastClickedChapterId = chapterId;
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        ExpandExercisesList(chapter);
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        WorkbookManager.EnableChaptersMenus(_mainWin._cmChapters, true);
+                        _mainWin.SelectChapter(chapterId, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventModelGamesHeaderClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Event handler invoked when a Study Tree was clicked.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventStudyTreeRunClicked(object sender, MouseButtonEventArgs e)
+        private void EventStudyTreeHeaderClicked(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -419,14 +489,22 @@ namespace ChessForge
         {
             try
             {
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 Run r = (Run)e.Source;
+                int chapterId = GetChapterIdFromChildRun(r);
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                if (chapter.Id != chapterId)
+                {
+                    _mainWin.SelectChapter(chapterId, false);
+                    chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                }
+
                 int gameIndex = TextUtils.GetIdFromPrefixedString(r.Name);
                 if (chapter != null && gameIndex >= 0 && gameIndex < chapter.ModelGames.Count)
                 {
                     if (e.ChangedButton == MouseButton.Left)
                     {
                         _mainWin.SelectModelGame(gameIndex);
+                        _mainWin.MainChessBoard.FlipBoard(PieceColor.White);
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
@@ -450,15 +528,22 @@ namespace ChessForge
         {
             try
             {
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 Run r = (Run)e.Source;
+                int chapterId = GetChapterIdFromChildRun(r);
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                if (chapter.Id != chapterId)
+                {
+                    _mainWin.SelectChapter(chapterId, false);
+                    chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                }
+
                 int gameIndex = TextUtils.GetIdFromPrefixedString(r.Name);
                 if (chapter != null && gameIndex >= 0 && gameIndex < chapter.Exercises.Count)
                 {
                     if (e.ChangedButton == MouseButton.Left)
                     {
                         _mainWin.SelectExercise(gameIndex);
-                        _mainWin.ExerciseChessBoard.DisplayPosition(WorkbookManager.SessionWorkbook.ActiveVariationTree.Nodes[0]);
+                        _mainWin.MainChessBoard.FlipBoard(PieceColor.White);
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
@@ -565,6 +650,66 @@ namespace ChessForge
             }
 
             BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
+        }
+
+        /// <summary>
+        /// Expands or collapses the list of Model Games depending
+        /// on its current state.
+        /// </summary>
+        /// <param name="chapter"></param>
+        private void ExpandModelGamesList(Chapter chapter)
+        {
+            bool? isExpanded = chapter.IsModelGamesListExpanded;
+
+            if (isExpanded == true)
+            {
+                chapter.IsModelGamesListExpanded = false;
+            }
+            else if (isExpanded == false)
+            {
+                chapter.IsModelGamesListExpanded = true;
+            }
+
+            BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
+        }
+
+        /// <summary>
+        /// Expands or collapses the list of Model Games depending
+        /// on its current state.
+        /// </summary>
+        /// <param name="chapter"></param>
+        private void ExpandExercisesList(Chapter chapter)
+        {
+            bool? isExpanded = chapter.IsExercisesListExpanded;
+
+            if (isExpanded == true)
+            {
+                chapter.IsExercisesListExpanded = false;
+            }
+            else if (isExpanded == false)
+            {
+                chapter.IsExercisesListExpanded = true;
+            }
+
+            BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
+        }
+
+        /// <summary>
+        /// Gets the ID from the parent paragraph identifying
+        /// the chapter the passed Run belongs in.
+        /// </summary>
+        /// <returns></returns>
+        private int GetChapterIdFromChildRun(Run r)
+        {
+            try
+            {
+                Paragraph para = r.Parent as Paragraph;
+                return TextUtils.GetIdFromPrefixedString(para.Name);
+            }
+            catch
+            {
+                return -1;
+            }
         }
     }
 }

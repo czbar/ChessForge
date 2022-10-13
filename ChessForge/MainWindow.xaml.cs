@@ -108,9 +108,6 @@ namespace ChessForge
         // The main chessboard of the application
         public ChessBoard MainChessBoard;
 
-        // The Chessboard for Exercise view.
-        public ChessBoard ExerciseChessBoard;
-
         /// <summary>
         /// Chessboard shown over moves in different views
         /// </summary>
@@ -200,9 +197,8 @@ namespace ChessForge
             }
 
             // main chess board
-            MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true);
-            FloatingChessBoard = new ChessBoard(_cnvFloat, _imgFloatingBoard, null, true);
-            ExerciseChessBoard = new ChessBoard(UiCnvExcercise, UiImgExercise, null, false);
+            MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true, true);
+            FloatingChessBoard = new ChessBoard(_cnvFloat, _imgFloatingBoard, null, true, false);
 
 
             BookmarkManager.InitBookmarksGui(this);
@@ -1330,11 +1326,31 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiRtbWorkbookFull_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void UiRtbStudyTree_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // Hand it off to the ActiveLine view.
             // In the future we may want to handle some key strokes here
             // but for now we will respond to whatever the ActiveLine view will request.
+            ActiveLine.PreviewKeyDown(sender, e);
+        }
+
+        /// <summary>
+        /// A key pressed event has been received.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabModelGames_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            ActiveLine.PreviewKeyDown(sender, e);
+        }
+
+        /// <summary>
+        /// A key pressed event has been received.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabExercises_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
             ActiveLine.PreviewKeyDown(sender, e);
         }
 

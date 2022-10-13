@@ -10,8 +10,10 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
-using static System.Net.Mime.MediaTypeNames;
+//using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media.Media3D;
+using System.Xml.Linq;
 
 namespace ChessForge
 {
@@ -344,6 +346,12 @@ namespace ChessForge
                 Document.Blocks.Add(titlePara);
             }
 
+            Paragraph boardPara = BuildExercisesChessboardParagraph();
+            if (boardPara != null)
+            {
+                Document.Blocks.Add(boardPara);
+            }
+
             // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
             // and note the distances in the Nodes so that we can use them when creating the document
             // in the forward traversing
@@ -386,35 +394,98 @@ namespace ChessForge
 
             if (_variationTree != null)
             {
-                if (_variationTree.Header.GetContentType(out _) == PgnHeaders.VALUE_MODEL_GAME)
+                string contentType = _variationTree.Header.GetContentType(out _);
+                
+                switch (contentType)
                 {
-                    para = CreateParagraph("0");
+                    case PgnHeaders.VALUE_MODEL_GAME:
+                    case PgnHeaders.VALUE_EXERCISE:
+                        string whitePlayer = _variationTree.Header.GetWhitePlayer(out _);
+                        string blackPlayer = _variationTree.Header.GetBlackPlayer(out _);
 
-                    Run rWhiteSquare = CreateRun("0", (Constants.CharWhiteSquare.ToString() + " "));
-                    rWhiteSquare.FontWeight = FontWeights.Normal;
-                    para.Inlines.Add(rWhiteSquare);
+                        para = CreateParagraph("0");
+                        para.Margin = new Thickness(0, 20, 0, 0);
 
-                    Run rWhite = CreateRun("0", (_variationTree.Header.GetWhitePlayer(out _) ?? "NN") + "\n");
-                    para.Inlines.Add(rWhite);
+                        bool hasPlayerNames = !(string.IsNullOrWhiteSpace(whitePlayer) && string.IsNullOrWhiteSpace(blackPlayer));
 
-                    Run rBlackSquare = CreateRun("0", (Constants.CharBlackSquare.ToString() + " "));
-                    rBlackSquare.FontWeight = FontWeights.Normal;
-                    para.Inlines.Add(rBlackSquare);
+                        if (hasPlayerNames)
+                        {
+                            Run rWhiteSquare = CreateRun("0", (Constants.CharWhiteSquare.ToString() + " "));
+                            rWhiteSquare.FontWeight = FontWeights.Normal;
+                            para.Inlines.Add(rWhiteSquare);
 
-                    Run rBlack = CreateRun("0", (_variationTree.Header.GetBlackPlayer(out _) ?? "NN") + "\n");
-                    para.Inlines.Add(rBlack);
+                            Run rWhite = CreateRun("0", (whitePlayer ?? "NN") + "\n");
+                            para.Inlines.Add(rWhite);
 
-                    if (!string.IsNullOrEmpty(_variationTree.Header.GetEventName(out _)))
-                    {
-                        Run rEvent = CreateRun("1", "    " + _variationTree.Header.GetEventName(out _) + "\n");
-                        para.Inlines.Add(rEvent);
-                    }
+                            Run rBlackSquare = CreateRun("0", (Constants.CharBlackSquare.ToString() + " "));
+                            rBlackSquare.FontWeight = FontWeights.Normal;
+                            para.Inlines.Add(rBlackSquare);
+
+                            Run rBlack = CreateRun("0", (blackPlayer ?? "NN") + "\n");
+                            para.Inlines.Add(rBlack);
+                        }
+
+                        if (!string.IsNullOrEmpty(_variationTree.Header.GetEventName(out _)))
+                        {
+                            if (hasPlayerNames)
+                            {
+                                Run rEvent = CreateRun("1", "    " + _variationTree.Header.GetEventName(out _) + "\n");
+                                para.Inlines.Add(rEvent);
+                            }
+                            else
+                            {
+                                Run rEvent = CreateRun("0", _variationTree.Header.GetEventName(out _) + "\n");
+                                para.Inlines.Add(rEvent);
+                            }
+                        }
+                        break;
                 }
             }
 
             return para;
         }
 
+        /// <summary>
+        /// Builds the chessborad image for the Exercises view.
+        /// </summary>
+        /// <returns></returns>
+        private Paragraph BuildExercisesChessboardParagraph()
+        {
+            if (_variationTree != null && _variationTree.Header.GetContentType(out _) == PgnHeaders.VALUE_EXERCISE)
+            {
+                Paragraph para = CreateParagraph("2");
+                para.Margin = new Thickness(0,0,0,40);
+                
+                InlineUIContainer uIContainer = new InlineUIContainer();
+                Viewbox vb = new Viewbox();
+                Canvas cnv = new Canvas();
+                cnv.Background = Brushes.Black;
+                cnv.Width = 250;
+                cnv.Height = 250;
+
+                Image img = new Image();
+                img.Margin = new Thickness(5, 5, 5, 5);    
+                img.Source = ChessBoards.ChessBoardBlueSmall;
+                ChessBoardSmall cb = new ChessBoardSmall(cnv, img, null, false, false);
+                cb.DisplayPosition(_variationTree.Nodes[0]);
+
+                cnv.Children.Add(img);
+                vb.Child = cnv;
+
+                uIContainer.Child = vb;
+
+                vb.Width = 250;
+                vb.Height = 250;
+                vb.Visibility = Visibility.Visible;
+                
+                para.Inlines.Add(uIContainer);
+                return para;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         /// <summary>
         /// Traverses the tree back from each leaf populating the DistanceToFork
