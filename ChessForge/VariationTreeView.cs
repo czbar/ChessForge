@@ -619,8 +619,20 @@ namespace ChessForge
         {
             TreeNode parent = nd.Parent;
 
-            Run rParent = _dictNodeToRun[parent.NodeId];
-            Paragraph para = _dictRunToParagraph[rParent];
+            Run rParent;
+            Paragraph para;
+
+            if (_dictNodeToCommentRun.ContainsKey(parent.NodeId))
+            {
+                rParent = _dictNodeToCommentRun[parent.NodeId];
+                para = _dictCommentRunToParagraph[rParent];
+            }
+            else
+            {
+                rParent = _dictNodeToRun[parent.NodeId];
+                para = _dictRunToParagraph[rParent];
+            }
+
 
             Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, false));
             r.Name = "run_" + nd.NodeId.ToString();
