@@ -499,12 +499,30 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabStudyTree_GotFocus(object sender, RoutedEventArgs e)
         {
+            bool? boardFlipped = WorkbookManager.SessionWorkbook.IsStudyBoardFlipped;
+            if (boardFlipped != null)
+            {
+                MainChessBoard.FlipBoard(boardFlipped.Value);
+            }
+
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             if (chapter != null)
             {
                 chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.GameType.STUDY_TREE);
             }
             RestoreSelectedLineAndMoveInActiveView();
+        }
+
+
+        /// <summary>
+        /// Persists the board's flipped state when the Study Tree view loses
+        /// focus.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabStudyTree_LostFocus(object sender, RoutedEventArgs e)
+        {
+            WorkbookManager.SessionWorkbook.IsStudyBoardFlipped = MainChessBoard.IsFlipped;
         }
 
         /// <summary>

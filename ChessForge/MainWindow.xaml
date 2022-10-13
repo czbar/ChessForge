@@ -180,7 +180,7 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="UiTabStudyTree"  Header="Study" GotFocus="UiTabStudyTree_GotFocus" >
+            <TabItem x:Name="UiTabStudyTree"  Header="Study" GotFocus="UiTabStudyTree_GotFocus" LostFocus="UiTabStudyTree_LostFocus" >
                 <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookView_OnPreviewMouseDown">
                     <Grid.ContextMenu>
                         <ContextMenu x:Name="UiCmnWorkbookRightClick">

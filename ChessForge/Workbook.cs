@@ -28,6 +28,13 @@ namespace ChessForge
         /// </summary>
         public PieceColor TrainingSide = PieceColor.None;
 
+        /// <summary>
+        /// Indicates whether the main board was flipped when
+        /// StudyTree last lost focus so we can restore
+        /// it when getting focus back
+        /// </summary>
+        public bool? IsStudyBoardFlipped = null;
+
         // chapter currently open in the session
         private Chapter _activeChapter;
 
