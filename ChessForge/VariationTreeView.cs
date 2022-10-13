@@ -404,6 +404,7 @@ namespace ChessForge
                         string blackPlayer = _variationTree.Header.GetBlackPlayer(out _);
 
                         para = CreateParagraph("0");
+                        para.Margin = new Thickness(0, 20, 0, 0);
 
                         bool hasPlayerNames = !(string.IsNullOrWhiteSpace(whitePlayer) && string.IsNullOrWhiteSpace(blackPlayer));
 
@@ -453,18 +454,19 @@ namespace ChessForge
             if (_variationTree != null && _variationTree.Header.GetContentType(out _) == PgnHeaders.VALUE_EXERCISE)
             {
                 Paragraph para = CreateParagraph("2");
+                para.Margin = new Thickness(0,0,0,40);
                 
                 InlineUIContainer uIContainer = new InlineUIContainer();
                 Viewbox vb = new Viewbox();
                 Canvas cnv = new Canvas();
                 cnv.Background = Brushes.Black;
-                cnv.Width = 682;
-                cnv.Height = 682;
+                cnv.Width = 250;
+                cnv.Height = 250;
 
                 Image img = new Image();
-                img.Margin = new Thickness(20, 20, 20, 20);    
-                img.Source = ChessBoards.ChessBoardBlue;
-                ChessBoard cb = new ChessBoard(cnv, img, null, false, false);
+                img.Margin = new Thickness(5, 5, 5, 5);    
+                img.Source = ChessBoards.ChessBoardBlueSmall;
+                ChessBoardSmall cb = new ChessBoardSmall(cnv, img, null, false, false);
                 cb.DisplayPosition(_variationTree.Nodes[0]);
 
                 cnv.Children.Add(img);
@@ -472,8 +474,8 @@ namespace ChessForge
 
                 uIContainer.Child = vb;
 
-                vb.Width = 240;
-                vb.Height = 240;
+                vb.Width = 250;
+                vb.Height = 250;
                 vb.Visibility = Visibility.Visible;
                 
                 para.Inlines.Add(uIContainer);
