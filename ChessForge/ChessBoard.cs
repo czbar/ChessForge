@@ -22,9 +22,9 @@ namespace ChessForge
         public TreeNode DisplayedNode;
 
         /// <summary>
-        /// Images for White pieces.
+        /// Images for White pieces 80x80.
         /// </summary>
-        private static Dictionary<PieceType, BitmapImage> WhitePieces =
+        protected Dictionary<PieceType, BitmapImage> _dictWhitePieces =
             new Dictionary<PieceType, BitmapImage>()
             {
                 [PieceType.Rook] = ChessForge.Pieces.WhiteRook,
@@ -36,9 +36,9 @@ namespace ChessForge
             };
 
         /// <summary>
-        /// Images for Black pieces.
+        /// Images for Black pieces 80x80.
         /// </summary>
-        private static Dictionary<PieceType, BitmapImage> BlackPieces =
+        protected Dictionary<PieceType, BitmapImage> _dictBlackPieces =
             new Dictionary<PieceType, BitmapImage>()
             {
                 [PieceType.Rook] = ChessForge.Pieces.BlackRook,
@@ -49,13 +49,29 @@ namespace ChessForge
                 [PieceType.Pawn] = ChessForge.Pieces.BlackPawn
             };
 
+        virtual protected Dictionary<PieceType, BitmapImage> WhitePieces
+        {
+            get => _dictWhitePieces;
+        }
+
+        virtual protected Dictionary<PieceType, BitmapImage> BlackPieces
+        {
+            get => _dictBlackPieces;
+        }
+
         // board position currently shown
         private BoardPosition _position;
+
+        // size of an individual square in pixels
+        private const int _squareSize = 80;
 
         /// <summary>
         /// Size of an individual square in pixels
         /// </summary>
-        private const int squareSize = 80;
+        virtual protected int SquareSize
+        {
+            get => _squareSize;
+        }
 
         /// <summary>
         /// Hositing Canvas control
@@ -163,7 +179,7 @@ namespace ChessForge
 
                 CanvasCtrl.Children.Add(lbl);
                 Canvas.SetLeft(lbl, 0);
-                Canvas.SetTop(lbl, 45 + (i*80));
+                Canvas.SetTop(lbl, 45 + (i * 80));
             }
 
             for (int i = 0; i <= 7; i++)
@@ -203,7 +219,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public static BitmapImage GetWhitePieceRegImg(PieceType pt)
+        public BitmapImage GetWhitePieceRegImg(PieceType pt)
         {
             return WhitePieces[pt];
         }
@@ -214,7 +230,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public static BitmapImage GetBlackPieceRegImg(PieceType pt)
+        public BitmapImage GetBlackPieceRegImg(PieceType pt)
         {
             return BlackPieces[pt];
         }
@@ -592,8 +608,8 @@ namespace ChessForge
 
                     Pieces[xPos, yPos] = new Image();
                     CanvasCtrl.Children.Add(Pieces[xPos, yPos]);
-                    Canvas.SetLeft(Pieces[xPos, yPos], squareSize * xPos + BoardImgCtrl.Margin.Left);
-                    Canvas.SetTop(Pieces[xPos, yPos], squareSize * (7 - yPos) + BoardImgCtrl.Margin.Top);
+                    Canvas.SetLeft(Pieces[xPos, yPos], SquareSize * xPos + BoardImgCtrl.Margin.Left);
+                    Canvas.SetTop(Pieces[xPos, yPos], SquareSize * (7 - yPos) + BoardImgCtrl.Margin.Top);
                     Canvas.SetZIndex(Pieces[xPos, yPos], Constants.ZIndex_PieceOnBoard);
                 }
             }
