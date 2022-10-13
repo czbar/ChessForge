@@ -48,43 +48,51 @@ namespace ChessForge
         /// <param name="arrows"></param>
         public static void Reset(string arrows, string circles, bool markDirty)
         {
-            Reset(markDirty);
-            if (!string.IsNullOrWhiteSpace(arrows))
+            // only draw in MANUAL_REVIEW mode
+            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
             {
-                string[] tokens = arrows.Split(',');
-                foreach (string token in tokens)
+                Reset(markDirty);
+                if (!string.IsNullOrWhiteSpace(arrows))
                 {
-                    if (DecodeArrowsString(token, out string color, out SquareCoords start, out SquareCoords end))
+                    string[] tokens = arrows.Split(',');
+                    foreach (string token in tokens)
                     {
-                        StartShapeDraw(start, color, false);
-                        FinalizeShape(end, false, markDirty);
+                        if (DecodeArrowsString(token, out string color, out SquareCoords start, out SquareCoords end))
+                        {
+                            StartShapeDraw(start, color, false);
+                            FinalizeShape(end, false, markDirty);
+                        }
                     }
                 }
-            }
 
-            if (!string.IsNullOrWhiteSpace(circles))
-            {
-                string[] tokens = circles.Split(',');
-                foreach (string token in tokens)
+                if (!string.IsNullOrWhiteSpace(circles))
                 {
-                    if (DecodeCirclesString(token, out string color, out SquareCoords square))
+                    string[] tokens = circles.Split(',');
+                    foreach (string token in tokens)
                     {
-                        StartShapeDraw(square, color, false);
-                        FinalizeShape(square, false, markDirty);
+                        if (DecodeCirclesString(token, out string color, out SquareCoords square))
+                        {
+                            StartShapeDraw(square, color, false);
+                            FinalizeShape(square, false, markDirty);
+                        }
                     }
                 }
-            }
 
-            if (SaveShapesStrings() && markDirty)
+                if (SaveShapesStrings() && markDirty)
+                {
+                    AppStateManager.IsDirty = true;
+                }
+            }
+            else
             {
-                AppStateManager.IsDirty = true;
+                Reset(false, false);
             }
         }
 
         /// <summary>
         /// Removes all created arrows and circles from the board
         /// </summary>
-        public static void Reset(bool markDirty)
+        public static void Reset(bool markDirty, bool save = true)
         {
             AppStateManager.MainWin.Dispatcher.Invoke(() =>
             {
@@ -103,9 +111,12 @@ namespace ChessForge
                 CancelShapeDraw(true);
                 _isShapeBuildInProgress = false;
 
-                if (SaveShapesStrings() && markDirty)
+                if (save)
                 {
-                    AppStateManager.IsDirty = true;
+                    if (SaveShapesStrings() && markDirty)
+                    {
+                        AppStateManager.IsDirty = true;
+                    }
                 }
             });
         }
