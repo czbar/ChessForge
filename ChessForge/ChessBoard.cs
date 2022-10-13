@@ -420,6 +420,18 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the flipped state according to the passed boolean
+        /// </summary>
+        /// <param name="setFlipped"></param>
+        public void FlipBoard(bool setFlipped)
+        {
+            if (!setFlipped && _isFlipped || setFlipped && !_isFlipped)
+            {
+                FlipBoard();
+            }
+        }
+
+        /// <summary>
         /// Sets up the position on the board
         /// reflecting the passed TreeNode object.
         /// </summary>
