@@ -641,7 +641,7 @@ namespace ChessForge
         /// <summary>
         /// Configure the Main Board's context menu.
         /// </summary>
-        private static void ConfigureMainBoardContextMenu()
+        public static void ConfigureMainBoardContextMenu()
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
@@ -723,6 +723,20 @@ namespace ChessForge
                         _mainWin.UiMnciPlayEngine.Visibility = Visibility.Collapsed;
                         break;
                 }
+
+                // if ContentType is ModelGame or exercise, hide Training menus
+                Workbook wb = WorkbookManager.SessionWorkbook;
+                if (wb != null &&
+                    (wb.ActiveContentType == GameMetadata.ContentType.MODEL_GAME
+                    || wb.ActiveContentType == GameMetadata.ContentType.EXERCISE))
+                {
+                    _mainWin.UiMnciStartTraining.Visibility = Visibility.Collapsed;
+                    _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
+                    _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
+                    _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
+                    _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Collapsed;
+                }
+
             });
         }
 
