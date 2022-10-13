@@ -200,9 +200,9 @@ namespace ChessForge
             }
 
             // main chess board
-            MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true);
-            FloatingChessBoard = new ChessBoard(_cnvFloat, _imgFloatingBoard, null, true);
-            ExerciseChessBoard = new ChessBoard(UiCnvExcercise, UiImgExercise, null, false);
+            MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true, true);
+            FloatingChessBoard = new ChessBoard(_cnvFloat, _imgFloatingBoard, null, true, false);
+            ExerciseChessBoard = new ChessBoard(UiCnvExcercise, UiImgExercise, null, false, true);
 
 
             BookmarkManager.InitBookmarksGui(this);
