@@ -283,32 +283,42 @@ namespace GameTree
             TreeNode fork = FindNextFork(Nodes[0]);
             if (fork == null)
             {
-                return;
-            }
-
-            // bookmark children of the first fork
-            if (fork.ColorToMove != TrainingSide)
-            {
-                BookmarkChildren(fork, MAX_BOOKMARKS);
-            }
-            else if (fork.Parent != null && fork.Parent.NodeId != 0)
-            {
-                BookmarkChildren(fork.Parent, MAX_BOOKMARKS);
-            }
-
-            // look for the next fork in each child
-            foreach (TreeNode nd in fork.Children)
-            {
-                TreeNode nextFork = FindNextFork(nd);
-                if (nextFork != null)
+                // nothing really to bookmark so let's just grab one node
+                for (int i = Nodes.Count - 1; i >= 0; i--)
                 {
-                    if (nextFork.ColorToMove != TrainingSide)
+                    if (Nodes[i].ColorToMove == TrainingSide || i == 0)
                     {
-                        BookmarkChildren(nextFork, MAX_BOOKMARKS);
+                        AddBookmark(Nodes[i]);
+                        break;
                     }
-                    else
+                }
+            }
+            else
+            {
+                // bookmark children of the first fork
+                if (fork.ColorToMove != TrainingSide)
+                {
+                    BookmarkChildren(fork, MAX_BOOKMARKS);
+                }
+                else if (fork.Parent != null && fork.Parent.NodeId != 0)
+                {
+                    BookmarkChildren(fork.Parent, MAX_BOOKMARKS);
+                }
+
+                // look for the next fork in each child
+                foreach (TreeNode nd in fork.Children)
+                {
+                    TreeNode nextFork = FindNextFork(nd);
+                    if (nextFork != null)
                     {
-                        BookmarkChildren(nextFork.Parent, MAX_BOOKMARKS);
+                        if (nextFork.ColorToMove != TrainingSide)
+                        {
+                            BookmarkChildren(nextFork, MAX_BOOKMARKS);
+                        }
+                        else
+                        {
+                            BookmarkChildren(nextFork.Parent, MAX_BOOKMARKS);
+                        }
                     }
                 }
             }
