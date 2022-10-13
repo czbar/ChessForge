@@ -5,7 +5,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessPosition.GameTree
+namespace GameTree
 {
     /// <summary>
     /// Encaplsulates headers of a single PGN game.

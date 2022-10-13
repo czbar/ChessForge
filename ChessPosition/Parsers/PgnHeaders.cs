@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using ChessPosition;
 
-namespace ChessPosition
+namespace GameTree
 {
     /// <summary>
     /// Handles PGN headers for either the Workbook

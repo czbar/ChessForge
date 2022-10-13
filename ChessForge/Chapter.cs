@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static ChessPosition.GameTree.GameMetadata;
 
 namespace ChessForge
 {
@@ -87,16 +86,16 @@ namespace ChessForge
         {
             switch (gameType)
             {
-                case ContentType.STUDY_TREE:
+                case GameMetadata.ContentType.STUDY_TREE:
                     _activeTree = StudyTree;
                     break;
-                case ContentType.MODEL_GAME:
+                case GameMetadata.ContentType.MODEL_GAME:
                     if (gameIndex >= 0 && gameIndex < ModelGames.Count)
                     {
                         _activeTree = ModelGames[gameIndex];
                     }
                     break;
-                case ContentType.EXERCISE:
+                case GameMetadata.ContentType.EXERCISE:
                     if (gameIndex >= 0 && gameIndex < Exercises.Count)
                     {
                         _activeTree = Exercises[gameIndex];
@@ -204,13 +203,13 @@ namespace ChessForge
         /// The caller must handle exceptions.
         /// </summary>
         /// <param name="gm"></param>
-        public void AddGame(GameMetadata gm, GameMetadata.ContentType typ = ContentType.INVALID)
+        public void AddGame(GameMetadata gm, GameMetadata.ContentType typ = GameMetadata.ContentType.INVALID)
         {
             VariationTree tree = new VariationTree(typ);
             PgnGameParser pp = new PgnGameParser(gm.GameText, tree, gm.Header.GetFenString());
             tree.Header = gm.Header;
 
-            if (typ == ContentType.INVALID)
+            if (typ == GameMetadata.ContentType.INVALID)
             {
                 typ = gm.GetContentType();
             }

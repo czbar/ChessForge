@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessPosition.GameTree
+namespace GameTree
 {
     /// <summary>
     /// Holds game metadata obtained from a PGN file.
