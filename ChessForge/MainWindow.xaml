@@ -198,7 +198,7 @@
                     </Grid.ContextMenu>
                     <RichTextBox x:Name="UiRtbStudyTreeView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="640" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbWorkbookFull_PreviewKeyDown">
+                                   Height="640" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbStudyTree_PreviewKeyDown">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0" />
@@ -348,7 +348,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="UiTabModelGames"  Header="Games" GotFocus="UiTabModelGames_GotFocus" >
+            <TabItem x:Name="UiTabModelGames"  Header="Games" GotFocus="UiTabModelGames_GotFocus" PreviewKeyDown="UiTabModelGames_PreviewKeyDown" >
                 <Grid Background="#FFE5E5E5" >
                     <RichTextBox x:Name="UiRtbModelGamesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
@@ -363,7 +363,7 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="UiTabExercises"  Header="Exercises" GotFocus="UiTabExercises_GotFocus" >
+            <TabItem x:Name="UiTabExercises"  Header="Exercises" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" >
                 <Grid Background="White" >
                     <RichTextBox x:Name="UiRtbExercisesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"

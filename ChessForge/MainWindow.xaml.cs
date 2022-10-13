@@ -1326,11 +1326,31 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiRtbWorkbookFull_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void UiRtbStudyTree_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // Hand it off to the ActiveLine view.
             // In the future we may want to handle some key strokes here
             // but for now we will respond to whatever the ActiveLine view will request.
+            ActiveLine.PreviewKeyDown(sender, e);
+        }
+
+        /// <summary>
+        /// A key pressed event has been received.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabModelGames_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            ActiveLine.PreviewKeyDown(sender, e);
+        }
+
+        /// <summary>
+        /// A key pressed event has been received.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabExercises_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
             ActiveLine.PreviewKeyDown(sender, e);
         }
 
