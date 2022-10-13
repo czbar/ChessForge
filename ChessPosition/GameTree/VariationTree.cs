@@ -48,7 +48,7 @@ namespace GameTree
         /// Header lines of the game/tree
         /// </summary>
         public GameHeader Header = new GameHeader();
-        
+
         // a list of nodes from a subtree
         private List<TreeNode> _subTree = new List<TreeNode>();
 
@@ -281,19 +281,7 @@ namespace GameTree
 
             // find the first, highest level, fork
             TreeNode fork = FindNextFork(Nodes[0]);
-            if (fork == null)
-            {
-                // nothing really to bookmark so let's just grab one node
-                for (int i = Nodes.Count - 1; i >= 0; i--)
-                {
-                    if (Nodes[i].ColorToMove == TrainingSide || i == 0)
-                    {
-                        AddBookmark(Nodes[i]);
-                        break;
-                    }
-                }
-            }
-            else
+            if (fork != null)
             {
                 // bookmark children of the first fork
                 if (fork.ColorToMove != TrainingSide)
@@ -321,6 +309,11 @@ namespace GameTree
                         }
                     }
                 }
+            }
+
+            if (Bookmarks.Count == 0)
+            {
+                BookmarkAnything();
             }
         }
 
@@ -973,6 +966,24 @@ namespace GameTree
             }
 
             return _subTree.Count > 0;
+        }
+
+        /// <summary>
+        /// Bookmarks the last Node that fits the Training Side
+        /// or the root node if nothing found.
+        /// Called when user called Generate Bookmarks if there is
+        /// no fork whose children can be reasonably bookmarked.
+        /// </summary>
+        private void BookmarkAnything()
+        {
+            for (int i = Nodes.Count - 1; i >= 0; i--)
+            {
+                if (Nodes[i].ColorToMove == TrainingSide || i == 0)
+                {
+                    AddBookmark(Nodes[i]);
+                    break;
+                }
+            }
         }
 
         /// <summary>
