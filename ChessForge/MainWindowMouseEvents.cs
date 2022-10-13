@@ -538,9 +538,10 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             if (chapter != null)
             {
-                chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.ContentType.STUDY_TREE);
+                chapter.SetActiveVariationTree(GameMetadata.ContentType.STUDY_TREE);
             }
             RestoreSelectedLineAndMoveInActiveView();
+            AppStateManager.ConfigureMainBoardContextMenu();
         }
 
         /// <summary>
@@ -570,9 +571,10 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             if (chapter != null)
             {
-                chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.ContentType.MODEL_GAME, chapter.ActiveModelGameIndex);
+                chapter.SetActiveVariationTree(GameMetadata.ContentType.MODEL_GAME, chapter.ActiveModelGameIndex);
             }
             RestoreSelectedLineAndMoveInActiveView();
+            AppStateManager.ConfigureMainBoardContextMenu();
         }
 
         /// <summary>
@@ -602,9 +604,10 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             if (chapter != null)
             {
-                chapter.SetActiveVariationTree(ChessPosition.GameTree.GameMetadata.ContentType.EXERCISE, chapter.ActiveExerciseIndex);
+                chapter.SetActiveVariationTree(GameMetadata.ContentType.EXERCISE, chapter.ActiveExerciseIndex);
             }
             RestoreSelectedLineAndMoveInActiveView();
+            AppStateManager.ConfigureMainBoardContextMenu();
         }
 
         /// <summary>
