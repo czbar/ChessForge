@@ -235,6 +235,12 @@ namespace ChessForge
             return sbOutput.ToString();
         }
 
+        /// <summary>
+        /// Builds headers for a Study Tree.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="chapterNo"></param>
+        /// <returns></returns>
         private static string BuildStudyTreeHeaderText(Chapter chapter, int chapterNo)
         {
             StringBuilder sb = new StringBuilder();
@@ -246,7 +252,7 @@ namespace ChessForge
 
             VariationTree tree = chapter.StudyTree;
 
-            value = tree.Header.GetContentType(out key, PgnHeaders.VALUE_STUDY_TREE);
+            value = tree.Header.GetContentTypeString(out key, PgnHeaders.VALUE_STUDY_TREE);
             sb.AppendLine(PgnHeaders.BuildHeaderLine(key, value));
 
             value = tree.Header.GetWhitePlayer(out key, "Chess Forge");
