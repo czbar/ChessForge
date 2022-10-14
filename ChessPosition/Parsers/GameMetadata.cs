@@ -23,7 +23,7 @@ namespace GameTree
         /// </summary>
         public enum ContentType
         {
-            INVALID,
+            GENERIC,
             WORKBOOK_PREFACE,
             STUDY_TREE,
             MODEL_GAME,
@@ -65,7 +65,7 @@ namespace GameTree
         /// <returns></returns>
         public bool IsStudyTree()
         {
-            return Header.GetContentType(out _) == PgnHeaders.VALUE_STUDY_TREE;
+            return Header.GetContentType(out _) == GameMetadata.ContentType.STUDY_TREE;
         }
 
         /// <summary>
@@ -77,25 +77,21 @@ namespace GameTree
         /// <returns></returns>
         public ContentType GetContentType()
         {
-            string value = Header.GetContentType(out _);
-            switch (value)
+            ContentType typ = Header.GetContentType(out _);
+
+            if (typ == ContentType.GENERIC)
             {
-                case PgnHeaders.VALUE_STUDY_TREE:
-                    return ContentType.STUDY_TREE;
-                case PgnHeaders.VALUE_MODEL_GAME:
-                    return ContentType.MODEL_GAME;
-                case PgnHeaders.VALUE_EXERCISE:
-                    return ContentType.EXERCISE;
-                default:
-                    if (!string.IsNullOrWhiteSpace(Header.GetFenString()))
-                    {
-                        return ContentType.EXERCISE;
-                    }
-                    else
-                    {
-                        return ContentType.MODEL_GAME;
-                    }
+                if (!string.IsNullOrWhiteSpace(Header.GetFenString()))
+                {
+                    typ = ContentType.EXERCISE;
+                }
+                else
+                {
+                    typ = ContentType.MODEL_GAME;
+                }
             }
+
+            return typ;
         }
 
         /// <summary>
