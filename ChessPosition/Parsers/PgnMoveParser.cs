@@ -275,9 +275,16 @@ namespace GameTree
             }
             else
             {
-                Move.MovingPiece = FenParser.FenCharToPiece[p];
-                // remove the processed character from the string
-                stringToProcess = stringToProcess.Substring(1);
+                try
+                {
+                    Move.MovingPiece = FenParser.FenCharToPiece[p];
+                    // remove the processed character from the string
+                    stringToProcess = stringToProcess.Substring(1);
+                }
+                catch
+                {
+                    throw new Exception("Could not identify piece from move notation: \"" + alg + "\"");
+                }
             }
 
             return stringToProcess;
