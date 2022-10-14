@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using static GameTree.ChfCommands;
 
 namespace ChessPosition
 {
+    /// <summary>
+    /// Color of the chess pieces
+    /// </summary>
     public enum PieceColor
     {
         None = 0,
@@ -14,6 +18,9 @@ namespace ChessPosition
         Black
     }
 
+    /// <summary>
+    /// Type of the chess piece
+    /// </summary>
     public enum PieceType
     {
         None = 0,
@@ -23,6 +30,17 @@ namespace ChessPosition
         Knight,
         Rook,
         Pawn
+    }
+
+    /// <summary>
+    /// Sizes in which the TabControls may be displayed.
+    /// </summary>
+    public enum TabControlSizeMode
+    {
+        SHOW_ACTIVE_LINE,
+        HIDE_ACTIVE_LINE,
+        SHOW_ACTIVE_LINE_NO_EVAL,
+        SHOW_ENGINE_GAME_LINE
     }
 
     /// <summary>
