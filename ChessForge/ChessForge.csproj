@@ -310,6 +310,8 @@
     <Resource Include="Resources\Images\CircleRed.png" />
     <Resource Include="Resources\Images\CircleYellow.png" />
     <Resource Include="Resources\Images\ChessBoardBlueSmall.png" />
+    <Resource Include="Resources\Images\ChessBoardLightBlue.png" />
+    <Resource Include="Resources\Images\ChessBoardLightGreen.png" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

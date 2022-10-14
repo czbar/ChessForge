@@ -13,6 +13,8 @@ namespace ChessForge
     public class ChessBoards
     {
         public static BitmapImage ChessBoardBlue = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardBlue.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ChessBoardLightBlue = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardLightBlue.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ChessBoardLightGreen = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardLightGreen.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage ChessBoardBlueSmall = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardBlueSmall.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage ChessBoardBrown = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardBrown.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage ChessBoardGreen = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardGreen.png", UriKind.RelativeOrAbsolute));
