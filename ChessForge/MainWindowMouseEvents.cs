@@ -542,6 +542,14 @@ namespace ChessForge
             }
             RestoreSelectedLineAndMoveInActiveView();
             AppStateManager.ConfigureMainBoardContextMenu();
+            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+            {
+                UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
+            }
+            else
+            {
+                UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+            }
         }
 
         /// <summary>
@@ -575,6 +583,7 @@ namespace ChessForge
             }
             RestoreSelectedLineAndMoveInActiveView();
             AppStateManager.ConfigureMainBoardContextMenu();
+            UiImgMainChessboard.Source = ChessBoards.ChessBoardLightBlue;
         }
 
         /// <summary>
@@ -608,6 +617,7 @@ namespace ChessForge
             }
             RestoreSelectedLineAndMoveInActiveView();
             AppStateManager.ConfigureMainBoardContextMenu();
+            UiImgMainChessboard.Source = ChessBoards.ChessBoardLightGreen;
         }
 
         /// <summary>
