@@ -203,13 +203,13 @@ namespace ChessForge
         /// The caller must handle exceptions.
         /// </summary>
         /// <param name="gm"></param>
-        public void AddGame(GameMetadata gm, GameMetadata.ContentType typ = GameMetadata.ContentType.INVALID)
+        public void AddGame(GameMetadata gm, GameMetadata.ContentType typ = GameMetadata.ContentType.GENERIC)
         {
             VariationTree tree = new VariationTree(typ);
             PgnGameParser pp = new PgnGameParser(gm.GameText, tree, gm.Header.GetFenString());
             tree.Header = gm.Header;
 
-            if (typ == GameMetadata.ContentType.INVALID)
+            if (typ == GameMetadata.ContentType.GENERIC)
             {
                 typ = gm.GetContentType();
             }

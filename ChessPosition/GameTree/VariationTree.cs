@@ -25,7 +25,7 @@ namespace GameTree
             _contentType = contentType;
         }
 
-        private GameMetadata.ContentType _contentType = GameMetadata.ContentType.INVALID;
+        private GameMetadata.ContentType _contentType = GameMetadata.ContentType.GENERIC;
 
         public GameMetadata.ContentType ContentType
         {
