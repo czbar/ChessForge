@@ -156,7 +156,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnWorkbookSave_Click(object sender, RoutedEventArgs e)
         {
-            this.Cursor = Cursors.Wait;
+            Mouse.SetCursor(Cursors.Wait);
             try
             {
                 WorkbookManager.PromptAndSaveWorkbook(true);
@@ -165,7 +165,7 @@ namespace ChessForge
             {
                 AppLog.Message("Error in PromptAndSaveWorkbook(): " + ex.Message);
             }
-            this.Cursor = Cursors.Arrow;
+            Mouse.SetCursor(Cursors.Arrow);
         }
 
         /// <summary>
@@ -459,7 +459,7 @@ namespace ChessForge
                         dlg.ShowDialog();
                         if (dlg.Result)
                         {
-                            this.Cursor = Cursors.Wait;
+                            Mouse.SetCursor(Cursors.Wait);
                             try
                             {
                                 for (int i = 0; i < games.Count; i++)
@@ -495,7 +495,7 @@ namespace ChessForge
                             catch
                             {
                             }
-                            this.Cursor = Cursors.Arrow;
+                            Mouse.SetCursor(Cursors.Arrow);
                         }
                         else
                         {
