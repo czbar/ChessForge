@@ -427,7 +427,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportModelGames_Click(object sender, RoutedEventArgs e)
         {
-            ImportGamesFromPgn(GameMetadata.ContentType.MODEL_GAME);
+            ImportGamesFromPgn(GameMetadata.ContentType.GENERIC);
         }
 
         /// <summary>
@@ -440,23 +440,40 @@ namespace ChessForge
             ImportGamesFromPgn(GameMetadata.ContentType.EXERCISE);
         }
 
+        /// <summary>
+        /// Imports Model Games or Exercises from a PGN file.
+        /// </summary>
+        /// <param name="contentType"></param>
         private void ImportGamesFromPgn(GameMetadata.ContentType contentType)
         {
-            if (WorkbookManager.SessionWorkbook.ActiveChapter != null)
+            if ((contentType == GameMetadata.ContentType.GENERIC || contentType == GameMetadata.ContentType.MODEL_GAME || contentType == GameMetadata.ContentType.EXERCISE)
+                && WorkbookManager.SessionWorkbook.ActiveChapter != null)
             {
                 string fileName = SelectPgnFile();
                 if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
                 {
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     ObservableCollection<GameMetadata> games = new ObservableCollection<GameMetadata>();
-                    int gameCount = WorkbookManager.ReadPgnFile(fileName, ref games);
+                    int gameCount = WorkbookManager.ReadPgnFile(fileName, ref games, contentType);
+
+                    int errorCount = 0;
+                    StringBuilder sbErrors = new StringBuilder();
+
                     if (gameCount > 0)
                     {
-                        StringBuilder sbErrors = new StringBuilder();
-                        int errorCount = 0;
+                        string dlgTitle = "";
+                        if (contentType == GameMetadata.ContentType.MODEL_GAME)
+                        {
+                            dlgTitle = "Select Model Games to Import";
+                        }
+                        else if (contentType == GameMetadata.ContentType.EXERCISE)
+                        {
+                            dlgTitle = "Select Exercises to Import";
+                        }
 
-                        SelectGamesDialog dlg = new SelectGamesDialog(ref games);
+                        SelectGamesDialog dlg = new SelectGamesDialog(ref games, dlgTitle);
                         dlg.ShowDialog();
+
                         if (dlg.Result)
                         {
                             Mouse.SetCursor(Cursors.Wait);
@@ -497,16 +514,25 @@ namespace ChessForge
                             }
                             Mouse.SetCursor(Cursors.Arrow);
                         }
+                    }
+                    else
+                    {
+                        string sError;
+                        if (contentType == GameMetadata.ContentType.EXERCISE)
+                        {
+                            sError = "No Exercises found in ";
+                        }
                         else
                         {
-                            MessageBox.Show("No games found in " + fileName, "Import PGN", MessageBoxButton.OK, MessageBoxImage.Information);
+                            sError = "No Games found in ";
                         }
+                        MessageBox.Show(sError + fileName, "Import PGN", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
 
-                        if (errorCount > 0)
-                        {
-                            TextBoxDialog tbDlg = new TextBoxDialog("PGN Parsing Errors", sbErrors.ToString());
-                            tbDlg.Show();
-                        }
+                    if (errorCount > 0)
+                    {
+                        TextBoxDialog tbDlg = new TextBoxDialog("PGN Parsing Errors", sbErrors.ToString());
+                        tbDlg.Show();
                     }
                 }
             }
