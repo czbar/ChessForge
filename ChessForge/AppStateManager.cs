@@ -40,7 +40,6 @@ namespace ChessForge
         public enum FileType
         {
             NONE,
-//            LEGACY_CHF,
             CHESS_FORGE_PGN,
             GENERIC_PGN
         }
@@ -93,57 +92,6 @@ namespace ChessForge
                 }
             }
         }
-
-        /// <summary>
-        /// Determines the type of the file based on its extension
-        /// (chf or pgn) and its first header. 
-        /// </summary>
-        /// <param name="filePath"></param>
-        /// <returns></returns>
-        //public static FileType DetermineFileType(string path)
-        //{
-        //    FileType ft = FileType.NONE;
-        //    try
-        //    {
-        //        if (Path.GetExtension(_workbookFilePath).ToLower() == ".chf")
-        //        {
-        //            ft = FileType.LEGACY_CHF;
-        //        }
-        //        else if (Path.GetExtension(_workbookFilePath).ToLower() == ".pgn")
-        //        {
-        //            using (StreamReader sr = new StreamReader(path))
-        //            {
-        //                string line;
-        //                while ((line = sr.ReadLine()) != null)
-        //                {
-        //                    if (!string.IsNullOrWhiteSpace(line))
-        //                    {
-        //                        string name = PgnHeaders.ParsePgnHeaderLine(line, out string value);
-        //                        if (name == PgnHeaders.NAME_WORKBOOK_TITLE)
-        //                        {
-        //                            ft = FileType.CHESS_FORGE_PGN;
-        //                        }
-        //                        else
-        //                        {
-        //                            ft = FileType.GENERIC_PGN;
-        //                        }
-        //                        break;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        else
-        //        {
-        //            ft = FileType.NONE;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        DebugUtils.ShowDebugMessage("Exception in DetermineFileType(): " + ex.Message);
-        //    }
-
-        //    return ft;
-        //}
 
         /// <summary>
         /// Saves the Workbook to a new file, updates the title bar
