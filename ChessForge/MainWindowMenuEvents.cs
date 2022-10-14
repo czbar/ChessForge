@@ -196,7 +196,7 @@ namespace ChessForge
             _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this);
 
             // ask for the options
-            if (!ShowWorkbookOptionsDialog())
+            if (!ShowWorkbookOptionsDialog(false))
             {
                 // user abandoned
                 return;
@@ -929,7 +929,10 @@ namespace ChessForge
         {
             if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE)
             {
-                ShowWorkbookOptionsDialog();
+                if (ShowWorkbookOptionsDialog(false))
+                {
+                    AppStateManager.IsDirty = true;
+                }
             }
         }
 
