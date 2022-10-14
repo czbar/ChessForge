@@ -1646,6 +1646,39 @@ namespace ChessForge
             return changed;
         }
 
+
+        /// <summary>
+        /// Resizes the tab control to show/hide ActiveLine/GameLine controls.
+        /// </summary>
+        /// <param name="ctrl"></param>
+        /// <param name="sizeMode"></param>
+        public void ResizeTabControl(TabControl ctrl, TabControlSizeMode sizeMode)
+        {
+            switch (sizeMode)
+            {
+                case TabControlSizeMode.SHOW_ACTIVE_LINE:
+                    ctrl.Margin = new Thickness(275, 5, 5, 5);
+                    UiDgActiveLine.Visibility = Visibility.Visible;
+                    break;
+                case TabControlSizeMode.HIDE_ACTIVE_LINE:
+                    ctrl.Margin = new Thickness(5, 5, 5, 5);
+                    UiDgActiveLine.Visibility = Visibility.Hidden;
+                    break;
+                case TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL:
+                    ctrl.Margin = new Thickness(175, 5, 5, 5);
+                    UiDgActiveLine.Visibility = Visibility.Visible;
+                    break;
+                case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
+                    ctrl.Margin = new Thickness(180, 5, 5, 5);
+                    UiDgActiveLine.Visibility = Visibility.Hidden;
+                    break;
+                default:
+                    ctrl.Margin = new Thickness(180, 5, 5, 5);
+                    UiDgActiveLine.Visibility = Visibility.Visible;
+                    break;
+            }
+        }
+
         /// <summary>
         /// Invoked before the context menu shows.
         /// </summary>
