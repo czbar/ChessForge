@@ -743,16 +743,26 @@ namespace ChessForge
                 string fileExtension = Path.GetExtension(fileName).ToLower();
 
                 bool acceptFile = false;
+                bool isChessForgeFile = false;
+
                 switch (fileExtension)
                 {
                     case ".chf":
                         acceptFile = WorkbookManager.ReadLegacyChfFile(fileName);
+                        isChessForgeFile = true;
                         break;
                     case ".pgn":
                         WorkbookManager.ReadPgnFile(fileName, ref GameList);
-                        WorkbookManager.PrepareWorkbook(ref GameList);
-                        WorkbookManager.AssignChaptersIds();
-                        acceptFile = true;
+                        bool res = WorkbookManager.PrepareWorkbook(ref GameList, out isChessForgeFile);
+                        if (res)
+                        {
+                            WorkbookManager.AssignChaptersIds();
+                            acceptFile = true;
+                        }
+                        else
+                        {
+                            acceptFile = false;
+                        }
                         break;
                     default:
                         MessageBox.Show("Unrecognized file format: " + fileName, "Input File", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -762,7 +772,7 @@ namespace ChessForge
 
                 if (acceptFile)
                 {
-                    SetupGuiForNewSession(AppStateManager.WorkbookFilePath);
+                    SetupGuiForNewSession(AppStateManager.WorkbookFilePath, isChessForgeFile);
                 }
                 else
                 {
@@ -781,7 +791,7 @@ namespace ChessForge
         /// a new session in the MANUAL_REVIEW learning mode.
         /// </summary>
         /// <param name="fileName"></param>
-        private void SetupGuiForNewSession(string fileName)
+        private void SetupGuiForNewSession(string fileName, bool isChessForgeFile = true)
         {
             // if we are here, the WorkbookFileName must have been updated
             // and the WorkbookFileType was set to CHESS_FORGE_PGN 
@@ -794,7 +804,7 @@ namespace ChessForge
 
             if (SessionWorkbook.TrainingSide == PieceColor.None)
             {
-                ShowWorkbookOptionsDialog();
+                ShowWorkbookOptionsDialog(false);
             }
 
             if (SessionWorkbook.TrainingSide == PieceColor.White && MainChessBoard.IsFlipped || SessionWorkbook.TrainingSide == PieceColor.Black && !MainChessBoard.IsFlipped)
@@ -802,7 +812,10 @@ namespace ChessForge
                 MainChessBoard.FlipBoard();
             }
 
-            WorkbookManager.UpdateRecentFilesList(fileName);
+            if (isChessForgeFile)
+            {
+                WorkbookManager.UpdateRecentFilesList(fileName);
+            }
 
             BoardCommentBox.ShowWorkbookTitle();
             InitializeChaptersView();
@@ -1498,7 +1511,7 @@ namespace ChessForge
         /// Shows the Workbook options dialog.
         /// </summary>
         /// <returns></returns>
-        private bool ShowWorkbookOptionsDialog()
+        public bool ShowWorkbookOptionsDialog(bool save)
         {
             WorkbookOptionsDialog dlg = new WorkbookOptionsDialog(SessionWorkbook)
             {
@@ -1512,9 +1525,16 @@ namespace ChessForge
             {
                 SessionWorkbook.TrainingSide = dlg.TrainingSide;
                 SessionWorkbook.Title = dlg.WorkbookTitle;
-                AppStateManager.SaveWorkbookFile();
+                if (save)
+                {
+                    AppStateManager.SaveWorkbookFile();
+                }
+
                 MainChessBoard.FlipBoard(SessionWorkbook.TrainingSide);
-                _chaptersView.BuildFlowDocumentForChaptersView();
+                if (_chaptersView != null)
+                {
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                }
                 return true;
             }
             else

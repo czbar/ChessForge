@@ -10,6 +10,8 @@ using System.Collections.ObjectModel;
 using GameTree;
 using ChessPosition;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Runtime.CompilerServices;
 
 namespace ChessForge
 {
@@ -272,15 +274,17 @@ namespace ChessForge
         /// - merge selected games into a single Study Tree,
         /// - create chapters out of selected games.
         /// </summary>
-        public static void PrepareWorkbook(ref ObservableCollection<GameMetadata> GameList)
+        public static bool PrepareWorkbook(ref ObservableCollection<GameMetadata> games, out bool isChessForgeFile)
         {
-            if (IsChessForgeWorkbook(ref GameList))
+            if (IsChessForgeWorkbook(ref games))
             {
-                CreateWorkbookFromGameList(ref GameList);
+                isChessForgeFile = true;
+                return CreateWorkbookFromGameList(ref games);
             }
             else
             {
-                MergeGamesV2();
+                isChessForgeFile = true;
+                return CreateWorkbookFromGenericGames(ref games);
             }
         }
 
@@ -288,21 +292,60 @@ namespace ChessForge
         /// Creates the Workbook object and populates it based on
         /// the content of the GameList.
         /// </summary>
-        private static void CreateWorkbookFromGameList(ref ObservableCollection<GameMetadata> GameList)
+        private static bool CreateWorkbookFromGameList(ref ObservableCollection<GameMetadata> GameList)
         {
-            // the first "game" identifies the file as Chess Forge Workbook
-            // while the rest are Study Trees, Model Games and Exercises.
-            SessionWorkbook = new Workbook();
+            try
+            {
+                // the first "game" identifies the file as Chess Forge Workbook
+                // while the rest are Study Trees, Model Games and Exercises.
+                SessionWorkbook = new Workbook();
 
-            VariationTree preface = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
-            PgnGameParser pp = new PgnGameParser(GameList[0].GameText, preface);
-            SessionWorkbook.Description = preface.Nodes[0].Comment;
+                VariationTree preface = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
+                PgnGameParser pp = new PgnGameParser(GameList[0].GameText, preface);
+                SessionWorkbook.Description = preface.Nodes[0].Comment;
 
-            SessionWorkbook.Title = GameList[0].GetWorkbookTitle();
-            SessionWorkbook.TrainingSide = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetTrainingSide(out _));
+                SessionWorkbook.Title = GameList[0].GetWorkbookTitle();
+                SessionWorkbook.TrainingSide = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetTrainingSide(out _));
 
-            ProcessGames(ref WorkbookManager.VariationTreeList);
+                ProcessGames(ref WorkbookManager.VariationTreeList);
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
         }
+
+        /// <summary>
+        /// Asks the user to select games before merging.
+        /// Returns the number of games merged, or -1 if the user
+        /// canceled the selection dialog.
+        /// </summary>
+        /// <returns></returns>
+        private static bool CreateWorkbookFromGenericGames(ref ObservableCollection<GameMetadata> games)
+        {
+            SessionWorkbook = new Workbook();
+            Chapter chapter = SessionWorkbook.CreateDefaultChapter();
+
+            int processedGames = MergeGames(ref chapter.StudyTree, ref games);
+
+            if (processedGames == 0)
+            {
+                MessageBox.Show("No valid games found. No Workbook has been created.", "PGN Import", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                AppStateManager.MainWin.ShowWorkbookOptionsDialog(false);
+                if (!SaveWorkbookToNewFileV2("", false))
+                {
+                    processedGames = 0;
+                }
+            }
+
+            return processedGames > 0;
+        }
+
 
         /// <summary>
         /// Processes all games in the file creating chapters as required.
@@ -334,10 +377,6 @@ namespace ChessForge
             }
         }
 
-        private static int MergeGamesV2()
-        {
-            return 0;
-        }
 
         /// <summary>
         /// If the current Chapter object is null or we have a second Study Tree
@@ -367,76 +406,77 @@ namespace ChessForge
             }
         }
 
-        /// <summary>
-        /// Asks the user to select games before merging.
-        /// Returns the number of games merged, or -1 if the user
-        /// canceled the selection dialog.
-        /// </summary>
-        /// <returns></returns>
-        private static int MergeGames(ObservableCollection<GameMetadata> GameList)
+        private static int MergeGames(ref VariationTree tree, ref ObservableCollection<GameMetadata> games)
         {
             StringBuilder sbErrors = new StringBuilder();
             int errorCount = 0;
 
-            SelectGamesDialog dlg = new SelectGamesDialog(ref GameList);
+            SelectGamesDialog dlg = new SelectGamesDialog(ref games);
             dlg.ShowDialog();
 
             int mergedCount = 0;
 
             if (dlg.Result)
             {
-                // merge workbooks
-                for (int i = 0; i < GameList.Count; i++)
+                Mouse.SetCursor(Cursors.Wait);
+                //AppStateManager.MainWin.Cursor = Cursors.Wait;
+                try
                 {
-                    if (GameList[i].IsSelected)
+                    // merge workbooks
+                    for (int i = 0; i < games.Count; i++)
                     {
-                        if (mergedCount == 0)
+                        if (games[i].IsSelected)
                         {
-                            try
+                            if (mergedCount == 0)
                             {
-                                // special treatment for the first one
-                                PgnGameParser pgp = new PgnGameParser(GameList[i].GameText, AppStateManager.MainWin.ActiveVariationTree, out bool multi);
-                                mergedCount++;
+                                try
+                                {
+                                    // special treatment for the first one
+                                    PgnGameParser pgp = new PgnGameParser(games[i].GameText, AppStateManager.MainWin.ActiveVariationTree, out bool multi);
+                                    mergedCount++;
+                                }
+                                catch (Exception ex)
+                                {
+                                    sbErrors.Append("Game #" + (i + 1).ToString() + " : " + games[i].Header.BuildGameHeaderLine());
+                                    sbErrors.Append(Environment.NewLine);
+                                    sbErrors.Append("     " + ex.Message);
+                                    sbErrors.Append(Environment.NewLine);
+                                    errorCount++;
+                                }
                             }
-                            catch (Exception ex)
+                            else
                             {
-                                sbErrors.Append("Game #" + (i + 1).ToString() + " : " + GameList[i].Header.BuildGameHeaderLine());
-                                sbErrors.Append(Environment.NewLine);
-                                sbErrors.Append("     " + ex.Message);
-                                sbErrors.Append(Environment.NewLine);
-                                errorCount++;
-                            }
-                        }
-                        else
-                        {
-                            VariationTree workbook2 = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
-                            try
-                            {
-                                PgnGameParser pgp = new PgnGameParser(GameList[i].GameText, workbook2, out bool multi);
-                                //AppStateManager.MainWin.StudyTree = WorkbookTreeMerge.MergeWorkbooks(AppStateManager.MainWin.StudyTree, workbook2);
-                                mergedCount++;
-                            }
-                            catch (Exception ex)
-                            {
-                                sbErrors.Append("Game #" + (i + 1).ToString() + " : " + GameList[i].Header.BuildGameHeaderLine());
-                                sbErrors.Append(Environment.NewLine);
-                                sbErrors.Append("     " + ex.Message);
-                                sbErrors.Append(Environment.NewLine);
-                                errorCount++;
+                                VariationTree workbook2 = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
+                                try
+                                {
+                                    PgnGameParser pgp = new PgnGameParser(games[i].GameText, workbook2, out bool multi);
+                                    tree = WorkbookTreeMerge.MergeWorkbooks(tree, workbook2);
+                                    mergedCount++;
+                                }
+                                catch (Exception ex)
+                                {
+                                    sbErrors.Append("Game #" + (i + 1).ToString() + " : " + games[i].Header.BuildGameHeaderLine());
+                                    sbErrors.Append(Environment.NewLine);
+                                    sbErrors.Append("     " + ex.Message);
+                                    sbErrors.Append(Environment.NewLine);
+                                    errorCount++;
+                                }
                             }
                         }
                     }
+                    if (errorCount > 0)
+                    {
+                        ShowMergeErrors(errorCount, mergedCount, ref sbErrors);
+                    }
                 }
-                if (errorCount > 0)
+                catch
                 {
-                    ShowMergeErrors(errorCount, mergedCount, ref sbErrors);
                 }
-                return mergedCount;
+
+                Mouse.SetCursor(Cursors.Arrow);
             }
-            else
-            {
-                return 0;
-            }
+
+            return mergedCount;
         }
 
         /// <summary>
@@ -596,7 +636,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Updates the list of recent files and LAstWorkbookFile
+        /// Updates the list of recent files and LastWorkbookFile
         /// </summary>
         /// <param name="fileName"></param>
         public static void UpdateRecentFilesList(string fileName)
