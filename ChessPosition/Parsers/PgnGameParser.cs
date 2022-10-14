@@ -97,6 +97,10 @@ namespace GameTree
         private void ProcessPgnGameText(VariationTree tree, string pgnGametext, string fen = null)
         {
             _tree = tree;
+            
+            // clear Nodes, just in case
+            _tree.Nodes.Clear();
+
             _runningNodeId = 0;
             _remainingGameText = ReadHeaders(pgnGametext);
             ParsePgnTreeText(tree, fen);
@@ -127,7 +131,7 @@ namespace GameTree
                     if (!readingHeaders)
                     {
 //                        sb.Append(line + " ");
-                        sb.Append(line);
+                        sb.AppendLine(line);
                     }
                 }
             }
@@ -523,6 +527,10 @@ namespace GameTree
             // trim to check if there is any comment but do not trim the comment if it is there.
             if (comment.Trim().Length > 0)
             {
+                // remove CRLF
+                comment = comment.Replace("\r", "");
+                comment = comment.Replace("\n", "");
+
                 node.Comment = comment;
             }
             _remainingGameText = _remainingGameText.Substring(endPos + 1);
@@ -543,7 +551,7 @@ namespace GameTree
             string token = "";
 
             // first skip the spaces
-            while ((_remainingGameText[charPos]) == ' ')
+            while (_remainingGameText[charPos] == ' ' || _remainingGameText[charPos] == '\r' || _remainingGameText[charPos] == '\n')
             {
                 charPos++;
                 // if there is no end-of-game char we will get a bad index
@@ -565,7 +573,13 @@ namespace GameTree
             else
             {
                 // go to the next space or closing parenthesis or a dot
-                while (charPos < _remainingGameText.Length && _remainingGameText[charPos] != ' ' && _remainingGameText[charPos] != ')' && _remainingGameText[charPos] != '.')
+                while (charPos < _remainingGameText.Length 
+                    && _remainingGameText[charPos] != ' ' 
+                    && _remainingGameText[charPos] != ')' 
+                    && _remainingGameText[charPos] != '.'
+                    && _remainingGameText[charPos] != '\r'
+                    && _remainingGameText[charPos] != '\n'
+                    )
                 {
                     charPos++;
                 }

@@ -35,6 +35,20 @@ namespace ChessForge
         /// </summary>
         public bool? IsStudyBoardFlipped = null;
 
+        /// <summary>
+        /// Indicates whether the main board was flipped when
+        /// Model Game view last lost focus so we can restore
+        /// it when getting focus back
+        /// </summary>
+        public bool? IsModelGameBoardFlipped = null;
+
+        /// <summary>
+        /// Indicates whether the main board was flipped when
+        /// Exercise view last lost focus so we can restore
+        /// it when getting focus back
+        /// </summary>
+        public bool? IsExerciseBoardFlipped = null;
+
         // chapter currently open in the session
         private Chapter _activeChapter;
 
@@ -92,7 +106,7 @@ namespace ChessForge
         /// <param name="chapterIndex">index of the requested chapter in the Chapters list.</param>
         /// <param name="gameType"></param>
         /// <param name="gameIndex">index in the list of elements of the requested type i.e. Model Games or Exercises </param>
-        public void SetActiveChapterTreeByIndex(int chapterIndex, GameMetadata.GameType gameType, int gameIndex = 0)
+        public void SetActiveChapterTreeByIndex(int chapterIndex, GameMetadata.ContentType gameType, int gameIndex = 0)
         {
             if (chapterIndex < 0 || chapterIndex >= Chapters.Count)
             {
@@ -109,7 +123,7 @@ namespace ChessForge
         /// <param name="chapterId"></param>
         /// <param name="gameType"></param>
         /// <param name="gameIndex"></param>
-        public void SetActiveChapterTreeById(int chapterId, GameMetadata.GameType gameType, int gameIndex = 0)
+        public void SetActiveChapterTreeById(int chapterId, GameMetadata.ContentType gameType, int gameIndex = 0)
         {
             foreach (Chapter chapter in Chapters)
             {
@@ -136,6 +150,21 @@ namespace ChessForge
                     SelectDefaultActiveChapter();
                 }
                 return _activeChapter.ActiveVariationTree;
+            }
+        }
+
+        /// <summary>
+        /// Returns the Content Type of the currently shown Tree.
+        /// </summary>
+        public GameMetadata.ContentType ActiveContentType
+        {
+            get
+            {
+                if (_activeChapter == null)
+                {
+                    SelectDefaultActiveChapter();
+                }
+                return ActiveVariationTree.ContentType;
             }
         }
 
@@ -194,7 +223,7 @@ namespace ChessForge
         public Chapter CreateNewChapter()
         {
             Chapter chapter = new Chapter();
-            chapter.StudyTree = new VariationTree(GameMetadata.GameType.STUDY_TREE);
+            chapter.StudyTree = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
             chapter.StudyTree.CreateNew();
             //TODO: we need to have a chapter specific version of SetupGuiForNewSession 
             chapter.Id = Chapters.Count + 1;

@@ -20,14 +20,14 @@ namespace GameTree
     /// </summary>
     public class VariationTree
     {
-        public VariationTree(GameMetadata.GameType contentType)
+        public VariationTree(GameMetadata.ContentType contentType)
         {
             _contentType = contentType;
         }
 
-        private GameMetadata.GameType _contentType = GameMetadata.GameType.INVALID;
+        private GameMetadata.ContentType _contentType = GameMetadata.ContentType.GENERIC;
 
-        public GameMetadata.GameType ContentType
+        public GameMetadata.ContentType ContentType
         {
             get
             {
@@ -48,7 +48,7 @@ namespace GameTree
         /// Header lines of the game/tree
         /// </summary>
         public GameHeader Header = new GameHeader();
-        
+
         // a list of nodes from a subtree
         private List<TreeNode> _subTree = new List<TreeNode>();
 
@@ -281,36 +281,39 @@ namespace GameTree
 
             // find the first, highest level, fork
             TreeNode fork = FindNextFork(Nodes[0]);
-            if (fork == null)
+            if (fork != null)
             {
-                return;
-            }
-
-            // bookmark children of the first fork
-            if (fork.ColorToMove != TrainingSide)
-            {
-                BookmarkChildren(fork, MAX_BOOKMARKS);
-            }
-            else if (fork.Parent != null && fork.Parent.NodeId != 0)
-            {
-                BookmarkChildren(fork.Parent, MAX_BOOKMARKS);
-            }
-
-            // look for the next fork in each child
-            foreach (TreeNode nd in fork.Children)
-            {
-                TreeNode nextFork = FindNextFork(nd);
-                if (nextFork != null)
+                // bookmark children of the first fork
+                if (fork.ColorToMove != TrainingSide)
                 {
-                    if (nextFork.ColorToMove != TrainingSide)
+                    BookmarkChildren(fork, MAX_BOOKMARKS);
+                }
+                else if (fork.Parent != null && fork.Parent.NodeId != 0)
+                {
+                    BookmarkChildren(fork.Parent, MAX_BOOKMARKS);
+                }
+
+                // look for the next fork in each child
+                foreach (TreeNode nd in fork.Children)
+                {
+                    TreeNode nextFork = FindNextFork(nd);
+                    if (nextFork != null)
                     {
-                        BookmarkChildren(nextFork, MAX_BOOKMARKS);
-                    }
-                    else
-                    {
-                        BookmarkChildren(nextFork.Parent, MAX_BOOKMARKS);
+                        if (nextFork.ColorToMove != TrainingSide)
+                        {
+                            BookmarkChildren(nextFork, MAX_BOOKMARKS);
+                        }
+                        else
+                        {
+                            BookmarkChildren(nextFork.Parent, MAX_BOOKMARKS);
+                        }
                     }
                 }
+            }
+
+            if (Bookmarks.Count == 0)
+            {
+                BookmarkAnything();
             }
         }
 
@@ -963,6 +966,24 @@ namespace GameTree
             }
 
             return _subTree.Count > 0;
+        }
+
+        /// <summary>
+        /// Bookmarks the last Node that fits the Training Side
+        /// or the root node if nothing found.
+        /// Called when user called Generate Bookmarks if there is
+        /// no fork whose children can be reasonably bookmarked.
+        /// </summary>
+        private void BookmarkAnything()
+        {
+            for (int i = Nodes.Count - 1; i >= 0; i--)
+            {
+                if (Nodes[i].ColorToMove == TrainingSide || i == 0)
+                {
+                    AddBookmark(Nodes[i]);
+                    break;
+                }
+            }
         }
 
         /// <summary>

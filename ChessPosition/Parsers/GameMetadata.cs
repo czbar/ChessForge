@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessPosition.GameTree
+namespace GameTree
 {
     /// <summary>
     /// Holds game metadata obtained from a PGN file.
@@ -21,9 +21,9 @@ namespace ChessPosition.GameTree
         /// In a non Chess Forge, we only expect GENERIC_GAME
         /// and GENERIC_EXERCISE
         /// </summary>
-        public enum GameType
+        public enum ContentType
         {
-            INVALID,
+            GENERIC,
             WORKBOOK_PREFACE,
             STUDY_TREE,
             MODEL_GAME,
@@ -65,7 +65,7 @@ namespace ChessPosition.GameTree
         /// <returns></returns>
         public bool IsStudyTree()
         {
-            return Header.GetContentType(out _) == PgnHeaders.VALUE_STUDY_TREE;
+            return Header.GetContentType(out _) == GameMetadata.ContentType.STUDY_TREE;
         }
 
         /// <summary>
@@ -75,27 +75,23 @@ namespace ChessPosition.GameTree
         /// we have a FEN header Making it an "Exercise".
         /// </summary>
         /// <returns></returns>
-        public GameType GetContentType()
+        public ContentType GetContentType()
         {
-            string value = Header.GetContentType(out _);
-            switch (value)
+            ContentType typ = Header.GetContentType(out _);
+
+            if (typ == ContentType.GENERIC)
             {
-                case PgnHeaders.VALUE_STUDY_TREE:
-                    return GameType.STUDY_TREE;
-                case PgnHeaders.VALUE_MODEL_GAME:
-                    return GameType.MODEL_GAME;
-                case PgnHeaders.VALUE_EXERCISE:
-                    return GameType.EXERCISE;
-                default:
-                    if (!string.IsNullOrWhiteSpace(Header.GetFenString()))
-                    {
-                        return GameType.EXERCISE;
-                    }
-                    else
-                    {
-                        return GameType.MODEL_GAME;
-                    }
+                if (!string.IsNullOrWhiteSpace(Header.GetFenString()))
+                {
+                    typ = ContentType.EXERCISE;
+                }
+                else
+                {
+                    typ = ContentType.MODEL_GAME;
+                }
             }
+
+            return typ;
         }
 
         /// <summary>

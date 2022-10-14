@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static ChessPosition.GameTree.GameMetadata;
 
 namespace ChessForge
 {
@@ -83,20 +82,20 @@ namespace ChessForge
         /// </summary>
         /// <param name="gameType"></param>
         /// <param name="gameIndex"></param>
-        public void SetActiveVariationTree(GameMetadata.GameType gameType, int gameIndex = 0)
+        public void SetActiveVariationTree(GameMetadata.ContentType gameType, int gameIndex = 0)
         {
             switch (gameType)
             {
-                case GameType.STUDY_TREE:
+                case GameMetadata.ContentType.STUDY_TREE:
                     _activeTree = StudyTree;
                     break;
-                case GameType.MODEL_GAME:
+                case GameMetadata.ContentType.MODEL_GAME:
                     if (gameIndex >= 0 && gameIndex < ModelGames.Count)
                     {
                         _activeTree = ModelGames[gameIndex];
                     }
                     break;
-                case GameType.EXERCISE:
+                case GameMetadata.ContentType.EXERCISE:
                     if (gameIndex >= 0 && gameIndex < Exercises.Count)
                     {
                         _activeTree = Exercises[gameIndex];
@@ -187,7 +186,7 @@ namespace ChessForge
         /// The analysis tree of the chapter. There is exactly one
         /// analysis tree in a chapter.
         /// </summary>
-        public VariationTree StudyTree = new VariationTree(GameMetadata.GameType.STUDY_TREE);
+        public VariationTree StudyTree = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
 
         /// <summary>
         /// The list of Model Games
@@ -204,13 +203,13 @@ namespace ChessForge
         /// The caller must handle exceptions.
         /// </summary>
         /// <param name="gm"></param>
-        public void AddGame(GameMetadata gm, GameMetadata.GameType typ = GameType.INVALID)
+        public void AddGame(GameMetadata gm, GameMetadata.ContentType typ = GameMetadata.ContentType.GENERIC)
         {
             VariationTree tree = new VariationTree(typ);
             PgnGameParser pp = new PgnGameParser(gm.GameText, tree, gm.Header.GetFenString());
             tree.Header = gm.Header;
 
-            if (typ == GameType.INVALID)
+            if (typ == GameMetadata.ContentType.GENERIC)
             {
                 typ = gm.GetContentType();
             }
@@ -218,13 +217,13 @@ namespace ChessForge
 
             switch (typ)
             {
-                case GameMetadata.GameType.STUDY_TREE:
+                case GameMetadata.ContentType.STUDY_TREE:
                     StudyTree = tree;
                     break;
-                case GameMetadata.GameType.MODEL_GAME:
+                case GameMetadata.ContentType.MODEL_GAME:
                     ModelGames.Add(tree);
                     break;
-                case GameMetadata.GameType.EXERCISE:
+                case GameMetadata.ContentType.EXERCISE:
                     Exercises.Add(tree);
                     break;
             }

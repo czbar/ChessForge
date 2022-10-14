@@ -55,14 +55,14 @@ namespace ChessForge
         {
             get
             {
-                GameMetadata.GameType gt = WorkbookManager.SessionWorkbook.ActiveVariationTree.ContentType;
+                GameMetadata.ContentType gt = WorkbookManager.SessionWorkbook.ActiveVariationTree.ContentType;
                 switch (gt)
                 {
-                    case GameMetadata.GameType.STUDY_TREE:
+                    case GameMetadata.ContentType.STUDY_TREE:
                         return _studyTreeView;
-                    case GameMetadata.GameType.MODEL_GAME:
+                    case GameMetadata.ContentType.MODEL_GAME:
                         return _modelGameTreeView;
-                    case GameMetadata.GameType.EXERCISE:
+                    case GameMetadata.ContentType.EXERCISE:
                         return _exerciseTreeView;
                     default:
                         return null;
@@ -356,7 +356,7 @@ namespace ChessForge
         {
             if (chapterId >= 0)
             {
-                WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameMetadata.GameType.STUDY_TREE);
+                WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameMetadata.ContentType.STUDY_TREE);
                 ClearTabViews();
                 _chaptersView.HighlightActiveChapter();
                 SetupGuiForActiveStudyTree(focusOnStudyTree);
@@ -394,7 +394,11 @@ namespace ChessForge
         public void SelectModelGame(int gameIndex)
         {
             WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
-            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.GameType.MODEL_GAME, gameIndex);
+            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.MODEL_GAME, gameIndex);
+            
+            MainChessBoard.FlipBoard(false);
+            WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped = null;
+
             SetupGuiForActiveModelGame(gameIndex, true);
         }
 
@@ -406,7 +410,11 @@ namespace ChessForge
         public void SelectExercise(int gameIndex)
         {
             WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = gameIndex;
-            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.GameType.EXERCISE, gameIndex);
+            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.EXERCISE, gameIndex);
+            
+            MainChessBoard.FlipBoard(false);
+            WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = null;
+
             SetupGuiForActiveExercise(gameIndex, true);
         }
 
@@ -735,16 +743,26 @@ namespace ChessForge
                 string fileExtension = Path.GetExtension(fileName).ToLower();
 
                 bool acceptFile = false;
+                bool isChessForgeFile = false;
+
                 switch (fileExtension)
                 {
                     case ".chf":
                         acceptFile = WorkbookManager.ReadLegacyChfFile(fileName);
+                        isChessForgeFile = true;
                         break;
                     case ".pgn":
-                        WorkbookManager.ReadPgnFile(fileName, ref GameList);
-                        WorkbookManager.PrepareWorkbook(ref GameList);
-                        WorkbookManager.AssignChaptersIds();
-                        acceptFile = true;
+                        WorkbookManager.ReadPgnFile(fileName, ref GameList, GameMetadata.ContentType.GENERIC);
+                        bool res = WorkbookManager.PrepareWorkbook(ref GameList, out isChessForgeFile);
+                        if (res)
+                        {
+                            WorkbookManager.AssignChaptersIds();
+                            acceptFile = true;
+                        }
+                        else
+                        {
+                            acceptFile = false;
+                        }
                         break;
                     default:
                         MessageBox.Show("Unrecognized file format: " + fileName, "Input File", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -754,7 +772,7 @@ namespace ChessForge
 
                 if (acceptFile)
                 {
-                    SetupGuiForNewSession(AppStateManager.WorkbookFilePath);
+                    SetupGuiForNewSession(AppStateManager.WorkbookFilePath, isChessForgeFile);
                 }
                 else
                 {
@@ -773,20 +791,20 @@ namespace ChessForge
         /// a new session in the MANUAL_REVIEW learning mode.
         /// </summary>
         /// <param name="fileName"></param>
-        private void SetupGuiForNewSession(string fileName)
+        private void SetupGuiForNewSession(string fileName, bool isChessForgeFile = true)
         {
             // if we are here, the WorkbookFileName must have been updated
             // and the WorkbookFileType was set to CHESS_FORGE_PGN 
 
             // if this is a new session we will set ActiveChapter to the first chapter
             // and Active Tree to the Study Tree in that chapter.
-            WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(0, GameMetadata.GameType.STUDY_TREE);
+            WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(0, GameMetadata.ContentType.STUDY_TREE);
             AppStateManager.UpdateAppTitleBar();
             BoardCommentBox.ShowWorkbookTitle();
 
             if (SessionWorkbook.TrainingSide == PieceColor.None)
             {
-                ShowWorkbookOptionsDialog();
+                ShowWorkbookOptionsDialog(false);
             }
 
             if (SessionWorkbook.TrainingSide == PieceColor.White && MainChessBoard.IsFlipped || SessionWorkbook.TrainingSide == PieceColor.Black && !MainChessBoard.IsFlipped)
@@ -794,7 +812,10 @@ namespace ChessForge
                 MainChessBoard.FlipBoard();
             }
 
-            WorkbookManager.UpdateRecentFilesList(fileName);
+            if (isChessForgeFile)
+            {
+                WorkbookManager.UpdateRecentFilesList(fileName);
+            }
 
             BoardCommentBox.ShowWorkbookTitle();
             InitializeChaptersView();
@@ -1490,7 +1511,7 @@ namespace ChessForge
         /// Shows the Workbook options dialog.
         /// </summary>
         /// <returns></returns>
-        private bool ShowWorkbookOptionsDialog()
+        public bool ShowWorkbookOptionsDialog(bool save)
         {
             WorkbookOptionsDialog dlg = new WorkbookOptionsDialog(SessionWorkbook)
             {
@@ -1504,9 +1525,16 @@ namespace ChessForge
             {
                 SessionWorkbook.TrainingSide = dlg.TrainingSide;
                 SessionWorkbook.Title = dlg.WorkbookTitle;
-                AppStateManager.SaveWorkbookFile();
+                if (save)
+                {
+                    AppStateManager.SaveWorkbookFile();
+                }
+
                 MainChessBoard.FlipBoard(SessionWorkbook.TrainingSide);
-                _chaptersView.BuildFlowDocumentForChaptersView();
+                if (_chaptersView != null)
+                {
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                }
                 return true;
             }
             else

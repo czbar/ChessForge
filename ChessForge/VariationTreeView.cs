@@ -273,7 +273,7 @@ namespace ChessForge
                         _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
                     }
                     else if (Configuration.DebugMode != 0)
-                    {  //we should always have this key, so show deubug message if not
+                    {  //we should always have this key, so show debug message if not
                         DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-brushRegularBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
                     }
                 }
@@ -394,12 +394,12 @@ namespace ChessForge
 
             if (_variationTree != null)
             {
-                string contentType = _variationTree.Header.GetContentType(out _);
+                GameMetadata.ContentType contentType = _variationTree.Header.GetContentType(out _);
                 
                 switch (contentType)
                 {
-                    case PgnHeaders.VALUE_MODEL_GAME:
-                    case PgnHeaders.VALUE_EXERCISE:
+                    case GameMetadata.ContentType.MODEL_GAME:
+                    case GameMetadata.ContentType.EXERCISE:
                         string whitePlayer = _variationTree.Header.GetWhitePlayer(out _);
                         string blackPlayer = _variationTree.Header.GetBlackPlayer(out _);
 
@@ -451,7 +451,7 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph BuildExercisesChessboardParagraph()
         {
-            if (_variationTree != null && _variationTree.Header.GetContentType(out _) == PgnHeaders.VALUE_EXERCISE)
+            if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameMetadata.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2");
                 para.Margin = new Thickness(0,0,0,40);
@@ -619,8 +619,20 @@ namespace ChessForge
         {
             TreeNode parent = nd.Parent;
 
-            Run rParent = _dictNodeToRun[parent.NodeId];
-            Paragraph para = _dictRunToParagraph[rParent];
+            Run rParent;
+            Paragraph para;
+
+            if (_dictNodeToCommentRun.ContainsKey(parent.NodeId))
+            {
+                rParent = _dictNodeToCommentRun[parent.NodeId];
+                para = _dictCommentRunToParagraph[rParent];
+            }
+            else
+            {
+                rParent = _dictNodeToRun[parent.NodeId];
+                para = _dictRunToParagraph[rParent];
+            }
+
 
             Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, false));
             r.Name = "run_" + nd.NodeId.ToString();

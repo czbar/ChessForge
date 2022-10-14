@@ -32,7 +32,7 @@
         <CheckBox x:Name="UiCbSelectAll" IsChecked="True" Grid.Row="1" Content="" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Checked="UiCbSelectAll_Checked" Unchecked="UiCbSelectAll_Unchecked"/>
         <Button x:Name="UiBtnOk" Content="OK" HorizontalAlignment="Left" Margin="320,10,0,0" Grid.Row="2" Width="60" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
         <Button x:Name="UiBtnCancel" Content="Cancel" HorizontalAlignment="Right" Margin="400,10,320,0" Grid.Row="2" Width="60" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
-        <Label x:Name="UiLblInstruct" Content="Select Games to Merge into a Workbook" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
+        <Label x:Name="UiLblInstruct" Content="Select Games" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
 
     </Grid>
 </Window>
