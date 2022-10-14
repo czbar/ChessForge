@@ -31,11 +31,12 @@ namespace ChessForge
         /// Creates the dialog object. Sets ItemsSource for the ListView
         /// to GamesHeaders list.
         /// </summary>
-        public SelectGamesDialog(ref ObservableCollection<GameMetadata> gameList)
+        public SelectGamesDialog(ref ObservableCollection<GameMetadata> gameList, string infoText)
         {
             _gameList = gameList;
             InitializeComponent();
             UiLvGames.ItemsSource = gameList;
+            UiLblInstruct.Content = infoText;
         }
 
         /// <summary>
