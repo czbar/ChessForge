@@ -156,7 +156,7 @@ namespace ChessForge
         /// This method does not check the validity of the text of the game. 
         /// Returns the number of games in the file.
         /// </summary>
-        public static int ReadPgnFile(string path, ref ObservableCollection<GameMetadata> games)
+        public static int ReadPgnFile(string path, ref ObservableCollection<GameMetadata> games, GameMetadata.ContentType contentType)
         {
             games.Clear();
 
@@ -193,6 +193,7 @@ namespace ChessForge
                         // if we do have any header data we add a new game to the list
                         if (gm.HasAnyHeader())
                         {
+                            gm.Header.DetermineContentType();
                             games.Add(gm);
                             gm = new GameMetadata();
                         }
@@ -221,7 +222,29 @@ namespace ChessForge
                 }
             }
 
+            if (contentType != GameMetadata.ContentType.GENERIC)
+            {
+                RemoveGamesOfWrongType(ref games, contentType);
+            }
+             
             return games.Count;
+        }
+
+        private static void RemoveGamesOfWrongType(ref ObservableCollection<GameMetadata> games, GameMetadata.ContentType contentType)
+        {
+            List<GameMetadata> gamesToRemove = new List<GameMetadata>();
+            foreach (GameMetadata game in games)
+            {
+                if (game.Header.GetContentType(out _) != contentType)
+                {
+                    gamesToRemove.Add(game);
+                }
+            }
+
+            foreach (GameMetadata game in gamesToRemove)
+            {
+                games.Remove(game);
+            }
         }
 
         /// <summary>
@@ -417,7 +440,7 @@ namespace ChessForge
             StringBuilder sbErrors = new StringBuilder();
             int errorCount = 0;
 
-            SelectGamesDialog dlg = new SelectGamesDialog(ref games);
+            SelectGamesDialog dlg = new SelectGamesDialog(ref games, "Select Games to Merge into the Study Tree");
             dlg.ShowDialog();
 
             int mergedCount = 0;
