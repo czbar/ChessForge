@@ -212,7 +212,7 @@ namespace GameTree
         /// Returns the Content Type value.
         /// </summary>
         /// <returns></returns>
-        public string GetContentType(out string key, string value = null)
+        public string GetContentTypeString(out string key, string value = null)
         {
             string headerKey = PgnHeaders.KEY_CONTENT_TYPE;
             key = headerKey;
@@ -225,6 +225,77 @@ namespace GameTree
             {
                 return value;
             }
+        }
+
+        /// <summary>
+        /// Returns the Content Type value.
+        /// </summary>
+        /// <returns></returns>
+        public GameMetadata.ContentType GetContentType(out string key, string value = null)
+        {
+            string headerKey = PgnHeaders.KEY_CONTENT_TYPE;
+            key = headerKey;
+
+            string val;
+            if (value == null)
+            {
+                val = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            }
+            else
+            {
+                val = value;
+            }
+
+            return GetContentTypeFromString(val);
+        }
+
+        /// <summary>
+        /// Based on the collected values determines and sets the type
+        /// </summary>
+        /// <returns></returns>
+        public GameMetadata.ContentType DetermineContentType()
+        {
+            if (!string.IsNullOrEmpty(GetContentTypeString(out _)))
+            {
+                return GetContentType(out _);
+            }
+            else if (!string.IsNullOrEmpty(GetFenString()))
+            {
+                SetHeaderValue(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_EXERCISE);
+                return GameMetadata.ContentType.EXERCISE;
+            }
+            else
+            {
+                return GameMetadata.ContentType.GENERIC;
+            }
+        }
+
+        /// <summary>
+        /// Converts a string value to ContentType. 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        private GameMetadata.ContentType GetContentTypeFromString(string s)
+        {
+            GameMetadata.ContentType typ = GameMetadata.ContentType.GENERIC;
+
+            if (!string.IsNullOrEmpty(s))
+            {
+                switch (s)
+                {
+                    case PgnHeaders.VALUE_MODEL_GAME:
+                        typ = GameMetadata.ContentType.MODEL_GAME;
+                        break;
+                    case PgnHeaders.VALUE_STUDY_TREE:
+                        typ = GameMetadata.ContentType.STUDY_TREE;
+                        break;
+                    case PgnHeaders.VALUE_EXERCISE:
+                        typ = GameMetadata.ContentType.EXERCISE;
+                        break;
+                }
+            }
+
+            return typ;
         }
 
         /// <summary>
