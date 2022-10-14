@@ -752,7 +752,7 @@ namespace ChessForge
                         isChessForgeFile = true;
                         break;
                     case ".pgn":
-                        WorkbookManager.ReadPgnFile(fileName, ref GameList);
+                        WorkbookManager.ReadPgnFile(fileName, ref GameList, GameMetadata.ContentType.GENERIC);
                         bool res = WorkbookManager.PrepareWorkbook(ref GameList, out isChessForgeFile);
                         if (res)
                         {
