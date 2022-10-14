@@ -527,6 +527,10 @@ namespace GameTree
             // trim to check if there is any comment but do not trim the comment if it is there.
             if (comment.Trim().Length > 0)
             {
+                // remove CRLF
+                comment = comment.Replace("\r", "");
+                comment = comment.Replace("\n", "");
+
                 node.Comment = comment;
             }
             _remainingGameText = _remainingGameText.Substring(endPos + 1);
