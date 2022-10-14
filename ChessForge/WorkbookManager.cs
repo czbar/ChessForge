@@ -406,6 +406,12 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Merges the passed list of games into a single Variation Tree.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="games"></param>
+        /// <returns></returns>
         private static int MergeGames(ref VariationTree tree, ref ObservableCollection<GameMetadata> games)
         {
             StringBuilder sbErrors = new StringBuilder();
@@ -419,7 +425,6 @@ namespace ChessForge
             if (dlg.Result)
             {
                 Mouse.SetCursor(Cursors.Wait);
-                //AppStateManager.MainWin.Cursor = Cursors.Wait;
                 try
                 {
                     // merge workbooks
@@ -433,7 +438,11 @@ namespace ChessForge
                                 {
                                     // special treatment for the first one
                                     PgnGameParser pgp = new PgnGameParser(games[i].GameText, AppStateManager.MainWin.ActiveVariationTree, out bool multi);
-                                    mergedCount++;
+                                    // make sure it is not a FEN position
+                                    if (string.IsNullOrEmpty(AppStateManager.MainWin.ActiveVariationTree.Header.GetFenString()))
+                                    {
+                                        mergedCount++;
+                                    }
                                 }
                                 catch (Exception ex)
                                 {
@@ -450,8 +459,12 @@ namespace ChessForge
                                 try
                                 {
                                     PgnGameParser pgp = new PgnGameParser(games[i].GameText, workbook2, out bool multi);
-                                    tree = WorkbookTreeMerge.MergeWorkbooks(tree, workbook2);
-                                    mergedCount++;
+                                    // make sure it is not a FEN position
+                                    if (string.IsNullOrEmpty(workbook2.Header.GetFenString()))
+                                    {
+                                        tree = WorkbookTreeMerge.MergeWorkbooks(tree, workbook2);
+                                        mergedCount++;
+                                    }
                                 }
                                 catch (Exception ex)
                                 {
