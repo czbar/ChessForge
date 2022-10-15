@@ -1517,7 +1517,7 @@ namespace ChessForge
             {
                 Left = ChessForgeMain.Left + 100,
                 Top = ChessForgeMain.Top + 100,
-                Topmost = true
+                Topmost = false
             };
             dlg.ShowDialog();
 
@@ -1552,7 +1552,7 @@ namespace ChessForge
             {
                 Left = ChessForgeMain.Left + 100,
                 Top = ChessForgeMain.Top + 100,
-                Topmost = true
+                Topmost = false
             };
             dlg.ShowDialog();
 
@@ -1577,7 +1577,7 @@ namespace ChessForge
             {
                 Left = ChessForgeMain.Left + 100,
                 Top = ChessForgeMain.Top + 100,
-                Topmost = true
+                Topmost = false
             };
             dlg.ShowDialog();
 
@@ -1628,7 +1628,7 @@ namespace ChessForge
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
-                    Topmost = true
+                    Topmost = false
                 };
                 dlg.ShowDialog();
                 if (dlg.ExitOk)
