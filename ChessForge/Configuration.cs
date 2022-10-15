@@ -67,6 +67,12 @@ namespace ChessForge
         public static int EngineMpv = 5;
 
         /// <summary>
+        /// Whether to show the generic PGN file info
+        /// when opening a non-Chess Forge file.
+        /// </summary>
+        public static bool ShowGenericPgnInfo = true;
+
+        /// <summary>
         /// Whether to include bookmark locations in the PGN export
         /// </summary>
         public static bool PgnExportBookmarks = true;
@@ -117,6 +123,8 @@ namespace ChessForge
         /// </summary>
         private const string CFG_PGN_EXP_BOOKMARKS = "PgnExportBookmarks";
         private const string CFG_PGN_EXP_EVALS = "PgnExportEvals";
+
+        private const string CFG_SHOW_GENERIC_PGN_INFO = "ShowGenericPgnInfo";
 
         public static string StartDirectory = "";
 
@@ -246,6 +254,8 @@ namespace ChessForge
 
                 sb.Append(CFG_PGN_EXP_BOOKMARKS + "=" + (PgnExportBookmarks ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_PGN_EXP_EVALS + "=" + (PgnExportEvaluations ? "1" : "0") + Environment.NewLine);
+
+                sb.Append(CFG_SHOW_GENERIC_PGN_INFO + "=" + (ShowGenericPgnInfo ? "1" : "0") + Environment.NewLine);
 
                 sb.Append(Environment.NewLine);
 
@@ -487,6 +497,9 @@ namespace ChessForge
                             break;
                         case CFG_PGN_EXP_EVALS:
                             PgnExportEvaluations = value != "0" ? true : false;
+                            break;
+                        case CFG_SHOW_GENERIC_PGN_INFO:
+                            ShowGenericPgnInfo = value != "0" ? true : false;
                             break;
                         case CFG_MAIN_WINDOW_POS:
                             string[] sizes = value.Split(',');
