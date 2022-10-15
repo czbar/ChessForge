@@ -6,9 +6,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using ChessPosition.GameTree;
 using System.Collections.ObjectModel;
-using ChessForge;
 using System.Text;
 
 namespace ChessForge
@@ -371,7 +369,7 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
             if (chapter != null && ShowChapterTitleDialog(chapter))
             {
-//                SetupGuiForActiveStudyTree(false);
+                //                SetupGuiForActiveStudyTree(false);
                 AppStateManager.IsDirty = true;
             }
         }
@@ -461,20 +459,7 @@ namespace ChessForge
 
                     if (gameCount > 0)
                     {
-                        string dlgTitle = "";
-                        if (contentType == GameMetadata.ContentType.MODEL_GAME)
-                        {
-                            dlgTitle = "Select Model Games to Import";
-                        }
-                        else if (contentType == GameMetadata.ContentType.EXERCISE)
-                        {
-                            dlgTitle = "Select Exercises to Import";
-                        }
-
-                        SelectGamesDialog dlg = new SelectGamesDialog(ref games, dlgTitle);
-                        dlg.ShowDialog();
-
-                        if (dlg.Result)
+                        if (ShowSelectGamesDialog(contentType, ref games))
                         {
                             Mouse.SetCursor(Cursors.Wait);
                             try
@@ -495,38 +480,16 @@ namespace ChessForge
                                         }
                                     }
                                 }
-
-                                chapter.IsViewExpanded = true;
-                                switch (contentType)
-                                {
-                                    case GameMetadata.ContentType.MODEL_GAME:
-                                        chapter.IsModelGamesListExpanded = true;
-                                        break;
-                                    case GameMetadata.ContentType.EXERCISE:
-                                        chapter.IsExercisesListExpanded = true;
-                                        break;
-                                }
-
-                                _chaptersView.RebuildChapterParagraph(WorkbookManager.SessionWorkbook.ActiveChapter);
+                                RefreshChaptersViewAfterImport(contentType, chapter);
                             }
-                            catch
-                            {
-                            }
+                            catch { }
+
                             Mouse.SetCursor(Cursors.Arrow);
                         }
                     }
                     else
                     {
-                        string sError;
-                        if (contentType == GameMetadata.ContentType.EXERCISE)
-                        {
-                            sError = "No Exercises found in ";
-                        }
-                        else
-                        {
-                            sError = "No Games found in ";
-                        }
-                        MessageBox.Show(sError + fileName, "Import PGN", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ShowNoGamesError(contentType, fileName);
                     }
 
                     if (errorCount > 0)
@@ -536,6 +499,104 @@ namespace ChessForge
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Sets the list in the Chapters View in the correct Expand/Collapse state.
+        /// Rebuilds the Paragraph for the chapter.
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <param name="chapter"></param>
+        public void RefreshChaptersViewAfterImport(GameMetadata.ContentType contentType, Chapter chapter)
+        {
+            chapter.IsViewExpanded = true;
+            switch (contentType)
+            {
+                case GameMetadata.ContentType.MODEL_GAME:
+                    chapter.IsModelGamesListExpanded = true;
+                    break;
+                case GameMetadata.ContentType.EXERCISE:
+                    chapter.IsExercisesListExpanded = true;
+                    break;
+            }
+
+            _chaptersView.RebuildChapterParagraph(WorkbookManager.SessionWorkbook.ActiveChapter);
+        }
+
+        /// <summary>
+        /// Show the Select Games dialog.
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <param name="games"></param>
+        /// <returns></returns>
+        private bool ShowSelectGamesDialog(GameMetadata.ContentType contentType, ref ObservableCollection<GameMetadata> games)
+        {
+            string dlgTitle = "";
+            if (contentType == GameMetadata.ContentType.MODEL_GAME)
+            {
+                dlgTitle = "Select Model Games to Import";
+            }
+            else if (contentType == GameMetadata.ContentType.EXERCISE)
+            {
+                dlgTitle = "Select Exercises to Import";
+            }
+
+            SelectGamesDialog dlg = new SelectGamesDialog(ref games, dlgTitle);
+            return dlg.ShowDialog() == true;
+        }
+
+        /// <summary>
+        /// Show the error when no games were found in the file.
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <param name="fileName"></param>
+        private void ShowNoGamesError(GameMetadata.ContentType contentType, string fileName)
+        {
+            string sError;
+            if (contentType == GameMetadata.ContentType.EXERCISE)
+            {
+                sError = "No Exercises found in ";
+            }
+            else
+            {
+                sError = "No Games found in ";
+            }
+            MessageBox.Show(sError + fileName, "Import PGN", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        /// <summary>
+        /// Shows the dialog with info about generic PGN files.
+        /// </summary>
+        /// <returns></returns>
+        public bool ShowGenericPgnInfoDialog()
+        {
+            bool res = true;
+
+            if (Configuration.ShowGenericPgnInfo)
+            {
+                GenericPgnInfoDialog dlgInfo = new GenericPgnInfoDialog
+                {
+                    Left = ChessForgeMain.Left + 100,
+                    Top = ChessForgeMain.Top + 100,
+                    Topmost = false
+                };
+                dlgInfo.ShowDialog();
+                if (dlgInfo.ExitOk)
+                {
+                    if (Configuration.ShowGenericPgnInfo != dlgInfo.ShowGenericPgnInfo)
+                    {
+                        Configuration.ShowGenericPgnInfo = dlgInfo.ShowGenericPgnInfo;
+                        Configuration.WriteOutConfiguration();
+                    }
+                    res = true;
+                }
+                else
+                {
+                    res = false;
+                }
+            }
+
+            return res;
         }
 
         /// <summary>
