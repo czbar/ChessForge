@@ -492,6 +492,17 @@ namespace ChessForge
         //**************************************************************
 
         /// <summary>
+        /// The Chapter View got focus.
+        /// Make sure it is sized properly.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabChapters_GotFocus(object sender, RoutedEventArgs e)
+        {
+            ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+        }
+
+        /// <summary>
         /// The Study Tree view got focus.
         /// Select the last selected line and move and display position.
         /// </summary>
@@ -540,8 +551,18 @@ namespace ChessForge
             {
                 chapter.SetActiveVariationTree(GameMetadata.ContentType.STUDY_TREE);
             }
-            RestoreSelectedLineAndMoveInActiveView();
             AppStateManager.ConfigureMainBoardContextMenu();
+            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+            {
+                UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
+            }
+            else
+            {
+                UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
+                RestoreSelectedLineAndMoveInActiveView();
+            }
+
         }
 
         /// <summary>
@@ -569,12 +590,20 @@ namespace ChessForge
             }
 
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-            if (chapter != null)
+            int activeModelGameIndex = chapter.ActiveModelGameIndex;
+            if (chapter != null && activeModelGameIndex >= 0)
             {
-                chapter.SetActiveVariationTree(GameMetadata.ContentType.MODEL_GAME, chapter.ActiveModelGameIndex);
+                chapter.SetActiveVariationTree(GameMetadata.ContentType.MODEL_GAME, activeModelGameIndex);
+                RestoreSelectedLineAndMoveInActiveView();
             }
-            RestoreSelectedLineAndMoveInActiveView();
+            else
+            {
+                MainChessBoard.SetStartingPosition();
+            }
+
             AppStateManager.ConfigureMainBoardContextMenu();
+            UiImgMainChessboard.Source = ChessBoards.ChessBoardLightBlue;
+            ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
         }
 
         /// <summary>
@@ -602,12 +631,20 @@ namespace ChessForge
             }
 
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-            if (chapter != null)
+            int activeExerciseIndex = chapter.ActiveExerciseIndex;
+            if (chapter != null && activeExerciseIndex >= 0)
             {
-                chapter.SetActiveVariationTree(GameMetadata.ContentType.EXERCISE, chapter.ActiveExerciseIndex);
+                chapter.SetActiveVariationTree(GameMetadata.ContentType.EXERCISE, activeExerciseIndex);
+                RestoreSelectedLineAndMoveInActiveView();
             }
-            RestoreSelectedLineAndMoveInActiveView();
+            else
+            {
+                MainChessBoard.SetStartingPosition();
+            }
+
             AppStateManager.ConfigureMainBoardContextMenu();
+            UiImgMainChessboard.Source = ChessBoards.ChessBoardLightGreen;
+            ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
         }
 
         /// <summary>

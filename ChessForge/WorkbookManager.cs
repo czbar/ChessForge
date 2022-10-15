@@ -307,7 +307,14 @@ namespace ChessForge
             else
             {
                 isChessForgeFile = true;
-                return CreateWorkbookFromGenericGames(ref games);
+                if (AppStateManager.MainWin.ShowGenericPgnInfoDialog())
+                {
+                    return CreateWorkbookFromGenericGames(ref games);
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 
