@@ -119,6 +119,15 @@ namespace ChessForge
             ChessEngineService.SendStopCommand();
         }
 
+        /// <summary>
+        /// Stops engine evaluation and changes Evaluation Mode to IDLE.
+        /// </summary>
+        public static void ExitEngineEvaluationMode()
+        {
+            StopEngineEvaluation();
+            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+        }
+
         //*********************************************************************************
         //
         //         PREPARING PROCESSING OF MESSAGES RECEIVED FROM THE ENGINE
