@@ -73,6 +73,11 @@ namespace ChessForge
         public static bool ShowGenericPgnInfo = true;
 
         /// <summary>
+        /// Whether to allow replaying moves with the mouse wheel. 
+        /// </summary>
+        public static bool UseMouseWheelForMoves = false;
+
+        /// <summary>
         /// Whether to include bookmark locations in the PGN export
         /// </summary>
         public static bool PgnExportBookmarks = true;
@@ -125,7 +130,8 @@ namespace ChessForge
         private const string CFG_PGN_EXP_EVALS = "PgnExportEvals";
 
         private const string CFG_SHOW_GENERIC_PGN_INFO = "ShowGenericPgnInfo";
-
+        private const string CFG_USE_MOUSE_WHEEL_FOR_MOVES = "UseMouseWheelForMoves";
+        
         public static string StartDirectory = "";
 
         // name of the file in which this configuration is stored.
@@ -256,6 +262,7 @@ namespace ChessForge
                 sb.Append(CFG_PGN_EXP_EVALS + "=" + (PgnExportEvaluations ? "1" : "0") + Environment.NewLine);
 
                 sb.Append(CFG_SHOW_GENERIC_PGN_INFO + "=" + (ShowGenericPgnInfo ? "1" : "0") + Environment.NewLine);
+                sb.Append(CFG_USE_MOUSE_WHEEL_FOR_MOVES + "=" + (UseMouseWheelForMoves ? "1" : "0") + Environment.NewLine);
 
                 sb.Append(Environment.NewLine);
 
@@ -500,6 +507,9 @@ namespace ChessForge
                             break;
                         case CFG_SHOW_GENERIC_PGN_INFO:
                             ShowGenericPgnInfo = value != "0" ? true : false;
+                            break;
+                        case CFG_USE_MOUSE_WHEEL_FOR_MOVES:
+                            UseMouseWheelForMoves = value != "0" ? true : false;
                             break;
                         case CFG_MAIN_WINDOW_POS:
                             string[] sizes = value.Split(',');
