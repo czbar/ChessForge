@@ -244,7 +244,7 @@ namespace ChessForge
                     if (nd.IsNewUserMove && !preExist)
                     {
                         AppStateManager.MainWin.AppendNodeToActiveLine(nd, false);
-                        AppStateManager.MainWin.AddNewNodeToWorkbookView(nd);
+                        AppStateManager.MainWin.AddNewNodeToVariationTreeView(nd);
                         AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveTreeView, AppStateManager.MainWin.ActiveLine.GetLineId(), AppStateManager.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
                     }
                     else
