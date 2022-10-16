@@ -213,7 +213,7 @@ namespace ChessForge
             AppStateManager.SetupGuiForCurrentStates();
             //StudyTree.CreateNew();
             UiTabStudyTree.Focus();
-            _studyTreeView.BuildFlowDocumentForWorkbook();
+            _studyTreeView.BuildFlowDocumentForVariationTree();
             int startingNode = 0;
             string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(startingNode);
             SetActiveLine(startLineId, startingNode);

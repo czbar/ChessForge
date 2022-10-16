@@ -180,7 +180,7 @@ namespace ChessForge
             // move to promote the line, so the end result wouldn't change. But it may if we change that other logic.
             _variationTree.PromoteLine(nd);
             _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
-            BuildFlowDocumentForWorkbook();
+            BuildFlowDocumentForVariationTree();
             _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
             AppStateManager.IsDirty = true;
         }
@@ -196,7 +196,7 @@ namespace ChessForge
             _variationTree.BuildLines();
             _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
             BookmarkManager.ResyncBookmarks(1);
-            BuildFlowDocumentForWorkbook();
+            BuildFlowDocumentForVariationTree();
             _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true));
             AppStateManager.IsDirty = true;
         }
@@ -331,10 +331,10 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds the FlowDocument from the entire Workbook tree for the RichTextBox to display.
+        /// Builds the FlowDocument from the entire Variation Tree for the RichTextBox to display.
         /// Inserts dummy (no text) run for the starting position (NodeId == 0)
         /// </summary>
-        public void BuildFlowDocumentForWorkbook(int rootNodeId = 0, bool includeStem = true)
+        public void BuildFlowDocumentForVariationTree(int rootNodeId = 0, bool includeStem = true)
         {
             Clear();
 
