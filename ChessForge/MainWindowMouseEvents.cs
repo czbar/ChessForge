@@ -268,13 +268,16 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (e.Delta > 0)
+            if (Configuration.AllowMouseWheelForMoves)
             {
-                ActiveLine.HandleKeyDown(Key.Left);
-            }
-            else if (e.Delta < 0)
-            {
-                ActiveLine.HandleKeyDown(Key.Right);
+                if (e.Delta > 0)
+                {
+                    ActiveLine.HandleKeyDown(Key.Left);
+                }
+                else if (e.Delta < 0)
+                {
+                    ActiveLine.HandleKeyDown(Key.Right);
+                }
             }
         }
 
