@@ -454,7 +454,7 @@ namespace ChessForge
             if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameMetadata.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2");
-                para.Margin = new Thickness(0,0,0,40);
+                para.Margin = new Thickness(60,0,0,40);
                 
                 InlineUIContainer uIContainer = new InlineUIContainer();
                 Viewbox vb = new Viewbox();
