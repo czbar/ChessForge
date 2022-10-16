@@ -23,7 +23,7 @@ namespace ChessForge
         /// <summary>
         /// Loads a new Workbook file.
         /// If the application is NOT in the IDLE mode, it will ask the user:
-        /// - to close/cancel/save/put_aside the current tree (TODO: TO BE IMPLEMENTED)
+        /// - to close/cancel/save/put_aside the current tree
         /// - stop a game against the engine, if in progress
         /// - stop any engine evaluations if in progress (TODO: it should be allowed to continue background analysis in a separate low-pri thread).
         /// </summary>
