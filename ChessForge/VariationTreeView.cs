@@ -834,17 +834,8 @@ namespace ChessForge
             {
                 sb.Append(" ");
             }
-
-            sb.Append(nd.LastMoveAlgebraicNotationWithNag);
-            if (nd.Position.IsCheckmate)
-            {
-                sb.Append("#");
-            }
-            else if (nd.Position.IsCheck)
-            {
-                sb.Append("+");
-            }
-
+            
+            sb.Append(nd.GetPlyText(true));
             return sb.ToString();
         }
 
@@ -993,6 +984,8 @@ namespace ChessForge
                     nodeId = int.Parse(r.Name.Substring(RUN_NAME_PREFIX.Length));
                     TreeNode foundNode = _variationTree.GetNodeFromNodeId(nodeId);
                     lineId = _variationTree.GetDefaultLineIdForNode(nodeId);
+
+                    // TODO: do not select line and therefore repaint everything if the clicked line is already selected
                     ObservableCollection<TreeNode> lineToSelect = _variationTree.SelectLine(lineId);
                     WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nodeId);
                     foreach (TreeNode nd in lineToSelect)
