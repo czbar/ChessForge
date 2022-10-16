@@ -620,7 +620,7 @@ namespace ChessForge
                 AppStateManager.MainWin.ActiveVariationTree.ClearTrainingFlags();
                 AppStateManager.MainWin.ActiveVariationTree.BuildLines();
                 AppStateManager.SaveWorkbookFile();
-                AppStateManager.MainWin.RebuildWorkbookView();
+                AppStateManager.MainWin.RebuildActiveTreeView();
                 AppStateManager.MainWin.RefreshSelectedActiveLineAndNode();
                 //    saved = true;
             }
