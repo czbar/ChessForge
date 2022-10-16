@@ -9,17 +9,19 @@
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >
         <Button x:Name="_btnSave" Content="Save" HorizontalAlignment="Left" Margin="202,220,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnSave_Click"/>
         <Button x:Name="_btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="328,220,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnCancel_Click" />
+        <GroupBox x:Name="_boxEngThinkTime" HorizontalAlignment="Left" Height="115" Header="Engine Time per Move (seconds)" Margin="22,86,0,0" VerticalAlignment="Top" Width="270"/>
         <Label x:Name="_lblThinkTimeInGame" Content="In Game" HorizontalAlignment="Left" Margin="52,117,0,0" VerticalAlignment="Top" Width="84"/>
-        <TextBox x:Name="_tbEngTimeInGame" HorizontalAlignment="Left" HorizontalContentAlignment="Center"  Margin="141,120,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60"/>
-        <TextBox x:Name="_tbEngEvalTime" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="141,157,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60"/>
+        <TextBox x:Name="UiTbEngTimeInGame" HorizontalAlignment="Left" HorizontalContentAlignment="Center"  Margin="141,120,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60"/>
+        <TextBox x:Name="UiTbEngEvalTime" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="141,157,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60"/>
         <Label x:Name="_lblEvalTime" Content="Evaluation" HorizontalAlignment="Left" Margin="52,154,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="_tbReplaySpeed" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="433,123,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60"/>
-        <Label x:Name="_lblReplaySpeed" Content="Time per Move" HorizontalAlignment="Left" Margin="335,118,0,0" VerticalAlignment="Top"/>
+        <GroupBox x:Name="_boxAutoReplay" HorizontalAlignment="Left" Height="115" Header="Move Replay" Margin="314,86,0,0" VerticalAlignment="Top" Width="270">
+        </GroupBox>
+        <TextBox x:Name="UiTbReplaySpeed" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="480,123,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60"/>
+        <Label x:Name="_lblReplaySpeed" Content="Seconds per Move in Auto" HorizontalAlignment="Left" Margin="325,118,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="UiCbAllowWheel" Content="Allow Mouse Wheel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="327,157,0,0" Height="20"/>
         <Label x:Name="_lblEngineExe" Content="Engine Executable" HorizontalAlignment="Left" Margin="26,31,0,0" VerticalAlignment="Top"/>
         <Button x:Name="_btnLocateEngine" Content=". . ." HorizontalAlignment="Left" Margin="545,34,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.681,0.002" Width="28" Click="UiBtnLocateEngine_Click"/>
-        <TextBox x:Name="_tbEngineExe" IsEnabled="False" HorizontalAlignment="Left" Margin="141,36,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="387"/>
-        <GroupBox x:Name="_boxEngThinkTime" HorizontalAlignment="Left" Height="115" Header="Engine Time per Move (seconds)" Margin="22,86,0,0" VerticalAlignment="Top" Width="270"/>
-        <GroupBox x:Name="_boxAutoReplay" HorizontalAlignment="Left" Height="115" Header="Auto Replay Speed (seconds)" Margin="314,86,0,0" VerticalAlignment="Top" Width="270"/>
+        <TextBox x:Name="UiTbEngineExe" IsEnabled="False" HorizontalAlignment="Left" Margin="141,36,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="387"/>
 
     </Grid>
 </Window>
