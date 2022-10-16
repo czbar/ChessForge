@@ -12,14 +12,11 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Security.Policy;
 using System.Diagnostics;
 using static ChessForge.AppStateManager;
-using ChessPosition.GameTree;
 
 namespace ChessForge
 {
@@ -847,15 +844,7 @@ namespace ChessForge
             string startLineId;
             int startNodeId = 0;
 
-            //if (!string.IsNullOrEmpty(ActiveVariationTree.SelectedLineId) && ActiveVariationTree.SelectedNodeId >= 0)
-            //{
-            //    startLineId = ActiveVariationTree.SelectedLineId;
-            //    startNodeId = ActiveVariationTree.SelectedNodeId;
-            //}
-            //else
-            //{
             startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
-            //}
 
             ActiveVariationTree.SelectedLineId = startLineId;
             ActiveVariationTree.SelectedNodeId = startNodeId;
@@ -1017,9 +1006,9 @@ namespace ChessForge
         /// This can only be done "safely" if we are adding a move to a leaf.
         /// </summary>
         /// <param name="nd"></param>
-        public void AddNewNodeToWorkbookView(TreeNode nd)
+        public void AddNewNodeToVariationTreeView(TreeNode nd)
         {
-            _studyTreeView.AddNewNode(nd);
+            ActiveTreeView.AddNewNode(nd);
         }
 
         /// <summary>

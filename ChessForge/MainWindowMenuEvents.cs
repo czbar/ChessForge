@@ -97,7 +97,7 @@ namespace ChessForge
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
             if (InvokeAnnotationsDialog(nd))
             {
-                _studyTreeView.InsertOrUpdateCommentRun(nd);
+                ActiveTreeView.InsertOrUpdateCommentRun(nd);
             }
         }
 
@@ -962,7 +962,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnPromoteLine_Click(object sender, RoutedEventArgs e)
         {
-            _studyTreeView.PromoteCurrentLine();
+            ActiveTreeView.PromoteCurrentLine();
         }
 
         /// <summary>
@@ -972,7 +972,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnDeleteMovesFromHere_Click(object sender, RoutedEventArgs e)
         {
-            _studyTreeView.DeleteRemainingMoves();
+            ActiveTreeView.DeleteRemainingMoves();
         }
 
 
