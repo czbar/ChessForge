@@ -1039,11 +1039,12 @@ namespace ChessForge
                 TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
                 if (_mainWin.InvokeAnnotationsDialog(nd))
                 {
-                    r.Text = BuildCommentRunText(nd);
-                    if (string.IsNullOrEmpty(r.Text))
-                    {
-                        RemoveRunFromHostingParagraph(r);
-                    }
+                    InsertOrUpdateCommentRun(nd);
+                    //r.Text = BuildCommentRunText(nd);
+                    //if (string.IsNullOrEmpty(r.Text))
+                    //{
+                    //    RemoveRunFromHostingParagraph(r);
+                    //}
                 }
             }
         }
@@ -1077,6 +1078,7 @@ namespace ChessForge
                 // if the comment run existed, remove it
                 if (r_comment != null)
                 {
+                    _dictNodeToCommentRun.Remove(nd.NodeId);
                     RemoveRunFromHostingParagraph(r_comment);
                 }
             }
