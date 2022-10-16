@@ -306,14 +306,14 @@ namespace ChessForge
             {
                 // previous move was by White
                 MoveWithEval move = MoveList[MoveList.Count - 1];
-                move.BlackPly = MoveUtils.BuildPlyText(nd, true);
+                move.BlackPly = nd.GetPlyText(true);
                 move.BlackEval = nd.EngineEvaluation;
                 move.BlackNodeId = nd.NodeId;
             }
             else
             {
                 MoveWithEval move = new MoveWithEval();
-                move.WhitePly = MoveUtils.BuildPlyText(nd, true);
+                move.WhitePly = nd.GetPlyText(true);
                 move.WhiteEval = nd.EngineEvaluation;
                 move.WhiteNodeId = nd.NodeId;
                 move.Number = (MoveList.Count + 1).ToString() + ".";
@@ -349,11 +349,11 @@ namespace ChessForge
             if (nd.Position.ColorToMove == PieceColor.White)
             {
                 // we are replacing Black's move
-                move.BlackPly = MoveUtils.BuildPlyText(nd, true);
+                move.BlackPly = nd.GetPlyText(true);
             }
             else
             {
-                move.WhitePly = MoveUtils.BuildPlyText(nd, true);
+                move.WhitePly = nd.GetPlyText(true);
             }
         }
     }
