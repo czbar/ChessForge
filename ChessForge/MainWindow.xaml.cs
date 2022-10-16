@@ -1139,7 +1139,7 @@ namespace ChessForge
             if (userRequested)
             {
                 distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                AppLog.DumpWorkbookTree(DebugUtils.BuildLogFileName(App.AppPath, "wktree", distinct), ActiveVariationTree);
+                AppLog.DumpVariationTree(DebugUtils.BuildLogFileName(App.AppPath, "wktree", distinct), ActiveVariationTree);
                 AppLog.DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
             }
 
