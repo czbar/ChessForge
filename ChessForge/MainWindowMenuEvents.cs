@@ -578,7 +578,8 @@ namespace ChessForge
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
-                    Topmost = false
+                    Topmost = false,
+                    Owner = this
                 };
                 dlgInfo.ShowDialog();
                 if (dlgInfo.ExitOk)

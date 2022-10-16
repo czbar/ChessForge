@@ -395,7 +395,7 @@ namespace ChessForge
         {
             WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
             WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.MODEL_GAME, gameIndex);
-            
+
             MainChessBoard.FlipBoard(false);
             WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped = null;
 
@@ -411,7 +411,7 @@ namespace ChessForge
         {
             WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = gameIndex;
             WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.EXERCISE, gameIndex);
-            
+
             MainChessBoard.FlipBoard(false);
             WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = null;
 
@@ -1517,7 +1517,8 @@ namespace ChessForge
             {
                 Left = ChessForgeMain.Left + 100,
                 Top = ChessForgeMain.Top + 100,
-                Topmost = false
+                Topmost = false,
+                Owner = this
             };
             dlg.ShowDialog();
 
@@ -1552,7 +1553,8 @@ namespace ChessForge
             {
                 Left = ChessForgeMain.Left + 100,
                 Top = ChessForgeMain.Top + 100,
-                Topmost = false
+                Topmost = false,
+                Owner = this
             };
             dlg.ShowDialog();
 
@@ -1577,7 +1579,8 @@ namespace ChessForge
             {
                 Left = ChessForgeMain.Left + 100,
                 Top = ChessForgeMain.Top + 100,
-                Topmost = false
+                Topmost = false,
+                Owner = this
             };
             dlg.ShowDialog();
 
@@ -1628,7 +1631,8 @@ namespace ChessForge
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
-                    Topmost = false
+                    Topmost = false,
+                    Owner = this
                 };
                 dlg.ShowDialog();
                 if (dlg.ExitOk)
