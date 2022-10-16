@@ -151,7 +151,6 @@
     <Compile Include="TreeTableCell.cs" />
     <Compile Include="TreeTableRow.cs" />
     <Compile Include="ChfTextBuilder.cs" />
-    <Compile Include="UIEelementState.cs" />
     <Compile Include="ScoreSheet.cs" />
     <Compile Include="WorkbookTableState.cs" />
     <Page Include="AboutBoxDialog.xaml">

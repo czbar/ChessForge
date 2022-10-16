@@ -12,14 +12,11 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Security.Policy;
 using System.Diagnostics;
 using static ChessForge.AppStateManager;
-using ChessPosition.GameTree;
 
 namespace ChessForge
 {
@@ -395,7 +392,7 @@ namespace ChessForge
         {
             WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
             WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.MODEL_GAME, gameIndex);
-            
+
             MainChessBoard.FlipBoard(false);
             WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped = null;
 
@@ -411,7 +408,7 @@ namespace ChessForge
         {
             WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = gameIndex;
             WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.EXERCISE, gameIndex);
-            
+
             MainChessBoard.FlipBoard(false);
             WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = null;
 
@@ -842,20 +839,12 @@ namespace ChessForge
                 ActiveVariationTree.BuildLines();
             }
 
-            _studyTreeView.BuildFlowDocumentForWorkbook();
+            _studyTreeView.BuildFlowDocumentForVariationTree();
 
             string startLineId;
             int startNodeId = 0;
 
-            //if (!string.IsNullOrEmpty(ActiveVariationTree.SelectedLineId) && ActiveVariationTree.SelectedNodeId >= 0)
-            //{
-            //    startLineId = ActiveVariationTree.SelectedLineId;
-            //    startNodeId = ActiveVariationTree.SelectedNodeId;
-            //}
-            //else
-            //{
             startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
-            //}
 
             ActiveVariationTree.SelectedLineId = startLineId;
             ActiveVariationTree.SelectedNodeId = startNodeId;
@@ -894,7 +883,7 @@ namespace ChessForge
                 ActiveVariationTree.BuildLines();
             }
 
-            _modelGameTreeView.BuildFlowDocumentForWorkbook();
+            _modelGameTreeView.BuildFlowDocumentForVariationTree();
 
             string startLineId;
             int startNodeId = 0;
@@ -946,7 +935,7 @@ namespace ChessForge
                 ActiveVariationTree.BuildLines();
             }
 
-            _exerciseTreeView.BuildFlowDocumentForWorkbook();
+            _exerciseTreeView.BuildFlowDocumentForVariationTree();
 
             string startLineId;
             int startNodeId = 0;
@@ -994,9 +983,9 @@ namespace ChessForge
         /// <summary>
         /// Rebuilds the entire Workbook View
         /// </summary>
-        public void RebuildWorkbookView()
+        public void RebuildActiveTreeView()
         {
-            _studyTreeView.BuildFlowDocumentForWorkbook();
+            ActiveTreeView.BuildFlowDocumentForVariationTree();
         }
 
         /// <summary>
@@ -1017,9 +1006,9 @@ namespace ChessForge
         /// This can only be done "safely" if we are adding a move to a leaf.
         /// </summary>
         /// <param name="nd"></param>
-        public void AddNewNodeToWorkbookView(TreeNode nd)
+        public void AddNewNodeToVariationTreeView(TreeNode nd)
         {
-            _studyTreeView.AddNewNode(nd);
+            ActiveTreeView.AddNewNode(nd);
         }
 
         /// <summary>
@@ -1139,7 +1128,7 @@ namespace ChessForge
             if (userRequested)
             {
                 distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                AppLog.DumpWorkbookTree(DebugUtils.BuildLogFileName(App.AppPath, "wktree", distinct), ActiveVariationTree);
+                AppLog.DumpVariationTree(DebugUtils.BuildLogFileName(App.AppPath, "wktree", distinct), ActiveVariationTree);
                 AppLog.DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
             }
 
@@ -1313,7 +1302,7 @@ namespace ChessForge
             Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
             AppStateManager.MainWin.ActiveVariationTree.BuildLines();
-            RebuildWorkbookView();
+            RebuildActiveTreeView();
 
             AppStateManager.SetupGuiForCurrentStates();
 
@@ -1517,7 +1506,8 @@ namespace ChessForge
             {
                 Left = ChessForgeMain.Left + 100,
                 Top = ChessForgeMain.Top + 100,
-                Topmost = false
+                Topmost = false,
+                Owner = this
             };
             dlg.ShowDialog();
 
@@ -1552,7 +1542,8 @@ namespace ChessForge
             {
                 Left = ChessForgeMain.Left + 100,
                 Top = ChessForgeMain.Top + 100,
-                Topmost = false
+                Topmost = false,
+                Owner = this
             };
             dlg.ShowDialog();
 
@@ -1577,7 +1568,8 @@ namespace ChessForge
             {
                 Left = ChessForgeMain.Left + 100,
                 Top = ChessForgeMain.Top + 100,
-                Topmost = false
+                Topmost = false,
+                Owner = this
             };
             dlg.ShowDialog();
 
@@ -1628,7 +1620,8 @@ namespace ChessForge
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
-                    Topmost = false
+                    Topmost = false,
+                    Owner = this
                 };
                 dlg.ShowDialog();
                 if (dlg.ExitOk)

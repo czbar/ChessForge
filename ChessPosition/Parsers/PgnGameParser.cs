@@ -651,7 +651,7 @@ namespace GameTree
         /// <summary>
         /// Removes the last character of the algebraic notation if it
         /// denotes a check or a mate.
-        /// This is so that these symbole are not duplicated when they get added
+        /// This is so that these symbols are not duplicated when they get added
         /// later on.
         /// </summary>
         /// <param name="algMove"></param>

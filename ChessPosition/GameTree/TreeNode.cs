@@ -375,19 +375,54 @@ namespace GameTree
         /// <returns></returns>
         public string GetPlyText(bool withNags)
         {
-            StringBuilder sb = new StringBuilder();
+            if (!Position.IsCheckmate && !Position.IsCheck)
+            {
+                return withNags ? LastMoveAlgebraicNotationWithNag : LastMoveAlgebraicNotation;
+            }
 
-            sb.Append( withNags ? LastMoveAlgebraicNotationWithNag : LastMoveAlgebraicNotation);
-            
-            if (Position.IsCheckmate)
+            if (withNags)
             {
-                sb.Append('#');
+                return LastMoveAlgebraicNotation + GetCheckOrMateSign() + GetNagSubstring();
             }
-            else if (Position.IsCheck)
+            else
             {
-                sb.Append('+');
+                return LastMoveAlgebraicNotation + GetCheckOrMateSign();
             }
-            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Obtains the NAG string if present by comparing the move string with and without the NAGs.
+        /// </summary>
+        /// <returns></returns>
+        private string GetNagSubstring()
+        {
+            if (LastMoveAlgebraicNotationWithNag == null || LastMoveAlgebraicNotation == null 
+                || LastMoveAlgebraicNotationWithNag.Length <= LastMoveAlgebraicNotation.Length)
+            {
+                return "";
+            }
+
+            return LastMoveAlgebraicNotationWithNag.Substring(LastMoveAlgebraicNotation.Length);
+        }
+
+        /// <summary>
+        /// Returns the check.mate/empty sign string appropriate for the position.
+        /// </summary>
+        /// <returns></returns>
+        private string GetCheckOrMateSign()
+        {
+            if (Position.IsCheck)
+            {
+                return "+";
+            }
+            else if (Position.IsCheckmate)
+            {
+                return "#";
+            }
+            else
+            {
+                return "";
+            }
         }
     }
 }

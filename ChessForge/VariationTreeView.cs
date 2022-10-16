@@ -180,7 +180,7 @@ namespace ChessForge
             // move to promote the line, so the end result wouldn't change. But it may if we change that other logic.
             _variationTree.PromoteLine(nd);
             _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
-            BuildFlowDocumentForWorkbook();
+            BuildFlowDocumentForVariationTree();
             _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
             AppStateManager.IsDirty = true;
         }
@@ -196,7 +196,7 @@ namespace ChessForge
             _variationTree.BuildLines();
             _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
             BookmarkManager.ResyncBookmarks(1);
-            BuildFlowDocumentForWorkbook();
+            BuildFlowDocumentForVariationTree();
             _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true));
             AppStateManager.IsDirty = true;
         }
@@ -331,10 +331,10 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds the FlowDocument from the entire Workbook tree for the RichTextBox to display.
+        /// Builds the FlowDocument from the entire Variation Tree for the RichTextBox to display.
         /// Inserts dummy (no text) run for the starting position (NodeId == 0)
         /// </summary>
-        public void BuildFlowDocumentForWorkbook(int rootNodeId = 0, bool includeStem = true)
+        public void BuildFlowDocumentForVariationTree(int rootNodeId = 0, bool includeStem = true)
         {
             Clear();
 
@@ -454,7 +454,7 @@ namespace ChessForge
             if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameMetadata.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2");
-                para.Margin = new Thickness(0,0,0,40);
+                para.Margin = new Thickness(60,0,0,40);
                 
                 InlineUIContainer uIContainer = new InlineUIContainer();
                 Viewbox vb = new Viewbox();
@@ -834,17 +834,8 @@ namespace ChessForge
             {
                 sb.Append(" ");
             }
-
-            sb.Append(nd.LastMoveAlgebraicNotationWithNag);
-            if (nd.Position.IsCheckmate)
-            {
-                sb.Append("#");
-            }
-            else if (nd.Position.IsCheck)
-            {
-                sb.Append("+");
-            }
-
+            
+            sb.Append(nd.GetPlyText(true));
             return sb.ToString();
         }
 
@@ -993,6 +984,8 @@ namespace ChessForge
                     nodeId = int.Parse(r.Name.Substring(RUN_NAME_PREFIX.Length));
                     TreeNode foundNode = _variationTree.GetNodeFromNodeId(nodeId);
                     lineId = _variationTree.GetDefaultLineIdForNode(nodeId);
+
+                    // TODO: do not select line and therefore repaint everything if the clicked line is already selected
                     ObservableCollection<TreeNode> lineToSelect = _variationTree.SelectLine(lineId);
                     WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nodeId);
                     foreach (TreeNode nd in lineToSelect)
@@ -1046,11 +1039,12 @@ namespace ChessForge
                 TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
                 if (_mainWin.InvokeAnnotationsDialog(nd))
                 {
-                    r.Text = BuildCommentRunText(nd);
-                    if (string.IsNullOrEmpty(r.Text))
-                    {
-                        RemoveRunFromHostingParagraph(r);
-                    }
+                    InsertOrUpdateCommentRun(nd);
+                    //r.Text = BuildCommentRunText(nd);
+                    //if (string.IsNullOrEmpty(r.Text))
+                    //{
+                    //    RemoveRunFromHostingParagraph(r);
+                    //}
                 }
             }
         }
@@ -1084,6 +1078,7 @@ namespace ChessForge
                 // if the comment run existed, remove it
                 if (r_comment != null)
                 {
+                    _dictNodeToCommentRun.Remove(nd.NodeId);
                     RemoveRunFromHostingParagraph(r_comment);
                 }
             }

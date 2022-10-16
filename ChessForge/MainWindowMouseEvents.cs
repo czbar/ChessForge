@@ -268,13 +268,16 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (e.Delta > 0)
+            if (Configuration.AllowMouseWheelForMoves)
             {
-                ActiveLine.HandleKeyDown(Key.Left);
-            }
-            else if (e.Delta < 0)
-            {
-                ActiveLine.HandleKeyDown(Key.Right);
+                if (e.Delta > 0)
+                {
+                    ActiveLine.HandleKeyDown(Key.Left);
+                }
+                else if (e.Delta < 0)
+                {
+                    ActiveLine.HandleKeyDown(Key.Right);
+                }
             }
         }
 
@@ -295,10 +298,10 @@ namespace ChessForge
         /// <param name="e"></param>
         private void WorkbookView_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (_studyTreeView != null)
+            if (ActiveTreeView != null)
             {
-                _studyTreeView.LastClickedNodeId = -1;
-                _studyTreeView.EnableWorkbookMenus(UiCmnWorkbookRightClick, false);
+                ActiveTreeView.LastClickedNodeId = -1;
+                ActiveTreeView.EnableWorkbookMenus(UiCmnWorkbookRightClick, false);
             }
         }
 

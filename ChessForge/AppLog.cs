@@ -66,18 +66,18 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Writes out the WorkbookTree
+        /// Writes out a VariationTree
         /// </summary>
         /// <param name="filePath"></param>
         /// <param name="tree"></param>
         [Conditional("DEBUG")]
-        public static void DumpWorkbookTree(string filePath, VariationTree tree)
+        public static void DumpVariationTree(string filePath, VariationTree tree)
         {
             StringBuilder sb = new StringBuilder();
 
             if (tree == null)
             {
-                sb.Append("WorkbookTree reference is null.");
+                sb.Append("VariationTree reference is null.");
             }
             else
             {
@@ -87,7 +87,7 @@ namespace ChessForge
                     sb.Append("Node index = " + i.ToString() + Environment.NewLine);
                     sb.Append("Node Id = " + nd.NodeId.ToString() + Environment.NewLine);
                     sb.Append("Parent Node Id = " + (nd.Parent == null ? "-" : nd.Parent.NodeId.ToString()) + Environment.NewLine);
-                    sb.Append("Move alg = " + nd.LastMoveAlgebraicNotation + Environment.NewLine);
+                    sb.Append("Move alg = " + nd.LastMoveAlgebraicNotationWithNag + Environment.NewLine);
                     sb.Append("Comment = " + (nd.Comment == null ? "" : nd.Comment)  + Environment.NewLine);
                     sb.Append("DistanceToLeaf = " + nd.DistanceToLeaf.ToString() + Environment.NewLine);
                     sb.Append("DistanceToFork = " + nd.DistanceToNextFork.ToString() + Environment.NewLine);
@@ -105,7 +105,7 @@ namespace ChessForge
             }
             catch
             {
-                MessageBox.Show("DEBUG", "Error writing out Workbook Tree to " + filePath, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("DEBUG", "Error writing out Variation Tree to " + filePath, MessageBoxButton.OK, MessageBoxImage.Error);
             };
         }
 

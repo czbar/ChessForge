@@ -23,7 +23,7 @@ namespace ChessForge
         /// <summary>
         /// Loads a new Workbook file.
         /// If the application is NOT in the IDLE mode, it will ask the user:
-        /// - to close/cancel/save/put_aside the current tree (TODO: TO BE IMPLEMENTED)
+        /// - to close/cancel/save/put_aside the current tree
         /// - stop a game against the engine, if in progress
         /// - stop any engine evaluations if in progress (TODO: it should be allowed to continue background analysis in a separate low-pri thread).
         /// </summary>
@@ -97,7 +97,7 @@ namespace ChessForge
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
             if (InvokeAnnotationsDialog(nd))
             {
-                _studyTreeView.InsertOrUpdateCommentRun(nd);
+                ActiveTreeView.InsertOrUpdateCommentRun(nd);
             }
         }
 
@@ -213,7 +213,7 @@ namespace ChessForge
             AppStateManager.SetupGuiForCurrentStates();
             //StudyTree.CreateNew();
             UiTabStudyTree.Focus();
-            _studyTreeView.BuildFlowDocumentForWorkbook();
+            _studyTreeView.BuildFlowDocumentForVariationTree();
             int startingNode = 0;
             string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(startingNode);
             SetActiveLine(startLineId, startingNode);
@@ -578,7 +578,8 @@ namespace ChessForge
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
-                    Topmost = false
+                    Topmost = false,
+                    Owner = this
                 };
                 dlgInfo.ShowDialog();
                 if (dlgInfo.ExitOk)
@@ -961,7 +962,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnPromoteLine_Click(object sender, RoutedEventArgs e)
         {
-            _studyTreeView.PromoteCurrentLine();
+            ActiveTreeView.PromoteCurrentLine();
         }
 
         /// <summary>
@@ -971,7 +972,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnDeleteMovesFromHere_Click(object sender, RoutedEventArgs e)
         {
-            _studyTreeView.DeleteRemainingMoves();
+            ActiveTreeView.DeleteRemainingMoves();
         }
 
 

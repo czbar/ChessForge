@@ -25,6 +25,8 @@ namespace ChessForge
 
         public double EngineTimePerMoveInEvaluation;
 
+        public bool AllowMouseWheel;
+
         // indicates whether the engine path was changed by the user in this dialog.
         public bool ChangedEnginePath = false;
 
@@ -39,11 +41,13 @@ namespace ChessForge
             ReplaySpeed = (double)Configuration.MoveSpeed / 1000.0;
             EngineTimePerMoveInGame = (double)Configuration.EngineMoveTime / 1000.0;
             EngineTimePerMoveInEvaluation = (double)Configuration.EngineEvaluationTime / 1000.0;
+            AllowMouseWheel = Configuration.AllowMouseWheelForMoves;
 
-            _tbEngineExe.Text = EnginePath;
-            _tbReplaySpeed.Text = ReplaySpeed.ToString("F1");
-            _tbEngTimeInGame.Text = EngineTimePerMoveInGame.ToString("F1");
-            _tbEngEvalTime.Text = EngineTimePerMoveInEvaluation.ToString("F1");
+            UiTbEngineExe.Text = EnginePath;
+            UiTbReplaySpeed.Text = ReplaySpeed.ToString("F1");
+            UiTbEngTimeInGame.Text = EngineTimePerMoveInGame.ToString("F1");
+            UiTbEngEvalTime.Text = EngineTimePerMoveInEvaluation.ToString("F1");
+            UiCbAllowWheel.IsChecked = (AllowMouseWheel == true);
         }
 
         /// <summary>
@@ -80,21 +84,23 @@ namespace ChessForge
 
             double dval;
 
-            if (double.TryParse(_tbReplaySpeed.Text, out dval))
+            if (double.TryParse(UiTbReplaySpeed.Text, out dval))
             {
                 Configuration.MoveSpeed = (int)(dval * 1000);
             }
 
-            if (double.TryParse(_tbEngTimeInGame.Text, out dval))
+            if (double.TryParse(UiTbEngTimeInGame.Text, out dval))
             {
                 Configuration.EngineMoveTime = (int)(dval * 1000);
             }
 
-            if (double.TryParse(_tbEngEvalTime.Text, out dval))
+            if (double.TryParse(UiTbEngEvalTime.Text, out dval))
             {
                 Configuration.EngineEvaluationTime = (int)(dval * 1000);
             }
-       
+
+            Configuration.AllowMouseWheelForMoves = (UiCbAllowWheel.IsChecked == true); 
+
             ExitOK = true;
             this.Close();
         }
