@@ -842,7 +842,7 @@ namespace ChessForge
                 ActiveVariationTree.BuildLines();
             }
 
-            _studyTreeView.BuildFlowDocumentForWorkbook();
+            _studyTreeView.BuildFlowDocumentForVariationTree();
 
             string startLineId;
             int startNodeId = 0;
@@ -894,7 +894,7 @@ namespace ChessForge
                 ActiveVariationTree.BuildLines();
             }
 
-            _modelGameTreeView.BuildFlowDocumentForWorkbook();
+            _modelGameTreeView.BuildFlowDocumentForVariationTree();
 
             string startLineId;
             int startNodeId = 0;
@@ -946,7 +946,7 @@ namespace ChessForge
                 ActiveVariationTree.BuildLines();
             }
 
-            _exerciseTreeView.BuildFlowDocumentForWorkbook();
+            _exerciseTreeView.BuildFlowDocumentForVariationTree();
 
             string startLineId;
             int startNodeId = 0;
@@ -994,9 +994,9 @@ namespace ChessForge
         /// <summary>
         /// Rebuilds the entire Workbook View
         /// </summary>
-        public void RebuildWorkbookView()
+        public void RebuildActiveTreeView()
         {
-            _studyTreeView.BuildFlowDocumentForWorkbook();
+            ActiveTreeView.BuildFlowDocumentForVariationTree();
         }
 
         /// <summary>
@@ -1313,7 +1313,7 @@ namespace ChessForge
             Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
             AppStateManager.MainWin.ActiveVariationTree.BuildLines();
-            RebuildWorkbookView();
+            RebuildActiveTreeView();
 
             AppStateManager.SetupGuiForCurrentStates();
 
