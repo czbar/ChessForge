@@ -9,6 +9,7 @@ using System.IO;
 using EngineService;
 using System.Windows.Ink;
 using System.Windows;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ChessForge
 {
@@ -349,7 +350,7 @@ namespace ChessForge
             AppStateManager.ShowMoveEvaluationControls(true);
             _mainWin.UpdateLastMoveTextBox(nodeIndex);
 
-            string fen = AppStateManager.PrepareMoveEvaluation(EvaluationManager.GetEvaluatedNode().Position, true);
+            string fen = AppStateManager.PrepareMoveEvaluation(EvaluationManager.GetEvaluatedNode(out _).Position, true);
             RequestEngineEvaluation(nd, fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
         }
 
@@ -442,7 +443,6 @@ namespace ChessForge
             _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
             ClearMoveCandidates(true);
 
-            //            TreeNode nd = _mainWin.ActiveLine.GetNodeAtIndex(index);
             if (nd != null)
             {
                 _mainWin.UpdateLastMoveTextBox(nd);
@@ -481,27 +481,123 @@ namespace ChessForge
         {
             try
             {
-                if (message == null)
-                    return;
-
-                if (message.StartsWith("info"))
+                if (message != null)
                 {
-                    ProcessInfoMessage(message);
-                }
-                else if (message.StartsWith(UciCommands.ENG_BEST_MOVE) || message.StartsWith(UciCommands.CHF_NODE_ID_PREFIX))
-                {
-                    ProcessBestMoveMessage(message);
-                }
-                else if (message.StartsWith(UciCommands.ENG_ID_NAME))
-                {
-                    string engineName = message.Substring(UciCommands.ENG_ID_NAME.Length).Trim();
-                    AppStateManager.EngineName = engineName;
+                    // Info and Best Move messages will begin with TreeId
+                    message = ParseMessagePrefix(message, out int treeId, out int nodeId);
+                    // only process if treeId and nodeId are what is supposed to be evaluated
+                    int evalTreeId;
+                    TreeNode evalNode = EvaluationManager.GetEvaluatedNode(out evalTreeId);
+                    if (evalNode != null && evalNode.NodeId == nodeId && evalTreeId == treeId)
+                    {
+                        if (message.StartsWith(UciCommands.ENG_INFO))
+                        {
+                            ProcessInfoMessage(message);
+                        }
+                        else if (message.StartsWith(UciCommands.ENG_BEST_MOVE))
+                        {
+                            ProcessBestMoveMessage(message, evalNode);
+                        }
+                        else if (message.StartsWith(UciCommands.ENG_ID_NAME))
+                        {
+                            string engineName = message.Substring(UciCommands.ENG_ID_NAME.Length).Trim();
+                            AppStateManager.EngineName = engineName;
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error processing engine message: " + ex.Message, "Chess Forge ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                AppLog.Message("ERROR: processing engine message: " + ex.Message);
+                DebugUtils.ShowDebugMessage("Error processing engine message: " + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Checks if the message comes with the prefix containing IDs
+        /// and if so gets their values and removes from the message.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="treeId"></param>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        private static string ParseMessagePrefix(string message, out int treeId, out int nodeId)
+        {
+            treeId = -1;
+            nodeId = -1;
+
+            if (message != null && message.StartsWith(UciCommands.CHF_TREE_ID_PREFIX))
+            {
+                int pos = FindSecondSpaceInString(message);
+                if (pos > 0)
+                {
+                    string[] idTokens = message.Substring(0, pos).Split(' ');
+                    treeId = GetIntValueFromPair(idTokens[0], '=');
+                    nodeId = GetIntValueFromPair(idTokens[1], '=');
+                    return message.Substring(pos + 1);
+                }
+                else
+                {
+                    // should never happen
+                    return "";
+                }
+            }
+            else
+            {
+                return message;
+            }
+        }
+
+        /// <summary>
+        /// Converts the second part of the string, as separated
+        /// by the splitChar to an int.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="splitChar"></param>
+        /// <returns></returns>
+        private static int GetIntValueFromPair(string text, char splitChar)
+        {
+            string[] tokens = text.Split(splitChar);
+
+            int id;
+            if (int.TryParse(tokens[1], out id))
+            {
+                return id;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// Finds the second occurence of the space character
+        /// in the passed string.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        private static int FindSecondSpaceInString(string str)
+        {
+            int secondSpacePos = -1;
+
+            bool firstSpaceFound = false;
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] == ' ')
+                {
+                    if (firstSpaceFound)
+                    {
+                        secondSpacePos = i;
+                        break;
+                    }
+                    else
+                    {
+                        firstSpaceFound = true;
+                    }
+                }
+            }
+
+            return secondSpacePos;
         }
 
         /// <summary>
@@ -510,37 +606,28 @@ namespace ChessForge
         /// Invoke the final processing
         /// </summary>
         /// <param name="message"></param>
-        private static void ProcessBestMoveMessage(string message)
+        private static void ProcessBestMoveMessage(string message, TreeNode nd)
         {
             try
             {
                 // make sure the last lines are shown before we stop the timer.
                 EngineLinesBox.ShowEngineLines(null, null);
 
-                // if there is a NodeId prefix, get it 
-                int nodeId = -1;
-                if (message.StartsWith(UciCommands.CHF_NODE_ID_PREFIX))
+                if (nd != null)
                 {
-                    string nodeIdPrefix = message.Split(' ')[0];
-                    string[] tokens = nodeIdPrefix.Split('=');
-                    if (tokens.Length > 1)
+                    if (EngineLinesBox.Lines.Count > 0)
                     {
-                        bool res = int.TryParse(tokens[1], out nodeId);
-                        nodeId = res ? nodeId : -1;
+                        nd.EngineEvaluation = EvaluationManager.BuildEvaluationText(EngineLinesBox.Lines[0], nd.Position.ColorToMove);
                     }
                 }
 
-                TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
-                if (nd != null)
-                {
-                    nd.EngineEvaluation = EvaluationManager.BuildEvaluationText(EngineLinesBox.Lines[0], nd.Position.ColorToMove);
-                }
                 // tell the app that the evaluation has finished
                 MoveEvaluationFinished(nd);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error processing \"bestmove\" message: " + ex.Message, "Chess Forge ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                AppLog.Message("ERROR: processing \"bestmove\" message: " + ex.Message);
+                DebugUtils.ShowDebugMessage("Error processing \"bestmove\" message: " + ex.Message);
             }
         }
 
@@ -561,7 +648,9 @@ namespace ChessForge
             }
 
             string[] tokens = message.Split(' ');
+
             int idx = 0;
+
             int? multipv = null;
             int? score = null;
             int? movesToMate = null;
