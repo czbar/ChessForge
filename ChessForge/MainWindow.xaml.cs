@@ -1332,6 +1332,20 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Main Window received a Key Down event.
+        /// If we are in Manual Review, pass it on to the ActiveLine.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ChessForgeMain_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
+            {
+                ActiveLine.PreviewKeyDown(sender, e);
+            }
+        }
+
+        /// <summary>
         /// A key pressed event has been received.
         /// </summary>
         /// <param name="sender"></param>
@@ -1685,6 +1699,5 @@ namespace ChessForge
                 BoardShapesManager.CancelShapeDraw(true);
             }
         }
-
     }
 }
