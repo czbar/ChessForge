@@ -488,7 +488,10 @@ namespace ChessForge
                     // only process if treeId and nodeId are what is supposed to be evaluated
                     int evalTreeId;
                     TreeNode evalNode = EvaluationManager.GetEvaluatedNode(out evalTreeId);
-                    if (evalNode != null && evalNode.NodeId == nodeId && evalTreeId == treeId)
+
+                    // TODO: chnage so that we get non-null eval node in GAME too!
+                    if ((LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME) 
+                        || evalNode != null && evalNode.NodeId == nodeId && evalTreeId == treeId)
                     {
                         if (message.StartsWith(UciCommands.ENG_INFO))
                         {
