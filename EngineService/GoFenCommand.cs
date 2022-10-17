@@ -23,8 +23,15 @@ namespace EngineService
         /// </summary>
         public string GoCommandString { get; set; }
 
+
         /// <summary>
-        /// The Id of the Workbook node for which we will be sending 
+        /// Id of the tree from which the Node 
+        /// under evaluation comes.
+        /// </summary>
+        public int TreeId { get; set; }
+
+        /// <summary>
+        /// Id of the Tree Node for which we will be sending 
         /// the "position fen" command.
         /// </summary>
         public int NodeId { get; set; }
@@ -42,6 +49,7 @@ namespace EngineService
         /// </summary>
         public GoFenCommand()
         {
+            TreeId = -1;
             NodeId = -1;
         }
     }
