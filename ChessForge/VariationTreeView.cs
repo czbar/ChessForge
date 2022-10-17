@@ -465,7 +465,7 @@ namespace ChessForge
 
                 Image img = new Image();
                 img.Margin = new Thickness(5, 5, 5, 5);    
-                img.Source = ChessBoards.ChessBoardBlueSmall;
+                img.Source = ChessBoards.ChessBoardGreySmall;
                 ChessBoardSmall cb = new ChessBoardSmall(cnv, img, null, false, false);
                 cb.DisplayPosition(_variationTree.Nodes[0]);
 
