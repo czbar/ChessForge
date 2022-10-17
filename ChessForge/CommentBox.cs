@@ -57,7 +57,7 @@ namespace ChessForge
         internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
             ["title"] = new RichTextPara(0, 10, 24, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
-            ["big_red"] = new RichTextPara(0, 10, 22, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
+            ["big_red"] = new RichTextPara(0, 10, 20, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
             ["user_wait"] = new RichTextPara(0, 10, 20, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
             ["bold_prompt"] = new RichTextPara(0, 5, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
             ["eval_results"] = new RichTextPara(30, 5, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(51, 159, 141)), TextAlignment.Center),
