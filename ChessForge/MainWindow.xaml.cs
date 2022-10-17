@@ -1177,8 +1177,8 @@ namespace ChessForge
 
         public void UpdateLastMoveTextBox(int posIndex)
         {
-            string moveTxt = EvaluationManager.GetEvaluatedNode().Position.MoveNumber.ToString()
-                    + (EvaluationManager.GetEvaluatedNode().Position.ColorToMove == PieceColor.Black ? "." : "...")
+            string moveTxt = EvaluationManager.GetEvaluatedNode(out _).Position.MoveNumber.ToString()
+                    + (EvaluationManager.GetEvaluatedNode(out _).Position.ColorToMove == PieceColor.Black ? "." : "...")
                     + ActiveLine.GetNodeAtIndex(posIndex).LastMoveAlgebraicNotation;
 
             UpdateLastMoveTextBox(moveTxt);
