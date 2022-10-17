@@ -72,8 +72,16 @@ namespace ChessForge
             get { return _currentMode; }
         }
 
-        public static TreeNode GetEvaluatedNode()
+        /// <summary>
+        /// Returns the Node being evaluated and 
+        /// the Tree id, the node belongs to.
+        /// </summary>
+        /// <returns></returns>
+        public static TreeNode GetEvaluatedNode(out int treeId)
         {
+            //TODO: implement tree id
+            treeId = -1;
+
             if (_currentMode != Mode.LINE)
             {
                 return _evaluatedSingleNode;

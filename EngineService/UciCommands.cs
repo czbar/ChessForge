@@ -19,11 +19,13 @@
         public const string ENG_UCI_OK = "uciok";
         public const string ENG_READY_OK = "readyok";
         public const string ENG_BEST_MOVE = "bestmove";
+        public const string ENG_INFO = "info";
 
         // prefix in the engine's message naming itself
         public const string ENG_ID_NAME = "id name";
 
-        // special ChessForge constant
+        // special ChessForge constants
+        public const string CHF_TREE_ID_PREFIX = "TreeId=";
         public const string CHF_NODE_ID_PREFIX = "NodeId=";
     }
 }

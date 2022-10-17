@@ -502,6 +502,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabChapters_GotFocus(object sender, RoutedEventArgs e)
         {
+            if (KeepFocusOnGame())
+            {
+                return;
+            }
+
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
         }
 
@@ -534,6 +539,10 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabBookmarks_GotFocus(object sender, RoutedEventArgs e)
         {
+            if (KeepFocusOnGame())
+            {
+                return;
+            }
             SetStudyStateOnFocus();
         }
 
@@ -586,6 +595,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabModelGames_GotFocus(object sender, RoutedEventArgs e)
         {
+            if (KeepFocusOnGame())
+            {
+                return;
+            }
+
             bool? boardFlipped = WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped;
             if (boardFlipped != null)
             {
@@ -627,6 +641,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabExercises_GotFocus(object sender, RoutedEventArgs e)
         {
+            if (KeepFocusOnGame())
+            {
+                return;
+            }
+
             bool? boardFlipped = WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped;
             if (boardFlipped != null)
             {
@@ -660,6 +679,31 @@ namespace ChessForge
             WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = MainChessBoard.IsFlipped;
         }
 
-
+        /// <summary>
+        /// Invoked when user clicks a non-active tab while an engine game is in progress.
+        /// Checks if there is a game in progress, displays a "flash announcement" and 
+        /// retruns focus to the view with the game.
+        /// </summary>
+        /// <returns></returns>
+        private bool KeepFocusOnGame()
+        {
+            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+            {
+                BoardCommentBox.ShowFlashAnnouncement("Exit the game against the engine before switching tabs.");
+                if (TrainingSession.IsTrainingInProgress)
+                {
+                    UiTabTrainingProgress.Focus();
+                }
+                else
+                {
+                    UiTabStudyTree.Focus();
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

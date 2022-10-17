@@ -17,19 +17,17 @@ namespace GameTree
         /// <summary>
         /// Types of "games" that can be encountered.
         /// In the Chess Forge file, we should only encounter
-        /// WORKBOOK_PREFACE, MODEL_GAME and EXERCISE.
-        /// In a non Chess Forge, we only expect GENERIC_GAME
-        /// and GENERIC_EXERCISE
+        /// WORKBOOK_PREFACE, STUDY_TREE, MODEL_GAME and EXERCISE.
+        /// In a non Chess Forge, we only expect GENERIC.
         /// </summary>
         public enum ContentType
         {
+            NONE,
             GENERIC,
             WORKBOOK_PREFACE,
             STUDY_TREE,
             MODEL_GAME,
             EXERCISE,
-            GENERIC_GAME,
-            GENERIC_EXERCISE
         }
 
         // whether this game is selected in the GUI

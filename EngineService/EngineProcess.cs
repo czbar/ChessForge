@@ -383,9 +383,9 @@ namespace EngineService
                             {
                                 if (message.StartsWith(UciCommands.ENG_BEST_MOVE))
                                 {
-                                    message = PrefixMessageWithNodeId(message);
                                     HandleBestMove();
                                 }
+                                message = InsertIdsPrefix(message);
                                 EngineMessage?.Invoke(message);
                             }
                         }
@@ -408,18 +408,20 @@ namespace EngineService
         }
 
         /// <summary>
-        /// Invoked when "bestmove" was received, prefixes the message with the id of the
-        /// Node for which the evaluation was performed.
+        /// Prefixes the message with the ids of the Tree and Node within
+        /// the tree, for which the evaluation was performed.
         /// The EngineMessageReceived() handler will parse it and strip off before further
         /// processing.
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        private string PrefixMessageWithNodeId(string message)
+        private string InsertIdsPrefix(string message)
         {
             if (_goFenCurrent != null)
             {
-                return UciCommands.CHF_NODE_ID_PREFIX + _goFenCurrent.NodeId.ToString() + " " + message;
+                return UciCommands.CHF_TREE_ID_PREFIX + _goFenCurrent.TreeId.ToString() + " "
+                     + UciCommands.CHF_NODE_ID_PREFIX + _goFenCurrent.NodeId.ToString()
+                     + " " + message;
             }
             else
             {

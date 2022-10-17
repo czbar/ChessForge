@@ -1177,8 +1177,8 @@ namespace ChessForge
 
         public void UpdateLastMoveTextBox(int posIndex)
         {
-            string moveTxt = EvaluationManager.GetEvaluatedNode().Position.MoveNumber.ToString()
-                    + (EvaluationManager.GetEvaluatedNode().Position.ColorToMove == PieceColor.Black ? "." : "...")
+            string moveTxt = EvaluationManager.GetEvaluatedNode(out _).Position.MoveNumber.ToString()
+                    + (EvaluationManager.GetEvaluatedNode(out _).Position.ColorToMove == PieceColor.Black ? "." : "...")
                     + ActiveLine.GetNodeAtIndex(posIndex).LastMoveAlgebraicNotation;
 
             UpdateLastMoveTextBox(moveTxt);
@@ -1329,6 +1329,20 @@ namespace ChessForge
                 UiPbEngineThinking.Value = 0;
             });
 
+        }
+
+        /// <summary>
+        /// Main Window received a Key Down event.
+        /// If we are in Manual Review, pass it on to the ActiveLine.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ChessForgeMain_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
+            {
+                ActiveLine.PreviewKeyDown(sender, e);
+            }
         }
 
         /// <summary>
@@ -1685,6 +1699,5 @@ namespace ChessForge
                 BoardShapesManager.CancelShapeDraw(true);
             }
         }
-
     }
 }
