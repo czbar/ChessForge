@@ -33,6 +33,43 @@ namespace ChessForge
         private static MainWindow _mainWin;
 
         /// <summary>
+        /// Accessor to the current ActiveVariationTree
+        /// </summary>
+        public static VariationTree ActiveVariationTree
+        {
+            get
+            {
+                if (WorkbookManager.SessionWorkbook != null
+                    && WorkbookManager.SessionWorkbook.ActiveVariationTree != null)
+                {
+                    return WorkbookManager.SessionWorkbook.ActiveVariationTree;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns the ContentType of the curent ActiveVariationTree
+        /// </summary>
+        public static GameMetadata.ContentType ActiveContentType
+        {
+            get
+            {
+                if (ActiveVariationTree != null)
+                {
+                    return ActiveVariationTree.ContentType;
+                }
+                else
+                {
+                    return GameMetadata.ContentType.NONE;
+                }
+            }
+        }
+
+        /// <summary>
         /// Types of files that Chess Forge can handle.
         /// PGN can only be viewed, not edited.
         /// CHF can be viewed and edited.
@@ -429,8 +466,16 @@ namespace ChessForge
 
                 _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
 
-                _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
-                _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
+                if (AppStateManager.ActiveContentType == GameMetadata.ContentType.STUDY_TREE)
+                {
+                    _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
+                    _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                    _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
+                }
 
                 _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
                 _mainWin.UiTabCtrlTraining.Visibility = Visibility.Hidden;
@@ -774,14 +819,19 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
-                _mainWin.UiDgActiveLine.Columns[2].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
-                _mainWin.UiDgActiveLine.Columns[4].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
-                _mainWin.UiDgActiveLine.Width = includeEvals ? 260 : 160;
+                // only applicable to StydyTree
+                if (ActiveContentType == GameMetadata.ContentType.STUDY_TREE
+                    && CurrentLearningMode != LearningMode.Mode.ENGINE_GAME)
+                {
+                    _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
+                    _mainWin.UiDgActiveLine.Columns[2].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
+                    _mainWin.UiDgActiveLine.Columns[4].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
+                    _mainWin.UiDgActiveLine.Width = includeEvals ? 260 : 160;
 
-                // adjust tab controls position
-                _mainWin.UiTabCtrlManualReview.Margin = includeEvals ? new Thickness(275, 5, 5, 5) : new Thickness(175, 5, 5, 5);
-                _mainWin.UiTabCtrlTraining.Margin = includeEvals ? new Thickness(185, 5, 5, 5) : new Thickness(5, 5, 5, 5);
+                    // adjust tab controls position
+                    _mainWin.UiTabCtrlManualReview.Margin = includeEvals ? new Thickness(275, 5, 5, 5) : new Thickness(175, 5, 5, 5);
+                    _mainWin.UiTabCtrlTraining.Margin = includeEvals ? new Thickness(185, 5, 5, 5) : new Thickness(5, 5, 5, 5);
+                }
             });
         }
 
@@ -793,24 +843,29 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                _mainWin.UiDgEngineGame.Visibility = show ? Visibility.Visible : Visibility.Hidden;
-                _mainWin.UiDgEngineGame.Width = 160;
-
-                // adjust tab controls position
-                if (TrainingSession.IsTrainingInProgress)
+                // only applicable when playing in ManualReview
+                if (ActiveContentType == GameMetadata.ContentType.STUDY_TREE
+                    && CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
-                    _mainWin.UiTabCtrlTraining.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
-                }
-                else
-                {
-                    _mainWin.UiTabCtrlManualReview.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
+                    _mainWin.UiDgEngineGame.Visibility = show ? Visibility.Visible : Visibility.Hidden;
+                    _mainWin.UiDgEngineGame.Width = 160;
 
-                    _mainWin.UiTabStudyTree.Focus();
-                    _mainWin.UiRtbStudyTreeView.Opacity = 0.1;
-                    _mainWin.UiRtbStudyTreeView.IsEnabled = false;
+                    // adjust tab controls position
+                    if (TrainingSession.IsTrainingInProgress)
+                    {
+                        _mainWin.UiTabCtrlTraining.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
+                    }
+                    else
+                    {
+                        _mainWin.UiTabCtrlManualReview.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
 
-                    _mainWin.UiTabBookmarks.Opacity = 0.1;
-                    _mainWin.UiTabBookmarks.IsEnabled = false;
+                        _mainWin.UiTabStudyTree.Focus();
+                        _mainWin.UiRtbStudyTreeView.Opacity = 0.1;
+                        _mainWin.UiRtbStudyTreeView.IsEnabled = false;
+
+                        _mainWin.UiTabBookmarks.Opacity = 0.1;
+                        _mainWin.UiTabBookmarks.IsEnabled = false;
+                    }
                 }
             });
         }
