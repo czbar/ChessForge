@@ -66,7 +66,7 @@ namespace ChessForge
         {
             try
             {
-                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.ENGINE_GAME && EvaluationManager.GetEvaluatedNode(out _) != null)
+                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.ENGINE_GAME && EngineMessageProcessor.LastMessageNode != null)
                 {
                     Lines.Clear();
                     lock (EngineMessageProcessor.MoveCandidatesLock)
@@ -118,7 +118,9 @@ namespace ChessForge
         {
             try
             {
-                TreeNode evalNode = EvaluationManager.GetEvaluatedNode(out _);
+//                TreeNode evalNode = EvaluationManager.GetEvaluatedNode(out _);
+                TreeNode evalNode = EngineMessageProcessor.LastMessageNode;
+
                 BoardPosition position = evalNode.Position;
                 if (line == null || position == null)
                 {
@@ -178,7 +180,7 @@ namespace ChessForge
 
             StringBuilder sb = new StringBuilder();
             // make a copy of the position under evaluation
-            TreeNode nd = EvaluationManager.GetEvaluatedNode(out _);
+            TreeNode nd = EngineMessageProcessor.LastMessageNode;
             if (nd != null)
             {
                 BoardPosition workingPosition = new BoardPosition(nd.Position);
