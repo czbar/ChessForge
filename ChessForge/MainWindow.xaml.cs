@@ -388,7 +388,7 @@ namespace ChessForge
         /// at the passed index.
         /// </summary>
         /// <param name="gameIndex"></param>
-        public void SelectModelGame(int gameIndex)
+        public void SelectModelGame(int gameIndex, bool setFocus)
         {
             WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
             WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.MODEL_GAME, gameIndex);
@@ -396,7 +396,7 @@ namespace ChessForge
             MainChessBoard.FlipBoard(false);
             WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped = null;
 
-            SetupGuiForActiveModelGame(gameIndex, true);
+            SetupGuiForActiveModelGame(gameIndex, setFocus);
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace ChessForge
         /// at the passed index.
         /// </summary>
         /// <param name="gameIndex"></param>
-        public void SelectExercise(int gameIndex)
+        public void SelectExercise(int gameIndex, bool setFocus)
         {
             WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = gameIndex;
             WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.EXERCISE, gameIndex);
@@ -412,7 +412,7 @@ namespace ChessForge
             MainChessBoard.FlipBoard(false);
             WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = null;
 
-            SetupGuiForActiveExercise(gameIndex, true);
+            SetupGuiForActiveExercise(gameIndex, setFocus);
         }
 
         /// <summary>
