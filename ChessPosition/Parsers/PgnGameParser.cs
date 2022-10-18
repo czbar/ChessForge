@@ -514,6 +514,12 @@ namespace GameTree
                 if (commandEnd > 0)
                 {
                     string command = _remainingGameText.Substring(commandStart + 1, commandEnd - (commandStart + 1));
+                    if (command.Trim().Length > 0)
+                    {
+                        // remove CRLF
+                        command = command.Replace("\r", "");
+                        command = command.Replace("\n", "");
+                    }
                     _tree.AddChfCommand(node, command);
                     _remainingGameText = _remainingGameText.Substring(commandEnd + 1);
                     endPos = endPos - (commandEnd + 1);
