@@ -475,6 +475,12 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EngineToggleOff_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (!EngineMessageProcessor.IsEngineAvailable)
+            {
+                BoardCommentBox.ShowFlashAnnouncement("Engine not available");
+                return;
+            }
+
             if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
             {
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);

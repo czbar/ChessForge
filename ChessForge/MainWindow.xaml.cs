@@ -291,7 +291,6 @@ namespace ChessForge
                     _appStartStage = 2;
                     this.Dispatcher.Invoke(() =>
                     {
-
                         CreateRecentFilesMenuItems();
                         Timers.Stop(AppTimers.TimerId.APP_START);
                         bool engineStarted = EngineMessageProcessor.StartEngineService();
@@ -300,7 +299,7 @@ namespace ChessForge
                         {
                             MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
-                        // if we have LastWorkbookFile or a name on the commend line
+                        // if we have LastWorkbookFile or a name on the command line
                         // we will try to open
                         string cmdLineFile = App.CmdLineFileName;
                         bool success = false;
@@ -1225,6 +1224,12 @@ namespace ChessForge
         /// <param name="startNode"></param>
         public void StartEngineGame(TreeNode startNode, bool IsTraining)
         {
+            if (!EngineMessageProcessor.IsEngineAvailable)
+            {
+                MessageBox.Show("Chess Engine not available", "Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);

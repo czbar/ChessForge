@@ -234,8 +234,15 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnEvaluatePosition_Click(object sender, RoutedEventArgs e)
         {
-            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
-            EvaluateActiveLineSelectedPosition();
+            if (EngineMessageProcessor.IsEngineAvailable)
+            {
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
+                EvaluateActiveLineSelectedPosition();
+            }
+            else
+            {
+                MessageBox.Show("Chess Engine is not available.", "Move Evaluation Failure", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         /// <summary>
@@ -290,6 +297,12 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnPlayEngine_Click(object sender, RoutedEventArgs e)
         {
+            if (!EngineMessageProcessor.IsEngineAvailable)
+            {
+                MessageBox.Show("Chess Engine not available", "Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             // check that there is a move selected in the _dgMainLineView so
             // that we have somewhere to start
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
