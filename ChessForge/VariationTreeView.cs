@@ -342,7 +342,7 @@ namespace ChessForge
 
             GameMetadata.ContentType contentType = _variationTree.Header.GetContentType(out _);
 
-            Paragraph titlePara = BuildPageHeader();
+            Paragraph titlePara = BuildPageHeader(contentType);
             if (titlePara != null)
             {
                 Document.Blocks.Add(titlePara);
@@ -399,14 +399,12 @@ namespace ChessForge
         /// Builds the top paragraph for the page if applicable.
         /// </summary>
         /// <returns></returns>
-        private Paragraph BuildPageHeader()
+        private Paragraph BuildPageHeader(GameMetadata.ContentType contentType)
         {
             Paragraph para = null;
 
             if (_variationTree != null)
             {
-                GameMetadata.ContentType contentType = _variationTree.Header.GetContentType(out _);
-
                 switch (contentType)
                 {
                     case GameMetadata.ContentType.MODEL_GAME:
@@ -451,7 +449,7 @@ namespace ChessForge
                         }
 
                         string result = _variationTree.Header.GetResult(out _);
-                        if (!string.IsNullOrWhiteSpace(result))
+                        if (!string.IsNullOrWhiteSpace(result) && result != "*")
                         {
                             Run rResult = new Run("      (" + result + ")\n");
                             rResult.FontWeight = FontWeights.Normal;
