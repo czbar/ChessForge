@@ -49,14 +49,20 @@ namespace EngineService
         public State CurrentState { get => _currentState; }
 
         /// <summary>
-        /// True if the engine is running ready to accept requets 
+        /// True if the engine is running and ready to accept requets 
         /// </summary>
-        public bool IsEngineRunning = false;
+        private bool _isEngineRunning = false;
+
+        // indicates engine's readiness
+        private bool _isEngineReady = false;
 
         /// <summary>
         /// True if we have received "readyok" from the engine  
         /// </summary>
-        public bool IsEngineReady = false;
+        public bool IsEngineReady
+        {
+            get => _isEngineReady;
+        }
 
         /// <summary>
         /// The number of alternative lines to analyze
@@ -156,7 +162,7 @@ namespace EngineService
                 WriteOut(UciCommands.ENG_ISREADY);
                 WriteOut(UciCommands.ENG_UCI_NEW_GAME);
 
-                IsEngineRunning = true;
+                _isEngineRunning = true;
                 _currentState = State.NOT_READY;
 
                 EngineLog.Message("Engine running.");
@@ -177,16 +183,19 @@ namespace EngineService
         {
             StopMessagePollTimer();
 
-            if (_engineProcess != null && !_engineProcess.HasExited)
+            if (_engineProcess != null && _isEngineRunning)
             {
                 _strmReader.Close();
                 _strmReader = null;
                 _strmWriter.Close();
-                _engineProcess.Close();
+                if (_engineProcess.ProcessName != null)
+                {
+                    _engineProcess.Close();
+                }
             }
 
-            IsEngineRunning = false;
-            IsEngineReady = false;
+            _isEngineRunning = false;
+            _isEngineReady = false;
 
             _currentState = State.NOT_READY;
         }
@@ -247,7 +256,7 @@ namespace EngineService
         /// <param name="command"></param>
         public void SendCommand(string command)
         {
-            if (!IsEngineRunning || !IsEngineReady)
+            if (!_isEngineRunning || !_isEngineReady)
             {
                 return;
             }
@@ -434,7 +443,7 @@ namespace EngineService
         /// </summary>
         private void HandleReadyOk()
         {
-            IsEngineReady = true;
+            _isEngineReady = true;
             _currentState = State.IDLE;
             StopMessagePollTimer();
         }
