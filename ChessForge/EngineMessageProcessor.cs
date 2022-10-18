@@ -341,6 +341,11 @@ namespace ChessForge
         /// <param name="posIndex"></param>
         public static void RequestMoveEvaluation(int nodeIndex, TreeNode nd)
         {
+            if (!IsEngineAvailable)
+            {
+                return;
+            }
+
             _mainWin.Dispatcher.Invoke(() =>
             {
                 if (EvaluationManager.CurrentMode == EvaluationManager.Mode.IDLE)
@@ -417,6 +422,12 @@ namespace ChessForge
         /// <param name="position"></param>
         public static void RequestEngineMove(BoardPosition position)
         {
+            if (!IsEngineAvailable)
+            {
+                MessageBox.Show("Chess Engine not available", "Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.ENGINE_GAME);
 
             string fen = AppStateManager.PrepareMoveEvaluation(position, false);

@@ -365,6 +365,7 @@ namespace ChessForge
                         else
                         {
                             ExpandChapterList(chapter);
+                            _mainWin.SelectChapter(chapterId, false);
                         }
                     }
                     else if (e.ChangedButton == MouseButton.Right)
@@ -503,7 +504,7 @@ namespace ChessForge
                 {
                     if (e.ChangedButton == MouseButton.Left)
                     {
-                        _mainWin.SelectModelGame(gameIndex);
+                        _mainWin.SelectModelGame(gameIndex, true);
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
@@ -541,7 +542,7 @@ namespace ChessForge
                 {
                     if (e.ChangedButton == MouseButton.Left)
                     {
-                        _mainWin.SelectExercise(gameIndex);
+                        _mainWin.SelectExercise(gameIndex, true);
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {

@@ -206,10 +206,13 @@ namespace ChessForge
         /// <param name="isFlipped"></param>
         private void SetCoordinateLabelsText(bool isFlipped)
         {
-            for (int i = 0; i <= 7; i++)
+            if (_includeCoords)
             {
-                _vertCoords[i].Content = isFlipped ? (char)('1' + i) : (char)('1' + (7 - i));
-                _horizCoords[i].Content = isFlipped ? (char)('a' + (7 - i)) : (char)('a' + i);
+                for (int i = 0; i <= 7; i++)
+                {
+                    _vertCoords[i].Content = isFlipped ? (char)('1' + i) : (char)('1' + (7 - i));
+                    _horizCoords[i].Content = isFlipped ? (char)('a' + (7 - i)) : (char)('a' + i);
+                }
             }
         }
 

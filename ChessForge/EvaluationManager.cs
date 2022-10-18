@@ -207,9 +207,6 @@ namespace ChessForge
         {
             lock (EvaluationLock)
             {
-                //_position = null;
-                //_positionIndex = 0;
-
                 ChangeCurrentMode(Mode.IDLE);
             }
             AppStateManager.SetupGuiForCurrentStates();
@@ -235,32 +232,6 @@ namespace ChessForge
         {
             _evaluatedSingleNode = nd;
         }
-
-        /// <summary>
-        /// Evaluated position's index in the Active Line,
-        /// if applicable.
-        /// </summary>
-        //public static int PositionIndex
-        //{
-        //    get
-        //    {
-        //        lock (EvaluationLock)
-        //        {
-        //            return _positionIndex;
-        //        }
-        //    }
-        //    set
-        //    {
-        //        lock (EvaluationLock)
-        //        {
-        //            _positionIndex = value;
-        //            if (_positionIndex >= 0)
-        //            {
-        //                _position = AppStateManager.MainWin.ActiveLine.GetNodeAtIndex(_positionIndex).Position;
-        //            }
-        //        }
-        //    }
-        //}
 
         /// <summary>
         /// Builds evaluation text ready to be included in a GUI element.

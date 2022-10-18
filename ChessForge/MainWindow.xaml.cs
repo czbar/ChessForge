@@ -108,7 +108,7 @@ namespace ChessForge
         /// <summary>
         /// Chessboard shown over moves in different views
         /// </summary>
-        public ChessBoard FloatingChessBoard;
+        public ChessBoardSmall FloatingChessBoard;
 
         /// <summary>
         /// The RichTextBox based comment box
@@ -195,7 +195,8 @@ namespace ChessForge
 
             // main chess board
             MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true, true);
-            FloatingChessBoard = new ChessBoard(_cnvFloat, _imgFloatingBoard, null, true, false);
+
+            FloatingChessBoard = new ChessBoardSmall(_cnvFloat, _imgFloatingBoard, null, true, false);
 
 
             BookmarkManager.InitBookmarksGui(this);
@@ -290,7 +291,6 @@ namespace ChessForge
                     _appStartStage = 2;
                     this.Dispatcher.Invoke(() =>
                     {
-
                         CreateRecentFilesMenuItems();
                         Timers.Stop(AppTimers.TimerId.APP_START);
                         bool engineStarted = EngineMessageProcessor.StartEngineService();
@@ -299,7 +299,7 @@ namespace ChessForge
                         {
                             MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
-                        // if we have LastWorkbookFile or a name on the commend line
+                        // if we have LastWorkbookFile or a name on the command line
                         // we will try to open
                         string cmdLineFile = App.CmdLineFileName;
                         bool success = false;
@@ -388,7 +388,7 @@ namespace ChessForge
         /// at the passed index.
         /// </summary>
         /// <param name="gameIndex"></param>
-        public void SelectModelGame(int gameIndex)
+        public void SelectModelGame(int gameIndex, bool setFocus)
         {
             WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
             WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.MODEL_GAME, gameIndex);
@@ -396,7 +396,7 @@ namespace ChessForge
             MainChessBoard.FlipBoard(false);
             WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped = null;
 
-            SetupGuiForActiveModelGame(gameIndex, true);
+            SetupGuiForActiveModelGame(gameIndex, setFocus);
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace ChessForge
         /// at the passed index.
         /// </summary>
         /// <param name="gameIndex"></param>
-        public void SelectExercise(int gameIndex)
+        public void SelectExercise(int gameIndex, bool setFocus)
         {
             WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = gameIndex;
             WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.EXERCISE, gameIndex);
@@ -412,7 +412,7 @@ namespace ChessForge
             MainChessBoard.FlipBoard(false);
             WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = null;
 
-            SetupGuiForActiveExercise(gameIndex, true);
+            SetupGuiForActiveExercise(gameIndex, setFocus);
         }
 
         /// <summary>
@@ -1224,6 +1224,12 @@ namespace ChessForge
         /// <param name="startNode"></param>
         public void StartEngineGame(TreeNode startNode, bool IsTraining)
         {
+            if (!EngineMessageProcessor.IsEngineAvailable)
+            {
+                MessageBox.Show("Chess Engine not available", "Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
@@ -1605,14 +1611,23 @@ namespace ChessForge
         /// Stops any evaluation that is currently happening.
         /// Resets evaluation state and adjusts the GUI accordingly. 
         /// </summary>
-        public void StopEvaluation()
+        public void StopEvaluation(bool updateGui = true)
         {
             EngineMessageProcessor.StopEngineEvaluation();
 
-            EvaluationManager.Reset();
+            if (updateGui)
+            {
+                EvaluationManager.Reset();
+            }
+
             AppStateManager.ResetEvaluationControls();
             AppStateManager.ShowMoveEvaluationControls(false, true);
-            AppStateManager.SetupGuiForCurrentStates();
+
+            if (updateGui)
+            {
+                // TODO: remove as EvaluationManager.Reset() already calls this
+                AppStateManager.SetupGuiForCurrentStates();
+            }
 
             if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
             {

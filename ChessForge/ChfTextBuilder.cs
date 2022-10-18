@@ -103,12 +103,12 @@ namespace ChessForge
         /// Builds text for the entire chapter.
         /// </summary>
         /// <param name="chapter"></param>
-        /// <param name="chapterNo"></param>
+        /// <param name="chapterIndex"></param>
         /// <returns></returns>
-        private static string BuildChapterText(Chapter chapter, int chapterNo)
+        private static string BuildChapterText(Chapter chapter, int chapterIndex)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(BuildStudyTreeText(chapter, chapterNo));
+            sb.Append(BuildStudyTreeText(chapter, chapterIndex));
             sb.Append(BuildModelGamesText(chapter));
             sb.Append(BuildExercisesText(chapter));
 
@@ -125,14 +125,14 @@ namespace ChessForge
         /// it will not be included in the output at all.
         /// </summary>
         /// <param name="chapter"></param>
-        /// <param name="chapterNo"></param>
+        /// <param name="chapterIndex"></param>
         /// <returns></returns>
-        private static string BuildStudyTreeText(Chapter chapter, int chapterNo)
+        private static string BuildStudyTreeText(Chapter chapter, int chapterIndex)
         {
             VariationTree tree = chapter.StudyTree;
             if (tree != null && tree.Nodes.Count >= 1)
             {
-                string headerText = BuildStudyTreeHeaderText(chapter, chapterNo);
+                string headerText = BuildStudyTreeHeaderText(chapter);
 
                 TreeNode root = tree.Nodes[0];
 
@@ -239,16 +239,16 @@ namespace ChessForge
         /// Builds headers for a Study Tree.
         /// </summary>
         /// <param name="chapter"></param>
-        /// <param name="chapterNo"></param>
+        /// <param name="chapterIndex"></param>
         /// <returns></returns>
-        private static string BuildStudyTreeHeaderText(Chapter chapter, int chapterNo)
+        private static string BuildStudyTreeHeaderText(Chapter chapter)
         {
             StringBuilder sb = new StringBuilder();
 
             string key = "";
             string value;
 
-            sb.Append(BuildCommonGameHeaderText(chapter, chapterNo));
+            sb.Append(BuildCommonGameHeaderText(chapter));
 
             VariationTree tree = chapter.StudyTree;
 
@@ -274,7 +274,7 @@ namespace ChessForge
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(BuildCommonGameHeaderText(chapter, chapterNo));
+            sb.Append(BuildCommonGameHeaderText(chapter));
 
             return sb.ToString();
         }
@@ -283,7 +283,7 @@ namespace ChessForge
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(BuildCommonGameHeaderText(chapter, chapter.Id));
+            sb.Append(BuildCommonGameHeaderText(chapter));
 
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_MODEL_GAME));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_EVENT, tree.Header.GetEventName(out _)));
@@ -308,7 +308,7 @@ namespace ChessForge
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(BuildCommonGameHeaderText(chapter, chapter.Id));
+            sb.Append(BuildCommonGameHeaderText(chapter));
 
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_EXERCISE));
 
@@ -341,11 +341,17 @@ namespace ChessForge
             }
         }
 
-        private static string BuildCommonGameHeaderText(Chapter chapter, int chapterNo)
+        /// <summary>
+        /// Builds part of the header that is common to all types
+        /// of games.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        private static string BuildCommonGameHeaderText(Chapter chapter)
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CHAPTER_ID, chapterNo.ToString()));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CHAPTER_ID, chapter.Id.ToString()));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CHAPTER_TITLE, chapter.Title));
 
             return sb.ToString();
@@ -409,35 +415,6 @@ namespace ChessForge
 
             return sb.ToString();
         }
-
-        /// <summary>
-        /// Build text for the headers
-        /// </summary>
-        //private static void BuildHeaders()
-        //{
-        //    string key = "";
-        //    string value;
-
-        //    value = _variationTree.Header.GetLegacyTitle();
-        //    BuildHeader(key, value);
-
-        //    value = _variationTree.Header.GetDate(out key, DateTime.Now.ToString("yyyy.MM.dd"));
-        //    BuildHeader(key, value);
-
-        //    value = _variationTree.Header.GetTrainingSide(out key);
-        //    BuildHeader(key, value);
-
-        //    value = _variationTree.Header.GetWhitePlayer(out key, "Chess Forge");
-        //    BuildHeader(key, value);
-
-        //    value = _variationTree.Header.GetBlackPlayer(out key, "Workbook File");
-        //    BuildHeader(key, value);
-
-        //    value = _variationTree.Header.GetResult(out key);
-        //    BuildHeader(key, value);
-
-        //    _fileText.AppendLine();
-        //}
 
         /// <summary>
         /// Build text for a single header.

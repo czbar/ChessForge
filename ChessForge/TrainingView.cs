@@ -340,12 +340,21 @@ namespace ChessForge
                         {
                             _paraCurrentEngineGame.Inlines.Add(new Run("\nThe Worbook line has ended."));
                         }
-                        _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine has started. Wait for the engine\'s move...\n"));
-                        _engineGameRootNode = _userMove;
-                        // call RequestEngineResponse() directly so it invokes PlayEngine
-                        LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
-                        AppStateManager.SetupGuiForCurrentStates();
-                        RequestEngineResponse();
+
+                        if (!EngineMessageProcessor.IsEngineAvailable)
+                        {
+                            MessageBox.Show("Engine not available. Training cannot continue.\n You can roll moves back or restart.", "Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                        else
+                        {
+                            _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine has started. Wait for the engine\'s move...\n"));
+                            _engineGameRootNode = _userMove;
+                            // call RequestEngineResponse() directly so it invokes PlayEngine
+                            LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
+                            AppStateManager.SetupGuiForCurrentStates();
+                            RequestEngineResponse();
+                        }
                     }
                 }
             }
@@ -596,6 +605,7 @@ namespace ChessForge
                         // show the last clicked node where our mouse is now 
                         if (_lastClickedNode != null)
                         {
+                            _mainWin.FloatingChessBoard.FlipBoard(_mainWin.MainChessBoard.IsFlipped);
                             _mainWin.FloatingChessBoard.DisplayPosition(_lastClickedNode);
                             _mainWin.UiVbFloatingChessboard.Margin = new Thickness(_lastClickedPoint.X, _lastClickedPoint.Y - 165, 0, 0);
                             _mainWin.ShowFloatingChessboard(true);
@@ -1022,6 +1032,12 @@ namespace ChessForge
         /// </summary>
         public void RequestMoveEvaluation()
         {
+            if (!EngineMessageProcessor.IsEngineAvailable)
+            {
+                _mainWin.BoardCommentBox.ShowFlashAnnouncement("Engine not available");
+                return;
+            }
+
             if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
             {
                 TreeNode nd = EvaluationManager.GetNextLineNodeToEvaluate();
@@ -1053,6 +1069,12 @@ namespace ChessForge
         /// </summary>
         public void RequestLineEvaluation()
         {
+            if (!EngineMessageProcessor.IsEngineAvailable)
+            {
+                AppStateManager.MainWin.BoardCommentBox.ShowFlashAnnouncement("Engine not available");
+                return;
+            }
+
             AppStateManager.MainWin.Dispatcher.Invoke(() =>
             {
                 EvaluationManager.ResetLineNodesToEvaluate();
@@ -1265,6 +1287,7 @@ namespace ChessForge
             if (nodeId >= 0)
             {
                 Point pt = e.GetPosition(_mainWin.UiRtbTrainingProgress);
+                _mainWin.FloatingChessBoard.FlipBoard(_mainWin.MainChessBoard.IsFlipped);
                 _mainWin.FloatingChessBoard.DisplayPosition(_mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId));
                 int yOffset = r.Name.StartsWith(_run_stem_move_) ? 25 : -165;
                 _mainWin.UiVbFloatingChessboard.Margin = new Thickness(pt.X, pt.Y + yOffset, 0, 0);

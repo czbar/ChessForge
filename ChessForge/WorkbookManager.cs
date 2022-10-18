@@ -226,7 +226,7 @@ namespace ChessForge
             {
                 RemoveGamesOfWrongType(ref games, contentType);
             }
-             
+
             return games.Count;
         }
 
@@ -259,10 +259,16 @@ namespace ChessForge
         /// <param name="isEnabled"></param>
         public static void EnableChaptersMenus(ContextMenu cmn, bool isEnabled)
         {
+            int index = -1;
+
             // ClickedIndex should be in sync with isEnabled but double check just in case
-            if (LastClickedChapterId < 0)
+            if (LastClickedChapterId < 0 || SessionWorkbook == null)
             {
                 isEnabled = false;
+            }
+            else
+            {
+                index = SessionWorkbook.GetChapterIndexFromId(LastClickedChapterId);
             }
 
             foreach (var item in cmn.Items)
@@ -282,7 +288,13 @@ namespace ChessForge
                             menuItem.IsEnabled = true;
                             break;
                         case "_mnDeleteChapter":
-                            menuItem.IsEnabled = SessionWorkbook.Chapters.Count > 1;
+                            menuItem.IsEnabled = SessionWorkbook != null  && SessionWorkbook.Chapters.Count > 1;
+                            break;
+                        case "_mnChapterUp":
+                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 0 && index > 0;
+                            break;
+                        case "_mnChapterDown":
+                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 0 && index < SessionWorkbook.Chapters.Count - 1;
                             break;
                     }
                 }
@@ -388,9 +400,7 @@ namespace ChessForge
             {
                 GameMetadata gm = GameList[i];
 
-                GameMetadata.ContentType contentType = gm.GetContentType();
-                string sChapter = gm.Header.GetChapterId();
-                if (IsNextChapter(chapter, i, sChapter, ref GameList))
+                if (gm.GetContentType() == GameMetadata.ContentType.STUDY_TREE)
                 {
                     chapter = SessionWorkbook.CreateNewChapter();
                     chapter.Title = gm.Header.GetChapterTitle();
@@ -404,35 +414,6 @@ namespace ChessForge
                 {
                     //TODO: report errors
                 }
-            }
-        }
-
-
-        /// <summary>
-        /// If the current Chapter object is null or we have a second Study Tree
-        /// for the current chapter then we need to create a new Chapter.
-        /// Otherwise we check the current and received chapter numbers.
-        /// If the received one is non-null and different, we need a new chapter.
-        /// Otherwise we continue with the current chapter.
-        /// </summary>
-        /// <param name="chapter"></param>
-        /// <param name="gameIndex"></param>
-        /// <param name="sChapterNumber"></param>
-        /// <returns></returns>
-        private static bool IsNextChapter(Chapter chapter, int gameIndex, string sChapterNumber, ref ObservableCollection<GameMetadata> GameList)
-        {
-            if (chapter == null || GameList[gameIndex].IsStudyTree() && chapter.StudyTree != null)
-            {
-                return true;
-            }
-
-            if (int.TryParse(sChapterNumber, out int no))
-            {
-                return no != chapter.Id;
-            }
-            else
-            {
-                return false;
             }
         }
 

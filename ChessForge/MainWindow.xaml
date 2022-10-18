@@ -150,11 +150,11 @@
                                 </FlowDocument>
                             </RichTextBox>
                             <Viewbox x:Name="UiVbFloatingChessboard" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Margin="0,0" Height="160" Width="160"  >
-                                <Canvas x:Name="_cnvFloat" HorizontalAlignment="Left" Height="644" Margin="0,0,0,0" VerticalAlignment="Top" Width="644">
+                                <Canvas x:Name="_cnvFloat" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244">
                                     <Canvas.Background>
                                         <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                     </Canvas.Background>
-                                    <Image x:Name="_imgFloatingBoard" Margin="2,2,0,0" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="640" Height="640" />
+                                    <Image x:Name="_imgFloatingBoard" Margin="2,2,0,0" Source="Resources/Images/ChessBoardGreySmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" />
                                 </Canvas>
                             </Viewbox>
                         </Grid>
@@ -169,6 +169,9 @@
                                     <Separator />
                                     <MenuItem x:Name="_mnSelectChapter" Header="Open This Chapter" Click="UiMnSelectChapter_Click" />
                                     <MenuItem x:Name="_mnRenameChapter" Header="Rename This Chapter" Click="UiMnRenameChapter_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnChapterUp" Header="Move Chapter Up" Click="UiMnChapterUp_Click" />
+                                    <MenuItem x:Name="_mnChapterDown" Header="Move Chapter Down" Click="UiMnChapterDown_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnImportModelGames" Header="Import Model Games" Click="UiMnImportModelGames_Click" />
                                     <MenuItem x:Name="_mnImportExercises" Header="Import Exercises" Click="UiMnImportExercises_Click" />
