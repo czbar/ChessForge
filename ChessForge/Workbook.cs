@@ -21,7 +21,15 @@ namespace ChessForge
         /// <summary>
         /// The list of chapters.
         /// </summary>
-        public List<Chapter> Chapters = new List<Chapter>();
+        private List<Chapter> _chapters = new List<Chapter>();
+
+        public List<Chapter> Chapters
+        {
+            get
+            {
+                return _chapters;
+            }
+        }
 
         /// <summary>
         /// The training side.
@@ -62,6 +70,13 @@ namespace ChessForge
         private string _title;
 
         /// <summary>
+        /// Empty constructor.
+        /// </summary>
+        public Workbook()
+        {
+        }
+
+        /// <summary>
         /// The chapter currently open in the session.
         /// </summary>
         public Chapter ActiveChapter
@@ -85,9 +100,13 @@ namespace ChessForge
         {
             if (Chapters.Count == 0)
             {
-                CreateDefaultChapter();
+                _activeChapter = null;
             }
-            _activeChapter = Chapters[0];
+            else
+            {
+                _activeChapter = Chapters[0];
+            }
+
             return _activeChapter;
         }
 
@@ -217,6 +236,45 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Return chapter from a given position in the Chapters list
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Chapter GetChapterByIndex(int idx)
+        {
+            if (idx >= 0 && idx < Chapters.Count)
+            {
+                return Chapters[idx];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns position of a chapter with a given id
+        /// in the Chapters list.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public int GetChapterIndexFromId(int id)
+        {
+            int idx = -1;
+
+            for (int i = 0; i < Chapters.Count; i++)
+            {
+                if (Chapters[i].Id == id)
+                {
+                    idx = i;
+                    break;
+                }
+            }
+
+            return idx;
+        }
+
+        /// <summary>
         /// Creates a new chapter.
         /// </summary>
         /// <param name="tree"></param>
@@ -226,7 +284,7 @@ namespace ChessForge
             chapter.StudyTree = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
             chapter.StudyTree.CreateNew();
             //TODO: we need to have a chapter specific version of SetupGuiForNewSession 
-            chapter.Id = Chapters.Count + 1;
+            chapter.Id = GenerateChapterId();
 
             Chapters.Add(chapter);
             _activeChapter = chapter;
@@ -273,6 +331,26 @@ namespace ChessForge
             }
 
             return ret;
+        }
+
+        /// <summary>
+        /// Finds the highest chapter id in the list
+        /// and increments it by one.
+        /// </summary>
+        /// <returns></returns>
+        private int GenerateChapterId()
+        {
+            int id = 1;
+
+            foreach (Chapter chapter in Chapters)
+            {
+                if (chapter.Id >= id)
+                {
+                    id = chapter.Id + 1;
+                }
+            }
+
+            return id;
         }
     }
 }
