@@ -108,7 +108,7 @@ namespace ChessForge
         /// <summary>
         /// Chessboard shown over moves in different views
         /// </summary>
-        public ChessBoard FloatingChessBoard;
+        public ChessBoardSmall FloatingChessBoard;
 
         /// <summary>
         /// The RichTextBox based comment box
@@ -195,7 +195,8 @@ namespace ChessForge
 
             // main chess board
             MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true, true);
-            FloatingChessBoard = new ChessBoard(_cnvFloat, _imgFloatingBoard, null, true, false);
+
+            FloatingChessBoard = new ChessBoardSmall(_cnvFloat, _imgFloatingBoard, null, true, false);
 
 
             BookmarkManager.InitBookmarksGui(this);
@@ -1605,14 +1606,23 @@ namespace ChessForge
         /// Stops any evaluation that is currently happening.
         /// Resets evaluation state and adjusts the GUI accordingly. 
         /// </summary>
-        public void StopEvaluation()
+        public void StopEvaluation(bool updateGui = true)
         {
             EngineMessageProcessor.StopEngineEvaluation();
 
-            EvaluationManager.Reset();
+            if (updateGui)
+            {
+                EvaluationManager.Reset();
+            }
+
             AppStateManager.ResetEvaluationControls();
             AppStateManager.ShowMoveEvaluationControls(false, true);
-            AppStateManager.SetupGuiForCurrentStates();
+
+            if (updateGui)
+            {
+                // TODO: remove as EvaluationManager.Reset() already calls this
+                AppStateManager.SetupGuiForCurrentStates();
+            }
 
             if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
             {
