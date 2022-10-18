@@ -607,11 +607,14 @@ namespace ChessForge
             }
 
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-            int activeModelGameIndex = chapter.ActiveModelGameIndex;
-            if (chapter != null && activeModelGameIndex >= 0)
+            if (chapter != null && chapter.GetModelGameCount() > 0)
             {
-                chapter.SetActiveVariationTree(GameMetadata.ContentType.MODEL_GAME, activeModelGameIndex);
-                RestoreSelectedLineAndMoveInActiveView();
+                if (chapter.ActiveModelGameIndex == -1)
+                {
+                    chapter.ActiveModelGameIndex = 0;
+                }
+
+                SelectModelGame(chapter.ActiveModelGameIndex, false);
             }
             else
             {
@@ -653,11 +656,14 @@ namespace ChessForge
             }
 
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-            int activeExerciseIndex = chapter.ActiveExerciseIndex;
-            if (chapter != null && activeExerciseIndex >= 0)
+            if (chapter != null && chapter.GetExerciseCount() > 0)
             {
-                chapter.SetActiveVariationTree(GameMetadata.ContentType.EXERCISE, activeExerciseIndex);
-                RestoreSelectedLineAndMoveInActiveView();
+                if (chapter.ActiveExerciseIndex == -1)
+                {
+                    chapter.ActiveExerciseIndex = 0;
+                }
+
+                SelectExercise(chapter.ActiveExerciseIndex, false);
             }
             else
             {
