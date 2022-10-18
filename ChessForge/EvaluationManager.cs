@@ -234,32 +234,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Evaluated position's index in the Active Line,
-        /// if applicable.
-        /// </summary>
-        //public static int PositionIndex
-        //{
-        //    get
-        //    {
-        //        lock (EvaluationLock)
-        //        {
-        //            return _positionIndex;
-        //        }
-        //    }
-        //    set
-        //    {
-        //        lock (EvaluationLock)
-        //        {
-        //            _positionIndex = value;
-        //            if (_positionIndex >= 0)
-        //            {
-        //                _position = AppStateManager.MainWin.ActiveLine.GetNodeAtIndex(_positionIndex).Position;
-        //            }
-        //        }
-        //    }
-        //}
-
-        /// <summary>
         /// Builds evaluation text ready to be included in a GUI element.
         /// It will produce a double value with 2 decimal digits or an
         /// indication of mate in a specified number of moves.
