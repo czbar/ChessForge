@@ -207,9 +207,6 @@ namespace ChessForge
         {
             lock (EvaluationLock)
             {
-                //_position = null;
-                //_positionIndex = 0;
-
                 ChangeCurrentMode(Mode.IDLE);
             }
             AppStateManager.SetupGuiForCurrentStates();
