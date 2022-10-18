@@ -340,6 +340,8 @@ namespace ChessForge
 
             _variationTree = _mainWin.ActiveVariationTree;
 
+            GameMetadata.ContentType contentType = _variationTree.Header.GetContentType(out _);
+
             Paragraph titlePara = BuildPageHeader();
             if (titlePara != null)
             {
@@ -381,6 +383,15 @@ namespace ChessForge
             // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
             BuildTreeLineText(root, para, includeStem);
 
+            if (contentType == GameMetadata.ContentType.MODEL_GAME || contentType == GameMetadata.ContentType.EXERCISE)
+            {
+                Paragraph resultPara = BuildResultPara();
+                if (resultPara != null)
+                {
+                    Document.Blocks.Add(resultPara);
+                }
+            }
+
             RemoveEmptyParagraphs();
         }
 
@@ -395,7 +406,7 @@ namespace ChessForge
             if (_variationTree != null)
             {
                 GameMetadata.ContentType contentType = _variationTree.Header.GetContentType(out _);
-                
+
                 switch (contentType)
                 {
                     case GameMetadata.ContentType.MODEL_GAME:
@@ -429,7 +440,7 @@ namespace ChessForge
                         {
                             if (hasPlayerNames)
                             {
-                                Run rEvent = CreateRun("1", "    " + _variationTree.Header.GetEventName(out _) + "\n");
+                                Run rEvent = CreateRun("1", "      " + _variationTree.Header.GetEventName(out _) + "\n");
                                 para.Inlines.Add(rEvent);
                             }
                             else
@@ -438,11 +449,41 @@ namespace ChessForge
                                 para.Inlines.Add(rEvent);
                             }
                         }
+
+                        string result = _variationTree.Header.GetResult(out _);
+                        if (!string.IsNullOrWhiteSpace(result))
+                        {
+                            Run rResult = new Run("      (" + result + ")\n");
+                            rResult.FontWeight = FontWeights.Normal;
+                            para.Inlines.Add(rResult);
+                        }
+
                         break;
                 }
             }
 
             return para;
+        }
+
+        /// <summary>
+        /// Builds a paragraph with Game/Exercise result
+        /// </summary>
+        /// <returns></returns>
+        private Paragraph BuildResultPara()
+        {
+            string result = _variationTree.Header.GetResult(out _);
+            if (!string.IsNullOrWhiteSpace(result))
+            {
+                Paragraph para = CreateParagraph("0");
+                para.Margin = new Thickness(0, 0, 0, 0);
+                Run rResult = new Run("     " + result);
+                para.Inlines.Add(rResult);
+                return para;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -454,8 +495,8 @@ namespace ChessForge
             if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameMetadata.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2");
-                para.Margin = new Thickness(60,0,0,40);
-                
+                para.Margin = new Thickness(60, 0, 0, 40);
+
                 InlineUIContainer uIContainer = new InlineUIContainer();
                 Viewbox vb = new Viewbox();
                 Canvas cnv = new Canvas();
@@ -464,7 +505,7 @@ namespace ChessForge
                 cnv.Height = 250;
 
                 Image img = new Image();
-                img.Margin = new Thickness(5, 5, 5, 5);    
+                img.Margin = new Thickness(5, 5, 5, 5);
                 img.Source = ChessBoards.ChessBoardGreySmall;
                 ChessBoardSmall cb = new ChessBoardSmall(cnv, img, null, false, false);
                 cb.DisplayPosition(_variationTree.Nodes[0]);
@@ -477,7 +518,7 @@ namespace ChessForge
                 vb.Width = 250;
                 vb.Height = 250;
                 vb.Visibility = Visibility.Visible;
-                
+
                 para.Inlines.Add(uIContainer);
                 return para;
             }
@@ -834,7 +875,7 @@ namespace ChessForge
             {
                 sb.Append(" ");
             }
-            
+
             sb.Append(nd.GetPlyText(true));
             return sb.ToString();
         }
