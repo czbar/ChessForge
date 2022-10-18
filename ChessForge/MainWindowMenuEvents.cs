@@ -132,7 +132,7 @@ namespace ChessForge
         {
             AppLog.Message("Application Closing");
 
-            StopEvaluation();
+            StopEvaluation(false);
 
             EngineMessageProcessor.ChessEngineService.StopEngine();
 
@@ -415,6 +415,42 @@ namespace ChessForge
                     SetupGuiForActiveStudyTree(false);
                     AppStateManager.IsDirty = true;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Moves chapter up one position in the list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnChapterUp_Click(object sender, RoutedEventArgs e)
+        {
+            int index = WorkbookManager.SessionWorkbook.GetChapterIndexFromId(WorkbookManager.LastClickedChapterId);
+            if (index > 0 && index < WorkbookManager.SessionWorkbook.Chapters.Count)
+            {
+                Chapter hold = WorkbookManager.SessionWorkbook.Chapters[index];
+                WorkbookManager.SessionWorkbook.Chapters[index] = WorkbookManager.SessionWorkbook.Chapters[index - 1];
+                WorkbookManager.SessionWorkbook.Chapters[index - 1] = hold;
+                _chaptersView.BuildFlowDocumentForChaptersView();
+                AppStateManager.IsDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// Moves chapter down one position in the list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnChapterDown_Click(object sender, RoutedEventArgs e)
+        {
+            int index = WorkbookManager.SessionWorkbook.GetChapterIndexFromId(WorkbookManager.LastClickedChapterId);
+            if (index >= 0 && index < WorkbookManager.SessionWorkbook.Chapters.Count - 1)
+            {
+                Chapter hold = WorkbookManager.SessionWorkbook.Chapters[index];
+                WorkbookManager.SessionWorkbook.Chapters[index] = WorkbookManager.SessionWorkbook.Chapters[index + 1];
+                WorkbookManager.SessionWorkbook.Chapters[index + 1] = hold;
+                _chaptersView.BuildFlowDocumentForChaptersView();
+                AppStateManager.IsDirty = true;
             }
         }
 
