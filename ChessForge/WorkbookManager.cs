@@ -288,13 +288,13 @@ namespace ChessForge
                             menuItem.IsEnabled = true;
                             break;
                         case "_mnDeleteChapter":
-                            menuItem.IsEnabled = SessionWorkbook.Chapters.Count > 1;
+                            menuItem.IsEnabled = SessionWorkbook != null  && SessionWorkbook.Chapters.Count > 1;
                             break;
                         case "_mnChapterUp":
-                            menuItem.IsEnabled = isEnabled && SessionWorkbook.Chapters.Count > 0 && index > 0;
+                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 0 && index > 0;
                             break;
                         case "_mnChapterDown":
-                            menuItem.IsEnabled = isEnabled && SessionWorkbook.Chapters.Count > 0 && index < SessionWorkbook.Chapters.Count - 1;
+                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 0 && index < SessionWorkbook.Chapters.Count - 1;
                             break;
                     }
                 }
