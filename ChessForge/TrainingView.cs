@@ -596,6 +596,7 @@ namespace ChessForge
                         // show the last clicked node where our mouse is now 
                         if (_lastClickedNode != null)
                         {
+                            _mainWin.FloatingChessBoard.FlipBoard(_mainWin.MainChessBoard.IsFlipped);
                             _mainWin.FloatingChessBoard.DisplayPosition(_lastClickedNode);
                             _mainWin.UiVbFloatingChessboard.Margin = new Thickness(_lastClickedPoint.X, _lastClickedPoint.Y - 165, 0, 0);
                             _mainWin.ShowFloatingChessboard(true);
@@ -1265,6 +1266,7 @@ namespace ChessForge
             if (nodeId >= 0)
             {
                 Point pt = e.GetPosition(_mainWin.UiRtbTrainingProgress);
+                _mainWin.FloatingChessBoard.FlipBoard(_mainWin.MainChessBoard.IsFlipped);
                 _mainWin.FloatingChessBoard.DisplayPosition(_mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId));
                 int yOffset = r.Name.StartsWith(_run_stem_move_) ? 25 : -165;
                 _mainWin.UiVbFloatingChessboard.Margin = new Thickness(pt.X, pt.Y + yOffset, 0, 0);
