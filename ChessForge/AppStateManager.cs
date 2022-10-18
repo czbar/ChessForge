@@ -70,6 +70,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the Mode object given its Tree and Node id.
+        /// </summary>
+        /// <param name="treeId"></param>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        public static TreeNode GetNodeByIds(int treeId, int nodeId)
+        {
+            // TODO: handle treeId
+            if (treeId < 0 && ActiveVariationTree != null)
+            {
+                return ActiveVariationTree.GetNodeFromNodeId(nodeId);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+        /// <summary>
         /// Types of files that Chess Forge can handle.
         /// PGN can only be viewed, not edited.
         /// CHF can be viewed and edited.

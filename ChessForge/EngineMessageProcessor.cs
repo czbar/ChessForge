@@ -49,6 +49,17 @@ namespace ChessForge
         // main application window
         private static MainWindow _mainWin;
 
+        // node for which the last engine message was received
+        private static TreeNode _lastMessageNode = null;
+
+        /// <summary>
+        /// The Node for whichthe last engine message was received.
+        /// </summary>
+        public static TreeNode LastMessageNode
+        {
+            get => _lastMessageNode;
+        }
+
         /// <summary>
         /// Creates an instance of the Engine service.
         /// </summary>
@@ -485,13 +496,13 @@ namespace ChessForge
                 {
                     // Info and Best Move messages will begin with TreeId
                     message = ParseMessagePrefix(message, out int treeId, out int nodeId);
-                    // only process if treeId and nodeId are what is supposed to be evaluated
-                    int evalTreeId;
-                    TreeNode evalNode = EvaluationManager.GetEvaluatedNode(out evalTreeId);
 
-                    // TODO: chnage so that we get non-null eval node in GAME too!
-                    if ((LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME) 
-                        || evalNode != null && evalNode.NodeId == nodeId && evalTreeId == treeId)
+                    // only process if treeId and nodeId are what is supposed to be evaluated
+                    TreeNode evalNode = AppStateManager.GetNodeByIds(treeId, nodeId);
+                    _lastMessageNode = evalNode;
+
+                    // TODO: change so that we get non-null eval node in GAME too!
+                    if ((LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME) || evalNode != null)
                     {
                         if (message.StartsWith(UciCommands.ENG_INFO))
                         {

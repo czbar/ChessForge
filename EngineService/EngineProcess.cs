@@ -381,11 +381,11 @@ namespace EngineService
                             }
                             else
                             {
-                                if (message.StartsWith(UciCommands.ENG_BEST_MOVE))
+                                message = InsertIdsPrefix(message);
+                                if (message.Contains(UciCommands.ENG_BEST_MOVE))
                                 {
                                     HandleBestMove();
                                 }
-                                message = InsertIdsPrefix(message);
                                 EngineMessage?.Invoke(message);
                             }
                         }

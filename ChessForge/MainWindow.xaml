@@ -28,48 +28,15 @@
         <KeyBinding Key="F" Modifiers="Control" Command="local:CustomCommands.FlipBoard"/>
         <KeyBinding Key="S" Modifiers="Control" Command="local:CustomCommands.SaveWorkbook"/>
     </Window.InputBindings>
-    
-    <Grid x:Name="_gridMain" ShowGridLines="False">
+
+    <Grid x:Name="_gridUber" ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="680"/>
-            <RowDefinition />
-            <RowDefinition Height="20" />
+            <RowDefinition Height="900*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="680"/>
-            <ColumnDefinition Width="270"/>
-            <ColumnDefinition />
-            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width= "*" />
         </Grid.ColumnDefinitions>
-        <Label x:Name="_lblGameInProgress" Grid.Column="1" Content="Game in Progress" Visibility="Hidden"
-               HorizontalAlignment="Left" Margin="75,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="159" FontWeight="Bold" FontSize="14"/>
-        <Viewbox x:Name="MainBoard" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680">
-            <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680" ContextMenuOpening="MainCanvas_ContextMenuOpening">
-                <Canvas.ContextMenu>
-                    <ContextMenu  x:Name="UiMnMainBoard">
-                        <MenuItem x:Name="UiMnciStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
-                        <MenuItem x:Name="UiMnciStartTraining"  Header="Start Training from a Bookmark" Click="UiMnStartTraining_Click"/>
-                        <MenuItem x:Name="UiMnciRestartTraining"  Header="Restart Training" Click="UiMnTrainRestartTraining_Click"/>
-                        <MenuItem x:Name="UiMnciExitTraining" Header="Exit Training" Click="UiMnStopTraining_Click"/>
-                        <Separator x:Name="UiMncMainBoardSepar_1" />
-                        <MenuItem x:Name="UiMnciEvalPos" Header="Evaluate Position" Click="UiMnEvaluatePosition_Click" />
-                        <MenuItem x:Name="UiMnciEvalLine" Header="Evaluate Line" Click="UiMnEvaluateLine_Click" />
-                        <Separator x:Name="UiMncMainBoardSepar_2" />
-                        <MenuItem x:Name="UiMnciBookmarkPosition" Header="Bookmark This Position" Click="UiMnBookmarkPosition_Click" />
-                        <Separator x:Name="UiMncMainBoardSepar_4" />
-                        <MenuItem x:Name="UiMnciReplay" Header="Replay"  Click="UiMnReplayLine_Clicked"/>
-                        <Separator x:Name="UiMncMainBoardSepar_3" />
-                        <MenuItem x:Name="UiMnciPlayEngine" Header="Play Against Computer " Click="UiMnPlayEngine_Click" />
-                        <MenuItem x:Name="UiMnciExitEngineGame" Header="Exit Game " Click="UiMnExitEngineGame_Click" />
-                    </ContextMenu>
-                </Canvas.ContextMenu>
-                <Canvas.Background>
-                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
-                </Canvas.Background>
-                <Image x:Name="UiImgMainChessboard" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBlue.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="640" Height="640" Grid.Column="0"/>
-            </Canvas>
-        </Viewbox>
 
         <Menu x:Name = "UiMainMenu" VerticalAlignment="Top" Background="#334B4B4B" BorderBrush="#993C3C3C" BorderThickness="1" Height="29" Grid.ColumnSpan="3">
             <!-- Game menu -->
@@ -108,339 +75,382 @@
                 <MenuItem Header="About" Click="UiMnHelpAbout_Click" />
             </MenuItem>
         </Menu>
-        <DataGrid x:Name="UiDgEngineGame" Grid.Column="1" HorizontalAlignment="Left" Height="670" Margin="10,5,0,0" VerticalAlignment="Top" Width="180"  
+
+        <Viewbox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1">
+            <Grid x:Name="_gridMain" ShowGridLines="False">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="680" />
+                    <RowDefinition Height="160" />
+                    <RowDefinition Height="20" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="680" />
+                    <ColumnDefinition Width="270" />
+                    <ColumnDefinition Width="600" />
+                    <ColumnDefinition Width="1" />
+                </Grid.ColumnDefinitions>
+                <Viewbox x:Name="MainBoard" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680">
+                    <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680" ContextMenuOpening="MainCanvas_ContextMenuOpening">
+                        <Canvas.ContextMenu>
+                            <ContextMenu  x:Name="UiMnMainBoard">
+                                <MenuItem x:Name="UiMnciStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
+                                <MenuItem x:Name="UiMnciStartTraining"  Header="Start Training from a Bookmark" Click="UiMnStartTraining_Click"/>
+                                <MenuItem x:Name="UiMnciRestartTraining"  Header="Restart Training" Click="UiMnTrainRestartTraining_Click"/>
+                                <MenuItem x:Name="UiMnciExitTraining" Header="Exit Training" Click="UiMnStopTraining_Click"/>
+                                <Separator x:Name="UiMncMainBoardSepar_1" />
+                                <MenuItem x:Name="UiMnciEvalPos" Header="Evaluate Position" Click="UiMnEvaluatePosition_Click" />
+                                <MenuItem x:Name="UiMnciEvalLine" Header="Evaluate Line" Click="UiMnEvaluateLine_Click" />
+                                <Separator x:Name="UiMncMainBoardSepar_2" />
+                                <MenuItem x:Name="UiMnciBookmarkPosition" Header="Bookmark This Position" Click="UiMnBookmarkPosition_Click" />
+                                <Separator x:Name="UiMncMainBoardSepar_4" />
+                                <MenuItem x:Name="UiMnciReplay" Header="Replay"  Click="UiMnReplayLine_Clicked"/>
+                                <Separator x:Name="UiMncMainBoardSepar_3" />
+                                <MenuItem x:Name="UiMnciPlayEngine" Header="Play Against Computer " Click="UiMnPlayEngine_Click" />
+                                <MenuItem x:Name="UiMnciExitEngineGame" Header="Exit Game " Click="UiMnExitEngineGame_Click" />
+                            </ContextMenu>
+                        </Canvas.ContextMenu>
+                        <Canvas.Background>
+                            <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                        </Canvas.Background>
+                        <Image x:Name="UiImgMainChessboard" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBlue.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="640" Height="640" Grid.Column="0"/>
+                    </Canvas>
+                </Viewbox>
+
+                <DataGrid x:Name="UiDgEngineGame" Grid.Column="1" HorizontalAlignment="Left" Height="670" Margin="10,5,0,0" VerticalAlignment="Top" Width="180"  
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" CanUserSortColumns="False"
                   GridLinesVisibility="None" Grid.Row="1" Background="White" PreviewMouseDown="EngineGame_OnPreviewMouseDown"  PreviewMouseUp="EngineGame_OnPreviewMouseUp"   >
-            <DataGrid.Resources>
-                <Style x:Key="DisableSelection" TargetType="{x:Type DataGridCell}">
-                    <Setter Property="Focusable" Value="False"/>
-                </Style>
-            </DataGrid.Resources>
-            <DataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}"/>
-            </DataGrid.RowStyle>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="#" Width="30" Binding="{Binding Number}" CellStyle="{StaticResource DisableSelection}" CanUserReorder="False" />
-                <DataGridTextColumn Header="White" Width="60" Binding="{Binding WhitePly}" CanUserReorder="False" />
-                <DataGridTextColumn Header="Black" Width="60" Binding="{Binding BlackPly}" CanUserReorder="False"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <TabControl x:Name="UiTabCtrlTraining" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" 
+                    <DataGrid.Resources>
+                        <Style x:Key="DisableSelection" TargetType="{x:Type DataGridCell}">
+                            <Setter Property="Focusable" Value="False"/>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}"/>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="#" Width="30" Binding="{Binding Number}" CellStyle="{StaticResource DisableSelection}" CanUserReorder="False" />
+                        <DataGridTextColumn Header="White" Width="60" Binding="{Binding WhitePly}" CanUserReorder="False" />
+                        <DataGridTextColumn Header="Black" Width="60" Binding="{Binding BlackPly}" CanUserReorder="False"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <TabControl x:Name="UiTabCtrlTraining" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" 
                     VerticalAlignment="Top" Grid.RowSpan="1" Visibility="Hidden">
-            <TabItem x:Name="UiTabTrainingProgress"  Header="Training">
-                <Grid Background="#FFE5E5E5">
-                    <RichTextBox x:Name="UiRtbTrainingProgress" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                    <TabItem x:Name="UiTabTrainingProgress"  Header="Training">
+                        <Grid Background="#FFE5E5E5">
+                            <RichTextBox x:Name="UiRtbTrainingProgress" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                  IsReadOnly="True"  MinHeight="640" PreviewMouseMove="TrainingView_OnPreviewMouseMove" GotFocus="UiRtbTrainingProgress_GotFocus">
-                        <RichTextBox.Resources>
-                            <Style TargetType="{x:Type Paragraph}">
-                                <Setter Property="Margin" Value="0" />
-                            </Style>
-                        </RichTextBox.Resources>
-                        <FlowDocument>
-                        </FlowDocument>
-                    </RichTextBox>
-                    <Viewbox x:Name="UiVbFloatingChessboard" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Margin="0,0" Height="160" Width="160"  >
-                        <Canvas x:Name="_cnvFloat" HorizontalAlignment="Left" Height="644" Margin="0,0,0,0" VerticalAlignment="Top" Width="644">
-                            <Canvas.Background>
-                                <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
-                            </Canvas.Background>
-                            <Image x:Name="_imgFloatingBoard" Margin="2,2,0,0" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="640" Height="640" />
-                        </Canvas>
-                    </Viewbox>
-                </Grid>
-            </TabItem>
-        </TabControl>
-        <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1">
-            <TabItem x:Name="UiTabChapters"  Header="Chapters" GotFocus="UiTabChapters_GotFocus" >
-                <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" >
-                    <Grid.ContextMenu>
-                        <ContextMenu x:Name="_cmChapters">
-                            <MenuItem x:Name="_mnAddChapter" Header="Create New Chapter" Click="UiMnAddChapter_Click"  />
-                            <Separator />
-                            <MenuItem x:Name="_mnSelectChapter" Header="Open This Chapter" Click="UiMnSelectChapter_Click" />
-                            <MenuItem x:Name="_mnRenameChapter" Header="Rename This Chapter" Click="UiMnRenameChapter_Click" />
-                            <Separator />
-                            <MenuItem x:Name="_mnImportModelGames" Header="Import Model Games" Click="UiMnImportModelGames_Click" />
-                            <MenuItem x:Name="_mnImportExercises" Header="Import Exercises" Click="UiMnImportExercises_Click" />
-                            <Separator />
-                            <MenuItem x:Name="_mnDeleteChapter" Header="Delete This Chapter" Click="UiMnDeleteChapter_Click" />
-                        </ContextMenu>
-                    </Grid.ContextMenu>
-                    <RichTextBox x:Name="UiRtbChaptersView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                <RichTextBox.Resources>
+                                    <Style TargetType="{x:Type Paragraph}">
+                                        <Setter Property="Margin" Value="0" />
+                                    </Style>
+                                </RichTextBox.Resources>
+                                <FlowDocument>
+                                </FlowDocument>
+                            </RichTextBox>
+                            <Viewbox x:Name="UiVbFloatingChessboard" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Margin="0,0" Height="160" Width="160"  >
+                                <Canvas x:Name="_cnvFloat" HorizontalAlignment="Left" Height="644" Margin="0,0,0,0" VerticalAlignment="Top" Width="644">
+                                    <Canvas.Background>
+                                        <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                    </Canvas.Background>
+                                    <Image x:Name="_imgFloatingBoard" Margin="2,2,0,0" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="640" Height="640" />
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+                <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1">
+                    <TabItem x:Name="UiTabChapters"  Header="Chapters" GotFocus="UiTabChapters_GotFocus" >
+                        <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" >
+                            <Grid.ContextMenu>
+                                <ContextMenu x:Name="_cmChapters">
+                                    <MenuItem x:Name="_mnAddChapter" Header="Create New Chapter" Click="UiMnAddChapter_Click"  />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnSelectChapter" Header="Open This Chapter" Click="UiMnSelectChapter_Click" />
+                                    <MenuItem x:Name="_mnRenameChapter" Header="Rename This Chapter" Click="UiMnRenameChapter_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnImportModelGames" Header="Import Model Games" Click="UiMnImportModelGames_Click" />
+                                    <MenuItem x:Name="_mnImportExercises" Header="Import Exercises" Click="UiMnImportExercises_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnDeleteChapter" Header="Delete This Chapter" Click="UiMnDeleteChapter_Click" />
+                                </ContextMenu>
+                            </Grid.ContextMenu>
+                            <RichTextBox x:Name="UiRtbChaptersView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
                                    Height="640" MinHeight="500" IsReadOnly="True" >
-                        <RichTextBox.Resources>
-                            <Style TargetType="{x:Type Paragraph}">
-                                <Setter Property="Margin" Value="0" />
-                            </Style>
-                        </RichTextBox.Resources>
-                        <FlowDocument>
-                        </FlowDocument>
-                    </RichTextBox>
-                </Grid>
-            </TabItem>
-            <TabItem x:Name="UiTabStudyTree"  Header="Study" GotFocus="UiTabStudyTree_GotFocus" LostFocus="UiTabStudyTree_LostFocus" >
-                <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookView_OnPreviewMouseDown">
-                    <Grid.ContextMenu>
-                        <ContextMenu x:Name="UiCmnWorkbookRightClick">
-                            <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
-                            <Separator />
-                            <MenuItem x:Name="UiMnPromoteLine" Header="Promote Line" Click="UiMnPromoteLine_Click" />
-                            <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnDeleteMovesFromHere_Click" />
-                            <Separator />
-                            <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Bookmark This Position" Click="UiMnWorkbookSelectAsBookmark_Click" />
-                            <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="Bookmark All Options Here" Click="UiMnWorkbookBookmarkAlternatives_Click" />
-                            <Separator />
-                            <MenuItem x:Name="_mnWorkbookEvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
-                            <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
-                        </ContextMenu>
-                    </Grid.ContextMenu>
-                    <RichTextBox x:Name="UiRtbStudyTreeView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                <RichTextBox.Resources>
+                                    <Style TargetType="{x:Type Paragraph}">
+                                        <Setter Property="Margin" Value="0" />
+                                    </Style>
+                                </RichTextBox.Resources>
+                                <FlowDocument>
+                                </FlowDocument>
+                            </RichTextBox>
+                        </Grid>
+                    </TabItem>
+                    <TabItem x:Name="UiTabStudyTree"  Header="Study" GotFocus="UiTabStudyTree_GotFocus" LostFocus="UiTabStudyTree_LostFocus" >
+                        <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookView_OnPreviewMouseDown">
+                            <Grid.ContextMenu>
+                                <ContextMenu x:Name="UiCmnWorkbookRightClick">
+                                    <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="UiMnPromoteLine" Header="Promote Line" Click="UiMnPromoteLine_Click" />
+                                    <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnDeleteMovesFromHere_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Bookmark This Position" Click="UiMnWorkbookSelectAsBookmark_Click" />
+                                    <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="Bookmark All Options Here" Click="UiMnWorkbookBookmarkAlternatives_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnWorkbookEvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
+                                    <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
+                                </ContextMenu>
+                            </Grid.ContextMenu>
+                            <RichTextBox x:Name="UiRtbStudyTreeView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbStudyTree_PreviewKeyDown">
-                        <RichTextBox.Resources>
-                            <Style TargetType="{x:Type Paragraph}">
-                                <Setter Property="Margin" Value="0" />
-                            </Style>
-                            <SolidColorBrush x:Key="WorkbookBackgroundBrush" Color="White"/>
-                            <SolidColorBrush x:Key="WorkbookHighlightBrush" Color="LightSkyBlue"/>
-                            <SolidColorBrush x:Key="WorkbookLineHighlightBrush" Color="Yellow"/>
-                        </RichTextBox.Resources>
-                        <FlowDocument>
-                        </FlowDocument>
-                    </RichTextBox>
-                </Grid>
-            </TabItem>
-            <TabItem x:Name="UiTabBookmarks" Header="Bookmarks" GotFocus="UiTabBookmarks_GotFocus" LostFocus="UiTabBookmarks_LostFocus">
-                <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown">
-                    <Grid.ContextMenu>
-                        <ContextMenu x:Name="_cmBookmarks">
-                            <MenuItem x:Name="_mnTrainFromBookmark" Header="Start Training from This Bookmark" Click="UiMnTrainFromBookmark_Click" />
-                            <Separator />
-                            <MenuItem x:Name="_mnGenerateBookmark" Header="Generate Bookmarks" Click="UiMnGenerateBookmark_Click" />
-                            <MenuItem x:Name="_mnAddBookmark" Header="Go to Study to Add a Bookmark" Click="UiMnAddBookmark_Click" />
-                            <Separator />
-                            <MenuItem x:Name="_mnDeleteBookmark" Header="Delete This Bookmark" Click="UiMnDeleteBookmark_Click" />
-                            <MenuItem x:Name="_mnDeleteAllBookmarks" Header="Delete All Bookmarks" Click="UiMnDeleteAllBookmarks_Click" />
-                        </ContextMenu>
-                    </Grid.ContextMenu>
-                    <Grid x:Name="UiGridBookmarks" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0"/>
-                            <RowDefinition Height="270*"/>
-                            <RowDefinition Height="270*"/>
-                            <RowDefinition Height="270*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="220*"/>
-                            <ColumnDefinition Width="220*"/>
-                            <ColumnDefinition Width="220*"/>
-                        </Grid.ColumnDefinitions>
+                                <RichTextBox.Resources>
+                                    <Style TargetType="{x:Type Paragraph}">
+                                        <Setter Property="Margin" Value="0" />
+                                    </Style>
+                                    <SolidColorBrush x:Key="WorkbookBackgroundBrush" Color="White"/>
+                                    <SolidColorBrush x:Key="WorkbookHighlightBrush" Color="LightSkyBlue"/>
+                                    <SolidColorBrush x:Key="WorkbookLineHighlightBrush" Color="Yellow"/>
+                                </RichTextBox.Resources>
+                                <FlowDocument>
+                                </FlowDocument>
+                            </RichTextBox>
+                        </Grid>
+                    </TabItem>
+                    <TabItem x:Name="UiTabBookmarks" Header="Bookmarks" GotFocus="UiTabBookmarks_GotFocus" LostFocus="UiTabBookmarks_LostFocus">
+                        <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown">
+                            <Grid.ContextMenu>
+                                <ContextMenu x:Name="_cmBookmarks">
+                                    <MenuItem x:Name="_mnTrainFromBookmark" Header="Start Training from This Bookmark" Click="UiMnTrainFromBookmark_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnGenerateBookmark" Header="Generate Bookmarks" Click="UiMnGenerateBookmark_Click" />
+                                    <MenuItem x:Name="_mnAddBookmark" Header="Go to Study to Add a Bookmark" Click="UiMnAddBookmark_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnDeleteBookmark" Header="Delete This Bookmark" Click="UiMnDeleteBookmark_Click" />
+                                    <MenuItem x:Name="_mnDeleteAllBookmarks" Header="Delete All Bookmarks" Click="UiMnDeleteAllBookmarks_Click" />
+                                </ContextMenu>
+                            </Grid.ContextMenu>
+                            <Grid x:Name="UiGridBookmarks" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0"/>
+                                    <RowDefinition Height="270*"/>
+                                    <RowDefinition Height="270*"/>
+                                    <RowDefinition Height="270*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="220*"/>
+                                    <ColumnDefinition Width="220*"/>
+                                    <ColumnDefinition Width="220*"/>
+                                </Grid.ColumnDefinitions>
 
-                        <Canvas x:Name="UiCnvPaging" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Visibility="Collapsed" >
-                            <Image x:Name="UiImgLeftArrow" HorizontalAlignment="Left"  Margin="-80,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseDown="Bookmarks_PreviousPage_OnPreviewMouseDown"  />
-                            <Label x:Name="UiLblBookmarkPage" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-50,-5,0,0" Width="100"  FontWeight="Bold"/>
-                            <Image x:Name="UiImgRightArrow" HorizontalAlignment="Right" Margin="0,0,-80,0" Source="Resources/Images/RightArrow.png" PreviewMouseDown="Bookmarks_NextPage_OnPreviewMouseDown"  />
-                        </Canvas>
+                                <Canvas x:Name="UiCnvPaging" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Visibility="Collapsed" >
+                                    <Image x:Name="UiImgLeftArrow" HorizontalAlignment="Left"  Margin="-80,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseDown="Bookmarks_PreviousPage_OnPreviewMouseDown"  />
+                                    <Label x:Name="UiLblBookmarkPage" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-50,-5,0,0" Width="100"  FontWeight="Bold"/>
+                                    <Image x:Name="UiImgRightArrow" HorizontalAlignment="Right" Margin="0,0,-80,0" Source="Resources/Images/RightArrow.png" PreviewMouseDown="Bookmarks_NextPage_OnPreviewMouseDown"  />
+                                </Canvas>
 
-                        <Viewbox x:Name="_vbLblBookmark_1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                            <Label x:Name="UiLblBookmark_1" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbBookmark_1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
-                            <Canvas x:Name="UiCnvBookmark_1" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
-                                <Canvas.Background>
-                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
-                                </Canvas.Background>
-                                <Image x:Name="UiImgBookmark_1" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
-                            </Canvas>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbLblBookmark_2" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                            <Label x:Name="UiLblBookmark_2" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbBookmark_2" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
-                            <Canvas x:Name="UiCnvBookmark_2" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
-                                <Canvas.Background>
-                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
-                                </Canvas.Background>
-                                <Image x:Name="UiImgBookmark_2" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
-                            </Canvas>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbLblBookmark_3" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                            <Label x:Name="UiLblBookmark_3" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbBookmark_3" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top">
-                            <Canvas x:Name="UiCnvBookmark_3" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
-                                <Canvas.Background>
-                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
-                                </Canvas.Background>
-                                <Image x:Name="UiImgBookmark_3" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
-                            </Canvas>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbLblBookmark_4" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                            <Label x:Name="UiLblBookmark_4" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbBookmark_4" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top">
-                            <Canvas x:Name="UiCnvBookmark_4" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
-                                <Canvas.Background>
-                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
-                                </Canvas.Background>
-                                <Image x:Name="UiImgBookmark_4" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
-                            </Canvas>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbLblBookmark_5" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                            <Label x:Name="UiLblBookmark_5" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbBookmark_5" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
-                            <Canvas x:Name="UiCnvBookmark_5" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
-                                <Canvas.Background>
-                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
-                                </Canvas.Background>
-                                <Image x:Name="UiImgBookmark_5" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
-                            </Canvas>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbLblBookmark_6" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                            <Label x:Name="UiLblBookmark_6" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbBookmark_6" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
-                            <Canvas x:Name="UiCnvBookmark_6" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
-                                <Canvas.Background>
-                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
-                                </Canvas.Background>
-                                <Image x:Name="UiImgBookmark_6" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
-                            </Canvas>
-                        </Viewbox>
+                                <Viewbox x:Name="_vbLblBookmark_1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                                    <Label x:Name="UiLblBookmark_1" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbBookmark_1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
+                                    <Canvas x:Name="UiCnvBookmark_1" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
+                                        <Canvas.Background>
+                                            <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                        </Canvas.Background>
+                                        <Image x:Name="UiImgBookmark_1" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
+                                    </Canvas>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbLblBookmark_2" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                                    <Label x:Name="UiLblBookmark_2" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbBookmark_2" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
+                                    <Canvas x:Name="UiCnvBookmark_2" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
+                                        <Canvas.Background>
+                                            <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                        </Canvas.Background>
+                                        <Image x:Name="UiImgBookmark_2" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
+                                    </Canvas>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbLblBookmark_3" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                                    <Label x:Name="UiLblBookmark_3" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbBookmark_3" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top">
+                                    <Canvas x:Name="UiCnvBookmark_3" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
+                                        <Canvas.Background>
+                                            <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                        </Canvas.Background>
+                                        <Image x:Name="UiImgBookmark_3" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
+                                    </Canvas>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbLblBookmark_4" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                                    <Label x:Name="UiLblBookmark_4" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbBookmark_4" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top">
+                                    <Canvas x:Name="UiCnvBookmark_4" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
+                                        <Canvas.Background>
+                                            <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                        </Canvas.Background>
+                                        <Image x:Name="UiImgBookmark_4" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
+                                    </Canvas>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbLblBookmark_5" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                                    <Label x:Name="UiLblBookmark_5" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbBookmark_5" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
+                                    <Canvas x:Name="UiCnvBookmark_5" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
+                                        <Canvas.Background>
+                                            <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                        </Canvas.Background>
+                                        <Image x:Name="UiImgBookmark_5" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
+                                    </Canvas>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbLblBookmark_6" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                                    <Label x:Name="UiLblBookmark_6" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbBookmark_6" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
+                                    <Canvas x:Name="UiCnvBookmark_6" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
+                                        <Canvas.Background>
+                                            <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                        </Canvas.Background>
+                                        <Image x:Name="UiImgBookmark_6" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
+                                    </Canvas>
+                                </Viewbox>
 
-                        <Viewbox x:Name="_vbLblBookmark_7" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                            <Label x:Name="UiLblBookmark_7" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbBookmark_7" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center"  Margin="10,50,10,10" VerticalAlignment="Top" >
-                            <Canvas x:Name="UiCnvBookmark_7" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
-                                <Canvas.Background>
-                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
-                                </Canvas.Background>
-                                <Image x:Name="UiImgBookmark_7" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
-                            </Canvas>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbLblBookmark_8" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                            <Label x:Name="UiLblBookmark_8" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbBookmark_8" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
-                            <Canvas x:Name="UiCnvBookmark_8" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
-                                <Canvas.Background>
-                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
-                                </Canvas.Background>
-                                <Image x:Name="UiImgBookmark_8" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
-                            </Canvas>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbLblBookmark_9" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                            <Label x:Name="UiLblBookmark_9" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
-                        </Viewbox>
-                        <Viewbox x:Name="_vbBookmark_9" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center"  Margin="10,50,10,10" VerticalAlignment="Top" >
-                            <Canvas x:Name="UiCnvBookmark_9" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
-                                <Canvas.Background>
-                                    <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
-                                </Canvas.Background>
-                                <Image x:Name="UiImgBookmark_9" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
-                            </Canvas>
-                        </Viewbox>
+                                <Viewbox x:Name="_vbLblBookmark_7" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                                    <Label x:Name="UiLblBookmark_7" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbBookmark_7" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center"  Margin="10,50,10,10" VerticalAlignment="Top" >
+                                    <Canvas x:Name="UiCnvBookmark_7" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
+                                        <Canvas.Background>
+                                            <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                        </Canvas.Background>
+                                        <Image x:Name="UiImgBookmark_7" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
+                                    </Canvas>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbLblBookmark_8" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                                    <Label x:Name="UiLblBookmark_8" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbBookmark_8" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
+                                    <Canvas x:Name="UiCnvBookmark_8" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
+                                        <Canvas.Background>
+                                            <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                        </Canvas.Background>
+                                        <Image x:Name="UiImgBookmark_8" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
+                                    </Canvas>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbLblBookmark_9" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
+                                    <Label x:Name="UiLblBookmark_9" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbBookmark_9" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center"  Margin="10,50,10,10" VerticalAlignment="Top" >
+                                    <Canvas x:Name="UiCnvBookmark_9" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
+                                        <Canvas.Background>
+                                            <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                        </Canvas.Background>
+                                        <Image x:Name="UiImgBookmark_9" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBrown.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="642" Grid.Column="0" />
+                                    </Canvas>
+                                </Viewbox>
 
-                    </Grid>
-                </Grid>
-            </TabItem>
-            <TabItem x:Name="UiTabModelGames"  Header="Games" GotFocus="UiTabModelGames_GotFocus" PreviewKeyDown="UiTabModelGames_PreviewKeyDown" LostFocus="UiTabModelGames_LostFocus" >
-                <Grid Background="#FFE5E5E5" >
-                    <RichTextBox x:Name="UiRtbModelGamesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                    <TabItem x:Name="UiTabModelGames"  Header="Games" GotFocus="UiTabModelGames_GotFocus" PreviewKeyDown="UiTabModelGames_PreviewKeyDown" LostFocus="UiTabModelGames_LostFocus" >
+                        <Grid Background="#FFE5E5E5" >
+                            <RichTextBox x:Name="UiRtbModelGamesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True" >
-                        <RichTextBox.Resources>
-                            <Style TargetType="{x:Type Paragraph}">
-                                <Setter Property="Margin" Value="0" />
-                            </Style>
-                        </RichTextBox.Resources>
-                        <FlowDocument>
-                        </FlowDocument>
-                    </RichTextBox>
-                </Grid>
-            </TabItem>
-            <TabItem x:Name="UiTabExercises"  Header="Exercises" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
-                <Grid Background="White" >
-                    <RichTextBox x:Name="UiRtbExercisesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                <RichTextBox.Resources>
+                                    <Style TargetType="{x:Type Paragraph}">
+                                        <Setter Property="Margin" Value="0" />
+                                    </Style>
+                                </RichTextBox.Resources>
+                                <FlowDocument>
+                                </FlowDocument>
+                            </RichTextBox>
+                        </Grid>
+                    </TabItem>
+                    <TabItem x:Name="UiTabExercises"  Header="Exercises" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
+                        <Grid Background="White" >
+                            <RichTextBox x:Name="UiRtbExercisesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True"  BorderThickness="0">
-                        <RichTextBox.Resources>
-                            <Style TargetType="{x:Type Paragraph}">
-                                <Setter Property="Margin" Value="0" />
-                            </Style>
-                        </RichTextBox.Resources>
-                        <FlowDocument>
-                        </FlowDocument>
-                    </RichTextBox>
-                </Grid>
-            </TabItem>
-        </TabControl>
-        <DataGrid x:Name="UiDgActiveLine" Grid.Column="1" HorizontalAlignment="Left" Height="670" Margin="10,5,0,0" VerticalAlignment="Top" Width="260"  
+                                <RichTextBox.Resources>
+                                    <Style TargetType="{x:Type Paragraph}">
+                                        <Setter Property="Margin" Value="0" />
+                                    </Style>
+                                </RichTextBox.Resources>
+                                <FlowDocument>
+                                </FlowDocument>
+                            </RichTextBox>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+                <DataGrid x:Name="UiDgActiveLine" Grid.Column="1" HorizontalAlignment="Left" Height="670" Margin="10,5,0,0" VerticalAlignment="Top" Width="260"  
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" 
                   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
                   CanUserSortColumns="False" GridLinesVisibility="None" Grid.Row="1" 
                   MouseDoubleClick="ActiveLine_OnMouseDoubleClick" PreviewMouseDown="ActiveLine_OnPreviewMouseDown" 
                   PreviewKeyDown="ViewActiveLine_PreviewKeyDown"   >
-            <DataGrid.Resources>
-                <Style x:Key="DisableSelection" TargetType="{x:Type DataGridCell}">
-                    <Setter Property="Focusable" Value="False"/>
-                </Style>
-                <Style TargetType="{x:Type DataGridCell}">
-                    <Setter Property="BorderThickness" Value="0" />
-                </Style>
-                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" 
+                    <DataGrid.Resources>
+                        <Style x:Key="DisableSelection" TargetType="{x:Type DataGridCell}">
+                            <Setter Property="Focusable" Value="False"/>
+                        </Style>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="BorderThickness" Value="0" />
+                        </Style>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" 
                    Color= "{DynamicResource {x:Static SystemColors.HighlightColorKey}}" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" 
+                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" 
                    Color= "{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}" />
-            </DataGrid.Resources>
-            <DataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}"/>
-            </DataGrid.RowStyle>
-            <DataGrid.Background>
-                <SolidColorBrush Color="White"/>
-            </DataGrid.Background>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="#" Width="30" Binding="{Binding Number}" CellStyle="{StaticResource DisableSelection}" CanUserReorder="False" />
-                <DataGridTextColumn Header="White" Width="60" Binding="{Binding WhitePly}" CanUserReorder="False" />
-                <DataGridTextColumn Header="Ev" Width="50" Binding="{Binding WhiteEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
-                <DataGridTextColumn Header="Black" Width="60" Binding="{Binding BlackPly}" CanUserReorder="False"/>
-                <DataGridTextColumn Header="Ev" Width="50" Binding="{Binding BlackEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <RichTextBox x:Name="UiRtbBoardComment" Panel.ZIndex="0" HorizontalAlignment="Left" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
-            <RichTextBox.Resources>
-                <Style TargetType="{x:Type Paragraph}">
-                    <Setter Property="Margin" Value="0" />
-                </Style>
-            </RichTextBox.Resources>
-            <FlowDocument PageWidth="670">
-                <Paragraph FontSize="20" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,0"></Paragraph>
-                <Paragraph FontSize="20" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,0">
-                    <Run>Welcome to</Run>
-                </Paragraph>
-                <Paragraph FontSize="36" FontWeight="Bold" TextAlignment="Center">
-                    <Image Source="Resources/Images/icon_blue.ico" Margin="0,0,100,0" Height="48" Width="48"></Image>
-                    <Run>Chess Forge</Run>
-                    <Image Source="Resources/Images/icon_green.ico" Margin="100,0,0,0" Height="48" Width="48"></Image>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
-        <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
-        <ProgressBar x:Name="UiPbEngineThinking" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="6" Margin="10,13,0,0" Grid.Row="2" VerticalAlignment="Top" Width="160"/>
-        <Image x:Name="UiImgEngineOn" Cursor="Hand" Grid.Column="1" Grid.Row="2" Margin="65,40,0,0" Source="Resources/Images/switch-on-64.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="64" Height="64" Visibility="Collapsed" PreviewMouseLeftButtonDown="EngineToggleOn_OnPreviewMouseLeftButtonDown" />
-        <Image x:Name="UiImgEngineOff" Cursor="Hand" Grid.Column="1" Grid.Row="2" Margin="65,40,0,0" Source="Resources/Images/switch-off-64.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="64" Height="64" Visibility="Visible" PreviewMouseLeftButtonDown="EngineToggleOff_OnPreviewMouseLeftButtonDown" />
-        <Label x:Name="UiLblEvaluating" Grid.Column="1" Content="Evaluating: " HorizontalAlignment="Left" Margin="25,31,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-        <Label x:Name="UiLblMoveUnderEval" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="95,30,0,0" Grid.Row="2" FontWeight="Bold" FontSize="14"  VerticalAlignment="Top"/>
-        <Label x:Name="UiLblEvalSecretMode" Grid.Column="1" Content="Engine is thinking ..." HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
+                    </DataGrid.Resources>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}"/>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Background>
+                        <SolidColorBrush Color="White"/>
+                    </DataGrid.Background>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="#" Width="30" Binding="{Binding Number}" CellStyle="{StaticResource DisableSelection}" CanUserReorder="False" />
+                        <DataGridTextColumn Header="White" Width="60" Binding="{Binding WhitePly}" CanUserReorder="False" />
+                        <DataGridTextColumn Header="Ev" Width="50" Binding="{Binding WhiteEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
+                        <DataGridTextColumn Header="Black" Width="60" Binding="{Binding BlackPly}" CanUserReorder="False"/>
+                        <DataGridTextColumn Header="Ev" Width="50" Binding="{Binding BlackEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <RichTextBox x:Name="UiRtbBoardComment" Panel.ZIndex="0" HorizontalAlignment="Left" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
+                    <RichTextBox.Resources>
+                        <Style TargetType="{x:Type Paragraph}">
+                            <Setter Property="Margin" Value="0" />
+                        </Style>
+                    </RichTextBox.Resources>
+                    <FlowDocument PageWidth="670">
+                        <Paragraph FontSize="20" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,0"></Paragraph>
+                        <Paragraph FontSize="20" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,0">
+                            <Run>Welcome to</Run>
+                        </Paragraph>
+                        <Paragraph FontSize="36" FontWeight="Bold" TextAlignment="Center">
+                            <Image Source="Resources/Images/icon_blue.ico" Margin="0,0,100,0" Height="48" Width="48"></Image>
+                            <Run>Chess Forge</Run>
+                            <Image Source="Resources/Images/icon_green.ico" Margin="100,0,0,0" Height="48" Width="48"></Image>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
+                <ProgressBar x:Name="UiPbEngineThinking" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="6" Margin="10,13,0,0" Grid.Row="2" VerticalAlignment="Top" Width="160"/>
+                <Image x:Name="UiImgEngineOn" Cursor="Hand" Grid.Column="1" Grid.Row="2" Margin="65,40,0,0" Source="Resources/Images/switch-on-64.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="64" Height="64" Visibility="Collapsed" PreviewMouseLeftButtonDown="EngineToggleOn_OnPreviewMouseLeftButtonDown" />
+                <Image x:Name="UiImgEngineOff" Cursor="Hand" Grid.Column="1" Grid.Row="2" Margin="65,40,0,0" Source="Resources/Images/switch-off-64.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="64" Height="64" Visibility="Visible" PreviewMouseLeftButtonDown="EngineToggleOff_OnPreviewMouseLeftButtonDown" />
+                <Label x:Name="UiLblEvaluating" Grid.Column="1" Content="Evaluating: " HorizontalAlignment="Left" Margin="25,31,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+                <Label x:Name="UiLblMoveUnderEval" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="95,30,0,0" Grid.Row="2" FontWeight="Bold" FontSize="14"  VerticalAlignment="Top"/>
+                <Label x:Name="UiLblEvalSecretMode" Grid.Column="1" Content="Engine is thinking ..." HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
                Margin="10,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="160" Grid.Row="2" />
-        <Button x:Name="UiBtnExitTraining" Panel.ZIndex="1" Grid.Column="1" Content="Exit Training" FontWeight="Bold" HorizontalAlignment="Left" Margin="52,105,0,0" Width="85" Height="25" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitTraining_Click"/>
-        <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="0" Content="Exit Game" HorizontalAlignment="Right" Margin="30,20,20,0" Width="100" Height="25" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitGame_Click"/>
+                <Button x:Name="UiBtnExitTraining" Panel.ZIndex="1" Grid.Column="1" Content="Exit Training" FontWeight="Bold" HorizontalAlignment="Left" Margin="52,105,0,0" Width="85" Height="25" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitTraining_Click"/>
+                <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="0" Content="Exit Game" HorizontalAlignment="Right" Margin="30,20,20,0" Width="100" Height="25" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitGame_Click"/>
 
+            </Grid>
+        </Viewbox>
     </Grid>
-
 
 </Window>
