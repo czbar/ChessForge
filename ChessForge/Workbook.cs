@@ -168,7 +168,15 @@ namespace ChessForge
                 {
                     SelectDefaultActiveChapter();
                 }
-                return _activeChapter.ActiveVariationTree;
+
+                if (_activeChapter == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return _activeChapter.ActiveVariationTree;
+                }
             }
         }
 
