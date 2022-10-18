@@ -134,6 +134,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the numer of model games in this chapter
+        /// </summary>
+        /// <returns></returns>
+        public int GetModelGameCount()
+        {
+            return ModelGames.Count();
+        }
+
+        /// <summary>
+        /// Returns the numer of exercises in this chapter
+        /// </summary>
+        /// <returns></returns>
+        public int GetExerciseCount()
+        {
+            return Exercises.Count();
+        }
+
+        /// <summary>
         /// Flag indictating whether this chapter is expanded in the ChaptersView
         /// </summary>
         public bool IsViewExpanded
