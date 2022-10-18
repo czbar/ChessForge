@@ -191,7 +191,6 @@ namespace ChessForge
 
             if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
             {
-                //string chfText = ChfTextBuilder.BuildText(AppStateManager.MainWin.StudyTree);
                 string chfText = ChfTextBuilder.BuildWorkbookText();
                 File.WriteAllText(WorkbookFilePath, chfText);
                 _isDirty = false;
