@@ -127,6 +127,9 @@
     <Compile Include="ActiveLineManager.cs" />
     <Compile Include="ManualReviewState.cs" />
     <Compile Include="MoveEvaluation.cs" />
+    <Compile Include="PositionSetupDialog.xaml.cs">
+      <DependentUpon>PositionSetupDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PromotionDialog.xaml.cs">
       <DependentUpon>PromotionDialog.xaml</DependentUpon>
     </Compile>
@@ -192,6 +195,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PositionSetupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PromotionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
