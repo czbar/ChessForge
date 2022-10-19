@@ -336,11 +336,21 @@ namespace ChessForge
         /// </summary>
         public void BuildFlowDocumentForVariationTree(int rootNodeId = 0, bool includeStem = true)
         {
-            Clear();
-
+            GameMetadata.ContentType contentType = GameMetadata.ContentType.NONE;
             _variationTree = _mainWin.ActiveVariationTree;
 
-            Paragraph titlePara = BuildPageHeader();
+            if (_variationTree != null)
+            {
+                contentType = _variationTree.Header.GetContentType(out _);
+            }
+
+            Clear();
+
+            BuildPreviousNextBar(contentType);
+
+            Document.Blocks.Add(BuildDummyPararaph());
+
+            Paragraph titlePara = BuildPageHeader(contentType);
             if (titlePara != null)
             {
                 Document.Blocks.Add(titlePara);
@@ -381,21 +391,150 @@ namespace ChessForge
             // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
             BuildTreeLineText(root, para, includeStem);
 
+            if (contentType == GameMetadata.ContentType.MODEL_GAME || contentType == GameMetadata.ContentType.EXERCISE)
+            {
+                Paragraph resultPara = BuildResultPara();
+                if (resultPara != null)
+                {
+                    Document.Blocks.Add(resultPara);
+                }
+            }
+
             RemoveEmptyParagraphs();
+        }
+
+        /// <summary>
+        /// Creates a dummy paragraph to use for spacing before
+        /// the first "real" paragraph. 
+        /// </summary>
+        /// <returns></returns>
+        private Paragraph BuildDummyPararaph()
+        {
+            Paragraph dummy = new Paragraph();
+            dummy.Margin = new Thickness(0, 0, 0, 0);
+            dummy.Inlines.Add(new Run(""));
+            return dummy;
+        }
+
+        /// <summary>
+        /// Populates or hides the Previous/Next game/exercise bar above the tree view
+        /// as appropriate.
+        /// </summary>
+        /// <param name="contentType"></param>
+        private void BuildPreviousNextBar(GameMetadata.ContentType contentType)
+        {
+            try
+            {
+                if (contentType == GameMetadata.ContentType.MODEL_GAME)
+                {
+                    BuildPreviousNextModelGameBar();
+                }
+                else if (contentType == GameMetadata.ContentType.EXERCISE)
+                {
+                    BuildPreviousNextExerciseBar();
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Builds the Previous/Next bar for Model Games view.
+        /// </summary>
+        private void BuildPreviousNextModelGameBar()
+        {
+            int gameCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount();
+            int gameIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex;
+
+            if (gameCount > 1)
+            {
+                _mainWin.UiCnvModelGamePrevNext.Visibility = Visibility.Visible;
+                _mainWin.UiGridModelGames.RowDefinitions[0].Height = new GridLength(20);
+                _mainWin.UiRtbModelGamesView.Height = 620;
+
+                _mainWin.UiLblModelGamePrevNextHint.Visibility = Visibility.Visible;
+                _mainWin.UiLblGameCounter.Content = "Game " + (gameIndex + 1).ToString() + " of " + gameCount.ToString();
+                if (gameIndex == 0)
+                {
+                    _mainWin.UiImgModelGameRightArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiImgModelGameLeftArrow.Visibility = Visibility.Hidden;
+                    _mainWin.UiLblModelGamePrevNextHint.Content = "Next Game";
+                }
+                else if (gameIndex == gameCount - 1)
+                {
+                    _mainWin.UiImgModelGameRightArrow.Visibility = Visibility.Hidden;
+                    _mainWin.UiImgModelGameLeftArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiLblModelGamePrevNextHint.Content = "Previous Game";
+                }
+                else
+                {
+                    _mainWin.UiImgModelGameRightArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiImgModelGameLeftArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiLblModelGamePrevNextHint.Content = "Previous | Next";
+                }
+            }
+            else
+            {
+                _mainWin.UiCnvModelGamePrevNext.Visibility = Visibility.Collapsed;
+                _mainWin.UiGridModelGames.RowDefinitions[0].Height = new GridLength(0);
+                _mainWin.UiRtbModelGamesView.Height = 640;
+            }
+        }
+
+        /// <summary>
+        /// Builds the Previous/Next bar for the Exercises view.
+        /// </summary>
+        private void BuildPreviousNextExerciseBar()
+        {
+            int exerciseCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount();
+            int exerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex;
+
+            if (exerciseCount > 1)
+            {
+                _mainWin.UiCnvExercisePrevNext.Visibility = Visibility.Visible;
+                _mainWin.UiGridExercises.RowDefinitions[0].Height = new GridLength(20);
+                _mainWin.UiRtbModelGamesView.Height = 620;
+
+                _mainWin.UiLblExcercisePrevNextHint.Visibility = Visibility.Visible;
+                _mainWin.UiLblExerciseCounter.Content = "Exercise " + (exerciseIndex + 1).ToString() + " of " + exerciseCount.ToString();
+                if (exerciseIndex == 0)
+                {
+                    _mainWin.UiImgExerciseRightArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiImgExerciseLeftArrow.Visibility = Visibility.Hidden;
+                    _mainWin.UiLblExcercisePrevNextHint.Content = "Next Exercise";
+                }
+                else if (exerciseIndex == exerciseCount - 1)
+                {
+                    _mainWin.UiImgExerciseRightArrow.Visibility = Visibility.Hidden;
+                    _mainWin.UiImgExerciseLeftArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiLblExcercisePrevNextHint.Content = "Previous Exercise";
+                }
+                else
+                {
+                    _mainWin.UiImgExerciseRightArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiImgExerciseLeftArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiLblExcercisePrevNextHint.Content = "Previous | Next";
+                }
+            }
+            else
+            {
+                _mainWin.UiCnvExercisePrevNext.Visibility = Visibility.Collapsed;
+                _mainWin.UiGridExercises.RowDefinitions[0].Height = new GridLength(0);
+                _mainWin.UiRtbModelGamesView.Height = 640;
+            }
         }
 
         /// <summary>
         /// Builds the top paragraph for the page if applicable.
         /// </summary>
         /// <returns></returns>
-        private Paragraph BuildPageHeader()
+        private Paragraph BuildPageHeader(GameMetadata.ContentType contentType)
         {
             Paragraph para = null;
 
             if (_variationTree != null)
             {
-                GameMetadata.ContentType contentType = _variationTree.Header.GetContentType(out _);
-                
                 switch (contentType)
                 {
                     case GameMetadata.ContentType.MODEL_GAME:
@@ -404,7 +543,7 @@ namespace ChessForge
                         string blackPlayer = _variationTree.Header.GetBlackPlayer(out _);
 
                         para = CreateParagraph("0");
-                        para.Margin = new Thickness(0, 20, 0, 0);
+                        para.Margin = new Thickness(0, 0, 0, 0);
 
                         bool hasPlayerNames = !(string.IsNullOrWhiteSpace(whitePlayer) && string.IsNullOrWhiteSpace(blackPlayer));
 
@@ -429,7 +568,7 @@ namespace ChessForge
                         {
                             if (hasPlayerNames)
                             {
-                                Run rEvent = CreateRun("1", "    " + _variationTree.Header.GetEventName(out _) + "\n");
+                                Run rEvent = CreateRun("1", "      " + _variationTree.Header.GetEventName(out _) + "\n");
                                 para.Inlines.Add(rEvent);
                             }
                             else
@@ -438,6 +577,15 @@ namespace ChessForge
                                 para.Inlines.Add(rEvent);
                             }
                         }
+
+                        string result = _variationTree.Header.GetResult(out _);
+                        if (!string.IsNullOrWhiteSpace(result) && result != "*")
+                        {
+                            Run rResult = new Run("      (" + result + ")\n");
+                            rResult.FontWeight = FontWeights.Normal;
+                            para.Inlines.Add(rResult);
+                        }
+
                         break;
                 }
             }
@@ -446,7 +594,28 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds the chessborad image for the Exercises view.
+        /// Builds a paragraph with Game/Exercise result
+        /// </summary>
+        /// <returns></returns>
+        private Paragraph BuildResultPara()
+        {
+            string result = _variationTree.Header.GetResult(out _);
+            if (!string.IsNullOrWhiteSpace(result))
+            {
+                Paragraph para = CreateParagraph("0");
+                para.Margin = new Thickness(0, 0, 0, 0);
+                Run rResult = new Run("     " + result);
+                para.Inlines.Add(rResult);
+                return para;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Builds the chessboard image for the Exercises view.
         /// </summary>
         /// <returns></returns>
         private Paragraph BuildExercisesChessboardParagraph()
@@ -454,8 +623,8 @@ namespace ChessForge
             if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameMetadata.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2");
-                para.Margin = new Thickness(60,0,0,40);
-                
+                para.Margin = new Thickness(60, 0, 0, 40);
+
                 InlineUIContainer uIContainer = new InlineUIContainer();
                 Viewbox vb = new Viewbox();
                 Canvas cnv = new Canvas();
@@ -464,7 +633,7 @@ namespace ChessForge
                 cnv.Height = 250;
 
                 Image img = new Image();
-                img.Margin = new Thickness(5, 5, 5, 5);    
+                img.Margin = new Thickness(5, 5, 5, 5);
                 img.Source = ChessBoards.ChessBoardGreySmall;
                 ChessBoardSmall cb = new ChessBoardSmall(cnv, img, null, false, false);
                 cb.DisplayPosition(_variationTree.Nodes[0]);
@@ -477,7 +646,7 @@ namespace ChessForge
                 vb.Width = 250;
                 vb.Height = 250;
                 vb.Visibility = Visibility.Visible;
-                
+
                 para.Inlines.Add(uIContainer);
                 return para;
             }
@@ -834,7 +1003,7 @@ namespace ChessForge
             {
                 sb.Append(" ");
             }
-            
+
             sb.Append(nd.GetPlyText(true));
             return sb.ToString();
         }

@@ -251,9 +251,9 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Canvas x:Name="UiCnvPaging" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Visibility="Collapsed" >
-                                    <Image x:Name="UiImgLeftArrow" HorizontalAlignment="Left"  Margin="-80,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseDown="Bookmarks_PreviousPage_OnPreviewMouseDown"  />
+                                    <Image x:Name="UiImgLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="-80,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseDown="Bookmarks_PreviousPage_OnPreviewMouseDown"  />
                                     <Label x:Name="UiLblBookmarkPage" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-50,-5,0,0" Width="100"  FontWeight="Bold"/>
-                                    <Image x:Name="UiImgRightArrow" HorizontalAlignment="Right" Margin="0,0,-80,0" Source="Resources/Images/RightArrow.png" PreviewMouseDown="Bookmarks_NextPage_OnPreviewMouseDown"  />
+                                    <Image x:Name="UiImgRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="0,0,-80,0" Source="Resources/Images/RightArrow.png" PreviewMouseDown="Bookmarks_NextPage_OnPreviewMouseDown"  />
                                 </Canvas>
 
                                 <Viewbox x:Name="_vbLblBookmark_1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
@@ -361,8 +361,28 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabModelGames"  Header="Games" GotFocus="UiTabModelGames_GotFocus" PreviewKeyDown="UiTabModelGames_PreviewKeyDown" LostFocus="UiTabModelGames_LostFocus" >
-                        <Grid Background="#FFE5E5E5" >
-                            <RichTextBox x:Name="UiRtbModelGamesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                        <Grid x:Name="UiGridModelGames"  Background="#FFE5E5E5" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.ContextMenu>
+                                <ContextMenu x:Name="UiCmModelGames">
+                                    <MenuItem x:Name="_mnCreateModelGame" Header="Create New Game" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnDeleteModelGame" Header="Delete This Game" />
+                                </ContextMenu>
+                            </Grid.ContextMenu>
+                            <Canvas x:Name="UiCnvModelGamePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
+                                <Label x:Name="UiLblGameCounter" Content="Game 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
+                                <Image x:Name="UiImgModelGameLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="120,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiLblModelGamePrevNextHint" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="150,-3,0,0" Width="100"  FontWeight="Bold"/>
+                                <Image x:Name="UiImgModelGameRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="255,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"   />
+                            </Canvas>
+                            <RichTextBox x:Name="UiRtbModelGamesView" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True" >
                                 <RichTextBox.Resources>
@@ -376,8 +396,28 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabExercises"  Header="Exercises" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
-                        <Grid Background="White" >
-                            <RichTextBox x:Name="UiRtbExercisesView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                        <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.ContextMenu>
+                                <ContextMenu x:Name="UiCmExercises">
+                                    <MenuItem x:Name="_mnCreateExercise" Header="Create New Exercise" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnDeleteExercise" Header="Delete This Exercise" />
+                                </ContextMenu>
+                            </Grid.ContextMenu>
+                            <Canvas x:Name="UiCnvExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
+                                <Label x:Name="UiLblExerciseCounter" Content="Exercise 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
+                                <Image x:Name="UiImgExerciseLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="120,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiLblExcercisePrevNextHint" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="150,-3,0,0" Width="100"  FontWeight="Bold"/>
+                                <Image x:Name="UiImgExerciseRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="255,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
+                            </Canvas>
+                            <RichTextBox x:Name="UiRtbExercisesView" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True"  BorderThickness="0">
                                 <RichTextBox.Resources>

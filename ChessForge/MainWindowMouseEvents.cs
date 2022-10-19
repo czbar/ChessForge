@@ -493,10 +493,96 @@ namespace ChessForge
             e.Handled = true;
         }
 
+        //**************************************************************
+        //
+        //  TAB VARIATION TREE VIEWS 
+        // 
+        //**************************************************************
+
+        /// <summary>
+        /// In the Model Games view, the user requested the previous game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex > 0)
+                {
+                    SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex - 1, true);
+                }
+            }
+            catch
+            {
+                AppLog.Message("Exception in UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown()");
+            }
+        }
+
+        /// <summary>
+        /// In the Model Games view, the user requested the next game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgModelGameRightArrow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex < WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1)
+                {
+                    SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex + 1, true);
+                }
+            }
+            catch
+            {
+                AppLog.Message("Exception in UiImgModelGameRightArrow_PreviewMouseLeftButtonDown()");
+            }
+        }
+
+        /// <summary>
+        /// In the Exercises view, the user requested the next game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex > 0)
+                {
+                    SelectExercise(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex - 1, true);
+                }
+            }
+            catch
+            {
+                AppLog.Message("Exception in UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown()");
+            }
+        }
+
+        /// <summary>
+        /// In the Exercises view, the user requested the previous game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgExerciseRightArrow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex < WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount() - 1)
+                {
+                    SelectExercise(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex + 1, true);
+                }
+            }
+            catch
+            {
+                AppLog.Message("Exception in UiImgExerciseRightArrow_PreviewMouseLeftButtonDown()");
+            }
+        }
+
 
         //**************************************************************
         //
-        //  VIEW FOCUS 
+        //  TAB VIEW FOCUS 
         // 
         //**************************************************************
 
