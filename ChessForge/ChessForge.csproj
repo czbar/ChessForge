@@ -98,6 +98,9 @@
     <Compile Include="EvaluationActiveLine.cs" />
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
+    <Compile Include="GameExerciseOptions.xaml.cs">
+      <DependentUpon>GameExerciseOptions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GenericPgnInfoDialog.xaml.cs">
       <DependentUpon>GenericPgnInfoDialog.xaml</DependentUpon>
     </Compile>
@@ -166,6 +169,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ChapterTitleDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameExerciseOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
