@@ -154,11 +154,25 @@ namespace ChessPosition
         public const byte BlackQueensideCastle = 0x01;
 
         /// <summary>
+        /// Strings representing game results
+        /// </summary>
+        public const string PGN_WHITE_WIN_RESULT = "1-0";
+        public const string PGN_BLACK_WIN_RESULT = "0-1";
+        public const string PGN_DRAW_RESULT = "1/2-1/2";
+        public const string PGN_DRAW_SHORT_RESULT = "1/2";
+        public const string PGN_NO_RESULT = "*";
+
+        /// <summary>
         /// The bit to store the color in chessboard square's
         /// byte encoding
         /// (MSB).
         /// </summary>
         public const byte Color = 0x80;
+
+        /// <summary>
+        /// A string to use when there is no date in the PGN file
+        /// </summary>
+        public const string EMPTY_PGN_DATE = "????.??.??";
 
         /// <summary>
         /// Zindex values for the main chessboard artefacts
