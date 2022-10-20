@@ -576,6 +576,58 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Opens the last clicked game. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnOpenGame_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (WorkbookManager.LastClickedModelGameIndex >= 0)
+                {
+                    WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = WorkbookManager.LastClickedModelGameIndex;
+                    SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
+                }
+            }
+            catch(Exception ex)
+            {
+                AppLog.Message("UiMnSelectGame_Click()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a new VariationTree object and invokes
+        /// the Game Header dialog.
+        /// If successfully returned, adds the Tree to the list of games
+        /// and opens the ModelGames view (where the game text will be empty)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnAddGame_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                VariationTree tree = new VariationTree(GameMetadata.ContentType.MODEL_GAME);
+                GameExerciseOptions dlg = new GameExerciseOptions(tree);
+                dlg.ShowDialog();
+                if (dlg.ExitOK)
+                {
+                    WorkbookManager.SessionWorkbook.ActiveChapter.AddModelGame(tree);
+                    WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex 
+                        = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
+                    AppStateManager.IsDirty = true;
+                }
+            }
+            catch(Exception ex)
+            {
+                AppLog.Message("UiMnAddGame_Click()", ex);
+            }
+        }
+
+        /// <summary>
         /// Sets the list in the Chapters View in the correct Expand/Collapse state.
         /// Rebuilds the Paragraph for the chapter.
         /// </summary>
