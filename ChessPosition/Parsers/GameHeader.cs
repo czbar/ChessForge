@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChessPosition;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
@@ -121,12 +122,10 @@ namespace GameTree
 
             if (value == null)
             {
-                return _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+                value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
             }
-            else
-            {
-                return value;
-            }
+
+            return TextUtils.AdjustDateString(value);
         }
 
         /// <summary>
@@ -141,7 +140,7 @@ namespace GameTree
             string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
             if (string.IsNullOrEmpty(value))
             {
-                value = "*";
+                value = Constants.PGN_NO_RESULT;
             }
 
             return value;
@@ -171,7 +170,7 @@ namespace GameTree
             string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
             if (string.IsNullOrEmpty(value))
             {
-                value = "*";
+                value = "";
             }
 
             return value;

@@ -359,7 +359,7 @@ namespace ChessForge
         private void Chapters_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             WorkbookManager.LastClickedChapterId = -1;
-            WorkbookManager.EnableChaptersMenus(_cmChapters, false);
+            WorkbookManager.EnableChaptersContextMenuItems(_cmChapters, false, GameMetadata.ContentType.GENERIC);
         }
 
         /// <summary>
@@ -547,6 +547,31 @@ namespace ChessForge
                         tbDlg.Show();
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Identifies the currently selected game and invokes
+        /// the Game Headers dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEditGameHeader_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames[WorkbookManager.LastClickedModelGameIndex];
+                var dlg = new GameExerciseOptions(game);
+                dlg.ShowDialog();
+                if (dlg.ExitOK)
+                {
+                    AppStateManager.IsDirty = true;
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Error in UiMnEditGameHeader_Click(): " + ex.Message);
             }
         }
 

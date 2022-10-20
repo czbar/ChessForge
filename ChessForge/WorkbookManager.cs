@@ -12,6 +12,7 @@ using ChessPosition;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Runtime.CompilerServices;
+using System.Reflection;
 
 namespace ChessForge
 {
@@ -29,6 +30,16 @@ namespace ChessForge
         /// Id of the chapter which was last clicked in the Chapters view.
         /// </summary>
         public static int LastClickedChapterId = -1;
+
+        /// <summary>
+        /// Index  of the model game was last clicked in the Chapters view.
+        /// </summary>
+        public static int LastClickedModelGameIndex = -1;
+
+        /// <summary>
+        /// Index of the exercise which was last clicked in the Chapters view.
+        /// </summary>
+        public static int LastClickedExerciseIndex = -1;
 
         /// <summary>
         /// The list of Variation Trees (a.k.a. PGN Games) for the SessionWorkbook.
@@ -257,18 +268,101 @@ namespace ChessForge
         /// </summary>
         /// <param name="cmn"></param>
         /// <param name="isEnabled"></param>
-        public static void EnableChaptersMenus(ContextMenu cmn, bool isEnabled)
+        public static void EnableChaptersContextMenuItems(ContextMenu cmn, bool isEnabled, GameMetadata.ContentType contentType)
         {
-            int index = -1;
+            try
+            {
+                SetupChapterMenuItems(cmn, isEnabled, contentType);
+                SetupModelGameMenuItems(cmn, isEnabled, contentType);
+                SetupExerciseMenuItems(cmn, isEnabled, contentType);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EnableChaptersContextMenuItems(): " + ex.Message);
+            }
+        }
 
+        /// <summary>
+        /// Sets up visibility of chapter related menu items in the Chapters context menu.
+        /// </summary>
+        /// <param name="cmn"></param>
+        /// <param name="isEnabled"></param>
+        /// <param name="contentType"></param>
+        private static void SetupChapterMenuItems(ContextMenu cmn, bool isEnabled, GameMetadata.ContentType contentType)
+        {
             // ClickedIndex should be in sync with isEnabled but double check just in case
             if (LastClickedChapterId < 0 || SessionWorkbook == null)
             {
                 isEnabled = false;
             }
-            else
+
+            bool isChaptersMenu = contentType == GameMetadata.ContentType.GENERIC || contentType == GameMetadata.ContentType.STUDY_TREE;
+            int index = SessionWorkbook.GetChapterIndexFromId(LastClickedChapterId);
+
+            foreach (var item in cmn.Items)
             {
-                index = SessionWorkbook.GetChapterIndexFromId(LastClickedChapterId);
+                if (item is MenuItem)
+                {
+                    MenuItem menuItem = item as MenuItem;
+                    switch (menuItem.Name)
+                    {
+                        case "_mnAddChapter":
+                            menuItem.IsEnabled = true;
+                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnSelectChapter":
+                            menuItem.IsEnabled = isEnabled;
+                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnRenameChapter":
+                            menuItem.IsEnabled = isEnabled;
+                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnChapterUp":
+                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 0 && index > 0;
+                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnChapterDown":
+                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 0 && index < SessionWorkbook.Chapters.Count - 1;
+                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnImportModelGames":
+                            menuItem.IsEnabled = isEnabled;
+                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnImportExercises":
+                            menuItem.IsEnabled = isEnabled;
+                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnDeleteChapter":
+                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 1;
+                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                    }
+                }
+                else if (item is Separator)
+                {
+                    if ((item as Separator).Name == "_mnChapterSepar_2")
+                    {
+                        (item as Separator).Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets up visibility of Model Game related menu items in the Chapters context menu.
+        /// </summary>
+        /// <param name="cmn"></param>
+        /// <param name="isEnabled"></param>
+        /// <param name="contentType"></param>
+        private static void SetupModelGameMenuItems(ContextMenu cmn, bool isEnabled, GameMetadata.ContentType contentType)
+        {
+            bool isGamesMenu = contentType == GameMetadata.ContentType.MODEL_GAME;
+            int index = LastClickedModelGameIndex;
+            if (index < 0 || SessionWorkbook == null)
+            {
+                isEnabled = false;
             }
 
             foreach (var item in cmn.Items)
@@ -278,23 +372,92 @@ namespace ChessForge
                     MenuItem menuItem = item as MenuItem;
                     switch (menuItem.Name)
                     {
-                        case "_mnSelectChapter":
-                            menuItem.IsEnabled = isEnabled;
-                            break;
-                        case "_mnRenameChapter":
-                            menuItem.IsEnabled = isEnabled;
-                            break;
-                        case "_mnAddChapter":
+                        case "_mnAddGame":
                             menuItem.IsEnabled = true;
+                            menuItem.Visibility = isGamesMenu ? Visibility.Visible : Visibility.Collapsed;
                             break;
-                        case "_mnDeleteChapter":
-                            menuItem.IsEnabled = SessionWorkbook != null  && SessionWorkbook.Chapters.Count > 1;
+                        case "_mnImportGame":
+                            menuItem.IsEnabled = true;
+                            menuItem.Visibility = isGamesMenu ? Visibility.Visible : Visibility.Collapsed;
                             break;
-                        case "_mnChapterUp":
-                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 0 && index > 0;
+                        case "_mnSelectGame":
+                            menuItem.IsEnabled = isEnabled;
+                            menuItem.Visibility = isGamesMenu ? Visibility.Visible : Visibility.Collapsed;
                             break;
-                        case "_mnChapterDown":
-                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 0 && index < SessionWorkbook.Chapters.Count - 1;
+                        case "_mnRenameGame":
+                            menuItem.IsEnabled = isEnabled;
+                            menuItem.Visibility = isGamesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnGameUp":
+                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null
+                                && SessionWorkbook.ActiveChapter.GetModelGameCount() > 0 && index > 0;
+                            menuItem.Visibility = isGamesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnGameDown":
+                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null
+                                && SessionWorkbook.ActiveChapter.GetModelGameCount() > 0 && index < SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
+                            menuItem.Visibility = isGamesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnDeleteGame":
+                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 1;
+                            menuItem.Visibility = isGamesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets up visibility of Exercise related menu items in the Chapters context menu.
+        /// </summary>
+        /// <param name="cmn"></param>
+        /// <param name="isEnabled"></param>
+        /// <param name="contentType"></param>
+        private static void SetupExerciseMenuItems(ContextMenu cmn, bool isEnabled, GameMetadata.ContentType contentType)
+        {
+            bool isExercisesMenu = contentType == GameMetadata.ContentType.EXERCISE;
+            int index = LastClickedExerciseIndex;
+            if (index < 0 || SessionWorkbook == null)
+            {
+                isEnabled = false;
+            }
+
+            foreach (var item in cmn.Items)
+            {
+                if (item is MenuItem)
+                {
+                    MenuItem menuItem = item as MenuItem;
+                    switch (menuItem.Name)
+                    {
+                        case "_mnAddExercise":
+                            menuItem.IsEnabled = true;
+                            menuItem.Visibility = isExercisesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnImportExercise":
+                            menuItem.IsEnabled = true;
+                            menuItem.Visibility = isExercisesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnSelectExercise":
+                            menuItem.IsEnabled = isEnabled;
+                            menuItem.Visibility = isExercisesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnRenameExercise":
+                            menuItem.IsEnabled = isEnabled;
+                            menuItem.Visibility = isExercisesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnExerciseUp":
+                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null 
+                                && SessionWorkbook.ActiveChapter.GetExerciseCount() > 0 && index > 0;
+                            menuItem.Visibility = isExercisesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnExerciseDown":
+                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null 
+                                && SessionWorkbook.ActiveChapter.GetExerciseCount() > 0 && index < SessionWorkbook.ActiveChapter.GetExerciseCount() - 1;
+                            menuItem.Visibility = isExercisesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnDeleteExercise":
+                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.ActiveChapter.GetExerciseCount() > 1;
+                            menuItem.Visibility = isExercisesMenu ? Visibility.Visible : Visibility.Collapsed;
                             break;
                     }
                 }

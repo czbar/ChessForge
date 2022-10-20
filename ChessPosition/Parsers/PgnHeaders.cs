@@ -179,7 +179,7 @@ namespace GameTree
 
         public static string GetLineResultHeader()
         {
-            return BuildHeaderLine(KEY_RESULT, "*");
+            return BuildHeaderLine(KEY_RESULT, Constants.PGN_NO_RESULT);
         }
 
 

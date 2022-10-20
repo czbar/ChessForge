@@ -68,6 +68,53 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Given a string, checks if it is in Chess Forger / PGN
+        /// format (yyyy.mm.dd) and if not gets out of it what it can.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string AdjustDateString(string val)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (string.IsNullOrEmpty(val))
+            {
+                return Constants.EMPTY_PGN_DATE;
+            }
+
+            string[] tokens = val.Split(new char[] { '.', '-', '/' });
+            if (tokens[0].Length == 4)
+            {
+                if (int.TryParse(tokens[0], out int year) && year > 1000)
+                {
+                    sb.Append(tokens[0] + '.');
+                    if (tokens.Length > 1 && int.TryParse(tokens[1], out int month) && month >= 1 && month <= 12)
+                    {
+                        sb.Append(month.ToString("00") + '.');
+                        if (tokens.Length > 2 && int.TryParse(tokens[2], out int day) && day >= 1 && day <= 31)
+                        {
+                            sb.Append(day.ToString("00"));
+                        }
+                        else
+                        {
+                            sb.Append("??");
+                        }
+                    }
+                    else
+                    {
+                        sb.Append("??.??");
+                    }
+                }
+            }
+            else
+            {
+                sb.Append(Constants.EMPTY_PGN_DATE);
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
         /// Extracts the integer value from a string that has it
         /// as a suffix following the last underscore.
         /// </summary>
