@@ -551,6 +551,31 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Identifies the currently selected game and invokes
+        /// the Game Headers dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEditGameHeader_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames[WorkbookManager.LastClickedModelGameIndex];
+                var dlg = new GameExerciseOptions(game);
+                dlg.ShowDialog();
+                if (dlg.ExitOK)
+                {
+                    AppStateManager.IsDirty = true;
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Error in UiMnEditGameHeader_Click(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Sets the list in the Chapters View in the correct Expand/Collapse state.
         /// Rebuilds the Paragraph for the chapter.
         /// </summary>
