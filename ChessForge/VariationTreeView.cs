@@ -578,6 +578,12 @@ namespace ChessForge
                             }
                         }
 
+                        if (!string.IsNullOrEmpty(_variationTree.Header.GetDate(out _)))
+                        {
+                            Run rDate = CreateRun("1", "      Date: " + _variationTree.Header.GetDate(out _) + "\n");
+                            para.Inlines.Add(rDate);
+                        }
+
                         string result = _variationTree.Header.GetResult(out _);
                         if (!string.IsNullOrWhiteSpace(result) && result != "*")
                         {
