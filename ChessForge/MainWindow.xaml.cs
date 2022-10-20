@@ -390,13 +390,23 @@ namespace ChessForge
         /// <param name="gameIndex"></param>
         public void SelectModelGame(int gameIndex, bool setFocus)
         {
-            WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
-            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.MODEL_GAME, gameIndex);
+            try
+            {
+                if (gameIndex >= 0 && gameIndex < WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount())
+                {
+                    WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
+                    WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.MODEL_GAME, gameIndex);
 
-            MainChessBoard.FlipBoard(false);
-            WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped = null;
+                    MainChessBoard.FlipBoard(false);
+                    WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped = null;
 
-            SetupGuiForActiveModelGame(gameIndex, setFocus);
+                    SetupGuiForActiveModelGame(gameIndex, setFocus);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in SelectModelGame(): " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -1714,5 +1724,6 @@ namespace ChessForge
                 BoardShapesManager.CancelShapeDraw(true);
             }
         }
+
     }
 }
