@@ -248,7 +248,10 @@ namespace GameTree
             if (string.IsNullOrEmpty(s))
                 return true;
 
-            if (s == "*" || s == "1-0" || s == "0-1" || s == "1/2-1/2")
+            if (s == Constants.PGN_NO_RESULT 
+                || s == Constants.PGN_WHITE_WIN_RESULT 
+                || s == Constants.PGN_BLACK_WIN_RESULT 
+                || s.StartsWith(Constants.PGN_DRAW_SHORT_RESULT))
                 return true;
 
             return false;
@@ -550,7 +553,7 @@ namespace GameTree
         {
             if (_remainingGameText.Length == 0)
             {
-                return "*"; // this is unexpected, return game termination token to prevent crash
+                return Constants.PGN_NO_RESULT; // this is unexpected, return game termination token to prevent crash
             }
 
             int charPos = 0;
