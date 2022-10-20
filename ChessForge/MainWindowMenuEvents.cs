@@ -359,7 +359,7 @@ namespace ChessForge
         private void Chapters_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             WorkbookManager.LastClickedChapterId = -1;
-            WorkbookManager.EnableChaptersMenus(_cmChapters, false);
+            WorkbookManager.EnableChaptersContextMenuItems(_cmChapters, false, GameMetadata.ContentType.GENERIC);
         }
 
         /// <summary>
