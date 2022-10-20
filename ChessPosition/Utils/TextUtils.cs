@@ -82,7 +82,7 @@ namespace ChessPosition
                 return Constants.EMPTY_PGN_DATE;
             }
 
-            string[] tokens = val.Split('.');
+            string[] tokens = val.Split(new char[] { '.', '-', '/' });
             if (tokens[0].Length == 4)
             {
                 if (int.TryParse(tokens[0], out int year) && year > 1000)
