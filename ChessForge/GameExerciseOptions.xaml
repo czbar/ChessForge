@@ -22,9 +22,9 @@
         <Button x:Name="UiBtnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="202,234,0,0" Width="80" VerticalAlignment="Top"/>
         <Button x:Name="UiBtnHelp" Content="Help" HorizontalAlignment="Left" Margin="348,234,0,0" Width="80" VerticalAlignment="Top"/>
         <GroupBox x:Name="UiGbResult" HorizontalAlignment="Left" Height="55" Header="Result" Margin="80,155,0,0" VerticalAlignment="Top" Width="300"/>
-        <CheckBox x:Name="UiCbWhiteWin" Content="1-0" HorizontalAlignment="Left" Margin="100,180,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="UiCbBlackWin" Content="0-1" HorizontalAlignment="Left" Margin="170,180,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="UiCbDraw" Content="1/2" HorizontalAlignment="Left" Margin="240,180,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="UiCbNoResult" Content="*" HorizontalAlignment="Left" Margin="310,180,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbWhiteWin" Content="1-0" HorizontalAlignment="Left" Margin="100,180,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbBlackWin" Content="0-1" HorizontalAlignment="Left" Margin="170,180,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbDraw" Content="1/2" HorizontalAlignment="Left" Margin="240,180,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbNoResult" Content="*" HorizontalAlignment="Left" Margin="310,180,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
