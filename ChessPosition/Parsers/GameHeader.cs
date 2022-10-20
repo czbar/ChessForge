@@ -208,7 +208,7 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Returns the Content Type value.
+        /// Returns the Content Type string value.
         /// </summary>
         /// <returns></returns>
         public string GetContentTypeString(out string key, string value = null)
@@ -246,6 +246,27 @@ namespace GameTree
             }
 
             return GetContentTypeFromString(val);
+        }
+
+        /// <summary>
+        /// Sets the string value of the ContentType header item
+        /// according to the passed ContentType
+        /// </summary>
+        /// <param name="contentType"></param>
+        public void SetContentType(GameMetadata.ContentType contentType)
+        {
+            switch (contentType)
+            {
+                case GameMetadata.ContentType.STUDY_TREE:
+                    SetHeaderValue(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_STUDY_TREE);
+                    break;
+                case GameMetadata.ContentType.MODEL_GAME:
+                    SetHeaderValue(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_MODEL_GAME);
+                    break;
+                case GameMetadata.ContentType.EXERCISE:
+                    SetHeaderValue(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_EXERCISE);
+                    break;
+            }
         }
 
         /// <summary>
@@ -336,7 +357,7 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Saves header's name and value. 
+        /// Saves header item's name and value. 
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>

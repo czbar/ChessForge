@@ -598,7 +598,8 @@ namespace ChessForge
             {
                 return;
             }
-
+            
+            UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
         }
 

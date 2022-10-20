@@ -166,14 +166,14 @@
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="_cmChapters">
                                     <MenuItem x:Name="_mnAddChapter" Header="Create New Chapter" Click="UiMnAddChapter_Click"  />
-                                    <MenuItem x:Name="_mnAddGame" Header="Create New Game"  />
+                                    <MenuItem x:Name="_mnAddGame" Header="Create New Game" Click="UiMnAddGame_Click"  />
                                     <MenuItem x:Name="_mnImportGame" Header="Import Games from PGN" />
                                     <MenuItem x:Name="_mnAddExercise" Header="Create New Exercise"  />
                                     <MenuItem x:Name="_mnImportExercise" Header="Import Exercises from PGN" />
                                     <Separator />
                                     <MenuItem x:Name="_mnSelectChapter" Header="Open This Chapter" Click="UiMnSelectChapter_Click" />
                                     <MenuItem x:Name="_mnRenameChapter" Header="Rename This Chapter" Click="UiMnRenameChapter_Click" />
-                                    <MenuItem x:Name="_mnSelectGame" Header="Open This Game"  />
+                                    <MenuItem x:Name="_mnSelectGame" Header="Open This Game" Click="UiMnOpenGame_Click"  />
                                     <MenuItem x:Name="_mnRenameGame" Header="Edit Game Headers" Click="UiMnEditGameHeader_Click" />
                                     <MenuItem x:Name="_mnSelectExercise" Header="Open This Exercise"  />
                                     <MenuItem x:Name="_mnRenameExercise" Header="Edit Exercise Headers" />

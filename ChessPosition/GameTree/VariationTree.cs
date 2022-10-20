@@ -23,6 +23,7 @@ namespace GameTree
         public VariationTree(GameMetadata.ContentType contentType)
         {
             _contentType = contentType;
+            Header.SetHeaderValue(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_MODEL_GAME);
         }
 
         private GameMetadata.ContentType _contentType = GameMetadata.ContentType.GENERIC;

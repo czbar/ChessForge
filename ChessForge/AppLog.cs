@@ -45,6 +45,25 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Logs a message with text made of the passed
+        /// text (typically a function name) and an Excpetion object.
+        /// </summary>
+        /// <param name="location">E.g. a function name</param>
+        /// <param name="ex"></param>
+        [Conditional("DEBUG")]
+        public static void Message(string location, Exception ex)
+        {
+            if (Configuration.DebugMode == 0 || ex == null)
+                return;
+
+            lock (AppLogLock)
+            {
+                string timeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "  ";
+                Log.Add(timeStamp + "Exception in " + location + " " + ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Writes the logged messages out to a file.
         /// </summary>
         /// <param name="logFileDistnct"></param>
