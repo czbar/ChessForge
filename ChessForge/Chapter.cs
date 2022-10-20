@@ -201,6 +201,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Adds a VariationTree to the list of Model Games
+        /// </summary>
+        /// <param name="game"></param>
+        public void AddModelGame(VariationTree game)
+        {
+            ModelGames.Add(game);
+        }
+
+        /// <summary>
+        /// Adds a VariationTree to the list of Exercises
+        /// </summary>
+        /// <param name="game"></param>
+        public void AddExercise(VariationTree game)
+        {
+            Exercises.Add(game);
+        }
+
+        /// <summary>
         /// The analysis tree of the chapter. There is exactly one
         /// analysis tree in a chapter.
         /// </summary>
