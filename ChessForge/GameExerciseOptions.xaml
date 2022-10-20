@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="Game/Exercise Options" Height="292" Width="513">
+        Title="Game/Exercise Options" Height="320" Width="513">
     <Grid>
         <Label x:Name="UiLblWhite" Content="White" HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbWhite" HorizontalAlignment="Left" Margin="80,33,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="400"/>
@@ -18,9 +18,9 @@
         <Label x:Name="UiLblDate" Content="Date" HorizontalAlignment="Left" Margin="160,120,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbDate" HorizontalAlignment="Left" Margin="210,123,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="80"/>
         <Label x:Name="UiLblDateSamples" Content="(e.g. 2022.09.22 or 2022.??.??)" HorizontalAlignment="Left" Margin="295,120,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnOk" Content="OK" HorizontalAlignment="Left" Margin="99,234,0,0" Width="80" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="202,234,0,0" Width="80" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnHelp" Content="Help" HorizontalAlignment="Left" Margin="348,234,0,0" Width="80" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnOk" Content="OK" HorizontalAlignment="Left" Margin="140,234,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="240,234,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnHelp" Content="Help" HorizontalAlignment="Left" Margin="370,234,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnHelp_Click"/>
         <GroupBox x:Name="UiGbResult" HorizontalAlignment="Left" Height="55" Header="Result" Margin="80,155,0,0" VerticalAlignment="Top" Width="300"/>
         <RadioButton x:Name="UiRbWhiteWin" Content="1-0" HorizontalAlignment="Left" Margin="100,180,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="UiRbBlackWin" Content="0-1" HorizontalAlignment="Left" Margin="170,180,0,0" VerticalAlignment="Top"/>
