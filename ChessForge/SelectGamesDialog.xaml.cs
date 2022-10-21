@@ -20,7 +20,7 @@ namespace ChessForge
         /// <summary>
         /// Exit result of this dialog.
         /// </summary>
-        public bool Result = false;
+        public bool ExitOK = false;
 
         /// <summary>
         /// The list of games to process.
@@ -72,7 +72,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            Result = true;
+            ExitOK = true;
             Close();
         }
 
@@ -83,7 +83,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            Result = false;
+            ExitOK = false;
             Close();
         }
     }
