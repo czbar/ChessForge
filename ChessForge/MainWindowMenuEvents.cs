@@ -631,7 +631,7 @@ namespace ChessForge
             try
             {
                 VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames[WorkbookManager.LastClickedModelGameIndex];
-                var dlg = new GameExerciseOptions(game);
+                var dlg = new GameHeaderDialog(game);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
@@ -679,7 +679,7 @@ namespace ChessForge
             try
             {
                 VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
-                GameExerciseOptions dlg = new GameExerciseOptions(tree);
+                GameHeaderDialog dlg = new GameHeaderDialog(tree);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {

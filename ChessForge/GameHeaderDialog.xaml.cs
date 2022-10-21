@@ -19,7 +19,7 @@ namespace ChessForge
     /// <summary>
     /// Interaction logic for GameExerciseOptions.xaml
     /// </summary>
-    public partial class GameExerciseOptions : Window
+    public partial class GameHeaderDialog : Window
     {
         // indictates if the dialog was exited on user pressing OK
         public bool ExitOK = false;
@@ -31,7 +31,7 @@ namespace ChessForge
         /// Constructor to create the dialog.
         /// </summary>
         /// <param name="tree"></param>
-        public GameExerciseOptions(VariationTree tree)
+        public GameHeaderDialog(VariationTree tree)
         {
             _tree = tree;
             InitializeComponent();
