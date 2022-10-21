@@ -206,6 +206,7 @@ namespace ChessForge
         {
             if (_draggedPiece.IsDragInProgress)
             {
+                _chessBoard.GetSquareCoordsFromPoint(e.GetPosition(UiImgChessBoard));
             }
 
             _draggedPiece.IsDragInProgress = false;
@@ -214,7 +215,21 @@ namespace ChessForge
 
         private void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            _draggedPiece.IsDragInProgress = false;
+            if (_draggedPiece.IsDragInProgress)
+            {
+                _draggedPiece.IsDragInProgress = false;
+                SquareCoords sc = _chessBoard.GetSquareCoordsFromPoint(e.GetPosition(UiImgChessBoard));
+                if (sc != null)
+                {
+                    _chessBoard.GetPieceImage(sc.Xcoord, sc.Ycoord, true).Source = _draggedPiece.ImageControl.Source;
+                    _draggedPiece.ImageControl.Source = null;
+                }
+                else
+                {
+                    UiCnvSetup.Children.Remove(_draggedPiece.ImageControl);
+                }
+            }
+            e.Handled = true;
         }
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
