@@ -20,23 +20,28 @@ namespace GameTree
     /// </summary>
     public class VariationTree
     {
+        /// <summary>
+        /// Constructor. Creates a VariationTree of the requested type.
+        /// </summary>
+        /// <param name="contentType"></param>
         public VariationTree(GameMetadata.ContentType contentType)
         {
-            _contentType = contentType;
-            Header.SetHeaderValue(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_MODEL_GAME);
+            Header.SetContentType(contentType);
         }
 
-        private GameMetadata.ContentType _contentType = GameMetadata.ContentType.GENERIC;
-
+        /// <summary>
+        /// Accessors to the ContentType value kept
+        /// in the Header.
+        /// </summary>
         public GameMetadata.ContentType ContentType
         {
             get
             {
-                return _contentType;
+                return Header.GetContentType(out _);
             }
             set
             {
-                _contentType = value;
+                Header.SetContentType(value);
             }
         }
 
