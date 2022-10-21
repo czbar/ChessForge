@@ -31,7 +31,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnOpenWorkbook_Click(object sender, RoutedEventArgs e)
         {
-            if (ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
+            bool proceed = true;
+
+            if (WorkbookManager.SessionWorkbook != null && AppStateManager.IsDirty)
+            {
+                proceed = WorkbookManager.PromptAndSaveWorkbook(false);
+            }
+
+            if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog
                 {
@@ -79,7 +86,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OpenRecentWorkbookFile(object sender, RoutedEventArgs e)
         {
-            if (ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
+            bool proceed = true;
+
+            if (WorkbookManager.SessionWorkbook != null && AppStateManager.IsDirty)
+            {
+                proceed = WorkbookManager.PromptAndSaveWorkbook(false);
+            }
+
+            if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
             {
                 string menuItemName = ((MenuItem)e.Source).Name;
                 string path = Configuration.GetRecentFile(menuItemName);
