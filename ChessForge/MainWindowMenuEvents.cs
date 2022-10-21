@@ -468,6 +468,66 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Moves game up one position in the chapter's game list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnGameUp_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                //int index = chapter.ActiveModelGameIndex;
+                int index = WorkbookManager.LastClickedModelGameIndex;
+                int gameCount = chapter.GetModelGameCount();
+
+                if (index > 0 && index < gameCount)
+                {
+                    VariationTree hold = chapter.ModelGames[index];
+                    chapter.ModelGames[index] = chapter.ModelGames[index - 1];
+                    chapter.ModelGames[index - 1] = hold;
+                    
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    AppStateManager.IsDirty = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnGameUp_Click()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Moves game down one position in the chapter's game list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnGameDown_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                //int index = chapter.ActiveModelGameIndex;
+                int index = WorkbookManager.LastClickedModelGameIndex;
+                int gameCount = chapter.GetModelGameCount();
+
+                if (index >= 0 && index < gameCount - 1)
+                {
+                    VariationTree hold = chapter.ModelGames[index];
+                    chapter.ModelGames[index] = chapter.ModelGames[index + 1];
+                    chapter.ModelGames[index + 1] = hold;
+
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    AppStateManager.IsDirty = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnGameDown_Click()", ex);
+            }
+        }
+
+        /// <summary>
         /// Requests import of Model Games from a PGN file
         /// </summary>
         /// <param name="sender"></param>
@@ -475,6 +535,16 @@ namespace ChessForge
         private void UiMnImportModelGames_Click(object sender, RoutedEventArgs e)
         {
             ImportGamesFromPgn(GameMetadata.ContentType.GENERIC);
+        }
+
+        /// <summary>
+        /// Requests import of Model Games from a PGN file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnImportGame_Click(object sender, RoutedEventArgs e)
+        {
+            UiMnImportModelGames_Click(sender, e);
         }
 
         /// <summary>
@@ -668,7 +738,8 @@ namespace ChessForge
             }
 
             SelectGamesDialog dlg = new SelectGamesDialog(ref games, dlgTitle);
-            return dlg.ShowDialog() == true;
+            dlg.ShowDialog();
+            return dlg.ExitOK;
         }
 
         /// <summary>

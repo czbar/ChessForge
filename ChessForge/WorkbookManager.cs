@@ -53,7 +53,9 @@ namespace ChessForge
         public static void CreateNewWorkbook()
         {
             SessionWorkbook = new Workbook();
-            SessionWorkbook.CreateNewChapter();
+            Chapter chapter = SessionWorkbook.CreateNewChapter();
+            SessionWorkbook.ActiveChapter = chapter;
+            SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.STUDY_TREE);
             AssignChaptersIds();
         }
 
@@ -596,7 +598,7 @@ namespace ChessForge
 
             int mergedCount = 0;
 
-            if (dlg.Result)
+            if (dlg.ExitOK)
             {
                 Mouse.SetCursor(Cursors.Wait);
                 try

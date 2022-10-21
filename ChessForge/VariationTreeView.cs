@@ -256,60 +256,67 @@ namespace ChessForge
         /// <param name="lineId"></param>
         public void SelectLineAndMove(string lineId, int nodeId)
         {
-            if (_selectedRun != null)
+            try
             {
-                _selectedRun.Background = _selectedRunBkg;
-                _selectedRun.Foreground = _selectedRunFore;
-            }
-
-            ObservableCollection<TreeNode> lineToSelect = _variationTree.SelectLine(lineId);
-            foreach (TreeNode nd in lineToSelect)
-            {
-                if (nd.NodeId != 0)
+                if (_selectedRun != null)
                 {
-
-                    if (_dictNodeToRun.ContainsKey(nd.NodeId))
-                    {
-                        _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
-                    }
-                    else if (Configuration.DebugMode != 0)
-                    {  //we should always have this key, so show debug message if not
-                        DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-brushRegularBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
-                    }
+                    _selectedRun.Background = _selectedRunBkg;
+                    _selectedRun.Foreground = _selectedRunFore;
                 }
-            }
 
-            _selectedRun = null;
-            _dictNodeToRun.TryGetValue(nodeId, out _selectedRun);
-
-            if (!string.IsNullOrEmpty(lineId))
-            {
+                ObservableCollection<TreeNode> lineToSelect = _variationTree.SelectLine(lineId);
                 foreach (TreeNode nd in lineToSelect)
                 {
                     if (nd.NodeId != 0)
                     {
-                        //we should always have this key, so allow crash in the debug mode
+
                         if (_dictNodeToRun.ContainsKey(nd.NodeId))
                         {
-                            _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
+                            _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
                         }
                         else if (Configuration.DebugMode != 0)
-                        {  //we should always have this key, so show deubug message if not
-                            DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-_brushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
+                        {  //we should always have this key, so show debug message if not
+                            DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-brushRegularBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
                         }
                     }
                 }
+
+                _selectedRun = null;
+                _dictNodeToRun.TryGetValue(nodeId, out _selectedRun);
+
+                if (!string.IsNullOrEmpty(lineId))
+                {
+                    foreach (TreeNode nd in lineToSelect)
+                    {
+                        if (nd.NodeId != 0)
+                        {
+                            //we should always have this key, so allow crash in the debug mode
+                            if (_dictNodeToRun.ContainsKey(nd.NodeId))
+                            {
+                                _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
+                            }
+                            else if (Configuration.DebugMode != 0)
+                            {  //we should always have this key, so show deubug message if not
+                                DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-_brushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
+                            }
+                        }
+                    }
+                }
+
+                if (_selectedRun != null)
+                {
+                    _selectedRunBkg = (SolidColorBrush)_selectedRun.Background;
+                    _selectedRunFore = (SolidColorBrush)_selectedRun.Foreground;
+
+                    _selectedRun.Background = _brushSelectedMoveBkg;
+                    _selectedRun.Foreground = _brushSelectedMoveFore;
+
+                    _selectedRun.BringIntoView();
+                }
             }
-
-            if (_selectedRun != null)
+            catch (Exception ex)
             {
-                _selectedRunBkg = (SolidColorBrush)_selectedRun.Background;
-                _selectedRunFore = (SolidColorBrush)_selectedRun.Foreground;
-
-                _selectedRun.Background = _brushSelectedMoveBkg;
-                _selectedRun.Foreground = _brushSelectedMoveFore;
-
-                _selectedRun.BringIntoView();
+                AppLog.Message("SelectLineAndMove()", ex);
             }
         }
 
