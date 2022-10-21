@@ -141,7 +141,14 @@ namespace ChessForge
         {
             get
             {
-                return SessionWorkbook.ActiveVariationTree;
+                if (SessionWorkbook == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return SessionWorkbook.ActiveVariationTree;
+                }
             }
         }
 
