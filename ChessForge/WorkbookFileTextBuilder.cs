@@ -11,9 +11,9 @@ using ChessPosition.GameTree;
 namespace ChessForge
 {
     /// <summary>
-    /// Builds the text of the CHF file that will be written out.
+    /// Builds the text of the PGN file that will be written out.
     /// </summary>
-    public class ChfTextBuilder
+    public class WorkbookFileTextBuilder
     {
         // keeps output text as it is being built
         private static StringBuilder _fileText;
