@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -76,12 +78,12 @@ namespace ChessForge
         /// <summary>
         /// Hositing Canvas control
         /// </summary>
-        private Canvas CanvasCtrl;
+        protected Canvas CanvasCtrl;
 
         /// <summary>
         /// Image control for the board.
         /// </summary>
-        private Image BoardImgCtrl;
+        protected Image BoardImgCtrl;
 
         /// <summary>
         /// Overlay image (yellow square) for the 
@@ -108,7 +110,7 @@ namespace ChessForge
         /// <summary>
         /// Image controls for ech square
         /// </summary>
-        private Image[,] Pieces = new Image[8, 8];
+        protected Image[,] Pieces = new Image[8, 8];
 
         /// <summary>
         /// Coordinates of the square with an active overlay, 
@@ -155,6 +157,35 @@ namespace ChessForge
             InitializeCoordinateLabels();
 
             Initialize(startPos);
+        }
+
+        /// <summary>
+        /// Returns Square Coordinates of the square with the
+        /// passed point coordinates.
+        /// Takes the flip state of the board into account.
+        /// </summary>
+        /// <param name="pt"></param>
+        /// <returns></returns>
+        public SquareCoords GetSquareCoordsFromPoint(Point pt)
+        {
+            int xCoord = (int)pt.X / SquareSize;
+            int yCoord = 7 - (int)pt.Y / SquareSize;
+
+            if (IsFlipped)
+            {
+                xCoord = 7 - xCoord;
+                yCoord = 7 - yCoord;
+            }
+
+            var sc = new SquareCoords(xCoord, yCoord);
+            if (sc.IsValid())
+            {
+                return sc;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -618,7 +649,7 @@ namespace ChessForge
         /// whether the board is flipped.
         /// </summary>
         /// <param name="startPosition"></param>
-        private void Initialize(bool startPosition)
+        protected void Initialize(bool startPosition)
         {
             for (var i = 0; i < 8; i++)
             {
@@ -629,9 +660,7 @@ namespace ChessForge
 
                     Pieces[xPos, yPos] = new Image();
                     CanvasCtrl.Children.Add(Pieces[xPos, yPos]);
-                    Canvas.SetLeft(Pieces[xPos, yPos], SquareSize * xPos + BoardImgCtrl.Margin.Left);
-                    Canvas.SetTop(Pieces[xPos, yPos], SquareSize * (7 - yPos) + BoardImgCtrl.Margin.Top);
-                    Canvas.SetZIndex(Pieces[xPos, yPos], Constants.ZIndex_PieceOnBoard);
+                    PlacePieceImageOnSquare(xPos, yPos);
                 }
             }
             if (startPosition)
@@ -641,6 +670,21 @@ namespace ChessForge
 
             _moveFromOverlay.Source = ChessForge.Pieces.YellowOverlay;
             _moveToOverlay.Source = ChessForge.Pieces.YellowOverlay;
+        }
+
+        /// <summary>
+        /// Places an image of a piece (or empty image object)
+        /// on the request square.
+        /// NOTE: we override in ChessBoardSmall because it uses different
+        /// way of placing the board (TODO: make it consistent)
+        /// </summary>
+        /// <param name="xPos"></param>
+        /// <param name="yPos"></param>
+        virtual protected void PlacePieceImageOnSquare(int xPos, int yPos)
+        {
+            Canvas.SetLeft(Pieces[xPos, yPos], SquareSize * xPos + BoardImgCtrl.Margin.Left);
+            Canvas.SetTop(Pieces[xPos, yPos], SquareSize * (7 - yPos) + BoardImgCtrl.Margin.Top);
+            Canvas.SetZIndex(Pieces[xPos, yPos], Constants.ZIndex_PieceOnBoard);
         }
 
         /// <summary>
