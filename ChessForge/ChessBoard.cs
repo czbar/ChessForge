@@ -124,7 +124,7 @@ namespace ChessForge
         /// <summary>
         /// Labels for vertical coordinates
         /// </summary>
-        private Label[] _vertCoords = new Label[8];
+        protected Label[] _vertCoords = new Label[8];
 
         /// <summary>
         /// Labels for horizontal coordinates
@@ -170,34 +170,52 @@ namespace ChessForge
             for (int i = 0; i <= 7; i++)
             {
                 Label lbl = _vertCoords[i] = new Label();
-                lbl.Width = 20;
-                lbl.Height = 28;
                 lbl.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
                 lbl.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
-                lbl.FontSize = 12;
                 lbl.Foreground = Brushes.White;
 
                 CanvasCtrl.Children.Add(lbl);
-                Canvas.SetLeft(lbl, 0);
-                Canvas.SetTop(lbl, 45 + (i * 80));
+                SetCoordinateLabelProperties(i, lbl, true);
             }
 
             for (int i = 0; i <= 7; i++)
             {
                 Label lbl = _horizCoords[i] = new Label();
-                lbl.Width = 20;
-                lbl.Height = 28;
                 lbl.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
                 lbl.VerticalContentAlignment = System.Windows.VerticalAlignment.Bottom;
-                lbl.FontSize = 12;
                 lbl.Foreground = Brushes.White;
 
                 CanvasCtrl.Children.Add(lbl);
-                Canvas.SetLeft(lbl, 45 + (i * 80));
-                Canvas.SetBottom(lbl, -2);
+                SetCoordinateLabelProperties(i, lbl, false);
             }
 
             SetCoordinateLabelsText(false);
+        }
+
+        /// <summary>
+        /// Sizes and positions coordinate labels.
+        /// Note that this will be overridden in the 
+        /// derived classes.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="lbl"></param>
+        /// <param name="isVert"></param>
+        virtual protected void SetCoordinateLabelProperties(int index, Label lbl, bool isVert)
+        {
+            lbl.Width = 20;
+            lbl.Height = 28;
+            lbl.FontSize = 12;
+
+            if (isVert)
+            {
+                Canvas.SetLeft(lbl, 0);
+                Canvas.SetTop(lbl, 45 + (index * 80));
+            }
+            else
+            {
+                Canvas.SetLeft(lbl, 45 + (index * 80));
+                Canvas.SetBottom(lbl, -2);
+            }
         }
 
         /// <summary>

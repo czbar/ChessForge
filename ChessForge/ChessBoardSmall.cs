@@ -78,5 +78,30 @@ namespace ChessForge
             : base (cnv, BoardCtrl, labelCtrl, startPos, includeCoords)
         {
         }
+
+        /// <summary>
+        /// Sizes and positions coordinate labels.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="lbl"></param>
+        /// <param name="isVert"></param>
+        override protected void SetCoordinateLabelProperties(int index, Label lbl, bool isVert)
+        {
+            lbl.Width = 20;
+            lbl.Height = 21;
+            lbl.FontSize = 8;
+
+            if (isVert)
+            {
+                Canvas.SetLeft(lbl, -2);
+                Canvas.SetTop(lbl, 18 + (index * 30));
+            }
+            else
+            {
+                Canvas.SetLeft(lbl, 19 + (index * 30));
+                Canvas.SetBottom(lbl, -1);
+            }
+        }
+
     }
 }
