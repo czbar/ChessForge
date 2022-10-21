@@ -36,7 +36,7 @@ namespace ChessPosition.GameTree
         public static VariationTree MergeWorkbooks(VariationTree tree1, VariationTree tree2)
         {
             // create a new Workbook and create a root Node
-            _mergedTree = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
+            _mergedTree = new VariationTree(GameData.ContentType.STUDY_TREE);
             _mergedTree.CreateNew();
 
             MergeTrees(tree1.Nodes[0], tree2.Nodes[0], _mergedTree.Nodes[0]);

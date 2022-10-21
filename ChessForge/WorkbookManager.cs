@@ -45,7 +45,7 @@ namespace ChessForge
         /// The list of Variation Trees (a.k.a. PGN Games) for the SessionWorkbook.
         /// This includes all types i.e. Study Tree, Model Games and Exercises.
         /// </summary>
-        public static ObservableCollection<GameMetadata> VariationTreeList = new ObservableCollection<GameMetadata>();
+        public static ObservableCollection<GameData> VariationTreeList = new ObservableCollection<GameData>();
 
         /// <summary>
         /// Creates and stores a new Workbook object.
@@ -55,7 +55,7 @@ namespace ChessForge
             SessionWorkbook = new Workbook();
             Chapter chapter = SessionWorkbook.CreateNewChapter();
             SessionWorkbook.ActiveChapter = chapter;
-            SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.STUDY_TREE);
+            SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
             AssignChaptersIds();
         }
 
@@ -77,7 +77,7 @@ namespace ChessForge
         /// header in the first game.
         /// </summary>
         /// <returns></returns>
-        public static bool IsChessForgeWorkbook(ref ObservableCollection<GameMetadata> GameList)
+        public static bool IsChessForgeWorkbook(ref ObservableCollection<GameData> GameList)
         {
             if (GameList.Count > 0)
             {
@@ -101,7 +101,7 @@ namespace ChessForge
             try
             {
                 string studyText = File.ReadAllText(fileName);
-                VariationTree tree = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
+                VariationTree tree = new VariationTree(GameData.ContentType.STUDY_TREE);
 
                 // parse the variation tree and create a new chapter.
                 PgnGameParser pgnGame = new PgnGameParser(studyText, tree, out bool isMulti, true);
@@ -169,13 +169,13 @@ namespace ChessForge
         /// This method does not check the validity of the text of the game. 
         /// Returns the number of games in the file.
         /// </summary>
-        public static int ReadPgnFile(string path, ref ObservableCollection<GameMetadata> games, GameMetadata.ContentType contentType)
+        public static int ReadPgnFile(string path, ref ObservableCollection<GameData> games, GameData.ContentType contentType)
         {
             games.Clear();
 
             // read line by line, fishing for lines with PGN headers i.e. beginning with "[" followed by a keyword.
             // Note we may accidentally hit a comment formatted that way, so make sure that the last char on the line is "]".
-            GameMetadata gm = new GameMetadata();
+            GameData gm = new GameData();
             gm.FirstLineInFile = 1;
 
             using (StreamReader sr = new StreamReader(path))
@@ -208,7 +208,7 @@ namespace ChessForge
                         {
                             gm.Header.DetermineContentType();
                             games.Add(gm);
-                            gm = new GameMetadata();
+                            gm = new GameData();
                         }
                     }
 
@@ -235,7 +235,7 @@ namespace ChessForge
                 }
             }
 
-            if (contentType != GameMetadata.ContentType.GENERIC)
+            if (contentType != GameData.ContentType.GENERIC)
             {
                 RemoveGamesOfWrongType(ref games, contentType);
             }
@@ -243,10 +243,10 @@ namespace ChessForge
             return games.Count;
         }
 
-        private static void RemoveGamesOfWrongType(ref ObservableCollection<GameMetadata> games, GameMetadata.ContentType contentType)
+        private static void RemoveGamesOfWrongType(ref ObservableCollection<GameData> games, GameData.ContentType contentType)
         {
-            List<GameMetadata> gamesToRemove = new List<GameMetadata>();
-            foreach (GameMetadata game in games)
+            List<GameData> gamesToRemove = new List<GameData>();
+            foreach (GameData game in games)
             {
                 if (game.Header.GetContentType(out _) != contentType)
                 {
@@ -254,7 +254,7 @@ namespace ChessForge
                 }
             }
 
-            foreach (GameMetadata game in gamesToRemove)
+            foreach (GameData game in gamesToRemove)
             {
                 games.Remove(game);
             }
@@ -270,7 +270,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="cmn"></param>
         /// <param name="isEnabled"></param>
-        public static void EnableChaptersContextMenuItems(ContextMenu cmn, bool isEnabled, GameMetadata.ContentType contentType)
+        public static void EnableChaptersContextMenuItems(ContextMenu cmn, bool isEnabled, GameData.ContentType contentType)
         {
             try
             {
@@ -290,7 +290,7 @@ namespace ChessForge
         /// <param name="cmn"></param>
         /// <param name="isEnabled"></param>
         /// <param name="contentType"></param>
-        private static void SetupChapterMenuItems(ContextMenu cmn, bool isEnabled, GameMetadata.ContentType contentType)
+        private static void SetupChapterMenuItems(ContextMenu cmn, bool isEnabled, GameData.ContentType contentType)
         {
             // ClickedIndex should be in sync with isEnabled but double check just in case
             if (LastClickedChapterId < 0 || SessionWorkbook == null)
@@ -298,7 +298,7 @@ namespace ChessForge
                 isEnabled = false;
             }
 
-            bool isChaptersMenu = contentType == GameMetadata.ContentType.GENERIC || contentType == GameMetadata.ContentType.STUDY_TREE;
+            bool isChaptersMenu = contentType == GameData.ContentType.GENERIC || contentType == GameData.ContentType.STUDY_TREE;
             int index = SessionWorkbook.GetChapterIndexFromId(LastClickedChapterId);
 
             foreach (var item in cmn.Items)
@@ -358,9 +358,9 @@ namespace ChessForge
         /// <param name="cmn"></param>
         /// <param name="isEnabled"></param>
         /// <param name="contentType"></param>
-        private static void SetupModelGameMenuItems(ContextMenu cmn, bool isEnabled, GameMetadata.ContentType contentType)
+        private static void SetupModelGameMenuItems(ContextMenu cmn, bool isEnabled, GameData.ContentType contentType)
         {
-            bool isGamesMenu = contentType == GameMetadata.ContentType.MODEL_GAME;
+            bool isGamesMenu = contentType == GameData.ContentType.MODEL_GAME;
             int index = LastClickedModelGameIndex;
             if (index < 0 || SessionWorkbook == null)
             {
@@ -415,9 +415,9 @@ namespace ChessForge
         /// <param name="cmn"></param>
         /// <param name="isEnabled"></param>
         /// <param name="contentType"></param>
-        private static void SetupExerciseMenuItems(ContextMenu cmn, bool isEnabled, GameMetadata.ContentType contentType)
+        private static void SetupExerciseMenuItems(ContextMenu cmn, bool isEnabled, GameData.ContentType contentType)
         {
-            bool isExercisesMenu = contentType == GameMetadata.ContentType.EXERCISE;
+            bool isExercisesMenu = contentType == GameData.ContentType.EXERCISE;
             int index = LastClickedExerciseIndex;
             if (index < 0 || SessionWorkbook == null)
             {
@@ -474,7 +474,7 @@ namespace ChessForge
         /// - merge selected games into a single Study Tree,
         /// - create chapters out of selected games.
         /// </summary>
-        public static bool PrepareWorkbook(ref ObservableCollection<GameMetadata> games, out bool isChessForgeFile)
+        public static bool PrepareWorkbook(ref ObservableCollection<GameData> games, out bool isChessForgeFile)
         {
             if (IsChessForgeWorkbook(ref games))
             {
@@ -499,7 +499,7 @@ namespace ChessForge
         /// Creates the Workbook object and populates it based on
         /// the content of the GameList.
         /// </summary>
-        private static bool CreateWorkbookFromGameList(ref ObservableCollection<GameMetadata> GameList)
+        private static bool CreateWorkbookFromGameList(ref ObservableCollection<GameData> GameList)
         {
             try
             {
@@ -507,7 +507,7 @@ namespace ChessForge
                 // while the rest are Study Trees, Model Games and Exercises.
                 SessionWorkbook = new Workbook();
 
-                VariationTree preface = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
+                VariationTree preface = new VariationTree(GameData.ContentType.STUDY_TREE);
                 PgnGameParser pp = new PgnGameParser(GameList[0].GameText, preface);
                 SessionWorkbook.Description = preface.Nodes[0].Comment;
 
@@ -530,7 +530,7 @@ namespace ChessForge
         /// canceled the selection dialog.
         /// </summary>
         /// <returns></returns>
-        private static bool CreateWorkbookFromGenericGames(ref ObservableCollection<GameMetadata> games)
+        private static bool CreateWorkbookFromGenericGames(ref ObservableCollection<GameData> games)
         {
             SessionWorkbook = new Workbook();
             Chapter chapter = SessionWorkbook.CreateDefaultChapter();
@@ -557,15 +557,15 @@ namespace ChessForge
         /// <summary>
         /// Processes all games in the file creating chapters as required.
         /// </summary>
-        private static void ProcessGames(ref ObservableCollection<GameMetadata> GameList)
+        private static void ProcessGames(ref ObservableCollection<GameData> GameList)
         {
             Chapter chapter = null;
 
             for (int i = 1; i < GameList.Count; i++)
             {
-                GameMetadata gm = GameList[i];
+                GameData gm = GameList[i];
 
-                if (gm.GetContentType() == GameMetadata.ContentType.STUDY_TREE)
+                if (gm.GetContentType() == GameData.ContentType.STUDY_TREE)
                 {
                     chapter = SessionWorkbook.CreateNewChapter();
                     chapter.Title = gm.Header.GetChapterTitle();
@@ -588,7 +588,7 @@ namespace ChessForge
         /// <param name="tree"></param>
         /// <param name="games"></param>
         /// <returns></returns>
-        private static int MergeGames(ref VariationTree tree, ref ObservableCollection<GameMetadata> games)
+        private static int MergeGames(ref VariationTree tree, ref ObservableCollection<GameData> games)
         {
             StringBuilder sbErrors = new StringBuilder();
             int errorCount = 0;
@@ -631,7 +631,7 @@ namespace ChessForge
                             }
                             else
                             {
-                                VariationTree workbook2 = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
+                                VariationTree workbook2 = new VariationTree(GameData.ContentType.STUDY_TREE);
                                 try
                                 {
                                     PgnGameParser pgp = new PgnGameParser(games[i].GameText, workbook2, out bool multi);

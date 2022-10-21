@@ -98,8 +98,8 @@
     <Compile Include="EvaluationActiveLine.cs" />
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
-    <Compile Include="GameExerciseOptions.xaml.cs">
-      <DependentUpon>GameExerciseOptions.xaml</DependentUpon>
+    <Compile Include="GameHeaderDialog.xaml.cs">
+      <DependentUpon>GameHeaderDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="GenericPgnInfoDialog.xaml.cs">
       <DependentUpon>GenericPgnInfoDialog.xaml</DependentUpon>
@@ -156,7 +156,7 @@
     <Compile Include="VariationTreeView.cs" />
     <Compile Include="TreeTableCell.cs" />
     <Compile Include="TreeTableRow.cs" />
-    <Compile Include="ChfTextBuilder.cs" />
+    <Compile Include="WorkbookFileTextBuilder.cs" />
     <Compile Include="ScoreSheet.cs" />
     <Compile Include="WorkbookTableState.cs" />
     <Page Include="AboutBoxDialog.xaml">
@@ -175,7 +175,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameExerciseOptions.xaml">
+    <Page Include="GameHeaderDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

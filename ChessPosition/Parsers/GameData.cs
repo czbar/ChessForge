@@ -12,7 +12,7 @@ namespace GameTree
     /// Holds game metadata obtained from a PGN file.
     /// It is bound to the ListView in SelectGames dialog.
     /// </summary>
-    public class GameMetadata : INotifyPropertyChanged
+    public class GameData : INotifyPropertyChanged
     {
         /// <summary>
         /// Types of "games" that can be encountered.
@@ -37,7 +37,7 @@ namespace GameTree
         /// Creates the object and sets IsSelected to true.
         /// The games in ListView are selected by default.
         /// </summary>
-        public GameMetadata()
+        public GameData()
         {
             IsSelected = true;
         }
@@ -63,7 +63,7 @@ namespace GameTree
         /// <returns></returns>
         public bool IsStudyTree()
         {
-            return Header.GetContentType(out _) == GameMetadata.ContentType.STUDY_TREE;
+            return Header.GetContentType(out _) == GameData.ContentType.STUDY_TREE;
         }
 
         /// <summary>

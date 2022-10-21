@@ -359,7 +359,7 @@ namespace ChessForge
         private void Chapters_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             WorkbookManager.LastClickedChapterId = -1;
-            WorkbookManager.EnableChaptersContextMenuItems(_cmChapters, false, GameMetadata.ContentType.GENERIC);
+            WorkbookManager.EnableChaptersContextMenuItems(_cmChapters, false, GameData.ContentType.GENERIC);
         }
 
         /// <summary>
@@ -534,7 +534,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportModelGames_Click(object sender, RoutedEventArgs e)
         {
-            ImportGamesFromPgn(GameMetadata.ContentType.GENERIC);
+            ImportGamesFromPgn(GameData.ContentType.GENERIC);
         }
 
         /// <summary>
@@ -554,23 +554,23 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportExercises_Click(object sender, RoutedEventArgs e)
         {
-            ImportGamesFromPgn(GameMetadata.ContentType.EXERCISE);
+            ImportGamesFromPgn(GameData.ContentType.EXERCISE);
         }
 
         /// <summary>
         /// Imports Model Games or Exercises from a PGN file.
         /// </summary>
         /// <param name="contentType"></param>
-        private void ImportGamesFromPgn(GameMetadata.ContentType contentType)
+        private void ImportGamesFromPgn(GameData.ContentType contentType)
         {
-            if ((contentType == GameMetadata.ContentType.GENERIC || contentType == GameMetadata.ContentType.MODEL_GAME || contentType == GameMetadata.ContentType.EXERCISE)
+            if ((contentType == GameData.ContentType.GENERIC || contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
                 && WorkbookManager.SessionWorkbook.ActiveChapter != null)
             {
                 string fileName = SelectPgnFile();
                 if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
                 {
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                    ObservableCollection<GameMetadata> games = new ObservableCollection<GameMetadata>();
+                    ObservableCollection<GameData> games = new ObservableCollection<GameData>();
                     int gameCount = WorkbookManager.ReadPgnFile(fileName, ref games, contentType);
 
                     int errorCount = 0;
@@ -631,7 +631,7 @@ namespace ChessForge
             try
             {
                 VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames[WorkbookManager.LastClickedModelGameIndex];
-                var dlg = new GameExerciseOptions(game);
+                var dlg = new GameHeaderDialog(game);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
@@ -678,8 +678,8 @@ namespace ChessForge
         {
             try
             {
-                VariationTree tree = new VariationTree(GameMetadata.ContentType.MODEL_GAME);
-                GameExerciseOptions dlg = new GameExerciseOptions(tree);
+                VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
+                GameHeaderDialog dlg = new GameHeaderDialog(tree);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
@@ -703,15 +703,15 @@ namespace ChessForge
         /// </summary>
         /// <param name="contentType"></param>
         /// <param name="chapter"></param>
-        public void RefreshChaptersViewAfterImport(GameMetadata.ContentType contentType, Chapter chapter)
+        public void RefreshChaptersViewAfterImport(GameData.ContentType contentType, Chapter chapter)
         {
             chapter.IsViewExpanded = true;
             switch (contentType)
             {
-                case GameMetadata.ContentType.MODEL_GAME:
+                case GameData.ContentType.MODEL_GAME:
                     chapter.IsModelGamesListExpanded = true;
                     break;
-                case GameMetadata.ContentType.EXERCISE:
+                case GameData.ContentType.EXERCISE:
                     chapter.IsExercisesListExpanded = true;
                     break;
             }
@@ -725,14 +725,14 @@ namespace ChessForge
         /// <param name="contentType"></param>
         /// <param name="games"></param>
         /// <returns></returns>
-        private bool ShowSelectGamesDialog(GameMetadata.ContentType contentType, ref ObservableCollection<GameMetadata> games)
+        private bool ShowSelectGamesDialog(GameData.ContentType contentType, ref ObservableCollection<GameData> games)
         {
             string dlgTitle = "";
-            if (contentType == GameMetadata.ContentType.MODEL_GAME)
+            if (contentType == GameData.ContentType.MODEL_GAME)
             {
                 dlgTitle = "Select Model Games to Import";
             }
-            else if (contentType == GameMetadata.ContentType.EXERCISE)
+            else if (contentType == GameData.ContentType.EXERCISE)
             {
                 dlgTitle = "Select Exercises to Import";
             }
@@ -747,10 +747,10 @@ namespace ChessForge
         /// </summary>
         /// <param name="contentType"></param>
         /// <param name="fileName"></param>
-        private void ShowNoGamesError(GameMetadata.ContentType contentType, string fileName)
+        private void ShowNoGamesError(GameData.ContentType contentType, string fileName)
         {
             string sError;
-            if (contentType == GameMetadata.ContentType.EXERCISE)
+            if (contentType == GameData.ContentType.EXERCISE)
             {
                 sError = "No Exercises found in ";
             }

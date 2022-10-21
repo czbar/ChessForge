@@ -343,7 +343,7 @@ namespace ChessForge
         /// </summary>
         public void BuildFlowDocumentForVariationTree(int rootNodeId = 0, bool includeStem = true)
         {
-            GameMetadata.ContentType contentType = GameMetadata.ContentType.NONE;
+            GameData.ContentType contentType = GameData.ContentType.NONE;
             _variationTree = _mainWin.ActiveVariationTree;
 
             if (_variationTree != null)
@@ -398,7 +398,7 @@ namespace ChessForge
             // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
             BuildTreeLineText(root, para, includeStem);
 
-            if (contentType == GameMetadata.ContentType.MODEL_GAME || contentType == GameMetadata.ContentType.EXERCISE)
+            if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
             {
                 Paragraph resultPara = BuildResultPara();
                 if (resultPara != null)
@@ -428,15 +428,15 @@ namespace ChessForge
         /// as appropriate.
         /// </summary>
         /// <param name="contentType"></param>
-        private void BuildPreviousNextBar(GameMetadata.ContentType contentType)
+        private void BuildPreviousNextBar(GameData.ContentType contentType)
         {
             try
             {
-                if (contentType == GameMetadata.ContentType.MODEL_GAME)
+                if (contentType == GameData.ContentType.MODEL_GAME)
                 {
                     BuildPreviousNextModelGameBar();
                 }
-                else if (contentType == GameMetadata.ContentType.EXERCISE)
+                else if (contentType == GameData.ContentType.EXERCISE)
                 {
                     BuildPreviousNextExerciseBar();
                 }
@@ -536,7 +536,7 @@ namespace ChessForge
         /// Builds the top paragraph for the page if applicable.
         /// </summary>
         /// <returns></returns>
-        private Paragraph BuildPageHeader(GameMetadata.ContentType contentType)
+        private Paragraph BuildPageHeader(GameData.ContentType contentType)
         {
             Paragraph para = null;
 
@@ -544,8 +544,8 @@ namespace ChessForge
             {
                 switch (contentType)
                 {
-                    case GameMetadata.ContentType.MODEL_GAME:
-                    case GameMetadata.ContentType.EXERCISE:
+                    case GameData.ContentType.MODEL_GAME:
+                    case GameData.ContentType.EXERCISE:
                         string whitePlayer = _variationTree.Header.GetWhitePlayer(out _);
                         string blackPlayer = _variationTree.Header.GetBlackPlayer(out _);
 
@@ -633,7 +633,7 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph BuildExercisesChessboardParagraph()
         {
-            if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameMetadata.ContentType.EXERCISE)
+            if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2");
                 para.Margin = new Thickness(60, 0, 0, 40);
