@@ -78,5 +78,46 @@ namespace ChessForge
             : base (cnv, BoardCtrl, labelCtrl, startPos, includeCoords)
         {
         }
+
+        /// <summary>
+        /// Places an image of a piece (or empty image object)
+        /// on the request square.
+        /// NOTE: we override in ChessBoardSmall because it uses different
+        /// way of placing the board (TODO: make it consistent)
+        /// </summary>
+        /// <param name="xPos"></param>
+        /// <param name="yPos"></param>
+        override protected void PlacePieceImageOnSquare(int xPos, int yPos)
+        {
+            Canvas.SetLeft(Pieces[xPos, yPos], SquareSize * xPos + Canvas.GetLeft(BoardImgCtrl));
+            Canvas.SetTop(Pieces[xPos, yPos], SquareSize * (7 - yPos) + Canvas.GetTop(BoardImgCtrl));
+            Canvas.SetZIndex(Pieces[xPos, yPos], Constants.ZIndex_PieceOnBoard);
+        }
+
+
+        /// <summary>
+        /// Sizes and positions coordinate labels.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="lbl"></param>
+        /// <param name="isVert"></param>
+        override protected void SetCoordinateLabelProperties(int index, Label lbl, bool isVert)
+        {
+            lbl.Width = 20;
+            lbl.Height = 21;
+            lbl.FontSize = 8;
+
+            if (isVert)
+            {
+                Canvas.SetLeft(lbl, -2);
+                Canvas.SetTop(lbl, 18 + (index * 30));
+            }
+            else
+            {
+                Canvas.SetLeft(lbl, 19 + (index * 30));
+                Canvas.SetBottom(lbl, -1);
+            }
+        }
+
     }
 }

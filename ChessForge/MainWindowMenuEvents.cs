@@ -31,7 +31,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnOpenWorkbook_Click(object sender, RoutedEventArgs e)
         {
-            if (ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
+            bool proceed = true;
+
+            if (WorkbookManager.SessionWorkbook != null && AppStateManager.IsDirty)
+            {
+                proceed = WorkbookManager.PromptAndSaveWorkbook(false);
+            }
+
+            if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog
                 {
@@ -79,7 +86,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OpenRecentWorkbookFile(object sender, RoutedEventArgs e)
         {
-            if (ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
+            bool proceed = true;
+
+            if (WorkbookManager.SessionWorkbook != null && AppStateManager.IsDirty)
+            {
+                proceed = WorkbookManager.PromptAndSaveWorkbook(false);
+            }
+
+            if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
             {
                 string menuItemName = ((MenuItem)e.Source).Name;
                 string path = Configuration.GetRecentFile(menuItemName);
@@ -669,7 +683,7 @@ namespace ChessForge
         /// <summary>
         /// Creates a new VariationTree object and invokes
         /// the Game Header dialog.
-        /// If successfully returned, adds the Tree to the list of games
+        /// If successfully returned, adds the Tree to the list of Model Games
         /// and opens the ModelGames view (where the game text will be empty)
         /// </summary>
         /// <param name="sender"></param>
@@ -692,6 +706,46 @@ namespace ChessForge
                 }
             }
             catch(Exception ex)
+            {
+                AppLog.Message("UiMnAddGame_Click()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a new VariationTree object and invokes
+        /// the Position Setup dialog.
+        /// If successfully returned, adds the Tree to the list of Exercises
+        /// and opens the Exercise view (where the Exercise text will be empty)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnAddExercise_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                PositionSetupDialog dlg = new PositionSetupDialog()
+                {
+                    Left = ChessForgeMain.Left + 100,
+                    Top = ChessForgeMain.Top + 100,
+                    Topmost = false,
+                    Owner = this
+                };
+                dlg.ShowDialog();
+
+                //VariationTree tree = new VariationTree(GameData.ContentType.EXERCISE);
+                //GameHeaderDialog dlg = new GameHeaderDialog(tree);
+                //dlg.ShowDialog();
+                //if (dlg.ExitOK)
+                //{
+                //    WorkbookManager.SessionWorkbook.ActiveChapter.AddModelGame(tree);
+                //    WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex
+                //        = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
+                //    _chaptersView.BuildFlowDocumentForChaptersView();
+                //    SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
+                //    AppStateManager.IsDirty = true;
+                //}
+            }
+            catch (Exception ex)
             {
                 AppLog.Message("UiMnAddGame_Click()", ex);
             }
