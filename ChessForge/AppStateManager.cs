@@ -54,7 +54,7 @@ namespace ChessForge
         /// <summary>
         /// Returns the ContentType of the curent ActiveVariationTree
         /// </summary>
-        public static GameMetadata.ContentType ActiveContentType
+        public static GameData.ContentType ActiveContentType
         {
             get
             {
@@ -64,7 +64,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    return GameMetadata.ContentType.NONE;
+                    return GameData.ContentType.NONE;
                 }
             }
         }
@@ -485,7 +485,7 @@ namespace ChessForge
 
                 _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
 
-                if (AppStateManager.ActiveContentType == GameMetadata.ContentType.STUDY_TREE)
+                if (AppStateManager.ActiveContentType == GameData.ContentType.STUDY_TREE)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
@@ -739,8 +739,8 @@ namespace ChessForge
                 // if ContentType is ModelGame or exercise, hide Training menus
                 Workbook wb = WorkbookManager.SessionWorkbook;
                 if (wb != null &&
-                    (wb.ActiveContentType == GameMetadata.ContentType.MODEL_GAME
-                    || wb.ActiveContentType == GameMetadata.ContentType.EXERCISE))
+                    (wb.ActiveContentType == GameData.ContentType.MODEL_GAME
+                    || wb.ActiveContentType == GameData.ContentType.EXERCISE))
                 {
                     _mainWin.UiMnciStartTraining.Visibility = Visibility.Collapsed;
                     _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
@@ -839,7 +839,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 // only applicable to StydyTree
-                if (ActiveContentType == GameMetadata.ContentType.STUDY_TREE
+                if (ActiveContentType == GameData.ContentType.STUDY_TREE
                     && CurrentLearningMode != LearningMode.Mode.ENGINE_GAME)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
@@ -863,7 +863,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 // only applicable when playing in ManualReview
-                if (ActiveContentType == GameMetadata.ContentType.STUDY_TREE
+                if (ActiveContentType == GameData.ContentType.STUDY_TREE
                     && CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
                     _mainWin.UiDgEngineGame.Visibility = show ? Visibility.Visible : Visibility.Hidden;

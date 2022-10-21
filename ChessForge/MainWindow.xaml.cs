@@ -52,14 +52,14 @@ namespace ChessForge
         {
             get
             {
-                GameMetadata.ContentType gt = WorkbookManager.SessionWorkbook.ActiveVariationTree.ContentType;
+                GameData.ContentType gt = WorkbookManager.SessionWorkbook.ActiveVariationTree.ContentType;
                 switch (gt)
                 {
-                    case GameMetadata.ContentType.STUDY_TREE:
+                    case GameData.ContentType.STUDY_TREE:
                         return _studyTreeView;
-                    case GameMetadata.ContentType.MODEL_GAME:
+                    case GameData.ContentType.MODEL_GAME:
                         return _modelGameTreeView;
-                    case GameMetadata.ContentType.EXERCISE:
+                    case GameData.ContentType.EXERCISE:
                         return _exerciseTreeView;
                     default:
                         return null;
@@ -353,7 +353,7 @@ namespace ChessForge
         {
             if (chapterId >= 0)
             {
-                WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameMetadata.ContentType.STUDY_TREE);
+                WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameData.ContentType.STUDY_TREE);
                 ClearTabViews();
                 _chaptersView.HighlightActiveChapter();
                 SetupGuiForActiveStudyTree(focusOnStudyTree);
@@ -395,7 +395,7 @@ namespace ChessForge
                 if (gameIndex >= 0 && gameIndex < WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount())
                 {
                     WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
-                    WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.MODEL_GAME, gameIndex);
+                    WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.MODEL_GAME, gameIndex);
 
                     MainChessBoard.FlipBoard(false);
                     WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped = null;
@@ -417,7 +417,7 @@ namespace ChessForge
         public void SelectExercise(int gameIndex, bool setFocus)
         {
             WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = gameIndex;
-            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameMetadata.ContentType.EXERCISE, gameIndex);
+            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, gameIndex);
 
             MainChessBoard.FlipBoard(false);
             WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = null;
@@ -734,7 +734,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="fileName">path to the file</param>
         /// <param name="isLastOpen">were we asked to open the file that was open last in the previous session</param>
-        private void ReadWorkbookFile(string fileName, bool isLastOpen, ref ObservableCollection<GameMetadata> GameList)
+        private void ReadWorkbookFile(string fileName, bool isLastOpen, ref ObservableCollection<GameData> GameList)
         {
             try
             {
@@ -759,7 +759,7 @@ namespace ChessForge
                         isChessForgeFile = true;
                         break;
                     case ".pgn":
-                        WorkbookManager.ReadPgnFile(fileName, ref GameList, GameMetadata.ContentType.GENERIC);
+                        WorkbookManager.ReadPgnFile(fileName, ref GameList, GameData.ContentType.GENERIC);
                         bool res = WorkbookManager.PrepareWorkbook(ref GameList, out isChessForgeFile);
                         if (res)
                         {
@@ -805,7 +805,7 @@ namespace ChessForge
 
             // if this is a new session we will set ActiveChapter to the first chapter
             // and Active Tree to the Study Tree in that chapter.
-            WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(0, GameMetadata.ContentType.STUDY_TREE);
+            WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(0, GameData.ContentType.STUDY_TREE);
             AppStateManager.UpdateAppTitleBar();
             BoardCommentBox.ShowWorkbookTitle();
 

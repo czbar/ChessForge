@@ -255,7 +255,7 @@ namespace ChessForge
         {
             para.Inlines.Add(new Run("\n"));
             para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT));
-            InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.Id, GameMetadata.ContentType.MODEL_GAME, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
+            InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.Id, GameData.ContentType.MODEL_GAME, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
             Run r = CreateRun(STYLE_SUBHEADER, "Model Games");
             r.Name = _run_model_games_header_ + chapter.Id.ToString();
             r.MouseDown += EventModelGamesHeaderClicked;
@@ -286,7 +286,7 @@ namespace ChessForge
         {
             para.Inlines.Add(new Run("\n"));
             para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT));
-            InsertExpandCollapseSymbolRun(para, _run_exercises_expand_char_, chapter.Id, GameMetadata.ContentType.EXERCISE, chapter.IsExercisesListExpanded, chapter.HasAnyExercise);
+            InsertExpandCollapseSymbolRun(para, _run_exercises_expand_char_, chapter.Id, GameData.ContentType.EXERCISE, chapter.IsExercisesListExpanded, chapter.HasAnyExercise);
             Run r = CreateRun(STYLE_SUBHEADER, "Exercises");
             r.Name = _run_exercises_header_ + chapter.Id.ToString();
             r.MouseDown += EventExercisesHeaderClicked;
@@ -314,7 +314,7 @@ namespace ChessForge
         /// <param name="isExpanded"></param>
         /// <param name="hasContent"></param>
         /// <returns></returns>
-        private Run InsertExpandCollapseSymbolRun(Paragraph para, string prefix, int chapterId, GameMetadata.ContentType contentType, bool isExpanded, bool hasContent)
+        private Run InsertExpandCollapseSymbolRun(Paragraph para, string prefix, int chapterId, GameData.ContentType contentType, bool isExpanded, bool hasContent)
         {
             if (hasContent)
             {
@@ -323,10 +323,10 @@ namespace ChessForge
                 rExpandChar.Name = prefix + chapterId;
                 switch (contentType)
                 {
-                    case GameMetadata.ContentType.MODEL_GAME:
+                    case GameData.ContentType.MODEL_GAME:
                         rExpandChar.MouseDown += EventModelGamesExpandSymbolClicked;
                         break;
-                    case GameMetadata.ContentType.EXERCISE:
+                    case GameData.ContentType.EXERCISE:
                         rExpandChar.MouseDown += EventExercisesExpandSymbolClicked;
                         break;
                 }
@@ -370,7 +370,7 @@ namespace ChessForge
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameMetadata.ContentType.GENERIC);
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.GENERIC);
                         _mainWin.SelectChapter(chapterId, false);
                     }
                 }
@@ -405,7 +405,7 @@ namespace ChessForge
                     else if (e.ChangedButton == MouseButton.Right)
                     {
                         WorkbookManager.LastClickedModelGameIndex = -1;
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameMetadata.ContentType.MODEL_GAME);
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.MODEL_GAME);
                         _mainWin.SelectChapter(chapterId, false);
                     }
                 }
@@ -440,7 +440,7 @@ namespace ChessForge
                     else if (e.ChangedButton == MouseButton.Right)
                     {
                         WorkbookManager.LastClickedExerciseIndex = -1;
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameMetadata.ContentType.EXERCISE);
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.EXERCISE);
                         _mainWin.SelectChapter(chapterId, false);
                     }
                 }
@@ -472,7 +472,7 @@ namespace ChessForge
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameMetadata.ContentType.STUDY_TREE);
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.STUDY_TREE);
                         _mainWin.SelectChapter(chapterId, false);
                     }
                 }
@@ -512,7 +512,7 @@ namespace ChessForge
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameMetadata.ContentType.MODEL_GAME);
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.MODEL_GAME);
                         //_mainWin.SelectModelGame(chapterId, false);
                     }
                 }
@@ -552,7 +552,7 @@ namespace ChessForge
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameMetadata.ContentType.EXERCISE);
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.EXERCISE);
                         //_mainWin.SelectExercise(chapterId, false);
                     }
                 }

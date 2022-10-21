@@ -24,7 +24,7 @@ namespace GameTree
         /// Constructor. Creates a VariationTree of the requested type.
         /// </summary>
         /// <param name="contentType"></param>
-        public VariationTree(GameMetadata.ContentType contentType)
+        public VariationTree(GameData.ContentType contentType)
         {
             Header.SetContentType(contentType);
         }
@@ -33,7 +33,7 @@ namespace GameTree
         /// Accessors to the ContentType value kept
         /// in the Header.
         /// </summary>
-        public GameMetadata.ContentType ContentType
+        public GameData.ContentType ContentType
         {
             get
             {

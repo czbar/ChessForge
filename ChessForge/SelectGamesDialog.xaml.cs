@@ -25,13 +25,13 @@ namespace ChessForge
         /// <summary>
         /// The list of games to process.
         /// </summary>
-        private ObservableCollection<GameMetadata> _gameList;
+        private ObservableCollection<GameData> _gameList;
 
         /// <summary>
         /// Creates the dialog object. Sets ItemsSource for the ListView
         /// to GamesHeaders list.
         /// </summary>
-        public SelectGamesDialog(ref ObservableCollection<GameMetadata> gameList, string infoText)
+        public SelectGamesDialog(ref ObservableCollection<GameData> gameList, string infoText)
         {
             _gameList = gameList;
             InitializeComponent();

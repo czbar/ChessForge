@@ -45,7 +45,7 @@ namespace ChessPositionTest
             VariationTree tree1 = BuildTreeFromFile("../../../ChessPositionTest/TestData/TestMerge_1.pgn");
             VariationTree tree2 = BuildTreeFromFile("../../../ChessPositionTest/TestData/TestMerge_2.pgn");
 
-            _treeOut = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
+            _treeOut = new VariationTree(GameData.ContentType.STUDY_TREE);
             _treeOut.AddNode(new TreeNode(null, "", 0));
 
             MergeTrees(tree1.Nodes[0], tree2.Nodes[0], _treeOut.Nodes[0]);
@@ -59,7 +59,7 @@ namespace ChessPositionTest
         /// <returns></returns>
         private static VariationTree BuildTreeFromFile(string fileName)
         {
-            VariationTree tree = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
+            VariationTree tree = new VariationTree(GameData.ContentType.STUDY_TREE);
             string gameText = File.ReadAllText(fileName);
             PgnGameParser pgnGame = new PgnGameParser(gameText, tree, out bool multi, true);
 
@@ -155,7 +155,7 @@ namespace ChessPositionTest
         /// </summary>
         private static void TestPgnGameParser()
         {
-            VariationTree variationTree = new VariationTree(GameMetadata.ContentType.STUDY_TREE);
+            VariationTree variationTree = new VariationTree(GameData.ContentType.STUDY_TREE);
             string gameText = File.ReadAllText("../../../ChessPositionTest/TestData/GameTreeTest_1.pgn");
             PgnGameParser pgnGame = new PgnGameParser(gameText, variationTree, out bool multi, true);
             PrintVariationTree(variationTree);

@@ -230,7 +230,7 @@ namespace GameTree
         /// Returns the Content Type value.
         /// </summary>
         /// <returns></returns>
-        public GameMetadata.ContentType GetContentType(out string key, string value = null)
+        public GameData.ContentType GetContentType(out string key, string value = null)
         {
             string headerKey = PgnHeaders.KEY_CONTENT_TYPE;
             key = headerKey;
@@ -253,17 +253,17 @@ namespace GameTree
         /// according to the passed ContentType
         /// </summary>
         /// <param name="contentType"></param>
-        public void SetContentType(GameMetadata.ContentType contentType)
+        public void SetContentType(GameData.ContentType contentType)
         {
             switch (contentType)
             {
-                case GameMetadata.ContentType.STUDY_TREE:
+                case GameData.ContentType.STUDY_TREE:
                     SetHeaderValue(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_STUDY_TREE);
                     break;
-                case GameMetadata.ContentType.MODEL_GAME:
+                case GameData.ContentType.MODEL_GAME:
                     SetHeaderValue(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_MODEL_GAME);
                     break;
-                case GameMetadata.ContentType.EXERCISE:
+                case GameData.ContentType.EXERCISE:
                     SetHeaderValue(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_EXERCISE);
                     break;
             }
@@ -273,7 +273,7 @@ namespace GameTree
         /// Based on the collected values determines and sets the type
         /// </summary>
         /// <returns></returns>
-        public GameMetadata.ContentType DetermineContentType()
+        public GameData.ContentType DetermineContentType()
         {
             if (!string.IsNullOrEmpty(GetContentTypeString(out _)))
             {
@@ -282,11 +282,11 @@ namespace GameTree
             else if (!string.IsNullOrEmpty(GetFenString()))
             {
                 SetHeaderValue(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_EXERCISE);
-                return GameMetadata.ContentType.EXERCISE;
+                return GameData.ContentType.EXERCISE;
             }
             else
             {
-                return GameMetadata.ContentType.GENERIC;
+                return GameData.ContentType.GENERIC;
             }
         }
 
@@ -295,22 +295,22 @@ namespace GameTree
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        private GameMetadata.ContentType GetContentTypeFromString(string s)
+        private GameData.ContentType GetContentTypeFromString(string s)
         {
-            GameMetadata.ContentType typ = GameMetadata.ContentType.GENERIC;
+            GameData.ContentType typ = GameData.ContentType.GENERIC;
 
             if (!string.IsNullOrEmpty(s))
             {
                 switch (s)
                 {
                     case PgnHeaders.VALUE_MODEL_GAME:
-                        typ = GameMetadata.ContentType.MODEL_GAME;
+                        typ = GameData.ContentType.MODEL_GAME;
                         break;
                     case PgnHeaders.VALUE_STUDY_TREE:
-                        typ = GameMetadata.ContentType.STUDY_TREE;
+                        typ = GameData.ContentType.STUDY_TREE;
                         break;
                     case PgnHeaders.VALUE_EXERCISE:
-                        typ = GameMetadata.ContentType.EXERCISE;
+                        typ = GameData.ContentType.EXERCISE;
                         break;
                 }
             }

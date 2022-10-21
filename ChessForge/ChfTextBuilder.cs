@@ -270,7 +270,7 @@ namespace ChessForge
         }
 
 
-        private static string BuildModelGameText(Chapter chapter, int chapterNo, GameMetadata gm)
+        private static string BuildModelGameText(Chapter chapter, int chapterNo, GameData gm)
         {
             StringBuilder sb = new StringBuilder();
 

@@ -170,7 +170,7 @@ namespace ChessPosition
         /// <param name="gameNo"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public static string BuildGameProcessingErrorText(GameMetadata gm, int gameNo, string message)
+        public static string BuildGameProcessingErrorText(GameData gm, int gameNo, string message)
         {
             StringBuilder sbErrors = new StringBuilder();
 

@@ -654,7 +654,7 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             if (chapter != null)
             {
-                chapter.SetActiveVariationTree(GameMetadata.ContentType.STUDY_TREE);
+                chapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
             }
             AppStateManager.ConfigureMainBoardContextMenu();
             if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
