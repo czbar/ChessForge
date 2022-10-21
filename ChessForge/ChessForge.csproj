@@ -130,6 +130,7 @@
     <Compile Include="PositionSetupDialog.xaml.cs">
       <DependentUpon>PositionSetupDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PositionSetupDraggedPiece.cs" />
     <Compile Include="PromotionDialog.xaml.cs">
       <DependentUpon>PromotionDialog.xaml</DependentUpon>
     </Compile>
