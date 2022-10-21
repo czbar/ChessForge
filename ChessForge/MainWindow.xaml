@@ -167,7 +167,7 @@
                                 <ContextMenu x:Name="_cmChapters">
                                     <MenuItem x:Name="_mnAddChapter" Header="Create New Chapter" Click="UiMnAddChapter_Click"  />
                                     <MenuItem x:Name="_mnAddGame" Header="Create New Game" Click="UiMnAddGame_Click"  />
-                                    <MenuItem x:Name="_mnImportGame" Header="Import Games from PGN" />
+                                    <MenuItem x:Name="_mnImportGame" Header="Import Games from PGN" Click="UiMnImportGame_Click" />
                                     <MenuItem x:Name="_mnAddExercise" Header="Create New Exercise"  />
                                     <MenuItem x:Name="_mnImportExercise" Header="Import Exercises from PGN" />
                                     <Separator />
@@ -180,8 +180,8 @@
                                     <Separator />
                                     <MenuItem x:Name="_mnChapterUp" Header="Move Chapter Up" Click="UiMnChapterUp_Click" />
                                     <MenuItem x:Name="_mnChapterDown" Header="Move Chapter Down" Click="UiMnChapterDown_Click" />
-                                    <MenuItem x:Name="_mnGameUp" Header="Move Game Up" />
-                                    <MenuItem x:Name="_mnGameDown" Header="Move Game Down" />
+                                    <MenuItem x:Name="_mnGameUp" Header="Move Game Up" Click="UiMnGameUp_Click" />
+                                    <MenuItem x:Name="_mnGameDown" Header="Move Game Down" Click="UiMnGameDown_Click" />
                                     <MenuItem x:Name="_mnExerciseUp" Header="Move Exercise Up" />
                                     <MenuItem x:Name="_mnExerciseDown" Header="Move Exercise Down" />
                                     <Separator />
