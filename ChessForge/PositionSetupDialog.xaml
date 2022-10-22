@@ -26,8 +26,8 @@
             <Image x:Name="UiImgWhitePawn" HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/WhitePawn.png" MouseDown="UiImgWhitePawn_MouseDown" RenderTransformOrigin="-0.867,0.101" Canvas.Left="193" Canvas.Top="323"/>
         </Canvas>
 
-        <Label x:Name="UiLblSideToMove" Content="White to Play" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="497,110,0,0" VerticalAlignment="Top" Width="136" MouseDown="UiLblSideToMove_MouseDown"/>
-        <Image x:Name="UiImgSwapSides" HorizontalAlignment="Left" Height="25" Margin="643,114,0,0" VerticalAlignment="Top" Width="25" Source="/Resources/Images/swap_vert.png" RenderTransformOrigin="0.082,0.705" MouseDown="UiImgSwapSides_MouseDown"/>
+        <Label x:Name="UiLblSideToMove" Content="White to Play" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="501,110,0,0" VerticalAlignment="Top" Width="136" MouseDown="UiLblSideToMove_MouseDown"/>
+        <Image x:Name="UiImgSwapSides" HorizontalAlignment="Left" Height="25" Margin="648,114,0,0" VerticalAlignment="Top" Width="25" Source="/Resources/Images/swap_vert.png" RenderTransformOrigin="0.082,0.705" MouseDown="UiImgSwapSides_MouseDown"/>
         <GroupBox x:Name="UiGbCastling" HorizontalAlignment="Left" Height="110" Header="Castling" Margin="431,151,0,0" VerticalAlignment="Top" Width="293">
         </GroupBox>
         <Label x:Name="UiLblWhite" Content="White" HorizontalAlignment="Left" Margin="456,178,0,0" VerticalAlignment="Top"/>
@@ -45,6 +45,7 @@
         <Button x:Name="UiBtnCancel" Content="Cancel" Width="80"  HorizontalAlignment="Left" Margin="430,431,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
         <Button x:Name="UiBtnStartingPos" Content="Starting Position" Width="160" HorizontalAlignment="Left" Margin="501,282,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="UiBtnStartingPos_Click"/>
         <Button x:Name="UiBtnClear" Content="Clear Board" Width="160" HorizontalAlignment="Left" Margin="501,315,0,0" VerticalAlignment="Top"  Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="UiBtnClear_Click" />
+        <Button x:Name="UiDebug" Content="Debug Position" Visibility="Collapsed" HorizontalAlignment="Left" Margin="501,23,0,0" Width="160" VerticalAlignment="Top" Click="UiDebug_Click"/>
 
     </Grid>
 </Window>

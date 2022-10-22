@@ -20,11 +20,115 @@ namespace ChessPosition
         /// </summary>
         public static Random GlobalRnd = new Random();
 
+        public static bool ValidatePosition(ref BoardPosition pos, out string errorText)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            bool result = true;
+
+            KingCount(out int whiteKings, out int blackKings, pos);
+            if (whiteKings != 1 || blackKings != 1)
+            {
+                result = false;
+                if (whiteKings > 1)
+                {
+                    sb.AppendLine("Too many White Kings");
+                }
+                else if (whiteKings == 0)
+                {
+                    sb.AppendLine("The White King is missing.");
+                }
+
+                if (blackKings > 1)
+                {
+                    sb.AppendLine("Too many Black Kings");
+                }
+                else if (blackKings == 0)
+                {
+                    sb.AppendLine("The Black King is missing.");
+                }
+            }
+
+            // only check if we know we have 1 king each side (otherwise we may get an exception)
+            if (result == true)
+            {
+                if (pos.ColorToMove == PieceColor.White && IsKingInCheck(pos, PieceColor.Black))
+                {
+                    result = false;
+                    sb.AppendLine("Black King cannot be in check on White\'s move");
+                }
+                if (pos.ColorToMove == PieceColor.Black && IsKingInCheck(pos, PieceColor.White))
+                {
+                    result = false;
+                    sb.AppendLine("White King cannot be in check on Black\'s move");
+                }
+            }
+
+            // remove any incorrect castling rights if we are good so far
+            if (result)
+            {
+                CorrectCastlingRights(ref pos);
+            }
+
+            errorText = sb.ToString();
+            return result;
+        }
+
+        private static void CorrectCastlingRights(ref BoardPosition pos)
+        {
+            if (GetPieceType(pos.Board[5, 0]) != PieceType.King || GetPieceColor(pos.Board[5, 0]) != PieceColor.White)
+            {
+                pos.DynamicProperties = (byte)(pos.DynamicProperties & ~(Constants.WhiteKingsideCastle | Constants.WhiteQueensideCastle));
+            }
+            if (GetPieceType(pos.Board[5, 7]) != PieceType.King || GetPieceColor(pos.Board[5, 7]) != PieceColor.Black)
+            {
+                pos.DynamicProperties = (byte)(pos.DynamicProperties & ~(Constants.WhiteKingsideCastle | Constants.WhiteQueensideCastle));
+            }
+
+            if (GetPieceType(pos.Board[0, 0]) != PieceType.Rook || GetPieceColor(pos.Board[0, 0]) != PieceColor.White)
+            {
+                pos.DynamicProperties = (byte)(pos.DynamicProperties & ~Constants.WhiteQueensideCastle);
+            }
+            if (GetPieceType(pos.Board[7, 0]) != PieceType.Rook || GetPieceColor(pos.Board[7, 0]) != PieceColor.White)
+            {
+                pos.DynamicProperties = (byte)(pos.DynamicProperties & ~Constants.WhiteKingsideCastle);
+            }
+            if (GetPieceType(pos.Board[0, 7]) != PieceType.Rook || GetPieceColor(pos.Board[0, 7]) != PieceColor.Black)
+            {
+                pos.DynamicProperties = (byte)(pos.DynamicProperties & ~Constants.BlackQueensideCastle);
+            }
+            if (GetPieceType(pos.Board[7, 7]) != PieceType.Rook || GetPieceColor(pos.Board[0, 7]) != PieceColor.Black)
+            {
+                pos.DynamicProperties = (byte)(pos.DynamicProperties & ~Constants.BlackKingsideCastle);
+            }
+        }
+
+        private static void KingCount(out int whiteKings, out int blackKings, BoardPosition pos)
+        {
+            whiteKings = 0;
+            blackKings = 0;
+
+            foreach (byte square in pos.Board)
+            {
+                if (GetPieceType(square) == PieceType.King)
+                {
+                    if (GetPieceColor(square) == PieceColor.White)
+                    {
+                        whiteKings++;
+                    }
+                    else if (GetPieceColor(square) == PieceColor.Black)
+                    {
+                        blackKings++;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Builds the starting position.
         /// </summary>
         /// <returns>BoardPosition object with the starting position.</returns>
-        static public BoardPosition SetupStartingPosition()
+        public static BoardPosition SetupStartingPosition()
         {
             BoardPosition pos = new BoardPosition();
 
@@ -105,9 +209,9 @@ namespace ChessPosition
         /// <param name="board"></param>
         public static void ClearPosition(ref byte[,] board)
         {
-            for (int x = 0; x < 7; x++)
+            for (int x = 0; x <= 7; x++)
             {
-                for (int y = 0; y < 7; y++)
+                for (int y = 0; y <= 7; y++)
                 {
                     board[x, y] = 0;
                 }
@@ -633,6 +737,29 @@ namespace ChessPosition
             }
 
             return true;
+        }
+
+        public static void SetCastlingRights(bool whiteKing, bool whiteQueen, bool blackKing, bool blackQueen, ref BoardPosition pos)
+        {
+            RemoveAllCastlingRights(PieceColor.White, ref pos);
+            RemoveAllCastlingRights(PieceColor.Black, ref pos);
+
+            if (whiteKing)
+            {
+                pos.DynamicProperties = (byte)(pos.DynamicProperties |= Constants.WhiteKingsideCastle);
+            }
+            else if (whiteQueen)
+            {
+                pos.DynamicProperties = (byte)(pos.DynamicProperties |= Constants.WhiteQueensideCastle);
+            }
+            else if (blackKing)
+            {
+                pos.DynamicProperties = (byte)(pos.DynamicProperties |= Constants.BlackKingsideCastle);
+            }
+            else if (blackQueen)
+            {
+                pos.DynamicProperties = (byte)(pos.DynamicProperties |= Constants.BlackQueensideCastle);
+            }
         }
 
         /// <summary>
