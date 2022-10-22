@@ -20,20 +20,27 @@ namespace ChessForge
         // square side's size
         private int _squareSize = 30;
 
+
         // left offset between the SetupCanvas and BoardCanvas
         private double _boardCanvasToSetupCanvasLeftOffset;
+
         // top offset between the SetupCanvas and BoardCanvas
         private double _boardCanvasToSetupCanvasTopOffset;
+
 
         // left offset between the the Board Image and BoardCanvas
         private double _boardImageToBoardCanvasLeftOffset;
         // top offset between the the Board Image and BoardCanvas
+        
         private double _boardImageToBoardCanvasTopOffset;
+
 
         // left offset between the the Board Image and Setup Canvas
         private double _boardLeftOffset;
+        
         // top offset between the the Board Image and Setup Canvas
         private double _boardTopOffset;
+
 
         /// <summary>
         /// Object representing the piece being dragged.
@@ -41,10 +48,19 @@ namespace ChessForge
         private PositionSetupDraggedPiece _draggedPiece = new PositionSetupDraggedPiece();
 
         /// Holds the current position
-        private BoardPosition _boardPosition = new BoardPosition();
+        public BoardPosition PositionSetup = new BoardPosition();
 
         // Holds piece images currently showing on the board
         private Image[,] _pieceImagesOnBoard = new Image[8, 8];
+
+        // string to show in the GUI indicating that White is on move
+        private const string WHITE_TO_MOVE = "White to move";
+
+        // string to show in the GUI indicating that Black is on move
+        private const string BLACK_TO_MOVE = "Black to move";
+
+        // color of the side to move
+        private PieceColor _sideToMove = PieceColor.White;
 
         /// <summary>
         /// Constructs the dialog.
@@ -53,6 +69,10 @@ namespace ChessForge
         public PositionSetupDialog()
         {
             InitializeComponent();
+
+            UiLblSideToMove.Content = WHITE_TO_MOVE;
+            SetSideToMove(PieceColor.White);
+
             ShowDebugButton();
 
             _boardCanvasToSetupCanvasLeftOffset = Canvas.GetLeft(UiCnvBoard);
@@ -211,7 +231,7 @@ namespace ChessForge
         {
             if (sc != null && sc.IsValid())
             {
-                byte square = _boardPosition.Board[sc.Xcoord, sc.Ycoord];
+                byte square = PositionSetup.Board[sc.Xcoord, sc.Ycoord];
 
                 _draggedPiece.Piece = PositionUtils.GetPieceType(square);
                 _draggedPiece.Color = PositionUtils.GetPieceColor(square);
@@ -398,7 +418,7 @@ namespace ChessForge
         private void AddPieceToBoard(SquareCoords sc, PieceType piece, PieceColor color, Image img)
         {
             RemovePieceFromBoard(sc);
-            PositionUtils.PlacePieceOnBoard(piece, color, (byte)sc.Xcoord, (byte)sc.Ycoord, ref _boardPosition.Board);
+            PositionUtils.PlacePieceOnBoard(piece, color, (byte)sc.Xcoord, (byte)sc.Ycoord, ref PositionSetup.Board);
             _pieceImagesOnBoard[sc.Xcoord, sc.Ycoord] = img;
             PlacePieceOnSquare(sc, _pieceImagesOnBoard[sc.Xcoord, sc.Ycoord]);
         }
@@ -412,7 +432,7 @@ namespace ChessForge
         {
             if (sc != null && sc.IsValid())
             {
-                PositionUtils.ClearSquare((byte)sc.Xcoord, (byte)sc.Ycoord, ref _boardPosition.Board);
+                PositionUtils.ClearSquare((byte)sc.Xcoord, (byte)sc.Ycoord, ref PositionSetup.Board);
 
                 if (_pieceImagesOnBoard[sc.Xcoord, sc.Ycoord] != null)
                 {
@@ -467,7 +487,7 @@ namespace ChessForge
             {
                 for (int y = 0; y <= 7; y++)
                 {
-                    byte square = _boardPosition.Board[x, y];
+                    byte square = PositionSetup.Board[x, y];
                     if (square != 0)
                     {
                         Image img = new Image();
@@ -477,6 +497,15 @@ namespace ChessForge
                         PlacePieceOnSquare(new SquareCoords(x, y), img);
                         _pieceImagesOnBoard[x, y] = img;
                         UiCnvSetup.Children.Add(img);
+                    }
+                    else
+                    {
+                        if (_pieceImagesOnBoard[x, y] != null)
+                        {
+                            UiCnvSetup.Children.Remove(_pieceImagesOnBoard[x, y]);
+                            _pieceImagesOnBoard[x, y].Source = null;
+                            _pieceImagesOnBoard[x, y] = null;
+                        }
                     }
                 }
             }
@@ -488,7 +517,7 @@ namespace ChessForge
         /// </summary>
         private void ClearAll()
         {
-            PositionUtils.ClearPosition(ref _boardPosition.Board);
+            PositionUtils.ClearPosition(ref PositionSetup.Board);
             foreach (Image img in _pieceImagesOnBoard)
             {
                 if (img != null)
@@ -499,6 +528,51 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Swaps the color of the side on move.
+        /// </summary>
+        private void SwapSideToMove()
+        {
+            if (_sideToMove == PieceColor.Black)
+            {
+                SetSideToMove(PieceColor.White);
+            }
+            else
+            {
+                SetSideToMove(PieceColor.Black);
+            }
+        }
+
+        /// <summary>
+        /// Sets the color of the side on move.
+        /// </summary>
+        /// <param name="color"></param>
+        private void SetSideToMove(PieceColor color)
+        {
+            if (color == PieceColor.Black)
+            {
+                UiLblSideToMove.Content = BLACK_TO_MOVE;
+                _sideToMove = PieceColor.Black;
+            }
+            else
+            {
+                UiLblSideToMove.Content = WHITE_TO_MOVE;
+                _sideToMove = PieceColor.White;
+            }
+        }
+
+        /// <summary>
+        /// Resets all castling rights to either allowed
+        /// or disallowed.
+        /// </summary>
+        /// <param name="allow"></param>
+        private void ResetCastlingRights(bool allow)
+        {
+            UiCbWhiteCastleShort.IsChecked = allow;
+            UiCbWhiteCastleLong.IsChecked = allow;
+            UiCbBlackCastleShort.IsChecked = allow;
+            UiCbBlackCastleLong.IsChecked = allow;
+        }
 
 
         //************************************************************
@@ -514,6 +588,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiLblSideToMove_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            SwapSideToMove();
         }
 
         /// <summary>
@@ -523,7 +598,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiImgSwapSides_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            SwapSideToMove();
         }
 
         /// <summary>
@@ -535,8 +610,11 @@ namespace ChessForge
         {
             ClearAll();
 
-            _boardPosition = PositionUtils.SetupStartingPosition();
+            PositionSetup = PositionUtils.SetupStartingPosition();
             SetupImagesForPosition();
+            
+            SetSideToMove(PieceColor.White);
+            ResetCastlingRights(true);
         }
 
         /// <summary>
@@ -547,17 +625,37 @@ namespace ChessForge
         private void UiBtnClear_Click(object sender, RoutedEventArgs e)
         {
             ClearAll();
+
+            SetSideToMove(PieceColor.White);
+            ResetCastlingRights(false);
         }
 
         /// <summary>
-        /// Exists the dialog on user pressing the OK button.
+        /// Exits the dialog on user pressing the OK button.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            ExitOK = true;
-            Close();
+
+            PositionUtils.SetCastlingRights(
+                UiCbWhiteCastleShort.IsChecked == true,
+                UiCbWhiteCastleLong.IsChecked == true,
+                UiCbBlackCastleShort.IsChecked == true,
+                UiCbBlackCastleLong.IsChecked == true,
+                ref PositionSetup);
+
+            PositionSetup.ColorToMove = _sideToMove;
+
+            if (PositionUtils.ValidatePosition(ref PositionSetup, out string errorText))
+            {
+                ExitOK = true;
+                Close();
+            }
+            else
+            {
+                MessageBox.Show(errorText, "Invalid Position Setup", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         /// <summary>
@@ -590,7 +688,7 @@ namespace ChessForge
         [System.Diagnostics.Conditional("DEBUG")]
         private void ShowChessBoard()
         {
-            AppStateManager.MainWin.DisplayPosition(_boardPosition);
+            AppStateManager.MainWin.DisplayPosition(PositionSetup);
         }
 
         /// <summary>
