@@ -20,6 +20,12 @@ namespace ChessPosition
         /// </summary>
         public static Random GlobalRnd = new Random();
 
+        /// <summary>
+        /// Checks validity of a psotion.
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="errorText"></param>
+        /// <returns></returns>
         public static bool ValidatePosition(ref BoardPosition pos, out string errorText)
         {
             StringBuilder sb = new StringBuilder();
@@ -74,6 +80,10 @@ namespace ChessPosition
             return result;
         }
 
+        /// <summary>
+        /// Removes castling rights, if they conflict with the king or rook psoitions. 
+        /// </summary>
+        /// <param name="pos"></param>
         private static void CorrectCastlingRights(ref BoardPosition pos)
         {
             if (GetPieceType(pos.Board[5, 0]) != PieceType.King || GetPieceColor(pos.Board[5, 0]) != PieceColor.White)
@@ -103,6 +113,12 @@ namespace ChessPosition
             }
         }
 
+        /// <summary>
+        /// Gets the number of Kings in a given position.
+        /// </summary>
+        /// <param name="whiteKings"></param>
+        /// <param name="blackKings"></param>
+        /// <param name="pos"></param>
         private static void KingCount(out int whiteKings, out int blackKings, BoardPosition pos)
         {
             whiteKings = 0;
@@ -378,6 +394,13 @@ namespace ChessPosition
             return color == PieceColor.White ? (yCoord + 1) : (8 - yCoord);
         }
 
+        /// <summary>
+        /// Gets Y cooridnate from the rank number.
+        /// E.g. rank "1" for Black translate to Y position of 7.
+        /// </summary>
+        /// <param name="rank"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
         public static int GetYposFromRankNo(int rank, PieceColor col)
         {
             return col == PieceColor.White ? (rank - 1) : (8 - rank);
@@ -713,6 +736,11 @@ namespace ChessPosition
             }
         }
 
+        /// <summary>
+        /// Clears all castling rights flags.
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="pos"></param>
         private static void RemoveAllCastlingRights(PieceColor col, ref BoardPosition pos)
         {
             if (col == PieceColor.White)
@@ -725,6 +753,12 @@ namespace ChessPosition
             }
         }
 
+        /// <summary>
+        /// Checks if a given side has any castling rights left.
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         private static bool HasAnyCastlingRights(PieceColor col, ref BoardPosition pos)
         {
             if (col == PieceColor.White && (pos.DynamicProperties & (Constants.WhiteKingsideCastle | Constants.WhiteQueensideCastle)) == 0)
@@ -739,6 +773,14 @@ namespace ChessPosition
             return true;
         }
 
+        /// <summary>
+        /// Sets the castling rights according to the boolean values passed.
+        /// </summary>
+        /// <param name="whiteKing"></param>
+        /// <param name="whiteQueen"></param>
+        /// <param name="blackKing"></param>
+        /// <param name="blackQueen"></param>
+        /// <param name="pos"></param>
         public static void SetCastlingRights(bool whiteKing, bool whiteQueen, bool blackKing, bool blackQueen, ref BoardPosition pos)
         {
             RemoveAllCastlingRights(PieceColor.White, ref pos);
