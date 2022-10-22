@@ -1,7 +1,9 @@
 ﻿using ChessPosition;
+using GameTree;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -38,8 +40,6 @@ namespace ChessForge
         /// </summary>
         private PositionSetupDraggedPiece _draggedPiece = new PositionSetupDraggedPiece();
 
-        private ChessBoardSmall _chessBoard;
-
         /// Holds the current position
         private BoardPosition _boardPosition = new BoardPosition();
 
@@ -53,8 +53,8 @@ namespace ChessForge
         public PositionSetupDialog()
         {
             InitializeComponent();
+            ShowDebugButton();
 
-            _chessBoard = new ChessBoardSmall(UiCnvBoard, UiImgChessBoard, null, false, true);
             _boardCanvasToSetupCanvasLeftOffset = Canvas.GetLeft(UiCnvBoard);
             _boardCanvasToSetupCanvasTopOffset = Canvas.GetTop(UiCnvBoard);
 
@@ -81,8 +81,17 @@ namespace ChessForge
                 SquareCoords sc = GetSquareCoordsFromSetupCanvasPoint(e.GetPosition(UiCnvSetup));
                 if (sc != null)
                 {
-                    AddPieceToBoard(sc, _draggedPiece.Piece, _draggedPiece.Color, _draggedPiece.ImageControl);
-                    _draggedPiece.ImageControl = new Image();
+                    if (_draggedPiece.Piece == PieceType.Pawn && (sc.Ycoord == 0 || sc.Ycoord == 7))
+                    {
+                        //RemovePieceFromBoard(sc);
+                        UiCnvSetup.Children.Remove(_draggedPiece.ImageControl);
+                        _draggedPiece.Clear();
+                    }
+                    else
+                    {
+                        AddPieceToBoard(sc, _draggedPiece.Piece, _draggedPiece.Color, _draggedPiece.ImageControl);
+                        _draggedPiece.ImageControl = new Image();
+                    }
                 }
                 else
                 {
@@ -94,7 +103,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// A mouse click occured within the Setup Canvas.
+        /// A mouse click ocurred within the Setup Canvas.
         /// It was in the chessboard as otherwise, off-the-board
         /// pieces woudl have picked up the event
         /// Start the drag process for the piece on the clicked
@@ -448,6 +457,49 @@ namespace ChessForge
             return pt;
         }
 
+        /// <summary>
+        /// Given the position in _boardPosition,
+        /// sets up the board's display.
+        /// </summary>
+        private void SetupImagesForPosition()
+        {
+            for (int x = 0; x <= 7; x++)
+            {
+                for (int y = 0; y <= 7; y++)
+                {
+                    byte square = _boardPosition.Board[x, y];
+                    if (square != 0)
+                    {
+                        Image img = new Image();
+                        PieceType piece = PositionUtils.GetPieceType(square);
+                        PieceColor color = PositionUtils.GetPieceColor(square);
+                        img.Source = Pieces.GetImageForPieceSmall(piece, color);
+                        PlacePieceOnSquare(new SquareCoords(x, y), img);
+                        _pieceImagesOnBoard[x, y] = img;
+                        UiCnvSetup.Children.Add(img);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Clears the _boardPosition.Board object and removes
+        /// all images from the board.
+        /// </summary>
+        private void ClearAll()
+        {
+            PositionUtils.ClearPosition(ref _boardPosition.Board);
+            foreach (Image img in _pieceImagesOnBoard)
+            {
+                if (img != null)
+                {
+                    UiCnvSetup.Children.Remove(img);
+                    img.Source = null;
+                }
+            }
+        }
+
+
 
         //************************************************************
         //
@@ -455,38 +507,100 @@ namespace ChessForge
         //
         //************************************************************
 
+        /// <summary>
+        /// Swaps the side to move.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiLblSideToMove_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
         }
 
+        /// <summary>
+        /// Swaps the side to move.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiImgSwapSides_MouseDown(object sender, MouseButtonEventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// Sets up the starting position in the GUI.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiBtnStartingPos_Click(object sender, RoutedEventArgs e)
         {
+            ClearAll();
 
+            _boardPosition = PositionUtils.SetupStartingPosition();
+            SetupImagesForPosition();
         }
 
+        /// <summary>
+        /// Handles the Clear button being pressed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiBtnClear_Click(object sender, RoutedEventArgs e)
         {
-
+            ClearAll();
         }
 
+        /// <summary>
+        /// Exists the dialog on user pressing the OK button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
             ExitOK = true;
             Close();
         }
 
+        /// <summary>
+        /// Exists the dialog on user pressing the Cancel button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
             ExitOK = false;
             Close();
         }
 
+        /// <summary>
+        /// Makes the Debug button visible.
+        /// </summary>
+        [System.Diagnostics.Conditional("DEBUG")]
+        private void ShowDebugButton()
+        {
+            if (Configuration.DebugMode > 2)
+            {
+                UiDebug.Visibility = Visibility.Visible;
+            }
+        }
 
+        /// <summary>
+        /// Shows the currently setup position on the main board.
+        /// Useful for debugging this dialog's logic.
+        /// </summary>
+        [System.Diagnostics.Conditional("DEBUG")]
+        private void ShowChessBoard()
+        {
+            AppStateManager.MainWin.DisplayPosition(_boardPosition);
+        }
+
+        /// <summary>
+        /// Debug Button click event handler.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiDebug_Click(object sender, RoutedEventArgs e)
+        {
+            ShowChessBoard();
+        }
     }
 }
