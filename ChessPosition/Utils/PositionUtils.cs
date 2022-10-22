@@ -100,6 +100,21 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Removes all pieces from the baord.
+        /// </summary>
+        /// <param name="board"></param>
+        public static void ClearPosition(ref byte[,] board)
+        {
+            for (int x = 0; x < 7; x++)
+            {
+                for (int y = 0; y < 7; y++)
+                {
+                    board[x, y] = 0;
+                }
+            }
+        }
+
+        /// <summary>
         /// Move a piece from one square to another.
         /// Does not perform checks of any kind.
         /// The caller must perform all such checks
@@ -655,7 +670,7 @@ namespace ChessPosition
                 // black
                 if (i + 1 < line.Count)
                 {
-                    move.BlackPly = line[i+1].GetPlyText(true);
+                    move.BlackPly = line[i + 1].GetPlyText(true);
                     move.BlackEval = line[i + 1].EngineEvaluation;
                     move.BlackNodeId = line[i + 1].NodeId;
                 }
