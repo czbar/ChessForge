@@ -594,13 +594,19 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabChapters_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (KeepFocusOnGame())
+            try
             {
-                return;
+                if (KeepFocusOnGame())
+                {
+                    return;
+                }
+
+                UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
             }
-            
-            UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
-            ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -611,7 +617,13 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabStudyTree_GotFocus(object sender, RoutedEventArgs e)
         {
-            SetStudyStateOnFocus();
+            try
+            {
+                SetStudyStateOnFocus();
+            }
+            catch
+            {
+            }
         }
 
 
@@ -622,7 +634,13 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabStudyTree_LostFocus(object sender, RoutedEventArgs e)
         {
-            WorkbookManager.SessionWorkbook.IsStudyBoardFlipped = MainChessBoard.IsFlipped;
+            try
+            {
+                WorkbookManager.SessionWorkbook.IsStudyBoardFlipped = MainChessBoard.IsFlipped;
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -632,11 +650,17 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabBookmarks_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (KeepFocusOnGame())
+            try
             {
-                return;
+                if (KeepFocusOnGame())
+                {
+                    return;
+                }
+                SetStudyStateOnFocus();
             }
-            SetStudyStateOnFocus();
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -645,29 +669,34 @@ namespace ChessForge
         /// </summary>
         private void SetStudyStateOnFocus()
         {
-            bool? boardFlipped = WorkbookManager.SessionWorkbook.IsStudyBoardFlipped;
-            if (boardFlipped != null)
+            try
             {
-                MainChessBoard.FlipBoard(boardFlipped.Value);
-            }
+                bool? boardFlipped = WorkbookManager.SessionWorkbook.IsStudyBoardFlipped;
+                if (boardFlipped != null)
+                {
+                    MainChessBoard.FlipBoard(boardFlipped.Value);
+                }
 
-            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-            if (chapter != null)
-            {
-                chapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                if (chapter != null)
+                {
+                    chapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
+                }
+                AppStateManager.ConfigureMainBoardContextMenu();
+                if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                {
+                    UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
+                }
+                else
+                {
+                    UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                    ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
+                    RestoreSelectedLineAndMoveInActiveView();
+                }
             }
-            AppStateManager.ConfigureMainBoardContextMenu();
-            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+            catch
             {
-                UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
             }
-            else
-            {
-                UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
-                ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
-                RestoreSelectedLineAndMoveInActiveView();
-            }
-
         }
 
         /// <summary>
@@ -677,7 +706,13 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabBookmarks_LostFocus(object sender, RoutedEventArgs e)
         {
-            WorkbookManager.SessionWorkbook.IsStudyBoardFlipped = MainChessBoard.IsFlipped;
+            try
+            {
+                WorkbookManager.SessionWorkbook.IsStudyBoardFlipped = MainChessBoard.IsFlipped;
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -688,35 +723,41 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabModelGames_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (KeepFocusOnGame())
+            try
             {
-                return;
-            }
-
-            bool? boardFlipped = WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped;
-            if (boardFlipped != null)
-            {
-                MainChessBoard.FlipBoard(boardFlipped.Value);
-            }
-
-            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-            if (chapter != null && chapter.GetModelGameCount() > 0)
-            {
-                if (chapter.ActiveModelGameIndex == -1)
+                if (KeepFocusOnGame())
                 {
-                    chapter.ActiveModelGameIndex = 0;
+                    return;
                 }
 
-                SelectModelGame(chapter.ActiveModelGameIndex, false);
-            }
-            else
-            {
-                MainChessBoard.SetStartingPosition();
-            }
+                bool? boardFlipped = WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped;
+                if (boardFlipped != null)
+                {
+                    MainChessBoard.FlipBoard(boardFlipped.Value);
+                }
 
-            AppStateManager.ConfigureMainBoardContextMenu();
-            UiImgMainChessboard.Source = ChessBoards.ChessBoardLightBlue;
-            ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                if (chapter != null && chapter.GetModelGameCount() > 0)
+                {
+                    if (chapter.ActiveModelGameIndex == -1)
+                    {
+                        chapter.ActiveModelGameIndex = 0;
+                    }
+
+                    SelectModelGame(chapter.ActiveModelGameIndex, false);
+                }
+                else
+                {
+                    MainChessBoard.SetStartingPosition();
+                }
+
+                AppStateManager.ConfigureMainBoardContextMenu();
+                UiImgMainChessboard.Source = ChessBoards.ChessBoardLightBlue;
+                ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -726,7 +767,13 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabModelGames_LostFocus(object sender, RoutedEventArgs e)
         {
-            WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped = MainChessBoard.IsFlipped;
+            try
+            {
+                WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped = MainChessBoard.IsFlipped;
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -737,35 +784,41 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabExercises_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (KeepFocusOnGame())
+            try
             {
-                return;
-            }
-
-            bool? boardFlipped = WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped;
-            if (boardFlipped != null)
-            {
-                MainChessBoard.FlipBoard(boardFlipped.Value);
-            }
-
-            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-            if (chapter != null && chapter.GetExerciseCount() > 0)
-            {
-                if (chapter.ActiveExerciseIndex == -1)
+                if (KeepFocusOnGame())
                 {
-                    chapter.ActiveExerciseIndex = 0;
+                    return;
                 }
 
-                SelectExercise(chapter.ActiveExerciseIndex, false);
-            }
-            else
-            {
-                MainChessBoard.SetStartingPosition();
-            }
+                bool? boardFlipped = WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped;
+                if (boardFlipped != null)
+                {
+                    MainChessBoard.FlipBoard(boardFlipped.Value);
+                }
 
-            AppStateManager.ConfigureMainBoardContextMenu();
-            UiImgMainChessboard.Source = ChessBoards.ChessBoardLightGreen;
-            ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                if (chapter != null && chapter.GetExerciseCount() > 0)
+                {
+                    if (chapter.ActiveExerciseIndex == -1)
+                    {
+                        chapter.ActiveExerciseIndex = 0;
+                    }
+
+                    SelectExercise(chapter.ActiveExerciseIndex, false);
+                }
+                else
+                {
+                    MainChessBoard.SetStartingPosition();
+                }
+
+                AppStateManager.ConfigureMainBoardContextMenu();
+                UiImgMainChessboard.Source = ChessBoards.ChessBoardLightGreen;
+                ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -775,7 +828,13 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabExercises_LostFocus(object sender, RoutedEventArgs e)
         {
-            WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = MainChessBoard.IsFlipped;
+            try
+            {
+                WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = MainChessBoard.IsFlipped;
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>

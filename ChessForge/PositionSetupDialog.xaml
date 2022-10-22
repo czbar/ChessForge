@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="Position Setup" Height="521" Width="815" MouseUp="Window_MouseUp" MouseMove="Window_MouseMove" MouseLeave="Window_MouseLeave">
+        Title="Position Setup" Height="521" Width="815" MouseUp="Window_MouseUp" MouseMove="Window_MouseMove" MouseLeave="Window_MouseLeave" >
     <Grid x:Name="_grdDialog" >
-        <Canvas x:Name="UiCnvSetup" Margin="105,41,0,0" Width="268" Height="368" HorizontalAlignment="Left" VerticalAlignment="Top" >
-            <Canvas x:Name="UiCnvBoard" Background="Black" Height="268" Width="268" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="0" Canvas.Top="50" >
-                <Image x:Name="UiImgChessBoard" HorizontalAlignment="Left" Height="240" VerticalAlignment="Top" Width="240" Source="/Resources/Images/ChessBoardGreySmall.png" MouseDown="UiImgBoard_MouseDown" MouseUp="UiImgBoard_MouseUp" Canvas.Left="14" Canvas.Top="14" />
+        <Canvas x:Name="UiCnvSetup" Margin="105,41,0,0" Width="268" Height="368" HorizontalAlignment="Left" VerticalAlignment="Top" MouseDown="UiCnvSetup_MouseDown" >
+            <Canvas x:Name="UiCnvBoard" Background="Black" Height="268" Width="268" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="0" Canvas.Top="50"  >
+                <Image x:Name="UiImgChessBoard" HorizontalAlignment="Left" Height="240" VerticalAlignment="Top" Width="240" Source="/Resources/Images/ChessBoardGreySmall.png" Canvas.Left="14" Canvas.Top="14" />
             </Canvas>
             <Image x:Name="UiImgBlackKing" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/BlackKing.png" MouseDown="UiImgBlackKing_MouseDown" Canvas.Left="48" Canvas.Top="12"/>
             <Image x:Name="UiImgBlackQueen" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/BlackQueen.png" MouseDown="UiImgBlackQueen_MouseDown" Canvas.Left="78" Canvas.Top="12"/>
@@ -26,8 +26,8 @@
             <Image x:Name="UiImgWhitePawn" HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/WhitePawn.png" MouseDown="UiImgWhitePawn_MouseDown" RenderTransformOrigin="-0.867,0.101" Canvas.Left="193" Canvas.Top="323"/>
         </Canvas>
 
-        <Label x:Name="UiLblSideToMove" Content="White to Play" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="497,110,0,0" VerticalAlignment="Top" Width="136" MouseDown="UiLblSideToMove_MouseDown"/>
-        <Image x:Name="UiImgSwapSides" HorizontalAlignment="Left" Height="25" Margin="643,114,0,0" VerticalAlignment="Top" Width="25" Source="/Resources/Images/swap_vert.png" RenderTransformOrigin="0.082,0.705" MouseDown="UiImgSwapSides_MouseDown"/>
+        <Label x:Name="UiLblSideToMove" Content="White to Play" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="501,110,0,0" VerticalAlignment="Top" Width="136" MouseDown="UiLblSideToMove_MouseDown"/>
+        <Image x:Name="UiImgSwapSides" HorizontalAlignment="Left" Height="25" Margin="648,114,0,0" VerticalAlignment="Top" Width="25" Source="/Resources/Images/swap_vert.png" RenderTransformOrigin="0.082,0.705" MouseDown="UiImgSwapSides_MouseDown"/>
         <GroupBox x:Name="UiGbCastling" HorizontalAlignment="Left" Height="110" Header="Castling" Margin="431,151,0,0" VerticalAlignment="Top" Width="293">
         </GroupBox>
         <Label x:Name="UiLblWhite" Content="White" HorizontalAlignment="Left" Margin="456,178,0,0" VerticalAlignment="Top"/>
@@ -45,6 +45,7 @@
         <Button x:Name="UiBtnCancel" Content="Cancel" Width="80"  HorizontalAlignment="Left" Margin="430,431,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
         <Button x:Name="UiBtnStartingPos" Content="Starting Position" Width="160" HorizontalAlignment="Left" Margin="501,282,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="UiBtnStartingPos_Click"/>
         <Button x:Name="UiBtnClear" Content="Clear Board" Width="160" HorizontalAlignment="Left" Margin="501,315,0,0" VerticalAlignment="Top"  Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="UiBtnClear_Click" />
+        <Button x:Name="UiDebug" Content="Debug Position" Visibility="Collapsed" HorizontalAlignment="Left" Margin="501,23,0,0" Width="160" VerticalAlignment="Top" Click="UiDebug_Click"/>
 
     </Grid>
 </Window>

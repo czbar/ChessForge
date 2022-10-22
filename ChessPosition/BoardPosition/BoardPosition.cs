@@ -11,7 +11,7 @@ namespace ChessPosition
     /// including dynamic properties, 
     /// as a small object that will be created for each leaf
     /// in the PGN training tree.
-    /// In particura, it can be used to generate FEN 
+    /// In particular, it can be used to generate FEN 
     /// and/or to check if 2 positions are identical.
     /// </summary>
     public class BoardPosition
