@@ -15,23 +15,35 @@ namespace ChessForge
         /// </summary>
         public bool ExitOK = false;
 
+        // square side's size
         private int _squareSize = 30;
 
+        // left offset between the SetupCanvas and BoardCanvas
         private double _boardCanvasToSetupCanvasLeftOffset;
+        // top offset between the SetupCanvas and BoardCanvas
         private double _boardCanvasToSetupCanvasTopOffset;
 
+        // left offset between the the Board Image and BoardCanvas
         private double _boardImageToBoardCanvasLeftOffset;
+        // top offset between the the Board Image and BoardCanvas
         private double _boardImageToBoardCanvasTopOffset;
 
+        // left offset between the the Board Image and Setup Canvas
         private double _boardLeftOffset;
+        // top offset between the the Board Image and Setup Canvas
         private double _boardTopOffset;
 
+        /// <summary>
+        /// Object representing the piece being dragged.
+        /// </summary>
         private PositionSetupDraggedPiece _draggedPiece = new PositionSetupDraggedPiece();
 
         private ChessBoardSmall _chessBoard;
 
+        /// Holds the current position
         private BoardPosition _boardPosition = new BoardPosition();
 
+        // Holds piece images currently showing on the board
         private Image[,] _pieceImagesOnBoard = new Image[8, 8];
 
         /// <summary>
@@ -52,6 +64,61 @@ namespace ChessForge
             _boardTopOffset = _boardCanvasToSetupCanvasTopOffset + _boardImageToBoardCanvasTopOffset;
         }
 
+        /// <summary>
+        /// If mouse was released while over the board
+        /// during the drag process, drop the piece
+        /// on the square after under the mouse.
+        /// If there was a piece on the square already,
+        /// replace it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (_draggedPiece.IsDragInProgress)
+            {
+                _draggedPiece.IsDragInProgress = false;
+                SquareCoords sc = GetSquareCoordsFromSetupCanvasPoint(e.GetPosition(UiCnvSetup));
+                if (sc != null)
+                {
+                    AddPieceToBoard(sc, _draggedPiece.Piece, _draggedPiece.Color, _draggedPiece.ImageControl);
+                    _draggedPiece.ImageControl = new Image();
+                }
+                else
+                {
+                    RemovePieceFromBoard(sc);
+                }
+                _draggedPiece.Clear();
+            }
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// A mouse click occured within the Setup Canvas.
+        /// It was in the chessboard as otherwise, off-the-board
+        /// pieces woudl have picked up the event
+        /// Start the drag process for the piece on the clicked
+        /// square, if any.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCnvSetup_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Point mousePoint = e.GetPosition(UiCnvSetup);
+
+            SquareCoords sc = GetSquareCoordsFromSetupCanvasPoint(mousePoint);
+            StartDrag(sc, e);
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Mouse Move event is of interest during the dragging process.
+        /// Paints the image at the new location.
+        /// Cancel the dragging process and removes the piece from the board
+        /// if we strayed off the SetupCanvas
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
             if (_draggedPiece.IsDragInProgress)
@@ -78,8 +145,6 @@ namespace ChessForge
                 else
                 {
                     Canvas.SetZIndex(_draggedPiece.ImageControl, Constants.ZIndex_PieceInAnimation);
-                    //mousePoint.X += UiImgChessBoard.Margin.Left;
-                    //mousePoint.Y += UiImgChessBoard.Margin.Top;
 
                     Canvas.SetLeft(_draggedPiece.ImageControl, mousePoint.X - _squareSize / 2);
                     Canvas.SetTop(_draggedPiece.ImageControl, mousePoint.Y - _squareSize / 2);
@@ -87,18 +152,25 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// We moved mouse outside the SetupCanvas area.
+        /// We stop moving and remove the dragged piece.
+        /// This is same as in Window_MoveMouse which should
+        /// be called as well so this is just in case.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_MouseLeave(object sender, MouseEventArgs e)
         {
             if (_draggedPiece.IsDragInProgress)
             {
-                UiCnvSetup.Children.Remove(_draggedPiece.ImageControl);
+                RemovePieceFromBoard(null);
                 _draggedPiece.IsDragInProgress = false;
             }
         }
 
-
         /// <summary>
-        /// Sets up the drag operation.
+        /// Sets up the drag operation using an off-the-board piece.
         /// </summary>
         /// <param name="piece"></param>
         /// <param name="color"></param>
@@ -117,6 +189,8 @@ namespace ChessForge
             _draggedPiece.Piece = piece;
             _draggedPiece.Color = color;
             _draggedPiece.IsDragInProgress = true;
+
+            e.Handled = true;
         }
 
         /// <summary>
@@ -272,83 +346,13 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// If mouse was released while over the board
-        /// during the drag process, drop the piece
-        /// on the square after under the mouse.
-        /// If there was a piece on the square already,
-        /// replace it.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Window_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            if (_draggedPiece.IsDragInProgress)
-            {
-                _draggedPiece.IsDragInProgress = false;
-                SquareCoords sc = GetSquareCoordsFromSetupCanvasPoint(e.GetPosition(UiCnvSetup));
-                if (sc != null)
-                {
-                    AddPieceToBoard(sc, _draggedPiece.Piece, _draggedPiece.Color, _draggedPiece.ImageControl);
-                    _draggedPiece.ImageControl = new Image();
-                }
-                else
-                {
-                    RemovePieceFromBoard(sc);
-                }
-                _draggedPiece.Clear();
-            }
-            e.Handled = true;
-        }
-
-        private void UiLblSideToMove_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void UiImgSwapSides_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void UiBtnStartingPos_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void UiBtnClear_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
-        {
-            ExitOK = true;
-            Close();
-        }
-
-        private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            ExitOK = false;
-            Close();
-        }
-
-        private void UiCnvSetup_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Point mousePoint = e.GetPosition(UiCnvSetup);
-
-            SquareCoords sc = GetSquareCoordsFromSetupCanvasPoint(mousePoint);
-            StartDrag(sc, e);
-            e.Handled = true;
-        }
-
-        /// <summary>
         /// Returns square coordinates of the clicked square or null
         /// if the click occured outside the board.
         /// The passed Point must be offset from the Setup Canvas.
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        SquareCoords GetSquareCoordsFromSetupCanvasPoint(Point pt)
+        private SquareCoords GetSquareCoordsFromSetupCanvasPoint(Point pt)
         {
             pt.X -= _boardLeftOffset;
             pt.Y -= _boardTopOffset;
@@ -373,7 +377,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Adds piece tp the board.
+        /// Adds a piece to the board.
         /// Updates the _pieceImagesOnBoard array,
         /// and the BoardPosition.Board array.
         /// Removes any piece that may have been on the square before.
@@ -416,7 +420,11 @@ namespace ChessForge
             }
         }
 
-
+        /// <summary>
+        /// Places a piece image in the center of a square.
+        /// </summary>
+        /// <param name="sc"></param>
+        /// <param name="piece"></param>
         private void PlacePieceOnSquare(SquareCoords sc, Image piece)
         {
             Point pt = GetSquareTopLeft(sc);
@@ -424,6 +432,12 @@ namespace ChessForge
             Canvas.SetTop(piece, pt.Y);
         }
 
+        /// <summary>
+        /// Gets Top and Left offsets of the square
+        /// with given coordinates.
+        /// </summary>
+        /// <param name="sc"></param>
+        /// <returns></returns>
         private Point GetSquareTopLeft(SquareCoords sc)
         {
             Point pt = new Point();
@@ -433,6 +447,46 @@ namespace ChessForge
 
             return pt;
         }
+
+
+        //************************************************************
+        //
+        // Button click handlers.
+        //
+        //************************************************************
+
+        private void UiLblSideToMove_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void UiImgSwapSides_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void UiBtnStartingPos_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UiBtnClear_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
+        {
+            ExitOK = true;
+            Close();
+        }
+
+        private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            ExitOK = false;
+            Close();
+        }
+
 
     }
 }
