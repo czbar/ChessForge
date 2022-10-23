@@ -256,67 +256,70 @@ namespace ChessForge
         /// <param name="lineId"></param>
         public void SelectLineAndMove(string lineId, int nodeId)
         {
-            try
+            if (_variationTree.ShowTreeLines)
             {
-                if (_selectedRun != null)
+                try
                 {
-                    _selectedRun.Background = _selectedRunBkg;
-                    _selectedRun.Foreground = _selectedRunFore;
-                }
-
-                ObservableCollection<TreeNode> lineToSelect = _variationTree.SelectLine(lineId);
-                foreach (TreeNode nd in lineToSelect)
-                {
-                    if (nd.NodeId != 0)
+                    if (_selectedRun != null)
                     {
-
-                        if (_dictNodeToRun.ContainsKey(nd.NodeId))
-                        {
-                            _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
-                        }
-                        else if (Configuration.DebugLevel != 0)
-                        {  //we should always have this key, so show debug message if not
-                            DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-brushRegularBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
-                        }
+                        _selectedRun.Background = _selectedRunBkg;
+                        _selectedRun.Foreground = _selectedRunFore;
                     }
-                }
 
-                _selectedRun = null;
-                _dictNodeToRun.TryGetValue(nodeId, out _selectedRun);
-
-                if (!string.IsNullOrEmpty(lineId))
-                {
+                    ObservableCollection<TreeNode> lineToSelect = _variationTree.SelectLine(lineId);
                     foreach (TreeNode nd in lineToSelect)
                     {
                         if (nd.NodeId != 0)
                         {
-                            //we should always have this key, so allow crash in the debug mode
+
                             if (_dictNodeToRun.ContainsKey(nd.NodeId))
                             {
-                                _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
+                                _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
                             }
                             else if (Configuration.DebugLevel != 0)
-                            {  //we should always have this key, so show deubug message if not
-                                DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-_brushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
+                            {  //we should always have this key, so show debug message if not
+                                DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-brushRegularBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
                             }
                         }
                     }
-                }
 
-                if (_selectedRun != null)
+                    _selectedRun = null;
+                    _dictNodeToRun.TryGetValue(nodeId, out _selectedRun);
+
+                    if (!string.IsNullOrEmpty(lineId))
+                    {
+                        foreach (TreeNode nd in lineToSelect)
+                        {
+                            if (nd.NodeId != 0)
+                            {
+                                //we should always have this key, so allow crash in the debug mode
+                                if (_dictNodeToRun.ContainsKey(nd.NodeId))
+                                {
+                                    _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
+                                }
+                                else if (Configuration.DebugLevel != 0)
+                                {  //we should always have this key, so show deubug message if not
+                                    DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-_brushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
+                                }
+                            }
+                        }
+                    }
+
+                    if (_selectedRun != null)
+                    {
+                        _selectedRunBkg = (SolidColorBrush)_selectedRun.Background;
+                        _selectedRunFore = (SolidColorBrush)_selectedRun.Foreground;
+
+                        _selectedRun.Background = _brushSelectedMoveBkg;
+                        _selectedRun.Foreground = _brushSelectedMoveFore;
+
+                        _selectedRun.BringIntoView();
+                    }
+                }
+                catch (Exception ex)
                 {
-                    _selectedRunBkg = (SolidColorBrush)_selectedRun.Background;
-                    _selectedRunFore = (SolidColorBrush)_selectedRun.Foreground;
-
-                    _selectedRun.Background = _brushSelectedMoveBkg;
-                    _selectedRun.Foreground = _brushSelectedMoveFore;
-
-                    _selectedRun.BringIntoView();
+                    AppLog.Message("SelectLineAndMove()", ex);
                 }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("SelectLineAndMove()", ex);
             }
         }
 
@@ -369,41 +372,50 @@ namespace ChessForge
                 Document.Blocks.Add(boardPara);
             }
 
-            // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
-            // and note the distances in the Nodes so that we can use them when creating the document
-            // in the forward traversing
-            SetNodeDistances();
-
-            TreeNode root;
-            if (rootNodeId == 0)
+            Paragraph buttonShowHide = BuildExerciseShowHideButton();
+            if (buttonShowHide != null)
             {
-                root = _variationTree.Nodes[0];
+                Document.Blocks.Add(buttonShowHide);
             }
-            else
+
+            if (contentType != GameData.ContentType.EXERCISE || _variationTree.ShowTreeLines)
             {
-                root = _variationTree.GetNodeFromNodeId(rootNodeId);
-                if (includeStem)
+                // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
+                // and note the distances in the Nodes so that we can use them when creating the document
+                // in the forward traversing
+                SetNodeDistances();
+
+                TreeNode root;
+                if (rootNodeId == 0)
                 {
-                    Paragraph paraStem = BuildWorkbookStemLine(root);
-                    Document.Blocks.Add(paraStem);
+                    root = _variationTree.Nodes[0];
                 }
-            }
-
-            // start by creating a level 1 paragraph.
-            Paragraph para = CreateParagraph("0");
-            Document.Blocks.Add(para);
-
-            CreateStartingNode(para);
-
-            // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
-            BuildTreeLineText(root, para, includeStem);
-
-            if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
-            {
-                Paragraph resultPara = BuildResultPara();
-                if (resultPara != null)
+                else
                 {
-                    Document.Blocks.Add(resultPara);
+                    root = _variationTree.GetNodeFromNodeId(rootNodeId);
+                    if (includeStem)
+                    {
+                        Paragraph paraStem = BuildWorkbookStemLine(root);
+                        Document.Blocks.Add(paraStem);
+                    }
+                }
+
+                // start by creating a level 1 paragraph.
+                Paragraph para = CreateParagraph("0");
+                Document.Blocks.Add(para);
+
+                CreateStartingNode(para);
+
+                // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
+                BuildTreeLineText(root, para, includeStem);
+
+                if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
+                {
+                    Paragraph resultPara = BuildResultPara();
+                    if (resultPara != null)
+                    {
+                        Document.Blocks.Add(resultPara);
+                    }
                 }
             }
 
@@ -661,6 +673,64 @@ namespace ChessForge
                 vb.Visibility = Visibility.Visible;
 
                 para.Inlines.Add(uIContainer);
+                return para;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Responds to the Show/Hide button being clicked by
+        /// flipping the ShowTreeLines flag and requesting the rebuild of the document.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventShowHideButtonClicked(object sender, RoutedEventArgs e)
+        {
+            _variationTree.ShowTreeLines = !_variationTree.ShowTreeLines;
+            BuildFlowDocumentForVariationTree();
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Creates a Show/Hide button.
+        /// </summary>
+        /// <returns></returns>
+        private Paragraph BuildExerciseShowHideButton()
+        {
+            if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
+            {
+                Paragraph para = CreateParagraph("2");
+                para.Margin = new Thickness(130, 0, 0, 40);
+
+                InlineUIContainer uIContainer = new InlineUIContainer();
+
+                Button btn = new Button();
+                if (_variationTree.ShowTreeLines)
+                {
+                    btn.Content = "Hide Solution";
+                }
+                else
+                {
+                    btn.Content = "Show Solution";
+                }
+
+                btn.Foreground = Brushes.Black;
+                btn.FontSize = 14;
+                btn.Width = 120;
+                btn.Height = 30;
+                btn.PreviewMouseDown += EventShowHideButtonClicked;
+
+                btn.HorizontalContentAlignment = HorizontalAlignment.Center;
+                btn.VerticalContentAlignment = VerticalAlignment.Center;
+
+                btn.Visibility = Visibility.Visible;
+
+                uIContainer.Child = btn;
+                para.Inlines.Add(uIContainer);
+
                 return para;
             }
             else
