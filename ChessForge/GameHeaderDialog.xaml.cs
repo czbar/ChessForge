@@ -31,11 +31,13 @@ namespace ChessForge
         /// Constructor to create the dialog.
         /// </summary>
         /// <param name="tree"></param>
-        public GameHeaderDialog(VariationTree tree)
+        public GameHeaderDialog(VariationTree tree, string title)
         {
             _tree = tree;
             InitializeComponent();
             InitializeData();
+
+            this.Title = title;
         }
 
         /// <summary>
