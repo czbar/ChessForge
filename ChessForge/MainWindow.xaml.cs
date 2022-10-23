@@ -945,6 +945,8 @@ namespace ChessForge
         public void SetupGuiForActiveExercise(int gameIndex, bool focusOnExercise)
         {
             _exerciseTreeView = new VariationTreeView(UiRtbExercisesView.Document, this);
+            UiRtbExercisesView.IsDocumentEnabled = true;
+
             if (ActiveVariationTree.Nodes.Count == 0)
             {
                 ActiveVariationTree.CreateNew();
