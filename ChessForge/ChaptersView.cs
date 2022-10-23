@@ -269,6 +269,10 @@ namespace ChessForge
                     Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.ModelGames[i].Header.BuildGameHeaderLine());
                     rGame.Name = _run_model_game_ + i.ToString();
                     rGame.MouseDown += EventModelGameRunClicked;
+                    if (i == chapter.ActiveModelGameIndex)
+                    {
+                        rGame.FontWeight = FontWeights.Bold;
+                    }
                     para.Inlines.Add(rGame);
                 }
             }
@@ -300,6 +304,10 @@ namespace ChessForge
                     Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.Exercises[i].Header.BuildGameHeaderLine());
                     rGame.Name = _run_exercise_ + i.ToString();
                     rGame.MouseDown += EventExerciseRunClicked;
+                    if (i == chapter.ActiveModelGameIndex)
+                    {
+                        rGame.FontWeight = FontWeights.Bold;
+                    }
                     para.Inlines.Add(rGame);
                 }
             }
@@ -503,6 +511,7 @@ namespace ChessForge
 
                 int gameIndex = TextUtils.GetIdFromPrefixedString(r.Name);
                 WorkbookManager.LastClickedModelGameIndex = gameIndex;
+                WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
 
                 if (chapter != null && gameIndex >= 0 && gameIndex < chapter.ModelGames.Count)
                 {
@@ -513,9 +522,10 @@ namespace ChessForge
                     else if (e.ChangedButton == MouseButton.Right)
                     {
                         WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.MODEL_GAME);
-                        //_mainWin.SelectModelGame(chapterId, false);
                     }
                 }
+
+                RebuildChapterParagraph(chapter);
             }
             catch (Exception ex)
             {
@@ -541,21 +551,23 @@ namespace ChessForge
                     chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 }
 
-                int gameIndex = TextUtils.GetIdFromPrefixedString(r.Name);
-                WorkbookManager.LastClickedExerciseIndex = gameIndex;
+                int exerciseIndex = TextUtils.GetIdFromPrefixedString(r.Name);
+                WorkbookManager.LastClickedExerciseIndex = exerciseIndex;
+                WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = exerciseIndex;
 
-                if (chapter != null && gameIndex >= 0 && gameIndex < chapter.Exercises.Count)
+                if (chapter != null && exerciseIndex >= 0 && exerciseIndex < chapter.Exercises.Count)
                 {
                     if (e.ChangedButton == MouseButton.Left)
                     {
-                        _mainWin.SelectExercise(gameIndex, true);
+                        _mainWin.SelectExercise(exerciseIndex, true);
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
                         WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.EXERCISE);
-                        //_mainWin.SelectExercise(chapterId, false);
                     }
                 }
+
+                RebuildChapterParagraph(chapter);
             }
             catch (Exception ex)
             {
