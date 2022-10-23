@@ -554,12 +554,19 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Checks if the clicked piece is eleigible for making a move.
+        /// Checks if the clicked piece is eligible for making a move.
         /// </summary>
         /// <param name="sqNorm"></param>
         /// <returns></returns>
         private bool CanMovePiece(SquareCoords sqNorm)
         {
+            // block the ability to make moves in Exercise
+            // TODO: implement such an ability
+            if (ActiveVariationTree.ContentType == GameData.ContentType.EXERCISE)
+            {
+                return false;
+            }
+
             PieceColor pieceColor = MainChessBoard.GetPieceColor(sqNorm);
 
             // in the Manual Review, the color of the piece on the main board must match the side on the move in the selected position
@@ -1735,6 +1742,5 @@ namespace ChessForge
                 BoardShapesManager.CancelShapeDraw(true);
             }
         }
-
     }
 }
