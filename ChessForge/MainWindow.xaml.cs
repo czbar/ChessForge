@@ -199,6 +199,8 @@ namespace ChessForge
                 this.Width = Configuration.MainWinPos.Right - Configuration.MainWinPos.Left;
                 this.Height = Configuration.MainWinPos.Bottom - Configuration.MainWinPos.Top;
             }
+            
+            DebugUtils.DebugLevel = Configuration.DebugLevel;
 
             // main chess board
             MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true, true);
@@ -210,7 +212,7 @@ namespace ChessForge
 
             ActiveLineReplay = new GameReplay(this, MainChessBoard, BoardCommentBox);
 
-            _isDebugMode = Configuration.DebugMode != 0;
+            _isDebugMode = Configuration.DebugLevel != 0;
         }
 
         /// <summary>

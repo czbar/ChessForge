@@ -96,7 +96,7 @@ namespace ChessForge
             }
             catch (Exception ex)
             {
-                if (Configuration.DebugMode != 0)
+                if (Configuration.DebugLevel != 0)
                 {
                     AppLog.Message("ShowEngineLines(): " + ex.Message);
                 }
@@ -160,7 +160,7 @@ namespace ChessForge
             }
             catch
             {
-                if (Configuration.DebugMode != 0)
+                if (Configuration.DebugLevel != 0)
                 {
                     AppLog.Message("BuildTextLine() exception: LineNo=" + lineNo.ToString() + ". LineText: " + line.Line);
                 }
@@ -207,7 +207,7 @@ namespace ChessForge
                 }
                 catch (Exception ex)
                 {
-                    if (Configuration.DebugMode != 0)
+                    if (Configuration.DebugLevel != 0)
                     {
                         AppLog.Message("Exception in BuildMoveSequence(): " + ex.Message);
                     }

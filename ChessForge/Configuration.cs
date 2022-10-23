@@ -88,15 +88,13 @@ namespace ChessForge
         public static bool PgnExportEvaluations = true;
 
         /// <summary>
-        /// Debug node.
-        /// If set to 1, messages will be logged for the app and the engine.
+        /// Debug message level.
+        /// 0 - no debug messaging of logging
+        /// 1 - logging for the app and the engine is enabled.
+        /// 2 - messages boxes may pop up when some errors or exceptions ar caught
+        /// 3 - some heavy debug tools are enabled (e.g. an extra button in Position Setup to show the current setup in the main window)
         /// </summary>
-        public static int DebugMode = 0;
-
-        /// <summary>
-        /// Returns true if app is in debug mode
-        /// </summary>
-        public static bool IsDebug { get { return DebugMode != 0; } }
+        public static int DebugLevel = 0;
 
         //*********************************
         // CONFIGUARTION ITEM NAMES
@@ -242,7 +240,7 @@ namespace ChessForge
             {
                 string fileName = Path.Combine(StartDirectory, ConfigurationFile);
 
-                sb.Append(CFG_DEBUG_MODE + "=" + DebugMode.ToString() + Environment.NewLine);
+                sb.Append(CFG_DEBUG_MODE + "=" + DebugLevel.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_MOVE_SPEED + "=" + MoveSpeed.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_DIRECTORY + "=" + LastOpenDirectory.ToString() + Environment.NewLine);
@@ -471,7 +469,7 @@ namespace ChessForge
                             int.TryParse(value, out MoveSpeed);
                             break;
                         case CFG_DEBUG_MODE:
-                            int.TryParse(value, out DebugMode);
+                            int.TryParse(value, out DebugLevel);
                             break;
                         case CFG_LAST_DIRECTORY:
                             LastOpenDirectory = value;

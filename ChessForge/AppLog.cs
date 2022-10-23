@@ -34,7 +34,7 @@ namespace ChessForge
         [Conditional("DEBUG")]
         public static void Message(string msg)
         {
-            if (Configuration.DebugMode == 0)
+            if (Configuration.DebugLevel == 0)
                 return;
 
             lock (AppLogLock)
@@ -53,7 +53,7 @@ namespace ChessForge
         [Conditional("DEBUG")]
         public static void Message(string location, Exception ex)
         {
-            if (Configuration.DebugMode == 0 || ex == null)
+            if (Configuration.DebugLevel == 0 || ex == null)
                 return;
 
             lock (AppLogLock)
