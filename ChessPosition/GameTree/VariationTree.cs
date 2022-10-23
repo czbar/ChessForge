@@ -27,6 +27,14 @@ namespace GameTree
         public VariationTree(GameData.ContentType contentType)
         {
             Header.SetContentType(contentType);
+            if (contentType == GameData.ContentType.EXERCISE)
+            {
+                ShowTreeLines = false;
+            }
+            else
+            {
+                ShowTreeLines = true;
+            }
         }
 
         /// <summary>
@@ -42,6 +50,7 @@ namespace GameTree
             set
             {
                 Header.SetContentType(value);
+                ShowTreeLines = (value != GameData.ContentType.EXERCISE);
             }
         }
 
@@ -104,7 +113,7 @@ namespace GameTree
         public bool ShowTreeLines
         {
             get { return _showTreeLines; }
-            set {_showTreeLines = value; }
+            set { _showTreeLines = value; }
         }
 
         /// <summary>
