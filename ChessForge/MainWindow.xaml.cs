@@ -199,6 +199,8 @@ namespace ChessForge
                 this.Width = Configuration.MainWinPos.Right - Configuration.MainWinPos.Left;
                 this.Height = Configuration.MainWinPos.Bottom - Configuration.MainWinPos.Top;
             }
+            
+            DebugUtils.DebugLevel = Configuration.DebugLevel;
 
             // main chess board
             MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true, true);
@@ -210,7 +212,7 @@ namespace ChessForge
 
             ActiveLineReplay = new GameReplay(this, MainChessBoard, BoardCommentBox);
 
-            _isDebugMode = Configuration.DebugMode != 0;
+            _isDebugMode = Configuration.DebugLevel != 0;
         }
 
         /// <summary>
@@ -552,12 +554,19 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Checks if the clicked piece is eleigible for making a move.
+        /// Checks if the clicked piece is eligible for making a move.
         /// </summary>
         /// <param name="sqNorm"></param>
         /// <returns></returns>
         private bool CanMovePiece(SquareCoords sqNorm)
         {
+            // block the ability to make moves in Exercise
+            // TODO: implement such an ability
+            if (ActiveVariationTree.ContentType == GameData.ContentType.EXERCISE)
+            {
+                return false;
+            }
+
             PieceColor pieceColor = MainChessBoard.GetPieceColor(sqNorm);
 
             // in the Manual Review, the color of the piece on the main board must match the side on the move in the selected position
@@ -943,6 +952,8 @@ namespace ChessForge
         public void SetupGuiForActiveExercise(int gameIndex, bool focusOnExercise)
         {
             _exerciseTreeView = new VariationTreeView(UiRtbExercisesView.Document, this);
+            UiRtbExercisesView.IsDocumentEnabled = true;
+
             if (ActiveVariationTree.Nodes.Count == 0)
             {
                 ActiveVariationTree.CreateNew();
@@ -1731,6 +1742,5 @@ namespace ChessForge
                 BoardShapesManager.CancelShapeDraw(true);
             }
         }
-
     }
 }

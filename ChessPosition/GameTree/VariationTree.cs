@@ -27,6 +27,14 @@ namespace GameTree
         public VariationTree(GameData.ContentType contentType)
         {
             Header.SetContentType(contentType);
+            if (contentType == GameData.ContentType.EXERCISE)
+            {
+                ShowTreeLines = false;
+            }
+            else
+            {
+                ShowTreeLines = true;
+            }
         }
 
         /// <summary>
@@ -42,6 +50,7 @@ namespace GameTree
             set
             {
                 Header.SetContentType(value);
+                ShowTreeLines = (value != GameData.ContentType.EXERCISE);
             }
         }
 
@@ -91,6 +100,20 @@ namespace GameTree
             {
                 return GetNodeFromNodeId(SelectedNodeId);
             }
+        }
+
+        // whethet to show the tree lines in the hosting view
+        private bool _showTreeLines = true;
+
+        /// <summary>
+        /// Determines whether to show the tree lines in the hosting view.
+        /// This will apply e.g. when we are showing the exercise and the user
+        /// can click a button to show or hide the solution,
+        /// </summary>
+        public bool ShowTreeLines
+        {
+            get { return _showTreeLines; }
+            set { _showTreeLines = value; }
         }
 
         /// <summary>
@@ -201,6 +224,21 @@ namespace GameTree
 
             TreeNode root = new TreeNode(null, "", 0);
             FenParser.ParseFenIntoBoard(fen, ref root.Position);
+            AddNode(root);
+            BuildLines();
+        }
+
+        /// <summary>
+        /// Creates a new Tree starting from the passed position
+        /// </summary>
+        /// <param name="position"></param>
+        public void CreateNew(BoardPosition position)
+        {
+            VariationLines.Clear();
+            Nodes.Clear();
+
+            TreeNode root = new TreeNode(null, "", 0);
+            root.Position = new BoardPosition(position);
             AddNode(root);
             BuildLines();
         }

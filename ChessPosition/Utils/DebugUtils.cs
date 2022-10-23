@@ -15,6 +15,11 @@ namespace ChessPosition
     public class DebugUtils
     {
         /// <summary>
+        /// The level of debugging detail.
+        /// </summary>
+        public static int DebugLevel = 0;
+
+        /// <summary>
         /// Maps Pieces to letters for the debug output.
         /// </summary>
         public static Dictionary<PieceType, char> FenPieceToChar = new Dictionary<PieceType, char>()
@@ -35,7 +40,10 @@ namespace ChessPosition
         [Conditional("DEBUG")]
         public static void ShowDebugMessage(string msg)
         {
-            MessageBox.Show(msg, "DEBUG", MessageBoxButton.OK, MessageBoxImage.Error);
+            if (DebugLevel >= 2)
+            {
+                MessageBox.Show(msg, "DEBUG", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         /// <summary>

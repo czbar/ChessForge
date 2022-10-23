@@ -160,14 +160,8 @@ namespace ChessForge
         {
             if (idx < 0 || idx >= NodeList.Count)
             {
-                if (Configuration.IsDebug)
-                {
-                    DebugUtils.ShowDebugMessage("ScoreSheet:GetNodeAtIndex bad index = " + idx.ToString());
-                }
-                else
-                {
-                    return null;
-                }
+                DebugUtils.ShowDebugMessage("ScoreSheet:GetNodeAtIndex bad index = " + idx.ToString());
+                return null;
             }
             return idx >= 0 ? NodeList[idx] : null;
         }

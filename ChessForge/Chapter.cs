@@ -43,7 +43,14 @@ namespace ChessForge
         /// </summary>
         public int ActiveModelGameIndex
         {
-            get => _activeModelGameIndex; 
+            get
+            {
+                if (_activeModelGameIndex < 0 && ModelGames.Count > 0)
+                {
+                    _activeModelGameIndex = 0;
+                }
+                return _activeModelGameIndex;
+            }
             set => _activeModelGameIndex = value;
         }
 
@@ -53,7 +60,14 @@ namespace ChessForge
         /// </summary>
         public int ActiveExerciseIndex
         {
-            get => _activeExerciseIndex;
+            get
+            {
+                if (_activeExerciseIndex < 0 && Exercises.Count > 0)
+                {
+                    _activeExerciseIndex = 0;
+                }
+                return _activeExerciseIndex;
+            }
             set => _activeExerciseIndex = value;
         }
 
