@@ -2,12 +2,12 @@
 using GameTree;
 using Microsoft.Win32;
 using System;
-using System.IO;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -500,7 +500,7 @@ namespace ChessForge
                     VariationTree hold = chapter.ModelGames[index];
                     chapter.ModelGames[index] = chapter.ModelGames[index - 1];
                     chapter.ModelGames[index - 1] = hold;
-                    
+
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     AppStateManager.IsDirty = true;
                 }
@@ -508,6 +508,35 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("UiMnGameUp_Click()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Moves game up one position in the chapter's game list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExerciseUp_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int index = WorkbookManager.LastClickedExerciseIndex;
+                int exerciseCount = chapter.GetExerciseCount();
+
+                if (index > 0 && index < exerciseCount)
+                {
+                    VariationTree hold = chapter.Exercises[index];
+                    chapter.Exercises[index] = chapter.Exercises[index - 1];
+                    chapter.Exercises[index - 1] = hold;
+
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    AppStateManager.IsDirty = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnExerciseUp_Click()", ex);
             }
         }
 
@@ -540,6 +569,36 @@ namespace ChessForge
                 AppLog.Message("UiMnGameDown_Click()", ex);
             }
         }
+
+        /// <summary>
+        /// Moves game down one position in the chapter's game list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExerciseDown_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int index = WorkbookManager.LastClickedExerciseIndex;
+                int exerciseCount = chapter.GetExerciseCount();
+
+                if (index >= 0 && index < exerciseCount - 1)
+                {
+                    VariationTree hold = chapter.Exercises[index];
+                    chapter.Exercises[index] = chapter.Exercises[index + 1];
+                    chapter.Exercises[index + 1] = hold;
+
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    AppStateManager.IsDirty = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnExerciseDown_Click()", ex);
+            }
+        }
+
 
         /// <summary>
         /// Requests import of Model Games from a PGN file
@@ -635,8 +694,8 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Identifies the currently selected game and invokes
-        /// the Game Headers dialog.
+        /// Identifies the currently selected Game and invokes
+        /// the Game Header dialog.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -645,7 +704,13 @@ namespace ChessForge
             try
             {
                 VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames[WorkbookManager.LastClickedModelGameIndex];
-                var dlg = new GameHeaderDialog(game, "Game Header");
+                var dlg = new GameHeaderDialog(game, "Game Header")
+                {
+                    Left = ChessForgeMain.Left + 100,
+                    Top = ChessForgeMain.Top + 100,
+                    Topmost = false,
+                    Owner = this
+                };
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
@@ -658,6 +723,39 @@ namespace ChessForge
                 AppLog.Message("Error in UiMnEditGameHeader_Click(): " + ex.Message);
             }
         }
+
+
+        /// <summary>
+        /// Identifies the currently selected Exercise and invokes
+        /// the Game Header dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEditExerciseHeader_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.Exercises[WorkbookManager.LastClickedExerciseIndex];
+                var dlg = new GameHeaderDialog(game, "Exercise Header")
+                {
+                    Left = ChessForgeMain.Left + 100,
+                    Top = ChessForgeMain.Top + 100,
+                    Topmost = false,
+                    Owner = this
+                };
+                dlg.ShowDialog();
+                if (dlg.ExitOK)
+                {
+                    AppStateManager.IsDirty = true;
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Error in UiMnEditExerciseHeader_Click(): " + ex.Message);
+            }
+        }
+
 
         /// <summary>
         /// Opens the last clicked game. 
@@ -674,9 +772,114 @@ namespace ChessForge
                     SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                AppLog.Message("UiMnSelectGame_Click()", ex);
+                AppLog.Message("UiMnOpenGame_Click()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Opens the last clicked exercise. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnOpenExercise_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (WorkbookManager.LastClickedExerciseIndex >= 0)
+                {
+                    WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = WorkbookManager.LastClickedExerciseIndex;
+                    SelectExercise(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnOpenExercise_Click()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Deletes the selected Game.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnDeleteGame_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (WorkbookManager.LastClickedModelGameIndex >= 0)
+                {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    string gameTitle = chapter.ModelGames[WorkbookManager.LastClickedModelGameIndex].Header.BuildGameHeaderLine();
+                    if (MessageBox.Show("Delete this Game?\n\n  " + gameTitle, "Delete Model Game", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        DeleteModelGame(WorkbookManager.LastClickedModelGameIndex);
+
+                        int gameCount = chapter.GetModelGameCount();
+                        if (chapter.GetModelGameCount() == 0)
+                        {
+                            WorkbookManager.LastClickedModelGameIndex = -1;
+                        }
+                        else if (WorkbookManager.LastClickedModelGameIndex >= gameCount - 1)
+                        {
+                            WorkbookManager.LastClickedModelGameIndex = gameCount - 1;
+                        }
+                        else
+                        {
+                            WorkbookManager.LastClickedModelGameIndex++;
+                        }
+
+                        chapter.ActiveModelGameIndex = WorkbookManager.LastClickedModelGameIndex;
+                        _chaptersView.RebuildChapterParagraph(WorkbookManager.SessionWorkbook.ActiveChapter);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnDeleteGame_Click()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Deletes the selected Exercise.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnDeleteExercise_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (WorkbookManager.LastClickedExerciseIndex >= 0)
+                {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    string exerciseTitle = chapter.Exercises[WorkbookManager.LastClickedExerciseIndex].Header.BuildGameHeaderLine();
+                    if (MessageBox.Show("Delete this Exercise?\n\n  " + exerciseTitle, "Delete Exercise", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        DeleteExercise(WorkbookManager.LastClickedExerciseIndex);
+
+                        int exerciseCount = chapter.GetExerciseCount();
+                        if (exerciseCount == 0)
+                        {
+                            WorkbookManager.LastClickedExerciseIndex = -1;
+                        }
+                        else if (WorkbookManager.LastClickedExerciseIndex >= exerciseCount - 1)
+                        {
+                            WorkbookManager.LastClickedExerciseIndex = exerciseCount - 1;
+                        }
+                        else
+                        {
+                            WorkbookManager.LastClickedExerciseIndex++;
+                        }
+
+                        chapter.ActiveExerciseIndex = WorkbookManager.LastClickedExerciseIndex;
+                        _chaptersView.RebuildChapterParagraph(WorkbookManager.SessionWorkbook.ActiveChapter);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnDeleteExercise_Click()", ex);
             }
         }
 
@@ -698,14 +901,14 @@ namespace ChessForge
                 if (dlg.ExitOK)
                 {
                     WorkbookManager.SessionWorkbook.ActiveChapter.AddModelGame(tree);
-                    WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex 
+                    WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex
                         = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
                     AppStateManager.IsDirty = true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLog.Message("UiMnAddGame_Click()", ex);
             }
@@ -758,6 +961,37 @@ namespace ChessForge
                 AppLog.Message("UiMnAddExercise_Click()", ex);
             }
         }
+
+        /// <summary>
+        /// Deletes the Game at the requested index from the list of games.
+        /// </summary>
+        /// <param name="index"></param>
+        private void DeleteModelGame(int index)
+        {
+            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+            int gameCount = chapter.GetModelGameCount();
+            if (index >= 0 && index < gameCount)
+            {
+                chapter.ModelGames.RemoveAt(index);
+                AppStateManager.IsDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the Exercise at the requested index from the list of games.
+        /// </summary>
+        /// <param name="index"></param>
+        private void DeleteExercise(int index)
+        {
+            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+            int exerciseCount = chapter.GetExerciseCount();
+            if (index >= 0 && index < exerciseCount)
+            {
+                chapter.Exercises.RemoveAt(index);
+                AppStateManager.IsDirty = true;
+            }
+        }
+
 
         /// <summary>
         /// Sets the list in the Chapters View in the correct Expand/Collapse state.
