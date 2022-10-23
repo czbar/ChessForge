@@ -645,7 +645,7 @@ namespace ChessForge
             try
             {
                 VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames[WorkbookManager.LastClickedModelGameIndex];
-                var dlg = new GameHeaderDialog(game);
+                var dlg = new GameHeaderDialog(game, "Game Header");
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
@@ -693,7 +693,7 @@ namespace ChessForge
             try
             {
                 VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
-                GameHeaderDialog dlg = new GameHeaderDialog(tree);
+                GameHeaderDialog dlg = new GameHeaderDialog(tree, "Game Header");
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
@@ -723,31 +723,39 @@ namespace ChessForge
         {
             try
             {
-                PositionSetupDialog dlg = new PositionSetupDialog()
+                PositionSetupDialog dlgPosSetup = new PositionSetupDialog()
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
                     Topmost = false,
                     Owner = this
                 };
-                dlg.ShowDialog();
+                dlgPosSetup.ShowDialog();
 
-                //VariationTree tree = new VariationTree(GameData.ContentType.EXERCISE);
-                //GameHeaderDialog dlg = new GameHeaderDialog(tree);
-                //dlg.ShowDialog();
-                //if (dlg.ExitOK)
-                //{
-                //    WorkbookManager.SessionWorkbook.ActiveChapter.AddModelGame(tree);
-                //    WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex
-                //        = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
-                //    _chaptersView.BuildFlowDocumentForChaptersView();
-                //    SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
-                //    AppStateManager.IsDirty = true;
-                //}
+                if (dlgPosSetup.ExitOK)
+                {
+                    BoardPosition pos = dlgPosSetup.PositionSetup;
+
+                    VariationTree tree = new VariationTree(GameData.ContentType.EXERCISE);
+                    tree.CreateNew(pos);
+
+                    GameHeaderDialog dlgHeader = new GameHeaderDialog(tree, "Exercise Header");
+
+                    dlgHeader.ShowDialog();
+                    if (dlgHeader.ExitOK)
+                    {
+                        WorkbookManager.SessionWorkbook.ActiveChapter.AddExercise(tree);
+                        WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex
+                            = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount() - 1;
+                        _chaptersView.BuildFlowDocumentForChaptersView();
+                        SelectExercise(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex, true);
+                        AppStateManager.IsDirty = true;
+                    }
+                }
             }
             catch (Exception ex)
             {
-                AppLog.Message("UiMnAddGame_Click()", ex);
+                AppLog.Message("UiMnAddExercise_Click()", ex);
             }
         }
 
