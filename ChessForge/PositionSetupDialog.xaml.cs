@@ -1,5 +1,6 @@
 ﻿using ChessPosition;
 using GameTree;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -82,6 +83,51 @@ namespace ChessForge
             _boardImageToBoardCanvasTopOffset = Canvas.GetTop(UiImgChessBoard);
             _boardLeftOffset = _boardCanvasToSetupCanvasLeftOffset + _boardImageToBoardCanvasLeftOffset;
             _boardTopOffset = _boardCanvasToSetupCanvasTopOffset + _boardImageToBoardCanvasTopOffset;
+
+            ShowCoordinates();
+        }
+
+        /// <summary>
+        /// Displays board's square coordinates
+        /// </summary>
+        private void ShowCoordinates()
+        {
+            for (int x = 0; x <= 7; x++)
+            {
+                Label lbl = CreateCoordinateLabel();
+                lbl.Content = (char)('a' + x);
+
+                UiCnvBoard.Children.Add(lbl);
+                Canvas.SetLeft(lbl, 19 + (x * 30));
+                Canvas.SetBottom(lbl, -1);
+            }
+
+            for (int y = 0; y <= 7; y++)
+            {
+                Label lbl = CreateCoordinateLabel();
+                lbl.Content = (char)('1' + (7 - y));
+
+                UiCnvBoard.Children.Add(lbl);
+                Canvas.SetLeft(lbl, -2);
+                Canvas.SetTop(lbl, 18 + (y * 30));
+            }
+        }
+
+        /// <summary>
+        /// Creates a Label object for a coordinate.
+        /// </summary>
+        /// <returns></returns>
+        private Label CreateCoordinateLabel()
+        {
+            Label lbl = new Label();
+            lbl.Foreground = Brushes.White;
+            lbl.Width = 20;
+            lbl.Height = 21;
+            lbl.FontSize = 8;
+            lbl.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+            lbl.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
+
+            return lbl;
         }
 
         /// <summary>
