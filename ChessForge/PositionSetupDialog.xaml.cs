@@ -675,7 +675,7 @@ namespace ChessForge
         [System.Diagnostics.Conditional("DEBUG")]
         private void ShowDebugButton()
         {
-            if (Configuration.DebugMode > 2)
+            if (Configuration.DebugLevel >= 3)
             {
                 UiDebug.Visibility = Visibility.Visible;
             }
