@@ -512,7 +512,7 @@ namespace ChessForge
                     TreeNode evalNode = AppStateManager.GetNodeByIds(treeId, nodeId);
                     _lastMessageNode = evalNode;
 
-                    // TODO: change so that we get non-null eval node in GAME too!
+                    // TODO: fix GAME implementation so we can get a non-null eval node there too!
                     if ((LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME) || evalNode != null)
                     {
                         if (message.StartsWith(UciCommands.ENG_INFO))
@@ -523,7 +523,10 @@ namespace ChessForge
                         {
                             ProcessBestMoveMessage(message, evalNode);
                         }
-                        else if (message.StartsWith(UciCommands.ENG_ID_NAME))
+                    }
+                    else
+                    {
+                        if (message.StartsWith(UciCommands.ENG_ID_NAME))
                         {
                             string engineName = message.Substring(UciCommands.ENG_ID_NAME.Length).Trim();
                             AppStateManager.EngineName = engineName;
