@@ -93,6 +93,20 @@ namespace GameTree
             }
         }
 
+        // whethet to show the tree lines in the hosting view
+        private bool _showTreeLines = true;
+
+        /// <summary>
+        /// Determines whether to show the tree lines in the hosting view.
+        /// This will apply e.g. when we are showing the exercise and the user
+        /// can click a button to show or hide the solution,
+        /// </summary>
+        public bool ShowTreeLines
+        {
+            get { return _showTreeLines; }
+            set {_showTreeLines = value; }
+        }
+
         /// <summary>
         /// Sets the line and mode selected in the GUI.
         /// This is to persist the state while the user switches between views.
