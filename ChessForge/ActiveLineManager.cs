@@ -479,6 +479,12 @@ namespace ChessForge
         /// <returns></returns>
         public bool HandleKeyDown(Key key)
         {
+            // prevent "cheating" in exercises
+            if (_mainWin.ActiveVariationTree == null || !_mainWin.ActiveVariationTree.ShowTreeLines)
+            {
+                return true;
+            }
+
             bool handled = false;
             
             GetSelectedRowColumn(out int currRow, out int currColumn);
