@@ -646,6 +646,14 @@ namespace ChessForge
                 ref PositionSetup);
 
             PositionSetup.ColorToMove = _sideToMove;
+            if (_sideToMove == PieceColor.Black)
+            {
+                PositionSetup.MoveNumber = 1;
+            }
+            else
+            {
+                PositionSetup.MoveNumber = 0;
+            }
 
             if (PositionUtils.ValidatePosition(ref PositionSetup, out string errorText))
             {
