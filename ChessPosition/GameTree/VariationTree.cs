@@ -206,6 +206,21 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Creates a new Tree starting from the passed position
+        /// </summary>
+        /// <param name="position"></param>
+        public void CreateNew(BoardPosition position)
+        {
+            VariationLines.Clear();
+            Nodes.Clear();
+
+            TreeNode root = new TreeNode(null, "", 0);
+            root.Position = new BoardPosition(position);
+            AddNode(root);
+            BuildLines();
+        }
+
+        /// <summary>
         /// Walks the tree and assigns line id to each node
         /// in the form of N.N.N (e.g. "1.2.1.3")
         /// The line with the first child selected at each point 
