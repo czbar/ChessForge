@@ -166,9 +166,9 @@
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="_cmChapters">
                                     <MenuItem x:Name="_mnAddChapter" Header="Create New Chapter" Click="UiMnAddChapter_Click"  />
-                                    <MenuItem x:Name="_mnAddGame" Header="Create New Game" Click="UiMnAddGame_Click"  />
+                                    <MenuItem x:Name="_mnAddGame" Header="Create New Game" Click="UiMnChpt_CreateModelGame_Click"  />
                                     <MenuItem x:Name="_mnImportGame" Header="Import Games from PGN" Click="UiMnImportGame_Click" />
-                                    <MenuItem x:Name="_mnAddExercise" Header="Create New Exercise" Click="UiMnAddExercise_Click"  />
+                                    <MenuItem x:Name="_mnAddExercise" Header="Create New Exercise" Click="UiMnChpt_AddExercise_Click"  />
                                     <MenuItem x:Name="_mnImportExercise" Header="Import Exercises from PGN" />
                                     <Separator />
                                     <MenuItem x:Name="_mnSelectChapter" Header="Open This Chapter" Click="UiMnSelectChapter_Click" />
@@ -189,8 +189,8 @@
                                     <MenuItem x:Name="_mnImportExercises" Header="Import Exercises" Click="UiMnImportExercises_Click" />
                                     <Separator x:Name="_mnChapterSepar_2" />
                                     <MenuItem x:Name="_mnDeleteChapter" Header="Delete This Chapter" Click="UiMnDeleteChapter_Click" />
-                                    <MenuItem x:Name="_mnDeleteGame" Header="Delete This Game" Click="UiMnDeleteGame_Click" />
-                                    <MenuItem x:Name="_mnDeleteExercise" Header="Delete This Exercise" Click="UiMnDeleteExercise_Click" />
+                                    <MenuItem x:Name="_mnDeleteGame" Header="Delete This Game" Click="UiMnChpt_DeleteGame_Click" />
+                                    <MenuItem x:Name="_mnDeleteExercise" Header="Delete This Exercise" Click="UiMnChpt_DeleteExercise_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <RichTextBox x:Name="UiRtbChaptersView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
@@ -385,9 +385,11 @@
                             </Grid.ColumnDefinitions>
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiCmModelGames">
-                                    <MenuItem x:Name="_mnCreateModelGame" Header="Create New Game" />
+                                    <MenuItem x:Name="_mnGame_EditHeader" Header="Edit Game Header" Click="UiMnGame_EditHeader_Click" />
+                                    <MenuItem x:Name="_mnGame_CreateModelGame" Header="Create New Game" Click="_UiMnGame_CreateModelGame_Click" />
+                                    <MenuItem x:Name="_mnGame_CreateExercise" Header="Create Exercise from Here..." Click="UiMnGame_CreateExercise_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnDeleteModelGame" Header="Delete This Game" />
+                                    <MenuItem x:Name="_mnGame_DeleteModelGame" Header="Delete This Game" Click="UiMnGame_DeleteModelGame_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvModelGamePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
@@ -420,9 +422,10 @@
                             </Grid.ColumnDefinitions>
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiCmExercises">
-                                    <MenuItem x:Name="_mnCreateExercise" Header="Create New Exercise" />
+                                    <MenuItem x:Name="_mnExerc_EditHeader" Header="Edit Exercise Header" Click="UiMnExerc_EditHeader_Click" />
+                                    <MenuItem x:Name="_mnExerc_CreateExercise" Header="Create New Exercise" Click="UiMnExerc_CreateExercise_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnDeleteThisExercise" Header="Delete This Exercise" />
+                                    <MenuItem x:Name="_mnExerc_DeleteThisExercise" Header="Delete This Exercise" Click="UiMnExerc_DeleteThisExercise_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
