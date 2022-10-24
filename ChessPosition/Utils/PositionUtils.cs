@@ -819,7 +819,8 @@ namespace ChessPosition
 
         /// <summary>
         /// Builds a list of MoveWithEval objects from the list of Nodes.
-        /// This useful in particular when building a ScoreSheet object.
+        /// This is useful e.g. when building a ScoreSheet object.
+        /// Must handle the case when the first move is Black's.
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
@@ -827,26 +828,89 @@ namespace ChessPosition
         {
             var game = new ObservableCollection<MoveWithEval>();
 
-            for (int i = 1; i < line.Count; i += 2)
+            int i = 1;
+
+            if (line.Count > 1)
+            {
+                // handle the first node first as it could be a White move or a Black move
+                //  (e.g. in exercise starting from a black move
+
+                MoveWithEval move = new MoveWithEval();
+                TreeNode node = line[1];
+                if (node.ColorToMove == PieceColor.White)
+                {
+                    move.Number = node.Position.MoveNumber.ToString() + ".";
+                    SetWhiteMoveInMoveList(null, ref move);
+                    SetBlackMoveInMoveList(node, ref move);
+
+                    game.Add(move);
+                    i++;
+                }
+            }
+
+            while (i < line.Count)
             {
                 MoveWithEval move = new MoveWithEval();
-                // white
-                move.Number = line[i].Position.MoveNumber.ToString() + ".";
-                move.WhitePly = line[i].GetPlyText(true);
-                move.WhiteEval = line[i].EngineEvaluation;
-                move.WhiteNodeId = line[i].NodeId;
 
-                // black
+                TreeNode whiteNode = line[i];
+                move.Number = whiteNode.Position.MoveNumber.ToString() + ".";
+                SetWhiteMoveInMoveList(whiteNode, ref move);
+
                 if (i + 1 < line.Count)
                 {
-                    move.BlackPly = line[i + 1].GetPlyText(true);
-                    move.BlackEval = line[i + 1].EngineEvaluation;
-                    move.BlackNodeId = line[i + 1].NodeId;
+                    TreeNode blackNode = line[i + 1];
+                    SetBlackMoveInMoveList(blackNode, ref move);
                 }
 
                 game.Add(move);
+
+                i += 2;
             }
+
             return game;
         }
+
+        /// <summary>
+        /// Sets White's move data in the MoveWithEval object.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="move"></param>
+        private static void SetWhiteMoveInMoveList(TreeNode node, ref MoveWithEval move)
+        {
+            if (node != null)
+            {
+                move.WhitePly = node.GetPlyText(true);
+                move.WhiteEval = node.EngineEvaluation;
+                move.WhiteNodeId = node.NodeId;
+            }
+            else
+            {
+                move.WhitePly = "";
+                move.WhiteEval = "";
+                move.WhiteNodeId = -1;
+            }
+        }
+
+        /// <summary>
+        /// Sets Black's move data in the MoveWithEval object.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="move"></param>
+        private static void SetBlackMoveInMoveList(TreeNode node, ref MoveWithEval move)
+        {
+            if (node != null)
+            {
+                move.BlackPly = node.GetPlyText(true);
+                move.BlackEval = node.EngineEvaluation;
+                move.BlackNodeId = node.NodeId;
+            }
+            else
+            {
+                move.BlackPly = "";
+                move.BlackEval = "";
+                move.BlackNodeId = -1;
+            }
+        }
+
     }
 }
