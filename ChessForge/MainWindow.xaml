@@ -394,9 +394,9 @@
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvModelGamePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
                                 <Label x:Name="UiLblGameCounter" Content="Game 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
-                                <Image x:Name="UiImgModelGameLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="120,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown"  />
-                                <Label x:Name="UiLblModelGamePrevNextHint" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="150,-3,0,0" Width="100"  FontWeight="Bold"/>
-                                <Image x:Name="UiImgModelGameRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="255,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"   />
+                                <Image x:Name="UiImgModelGameLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="140,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiLblModelGamePrevNextHint" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="170,-3,0,0" Width="100"  FontWeight="Bold"/>
+                                <Image x:Name="UiImgModelGameRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"   />
                             </Canvas>
                             <RichTextBox x:Name="UiRtbModelGamesView" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
@@ -430,9 +430,9 @@
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
                                 <Label x:Name="UiLblExerciseCounter" Content="Exercise 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
-                                <Image x:Name="UiImgExerciseLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="120,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown"  />
-                                <Label x:Name="UiLblExcercisePrevNextHint" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="150,-3,0,0" Width="100"  FontWeight="Bold"/>
-                                <Image x:Name="UiImgExerciseRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="255,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
+                                <Image x:Name="UiImgExerciseLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="140,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiLblExcercisePrevNextHint" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="170,-3,0,0" Width="100"  FontWeight="Bold"/>
+                                <Image x:Name="UiImgExerciseRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
                             </Canvas>
                             <RichTextBox x:Name="UiRtbExercisesView" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
