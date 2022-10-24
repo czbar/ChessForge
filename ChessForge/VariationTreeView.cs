@@ -168,6 +168,30 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the currently selecte Node.
+        /// </summary>
+        /// <returns></returns>
+        public TreeNode GetSelectedNode()
+        {
+            TreeNode node = null;
+            try
+            {
+                if (_selectedRun != null)
+                {
+                    int nodeId = TextUtils.GetIdFromPrefixedString(_selectedRun.Name);
+                    node = _variationTree.GetNodeFromNodeId(nodeId);
+                }
+            }
+            catch(Exception ex)
+            {
+                node = null;
+                AppLog.Message("GetSelectedNode()", ex);
+            }
+
+            return node;
+        }
+
+        /// <summary>
         /// Promotes the line with the last clicked node
         /// one level up.
         /// </summary>
