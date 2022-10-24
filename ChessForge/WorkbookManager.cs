@@ -31,7 +31,7 @@ namespace ChessForge
             STUDY,
             BOOKMARKS,
             MODEL_GAME,
-            EXRERCISE
+            EXERCISE
         }
 
         // which tab control had focus most recently

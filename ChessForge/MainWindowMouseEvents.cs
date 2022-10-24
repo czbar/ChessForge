@@ -788,7 +788,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabExercises_GotFocus(object sender, RoutedEventArgs e)
         {
-            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.EXRERCISE;
+            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.EXERCISE;
             try
             {
                 if (KeepFocusOnGame())
