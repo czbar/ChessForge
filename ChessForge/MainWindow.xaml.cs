@@ -1736,10 +1736,19 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MainCanvas_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            _lastRightClickedPoint = null;
-            if (BoardShapesManager.IsShapeBuildInProgress)
+            if (WorkbookManager.ActiveTab == WorkbookManager.TabControlType.STUDY)
             {
-                BoardShapesManager.CancelShapeDraw(true);
+                _lastRightClickedPoint = null;
+                if (BoardShapesManager.IsShapeBuildInProgress)
+                {
+                    BoardShapesManager.CancelShapeDraw(true);
+                }
+                UiMnMainBoard.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                UiMnMainBoard.Visibility = Visibility.Collapsed;
+                e.Handled = true;
             }
         }
     }
