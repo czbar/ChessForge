@@ -22,6 +22,33 @@ namespace ChessForge
     public class WorkbookManager
     {
         /// <summary>
+        /// Type of the tab control.
+        /// </summary>
+        public enum TabControlType
+        {
+            NONE,
+            CHAPTERS,
+            STUDY,
+            BOOKMARKS,
+            MODEL_GAME,
+            EXRERCISE
+        }
+
+        // which tab control had focus most recently
+        private static TabControlType _activeTab = TabControlType.NONE;
+
+        /// <summary>
+        /// Which tab control got focus most recently and is therefore
+        /// visible in the GUI
+        /// </summary>
+        public static TabControlType ActiveTab
+        {
+            get { return _activeTab; }
+            set { _activeTab = value; }
+        }
+
+
+        /// <summary>
         /// Workbook for the current session.
         /// </summary>
         public static Workbook SessionWorkbook;
