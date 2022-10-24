@@ -168,6 +168,30 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the currently selecte Node.
+        /// </summary>
+        /// <returns></returns>
+        public TreeNode GetSelectedNode()
+        {
+            TreeNode node = null;
+            try
+            {
+                if (_selectedRun != null)
+                {
+                    int nodeId = TextUtils.GetIdFromPrefixedString(_selectedRun.Name);
+                    node = _variationTree.GetNodeFromNodeId(nodeId);
+                }
+            }
+            catch(Exception ex)
+            {
+                node = null;
+                AppLog.Message("GetSelectedNode()", ex);
+            }
+
+            return node;
+        }
+
+        /// <summary>
         /// Promotes the line with the last clicked node
         /// one level up.
         /// </summary>
@@ -478,13 +502,13 @@ namespace ChessForge
                 {
                     _mainWin.UiImgModelGameRightArrow.Visibility = Visibility.Visible;
                     _mainWin.UiImgModelGameLeftArrow.Visibility = Visibility.Hidden;
-                    _mainWin.UiLblModelGamePrevNextHint.Content = "Next Game";
+                    _mainWin.UiLblModelGamePrevNextHint.Content = "Next";
                 }
                 else if (gameIndex == gameCount - 1)
                 {
                     _mainWin.UiImgModelGameRightArrow.Visibility = Visibility.Hidden;
                     _mainWin.UiImgModelGameLeftArrow.Visibility = Visibility.Visible;
-                    _mainWin.UiLblModelGamePrevNextHint.Content = "Previous Game";
+                    _mainWin.UiLblModelGamePrevNextHint.Content = "Previous";
                 }
                 else
                 {
@@ -521,13 +545,13 @@ namespace ChessForge
                 {
                     _mainWin.UiImgExerciseRightArrow.Visibility = Visibility.Visible;
                     _mainWin.UiImgExerciseLeftArrow.Visibility = Visibility.Hidden;
-                    _mainWin.UiLblExcercisePrevNextHint.Content = "Next Exercise";
+                    _mainWin.UiLblExcercisePrevNextHint.Content = "Next";
                 }
                 else if (exerciseIndex == exerciseCount - 1)
                 {
                     _mainWin.UiImgExerciseRightArrow.Visibility = Visibility.Hidden;
                     _mainWin.UiImgExerciseLeftArrow.Visibility = Visibility.Visible;
-                    _mainWin.UiLblExcercisePrevNextHint.Content = "Previous Exercise";
+                    _mainWin.UiLblExcercisePrevNextHint.Content = "Previous";
                 }
                 else
                 {
@@ -867,7 +891,7 @@ namespace ChessForge
         /// e.g. that this is a new leaf in a line
         /// </summary>
         /// <param name="nd"></param>
-        public void AddNewNode(TreeNode nd)
+        public void AddNewNodeToDocument(TreeNode nd)
         {
             TreeNode parent = nd.Parent;
 

@@ -422,16 +422,16 @@ namespace ChessForge
         /// Select and activate view for the exercise in the ActiveChapter
         /// at the passed index.
         /// </summary>
-        /// <param name="gameIndex"></param>
-        public void SelectExercise(int gameIndex, bool setFocus)
+        /// <param name="exerciseIndex"></param>
+        public void SelectExercise(int exerciseIndex, bool setFocus)
         {
-            WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = gameIndex;
-            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, gameIndex);
+            WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = exerciseIndex;
+            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, exerciseIndex);
 
             MainChessBoard.FlipBoard(false);
             WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = null;
 
-            SetupGuiForActiveExercise(gameIndex, setFocus);
+            SetupGuiForActiveExercise(exerciseIndex, setFocus);
         }
 
         /// <summary>
@@ -560,13 +560,6 @@ namespace ChessForge
         /// <returns></returns>
         private bool CanMovePiece(SquareCoords sqNorm)
         {
-            // block the ability to make moves in Exercise
-            // TODO: implement such an ability
-            if (ActiveVariationTree.ContentType == GameData.ContentType.EXERCISE)
-            {
-                return false;
-            }
-
             PieceColor pieceColor = MainChessBoard.GetPieceColor(sqNorm);
 
             // in the Manual Review, the color of the piece on the main board must match the side on the move in the selected position
@@ -1036,7 +1029,10 @@ namespace ChessForge
         /// <param name="nd"></param>
         public void AddNewNodeToVariationTreeView(TreeNode nd)
         {
-            ActiveTreeView.AddNewNode(nd);
+            if (ActiveVariationTree.ShowTreeLines)
+            {
+                ActiveTreeView.AddNewNodeToDocument(nd);
+            }
         }
 
         /// <summary>
@@ -1736,10 +1732,19 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MainCanvas_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            _lastRightClickedPoint = null;
-            if (BoardShapesManager.IsShapeBuildInProgress)
+            if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY)
             {
-                BoardShapesManager.CancelShapeDraw(true);
+                _lastRightClickedPoint = null;
+                if (BoardShapesManager.IsShapeBuildInProgress)
+                {
+                    BoardShapesManager.CancelShapeDraw(true);
+                }
+                UiMnMainBoard.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                UiMnMainBoard.Visibility = Visibility.Collapsed;
+                e.Handled = true;
             }
         }
     }

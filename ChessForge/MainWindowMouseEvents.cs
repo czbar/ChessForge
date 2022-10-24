@@ -594,6 +594,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabChapters_GotFocus(object sender, RoutedEventArgs e)
         {
+            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.CHAPTERS;
             try
             {
                 if (KeepFocusOnGame())
@@ -617,6 +618,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabStudyTree_GotFocus(object sender, RoutedEventArgs e)
         {
+            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.STUDY;
             try
             {
                 SetStudyStateOnFocus();
@@ -650,6 +652,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabBookmarks_GotFocus(object sender, RoutedEventArgs e)
         {
+            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.BOOKMARKS;
             try
             {
                 if (KeepFocusOnGame())
@@ -723,6 +726,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabModelGames_GotFocus(object sender, RoutedEventArgs e)
         {
+            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.MODEL_GAME;
             try
             {
                 if (KeepFocusOnGame())
@@ -784,6 +788,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabExercises_GotFocus(object sender, RoutedEventArgs e)
         {
+            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.EXERCISE;
             try
             {
                 if (KeepFocusOnGame())

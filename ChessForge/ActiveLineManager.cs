@@ -229,8 +229,9 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Calculates the index of a node give the node's
+        /// Calculates the index of a node given the node's
         /// row and column.
+        /// Allow for lines that start with a Black move (e.g. exercises)
         /// </summary>
         /// <param name="row"></param>
         /// <param name="column"></param>
@@ -240,7 +241,12 @@ namespace ChessForge
             if (row < 0 || column < 0)
                 return -1;
 
+            PieceColor startingColor = Line.NodeList[0].ColorToMove;
             int nodeIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
+            if (startingColor != PieceColor.White)
+            {
+                nodeIndex--;
+            }
 
             return (nodeIndex < Line.GetPlyCount()) ? nodeIndex : -1;
         }
@@ -658,11 +664,17 @@ namespace ChessForge
         /// <returns></returns>
         private TreeNode GetTreeNodeFromRowColumn(int row, int column)
         {
-            int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
+            int nodeIndex;
+            nodeIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1);
 
-            if (moveIndex + 1 < Line.GetPlyCount())
+            if (Line.NodeList[0].ColorToMove == PieceColor.Black)
             {
-                return Line.GetNodeAtIndex(moveIndex + 1);
+                nodeIndex--;
+            }
+
+            if (nodeIndex + 1 < Line.GetPlyCount())
+            {
+                return Line.GetNodeAtIndex(nodeIndex + 1);
             }
             else
             {
