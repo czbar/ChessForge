@@ -1736,7 +1736,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MainCanvas_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            if (WorkbookManager.ActiveTab == WorkbookManager.TabControlType.STUDY)
+            if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY)
             {
                 _lastRightClickedPoint = null;
                 if (BoardShapesManager.IsShapeBuildInProgress)

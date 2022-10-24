@@ -24,7 +24,7 @@ namespace ChessForge
         /// <summary>
         /// Type of the tab control.
         /// </summary>
-        public enum TabControlType
+        public enum TabViewType
         {
             NONE,
             CHAPTERS,
@@ -35,13 +35,13 @@ namespace ChessForge
         }
 
         // which tab control had focus most recently
-        private static TabControlType _activeTab = TabControlType.NONE;
+        private static TabViewType _activeTab = TabViewType.NONE;
 
         /// <summary>
         /// Which tab control got focus most recently and is therefore
         /// visible in the GUI
         /// </summary>
-        public static TabControlType ActiveTab
+        public static TabViewType ActiveTab
         {
             get { return _activeTab; }
             set { _activeTab = value; }
