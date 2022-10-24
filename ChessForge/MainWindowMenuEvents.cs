@@ -722,13 +722,37 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates a new Exercise from the Chapters View context menu.
+        /// Creates a new Exercise from the Model Games View context menu.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiMnGame_CreateExercise_Click(object sender, RoutedEventArgs e)
         {
-            CreateNewExercise();
+            try
+            {
+                TreeNode nd = _modelGameTreeView.GetSelectedNode();
+                if (nd != null)
+                {
+                    VariationTree tree = VariationTree.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
+                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    CopyHeaderFromGame(tree, chapter.GetActiveModelGameHeader());
+                    CreateNewExerciseFromTree(tree);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnGame_CreateExercise_Click()", ex);
+            }
+        }
+
+        private void CopyHeaderFromGame(VariationTree tree, GameHeader header)
+        {
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE, header.GetWhitePlayer(out _));
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, header.GetBlackPlayer(out _));
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_RESULT, header.GetResult(out _));
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, header.GetEventName(out _));
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, header.GetDate(out _));
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_ROUND, header.GetRound(out _));
         }
 
         /// <summary>
@@ -760,7 +784,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnExerc_DeleteThisExercise_Click(object sender, RoutedEventArgs e)
         {
-
+            DeleteExercise();
         }
 
         /// <summary>
@@ -1743,7 +1767,5 @@ namespace ChessForge
                 AppLog.Message("EditExerciseHeader()" + ex.Message);
             }
         }
-
-
     }
 }
