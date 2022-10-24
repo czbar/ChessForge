@@ -92,6 +92,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns reference to the Active Game's header.
+        /// </summary>
+        /// <returns></returns>
+        public GameHeader GetActiveModelGameHeader()
+        {
+            GameHeader gameHeader = null;
+            try
+            {
+                if (ModelGames.Count > 0)
+                gameHeader = ModelGames[ActiveModelGameIndex].Header;
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("GetActiveModelGameHeader()", ex);
+            }
+
+            return gameHeader;
+        }
+
+        /// <summary>
         /// Sets the ActiveVariationTree based on the passed type and index.
         /// </summary>
         /// <param name="gameType"></param>
@@ -274,6 +294,7 @@ namespace ChessForge
                     ModelGames.Add(tree);
                     break;
                 case GameData.ContentType.EXERCISE:
+                    VariationTree.RestartMoveNumbering(tree);
                     Exercises.Add(tree);
                     break;
             }
