@@ -297,6 +297,7 @@ namespace GameTree
 
         /// <summary>
         /// Makes a deep copy of this TreeNode.
+        /// NOTE: does not setTreeNode.Parent references.
         /// If clearChildren == false it will also make deep copies of the Children list.
         /// </summary>
         /// <param name="clearChildren"></param>
