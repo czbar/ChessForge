@@ -30,7 +30,7 @@ namespace ChessForge
         private int _activeExerciseIndex = -1;
 
         // whether the chapter is expanded in the ChaptersView
-        private bool _isViewExpanded;
+        private bool _isViewExpanded = true;
 
         // whether the Model Games list is expanded in the ChaptersView
         private bool _isModelGamesListExpanded;

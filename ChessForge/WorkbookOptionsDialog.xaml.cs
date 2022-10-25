@@ -31,7 +31,7 @@ namespace ChessForge
             TrainingSide = _workbook.TrainingSide;
 
             _tbTitle.Text = _workbook.Title;
-            _tbSideOnMove.Text = _workbook.TrainingSide == PieceColor.Black ? _strBlack : _strWhite;
+            UiLblSideToMove.Content = _workbook.TrainingSide == PieceColor.Black ? _strBlack : _strWhite;
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace ChessForge
         {
             WorkbookTitle = _tbTitle.Text;
 
-            if (_tbSideOnMove.Text == _strBlack)
+            if ((string)UiLblSideToMove.Content == _strBlack)
             {
                 TrainingSide = PieceColor.Black;
             }
@@ -85,20 +85,20 @@ namespace ChessForge
 
         private void SwapTrainingSide()
         {
-            if (_tbSideOnMove.Text == _strWhite)
+            if ((string)UiLblSideToMove.Content == _strWhite)
             {
-                _tbSideOnMove.Text = _strBlack;
+                UiLblSideToMove.Content = _strBlack;
                 TrainingSide = PieceColor.Black;
             }
             else
             {
-                _tbSideOnMove.Text = _strWhite;
+                UiLblSideToMove.Content = _strWhite;
                 TrainingSide = PieceColor.White;
             }
         }
 
         /// <summary>
-        /// Exists the dialog without setting ExitOK to true.
+        /// Exits the dialog without setting ExitOK to true.
         /// The caller should consider such exit as cancellation.
         /// </summary>
         /// <param name="sender"></param>

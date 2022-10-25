@@ -226,8 +226,9 @@ namespace ChessForge
 
             AppStateManager.SetupGuiForCurrentStates();
             //StudyTree.CreateNew();
-            UiTabStudyTree.Focus();
             _studyTreeView.BuildFlowDocumentForVariationTree();
+            UiTabStudyTree.Focus();
+
             int startingNode = 0;
             string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(startingNode);
             SetActiveLine(startLineId, startingNode);
@@ -416,6 +417,54 @@ namespace ChessForge
             {
                 // remove the just created Chapter
                 SessionWorkbook.Chapters.Remove(chapter);
+            }
+        }
+
+        /// <summary>
+        /// Invokes the Import PGN dialog to allow the user to select games
+        /// to merge into a new Study Tree from which a Chapter will be created.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnImportChapter_Click(object sender, RoutedEventArgs e)
+        {
+            string fileName = SelectPgnFile();
+            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+            {
+                bool success = false;
+                Chapter previousActiveChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+
+                Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
+                ObservableCollection<GameData> games = new ObservableCollection<GameData>();
+
+                int gamesCount = WorkbookManager.ReadPgnFile(fileName, ref games, GameData.ContentType.GENERIC);
+                if (gamesCount > 0)
+                {
+                    int processedGames = WorkbookManager.MergeGames(ref chapter.StudyTree, ref games);
+                    if (processedGames == 0)
+                    {
+                        MessageBox.Show("No valid games found. No new chapter has been created.", "PGN Import", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        success = true;
+                    }
+                }
+                else
+                {
+                    ShowNoGamesError(GameData.ContentType.GENERIC, fileName);
+                }
+
+                if (success)
+                {
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                }
+                else
+                {
+                    // delete the above created chapter and activate the previously active one
+                    WorkbookManager.SessionWorkbook.ActiveChapter = previousActiveChapter;
+                    WorkbookManager.SessionWorkbook.Chapters.Remove(chapter);
+                }
             }
         }
 
@@ -685,7 +734,13 @@ namespace ChessForge
 
                     if (errorCount > 0)
                     {
-                        TextBoxDialog tbDlg = new TextBoxDialog("PGN Parsing Errors", sbErrors.ToString());
+                        TextBoxDialog tbDlg = new TextBoxDialog("PGN Parsing Errors", sbErrors.ToString())
+                        {
+                            Left = ChessForgeMain.Left + 100,
+                            Top = ChessForgeMain.Top + 100,
+                            Topmost = false,
+                            Owner = this
+                        };
                         tbDlg.Show();
                     }
                 }
@@ -742,6 +797,34 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("UiMnGame_CreateExercise_Click()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a new Exercise starting from the position currently selected in the Study Tree.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnStudy_CreateExercise_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TreeNode nd = _studyTreeView.GetSelectedNode();
+                if (nd != null)
+                {
+                    VariationTree tree = VariationTree.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
+                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    CopyHeaderFromGame(tree, chapter.StudyTree.Header);
+                    if (string.IsNullOrEmpty(tree.Header.GetEventName(out _)))
+                    {
+                        tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, "Study Tree after " + MoveUtils.BuildSingleMoveText(nd, true, true));
+                    }
+                    CreateNewExerciseFromTree(tree);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnStudy_CreateExercise_Click()", ex);
             }
         }
 
@@ -949,7 +1032,13 @@ namespace ChessForge
                 dlgTitle = "Select Exercises to Import";
             }
 
-            SelectGamesDialog dlg = new SelectGamesDialog(ref games, dlgTitle);
+            SelectGamesDialog dlg = new SelectGamesDialog(ref games, dlgTitle)
+            {
+                Left = ChessForgeMain.Left + 100,
+                Top = ChessForgeMain.Top + 100,
+                Topmost = false,
+                Owner = AppStateManager.MainWin
+            };
             dlg.ShowDialog();
             return dlg.ExitOK;
         }
@@ -1412,7 +1501,13 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnHelpAbout_Click(object sender, RoutedEventArgs e)
         {
-            AboutBoxDialog dlg = new AboutBoxDialog();
+            AboutBoxDialog dlg = new AboutBoxDialog()
+            {
+                Left = ChessForgeMain.Left + 100,
+                Top = ChessForgeMain.Top + 100,
+                Topmost = false,
+                Owner = this
+            };
             dlg.ShowDialog();
         }
 
@@ -1515,7 +1610,13 @@ namespace ChessForge
             try
             {
                 VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
-                GameHeaderDialog dlg = new GameHeaderDialog(tree, "Game Header");
+                GameHeaderDialog dlg = new GameHeaderDialog(tree, "Game Header")
+                {
+                    Left = ChessForgeMain.Left + 100,
+                    Top = ChessForgeMain.Top + 100,
+                    Topmost = false,
+                    Owner = this
+                };
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {

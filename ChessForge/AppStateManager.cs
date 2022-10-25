@@ -262,6 +262,7 @@ namespace ChessForge
         {
             BookmarkManager.ClearBookmarksGui();
             IsDirty = false;
+            _mainWin.SetupGuiForChapters();
             _mainWin.Dispatcher.Invoke(() =>
             {
                 _mainWin.ActiveLine.Clear();
@@ -485,7 +486,7 @@ namespace ChessForge
 
                 _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
 
-                if (AppStateManager.ActiveContentType == GameData.ContentType.STUDY_TREE)
+                if (AppStateManager.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
@@ -839,7 +840,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 // only applicable to StydyTree
-                if (ActiveContentType == GameData.ContentType.STUDY_TREE
+                if (ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY
                     && CurrentLearningMode != LearningMode.Mode.ENGINE_GAME)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
@@ -847,9 +848,18 @@ namespace ChessForge
                     _mainWin.UiDgActiveLine.Columns[4].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
                     _mainWin.UiDgActiveLine.Width = includeEvals ? 260 : 160;
 
-                    // adjust tab controls position
-                    _mainWin.UiTabCtrlManualReview.Margin = includeEvals ? new Thickness(275, 5, 5, 5) : new Thickness(175, 5, 5, 5);
-                    _mainWin.UiTabCtrlTraining.Margin = includeEvals ? new Thickness(185, 5, 5, 5) : new Thickness(5, 5, 5, 5);
+                    if (includeEvals)
+                    {
+                        _mainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
+                    }
+                    else
+                    {
+                        _mainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL);
+                    }
+
+                    //// adjust tab controls position
+                    //_mainWin.UiTabCtrlManualReview.Margin = includeEvals ? new Thickness(275, 5, 5, 5) : new Thickness(175, 5, 5, 5);
+                    //_mainWin.UiTabCtrlTraining.Margin = includeEvals ? new Thickness(185, 5, 5, 5) : new Thickness(5, 5, 5, 5);
                 }
             });
         }
