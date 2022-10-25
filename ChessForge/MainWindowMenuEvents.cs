@@ -734,7 +734,13 @@ namespace ChessForge
 
                     if (errorCount > 0)
                     {
-                        TextBoxDialog tbDlg = new TextBoxDialog("PGN Parsing Errors", sbErrors.ToString());
+                        TextBoxDialog tbDlg = new TextBoxDialog("PGN Parsing Errors", sbErrors.ToString())
+                        {
+                            Left = ChessForgeMain.Left + 100,
+                            Top = ChessForgeMain.Top + 100,
+                            Topmost = false,
+                            Owner = this
+                        };
                         tbDlg.Show();
                     }
                 }
@@ -1026,7 +1032,13 @@ namespace ChessForge
                 dlgTitle = "Select Exercises to Import";
             }
 
-            SelectGamesDialog dlg = new SelectGamesDialog(ref games, dlgTitle);
+            SelectGamesDialog dlg = new SelectGamesDialog(ref games, dlgTitle)
+            {
+                Left = ChessForgeMain.Left + 100,
+                Top = ChessForgeMain.Top + 100,
+                Topmost = false,
+                Owner = AppStateManager.MainWin
+            };
             dlg.ShowDialog();
             return dlg.ExitOK;
         }
@@ -1489,7 +1501,13 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnHelpAbout_Click(object sender, RoutedEventArgs e)
         {
-            AboutBoxDialog dlg = new AboutBoxDialog();
+            AboutBoxDialog dlg = new AboutBoxDialog()
+            {
+                Left = ChessForgeMain.Left + 100,
+                Top = ChessForgeMain.Top + 100,
+                Topmost = false,
+                Owner = this
+            };
             dlg.ShowDialog();
         }
 
@@ -1592,7 +1610,13 @@ namespace ChessForge
             try
             {
                 VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
-                GameHeaderDialog dlg = new GameHeaderDialog(tree, "Game Header");
+                GameHeaderDialog dlg = new GameHeaderDialog(tree, "Game Header")
+                {
+                    Left = ChessForgeMain.Left + 100,
+                    Top = ChessForgeMain.Top + 100,
+                    Topmost = false,
+                    Owner = this
+                };
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
