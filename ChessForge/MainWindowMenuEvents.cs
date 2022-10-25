@@ -421,6 +421,54 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Invokes the Import PGN dialog to allow the user to select games
+        /// to merge into a new Study Tree from which a Chapter will be created.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnImportChapter_Click(object sender, RoutedEventArgs e)
+        {
+            string fileName = SelectPgnFile();
+            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+            {
+                bool success = false;
+                Chapter previousActiveChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+
+                Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
+                ObservableCollection<GameData> games = new ObservableCollection<GameData>();
+
+                int gamesCount = WorkbookManager.ReadPgnFile(fileName, ref games, GameData.ContentType.GENERIC);
+                if (gamesCount > 0)
+                {
+                    int processedGames = WorkbookManager.MergeGames(ref chapter.StudyTree, ref games);
+                    if (processedGames == 0)
+                    {
+                        MessageBox.Show("No valid games found. No new chapter has been created.", "PGN Import", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        success = true;
+                    }
+                }
+                else
+                {
+                    ShowNoGamesError(GameData.ContentType.GENERIC, fileName);
+                }
+
+                if (success)
+                {
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                }
+                else
+                {
+                    // delete the above created chapter and activate the previously active one
+                    WorkbookManager.SessionWorkbook.ActiveChapter = previousActiveChapter;
+                    WorkbookManager.SessionWorkbook.Chapters.Remove(chapter);
+                }
+            }
+        }
+
+        /// <summary>
         /// Deletes the entire chapter from the Workbook.
         /// </summary>
         /// <param name="sender"></param>
