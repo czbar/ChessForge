@@ -615,7 +615,7 @@ namespace ChessForge
         /// <param name="tree"></param>
         /// <param name="games"></param>
         /// <returns></returns>
-        private static int MergeGames(ref VariationTree tree, ref ObservableCollection<GameData> games)
+        public static int MergeGames(ref VariationTree tree, ref ObservableCollection<GameData> games)
         {
             StringBuilder sbErrors = new StringBuilder();
             int errorCount = 0;
