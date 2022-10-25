@@ -226,8 +226,9 @@ namespace ChessForge
 
             AppStateManager.SetupGuiForCurrentStates();
             //StudyTree.CreateNew();
-            UiTabStudyTree.Focus();
             _studyTreeView.BuildFlowDocumentForVariationTree();
+            UiTabStudyTree.Focus();
+
             int startingNode = 0;
             string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(startingNode);
             SetActiveLine(startLineId, startingNode);
@@ -742,6 +743,34 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("UiMnGame_CreateExercise_Click()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a new Exercise starting from the position currently selected in the Study Tree.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnStudy_CreateExercise_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TreeNode nd = _studyTreeView.GetSelectedNode();
+                if (nd != null)
+                {
+                    VariationTree tree = VariationTree.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
+                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    CopyHeaderFromGame(tree, chapter.StudyTree.Header);
+                    if (string.IsNullOrEmpty(tree.Header.GetEventName(out _)))
+                    {
+                        tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, "Study Tree after " + MoveUtils.BuildSingleMoveText(nd, true, true));
+                    }
+                    CreateNewExerciseFromTree(tree);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnStudy_CreateExercise_Click()", ex);
             }
         }
 

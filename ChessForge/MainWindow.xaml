@@ -99,6 +99,8 @@
                                 <MenuItem x:Name="UiMnciRestartTraining"  Header="Restart Training" Click="UiMnTrainRestartTraining_Click"/>
                                 <MenuItem x:Name="UiMnciExitTraining" Header="Exit Training" Click="UiMnStopTraining_Click"/>
                                 <Separator x:Name="UiMncMainBoardSepar_1" />
+                                <MenuItem x:Name="UiMnMain_CreateExercise" Header="Create Exercise from Here..." Click="UiMnStudy_CreateExercise_Click"  />
+                                <Separator x:Name="UiMncMainBoardSepar_1a" />
                                 <MenuItem x:Name="UiMnciEvalPos" Header="Evaluate Position" Click="UiMnEvaluatePosition_Click" />
                                 <MenuItem x:Name="UiMnciEvalLine" Header="Evaluate Line" Click="UiMnEvaluateLine_Click" />
                                 <Separator x:Name="UiMncMainBoardSepar_2" />
@@ -211,6 +213,7 @@
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiCmnWorkbookRightClick">
                                     <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
+                                    <MenuItem x:Name="UiMnStudy_CreateExercise" Header="Create Exercise from Here..." Click="UiMnStudy_CreateExercise_Click"  />
                                     <Separator />
                                     <MenuItem x:Name="UiMnPromoteLine" Header="Promote Line" Click="UiMnPromoteLine_Click" />
                                     <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnDeleteMovesFromHere_Click" />
