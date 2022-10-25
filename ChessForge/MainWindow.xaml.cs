@@ -836,9 +836,10 @@ namespace ChessForge
             BoardCommentBox.ShowWorkbookTitle();
             InitializeChaptersView();
 
-            SetupGuiForActiveStudyTree(true);
+//            SetupGuiForActiveStudyTree(true);
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
+            UiTabChapters_GotFocus(null, null);
         }
 
         /// <summary>
@@ -1747,5 +1748,6 @@ namespace ChessForge
                 e.Handled = true;
             }
         }
+
     }
 }
