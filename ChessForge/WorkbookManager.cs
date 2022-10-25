@@ -475,12 +475,12 @@ namespace ChessForge
                             menuItem.Visibility = isExercisesMenu ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnExerciseUp":
-                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null 
+                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null
                                 && SessionWorkbook.ActiveChapter.GetExerciseCount() > 0 && index > 0;
                             menuItem.Visibility = isExercisesMenu ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnExerciseDown":
-                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null 
+                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null
                                 && SessionWorkbook.ActiveChapter.GetExerciseCount() > 0 && index < SessionWorkbook.ActiveChapter.GetExerciseCount() - 1;
                             menuItem.Visibility = isExercisesMenu ? Visibility.Visible : Visibility.Collapsed;
                             break;
@@ -570,8 +570,14 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.MainWin.ShowWorkbookOptionsDialog(false);
-                if (!SaveWorkbookToNewFileV2("", false))
+                if (AppStateManager.MainWin.ShowWorkbookOptionsDialog(false))
+                {
+                    if (!SaveWorkbookToNewFileV2("", false))
+                    {
+                        processedGames = 0;
+                    }
+                }
+                else
                 {
                     processedGames = 0;
                 }
@@ -620,7 +626,14 @@ namespace ChessForge
             StringBuilder sbErrors = new StringBuilder();
             int errorCount = 0;
 
-            SelectGamesDialog dlg = new SelectGamesDialog(ref games, "Select Games to Merge into the Study Tree");
+            SelectGamesDialog dlg = new SelectGamesDialog(ref games, "Select Games to Merge into the Study Tree")
+            {
+                Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
+                Top = AppStateManager.MainWin.ChessForgeMain.Top + 100,
+                Topmost = false,
+                Owner = AppStateManager.MainWin
+            };
+
             dlg.ShowDialog();
 
             int mergedCount = 0;
@@ -633,7 +646,7 @@ namespace ChessForge
                     // merge workbooks
                     for (int i = 0; i < games.Count; i++)
                     {
-                        if (games[i].IsSelected)
+                        if (games[i].IsSelected && string.IsNullOrEmpty(games[i].Header.GetFenString()))
                         {
                             if (mergedCount == 0)
                             {
@@ -641,20 +654,14 @@ namespace ChessForge
                                 {
                                     // special treatment for the first one
                                     PgnGameParser pgp = new PgnGameParser(games[i].GameText, AppStateManager.MainWin.ActiveVariationTree, out bool multi);
-                                    // make sure it is not a FEN position
-                                    if (string.IsNullOrEmpty(AppStateManager.MainWin.ActiveVariationTree.Header.GetFenString()))
-                                    {
-                                        mergedCount++;
-                                    }
                                 }
                                 catch (Exception ex)
                                 {
-                                    sbErrors.Append("Game #" + (i + 1).ToString() + " : " + games[i].Header.BuildGameHeaderLine());
-                                    sbErrors.Append(Environment.NewLine);
-                                    sbErrors.Append("     " + ex.Message);
-                                    sbErrors.Append(Environment.NewLine);
+                                    sbErrors.AppendLine(BuildGameParseErrorText(i + 1, games[i], ex));
                                     errorCount++;
                                 }
+                                // make sure it is not a FEN position
+                                mergedCount++;
                             }
                             else
                             {
@@ -662,21 +669,14 @@ namespace ChessForge
                                 try
                                 {
                                     PgnGameParser pgp = new PgnGameParser(games[i].GameText, workbook2, out bool multi);
-                                    // make sure it is not a FEN position
-                                    if (string.IsNullOrEmpty(workbook2.Header.GetFenString()))
-                                    {
-                                        tree = WorkbookTreeMerge.MergeWorkbooks(tree, workbook2);
-                                        mergedCount++;
-                                    }
                                 }
                                 catch (Exception ex)
                                 {
-                                    sbErrors.Append("Game #" + (i + 1).ToString() + " : " + games[i].Header.BuildGameHeaderLine());
-                                    sbErrors.Append(Environment.NewLine);
-                                    sbErrors.Append("     " + ex.Message);
-                                    sbErrors.Append(Environment.NewLine);
+                                    sbErrors.AppendLine(BuildGameParseErrorText(i + 1, games[i], ex));
                                     errorCount++;
                                 }
+                                tree = WorkbookTreeMerge.MergeWorkbooks(tree, workbook2);
+                                mergedCount++;
                             }
                         }
                     }
@@ -695,6 +695,18 @@ namespace ChessForge
             return mergedCount;
         }
 
+        private static string BuildGameParseErrorText(int gameNo, GameData game, Exception ex)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("Game #" + gameNo.ToString() + " : " + game.Header.BuildGameHeaderLine());
+            sb.Append(Environment.NewLine);
+            sb.Append("     " + ex.Message);
+            sb.Append(Environment.NewLine);
+
+            return sb.ToString();
+        }
+
         /// <summary>
         /// Reports errors encountered while merging
         /// </summary>
@@ -702,7 +714,13 @@ namespace ChessForge
         /// <param name="mergedCount"></param>
         private static void ShowMergeErrors(int errorCount, int mergedCount, ref StringBuilder sb)
         {
-            TextBoxDialog dlg = new TextBoxDialog("Merge Errors", sb.ToString());
+            TextBoxDialog dlg = new TextBoxDialog("Merge Errors", sb.ToString())
+            {
+                Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
+                Top = AppStateManager.MainWin.ChessForgeMain.Top + 100,
+                Topmost = false,
+                Owner = AppStateManager.MainWin
+            };
             dlg.ShowDialog();
         }
 
