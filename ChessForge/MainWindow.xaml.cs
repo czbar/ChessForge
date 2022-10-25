@@ -836,10 +836,10 @@ namespace ChessForge
             BoardCommentBox.ShowWorkbookTitle();
             InitializeChaptersView();
 
-//            SetupGuiForActiveStudyTree(true);
+            SetupGuiForActiveStudyTree(false);
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-            UiTabChapters_GotFocus(null, null);
+            SetupGuiForChapters();
         }
 
         /// <summary>
@@ -936,6 +936,14 @@ namespace ChessForge
 
             int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
             SelectLineAndMoveInWorkbookViews(_modelGameTreeView, startLineId, nodeIndex);
+        }
+
+        /// <summary>
+        /// Activates the Chapters tab.
+        /// </summary>
+        public void SetupGuiForChapters()
+        {
+            UiTabChapters.Focus();
         }
 
         /// <summary>
