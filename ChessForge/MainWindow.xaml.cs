@@ -228,6 +228,7 @@ namespace ChessForge
             UiDgActiveLine.ContextMenu = UiMnMainBoard;
             AddDebugMenu();
 
+            ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
             LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
             AppStateManager.SetupGuiForCurrentStates();
 
