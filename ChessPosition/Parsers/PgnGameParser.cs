@@ -97,7 +97,7 @@ namespace GameTree
         private void ProcessPgnGameText(VariationTree tree, string pgnGametext, string fen = null)
         {
             _tree = tree;
-            
+
             // clear Nodes, just in case
             _tree.Nodes.Clear();
 
@@ -130,7 +130,7 @@ namespace GameTree
 
                     if (!readingHeaders)
                     {
-//                        sb.Append(line + " ");
+                        //                        sb.Append(line + " ");
                         sb.AppendLine(line);
                     }
                 }
@@ -248,9 +248,9 @@ namespace GameTree
             if (string.IsNullOrEmpty(s))
                 return true;
 
-            if (s == Constants.PGN_NO_RESULT 
-                || s == Constants.PGN_WHITE_WIN_RESULT 
-                || s == Constants.PGN_BLACK_WIN_RESULT 
+            if (s == Constants.PGN_NO_RESULT
+                || s == Constants.PGN_WHITE_WIN_RESULT
+                || s == Constants.PGN_BLACK_WIN_RESULT
                 || s.StartsWith(Constants.PGN_DRAW_SHORT_RESULT))
                 return true;
 
@@ -302,7 +302,13 @@ namespace GameTree
 
                         break;
                     case PgnTokenType.MoveNumber:
-                        ProcessMoveNumber(token, parentNode);
+                        TreeNode adjustedParent = ProcessMoveNumber(token, parentNode);
+                        // did we have to adjust the parent
+                        if (adjustedParent != null)
+                        {
+                            previousNode = adjustedParent;
+                            parentNode = adjustedParent;
+                        }
                         break;
                     case PgnTokenType.NAG:
                         // add to the last processed move
@@ -454,10 +460,12 @@ namespace GameTree
         /// <summary>
         /// Check that the move number is as expected.
         /// We have seen corrupt/illegal PGNs with moves missing.
+        /// If the move has a wrong number do our best to find the correct parent
+        /// in the already processed data.
         /// </summary>
         /// <param name="token"></param>
         /// <param name="previousNode"></param>
-        private void ProcessMoveNumber(string token, TreeNode parent)
+        private TreeNode ProcessMoveNumber(string token, TreeNode parent)
         {
             // the token is in the format of integer followed by one or 3 dots
             int dotPos = token.IndexOf('.');
@@ -468,13 +476,87 @@ namespace GameTree
             if (parent.ColorToMove == PieceColor.White && dotCount == 1 && moveNo == parent.MoveNumber + 1
                 || parent.ColorToMove == PieceColor.Black && dotCount == 3 && moveNo == parent.MoveNumber)
             {
-                return;
+                return null;
             }
             else
             {
-                throw new Exception(BuildMissingMoveErrorText(parent));
+                // bad wrong number, see we can find the right parent
+                TreeNode nd = FindParentForMove(parent, (int)moveNo, dotCount == 3 ? PieceColor.Black : PieceColor.White);
+                if (nd != null)
+                {
+                    return nd;
+                }
+                else
+                {
+                    throw new Exception(BuildMissingMoveErrorText(parent));
+                }
             }
         }
+
+        /// <summary>
+        /// Attempts to find the right parent based on the coming move number
+        /// and color as well as "presumed" parent which proved to be not from an 
+        /// immediately preceding move.
+        /// </summary>
+        /// <param name="presumedParent"></param>
+        /// <param name="moveNo"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        private TreeNode FindParentForMove(TreeNode presumedParent, int moveNo, PieceColor color)
+        {
+            int moveDistance = CalculateMoveDistance(presumedParent, moveNo, color);
+            if (moveDistance == 2)
+            {
+                return presumedParent.Children[0];
+            }
+            else
+            {
+                TreeNode nd = presumedParent;
+                if (moveDistance < 2)
+                {
+                    for (int i = 1; i > moveDistance; i--)
+                    {
+                        if (nd != null)
+                        {
+                            nd = nd.Parent;
+                        }
+                    }
+                }
+                return nd;
+            }
+        }
+
+        /// <summary>
+        /// Calculates the distance, in half moves, between a Node and a move
+        /// identified by its number and color.
+        /// 
+        /// This distance should normally be 1, but in bad PGN it may be 0, 2 
+        /// or something else e.g.:
+        /// -1 : 7... Be7 7.f4
+        /// 0  : 7... Be7 7...Nf6
+        /// 1  : 7... Be7 8.Bg5 or 7...Be7 8.Bg5 ( 8.Bc4
+        /// 2  : 7... Be7 ( 8.Bg5
+        /// </summary>
+        /// <param name="fromMoveNode"></param>
+        /// <param name="toMoveNumber"></param>
+        /// <param name="toMoveColor"></param>
+        /// <returns></returns>
+        private int CalculateMoveDistance(TreeNode fromMoveNode, int toMoveNumber, PieceColor toMoveColor)
+        {
+            int moveDiff = (int)(toMoveNumber - fromMoveNode.MoveNumber) * 2;
+            int colorDiff = 0;
+            if (toMoveColor == PieceColor.White && fromMoveNode.ColorToMove == PieceColor.White)
+            {
+                colorDiff = -1;
+            }
+            else if (toMoveColor == PieceColor.Black && fromMoveNode.ColorToMove == PieceColor.Black)
+            {
+                colorDiff = 1;
+            }
+
+            return moveDiff + colorDiff;
+        }
+
 
         /// <summary>
         /// Builds text for a message reporting a "missing move" error.
@@ -582,9 +664,9 @@ namespace GameTree
             else
             {
                 // go to the next space or closing parenthesis or a dot
-                while (charPos < _remainingGameText.Length 
-                    && _remainingGameText[charPos] != ' ' 
-                    && _remainingGameText[charPos] != ')' 
+                while (charPos < _remainingGameText.Length
+                    && _remainingGameText[charPos] != ' '
+                    && _remainingGameText[charPos] != ')'
                     && _remainingGameText[charPos] != '.'
                     && _remainingGameText[charPos] != '\r'
                     && _remainingGameText[charPos] != '\n'
