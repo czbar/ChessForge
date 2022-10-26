@@ -32,6 +32,10 @@ namespace ChessForge
         // Application's Main Window
         private MainWindow _mainWin;
 
+        private int _selectedRow = -1;
+
+        private int _selectedColumn = -1;
+
         /// <summary>
         /// Constructor.
         /// Sets reference to the DataGrid control
@@ -49,19 +53,10 @@ namespace ChessForge
         /// </summary>
         public void Clear()
         {
-            _dgActiveLine.SelectedCells.Clear();
+            ClearSelection();
+
             Line.MoveList.Clear();
             Line.NodeList.Clear();
-        }
-
-        /// <summary>
-        /// Returns true if there is a cell selected
-        /// in the DataGrid.
-        /// </summary>
-        /// <returns></returns>
-        public bool HasAnySelection()
-        {
-            return _dgActiveLine.SelectedCells.Count > 0;
         }
 
         /// <summary>
@@ -265,24 +260,10 @@ namespace ChessForge
         /// <returns></returns>
         public bool GetSelectedRowColumn(out int row, out int column)
         {
-            row = -1;
-            column = -1;
+            row = _selectedRow;
+            column = _selectedColumn;
 
-            if (_dgActiveLine.SelectedCells.Count > 0)
-            {
-                DataGridCellInfo cell = _dgActiveLine.SelectedCells[0];
-                column = cell.Column.DisplayIndex;
-                DataGridRow dr = (DataGridRow)(_dgActiveLine.ItemContainerGenerator.ContainerFromItem(cell.Item));
-                if (dr != null)
-                {
-                    row = dr.GetIndex();
-                }
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return row >= 0 && column >= 0;
         }
 
         /// <summary>
@@ -299,7 +280,8 @@ namespace ChessForge
             // the under board message may not be relevant anymore
             _mainWin.BoardCommentBox.RestoreTitleMessage();
 
-            _dgActiveLine.SelectedCells.Clear();
+            ClearSelection();
+
             moveNo = Math.Max(moveNo, 0);
 
             if (moveNo == 0 && colorToMove != PieceColor.White)
@@ -315,14 +297,17 @@ namespace ChessForge
             DataGridCellInfo cell;
             if (colorToMove == PieceColor.White && moveNo < _dgActiveLine.Items.Count)
             {
-                cell = new DataGridCellInfo(_dgActiveLine.Items[moveNo], _dgActiveLine.Columns[_dgActiveLineWhitePlyColumn]);
-                _dgActiveLine.ScrollIntoView(_dgActiveLine.Items[moveNo]);
+                _selectedRow = moveNo;
+                _selectedColumn = _dgActiveLineWhitePlyColumn;
             }
             else
             {
-                cell = new DataGridCellInfo(_dgActiveLine.Items[moveNo - 1], _dgActiveLine.Columns[_dgActiveLineBlackPlyColumn]);
-                _dgActiveLine.ScrollIntoView(_dgActiveLine.Items[moveNo - 1]);
+                _selectedRow = moveNo - 1;
+                _selectedColumn = _dgActiveLineBlackPlyColumn;
+
             }
+            cell = new DataGridCellInfo(_dgActiveLine.Items[_selectedRow], _dgActiveLine.Columns[_selectedColumn]);
+            _dgActiveLine.ScrollIntoView(_dgActiveLine.Items[_selectedRow]);
 
             var cellContent = cell.Column.GetCellContent(cell.Item);
             if (cellContent == null)
@@ -334,6 +319,10 @@ namespace ChessForge
             if (cellContent != null)
             {
                 _dgActiveLine.SelectedCells.Add(cell);
+            }
+            else
+            {
+                DebugUtils.ShowDebugMessage("Cell content is null in " + "SelectPly");
             }
         }
 
@@ -415,6 +404,7 @@ namespace ChessForge
         public void PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out int row, out int column);
+            
             _mainWin.BoardCommentBox.ShowWorkbookTitle();
 
             if (IsSelectableCell(row, column))
@@ -442,6 +432,9 @@ namespace ChessForge
                     {
                         _mainWin.StopEvaluation();
                     }
+
+                    _selectedRow = row;
+                    _selectedRow = column;
 
                     _mainWin.DisplayPosition(nd);
                     _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, Line.GetLineId(), moveIndex);
@@ -520,6 +513,9 @@ namespace ChessForge
                 {
                     if (postKeyDownRow >= 0)
                     {
+                        _selectedRow = postKeyDownRow;
+                        _selectedColumn = postKeyDownColumn;
+
                         DataGridCellInfo cell = new DataGridCellInfo(_dgActiveLine.Items[postKeyDownRow], _dgActiveLine.Columns[postKeyDownColumn]);
                         _dgActiveLine.ScrollIntoView(_dgActiveLine.Items[postKeyDownRow]);
                         _dgActiveLine.SelectedCells.Clear();
@@ -529,7 +525,7 @@ namespace ChessForge
                     }
                     else
                     {
-                        _dgActiveLine.SelectedCells.Clear();
+                        ClearSelection();
                         plyIndex = 0;
                     }
 
@@ -556,6 +552,17 @@ namespace ChessForge
             }
 
             return handled;
+        }
+
+        /// <summary>
+        /// Clears the selection in the DataGrid
+        /// and tracking variables.
+        /// </summary>
+        private void ClearSelection()
+        {
+            _dgActiveLine.SelectedCells.Clear();
+            _selectedRow = -1;
+            _selectedColumn = -1;
         }
 
         /// <summary>
