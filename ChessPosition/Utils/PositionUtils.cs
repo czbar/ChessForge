@@ -86,15 +86,17 @@ namespace ChessPosition
         /// <param name="pos"></param>
         private static void CorrectCastlingRights(ref BoardPosition pos)
         {
-            if (GetPieceType(pos.Board[5, 0]) != PieceType.King || GetPieceColor(pos.Board[5, 0]) != PieceColor.White)
+            // Remove rights based in Kings' positions
+            if (GetPieceType(pos.Board[4, 0]) != PieceType.King || GetPieceColor(pos.Board[4, 0]) != PieceColor.White)
             {
                 pos.DynamicProperties = (byte)(pos.DynamicProperties & ~(Constants.WhiteKingsideCastle | Constants.WhiteQueensideCastle));
             }
-            if (GetPieceType(pos.Board[5, 7]) != PieceType.King || GetPieceColor(pos.Board[5, 7]) != PieceColor.Black)
+            if (GetPieceType(pos.Board[4, 7]) != PieceType.King || GetPieceColor(pos.Board[4, 7]) != PieceColor.Black)
             {
-                pos.DynamicProperties = (byte)(pos.DynamicProperties & ~(Constants.WhiteKingsideCastle | Constants.WhiteQueensideCastle));
+                pos.DynamicProperties = (byte)(pos.DynamicProperties & ~(Constants.BlackKingsideCastle | Constants.BlackQueensideCastle));
             }
 
+            // Remove rights based on White Rook's positions
             if (GetPieceType(pos.Board[0, 0]) != PieceType.Rook || GetPieceColor(pos.Board[0, 0]) != PieceColor.White)
             {
                 pos.DynamicProperties = (byte)(pos.DynamicProperties & ~Constants.WhiteQueensideCastle);
@@ -103,6 +105,8 @@ namespace ChessPosition
             {
                 pos.DynamicProperties = (byte)(pos.DynamicProperties & ~Constants.WhiteKingsideCastle);
             }
+
+            // Remove rights based on Black Rook's positions
             if (GetPieceType(pos.Board[0, 7]) != PieceType.Rook || GetPieceColor(pos.Board[0, 7]) != PieceColor.Black)
             {
                 pos.DynamicProperties = (byte)(pos.DynamicProperties & ~Constants.BlackQueensideCastle);
