@@ -1657,7 +1657,13 @@ namespace ChessForge
                     VariationTree tree = new VariationTree(GameData.ContentType.EXERCISE);
                     tree.CreateNew(pos);
 
-                    GameHeaderDialog dlgHeader = new GameHeaderDialog(tree, "Exercise Header");
+                    GameHeaderDialog dlgHeader = new GameHeaderDialog(tree, "Exercise Header")
+                    {
+                        Left = ChessForgeMain.Left + 100,
+                        Top = ChessForgeMain.Top + 100,
+                        Topmost = false,
+                        Owner = this
+                    };
 
                     dlgHeader.ShowDialog();
                     if (dlgHeader.ExitOK)
