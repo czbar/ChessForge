@@ -344,7 +344,7 @@ namespace ChessForge
                         switch (menuItem.Name)
                         {
                             case "_mnGame_EditHeader":
-                                menuItem.IsEnabled = isEnabled && gameIndex >= 0;
+                                menuItem.IsEnabled = gameIndex >= 0;
                                 break;
                             case "_mnGame_CreateModelGame":
                                 menuItem.IsEnabled = true;
@@ -392,7 +392,7 @@ namespace ChessForge
                         switch (menuItem.Name)
                         {
                             case "_mnExerc_EditHeader":
-                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0;
+                                menuItem.IsEnabled = exerciseIndex >= 0;
                                 break;
                             case "_mnExerc_CreateExercise":
                                 menuItem.IsEnabled = true;

@@ -16,8 +16,6 @@
         <Label x:Name="UiLblRound" Content="Round" HorizontalAlignment="Left" Margin="20,120,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbRound" HorizontalAlignment="Left" Margin="80,123,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="40"/>
         <Label x:Name="UiLblDate" Content="Date" HorizontalAlignment="Left" Margin="160,120,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="UiTbDate" HorizontalAlignment="Left" Margin="210,123,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="80"/>
-        <Label x:Name="UiLblDateSamples" Content="(e.g. 2022.09.22 or 2022.??.??)" HorizontalAlignment="Left" Margin="295,120,0,0" VerticalAlignment="Top"/>
         <Button x:Name="UiBtnOk" Content="OK" HorizontalAlignment="Left" Margin="140,234,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
         <Button x:Name="UiBtnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="240,234,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
         <Button x:Name="UiBtnHelp" Content="Help" HorizontalAlignment="Left" Margin="370,234,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnHelp_Click"/>
@@ -26,5 +24,6 @@
         <RadioButton x:Name="UiRbBlackWin" Content="0-1" HorizontalAlignment="Left" Margin="170,180,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="UiRbDraw" Content="1/2" HorizontalAlignment="Left" Margin="240,180,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="UiRbNoResult" Content="*" HorizontalAlignment="Left" Margin="310,180,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="UiDatePicker" HorizontalAlignment="Left" Margin="214,122,0,0" VerticalAlignment="Top" IsTodayHighlighted="False"/>
     </Grid>
 </Window>

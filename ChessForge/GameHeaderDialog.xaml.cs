@@ -63,11 +63,11 @@ namespace ChessForge
             string date = _tree.Header.GetDate(out _);
             if (string.IsNullOrEmpty(date))
             {
-                UiTbDate.Text = Constants.EMPTY_PGN_DATE;
+                UiDatePicker.Text = "";
             }
             else
             {
-                UiTbDate.Text = date;
+                UiDatePicker.Text = date;
             }
         }
 
@@ -113,7 +113,7 @@ namespace ChessForge
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, UiTbBlack.Text);
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, UiTbEvent.Text);
 
-            _tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, TextUtils.AdjustDateString(UiTbDate.Text));
+            _tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, TextUtils.AdjustDateString(UiDatePicker.Text));
 
             if (int.TryParse(UiTbRound.Text, out int round))
             {
