@@ -249,7 +249,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="cmn"></param>
         /// <param name="isEnabled"></param>
-        public void EnableActiveTreeViewMenus(ContextMenu cmn, bool isEnabled)
+        public void EnableActiveTreeViewMenus(bool isEnabled)
         {
             // ClickedIndex should be in sync with isEnabled but double check just in case
             if (LastClickedNodeId < 0)
@@ -262,13 +262,13 @@ namespace ChessForge
                 switch (_variationTree.ContentType)
                 {
                     case GameData.ContentType.STUDY_TREE:
-                        EnableStudyTreeMenus(cmn, isEnabled);
+                        EnableStudyTreeMenus(_mainWin.UiCmnWorkbookRightClick, isEnabled);
                         break;
                     case GameData.ContentType.MODEL_GAME:
-                        EnableModelGamesMenus(cmn, isEnabled);
+                        EnableModelGamesMenus(_mainWin.UiCmModelGames, isEnabled);
                         break;
                     case GameData.ContentType.EXERCISE:
-                        EnableExercisesMenus(cmn, isEnabled);
+                        EnableExercisesMenus(_mainWin.UiCmExercises, isEnabled);
                         break;
                     default:
                         break;
@@ -348,6 +348,9 @@ namespace ChessForge
                                 break;
                             case "_mnGame_CreateModelGame":
                                 menuItem.IsEnabled = true;
+                                break;
+                            case "_mnGame_CreateExercise":
+                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && _lastClickedNodeId >= 0;
                                 break;
                             case "_mnGame_PromoteLine":
                                 menuItem.IsEnabled = isEnabled && gameIndex >= 0 && _lastClickedNodeId >= 0;
@@ -1432,7 +1435,7 @@ namespace ChessForge
                 if (e.ChangedButton == MouseButton.Right)
                 {
                     _lastClickedNodeId = nodeId;
-                    EnableActiveTreeViewMenus(_mainWin.UiCmnWorkbookRightClick, true);
+                    EnableActiveTreeViewMenus(true);
                 }
                 else
                 {
