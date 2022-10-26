@@ -51,24 +51,26 @@ namespace ChessForge
             UiTbEvent.Text = _tree.Header.GetEventName(out _) ?? "";
             UiTbRound.Text = _tree.Header.GetRound(out _) ?? "";
 
-            SetDateTextBox();
+            SetDateControls();
             SetResultRadioButton();
         }
 
         /// <summary>
         /// Sets the text in the Date TextBox.
         /// </summary>
-        private void SetDateTextBox()
+        private void SetDateControls()
         {
-            string date = _tree.Header.GetDate(out _);
-            if (string.IsNullOrEmpty(date))
-            {
-                UiTbDate.Text = Constants.EMPTY_PGN_DATE;
-            }
-            else
-            {
-                UiTbDate.Text = date;
-            }
+            string date = TextUtils.AdjustPgnDateString(_tree.Header.GetDate(out _), out bool hasMonth, out bool hasDay);
+            SetCheckBoxes(hasMonth, hasDay);
+
+            UiTbPgnDate.Text = date;
+            UiDatePicker.SelectedDate = TextUtils.GetDateFromPgnString(date);
+        }
+
+        private void SetCheckBoxes(bool hasMonth, bool hasDay)
+        {
+            UiCbIgnoreMonthDay.IsChecked = !hasMonth;
+            UiCbIgnoreDay.IsChecked = !hasMonth || !hasDay;
         }
 
         /// <summary>
@@ -113,7 +115,7 @@ namespace ChessForge
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, UiTbBlack.Text);
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, UiTbEvent.Text);
 
-            _tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, TextUtils.AdjustDateString(UiTbDate.Text));
+            _tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, TextUtils.AdjustPgnDateString(UiTbPgnDate.Text, out _, out _));
 
             if (int.TryParse(UiTbRound.Text, out int round))
             {
@@ -175,6 +177,55 @@ namespace ChessForge
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Game-Header-Editor");
+        }
+
+        private void UiBtnClearDate_Click(object sender, RoutedEventArgs e)
+        {
+            UiDatePicker.Text = "";
+            UiTbPgnDate.Text = TextUtils.BuildPgnDateString(null);
+        }
+
+        private void UiDatePicker_LostFocus(object sender, RoutedEventArgs e)
+        {
+            DateTime? dt = UiDatePicker.SelectedDate;
+            UiTbPgnDate.Text = TextUtils.BuildPgnDateString(dt, UiCbIgnoreMonthDay.IsChecked == true, UiCbIgnoreDay.IsChecked == true);
+        }
+
+        private void UiTbPgnDate_LostFocus(object sender, RoutedEventArgs e)
+        {
+            string pgnDate = TextUtils.AdjustPgnDateString(UiTbPgnDate.Text, out bool hasMonth, out bool hasDay);
+            SetCheckBoxes(hasMonth, hasDay);
+
+            UiTbPgnDate.Text = pgnDate;
+            DateTime? dt = TextUtils.GetDateFromPgnString(pgnDate);
+            UiDatePicker.SelectedDate = dt;
+        }
+
+        private void UiCbIgnoreMonthDay_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckedEventOccurred();
+        }
+
+        private void UiCbIgnoreMonthDay_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CheckedEventOccurred();
+        }
+
+        private void UiCbIgnoreDay_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CheckedEventOccurred();
+        }
+
+        private void UiCbIgnoreDay_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckedEventOccurred();
+        }
+
+        private void CheckedEventOccurred()
+        {
+            UiTbPgnDate.Text = TextUtils.BuildPgnDateString(UiDatePicker.SelectedDate, UiCbIgnoreMonthDay.IsChecked == true, UiCbIgnoreDay.IsChecked == true);
+            DateTime? dt = TextUtils.GetDateFromPgnString(UiTbPgnDate.Text);
+            UiDatePicker.SelectedDate = dt;
         }
     }
 }

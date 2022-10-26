@@ -1,10 +1,6 @@
 ﻿using ChessPosition;
 using GameTree;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -296,12 +292,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void WorkbookView_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void VariationTreeView_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (ActiveTreeView != null)
             {
                 ActiveTreeView.LastClickedNodeId = -1;
-                ActiveTreeView.EnableWorkbookMenus(UiCmnWorkbookRightClick, false);
+                ActiveTreeView.EnableActiveTreeViewMenus(false);
             }
         }
 

@@ -228,6 +228,7 @@ namespace ChessForge
             UiDgActiveLine.ContextMenu = UiMnMainBoard;
             AddDebugMenu();
 
+            ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
             LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
             AppStateManager.SetupGuiForCurrentStates();
 
@@ -411,6 +412,10 @@ namespace ChessForge
 
                     SetupGuiForActiveModelGame(gameIndex, setFocus);
                 }
+                else
+                {
+                    _modelGameTreeView.Clear();
+                }
             }
             catch (Exception ex)
             {
@@ -425,13 +430,27 @@ namespace ChessForge
         /// <param name="exerciseIndex"></param>
         public void SelectExercise(int exerciseIndex, bool setFocus)
         {
-            WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = exerciseIndex;
-            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, exerciseIndex);
+            try
+            {
+                if (exerciseIndex >= 0 && exerciseIndex < WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount())
+                {
+                    WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = exerciseIndex;
+                    WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, exerciseIndex);
 
-            MainChessBoard.FlipBoard(false);
-            WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = null;
+                    MainChessBoard.FlipBoard(false);
+                    WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = null;
 
-            SetupGuiForActiveExercise(exerciseIndex, setFocus);
+                    SetupGuiForActiveExercise(exerciseIndex, setFocus);
+                }
+                else
+                {
+                    _exerciseTreeView.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in SelectExercise(): " + ex.Message);
+            }
         }
 
         /// <summary>

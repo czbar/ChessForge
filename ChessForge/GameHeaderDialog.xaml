@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="Game/Exercise Options" Height="320" Width="513">
+        Title="Game/Exercise Options" Height="400" Width="513">
     <Grid>
         <Label x:Name="UiLblWhite" Content="White" HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbWhite" HorizontalAlignment="Left" Margin="80,33,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="400"/>
@@ -15,16 +15,21 @@
         <TextBox x:Name="UiTbEvent" HorizontalAlignment="Left" Margin="80,93,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="400"/>
         <Label x:Name="UiLblRound" Content="Round" HorizontalAlignment="Left" Margin="20,120,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbRound" HorizontalAlignment="Left" Margin="80,123,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="40"/>
-        <Label x:Name="UiLblDate" Content="Date" HorizontalAlignment="Left" Margin="160,120,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="UiTbDate" HorizontalAlignment="Left" Margin="210,123,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="80"/>
-        <Label x:Name="UiLblDateSamples" Content="(e.g. 2022.09.22 or 2022.??.??)" HorizontalAlignment="Left" Margin="295,120,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnOk" Content="OK" HorizontalAlignment="Left" Margin="140,234,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="240,234,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
-        <Button x:Name="UiBtnHelp" Content="Help" HorizontalAlignment="Left" Margin="370,234,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnHelp_Click"/>
-        <GroupBox x:Name="UiGbResult" HorizontalAlignment="Left" Height="55" Header="Result" Margin="80,155,0,0" VerticalAlignment="Top" Width="300"/>
-        <RadioButton x:Name="UiRbWhiteWin" Content="1-0" HorizontalAlignment="Left" Margin="100,180,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="UiRbBlackWin" Content="0-1" HorizontalAlignment="Left" Margin="170,180,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="UiRbDraw" Content="1/2" HorizontalAlignment="Left" Margin="240,180,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="UiRbNoResult" Content="*" HorizontalAlignment="Left" Margin="310,180,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnOk" Content="OK" HorizontalAlignment="Left" Margin="140,314,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="240,314,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnHelp" Content="Help" HorizontalAlignment="Left" Margin="370,314,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnHelp_Click"/>
+        <GroupBox x:Name="UiGbResult" HorizontalAlignment="Left" Height="131" Header="Result" Margin="80,155,0,0" VerticalAlignment="Top" Width="123"/>
+        <RadioButton x:Name="UiRbWhiteWin" Content="1-0" HorizontalAlignment="Left" Margin="115,180,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbBlackWin" Content="0-1" HorizontalAlignment="Left" Margin="115,205,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbDraw" Content="1/2" HorizontalAlignment="Left" Margin="115,230,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbNoResult" Content="*" HorizontalAlignment="Left" Margin="115,255,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="UiDatePicker" HorizontalAlignment="Left" Margin="252,148,0,0" VerticalAlignment="Top" IsTodayHighlighted="False" Width="144" LostFocus="UiDatePicker_LostFocus"/>
+        <Label x:Name="UiLblPgnDate" Content="PGN" HorizontalAlignment="Left" Margin="247,180,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="UiCbIgnoreMonthDay" Content="Ignore Day and Month" HorizontalAlignment="Left" Margin="252,224,0,0" VerticalAlignment="Top" Checked="UiCbIgnoreMonthDay_Checked" Unchecked="UiCbIgnoreMonthDay_Unchecked"/>
+        <CheckBox x:Name="UiCbIgnoreDay" Content="Ignore Day" HorizontalAlignment="Left" Margin="252,247,0,0" VerticalAlignment="Top" Unchecked="UiCbIgnoreDay_Unchecked" Checked="UiCbIgnoreDay_Checked"/>
+        <TextBox x:Name="UiTbPgnDate" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="288,184,0,0" VerticalAlignment="Top" TextWrapping="Wrap" Text="????.??.??" Width="80" LostFocus="UiTbPgnDate_LostFocus" />
+        <Button x:Name="UiBtnClearDate" Content="Clear" HorizontalAlignment="Left" Width="40" Margin="412,150,0,0" VerticalAlignment="Top" Click="UiBtnClearDate_Click"/>
+        <GroupBox x:Name="UiGbDate" HorizontalAlignment="Left" Height="171" Header="Date" Margin="216,116,0,0" VerticalAlignment="Top" Width="265">
+        </GroupBox>
     </Grid>
 </Window>

@@ -210,7 +210,7 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabStudyTree"  Header="Study" GotFocus="UiTabStudyTree_GotFocus" LostFocus="UiTabStudyTree_LostFocus" >
-                        <Grid Background="#FFE5E5E5" PreviewMouseDown="WorkbookView_OnPreviewMouseDown">
+                        <Grid Background="#FFE5E5E5" PreviewMouseDown="VariationTreeView_OnPreviewMouseDown">
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiCmnWorkbookRightClick">
                                     <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
@@ -379,7 +379,7 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabModelGames"  Header="Games" GotFocus="UiTabModelGames_GotFocus" PreviewKeyDown="UiTabModelGames_PreviewKeyDown" LostFocus="UiTabModelGames_LostFocus" >
-                        <Grid x:Name="UiGridModelGames"  Background="#FFE5E5E5" >
+                        <Grid x:Name="UiGridModelGames"  Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0"/>
                                 <RowDefinition />
@@ -392,6 +392,9 @@
                                     <MenuItem x:Name="_mnGame_EditHeader" Header="Edit Game Header" Click="UiMnGame_EditHeader_Click" />
                                     <MenuItem x:Name="_mnGame_CreateModelGame" Header="Create New Game" Click="_UiMnGame_CreateModelGame_Click" />
                                     <MenuItem x:Name="_mnGame_CreateExercise" Header="Create Exercise from Here..." Click="UiMnGame_CreateExercise_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnGame_PromoteLine" Header="Promote Line" Click="UiMnGame_PromoteLine_Click" />
+                                    <MenuItem x:Name="_mnGame_DeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnGame_DeleteMovesFromHere_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_DeleteModelGame" Header="Delete This Game" Click="UiMnGame_DeleteModelGame_Click" />
                                 </ContextMenu>
@@ -416,7 +419,7 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabExercises"  Header="Exercises" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
-                        <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  >
+                        <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0"/>
                                 <RowDefinition />
@@ -429,7 +432,10 @@
                                     <MenuItem x:Name="_mnExerc_EditHeader" Header="Edit Exercise Header" Click="UiMnExerc_EditHeader_Click" />
                                     <MenuItem x:Name="_mnExerc_CreateExercise" Header="Create New Exercise" Click="UiMnExerc_CreateExercise_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnExerc_DeleteThisExercise" Header="Delete This Exercise" Click="UiMnExerc_DeleteThisExercise_Click" />
+                                    <MenuItem x:Name="_mnExerc_PromoteLine" Header="Promote Line" Click="UiMnExerc_PromoteLine_Click" />
+                                    <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnExerc_DeleteMovesFromHere_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnExerc_DeleteThisExercise" Header="Delete This Exercise" Click="UiMnExerc_DeleteExercise_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >

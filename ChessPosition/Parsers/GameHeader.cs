@@ -125,7 +125,7 @@ namespace GameTree
                 value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
             }
 
-            return TextUtils.AdjustDateString(value);
+            return TextUtils.AdjustPgnDateString(value, out _, out _);
         }
 
         /// <summary>
