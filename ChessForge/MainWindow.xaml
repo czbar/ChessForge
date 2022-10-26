@@ -393,6 +393,9 @@
                                     <MenuItem x:Name="_mnGame_CreateModelGame" Header="Create New Game" Click="_UiMnGame_CreateModelGame_Click" />
                                     <MenuItem x:Name="_mnGame_CreateExercise" Header="Create Exercise from Here..." Click="UiMnGame_CreateExercise_Click" />
                                     <Separator />
+                                    <MenuItem x:Name="_mnGame_PromoteLine" Header="Promote Line" Click="UiMnGame_PromoteLine_Click" />
+                                    <MenuItem x:Name="_mnGame_DeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnGame_DeleteMovesFromHere_Click" />
+                                    <Separator />
                                     <MenuItem x:Name="_mnGame_DeleteModelGame" Header="Delete This Game" Click="UiMnGame_DeleteModelGame_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
@@ -428,6 +431,9 @@
                                 <ContextMenu x:Name="UiCmExercises">
                                     <MenuItem x:Name="_mnExerc_EditHeader" Header="Edit Exercise Header" Click="UiMnExerc_EditHeader_Click" />
                                     <MenuItem x:Name="_mnExerc_CreateExercise" Header="Create New Exercise" Click="UiMnExerc_CreateExercise_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnExerc_PromoteLine" Header="Promote Line" Click="UiMnExerc_PromoteLine_Click" />
+                                    <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnExerc_DeleteMovesFromHere_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnExerc_DeleteThisExercise" Header="Delete This Exercise" Click="UiMnExerc_DeleteExercise_Click" />
                                 </ContextMenu>

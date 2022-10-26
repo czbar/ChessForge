@@ -1454,7 +1454,7 @@ namespace ChessForge
         //**********************
 
         /// <summary>
-        /// The user requested to promote the currently selected line.
+        /// The user requested from the Study menu to promote the currently selected line.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1464,7 +1464,28 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The user requested to deleted the sub-tree starting at the selected node.
+        /// The user requested from the Exercises menu to promote the currently selected line.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExerc_PromoteLine_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveTreeView.PromoteCurrentLine();
+        }
+
+        /// <summary>
+        /// The user requested from the Games menu to promote the currently selected line.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnGame_PromoteLine_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveTreeView.PromoteCurrentLine();
+        }
+
+
+        /// <summary>
+        /// The user requested from the Study menu to delete the sub-tree starting at the selected node.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1472,6 +1493,27 @@ namespace ChessForge
         {
             ActiveTreeView.DeleteRemainingMoves();
         }
+
+        /// <summary>
+        /// The user requested from the Exercises menu to delete the sub-tree starting at the selected node.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExerc_DeleteMovesFromHere_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveTreeView.DeleteRemainingMoves();
+        }
+
+        /// <summary>
+        /// The user requested from the Games menu to delete the sub-tree starting at the selected node.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnGame_DeleteMovesFromHere_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveTreeView.DeleteRemainingMoves();
+        }
+
 
 
         //*********************
