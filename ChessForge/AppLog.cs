@@ -8,6 +8,7 @@ using GameTree;
 using System.Windows;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using ChessPosition;
 
 namespace ChessForge
 {
@@ -41,6 +42,40 @@ namespace ChessForge
             {
                 string timeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "  ";
                 Log.Add(timeStamp + msg);
+            }
+        }
+
+        /// <summary>
+        /// Logs TreeNode details including the board position.
+        /// </summary>
+        /// <param name="nd"></param>
+        public static void TreeNodeDetails(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                Message("");
+            }
+
+            Message("*** BEGIN TreeNode details:");
+            if (nd == null)
+            {
+                Message("The TreeNode is null.");
+                Message("*** END TreeNode:");
+            }
+            else
+            {
+                Message("NodeId=" + nd.NodeId.ToString());
+                Message("LastMove=" + (nd.LastMoveAlgebraicNotationWithNag ?? ""));
+                Message("ColorToMove=" + (nd.ColorToMove.ToString()));
+                Message("MoveNumber=" + nd.MoveNumber.ToString());
+
+                List<string> list = DebugUtils.BuildStringForPosition(nd.Position);
+                foreach (string item in list)
+                {
+                    Message(item);
+                }
+                Message("*** END TreeNode:");
+                Message("");
             }
         }
 
