@@ -66,6 +66,62 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Builds a list of strings representing the current position
+        /// including the board.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <returns></returns>
+        public static List<string> BuildStringForPosition(BoardPosition board)
+        {
+            List<string> list = new List<string>();
+
+            list.Add("");
+
+            for (int i = 7; i >= 0; i--)
+            {
+                list.Add(BuildStringForRow((int)i, board));
+            }
+
+            list.Add("   ........");
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("   ");
+            for (int i = 0; i <= 7; i++)
+            {
+                sb.Append((char)('a' + i));
+            }
+            list.Add(sb.ToString());
+
+            list.Add("");
+            list.Add("Side to move: " + (((board.DynamicProperties & Constants.Color) > 0) ? "White" : "Black"));
+
+            list.Add("Castling rights");
+            list.Add("   White Kingside : " + (((board.DynamicProperties & Constants.WhiteKingsideCastle) > 0) ? "yes" : "no"));
+            list.Add("   White Queenside: " + (((board.DynamicProperties & Constants.WhiteQueensideCastle) > 0) ? "yes" : "no"));
+            list.Add("   Black Kingside : " + (((board.DynamicProperties & Constants.BlackKingsideCastle) > 0) ? "yes" : "no"));
+            list.Add("   Black Queenside: " + (((board.DynamicProperties & Constants.BlackQueensideCastle) > 0) ? "yes" : "no"));
+
+            sb = new StringBuilder();
+            sb.Append("En Passant square: ");
+            if (board.EnPassantSquare == 0)
+            {
+                sb.Append("none");
+            }
+            else
+            {
+                char columnCharCode = (char)((board.EnPassantSquare >> 4) + (int)'a');
+                char rowCharCode = (char)((board.EnPassantSquare & 0x0F) + (int)'1');
+                sb.Append((char)columnCharCode);
+                sb.Append((char)rowCharCode);
+            }
+            list.Add(sb.ToString());
+
+            list.Add("Halfmove50 clock: " + board.HalfMove50Clock);
+            list.Add("Move number     : " + board.MoveNumber);
+            return list;
+        }
+
+        /// <summary>
         /// Prints the passed position to the Console in 
         /// a human readable format.
         /// </summary>
@@ -132,14 +188,15 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Prints a single board row to the Console.
+        /// Generates a string for logging a single board row.
         /// </summary>
         /// <param name="row"></param>
         /// <param name="board"></param>
-        [Conditional("DEBUG")]
-        private static void PrintRow(int row, BoardPosition board)
+        /// <returns></returns>
+        private static string BuildStringForRow(int row, BoardPosition board)
         {
-            Console.Write((row + 1) + ": ");
+            StringBuilder sb = new StringBuilder();
+            sb.Append((row + 1) + ": ");
             for (int i = 0; i <= 7; i++)
             {
                 char piece = FenPieceToChar[Constants.FlagToPiece[(byte)((board.Board[i, row] & ~Constants.Color))]];
@@ -148,9 +205,22 @@ namespace ChessPosition
                     piece = char.ToUpper(piece);
                 }
 
-                Console.Write(piece);
+                sb.Append(piece);
             }
-            Console.WriteLine("");
+            sb.Append("");
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Prints a single board row to the Console.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="board"></param>
+        [Conditional("DEBUG")]
+        private static void PrintRow(int row, BoardPosition board)
+        {
+            string rowStr = BuildStringForRow(row, board);
+            Console.WriteLine(rowStr);
         }
 
         /// <summary>
