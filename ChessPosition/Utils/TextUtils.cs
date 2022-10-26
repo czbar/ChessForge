@@ -68,13 +68,19 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Given a string, checks if it is in Chess Forger / PGN
+        /// Given a string, checks if it is in Chess Forge / PGN
         /// format (yyyy.mm.dd) and if not gets out of it what it can.
+        /// Returns the corrected string.
         /// </summary>
-        /// <param name="s"></param>
+        /// <param name="val"></param>
+        /// <param name="hasMonth">Returns whether the string had a month included</param>
+        /// <param name="hasDay">Returns whether the string had a day included</param>
         /// <returns></returns>
-        public static string AdjustDateString(string val)
+        public static string AdjustPgnDateString(string val, out bool hasMonth, out bool hasDay)
         {
+            hasMonth = false;
+            hasDay = false;
+
             StringBuilder sb = new StringBuilder();
 
             if (string.IsNullOrEmpty(val))
@@ -91,9 +97,11 @@ namespace ChessPosition
                     if (tokens.Length > 1 && int.TryParse(tokens[1], out int month) && month >= 1 && month <= 12)
                     {
                         sb.Append(month.ToString("00") + '.');
+                        hasMonth = true;
                         if (tokens.Length > 2 && int.TryParse(tokens[2], out int day) && day >= 1 && day <= 31)
                         {
                             sb.Append(day.ToString("00"));
+                            hasDay = true;
                         }
                         else
                         {
@@ -112,6 +120,88 @@ namespace ChessPosition
             }
 
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Builds a PGN formatted date from a DateTiem object
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="ignoreMonthDay">whether month and day should be replaced with "??.??"</param>
+        /// <param name="ignoreDay">whether day should be replaced with "??"</param>
+        /// <returns></returns>
+        public static string BuildPgnDateString(DateTime? dt, bool ignoreMonthDay = false, bool ignoreDay = false)
+        {
+            if (dt == null)
+            {
+                return Constants.EMPTY_PGN_DATE;
+            }
+            else
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append(dt.Value.Year.ToString("0000") + '.');
+                if (ignoreMonthDay)
+                {
+                    sb.Append("??.??");
+                }
+                else
+                {
+                    sb.Append(dt.Value.Month.ToString("00") + '.');
+                    if (ignoreDay)
+                    {
+                        sb.Append("??");
+                    }
+                    else
+                    {
+                        sb.Append(dt.Value.Day.ToString("00"));
+                    }
+                }
+
+                return sb.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Converts a PGN string "xxxx.xx.xx" to a date.
+        /// </summary>
+        /// <param name="pgn"></param>
+        /// <returns></returns>
+        public static DateTime? GetDateFromPgnString(string pgn)
+        {
+            if (string.IsNullOrEmpty(pgn))
+            {
+                return null;
+            }
+
+            DateTime? dt = null;
+            string[] tokens = pgn.Split('.');
+
+            int year;
+            int month = 1;
+            int day = 1;
+
+            if (int.TryParse(tokens[0], out year))
+            {
+                if (tokens.Length > 1)
+                {
+                    if (int.TryParse(tokens[1], out month))
+                    {
+                        if (tokens.Length > 2)
+                        {
+                            if (!int.TryParse(tokens[2], out day))
+                            {
+                                day = 1;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        month = 1;
+                    }
+                }
+                dt = new DateTime(year, month, day);
+            }
+
+            return dt;
         }
 
         /// <summary>
