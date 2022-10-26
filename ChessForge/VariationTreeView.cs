@@ -196,16 +196,23 @@ namespace ChessForge
         /// </summary>
         public void PromoteCurrentLine()
         {
-            TreeNode nd = _variationTree.GetNodeFromNodeId(_lastClickedNodeId);
-            // TODO: it would be more precise to get the last move of the line being promoted and set it as line id
-            // otherwise we end up selecting a different line that the one we are promoting.
-            // However, with the current GUI logic, the selected line changes when the user right-clicks on the
-            // move to promote the line, so the end result wouldn't change. But it may if we change that other logic.
-            _variationTree.PromoteLine(nd);
-            _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
-            BuildFlowDocumentForVariationTree();
-            _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
-            AppStateManager.IsDirty = true;
+            try
+            {
+                TreeNode nd = _variationTree.GetNodeFromNodeId(_lastClickedNodeId);
+                // TODO: it would be more precise to get the last move of the line being promoted and set it as line id
+                // otherwise we end up selecting a different line that the one we are promoting.
+                // However, with the current GUI logic, the selected line changes when the user right-clicks on the
+                // move to promote the line, so the end result wouldn't change. But it may if we change that other logic.
+                _variationTree.PromoteLine(nd);
+                _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
+                BuildFlowDocumentForVariationTree();
+                _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
+                AppStateManager.IsDirty = true;
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("PromoteCurrentLine()", ex);
+            }
         }
 
         /// <summary>
@@ -213,29 +220,36 @@ namespace ChessForge
         /// </summary>
         public void DeleteRemainingMoves()
         {
-            GameData.ContentType contentType = _variationTree.ContentType;
-
-            TreeNode nd = _variationTree.GetNodeFromNodeId(_lastClickedNodeId);
-            TreeNode parent = nd.Parent;
-            _variationTree.DeleteRemainingMoves(nd);
-            _variationTree.BuildLines();
-            _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
-            BuildFlowDocumentForVariationTree();
-            _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true));
-            AppStateManager.IsDirty = true;
-
-            if (contentType == GameData.ContentType.STUDY_TREE)
+            try
             {
-            BookmarkManager.ResyncBookmarks(1);
+                GameData.ContentType contentType = _variationTree.ContentType;
+
+                TreeNode nd = _variationTree.GetNodeFromNodeId(_lastClickedNodeId);
+                TreeNode parent = nd.Parent;
+                _variationTree.DeleteRemainingMoves(nd);
+                _variationTree.BuildLines();
+                _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
+                BuildFlowDocumentForVariationTree();
+                _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true));
+                AppStateManager.IsDirty = true;
+
+                if (contentType == GameData.ContentType.STUDY_TREE)
+                {
+                    BookmarkManager.ResyncBookmarks(1);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("DeleteRemainingMoves()", ex);
             }
         }
 
         /// <summary>
-        /// Sets up Workbook view's context menu.
+        /// Sets up ActiveTreeView's context menu.
         /// </summary>
         /// <param name="cmn"></param>
         /// <param name="isEnabled"></param>
-        public void EnableWorkbookMenus(ContextMenu cmn, bool isEnabled)
+        public void EnableActiveTreeViewMenus(ContextMenu cmn, bool isEnabled)
         {
             // ClickedIndex should be in sync with isEnabled but double check just in case
             if (LastClickedNodeId < 0)
@@ -243,36 +257,159 @@ namespace ChessForge
                 isEnabled = false;
             }
 
-            foreach (var item in cmn.Items)
+            if (_variationTree != null)
             {
-                if (item is MenuItem)
+                switch (_variationTree.ContentType)
                 {
-                    MenuItem menuItem = item as MenuItem;
-                    switch (menuItem.Name)
+                    case GameData.ContentType.STUDY_TREE:
+                        EnableStudyTreeMenus(cmn, isEnabled);
+                        break;
+                    case GameData.ContentType.MODEL_GAME:
+                        EnableModelGamesMenus(cmn, isEnabled);
+                        break;
+                    case GameData.ContentType.EXERCISE:
+                        EnableExercisesMenus(cmn, isEnabled);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets up StudyTrees's context menu.
+        /// </summary>
+        /// <param name="cmn"></param>
+        /// <param name="isEnabled"></param>
+        private void EnableStudyTreeMenus(ContextMenu cmn, bool isEnabled)
+        {
+            try
+            {
+                foreach (var item in cmn.Items)
+                {
+                    if (item is MenuItem)
                     {
-                        case "_mnWorkbookSelectAsBookmark":
-                            menuItem.IsEnabled = isEnabled;
-                            break;
-                        case "_mnWorkbookBookmarkAlternatives":
-                            if (_mainWin.ActiveVariationTree.NodeHasSiblings(LastClickedNodeId))
-                            {
-                                menuItem.Visibility = Visibility.Visible;
+                        MenuItem menuItem = item as MenuItem;
+                        switch (menuItem.Name)
+                        {
+                            case "_mnWorkbookSelectAsBookmark":
                                 menuItem.IsEnabled = isEnabled;
-                            }
-                            else
-                            {
-                                menuItem.Visibility = Visibility.Collapsed;
-                                menuItem.IsEnabled = false;
-                            }
-                            break;
-                        case "_mnWorkbookEvalMove":
-                            menuItem.IsEnabled = isEnabled;
-                            break;
-                        case "_mnWorkbookEvalLine":
-                            menuItem.IsEnabled = true;
-                            break;
+                                break;
+                            case "_mnWorkbookBookmarkAlternatives":
+                                if (_mainWin.ActiveVariationTree.NodeHasSiblings(LastClickedNodeId))
+                                {
+                                    menuItem.Visibility = Visibility.Visible;
+                                    menuItem.IsEnabled = isEnabled;
+                                }
+                                else
+                                {
+                                    menuItem.Visibility = Visibility.Collapsed;
+                                    menuItem.IsEnabled = false;
+                                }
+                                break;
+                            case "_mnWorkbookEvalMove":
+                                menuItem.IsEnabled = isEnabled;
+                                break;
+                            case "_mnWorkbookEvalLine":
+                                menuItem.IsEnabled = true;
+                                break;
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("EnableStudyTreeMenus()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Sets up ModelGames's context menu.
+        /// </summary>
+        /// <param name="cmn"></param>
+        /// <param name="isEnabled"></param>
+        private void EnableModelGamesMenus(ContextMenu cmn, bool isEnabled)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int gameCount = chapter.GetModelGameCount();
+                int gameIndex = chapter.ActiveModelGameIndex;
+
+                foreach (var item in cmn.Items)
+                {
+                    if (item is MenuItem)
+                    {
+                        MenuItem menuItem = item as MenuItem;
+                        switch (menuItem.Name)
+                        {
+                            case "_mnGame_EditHeader":
+                                menuItem.IsEnabled = isEnabled && gameIndex >= 0;
+                                break;
+                            case "_mnGame_CreateModelGame":
+                                menuItem.IsEnabled = true;
+                                break;
+                            case "_mnGame_PromoteLine":
+                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && _lastClickedNodeId >= 0;
+                                break;
+                            case "_mnGame_DeleteMovesFromHere":
+                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && _lastClickedNodeId >= 0;
+                                break;
+                            case "_mnGame_DeleteModelGame":
+                                menuItem.IsEnabled = isEnabled && gameIndex >= 0;
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("EnableModelGamesMenus()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Sets up Exercises's context menu.
+        /// </summary>
+        /// <param name="cmn"></param>
+        /// <param name="isEnabled"></param>
+        private void EnableExercisesMenus(ContextMenu cmn, bool isEnabled)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int exerciseCount = chapter.GetExerciseCount();
+                int exerciseIndex = chapter.ActiveExerciseIndex;
+
+                foreach (var item in cmn.Items)
+                {
+                    if (item is MenuItem)
+                    {
+                        MenuItem menuItem = item as MenuItem;
+                        switch (menuItem.Name)
+                        {
+                            case "_mnExerc_EditHeader":
+                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0;
+                                break;
+                            case "_mnExerc_CreateExercise":
+                                menuItem.IsEnabled = true;
+                                break;
+                            case "_mnExerc_PromoteLine":
+                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0 && _lastClickedNodeId >= 0;
+                                break;
+                            case "_mnExerc_DeleteMovesFromHere":
+                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0 && _lastClickedNodeId >= 0;
+                                break;
+                            case "_mnExerc_DeleteThisExercise":
+                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0;
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("EnableModelGamesMenus()", ex);
             }
         }
 
@@ -1295,7 +1432,7 @@ namespace ChessForge
                 if (e.ChangedButton == MouseButton.Right)
                 {
                     _lastClickedNodeId = nodeId;
-                    EnableWorkbookMenus(_mainWin.UiCmnWorkbookRightClick, true);
+                    EnableActiveTreeViewMenus(_mainWin.UiCmnWorkbookRightClick, true);
                 }
                 else
                 {
