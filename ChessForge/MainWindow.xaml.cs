@@ -432,7 +432,7 @@ namespace ChessForge
         {
             try
             {
-                if (exerciseIndex >= 0 && exerciseIndex < WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount())
+                if (exerciseIndex >= 0 && exerciseIndex < WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount())
                 {
                     WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = exerciseIndex;
                     WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, exerciseIndex);
