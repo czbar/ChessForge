@@ -865,7 +865,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnExerc_DeleteThisExercise_Click(object sender, RoutedEventArgs e)
+        private void UiMnExerc_DeleteExercise_Click(object sender, RoutedEventArgs e)
         {
             DeleteExercise();
         }
@@ -1766,7 +1766,7 @@ namespace ChessForge
                         _chaptersView.RebuildChapterParagraph(WorkbookManager.SessionWorkbook.ActiveChapter);
                         if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
                         {
-                            SelectModelGame(chapter.ActiveModelGameIndex, false);
+                            SelectExercise(chapter.ActiveExerciseIndex, false);
                         }
                     }
                 }
