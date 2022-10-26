@@ -170,9 +170,9 @@
                                     <MenuItem x:Name="_mnAddChapter" Header="Create New Chapter" Click="UiMnAddChapter_Click"  />
                                     <MenuItem x:Name="_mnImportChapter" Header="Import New Chapter" Click="UiMnImportChapter_Click" />
                                     <MenuItem x:Name="_mnAddGame" Header="Create New Game" Click="UiMnChpt_CreateModelGame_Click"  />
-                                    <MenuItem x:Name="_mnImportGame" Header="Import Games from PGN" Click="UiMnImportGame_Click" />
+                                    <MenuItem x:Name="_mnImportGame" Header="Import Games" Click="UiMnImportGame_Click" />
                                     <MenuItem x:Name="_mnAddExercise" Header="Create New Exercise" Click="UiMnChpt_AddExercise_Click"  />
-                                    <MenuItem x:Name="_mnImportExercise" Header="Import Exercises from PGN" />
+                                    <MenuItem x:Name="_mnImportExercise" Header="Import Exercises" />
                                     <Separator />
                                     <MenuItem x:Name="_mnSelectChapter" Header="Open This Chapter" Click="UiMnSelectChapter_Click" />
                                     <MenuItem x:Name="_mnRenameChapter" Header="Rename This Chapter" Click="UiMnRenameChapter_Click" />
@@ -188,7 +188,7 @@
                                     <MenuItem x:Name="_mnExerciseUp" Header="Move Exercise Up" Click="UiMnExerciseUp_Click" />
                                     <MenuItem x:Name="_mnExerciseDown" Header="Move Exercise Down" Click="UiMnExerciseDown_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnImportModelGames" Header="Import Model Games" Click="UiMnImportModelGames_Click" />
+                                    <MenuItem x:Name="_mnImportModelGames" Header="Import Games" Click="UiMnImportModelGames_Click" />
                                     <MenuItem x:Name="_mnImportExercises" Header="Import Exercises" Click="UiMnImportExercises_Click" />
                                     <Separator x:Name="_mnChapterSepar_2" />
                                     <MenuItem x:Name="_mnDeleteChapter" Header="Delete This Chapter" Click="UiMnDeleteChapter_Click" />
@@ -391,6 +391,8 @@
                                 <ContextMenu x:Name="UiCmModelGames">
                                     <MenuItem x:Name="_mnGame_EditHeader" Header="Edit Game Header" Click="UiMnGame_EditHeader_Click" />
                                     <MenuItem x:Name="_mnGame_CreateModelGame" Header="Create New Game" Click="_UiMnGame_CreateModelGame_Click" />
+                                    <MenuItem x:Name="_mnGame_ImportGames" Header="Import Games" Click="UiMnGame_ImportGames_Click"  />
+                                    <Separator />
                                     <MenuItem x:Name="_mnGame_CreateExercise" Header="Create Exercise from Here..." Click="UiMnGame_CreateExercise_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_PromoteLine" Header="Promote Line" Click="UiMnGame_PromoteLine_Click" />
@@ -431,6 +433,7 @@
                                 <ContextMenu x:Name="UiCmExercises">
                                     <MenuItem x:Name="_mnExerc_EditHeader" Header="Edit Exercise Header" Click="UiMnExerc_EditHeader_Click" />
                                     <MenuItem x:Name="_mnExerc_CreateExercise" Header="Create New Exercise" Click="UiMnExerc_CreateExercise_Click" />
+                                    <MenuItem x:Name="_mnExerc_ImportExercises" Header="Import Exercises" Click="UiMnExerc_ImportExercises_Click"  />
                                     <Separator />
                                     <MenuItem x:Name="_mnExerc_PromoteLine" Header="Promote Line" Click="UiMnExerc_PromoteLine_Click" />
                                     <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnExerc_DeleteMovesFromHere_Click" />
