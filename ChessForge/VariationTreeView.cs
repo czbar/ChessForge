@@ -192,8 +192,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Promotes the line with the last clicked node
-        /// one level up.
+        /// Promotes the line with the last clicked node one level up.
         /// </summary>
         public void PromoteCurrentLine()
         {
@@ -214,15 +213,21 @@ namespace ChessForge
         /// </summary>
         public void DeleteRemainingMoves()
         {
+            GameData.ContentType contentType = _variationTree.ContentType;
+
             TreeNode nd = _variationTree.GetNodeFromNodeId(_lastClickedNodeId);
             TreeNode parent = nd.Parent;
             _variationTree.DeleteRemainingMoves(nd);
             _variationTree.BuildLines();
             _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
-            BookmarkManager.ResyncBookmarks(1);
             BuildFlowDocumentForVariationTree();
             _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true));
             AppStateManager.IsDirty = true;
+
+            if (contentType == GameData.ContentType.STUDY_TREE)
+            {
+            BookmarkManager.ResyncBookmarks(1);
+            }
         }
 
         /// <summary>
