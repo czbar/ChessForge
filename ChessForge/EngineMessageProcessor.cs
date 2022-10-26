@@ -655,7 +655,8 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("ERROR: processing \"bestmove\" message: " + ex.Message);
-                DebugUtils.ShowDebugMessage("Error processing \"bestmove\" message: " + ex.Message);
+                AppLog.TreeNodeDetails(nd);
+                DebugUtils.ShowDebugMessage("Error processing \"bestmove\": " + ex.Message);
             }
         }
 
