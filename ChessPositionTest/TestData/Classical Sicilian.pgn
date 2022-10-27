@@ -1,0 +1,1405 @@
+[ChessForgeWorkbook "Classical Sicilian"]
+[TrainingSide "Black"]
+[White "Chess Forge"]
+[Black "Workbook File"]
+[Result "*"]
+
+*
+
+[ChapterId "1"]
+[ChapterTitle "Introduction"]
+[ContentType "Study Tree"]
+
+1. e4 { In this Workbook, we look into the Classical variation of the open 
+Sicilian. }  c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 {This is the 
+starting position of the Classical Sicilian where White can choose from a number 
+of good continuations.}  6. Bg5 {Richter-Rauzer}  (6. Be2 {Boleslavsky} )  (6. 
+Bc4 {The Sozin variation as well as the Velimirovic attack were extremely 
+popular and thoroughly investigated at one point or another. Newer approaches 
+with early f3 and Be3 have gained popularity too. We will start with by far the 
+most popular, and arguably the most dangerous for Black 6.Bg5} )  *
+
+
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Study Tree"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 {A good 
+and quite a popular alternative is}  a6 {Now Black has choice between the most 
+popular}  (7... Be7 {We are discussing it briefly in a chapter later in this 
+course.} ) 8. O-O-O Bd7 { and other sensible options like }  (8... h6)  (8... 
+Be7)  (8... Nxd4 { This workbook focuses on} )  (8... Bd7)  (8... Bd7 {After}  
+9. f4 (9. f4 { White intends to immediately attack in the center and on the 
+kingside.} )  (9. f3 {[%cal Gg2g4,Gh2h4] with the plan of attacking the kingside 
+with the g and h pawns.} )  (9. f4 {, Black still have options of}  Be7 { or}  
+(9... h6 { but} )  (9... b5 { is the most principled. Black develops activity on 
+the queenside without delay.} ) ) 9... b5 10. Bxf6 {Most often Black will 
+exchange the light pieces on f6 straight away although he can also wait a little 
+e.g. swap the pieces on c6 first.}  gxf6 {[%cal 
+Gf4f5,Rb5b4,Ra6a5,Gd4e2,Ge2g3,Rh7h5,Rh8g8][%csl Ge6]Having doubled black f 
+pawns, White intends to push their pawn to f5. and apply pressure on e6. In 
+addition to the obvious plan of attacking the White king with b5-b4, a6-a5 and 
+so on, Black must take care of the center and often of the kingside too.Black 
+will strive to occupy the critical square e5 with his bishop or even with the 
+queen, if the knight c6 has been swapped for the White's d4 one. In the absence 
+of White's dark bishop, the Black queen can be quite comfortable on e5.It may 
+transpire that it is beneficial to move the e6 pawn to e5, especially after 
+Black's push b5-b4 forces the c3 knight to e2. While the move creates a weakness 
+on d5, it drastically reduces options for the White knight and also highlights 
+the weakness of the pawn e4. It can be attacked by a Qb7-Bc6 battery. If White 
+places the knight on g3, Black can attack it with h5-h4. Blocking the Black pawn 
+with h2-h4, White will  have a weakness on the g file which Black can try to 
+exploit by moving its rook to g8.  } )  *
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Rauzer 9.f4: Lines"]
+[Black "Line: 10.Nxc6 11.e5?!"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
+O-O-O Bd7 9. f4 {Apart from the}  b5 $166 10. Bxb5 { sacrifice covered in the 
+previous chapter, Black needs to know how to play against another forced 
+tactical line}  (10. Nxc6 Bxc6 11. e5 { As it turns out, the g5-d8 pin is not 
+dangerous here and Black has nothing to fear.} )  (10. Nxc6 Bxc6 11. e5 $6 {This 
+naive attempt to win material does not work well for White.}  dxe5 12. Qxd8+ 
+Rxd8 13. Rxd8+ Kxd8 14. fxe5 h6 15. Bxf6+ gxf6 16. exf6 Bc5 $15)  *
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Rauzer 9.f4: Lines"]
+[Black "Line: 10.Nxc6 11.e5?!"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
+O-O-O Bd7 9. f4 {Plan of attack with f2-f3, g2-g4 will be considered in the next 
+chapter.}  b5 $166 10. Nxc6 Bxc6 11. e5 $2 dxe5 12. Qxd8+ Rxd8 13. Rxd8+ Kxd8 
+14. fxe5 h6 {This move is even worse than}  15. Bh4 (15. exf6) 15... g5 16. exf6 
+gxh4 $19 *
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Rauzer 9.f4: Lines"]
+[Black "Line: 10.Nxc6 11.Bd3"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
+O-O-O Bd7 9. f4 {Plan of attack with f2-f3, g2-g4 will be considered in the next 
+chapter.}  b5 $166 10. Nxc6 {The main alternative to the most popular 10.Bxf6.}  
+Bxc6 {Instead}  11. Bd3 (11. Bxf6 { may not transpose to the  10.Bxf6 variation 
+since Black can comfortably recapture with the queen.} )  (11. Qe1 { and} )  
+(11. Qe3 { are good options preparing the Nc3-d5 maneuver. We will examine them 
+next.} ) 11... Be7 12. e5 dxe5 13. fxe5 Nd7 14. Bxe7 Qxe7 15. Be4 Qc5 16. Rhe1 
+Ra7 $11 *
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Rauzer 9.f4: Lines"]
+[Black "Line: 10.Nxc6 11.Qe1"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
+O-O-O Bd7 9. f4 b5 10. Nxc6 Bxc6 11. Qe1 Be7 12. e5 Nd5 13. Bxe7 Qxe7 14. Ne4 
+dxe5 15. fxe5 O-O 16. Bd3 Nf4 {Black has a comfortable position.}  *
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Rauzer 9.f4: Lines"]
+[Black "Line: 10.Nxc6 11.Qe3"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
+O-O-O Bd7 9. f4 b5 10. Nxc6 Bxc6 11. Qe3 Be7 12. Bxf6 Bxf6 {White can play here 
+the thematic}  (12... gxf6 { is playable too leading to positions similar to 
+those in the 10.Bxf6 lines.}  13. f5 Qa5 14. Kb1 b4 15. Ne2 Qe5 16. Qb6 { White 
+has an edge.} ) 13. e5 (13. Nd5 Bxd5 14. exd5 e5 { which also leads to 
+equality.} ) 13... Be7 14. exd6 Bxd6 15. Ne4 Bxe4 16. Qxe4 O-O $11 *
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Rauzer 9.f4: Lines"]
+[Black "Line: 10.Bxf6 11.Kb1"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
+O-O-O Bd7 9. f4 b5 10. Bxf6 {The most popular and most promising continuation 
+for White. With the best play from both sides White should retain some advantage 
+but Black has good counter attacking chances in the sharp play.}  gxf6 {One of 
+the 3 main continuations for White. The other 2 being}  11. Kb1 (11. Nxc6 { and} 
+)  (11. f5 { that we will review next.} ) 11... Qb6 12. Nxc6 Bxc6 13. f5 b4 14. 
+Ne2 e5 15. Ng3 h5 16. h4 Qc5 *
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Rauzer 9.f4: Lines"]
+[Black "Line: 10.Bxf6 11.Nxc6"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
+O-O-O Bd7 9. f4 {Plan of attack with f2-f3, g2-g4 will be considered in the next 
+chapter.}  b5 $166 10. Bxf6 {The main continuation aiming to attack black's 
+weakened pawn structure by means of  f4-f5  possibly supported by  the knight's  
+d4  -  e2  -  f4  transfer.}  gxf6 11. Nxc6 Bxc6 12. Qe1 Be7 13. Bd3 Qb6 14. Kb1 
+Qc5 15. f5 b4 16. Ne2 a5 17. Nf4 e5 $11 *
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Model Game"]
+[Event "BAN-ch 42nd"]
+[Date "2016.11.16"]
+[White "Mahammad, Javed"]
+[Black "Rahman, Ziaur"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bg5 e6 7. Qd2 a6 8. 
+O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Kb1 Qb6 12. Nxc6 Bxc6 13. Bd3 b4 14. Ne2 a5 
+15. f5 e5 16. Bc4 h5 17. Bd5 Rc8 18. Qd3 Bxd5 19. Qxd5 Rc5 20. Qd3 Ke7 {White 
+should have left their queenside pawns aloneand play}  21. c3 $2 (21. Qf3 {or 
+Qb3 instead. Now Black has a target for their attack.} ) 21... Bh6 22. cxb4 $2 
+{Again, it was better to play on the kingside. Black'sattack gains momentum.}  
+axb4 23. Qb3 $2 {Another inaccurate move. This is nolonger a good square for the 
+queen.}  Rhc8 24. a3 {And another inaccuracy.White should have tried 24.Rd5. Now 
+his position becomes critical.}  Qc6 25. Qxb4 {A losing move but other options 
+were not much better.}  Rb5 0-1
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Model Game"]
+[Event "CRO-CupT final"]
+[Date "2015.05.21"]
+[White "Mrdja, Milan"]
+[Black "Jankovic, Alojzije"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bg5 e6 7. Qd2 a6 8. 
+O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Kb1 Rc8 12. Nxc6 Bxc6 13. Bd3 h5 14. Qe1 h4 
+15. Rd2 b4 16. Nd1 Qb6 17. Rf1 a5 18. f5 e5 19. Bc4 Ke7 20. Rd3 Bh6 21. b3 Bf4 
+{Allows Black to seizethe initiative. White should have played}  22. h3 (22. Nb2 
+Bxh2 23. Bxf7 Kxf7 24. Nc4 Qc7 25. Nxd6+ {=+} ) 22... a4 {[%eval -1.22]Now this 
+is a mistake.}  23. Nb2 {[%eval -2.96]}  (23. Ne3 {or Nf2 was better.} ) 23... 
+a3 {[%eval -2.46]}  24. Nd1 Bb7 25. Ne3 Bxe3 26. Rxe3 {Losing. 26.Qxe3 was 
+necessary.}  Rhg8 {Loses immediately. If}  27. Qd2 (27. Re2 {then}  Qd4 28. Qc1 
+{and simple}  Bxe4 {or computer recommended Rxc4}  29. Rd1 {Bxe4 Rxd4Rxd4 .} ) 
+27... Rxg2 28. Qc1 Rcg8 0-1
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Model Game"]
+[Event "EU-ch 12th"]
+[Date "2011.03.27"]
+[White "Khalifman, Alexander"]
+[Black "Dubov, Daniil"]
+[Result "1/2-1/2"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
+O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Kb1 Qb6 12. Nxc6 Bxc6 13. f5 b4 14. Ne2 e5 
+15. Ng3 h5 16. h4 Qc5 17. Bd3 Bh6 18. Qe2 Ke7 19. Nxh5 Qe3 20. Qf1 Bxe4 21. Rh3 
+Bxd3 22. Rxd3 Qc1+ 23. Qxc1 Bxc1 24. g4 $146 Bh6 25. a3 Rag8 $132 26. Nxf6 Kxf6 
+27. Rxd6+ Kg7 28. g5 Bxg5 29. Rg3 Rxh4 30. Rxg5+ Kh7 31. Rxg8 Kxg8 32. axb4 Rxb4 
+33. Rxa6 Rf4 34. f6 Kh7 35. c3 Kg6 36. b4 Rf2 37. b5 e4 38. Ra8 $1 e3 39. Re8 
+Rf5 40. c4 Rf4 41. Kb2 Rxc4 42. Kb3 Rc1 43. Rxe3 Kxf6 44. Kb4 Kg5 45. b6 Rc8 46. 
+b7 Rb8 47. Re7 f5 48. Kc5 f4 49. Kd4 f3 50. Ke3 1/2-1/2
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Model Game"]
+[Event "EU-ch 8th"]
+[Date "2007.04.13"]
+[White "Brkic, Ante"]
+[Black "Murariu, Andrei"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bg5 e6 7. Qd2 a6 8. 
+O-O-O Bd7 9. f4 b5 10. a3 {Not one of the main continuations here but a fairly 
+popular move.}  Qb6 11. e5 Qxd4 12. Qe1 {White opts to keep the queens on. 
+Exchanging on d4 would lead to a roughly equal game too.}  Qa7 13. exf6 g6 14. 
+Nd5 Kd8 15. Ne7 Nxe7 16. fxe7+ Bxe7 17. Qc3 $6 {White will struggle to maintain 
+equality after this, as Black can easily defend himself on the kingside. It was 
+better to claim the pawn back after 17.Rxd6.}  Rf8 18. Qg7 Ke8 19. Bxe7 Kxe7 20. 
+Bd3 Qc5 $6 {Too cautious. Black should have simply taken another pawn 20...Qe3+ 
+21.Kb1 Qxf4}  21. g4 Rg8 22. Qh6 b4 23. axb4 Qxb4 24. Qg5+ f6 {Now White 
+equalizes. Black should have kept the initiative by playing}  (24... Kf8 25. 
+Qh6+ Rg7) 25. Qh6 Be8 {Not}  26. Rhe1 (26. Qxh7+ Bf7 27. Qh3 Rab8) 26... Rb8 27. 
+b3 Qa3+ 28. Kb1 Rxb3+ {This rook sacrifice guarantees Black a draw by perpetual 
+check.}  29. cxb3 Qxb3+ 30. Kc1 Qc3+ 31. Bc2 Bf7 32. Re2 Rc8 33. f5 g5 (33... 
+Qa1+ 34. Kd2 Qc3+ { would lead to an immediate draw but Black is hoping to tempt 
+White into a trap.} ) 34. fxe6 $4 {Opening the c2-g6 diagonal for the black 
+bishop loses by force.}  Qa3+ 35. Kd2 Rxc2+ $1 36. Kxc2 Bg6+ 37. Kd2 Qb4+ 0-1
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Model Game"]
+[Event "Anapa Sea Harbor Cup"]
+[Date "2021.06.10"]
+[White "Maneluk, Daniil"]
+[Black "Moiseenko, Vadim"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bg5 e6 7. Qd2 a6 8. 
+O-O-O Bd7 9. f4 b5 10. Nxc6 Bxc6 11. Bd3 Be7 12. Rhe1 {Immediate e5 is a more 
+popular choice}  (12. e5 dxe5 13. fxe5 Nd7 14. Bxe7 Qxe7) 12... O-O 13. e5 dxe5 
+14. fxe5 Nd7 15. Bxe7 Qxe7 16. Qf4 Nc5 17. Ne4 Bxe4 18. Bxe4 Rac8 19. Rd6 Nxe4 
+20. Qxe4 Qg5+ {Black has a slight advantage in the endgame with all major pieces 
+still on the board.}  21. Kb1 Rc4 22. Qe2 Rfc8 23. Rxa6 Qf5 24. Rc1 R4c5 25. Ra5 
+Rxe5 26. Qf3 $4 {White overlooks mate in 4.}  Qxc2+ 0-1
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Exercise"]
+[FEN "2r4r/4kp2/1qbp1p2/4pP2/ppB1Pb1p/1P1R3P/PNP3P1/1K2QR2 b - - 1 1"]
+[Event "CRO-CupT final"]
+[Date "2015.05.21"]
+[White "Mrdja, Milan"]
+[Black "Jankovic, Alojzije"]
+[Result "0-1"]
+
+ {[%eval -2.88]}  a3 {[%eval -2.46]}  2. Nd1 Bb7 3. Ne3 Bxe3 4. Rxe3 {Losing. 
+26.Qxe3 was necessary.}  Rhg8 {Loses immediately. If}  5. Qd2 (5. Re2 {then}  
+Qd4 6. Qc1 {and simple}  Bxe4 {or computer recommended Rxc4}  7. Rd1 {Bxe4 
+Rxd4Rxd4 .} ) 5... Rxg2 6. Qc1 Rcg8 0-1
+
+
+
+[ChapterId "3"]
+[ChapterTitle "Rauzer 9.f3"]
+[ContentType "Study Tree"]
+
+1. e4 c5 2. Nf3 Nc6 (2... d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 (5... a6 6. Bg5 
+Nc6 7. Qd2 e6 8. O-O-O Bd7 9. f3 b5 (9... Be7 10. h4 Rc8 11. g4 $6 h5 $1 12. 
+gxh5 Nxh5 13. Rg1 Nxd4 14. Qxd4 Rc6 15. Qd2 g6 16. Ne2 $2 e5 $1 17. Nc3 $6 
+{Inaccuracy. After the exchange on d5, black gains upper hand.}  Be6 18. Nd5 
+Bxd5 19. Qxd5 Bxg5 20. hxg5 Nf4 21. Qd2 Rh5 22. Kb1 Qb6 $19 23. Bd3 Ke7 24. Rg3 
+Qc5 25. Bf1 Rc8 26. b4 Qb6 27. a3 a5 28. Kb2 axb4 29. axb4 $4 Rh2 30. Qxh2 Qxb4 
+31. Kc1 Qc3 { Yilmaz-Kozul, Pula 1997} ) 10. g4 Ne5 11. h4 h6 12. Be3 $2 {Not 
+the best square for the bishop anticipating the appearance of the Black knight 
+d5 after d6-d5 and e4xd5. Better was 12.Bf4 or 12.Bxf6.}  b4 13. Nb1 d5 $1 14. 
+exd5 Nxd5 15. Be2 $2 {Now Black's position becomes critical. 15.Bf2 was better.} 
+ Bc5 16. Nxe6 {Loses. 16.Bf2 or 16.Bf1 was more tenacious.}  Bxe3 17. Nxd8 Rxd8 
+18. Bxa6 Bxd2 19. Rxd2 Be6 20. Rf1 g5 21. Re2 f6 22. a3 Kf7 23. h5 Nc7 24. Bd3 
+Nxd3 25. cxd3 Rxd3 26. axb4 Nd5 27. Rd2 Rc8 28. Nc3 Re3 {Kazarova - Petrushin, 
+Krasnodar 1997.} ) 6. Bg5 e6 7. Qd2 a6 8. O-O-O Bd7 9. f3 {Instead of playing 
+f2-f4, preparing to attack Black's central pawns, White advances its pawn by one 
+square. The idea is to attack on the kingside with the g- and h-pawns. In line 
+with this plan, it makes no sense for White to double Black's f-pawns by 
+exchanging on f6.     Typically, Black will play g2-g4 followed immediately, or 
+a few moves later, by h2-h4. Black will often counter that with h7-h5, although 
+sometimes it will limit his pawn activity on the kingside to h7-h6 or even not 
+moving the pawns at all.  Black will eye the best moment to counterattack in the 
+center with d6-d5 or e6-e5. He will also try to attack the white king with his 
+queenside pawns b7-b5-b4 and a6-a5-a4.} ) 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. 
+Bg5 e6 7. Qd2 a6 8. O-O-O Bd7 9. f3 Qa5 (9... Be7 10. h4 (10. Kb1 b5 11. Nxc6 
+Bxc6 12. h4 O-O 13. g4 Qc7 $11 14. Bh3 Rac8 15. Ne2 $2 {In Markovic-Jurka, Ceske 
+Budejovice 1994, Black played the less accurate}  Bxe4 (15... Nxe4 16. fxe4 Bxe4 
+{ where White could have kept approximate equality with some active play}  17. 
+Nd4 $1 Bxh1 18. Rxh1 Bxg5 19. hxg5 d5 20. g6 hxg6 21. g5 Qe5 22. Nxe6 $1 fxe6 
+23. Re1) 16. fxe4 Nxe4 17. Qc1 Bxg5 18. hxg5 Nf2 19. Nd4 d5 20. Rdg1 Nxh1 21. 
+Rxh1 Qg3) 10... O-O 11. Kb1 b5 12. Nxc6 Bxc6 13. Ne2 Rc8 (13... Qb6 14. g4 Rfd8 
+15. Nd4 Be8 16. h5 Qb7 17. Bd3 a5 18. Qe1 {The most direct option to prevent 
+h5-h6. In Shabalov-Lewis, New York 1997 Black was lost after}  h6 (18... a4 $2 
+19. h6 a3 20. b3 Qb6 21. Ne2 Qc5 22. f4 d5 23. e5 Ne4 24. hxg7) 19. Bh4 b4 20. 
+g5 hxg5 21. Bxg5 Nh7 22. Bxe7 Qxe7 23. h6 g6 24. f4 Qf6 25. Qe3 a4 $13) 14. Nd4 
+Qb6 (14... Bb7 15. g4 d5 16. e5 Nd7 17. Qh2 Re8 18. Bxe7 Qxe7 19. g5 Nb6 20. h5 
+{Black's best defense is to accept the sacrifice. The open g-file proves less 
+dangerous than the g5-g6 thrust. After}  Qxg5 (20... Nc4 $2 { Black quickly lost 
+in Fedorchuk-Bernard, Paris 2008,}  21. g6 fxg6 22. hxg6 h6 23. Bh3 Qd7 24. f4 
+Rc7 25. f5 exf5 26. Bxf5 Qe7 27. Be6) 21. Rg1 Qh6 22. Bd3 Nc4 23. f4 Kh8 24. f5 
+Rg8 $10) 15. g4 b4 16. Be3 Qb7 17. g5 {A typical combination in this variation 
+that gives Black a small edge. Instead,}  Nxe4 $1 (17... Nd7 18. g6 $1 Nc5 19. 
+h5 Bf6 20. Bg5 { would maintain White's advantage, Gonzales Garcia - Teran 
+Alvarez, Seville 2011.} ) 18. fxe4 Bxe4 19. Rg1 e5)  (9... b5 10. Nxc6 Bxc6 11. 
+Ne2 Be7 12. h4 Rc8 13. Nd4 Bd7 14. Be2 Qc7 15. g4 O-O 16. h5 $4 e5 17. Nf5 {In 
+Forsberg Conde - Gonzalez Rodriguez, Barcelona 2010 black resigned after 17.Bxf6 
+Bxf6 18.g5 Be7 19.Kb1 exd4 20.Qxd4 Qxc2 21.Ka1 Qc5}  Bxf5 18. gxf5 Nxe4 $1)  
+(9... Rc8 10. Nxc6 (10. Kb1 h6 (10... Be7 11. h4 b5 (11... O-O 12. g4 b5 13. Be3 
+Nxd4 14. Qxd4 Bc6 15. g5 Nd7 16. Bh3 b4 17. Ne2 Ne5 18. Bg2 Bb5 19. Ng3 Qc7 20. 
+Rc1 Nc4 21. Bf2 Qa5 22. Bf1 {Allows an elegant finish in an already lost 
+position.}  b3 {De la Villa Garcia - Estremera Panos, Mondariz 1996} ) 12. Nxc6 
+Bxc6 13. Ne2 O-O 14. g4 $4 Nxe4 $1 15. fxe4 Bxe4 16. Bxe7 Qxe7 17. Rh3 Rxc2 18. 
+Qxc2 Bxc2 19. Kxc2 d5 20. Kb1 Qb4 21. Nd4 e5 22. Nf5 Qxg4 23. Ne3 Qg6 24. Bd3 e4 
+25. Nxd5 Qg4 26. Rhh1 exd3 27. Nf6 gxf6 28. Rhg1 f5 29. Kc1 d2 {Salem - 
+Alekseenko, Chess.com, 2018} ) 11. Be3 Ne5 12. g4 Be7 13. h4 b5 14. Bd3 b4 15. 
+Nce2 {In Caturla -Flude, Penang 1974 Black played}  Nxd3 (15... Nc4 $2 { and 
+after the exchange on  c4 ,}  16. Bxc4 Rxc4 { White's attack developed swiftly}  
+17. g5 Ng8 18. f4 a5 19. Qd3 Rc5 20. e5 d5 21. g6 h5 22. gxf7 { +-.} ) 16. Qxd3 
+Qc7 {or}  17. Rc1 (17. g5 Nh5) 17... e5 18. Nf5 Bxf5 19. gxf5 Qc4 $11) 10... 
+Rxc6 11. Kb1 Be7 12. h4 b5 13. Ne2 h6 14. Be3 e5 15. g4 Be6 16. g5 $4 hxg5 17. 
+Bxg5 Nxe4 18. fxe4 Bxg5 19. hxg5 Rxh1 20. Ng3 Rh7 21. Nf5 g6 22. Nxd6 Rxd6 23. 
+Qxd6 Qxd6 24. Rxd6 Bg4 $1 {White will lose material now that the rook cannot 
+return to d1  (Mladenov - Benidze, Plovdiv 2012)} ) 10. Be3 Be7 11. Kb1 b5 12. 
+Nxc6 Bxc6 13. Ne2 Qc7 14. Nd4 O-O 15. g4 Nd7 16. h4 Rac8 $11 17. g5 Ne5 18. h5 
+$2 Nxf3 $1 19. Nxf3 Bxe4 20. Be2 Qb7 21. Rc1 Bxf3 22. Bxf3 Qxf3 23. g6 hxg6 24. 
+hxg6 fxg6 25. Bg5 Bxg5 26. Qxg5 Rxc2 {Shamkovich - Ivanovic, Hamilton 1978}  *
+
+[ChapterId "3"]
+[ChapterTitle "Rauzer 9.f3"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Rauzer 9.f3: Lines"]
+[Black "Line: 9...Nxd4"]
+[Result "*"]
+
+ {[%eval +0.40]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f3 Nxd4 (9... Be7 { This is the most popular move but 
+...} )  (9... Nxd4 { ... has been scoring better for Black in recent years so we 
+chose it as our main variation.} )  (9... Be7 { This is briefly covered as the 
+alternative line in the next chapter.} ) 10. Qxd4 h6 (10... Be7 {[%eval +0.62]A 
+good alternative.}  11. h4 Qc7 12. Kb1 b5 13. g4 h5 14. gxh5 Nxh5 $11 {[%eval 
++0.73] Leads to equality as well.} ) 11. Be3 (11. Bxf6 Qxf6 12. Qxf6 gxf6 { 
+gives black a slight advantage.} ) 11... Bc6 12. Kb1 d5 13. e5 Nd7 14. f4 Bc5 
+15. Qd2 Bxe3 16. Qxe3 {An interesting move. Quieter options to achieve equal 
+game are}  g5 $5 (16... O-O {[%eval +0.99]} )  (16... Rc8 {[%eval +0.87]} )  
+(16... Qc7 {[%eval +0.21]} )  (16... Qb6 { Offering to exchange the queens.} ) 
+17. f5 Qb6 18. Qh3 O-O-O 19. fxe6 fxe6 20. Qxe6 Rde8 $10 *
+
+[ChapterId "3"]
+[ChapterTitle "Rauzer 9.f3"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Rauzer 9.f3: Lines"]
+[Black "Line: 9...Nxd4"]
+[Result "*"]
+
+ {[%eval +0.41]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f3 Nxd4 10. Qxd4 h6 11. Be3 Bc6 12. Kb1 d5 13. exd5 
+Nxd5 14. Nxd5 Qxd5 15. Bc4 Qxd4 16. Bxd4 O-O-O $11 {The position is equal.}  *
+
+[ChapterId "3"]
+[ChapterTitle "Rauzer 9.f3"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Rauzer 9.f3: Lines"]
+[Black "Line: 9...Be7"]
+[Result "*"]
+
+ {[%eval +0.53]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f3 Be7 {This is the most popular Black's move in this 
+variation.}  10. h4 h6 11. Be3 h5 12. Bg5 Ne5 13. f4 Neg4 $165 14. Qe1 O-O 15. 
+Be2 Rc8 16. Kb1 Ne3 17. Rd3 Nc4 $11 *
+
+[ChapterId "3"]
+[ChapterTitle "Rauzer 9.f3"]
+[ContentType "Model Game"]
+[Event "Online Olym Div Top-A"]
+[Date "2020.08.22"]
+[White "Priasmoro, Novendra"]
+[Black "Vokhidov, Shamsiddin"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 Bd7 7. Qd2 a6 8. 
+O-O-O e6 9. f3 Nxd4 10. Qxd4 h6 11. Be3 Bc6 12. h4 {White chooses a less popular 
+move, saving a tempo by not playing Kb1.}  d5 {Black experiences no problems 
+after}  13. exd5 (13. e5 Nd7 14. Kb1 Qc7) 13... Nxd5 14. Nxd5 Qxd5 15. Bc4 Qxd4 
+16. Bxd4 h5 17. Rd3 O-O-O 18. Rhd1 Bd6 19. Kb1 Bf4 20. b4 Rhg8 21. Bf2 Rxd3 22. 
+Rxd3 g5 23. hxg5 b5 24. Bb3 Rxg5 25. Bh4 Rxg2 26. Rd8+ Kc7 27. Rf8 Rg1+ 28. Kb2 
+Be5+ 29. Ka3 Rg7 30. Bd8+ Kb7 31. f4 Bxf4 $19 32. Kb2 Be5+ 33. Ka3 Bf4 34. Kb2 
+Rh7 35. Bh4 Bd6 36. Rd8 {[%eval -3.94]}  Bxb4 {The endgame is winning for Black. 
+White resigned after 73 moves.}  0-1
+
+[ChapterId "3"]
+[ChapterTitle "Rauzer 9.f3"]
+[ContentType "Model Game"]
+[Event "PRO League Stage"]
+[Date "2019.03.13"]
+[White "Robson, Ray"]
+[Black "Caruana, Fabiano"]
+[Result "1-0"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bg5 e6 7. Qd2 a6 8. 
+O-O-O Bd7 9. f3 Nxd4 10. Qxd4 h6 11. Bh4 Rc8 12. Kb1 Be7 13. g4 b5 14. Bg3 e5 
+15. Qe3 Qc7 16. Bd3 Be6 17. h4 $6 {Allows Black to seize the initiative.}  Qa5 
+$1 { Threatening Rxc3 followed by Qa3 forcing White to part with the material to 
+save his king. }  18. g5 {Stronger was}  b4 $6 (18... Rxc3 19. gxf6 Qxa2+ 20. 
+Kc1 Rxd3 21. Qxd3 gxf6 { or} )  (18... Nh5 19. Be1 Rxc3 20. Bxc3 b4 21. Be1 
+Qxa2+ 22. Kc1 Qa1+ 23. Kd2 Qxb2 { in both cases Black has two pawns and attack 
+for the exchange.} ) 19. Nd5 Nxd5 20. exd5 Bxd5 21. b3 Qc5 22. Qe2 Qc6 23. Rhf1 
+Ra8 {After this defensive move, Black's initiative evaporates.}  (23... hxg5 24. 
+hxg5 Rh3 25. Qg2 Rh5) 24. f4 e4 25. Rfe1 f5 26. gxf6 {[%eval 0.00]}  gxf6 $4 
+{[%eval +3.24]It was necessary to recapture with the bishop undesrscoring the 
+weakness of dark squares in White's defenses.}  (26... Bxf6 27. Bxe4 Qc3 28. 
+Bxd5+ Kd8 29. Kc1 Qa1+ 30. Kd2 Qc3+ { with perpetual check.} ) 27. Bxe4 {[%eval 
++1.91]}  Bxe4 28. Qxe4 Qxe4 29. Rxe4 Rg8 30. Rd3 d5 31. Re6 Kf7 32. f5 Rg4 33. 
+Bd6 Ra7 34. Rxd5 Rxh4 35. Bxe7 Rxe7 36. Rxa6 Rf4 37. Ra8 h5 38. Kb2 h4 39. Rh8 
+Kg7 40. Rh5 Re5 41. Rd7+ Kg8 42. Rd8+ Kg7 43. Rd7+ Kg8 44. Rdh7 Rexf5 45. Rxf5 
+Rxf5 46. Rxh4 Rb5 47. c3 bxc3+ 48. Kxc3 Kf7 49. a4 Ra5 50. Kb4 Re5 51. a5 Ke6 
+52. Rd4 Re1 53. a6 Ke5 54. Rd8 Ra1 55. Kb5 f5 56. b4 f4 57. Kb6 f3 58. Rf8 Ra3 
+59. a7 Ke4 60. a8=Q+ 1-0
+
+
+
+[ChapterId "4"]
+[ChapterTitle "Rauzer - Black's alternative"]
+[ContentType "Study Tree"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 {If}  7. Qd2 Bd7 
+{ is not to your liking, here's one other option played at the grandmaster 
+level.}  (7... Be7 8. O-O-O Nxd4 9. Qxd4 O-O 10. f4 Qa5 11. Bc4 Bd7 12. e5 dxe5 
+13. fxe5 Bc6 14. Bd2 Nd7 15. Nd5 Qd8 16. Nxe7 Qxe7 $11)  *
+
+
+
+[ChapterId "5"]
+[ChapterTitle "Anti-Sozin"]
+[ContentType "Study Tree"]
+
+1. e4 c5 2. Nf3 Nc6 (2... d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bc4 Qb6 {This 
+is a popular alternative to 6... e6 that forces white to immediately decide the 
+position of the knight on d4. Thus black can avoid the sharp lines of the Sozin 
+and Velimirovic attack.Note that white can actually keep the knight on d4 but 
+only at the expense of its b2 pawn: 7.Be3. While the sacrifice is not correct, 
+you have know how to deal with it so we will examine it too.But first let's take 
+a look at the key ideas behind the the best continuations i.e.: 7.Nxc6, 7.Nb3, 
+7.Ndb5 and 7.Nde2.}  7. Nxc6 {White allows Black to strengthen his pawn presence 
+in the center. Black will be able to play e6-e5 without weakening the d5 square 
+or prepare d6-d5 having both c6 and e6 pawns to support it.On the queenside, 
+Black now has a semi-open b-file. White will set his sights on the kingside and 
+will try to build an attack there. He may choose to force Black to reveal his 
+plans in the center by attempting to disrupt it with e4-e5.}  (7. Nb3 e6 8. O-O 
+Be7 9. Be3 Qc7 10. f4 a6 11. Bd3 b5 12. Qf3 Bb7 13. a3 Rc8 14. Qh3 b4 15. axb4 
+Nxb4 16. f5 e5 17. Ra4 d5 18. exd5 Nfxd5 19. Nxd5 Bxd5 20. Bxa6 Rb8 {White could 
+have saved the game with}  21. Nd2 $2 (21. c4 Nxa6 22. cxd5 Rxb3 23. f6 $1 { and 
+taking the bishop  a6  on the next move. Immediate}  (23. Rxa6 { loses the queen 
+after}  Rxe3 24. Qxe3 Bc5) ) 21... Qxc2 22. Ra5 O-O 23. f6 Bxf6 24. Nf3 Nxa6 25. 
+Rxd5 Qe4)  (7. Ndb5 a6 8. Be3 Qa5 9. Nd4 Ne5 10. Bd3 e6 11. f4 Nxd3 12. Qxd3 Bd7 
+13. O-O-O Rc8 14. Nb3 Qc7 15. h3 Bc6 16. g4 d5 {Classic response to the kingside 
+attack. b7-b5 was a good option too.}  17. e5 Ne4 18. Bd4 Nxc3 (18... Bb4 19. 
+Nxe4 dxe4 20. Qc4 a5 21. Rh2 O-O 22. f5 b5 23. Qe2 Rfd8 24. fxe6 fxe6 25. a3 {or 
+c3 was more tenacious but white is in serious trouble already.}  (25. Rf2 a4 26. 
+Na1 a3 27. c3 Bd5 28. Nb3 Bxb3) ) 19. Qxc3 Bb5 20. Kb1 Qxc3 21. Bxc3 h5 $15 
+{Black has an edge.} )  (7. Nde2 e6 8. O-O Be7 9. Bb3 O-O 10. Be3 Qc7 11. Ng3 a6 
+12. f4 Na5 13. f5 Nc4 14. Bc1 {Exchanging on c4 14.Bxc4 was better. Now black 
+seizes initiative.}  b5 15. Kh1 Bb7 16. Qe2 Rac8 {a2-a4 now or after exchanging 
+pawns on  e6  would offer white better chances to defend e.g.}  17. Nh5 $2 (17. 
+a4 b4 18. Nd1 d5 19. fxe6 fxe6 20. exd5 Bxd5) 17... b4 18. Nxf6 Bxf6 19. Na4 Qc6 
+20. Rf4 exf5 21. exf5 Rfe8 22. Qf2 Re1 {Gutierrez - Almiron, Assuncion 2008} ) 
+7... bxc6 8. O-O e6 9. Qe2 Be7) 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bc4 Qb6 7. 
+Nxc6 bxc6 8. O-O e6 9. Qe2 Be7 10. b3 (10. e5 {White breaks up Black's pawn 
+chain at the first opportunity.}  dxe5 11. Qxe5 O-O {The most popular 
+continuation}  12. Bb3 $6 (12. Na4 Qb4 13. b3 { is better.} ) 12... Ba6 13. Re1 
+c5 14. Na4 Qc6 15. c4 Bxc4 $1 16. Bxc4 Qxa4 17. b3 Qc6 18. Bb2 Rfd8 19. Rac1 Rd2 
+20. a4 Rxf2 $1 21. Kxf2 Ng4 $19) 10... O-O 11. Bb2 Qc7 12. f4 (12. Rae1) 12... 
+d5 {The thematic d6-d5 is a solid continuation here.}  13. Bd3 Bb7 14. Kh1 Nd7 
+15. exd5 cxd5 16. Nb5 Qd8 *
+
+[ChapterId "5"]
+[ChapterTitle "Anti-Sozin"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Anti-Sozin: Lines"]
+[Black "Line: 7.Be3"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bc4 {This can lead to 
+the Sozin variation where black plays e7-e6 and white castles king side, or 
+Velimirovic attack where black castles queen side.}  Qb6 $166 {Sacrificing the 
+pawn on b2 does not offer white any advantage.}  7. Be3 $6 Qxb2 8. Ndb5 Qb4 9. 
+Qe2 Qa5 {We will look at sharp 9...Nxe4 next.}  10. Bd2 Qd8 *
+
+[ChapterId "5"]
+[ChapterTitle "Anti-Sozin"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Anti-Sozin: Lines"]
+[Black "Line: 7.Be3"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bc4 Qb6 $166 {This is 
+called anti-Sozin, forcing white to immediately decide the position of the 
+knight on d4. White has 4 good responses: Nb3, Nxc6, Ndb5 and Nde2.}  7. Nb3 
+{The most popular move.}  e6 8. O-O Be7 9. Be3 Qc7 10. f4 a6 11. Bd3 b5 12. Qf3 
+Bb7 13. Qh3 Nb4 14. a3 Nxd3 15. cxd3 O-O 16. Rac1 Qd8 $11 *
+
+[ChapterId "5"]
+[ChapterTitle "Anti-Sozin"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Anti-Sozin: Lines"]
+[Black "Line: 7.Nxc6"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bc4 Qb6 $166 {This is 
+called anti-Sozin, forcing white to immediately decide the position of the 
+knight on d4. White has 4 good responses: Nb3, Nxc6, Ndb5 and Nde2.}  7. Nxc6 
+bxc6 8. O-O g6 9. Qe1 Qc7 10. Bf4 Nd7 11. Qd2 Bg7 12. Bh6 O-O 13. Bxg7 Kxg7 14. 
+Rad1 Rb8 15. b3 Nf6 16. Kh1 Qa5 $11 *
+
+[ChapterId "5"]
+[ChapterTitle "Anti-Sozin"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Anti-Sozin: Lines"]
+[Black "Line: 7.Ndb5"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bc4 Qb6 $166 {This is 
+called anti-Sozin, forcing white to immediately decide the position of the 
+knight on d4. White has 4 good responses: Nb3, Nxc6, Ndb5 and Nde2.}  7. Ndb5 a6 
+8. Be3 Qa5 9. Nd4 {Avoiding transposition to the Sozin variation.}  Ne5 (9... e6 
+10. O-O Be7 11. Bb3 O-O 12. f4 Qc7 { would lead, with each side making 2 extra 
+moves, to a standard position of the Sozin variation.} ) 10. Nb3 Qc7 11. Be2 e6 
+12. f4 Nc4 $11 *
+
+[ChapterId "5"]
+[ChapterTitle "Anti-Sozin"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Anti-Sozin: Lines"]
+[Black "Line: 7.Nde2"]
+[Result "*"]
+
+ {[%eval +0.41]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bc4 Qb6 
+$166 {This is called anti-Sozin, forcing white to immediately decide the 
+position of the knight on d4. White has 4 good responses: Nb3, Nxc6, Ndb5 and 
+Nde2.}  7. Nde2 e6 8. O-O Be7 9. Bb3 O-O 10. Bg5 Na5 11. Ng3 h6 12. Be3 Qc6 $11 *
+
+[ChapterId "5"]
+[ChapterTitle "Anti-Sozin"]
+[ContentType "Model Game"]
+[Event "Linares 11th"]
+[Date "1993.??.??"]
+[White "Ivanchuk, Vassily"]
+[Black "Kramnik, Vladimir"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bc4 Qb6 7. Nb3 e6 8. Bf4 
+$5 Ne5 9. Be2 a6 10. Bg3 h5 11. h3 Qc7 12. f4 Nc4 13. Bxc4 Qxc4 14. Qf3 h4 15. 
+Bh2 Bd7 16. O-O-O Rc8 17. Rhe1 b5 18. Qf2 $2 (18. a3 Qc7 19. e5 dxe5 20. fxe5 
+Bc6 21. Qf2) 18... Qc7 $1 {Preparing a6-a5.}  19. e5 (19. a3 a5) 19... b4 20. 
+Rd3 dxe5 21. fxe5 bxc3 22. Rxc3 $2 (22. exf6 Qxh2 23. Rxd7 Qg3 24. Qxg3 hxg3 25. 
+Ra7 cxb2+ 26. Kxb2 gxf6 27. Rxa6 Rh4) 22... Qxc3 $2 {Turns the advantage over to 
+White again. The right move was}  (22... Qb8 23. Rxc8+ Bxc8 24. Rf1 {. If}  Rh7 
+(24... Rg8 { then}  25. g4 hxg3 26. Bxg3 { Threatening exf6. With the rook on 
+h7, Black would take on h3 preventing exf6.} ) ) 23. bxc3 Ba3+ 24. Kd2 Nd5 25. 
+Re4 Rxc3 26. Rg4 $2 {[%eval -0.85]Better was 26.Rd4}  O-O {[%eval -0.70]}  27. 
+Qxh4 {[%eval -1.45]}  Rfc8 {[%eval -1.43]}  28. Nd4 {[%eval -2.64]}  Bb4 $19 
+{[%eval -2.71]}  29. Ke2 {[%eval -7.02]}  Bb5+ $1 30. Nxb5 Rxc2+ 31. Kf3 axb5 
+32. Rxb4 Nxb4 33. Qxb4 R8c3+ (33... R8c3+ 34. Ke4 Rc4+)  0-1
+
+[ChapterId "5"]
+[ChapterTitle "Anti-Sozin"]
+[ContentType "Model Game"]
+[Event "Norderstedt op"]
+[Date "2013.03.28"]
+[White "Sailer, Hans Peter"]
+[Black "Miroshnichenko, Evgenij"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bc4 Qb6 7. Nxc6 bxc6 8. 
+O-O g6 9. Bb3 Bg7 10. Be3 Qc7 11. h3 O-O 12. Qd2 a5 13. a4 (13. Bh6 a4 14. Bxa4 
+Nxe4) 13... Rb8 $15 {White's previous move prevented a5-a4 but created 
+weaknesses that Black will attempt to exploit. Black is slightly better.}  14. 
+Rab1 Rb4 15. f3 Ba6 16. Rfd1 Rfb8 17. Na2 R4b7 18. Nc3 c5 19. e5 $2 {White 
+appears to overreact to the threat of c5-c4. However, it is not that dangerous 
+yet. Both 19.Ba2 Rxb2 and 19.Qe1 c4 20.Ba2 Rxb2 would be met with 21.Nb5}  dxe5 
+20. Bd5 Rb4 21. b3 Rd4 22. Qf2 Rd8 23. Be4 Rxd1+ 24. Rxd1 Rxd1+ 25. Nxd1 Nxe4 
+26. fxe4 c4 27. Bb6 Qc6 28. Bxa5 cxb3 29. cxb3 Qxe4 30. Nc3 Qd3 31. Qf3 {White's 
+pawns on the queenside are not mobile enough to compensate for the pawn and the 
+bishop pair. Black is clearly better.}  f5 32. Qd5+ Kf8 33. Qxd3 Bxd3 34. b4 e4 
+35. b5 Bd4+ 36. Kh2 e3 37. b6 e2 38. Nxe2 Bxe2 39. b7 Be5+ 40. g3 Ba6 0-1
+
+[ChapterId "5"]
+[ChapterTitle "Anti-Sozin"]
+[ContentType "Model Game"]
+[Event "World op 25th"]
+[Date "1997.??.??"]
+[White "Kelleher, William"]
+[Black "Yermolinsky, Alex"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bc4 Qb6 7. Ndb5 a6 8. 
+Be3 Qa5 9. Nd4 Ng4 10. Nxc6 bxc6 11. Bd2 Qc7 12. Bb3 Nf6 13. O-O e6 14. Qf3 Be7 
+15. Qg3 O-O 16. Bh6 Ne8 17. Rad1 a5 18. Rfe1 Kh8 19. Bf4 e5 20. Bg5 f6 21. Be3 
+f5 22. f4 {Better was}  fxe4 $6 (22... exf4 { with the following, practically 
+forcing, line}  23. Bxf4 fxe4 24. Nxe4 a4 25. Bc4 Qb6+ 26. Kh1 d5 27. Ng5 Bxg5 
+28. Qxg5 dxc4 29. Rd8 Qf2 30. Qg3 Qxg3 31. Bxg3 Bb7 32. Bb8) 23. fxe5 Bf5 24. 
+Na4 dxe5 25. Bb6 $14 {White has an edge despite being a pawn down.}  Qb8 26. Bc5 
+$6 {This exchange makes Black's play easier. White should have played 26.Rf1 
+maintaining initiative.}  Bxc5+ 27. Nxc5 Nf6 28. Be6 $2 {And now this indirect 
+exchange of light pieces is simply bad.}  Qa7 29. Bxf5 Qxc5+ 30. Kh1 Rad8 $17 
+31. Rxd8 Rxd8 32. h3 Qxc2 33. Qxe5 Qd2 34. Qg3 Re8 35. Qc3 Qxc3 36. bxc3 g6 37. 
+Bg4 Kg7 38. Kg1 Nxg4 39. hxg4 Kf6 40. Rb1 Kg5 41. Kf2 Kxg4 42. Rb6 h5 43. Rxc6 
+g5 0-1
+
+[ChapterId "5"]
+[ChapterTitle "Anti-Sozin"]
+[ContentType "Model Game"]
+[Event "North Sea Cup 15th"]
+[Date "2000.07.11"]
+[White "De Vreugt, Dennis"]
+[Black "Gulko, Boris F"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bc4 Qb6 7. Nde2 e6 8. 
+O-O Be7 9. Bb3 O-O 10. Bg5 Rd8 11. Ng3 h6 $146 12. Be3 (12. Bxf6 Bxf6 13. Nh5 
+Bxc3 14. bxc3 Qc5) 12... Qc7 13. Nh5 Bd7 14. f4 Na5 $5 15. Bd4 Nxh5 16. Qxh5 d5 
+{Appears premature. Safer options were 16... Nxb3 or 16... Bf8}  17. exd5 Bc5 
+18. Bxc5 Qxc5+ 19. Kh1 Nxb3 20. axb3 exd5 21. Qxd5 Qc7 {Black has compensation 
+for the pawn. The position is roughly equal.}  22. Qa5 b6 23. Qh5 Bc6 24. Rad1 
+Rxd1 25. Qxd1 Rd8 26. Qe2 $6 {White should have played 26.Qc1 to be able to 
+respond to 26... Rd4 with 27.Ne2}  Rd4 27. Qe3 Qd7 28. Kg1 b5 29. h3 b4 30. Ne2 
+Rd2 31. c3 $6 (31. Rf2) 31... Rxb2 $17 32. cxb4 Qd5 33. Rf2 $8 Rxb3 $6 {Black 
+could have won with}  (33... Qd1+ 34. Kh2 Qe1 35. Qc5 (35. f5 Bb5 {. Now the 
+task becomes much more difficult.} ) 35... Be4 36. Qe3 f5 37. b5 Rd2 38. Qc5 Kh7 
+39. Qe3 Bd3 { or} ) 34. Qxa7 Rxh3 35. Qd4 Rb3 36. Qxd5 Bxd5 37. Kh2 Rxb4 $17 38. 
+Ng3 g6 39. Rd2 Bb7 40. Ne2 Kg7 41. Nd4 h5 42. Kh3 Kh6 43. Kh4 $4 (43. Kg3) 43... 
+Bxg2 $19 44. Kg3 Bb7 45. Kh4 Ra4 46. Kg3 Ra3+ 47. Kh2 h4 48. Rb2 Bd5 49. Rd2 Ba8 
+50. Rf2 Ra1 51. Kh3 Kh5 0-1
+
+[ChapterId "5"]
+[ChapterTitle "Anti-Sozin"]
+[ContentType "Exercise"]
+[FEN "2r3k1/3b1pp1/p3p3/3nP3/1b1N2RQ/2r4P/P1P1K1PB/8 b - - 1 1"]
+[Event "Linares 11th"]
+[Date "1993.??.??"]
+[White "Ivanchuk, Vassily"]
+[Black "Kramnik, Vladimir"]
+[Result "0-1"]
+
+ {[%eval -7.02]}  Bb5 $1 2. Nxb5 Rxc2 3. Kf3 axb5 4. Rxb4 Nxb4 5. Qxb4 R8c3 
+(5... R8c3 6. Ke4 Rc4)  0-1
+
+
+
+[ChapterId "6"]
+[ChapterTitle "Boleslavsky 6.Be2"]
+[ContentType "Study Tree"]
+
+1. e4 c5 2. Nf3 Nc6 (2... d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be2 {This move 
+defines the Boleslavsky variation and is the only response to  6.Be2  that we 
+will examine. Other common moves}  e6 {,}  (6... g6 { transpose to other 
+variations  (Scheveningen, Dragon) . ***Plans and Ideas***Black's} )  (6... e5 { 
+indicates the desire to fight for the center while weakening the  d5  square. 
+Black's main plan involves advancing the pawns on the queenside  (with a7-a5 
+being the hallmark of the variation)  (and aiming to get rid of the d6 weakness 
+by playing d6-d5. The latter will be assisted by Nc6-b4 if White responds with 
+a2-a4 to Black's pawn attack.)  White will try to attack on the kingside while 
+keeping control over the center. It may keep the tension on the e5 pawn or block 
+the center by f4-f5.}  7. Nb3 Be7 8. O-O O-O 9. Be3 (9. f4 a5 10. a4 Nb4 11. Be3 
+Be6 12. fxe5 dxe5 13. Nc5 $2 Qb6) 9... Be6 10. Qd2 a5 11. a4 Nb4 12. f4 exf4 
+(12... Rc8 13. f5 Bc4 14. Bxc4 Rxc4 15. Qe2 Qc8 $6 {The thematic 15...d5 would 
+keep the position in balance. After the text move, White gains an edge.}  16. 
+Nxa5 Rxc3 $1 {Exchange sacrifice on c3 is typical in many variations of the 
+Sicilian. In this particular position, however, it is not very effective and the 
+advantage stays with White.}  17. bxc3 Qxc3 18. Qd2 Nxe4 19. Qxc3 Nxc3 20. Bd2 
+Nbd5 {with Black's advantage.} ) 13. Bxf4 $2 (13. Rxf4 { was necessary. White 
+falls into a very common trap.} ) 13... Nxc2 {This mini-combination has occurred 
+regularly in many variants of this position.}  14. Qxc2 Qb6 15. Kh1 Bxb3) ) 3. 
+d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Be2 e5 7. Nb3 Be7 8. O-O (8. f4 O-O 9. f5 Qb6 
+(9... a5 { is a strong move as well.} ) 10. Bg5 $4 Nxe4 {Overlooks a checkmate. 
+After}  11. Bxe7 $4 (11. Nxe4 { Black would gain a big advantage playing}  Qb4) 
+11... Qf2) 8... O-O{Now *
+
+[ChapterId "6"]
+[ChapterTitle "Boleslavsky 6.Be2"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Boleslavsky: Lines"]
+[Black "Line: 10.f4 d5 11.f5"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be2 e5 $166 7. Nb3 Be7 
+8. Be3 Be6 9. O-O O-O 10. f4 d5 11. f5 d4 12. fxe6 fxe6 13. Bc4 dxe3 $15 *
+
+[ChapterId "6"]
+[ChapterTitle "Boleslavsky 6.Be2"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Boleslavsky: Lines"]
+[Black "Line: 10.f4 d5 11.exd5"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be2 e5 $166 7. Nb3 Be7 
+8. Be3 Be6 9. O-O O-O 10. f4 d5 11. exd5 Nxd5 12. Nxd5 Qxd5 13. Qxd5 Bxd5 14. 
+Rad1 Rfd8 15. fxe5 Nxe5 16. Rfe1 f6 *
+
+[ChapterId "6"]
+[ChapterTitle "Boleslavsky 6.Be2"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Boleslavsky: Lines"]
+[Black "Line: 10.f4 d5 11.exd5"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be2 e5 $166 7. Nb3 Be7 
+8. Be3 Be6 9. O-O O-O 10. f4 d5 11. exd5 Nxd5 12. Nxd5 Qxd5 13. f5 Qe4 14. Rf3 
+Bxb3 15. axb3 Nd4 16. Bxd4 Rad8 $10 (16... exd4 { or} )  (16... Qxd4+ { lead to 
+equality too.} )  *
+
+[ChapterId "6"]
+[ChapterTitle "Boleslavsky 6.Be2"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Boleslavsky: Lines"]
+[Black "Line: 10.f4 d5 11.exd5"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be2 e5 $166 7. Nb3 Be7 
+8. Be3 Be6 9. O-O O-O 10. f4 d5 11. exd5 Nxd5 12. Nxd5 Bxd5 {Unlike in the 
+previous line, Black prefers a more complicated play with queens on the board.}  
+13. fxe5 Nxe5 14. Qd4 Bf6 {Black is no worse.}  *
+
+[ChapterId "6"]
+[ChapterTitle "Boleslavsky 6.Be2"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Boleslavsky: Lines"]
+[Black "Line: 10.f4 d5 11.exd5"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be2 e5 $166 7. Nb3 Be7 
+8. Be3 Be6 9. O-O O-O 10. f4 d5 11. exd5 Nxd5 12. Nxd5 Bxd5 13. f5 Re8 14. Rf2 
+Na5 $10 *
+
+[ChapterId "6"]
+[ChapterTitle "Boleslavsky 6.Be2"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Boleslavsky: Lines"]
+[Black "Line: 10.f4 d5 11.exd5"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be2 e5 $166 7. Nb3 Be7 
+8. Be3 Be6 9. O-O O-O 10. f4 d5 11. exd5 Nxd5 12. Nxd5 Bxd5 13. c4 Be4 14. Qe1 
+exf4 15. Rd1 Qc8 16. Rxf4 Bg6 17. Bg4 Qc7 18. Rd7 Qb8 19. Rf1 Bd6 20. Rxd6 Qxd6 
+21. Bc5 Qc7 22. Bxf8 Rxf8 $15 *
+
+[ChapterId "6"]
+[ChapterTitle "Boleslavsky 6.Be2"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Boleslavsky: Lines"]
+[Black "Line: 10.f4 d5 11.exd5"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be2 e5 $166 7. Nb3 Be7 
+8. Be3 Be6 9. O-O O-O 10. f4 d5 11. exd5 Nxd5 12. Nxd5 Bxd5 13. c4 Be4 14. Qe1 
+exf4 15. Rd1 Qc8 16. Bxf4 Bg6 17. Bf3 Re8 18. Qg3 a5 19. Bg4 Bf5 20. Bxf5 Qxf5 
+21. Bd6 Qc2 $15 *
+
+[ChapterId "6"]
+[ChapterTitle "Boleslavsky 6.Be2"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Boleslavsky: Lines"]
+[Black "Line: 10.Bf3"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be2 e5 $166 7. Nb3 Be7 
+8. Be3 Be6 9. O-O O-O 10. Bf3 a5 11. Nd5 Bxd5 12. exd5 Nb4 13. c3 Na6 *
+
+[ChapterId "6"]
+[ChapterTitle "Boleslavsky 6.Be2"]
+[ContentType "Model Game"]
+[Event "Virovitica"]
+[Date "1980.01.30"]
+[White "Bozic, Aleksandar"]
+[Black "Damljanovic, Branko"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be2 e5 7. Nb3 Be7 8. O-O 
+O-O 9. f4 a5 10. a4 Nb4 11. Bf3 Be6 12. Kh1 Rc8 13. Rf2 Qb6 14. Qe1 Bxb3 15. Be3 
+Qd8 16. cxb3 Nd3 17. Qd2 Nxf2+ 18. Qxf2 Qd7 19. Bb6 Bd8 20. Rd1 Qe6 21. Nd5 Nxd5 
+22. exd5 Qf6 23. fxe5 Bxb6 24. Qxb6 Qxe5 25. Qxa5 Rc2 0-1
+
+[ChapterId "6"]
+[ChapterTitle "Boleslavsky 6.Be2"]
+[ContentType "Model Game"]
+[Event "CHN-chT"]
+[Date "2016.06.24"]
+[White "Liu, Chang"]
+[Black "Bu, Xiangzhi"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Be2 e5 7. Nb3 Be7 8. O-O 
+O-O 9. f4 a5 10. a4 Nb4 11. f5 b6 12. Bg5 Bb7 13. Bf3 Rc8 14. Rf2 h6 15. Bxf6 
+Bxf6 16. Rd2 d5 17. exd5 e4 18. Bxe4 Bxc3 19. bxc3 Rxc3 20. Qf1 Re8 21. Re1 Qh4 
+22. g3 Qf6 23. Bg2 Rxe1 24. Qxe1 Nxc2 25. Qe8+ Kh7 26. d6 Bxg2 27. d7 Bc6 0-1
+
+[ChapterId "6"]
+[ChapterTitle "Boleslavsky 6.Be2"]
+[ContentType "Model Game"]
+[Event "Centrocoop op"]
+[Date "2000.??.??"]
+[White "Marinescu, Emilian"]
+[Black "Mosnegutu, Mariana"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Be2 e5 7. Nb3 Be7 8. O-O 
+O-O 9. f4 a5 10. a4 Nb4 11. f5 b6 12. Bf3 Bb7 13. Bg5 Rc8 14. Rf2 Qd7 15. Be3 
+Qc6 16. Nd5 Nfxd5 17. exd5 Qc4 18. Bxb6 Nxc2 19. Nxa5 Qb4 20. Nc6 Bxc6 21. Qxc2 
+Bb7 22. Qd2 Qxb6 23. a5 Qa7 24. b4 h6 25. b5 Bg5 26. Qb2 Be3 27. b6 Qb8 28. Kf1 
+Bd4 0-1
+
+[ChapterId "6"]
+[ChapterTitle "Boleslavsky 6.Be2"]
+[ContentType "Model Game"]
+[Event "ROM-ch29 Final"]
+[Date "1965.??.??"]
+[White "Suta, Mihai"]
+[Black "Ghitescu, Theodor"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be2 e5 7. Nb3 Be7 8. O-O 
+O-O 9. f4 a5 10. a4 Nb4 11. Be3 Be6 12. f5 Bd7 13. Bf3 Bc6 14. Rf2 d5 15. exd5 
+Nbxd5 16. Nxd5 Nxd5 17. Rd2 Nxe3 18. Rxd8 Bxd8 19. Qe2 Bb6 20. Kh1 e4 21. Bg4 
+Rad8 22. h3 h5 23. Nxa5 Bxa5 24. Qxe3 hxg4 25. Qg5 f6 26. Qxg4 Rd2 27. h4 Rfd8 
+28. h5 e3 29. Rg1 R8d4 30. Qg3 Bc7 0-1
+
+[ChapterId "6"]
+[ChapterTitle "Boleslavsky 6.Be2"]
+[ContentType "Model Game"]
+[Event "SWE-ch"]
+[Date "1976.??.??"]
+[White "Wahlbom, Magnus"]
+[Black "Schneider, Lars Ake"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Be2 e5 7. Nb3 Be7 8. O-O 
+O-O 9. f4 a5 10. a4 Nb4 11. Kh1 Be6 12. Nd2 Rc8 13. Nf3 Qb6 14. f5 Bd7 15. Bg5 
+Rfd8 16. Rc1 Bc6 17. Bxf6 Bxf6 18. Bc4 d5 19. exd5 e4 20. Nxe4 Bxb2 21. Rb1 Nxd5 
+22. Qe1 Bxa4 23. Bb3 Bxb3 24. cxb3 Bf6 25. Qg3 Ne3 26. Qf2 Bd4 27. Nxd4 Nxf1 0-1
+
+[ChapterId "6"]
+[ChapterTitle "Boleslavsky 6.Be2"]
+[ContentType "Exercise"]
+[FEN "r2q1rk1/pp2bppp/2npbn2/4p3/4PP2/1NN1B3/PPP1B1PP/R2Q1RK1 b - f3 0 1"]
+[Event ""]
+[Date "????.??.??"]
+[White "Boleslavsky: Lines"]
+[Black "Line: 10.f4 d5 11.f5"]
+[Result "*"]
+
+ d5 2. f5 d4 3. fxe6 fxe6 4. Bc4 dxe3 $15 *
+
+
+
+[ChapterId "7"]
+[ChapterTitle "6. f3"]
+[ContentType "Study Tree"]
+
+1. e4 c5 2. Nf3 d6 (2... Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. f3 e5 7. Nb3 
+Be7 8. Be3 O-O 9. Qd2 a5 10. Bb5 Be6 11. O-O-O Nb4 {Druska - Lagarde, Skopje 
+2019}  12. a3 Qc7 13. axb4 Bxb3 14. cxb3 axb4 15. Kb1 Qa5 {White gives up the 
+wrong piece.}  16. Na4 (16. Bc4 { was better.} ) 16... Qxb5 {Black's position is 
+much better.}  17. Qd3 Qa5 18. Bb6 Qa6 19. Qe3 Rfc8 20. Rc1 Bd8) 3. d4 cxd4 4. 
+Nxd4 Nf6 5. Nc3 Nc6 {In this course we will only examine the most common 
+response}  6. f3 e5 {. Other popular moves transpose to different variation of 
+the Sicilian. After e7-e5, the typical development will see castling on opposite 
+sides with subsequent attacks on the kings.}  7. Nb3 Be7 8. Be3 O-O (8... Be6 9. 
+Qd2 a5 10. Bb5 O-O 11. O-O-O Na7) 9. Qd2 a5 {Black begins the attack first and 
+threatens to push the pawn further to a4. White will prevent that by playing 
+a2-a4 or Bf1-b5. Sometimes, White chooses to avoid mutual attacks and castles 
+kingside but most often he will castle queenside facilitating attacks on 
+opposite sides. The critical square in the center is, of course, d5. Black will 
+attempt to push d6-d5 before White manages g2-g4-g5.}  10. Bb5 Be6 11. O-O-O Nb4 
+12. a3 d5 $5 (12... Qc7 { is more accurate.} ) 13. axb4 d4 {White should have 
+played}  14. Nd5 $2 (14. Bxd4 exd4 15. Qxd4 axb4 16. Qxd8 Rfxd8 17. Rxd8 Rxd8 
+18. Na4 Bxb3 19. cxb3 { with advantage.} ) 14... Bxd5 15. exd5 Nxd5 16. Nxd4 
+Nxe3 17. Ne6 fxe6 18. Qxe3 Bg5 $19 19. Rxd8 Bxe3 20. Rd2 axb4 {Warnecke - 
+Armbrust, Bad Zwesten 2006.}  *
+
+[ChapterId "7"]
+[ChapterTitle "6. f3"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "6.f3: Lines"]
+[Black "Line: 10.0-0-0 11.Kb1"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. f3 e5 $165 7. Nb3 Be7 8. 
+Be3 O-O 9. Qd2 Be6 10. O-O-O a5 11. Kb1 a4 12. Nc1 a3 13. b3 Nb4 {Leads to some 
+tactics typical for this variation.}  14. g4 d5 15. g5 Nxe4 16. fxe4 d4 $17 *
+
+[ChapterId "7"]
+[ChapterTitle "6. f3"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "6.f3: Lines"]
+[Black "Line: 10.0-0-0 11.Bb5"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. f3 e5 $165 7. Nb3 Be7 8. 
+Be3 O-O 9. Qd2 Be6 10. O-O-O a5 11. Bb5 Nb4 12. a3 Qc7 13. axb4 Bxb3 $15 *
+
+[ChapterId "7"]
+[ChapterTitle "6. f3"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "6.f3: Lines"]
+[Black "Line: 10.Nd5"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. f3 e5 $165 7. Nb3 Be7 8. 
+Be3 O-O 9. Qd2 Be6 10. Nd5 a5 11. Bb5 Bxd5 12. exd5 Na7 13. Be2 a4 $11 *
+
+[ChapterId "7"]
+[ChapterTitle "6. f3"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "6.f3: Lines"]
+[Black "Line: 10.Bb5 12.0-0-0"]
+[Result "*"]
+
+ {[%eval +0.39]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. f3 e5 
+$165 7. Nb3 Be7 8. Be3 O-O 9. Qd2 a5 10. Bb5 $1 Na7 11. Bd3 Be6 12. O-O-O Nc8 
+13. Bb5 Nb6 14. Qf2 Nfd7 $11 *
+
+[ChapterId "7"]
+[ChapterTitle "6. f3"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "6.f3: Lines"]
+[Black "Line: 10.Bb5 12.Rd1"]
+[Result "*"]
+
+ {[%eval +0.42]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. f3 {A 
+newer attempt with the idea of queen side castle and g2-g4.}  e5 $165 7. Nb3 Be7 
+8. Be3 O-O 9. Qd2 a5 10. Bb5 $1 Na7 11. Bd3 Be6 12. Rd1 Nc8 13. O-O a4 14. Nc1 
+Nb6 *
+
+[ChapterId "7"]
+[ChapterTitle "6. f3"]
+[ContentType "Model Game"]
+[Event "EU-Cup 26th"]
+[Date "2010.10.19"]
+[White "Zaragatski, Ilja"]
+[Black "Malakhov, Vladimir"]
+[Result "0-1"]
+
+1. Nf3 c5 2. e4 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. f3 e5 7. Nb3 Be7 8. Be3 
+O-O 9. Qd2 a5 10. Bb5 Be6 11. Qf2 (11. Rd1 { or} )  (11. O-O-O { are better 
+options here. White's threat of Be3-b6 can safely be ignored.} ) 11... d5 $1 12. 
+Bb6 Qd6 13. Bc5 Qc7 14. Bb6 Qc8 15. exd5 Nxd5 16. Nxd5 Bxd5 17. c3 Qe6 18. Nc5 
+Bxc5 19. Bxc5 Rfc8 20. O-O Bxa2 21. Rfe1 Bc4 22. Bxc6 Rxc6 23. f4 Qc8 24. Ba7 
+Ra6 $2 {[%eval -0.26]Black could have obtained a clearly better position with}  
+(24... exf4 25. Bd4 Re6 26. Qxf4 f6 { The text move gives White an opportunity 
+to equalize.} ) 25. Be3 $2 {[%eval -2.30]}  (25. Rxe5 R6xa7 26. Rc5 { with equal 
+chances.} ) 25... e4 $17 26. f5 Bd3 27. Bd4 f6 28. Re3 Qd7 29. g4 Rd6 30. Rg3 
+Rd5 31. Kh1 Kf7 32. Qe3 h6 33. h4 b5 34. Rag1 Rh8 35. R1g2 b4 36. Kg1 b3 37. g5 
+hxg5 38. Rxg5 $2 fxg5 39. Qxg5 Rh7 40. Qg6+ Kg8 41. f6 Rxd4 42. cxd4 Qxd4+ 43. 
+Rf2 Qxf2+ $1 44. Kxf2 e3+ 0-1
+
+[ChapterId "7"]
+[ChapterTitle "6. f3"]
+[ContentType "Model Game"]
+[Event "Moscow Aeroflot op-A"]
+[Date "2005.02.16"]
+[White "Fedorov, Alexei"]
+[Black "Ivanchuk, Vassily"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. Nc3 d6 4. d4 cxd4 5. Nxd4 Nf6 6. f3 e5 7. Nb3 Be7 8. Be3 
+O-O 9. Qd2 a5 10. Bb5 Be6 11. O-O-O Nb4 $5 12. a3 d5 $5 (12... Qc7 { is a less 
+forcing option that should give Black equality.} ) 13. axb4 d4 {White's better 
+option was}  14. Nxd4 (14. Bxd4 exd4 15. Qxd4 Qxd4 16. Nxd4 axb4 17. Na4) 14... 
+exd4 15. Qxd4 Qxd4 16. Rxd4 axb4 {Black has sufficient compensation for the 
+pawn.}  17. Nb1 Rfc8 {Better was}  18. c4 $6 {After this move, Black gains 
+substantial advantage.}  (18. Bd2 b3 19. Bc3) 18... bxc3 19. bxc3 {[%eval 
+-2.18]}  Ra5 {[%eval -2.39]}  20. Be2 Bc5 {or}  21. Rhd1 (21. Rd3 Bc4 22. Bxc5 
+Bxd3 23. Bb4 Ra4 24. Bxd3 Rxb4) 21... Nd7 {or}  22. Kd2 (22. R4d3 Bc4 23. Bxc5 
+Bxd3 24. Be3 Bxe2 25. Rxd7 b5) 22... Ra2+ {[%eval -1.46]}  23. Ke1 Bxd4 24. Bxd4 
+Bb3 25. Rc1 Ra4 26. Kd2 {[%eval -3.16]}  Nc5 $17 {[%eval -2.68]}  27. Ke3 
+{[%eval -3.37]}  Ne6 28. Be5 {[%eval -3.39]}  f6 {[%eval -3.28]}  29. Bg3 
+{[%eval -4.86]}  Ra1 30. Bb5 {[%eval -5.68]}  Ba2 31. Bd7 Rd8 32. Bxe6+ {[%eval 
+-6.39]}  Bxe6 33. c4 Rc8 $19 (33... Rc8 34. c5 Ba2)  0-1
+
+
+
+[ChapterId "8"]
+[ChapterTitle "6. Be3"]
+[ContentType "Study Tree"]
+
+ {[%eval +0.38]} 1. e4 c5 2. Nf3 Nc6 (2... d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 
+{We will examine 3 lines that are unique to this move order:}  6. Be3 {After Be3 
+play will often transpose to a different line in Classical Sicilian  
+(Boleslavsky, f2-f3, f2-f4)  or another variation of the Sicilian altogether  
+(Scheveningen, Dragon)  .}  e5 (6... Ng4 { and, as an alternatives,}  7. Bc1 (7. 
+Bg5 Qb6 (7... h6 8. Bh4 g5 9. Bg3 Bg7 10. Nf5 $2 Bxf5 11. exf5 Qa5 12. Qxg4 $2 
+Bxc3 $19 13. Kd1 Bxb2 14. Bd3 Bxa1 15. Re1 Be5 {Thienpondt - Sumets, 2015.} ) 8. 
+Nd5 {Forces mass exchanges, ultimately favorable for black.}  Qxd4 9. Qxd4 Nxd4 
+10. Nc7 Kd8 11. Nxa8 Nxc2 12. Kd2 Nxa1 13. Bd3 b6 14. Rxa1 Bb7 15. Nxb6 axb6 
+{Almeida Junior - Durarbayli, chess.com 2020} ) 7... Qb6 8. Bb5 Bd7 9. Bxc6 bxc6 
+10. O-O g6 11. f3 $2 {Black hopes for equality after exchanging the pinned Nd4 
+for black Ng4. However, it turns out that he cannot hold his position.}  Bg7 12. 
+Nce2 e5 13. fxg4 Bxg4 14. c3 exd4 15. cxd4 O-O 16. Kh1 Rae8 17. Rf4 f5 18. h3 
+Bxe2 19. Qxe2 Qxd4 20. Be3 Qxb2 21. Qxb2 Bxb2 22. Rb1 Be5 23. Rff1 fxe4 24. Rxf8 
+Rxf8 25. Bxa7 c5 26. a4 e3 {Szilagyi - Ovsejevitsch, 2003.} ) 7. Ndb5) 3. d4 
+cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Be3 Ng4 7. Bg5 h6 8. Bh4 g5 9. Bg3 Bg7 10. Bb5 $6 
+(10. Nb3 h5 11. h4 $11 { was better for white.} ) 10... Qb6 11. Bxc6 $6 {White 
+should play 11.Nde2 instead, to keep black's advantage to a minimum.}  bxc6 12. 
+Nb3 h5 13. h3 {13.h4 was more tenacious.}  h4 14. hxg4 hxg3 15. Rxh8 Bxh8 16. 
+fxg3 Qe3 17. Kf1 Bxc3 18. bxc3 Ba6 {Agrusti - Lazarev, Lyon 2005.}  *
+
+[ChapterId "8"]
+[ChapterTitle "6. Be3"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "6.Be3 Lines"]
+[Black "Line: 6.Be3 Ng4 7.Bb5 h6"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be3 Ng4 7. Bg5 h6 8. Bc1 
+Qb6 $11 *
+
+[ChapterId "8"]
+[ChapterTitle "6. Be3"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "6.Be3 Lines"]
+[Black "Line: 6.Be3 Ng4 7.Bb5 Nxe3"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be3 {An interesting 
+option is}  Ng4 7. Bb5 Nxe3 8. fxe3 Bd7 9. O-O e6 $11 *
+
+[ChapterId "8"]
+[ChapterTitle "6. Be3"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "6.Be3 Lines"]
+[Black "Line: 6.Be3 e5 7.Nf3"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be3 e5 $165 {Again, the 
+principal response avoiding transpositions to Sozin, Scheveningen or Dragon 
+variations.}  7. Nf3 Be7 8. Bc4 O-O 9. O-O a6 10. Qe2 Na5 11. Bb3 {With the 
+h-pawn still on  h7 ,}  Be6 12. Bxe6 { would strengthen Black's center without 
+creating a weakness on}  (12. Rfd1 Nxb3 13. axb3 Qc7 14. Bg5 Rac8 15. Bxf6 Bxf6 
+16. Rac1 $11) 12... g6 {.}  *
+
+[ChapterId "8"]
+[ChapterTitle "6. Be3"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "6.Be3 Lines"]
+[Black "Line: 6.Be3 e5 7.Ndb5"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be3 e5 $165 {Again, the 
+principal response avoiding transpositions to Sozin, Scheveningen or Dragon 
+variations.}  7. Ndb5 {Looks like a waste of tempo after the obvious a7-a6, 
+b7-b5, threatening b5-b4. Yet, this move has some bite.}  a6 8. Na3 b5 9. Nd5 
+{But not}  Rb8 (9... Nxe4 $4 10. Bb6) 10. Nxf6+ Qxf6 11. Be2 {We will look at}  
+Be7 (11... Nd4 $5 { next.} ) 12. O-O O-O $11 *
+
+[ChapterId "8"]
+[ChapterTitle "6. Be3"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "6.Be3 Lines"]
+[Black "Line: 6.Be3 e5 7.Ndb5"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be3 e5 $165 7. Ndb5 a6 
+8. Na3 b5 9. Nd5 Rb8 10. Nxf6+ Qxf6 11. Be2 Nd4 $5 12. O-O Nxe2+ 13. Qxe2 Qg6 
+14. f3 f5 $10 *
+
+[ChapterId "8"]
+[ChapterTitle "6. Be3"]
+[ContentType "Model Game"]
+[Event "EU-Cup Online Gr-A (Women)"]
+[Date "2020.12.19"]
+[White "Petraki, Argiro"]
+[Black "Cramling, Pia"]
+[Result "0-1"]
+
+ {[%eval +0.48]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Be3 Ng4 
+7. Nxc6 bxc6 8. Bg5 Qb6 9. Qd2 h6 10. Bh4 g5 11. Bg3 Bg7 12. Rb1 Rb8 13. Bc4 Ba6 
+14. Bxa6 {[%eval -0.96]}  Qxa6 15. h4 {[%eval -1.67]}  Qc4 16. e5 {[%eval 
+-2.75]}  Nxe5 {[%eval -2.54]}  17. hxg5 {[%eval -9.55]}  Nf3+ 0-1
+
+[ChapterId "8"]
+[ChapterTitle "6. Be3"]
+[ContentType "Exercise"]
+[FEN "1r2k2r/p3ppb1/2pp3p/4n1P1/2q5/2N3B1/PPPQ1PP1/1R2K2R b Kk - 0 1"]
+[Event "EU-Cup Online Gr-A (Women)"]
+[Date "2020.12.19"]
+[White "Petraki, Argiro"]
+[Black "Cramling, Pia"]
+[Result "0-1"]
+
+ {[%eval -9.37]}  Nf3 0-1
+
+
+
+[ChapterId "9"]
+[ChapterTitle "6. f4"]
+[ContentType "Study Tree"]
+
+ {[%eval +9.11]} 1. e4 c5 2. Nf3 d6 (2... Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 
+6. f4 e5 7. Nf3 Be7 8. Bd3 (8. Bc4 O-O (8... Qb6 9. Bb3 O-O 10. f5 a5 11. a3 
+(11. Bxa4 Nxe4) 11... a4 $1 12. Ba2 Bd7 13. Qd3 Nd4 14. h3 Rac8 15. g4 Bc6 
+{White's position can no longer be saved e.g.}  16. Rh2 (16. Nd2 Bb5 {.} ) 16... 
+Nxf3 {Stebbings - Strugnell, 2015.} ) 9. Bb3 Qb6 10. Qe2 Nd4 11. Nxd4 exd4 
+{Typically for this variation, Black is not worried about creating doubled, 
+isolated pawns on the d-file. The d4 pawn will be quite safe while restricting 
+White's c2 pawn.}  12. Nd5 Nxd5 13. Bxd5 Bh4 14. g3 Bf6 15. Qd3 Bd7 16. Qb3 Rac8 
+17. Qxb6 axb6 18. O-O {Kd1 was more tenacious.}  Rxc2 19. Rf2 Rfc8 20. Bd2 Rxb2 
+21. e5 Be7 22. Bb3 Bf8 23. Re1 dxe5 24. Rxe5 Bc5 25. Kf1 d3 26. Be3 Bh3 27. Ke1 
+Bb4 28. Bd2 Rxd2 {Cantin Zaborras - Colas Longares, 2003.} ) 8... Qb6 9. f5 
+{White releases tension on e5 which combined with bishop on d3 rather than c4 or 
+b3 makes it easier for black to prepare d6-d5 or Nc6-d4.}  O-O 10. Qe2 Re8 11. 
+Rb1 {With the black rook opposite the white queen on the e-file, white cannot 
+help himself to the pawn on}  (11. Bc4 { This line illustrates another tactic 
+typical for this variation}  Nd4 12. Nxd4 exd4 13. Nd5 Nxd5 14. Bxd5 Bxf5 15. 
+exf5 Bh4 16. g3 Qa5) 11... d5 $1 (11... d5 { e.g.}  12. Nxd5 Nd4 13. Qd1 Bb4 { 
+-+} ) 12. Kf1 Bxf5 13. exf5 e4 14. Bxe4 dxe4 $19 15. Ng5 Rac8 16. Be3 Qa5 17. g4 
+Bc5 18. Rg1 Ne5 19. h3 Bxe3 20. Qxe3 Nc4 21. Qe2 h6 22. Ngxe4 Nxe4 23. Nxe4 Rxe4 
+{Louis - Veingold, 1994.} ) 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 {This may 
+transpose to the Dragon or Scheveningen variations if Black chooses}  6. f4 
+{After}  e6 { or}  (6... g6 { respectively.} )  (6... e5 {, if White responds}  
+7. Nb3 { the play may shift to the Boleslavsky variation. Hence, we will focus 
+on the other knight's retreat:}  (7. Nf3) )  (6... e5 7. Nf3)  *
+
+[ChapterId "9"]
+[ChapterTitle "6. f4"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "6.f4 Lines"]
+[Black "6.f4 e5 7.Nf3 Be7 8.Bc4"]
+[Result "*"]
+
+ {[%eval +0.50]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. f4 e5 
+$165 7. Nf3 Be7 8. Bc4 O-O 9. f5 Qb6 10. Bb3 a5 $15 *
+
+[ChapterId "9"]
+[ChapterTitle "6. f4"]
+[ContentType "Model Game"]
+[Event "Kavala op 16th"]
+[Date "2007.08.08"]
+[White "Oleksienko, Mikhailo"]
+[Black "Kotronias, Vasilios"]
+[Result "0-1"]
+
+ {[%eval +0.41]} 1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. f4 e5 
+7. Nf3 Be7 8. Qe2 {This is a rare move but quite a reasonable one.}  O-O 9. Be3 
+Bg4 10. O-O-O exf4 11. Bxf4 Nh5 12. Bd2 Rc8 13. Qf2 Nf6 14. h3 Bh5 15. Bd3 Bg6 
+16. Rhe1 Nb4 17. Qxa7 d5 18. Bf4 Bc5 19. Qa4 (19. Qxb7 { was stronger. Now Black 
+seizes initiative.} ) 19... d4 20. Bb5 Qb6 21. Nxd4 Ra8 22. Qb3 Nxa2+ 23. Nxa2 
+Bxd4 {A blunder. After}  24. e5 $2 (24. Bc4 Rfc8 25. Qxb6 Bxb6 26. Bb3 Nxe4 27. 
+Be3 { White would only be slightly worse.} ) 24... Rfc8 25. c3 Rxa2 $2 {[%eval 
+-0.84]Black throws his advantage away.}  26. exf6 $2 {[%eval -8.95]However, 
+White does not seize the opportunity!}  (26. Qxa2 Bxc3 27. bxc3 { would lead to 
+an equal position. Now White loses by force.} ) 26... Ra1+ {[%eval -8.81]}  27. 
+Kd2 Bxc3+ {Or}  28. Qxc3 (28. bxc3 Qf2+ 29. Re2 Rd8+ { with an inevitable mate.} 
+) 28... Qf2+ 29. Re2 Rd8+ 30. Bd6 Rxd6+ 31. Bd3 Qf4+ 32. Re3 Rxd3+ 33. Qxd3 Bxd3 
+34. Rxa1 Ba6 0-1
+
+[ChapterId "9"]
+[ChapterTitle "6. f4"]
+[ContentType "Exercise"]
+[FEN "2r3k1/1p3ppp/1q3Pb1/1B6/3b1B2/1QP4P/rP4P1/2KRR3 b - - 0 1"]
+[Event "Kavala op 16th"]
+[Date "2007.08.08"]
+[White "Oleksienko, Mikhailo"]
+[Black "Kotronias, Vasilios"]
+[Result "0-1"]
+
+ {[%eval -8.55]However, White does not seize the opportunity!}  Ra1 {[%eval 
+-8.81]}  2. Kd2 Bxc3 {Or}  3. Qxc3 (3. bxc3 Qf2 4. Re2 Rd8 { with an inevitable 
+mate.} ) 3... Qf2 4. Re2 Rd8 5. Bd6 Rxd6 6. Bd3 Qf4 7. Re3 Rxd3 8. Qxd3 Bxd3 9. 
+Rxa1 Ba6 0-1
+
+
+
+[ChapterId "10"]
+[ChapterTitle "Rare Moves"]
+[ContentType "Study Tree"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 {There are a number of options 
+on White's 6th move, in addition to those reviewed in previous chapters. The 
+most popular among them are}  Nc6 6. h3 { and 6.g3Pawn e7-e5 is a solid response 
+to all of them. Alternatively, you may want to switch to the Dragon or 
+Scheveningen variations where those White's moves are not considered dangerous.} 
+ e5 7. Nde2 (7. Nb3 Be6 8. Bg5 {By pinning and then exchanging the knight, White 
+makes it harder for Black to push d6-d5.}  Be7 9. Bxf6 Bxf6 {White aims for a 
+position with opposite side castling. Objectively, it is better for White to 
+castle kingside and play}  10. Qd3 (10. Be2 { or} )  (10. Nd5) 10... O-O 11. 
+O-O-O Qb6 12. Qg3 a5 13. Rxd6 a4 14. Nd2 a3 15. b3 Rfd8 $17) 7... Be6 {Or}  8. 
+Be3 (8. Ng3 {Or}  d5)  (8. g4 d5 9. exd5 Nxd5 10. Bg2 Nxc3 11. Nxc3 Qxd1 12. 
+Nxd1 O-O-O 13. O-O Nd4 14. Ne3) 8... Be7 (8... d5 { is good here too but Black 
+may choose to keep the tension a bit longer while finishing his development.} ) 
+9. Qd2 O-O {Black is ready to play d6-d5. White puts his rook on d1 to prevent 
+it.}  10. O-O-O Qa5 {But not}  11. a3 (11. Kb1 { because of}  Nxe4) 11... Rad8 
+12. Kb1 Kh8 $1 {Maintains Black's advantage. White would equalize after}  (12... 
+a6 13. Nd5 Nxd5) 13. Ng3 d5 $15 *
+
+[ChapterId "10"]
+[ChapterTitle "Rare Moves"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Rare Moves: Ideas"]
+[Black "Intro"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 {There are a number of options 
+on White's 6th move, in addition to those reviewed in previous chapters. The 
+most popular among them are}  Nc6 6. h3 { and 6.g3Pawn e7-e5 is a solid response 
+to all of them. Alternatively, you may want to switch to the Dragon or 
+Scheveningen variations where those White's moves are not considered dangerous.} 
+ *
+
+[ChapterId "10"]
+[ChapterTitle "Rare Moves"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Rare Moves: Ideas"]
+[Black "6.h3: Black pushes d5"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. h3 e5 7. Nde2 Be6 {Or}  
+8. Be3 (8. Ng3 {Or}  d5)  (8. g4 d5 9. exd5 Nxd5 10. Bg2 Nxc3 11. Nxc3 Qxd1+ 12. 
+Nxd1 O-O-O 13. O-O Nd4 14. Ne3) 8... Be7 (8... d5 { is good here too but Black 
+may choose to keep the tension a bit longer while finishing his development.} ) 
+9. Qd2 O-O {Black is ready to play d6-d5. White puts his rook on d1 to prevent 
+it.}  10. O-O-O Qa5 {But not}  11. a3 (11. Kb1 { because of}  Nxe4) 11... Rad8 
+12. Kb1 Kh8 $1 {Maintains Black's advantage. White would equalize after}  (12... 
+a6 13. Nd5 Nxd5) 13. Ng3 d5 $15 *
+
+[ChapterId "10"]
+[ChapterTitle "Rare Moves"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
+[White "Rare Moves: Ideas"]
+[Black "6.h3: White prevents d5"]
+[Result "*"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. h3 e5 7. Nb3 Be6 8. Bg5 
+{By pinning and then exchanging the knight, White makes it harder for Black to 
+push d6-d5.}  Be7 9. Bxf6 Bxf6 {White aims for a position with opposite side 
+castling. Objectively, it is better for White to castle kingside and play}  10. 
+Qd3 (10. Be2 { or} )  (10. Nd5) 10... O-O 11. O-O-O Qb6 12. Qg3 a5 13. Rxd6 a4 
+14. Nd2 a3 15. b3 Rfd8 $17 *
+
+[ChapterId "10"]
+[ChapterTitle "Rare Moves"]
+[ContentType "Model Game"]
+[Event "PRO League KO Stage"]
+[Date "2020.03.04"]
+[White "Nakamura, Hikaru"]
+[Black "Lagarde, Maxime"]
+[Result "1-0"]
+
+1. e4 c5 2. Nf3 d6 3. Nc3 Nf6 4. h3 Nc6 5. d4 cxd4 6. Nxd4 e5 7. Nf3 Be7 8. Bc4 
+O-O 9. O-O Be6 10. Bb3 Rc8 11. Bg5 Na5 12. Bxf6 Bxf6 13. Nd5 Bg5 14. Qd3 Rc5 15. 
+Nc3 Nc4 16. Rab1 Be7 17. Nd2 b5 {Black has a small edge.}  18. Rfd1 {Other 
+squares would be better for the black queen e.g.}  Qb6 $6 {Both sides missed}  
+(18... Qd7 { or} )  (18... Qb8) 19. Bxc4 (19. Na4 { that would equalize 
+chances.} ) 19... bxc4 20. Qe2 Qc6 21. Nd5 Bxd5 22. exd5 {Black would have kept 
+a slight advantage by not exchanging the pawns}  Rxd5 (22... Qc8) 23. Nxc4 $11 
+Rc8 24. Ne3 Rxd1+ 25. Rxd1 Bg5 26. c3 Bxe3 27. Qxe3 {Better was}  Qa4 $2 (27... 
+Qa6 { or} )  (27... Qb7) 28. Rxd6 $16 Qxa2 29. Qc5 Rf8 30. b4 Qe2 31. b5 h5 32. 
+Rd7 Qe1+ 33. Kh2 Qe4 34. Rxa7 Rd8 35. Qe3 Qf5 36. b6 Kh7 37. Qf3 Qxf3 38. gxf3 
+Rb8 39. Ra6 Kg6 40. c4 Kf5 41. c5 Ke6 42. c6 Kd6 43. c7 Re8 44. c8=Q 1-0
+
+[ChapterId "10"]
+[ChapterTitle "Rare Moves"]
+[ContentType "Model Game"]
+[Event "PRO League Stage"]
+[Date "2018.02.03"]
+[White "Fontaine, Robert"]
+[Black "Gupta, Abhijeet"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 d6 3. Nc3 Nc6 4. d4 cxd4 5. Nxd4 Nf6 6. g3 e5 7. Nde2 Be7 8. Bg2 
+O-O 9. O-O Be6 10. h3 Rc8 11. g4 h6 12. Ng3 a6 13. Nf5 b5 14. Nd5 Bxf5 15. Nxe7+ 
+Qxe7 16. exf5 d5 17. c3 e4 18. Bf4 Ne5 19. Qe2 Nd3 20. Bg3 Rfe8 21. Rad1 b4 22. 
+cxb4 Qxb4 23. b3 a5 24. Kh2 Qc3 25. f4 Nh7 26. h4 Nb4 27. g5 d4 28. Bxe4 Qe3 29. 
+Rfe1 Rxe4 30. Qf1 Rc2+ 31. Kh3 hxg5 32. Rxe3 g4+ 33. Kxg4 Nf6+ 34. Kh3 Rxe3 35. 
+Rc1 d3 36. Rxc2 dxc2 37. Qc4 Ne4 38. f6 Rxg3+ 39. Kh2 Rc3 40. Qxe4 c1=Q 41. Qe8+ 
+Kh7 42. Qe4+ g6 0-1
+
+[ChapterId "10"]
+[ChapterTitle "Rare Moves"]
+[ContentType "Model Game"]
+[Event "Odorheiu Secuiesc zt"]
+[Date "1995.??.??"]
+[White "Jansa, Vlastimil"]
+[Black "Groszpeter, Attila"]
+[Result "1-0"]
+
+1. e4 c5 2. Nc3 Nc6 3. Nge2 Nf6 4. d4 cxd4 5. Nxd4 d6 6. g3 e5 7. Nde2 Be7 8. 
+Bg2 O-O 9. O-O Be6 10. h3 Rc8 (10... a6 11. Be3 b5 12. Qd2 Qc7 13. g4 Rac8 14. 
+Rac1 Rfd8 15. Nd5 Bxd5 16. exd5 Na5) 11. Be3 (11. f4 b5 12. b3 Nb4 13. Bb2 a5 
+14. Kh2 Qb6 15. Rc1 a4 16. a3 Na6 17. Nd5 Bxd5 18. exd5 Nd7) 11... Qa5 12. Qd2 
+Rfd8 13. Rfd1 h6 14. b3 Rd7 15. Nd5 $1 Qxd2 16. Rxd2 b5 $1 (16... Bd8 17. c4) 
+17. Nxe7+ Nxe7 18. f4 Rdc7 19. c3 Ne8 (19... d5 20. f5 Bd7 21. exd5 Nxf5 22. d6) 
+20. f5 Bd7 21. g4 Bc6 22. c4 $1 bxc4 23. b4 Rb7 24. Nc3 $1 (24. a3 a5 25. bxa5 
+Rb3 { with an unclear position.} ) 24... Rxb4 25. Bxa7 Ra8 26. Bf2 Ra3 (26... 
+Rab8 27. Rc1 { xc4} ) 27. Rc1 g5 28. Be1 Rb8 29. Bf1 Rc8 30. Rdd1 (30. Bxc4 Ba8 
+31. Nb5 Re3 { with Black initiative.} ) 30... Ba8 31. Rb1 Kg7 (31... Nf6 32. Nb5 
+Rxa2 33. Nxd6 Rf8 34. Bxc4) 32. Rb4 Ra6 (32... d5 33. exd5 Nd6 34. f6+ Kxf6 35. 
+Rb6) 33. Rxc4 Rb8 (33... Rxc4 34. Bxc4 Ra3 35. Bb3 { with an attack.} ) 34. Rc7 
+$138 Nxc7 35. Bxa6 Nxa6 36. f6+ Kf8 (36... Kxf6 37. Rxd6+ Kg7 38. Rxa6) 37. 
+fxe7+ Kxe7 $17 1-0
+
+[ChapterId "10"]
+[ChapterTitle "Rare Moves"]
+[ContentType "Model Game"]
+[Event "Vecindario Canarias op 4th"]
+[Date "2010.07.19"]
+[White "Bressac, Stephane"]
+[Black "Andres Gonzalez, Alberto"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. g3 e5 7. Nde2 Be7 8. Bg2 
+O-O 9. O-O Be6 10. h3 a6 11. Nd5 Rc8 12. g4 Nd7 13. b3 Bg5 14. Ba3 Nc5 15. b4 
+Na4 16. b5 axb5 17. Bxd6 Re8 18. Rb1 Qa5 19. Qd3 b4 20. Qg3 Qa6 21. Qd3 Nc3 22. 
+Qd1 Qa5 23. Qd3 Na4 24. Qg3 Qa6 25. Qd3 Nc3 26. Nexc3 bxc3 27. Qxa6 bxa6 28. 
+Nxc3 Bc4 29. Rfd1 f6 30. Nd5 Bxa2 31. Ra1 Bc4 32. Nb6 Be2 33. Nxc8 Bxd1 34. Rxd1 
+Rxc8 35. Bc5 Nd4 36. Bxd4 exd4 37. Rxd4 Rxc2 38. Ra4 Bh4 39. Rxa6 Bxf2+ 40. Kh1 
+Bd4 41. Kh2 Kf7 42. Kg3 Kg6 43. Kf3 Bf2 0-1
+
+
+
