@@ -73,15 +73,15 @@ namespace ChessForge
         {
             if (_studyTreeView != null)
             {
-                _studyTreeView.Clear();
+                _studyTreeView.Clear(GameData.ContentType.STUDY_TREE);
             }
             if (_modelGameTreeView != null)
             {
-                _modelGameTreeView.Clear();
+                _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
             }
             if (_exerciseTreeView != null)
             {
-                _exerciseTreeView.Clear();
+                _exerciseTreeView.Clear(GameData.ContentType.EXERCISE);
             }
         }
 
@@ -389,24 +389,24 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Clears the TreeViews' douments in the tab control.
+        /// Clears the TreeViews' documents in the tab control.
         /// </summary>
         private void ClearTabViews()
         {
-            ClearTreeView(_studyTreeView);
-            ClearTreeView(_modelGameTreeView);
-            ClearTreeView(_exerciseTreeView);
+            ClearTreeView(_studyTreeView, GameData.ContentType.STUDY_TREE);
+            ClearTreeView(_modelGameTreeView, GameData.ContentType.MODEL_GAME);
+            ClearTreeView(_exerciseTreeView, GameData.ContentType.EXERCISE);
         }
 
         /// <summary>
         /// Clears the passed VariationTreeView
         /// </summary>
         /// <param name="view"></param>
-        private void ClearTreeView(VariationTreeView view)
+        private void ClearTreeView(VariationTreeView view, GameData.ContentType contentType)
         {
             if (view != null)
             {
-                view.Clear();
+                view.Clear(contentType);
             }
         }
 
@@ -432,7 +432,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    _modelGameTreeView.Clear();
+                    _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
                 }
             }
             catch (Exception ex)
@@ -462,7 +462,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    _exerciseTreeView.Clear();
+                    _exerciseTreeView.Clear(GameData.ContentType.EXERCISE);
                 }
             }
             catch (Exception ex)

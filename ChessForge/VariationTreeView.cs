@@ -492,9 +492,11 @@ namespace ChessForge
         /// <summary>
         /// Clears the document and relevant structrue.
         /// </summary>
-        public void Clear()
+        public void Clear(GameData.ContentType contentType)
         {
             Document.Blocks.Clear();
+
+            BuildPreviousNextBar(contentType);
 
             // resets
             _dictNodeToRun.Clear();
@@ -520,7 +522,7 @@ namespace ChessForge
                 contentType = _variationTree.Header.GetContentType(out _);
             }
 
-            Clear();
+            Clear(GameData.ContentType.GENERIC);
 
             BuildPreviousNextBar(contentType);
 
@@ -633,8 +635,14 @@ namespace ChessForge
         /// </summary>
         private void BuildPreviousNextChapterBar()
         {
-            int chapterCount = WorkbookManager.SessionWorkbook.GetChapterCount();
-            int chapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterNumber - 1;
+            int chapterCount = 0;
+            int chapterIndex = -1;
+
+            if (WorkbookManager.SessionWorkbook != null)
+            {
+                chapterCount = WorkbookManager.SessionWorkbook.GetChapterCount();
+                chapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterNumber - 1;
+            }
 
             if (chapterCount > 1)
             {
@@ -677,8 +685,15 @@ namespace ChessForge
         /// </summary>
         private void BuildPreviousNextModelGameBar()
         {
-            int gameCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount();
-            int gameIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex;
+            int gameCount = 0;
+            int gameIndex = -1;
+
+            if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
+            {
+                gameCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount();
+                gameIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex;
+            }
+
 
             if (gameCount > 1)
             {
@@ -720,8 +735,14 @@ namespace ChessForge
         /// </summary>
         private void BuildPreviousNextExerciseBar()
         {
-            int exerciseCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount();
-            int exerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex;
+            int exerciseCount = 0;
+            int exerciseIndex = -1;
+
+            if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
+            {
+                exerciseCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount();
+                exerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex;
+            }
 
             if (exerciseCount > 1)
             {
@@ -1357,34 +1378,41 @@ namespace ChessForge
         /// <param name="fontColor"></param>
         private void AddRunToParagraph(TreeNode nd, Paragraph para, string text, SolidColorBrush fontColor)
         {
-            Run r = new Run(text.ToString());
-            r.Name = "run_" + nd.NodeId.ToString();
-            r.MouseDown += EventRunClicked;
-
-            if (_isIntraFork)
+            try
             {
-                r.FontStyle = _intraForkFontStyle;
-                r.FontSize = GetParaAttrs((_currParagraphLevel + 1).ToString()).FontSize;
-            }
+                Run r = new Run(text.ToString());
+                r.Name = "run_" + nd.NodeId.ToString();
+                r.MouseDown += EventRunClicked;
 
-            if (fontColor != null && para.Inlines.Count == 0)
+                if (_isIntraFork)
+                {
+                    r.FontStyle = _intraForkFontStyle;
+                    r.FontSize = GetParaAttrs((_currParagraphLevel + 1).ToString()).FontSize;
+                }
+
+                if (fontColor != null && para.Inlines.Count == 0)
+                {
+                    r.Foreground = fontColor;
+                    r.FontWeight = FontWeights.Bold;
+                }
+
+                if (para.Margin.Left == 0 && nd.IsMainLine())
+                {
+                    r.FontWeight = FontWeights.Bold;
+                    para.Inlines.Add(r);
+                }
+                else
+                    para.Inlines.Add(r);
+
+                _dictNodeToRun.Add(nd.NodeId, r);
+                _dictRunToParagraph.Add(r, para);
+
+                _lastAddedRun = r;
+            }
+            catch(Exception ex)
             {
-                r.Foreground = fontColor;
-                r.FontWeight = FontWeights.Bold;
+                AppLog.Message("AddRunToParagraph()", ex);
             }
-
-            if (para.Margin.Left == 0 && nd.IsMainLine())
-            {
-                r.FontWeight = FontWeights.Bold;
-                para.Inlines.Add(r);
-            }
-            else
-                para.Inlines.Add(r);
-
-            _dictNodeToRun.Add(nd.NodeId, r);
-            _dictRunToParagraph.Add(r, para);
-
-            _lastAddedRun = r;
         }
 
         /// <summary>
@@ -1395,27 +1423,34 @@ namespace ChessForge
         /// <param name="para"></param>
         private void AddCommentRunToParagraph(TreeNode nd, Paragraph para)
         {
-            // check if there is anything to show
-            if (string.IsNullOrEmpty(nd.Comment))
+            try
             {
-                return;
+                // check if there is anything to show
+                if (string.IsNullOrEmpty(nd.Comment))
+                {
+                    return;
+                }
+
+                Run rNode = _dictNodeToRun[nd.NodeId];
+
+                Run r = new Run(BuildCommentRunText(nd));
+                r.Name = "run_" + nd.NodeId.ToString() + "_comment";
+                r.MouseDown += EventCommentRunClicked;
+
+                r.FontStyle = FontStyles.Normal;
+
+                r.Foreground = Brushes.Black;
+                r.FontWeight = FontWeights.Normal;
+
+                para.Inlines.InsertAfter(rNode, r);
+
+                _dictNodeToCommentRun.Add(nd.NodeId, r);
+                _dictCommentRunToParagraph.Add(r, para);
             }
-
-            Run rNode = _dictNodeToRun[nd.NodeId];
-
-            Run r = new Run(BuildCommentRunText(nd));
-            r.Name = "run_" + nd.NodeId.ToString() + "_comment";
-            r.MouseDown += EventCommentRunClicked;
-
-            r.FontStyle = FontStyles.Normal;
-
-            r.Foreground = Brushes.Black;
-            r.FontWeight = FontWeights.Normal;
-
-            para.Inlines.InsertAfter(rNode, r);
-
-            _dictNodeToCommentRun.Add(nd.NodeId, r);
-            _dictCommentRunToParagraph.Add(r, para);
+            catch (Exception ex)
+            {
+                AppLog.Message("AddCommentRunToParagraph()", ex);
+            }
         }
 
         /// <summary>
