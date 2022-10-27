@@ -182,7 +182,7 @@ namespace ChessForge
                     node = _variationTree.GetNodeFromNodeId(nodeId);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 node = null;
                 AppLog.Message("GetSelectedNode()", ex);
@@ -257,22 +257,19 @@ namespace ChessForge
                 isEnabled = false;
             }
 
-            if (_variationTree != null)
+            switch (WorkbookManager.ActiveTab)
             {
-                switch (_variationTree.ContentType)
-                {
-                    case GameData.ContentType.STUDY_TREE:
-                        EnableStudyTreeMenus(_mainWin.UiCmnWorkbookRightClick, isEnabled);
-                        break;
-                    case GameData.ContentType.MODEL_GAME:
-                        EnableModelGamesMenus(_mainWin.UiCmModelGames, isEnabled);
-                        break;
-                    case GameData.ContentType.EXERCISE:
-                        EnableExercisesMenus(_mainWin.UiCmExercises, isEnabled);
-                        break;
-                    default:
-                        break;
-                }
+                case WorkbookManager.TabViewType.STUDY:
+                    EnableStudyTreeMenus(_mainWin.UiCmnWorkbookRightClick, isEnabled);
+                    break;
+                case WorkbookManager.TabViewType.MODEL_GAME:
+                    EnableModelGamesMenus(_mainWin.UiCmModelGames, isEnabled);
+                    break;
+                case WorkbookManager.TabViewType.EXERCISE:
+                    EnableExercisesMenus(_mainWin.UiCmExercises, isEnabled);
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -308,10 +305,10 @@ namespace ChessForge
                                 }
                                 break;
                             case "_mnWorkbookEvalMove":
-                                menuItem.IsEnabled = isEnabled;
+                                menuItem.IsEnabled = _mainWin.ActiveVariationTree.SelectedNode != null;
                                 break;
                             case "_mnWorkbookEvalLine":
-                                menuItem.IsEnabled = true;
+                                menuItem.IsEnabled = _mainWin.ActiveVariationTree.Nodes.Count > 1;
                                 break;
                         }
                     }
