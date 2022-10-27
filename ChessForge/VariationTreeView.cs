@@ -837,7 +837,7 @@ namespace ChessForge
                         {
                             int no = WorkbookManager.SessionWorkbook.ActiveChapterNumber;
                             para = CreateParagraph("0");
-//                            para.Margin = new Thickness(0, 0, 0, 0);
+                            //                            para.Margin = new Thickness(0, 0, 0, 0);
                             Run r = new Run("Chapter " + no.ToString() + ": " + WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle(true));
                             para.Inlines.Add(r);
                         }
@@ -878,7 +878,7 @@ namespace ChessForge
             if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2");
-                para.Margin = new Thickness(60, 0, 0, 40);
+                para.Margin = new Thickness(60, 0, 0, 20);
 
                 InlineUIContainer uIContainer = new InlineUIContainer();
                 Viewbox vb = new Viewbox();
@@ -934,6 +934,19 @@ namespace ChessForge
             {
                 Paragraph para = CreateParagraph("2");
                 para.Margin = new Thickness(130, 0, 0, 40);
+
+                PieceColor color = WorkbookManager.SessionWorkbook.ActiveChapter.GetSideToSolveExercise();
+                Run rToMove = new Run();
+                if (color == PieceColor.Black)
+                {
+                    rToMove.Text = "   Black to move\n\n";
+                }
+                else
+                {
+                    rToMove.Text = "   White to move\n\n";
+                }
+                rToMove.FontWeight = FontWeights.Bold;
+                para.Inlines.Add(rToMove);
 
                 InlineUIContainer uIContainer = new InlineUIContainer();
 
