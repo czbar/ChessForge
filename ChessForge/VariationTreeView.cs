@@ -610,19 +610,67 @@ namespace ChessForge
         {
             try
             {
-                if (contentType == GameData.ContentType.MODEL_GAME)
+                switch (contentType)
                 {
-                    BuildPreviousNextModelGameBar();
-                }
-                else if (contentType == GameData.ContentType.EXERCISE)
-                {
-                    BuildPreviousNextExerciseBar();
+                    case GameData.ContentType.STUDY_TREE:
+                        BuildPreviousNextChapterBar();
+                        break;
+                    case GameData.ContentType.MODEL_GAME:
+                        BuildPreviousNextModelGameBar();
+                        break;
+                    case GameData.ContentType.EXERCISE:
+                        BuildPreviousNextExerciseBar();
+                        break;
                 }
             }
             catch
             {
             }
         }
+
+        /// <summary>
+        /// Builds the Previous/Next bar for Chapter/Study Tree view.
+        /// </summary>
+        private void BuildPreviousNextChapterBar()
+        {
+            int chapterCount = WorkbookManager.SessionWorkbook.GetChapterCount();
+            int chapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterNumber - 1;
+
+            if (chapterCount > 1)
+            {
+                _mainWin.UiCnvStudyTreePrevNext.Visibility = Visibility.Visible;
+                _mainWin.UiGridStudyTree.RowDefinitions[0].Height = new GridLength(20);
+                _mainWin.UiRtbStudyTreeView.Height = 620;
+
+                _mainWin.UiLblChapterPrevNextHint.Visibility = Visibility.Visible;
+                _mainWin.UiLblChapterCounter.Content = "Chapter " + (chapterIndex + 1).ToString() + " of " + chapterCount.ToString();
+                if (chapterIndex == 0)
+                {
+                    _mainWin.UiImgChapterRightArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiImgChapterLeftArrow.Visibility = Visibility.Hidden;
+                    _mainWin.UiLblChapterPrevNextHint.Content = "Next";
+                }
+                else if (chapterIndex == chapterCount - 1)
+                {
+                    _mainWin.UiImgChapterRightArrow.Visibility = Visibility.Hidden;
+                    _mainWin.UiImgChapterLeftArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiLblChapterPrevNextHint.Content = "Previous";
+                }
+                else
+                {
+                    _mainWin.UiImgChapterRightArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiImgChapterLeftArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiLblChapterPrevNextHint.Content = "Previous | Next";
+                }
+            }
+            else
+            {
+                _mainWin.UiCnvStudyTreePrevNext.Visibility = Visibility.Collapsed;
+                _mainWin.UiGridStudyTree.RowDefinitions[0].Height = new GridLength(0);
+                _mainWin.UiRtbStudyTreeView.Height = 640;
+            }
+        }
+
 
         /// <summary>
         /// Builds the Previous/Next bar for Model Games view.

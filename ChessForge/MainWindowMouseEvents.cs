@@ -496,6 +496,47 @@ namespace ChessForge
         //**************************************************************
 
         /// <summary>
+        /// In the Study view, the user requested the previous chapter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgChapterLeftArrow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (WorkbookManager.SessionWorkbook.ActiveChapterNumber > 1)
+                {
+                    SelectChapter(WorkbookManager.SessionWorkbook.ActiveChapterNumber - 1, true);
+                }
+            }
+            catch
+            {
+                AppLog.Message("Exception in UiImgChapterLeftArrow_PreviewMouseLeftButtonDown()");
+            }
+        }
+
+        /// <summary>
+        /// In the Study view, the user requested the next chapter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgChapterRightArrow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (WorkbookManager.SessionWorkbook.ActiveChapterNumber > 0 
+                    && WorkbookManager.SessionWorkbook.ActiveChapterNumber < WorkbookManager.SessionWorkbook.Chapters.Count)
+                {
+                    SelectChapter(WorkbookManager.SessionWorkbook.ActiveChapterNumber + 1, true);
+                }
+            }
+            catch
+            {
+                AppLog.Message("Exception in UiImgChapterRightArrow_PreviewMouseLeftButtonDown()");
+            }
+        }
+
+        /// <summary>
         /// In the Model Games view, the user requested the previous game
         /// </summary>
         /// <param name="sender"></param>
@@ -597,7 +638,7 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.CHAPTERS;
             try
             {
-                if (KeepFocusOnGame() || WorkbookManager.SessionWorkbook == null )
+                if (KeepFocusOnGame() || WorkbookManager.SessionWorkbook == null)
                 {
                     return;
                 }
@@ -625,7 +666,7 @@ namespace ChessForge
         {
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
-         
+
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.STUDY;
             try
             {
@@ -669,7 +710,7 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.BOOKMARKS;
             try
             {
-                if (KeepFocusOnGame() || WorkbookManager.SessionWorkbook == null )
+                if (KeepFocusOnGame() || WorkbookManager.SessionWorkbook == null)
                 {
                     return;
                 }
