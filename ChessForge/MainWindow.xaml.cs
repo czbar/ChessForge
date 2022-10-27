@@ -1,22 +1,16 @@
 ﻿using ChessPosition;
 using EngineService;
 using GameTree;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Threading.Tasks;
-using System.Windows.Threading;
-using System.Security.Policy;
-using System.Diagnostics;
-using static ChessForge.AppStateManager;
 
 namespace ChessForge
 {
@@ -52,6 +46,11 @@ namespace ChessForge
         {
             get
             {
+                if (WorkbookManager.SessionWorkbook == null)
+                {
+                    return null;
+                }
+
                 GameData.ContentType gt = WorkbookManager.SessionWorkbook.ActiveVariationTree.ContentType;
                 switch (gt)
                 {
@@ -1776,5 +1775,12 @@ namespace ChessForge
             }
         }
 
+        private void SupressContextMenu(object sender, ContextMenuEventArgs e)
+        {
+            if (WorkbookManager.SessionWorkbook == null)
+            {
+                e.Handled = true;
+            }
+        }
     }
 }
