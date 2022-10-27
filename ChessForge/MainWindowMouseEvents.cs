@@ -592,6 +592,7 @@ namespace ChessForge
         {
             UiImgEngineOn.IsEnabled = false;
             UiImgEngineOff.IsEnabled = false;
+            ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.CHAPTERS;
             try
@@ -608,7 +609,6 @@ namespace ChessForge
                 {
                     EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
                 }
-                ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
             }
             catch
             {
