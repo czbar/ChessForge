@@ -712,6 +712,8 @@ namespace ChessForge
 
         /// <summary>
         /// Builds the top paragraph for the page if applicable.
+        /// It will be Game/Exercise header or the chapter's title
+        /// if we are in the Chapters View
         /// </summary>
         /// <returns></returns>
         private Paragraph BuildPageHeader(GameData.ContentType contentType)
@@ -781,6 +783,16 @@ namespace ChessForge
                             para.Inlines.Add(rResult);
                         }
 
+                        break;
+                    case GameData.ContentType.STUDY_TREE:
+                        if (WorkbookManager.SessionWorkbook.ActiveChapter != null)
+                        {
+                            int no = WorkbookManager.SessionWorkbook.ActiveChapterNumber;
+                            para = CreateParagraph("0");
+//                            para.Margin = new Thickness(0, 0, 0, 0);
+                            Run r = new Run("Chapter " + no.ToString() + ": " + WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle(true));
+                            para.Inlines.Add(r);
+                        }
                         break;
                 }
             }
