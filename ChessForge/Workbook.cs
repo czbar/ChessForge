@@ -122,6 +122,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the number of chapters in this workbook.
+        /// </summary>
+        /// <returns></returns>
+        public int GetChapterCount()
+        {
+            return _chapters.Count;
+        }
+
+        /// <summary>
         /// Selects the default (first in the list) chapter as ActiveChapter
         /// </summary>
         /// <returns></returns>
