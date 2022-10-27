@@ -145,7 +145,7 @@ namespace ChessForge
                 SessionWorkbook.Title = tree.Title;
 
                 Chapter chapter = SessionWorkbook.CreateNewChapter(tree);
-                chapter.Title = tree.Title;
+                chapter.SetTitle(tree.Title);
 
                 // ask the name of the file to save the converted workbook to
                 return SaveWorkbookToNewFileV2(fileName, true);
@@ -610,7 +610,7 @@ namespace ChessForge
                 if (gm.GetContentType() == GameData.ContentType.STUDY_TREE)
                 {
                     chapter = SessionWorkbook.CreateNewChapter();
-                    chapter.Title = gm.Header.GetChapterTitle();
+                    chapter.SetTitle(gm.Header.GetChapterTitle());
                 }
 
                 try

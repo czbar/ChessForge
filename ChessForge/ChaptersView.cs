@@ -205,7 +205,7 @@ namespace ChessForge
                 rExpandChar.MouseDown += EventChapterExpandSymbolClicked;
                 para.Inlines.Add(rExpandChar);
 
-                Run rTitle = CreateRun(STYLE_CHAPTER_TITLE, chapter.Title);
+                Run rTitle = CreateRun(STYLE_CHAPTER_TITLE, chapter.GetTitle());
                 if (chapter.Id == WorkbookManager.SessionWorkbook.ActiveChapter.Id)
                 {
                     rTitle.FontWeight = FontWeights.Bold;
