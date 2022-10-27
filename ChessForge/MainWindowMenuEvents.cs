@@ -268,7 +268,7 @@ namespace ChessForge
         private void UiMnEvaluateLine_Click(object sender, RoutedEventArgs e)
         {
             // a defensive check
-            if (ActiveLine.GetPlyCount() == 0)
+            if (ActiveLine.GetPlyCount() <= 1)
             {
                 return;
             }
