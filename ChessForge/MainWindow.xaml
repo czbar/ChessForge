@@ -164,7 +164,7 @@
                 </TabControl>
                 <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1">
                     <TabItem x:Name="UiTabChapters"  Header="Chapters" GotFocus="UiTabChapters_GotFocus" >
-                        <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" >
+                        <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" ContextMenuOpening="SupressContextMenu" >
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="_cmChapters">
                                     <MenuItem x:Name="_mnAddChapter" Header="Create New Chapter" Click="UiMnAddChapter_Click"  />
@@ -198,7 +198,7 @@
                             </Grid.ContextMenu>
                             <RichTextBox x:Name="UiRtbChaptersView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
-                                   Height="640" MinHeight="500" IsReadOnly="True" >
+                                   Height="640" MinHeight="500" IsReadOnly="True"  >
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
                                         <Setter Property="Margin" Value="0" />
@@ -210,7 +210,7 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabStudyTree"  Header="Study" GotFocus="UiTabStudyTree_GotFocus" LostFocus="UiTabStudyTree_LostFocus" >
-                        <Grid Background="#FFE5E5E5" PreviewMouseDown="VariationTreeView_OnPreviewMouseDown">
+                        <Grid Background="#FFE5E5E5" PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu">
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiCmnWorkbookRightClick">
                                     <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
@@ -243,7 +243,7 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabBookmarks" Header="Bookmarks" GotFocus="UiTabBookmarks_GotFocus" LostFocus="UiTabBookmarks_LostFocus">
-                        <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown">
+                        <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown" ContextMenuOpening="SupressContextMenu">
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="_cmBookmarks">
                                     <MenuItem x:Name="_mnTrainFromBookmark" Header="Start Training from This Bookmark" Click="UiMnTrainFromBookmark_Click" />
@@ -379,7 +379,7 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabModelGames"  Header="Games" GotFocus="UiTabModelGames_GotFocus" PreviewKeyDown="UiTabModelGames_PreviewKeyDown" LostFocus="UiTabModelGames_LostFocus" >
-                        <Grid x:Name="UiGridModelGames"  Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown">
+                        <Grid x:Name="UiGridModelGames"  Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0"/>
                                 <RowDefinition />
@@ -421,7 +421,7 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabExercises"  Header="Exercises" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
-                        <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" >
+                        <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0"/>
                                 <RowDefinition />
