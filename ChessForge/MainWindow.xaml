@@ -164,15 +164,15 @@
                 </TabControl>
                 <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1">
                     <TabItem x:Name="UiTabChapters"  Header="Chapters" GotFocus="UiTabChapters_GotFocus" >
-                        <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" >
+                        <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" ContextMenuOpening="SupressContextMenu" >
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="_cmChapters">
                                     <MenuItem x:Name="_mnAddChapter" Header="Create New Chapter" Click="UiMnAddChapter_Click"  />
                                     <MenuItem x:Name="_mnImportChapter" Header="Import New Chapter" Click="UiMnImportChapter_Click" />
                                     <MenuItem x:Name="_mnAddGame" Header="Create New Game" Click="UiMnChpt_CreateModelGame_Click"  />
-                                    <MenuItem x:Name="_mnImportGame" Header="Import Games from PGN" Click="UiMnImportGame_Click" />
+                                    <MenuItem x:Name="_mnImportGame" Header="Import Games" Click="UiMnImportGame_Click" />
                                     <MenuItem x:Name="_mnAddExercise" Header="Create New Exercise" Click="UiMnChpt_AddExercise_Click"  />
-                                    <MenuItem x:Name="_mnImportExercise" Header="Import Exercises from PGN" />
+                                    <MenuItem x:Name="_mnImportExercise" Header="Import Exercises" />
                                     <Separator />
                                     <MenuItem x:Name="_mnSelectChapter" Header="Open This Chapter" Click="UiMnSelectChapter_Click" />
                                     <MenuItem x:Name="_mnRenameChapter" Header="Rename This Chapter" Click="UiMnRenameChapter_Click" />
@@ -188,7 +188,7 @@
                                     <MenuItem x:Name="_mnExerciseUp" Header="Move Exercise Up" Click="UiMnExerciseUp_Click" />
                                     <MenuItem x:Name="_mnExerciseDown" Header="Move Exercise Down" Click="UiMnExerciseDown_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnImportModelGames" Header="Import Model Games" Click="UiMnImportModelGames_Click" />
+                                    <MenuItem x:Name="_mnImportModelGames" Header="Import Games" Click="UiMnImportModelGames_Click" />
                                     <MenuItem x:Name="_mnImportExercises" Header="Import Exercises" Click="UiMnImportExercises_Click" />
                                     <Separator x:Name="_mnChapterSepar_2" />
                                     <MenuItem x:Name="_mnDeleteChapter" Header="Delete This Chapter" Click="UiMnDeleteChapter_Click" />
@@ -198,7 +198,7 @@
                             </Grid.ContextMenu>
                             <RichTextBox x:Name="UiRtbChaptersView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
-                                   Height="640" MinHeight="500" IsReadOnly="True" >
+                                   Height="640" MinHeight="500" IsReadOnly="True"  >
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
                                         <Setter Property="Margin" Value="0" />
@@ -210,8 +210,15 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabStudyTree"  Header="Study" GotFocus="UiTabStudyTree_GotFocus" LostFocus="UiTabStudyTree_LostFocus" >
-                        <Grid Background="#FFE5E5E5" PreviewMouseDown="VariationTreeView_OnPreviewMouseDown">
-                            <Grid.ContextMenu>
+                        <Grid x:Name="UiGridStudyTree"  Background="#FFE5E5E5" PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0"/>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiCmnWorkbookRightClick">
                                     <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="UiMnStudy_CreateExercise" Header="Create Exercise from Here..." Click="UiMnStudy_CreateExercise_Click"  />
@@ -226,7 +233,13 @@
                                     <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            <RichTextBox x:Name="UiRtbStudyTreeView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                            <Canvas x:Name="UiCnvStudyTreePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
+                                <Label x:Name="UiLblChapterCounter" Content="Chapter 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
+                                <Image x:Name="UiImgChapterLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="140,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown" />
+                                <Label x:Name="UiLblChapterPrevNextHint" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="170,-3,0,0" Width="100"  FontWeight="Bold" />
+                                <Image x:Name="UiImgChapterRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
+                            </Canvas>
+                            <RichTextBox x:Name="UiRtbStudyTreeView" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbStudyTree_PreviewKeyDown">
                                 <RichTextBox.Resources>
@@ -243,7 +256,7 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabBookmarks" Header="Bookmarks" GotFocus="UiTabBookmarks_GotFocus" LostFocus="UiTabBookmarks_LostFocus">
-                        <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown">
+                        <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown" ContextMenuOpening="SupressContextMenu">
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="_cmBookmarks">
                                     <MenuItem x:Name="_mnTrainFromBookmark" Header="Start Training from This Bookmark" Click="UiMnTrainFromBookmark_Click" />
@@ -379,7 +392,7 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabModelGames"  Header="Games" GotFocus="UiTabModelGames_GotFocus" PreviewKeyDown="UiTabModelGames_PreviewKeyDown" LostFocus="UiTabModelGames_LostFocus" >
-                        <Grid x:Name="UiGridModelGames"  Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown">
+                        <Grid x:Name="UiGridModelGames"  Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0"/>
                                 <RowDefinition />
@@ -391,6 +404,8 @@
                                 <ContextMenu x:Name="UiCmModelGames">
                                     <MenuItem x:Name="_mnGame_EditHeader" Header="Edit Game Header" Click="UiMnGame_EditHeader_Click" />
                                     <MenuItem x:Name="_mnGame_CreateModelGame" Header="Create New Game" Click="_UiMnGame_CreateModelGame_Click" />
+                                    <MenuItem x:Name="_mnGame_ImportGames" Header="Import Games" Click="UiMnGame_ImportGames_Click"  />
+                                    <Separator />
                                     <MenuItem x:Name="_mnGame_CreateExercise" Header="Create Exercise from Here..." Click="UiMnGame_CreateExercise_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_PromoteLine" Header="Promote Line" Click="UiMnGame_PromoteLine_Click" />
@@ -419,7 +434,7 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabExercises"  Header="Exercises" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
-                        <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" >
+                        <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0"/>
                                 <RowDefinition />
@@ -431,6 +446,7 @@
                                 <ContextMenu x:Name="UiCmExercises">
                                     <MenuItem x:Name="_mnExerc_EditHeader" Header="Edit Exercise Header" Click="UiMnExerc_EditHeader_Click" />
                                     <MenuItem x:Name="_mnExerc_CreateExercise" Header="Create New Exercise" Click="UiMnExerc_CreateExercise_Click" />
+                                    <MenuItem x:Name="_mnExerc_ImportExercises" Header="Import Exercises" Click="UiMnExerc_ImportExercises_Click"  />
                                     <Separator />
                                     <MenuItem x:Name="_mnExerc_PromoteLine" Header="Promote Line" Click="UiMnExerc_PromoteLine_Click" />
                                     <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnExerc_DeleteMovesFromHere_Click" />

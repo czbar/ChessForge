@@ -170,6 +170,7 @@ namespace ChessForge
                     AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                     AppStateManager.MainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                     EngineMessageProcessor.StopEngineEvaluation();
+                    AppStateManager.MainWin.BoardCommentBox.ShowWorkbookTitle();
                     break;
                 case Mode.CONTINUOUS:
                     AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);

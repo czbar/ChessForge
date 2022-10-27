@@ -352,7 +352,7 @@ namespace ChessForge
             StringBuilder sb = new StringBuilder();
 
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CHAPTER_ID, chapter.Id.ToString()));
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CHAPTER_TITLE, chapter.Title));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CHAPTER_TITLE, chapter.GetTitle()));
 
             return sb.ToString();
         }

@@ -1,8 +1,9 @@
-﻿using ChessPosition.GameTree;
+﻿using ChessPosition;
 using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -101,7 +102,7 @@ namespace ChessForge
             try
             {
                 if (ModelGames.Count > 0)
-                gameHeader = ModelGames[ActiveModelGameIndex].Header;
+                    gameHeader = ModelGames[ActiveModelGameIndex].Header;
             }
             catch (Exception ex)
             {
@@ -149,22 +150,28 @@ namespace ChessForge
 
         /// <summary>
         /// The Title of this chapter.
-        /// Returns default text if empty.
+        /// If raw is set to false and the title is empty
+        /// it returns the default title.
         /// </summary>
-        public string Title
+        public string GetTitle(bool raw = false)
         {
-            get
+            if (raw || !string.IsNullOrWhiteSpace(_title))
             {
-                if (string.IsNullOrWhiteSpace(_title))
-                {
-                    return "Chapter " + Id.ToString();
-                }
-                else
-                {
-                    return _title;
-                }
+                return _title ?? "";
             }
-            set => _title = value;
+            else
+            {
+                return "Chapter " + Id.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Sets the title of the Chapter.
+        /// </summary>
+        /// <param name="title"></param>
+        public void SetTitle(string title)
+        {
+            _title = title;
         }
 
         /// <summary>
@@ -231,6 +238,34 @@ namespace ChessForge
             get
             {
                 return Exercises.Count > 0;
+            }
+        }
+
+        /// <summary>
+        /// Returns the color of the side to move first in the exercise.
+        /// </summary>
+        /// <param name="exerciseIndex"></param>
+        /// <returns></returns>
+        public PieceColor GetSideToSolveExercise(int? exerciseIndex = null)
+        {
+            int index;
+
+            if (exerciseIndex == null)
+            {
+                index = _activeExerciseIndex;
+            }
+            else
+            {
+                index = exerciseIndex.Value;
+            }
+
+            if (index >= 0 && index < Exercises.Count)
+            {
+                return Exercises[index].Nodes[0].ColorToMove;
+            }
+            else
+            {
+                return PieceColor.None;
             }
         }
 

@@ -116,6 +116,8 @@ namespace ChessForge
         {
             Line.SetNodeList(line);
             _dgActiveLine.ItemsSource = Line.MoveList;
+            _selectedRow = -1;
+            _selectedColumn = -1;
         }
 
         /// <summary>

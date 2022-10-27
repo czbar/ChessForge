@@ -357,6 +357,11 @@ namespace ChessForge
         /// <param name="isEnabled"></param>
         public static void EnableBookmarkMenus(ContextMenu cmn, bool isEnabled)
         {
+            if (_mainWin.ActiveVariationTree == null)
+            {
+                return;
+            }
+
             // ClickedIndex should be in sync with isEnabled but double check just in case
             if (ClickedIndex < 0)
             {

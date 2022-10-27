@@ -341,7 +341,11 @@ namespace ChessForge
         /// <param name="posIndex"></param>
         public static void RequestMoveEvaluation(int nodeIndex, TreeNode nd)
         {
-            if (!IsEngineAvailable)
+            if (!IsEngineAvailable 
+                || WorkbookManager.SessionWorkbook == null 
+                || _mainWin.ActiveTreeView == null
+                || nd == null
+                || nd.Parent == null)
             {
                 return;
             }

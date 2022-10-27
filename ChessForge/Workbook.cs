@@ -93,6 +93,44 @@ namespace ChessForge
         }
 
         /// <summary>
+        ///  Returns the 1-based Active Chapter number.
+        ///  Returns 0 if there is no active chapter.
+        /// </summary>
+        public int ActiveChapterNumber
+        {
+            get
+            {
+                return GetChapterNumber(_activeChapter);
+            }
+        }
+
+        /// <summary>
+        ///  Returns the 1-based chapter number.
+        ///  Returns 0 if not found.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        public int GetChapterNumber(Chapter chapter)
+        {
+            for (int i = 0; i < _chapters.Count; i++)
+            {
+                if (_chapters[i] == chapter)
+                    return i + 1;
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Returns the number of chapters in this workbook.
+        /// </summary>
+        /// <returns></returns>
+        public int GetChapterCount()
+        {
+            return _chapters.Count;
+        }
+
+        /// <summary>
         /// Selects the default (first in the list) chapter as ActiveChapter
         /// </summary>
         /// <returns></returns>

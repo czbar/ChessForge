@@ -1,22 +1,16 @@
 ﻿using ChessPosition;
 using EngineService;
 using GameTree;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Threading.Tasks;
-using System.Windows.Threading;
-using System.Security.Policy;
-using System.Diagnostics;
-using static ChessForge.AppStateManager;
 
 namespace ChessForge
 {
@@ -52,6 +46,11 @@ namespace ChessForge
         {
             get
             {
+                if (WorkbookManager.SessionWorkbook == null)
+                {
+                    return null;
+                }
+
                 GameData.ContentType gt = WorkbookManager.SessionWorkbook.ActiveVariationTree.ContentType;
                 switch (gt)
                 {
@@ -64,6 +63,25 @@ namespace ChessForge
                     default:
                         return null;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Clears content of the tree views.
+        /// </summary>
+        public void ClearTreeViews()
+        {
+            if (_studyTreeView != null)
+            {
+                _studyTreeView.Clear(GameData.ContentType.STUDY_TREE);
+            }
+            if (_modelGameTreeView != null)
+            {
+                _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
+            }
+            if (_exerciseTreeView != null)
+            {
+                _exerciseTreeView.Clear(GameData.ContentType.EXERCISE);
             }
         }
 
@@ -371,24 +389,24 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Clears the TreeViews' douments in the tab control.
+        /// Clears the TreeViews' documents in the tab control.
         /// </summary>
         private void ClearTabViews()
         {
-            ClearTreeView(_studyTreeView);
-            ClearTreeView(_modelGameTreeView);
-            ClearTreeView(_exerciseTreeView);
+            ClearTreeView(_studyTreeView, GameData.ContentType.STUDY_TREE);
+            ClearTreeView(_modelGameTreeView, GameData.ContentType.MODEL_GAME);
+            ClearTreeView(_exerciseTreeView, GameData.ContentType.EXERCISE);
         }
 
         /// <summary>
         /// Clears the passed VariationTreeView
         /// </summary>
         /// <param name="view"></param>
-        private void ClearTreeView(VariationTreeView view)
+        private void ClearTreeView(VariationTreeView view, GameData.ContentType contentType)
         {
             if (view != null)
             {
-                view.Clear();
+                view.Clear(contentType);
             }
         }
 
@@ -414,7 +432,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    _modelGameTreeView.Clear();
+                    _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
                 }
             }
             catch (Exception ex)
@@ -444,7 +462,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    _exerciseTreeView.Clear();
+                    _exerciseTreeView.Clear(GameData.ContentType.EXERCISE);
                 }
             }
             catch (Exception ex)
@@ -858,6 +876,7 @@ namespace ChessForge
             SetupGuiForActiveStudyTree(false);
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
+            UiTabChapters.Focus();
             SetupGuiForChapters();
         }
 
@@ -962,7 +981,6 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForChapters()
         {
-            UiTabChapters.Focus();
         }
 
         /// <summary>
@@ -1012,8 +1030,6 @@ namespace ChessForge
                 // in the above branch this will be executed by the Focus() methods.
                 SetActiveLine(startLineId, startNodeId);
             }
-
-            //BookmarkManager.ShowBookmarks();
 
             int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
             SelectLineAndMoveInWorkbookViews(_exerciseTreeView, startLineId, nodeIndex);
@@ -1597,6 +1613,8 @@ namespace ChessForge
                 {
                     _chaptersView.BuildFlowDocumentForChaptersView();
                 }
+
+                BoardCommentBox.ShowWorkbookTitle();
                 return true;
             }
             else
@@ -1647,7 +1665,7 @@ namespace ChessForge
 
             if (dlg.ExitOK)
             {
-                chapter.Title = dlg.ChapterTitle;
+                chapter.SetTitle(dlg.ChapterTitle);
                 _chaptersView.BuildFlowDocumentForChaptersView();
                 AppStateManager.IsDirty = true;
                 return true;
@@ -1776,5 +1794,12 @@ namespace ChessForge
             }
         }
 
+        private void SupressContextMenu(object sender, ContextMenuEventArgs e)
+        {
+            if (WorkbookManager.SessionWorkbook == null)
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

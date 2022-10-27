@@ -182,7 +182,7 @@ namespace ChessForge
                     node = _variationTree.GetNodeFromNodeId(nodeId);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 node = null;
                 AppLog.Message("GetSelectedNode()", ex);
@@ -257,22 +257,19 @@ namespace ChessForge
                 isEnabled = false;
             }
 
-            if (_variationTree != null)
+            switch (WorkbookManager.ActiveTab)
             {
-                switch (_variationTree.ContentType)
-                {
-                    case GameData.ContentType.STUDY_TREE:
-                        EnableStudyTreeMenus(_mainWin.UiCmnWorkbookRightClick, isEnabled);
-                        break;
-                    case GameData.ContentType.MODEL_GAME:
-                        EnableModelGamesMenus(_mainWin.UiCmModelGames, isEnabled);
-                        break;
-                    case GameData.ContentType.EXERCISE:
-                        EnableExercisesMenus(_mainWin.UiCmExercises, isEnabled);
-                        break;
-                    default:
-                        break;
-                }
+                case WorkbookManager.TabViewType.STUDY:
+                    EnableStudyTreeMenus(_mainWin.UiCmnWorkbookRightClick, isEnabled);
+                    break;
+                case WorkbookManager.TabViewType.MODEL_GAME:
+                    EnableModelGamesMenus(_mainWin.UiCmModelGames, isEnabled);
+                    break;
+                case WorkbookManager.TabViewType.EXERCISE:
+                    EnableExercisesMenus(_mainWin.UiCmExercises, isEnabled);
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -308,10 +305,10 @@ namespace ChessForge
                                 }
                                 break;
                             case "_mnWorkbookEvalMove":
-                                menuItem.IsEnabled = isEnabled;
+                                menuItem.IsEnabled = _mainWin.ActiveVariationTree.SelectedNode != null;
                                 break;
                             case "_mnWorkbookEvalLine":
-                                menuItem.IsEnabled = true;
+                                menuItem.IsEnabled = _mainWin.ActiveVariationTree.Nodes.Count > 1;
                                 break;
                         }
                     }
@@ -495,9 +492,11 @@ namespace ChessForge
         /// <summary>
         /// Clears the document and relevant structrue.
         /// </summary>
-        public void Clear()
+        public void Clear(GameData.ContentType contentType)
         {
             Document.Blocks.Clear();
+
+            BuildPreviousNextBar(contentType);
 
             // resets
             _dictNodeToRun.Clear();
@@ -523,7 +522,7 @@ namespace ChessForge
                 contentType = _variationTree.Header.GetContentType(out _);
             }
 
-            Clear();
+            Clear(GameData.ContentType.GENERIC);
 
             BuildPreviousNextBar(contentType);
 
@@ -613,13 +612,17 @@ namespace ChessForge
         {
             try
             {
-                if (contentType == GameData.ContentType.MODEL_GAME)
+                switch (contentType)
                 {
-                    BuildPreviousNextModelGameBar();
-                }
-                else if (contentType == GameData.ContentType.EXERCISE)
-                {
-                    BuildPreviousNextExerciseBar();
+                    case GameData.ContentType.STUDY_TREE:
+                        BuildPreviousNextChapterBar();
+                        break;
+                    case GameData.ContentType.MODEL_GAME:
+                        BuildPreviousNextModelGameBar();
+                        break;
+                    case GameData.ContentType.EXERCISE:
+                        BuildPreviousNextExerciseBar();
+                        break;
                 }
             }
             catch
@@ -628,12 +631,69 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds the Previous/Next bar for Chapter/Study Tree view.
+        /// </summary>
+        private void BuildPreviousNextChapterBar()
+        {
+            int chapterCount = 0;
+            int chapterIndex = -1;
+
+            if (WorkbookManager.SessionWorkbook != null)
+            {
+                chapterCount = WorkbookManager.SessionWorkbook.GetChapterCount();
+                chapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterNumber - 1;
+            }
+
+            if (chapterCount > 1)
+            {
+                _mainWin.UiCnvStudyTreePrevNext.Visibility = Visibility.Visible;
+                _mainWin.UiGridStudyTree.RowDefinitions[0].Height = new GridLength(20);
+                _mainWin.UiRtbStudyTreeView.Height = 620;
+
+                _mainWin.UiLblChapterPrevNextHint.Visibility = Visibility.Visible;
+                _mainWin.UiLblChapterCounter.Content = "Chapter " + (chapterIndex + 1).ToString() + " of " + chapterCount.ToString();
+                if (chapterIndex == 0)
+                {
+                    _mainWin.UiImgChapterRightArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiImgChapterLeftArrow.Visibility = Visibility.Hidden;
+                    _mainWin.UiLblChapterPrevNextHint.Content = "Next";
+                }
+                else if (chapterIndex == chapterCount - 1)
+                {
+                    _mainWin.UiImgChapterRightArrow.Visibility = Visibility.Hidden;
+                    _mainWin.UiImgChapterLeftArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiLblChapterPrevNextHint.Content = "Previous";
+                }
+                else
+                {
+                    _mainWin.UiImgChapterRightArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiImgChapterLeftArrow.Visibility = Visibility.Visible;
+                    _mainWin.UiLblChapterPrevNextHint.Content = "Previous | Next";
+                }
+            }
+            else
+            {
+                _mainWin.UiCnvStudyTreePrevNext.Visibility = Visibility.Collapsed;
+                _mainWin.UiGridStudyTree.RowDefinitions[0].Height = new GridLength(0);
+                _mainWin.UiRtbStudyTreeView.Height = 640;
+            }
+        }
+
+
+        /// <summary>
         /// Builds the Previous/Next bar for Model Games view.
         /// </summary>
         private void BuildPreviousNextModelGameBar()
         {
-            int gameCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount();
-            int gameIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex;
+            int gameCount = 0;
+            int gameIndex = -1;
+
+            if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
+            {
+                gameCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount();
+                gameIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex;
+            }
+
 
             if (gameCount > 1)
             {
@@ -675,8 +735,14 @@ namespace ChessForge
         /// </summary>
         private void BuildPreviousNextExerciseBar()
         {
-            int exerciseCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount();
-            int exerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex;
+            int exerciseCount = 0;
+            int exerciseIndex = -1;
+
+            if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
+            {
+                exerciseCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount();
+                exerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex;
+            }
 
             if (exerciseCount > 1)
             {
@@ -715,6 +781,8 @@ namespace ChessForge
 
         /// <summary>
         /// Builds the top paragraph for the page if applicable.
+        /// It will be Game/Exercise header or the chapter's title
+        /// if we are in the Chapters View
         /// </summary>
         /// <returns></returns>
         private Paragraph BuildPageHeader(GameData.ContentType contentType)
@@ -766,10 +834,14 @@ namespace ChessForge
                             }
                         }
 
-                        if (!string.IsNullOrEmpty(_variationTree.Header.GetDate(out _)))
+                        string date = _variationTree.Header.GetDate(out _);
+                        if (!string.IsNullOrEmpty(date))
                         {
-                            Run rDate = CreateRun("1", "      Date: " + _variationTree.Header.GetDate(out _) + "\n");
-                            para.Inlines.Add(rDate);
+                            if (TextUtils.GetDateFromPgnString(date) != null)
+                            {
+                                Run rDate = CreateRun("1", "      Date: " + date + "\n");
+                                para.Inlines.Add(rDate);
+                            }
                         }
 
                         string result = _variationTree.Header.GetResult(out _);
@@ -780,6 +852,16 @@ namespace ChessForge
                             para.Inlines.Add(rResult);
                         }
 
+                        break;
+                    case GameData.ContentType.STUDY_TREE:
+                        if (WorkbookManager.SessionWorkbook.ActiveChapter != null)
+                        {
+                            int no = WorkbookManager.SessionWorkbook.ActiveChapterNumber;
+                            para = CreateParagraph("0");
+                            //                            para.Margin = new Thickness(0, 0, 0, 0);
+                            Run r = new Run("Chapter " + no.ToString() + ": " + WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle(true));
+                            para.Inlines.Add(r);
+                        }
                         break;
                 }
             }
@@ -817,7 +899,7 @@ namespace ChessForge
             if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2");
-                para.Margin = new Thickness(60, 0, 0, 40);
+                para.Margin = new Thickness(60, 0, 0, 20);
 
                 InlineUIContainer uIContainer = new InlineUIContainer();
                 Viewbox vb = new Viewbox();
@@ -873,6 +955,19 @@ namespace ChessForge
             {
                 Paragraph para = CreateParagraph("2");
                 para.Margin = new Thickness(130, 0, 0, 40);
+
+                PieceColor color = WorkbookManager.SessionWorkbook.ActiveChapter.GetSideToSolveExercise();
+                Run rToMove = new Run();
+                if (color == PieceColor.Black)
+                {
+                    rToMove.Text = "   Black to move\n\n";
+                }
+                else
+                {
+                    rToMove.Text = "   White to move\n\n";
+                }
+                rToMove.FontWeight = FontWeights.Bold;
+                para.Inlines.Add(rToMove);
 
                 InlineUIContainer uIContainer = new InlineUIContainer();
 
@@ -1283,34 +1378,41 @@ namespace ChessForge
         /// <param name="fontColor"></param>
         private void AddRunToParagraph(TreeNode nd, Paragraph para, string text, SolidColorBrush fontColor)
         {
-            Run r = new Run(text.ToString());
-            r.Name = "run_" + nd.NodeId.ToString();
-            r.MouseDown += EventRunClicked;
-
-            if (_isIntraFork)
+            try
             {
-                r.FontStyle = _intraForkFontStyle;
-                r.FontSize = GetParaAttrs((_currParagraphLevel + 1).ToString()).FontSize;
-            }
+                Run r = new Run(text.ToString());
+                r.Name = "run_" + nd.NodeId.ToString();
+                r.MouseDown += EventRunClicked;
 
-            if (fontColor != null && para.Inlines.Count == 0)
+                if (_isIntraFork)
+                {
+                    r.FontStyle = _intraForkFontStyle;
+                    r.FontSize = GetParaAttrs((_currParagraphLevel + 1).ToString()).FontSize;
+                }
+
+                if (fontColor != null && para.Inlines.Count == 0)
+                {
+                    r.Foreground = fontColor;
+                    r.FontWeight = FontWeights.Bold;
+                }
+
+                if (para.Margin.Left == 0 && nd.IsMainLine())
+                {
+                    r.FontWeight = FontWeights.Bold;
+                    para.Inlines.Add(r);
+                }
+                else
+                    para.Inlines.Add(r);
+
+                _dictNodeToRun.Add(nd.NodeId, r);
+                _dictRunToParagraph.Add(r, para);
+
+                _lastAddedRun = r;
+            }
+            catch(Exception ex)
             {
-                r.Foreground = fontColor;
-                r.FontWeight = FontWeights.Bold;
+                AppLog.Message("AddRunToParagraph()", ex);
             }
-
-            if (para.Margin.Left == 0 && nd.IsMainLine())
-            {
-                r.FontWeight = FontWeights.Bold;
-                para.Inlines.Add(r);
-            }
-            else
-                para.Inlines.Add(r);
-
-            _dictNodeToRun.Add(nd.NodeId, r);
-            _dictRunToParagraph.Add(r, para);
-
-            _lastAddedRun = r;
         }
 
         /// <summary>
@@ -1321,27 +1423,34 @@ namespace ChessForge
         /// <param name="para"></param>
         private void AddCommentRunToParagraph(TreeNode nd, Paragraph para)
         {
-            // check if there is anything to show
-            if (string.IsNullOrEmpty(nd.Comment))
+            try
             {
-                return;
+                // check if there is anything to show
+                if (string.IsNullOrEmpty(nd.Comment))
+                {
+                    return;
+                }
+
+                Run rNode = _dictNodeToRun[nd.NodeId];
+
+                Run r = new Run(BuildCommentRunText(nd));
+                r.Name = "run_" + nd.NodeId.ToString() + "_comment";
+                r.MouseDown += EventCommentRunClicked;
+
+                r.FontStyle = FontStyles.Normal;
+
+                r.Foreground = Brushes.Black;
+                r.FontWeight = FontWeights.Normal;
+
+                para.Inlines.InsertAfter(rNode, r);
+
+                _dictNodeToCommentRun.Add(nd.NodeId, r);
+                _dictCommentRunToParagraph.Add(r, para);
             }
-
-            Run rNode = _dictNodeToRun[nd.NodeId];
-
-            Run r = new Run(BuildCommentRunText(nd));
-            r.Name = "run_" + nd.NodeId.ToString() + "_comment";
-            r.MouseDown += EventCommentRunClicked;
-
-            r.FontStyle = FontStyles.Normal;
-
-            r.Foreground = Brushes.Black;
-            r.FontWeight = FontWeights.Normal;
-
-            para.Inlines.InsertAfter(rNode, r);
-
-            _dictNodeToCommentRun.Add(nd.NodeId, r);
-            _dictCommentRunToParagraph.Add(r, para);
+            catch (Exception ex)
+            {
+                AppLog.Message("AddCommentRunToParagraph()", ex);
+            }
         }
 
         /// <summary>

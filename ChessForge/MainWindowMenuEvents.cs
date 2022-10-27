@@ -268,7 +268,7 @@ namespace ChessForge
         private void UiMnEvaluateLine_Click(object sender, RoutedEventArgs e)
         {
             // a defensive check
-            if (ActiveLine.GetPlyCount() == 0)
+            if (ActiveLine.GetPlyCount() <= 1)
             {
                 return;
             }
@@ -478,7 +478,7 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
             if (chapter != null)
             {
-                var res = MessageBox.Show("Deleting chapter \"" + chapter.Title + ". Are you sure?", "Delete Chapter", MessageBoxButton.YesNoCancel);
+                var res = MessageBox.Show("Deleting chapter \"" + chapter.GetTitle() + ". Are you sure?", "Delete Chapter", MessageBoxButton.YesNoCancel);
                 if (res == MessageBoxResult.Yes)
                 {
                     WorkbookManager.SessionWorkbook.Chapters.Remove(chapter);
@@ -1452,6 +1452,65 @@ namespace ChessForge
         //  TREE OPERATIONS
         // 
         //**********************
+
+        /// <summary>
+        /// Handles Game import from the Games context menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnGame_ImportGames_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int count = chapter.GetModelGameCount();
+                ImportGamesFromPgn(GameData.ContentType.GENERIC);
+
+                if (chapter.GetModelGameCount() > count)
+                {
+                    chapter.ActiveModelGameIndex = count;
+                }
+                else 
+                {
+                    chapter.ActiveModelGameIndex = count - 1;
+                }
+
+                SelectModelGame(chapter.ActiveModelGameIndex, false);
+            }
+            catch
+            {
+            }
+        }
+
+
+        /// <summary>
+        /// Handles Exercise import from the Exercises context menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExerc_ImportExercises_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int count = chapter.GetExerciseCount();
+                ImportGamesFromPgn(GameData.ContentType.EXERCISE);
+
+                if (chapter.GetExerciseCount() > count)
+                {
+                    chapter.ActiveExerciseIndex = count;
+                }
+                else
+                {
+                    chapter.ActiveExerciseIndex = count - 1;
+                }
+
+                SelectExercise(chapter.ActiveExerciseIndex, false);
+            }
+            catch
+            {
+            }
+        }
 
         /// <summary>
         /// The user requested from the Study menu to promote the currently selected line.
