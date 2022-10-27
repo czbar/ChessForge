@@ -1,8 +1,9 @@
-﻿using ChessPosition.GameTree;
+﻿using ChessPosition;
 using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -237,6 +238,34 @@ namespace ChessForge
             get
             {
                 return Exercises.Count > 0;
+            }
+        }
+
+        /// <summary>
+        /// Returns the color of the side to move first in the exercise.
+        /// </summary>
+        /// <param name="exerciseIndex"></param>
+        /// <returns></returns>
+        public PieceColor GetSideToSolveExercise(int? exerciseIndex = null)
+        {
+            int index;
+
+            if (exerciseIndex == null)
+            {
+                index = _activeExerciseIndex;
+            }
+            else
+            {
+                index = exerciseIndex.Value;
+            }
+
+            if (index >= 0 && index < Exercises.Count)
+            {
+                return Exercises[index].Nodes[0].ColorToMove;
+            }
+            else
+            {
+                return PieceColor.None;
             }
         }
 
