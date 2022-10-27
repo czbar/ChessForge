@@ -876,6 +876,7 @@ namespace ChessForge
             SetupGuiForActiveStudyTree(false);
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
+            UiTabChapters.Focus();
             SetupGuiForChapters();
         }
 
@@ -980,7 +981,6 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForChapters()
         {
-            UiTabChapters.Focus();
         }
 
         /// <summary>
@@ -1030,8 +1030,6 @@ namespace ChessForge
                 // in the above branch this will be executed by the Focus() methods.
                 SetActiveLine(startLineId, startNodeId);
             }
-
-            //BookmarkManager.ShowBookmarks();
 
             int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
             SelectLineAndMoveInWorkbookViews(_exerciseTreeView, startLineId, nodeIndex);
@@ -1615,6 +1613,8 @@ namespace ChessForge
                 {
                     _chaptersView.BuildFlowDocumentForChaptersView();
                 }
+
+                BoardCommentBox.ShowWorkbookTitle();
                 return true;
             }
             else
