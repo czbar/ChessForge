@@ -478,7 +478,7 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
             if (chapter != null)
             {
-                var res = MessageBox.Show("Deleting chapter \"" + chapter.Title + ". Are you sure?", "Delete Chapter", MessageBoxButton.YesNoCancel);
+                var res = MessageBox.Show("Deleting chapter \"" + chapter.GetTitle() + ". Are you sure?", "Delete Chapter", MessageBoxButton.YesNoCancel);
                 if (res == MessageBoxResult.Yes)
                 {
                     WorkbookManager.SessionWorkbook.Chapters.Remove(chapter);

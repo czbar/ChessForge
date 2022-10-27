@@ -101,7 +101,7 @@ namespace ChessForge
             try
             {
                 if (ModelGames.Count > 0)
-                gameHeader = ModelGames[ActiveModelGameIndex].Header;
+                    gameHeader = ModelGames[ActiveModelGameIndex].Header;
             }
             catch (Exception ex)
             {
@@ -149,22 +149,24 @@ namespace ChessForge
 
         /// <summary>
         /// The Title of this chapter.
-        /// Returns default text if empty.
+        /// If raw is set to false and the title is empty
+        /// it returns the default title.
         /// </summary>
-        public string Title
+        public string GetTitle(bool raw = false)
         {
-            get
+            if (raw || !string.IsNullOrWhiteSpace(_title))
             {
-                if (string.IsNullOrWhiteSpace(_title))
-                {
-                    return "Chapter " + Id.ToString();
-                }
-                else
-                {
-                    return _title;
-                }
+                return _title ?? "";
             }
-            set => _title = value;
+            else
+            {
+                return "Chapter " + Id.ToString();
+            }
+        }
+
+        public void SetTitle(string title)
+        {
+            _title = title;
         }
 
         /// <summary>

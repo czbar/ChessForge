@@ -1665,7 +1665,7 @@ namespace ChessForge
 
             if (dlg.ExitOK)
             {
-                chapter.Title = dlg.ChapterTitle;
+                chapter.SetTitle(dlg.ChapterTitle);
                 _chaptersView.BuildFlowDocumentForChaptersView();
                 AppStateManager.IsDirty = true;
                 return true;
