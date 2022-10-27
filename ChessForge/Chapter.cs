@@ -164,6 +164,10 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Sets the title of the Chapter.
+        /// </summary>
+        /// <param name="title"></param>
         public void SetTitle(string title)
         {
             _title = title;
