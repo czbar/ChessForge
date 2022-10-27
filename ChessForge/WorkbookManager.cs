@@ -75,6 +75,14 @@ namespace ChessForge
         public static ObservableCollection<GameData> VariationTreeList = new ObservableCollection<GameData>();
 
         /// <summary>
+        /// Resets properties.
+        /// </summary>
+        public static void ClearAll()
+        {
+            SessionWorkbook = null;
+        }
+
+        /// <summary>
         /// Creates and stores a new Workbook object.
         /// </summary>
         public static void CreateNewWorkbook()
@@ -326,7 +334,8 @@ namespace ChessForge
             }
 
             bool isChaptersMenu = contentType == GameData.ContentType.GENERIC || contentType == GameData.ContentType.STUDY_TREE;
-            int index = SessionWorkbook.GetChapterIndexFromId(LastClickedChapterId);
+
+            int index = SessionWorkbook == null ? -1 : SessionWorkbook.GetChapterIndexFromId(LastClickedChapterId);
 
             foreach (var item in cmn.Items)
             {
