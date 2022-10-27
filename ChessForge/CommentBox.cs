@@ -192,16 +192,23 @@ namespace ChessForge
         /// <param name="title"></param>
         public void ShowWorkbookTitle()
         {
-            Document.Blocks.Clear();
-
-            string title = _mainWin.SessionWorkbook.Title;
-            if (string.IsNullOrEmpty(_mainWin.SessionWorkbook.Title))
+            _mainWin.Dispatcher.Invoke(() =>
             {
-                title = "Untitled Workbook";
-            }
-            AddNewParagraphToDoc("title", title);
-            AddNewParagraphToDoc("bold_prompt", "Some available actions are:");
-            AddNewParagraphToDoc("normal", Strings.QUICK_INSTRUCTION);
+                Document.Blocks.Clear();
+
+                if (_mainWin.SessionWorkbook != null)
+                {
+                    string title = _mainWin.SessionWorkbook.Title;
+                    if (string.IsNullOrEmpty(_mainWin.SessionWorkbook.Title))
+                    {
+                        title = "Untitled Workbook";
+                    }
+                    AddNewParagraphToDoc("title", title);
+                    AddNewParagraphToDoc("bold_prompt", "Some available actions are:");
+                    AddNewParagraphToDoc("normal", Strings.QUICK_INSTRUCTION);
+                }
+                AppStateManager.SwapCommentBoxForEngineLines(false);
+            });
         }
 
         /// <summary>
