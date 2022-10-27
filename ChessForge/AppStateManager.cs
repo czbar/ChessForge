@@ -264,6 +264,7 @@ namespace ChessForge
             IsDirty = false;
             WorkbookManager.ClearAll();
             _mainWin.ClearTreeViews();
+            _mainWin.UiTabChapters.Focus();
             _mainWin.SetupGuiForChapters();
             _mainWin.Dispatcher.Invoke(() =>
             {
