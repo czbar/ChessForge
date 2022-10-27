@@ -262,6 +262,7 @@ namespace ChessForge
         {
             BookmarkManager.ClearBookmarksGui();
             IsDirty = false;
+            WorkbookManager.ClearAll();
             _mainWin.SetupGuiForChapters();
             _mainWin.Dispatcher.Invoke(() =>
             {
