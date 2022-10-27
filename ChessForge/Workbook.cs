@@ -93,21 +93,32 @@ namespace ChessForge
         }
 
         /// <summary>
-        ///  The 1-based Active Chapter number.
+        ///  Returns the 1-based Active Chapter number.
         ///  Returns 0 if there is no active chapter.
         /// </summary>
         public int ActiveChapterNumber
         {
             get
             {
-                for (int i = 0; i < _chapters.Count; i++)
-                {
-                    if (_chapters[i] == _activeChapter)
-                        return i + 1;
-                }
-
-                return 0;
+                return GetChapterNumber(_activeChapter);
             }
+        }
+
+        /// <summary>
+        ///  Returns the 1-based chapter number.
+        ///  Returns 0 if not found.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        public int GetChapterNumber(Chapter chapter)
+        {
+            for (int i = 0; i < _chapters.Count; i++)
+            {
+                if (_chapters[i] == chapter)
+                    return i + 1;
+            }
+
+            return 0;
         }
 
         /// <summary>
