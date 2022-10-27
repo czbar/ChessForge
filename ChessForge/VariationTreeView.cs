@@ -763,10 +763,14 @@ namespace ChessForge
                             }
                         }
 
-                        if (!string.IsNullOrEmpty(_variationTree.Header.GetDate(out _)))
+                        string date = _variationTree.Header.GetDate(out _);
+                        if (!string.IsNullOrEmpty(date))
                         {
-                            Run rDate = CreateRun("1", "      Date: " + _variationTree.Header.GetDate(out _) + "\n");
-                            para.Inlines.Add(rDate);
+                            if (TextUtils.GetDateFromPgnString(date) != null)
+                            {
+                                Run rDate = CreateRun("1", "      Date: " + date + "\n");
+                                para.Inlines.Add(rDate);
+                            }
                         }
 
                         string result = _variationTree.Header.GetResult(out _);
