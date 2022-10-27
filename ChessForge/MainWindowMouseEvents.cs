@@ -590,6 +590,9 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabChapters_GotFocus(object sender, RoutedEventArgs e)
         {
+            UiImgEngineOn.IsEnabled = false;
+            UiImgEngineOff.IsEnabled = false;
+
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.CHAPTERS;
             try
             {
@@ -598,7 +601,13 @@ namespace ChessForge
                     return;
                 }
 
+                SetupGuiForChapters();
                 UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                DisplayPosition(PositionUtils.SetupStartingPosition());
+                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
+                {
+                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                }
                 ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
             }
             catch
@@ -614,6 +623,9 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabStudyTree_GotFocus(object sender, RoutedEventArgs e)
         {
+            UiImgEngineOn.IsEnabled = true;
+            UiImgEngineOff.IsEnabled = true;
+         
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.STUDY;
             try
             {
@@ -735,6 +747,9 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabModelGames_GotFocus(object sender, RoutedEventArgs e)
         {
+            UiImgEngineOn.IsEnabled = true;
+            UiImgEngineOff.IsEnabled = true;
+
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.MODEL_GAME;
             try
             {
@@ -800,6 +815,9 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabExercises_GotFocus(object sender, RoutedEventArgs e)
         {
+            UiImgEngineOn.IsEnabled = true;
+            UiImgEngineOff.IsEnabled = true;
+
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.EXERCISE;
             try
             {
