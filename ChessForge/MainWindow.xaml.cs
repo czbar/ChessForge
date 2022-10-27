@@ -67,6 +67,25 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Clears content of the tree views.
+        /// </summary>
+        public void ClearTreeViews()
+        {
+            if (_studyTreeView != null)
+            {
+                _studyTreeView.Clear();
+            }
+            if (_modelGameTreeView != null)
+            {
+                _modelGameTreeView.Clear();
+            }
+            if (_exerciseTreeView != null)
+            {
+                _exerciseTreeView.Clear();
+            }
+        }
+
+        /// <summary>
         /// Sets the selections in the ActiveTreeView as they were stored last.
         /// </summary>
         public void RestoreSelectedLineAndMoveInActiveView()
