@@ -593,7 +593,7 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.CHAPTERS;
             try
             {
-                if (KeepFocusOnGame())
+                if (KeepFocusOnGame() || WorkbookManager.SessionWorkbook == null )
                 {
                     return;
                 }
@@ -617,7 +617,10 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.STUDY;
             try
             {
-                SetStudyStateOnFocus();
+                if (WorkbookManager.SessionWorkbook != null)
+                {
+                    SetStudyStateOnFocus();
+                }
             }
             catch
             {
@@ -634,7 +637,10 @@ namespace ChessForge
         {
             try
             {
-                WorkbookManager.SessionWorkbook.IsStudyBoardFlipped = MainChessBoard.IsFlipped;
+                if (WorkbookManager.SessionWorkbook != null)
+                {
+                    WorkbookManager.SessionWorkbook.IsStudyBoardFlipped = MainChessBoard.IsFlipped;
+                }
             }
             catch
             {
@@ -651,7 +657,7 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.BOOKMARKS;
             try
             {
-                if (KeepFocusOnGame())
+                if (KeepFocusOnGame() || WorkbookManager.SessionWorkbook == null )
                 {
                     return;
                 }
@@ -670,27 +676,31 @@ namespace ChessForge
         {
             try
             {
-                bool? boardFlipped = WorkbookManager.SessionWorkbook.IsStudyBoardFlipped;
-                if (boardFlipped != null)
+                if (WorkbookManager.SessionWorkbook != null)
                 {
-                    MainChessBoard.FlipBoard(boardFlipped.Value);
-                }
 
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                if (chapter != null)
-                {
-                    chapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
-                }
-                AppStateManager.ConfigureMainBoardContextMenu();
-                if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
-                {
-                    UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
-                }
-                else
-                {
-                    UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
-                    ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
-                    RestoreSelectedLineAndMoveInActiveView();
+                    bool? boardFlipped = WorkbookManager.SessionWorkbook.IsStudyBoardFlipped;
+                    if (boardFlipped != null)
+                    {
+                        MainChessBoard.FlipBoard(boardFlipped.Value);
+                    }
+
+                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    if (chapter != null)
+                    {
+                        chapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
+                    }
+                    AppStateManager.ConfigureMainBoardContextMenu();
+                    if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                    {
+                        UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
+                    }
+                    else
+                    {
+                        UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                        ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
+                        RestoreSelectedLineAndMoveInActiveView();
+                    }
                 }
             }
             catch
@@ -707,7 +717,10 @@ namespace ChessForge
         {
             try
             {
-                WorkbookManager.SessionWorkbook.IsStudyBoardFlipped = MainChessBoard.IsFlipped;
+                if (WorkbookManager.SessionWorkbook != null)
+                {
+                    WorkbookManager.SessionWorkbook.IsStudyBoardFlipped = MainChessBoard.IsFlipped;
+                }
             }
             catch
             {
@@ -725,7 +738,7 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.MODEL_GAME;
             try
             {
-                if (KeepFocusOnGame())
+                if (KeepFocusOnGame() || WorkbookManager.SessionWorkbook == null)
                 {
                     return;
                 }
@@ -769,7 +782,10 @@ namespace ChessForge
         {
             try
             {
-                WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped = MainChessBoard.IsFlipped;
+                if (WorkbookManager.SessionWorkbook != null)
+                {
+                    WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped = MainChessBoard.IsFlipped;
+                }
             }
             catch
             {
@@ -787,7 +803,7 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.EXERCISE;
             try
             {
-                if (KeepFocusOnGame())
+                if (KeepFocusOnGame() || WorkbookManager.SessionWorkbook == null)
                 {
                     return;
                 }
@@ -831,7 +847,10 @@ namespace ChessForge
         {
             try
             {
-                WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = MainChessBoard.IsFlipped;
+                if (WorkbookManager.SessionWorkbook != null)
+                {
+                    WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = MainChessBoard.IsFlipped;
+                }
             }
             catch
             {
