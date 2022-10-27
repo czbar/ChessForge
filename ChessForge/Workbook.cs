@@ -93,6 +93,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        ///  The 1-based Active Chapter number.
+        ///  Returns 0 if there is no active chapter.
+        /// </summary>
+        public int ActiveChapterNumber
+        {
+            get
+            {
+                for (int i = 0; i < _chapters.Count; i++)
+                {
+                    if (_chapters[i] == _activeChapter)
+                        return i + 1;
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
         /// Selects the default (first in the list) chapter as ActiveChapter
         /// </summary>
         /// <returns></returns>
