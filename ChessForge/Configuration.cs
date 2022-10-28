@@ -67,6 +67,11 @@ namespace ChessForge
         public static int EngineMpv = 5;
 
         /// <summary>
+        /// Scoresheet control position.
+        /// </summary>
+        public static int ScoreSheetPosition = 0;
+
+        /// <summary>
         /// Whether to show the generic PGN file info
         /// when opening a non-Chess Forge file.
         /// </summary>
@@ -118,6 +123,7 @@ namespace ChessForge
         /// </summary>
         private const string CFG_ENGINE_EVALUATION_TIME = "EngineEvaluationTime";
         private const string CFG_ENGINE_MPV = "EngineMpv";
+        private const string CFG_SCORESHEET_POSITION = "ScoreSheetPosition";
         private const string CFG_VIABLE_MOVE_CP_DIFF = "ViableMoveCpDiff";
 
         /// <summary>
@@ -253,6 +259,8 @@ namespace ChessForge
                 sb.Append(CFG_ENGINE_MOVE_TIME + "=" + EngineMoveTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_EVALUATION_TIME + "=" + EngineEvaluationTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_MPV + "=" + EngineMpv.ToString() + Environment.NewLine);
+
+                sb.Append(CFG_SCORESHEET_POSITION + "=" + ScoreSheetPosition.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_VIABLE_MOVE_CP_DIFF + "=" + ViableMoveCpDiff.ToString() + Environment.NewLine);
 
@@ -508,6 +516,9 @@ namespace ChessForge
                             break;
                         case CFG_ENGINE_MPV:
                             int.TryParse(value, out EngineMpv);
+                            break;
+                        case CFG_SCORESHEET_POSITION:
+                            int.TryParse(value, out ScoreSheetPosition);
                             break;
                         case CFG_VIABLE_MOVE_CP_DIFF:
                             int.TryParse(value, out ViableMoveCpDiff);
