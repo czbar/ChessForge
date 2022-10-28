@@ -524,7 +524,7 @@ namespace ChessForge
         {
             try
             {
-                if (WorkbookManager.SessionWorkbook.ActiveChapterNumber > 0 
+                if (WorkbookManager.SessionWorkbook.ActiveChapterNumber > 0
                     && WorkbookManager.SessionWorkbook.ActiveChapterNumber < WorkbookManager.SessionWorkbook.Chapters.Count)
                 {
                     SelectChapter(WorkbookManager.SessionWorkbook.ActiveChapterNumber + 1, true);
@@ -643,12 +643,15 @@ namespace ChessForge
                     return;
                 }
 
-                SetupGuiForChapters();
                 UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
-                DisplayPosition(PositionUtils.SetupStartingPosition());
-                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
+                if (WorkbookManager.SessionWorkbook != null)
                 {
-                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                    SetupGuiForChapters();
+                    DisplayPosition(PositionUtils.SetupStartingPosition());
+                    if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
+                    {
+                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                    }
                 }
             }
             catch
@@ -670,10 +673,7 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.STUDY;
             try
             {
-                if (WorkbookManager.SessionWorkbook != null)
-                {
-                    SetStudyStateOnFocus();
-                }
+                SetStudyStateOnFocus();
             }
             catch
             {
@@ -710,7 +710,7 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.BOOKMARKS;
             try
             {
-                if (KeepFocusOnGame() || WorkbookManager.SessionWorkbook == null)
+                if (KeepFocusOnGame())
                 {
                     return;
                 }
@@ -729,6 +729,18 @@ namespace ChessForge
         {
             try
             {
+                AppStateManager.ConfigureMainBoardContextMenu();
+                if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                {
+                    UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
+                }
+                else
+                {
+                    UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                    ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
+                    RestoreSelectedLineAndMoveInActiveView();
+                }
+
                 if (WorkbookManager.SessionWorkbook != null)
                 {
 
@@ -742,17 +754,6 @@ namespace ChessForge
                     if (chapter != null)
                     {
                         chapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
-                    }
-                    AppStateManager.ConfigureMainBoardContextMenu();
-                    if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
-                    {
-                        UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
-                    }
-                    else
-                    {
-                        UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
-                        ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
-                        RestoreSelectedLineAndMoveInActiveView();
                     }
                 }
             }
@@ -794,36 +795,40 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.MODEL_GAME;
             try
             {
-                if (KeepFocusOnGame() || WorkbookManager.SessionWorkbook == null)
+                if (KeepFocusOnGame())
                 {
                     return;
                 }
 
-                bool? boardFlipped = WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped;
-                if (boardFlipped != null)
-                {
-                    MainChessBoard.FlipBoard(boardFlipped.Value);
-                }
+                UiImgMainChessboard.Source = ChessBoards.ChessBoardLightBlue;
 
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                if (chapter != null && chapter.GetModelGameCount() > 0)
+                if (WorkbookManager.SessionWorkbook != null)
                 {
-                    if (chapter.ActiveModelGameIndex == -1)
+                    bool? boardFlipped = WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped;
+                    if (boardFlipped != null)
                     {
-                        chapter.ActiveModelGameIndex = 0;
+                        MainChessBoard.FlipBoard(boardFlipped.Value);
                     }
 
-                    SelectModelGame(chapter.ActiveModelGameIndex, false);
-                }
-                else
-                {
-                    MainChessBoard.SetStartingPosition();
-                    ClearTabViews();
-                }
+                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    if (chapter != null && chapter.GetModelGameCount() > 0)
+                    {
+                        if (chapter.ActiveModelGameIndex == -1)
+                        {
+                            chapter.ActiveModelGameIndex = 0;
+                        }
 
-                AppStateManager.ConfigureMainBoardContextMenu();
-                UiImgMainChessboard.Source = ChessBoards.ChessBoardLightBlue;
-                ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+                        SelectModelGame(chapter.ActiveModelGameIndex, false);
+                    }
+                    else
+                    {
+                        MainChessBoard.SetStartingPosition();
+                        ClearTabViews();
+                    }
+
+                    AppStateManager.ConfigureMainBoardContextMenu();
+                    ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+                }
             }
             catch
             {
@@ -863,36 +868,39 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.EXERCISE;
             try
             {
-                if (KeepFocusOnGame() || WorkbookManager.SessionWorkbook == null)
+                if (KeepFocusOnGame())
                 {
                     return;
                 }
 
-                bool? boardFlipped = WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped;
-                if (boardFlipped != null)
+                UiImgMainChessboard.Source = ChessBoards.ChessBoardLightGreen;
+                if (WorkbookManager.SessionWorkbook != null)
                 {
-                    MainChessBoard.FlipBoard(boardFlipped.Value);
-                }
-
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                if (chapter != null && chapter.GetExerciseCount() > 0)
-                {
-                    if (chapter.ActiveExerciseIndex == -1)
+                    bool? boardFlipped = WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped;
+                    if (boardFlipped != null)
                     {
-                        chapter.ActiveExerciseIndex = 0;
+                        MainChessBoard.FlipBoard(boardFlipped.Value);
                     }
 
-                    SelectExercise(chapter.ActiveExerciseIndex, false);
-                }
-                else
-                {
-                    MainChessBoard.SetStartingPosition();
-                    ClearTabViews();
-                }
+                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    if (chapter != null && chapter.GetExerciseCount() > 0)
+                    {
+                        if (chapter.ActiveExerciseIndex == -1)
+                        {
+                            chapter.ActiveExerciseIndex = 0;
+                        }
 
-                AppStateManager.ConfigureMainBoardContextMenu();
-                UiImgMainChessboard.Source = ChessBoards.ChessBoardLightGreen;
-                ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+                        SelectExercise(chapter.ActiveExerciseIndex, false);
+                    }
+                    else
+                    {
+                        MainChessBoard.SetStartingPosition();
+                        ClearTabViews();
+                    }
+
+                    AppStateManager.ConfigureMainBoardContextMenu();
+                    ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+                }
             }
             catch
             {
