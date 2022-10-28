@@ -224,6 +224,20 @@ namespace ChessForge
             
             DebugUtils.DebugLevel = Configuration.DebugLevel;
 
+            // setup control positions
+            if (Configuration.ScoreSheetPosition == 1)
+            {
+                UiDgActiveLine.HorizontalAlignment = HorizontalAlignment.Right;
+                UiDgActiveLine.Margin = new Thickness(0, 5, 10, 0);
+
+                UiDgEngineGame.HorizontalAlignment = HorizontalAlignment.Right;
+                UiDgEngineGame.Margin = new Thickness(0, 5, 10, 0);
+
+                UiTabCtrlManualReview.HorizontalAlignment = HorizontalAlignment.Right;
+
+                UiTabCtrlTraining.HorizontalAlignment = HorizontalAlignment.Right;
+            }
+
             // main chess board
             MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true, true);
 
@@ -1750,28 +1764,61 @@ namespace ChessForge
         /// <param name="sizeMode"></param>
         public void ResizeTabControl(TabControl ctrl, TabControlSizeMode sizeMode)
         {
-            switch (sizeMode)
+            if (Configuration.ScoreSheetPosition == 1)
             {
-                case TabControlSizeMode.SHOW_ACTIVE_LINE:
-                    ctrl.Margin = new Thickness(275, 5, 5, 5);
-                    UiDgActiveLine.Visibility = Visibility.Visible;
-                    break;
-                case TabControlSizeMode.HIDE_ACTIVE_LINE:
-                    ctrl.Margin = new Thickness(5, 5, 5, 5);
-                    UiDgActiveLine.Visibility = Visibility.Hidden;
-                    break;
-                case TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL:
-                    ctrl.Margin = new Thickness(175, 5, 5, 5);
-                    UiDgActiveLine.Visibility = Visibility.Visible;
-                    break;
-                case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
-                    ctrl.Margin = new Thickness(180, 5, 5, 5);
-                    UiDgActiveLine.Visibility = Visibility.Hidden;
-                    break;
-                default:
-                    ctrl.Margin = new Thickness(180, 5, 5, 5);
-                    UiDgActiveLine.Visibility = Visibility.Visible;
-                    break;
+                switch (sizeMode)
+                {
+                    case TabControlSizeMode.SHOW_ACTIVE_LINE:
+                        ctrl.Margin = new Thickness(5, 5, 275, 5);
+                        UiDgActiveLine.Visibility = Visibility.Visible;
+                        break;
+                    case TabControlSizeMode.HIDE_ACTIVE_LINE:
+                        ctrl.Margin = new Thickness(5, 5, 5, 5);
+                        UiDgActiveLine.Visibility = Visibility.Hidden;
+                        break;
+                    case TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL:
+                        ctrl.Margin = new Thickness(5, 5, 175, 5);
+                        UiDgActiveLine.Visibility = Visibility.Visible;
+                        break;
+                    case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
+                        ctrl.Margin = new Thickness(5, 5, 180, 5);
+                        UiDgActiveLine.Visibility = Visibility.Hidden;
+                        break;
+                    case TabControlSizeMode.HIDE_ENGINE_GAME_LINE:
+                        ctrl.Margin = new Thickness(5, 5, 5, 5);
+                        UiDgActiveLine.Visibility = Visibility.Hidden;
+                        break;
+                    default:
+                        ctrl.Margin = new Thickness(5, 5, 180, 5);
+                        UiDgActiveLine.Visibility = Visibility.Visible;
+                        break;
+                }
+            }
+            else
+            {
+                switch (sizeMode)
+                {
+                    case TabControlSizeMode.SHOW_ACTIVE_LINE:
+                        ctrl.Margin = new Thickness(275, 5, 5, 5);
+                        UiDgActiveLine.Visibility = Visibility.Visible;
+                        break;
+                    case TabControlSizeMode.HIDE_ACTIVE_LINE:
+                        ctrl.Margin = new Thickness(5, 5, 5, 5);
+                        UiDgActiveLine.Visibility = Visibility.Hidden;
+                        break;
+                    case TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL:
+                        ctrl.Margin = new Thickness(175, 5, 5, 5);
+                        UiDgActiveLine.Visibility = Visibility.Visible;
+                        break;
+                    case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
+                        ctrl.Margin = new Thickness(180, 5, 5, 5);
+                        UiDgActiveLine.Visibility = Visibility.Hidden;
+                        break;
+                    default:
+                        ctrl.Margin = new Thickness(180, 5, 5, 5);
+                        UiDgActiveLine.Visibility = Visibility.Visible;
+                        break;
+                }
             }
         }
 
