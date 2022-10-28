@@ -1351,6 +1351,7 @@ namespace ChessForge
                     MainChessBoard.RemoveMoveSquareColors();
                     LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
                     AppStateManager.SetupGuiForCurrentStates();
+                    SetStudyStateOnFocus();
 
                     ActiveLine.DisplayPositionForSelectedCell();
                     AppStateManager.SwapCommentBoxForEngineLines(false);
