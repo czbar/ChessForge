@@ -318,13 +318,18 @@ namespace ChessForge
                 cellContent = cell.Column.GetCellContent(cell.Item);
             }
 
-            if (cellContent != null)
+            try
             {
                 _dgActiveLine.SelectedCells.Add(cell);
             }
-            else
+            catch(Exception ex)
             {
-                DebugUtils.ShowDebugMessage("Cell content is null in " + "SelectPly");
+                AppLog.Message("_dgActiveLine.SelectedCells.Add(cell) in SelectPly", ex);
+            }
+
+            if (cellContent == null)
+            {
+                DebugUtils.ShowDebugMessage("Cell content is null in SelectPly(): " + "row=" + _selectedRow.ToString() + " column=" + _selectedColumn.ToString());
             }
         }
 
