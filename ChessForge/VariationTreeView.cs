@@ -263,10 +263,10 @@ namespace ChessForge
                     EnableStudyTreeMenus(_mainWin.UiCmnWorkbookRightClick, isEnabled);
                     break;
                 case WorkbookManager.TabViewType.MODEL_GAME:
-                    EnableModelGamesMenus(_mainWin.UiCmModelGames, isEnabled);
+                    EnableModelGamesMenus(_mainWin.UiCmModelGames, true);
                     break;
                 case WorkbookManager.TabViewType.EXERCISE:
-                    EnableExercisesMenus(_mainWin.UiCmExercises, isEnabled);
+                    EnableExercisesMenus(_mainWin.UiCmExercises, true);
                     break;
                 default:
                     break;
