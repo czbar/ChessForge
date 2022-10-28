@@ -25,34 +25,35 @@ and arguably the most dangerous for Black 6.Bg5.} )  *
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Study Tree"]
 
-1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 (7... 
-Be7 {This is a very good and popular option but we are not discussing it in this 
-Workbook.} ) 8. O-O-O Bd7 {There are other sensible options at this move too...} 
- (8... h6)  (8... Be7)  (8... Nxd4) 9. f4 {[%cal Ge4e5,Gf4f5][%csl Ge6,Gf6]White 
-intends to immediately attack in the center and on the kingside.}  (9. f3 {[%cal 
-Gg2g4,Gh2h4]With the plan of attacking the kingside with the g and h pawns. See 
-the Games section for more detail.} ) 9... b5 {Most principled. Other available 
-choices are 9... h6 and 9... Be7.}  10. Bxf6 {Most often Black will exchange the 
-light pieces on f6 straight away although he can also wait a little e.g. swap 
-the pieces on c6 first.}  gxf6 {[%cal 
-Gf4f5,Rb5b4,Ra6a5,Gd4e2,Ge2g3,Rh7h5,Rh8g8][%csl Ge6]Having doubled black f 
-pawns, White intends to push their pawn to f5 and apply pressure on e6. In 
+ {[%eval +16.70]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 
+7. Qd2 a6 (7... Be7 {This is a very good and popular option but we are not 
+discussing it in this Workbook.} ) 8. O-O-O Bd7 {There are other sensible 
+options at this move too...}  (8... h6)  (8... Be7)  (8... Nxd4) 9. f4 {[%cal 
+Ge4e5,Gf4f5][%csl Ge6,Gf6]White intends to immediately attack in the center and 
+on the kingside.}  (9. f3 {[%cal Gg2g4,Gh2h4]With the plan of attacking the 
+kingside with the g and h pawns. See the Games section for more detail.} ) 9... 
+b5 {Most principled. Other available choices are 9... h6 and 9... Be7.}  10. 
+Bxf6 {Most often Black will exchange the light pieces on f6 straight away 
+although he can also wait a little e.g. swap the pieces on c6 first.}  gxf6 
+{[%cal Gf4f5,Rb5b4,Ra6a5,Gd4e2,Ge2g3,Rh7h5,Rh8g8][%csl Ge6]Having doubled black 
+the f-pawns, White intends to push their pawn to f5 and apply pressure to e6. In 
 addition to the obvious plan of attacking the White king with b5-b4, a6-a5 and 
 so on, Black must take care of the center and often of the kingside too. Black 
 will strive to occupy the critical square e5 with his bishop or even with the 
 queen, if the knight c6 has been swapped for the White's d4 one. In the absence 
-of White's dark bishop, the Black queen can be quite comfortable on e5. It may 
-transpire that it is beneficial to move the e6 pawn to e5, especially after 
-Black's push b5-b4 forces the c3 knight to e2. While the move creates a weakness 
-on d5, it drastically reduces options for the White knight and also highlights 
-the weakness of the pawn e4. It can be attacked by a Qb7-Bc6 battery. If White 
-places the knight on g3, Black can attack it with h5-h4. Blocking the Black pawn 
-with h2-h4, White will  have a weakness on the g file which Black can try to 
-exploit by moving its rook to g8.}  *
+of White's dark-squared bishop, the Black queen can be quite comfortable on e5. 
+It may transpire that it is beneficial to move the e6 pawn to e5, especially 
+after Black's push b5-b4 forces the c3 knight to e2. While the move creates a 
+weakness on d5, it drastically reduces options for the White knight and also 
+highlights the weakness of the pawn e4. It can be attacked by a Qb7-Bc6 battery. 
+If White places the knight on g3, Black can attack it with h5-h4. Blocking the 
+Black pawn with h2-h4, White will  have a weakness on the g file which Black can 
+try to exploit by moving its rook to g8.}  *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
+[Event ""]
 [Date "2021.08.20"]
 [White "Rauzer 9.f4: Ideas"]
 [Black "10.Bb5?!"]
@@ -64,19 +65,19 @@ in many a Sicilian variation where Black plays a6 and b5.  The bishop sacrifice
 leads to a short and sharp tactical crisis that with the best play from both 
 sides leads to Black's advantage.  To defend his position and secure the upper 
 hand Black will have to make a few accurate moves and then convert the advantage 
-in a position with unbalanced material.}  axb5 {After}  11. Ndxb5 (11. Bxf6 gxf6 
-12. Ndxb5 { black will play as in the main line}  Nb4) 11... Nb4 $1 {White may 
-also try}  12. a3 (12. Nxd6+ { or} )  (12. e5 { which we will examine in the 
-following sections.} ) 12... Na2+ $1 (12... Bxb5 { only equalizes.} ) 13. Nxa2 
-Bxb5 {More tenacious is}  14. e5 (14. Nc3 Bc6 15. Qe2 Be7 16. e5 Nd5 { but here 
-too black is clearly better.} ) 14... dxe5 15. Qxd8+ Rxd8 16. Rxd8+ Kxd8 17. 
-fxe5 h6 18. Bxf6+ gxf6 19. exf6 Bd6 $19 {White has 3 connected unopposed pawns 
-for the minor piece but their position is lost due to the active, coordinated 
-black pieces.}  *
+in a position with unbalanced material.}  axb5 11. Ndxb5 (11. Bxf6 gxf6 12. 
+Ndxb5 {Black will play here as in the main line}  Nb4) 11... Nb4 $1 12. a3 
+{12..Nxd6 and 12.e5 are exemined in the next Games}  Na2+ $1 (12... Bxb5 { only 
+equalizes} ) 13. Nxa2 Bxb5 14. e5 (14. Nc3 {This is more tenacious...}  Bc6 15. 
+Qe2 Be7 16. e5 Nd5 {... but here too black is clearly better.} ) 14... dxe5 15. 
+Qxd8+ Rxd8 16. Rxd8+ Kxd8 17. fxe5 h6 18. Bxf6+ gxf6 19. exf6 Bd6 $19 {White has 
+3 connected unopposed pawns for the minor piece but his position is lost due to 
+the active, coordinated black pieces.}  *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
+[Event ""]
 [Date "2021.08.20"]
 [White "Rauzer 9.f4: Ideas"]
 [Black "10.Bb5?!"]
@@ -84,46 +85,49 @@ black pieces.}  *
 
 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
 O-O-O Bd7 9. f4 b5 10. Bxb5 $2 axb5 11. Ndxb5 Nb4 $1 12. Nxd6+ Bxd6 13. Qxd6 
-Nxa2+ 14. Nxa2 Rxa2 15. Bxf6 (15. Kb1 $4 { loses immediately too }  Qa8) 15... 
-gxf6 16. Kb1 Ra7 {If}  17. Rhe1 (17. Rd3 { then}  Qa8 { or} )  (17. Rhf1 Qa5 18. 
-Qb8+ Bc8 $1 { -+} ) 17... Qc7 $17 *
+Nxa2+ 14. Nxa2 Rxa2 {[%eval -2.24]}  15. Bxf6 (15. Kb1 $4 {[%eval -10.61]loses 
+immediately}  Qa8) 15... gxf6 16. Kb1 Ra7 17. Rhe1 (17. Rd3 Qa8)  (17. Rhf1 Qa5 
+18. Qb8+ Bc8 $1 $19 {[%eval -4.90]} ) 17... Qc7 $17 *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
+[Event ""]
 [Date "2021.08.20"]
 [White "Rauzer 9.f4: Ideas"]
 [Black "10.Bb5?!"]
 [Result "*"]
 
 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 10. Bxb5 $2 axb5 11. Ndxb5 Nb4 $1 12. e5 Nxa2+ {Or}  13. Nxa2 
-(13. Kb1 Nxc3+ 14. Nxc3 Qb6 { -+} ) 13... Bxb5 14. Qb4 (14. Nc3 Ne4 $1 { -+} ) 
-14... Bd7 $19 *
+O-O-O Bd7 9. f4 b5 10. Bxb5 $2 axb5 11. Ndxb5 Nb4 $1 12. e5 Nxa2+ 13. Nxa2 (13. 
+Kb1 Nxc3+ 14. Nxc3 Qb6 $19) 13... Bxb5 14. Qb4 (14. Nc3 Ne4 $1 $19) 14... Bd7 
+$19 *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
+[Event ""]
 [Date "2021.08.19"]
 [White "Rauzer 9.f4: Ideas"]
 [Black "Nd5 in 10.Nxc6"]
 [Result "*"]
 
 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 {Nc3 - d5 is a thematic move in many lines of this variation. 
+O-O-O Bd7 9. f4 b5 {Nc3-d5 is a thematic move in many lines of this variation. 
 While it is a typical tactical idea across the Sicilian defense, it is 
 particularly common here due to Black delaying the deployment of the f8 bishop 
-to e7. White will usually play  Nd5  when his queen or rook is on the e-file and 
+to e7. White will usually play Nd5 when his queen or rook is on the e-file and 
 it is rarely an actual sacrifice.  We will show the best lines for Black where 
 the threat of Nd5 is neutralized. However, be sure to review the comments that 
-illustrate typical Black's inaccuracies leading to  Nd5  being more effective 
-for White.}  10. Nxc6 Bxc6 11. Qe3 {After}  Be7 (11... Qc7 $6 12. Bxf6 gxf6 13. 
-Nd5 Bxd5 14. exd5 e5 15. Bd3 Bh6 16. Rhf1 { White gains a small advantage.} ) 
-12. Bxf6 Bxf6 13. Nd5 Bxd5 14. exd5 e5 *
+illustrate typical Black's inaccuracies leading to Nd5 being more effective for 
+White.}  10. Nxc6 Bxc6 11. Qe3 Be7 (11... Qc7 $6 12. Bxf6 gxf6 13. Nd5 Bxd5 14. 
+exd5 e5 15. Bd3 Bh6 16. Rhf1 { White gains a small advantage.} ) 12. Bxf6 Bxf6 
+13. Nd5 Bxd5 14. exd5 e5 *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
+[Event ""]
 [Date "2021.08.19"]
 [White "Rauzer 9.f4: Ideas"]
 [Black "Nd5 in 10.Nxc6"]
@@ -131,30 +135,31 @@ Nd5 Bxd5 14. exd5 e5 15. Bd3 Bh6 16. Rhf1 { White gains a small advantage.} )
 
 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
 O-O-O Bd7 9. f4 b5 10. Nxc6 Bxc6 11. Bd3 {White intends to use his rook to put 
-pressure on the e-file.}  Qb6 (11... Be7 { is a good alternative.} ) 12. Bxf6 
-(12. Rhe1 { would maintain White's small edge.} ) 12... gxf6 13. Rhe1 O-O-O 
-(13... h5 $6 { would allow White to regain some their edge after}  14. Nd5 Bxd5 
-15. exd5 e5 16. Kb1 { 0-0-0  17.c4} )  *
+pressure on the e-file.}  Qb6 (11... Be7 {is a good alternative} ) 12. Bxf6 (12. 
+Rhe1 {This would maintain White's small edge.} ) 12... gxf6 13. Rhe1 O-O-O 
+(13... h5 $6 {would allow White to regain some their edge after...}  14. Nd5 
+Bxd5 15. exd5 e5 16. Kb1 {[%eval +2.18]} )  *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
+[Event ""]
 [Date "2021.08.19"]
 [White "Rauzer 9.f4: Ideas"]
 [Black "Nd5 in 10.Nxc6"]
 [Result "*"]
 
 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 10. Nxc6 Bxc6 11. Qe1 {After}  Be7 {Other options are}  
-(11... Qc7 $6 12. Bxf6 gxf6 13. Nd5 Bxd5 14. exd5 e5 15. Bd3 { White gains a 
-small advantage.} ) 12. Bxf6 (12. e5 { or} )  (12. Bd3) 12... gxf6 (12... Bxf6 { 
-is also good. If}  13. Nd5 { then}  O-O 14. Nxf6+ Qxf6 { with equality.} ) 13. 
-Bd3 Qb6 14. Kb1 Qc5 (14... O-O-O?! { would allow the thematic}  15. Nd5 exd5 16. 
-exd5 Bxd5 17. Qxe7 Bxg2 18. Rhe1 { with an edge.} ) 15. f5 b4 16. Ne2 e5 *
+O-O-O Bd7 9. f4 b5 10. Nxc6 Bxc6 11. Qe1 Be7 $11 {[%eval +0.01]}  (11... Qc7 $6 
+12. Bxf6 gxf6 13. Nd5 Bxd5 14. exd5 e5 15. Bd3 {White gains a small advantage.} 
+) 12. Bxf6 gxf6 (12... Bxf6 {is also good}  13. Nd5 O-O 14. Nxf6+ Qxf6) 13. Bd3 
+Qb6 14. Kb1 Qc5 (14... O-O-O?! {would allow the thematic ...}  15. Nd5 exd5 16. 
+exd5 Bxd5 17. Qxe7 Bxg2 18. Rhe1 {... with an edge.} ) 15. f5 b4 16. Ne2 e5 *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
+[Event ""]
 [Date "2021.08.19"]
 [White "Rauzer 9.f4: Ideas"]
 [Black "Nd5 in 10.Bxf6"]
@@ -167,37 +172,39 @@ O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Kb1 Qb6 12. Nxc6 Bxc6 13. f5 Qc5 14. Bd3 h5
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
+[Event ""]
 [Date "2021.08.19"]
 [White "Rauzer 9.f4: Ideas"]
 [Black "Nd5 in 10.Bxf6"]
 [Result "*"]
 
 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Kb1 Qb6 12. Nxc6 Bxc6 13. Qe1 {If}  Be7 
-(13... Qc5 $6 { then}  14. Bd3 h5 15. Nd5 { favors white} ) 14. Bd3 {Other good 
-moves in this position are}  Rg8 (14... Qc5 {,} )  (14... b4 { and} )  (14... a5 
-{ Not so much} )  (14... O-O-O?! 15. Nd5 Qb7 16. Qc3 Rhe8 17. Rhe1 Kb8 18. Nxe7) 
- *
+O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Kb1 Qb6 12. Nxc6 Bxc6 13. Qe1 Be7 (13... 
+Qc5 $6 14. Bd3 h5 15. Nd5 {favors white} ) 14. Bd3 Rg8 $14 {[%eval +0.63]Other 
+good options are 14... Qc5, 14... b4, 14... a5}  (14... O-O-O?! 15. Nd5 Qb7 16. 
+Qc3 Rhe8 17. Rhe1 Kb8 18. Nxe7 $16 {[%eval +2.43]} )  *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
+[Event ""]
 [Date "2021.08.19"]
 [White "Rauzer 9.f4: Ideas"]
 [Black "Nd5 in 10.Bxf6 11.Nxc6"]
 [Result "*"]
 
 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Nxc6 Bxc6 12. Qe1 Be7 (12... Qb6 $6 { again 
-invites}  13. Nd5 Bxd5 14. exd5 e5 15. Bd3 O-O-O 16. Kb1 { where white has an 
-edge.} ) 13. Bd3 Qb6 14. Kb1 Qc5 15. Rf1 h5 16. Rd2 Kd7 17. f5 Qe5 18. Re2 
-{After}  Rae8 (18... Rag8 $2 { White gains advantage}  19. Nd5 $1 Bd8 20. fxe6+ 
-fxe6 21. Qf2 $1 exd5 $2 22. exd5 Qxd5 23. Qa7+ Bb7 24. Be4) 19. fxe6+ fxe6 20. 
-Nd5 Bd8 $11 *
+O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Nxc6 Bxc6 12. Qe1 Be7 (12... Qb6 $6 
+{invites ....}  13. Nd5 Bxd5 14. exd5 e5 15. Bd3 O-O-O 16. Kb1 {... where White 
+has an edge.} ) 13. Bd3 Qb6 14. Kb1 Qc5 15. Rf1 h5 16. Rd2 Kd7 17. f5 Qe5 18. 
+Re2 {After}  Rae8 (18... Rag8 $2 {Again, White gains advantage with the thematic 
+...}  19. Nd5 $1 Bd8 20. fxe6+ fxe6 21. Qf2 $1 exd5 $2 22. exd5 Qxd5 23. Qa7+ 
+Bb7 24. Be4) 19. fxe6+ fxe6 20. Nd5 Bd8 $11 *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
+[Event ""]
 [Date "2021.08.19"]
 [White "Rauzer 9.f4: Ideas"]
 [Black "Nd5 in 10.Bxf6 11.Nxc6"]
@@ -210,35 +217,38 @@ Be7 15. Re3 O-O-O 16. Nd5 Kd7 17. Qe1 $14 *
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
+[Event ""]
 [Date "2021.08.19"]
 [White "Rauzer 9.f4: Ideas"]
 [Black "Nd5 in 10.Qe1"]
 [Result "*"]
 
 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 10. Qe1 Nxd4 (10... Qb6 { allows white to gain some advantage 
-with the help of Nd5:}  11. Nxc6 Bxc6 12. Nd5 Qd8 13. Qc3 Bxd5 14. exd5 Rc8 15. 
-Qh3) 11. Rxd4 Qb6 12. Qd2 Bc6 13. Bxf6 gxf6 14. Be2 h5 15. Bf3 O-O-O *
+O-O-O Bd7 9. f4 b5 10. Qe1 Nxd4 (10... Qb6 {This allows White to gain some 
+advantage with the help of the familiar Nc3-d5 ...}  11. Nxc6 Bxc6 12. Nd5 Qd8 
+13. Qc3 Bxd5 14. exd5 Rc8 15. Qh3) 11. Rxd4 Qb6 12. Qd2 Bc6 13. Bxf6 gxf6 14. 
+Be2 h5 15. Bf3 O-O-O *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
+[Event ""]
 [Date "2021.08.20"]
 [White "Rauzer 9.f4: Ideas"]
 [Black "Bishop h6-f4-e5"]
 [Result "*"]
 
 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. f5 Nxd4 12. Qxd4 Bh6+ 13. Kb1 Bf4 {Play 
-will develop along similar lines in case of}  14. Ne2 (14. fxe6 fxe6 15. Ne2 Be5 
-16. Qe3 Rc8 17. Nf4 Qc7 18. Rc1 Qc5 $11 {.} ) 14... Be5 {White can also retract 
-the queen to d2:}  15. Qe3 (15. Qd2 exf5 16. exf5 Bxf5 17. Nf4 { or to d3:} )  
-(15. Qd3 Qb6 {or}  16. Nd4 (16. g3 Rc8 17. Bh3 Ke7) 16... Qxd4 17. Qxd4 Bxd4 18. 
-Rxd4 Ke7 $11) 15... Rc8 16. Nd4 Qc7 17. Qb3 Ke7 *
+O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. f5 Nxd4 12. Qxd4 Bh6+ 13. Kb1 Bf4 14. Ne2 
+(14. fxe6 {Play will develop similarly to the main line.}  fxe6 15. Ne2 Be5 16. 
+Qe3 Rc8 17. Nf4 Qc7 18. Rc1 Qc5 $11) 14... Be5 15. Qe3 (15. Qd2 exf5 16. exf5 
+Bxf5 17. Nf4 { or to d3:} )  (15. Qd3 Qb6 16. Nd4 (16. g3 Rc8 17. Bh3 Ke7) 16... 
+Qxd4 17. Qxd4 Bxd4 18. Rxd4 Ke7 $11) 15... Rc8 16. Nd4 Qc7 17. Qb3 Ke7 *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
+[Event ""]
 [Date "2021.08.20"]
 [White "Rauzer 9.f4: Ideas"]
 [Black "Pawn e6-e5"]
@@ -247,41 +257,41 @@ Rxd4 Ke7 $11) 15... Rc8 16. Nd4 Qc7 17. Qb3 Ke7 *
 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
 O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Nxc6 Bxc6 12. Bd3 b4 13. Ne2 Qb6 14. Kb1 h5 
 15. f5 Bh6 16. Qe1 e5 {Makes squares d4 and f4 inaccessible to the white 
-knight.}  17. Ng3 (17. h4 Ke7 18. Rh3 Rag8 {. Black has an edge.} ) 17... h4 18. 
-Nf1 Ke7 {The position is equal.}  *
-
-[ChapterId "2"]
-[ChapterTitle "Rauzer 9.f4"]
-[ContentType "Model Game"]
-[Date "2012.12.17"]
-[White "Rauzer 9.f4: Ideas"]
-[Black "Black attacks on queenside"]
-[Result "0-1"]
-
-1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Kb1 Qb6 12. Nxc6 Bxc6 13. Bd3 {Black 
-attacks the white king's fortress by pushing his a and b pawns. This is 
-supported by the rook, the queen and one of both of black bishops.Black king 
-remains in the center and is the target of white's counter attack. In this 
-example,  white fails to create such counter play, though.}  b4 14. Ne2 h5 15. 
-Qe1 h4 16. Rf1 a5 17. Ng1 Qc5 18. Nf3 h3 19. g3 a4 20. Qf2 d5 $5 21. exd5 Bxd5 
-22. Qe2 Be7 23. Bb5+ $2 Kf8 24. Nd4 a3 25. Nb3 Qa7 26. Bc4 $2 axb2 27. Nd2 
-{Loses immediately in a very difficult position.}  b3 {27 Mazi,L 2351 
--Martinovic,S 2530 Zadar 2012}  0-1
+knight.}  17. Ng3 (17. h4 Ke7 18. Rh3 Rag8 {Black has an edge.} ) 17... h4 18. 
+Nf1 Ke7 $11 *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date "2012.12.17"]
+[White "Rauzer 9.f4: Ideas"]
+[Black "Black attacks on queenside"]
+[Result "0-1"]
+
+ {[%eval +0.45]} 1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Kb1 Qb6 12. Nxc6 Bxc6 13. Bd3 
+{Black attacks the white king's fortress by pushing his a and b pawns. This is 
+supported by the rook, the queen and one of both bishops. Black king remains in 
+the center and is the target of White's counter attack. In this example,  White 
+fails to create such counter play, though.}  b4 14. Ne2 h5 15. Qe1 h4 16. Rf1 a5 
+17. Ng1 Qc5 18. Nf3 h3 19. g3 a4 20. Qf2 d5 $5 21. exd5 Bxd5 22. Qe2 Be7 23. 
+Bb5+ $2 Kf8 24. Nd4 a3 25. Nb3 Qa7 26. Bc4 $2 axb2 27. Nd2 {[%eval -8.25]Loses 
+immediately in a very difficult position.}  b3 {27 Mazi,L 2351 -Martinovic,S 
+2530 Zadar 2012}  0-1
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Model Game"]
+[Event ""]
+[Date ""]
 [White "Rauzer 9.f4: Lines"]
 [Black "Line: 10.Nxc6 11.e5?!"]
 [Result "*"]
 
-1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 $166 10. Nxc6 {Apart from the 10.Bxb5 sacrifice covered in 
-the previous chapter, Black needs to know how to play against this forced 
-tactical line.}  Bxc6 11. e5 $6 {This somewhat naive attempt to win material 
+ {[%eval +0.46]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f4 b5 $166 10. Nxc6 {The main alternative to the most 
+popular 10.Bxf6.}  Bxc6 11. e5 $6 {This somewhat naive attempt to win material 
 does not work well for White.  As it turns out, the g5-d8 pin is not dangerous 
 here and Black has nothing to fear.}  dxe5 12. Qxd8+ Rxd8 13. Rxd8+ Kxd8 14. 
 fxe5 h6 15. Bxf6+ gxf6 16. exf6 Bc5 $15 *
@@ -290,96 +300,93 @@ fxe5 h6 15. Bxf6+ gxf6 16. exf6 Bc5 $15 *
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f4: Lines"]
 [Black "Line: 10.Nxc6 11.e5?!"]
 [Result "*"]
 
-1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 {Plan of attack with f2-f3, g2-g4 will be considered in the next 
-chapter.}  b5 $166 10. Nxc6 Bxc6 11. e5 $2 dxe5 12. Qxd8+ Rxd8 13. Rxd8+ Kxd8 
-14. fxe5 h6 {This move is even worse than}  15. Bh4 (15. exf6) 15... g5 16. exf6 
-gxh4 $19 *
+ {[%eval +0.41]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f4 b5 $166 10. Nxc6 Bxc6 11. e5 $2 dxe5 12. Qxd8+ Rxd8 
+13. Rxd8+ Kxd8 14. fxe5 h6 15. Bh4 {[%eval -1.81]}  (15. exf6 {[%eval -4.91]This 
+is even worse.}  hxg5 {[%eval -5.13]}  16. fxg7 {[%eval -5.59]}  Bxg7 $19 
+{[%eval -5.55]Black pieces dominate the board.} ) 15... g5 16. exf6 gxh4 $19 *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f4: Lines"]
 [Black "Line: 10.Nxc6 11.Bd3"]
 [Result "*"]
 
-1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 {Plan of attack with f2-f3, g2-g4 will be considered in the next 
-chapter.}  b5 $166 10. Nxc6 {The main alternative to the most popular 10.Bxf6.}  
-Bxc6 {Instead}  11. Bd3 (11. Bxf6 { may not transpose to the  10.Bxf6 variation 
-since Black can comfortably recapture with the queen.} )  (11. Qe1 { and} )  
-(11. Qe3 { are good options preparing the Nc3-d5 maneuver. We will examine them 
-next.} ) 11... Be7 12. e5 dxe5 13. fxe5 Nd7 14. Bxe7 Qxe7 15. Be4 Qc5 16. Rhe1 
-Ra7 $11 *
+ {[%eval +0.36]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f4 b5 $166 10. Nxc6 Bxc6 {[%eval +0.62]}  11. Bd3 (11. 
+Bxf6 {This may not transpose to the 10.Bxf6 variation since Black can 
+comfortably recapture with the queen.} ) 11... Be7 12. e5 dxe5 13. fxe5 Nd7 14. 
+Bxe7 Qxe7 15. Be4 Qc5 16. Rhe1 Ra7 $11 *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f4: Lines"]
 [Black "Line: 10.Nxc6 11.Qe1"]
 [Result "*"]
 
-1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 10. Nxc6 Bxc6 11. Qe1 Be7 12. e5 Nd5 13. Bxe7 Qxe7 14. Ne4 
-dxe5 15. fxe5 O-O 16. Bd3 Nf4 {Black has a comfortable position.}  *
+ {[%eval +0.43]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f4 b5 10. Nxc6 Bxc6 {[%eval +0.49]}  11. Qe1 Be7 12. 
+e5 Nd5 13. Bxe7 Qxe7 14. Ne4 dxe5 15. fxe5 O-O 16. Bd3 Nf4 {Black has a 
+comfortable position.}  *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f4: Lines"]
 [Black "Line: 10.Nxc6 11.Qe3"]
 [Result "*"]
 
-1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 10. Nxc6 Bxc6 11. Qe3 Be7 12. Bxf6 Bxf6 (12... gxf6 {This is 
-playable too leading to positions similar to those in the 10.Bxf6 lines.}  13. 
-f5 Qa5 14. Kb1 b4 15. Ne2 Qe5 16. Qb6 $14 { White has an edge.} ) 13. e5 (13. 
-Nd5 {A thematic move in this and any other Sicilian variation!}  Bxd5 14. exd5 
-e5 $11) 13... Be7 14. exd6 Bxd6 15. Ne4 Bxe4 16. Qxe4 O-O $11 *
+ {[%eval +0.35]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f4 b5 10. Nxc6 Bxc6 11. Qe3 Be7 12. Bxf6 Bxf6 (12... 
+gxf6 {This is playable too leading to positions similar to those in the 10.Bxf6 
+lines.}  13. f5 Qa5 14. Kb1 b4 15. Ne2 Qe5 16. Qb6 $14) 13. e5 (13. Nd5 Bxd5 14. 
+exd5 {[%eval -0.57]}  e5 $11) 13... Be7 14. exd6 Bxd6 15. Ne4 Bxe4 16. Qxe4 O-O 
+$11 *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f4: Lines"]
 [Black "Line: 10.Bxf6 11.Kb1"]
 [Result "*"]
 
-1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 10. Bxf6 {The most popular and most promising continuation 
-for White. With the best play from both sides White should retain some advantage 
-but Black has good counter attacking chances in the sharp play.}  gxf6 {One of 
-the 3 main continuations for White. The other 2 being}  11. Kb1 (11. Nxc6 { and} 
-)  (11. f5 { that we will review next.} ) 11... Qb6 12. Nxc6 Bxc6 13. f5 b4 14. 
-Ne2 e5 15. Ng3 h5 16. h4 Qc5 *
+ {[%eval +0.45]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f4 b5 10. Bxf6 {[%cal Gf4f5,Gd4e2,Ge2f4]The most 
+popular and most promising continuation for White. Aims to attack Black's 
+weakened pawn structure by means of  f4-f5,  possibly supported by the knight's  
+d4-e2- f4  transfer. With the best play from both sides White should retain some 
+advantage but Black has good counter attacking chances in the sharp play.}  gxf6 
+{[%eval +0.80]}  11. Kb1 Qb6 12. Nxc6 Bxc6 13. f5 b4 14. Ne2 e5 15. Ng3 h5 16. 
+h4 Qc5 *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f4: Lines"]
 [Black "Line: 10.Bxf6 11.Nxc6"]
 [Result "*"]
 
-1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 {Plan of attack with f2-f3, g2-g4 will be considered in the next 
-chapter.}  b5 $166 10. Bxf6 {The main continuation aiming to attack black's 
-weakened pawn structure by means of  f4-f5  possibly supported by  the knight's  
-d4  -  e2  -  f4  transfer.}  gxf6 11. Nxc6 Bxc6 12. Qe1 Be7 13. Bd3 Qb6 14. Kb1 
-Qc5 15. f5 b4 16. Ne2 a5 17. Nf4 e5 $11 *
+ {[%eval +0.97]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f4 b5 $166 10. Bxf6 {[%eval +0.50]}  gxf6 {[%eval 
++0.91]}  11. Nxc6 Bxc6 12. Qe1 Be7 13. Bd3 Qb6 14. Kb1 Qc5 15. f5 b4 16. Ne2 a5 
+17. Nf4 e5 $11 *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
@@ -390,16 +397,16 @@ Qc5 15. f5 b4 16. Ne2 a5 17. Nf4 e5 $11 *
 [Black "Rahman, Ziaur"]
 [Result "0-1"]
 
-1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Kb1 Qb6 12. Nxc6 Bxc6 13. Bd3 b4 14. Ne2 a5 
-15. f5 e5 16. Bc4 h5 17. Bd5 Rc8 18. Qd3 Bxd5 19. Qxd5 Rc5 20. Qd3 Ke7 {White 
-should have left their queenside pawns aloneand play}  21. c3 $2 (21. Qf3 {or 
-Qb3 instead. Now Black has a target for their attack.} ) 21... Bh6 22. cxb4 $2 
-{Again, it was better to play on the kingside. Black'sattack gains momentum.}  
-axb4 23. Qb3 $2 {Another inaccurate move. This is nolonger a good square for the 
-queen.}  Rhc8 24. a3 {And another inaccuracy.White should have tried 24.Rd5. Now 
-his position becomes critical.}  Qc6 25. Qxb4 {A losing move but other options 
-were not much better.}  Rb5 0-1
+ {[%eval +0.46]} 1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Kb1 Qb6 12. Nxc6 Bxc6 13. Bd3 
+b4 14. Ne2 a5 15. f5 e5 16. Bc4 h5 17. Bd5 Rc8 18. Qd3 Bxd5 19. Qxd5 Rc5 20. Qd3 
+Ke7 {[%eval -0.21]}  21. c3 $2 {[%eval -2.51]White should have left their 
+queenside pawns alone and play 21.Qf3 or 21.Qb3 instead.}  Bh6 22. cxb4 $2 
+{Again, it was better to play on the kingside. Black's attack gains momentum.}  
+axb4 23. Qb3 $2 {Another inaccurate move. This is no longer a good square for 
+the queen.}  Rhc8 24. a3 {And another inaccuracy. White should have tried 
+24.Rd5. Now his position becomes critical.}  Qc6 25. Qxb4 {A losing move but 
+other options were not much better.}  Rb5 0-1
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
@@ -410,16 +417,17 @@ were not much better.}  Rb5 0-1
 [Black "Jankovic, Alojzije"]
 [Result "0-1"]
 
-1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Kb1 Rc8 12. Nxc6 Bxc6 13. Bd3 h5 14. Qe1 h4 
-15. Rd2 b4 16. Nd1 Qb6 17. Rf1 a5 18. f5 e5 19. Bc4 Ke7 20. Rd3 Bh6 21. b3 Bf4 
-{Allows Black to seizethe initiative. White should have played}  22. h3 (22. Nb2 
-Bxh2 23. Bxf7 Kxf7 24. Nc4 Qc7 25. Nxd6+ {=+} ) 22... a4 {[%eval -1.22]Now this 
-is a mistake.}  23. Nb2 {[%eval -2.96]}  (23. Ne3 {or Nf2 was better.} ) 23... 
-a3 {[%eval -2.46]}  24. Nd1 Bb7 25. Ne3 Bxe3 26. Rxe3 {Losing. 26.Qxe3 was 
-necessary.}  Rhg8 {Loses immediately. If}  27. Qd2 (27. Re2 {then}  Qd4 28. Qc1 
-{and simple}  Bxe4 {or computer recommended Rxc4}  29. Rd1 {Bxe4 Rxd4Rxd4 .} ) 
-27... Rxg2 28. Qc1 Rcg8 0-1
+ {[%eval +2.79]} 1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Kb1 Rc8 12. Nxc6 Bxc6 13. Bd3 
+h5 14. Qe1 h4 15. Rd2 b4 16. Nd1 Qb6 17. Rf1 a5 18. f5 e5 19. Bc4 Ke7 20. Rd3 
+Bh6 21. b3 Bf4 {[%eval -0.21]}  22. h3 {[%eval -1.30]Allows Black to seize the 
+initiative.}  (22. Nb2 $1 {[%eval -0.16]was better}  Bxh2 23. Bxf7 {[%eval 
+-3.76]}  Kxf7 24. Nc4 Qc7 25. Nxd6+ $15 {[%eval 0.00]} ) 22... a4 {[%eval 
+-1.26]}  23. Nb2 {[%eval -3.40]But here this is a mistake, 23.Ne3 or 23.Nf2 was 
+better.}  a3 {[%eval -2.46]}  24. Nd1 Bb7 25. Ne3 Bxe3 26. Rxe3 {Losing. 26.Qxe3 
+was necessary.}  Rhg8 {[%eval -2.64]}  27. Qd2 {[%eval -7.79]Loses immediately}  
+(27. Re2 Qd4 28. Qc1 {[%eval -5.96]}  Bxe4 29. Rd1 {[%eval -5.96]} ) 27... Rxg2 
+28. Qc1 Rcg8 0-1
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
@@ -430,14 +438,14 @@ necessary.}  Rhg8 {Loses immediately. If}  27. Qd2 (27. Re2 {then}  Qd4 28. Qc1
 [Black "Dubov, Daniil"]
 [Result "1/2-1/2"]
 
-1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Kb1 Qb6 12. Nxc6 Bxc6 13. f5 b4 14. Ne2 e5 
-15. Ng3 h5 16. h4 Qc5 17. Bd3 Bh6 18. Qe2 Ke7 19. Nxh5 Qe3 20. Qf1 Bxe4 21. Rh3 
-Bxd3 22. Rxd3 Qc1+ 23. Qxc1 Bxc1 24. g4 $146 Bh6 25. a3 Rag8 $132 26. Nxf6 Kxf6 
-27. Rxd6+ Kg7 28. g5 Bxg5 29. Rg3 Rxh4 30. Rxg5+ Kh7 31. Rxg8 Kxg8 32. axb4 Rxb4 
-33. Rxa6 Rf4 34. f6 Kh7 35. c3 Kg6 36. b4 Rf2 37. b5 e4 38. Ra8 $1 e3 39. Re8 
-Rf5 40. c4 Rf4 41. Kb2 Rxc4 42. Kb3 Rc1 43. Rxe3 Kxf6 44. Kb4 Kg5 45. b6 Rc8 46. 
-b7 Rb8 47. Re7 f5 48. Kc5 f4 49. Kd4 f3 50. Ke3 1/2-1/2
+ {[%eval +0.63]} 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f4 b5 10. Bxf6 gxf6 11. Kb1 Qb6 12. Nxc6 Bxc6 13. f5 
+b4 14. Ne2 e5 15. Ng3 h5 16. h4 Qc5 17. Bd3 Bh6 18. Qe2 Ke7 19. Nxh5 Qe3 20. Qf1 
+Bxe4 21. Rh3 Bxd3 22. Rxd3 Qc1+ 23. Qxc1 Bxc1 24. g4 $146 Bh6 25. a3 Rag8 $132 
+26. Nxf6 Kxf6 27. Rxd6+ Kg7 28. g5 Bxg5 29. Rg3 Rxh4 30. Rxg5+ Kh7 31. Rxg8 Kxg8 
+32. axb4 Rxb4 33. Rxa6 Rf4 34. f6 Kh7 35. c3 Kg6 36. b4 Rf2 37. b5 e4 38. Ra8 $1 
+e3 39. Re8 Rf5 40. c4 Rf4 41. Kb2 Rxc4 42. Kb3 Rc1 43. Rxe3 Kxf6 44. Kb4 Kg5 45. 
+b6 Rc8 46. b7 Rb8 47. Re7 f5 48. Kc5 f4 49. Kd4 f3 50. Ke3 1/2-1/2
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
@@ -448,22 +456,24 @@ b7 Rb8 47. Re7 f5 48. Kc5 f4 49. Kd4 f3 50. Ke3 1/2-1/2
 [Black "Murariu, Andrei"]
 [Result "0-1"]
 
-1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 10. a3 {Not one of the main continuations here but a fairly 
-popular move.}  Qb6 11. e5 Qxd4 12. Qe1 {White opts to keep the queens on. 
-Exchanging on d4 would lead to a roughly equal game too.}  Qa7 13. exf6 g6 14. 
-Nd5 Kd8 15. Ne7 Nxe7 16. fxe7+ Bxe7 17. Qc3 $6 {White will struggle to maintain 
-equality after this, as Black can easily defend himself on the kingside. It was 
-better to claim the pawn back after 17.Rxd6.}  Rf8 18. Qg7 Ke8 19. Bxe7 Kxe7 20. 
-Bd3 Qc5 $6 {Too cautious. Black should have simply taken another pawn 20...Qe3+ 
-21.Kb1 Qxf4}  21. g4 Rg8 22. Qh6 b4 23. axb4 Qxb4 24. Qg5+ f6 {Now White 
-equalizes. Black should have kept the initiative by playing}  (24... Kf8 25. 
-Qh6+ Rg7) 25. Qh6 Be8 {Not}  26. Rhe1 (26. Qxh7+ Bf7 27. Qh3 Rab8) 26... Rb8 27. 
-b3 Qa3+ 28. Kb1 Rxb3+ {This rook sacrifice guarantees Black a draw by perpetual 
-check.}  29. cxb3 Qxb3+ 30. Kc1 Qc3+ 31. Bc2 Bf7 32. Re2 Rc8 33. f5 g5 (33... 
-Qa1+ 34. Kd2 Qc3+ { would lead to an immediate draw but Black is hoping to tempt 
-White into a trap.} ) 34. fxe6 $4 {Opening the c2-g6 diagonal for the black 
-bishop loses by force.}  Qa3+ 35. Kd2 Rxc2+ $1 36. Kxc2 Bg6+ 37. Kd2 Qb4+ 0-1
+ {[%eval +0.40]} 1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f4 b5 10. a3 {Not one of the main continuations here 
+but a fairly popular move.}  Qb6 11. e5 Qxd4 12. Qe1 {White opts to keep the 
+queens on. Exchanging on d4 would lead to a roughly equal game too.}  Qa7 13. 
+exf6 g6 14. Nd5 Kd8 15. Ne7 Nxe7 16. fxe7+ Bxe7 17. Qc3 $6 {White will struggle 
+to maintain equality after this, as Black can easily defend himself on the 
+kingside. It was better to claim the pawn back after 17.Rxd6.}  Rf8 18. Qg7 Ke8 
+19. Bxe7 Kxe7 20. Bd3 {[%eval -1.00]}  Qc5 $6 {Too cautious. Black should have 
+simply taken another pawn.}  (20... Qe3+ {[%eval -0.97]}  21. Kb1 {[%eval 
+-1.01]}  Qxf4 {[%eval -0.74]} ) 21. g4 Rg8 22. Qh6 b4 23. axb4 Qxb4 24. Qg5+ f6 
+{Now White equalizes. Black should have kept the initiative by playing 24... 
+Kf8.}  (24... Kf8 25. Qh6+ Rg7) 25. Qh6 Be8 {[%eval 0.00]}  26. Rhe1 (26. Qxh7+ 
+$4 {[%eval -2.84]}  Bf7 27. Qh3 Rab8) 26... Rb8 27. b3 Qa3+ 28. Kb1 Rxb3+ {This 
+rook sacrifice guarantees Black a draw by perpetual check.}  29. cxb3 Qxb3+ 30. 
+Kc1 Qc3+ 31. Bc2 Bf7 32. Re2 Rc8 33. f5 g5 (33... Qa1+ 34. Kd2 Qc3+ {would lead 
+to an immediate draw but Black is hoping to tempt White into a trap.} ) 34. fxe6 
+$4 {[%eval -2.17]Opening the c2-g6 diagonal for the black bishop loses by 
+force.}  Qa3+ 35. Kd2 Rxc2+ $1 36. Kxc2 Bg6+ 37. Kd2 Qb4+ 0-1
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
@@ -474,13 +484,13 @@ bishop loses by force.}  Qa3+ 35. Kd2 Rxc2+ $1 36. Kxc2 Bg6+ 37. Kd2 Qb4+ 0-1
 [Black "Moiseenko, Vadim"]
 [Result "0-1"]
 
-1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bg5 e6 7. Qd2 a6 8. 
-O-O-O Bd7 9. f4 b5 10. Nxc6 Bxc6 11. Bd3 Be7 12. Rhe1 {Immediate e5 is a more 
-popular choice}  (12. e5 dxe5 13. fxe5 Nd7 14. Bxe7 Qxe7) 12... O-O 13. e5 dxe5 
-14. fxe5 Nd7 15. Bxe7 Qxe7 16. Qf4 Nc5 17. Ne4 Bxe4 18. Bxe4 Rac8 19. Rd6 Nxe4 
-20. Qxe4 Qg5+ {Black has a slight advantage in the endgame with all major pieces 
-still on the board.}  21. Kb1 Rc4 22. Qe2 Rfc8 23. Rxa6 Qf5 24. Rc1 R4c5 25. Ra5 
-Rxe5 26. Qf3 $4 {White overlooks mate in 4.}  Qxc2+ 0-1
+ {[%eval +0.46]} 1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bg5 e6 
+7. Qd2 a6 8. O-O-O Bd7 9. f4 b5 10. Nxc6 Bxc6 11. Bd3 Be7 12. Rhe1 {Immediate e5 
+is a more popular choice}  (12. e5 dxe5 13. fxe5 Nd7 14. Bxe7 Qxe7) 12... O-O 
+13. e5 dxe5 14. fxe5 Nd7 15. Bxe7 Qxe7 16. Qf4 Nc5 17. Ne4 Bxe4 18. Bxe4 Rac8 
+19. Rd6 Nxe4 20. Qxe4 Qg5+ {Black has a slight advantage in the endgame with all 
+major pieces still on the board.}  21. Kb1 Rc4 22. Qe2 Rfc8 23. Rxa6 Qf5 24. Rc1 
+R4c5 25. Ra5 Rxe5 26. Qf3 $4 {White overlooks mate in 4.}  Qxc2+ 0-1
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
@@ -492,7 +502,7 @@ Rxe5 26. Qf3 $4 {White overlooks mate in 4.}  Qxc2+ 0-1
 [Black "Jankovic, Alojzije"]
 [Result "0-1"]
 
- {[%eval -2.88]}  a3 {[%eval -2.46]}  2. Nd1 Bb7 3. Ne3 Bxe3 4. Rxe3 {Losing. 
+ {[%eval -2.77]}  a3 {[%eval -2.46]}  2. Nd1 Bb7 3. Ne3 Bxe3 4. Rxe3 {Losing. 
 26.Qxe3 was necessary.}  Rhg8 {Loses immediately. If}  5. Qd2 (5. Re2 {then}  
 Qd4 6. Qc1 {and simple}  Bxe4 {or computer recommended Rxc4}  7. Rd1 {Bxe4 
 Rxd4Rxd4 .} ) 5... Rxg2 6. Qc1 Rcg8 0-1
@@ -501,16 +511,43 @@ Rxd4Rxd4 .} ) 5... Rxg2 6. Qc1 Rcg8 0-1
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Exercise"]
 [FEN "r2qkb1r/3b1ppp/3ppn2/1N4B1/1n2PP2/P1N5/1PPQ2PP/2KR3R b kq - 0 1"]
+[Event ""]
 [Date "2021.08.20"]
 [White "Rauzer 9.f4: Ideas"]
 [Black "10.Bb5?!"]
 [Result "*"]
 
- Na2 $1 (1... Bxb5 { only equalizes.} ) 2. Nxa2 Bxb5 {More tenacious is}  3. e5 
-(3. Nc3 Bc6 4. Qe2 Be7 5. e5 Nd5 { but here too black is clearly better.} ) 3... 
-dxe5 4. Qxd8 Rxd8 5. Rxd8 Kxd8 6. fxe5 h6 7. Bxf6 gxf6 8. exf6 Bd6 $19 {White 
-has 3 connected unopposed pawns for the minor piece but their position is lost 
-due to the active, coordinated black pieces.}  *
+ {[%eval -0.64]}  Na2 $1 (1... Bxb5 { only equalizes.} ) 2. Nxa2 Bxb5 {More 
+tenacious is}  3. e5 (3. Nc3 Bc6 4. Qe2 Be7 5. e5 Nd5 { but here too black is 
+clearly better.} ) 3... dxe5 4. Qxd8 Rxd8 5. Rxd8 Kxd8 6. fxe5 h6 7. Bxf6 gxf6 
+8. exf6 Bd6 $19 {White has 3 connected unopposed pawns for the minor piece but 
+their position is lost due to the active, coordinated black pieces.}  *
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Exercise"]
+[FEN "r4k1r/q3bp2/4pp2/3b4/1pB2P2/6Pp/PpPNQ2P/1K1R1R2 b - - 1 1"]
+[Event ""]
+[Date "2012.12.17"]
+[White "Rauzer 9.f4: Ideas"]
+[Black "Black attacks on queenside"]
+[Result "0-1"]
+
+ {[%eval -14.42]Loses immediately in a very difficult position.}  b3 {27 Mazi,L 
+2351 -Martinovic,S 2530 Zadar 2012}  0-1
+
+[ChapterId "2"]
+[ChapterTitle "Rauzer 9.f4"]
+[ContentType "Exercise"]
+[FEN "2r5/4kb1p/p2pPp1Q/6p1/6P1/2q5/2B1R2P/2KR4 b - - 0 1"]
+[Event "EU-ch 8th"]
+[Date "2007.04.13"]
+[White "Brkic, Ante"]
+[Black "Murariu, Andrei"]
+[Result "0-1"]
+
+ {[%eval -3.19]Opening the c2-g6 diagonal for the black bishop loses by force.}  
+Qa3 2. Kd2 Rxc2 $1 3. Kxc2 Bg6 4. Kd2 Qb4 0-1
 
 
 
@@ -588,7 +625,7 @@ hxg6 fxg6 25. Bg5 Bxg5 26. Qxg5 Rxc2 {Shamkovich - Ivanovic, Hamilton 1978}  *
 [ChapterTitle "Rauzer 9.f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f3: Lines"]
 [Black "Line: 9...Nxd4"]
 [Result "*"]
@@ -610,7 +647,7 @@ game are}  g5 $5 (16... O-O {[%eval +0.99]} )  (16... Rc8 {[%eval +0.87]} )
 [ChapterTitle "Rauzer 9.f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f3: Lines"]
 [Black "Line: 9...Nxd4"]
 [Result "*"]
@@ -623,7 +660,7 @@ Nxd5 14. Nxd5 Qxd5 15. Bc4 Qxd4 16. Bxd4 O-O-O $11 {The position is equal.}  *
 [ChapterTitle "Rauzer 9.f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f3: Lines"]
 [Black "Line: 9...Be7"]
 [Result "*"]
@@ -730,7 +767,7 @@ d5 {The thematic d6-d5 is a solid continuation here.}  13. Bd3 Bb7 14. Kh1 Nd7
 [ChapterTitle "Anti-Sozin"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Anti-Sozin: Lines"]
 [Black "Line: 7.Be3"]
 [Result "*"]
@@ -745,7 +782,7 @@ Qe2 Qa5 {We will look at sharp 9...Nxe4 next.}  10. Bd2 Qd8 *
 [ChapterTitle "Anti-Sozin"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Anti-Sozin: Lines"]
 [Black "Line: 7.Be3"]
 [Result "*"]
@@ -760,7 +797,7 @@ Bb7 13. Qh3 Nb4 14. a3 Nxd3 15. cxd3 O-O 16. Rac1 Qd8 $11 *
 [ChapterTitle "Anti-Sozin"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Anti-Sozin: Lines"]
 [Black "Line: 7.Nxc6"]
 [Result "*"]
@@ -775,7 +812,7 @@ Rad1 Rb8 15. b3 Nf6 16. Kh1 Qa5 $11 *
 [ChapterTitle "Anti-Sozin"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Anti-Sozin: Lines"]
 [Black "Line: 7.Ndb5"]
 [Result "*"]
@@ -792,7 +829,7 @@ moves, to a standard position of the Sozin variation.} ) 10. Nb3 Qc7 11. Be2 e6
 [ChapterTitle "Anti-Sozin"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Anti-Sozin: Lines"]
 [Black "Line: 7.Nde2"]
 [Result "*"]
@@ -943,7 +980,7 @@ After}  11. Bxe7 $4 (11. Nxe4 { Black would gain a big advantage playing}  Qb4)
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.f5"]
 [Result "*"]
@@ -955,7 +992,7 @@ After}  11. Bxe7 $4 (11. Nxe4 { Black would gain a big advantage playing}  Qb4)
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.exd5"]
 [Result "*"]
@@ -968,7 +1005,7 @@ Rad1 Rfd8 15. fxe5 Nxe5 16. Rfe1 f6 *
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.exd5"]
 [Result "*"]
@@ -982,7 +1019,7 @@ equality too.} )  *
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.exd5"]
 [Result "*"]
@@ -996,7 +1033,7 @@ previous line, Black prefers a more complicated play with queens on the board.}
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.exd5"]
 [Result "*"]
@@ -1009,7 +1046,7 @@ Na5 $10 *
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.exd5"]
 [Result "*"]
@@ -1023,7 +1060,7 @@ exf4 15. Rd1 Qc8 16. Rxf4 Bg6 17. Bg4 Qc7 18. Rd7 Qb8 19. Rf1 Bd6 20. Rxd6 Qxd6
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.exd5"]
 [Result "*"]
@@ -1037,7 +1074,7 @@ exf4 15. Rd1 Qc8 16. Bxf4 Bg6 17. Bf3 Re8 18. Qg3 a5 19. Bg4 Bf5 20. Bxf5 Qxf5
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.Bf3"]
 [Result "*"]
@@ -1122,7 +1159,7 @@ Rfd8 16. Rc1 Bc6 17. Bxf6 Bxf6 18. Bc4 d5 19. exd5 e4 20. Nxe4 Bxb2 21. Rb1 Nxd5
 [ContentType "Exercise"]
 [FEN "r2q1rk1/pp2bppp/2npbn2/4p3/4PP2/1NN1B3/PPP1B1PP/R2Q1RK1 b - - 0 1"]
 [Event ""]
-[Date ""]
+[Date "????.??.??"]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.f5"]
 [Result "*"]
@@ -1160,7 +1197,7 @@ Armbrust, Bad Zwesten 2006.}  *
 [ChapterTitle "6. f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.f3: Lines"]
 [Black "Line: 10.0-0-0 11.Kb1"]
 [Result "*"]
@@ -1173,7 +1210,7 @@ tactics typical for this variation.}  14. g4 d5 15. g5 Nxe4 16. fxe4 d4 $17 *
 [ChapterTitle "6. f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.f3: Lines"]
 [Black "Line: 10.0-0-0 11.Bb5"]
 [Result "*"]
@@ -1185,7 +1222,7 @@ Be3 O-O 9. Qd2 Be6 10. O-O-O a5 11. Bb5 Nb4 12. a3 Qc7 13. axb4 Bxb3 $15 *
 [ChapterTitle "6. f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.f3: Lines"]
 [Black "Line: 10.Nd5"]
 [Result "*"]
@@ -1197,7 +1234,7 @@ Be3 O-O 9. Qd2 Be6 10. Nd5 a5 11. Bb5 Bxd5 12. exd5 Na7 13. Be2 a4 $11 *
 [ChapterTitle "6. f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.f3: Lines"]
 [Black "Line: 10.Bb5 12.0-0-0"]
 [Result "*"]
@@ -1210,7 +1247,7 @@ $165 7. Nb3 Be7 8. Be3 O-O 9. Qd2 a5 10. Bb5 $1 Na7 11. Bd3 Be6 12. O-O-O Nc8
 [ChapterTitle "6. f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.f3: Lines"]
 [Black "Line: 10.Bb5 12.Rd1"]
 [Result "*"]
@@ -1297,7 +1334,7 @@ fxg3 Qe3 17. Kf1 Bxc3 18. bxc3 Ba6 {Agrusti - Lazarev, Lyon 2005.}  *
 [ChapterTitle "6. Be3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.Be3 Lines"]
 [Black "Line: 6.Be3 Ng4 7.Bb5 h6"]
 [Result "*"]
@@ -1309,7 +1346,7 @@ Qb6 $11 *
 [ChapterTitle "6. Be3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.Be3 Lines"]
 [Black "Line: 6.Be3 Ng4 7.Bb5 Nxe3"]
 [Result "*"]
@@ -1321,7 +1358,7 @@ option is}  Ng4 7. Bb5 Nxe3 8. fxe3 Bd7 9. O-O e6 $11 *
 [ChapterTitle "6. Be3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.Be3 Lines"]
 [Black "Line: 6.Be3 e5 7.Nf3"]
 [Result "*"]
@@ -1337,7 +1374,7 @@ creating a weakness on}  (12. Rfd1 Nxb3 13. axb3 Qc7 14. Bg5 Rac8 15. Bxf6 Bxf6
 [ChapterTitle "6. Be3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.Be3 Lines"]
 [Black "Line: 6.Be3 e5 7.Ndb5"]
 [Result "*"]
@@ -1353,7 +1390,7 @@ Be7 (11... Nd4 $5 { next.} ) 12. O-O O-O $11 *
 [ChapterTitle "6. Be3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.Be3 Lines"]
 [Black "Line: 6.Be3 e5 7.Ndb5"]
 [Result "*"]
@@ -1423,7 +1460,7 @@ on the other knight's retreat:}  (7. Nf3) )  (6... e5 7. Nf3)  *
 [ChapterTitle "6. f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.f4 Lines"]
 [Black "6.f4 e5 7.Nf3 Be7 8.Bc4"]
 [Result "*"]
@@ -1497,7 +1534,7 @@ a6 13. Nd5 Nxd5) 13. Ng3 d5 $15 *
 [ChapterTitle "Rare Moves"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rare Moves: Ideas"]
 [Black "Intro"]
 [Result "*"]
@@ -1513,7 +1550,7 @@ Scheveningen variations where those White's moves are not considered dangerous.}
 [ChapterTitle "Rare Moves"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rare Moves: Ideas"]
 [Black "6.h3: Black pushes d5"]
 [Result "*"]
@@ -1531,7 +1568,7 @@ a6 13. Nd5 Nxd5) 13. Ng3 d5 $15 *
 [ChapterTitle "Rare Moves"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rare Moves: Ideas"]
 [Black "6.h3: White prevents d5"]
 [Result "*"]
