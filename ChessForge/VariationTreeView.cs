@@ -1598,7 +1598,11 @@ namespace ChessForge
                 return;
             }
 
+            // we are refreshing the move's text in case we have a change in NAG,
+            // be sure to keep any leading spaces
+            string spaces = TextUtils.GetLeadingSpaces(r.Text);
             r.Text = BuildNodeText(nd, IsMoveTextWithNumber(r.Text));
+            r.Text = spaces + r.Text.TrimStart();
 
             Run r_comment;
             _dictNodeToCommentRun.TryGetValue(nd.NodeId, out r_comment);
