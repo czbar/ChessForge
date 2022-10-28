@@ -210,7 +210,11 @@ namespace ChessForge
             Configuration.Initialize(this);
             Configuration.StartDirectory = App.AppPath;
             Configuration.ReadConfigurationFile();
-            if (Configuration.IsMainWinPosValid())
+            if (Configuration.IsMainWinMaximized())
+            {
+                this.WindowState = WindowState.Maximized;
+            }
+            else if (Configuration.IsMainWinPosValid())
             {
                 this.Left = Configuration.MainWinPos.Left;
                 this.Top = Configuration.MainWinPos.Top;
