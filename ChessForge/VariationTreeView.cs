@@ -263,10 +263,10 @@ namespace ChessForge
                     EnableStudyTreeMenus(_mainWin.UiCmnWorkbookRightClick, isEnabled);
                     break;
                 case WorkbookManager.TabViewType.MODEL_GAME:
-                    EnableModelGamesMenus(_mainWin.UiCmModelGames, isEnabled);
+                    EnableModelGamesMenus(_mainWin.UiCmModelGames, true);
                     break;
                 case WorkbookManager.TabViewType.EXERCISE:
-                    EnableExercisesMenus(_mainWin.UiCmExercises, isEnabled);
+                    EnableExercisesMenus(_mainWin.UiCmExercises, true);
                     break;
                 default:
                     break;
@@ -1598,7 +1598,11 @@ namespace ChessForge
                 return;
             }
 
+            // we are refreshing the move's text in case we have a change in NAG,
+            // be sure to keep any leading spaces
+            string spaces = TextUtils.GetLeadingSpaces(r.Text);
             r.Text = BuildNodeText(nd, IsMoveTextWithNumber(r.Text));
+            r.Text = spaces + r.Text.TrimStart();
 
             Run r_comment;
             _dictNodeToCommentRun.TryGetValue(nd.NodeId, out r_comment);

@@ -189,11 +189,18 @@ namespace ChessForge
             if (checkDirty && !IsDirty)
                 return;
 
-            if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
+            try
             {
-                string chfText = WorkbookFileTextBuilder.BuildWorkbookText();
-                File.WriteAllText(WorkbookFilePath, chfText);
-                _isDirty = false;
+                if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
+                {
+                    string chfText = WorkbookFileTextBuilder.BuildWorkbookText();
+                    File.WriteAllText(WorkbookFilePath, chfText);
+                    _isDirty = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to save file: " + ex.Message, "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -857,10 +864,6 @@ namespace ChessForge
                     {
                         _mainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL);
                     }
-
-                    //// adjust tab controls position
-                    //_mainWin.UiTabCtrlManualReview.Margin = includeEvals ? new Thickness(275, 5, 5, 5) : new Thickness(175, 5, 5, 5);
-                    //_mainWin.UiTabCtrlTraining.Margin = includeEvals ? new Thickness(185, 5, 5, 5) : new Thickness(5, 5, 5, 5);
                 }
             });
         }
@@ -883,18 +886,29 @@ namespace ChessForge
                     // adjust tab controls position
                     if (TrainingSession.IsTrainingInProgress)
                     {
-                        _mainWin.UiTabCtrlTraining.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
+                        if (show)
+                        {
+                            MainWin.ResizeTabControl(_mainWin.UiTabCtrlTraining, TabControlSizeMode.SHOW_ENGINE_GAME_LINE);
+                        }
+                        else
+                        {
+                            MainWin.ResizeTabControl(_mainWin.UiTabCtrlTraining, TabControlSizeMode.HIDE_ENGINE_GAME_LINE);
+                        }
+                        //_mainWin.UiTabCtrlTraining.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
                     }
                     else
                     {
-                        _mainWin.UiTabCtrlManualReview.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
+                        if (show)
+                        {
+                            MainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.SHOW_ENGINE_GAME_LINE);
+                        }
+                        else
+                        {
+                            MainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.HIDE_ENGINE_GAME_LINE);
+                        }
+                        //_mainWin.UiTabCtrlManualReview.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
 
                         _mainWin.UiTabStudyTree.Focus();
-                        //_mainWin.UiRtbStudyTreeView.Opacity = 0.1;
-                        //_mainWin.UiRtbStudyTreeView.IsEnabled = false;
-
-                        //_mainWin.UiTabBookmarks.Opacity = 0.1;
-                        //_mainWin.UiTabBookmarks.IsEnabled = false;
                     }
                 }
             });

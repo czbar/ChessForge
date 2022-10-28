@@ -67,6 +67,11 @@ namespace ChessForge
         public static int EngineMpv = 5;
 
         /// <summary>
+        /// Scoresheet control position.
+        /// </summary>
+        public static int ScoreSheetPosition = 0;
+
+        /// <summary>
         /// Whether to show the generic PGN file info
         /// when opening a non-Chess Forge file.
         /// </summary>
@@ -118,6 +123,7 @@ namespace ChessForge
         /// </summary>
         private const string CFG_ENGINE_EVALUATION_TIME = "EngineEvaluationTime";
         private const string CFG_ENGINE_MPV = "EngineMpv";
+        private const string CFG_SCORESHEET_POSITION = "ScoreSheetPosition";
         private const string CFG_VIABLE_MOVE_CP_DIFF = "ViableMoveCpDiff";
 
         /// <summary>
@@ -254,6 +260,8 @@ namespace ChessForge
                 sb.Append(CFG_ENGINE_EVALUATION_TIME + "=" + EngineEvaluationTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_MPV + "=" + EngineMpv.ToString() + Environment.NewLine);
 
+                sb.Append(CFG_SCORESHEET_POSITION + "=" + ScoreSheetPosition.ToString() + Environment.NewLine);
+
                 sb.Append(CFG_VIABLE_MOVE_CP_DIFF + "=" + ViableMoveCpDiff.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_PGN_EXP_BOOKMARKS + "=" + (PgnExportBookmarks ? "1" : "0") + Environment.NewLine);
@@ -283,10 +291,18 @@ namespace ChessForge
         /// <returns></returns>
         public static string GetWindowPosition()
         {
-            double left = Application.Current.MainWindow.Left;
-            double top = Application.Current.MainWindow.Top;
-            double right = left + Application.Current.MainWindow.Width;
-            double bottom = top + Application.Current.MainWindow.Height;
+            double left = 0;
+            double top = 0;
+            double right = 0;
+            double bottom = 0;
+
+            if (Application.Current.MainWindow.WindowState != WindowState.Maximized)
+            {
+                left = Application.Current.MainWindow.Left;
+                top = Application.Current.MainWindow.Top;
+                right = left + Application.Current.MainWindow.Width;
+                bottom = top + Application.Current.MainWindow.Height;
+            }
 
             return CFG_MAIN_WINDOW_POS + " = " + left.ToString() + "," + top.ToString() + ","
                 + right.ToString() + "," + bottom.ToString() + Environment.NewLine;
@@ -308,6 +324,15 @@ namespace ChessForge
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Checks if the last Window position was recorded as maximized.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsMainWinMaximized()
+        {
+            return MainWinPos.Right == 0 && MainWinPos.Left == 0 && MainWinPos.Bottom == 0 && MainWinPos.Top == 0; 
         }
 
         /// <summary>
@@ -491,6 +516,9 @@ namespace ChessForge
                             break;
                         case CFG_ENGINE_MPV:
                             int.TryParse(value, out EngineMpv);
+                            break;
+                        case CFG_SCORESHEET_POSITION:
+                            int.TryParse(value, out ScoreSheetPosition);
                             break;
                         case CFG_VIABLE_MOVE_CP_DIFF:
                             int.TryParse(value, out ViableMoveCpDiff);

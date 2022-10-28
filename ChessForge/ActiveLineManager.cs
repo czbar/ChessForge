@@ -116,6 +116,13 @@ namespace ChessForge
         {
             Line.SetNodeList(line);
             _dgActiveLine.ItemsSource = Line.MoveList;
+            if (Configuration.DebugLevel > 0)
+            {
+                if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
+                {
+                    AppLog.Message("_dgActiveLine.ItemsSource bound to Exercise, Line.MoveList.Count=" + Line.MoveList.Count.ToString());
+                }
+            }
             _selectedRow = -1;
             _selectedColumn = -1;
         }
@@ -318,13 +325,22 @@ namespace ChessForge
                 cellContent = cell.Column.GetCellContent(cell.Item);
             }
 
-            if (cellContent != null)
+            try
             {
                 _dgActiveLine.SelectedCells.Add(cell);
             }
-            else
+            catch(Exception ex)
             {
-                DebugUtils.ShowDebugMessage("Cell content is null in " + "SelectPly");
+                AppLog.Message("_dgActiveLine.SelectedCells.Add(cell) in SelectPly", ex);
+            }
+
+            if (cellContent == null)
+            {
+                string msg = "Cell content is null in SelectPly(): " + "row=" + _selectedRow.ToString() + " column=" + _selectedColumn.ToString();
+                DebugUtils.ShowDebugMessage(msg);
+                AppLog.Message(msg);
+                AppLog.Message("_dgActiveLine.Items.Count=" + _dgActiveLine.Items.Count.ToString());
+                AppLog.Message("Line.MoveList.Count=" + Line.MoveList.Count.ToString());
             }
         }
 

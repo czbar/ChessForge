@@ -818,6 +818,7 @@ namespace ChessForge
                 else
                 {
                     MainChessBoard.SetStartingPosition();
+                    ClearTabViews();
                 }
 
                 AppStateManager.ConfigureMainBoardContextMenu();
@@ -886,6 +887,7 @@ namespace ChessForge
                 else
                 {
                     MainChessBoard.SetStartingPosition();
+                    ClearTabViews();
                 }
 
                 AppStateManager.ConfigureMainBoardContextMenu();
