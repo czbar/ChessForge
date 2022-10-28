@@ -224,6 +224,8 @@ namespace ChessForge
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
 
+            SetupGuiForNewSession(AppStateManager.WorkbookFilePath, true);
+
             AppStateManager.SetupGuiForCurrentStates();
             //StudyTree.CreateNew();
             _studyTreeView.BuildFlowDocumentForVariationTree();
