@@ -1,4 +1,4 @@
-[ChessForgeWorkbook "Ridiculous Sacrifices"]
+[ChessForgeWorkbook "Ridiculous Sacrifices - from lichess.org"]
 [TrainingSide "White"]
 [White "Chess Forge"]
 [Black "Workbook File"]
@@ -10,7 +10,8 @@
 [ChapterTitle "Ridiculous Sacrifices"]
 [ContentType "Study Tree"]
 
- *
+ {This is a lichess.org study (https://lichess.org/study/ReJfRphr) adopted as a 
+demo for Chess Forge. Content created by https://lichess.org/@/Crusher_Boy.}  *
 
 [ChapterId "1"]
 [ChapterTitle "Ridiculous Sacrifices"]
@@ -37,11 +38,12 @@ killer move which cannot be stopped.} 1. d8=N {[%eval +#1]the only winning move}
 [Black ""]
 [Result "1/2-1/2"]
 
- {[%eval -5.49]In this position, black is up 2 rooks, but white on the other 
-hand has a plan that can turn this game into a draw} 1. Ba4+ {[%eval -11.87]}  
-Kxa4 {[%eval -8.54]}  2. b3+ {[%eval -8.56]}  Kb5 {[%eval -8.52]}  3. c4+ 
-{[%eval -9.11]}  Kc6 {[%eval -8.52]}  4. d5+ {[%eval -8.37]}  Kd7 {[%eval 
--8.37]}  5. e6+ {[%eval -8.21]}  Kxd8 {[%eval -8.64]}  6. f5 {[%eval -6.82]}  1/2-1/2
+ {[%eval -8.24]In this position, black is up 2 rooks, but white on the other 
+hand has a plan that can turn this game into a draw} 1. Ba4+ {[%eval -13.71]}  
+Kxa4 {[%eval -13.86]}  2. b3+ {[%eval -15.06]}  Kb5 {[%eval -15.84]}  3. c4+ 
+{[%eval -9.05]}  Kc6 {[%eval -8.68]}  4. d5+ {[%eval -8.72]}  Kd7 {[%eval 
+-8.29]}  5. e6+ {[%eval -8.89]}  Kxd8 {[%eval -8.64]}  (5... Ke8 {[%eval -8.89]} 
+ 6. f5 {[%eval -8.55]}  Bxd8) 6. f5 {[%eval -6.82]}  1/2-1/2
 
 [ChapterId "1"]
 [ChapterTitle "Ridiculous Sacrifices"]
@@ -53,10 +55,10 @@ Kxa4 {[%eval -8.54]}  2. b3+ {[%eval -8.56]}  Kb5 {[%eval -8.52]}  3. c4+
 [Black ""]
 [Result "0-1"]
 
- {[%eval -8.85]In this tricky position, white seems to be doing better, but 
-black has a tactical blow that can deliver checkmate}  Qxb4+ {[%eval -#3]}  2. 
-Bxb4 {[%eval -#3]}  Rd2 {[%eval -#2]}  3. Qxd2 {[%eval -#2]}  Nc2+ {[%eval -#1]} 
- 4. Qxc2 {[%eval -#1]}  axb4# {[%eval #]}  0-1
+ {[%eval -#4]In this tricky position, white seems to be doing better, but black 
+has a tactical blow that can deliver checkmate}  Qxb4+ {[%eval -#3]}  2. Bxb4 
+{[%eval -#3]}  Rd2 {[%eval -#2]}  3. Qxd2 {[%eval -#2]}  Nc2+ {[%eval -#1]}  4. 
+Qxc2 {[%eval -#1]}  axb4# {[%eval #]}  0-1
 
 [ChapterId "1"]
 [ChapterTitle "Ridiculous Sacrifices"]
