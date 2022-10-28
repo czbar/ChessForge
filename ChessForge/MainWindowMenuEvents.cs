@@ -410,6 +410,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnAddChapter_Click(object sender, RoutedEventArgs e)
         {
+            Chapter lastActiveChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
             if (ShowChapterTitleDialog(chapter))
             {
@@ -418,6 +419,7 @@ namespace ChessForge
             else
             {
                 // remove the just created Chapter
+                WorkbookManager.SessionWorkbook.ActiveChapter = lastActiveChapter;
                 SessionWorkbook.Chapters.Remove(chapter);
             }
         }
