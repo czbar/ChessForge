@@ -1659,12 +1659,14 @@ namespace ChessForge
                 return "";
             }
 
-            StringBuilder sb = new StringBuilder(" {");
+//            StringBuilder sb = new StringBuilder(" {");
+            StringBuilder sb = new StringBuilder(" [");
             if (!string.IsNullOrEmpty(nd.Comment))
             {
                 sb.Append(nd.Comment);
             }
-            sb.Append("}");
+//            sb.Append("}");
+            sb.Append("]");
 
             // if this is a root node add a space because the first move does not have it in front.
             if (nd.NodeId == 0)
