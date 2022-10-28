@@ -886,18 +886,29 @@ namespace ChessForge
                     // adjust tab controls position
                     if (TrainingSession.IsTrainingInProgress)
                     {
-                        _mainWin.UiTabCtrlTraining.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
+                        if (show)
+                        {
+                            MainWin.ResizeTabControl(_mainWin.UiTabCtrlTraining, TabControlSizeMode.SHOW_ENGINE_GAME_LINE);
+                        }
+                        else
+                        {
+                            MainWin.ResizeTabControl(_mainWin.UiTabCtrlTraining, TabControlSizeMode.HIDE_ENGINE_GAME_LINE);
+                        }
+                        //_mainWin.UiTabCtrlTraining.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
                     }
                     else
                     {
-                        _mainWin.UiTabCtrlManualReview.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
+                        if (show)
+                        {
+                            MainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.SHOW_ENGINE_GAME_LINE);
+                        }
+                        else
+                        {
+                            MainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.HIDE_ENGINE_GAME_LINE);
+                        }
+                        //_mainWin.UiTabCtrlManualReview.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
 
                         _mainWin.UiTabStudyTree.Focus();
-                        //_mainWin.UiRtbStudyTreeView.Opacity = 0.1;
-                        //_mainWin.UiRtbStudyTreeView.IsEnabled = false;
-
-                        //_mainWin.UiTabBookmarks.Opacity = 0.1;
-                        //_mainWin.UiTabBookmarks.IsEnabled = false;
                     }
                 }
             });
