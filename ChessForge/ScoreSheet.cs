@@ -299,7 +299,18 @@ namespace ChessForge
             if (nd.Position.ColorToMove == PieceColor.White)
             {
                 // previous move was by White
-                MoveWithEval move = MoveList[MoveList.Count - 1];
+                // If we are in exercise that starts fronm a Black move there will be no moves yet
+                // and we need to create one
+                MoveWithEval move;
+                if (MoveList.Count == 0)
+                {
+                    move = new MoveWithEval();
+                    MoveList.Add(move);
+                }
+                else
+                {
+                    move = MoveList[MoveList.Count - 1];
+                }
                 move.BlackPly = nd.GetPlyText(true);
                 move.BlackEval = nd.EngineEvaluation;
                 move.BlackNodeId = nd.NodeId;
