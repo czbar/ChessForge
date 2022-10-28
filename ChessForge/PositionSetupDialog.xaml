@@ -33,9 +33,9 @@
         <Label x:Name="UiLblWhite" Content="White" HorizontalAlignment="Left" Margin="456,178,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblBlack" Content="Black" HorizontalAlignment="Left" Margin="454,214,0,0" VerticalAlignment="Top"/>
         <CheckBox x:Name="UiCbWhiteCastleShort" Content="" HorizontalAlignment="Left" Margin="586,183,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.389,0.951"/>
-        <Label x:Name="UiLblWhiteCastleShort" Content="O-O" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="549,178,0,0"/>
+        <Label x:Name="UiLblWhiteCastleShort" Content="O-O" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="551,178,0,0"/>
         <CheckBox x:Name="UiCbWhiteCastleLong" Content="" HorizontalAlignment="Left" Margin="682,183,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="UiLblWhiteCastleLong" Content="O-O-O" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="628,177,0,0"/>
+        <Label x:Name="UiLblWhiteCastleLong" Content="O-O-O" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="631,177,0,0"/>
 
         <CheckBox x:Name="UiCbBlackCastleShort" Content="" HorizontalAlignment="Left" Margin="586,220,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblBlackCastleShort" Content="O-O" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="551,213,0,0"/>
