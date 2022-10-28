@@ -274,5 +274,40 @@ namespace ChessPosition
 
             return sbErrors.ToString();
         }
+
+        /// <summary>
+        /// Returns a string representing with the leading spaces
+        /// of the passed string.
+        /// Returns an empty string if no leading spaces found.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string GetLeadingSpaces(string text)
+        {
+            if (text == null)
+                return "";
+
+            int spaceCount = 0;
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (text[i] == ' ')
+                {
+                    spaceCount++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (spaceCount == 0)
+            {
+                return "";
+            }
+            else
+            {
+                return text.Substring(0, spaceCount);
+            }
+        }
     }
 }
