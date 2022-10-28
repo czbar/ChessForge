@@ -111,7 +111,7 @@ namespace ChessPosition
             {
                 pos.DynamicProperties = (byte)(pos.DynamicProperties & ~Constants.BlackQueensideCastle);
             }
-            if (GetPieceType(pos.Board[7, 7]) != PieceType.Rook || GetPieceColor(pos.Board[0, 7]) != PieceColor.Black)
+            if (GetPieceType(pos.Board[7, 7]) != PieceType.Rook || GetPieceColor(pos.Board[7, 7]) != PieceColor.Black)
             {
                 pos.DynamicProperties = (byte)(pos.DynamicProperties & ~Constants.BlackKingsideCastle);
             }
