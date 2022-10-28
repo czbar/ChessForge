@@ -189,11 +189,18 @@ namespace ChessForge
             if (checkDirty && !IsDirty)
                 return;
 
-            if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
+            try
             {
-                string chfText = WorkbookFileTextBuilder.BuildWorkbookText();
-                File.WriteAllText(WorkbookFilePath, chfText);
-                _isDirty = false;
+                if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
+                {
+                    string chfText = WorkbookFileTextBuilder.BuildWorkbookText();
+                    File.WriteAllText(WorkbookFilePath, chfText);
+                    _isDirty = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to save file: " + ex.Message, "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
