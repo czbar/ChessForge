@@ -81,12 +81,12 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Removes castling rights, if they conflict with the king or rook psoitions. 
+        /// Removes castling rights, if they conflict with the king or rook positions. 
         /// </summary>
         /// <param name="pos"></param>
         private static void CorrectCastlingRights(ref BoardPosition pos)
         {
-            // Remove rights based in Kings' positions
+            // Remove rights based on Kings' positions
             if (GetPieceType(pos.Board[4, 0]) != PieceType.King || GetPieceColor(pos.Board[4, 0]) != PieceColor.White)
             {
                 pos.DynamicProperties = (byte)(pos.DynamicProperties & ~(Constants.WhiteKingsideCastle | Constants.WhiteQueensideCastle));
@@ -794,15 +794,15 @@ namespace ChessPosition
             {
                 pos.DynamicProperties = (byte)(pos.DynamicProperties |= Constants.WhiteKingsideCastle);
             }
-            else if (whiteQueen)
+            if (whiteQueen)
             {
                 pos.DynamicProperties = (byte)(pos.DynamicProperties |= Constants.WhiteQueensideCastle);
             }
-            else if (blackKing)
+            if (blackKing)
             {
                 pos.DynamicProperties = (byte)(pos.DynamicProperties |= Constants.BlackKingsideCastle);
             }
-            else if (blackQueen)
+            if (blackQueen)
             {
                 pos.DynamicProperties = (byte)(pos.DynamicProperties |= Constants.BlackQueensideCastle);
             }
