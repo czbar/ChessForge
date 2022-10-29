@@ -5,6 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -857,6 +858,9 @@ namespace ChessForge
             tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, header.GetEventName(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, header.GetDate(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_ROUND, header.GetRound(out _));
+
+            List<string> preamble = header.GetPreamble();
+            tree.Header.SetPreamble(preamble);
         }
 
         /// <summary>

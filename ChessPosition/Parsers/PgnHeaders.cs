@@ -98,6 +98,12 @@ namespace GameTree
         /// </summary>
         public const string KEY_BLACK = "Black";
 
+        /// <summary>
+        /// A preamble line. There can be many per header and will be combined
+        /// together into a preamble.
+        /// </summary>
+        public const string KEY_PREAMBLE = "Preamble";
+
         public const string VALUE_WHITE = "White";
         public const string VALUE_BLACK = "Black";
         public const string VALUE_NO_COLOR = "None";
@@ -136,7 +142,6 @@ namespace GameTree
 
             return header;
         }
-
 
         public static string GetTrainingSideText(PieceColor color)
         {
