@@ -542,16 +542,16 @@ namespace ChessForge
                 Document.Blocks.Add(boardPara);
             }
 
-            Paragraph preamblePara = BuildPreamble();
-            if (preamblePara != null)
-            {
-                Document.Blocks.Add(preamblePara);
-            }
-
             Paragraph buttonShowHide = BuildExerciseShowHideButton();
             if (buttonShowHide != null)
             {
                 Document.Blocks.Add(buttonShowHide);
+            }
+
+            Paragraph preamblePara = BuildPreamble();
+            if (preamblePara != null)
+            {
+                Document.Blocks.Add(preamblePara);
             }
 
             if (contentType != GameData.ContentType.EXERCISE || _variationTree.ShowTreeLines)
@@ -756,7 +756,7 @@ namespace ChessForge
             {
                 _mainWin.UiCnvExercisePrevNext.Visibility = Visibility.Visible;
                 _mainWin.UiGridExercises.RowDefinitions[0].Height = new GridLength(20);
-                _mainWin.UiRtbModelGamesView.Height = 620;
+                _mainWin.UiRtbExercisesView.Height = 620;
 
                 _mainWin.UiLblExcercisePrevNextHint.Visibility = Visibility.Visible;
                 _mainWin.UiLblExerciseCounter.Content = "Exercise " + (exerciseIndex + 1).ToString() + " of " + exerciseCount.ToString();
@@ -965,6 +965,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// On Mouse up on the button brings the first node to view.
+        /// Doing it from the click handler would be premature (ineffective).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventShowHideButtonMouseUp(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (_variationTree.ShowTreeLines)
+                {
+                    SelectLineAndMove("1", _variationTree.Nodes[0].Children[0].NodeId);
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Responds to the Show/Hide button being clicked by
         /// flipping the ShowTreeLines flag and requesting the rebuild of the document.
         /// </summary>
@@ -1014,10 +1034,11 @@ namespace ChessForge
                 }
 
                 btn.Foreground = Brushes.Black;
-                btn.FontSize = 14;
+                btn.FontSize = 12;
                 btn.Width = 120;
-                btn.Height = 30;
+                btn.Height = 20;
                 btn.PreviewMouseDown += EventShowHideButtonClicked;
+                btn.PreviewMouseUp += EventShowHideButtonMouseUp;
 
                 btn.HorizontalContentAlignment = HorizontalAlignment.Center;
                 btn.VerticalContentAlignment = VerticalAlignment.Center;
