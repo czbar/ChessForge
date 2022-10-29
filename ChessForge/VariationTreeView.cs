@@ -67,6 +67,7 @@ namespace ChessForge
             ["9"] = new RichTextPara(130, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(30, 50, 40)), TextAlignment.Left),
             ["10"] = new RichTextPara(135, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(20, 20, 10)), TextAlignment.Left),
             ["default"] = new RichTextPara(140, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(20, 0, 0)), TextAlignment.Left),
+            ["preamble"] = new RichTextPara(40, 10, 16, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
         };
 
         /// <summary>
@@ -267,6 +268,7 @@ namespace ChessForge
                     break;
                 case WorkbookManager.TabViewType.EXERCISE:
                     EnableExercisesMenus(_mainWin.UiCmExercises, true);
+                    //_mainWin.UiCmExercises.IsOpen = true;
                     break;
                 default:
                     break;
@@ -538,6 +540,12 @@ namespace ChessForge
             if (boardPara != null)
             {
                 Document.Blocks.Add(boardPara);
+            }
+
+            Paragraph preamblePara = BuildPreamble();
+            if (preamblePara != null)
+            {
+                Document.Blocks.Add(preamblePara);
             }
 
             Paragraph buttonShowHide = BuildExerciseShowHideButton();
@@ -882,6 +890,30 @@ namespace ChessForge
                 para.Margin = new Thickness(0, 0, 0, 0);
                 Run rResult = new Run("     " + result);
                 para.Inlines.Add(rResult);
+                return para;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Builds a preamble paragarph
+        /// </summary>
+        /// <returns></returns>
+        private Paragraph BuildPreamble()
+        {
+            string preamble = _variationTree.Header.BuildPreambleText();
+            if (!string.IsNullOrWhiteSpace(preamble))
+            {
+                Paragraph para = CreateParagraph("preamble");
+                para.Margin = new Thickness(20, 20, 20, 20);
+                Run rPreamble = new Run(preamble);
+                para.Inlines.Add(rPreamble);
+                para.BorderThickness = new Thickness(1,1,1,1);
+                para.BorderBrush = Brushes.Black;  
+                para.Padding = new Thickness(10,10,10,10);
                 return para;
             }
             else
