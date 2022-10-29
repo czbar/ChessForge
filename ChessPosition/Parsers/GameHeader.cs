@@ -51,6 +51,29 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Combines Preamble strings inserting NewLines between them. 
+        /// </summary>
+        /// <returns></returns>
+        public string BuildPreambleText()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < _preamble.Count; i++)
+            {
+                if (i < _preamble.Count - 1)
+                {
+                    sb.AppendLine(_preamble[i]);
+                }
+                else
+                {
+                    sb.Append(_preamble[i]);
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
         /// Copies strings from a passed list into the preamble
         /// </summary>
         /// <param name="preamble"></param>
