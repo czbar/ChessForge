@@ -100,6 +100,7 @@ namespace GameTree
 
             // clear Nodes, just in case
             _tree.Nodes.Clear();
+            _tree.Header.Clear();
 
             _runningNodeId = 0;
             _remainingGameText = ReadHeaders(pgnGametext);

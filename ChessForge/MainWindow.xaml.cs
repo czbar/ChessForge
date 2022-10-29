@@ -90,6 +90,11 @@ namespace ChessForge
         /// </summary>
         public void RestoreSelectedLineAndMoveInActiveView()
         {
+            if (WorkbookManager.SessionWorkbook == null)
+            {
+                return;
+            }
+
             VariationTree tree = WorkbookManager.SessionWorkbook.ActiveVariationTree;
             if (tree != null)
             {
@@ -221,7 +226,7 @@ namespace ChessForge
                 this.Width = Configuration.MainWinPos.Right - Configuration.MainWinPos.Left;
                 this.Height = Configuration.MainWinPos.Bottom - Configuration.MainWinPos.Top;
             }
-            
+
             DebugUtils.DebugLevel = Configuration.DebugLevel;
 
             // setup control positions
@@ -609,35 +614,69 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if the main board can be used i.e. if the active tab has a variation tree to use.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsACtiveMainBoard()
+        {
+            if (WorkbookManager.SessionWorkbook == null || WorkbookManager.SessionWorkbook.ActiveChapter == null)
+            {
+                return false;
+            }
+
+            if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE && WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex < 0
+                ||
+               WorkbookManager.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME && WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex < 0
+                ||
+               WorkbookManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS
+                ||
+               WorkbookManager.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
         /// Checks if the clicked piece is eligible for making a move.
         /// </summary>
         /// <param name="sqNorm"></param>
         /// <returns></returns>
         private bool CanMovePiece(SquareCoords sqNorm)
         {
-            PieceColor pieceColor = MainChessBoard.GetPieceColor(sqNorm);
-
-            // in the Manual Review, the color of the piece on the main board must match the side on the move in the selected position
-            if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
+            if (IsACtiveMainBoard())
             {
-                TreeNode nd = ActiveLine.GetSelectedTreeNode();
-                if (nd == null)
+                PieceColor pieceColor = MainChessBoard.GetPieceColor(sqNorm);
+
+                // in the Manual Review, the color of the piece on the main board must match the side on the move in the selected position
+                if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
                 {
-                    nd = ActiveVariationTree.Nodes[0];
-                }
+                    TreeNode nd = ActiveLine.GetSelectedTreeNode();
+                    if (nd == null)
+                    {
+                        nd = ActiveVariationTree.Nodes[0];
+                    }
 
-                if (pieceColor != PieceColor.None && pieceColor == nd.ColorToMove)
-                    return true;
+                    if (pieceColor != PieceColor.None && pieceColor == nd.ColorToMove)
+                        return true;
+                    else
+                        return false;
+                }
+                else if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
+                    || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE && !TrainingSession.IsBrowseActive)
+                {
+                    if (EngineGame.GetPieceColor(sqNorm) == EngineGame.ColorToMove)
+                        return true;
+                    else
+                        return false;
+                }
                 else
+                {
                     return false;
-            }
-            else if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
-                || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE && !TrainingSession.IsBrowseActive)
-            {
-                if (EngineGame.GetPieceColor(sqNorm) == EngineGame.ColorToMove)
-                    return true;
-                else
-                    return false;
+                }
             }
             else
             {
@@ -1850,6 +1889,22 @@ namespace ChessForge
             if (WorkbookManager.SessionWorkbook == null)
             {
                 e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// On mouse re-entring check if the left button is released.
+        /// If so, the mouse may left the window while dragging so 
+        /// cancel dragging.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ChessForgeMain_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (DraggedPiece.isDragInProgress && e.LeftButton == MouseButtonState.Released)
+            {
+                DraggedPiece.isDragInProgress = false;
+                ReturnDraggedPiece(false);
             }
         }
     }

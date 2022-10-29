@@ -5,6 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -408,12 +409,13 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnAddChapter_Click(object sender, RoutedEventArgs e)
+        private void UiMnCreateNewChapter_Click(object sender, RoutedEventArgs e)
         {
             Chapter lastActiveChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
             if (ShowChapterTitleDialog(chapter))
             {
+                SelectChapter(chapter.Id, false);
                 AppStateManager.IsDirty = true;
             }
             else
@@ -462,6 +464,7 @@ namespace ChessForge
                 if (success)
                 {
                     _chaptersView.BuildFlowDocumentForChaptersView();
+                    SelectChapter(chapter.Id, false);
                 }
                 else
                 {
@@ -552,6 +555,7 @@ namespace ChessForge
                     VariationTree hold = chapter.ModelGames[index];
                     chapter.ModelGames[index] = chapter.ModelGames[index - 1];
                     chapter.ModelGames[index - 1] = hold;
+                    chapter.ActiveModelGameIndex = index - 1;
 
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     AppStateManager.IsDirty = true;
@@ -581,6 +585,7 @@ namespace ChessForge
                     VariationTree hold = chapter.Exercises[index];
                     chapter.Exercises[index] = chapter.Exercises[index - 1];
                     chapter.Exercises[index - 1] = hold;
+                    chapter.ActiveExerciseIndex = index - 1;
 
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     AppStateManager.IsDirty = true;
@@ -611,6 +616,7 @@ namespace ChessForge
                     VariationTree hold = chapter.ModelGames[index];
                     chapter.ModelGames[index] = chapter.ModelGames[index + 1];
                     chapter.ModelGames[index + 1] = hold;
+                    chapter.ActiveModelGameIndex = index + 1;
 
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     AppStateManager.IsDirty = true;
@@ -640,6 +646,7 @@ namespace ChessForge
                     VariationTree hold = chapter.Exercises[index];
                     chapter.Exercises[index] = chapter.Exercises[index + 1];
                     chapter.Exercises[index + 1] = hold;
+                    chapter.ActiveExerciseIndex = index + 1;
 
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     AppStateManager.IsDirty = true;
@@ -686,8 +693,9 @@ namespace ChessForge
         /// Imports Model Games or Exercises from a PGN file.
         /// </summary>
         /// <param name="contentType"></param>
-        private void ImportGamesFromPgn(GameData.ContentType contentType)
+        private int ImportGamesFromPgn(GameData.ContentType contentType)
         {
+            int gameCount = 0;
             if ((contentType == GameData.ContentType.GENERIC || contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
                 && WorkbookManager.SessionWorkbook.ActiveChapter != null)
             {
@@ -696,7 +704,7 @@ namespace ChessForge
                 {
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     ObservableCollection<GameData> games = new ObservableCollection<GameData>();
-                    int gameCount = WorkbookManager.ReadPgnFile(fileName, ref games, contentType);
+                    gameCount = WorkbookManager.ReadPgnFile(fileName, ref games, contentType);
 
                     int errorCount = 0;
                     StringBuilder sbErrors = new StringBuilder();
@@ -730,6 +738,10 @@ namespace ChessForge
 
                             Mouse.SetCursor(Cursors.Arrow);
                         }
+                        else
+                        {
+                            gameCount = 0;
+                        }
                     }
                     else
                     {
@@ -749,6 +761,7 @@ namespace ChessForge
                     }
                 }
             }
+            return gameCount;
         }
 
 
@@ -832,6 +845,11 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Copies a header from a GameHeader object to the Tree.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="header"></param>
         private void CopyHeaderFromGame(VariationTree tree, GameHeader header)
         {
             tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE, header.GetWhitePlayer(out _));
@@ -840,6 +858,9 @@ namespace ChessForge
             tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, header.GetEventName(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, header.GetDate(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_ROUND, header.GetRound(out _));
+
+            List<string> preamble = header.GetPreamble();
+            tree.Header.SetPreamble(preamble);
         }
 
         /// <summary>
@@ -1351,6 +1372,7 @@ namespace ChessForge
                     MainChessBoard.RemoveMoveSquareColors();
                     LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
                     AppStateManager.SetupGuiForCurrentStates();
+                    SetStudyStateOnFocus();
 
                     ActiveLine.DisplayPositionForSelectedCell();
                     AppStateManager.SwapCommentBoxForEngineLines(false);
@@ -1468,18 +1490,19 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int count = chapter.GetModelGameCount();
-                ImportGamesFromPgn(GameData.ContentType.GENERIC);
-
-                if (chapter.GetModelGameCount() > count)
+                if (ImportGamesFromPgn(GameData.ContentType.GENERIC) > 0)
                 {
-                    chapter.ActiveModelGameIndex = count;
-                }
-                else 
-                {
-                    chapter.ActiveModelGameIndex = count - 1;
-                }
 
-                SelectModelGame(chapter.ActiveModelGameIndex, false);
+                    if (chapter.GetModelGameCount() > count)
+                    {
+                        chapter.ActiveModelGameIndex = count;
+                    }
+                    else
+                    {
+                        chapter.ActiveModelGameIndex = count - 1;
+                    }
+                    SelectModelGame(chapter.ActiveModelGameIndex, false);
+                }
             }
             catch
             {
@@ -1498,18 +1521,18 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int count = chapter.GetExerciseCount();
-                ImportGamesFromPgn(GameData.ContentType.EXERCISE);
-
-                if (chapter.GetExerciseCount() > count)
+                if (ImportGamesFromPgn(GameData.ContentType.EXERCISE) > 0)
                 {
-                    chapter.ActiveExerciseIndex = count;
+                    if (chapter.GetExerciseCount() > count)
+                    {
+                        chapter.ActiveExerciseIndex = count;
+                    }
+                    else
+                    {
+                        chapter.ActiveExerciseIndex = count - 1;
+                    }
+                    SelectExercise(chapter.ActiveExerciseIndex, false);
                 }
-                else
-                {
-                    chapter.ActiveExerciseIndex = count - 1;
-                }
-
-                SelectExercise(chapter.ActiveExerciseIndex, false);
             }
             catch
             {
@@ -1823,6 +1846,7 @@ namespace ChessForge
                         if (chapter.GetModelGameCount() == 0)
                         {
                             chapter.ActiveModelGameIndex = -1;
+                            DisplayPosition(PositionUtils.SetupStartingPosition());
                         }
                         else if (chapter.ActiveModelGameIndex >= gameCount - 1)
                         {
@@ -1862,6 +1886,7 @@ namespace ChessForge
                         if (exerciseCount == 0)
                         {
                             chapter.ActiveExerciseIndex = -1;
+                            DisplayPosition(PositionUtils.SetupStartingPosition());
                         }
                         else if (chapter.ActiveExerciseIndex >= exerciseCount - 1)
                         {

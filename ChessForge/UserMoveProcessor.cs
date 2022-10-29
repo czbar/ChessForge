@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -244,7 +245,14 @@ namespace ChessForge
                     if (nd.IsNewUserMove && !preExist)
                     {
                         AppStateManager.MainWin.AppendNodeToActiveLine(nd, false);
-                        AppStateManager.MainWin.AddNewNodeToVariationTreeView(nd);
+                        if (nd.Parent == null || AppStateManager.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
+                        {
+                            AppStateManager.MainWin.RebuildActiveTreeView();
+                        }
+                        else
+                        {
+                            AppStateManager.MainWin.AddNewNodeToVariationTreeView(nd);
+                        }
                         AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveTreeView, AppStateManager.MainWin.ActiveLine.GetLineId(), AppStateManager.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
                     }
                     else

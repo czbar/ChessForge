@@ -236,7 +236,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds headers for a Study Tree.
+        /// Builds the header for a Study Tree.
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="chapterIndex"></param>
@@ -264,6 +264,8 @@ namespace ChessForge
             value = tree.Header.GetResult(out key);
             PgnHeaders.BuildHeaderLine(key, value);
 
+            sb.AppendLine(BuildPreamble(tree));
+
             sb.AppendLine("");
 
             return sb.ToString();
@@ -279,6 +281,12 @@ namespace ChessForge
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Builds the header for a Model Game.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="tree"></param>
+        /// <returns></returns>
         private static string BuildModelGameHeaderText(Chapter chapter, VariationTree tree)
         {
             StringBuilder sb = new StringBuilder();
@@ -291,6 +299,7 @@ namespace ChessForge
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_WHITE, tree.Header.GetWhitePlayer(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK, tree.Header.GetBlackPlayer(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_RESULT, tree.Header.GetResult(out _)));
+            sb.AppendLine(BuildPreamble(tree));
 
             sb.AppendLine();
 
@@ -299,7 +308,7 @@ namespace ChessForge
 
 
         /// <summary>
-        /// Builds text for all the exercises in the chapter.
+        /// Builds the header for an Exercise.
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="chapterNo"></param>
@@ -322,9 +331,22 @@ namespace ChessForge
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_DATE, tree.Header.GetDate(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_WHITE, tree.Header.GetWhitePlayer(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK, tree.Header.GetBlackPlayer(out _)));
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_RESULT, tree.Header.GetResult(out _)));            
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_RESULT, tree.Header.GetResult(out _)));
+            sb.AppendLine(BuildPreamble(tree));
 
             sb.AppendLine();
+            return sb.ToString();
+        }
+
+        private static string BuildPreamble(VariationTree tree)
+        {
+            StringBuilder sb = new StringBuilder();
+            List<string> preamble = tree.Header.GetPreamble();
+            foreach (string line in preamble)
+            {
+                sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_PREAMBLE, line));
+            }
+
             return sb.ToString();
         }
 

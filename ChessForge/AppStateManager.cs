@@ -285,6 +285,8 @@ namespace ChessForge
                 EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
+                _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                _mainWin.MainChessBoard.FlipBoard(PieceColor.White);
                 _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
                 _mainWin.RemoveMoveSquareColors();
                 WorkbookFilePath = "";

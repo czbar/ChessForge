@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace GameTree
 {
     /// <summary>
-    /// Encaplsulates headers of a single PGN game.
+    /// Encapsulates headers of a single PGN game.
     /// It is used by VariationTree and GameMetadata.
     /// </summary>
     public class GameHeader
@@ -18,6 +18,82 @@ namespace GameTree
         /// The list of headers. 
         /// </summary>
         private List<KeyValuePair<string, string>> _headers = new List<KeyValuePair<string, string>>();
+
+        /// <summary>
+        /// The preamble assembled from individual [Preamble "Text"] headers
+        /// </summary>
+        private List<string> _preamble = new List<string>();
+
+        /// <summary>
+        /// Clears any stored header data.
+        /// </summary>
+        public void Clear()
+        {
+            _preamble.Clear();
+            _headers.Clear();
+        }
+
+        /// <summary>
+        /// Divides the passed string into lines and stores them in the _preamble list
+        /// </summary>
+        /// <param name="text"></param>
+        public void SetPreamble(string text)
+        {
+            _preamble.Clear();
+            if (!string.IsNullOrEmpty(text))
+            {
+                string[] lines = text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                foreach (string line in lines)
+                {
+                    _preamble.Add(line);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Combines Preamble strings inserting NewLines between them. 
+        /// </summary>
+        /// <returns></returns>
+        public string BuildPreambleText()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < _preamble.Count; i++)
+            {
+                if (i < _preamble.Count - 1)
+                {
+                    sb.AppendLine(_preamble[i]);
+                }
+                else
+                {
+                    sb.Append(_preamble[i]);
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Copies strings from a passed list into the preamble
+        /// </summary>
+        /// <param name="preamble"></param>
+        public void SetPreamble(List<string> preamble)
+        {
+            _preamble.Clear();
+            foreach (string line in preamble)
+            {
+                _preamble.Add(line);
+            }
+        }
+
+        /// <summary>
+        /// Returns the Preamble.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetPreamble()
+        {
+            return _preamble;
+        }
 
         /// <summary>
         /// Checks if there is at least one header line processed 
@@ -32,18 +108,47 @@ namespace GameTree
         /// <summary>
         /// Builds text for the column with the name of the game.
         /// </summary>
-        public string BuildGameHeaderLine()
+        public string BuildGameHeaderLine(bool simplified = false)
         {
             StringBuilder sb = new StringBuilder();
 
             string white = GetWhitePlayer(out _);
             string black = GetBlackPlayer(out _);
-            sb.Append((white ?? "NN") + " - " + (black ?? "NN"));
+
+            bool hasWhite = !string.IsNullOrEmpty(white);
+            bool hasBlack = !string.IsNullOrEmpty(black);
+
+            if (simplified)
+            {
+                if (hasWhite)
+                {
+                    sb.Append(white);
+                }
+                if (hasWhite || hasBlack)
+                {
+                    sb.Append(" - ");
+                }
+                if (hasBlack)
+                {
+                    sb.Append(black);
+                }
+            }
+            else
+            {
+                sb.Append((white ?? "NN") + " - " + (black ?? "NN"));
+            }
 
             string eventName = GetEventName(out _);
             if (!string.IsNullOrEmpty(eventName) && eventName != "?")
             {
-                sb.Append(" at " + eventName + "");
+                if (simplified && !hasWhite && !hasBlack)
+                {
+                    sb.Append(eventName);
+                }
+                else
+                {
+                    sb.Append(" at " + eventName + "");
+                }
             }
 
             string round = GetRound(out _);
@@ -363,14 +468,24 @@ namespace GameTree
         /// <param name="value"></param>
         public void SetHeaderValue(string name, string value)
         {
-            var header = _headers.Where(kvp => kvp.Key == name).FirstOrDefault();
-            if (!header.Equals(default(KeyValuePair<string, string>)))
+            if (name == PgnHeaders.KEY_PREAMBLE)
             {
-                _headers.Remove(header);
+                _preamble.Add(value ?? "");
             }
+            else
+            {
+                if (!string.IsNullOrEmpty(name))
+                {
+                    var header = _headers.Where(kvp => kvp.Key == name).FirstOrDefault();
+                    if (!header.Equals(default(KeyValuePair<string, string>)))
+                    {
+                        _headers.Remove(header);
+                    }
 
-            header = new KeyValuePair<string, string>(name, value);
-            _headers.Add(header);
+                    header = new KeyValuePair<string, string>(name, value);
+                    _headers.Add(header);
+                }
+            }
         }
     }
 }

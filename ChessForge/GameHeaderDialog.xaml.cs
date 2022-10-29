@@ -51,6 +51,8 @@ namespace ChessForge
             UiTbEvent.Text = _tree.Header.GetEventName(out _) ?? "";
             UiTbRound.Text = _tree.Header.GetRound(out _) ?? "";
 
+            UiTbPreamble.Text = _tree.Header.BuildPreambleText();
+
             SetDateControls();
             SetResultRadioButton();
         }
@@ -127,6 +129,8 @@ namespace ChessForge
             }
 
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_RESULT, CollectResultString());
+
+            _tree.Header.SetPreamble(UiTbPreamble.Text);
         }
 
         /// <summary>
