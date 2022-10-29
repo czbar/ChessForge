@@ -554,6 +554,7 @@ namespace ChessForge
                     VariationTree hold = chapter.ModelGames[index];
                     chapter.ModelGames[index] = chapter.ModelGames[index - 1];
                     chapter.ModelGames[index - 1] = hold;
+                    chapter.ActiveModelGameIndex = index - 1;
 
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     AppStateManager.IsDirty = true;
@@ -583,6 +584,7 @@ namespace ChessForge
                     VariationTree hold = chapter.Exercises[index];
                     chapter.Exercises[index] = chapter.Exercises[index - 1];
                     chapter.Exercises[index - 1] = hold;
+                    chapter.ActiveExerciseIndex = index - 1;
 
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     AppStateManager.IsDirty = true;
@@ -613,6 +615,7 @@ namespace ChessForge
                     VariationTree hold = chapter.ModelGames[index];
                     chapter.ModelGames[index] = chapter.ModelGames[index + 1];
                     chapter.ModelGames[index + 1] = hold;
+                    chapter.ActiveModelGameIndex = index + 1;
 
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     AppStateManager.IsDirty = true;
@@ -642,6 +645,7 @@ namespace ChessForge
                     VariationTree hold = chapter.Exercises[index];
                     chapter.Exercises[index] = chapter.Exercises[index + 1];
                     chapter.Exercises[index + 1] = hold;
+                    chapter.ActiveExerciseIndex = index + 1;
 
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     AppStateManager.IsDirty = true;
@@ -688,8 +692,9 @@ namespace ChessForge
         /// Imports Model Games or Exercises from a PGN file.
         /// </summary>
         /// <param name="contentType"></param>
-        private void ImportGamesFromPgn(GameData.ContentType contentType)
+        private int ImportGamesFromPgn(GameData.ContentType contentType)
         {
+            int gameCount = 0;
             if ((contentType == GameData.ContentType.GENERIC || contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
                 && WorkbookManager.SessionWorkbook.ActiveChapter != null)
             {
@@ -698,7 +703,7 @@ namespace ChessForge
                 {
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     ObservableCollection<GameData> games = new ObservableCollection<GameData>();
-                    int gameCount = WorkbookManager.ReadPgnFile(fileName, ref games, contentType);
+                    gameCount = WorkbookManager.ReadPgnFile(fileName, ref games, contentType);
 
                     int errorCount = 0;
                     StringBuilder sbErrors = new StringBuilder();
@@ -732,6 +737,10 @@ namespace ChessForge
 
                             Mouse.SetCursor(Cursors.Arrow);
                         }
+                        else
+                        {
+                            gameCount = 0;
+                        }
                     }
                     else
                     {
@@ -751,6 +760,7 @@ namespace ChessForge
                     }
                 }
             }
+            return gameCount;
         }
 
 
@@ -1476,18 +1486,19 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int count = chapter.GetModelGameCount();
-                ImportGamesFromPgn(GameData.ContentType.GENERIC);
-
-                if (chapter.GetModelGameCount() > count)
+                if (ImportGamesFromPgn(GameData.ContentType.GENERIC) > 0)
                 {
-                    chapter.ActiveModelGameIndex = count;
-                }
-                else 
-                {
-                    chapter.ActiveModelGameIndex = count - 1;
-                }
 
-                SelectModelGame(chapter.ActiveModelGameIndex, false);
+                    if (chapter.GetModelGameCount() > count)
+                    {
+                        chapter.ActiveModelGameIndex = count;
+                    }
+                    else
+                    {
+                        chapter.ActiveModelGameIndex = count - 1;
+                    }
+                    SelectModelGame(chapter.ActiveModelGameIndex, false);
+                }
             }
             catch
             {
@@ -1506,18 +1517,18 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int count = chapter.GetExerciseCount();
-                ImportGamesFromPgn(GameData.ContentType.EXERCISE);
-
-                if (chapter.GetExerciseCount() > count)
+                if (ImportGamesFromPgn(GameData.ContentType.EXERCISE) > 0)
                 {
-                    chapter.ActiveExerciseIndex = count;
+                    if (chapter.GetExerciseCount() > count)
+                    {
+                        chapter.ActiveExerciseIndex = count;
+                    }
+                    else
+                    {
+                        chapter.ActiveExerciseIndex = count - 1;
+                    }
+                    SelectExercise(chapter.ActiveExerciseIndex, false);
                 }
-                else
-                {
-                    chapter.ActiveExerciseIndex = count - 1;
-                }
-
-                SelectExercise(chapter.ActiveExerciseIndex, false);
             }
             catch
             {
