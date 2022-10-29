@@ -32,18 +32,47 @@ namespace GameTree
         /// <summary>
         /// Builds text for the column with the name of the game.
         /// </summary>
-        public string BuildGameHeaderLine()
+        public string BuildGameHeaderLine(bool simplified = false)
         {
             StringBuilder sb = new StringBuilder();
 
             string white = GetWhitePlayer(out _);
             string black = GetBlackPlayer(out _);
-            sb.Append((white ?? "NN") + " - " + (black ?? "NN"));
+
+            bool hasWhite = !string.IsNullOrEmpty(white);
+            bool hasBlack = !string.IsNullOrEmpty(black);
+
+            if (simplified)
+            {
+                if (hasWhite)
+                {
+                    sb.Append(white);
+                }
+                if (hasWhite || hasBlack)
+                {
+                    sb.Append(" - ");
+                }
+                if (hasBlack)
+                {
+                    sb.Append(black);
+                }
+            }
+            else
+            {
+                sb.Append((white ?? "NN") + " - " + (black ?? "NN"));
+            }
 
             string eventName = GetEventName(out _);
             if (!string.IsNullOrEmpty(eventName) && eventName != "?")
             {
-                sb.Append(" at " + eventName + "");
+                if (simplified && !hasWhite && !hasBlack)
+                {
+                    sb.Append(eventName);
+                }
+                else
+                {
+                    sb.Append(" at " + eventName + "");
+                }
             }
 
             string round = GetRound(out _);
