@@ -1891,5 +1891,21 @@ namespace ChessForge
                 e.Handled = true;
             }
         }
+
+        /// <summary>
+        /// On mouse re-entring check if the left button is released.
+        /// If so, the mouse may left the window while dragging so 
+        /// cancel dragging.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ChessForgeMain_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (DraggedPiece.isDragInProgress && e.LeftButton == MouseButtonState.Released)
+            {
+                DraggedPiece.isDragInProgress = false;
+                ReturnDraggedPiece(false);
+            }
+        }
     }
 }
