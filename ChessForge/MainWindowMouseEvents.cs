@@ -738,7 +738,6 @@ namespace ChessForge
                 {
                     UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
                     ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
-                    RestoreSelectedLineAndMoveInActiveView();
                 }
 
                 if (WorkbookManager.SessionWorkbook != null)
@@ -754,6 +753,7 @@ namespace ChessForge
                     if (chapter != null)
                     {
                         chapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
+                        RestoreSelectedLineAndMoveInActiveView();
                     }
                 }
             }
@@ -823,7 +823,7 @@ namespace ChessForge
                     else
                     {
                         MainChessBoard.SetStartingPosition();
-                        ClearTabViews();
+                        ClearTreeView(_modelGameTreeView, GameData.ContentType.MODEL_GAME);
                     }
 
                     AppStateManager.ConfigureMainBoardContextMenu();
@@ -895,7 +895,7 @@ namespace ChessForge
                     else
                     {
                         MainChessBoard.SetStartingPosition();
-                        ClearTabViews();
+                        ClearTreeView(_exerciseTreeView, GameData.ContentType.EXERCISE);
                     }
 
                     AppStateManager.ConfigureMainBoardContextMenu();
