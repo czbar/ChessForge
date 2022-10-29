@@ -167,7 +167,7 @@
                         <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" ContextMenuOpening="SupressContextMenu" >
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="_cmChapters">
-                                    <MenuItem x:Name="_mnAddChapter" Header="Create New Chapter" Click="UiMnAddChapter_Click"  />
+                                    <MenuItem x:Name="_mnAddChapter" Header="Create New Chapter" Click="UiMnCreateNewChapter_Click"  />
                                     <MenuItem x:Name="_mnImportChapter" Header="Import New Chapter" Click="UiMnImportChapter_Click" />
                                     <MenuItem x:Name="_mnAddGame" Header="Create New Game" Click="UiMnChpt_CreateModelGame_Click"  />
                                     <MenuItem x:Name="_mnImportGame" Header="Import Games" Click="UiMnImportGame_Click" />
