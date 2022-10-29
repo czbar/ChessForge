@@ -408,12 +408,13 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnAddChapter_Click(object sender, RoutedEventArgs e)
+        private void UiMnCreateNewChapter_Click(object sender, RoutedEventArgs e)
         {
             Chapter lastActiveChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
             if (ShowChapterTitleDialog(chapter))
             {
+                SelectChapter(chapter.Id, false);
                 AppStateManager.IsDirty = true;
             }
             else
@@ -462,6 +463,7 @@ namespace ChessForge
                 if (success)
                 {
                     _chaptersView.BuildFlowDocumentForChaptersView();
+                    SelectChapter(chapter.Id, false);
                 }
                 else
                 {
@@ -832,6 +834,11 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Copies a header from a GameHeader object to the Tree.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="header"></param>
         private void CopyHeaderFromGame(VariationTree tree, GameHeader header)
         {
             tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE, header.GetWhitePlayer(out _));
@@ -1824,6 +1831,7 @@ namespace ChessForge
                         if (chapter.GetModelGameCount() == 0)
                         {
                             chapter.ActiveModelGameIndex = -1;
+                            DisplayPosition(PositionUtils.SetupStartingPosition());
                         }
                         else if (chapter.ActiveModelGameIndex >= gameCount - 1)
                         {
@@ -1863,6 +1871,7 @@ namespace ChessForge
                         if (exerciseCount == 0)
                         {
                             chapter.ActiveExerciseIndex = -1;
+                            DisplayPosition(PositionUtils.SetupStartingPosition());
                         }
                         else if (chapter.ActiveExerciseIndex >= exerciseCount - 1)
                         {
