@@ -230,7 +230,7 @@ namespace ChessForge
             DebugUtils.DebugLevel = Configuration.DebugLevel;
 
             // setup control positions
-            if (Configuration.ScoreSheetPosition == 1)
+            if (Configuration.ScoreSheetPosition == 0)
             {
                 UiDgActiveLine.HorizontalAlignment = HorizontalAlignment.Right;
                 UiDgActiveLine.Margin = new Thickness(0, 5, 10, 0);
@@ -241,6 +241,18 @@ namespace ChessForge
                 UiTabCtrlManualReview.HorizontalAlignment = HorizontalAlignment.Right;
 
                 UiTabCtrlTraining.HorizontalAlignment = HorizontalAlignment.Right;
+            }
+            else
+            {
+                UiDgActiveLine.HorizontalAlignment = HorizontalAlignment.Left;
+                UiDgActiveLine.Margin = new Thickness(0, 10, 5, 0);
+
+                UiDgEngineGame.HorizontalAlignment = HorizontalAlignment.Left;
+                UiDgEngineGame.Margin = new Thickness(0, 10, 5, 0);
+
+                UiTabCtrlManualReview.HorizontalAlignment = HorizontalAlignment.Left;
+
+                UiTabCtrlTraining.HorizontalAlignment = HorizontalAlignment.Left;
             }
 
             // main chess board
@@ -1803,7 +1815,7 @@ namespace ChessForge
         /// <param name="sizeMode"></param>
         public void ResizeTabControl(TabControl ctrl, TabControlSizeMode sizeMode)
         {
-            if (Configuration.ScoreSheetPosition == 1)
+            if (Configuration.ScoreSheetPosition == 0)
             {
                 switch (sizeMode)
                 {
