@@ -403,9 +403,16 @@ namespace ChessForge
             {
                 Run r = (Run)e.Source;
                 int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
-                if (chapterId >= 0)
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+
+                if (chapter.Id != chapterId)
                 {
-                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                    _mainWin.SelectChapter(chapterId, false);
+                    chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                }
+
+                if (chapter != null)
+                {
                     WorkbookManager.LastClickedChapterId = chapterId;
                     if (e.ChangedButton == MouseButton.Left)
                     {
@@ -447,9 +454,16 @@ namespace ChessForge
             {
                 Run r = (Run)e.Source;
                 int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
-                if (chapterId >= 0)
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+
+                if (chapter.Id != chapterId)
                 {
-                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                    _mainWin.SelectChapter(chapterId, false);
+                    chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                }
+
+                if (chapter != null)
+                {
                     WorkbookManager.LastClickedChapterId = chapterId;
                     if (e.ChangedButton == MouseButton.Left)
                     {
