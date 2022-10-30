@@ -381,6 +381,18 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The right button mouse up event will trigger bringing the last marked 
+        /// Run into view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Chapters_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            _chaptersView.BringRunToview();
+        }
+
+
+        /// <summary>
         /// Selects the clicked Chapter
         /// </summary>
         /// <param name="sender"></param>
