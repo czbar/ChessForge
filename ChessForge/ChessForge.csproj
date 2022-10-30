@@ -90,6 +90,7 @@
     <Compile Include="BoardCircle.cs" />
     <Compile Include="Chapter.cs" />
     <Compile Include="ChaptersView.cs" />
+    <Compile Include="ChaptersViewRunAttrs.cs" />
     <Compile Include="ChapterTitleDialog.xaml.cs">
       <DependentUpon>ChapterTitleDialog.xaml</DependentUpon>
     </Compile>

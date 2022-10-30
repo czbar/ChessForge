@@ -305,13 +305,13 @@ namespace ChessForge
         /// </summary>
         /// <param name="cmn"></param>
         /// <param name="isEnabled"></param>
-        public static void EnableChaptersContextMenuItems(ContextMenu cmn, bool isEnabled, GameData.ContentType contentType)
+        public static void EnableChaptersContextMenuItems(ContextMenu cmn, bool isEnabled, GameData.ContentType contentType, bool isMini = false)
         {
             try
             {
-                SetupChapterMenuItems(cmn, isEnabled, contentType);
-                SetupModelGameMenuItems(cmn, isEnabled, contentType);
-                SetupExerciseMenuItems(cmn, isEnabled, contentType);
+                SetupChapterMenuItems(cmn, isEnabled, contentType, isMini);
+                SetupModelGameMenuItems(cmn, isEnabled, contentType, isMini);
+                SetupExerciseMenuItems(cmn, isEnabled, contentType, isMini);
             }
             catch (Exception ex)
             {
@@ -325,7 +325,7 @@ namespace ChessForge
         /// <param name="cmn"></param>
         /// <param name="isEnabled"></param>
         /// <param name="contentType"></param>
-        private static void SetupChapterMenuItems(ContextMenu cmn, bool isEnabled, GameData.ContentType contentType)
+        private static void SetupChapterMenuItems(ContextMenu cmn, bool isEnabled, GameData.ContentType contentType, bool isMini)
         {
             // ClickedIndex should be in sync with isEnabled but double check just in case
             if (LastClickedChapterId < 0 || SessionWorkbook == null)
@@ -342,47 +342,61 @@ namespace ChessForge
                 if (item is MenuItem)
                 {
                     MenuItem menuItem = item as MenuItem;
-                    switch (menuItem.Name)
+                    if (isMini)
                     {
-                        case "_mnAddChapter":
-                            menuItem.IsEnabled = true;
-                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
-                            break;
-                        case "_mnSelectChapter":
-                            menuItem.IsEnabled = isEnabled;
-                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
-                            break;
-                        case "_mnRenameChapter":
-                            menuItem.IsEnabled = isEnabled;
-                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
-                            break;
-                        case "_mnChapterUp":
-                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 0 && index > 0;
-                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
-                            break;
-                        case "_mnChapterDown":
-                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 0 && index < SessionWorkbook.Chapters.Count - 1;
-                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
-                            break;
-                        case "_mnImportModelGames":
-                            menuItem.IsEnabled = isEnabled;
-                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
-                            break;
-                        case "_mnImportExercises":
-                            menuItem.IsEnabled = isEnabled;
-                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
-                            break;
-                        case "_mnDeleteChapter":
-                            menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 1;
-                            menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
-                            break;
+                        menuItem.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        switch (menuItem.Name)
+                        {
+                            case "_mnAddChapter":
+                                menuItem.IsEnabled = true;
+                                menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "_mnSelectChapter":
+                                menuItem.IsEnabled = isEnabled;
+                                menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "_mnRenameChapter":
+                                menuItem.IsEnabled = isEnabled;
+                                menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "_mnChapterUp":
+                                menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 0 && index > 0;
+                                menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "_mnChapterDown":
+                                menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 0 && index < SessionWorkbook.Chapters.Count - 1;
+                                menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "_mnImportModelGames":
+                                menuItem.IsEnabled = isEnabled;
+                                menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "_mnImportExercises":
+                                menuItem.IsEnabled = isEnabled;
+                                menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "_mnDeleteChapter":
+                                menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 1;
+                                menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                        }
                     }
                 }
                 else if (item is Separator)
                 {
-                    if ((item as Separator).Name == "_mnChapterSepar_2")
+                    if (isMini)
                     {
-                        (item as Separator).Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                        (item as Separator).Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        if ((item as Separator).Name == "_mnChapterSepar_2")
+                        {
+                            (item as Separator).Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                        }
                     }
                 }
             }
@@ -394,7 +408,7 @@ namespace ChessForge
         /// <param name="cmn"></param>
         /// <param name="isEnabled"></param>
         /// <param name="contentType"></param>
-        private static void SetupModelGameMenuItems(ContextMenu cmn, bool isEnabled, GameData.ContentType contentType)
+        private static void SetupModelGameMenuItems(ContextMenu cmn, bool isEnabled, GameData.ContentType contentType, bool isMini)
         {
             bool isGamesMenu = contentType == GameData.ContentType.MODEL_GAME;
             int index = LastClickedModelGameIndex;
@@ -420,26 +434,33 @@ namespace ChessForge
                             break;
                         case "_mnSelectGame":
                             menuItem.IsEnabled = isEnabled;
-                            menuItem.Visibility = isGamesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            menuItem.Visibility = (isGamesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnRenameGame":
                             menuItem.IsEnabled = isEnabled;
-                            menuItem.Visibility = isGamesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            menuItem.Visibility = (isGamesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnGameUp":
                             menuItem.IsEnabled = isEnabled && SessionWorkbook != null
                                 && SessionWorkbook.ActiveChapter.GetModelGameCount() > 0 && index > 0;
-                            menuItem.Visibility = isGamesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            menuItem.Visibility = (isGamesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnGameDown":
                             menuItem.IsEnabled = isEnabled && SessionWorkbook != null
                                 && SessionWorkbook.ActiveChapter.GetModelGameCount() > 0 && index < SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
-                            menuItem.Visibility = isGamesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            menuItem.Visibility = (isGamesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnDeleteGame":
                             menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 1;
-                            menuItem.Visibility = isGamesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            menuItem.Visibility = (isGamesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
+                    }
+                }
+                else if (item is Separator)
+                {
+                    if (isMini)
+                    {
+                        (item as Separator).Visibility = Visibility.Collapsed;
                     }
                 }
             }
@@ -451,7 +472,7 @@ namespace ChessForge
         /// <param name="cmn"></param>
         /// <param name="isEnabled"></param>
         /// <param name="contentType"></param>
-        private static void SetupExerciseMenuItems(ContextMenu cmn, bool isEnabled, GameData.ContentType contentType)
+        private static void SetupExerciseMenuItems(ContextMenu cmn, bool isEnabled, GameData.ContentType contentType, bool isMini)
         {
             bool isExercisesMenu = contentType == GameData.ContentType.EXERCISE;
             int index = LastClickedExerciseIndex;
@@ -477,26 +498,33 @@ namespace ChessForge
                             break;
                         case "_mnSelectExercise":
                             menuItem.IsEnabled = isEnabled;
-                            menuItem.Visibility = isExercisesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            menuItem.Visibility = (isExercisesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnRenameExercise":
                             menuItem.IsEnabled = isEnabled;
-                            menuItem.Visibility = isExercisesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            menuItem.Visibility = (isExercisesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnExerciseUp":
                             menuItem.IsEnabled = isEnabled && SessionWorkbook != null
                                 && SessionWorkbook.ActiveChapter.GetExerciseCount() > 0 && index > 0;
-                            menuItem.Visibility = isExercisesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            menuItem.Visibility = (isExercisesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnExerciseDown":
                             menuItem.IsEnabled = isEnabled && SessionWorkbook != null
                                 && SessionWorkbook.ActiveChapter.GetExerciseCount() > 0 && index < SessionWorkbook.ActiveChapter.GetExerciseCount() - 1;
-                            menuItem.Visibility = isExercisesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            menuItem.Visibility = (isExercisesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnDeleteExercise":
                             menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.ActiveChapter.GetExerciseCount() > 1;
-                            menuItem.Visibility = isExercisesMenu ? Visibility.Visible : Visibility.Collapsed;
+                            menuItem.Visibility = (isExercisesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
+                    }
+                }
+                else if (item is Separator)
+                {
+                    if (isMini)
+                    {
+                        (item as Separator).Visibility = Visibility.Collapsed;
                     }
                 }
             }

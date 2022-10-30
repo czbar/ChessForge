@@ -213,6 +213,11 @@ namespace ChessPosition
         /// <returns></returns>
         public static int GetIdFromPrefixedString(string s, char lastChar = '_')
         {
+            if (string.IsNullOrEmpty(s))
+            {
+                return -1;
+            }
+
             int nodeId = -1;
 
             int lastCharPos = s.LastIndexOf('_');
