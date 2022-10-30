@@ -409,7 +409,16 @@ namespace ChessForge
                     WorkbookManager.LastClickedChapterId = chapterId;
                     if (e.ChangedButton == MouseButton.Left)
                     {
-                        ExpandModelGamesList(chapter);
+                        if (chapter.GetModelGameCount() > 0)
+                        {
+                            ExpandModelGamesList(chapter);
+                        }
+                        else
+                        {
+                            WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.MODEL_GAME, true);
+                            _mainWin._cmChapters.IsOpen = true;
+                            e.Handled = true;
+                        }
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
@@ -444,7 +453,16 @@ namespace ChessForge
                     WorkbookManager.LastClickedChapterId = chapterId;
                     if (e.ChangedButton == MouseButton.Left)
                     {
-                        ExpandExercisesList(chapter);
+                        if (chapter.GetExerciseCount() > 0)
+                        {
+                            ExpandExercisesList(chapter);
+                        }
+                        else
+                        {
+                            WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.EXERCISE, true);
+                            _mainWin._cmChapters.IsOpen = true;
+                            e.Handled = true;
+                        }
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
