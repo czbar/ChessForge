@@ -8,8 +8,9 @@
     - EngineService.dll
     - README.MD
     - LICENSE.MD
-    - Stafford.chf
-    - CaroKann.chf
+    - Classical Sicilian.pgn
+    - Stafford Gambit.pgn
+    - Ridiculous Sacrifices.pgn
     - Stockfish_15_x64_avx2.exe  
     
     into __SourceForgeFull.zip__.  
