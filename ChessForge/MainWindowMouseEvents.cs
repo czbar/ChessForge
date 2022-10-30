@@ -297,7 +297,7 @@ namespace ChessForge
             if (ActiveTreeView != null)
             {
                 ActiveTreeView.LastClickedNodeId = -1;
-                ActiveTreeView.EnableActiveTreeViewMenus(false);
+                ActiveTreeView.EnableActiveTreeViewMenus(e.ChangedButton, false);
             }
         }
 

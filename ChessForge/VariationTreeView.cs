@@ -23,6 +23,12 @@ namespace ChessForge
     /// </summary>
     public class VariationTreeView : RichTextBuilder
     {
+        /// <summary>
+        /// For unknown reason the first right click in the app (some views anyway) does not
+        /// bring up the context menu unless we force it with IsOpen
+        /// </summary>
+        private static bool _contextMenuPrimed = false;
+
         // Application's Main Window
         private MainWindow _mainWin;
 
@@ -250,8 +256,13 @@ namespace ChessForge
         /// </summary>
         /// <param name="cmn"></param>
         /// <param name="isEnabled"></param>
-        public void EnableActiveTreeViewMenus(bool isEnabled)
+        public void EnableActiveTreeViewMenus(MouseButton button, bool isEnabled)
         {
+            if (button == MouseButton.Left)
+            {
+                _contextMenuPrimed = true;
+            }
+
             // ClickedIndex should be in sync with isEnabled but double check just in case
             if (LastClickedNodeId < 0)
             {
@@ -265,10 +276,19 @@ namespace ChessForge
                     break;
                 case WorkbookManager.TabViewType.MODEL_GAME:
                     EnableModelGamesMenus(_mainWin.UiCmModelGames, true);
+                    if (!_contextMenuPrimed)
+                    {
+                        _mainWin.UiCmModelGames.IsOpen = true;
+                        _contextMenuPrimed = true;
+                    }
                     break;
                 case WorkbookManager.TabViewType.EXERCISE:
                     EnableExercisesMenus(_mainWin.UiCmExercises, true);
-                    //_mainWin.UiCmExercises.IsOpen = true;
+                    if (!_contextMenuPrimed)
+                    {
+                        _mainWin.UiCmExercises.IsOpen = true;
+                        _contextMenuPrimed = true;
+                    }
                     break;
                 default:
                     break;
@@ -992,6 +1012,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventShowHideButtonClicked(object sender, RoutedEventArgs e)
         {
+            _contextMenuPrimed = true;
             _variationTree.ShowTreeLines = !_variationTree.ShowTreeLines;
             BuildFlowDocumentForVariationTree();
             e.Handled = true;
@@ -1597,7 +1618,7 @@ namespace ChessForge
                 if (e.ChangedButton == MouseButton.Right)
                 {
                     _lastClickedNodeId = nodeId;
-                    EnableActiveTreeViewMenus(true);
+                    EnableActiveTreeViewMenus(e.ChangedButton, true);
                 }
                 else
                 {
