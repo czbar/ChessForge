@@ -172,7 +172,7 @@
                                     <MenuItem x:Name="_mnAddGame" Header="Create New Game" Click="UiMnChpt_CreateModelGame_Click"  />
                                     <MenuItem x:Name="_mnImportGame" Header="Import Games" Click="UiMnImportGame_Click" />
                                     <MenuItem x:Name="_mnAddExercise" Header="Create New Exercise" Click="UiMnChpt_AddExercise_Click"  />
-                                    <MenuItem x:Name="_mnImportExercise" Header="Import Exercises" />
+                                    <MenuItem x:Name="_mnImportExercise" Header="Import Exercises" Click="UiMnImportExercises_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnSelectChapter" Header="Open This Chapter" Click="UiMnSelectChapter_Click" />
                                     <MenuItem x:Name="_mnRenameChapter" Header="Rename This Chapter" Click="UiMnRenameChapter_Click" />
