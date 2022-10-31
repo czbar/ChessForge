@@ -1,0 +1,81 @@
+[ChessForgeWorkbook "Untitled Workbook"]
+[TrainingSide "White"]
+[White "Chess Forge"]
+[Black "Workbook File"]
+[Result "*"]
+
+*
+
+[ChapterId "1"]
+[ChapterTitle "Chapter 1"]
+[ContentType "Study Tree"]
+
+
+1. d4 Nf6 2. c4 e6 3. g3 d5 4. Nf3 Be7 5. Bg2 O-O 6. O-O dxc4 7. Qc2 a6 (7... c5 
+8. dxc5 Bxc5 (8... Qc7 9. Qxc4 Qxc5 10. Qxc5 Bxc5 11. Nc3 Nc6 12. Bf4 Bd7 13. 
+Rac1 Rac8 14. Nb5 $14) 9. Nbd2 $1 Nc6 (9... b5 $4 10. Ng5 h6 11. Nge4 $18) 10. 
+Nxc4 Qe7 11. Nfe5 Nxe5 (11... Nd4 12. Qd1 Rd8 13. e3 Nc6 14. Nxc6 bxc6 15. Qa4 
+$14) 12. Nxe5 $14)  (7... b5 8. a4 b4 (8... c6 $2 9. axb5 cxb5 10. Ng5 $1 h6 11. 
+Nxf7 $16)  (8... Bb7 9. axb5 a6 10. bxa6 Nxa6 (10... Rxa6 11. Rxa6 Nxa6 12. Qxc4 
+c5 13. Nc3 Qb6 14. Be3 Nd5 15. Nxd5 Bxd5 (15... exd5 16. dxc5 Bxc5 (16... Nxc5 
+17. Qc3 $16) 17. Bxc5 Nxc5 18. Qd4 $16) 16. Qa4) 11. Qxc4 Bd5 12. Qd3 Nb4 13. 
+Rxa8 Qxa8 14. Qd1) 9. Nfd2 c6 10. Nxc4 Qxd4 11. Rd1 Qc5 12. Be3 Qh5 (12... Qf5 
+13. Qxf5 exf5 14. Nbd2 Be6 15. Na5 {followed by Rac1. Black is doomed to 
+passivedefence.} ) 13. Nbd2 Ng4 14. Nf3 Nxe3 15. Nxe3 a5 16. Nd4 $1 Ba6 17. Rac1 
+Rc8 18. Bf3 Qg6 19. Be4 Qh5 20. Rd2 Ra7 21. Rcd1 $44 g6 (21... c5 $2 22. Nb5 $18 
+Bxb5 23. axb5 a4 24. Nc4 b3 25. Qb1 Bg5 26. b6 Re7 27. e3 Rf8 28. Qa1 $18) 22. 
+Bd3 $14)  (7... Bd7 8. Qxc4 Bc6 9. Nc3 {in the variation with ...a6 and a4 
+thiswould not be good because of ...b5!}  a6 (9... Nbd7 10. Re1 Ne4 11. Qd3 $1 
+Nxc3 12. bxc3 f5 {preventing e4}  (12... b6 $2 13. Ng5 Bxg5 14. Bxc6 $18) ) 10. 
+Bg5 b5 11. Qd3 Nbd7 12. a3 $1) 8. a4 (8. Qxc4 b5 9. Qc2 Bb7 10. Bd2 Ra7 11. Rc1 
+Be4 12. Qb3 (12. Qd1 Bxf3 13. Bxf3 Qxd4) 12... Nc6 13. e3 Qa8 14. Qd1 Nb8 15. 
+Ba5 Bd6 16. a3 Nbd7 17. Nbd2 Bd5 18. Qf1 c5 (18... e5 19. dxe5 Nxe5 20. Nxe5 
+Bxe5 21. Rc2) 19. dxc5 Bxc5 20. Rc2 Qb7 21. Rac1 Bb6 22. Bxb6 Qxb6 23. Nd4 Ne5 
+24. Bxd5 Nxd5 25. N4f3 Nxf3+ 26. Nxf3 Rd8 27. Qd3 Ne7 (27... Nf6 28. Rc6 Qb8 
+(28... Rxd3 29. Rxb6) 29. Qc2) 28. Qe4 Rad7 29. Kg2 f6 (29... Rd1 30. Rxd1 Rxd1 
+31. Ng5 Ng6 32. Qf3 Rd7 33. Rc8+ Nf8 34. Qa8 Qb7+ 35. Ne4 $18) 30. h4 e5 31. h5 
+Qb7 32. Qxb7 $1 (32. Qg4 $6 Kf7 $6 (32... h6 $5) 33. Rc5 Rc8 34. Rxc8 Nxc8 35. 
+Qf5 g6 36. Qg4 Ne7 37. hxg6+ hxg6 38. Rh1 f5 (38... Kg7 39. Qh3) 39. Rh7+ Ke6 
+40. Qg5 Qe4 41. Qh6 f4 42. Qf8 Nc6 43. Qc8 Ne7 44. Qe8 Kd6 45. Qf8 Qd5 46. e4 
+Qe6 47. Ng5 $18) 32... Rxb7 33. Nd2 b4 34. Ne4 $16) 8... Bd7 (8... b6 9. Ne5 Ra7 
+10. Rd1 Bb7 11. e4 Nc6 12. Nxc6 Bxc6 13. Nc3 Ba8 14. Qe2 c6 15. Qxc4 b5 16. Qf1 
+$1 (16. Qe2 b4 17. e5 bxc3 18. exf6 c2 $1 19. Qxc2 Bxf6 $11) 16... b4 17. e5 
+bxc3 18. exf6 Bxf6 19. bxc3 $14)  (8... c5 9. dxc5 Nc6 (9... Bxc5 10. Nbd2 Nc6 
+11. Nxc4 {transposes} ) 10. Na3 Bxc5 (10... e5 11. Nxc4 e4 12. Rd1 $16) 11. Nxc4 
+Qe7 12. Nfe5 Nxe5 13. Nxe5 Nd5 14. Nd3 Bd6 15. Bd2 Bd7 16. Qb3 a5 17. Rfd1 $14)  
+(8... Nc6 9. Qxc4 Qd5 10. Nbd2 Rd8 (10... Qxc4 11. Nxc4 a5 12. Bd2 Rd8 13. Rfc1 
+Bd7 14. e3 Nd5 15. Ne1 Be8 16. Nd3 {is pleasant for White} ) 11. e3 Qh5 12. h3 
+Nd5 13. e4 Ndb4 14. Nb3 b6 15. Bd2 Bb7 16. Rfc1 Rac8 17. a5 $14) 9. Rd1 {Meier's 
+pet line}  (9. Qxc4 Bc6 10. Bf4 Nd5 (10... Bd6 11. Qc1 $1 a5 12. Nc3 Na6 13. Rd1 
+Nb4 14. Bg5 h6 15. Bh4 Bxf3 16. Bxf3 c6 (16... g5 $5 17. Bxb7 $11) 17. e4 Be7 
+18. e5 Nfd5 19. Bxe7 Qxe7 20. Ne4)  (10... Nbd7 11. Nc3 Bd6 (11... Rc8 12. Rfd1 
+Nb6 13. Qb3 Nbd5 14. Bg5 $1 Nd7 15. Bd2 Nxc3 16. bxc3 b6 17. Qc4 $1 Bb7 18. Ne1 
+Bxg2 19. Kxg2 a5)  (11... Nb6 12. Qd3 $1 Nbd5 (12... Nfd5 13. Bc1 $1 Nxc3 14. 
+bxc3 Nxa4 (14... Bxa4 15. c4 c5 16. Bd2 $1) 15. c4) 13. Bg5 Nxc3 14. bxc3 Be4 
+15. Qe3 Bd5 16. Rfd1 c5 17. c4 $1 Bxc4 18. dxc5 Qc7 19. Bf4 $1 Qxc5 20. Qxc5 
+Bxc5 21. Rdc1 Rac8 (21... b5 22. Ne5 $1 Rad8 23. Nxc4 bxc4 24. Rxc4 $14) 22. 
+Rxc4 Bxf2+ 23. Kxf2 Rxc4 24. Nd2 $14) 12. Bd2 Ne4 13. Nxe4 Bxe4 14. Ng5 $1 Bxg2 
+15. Kxg2 Nf6 16. Rac1 $1 h6 (16... Rc8 17. Qb3 $1) 17. Nf3 Ne4 18. Ba5)  (10... 
+a5 11. Nc3 Na6 12. Rac1 Nb4 13. Ne5 Bxg2 14. Kxg2 Nfd5 15. Nxd5 Qxd5+ (15... 
+Nxd5 16. Bd2 Bb4 (16... c6 17. Rfd1 Nb6 18. Qc2 $1 f6 19. Nf3 Qd7 20. e4 Nc8 21. 
+Be3 $14) 17. Bxb4 Nxb4 18. e4 c6 19. Rfd1 Qe7 20. Qc5 $1 Qc7 21. Nc4 Rfd8 22. 
+Rc3 {The rook may go to b3, creating the threat Nxa5 or to f3 andf4 to create 
+threats there.} ) 16. Qxd5 Nxd5 17. Bd2 c6 18. Rfd1 Rfd8 19. Nc4 Nb4 20. e3 f6 
+21. b3) 11. Bd2 $1 a5 12. Qc2 Nb4 13. Bxb4 Bxb4 14. e4)  (9. Ne5 Bc6 10. Nxc6 
+Nxc6 11. e3 Na5 12. Nd2 c5 13. dxc5 Rc8)  (9. Nc3 Nc6) 9... Bc6 (9... Nc6 10. 
+Qxc4) 10. Nc3 Bxf3 $5 (10... Nbd7 11. e4 b5 12. d5 exd5 13. e5 Ne4 (13... Nc5 
+14. Nd4 Bb7 15. exf6 Bxf6 16. axb5 axb5 17. Rxa8 Qxa8 18. Ncxb5 c6 19. Nd6) 14. 
+Nxd5 Bxd5 15. Rxd5 Nec5 16. axb5 axb5 17. Rxa8 Qxa8 18. Rxd7 Nxd7 19. Ng5 $18)  
+(10... Nd5 11. e4 Nxc3 12. bxc3 b5 13. Ne5 Bb7 14. Rb1 {threatening axb5 and 
+Nxc4}  c6 (14... c5 15. d5 $16) 15. Nxc4 $16)  (10... a5 11. e4 Na6 12. Ne5 Nb4 
+13. Qe2 h6 14. Be3 Qc8 15. Rd2 Rd8 16. Rad1 Be8 17. Nxc4 $16 Ra6 18. Bh3 Qb8 19. 
+Bf4 g5 20. Be3 b5 21. Ne5 bxa4 22. f4 Nh7 23. Rf1 f6 24. Nc4 Kg7 25. d5 exd5 26. 
+exd5 Bf7 27. Bd4 Re8 28. Bd7 Nxd5 29. Nxd5 Bxd5 30. Ne3 Re6 31. Bxe8 Qxe8 32. 
+Nxd5 Rxe2 33. Rxe2 $18)  (10... Bb4 {considered best}  11. Bg5 h6 12. Bxf6 Qxf6 
+13. Na2) 11. Bxf3 Nc6 12. Bxc6 (12. e3 $6 Na5) 12... bxc6 13. a5 $5 {with the 
+idea Ra4-c4}  Rb8 (13... Nd5 14. Na4 Qb8 15. Bd2 (15. Qxc4 Qb5 $1) 15... Qb5 16. 
+Rdc1) 14. Ra4 Rb4 15. Na2 Rxa4 16. Qxa4 Qb8 17. Qxc4 Qb5 18. Qxb5 cxb5 19. Be3 
+Nd5 20. Rc1 Rd8 21. Rc6 Rd6 22. Rc2 $14 {clearing c1 forthe knight}  *
+
+
+
