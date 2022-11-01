@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Media;
 using ChessPosition;
 using GameTree;
 
@@ -67,6 +68,28 @@ namespace ChessForge
             };
 
             return para;
+        }
+
+        /// <summary>
+        /// Create a table for the specified style.
+        /// Sets the right margin same as the left one.
+        /// Sets Foreground color to Black
+        /// and FontWeight to Normal.
+        /// </summary>
+        /// <param name="style"></param>
+        /// <returns></returns>
+        public Table CreateTable(double indent)
+        {
+            Table table = new Table
+            {
+                Margin = new Thickness(indent, 0, indent, 0),
+                FontSize = 14,
+                FontWeight = FontWeights.Normal,
+                TextAlignment = TextAlignment.Left,
+                Foreground = Brushes.Black
+            };
+
+            return table;
         }
 
         /// <summary>
@@ -154,6 +177,15 @@ namespace ChessForge
             {
                 Document.Blocks.Remove(para);
             }
+        }
+
+        /// <summary>
+        /// Removes a Block object from the Document
+        /// </summary>
+        /// <param name="block"></param>
+        public void RemoveBlock(Block block)
+        {
+            Document.Blocks.Remove(block);
         }
 
 
