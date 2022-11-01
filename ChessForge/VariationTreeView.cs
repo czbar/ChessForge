@@ -79,6 +79,10 @@ namespace ChessForge
             ["preamble"] = new RichTextPara(40, 10, 16, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
         };
 
+        // prefixes for run names
+        private readonly string _run_fork_move_ = "_run_fork_move_";
+        private readonly string _run_ = "run_";
+
         /// <summary>
         /// Most recent clicked node.
         /// This allows the context menu to reference the correct move.
@@ -158,12 +162,6 @@ namespace ChessForge
         private Run _selectedRun;
         private SolidColorBrush _selectedRunFore;
         private SolidColorBrush _selectedRunBkg;
-
-        /// <summary>
-        /// Prefix that will be followed by NodeId in the name of each Run
-        /// that represents a TreeNode.
-        /// </summary>
-        private readonly string RUN_NAME_PREFIX = "run_";
 
         /// <summary>
         /// Type of nodes that can be encountered in the Workbook tree.
@@ -967,7 +965,10 @@ namespace ChessForge
                     TableCell cell;
                     if (i < moveCount)
                     {
-                        cell = new TableCell(new Paragraph(new Run(MoveUtils.BuildSingleMoveText(node.Children[i], true, true))));
+                        Run rCell = new Run(MoveUtils.BuildSingleMoveText(node.Children[i], true, true));
+                        rCell.Name = _run_fork_move_ + node.Children[i].NodeId.ToString();
+                        rCell.MouseDown += EventForkChildClicked;
+                        cell = new TableCell(new Paragraph(rCell));
                     }
                     else
                     {
@@ -1322,7 +1323,7 @@ namespace ChessForge
 
 
             Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, false));
-            r.Name = "run_" + nd.NodeId.ToString();
+            r.Name = _run_ + nd.NodeId.ToString();
             r.MouseDown += EventRunClicked;
 
             r.FontStyle = rParent.FontStyle;
@@ -1552,7 +1553,7 @@ namespace ChessForge
             try
             {
                 Run r = new Run(text.ToString());
-                r.Name = "run_" + nd.NodeId.ToString();
+                r.Name = _run_ + nd.NodeId.ToString();
                 r.MouseDown += EventRunClicked;
 
                 if (_isIntraFork)
@@ -1605,7 +1606,7 @@ namespace ChessForge
                 Run rNode = _dictNodeToRun[nd.NodeId];
 
                 Run r = new Run(BuildCommentRunText(nd));
-                r.Name = "run_" + nd.NodeId.ToString() + "_comment";
+                r.Name = _run_ + nd.NodeId.ToString() + "_comment";
                 r.MouseDown += EventCommentRunClicked;
 
                 r.FontStyle = FontStyles.Normal;
@@ -1625,21 +1626,18 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Event handler invoked when a Run was clicked.
-        /// In response, we highlight the line to which this Run belongs
-        /// (selecting the top branch for the part of the line beyond
-        /// the clicked Run),
+        /// Select a Run.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventRunClicked(object sender, MouseButtonEventArgs e)
+        /// <param name="r"></param>
+        /// <param name="clickCount"></param>
+        /// <param name="changedButton"></param>
+        private void SelectRun(Run r, int clickCount, MouseButton changedButton)
         {
-            Run r = (Run)e.Source;
-            if (e.ClickCount == 2)
+            if (clickCount == 2)
             {
                 if (r != null)
                 {
-                    int nodeId = GetNodeIdFromRunName(r.Name, RUN_NAME_PREFIX);
+                    int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
                     TreeNode nd = _variationTree.GetNodeFromNodeId(nodeId);
                     if (_mainWin.InvokeAnnotationsDialog(nd))
                     {
@@ -1680,14 +1678,12 @@ namespace ChessForge
                 int idd = TextUtils.GetIdFromPrefixedString(r.Name);
                 BuildForkTable(idd);
 
-
-                string lineId = "";
                 int nodeId = -1;
-                if (r.Name != null && r.Name.StartsWith(RUN_NAME_PREFIX))
+                if (r.Name != null && r.Name.StartsWith(_run_))
                 {
-                    nodeId = int.Parse(r.Name.Substring(RUN_NAME_PREFIX.Length));
+                    nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
                     TreeNode foundNode = _variationTree.GetNodeFromNodeId(nodeId);
-                    lineId = _variationTree.GetDefaultLineIdForNode(nodeId);
+                    string lineId = _variationTree.GetDefaultLineIdForNode(nodeId);
 
                     // TODO: do not select line and therefore repaint everything if the clicked line is already selected
                     ObservableCollection<TreeNode> lineToSelect = _variationTree.SelectLine(lineId);
@@ -1715,16 +1711,30 @@ namespace ChessForge
                 r.Foreground = _brushSelectedMoveFore;
 
                 // this is a right click offer the context menu
-                if (e.ChangedButton == MouseButton.Right)
+                if (changedButton == MouseButton.Right)
                 {
                     _lastClickedNodeId = nodeId;
-                    EnableActiveTreeViewMenus(e.ChangedButton, true);
+                    EnableActiveTreeViewMenus(changedButton, true);
                 }
                 else
                 {
                     _lastClickedNodeId = -1;
                 }
             }
+        }
+
+        /// <summary>
+        /// Event handler invoked when a Run was clicked.
+        /// In response, we highlight the line to which this Run belongs
+        /// (selecting the top branch for the part of the line beyond
+        /// the clicked Run),
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventRunClicked(object sender, MouseButtonEventArgs e)
+        {
+            Run r = (Run)e.Source;
+            SelectRun(r, e.ClickCount, e.ChangedButton);
         }
 
         /// <summary>
@@ -1739,7 +1749,7 @@ namespace ChessForge
             {
                 Run r = (Run)e.Source;
 
-                int nodeId = GetNodeIdFromRunName(r.Name, RUN_NAME_PREFIX);
+                int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
                 TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
                 if (_mainWin.InvokeAnnotationsDialog(nd))
                 {
@@ -1751,6 +1761,22 @@ namespace ChessForge
                     //}
                 }
             }
+        }
+
+
+        /// <summary>
+        /// A run in the fork table was clicked.
+        /// Select the move with the nodeid.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventForkChildClicked(object sender, MouseButtonEventArgs e)
+        {
+            Run r = (Run)e.Source;
+            int id = TextUtils.GetIdFromPrefixedString(r.Name);
+            Run rPly = _dictNodeToRun[id];
+            SelectRun(rPly, 1, MouseButton.Left);
+            rPly.BringIntoView();
         }
 
         /// <summary>
