@@ -81,14 +81,7 @@ namespace ChessForge
         {
             get
             {
-                if (_activeTree != null)
-                {
-                    return _activeTree;
-                }
-                else
-                {
-                    return StudyTree;
-                }
+                return _activeTree;
             }
         }
 
@@ -135,6 +128,9 @@ namespace ChessForge
                     {
                         _activeTree = Exercises[gameIndex];
                     }
+                    break;
+                default:
+                    _activeTree = null;
                     break;
             }
         }
