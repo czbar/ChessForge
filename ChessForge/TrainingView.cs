@@ -746,11 +746,18 @@ namespace ChessForge
             InsertPrefixRuns(_dictParas[ParaType.STEM], node);
         }
 
+        /// <summary>
+        /// Builds text for the stem of the line and inserts in the 
+        /// passed paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="lastNode"></param>
         private void InsertPrefixRuns(Paragraph para, TreeNode lastNode)
         {
             TreeNode nd = lastNode;
             Run prevRun = null;
-            while (nd != null)
+            // NOTE without nd.Parent != null we'd be getting "starting position" text in front
+            while (nd != null && nd.Parent != null)
             {
                 Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, false) + " ", _run_stem_move_ + nd.NodeId.ToString(), Brushes.Black);
                 nd = nd.Parent;

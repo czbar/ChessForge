@@ -824,6 +824,8 @@ namespace ChessForge
                     {
                         MainChessBoard.SetStartingPosition();
                         ClearTreeView(_modelGameTreeView, GameData.ContentType.MODEL_GAME);
+                        // SelectModelGame() does this in the branch above
+                        WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.NONE);
                     }
 
                     AppStateManager.ConfigureMainBoardContextMenu();

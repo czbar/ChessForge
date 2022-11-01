@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls.Primitives;
 using ChessPosition;
 using ChessPosition.GameTree;
 using GameTree;
@@ -219,17 +220,31 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Returns the Content Type of the currently shown Tree.
+        /// Returns the Content Type of the current tab.
         /// </summary>
         public GameData.ContentType ActiveContentType
         {
             get
             {
-                if (_activeChapter == null)
+                GameData.ContentType contentType = GameData.ContentType.NONE;
+
+                switch (WorkbookManager.ActiveTab)
                 {
-                    SelectDefaultActiveChapter();
+                    case WorkbookManager.TabViewType.STUDY:
+                        contentType = GameData.ContentType.STUDY_TREE;
+                        break;
+                    case WorkbookManager.TabViewType.MODEL_GAME:
+                        contentType = GameData.ContentType.MODEL_GAME;
+                        break;
+                    case WorkbookManager.TabViewType.EXERCISE:
+                        contentType = GameData.ContentType.EXERCISE;
+                        break;
+                    default:
+                        contentType = GameData.ContentType.NONE;
+                        break;
                 }
-                return ActiveVariationTree.ContentType;
+
+                return contentType;
             }
         }
 
