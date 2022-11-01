@@ -35,6 +35,9 @@ namespace ChessForge
         // tracks the last added run as we may need to change its color
         private Run _lastAddedRun;
 
+        // currently showing fork table
+        private Table _forkTable;
+
         /// <summary>
         /// Constructor. Sets a reference to the 
         /// FlowDocument for the RichTextBox control, via
@@ -175,7 +178,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Returns the currently selecte Node.
+        /// Returns the currently selected Node.
         /// </summary>
         /// <returns></returns>
         public TreeNode GetSelectedNode()
@@ -448,6 +451,8 @@ namespace ChessForge
             {
                 try
                 {
+                    BuildForkTable(nodeId);
+
                     if (_selectedRun != null)
                     {
                         _selectedRun.Background = _selectedRunBkg;
@@ -459,7 +464,6 @@ namespace ChessForge
                     {
                         if (nd.NodeId != 0)
                         {
-
                             if (_dictNodeToRun.ContainsKey(nd.NodeId))
                             {
                                 _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
@@ -897,6 +901,99 @@ namespace ChessForge
             return para;
         }
 
+
+        /// <summary>
+        /// Builds a Table with moves available at the passed node.
+        /// There must be at least 2 children in the passed node for the
+        /// table to be shown.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="style"></param>
+        /// <param name="contentType"></param>
+        /// <returns></returns>
+        private Table BuildForkTable(int nodeId)
+        {
+            Document.Blocks.Remove(_forkTable);
+            _forkTable = null;
+
+            TreeNode node = _variationTree.GetNodeFromNodeId(nodeId);
+
+            if (node == null || node.Children.Count <= 2)
+            {
+                return null;
+            }
+
+            Run r = _dictNodeToRun[node.NodeId];
+            Paragraph para = _dictRunToParagraph[r];
+            _forkTable = null;
+
+            if (_variationTree != null)
+            {
+                _forkTable = CreateTable(para.Margin.Left);
+
+                // constant settings
+                _forkTable.FontSize = 14;
+                _forkTable.CellSpacing = 2;
+                int columnsPerRow = 4;
+
+                // number of move to put in the table
+                int moveCount = node.Children.Count;
+
+                // required number of rows
+                int rowCount = (int)((moveCount - 1) / columnsPerRow) + 1;
+                _forkTable.RowGroups.Add(new TableRowGroup());
+                for (int i = 0; i < rowCount; i++)
+                {
+                    _forkTable.RowGroups[0].Rows.Add(new TableRow());
+                }
+
+                // required number of columns 
+                int columnCount = moveCount <= columnsPerRow ? moveCount : columnsPerRow;
+                // total cells in the table, with moves or without
+                int cellCount = columnCount * rowCount;
+
+                // create columns
+                for (int i = 0; i < columnCount; i++)
+                {
+                    _forkTable.Columns.Add(new TableColumn());
+                }
+
+                // populate cells
+                for (int i = 0; i < cellCount; i++)
+                {
+                    int rowIndex = (int)(i / columnsPerRow);
+                    TableRow row = _forkTable.RowGroups[0].Rows[rowIndex];
+
+                    TableCell cell;
+                    if (i < moveCount)
+                    {
+                        cell = new TableCell(new Paragraph(new Run(MoveUtils.BuildSingleMoveText(node.Children[i], true, true))));
+                    }
+                    else
+                    {
+                        cell = new TableCell(new Paragraph(new Run("")));
+                    }
+                    cell.TextAlignment = TextAlignment.Center;
+
+                    if ((i % 2 + rowIndex % 2) % 2 == 0)
+                    {
+                        cell.Background = _forkTable.Columns[i].Background = Brushes.LightBlue;
+                    }
+                    else
+                    {
+                        cell.Background = _forkTable.Columns[i].Background = Brushes.LightSteelBlue;
+                    }
+                    cell.BorderThickness = new Thickness(2, 2, 2, 2);
+                    cell.BorderBrush = Brushes.White;
+                    row.Cells.Add(cell);
+                }
+
+                Document.Blocks.InsertAfter(para, _forkTable);
+            }
+
+            return _forkTable;
+        }
+
         /// <summary>
         /// Builds a paragraph with Game/Exercise result
         /// </summary>
@@ -931,9 +1028,9 @@ namespace ChessForge
                 para.Margin = new Thickness(20, 20, 20, 20);
                 Run rPreamble = new Run(preamble);
                 para.Inlines.Add(rPreamble);
-                para.BorderThickness = new Thickness(1,1,1,1);
-                para.BorderBrush = Brushes.Black;  
-                para.Padding = new Thickness(10,10,10,10);
+                para.BorderThickness = new Thickness(1, 1, 1, 1);
+                para.BorderBrush = Brushes.Black;
+                para.Padding = new Thickness(10, 10, 10, 10);
                 return para;
             }
             else
@@ -1483,7 +1580,7 @@ namespace ChessForge
 
                 _lastAddedRun = r;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLog.Message("AddRunToParagraph()", ex);
             }
@@ -1537,9 +1634,9 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
+            Run r = (Run)e.Source;
             if (e.ClickCount == 2)
             {
-                Run r = (Run)e.Source;
                 if (r != null)
                 {
                     int nodeId = GetNodeIdFromRunName(r.Name, RUN_NAME_PREFIX);
@@ -1578,8 +1675,11 @@ namespace ChessForge
                     }
                 }
 
-                Run r = (Run)e.Source;
                 _selectedRun = r;
+
+                int idd = TextUtils.GetIdFromPrefixedString(r.Name);
+                BuildForkTable(idd);
+
 
                 string lineId = "";
                 int nodeId = -1;
@@ -1733,13 +1833,11 @@ namespace ChessForge
                 return "";
             }
 
-//            StringBuilder sb = new StringBuilder(" {");
             StringBuilder sb = new StringBuilder(" [");
             if (!string.IsNullOrEmpty(nd.Comment))
             {
                 sb.Append(nd.Comment);
             }
-//            sb.Append("}");
             sb.Append("]");
 
             // if this is a root node add a space because the first move does not have it in front.
