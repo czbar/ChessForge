@@ -478,14 +478,19 @@ namespace ChessForge
         /// <summary>
         /// Intercepts and handles key events in the Active Line view.
         /// Facilitates scrolling through the game using the keyboard.
+        /// If the key modifier is CTRL do not mark as handled as we need
+        /// keyboard shortcut to work.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (HandleKeyDown(e.Key))
+            if (Keyboard.Modifiers != ModifierKeys.Control)
             {
-                e.Handled = true;
+                if (HandleKeyDown(e.Key))
+                {
+                    e.Handled = true;
+                }
             }
         }
 
