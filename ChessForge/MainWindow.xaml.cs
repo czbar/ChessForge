@@ -46,7 +46,7 @@ namespace ChessForge
         {
             get
             {
-                if (WorkbookManager.SessionWorkbook == null)
+                if (WorkbookManager.SessionWorkbook == null || WorkbookManager.SessionWorkbook.ActiveVariationTree == null)
                 {
                     return null;
                 }
@@ -468,6 +468,7 @@ namespace ChessForge
                 else
                 {
                     _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
+                    WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.NONE);
                 }
             }
             catch (Exception ex)
