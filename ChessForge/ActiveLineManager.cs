@@ -545,6 +545,11 @@ namespace ChessForge
                         _dgActiveLine.SelectedCells.Add(cell);
 
                         plyIndex = (postKeyDownRow * 2) + (postKeyDownColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
+                        // check for Exercise starting with Black move
+                        if (plyIndex != 0 && Line.NodeList[0].ColorToMove == PieceColor.Black)
+                        {
+                            plyIndex--;
+                        }
                     }
                     else
                     {
@@ -610,6 +615,12 @@ namespace ChessForge
                 case Key.Left:
                     postKeyDownColumn = currColumn == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : _dgActiveLineWhitePlyColumn;
                     postKeyDownRow = currColumn == _dgActiveLineWhitePlyColumn ? currRow - 1 : currRow;
+                    // check for Exercise starting with Black move
+                    if (Line.NodeList[0].ColorToMove == PieceColor.Black && postKeyDownRow == -1)
+                    {
+                        postKeyDownRow = 0;
+                        postKeyDownColumn = _dgActiveLineWhitePlyColumn;
+                    }
                     break;
                 case Key.Right:
                     postKeyDownColumn = currColumn == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : 1;
@@ -617,6 +628,12 @@ namespace ChessForge
                     // if we went beyond the last move (because it is White's and Black cell is empty.)
                     // switch back to the White column
                     int selectedPlyIndex = (postKeyDownRow * 2) + (postKeyDownColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
+
+                    // check for Exercise starting with Black move
+                    if (selectedPlyIndex != 0 && Line.NodeList[0].ColorToMove == PieceColor.Black)
+                    {
+                        selectedPlyIndex--;
+                    }
                     if (selectedPlyIndex >= Line.GetPlyCount())
                     {
                         postKeyDownColumn = _dgActiveLineWhitePlyColumn;
