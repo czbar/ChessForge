@@ -38,57 +38,19 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Creates a new VariationTree object given a single TreeNode
-        /// that will be considered the RootNode.
-        /// The node and its children will be copied and the root node's id
-        /// changed to 0.
+        /// Accessor for the root node.
         /// </summary>
-        /// <param name="node"></param>
-        /// <param name=""></param>
-        /// <returns></returns>
-        public static VariationTree CreateNewTreeFromNode(TreeNode node, GameData.ContentType contentType)
+        public TreeNode RootNode
         {
-            if (node == null)
+            get
             {
-                return null;
-            }
-
-            VariationTree tree = new VariationTree(contentType);
-
-            TreeNode root = node.CloneMe(false);
-            int origRootId = node.NodeId;
-            root.NodeId = 0;
-            root.Parent = null;
-            tree.AddNode(root);
-            AddChildrenToTree(root, tree);
-            RestartMoveNumbering(tree);
-            return tree;
-        }
-
-        public static void RestartMoveNumbering(VariationTree tree)
-        {
-            if (tree.Nodes.Count == 0)
-            {
-                return;
-            }
-
-            int rootNodeMoveNumber = (int)tree.Nodes[0].MoveNumber;
-            int decrement = tree.Nodes[0].ColorToMove == PieceColor.White ? rootNodeMoveNumber : rootNodeMoveNumber - 1;
-            foreach (TreeNode node in tree.Nodes)
-            {
-                node.MoveNumber = (uint)((int)node.MoveNumber - decrement);
-            }
-        }
-
-        private static void AddChildrenToTree(TreeNode node, VariationTree tree)
-        {
-            if (node.Children.Count > 0)
-            {
-                foreach (TreeNode child in node.Children)
+                if (Nodes.Count > 0)
                 {
-                    child.Parent = node;
-                    tree.AddNode(child);
-                    AddChildrenToTree(child, tree);
+                    return Nodes[0];
+                }
+                else
+                {
+                    return null;
                 }
             }
         }
@@ -902,6 +864,11 @@ namespace GameTree
         public string GetDefaultLineIdForNode(int nodeId)
         {
             TreeNode nd = GetNodeFromNodeId(nodeId);
+            if (nd == null)
+            {
+                return "";
+            }
+
             // go to the last node
             while (nd.Children.Count > 0)
             {

@@ -24,6 +24,97 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Creates a new node in the game tree for the next move
+        /// to be stored with the position.
+        /// TODO: remove dupe from PgnGameParser
+        /// </summary>
+        /// <param name="algMove"></param>
+        /// <param name="move"></param>
+        /// <param name="parentNode"></param>
+        /// <param name="parentSideToMove"></param>
+        /// <returns></returns>
+        public static TreeNode CreateNewNode(string algMove, MoveData move, TreeNode parentNode, PieceColor parentSideToMove, int nodeId)
+        {
+            TreeNode newNode = new TreeNode(parentNode, algMove, nodeId);
+
+            // copy the board from the parent
+            newNode.Position.Board = (byte[,])parentNode.Position.Board.Clone();
+
+            if (parentSideToMove == PieceColor.White)
+            {
+                newNode.Position.MoveNumber = parentNode.Position.MoveNumber + 1;
+                newNode.Position.ColorToMove = PieceColor.Black;
+            }
+            else
+            {
+                newNode.Position.MoveNumber = parentNode.Position.MoveNumber;
+                newNode.Position.ColorToMove = PieceColor.White;
+            }
+
+            if (move.IsCaptureOrPawnMove())
+            {
+                newNode.Position.HalfMove50Clock = 0;
+            }
+            else
+            {
+                newNode.Position.HalfMove50Clock += 1;
+            }
+
+            if (!string.IsNullOrEmpty(move.Nag))
+            {
+                newNode.AddNag(move.Nag);
+            }
+
+            return newNode;
+        }
+
+        // TODO: remove dupe from PgnParser
+        public static TreeNode ProcessAlgMove(string algMove, TreeNode parentNode, int nodeId)
+        {
+            PieceColor parentSideToMove = parentNode.ColorToMove;
+
+            // check for bad PGN with '0-0' instead of 'O-O' castling
+            if (algMove.Length > 1 && algMove[0] == '0')
+            {
+                algMove = algMove.Replace('0', 'O');
+            }
+
+            PgnMoveParser pmp = new PgnMoveParser();
+            int suffixLen = pmp.ParseAlgebraic(algMove, parentSideToMove);
+            // remove suffix from algMove
+            algMove = algMove.Substring(0, algMove.Length - suffixLen);
+            MoveData move = pmp.Move;
+            algMove = TextUtils.StripCheckOrMateChar(algMove);
+
+            // create a new node
+            TreeNode newNode = CreateNewNode(algMove, move, parentNode, parentSideToMove, nodeId);
+            if (move.IsCheckmate)
+            {
+                newNode.Position.IsCheckmate = true;
+            }
+            else if (move.IsCheck)
+            {
+                newNode.Position.IsCheck = true;
+            }
+
+            try
+            {
+                // Make the move on it
+                MoveUtils.MakeMove(newNode.Position, move);
+            }
+            catch
+            {
+                throw new Exception(TextUtils.BuildErrortext(newNode, algMove));
+            }
+
+            // do the postprocessing
+            PositionUtils.UpdateCastlingRights(ref newNode.Position, move, false);
+            PositionUtils.SetEnpassantSquare(ref newNode.Position, move);
+
+            return newNode;
+        }
+
+        /// <summary>
         /// Makes the passed move on the supplied Position after
         /// verifying that it is legal and not ambiguous.
         /// </summary>

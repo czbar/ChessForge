@@ -414,6 +414,9 @@ namespace ChessForge
                             case "_mnExerc_EditHeader":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
                                 break;
+                            case "_mnExerc_EditPosition":
+                                menuItem.IsEnabled = exerciseIndex >= 0;
+                                break;
                             case "_mnExerc_CreateExercise":
                                 menuItem.IsEnabled = true;
                                 break;
@@ -911,6 +914,11 @@ namespace ChessForge
         /// <returns></returns>
         private Table BuildForkTable(int nodeId)
         {
+            if (!Configuration.ShowMovesAtFork)
+            {
+                return null;
+            }
+
             Document.Blocks.Remove(_forkTable);
             _forkTable = null;
 

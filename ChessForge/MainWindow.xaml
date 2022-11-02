@@ -445,6 +445,8 @@
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiCmExercises">
                                     <MenuItem x:Name="_mnExerc_EditHeader" Header="Edit Exercise Header" Click="UiMnExerc_EditHeader_Click" />
+                                    <MenuItem x:Name="_mnExerc_EditPosition" Header="Edit Starting Position" Click="UiMnExerc_EditPosition_Click" />
+                                    <Separator />
                                     <MenuItem x:Name="_mnExerc_CreateExercise" Header="Create New Exercise" Click="UiMnExerc_CreateExercise_Click" />
                                     <MenuItem x:Name="_mnExerc_ImportExercises" Header="Import Exercises" Click="UiMnExerc_ImportExercises_Click"  />
                                     <Separator />

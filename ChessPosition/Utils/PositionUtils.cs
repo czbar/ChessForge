@@ -21,7 +21,7 @@ namespace ChessPosition
         public static Random GlobalRnd = new Random();
 
         /// <summary>
-        /// Checks validity of a psotion.
+        /// Checks validity of a position.
         /// </summary>
         /// <param name="pos"></param>
         /// <param name="errorText"></param>

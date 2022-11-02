@@ -817,7 +817,7 @@ namespace ChessForge
                 TreeNode nd = _modelGameTreeView.GetSelectedNode();
                 if (nd != null)
                 {
-                    VariationTree tree = VariationTree.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
+                    VariationTree tree = TreeUtils.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     CopyHeaderFromGame(tree, chapter.GetActiveModelGameHeader());
                     CreateNewExerciseFromTree(tree);
@@ -841,7 +841,7 @@ namespace ChessForge
                 TreeNode nd = _studyTreeView.GetSelectedNode();
                 if (nd != null)
                 {
-                    VariationTree tree = VariationTree.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
+                    VariationTree tree = TreeUtils.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     CopyHeaderFromGame(tree, chapter.StudyTree.Header);
                     if (string.IsNullOrEmpty(tree.Header.GetEventName(out _)))
@@ -927,6 +927,43 @@ namespace ChessForge
         private void UiMnExerc_EditHeader_Click(object sender, RoutedEventArgs e)
         {
             EditExerciseHeader();
+        }
+
+        /// <summary>
+        /// Allows the user to edit the starting position of an exercise.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExerc_EditPosition_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int index = chapter.ActiveExerciseIndex;
+                if (index >= 0)
+                {
+                    VariationTree tree = chapter.Exercises[index];
+                    PositionSetupDialog dlg = new PositionSetupDialog(tree)
+                    {
+                        Left = ChessForgeMain.Left + 100,
+                        Top = ChessForgeMain.Top + 100,
+                        Topmost = false,
+                        Owner = this
+                    };
+                    dlg.ShowDialog();
+                    if (dlg.ExitOK)
+                    {
+                        chapter.Exercises[index] = dlg.FixedTree;
+                        //chapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, index);
+                        //_exerciseTreeView.BuildFlowDocumentForVariationTree();
+                        SelectExercise(index, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnExerc_EditPosition_Click()", ex);
+            }
         }
 
         /// <summary>
@@ -1781,7 +1818,7 @@ namespace ChessForge
         {
             try
             {
-                PositionSetupDialog dlgPosSetup = new PositionSetupDialog()
+                PositionSetupDialog dlgPosSetup = new PositionSetupDialog(null)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,

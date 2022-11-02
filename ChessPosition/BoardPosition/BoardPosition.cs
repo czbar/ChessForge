@@ -130,6 +130,9 @@ namespace ChessPosition
             this.HalfMove50Clock = position.HalfMove50Clock;
             this.MoveNumber = position.MoveNumber;
 
+            this.IsCheck = position.IsCheck;
+            this.IsCheckmate = position.IsCheckmate;
+
             this.LastMove = position.LastMove.CloneMe();
         }
 
