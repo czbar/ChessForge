@@ -68,6 +68,48 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Builds text for a message reporting error in processing a move.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="algMove"></param>
+        /// <returns></returns>
+        public static string BuildErrortext(TreeNode nd, string algMove)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Move " + nd.MoveNumber.ToString());
+            if (nd.ColorToMove == PieceColor.White)
+            {
+                sb.Append("...");
+            }
+            else
+            {
+                sb.Append(".");
+            }
+            sb.Append(algMove);
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Removes the last character of the algebraic notation if it
+        /// denotes a check or a mate.
+        /// This is so that these symbols are not duplicated when they get added
+        /// later on.
+        /// </summary>
+        /// <param name="algMove"></param>
+        /// <returns></returns>
+        public static string StripCheckOrMateChar(string algMove)
+        {
+
+            if (algMove[algMove.Length - 1] == '#' || algMove[algMove.Length - 1] == '+')
+            {
+                return algMove.Substring(0, algMove.Length - 1);
+            }
+
+            return algMove;
+        }
+
+
+        /// <summary>
         /// Given a string, checks if it is in Chess Forge / PGN
         /// format (yyyy.mm.dd) and if not gets out of it what it can.
         /// Returns the corrected string.
