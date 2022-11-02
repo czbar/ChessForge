@@ -930,6 +930,43 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Allows the user to edit the starting position of an exercise.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExerc_EditPosition_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int index = chapter.ActiveExerciseIndex;
+                if (index >= 0)
+                {
+                    VariationTree tree = chapter.Exercises[index];
+                    PositionSetupDialog dlg = new PositionSetupDialog(tree)
+                    {
+                        Left = ChessForgeMain.Left + 100,
+                        Top = ChessForgeMain.Top + 100,
+                        Topmost = false,
+                        Owner = this
+                    };
+                    dlg.ShowDialog();
+                    if (dlg.ExitOK)
+                    {
+                        chapter.Exercises[index] = dlg.FixedTree;
+                        //chapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, index);
+                        //_exerciseTreeView.BuildFlowDocumentForVariationTree();
+                        SelectExercise(index, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnExerc_EditPosition_Click()", ex);
+            }
+        }
+
+        /// <summary>
         /// Edits a Game header.
         /// Invoked from Chapters View menu.
         /// </summary>
@@ -1781,7 +1818,7 @@ namespace ChessForge
         {
             try
             {
-                PositionSetupDialog dlgPosSetup = new PositionSetupDialog()
+                PositionSetupDialog dlgPosSetup = new PositionSetupDialog(null)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
