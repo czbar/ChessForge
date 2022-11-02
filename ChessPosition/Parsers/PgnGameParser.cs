@@ -406,8 +406,6 @@ namespace GameTree
             }
             catch
             {
-                //MessageBox.Show("Failed to parse move " + newNode.MoveNumber.ToString() + ". " + algMove + " : " + ex.Message, 
-                //    "PGN Parsing Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 throw new Exception(BuildErrortext(newNode, algMove));
             }
 
