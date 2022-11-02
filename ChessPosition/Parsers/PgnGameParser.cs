@@ -382,14 +382,12 @@ namespace GameTree
             // remove suffix from algMove
             algMove = algMove.Substring(0, algMove.Length - suffixLen);
             MoveData move = pmp.Move;
-            algMove = StripCheckOrMateChar(algMove);
-            if (DEBUG_MODE)
-            {
-                DebugUtils.PrintMove(move, algMove);
-            }
+            algMove = TextUtils.StripCheckOrMateChar(algMove);
 
             // create a new node
-            TreeNode newNode = CreateNewNode(algMove, move, parentNode, parentSideToMove);
+            TreeNode newNode = CreateNewNode(algMove, move, parentNode, parentSideToMove, _runningNodeId);
+            _runningNodeId++;
+
             if (move.IsCheckmate)
             {
                 newNode.Position.IsCheckmate = true;
@@ -406,7 +404,7 @@ namespace GameTree
             }
             catch
             {
-                throw new Exception(BuildErrortext(newNode, algMove));
+                throw new Exception(TextUtils.BuildErrortext(newNode, algMove));
             }
 
             // do the postprocessing
@@ -414,28 +412,6 @@ namespace GameTree
             PositionUtils.SetEnpassantSquare(ref newNode.Position, move);
 
             return newNode;
-        }
-
-        /// <summary>
-        /// Builds text for a message reporting error in processing a move.
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <param name="algMove"></param>
-        /// <returns></returns>
-        private string BuildErrortext(TreeNode nd, string algMove)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Move " + nd.MoveNumber.ToString());
-            if (nd.ColorToMove == PieceColor.White)
-            {
-                sb.Append("...");
-            }
-            else
-            {
-                sb.Append(".");
-            }
-            sb.Append(algMove);
-            return sb.ToString();
         }
 
         /// <summary>
@@ -447,10 +423,9 @@ namespace GameTree
         /// <param name="parentNode"></param>
         /// <param name="parentSideToMove"></param>
         /// <returns></returns>
-        private TreeNode CreateNewNode(string algMove, MoveData move, TreeNode parentNode, PieceColor parentSideToMove)
+        private TreeNode CreateNewNode(string algMove, MoveData move, TreeNode parentNode, PieceColor parentSideToMove, int nodeId)
         {
-            TreeNode newNode = new TreeNode(parentNode, algMove, _runningNodeId);
-            _runningNodeId++;
+            TreeNode newNode = new TreeNode(parentNode, algMove, nodeId);
 
             // copy the board from the parent
             newNode.Position.Board = (byte[,])parentNode.Position.Board.Clone();
@@ -763,25 +738,6 @@ namespace GameTree
             }
 
             return gtt;
-        }
-
-        /// <summary>
-        /// Removes the last character of the algebraic notation if it
-        /// denotes a check or a mate.
-        /// This is so that these symbols are not duplicated when they get added
-        /// later on.
-        /// </summary>
-        /// <param name="algMove"></param>
-        /// <returns></returns>
-        private string StripCheckOrMateChar(string algMove)
-        {
-
-            if (algMove[algMove.Length - 1] == '#' || algMove[algMove.Length - 1] == '+')
-            {
-                return algMove.Substring(0, algMove.Length - 1);
-            }
-
-            return algMove;
         }
 
     }
