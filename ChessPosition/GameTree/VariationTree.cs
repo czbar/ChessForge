@@ -864,6 +864,11 @@ namespace GameTree
         public string GetDefaultLineIdForNode(int nodeId)
         {
             TreeNode nd = GetNodeFromNodeId(nodeId);
+            if (nd == null)
+            {
+                return "";
+            }
+
             // go to the last node
             while (nd.Children.Count > 0)
             {
