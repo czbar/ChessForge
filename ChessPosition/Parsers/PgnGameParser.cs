@@ -105,6 +105,33 @@ namespace GameTree
             _runningNodeId = 0;
             _remainingGameText = ReadHeaders(pgnGametext);
             ParsePgnTreeText(tree, fen);
+
+            SetCheckAndMates();
+        }
+
+        /// <summary>
+        /// Sets check and mate status in psoitions as they may not have been
+        /// correctly marked in the PGN.
+        /// </summary>
+        private void SetCheckAndMates()
+        {
+            foreach (TreeNode nd in _tree.Nodes)
+            {
+                if (PositionUtils.IsKingInCheck(nd.Position, nd.ColorToMove))
+                {
+                    nd.Position.IsCheck = true;
+                    if (PositionUtils.IsCheckmate(nd.Position))
+                    {
+                        nd.Position.IsCheck = false;
+                        nd.Position.IsCheckmate = true;
+                    }
+                }
+                else
+                {
+                    nd.Position.IsCheck = false;
+                    nd.Position.IsCheckmate = false;
+                }
+            }
         }
 
         /// <summary>
