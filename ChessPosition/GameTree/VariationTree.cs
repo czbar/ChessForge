@@ -38,6 +38,24 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Accessor for the root node.
+        /// </summary>
+        public TreeNode RootNode
+        {
+            get
+            {
+                if (Nodes.Count > 0)
+                {
+                    return Nodes[0];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
         /// Accessors to the ContentType value kept
         /// in the Header.
         /// </summary>
