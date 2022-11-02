@@ -26,6 +26,7 @@ namespace ChessPosition
         /// <summary>
         /// Creates a new node in the game tree for the next move
         /// to be stored with the position.
+        /// TODO: remove dupe from PgnGameParser
         /// </summary>
         /// <param name="algMove"></param>
         /// <param name="move"></param>
@@ -67,7 +68,7 @@ namespace ChessPosition
             return newNode;
         }
 
-
+        // TODO: remove dupe from PgnParser
         public static TreeNode ProcessAlgMove(string algMove, TreeNode parentNode, int nodeId)
         {
             PieceColor parentSideToMove = parentNode.ColorToMove;
