@@ -1,6 +1,8 @@
 ﻿using ChessPosition;
 using GameTree;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,6 +20,8 @@ namespace ChessForge
         /// </summary>
         public bool ExitOK = false;
 
+        public VariationTree FixedTree;
+
         // square side's size
         private int _squareSize = 30;
 
@@ -32,13 +36,13 @@ namespace ChessForge
         // left offset between the the Board Image and BoardCanvas
         private double _boardImageToBoardCanvasLeftOffset;
         // top offset between the the Board Image and BoardCanvas
-        
+
         private double _boardImageToBoardCanvasTopOffset;
 
 
         // left offset between the the Board Image and Setup Canvas
         private double _boardLeftOffset;
-        
+
         // top offset between the the Board Image and Setup Canvas
         private double _boardTopOffset;
 
@@ -63,13 +67,17 @@ namespace ChessForge
         // color of the side to move
         private PieceColor _sideToMove = PieceColor.White;
 
+        // tree object to verify on exit if any was passed
+        private VariationTree _tree;
+
         /// <summary>
         /// Constructs the dialog.
         /// Sets up offset values.
         /// </summary>
-        public PositionSetupDialog()
+        public PositionSetupDialog(VariationTree tree)
         {
             InitializeComponent();
+            _tree = tree;
 
             UiLblSideToMove.Content = WHITE_TO_MOVE;
             SetSideToMove(PieceColor.White);
@@ -85,6 +93,27 @@ namespace ChessForge
             _boardTopOffset = _boardCanvasToSetupCanvasTopOffset + _boardImageToBoardCanvasTopOffset;
 
             ShowCoordinates();
+
+            if (_tree != null)
+            {
+                SetupInitialPosition(tree.RootNode);
+                SetSideToMove(tree.RootNode.ColorToMove);
+            }
+        }
+
+        /// <summary>
+        /// Sets up the initial position if a non-null TreeNode
+        /// was passed.
+        /// </summary>
+        /// <param name="nd"></param>
+        private void SetupInitialPosition(TreeNode nd)
+        {
+            PositionSetup = new BoardPosition(nd.Position);
+            SetupImagesForPosition();
+            UiCbWhiteCastleShort.IsChecked = (PositionSetup.DynamicProperties & Constants.WhiteKingsideCastle) > 0;
+            UiCbWhiteCastleLong.IsChecked = (PositionSetup.DynamicProperties & Constants.WhiteQueensideCastle) > 0;
+            UiCbBlackCastleShort.IsChecked = (PositionSetup.DynamicProperties & Constants.BlackKingsideCastle) > 0;
+            UiCbBlackCastleLong.IsChecked = (PositionSetup.DynamicProperties & Constants.BlackQueensideCastle) > 0;
         }
 
         /// <summary>
@@ -658,7 +687,7 @@ namespace ChessForge
 
             PositionSetup = PositionUtils.SetupStartingPosition();
             SetupImagesForPosition();
-            
+
             SetSideToMove(PieceColor.White);
             ResetCastlingRights(true);
         }
@@ -674,6 +703,84 @@ namespace ChessForge
 
             SetSideToMove(PieceColor.White);
             ResetCastlingRights(false);
+        }
+
+        /// <summary>
+        /// Checks if the moves in the Exercise remain valid after the initial
+        /// position was changed.
+        /// </summary>
+        /// <returns></returns>
+        private bool ValidateTree()
+        {
+            bool result = true;
+
+            // if a non-null tree was passed validate
+            if (_tree != null)
+            {
+                TreeNode ndRoot = _tree.Nodes[0].CloneMe(false);
+                VariationTree fixedTree = TreeUtils.CreateNewTreeFromNode(ndRoot, _tree.ContentType);
+                fixedTree.RootNode.Position = new BoardPosition(PositionSetup);
+
+                // temporarily replace the position in the root node with the one produced in this dialog
+                //BoardPosition originalPos = new BoardPosition(_tree.RootNode.Position);
+                //_tree.RootNode.Position = new BoardPosition(PositionSetup);
+
+                List<TreeNode> nodesToRemove = new List<TreeNode>();
+                FixedTree = TreeUtils.ValidateTree(fixedTree, ref nodesToRemove);
+                if (nodesToRemove.Count > 0)
+                {
+                    var res = MessageBox.Show(BuildBadMovesWarning(nodesToRemove), "Position Setup",
+                                              MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    if (res == MessageBoxResult.Yes)
+                    {
+                        //_tree = FixedTree;
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                        //// restore root
+                        //_tree.RootNode.Position = new BoardPosition(originalPos);
+                    }
+                }
+                else
+                {
+                    //_tree = FixedTree;
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds warning message for Nodes that failed validation.
+        /// </summary>
+        /// <param name="nodesToRemove"></param>
+        /// <returns></returns>
+        private string BuildBadMovesWarning(List<TreeNode> nodesToRemove)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < nodesToRemove.Count; i++)
+            {
+                if (i > 0)
+                {
+                    sb.Append(", ");
+                }
+                sb.Append(MoveUtils.BuildSingleMoveText(nodesToRemove[i], true));
+            }
+            if (nodesToRemove.Count > 1)
+            {
+                sb.Insert(0, "Moves ");
+                sb.Append(" are no longer valid");
+            }
+            else
+            {
+                sb.Insert(0, "Move ");
+                sb.Append(" is no longer valid");
+            }
+            sb.Append(" and will be deleted. Proceed anyway?");
+            return sb.ToString();
         }
 
         /// <summary>
@@ -703,8 +810,11 @@ namespace ChessForge
 
             if (PositionUtils.ValidatePosition(ref PositionSetup, out string errorText))
             {
-                ExitOK = true;
-                Close();
+                if (ValidateTree())
+                {
+                    ExitOK = true;
+                    Close();
+                }
             }
             else
             {
