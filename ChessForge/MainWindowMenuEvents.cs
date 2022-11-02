@@ -817,7 +817,7 @@ namespace ChessForge
                 TreeNode nd = _modelGameTreeView.GetSelectedNode();
                 if (nd != null)
                 {
-                    VariationTree tree = VariationTree.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
+                    VariationTree tree = TreeUtils.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     CopyHeaderFromGame(tree, chapter.GetActiveModelGameHeader());
                     CreateNewExerciseFromTree(tree);
@@ -841,7 +841,7 @@ namespace ChessForge
                 TreeNode nd = _studyTreeView.GetSelectedNode();
                 if (nd != null)
                 {
-                    VariationTree tree = VariationTree.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
+                    VariationTree tree = TreeUtils.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     CopyHeaderFromGame(tree, chapter.StudyTree.Header);
                     if (string.IsNullOrEmpty(tree.Header.GetEventName(out _)))
