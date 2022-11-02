@@ -911,6 +911,11 @@ namespace ChessForge
         /// <returns></returns>
         private Table BuildForkTable(int nodeId)
         {
+            if (!Configuration.ShowMovesAtFork)
+            {
+                return null;
+            }
+
             Document.Blocks.Remove(_forkTable);
             _forkTable = null;
 
