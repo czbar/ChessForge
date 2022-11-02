@@ -36,7 +36,6 @@ namespace ChessPosition
             }
         }
 
-
         /// <summary>
         /// Creates a new VariationTree object given a single TreeNode
         /// that will be considered the RootNode.
@@ -86,43 +85,52 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Walks the tree and checks if the moves are valid.
+        /// Copies the passed tree and cerifies validity of the .
         /// If not cuts the subtree off and reports the number of removed
         /// Nodes.
         /// Returns a new Tree object contatining only the good nodes. 
         /// </summary>
         /// <param name="tree"></param>
-        /// <param name="goodNodeCount"></param>
-        /// <param name="badNodeCount"></param>
         /// <returns></returns>
-        public static VariationTree ValidateTree(VariationTree tree)
+        public static VariationTree ValidateTree(VariationTree tree, ref List<TreeNode> nodesToRemove)
         {
-            TreeNode ndRoot = tree.Nodes[0].CloneMe(false);
+            VariationTree fixedTree = tree;
+            ValidateNode(fixedTree.RootNode, fixedTree, ref nodesToRemove);
 
-            VariationTree fixedTree = new VariationTree(tree.ContentType);
-
-            ValidateNode(ndRoot, ref fixedTree);
+            foreach (TreeNode nd in nodesToRemove)
+            {
+                fixedTree.DeleteRemainingMoves(nd);
+            }
             SetCheckAndMates(ref fixedTree);
 
-            return CreateNewTreeFromNode(ndRoot, tree.ContentType);
+            return fixedTree;
         }
 
-        private static bool ValidateNode(TreeNode nd, ref VariationTree tree)
+        /// <summary>
+        /// Recursively validates the passed tree.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="fixedTree"></param>
+        /// <param name="nodesToRemove"></param>
+        /// <returns></returns>
+        private static bool ValidateNode(TreeNode nd, VariationTree fixedTree, ref List<TreeNode> nodesToRemove)
         {
-            if (nd.NodeId != 0)
+            try
             {
-                try
+                if (nd.NodeId != 0)
                 {
-                    MoveUtils.ProcessAlgMove(nd.LastMoveAlgebraicNotation, nd.Parent, nd.NodeId);
-                    foreach (TreeNode child in nd.Children)
-                    {
-                        ValidateNode(child, ref tree);
-                    }
+                    TreeNode newNode = MoveUtils.ProcessAlgMove(nd.LastMoveAlgebraicNotation, nd.Parent, nd.NodeId);
+                    nd.Position = new BoardPosition(newNode.Position);
                 }
-                catch
+                foreach (TreeNode child in nd.Children)
                 {
-                    return false;
+                    ValidateNode(child, fixedTree, ref nodesToRemove);
                 }
+            }
+            catch
+            {
+                nodesToRemove.Add(nd);
+                return false;
             }
 
             return true;
