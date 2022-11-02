@@ -74,6 +74,7 @@
     <Compile Include="BoardPosition\Square.cs" />
     <Compile Include="BoardPosition\SquareCoords.cs" />
     <Compile Include="Utils\TextUtils.cs" />
+    <Compile Include="Utils\TreeUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

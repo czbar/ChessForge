@@ -325,7 +325,7 @@ namespace ChessForge
                     ModelGames.Add(tree);
                     break;
                 case GameData.ContentType.EXERCISE:
-                    VariationTree.RestartMoveNumbering(tree);
+                    TreeUtils.RestartMoveNumbering(tree);
                     Exercises.Add(tree);
                     break;
             }
