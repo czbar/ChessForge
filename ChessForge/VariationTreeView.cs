@@ -414,6 +414,9 @@ namespace ChessForge
                             case "_mnExerc_EditHeader":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
                                 break;
+                            case "_mnExerc_EditPosition":
+                                menuItem.IsEnabled = exerciseIndex >= 0;
+                                break;
                             case "_mnExerc_CreateExercise":
                                 menuItem.IsEnabled = true;
                                 break;
