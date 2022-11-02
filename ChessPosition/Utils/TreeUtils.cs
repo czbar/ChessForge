@@ -2,13 +2,41 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ChessPosition
 {
     public class TreeUtils
     {
+        /// <summary>
+        /// Sets check and mate status in psoitions as they may not have been
+        /// correctly marked in the PGN.
+        /// </summary>
+        public static void SetCheckAndMates(ref VariationTree _tree)
+        {
+            foreach (TreeNode nd in _tree.Nodes)
+            {
+                if (PositionUtils.IsKingInCheck(nd.Position, nd.ColorToMove))
+                {
+                    nd.Position.IsCheck = true;
+                    if (PositionUtils.IsCheckmate(nd.Position))
+                    {
+                        nd.Position.IsCheck = false;
+                        nd.Position.IsCheckmate = true;
+                    }
+                }
+                else
+                {
+                    nd.Position.IsCheck = false;
+                    nd.Position.IsCheckmate = false;
+                }
+            }
+        }
+
+
         /// <summary>
         /// Creates a new VariationTree object given a single TreeNode
         /// that will be considered the RootNode.
@@ -55,6 +83,49 @@ namespace ChessPosition
             {
                 node.MoveNumber = (uint)((int)node.MoveNumber - decrement);
             }
+        }
+
+        /// <summary>
+        /// Walks the tree and checks if the moves are valid.
+        /// If not cuts the subtree off and reports the number of removed
+        /// Nodes.
+        /// Returns a new Tree object contatining only the good nodes. 
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="goodNodeCount"></param>
+        /// <param name="badNodeCount"></param>
+        /// <returns></returns>
+        public static VariationTree ValidateTree(VariationTree tree)
+        {
+            TreeNode ndRoot = tree.Nodes[0].CloneMe(false);
+
+            VariationTree fixedTree = new VariationTree(tree.ContentType);
+
+            ValidateNode(ndRoot, ref fixedTree);
+            SetCheckAndMates(ref fixedTree);
+
+            return CreateNewTreeFromNode(ndRoot, tree.ContentType);
+        }
+
+        private static bool ValidateNode(TreeNode nd, ref VariationTree tree)
+        {
+            if (nd.NodeId != 0)
+            {
+                try
+                {
+                    MoveUtils.ProcessAlgMove(nd.LastMoveAlgebraicNotation, nd.Parent, nd.NodeId);
+                    foreach (TreeNode child in nd.Children)
+                    {
+                        ValidateNode(child, ref tree);
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
