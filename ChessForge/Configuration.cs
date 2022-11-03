@@ -11,6 +11,11 @@ namespace ChessForge
 {
     public class Configuration
     {
+        // max value by which a font size can be increased from the standard size
+        public const int MAX_UP_FONT_SIZE_DIFF = 4;
+        // max value by which a font size can be decreased from the standard size
+        public const int MAX_DOWN_FONT_SIZE_DIFF = -2;
+
         //*********************************
         // CONFIGURATION ITEMS
         //*********************************

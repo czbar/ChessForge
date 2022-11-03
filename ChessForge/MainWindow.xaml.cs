@@ -255,6 +255,8 @@ namespace ChessForge
                 UiTabCtrlTraining.HorizontalAlignment = HorizontalAlignment.Left;
             }
 
+            SetupMenuBarControls();
+
             // main chess board
             MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true, true);
 
@@ -1920,5 +1922,6 @@ namespace ChessForge
                 ReturnDraggedPiece(false);
             }
         }
+
     }
 }
