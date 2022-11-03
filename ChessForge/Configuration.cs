@@ -11,6 +11,11 @@ namespace ChessForge
 {
     public class Configuration
     {
+        // max value by which a font size can be increased from the standard size
+        public const int MAX_UP_FONT_SIZE_DIFF = 4;
+        // max value by which a font size can be decreased from the standard size
+        public const int MAX_DOWN_FONT_SIZE_DIFF = -2;
+
         //*********************************
         // CONFIGURATION ITEMS
         //*********************************
@@ -39,6 +44,13 @@ namespace ChessForge
         /// Path to the engine executable
         /// </summary>
         public static string EngineExePath = "";
+
+        /// <summary>
+        /// By how many pixels to adjust font size
+        /// in the views.
+        /// (in milliseconds)
+        /// </summary>
+        public static int FontSizeDiff = 0;
 
         /// <summary>
         /// Time given to the engine to evaluate a single move
@@ -81,6 +93,16 @@ namespace ChessForge
         /// Whether to show move options at a fork.
         /// </summary>
         public static bool ShowMovesAtFork = true;
+
+        /// <summary>
+        /// Whether AutoSave is On.
+        /// </summary>
+        public static bool AutoSave = false;
+
+        /// <summary>
+        /// Whether fixed size font should be used.
+        /// </summary>
+        public static bool UseFixedFont = false;
 
         /// <summary>
         /// Whether to allow replaying moves with the mouse wheel. 
@@ -131,6 +153,8 @@ namespace ChessForge
         private const string CFG_SCORESHEET_POSITION = "ScoreSheetPosition";
         private const string CFG_VIABLE_MOVE_CP_DIFF = "ViableMoveCpDiff";
 
+        private const string CFG_FONT_SIZE_DIFF = "FontSizeDiff";
+
         /// <summary>
         /// PGN export configuration.
         /// What to include
@@ -138,7 +162,9 @@ namespace ChessForge
         private const string CFG_PGN_EXP_BOOKMARKS = "PgnExportBookmarks";
         private const string CFG_PGN_EXP_EVALS = "PgnExportEvals";
 
-        private const string CFG_SHOW_MovesAtFork = "ShowMovesAtFork";
+        private const string CFG_AUTO_SAVE = "AutoSave";
+        private const string CFG_USE_FIXED_FONT = "UseFixedFont";
+        private const string CFG_SHOW_MOVES_AT_FORK = "ShowMovesAtFork";
         private const string CFG_SHOW_GENERIC_PGN_INFO = "ShowGenericPgnInfo";
         private const string CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES = "AllowMouseWheelForMoves";
         
@@ -266,6 +292,8 @@ namespace ChessForge
                 sb.Append(CFG_ENGINE_EVALUATION_TIME + "=" + EngineEvaluationTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_MPV + "=" + EngineMpv.ToString() + Environment.NewLine);
 
+                sb.Append(CFG_FONT_SIZE_DIFF + "=" + FontSizeDiff.ToString() + Environment.NewLine);
+
                 sb.Append(CFG_SCORESHEET_POSITION + "=" + ScoreSheetPosition.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_VIABLE_MOVE_CP_DIFF + "=" + ViableMoveCpDiff.ToString() + Environment.NewLine);
@@ -273,7 +301,9 @@ namespace ChessForge
                 sb.Append(CFG_PGN_EXP_BOOKMARKS + "=" + (PgnExportBookmarks ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_PGN_EXP_EVALS + "=" + (PgnExportEvaluations ? "1" : "0") + Environment.NewLine);
 
-                sb.Append(CFG_SHOW_MovesAtFork + "=" + (ShowMovesAtFork ? "1" : "0") + Environment.NewLine);
+                sb.Append(CFG_AUTO_SAVE + "=" + (AutoSave ? "1" : "0") + Environment.NewLine);
+                sb.Append(CFG_USE_FIXED_FONT + "=" + (UseFixedFont ? "1" : "0") + Environment.NewLine);
+                sb.Append(CFG_SHOW_MOVES_AT_FORK + "=" + (ShowMovesAtFork ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_GENERIC_PGN_INFO + "=" + (ShowGenericPgnInfo ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES + "=" + (AllowMouseWheelForMoves ? "1" : "0") + Environment.NewLine);
 
@@ -515,6 +545,9 @@ namespace ChessForge
                         case CFG_ENGINE_EXE:
                             EngineExePath = value;
                             break;
+                        case CFG_FONT_SIZE_DIFF:
+                            int.TryParse(value, out FontSizeDiff);
+                            break;
                         case CFG_ENGINE_EVALUATION_TIME:
                             int.TryParse(value, out EngineEvaluationTime);
                             break;
@@ -541,8 +574,14 @@ namespace ChessForge
                         case CFG_SHOW_GENERIC_PGN_INFO:
                             ShowGenericPgnInfo = value != "0" ? true : false;
                             break;
-                        case CFG_SHOW_MovesAtFork:
+                        case CFG_SHOW_MOVES_AT_FORK:
                             ShowMovesAtFork = value != "0" ? true : false;
+                            break;
+                        case CFG_AUTO_SAVE:
+                            AutoSave = value != "0" ? true : false;
+                            break;
+                        case CFG_USE_FIXED_FONT:
+                            UseFixedFont = value != "0" ? true : false;
                             break;
                         case CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES:
                             AllowMouseWheelForMoves = value != "0" ? true : false;

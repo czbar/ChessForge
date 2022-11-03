@@ -335,6 +335,12 @@
     <Resource Include="Resources\Images\ChessBoardLightBlue.png" />
     <Resource Include="Resources\Images\ChessBoardLightGreen.png" />
     <Resource Include="Resources\Images\ChessBoardGreySmall.png" />
+    <Resource Include="Resources\Images\AutoSaveOff.png" />
+    <Resource Include="Resources\Images\AutoSaveOn.png" />
+    <Resource Include="Resources\Images\FontSizeDown.png" />
+    <Resource Include="Resources\Images\FontSizeUp.png" />
+    <Resource Include="Resources\Images\FontSizeFixed.png" />
+    <Resource Include="Resources\Images\FontSizeVariable.png" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

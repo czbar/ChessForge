@@ -1774,7 +1774,7 @@ namespace ChessForge
 
         //********************************************************
         //
-        // Methods invoked from Menu Evant handlers 
+        // Methods invoked from Menu Event handlers 
         //
         //********************************************************
 
@@ -2052,6 +2052,101 @@ namespace ChessForge
             {
                 AppLog.Message("EditExerciseHeader()" + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// The AutoSave Off image was clicked
+        /// which toggles it to On.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgAutoSaveOff_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Configuration.AutoSave = true;
+            SetupMenuBarControls();
+        }
+
+        /// <summary>
+        /// The AutoSave On image was clicked
+        /// which toggles it to Off.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgAutoSaveOn_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Configuration.AutoSave = false;
+            SetupMenuBarControls();
+        }
+
+        /// <summary>
+        /// The increase font button was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnFontSizeUp_Click(object sender, RoutedEventArgs e)
+        {
+            // lets limit the increase to 4 pixels
+            if (Configuration.FontSizeDiff < Configuration.MAX_UP_FONT_SIZE_DIFF)
+            {
+                Configuration.FontSizeDiff++;
+            }
+
+            SetupMenuBarControls();
+        }
+
+        /// <summary>
+        /// The decrease font button was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnFontSizeDown_Click(object sender, RoutedEventArgs e)
+        {
+            const int MAX_DOWN_DIFF = -2;
+
+            // do not allow decrease by more than 2 pixels
+            if (Configuration.FontSizeDiff > MAX_DOWN_DIFF)
+            {
+                Configuration.FontSizeDiff--;
+            }
+
+            SetupMenuBarControls();
+        }
+
+        /// <summary>
+        /// The button requesting the use of fixed size font was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnFontSizeFixed_Click(object sender, RoutedEventArgs e)
+        {
+            Configuration.UseFixedFont = true;
+            SetupMenuBarControls();
+        }
+
+        /// <summary>
+        /// The button requesting the use of variable size font was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnFontSizeVariable_Click(object sender, RoutedEventArgs e)
+        {
+            Configuration.UseFixedFont = false;
+            SetupMenuBarControls();
+        }
+
+        /// <summary>
+        /// Sets up controls in the menu bar according to the current configuration
+        /// </summary>
+        private void SetupMenuBarControls()
+        {
+            UiImgAutoSaveOn.Visibility = Configuration.AutoSave ? Visibility.Visible : Visibility.Hidden;
+            UiImgAutoSaveOff.Visibility = Configuration.AutoSave ? Visibility.Hidden : Visibility.Visible;
+
+            UiBtnFontSizeUp.IsEnabled = Configuration.FontSizeDiff < Configuration.MAX_UP_FONT_SIZE_DIFF ? true : false;
+            UiBtnFontSizeDown.IsEnabled = Configuration.FontSizeDiff > Configuration.MAX_DOWN_FONT_SIZE_DIFF ? true : false;
+
+            UiBtnFontSizeFixed.Visibility = Configuration.UseFixedFont ? Visibility.Hidden : Visibility.Visible;
+            UiBtnFontSizeVariable.Visibility = Configuration.UseFixedFont ? Visibility.Visible : Visibility.Hidden;
         }
     }
 }
