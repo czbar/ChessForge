@@ -144,7 +144,7 @@ namespace ChessForge
         private const string CFG_PGN_EXP_EVALS = "PgnExportEvals";
 
         private const string CFG_SHOW_AUTO_SAVE = "AutoSave";
-        private const string CFG_SHOW_MovesAtFork = "ShowMovesAtFork";
+        private const string CFG_SHOW_MOVES_AT_FORK = "ShowMovesAtFork";
         private const string CFG_SHOW_GENERIC_PGN_INFO = "ShowGenericPgnInfo";
         private const string CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES = "AllowMouseWheelForMoves";
         
@@ -280,7 +280,7 @@ namespace ChessForge
                 sb.Append(CFG_PGN_EXP_EVALS + "=" + (PgnExportEvaluations ? "1" : "0") + Environment.NewLine);
 
                 sb.Append(CFG_SHOW_AUTO_SAVE + "=" + (AutoSave ? "1" : "0") + Environment.NewLine);
-                sb.Append(CFG_SHOW_MovesAtFork + "=" + (ShowMovesAtFork ? "1" : "0") + Environment.NewLine);
+                sb.Append(CFG_SHOW_MOVES_AT_FORK + "=" + (ShowMovesAtFork ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_GENERIC_PGN_INFO + "=" + (ShowGenericPgnInfo ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES + "=" + (AllowMouseWheelForMoves ? "1" : "0") + Environment.NewLine);
 
@@ -548,7 +548,7 @@ namespace ChessForge
                         case CFG_SHOW_GENERIC_PGN_INFO:
                             ShowGenericPgnInfo = value != "0" ? true : false;
                             break;
-                        case CFG_SHOW_MovesAtFork:
+                        case CFG_SHOW_MOVES_AT_FORK:
                             ShowMovesAtFork = value != "0" ? true : false;
                             break;
                         case CFG_SHOW_AUTO_SAVE:
