@@ -38,43 +38,69 @@
             <ColumnDefinition Width= "*" />
         </Grid.ColumnDefinitions>
 
-        <Menu x:Name = "UiMainMenu" VerticalAlignment="Top" Background="#334B4B4B" BorderBrush="#993C3C3C" BorderThickness="1" Height="29" Grid.ColumnSpan="3">
-            <!-- Game menu -->
-            <MenuItem x:Name ="MenuFile"  Header="File" Margin="0,0,0,0" >
-                <MenuItem x:Name="UiMnNewWorkbook" Header="New Workbook" Click="UiMnNewWorkbook_Click" />
-                <MenuItem x:Name="UiMnOpenWorkbook" Header="Open Workbook" Click="UiMnOpenWorkbook_Click"/>
-                <MenuItem x:Name="UiMnCloseWorkbook" Header="Close Workbook" Click="UiMnCloseWorkbook_Click" />
-                <Separator />
-                <MenuItem x:Name="UiMnWorkbookSave" Header="Save" Click="UiMnWorkbookSave_Click" InputGestureText="Ctrl+S" />
-                <MenuItem x:Name="UiMnWorkbookSaveAs" Header="Save As ..." Click="UiMnWorkbookSaveAs_Click" />
-                <Separator />
-            </MenuItem>
-            <MenuItem Header="Training" Margin="0,0,0,0">
-                <MenuItem x:Name="UiMnStartTraining"  Header="Start New Session" Click="UiMnStartTraining_Click"/>
-                <MenuItem x:Name="UiMnRestartTraining"  Header="Restart Training" Click="UiMnTrainRestartTraining_Click"/>
-                <MenuItem x:Name="UiMnExitTraining" Header="Exit Training" Click="UiMnStopTraining_Click"/>
-            </MenuItem>
-            <MenuItem Header="Edit" Margin="0,0,0,0">
-                <MenuItem Header="Annotations" Click="UiMnAnnotationsDialog_Click" >
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="View" Margin="0,0,0,0">
-                <MenuItem Header="Flip Board" Click="UiMnFlipBoard_Click" InputGestureText="Ctrl+F" >
-                    <MenuItem.Icon>
-                        <Image Source="Resources/Images/flip_board.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <Separator />
-                <MenuItem Header="Application Options..." Click="UiMnApplicationOptions_Click" />
-                <MenuItem Header="Workbook Options..." Click="UiMnWorkbookOptions_Click" />
-                <MenuItem Header="Analysis Engine..." Click="UiMnSelectEngine_Click" />
-            </MenuItem>
-            <MenuItem Header="Help" Margin="0,0,0,0">
-                <MenuItem Header="Wiki" Click="UiMnHelpWiki_Click" />
-                <Separator />
-                <MenuItem Header="About" Click="UiMnHelpAbout_Click" />
-            </MenuItem>
-        </Menu>
+        <StackPanel Grid.Row="0" Background="LightGray" >
+            <Grid x:Name="_gridMenu" ShowGridLines="False" VerticalAlignment="Top"  >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="400" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Menu x:Name = "UiMainMenu" VerticalAlignment="Center" Margin="0,0,0,0" Background="LightGray" BorderBrush="#993C3C3C" Grid.ColumnSpan="3" Height="20">
+                    <!-- Game menu -->
+                    <MenuItem x:Name ="MenuFile"  Header="File" Margin="0,0,0,0" >
+                        <MenuItem x:Name="UiMnNewWorkbook" Header="New Workbook" Click="UiMnNewWorkbook_Click" />
+                        <MenuItem x:Name="UiMnOpenWorkbook" Header="Open Workbook" Click="UiMnOpenWorkbook_Click"/>
+                        <MenuItem x:Name="UiMnCloseWorkbook" Header="Close Workbook" Click="UiMnCloseWorkbook_Click" />
+                        <Separator />
+                        <MenuItem x:Name="UiMnWorkbookSave" Header="Save" Click="UiMnWorkbookSave_Click" InputGestureText="Ctrl+S" />
+                        <MenuItem x:Name="UiMnWorkbookSaveAs" Header="Save As ..." Click="UiMnWorkbookSaveAs_Click" />
+                        <Separator />
+                    </MenuItem>
+                    <MenuItem Header="Training" Margin="0,0,0,0">
+                        <MenuItem x:Name="UiMnStartTraining"  Header="Start New Session" Click="UiMnStartTraining_Click"/>
+                        <MenuItem x:Name="UiMnRestartTraining"  Header="Restart Training" Click="UiMnTrainRestartTraining_Click"/>
+                        <MenuItem x:Name="UiMnExitTraining" Header="Exit Training" Click="UiMnStopTraining_Click"/>
+                    </MenuItem>
+                    <MenuItem Header="Edit" Margin="0,0,0,0">
+                        <MenuItem Header="Annotations" Click="UiMnAnnotationsDialog_Click" >
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="View" Margin="0,0,0,0">
+                        <MenuItem Header="Flip Board" Click="UiMnFlipBoard_Click" InputGestureText="Ctrl+F" >
+                            <MenuItem.Icon>
+                                <Image Source="Resources/Images/flip_board.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Header="Application Options..." Click="UiMnApplicationOptions_Click" />
+                        <MenuItem Header="Workbook Options..." Click="UiMnWorkbookOptions_Click" />
+                        <MenuItem Header="Analysis Engine..." Click="UiMnSelectEngine_Click" />
+                    </MenuItem>
+                    <MenuItem Header="Help" Margin="0,0,0,0">
+                        <MenuItem Header="Wiki" Click="UiMnHelpWiki_Click" />
+                        <Separator />
+                        <MenuItem Header="About" Click="UiMnHelpAbout_Click" />
+                    </MenuItem>
+                </Menu>
+                <Label Grid.Column="1"  Content="AutoSave" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,2,0,0" Height="28" Width="60"  />
+                <Image x:Name="UiImgAutoSaveOn" ToolTip="Turn AutoSave Off" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOn.png" Visibility="Hidden" />
+                <Image x:Name="UiImgAutoSaveOff" ToolTip="Turn AutoSave On" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOff.png" />
+                <Button Name="UiBtnFontSizeUp" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="200,0,0,0" ToolTip="Increase Font Size">
+                    <Image Source="Resources/Images/FontSizeUp.png" Width="18" Height="18"></Image>
+                </Button>
+                <Button Name="UiBtnFontSizeDown" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="235,0,0,0" ToolTip="Decrease Font Size">
+                    <Image Source="Resources/Images/FontSizeDown.png" Width="18" Height="18"></Image>
+                </Button>
+                <Button Name="UiBtnFontSizeFixed" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="270,0,0,0" ToolTip="Click to use Fixed Font Sizes" >
+                    <Image Source="Resources/Images/FontSizeFixed.png" Width="18" Height="18"></Image>
+                </Button>
+                <Button Name="UiBtnFontSizeVariable" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="270,0,0,0" ToolTip="Click to use Variable Font Size" Visibility="Hidden">
+                    <Image Source="Resources/Images/FontSizeVariable.png" Width="18" Height="18"></Image>
+                </Button>
+            </Grid>
+        </StackPanel>
 
         <Viewbox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1">
             <Grid x:Name="_gridMain" ShowGridLines="False">
@@ -211,14 +237,14 @@
                     </TabItem>
                     <TabItem x:Name="UiTabStudyTree"  Header="Study" GotFocus="UiTabStudyTree_GotFocus" LostFocus="UiTabStudyTree_LostFocus" >
                         <Grid x:Name="UiGridStudyTree"  Background="#FFE5E5E5" PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0"/>
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Grid.ContextMenu>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiCmnWorkbookRightClick">
                                     <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="UiMnStudy_CreateExercise" Header="Create Exercise from Here..." Click="UiMnStudy_CreateExercise_Click"  />
