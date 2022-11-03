@@ -83,6 +83,11 @@ namespace ChessForge
         public static bool ShowMovesAtFork = true;
 
         /// <summary>
+        /// Whether AutoSave is On.
+        /// </summary>
+        public static bool AutoSave = false;
+
+        /// <summary>
         /// Whether to allow replaying moves with the mouse wheel. 
         /// </summary>
         public static bool AllowMouseWheelForMoves = false;
@@ -138,6 +143,7 @@ namespace ChessForge
         private const string CFG_PGN_EXP_BOOKMARKS = "PgnExportBookmarks";
         private const string CFG_PGN_EXP_EVALS = "PgnExportEvals";
 
+        private const string CFG_SHOW_AUTO_SAVE = "AutoSave";
         private const string CFG_SHOW_MovesAtFork = "ShowMovesAtFork";
         private const string CFG_SHOW_GENERIC_PGN_INFO = "ShowGenericPgnInfo";
         private const string CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES = "AllowMouseWheelForMoves";
@@ -273,6 +279,7 @@ namespace ChessForge
                 sb.Append(CFG_PGN_EXP_BOOKMARKS + "=" + (PgnExportBookmarks ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_PGN_EXP_EVALS + "=" + (PgnExportEvaluations ? "1" : "0") + Environment.NewLine);
 
+                sb.Append(CFG_SHOW_AUTO_SAVE + "=" + (AutoSave ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_MovesAtFork + "=" + (ShowMovesAtFork ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_GENERIC_PGN_INFO + "=" + (ShowGenericPgnInfo ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES + "=" + (AllowMouseWheelForMoves ? "1" : "0") + Environment.NewLine);
@@ -543,6 +550,9 @@ namespace ChessForge
                             break;
                         case CFG_SHOW_MovesAtFork:
                             ShowMovesAtFork = value != "0" ? true : false;
+                            break;
+                        case CFG_SHOW_AUTO_SAVE:
+                            AutoSave = value != "0" ? true : false;
                             break;
                         case CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES:
                             AllowMouseWheelForMoves = value != "0" ? true : false;
