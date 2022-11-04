@@ -1335,7 +1335,7 @@ namespace ChessForge
 
             Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, false));
             r.Name = _run_ + nd.NodeId.ToString();
-            r.MouseDown += EventRunClicked;
+            r.PreviewMouseDown += EventRunClicked;
 
             r.FontStyle = rParent.FontStyle;
             r.FontSize = rParent.FontSize;
@@ -1565,7 +1565,7 @@ namespace ChessForge
             {
                 Run r = new Run(text.ToString());
                 r.Name = _run_ + nd.NodeId.ToString();
-                r.MouseDown += EventRunClicked;
+                r.PreviewMouseDown += EventRunClicked;
 
                 if (_isIntraFork)
                 {
@@ -1618,7 +1618,7 @@ namespace ChessForge
 
                 Run r = new Run(BuildCommentRunText(nd));
                 r.Name = _run_ + nd.NodeId.ToString() + "_comment";
-                r.MouseDown += EventCommentRunClicked;
+                r.PreviewMouseDown += EventCommentRunClicked;
 
                 r.FontStyle = FontStyles.Normal;
 
