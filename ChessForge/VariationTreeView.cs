@@ -1949,7 +1949,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Looks like a user attemoted to make a move on the dummy board.
+        /// Looks like a user attempted to make a move on the dummy board.
         /// Give them some info.
         /// </summary>
         /// <param name="sender"></param>
