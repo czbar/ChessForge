@@ -56,7 +56,7 @@ namespace ChessForge
         /// How often AutoSave is called
         /// (in seconds)
         /// </summary>
-        public static int AutoSaveFrequency = 0;
+        public static int AutoSaveFrequency = 60;
 
         /// <summary>
         /// Time given to the engine to evaluate a single move
