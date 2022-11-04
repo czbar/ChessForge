@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using ChessPosition;
 using GameTree;
 using Path = System.IO.Path;
+using System.Timers;
 
 namespace ChessForge
 {
@@ -147,6 +148,22 @@ namespace ChessForge
                 {
                     _workbookFileType = FileType.CHESS_FORGE_PGN;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Handles events from the AutoSave timer.
+        /// Writes out the current file if it is "dirty" and if
+        /// AutoSave is enabled (which it should be if this event
+        /// is enabled but we do a defensive check)
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public static void AutoSaveEvent(object source, ElapsedEventArgs e)
+        {
+            if (IsDirty && Configuration.AutoSave)
+            {
+                SaveWorkbookFile();
             }
         }
 
