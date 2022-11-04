@@ -1375,6 +1375,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnStartTrainingHere_Click(object sender, RoutedEventArgs e)
         {
+            if (ActiveVariationTree == null)
+            {
+                return;
+            }
+
             // do some housekeeping just in case
             if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
             {
@@ -1388,7 +1393,8 @@ namespace ChessForge
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
             if (nd != null)
             {
-                if (!BookmarkManager.IsBookmarked(nd.NodeId))
+                // only offer to save bookmark if training in the Study Tree
+                if (ActiveVariationTree.ContentType == GameData.ContentType.STUDY_TREE && !BookmarkManager.IsBookmarked(nd.NodeId))
                 {
                     if (MessageBox.Show("Do you want to bookmark this move?", "Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {

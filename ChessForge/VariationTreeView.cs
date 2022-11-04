@@ -369,6 +369,9 @@ namespace ChessForge
                             case "_mnGame_CreateModelGame":
                                 menuItem.IsEnabled = true;
                                 break;
+                            case "_mnGame_StartTrainingFromHere":
+                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && _lastClickedNodeId >= 0;
+                                break;
                             case "_mnGame_CreateExercise":
                                 menuItem.IsEnabled = isEnabled && gameIndex >= 0 && _lastClickedNodeId >= 0;
                                 break;
