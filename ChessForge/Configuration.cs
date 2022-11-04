@@ -53,6 +53,12 @@ namespace ChessForge
         public static int FontSizeDiff = 0;
 
         /// <summary>
+        /// How often AutoSave is called
+        /// (in seconds)
+        /// </summary>
+        public static int AutoSaveFrequency = 0;
+
+        /// <summary>
         /// Time given to the engine to evaluate a single move
         /// (in milliseconds)
         /// </summary>
@@ -154,6 +160,7 @@ namespace ChessForge
         private const string CFG_VIABLE_MOVE_CP_DIFF = "ViableMoveCpDiff";
 
         private const string CFG_FONT_SIZE_DIFF = "FontSizeDiff";
+        private const string CFG_AUTO_SAVE_FREQ = "AutoSaveFrequency";
 
         /// <summary>
         /// PGN export configuration.
@@ -293,6 +300,7 @@ namespace ChessForge
                 sb.Append(CFG_ENGINE_MPV + "=" + EngineMpv.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_FONT_SIZE_DIFF + "=" + FontSizeDiff.ToString() + Environment.NewLine);
+                sb.Append(CFG_AUTO_SAVE_FREQ + "=" + AutoSaveFrequency.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_SCORESHEET_POSITION + "=" + ScoreSheetPosition.ToString() + Environment.NewLine);
 
@@ -547,6 +555,9 @@ namespace ChessForge
                             break;
                         case CFG_FONT_SIZE_DIFF:
                             int.TryParse(value, out FontSizeDiff);
+                            break;
+                        case CFG_AUTO_SAVE_FREQ:
+                            int.TryParse(value, out AutoSaveFrequency);
                             break;
                         case CFG_ENGINE_EVALUATION_TIME:
                             int.TryParse(value, out EngineEvaluationTime);
