@@ -38,6 +38,21 @@ namespace ChessForge
         public PieceColor TrainingSide = PieceColor.None;
 
         /// <summary>
+        /// Determines the initial board orientation in the Study view.
+        /// </summary>
+        public PieceColor StudyBoardOrientation = PieceColor.None;
+
+        /// <summary>
+        /// Determines the initial board orientation in the Games view.
+        /// </summary>
+        public PieceColor GameBoardOrientation = PieceColor.None;
+
+        /// <summary>
+        /// Determines the initial board orientation in the Exercises view.
+        /// </summary>
+        public PieceColor ExerciseBoardOrientation = PieceColor.None;
+
+        /// <summary>
         /// Indicates whether the main board was flipped when
         /// StudyTree last lost focus so we can restore
         /// it when getting focus back
