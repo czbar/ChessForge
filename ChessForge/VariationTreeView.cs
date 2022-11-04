@@ -38,6 +38,10 @@ namespace ChessForge
         // currently showing fork table
         private Table _forkTable;
 
+        // flag indictating a possible attempt by the user to drag on the "dummy" board
+        private bool _dummyBoardLeftClicked = false;
+        private bool _dummyBoardInDrag = false;
+
         /// <summary>
         /// Constructor. Sets a reference to the 
         /// FlowDocument for the RichTextBox control, via
@@ -1075,6 +1079,10 @@ namespace ChessForge
                 ChessBoardSmall cb = new ChessBoardSmall(cnv, img, null, false, false);
                 cb.DisplayPosition(_variationTree.Nodes[0]);
 
+                cnv.PreviewMouseLeftButtonDown += EventDummyBoardMouseDown;
+                cnv.PreviewMouseLeftButtonUp += EventDummyBoardMouseUp;
+                cnv.PreviewMouseMove += EventDummyBoardMouseMove;
+
                 cnv.Children.Add(img);
                 vb.Child = cnv;
 
@@ -1900,5 +1908,62 @@ namespace ChessForge
                 _lastAddedRun.FontWeight = FontWeights.Bold;
             }
         }
+
+
+        //****************************************************************
+        //
+        // MOUSE EVENTS ON THE EXERCISE BOARD
+        //
+        //****************************************************************
+
+        /// <summary>
+        /// Registers the dummy board having a mouse down event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventDummyBoardMouseDown(object sender, RoutedEventArgs e)
+        {
+            _dummyBoardLeftClicked = true;
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Registers the dummy board having a mouse move event
+        /// following a mouse left button down.
+        /// This may indicate an attempt by the user to drag a piece on the
+        /// dummy board.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventDummyBoardMouseMove(object sender, RoutedEventArgs e)
+        {
+            if (_dummyBoardLeftClicked)
+            {
+                _dummyBoardInDrag = true;
+            }
+            else
+            {
+                _dummyBoardInDrag = false;
+            }
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Looks like a user attemoted to make a move on the dummy board.
+        /// Give them some info.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventDummyBoardMouseUp(object sender, RoutedEventArgs e)
+        {
+            if (_dummyBoardInDrag)
+            {
+                _mainWin.BoardCommentBox.ShowFlashAnnouncement("This is just a picture! Make your moves on the big board.");
+                _dummyBoardInDrag = false;
+            }
+            _dummyBoardLeftClicked = false;
+            e.Handled = true;
+        }
+
     }
 }
