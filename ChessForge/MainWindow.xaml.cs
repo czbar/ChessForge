@@ -1556,6 +1556,11 @@ namespace ChessForge
         /// <param name="startNode"></param>
         public void SetAppInTrainingMode(TreeNode startNode)
         {
+            if (ActiveVariationTree == null)
+            {
+                return;
+            }
+
             // Set up the training mode
             StopEvaluation();
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
@@ -1567,7 +1572,7 @@ namespace ChessForge
             MainChessBoard.DisplayPosition(startNode);
 
             UiTrainingView = new TrainingView(UiRtbTrainingProgress.Document, this);
-            UiTrainingView.Initialize(startNode);
+            UiTrainingView.Initialize(startNode, ActiveVariationTree.ContentType);
 
             if (LearningMode.TrainingSide == PieceColor.Black && !MainChessBoard.IsFlipped
                 || LearningMode.TrainingSide == PieceColor.White && MainChessBoard.IsFlipped)
@@ -1835,26 +1840,32 @@ namespace ChessForge
                     case TabControlSizeMode.SHOW_ACTIVE_LINE:
                         ctrl.Margin = new Thickness(5, 5, 275, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
+                        UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.HIDE_ACTIVE_LINE:
                         ctrl.Margin = new Thickness(5, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
+                        UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL:
                         ctrl.Margin = new Thickness(5, 5, 175, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
+                        UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
                         ctrl.Margin = new Thickness(5, 5, 180, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
+                        UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.HIDE_ENGINE_GAME_LINE:
                         ctrl.Margin = new Thickness(5, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
+                        UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     default:
                         ctrl.Margin = new Thickness(5, 5, 180, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
+                        UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                 }
             }
