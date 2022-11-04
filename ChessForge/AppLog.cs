@@ -195,10 +195,13 @@ namespace ChessForge
             bool isMessagePollEnabled = EngineMessageProcessor.ChessEngineService.IsMessagePollEnabled();
             sb.Append("ENGINE MESSAGE POLL" + ": IsEnabled = "
                 + isMessagePollEnabled.ToString() + Environment.NewLine);
+
+            sb.Append(AppTimers.TimerId.AUTO_SAVE.ToString() + ": IsEnabled = "
+                + timers.IsEnabled(AppTimers.TimerId.AUTO_SAVE).ToString() + Environment.NewLine);
+            sb.Append(Environment.NewLine);
             sb.Append(AppTimers.TimerId.EVALUATION_LINE_DISPLAY.ToString() + ": IsEnabled = "
                 + timers.IsEnabled(AppTimers.TimerId.EVALUATION_LINE_DISPLAY).ToString() + Environment.NewLine);
             sb.Append(Environment.NewLine);
-
             sb.Append(AppTimers.TimerId.CHECK_FOR_USER_MOVE.ToString() + ": IsEnabled = " 
                 + timers.IsEnabled(AppTimers.TimerId.CHECK_FOR_USER_MOVE).ToString() + Environment.NewLine);
             sb.Append(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE.ToString() + ": IsEnabled = " 
