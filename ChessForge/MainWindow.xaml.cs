@@ -210,8 +210,50 @@ namespace ChessForge
             ActiveLine = new ActiveLineManager(UiDgActiveLine, this);
 
             EngineLinesBox.Initialize(this, UiTbEngineLines, UiPbEngineThinking);
+
+            InitializeConfiguration();
+
+            // Note: must be called AFTER configuration was initialized.
             Timers = new AppTimers(this);
 
+            // main chess board
+            MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true, true);
+
+            FloatingChessBoard = new ChessBoardSmall(_cnvFloat, _imgFloatingBoard, null, true, false);
+
+
+            BookmarkManager.InitBookmarksGui(this);
+
+            ActiveLineReplay = new GameReplay(this, MainChessBoard, BoardCommentBox);
+
+            _isDebugMode = Configuration.DebugLevel != 0;
+        }
+
+        /// <summary>
+        /// Actions taken after the main window
+        /// has been loaded.
+        /// In particular, if the last used file can be identified
+        /// it will be read in and the session initialized with it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            UiDgActiveLine.ContextMenu = UiMnMainBoard;
+            AddDebugMenu();
+
+            ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
+            AppStateManager.SetupGuiForCurrentStates();
+
+            Timers.Start(AppTimers.TimerId.APP_START);
+        }
+
+        /// <summary>
+        /// Reads in configuration and initializes appropriate entities.
+        /// </summary>
+        private void InitializeConfiguration()
+        {
             Configuration.Initialize(this);
             Configuration.StartDirectory = App.AppPath;
             Configuration.ReadConfigurationFile();
@@ -256,38 +298,6 @@ namespace ChessForge
             }
 
             SetupMenuBarControls();
-
-            // main chess board
-            MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true, true);
-
-            FloatingChessBoard = new ChessBoardSmall(_cnvFloat, _imgFloatingBoard, null, true, false);
-
-
-            BookmarkManager.InitBookmarksGui(this);
-
-            ActiveLineReplay = new GameReplay(this, MainChessBoard, BoardCommentBox);
-
-            _isDebugMode = Configuration.DebugLevel != 0;
-        }
-
-        /// <summary>
-        /// Actions taken after the main window
-        /// has been loaded.
-        /// In particular, if the last used file can be identified
-        /// it will be read in and the session initialized with it.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            UiDgActiveLine.ContextMenu = UiMnMainBoard;
-            AddDebugMenu();
-
-            ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
-            AppStateManager.SetupGuiForCurrentStates();
-
-            Timers.Start(AppTimers.TimerId.APP_START);
         }
 
         [Conditional("DEBUG")]
@@ -1546,6 +1556,11 @@ namespace ChessForge
         /// <param name="startNode"></param>
         public void SetAppInTrainingMode(TreeNode startNode)
         {
+            if (ActiveVariationTree == null)
+            {
+                return;
+            }
+
             // Set up the training mode
             StopEvaluation();
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
@@ -1557,7 +1572,7 @@ namespace ChessForge
             MainChessBoard.DisplayPosition(startNode);
 
             UiTrainingView = new TrainingView(UiRtbTrainingProgress.Document, this);
-            UiTrainingView.Initialize(startNode);
+            UiTrainingView.Initialize(startNode, ActiveVariationTree.ContentType);
 
             if (LearningMode.TrainingSide == PieceColor.Black && !MainChessBoard.IsFlipped
                 || LearningMode.TrainingSide == PieceColor.White && MainChessBoard.IsFlipped)
@@ -1825,26 +1840,32 @@ namespace ChessForge
                     case TabControlSizeMode.SHOW_ACTIVE_LINE:
                         ctrl.Margin = new Thickness(5, 5, 275, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
+                        UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.HIDE_ACTIVE_LINE:
                         ctrl.Margin = new Thickness(5, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
+                        UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL:
                         ctrl.Margin = new Thickness(5, 5, 175, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
+                        UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
                         ctrl.Margin = new Thickness(5, 5, 180, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
+                        UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.HIDE_ENGINE_GAME_LINE:
                         ctrl.Margin = new Thickness(5, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
+                        UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     default:
                         ctrl.Margin = new Thickness(5, 5, 180, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
+                        UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                 }
             }

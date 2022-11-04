@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using ChessPosition;
 using GameTree;
 using Path = System.IO.Path;
+using System.Timers;
 
 namespace ChessForge
 {
@@ -147,6 +148,22 @@ namespace ChessForge
                 {
                     _workbookFileType = FileType.CHESS_FORGE_PGN;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Handles events from the AutoSave timer.
+        /// Writes out the current file if it is "dirty" and if
+        /// AutoSave is enabled (which it should be if this event
+        /// is enabled but we do a defensive check)
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public static void AutoSaveEvent(object source, ElapsedEventArgs e)
+        {
+            if (IsDirty && Configuration.AutoSave)
+            {
+                SaveWorkbookFile();
             }
         }
 
@@ -577,7 +594,7 @@ namespace ChessForge
                     _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
-                    _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
+                    _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
 
                     _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
                     _mainWin.UiTabStudyTree.Visibility = Visibility.Hidden;
@@ -594,7 +611,7 @@ namespace ChessForge
                     _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
-                    _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
+                    _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
 
                     _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
                     _mainWin.UiTabStudyTree.Visibility = Visibility.Visible;
@@ -882,7 +899,8 @@ namespace ChessForge
                 if (ActiveContentType == GameData.ContentType.STUDY_TREE
                     && CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
-                    _mainWin.UiDgEngineGame.Visibility = show ? Visibility.Visible : Visibility.Hidden;
+                    //_mainWin.UiDgEngineGame.Visibility = show ? Visibility.Visible : Visibility.Hidden;
+                    _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
                     _mainWin.UiDgEngineGame.Width = 160;
 
                     // adjust tab controls position

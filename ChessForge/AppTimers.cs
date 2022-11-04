@@ -22,6 +22,7 @@ namespace ChessForge
         public enum TimerId
         {
             DUMMY,
+            AUTO_SAVE,
             EVALUATION_LINE_DISPLAY,
             CHECK_FOR_USER_MOVE,
             CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE,
@@ -39,6 +40,11 @@ namespace ChessForge
             DUMMY,
             EVALUATION_ELAPSED_TIME
         };
+
+        /// <summary>
+        /// Controls the frequency of automatic save.
+        /// </summary>
+        private Timer _autoSaveTimer;
 
         /// <summary>
         /// This timer invokes the method that processes engine messages and displays
@@ -111,6 +117,10 @@ namespace ChessForge
             _evaluationLinesDisplayTimer = new Timer();
             InitEvaluationLinesDisplayTimer();
             _dictTimers.Add(TimerId.EVALUATION_LINE_DISPLAY, _evaluationLinesDisplayTimer);
+
+            _autoSaveTimer = new Timer();
+            InitAutoSaveTimer();
+            _dictTimers.Add(TimerId.AUTO_SAVE, _autoSaveTimer);
 
             _checkForUserMoveTimer = new Timer();
             InitCheckForUserMoveTimer();
@@ -234,6 +244,15 @@ namespace ChessForge
             _evaluationLinesDisplayTimer.Interval = 100;
             _evaluationLinesDisplayTimer.Enabled = false;
         }
+
+        private void InitAutoSaveTimer()
+        {
+            _autoSaveTimer.Elapsed += new ElapsedEventHandler(AppStateManager.AutoSaveEvent);
+            // take the configured value with a sanity check
+            _autoSaveTimer.Interval = Math.Max(Configuration.AutoSaveFrequency, 15) * 1000;
+            _autoSaveTimer.Enabled = Configuration.AutoSave;
+        }
+
 
         private void InitCheckForUserMoveTimer()
         {

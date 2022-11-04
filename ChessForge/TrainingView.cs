@@ -201,6 +201,12 @@ namespace ChessForge
         private static readonly string STYLE_DEFAULT = "default";
 
         /// <summary>
+        /// The word to use in messaging the user; Workbook or Game, depending on
+        /// when the training started from.
+        /// </summary>
+        private static string TRAINING_SOURCE = "Workbook"; 
+
+        /// <summary>
         /// Layout definitions for paragraphs at different levels.
         /// </summary>
         internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
@@ -240,8 +246,17 @@ namespace ChessForge
         /// and shows the intro text.
         /// </summary>
         /// <param name="node"></param>
-        public void Initialize(TreeNode node)
+        public void Initialize(TreeNode node, GameData.ContentType contentType)
         {
+            if (contentType == GameData.ContentType.MODEL_GAME)
+            {
+                TRAINING_SOURCE = "Game";
+            }
+            else
+            {
+                TRAINING_SOURCE = "Workbook";
+            }
+
             _currentEngineGameMoveCount = 0;
             TrainingSession.ResetTrainingLine(node);
             Document.Blocks.Clear();
@@ -786,7 +801,7 @@ namespace ChessForge
             sbInstruction.Append("and the program (a.k.a. the \"Coach\") will respond for");
             sbInstruction.Append(TrainingSession.StartPosition.ColorToMove == PieceColor.White ? " Black." : " White.");
             sbInstruction.AppendLine();
-            sbInstruction.Append("The Coach will comment on your every move based on the content of the Workbook.\n");
+            sbInstruction.Append("The Coach will comment on your every move based on the content of the " + TRAINING_SOURCE + ".\n");
             sbInstruction.Append("\nRemember that you can:\n");
             sbInstruction.Append("- click on an alternative move in the Coach's comment to play it instead of your original choice,\n");
             sbInstruction.Append("- right click on any move to invoke a context menu where, among other options, you can request engine evaluation of the move.\n");
@@ -856,7 +871,7 @@ namespace ChessForge
             {
                 if (isWorkbookMove)
                 {
-                    txt += "The move you made is the only move in the Workbook.";
+                    txt += "The move you made is the only move in the " + TRAINING_SOURCE + ".";
                     Run r_only = new Run(txt);
                     para.Inlines.Add(r_only);
                 }
@@ -872,7 +887,7 @@ namespace ChessForge
 
                 if (!isWorkbookMove)
                 {
-                    txt += "This is not in the Workbook. ";
+                    txt += "This is not in the " + TRAINING_SOURCE + ". ";
                     Run r_notWb = new Run(txt);
                     para.Inlines.Add(r_notWb);
 
@@ -883,11 +898,11 @@ namespace ChessForge
                 {
                     if (_otherMovesInWorkbook.Count == 1)
                     {
-                        txt += "The only Workbook move is ";
+                        txt += "The only " + TRAINING_SOURCE + " move is ";
                     }
                     else
                     {
-                        txt += "The Workbook moves are ";
+                        txt += "The " + TRAINING_SOURCE + " moves are ";
                     }
                     Run r_wb = new Run(txt);
                     para.Inlines.Add(r_wb);
@@ -896,11 +911,11 @@ namespace ChessForge
                 {
                     if (_otherMovesInWorkbook.Count == 1)
                     {
-                        txt += "The only other Workbook move is ";
+                        txt += "The only other " + TRAINING_SOURCE + " move is ";
                     }
                     else
                     {
-                        txt += "Other Workbook moves are ";
+                        txt += "Other " + TRAINING_SOURCE + " moves are ";
                     }
                     Run r_wb = new Run(txt);
                     para.Inlines.Add(r_wb);

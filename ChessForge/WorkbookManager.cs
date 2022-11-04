@@ -799,10 +799,14 @@ namespace ChessForge
                 {
                     if (AppStateManager.IsDirty)
                     {
-                        // this was prompted by an action other than File->Save so ask...
-                        MessageBoxButton mbb = isAppClosing ? MessageBoxButton.YesNo : MessageBoxButton.YesNoCancel;
-                        res = MessageBox.Show("Save the Workbook?", "Workbook not saved", mbb, MessageBoxImage.Question);
-                        if (res == MessageBoxResult.Yes)
+                        // this was prompted by an action other than File->Save 
+                        // Ask, or proceed without asking of AutoSave is enabled
+                        if (!Configuration.AutoSave)
+                        {
+                            MessageBoxButton mbb = isAppClosing ? MessageBoxButton.YesNo : MessageBoxButton.YesNoCancel;
+                            res = MessageBox.Show("Save the Workbook?", "Workbook not saved", mbb, MessageBoxImage.Question);
+                        }
+                        if (Configuration.AutoSave || res == MessageBoxResult.Yes)
                         {
                             AppStateManager.SaveWorkbookFile();
                         }
