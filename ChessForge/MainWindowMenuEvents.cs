@@ -2063,6 +2063,7 @@ namespace ChessForge
         private void UiImgAutoSaveOff_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Configuration.AutoSave = true;
+            Timers.Start(AppTimers.TimerId.AUTO_SAVE);
             SetupMenuBarControls();
         }
 
@@ -2075,6 +2076,7 @@ namespace ChessForge
         private void UiImgAutoSaveOn_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Configuration.AutoSave = false;
+            Timers.Stop(AppTimers.TimerId.AUTO_SAVE);
             SetupMenuBarControls();
         }
 
