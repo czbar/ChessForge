@@ -210,8 +210,50 @@ namespace ChessForge
             ActiveLine = new ActiveLineManager(UiDgActiveLine, this);
 
             EngineLinesBox.Initialize(this, UiTbEngineLines, UiPbEngineThinking);
+
+            InitializeConfiguration();
+
+            // Note: must be called AFTER configuration was initialized.
             Timers = new AppTimers(this);
 
+            // main chess board
+            MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true, true);
+
+            FloatingChessBoard = new ChessBoardSmall(_cnvFloat, _imgFloatingBoard, null, true, false);
+
+
+            BookmarkManager.InitBookmarksGui(this);
+
+            ActiveLineReplay = new GameReplay(this, MainChessBoard, BoardCommentBox);
+
+            _isDebugMode = Configuration.DebugLevel != 0;
+        }
+
+        /// <summary>
+        /// Actions taken after the main window
+        /// has been loaded.
+        /// In particular, if the last used file can be identified
+        /// it will be read in and the session initialized with it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            UiDgActiveLine.ContextMenu = UiMnMainBoard;
+            AddDebugMenu();
+
+            ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
+            AppStateManager.SetupGuiForCurrentStates();
+
+            Timers.Start(AppTimers.TimerId.APP_START);
+        }
+
+        /// <summary>
+        /// Reads in configuration and initializes appropriate entities.
+        /// </summary>
+        private void InitializeConfiguration()
+        {
             Configuration.Initialize(this);
             Configuration.StartDirectory = App.AppPath;
             Configuration.ReadConfigurationFile();
@@ -256,38 +298,6 @@ namespace ChessForge
             }
 
             SetupMenuBarControls();
-
-            // main chess board
-            MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true, true);
-
-            FloatingChessBoard = new ChessBoardSmall(_cnvFloat, _imgFloatingBoard, null, true, false);
-
-
-            BookmarkManager.InitBookmarksGui(this);
-
-            ActiveLineReplay = new GameReplay(this, MainChessBoard, BoardCommentBox);
-
-            _isDebugMode = Configuration.DebugLevel != 0;
-        }
-
-        /// <summary>
-        /// Actions taken after the main window
-        /// has been loaded.
-        /// In particular, if the last used file can be identified
-        /// it will be read in and the session initialized with it.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            UiDgActiveLine.ContextMenu = UiMnMainBoard;
-            AddDebugMenu();
-
-            ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
-            AppStateManager.SetupGuiForCurrentStates();
-
-            Timers.Start(AppTimers.TimerId.APP_START);
         }
 
         [Conditional("DEBUG")]
