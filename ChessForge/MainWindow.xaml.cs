@@ -942,7 +942,7 @@ namespace ChessForge
                 ShowWorkbookOptionsDialog(false);
             }
 
-            PieceColor sideAtBoardBottom = 
+            PieceColor sideAtBoardBottom =
                 SessionWorkbook.StudyBoardOrientation != PieceColor.None ? SessionWorkbook.StudyBoardOrientation : SessionWorkbook.TrainingSide;
             MainChessBoard.FlipBoard(sideAtBoardBottom);
 
@@ -968,7 +968,8 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForActiveStudyTree(bool focusOnStudyTree)
         {
-            _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this);
+            _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
+            // TODO: below, it should not be ActiveVariationTree but the active study tree
             if (ActiveVariationTree.Nodes.Count == 0)
             {
                 ActiveVariationTree.CreateNew();
@@ -1012,7 +1013,7 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForActiveModelGame(int gameIndex, bool focusOnModelGame)
         {
-            _modelGameTreeView = new VariationTreeView(UiRtbModelGamesView.Document, this);
+            _modelGameTreeView = new VariationTreeView(UiRtbModelGamesView.Document, this, GameData.ContentType.MODEL_GAME, gameIndex);
             if (ActiveVariationTree.Nodes.Count == 0)
             {
                 ActiveVariationTree.CreateNew();
@@ -1069,9 +1070,9 @@ namespace ChessForge
         /// This method will be called e.g. when opening a new
         /// Workbook and initializing the view.
         /// </summary>
-        public void SetupGuiForActiveExercise(int gameIndex, bool focusOnExercise)
+        public void SetupGuiForActiveExercise(int exerciseIndex, bool focusOnExercise)
         {
-            _exerciseTreeView = new VariationTreeView(UiRtbExercisesView.Document, this);
+            _exerciseTreeView = new VariationTreeView(UiRtbExercisesView.Document, this, GameData.ContentType.EXERCISE, exerciseIndex);
             UiRtbExercisesView.IsDocumentEnabled = true;
 
             if (ActiveVariationTree.Nodes.Count == 0)
