@@ -472,8 +472,7 @@ namespace ChessForge
                     WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
                     WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.MODEL_GAME, gameIndex);
 
-                    MainChessBoard.FlipBoard(false);
-                    WorkbookManager.SessionWorkbook.IsModelGameBoardFlipped = null;
+                    MainChessBoard.FlipBoard(WorkbookManager.SessionWorkbook.GameBoardOrientation);
 
                     SetupGuiForActiveModelGame(gameIndex, setFocus);
                 }
@@ -503,9 +502,7 @@ namespace ChessForge
                     WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = exerciseIndex;
                     WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, exerciseIndex);
 
-                    MainChessBoard.FlipBoard(false);
-                    WorkbookManager.SessionWorkbook.IsExerciseBoardFlipped = null;
-
+                    MainChessBoard.FlipBoard(WorkbookManager.SessionWorkbook.ExerciseBoardOrientation);
                     SetupGuiForActiveExercise(exerciseIndex, setFocus);
                 }
                 else
@@ -942,9 +939,9 @@ namespace ChessForge
                 ShowWorkbookOptionsDialog(false);
             }
 
-            PieceColor sideAtBoardBottom =
-                SessionWorkbook.StudyBoardOrientation != PieceColor.None ? SessionWorkbook.StudyBoardOrientation : SessionWorkbook.TrainingSide;
-            MainChessBoard.FlipBoard(sideAtBoardBottom);
+            //PieceColor sideAtBoardBottom =
+            //    SessionWorkbook.StudyBoardOrientation != PieceColor.None ? SessionWorkbook.StudyBoardOrientation : SessionWorkbook.TrainingSide;
+            MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientation);
 
             if (isChessForgeFile)
             {
@@ -1700,7 +1697,7 @@ namespace ChessForge
                     AppStateManager.SaveWorkbookFile();
                 }
 
-                MainChessBoard.FlipBoard(SessionWorkbook.TrainingSide);
+                MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientation);
                 if (_chaptersView != null)
                 {
                     _chaptersView.BuildFlowDocumentForChaptersView();
