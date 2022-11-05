@@ -77,27 +77,6 @@ namespace ChessForge
         /// </summary>
         public PieceColor ExerciseBoardOrientation = PieceColor.White;
 
-        /// <summary>
-        /// Indicates whether the main board was flipped when
-        /// StudyTree last lost focus so we can restore
-        /// it when getting focus back
-        /// </summary>
-        public bool? IsStudyBoardFlipped = null;
-
-        /// <summary>
-        /// Indicates whether the main board was flipped when
-        /// Model Game view last lost focus so we can restore
-        /// it when getting focus back
-        /// </summary>
-        public bool? IsModelGameBoardFlipped = null;
-
-        /// <summary>
-        /// Indicates whether the main board was flipped when
-        /// Exercise view last lost focus so we can restore
-        /// it when getting focus back
-        /// </summary>
-        public bool? IsExerciseBoardFlipped = null;
-
         // chapter currently open in the session
         private Chapter _activeChapter;
 
