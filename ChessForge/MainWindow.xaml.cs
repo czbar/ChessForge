@@ -942,10 +942,9 @@ namespace ChessForge
                 ShowWorkbookOptionsDialog(false);
             }
 
-            if (SessionWorkbook.TrainingSide == PieceColor.White && MainChessBoard.IsFlipped || SessionWorkbook.TrainingSide == PieceColor.Black && !MainChessBoard.IsFlipped)
-            {
-                MainChessBoard.FlipBoard();
-            }
+            PieceColor sideAtBoardBottom = 
+                SessionWorkbook.StudyBoardOrientation != PieceColor.None ? SessionWorkbook.StudyBoardOrientation : SessionWorkbook.TrainingSide;
+            MainChessBoard.FlipBoard(sideAtBoardBottom);
 
             if (isChessForgeFile)
             {
@@ -1688,8 +1687,13 @@ namespace ChessForge
 
             if (dlg.ExitOK)
             {
-                SessionWorkbook.TrainingSide = dlg.TrainingSide;
                 SessionWorkbook.Title = dlg.WorkbookTitle;
+                SessionWorkbook.TrainingSide = dlg.TrainingSide;
+
+                SessionWorkbook.StudyBoardOrientation = dlg.StudyBoardOrientation;
+                SessionWorkbook.GameBoardOrientation = dlg.GameBoardOrientation;
+                SessionWorkbook.ExerciseBoardOrientation = dlg.ExerciseBoardOrientation;
+
                 if (save)
                 {
                     AppStateManager.SaveWorkbookFile();
