@@ -40,17 +40,42 @@ namespace ChessForge
         /// <summary>
         /// Determines the initial board orientation in the Study view.
         /// </summary>
-        public PieceColor StudyBoardOrientation = PieceColor.None;
+        public PieceColor StudyBoardOrientation
+        {
+            get
+            {
+                return _studyBoardOrientation != PieceColor.None ? _studyBoardOrientation : TrainingSide;
+            }
+            set
+            {
+                _studyBoardOrientation = value;
+            }
+        }
+
+        private PieceColor _studyBoardOrientation = PieceColor.None;
 
         /// <summary>
         /// Determines the initial board orientation in the Games view.
         /// </summary>
-        public PieceColor GameBoardOrientation = PieceColor.None;
+        public PieceColor GameBoardOrientation
+        {
+            get
+            {
+                return _gameBoardOrientation != PieceColor.None ? _gameBoardOrientation : TrainingSide;
+            }
+            set
+            {
+                _gameBoardOrientation = value;
+            }
+        }
+
+        private PieceColor _gameBoardOrientation = PieceColor.None;
+
 
         /// <summary>
         /// Determines the initial board orientation in the Exercises view.
         /// </summary>
-        public PieceColor ExerciseBoardOrientation = PieceColor.None;
+        public PieceColor ExerciseBoardOrientation = PieceColor.White;
 
         /// <summary>
         /// Indicates whether the main board was flipped when
