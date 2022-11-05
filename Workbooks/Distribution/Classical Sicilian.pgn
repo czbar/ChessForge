@@ -1,5 +1,8 @@
 [ChessForgeWorkbook "Classical Sicilian"]
 [TrainingSide "Black"]
+[StudyBoardOrientation "Black"]
+[GameBoardOrientation "White"]
+[ExerciseBoardOrientation "White"]
 [White "Chess Forge"]
 [Black "Workbook File"]
 [Result "*"]
@@ -307,7 +310,7 @@ immediately in a very difficult position.}  b3 {27 Mazi,L 2351 -Martinovic,S
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f4: Lines"]
 [Black "Line: 10.Nxc6 11.e5?!"]
 [Result "*"]
@@ -324,7 +327,7 @@ fxe5 h6 15. Bxf6+ gxf6 16. exf6 Bc5 $15 *
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f4: Lines"]
 [Black "Line: 10.Nxc6 11.e5?!"]
 [Result "*"]
@@ -340,7 +343,7 @@ is even worse.}  hxg5 {[%eval -5.13]}  16. fxg7 {[%eval -5.59]}  Bxg7 $19
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f4: Lines"]
 [Black "Line: 10.Nxc6 11.Bd3"]
 [Result "*"]
@@ -356,7 +359,7 @@ Bxe7 Qxe7 15. Be4 Qc5 16. Rhe1 Ra7 $11 *
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f4: Lines"]
 [Black "Line: 10.Nxc6 11.Qe1"]
 [Result "*"]
@@ -371,7 +374,7 @@ comfortable position.}  *
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f4: Lines"]
 [Black "Line: 10.Nxc6 11.Qe3"]
 [Result "*"]
@@ -388,7 +391,7 @@ $11 *
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f4: Lines"]
 [Black "Line: 10.Bxf6 11.Kb1"]
 [Result "*"]
@@ -402,7 +405,7 @@ Nxc6 Bxc6 13. f5 b4 14. Ne2 e5 15. Ng3 h5 16. h4 Qc5 *
 [ChapterTitle "Rauzer 9.f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f4: Lines"]
 [Black "Line: 10.Bxf6 11.Nxc6"]
 [Result "*"]
@@ -549,11 +552,11 @@ Rxd4 {[%eval -2.85]}  Rxd4 {[%eval -3.03]} ) 5... Rxg2 6. Qc1 Rcg8 0-1
 [Result "*"]
 
 
- {[%eval -0.64]}  Na2 $1 (1... Bxb5 { only equalizes.} ) 2. Nxa2 Bxb5 {More 
+ {[%eval -0.64]}  Na2+ $1 (1... Bxb5 { only equalizes.} ) 2. Nxa2 Bxb5 {More 
 tenacious is}  3. e5 (3. Nc3 Bc6 4. Qe2 Be7 5. e5 Nd5 { but here too Black is 
-clearly better.} ) 3... dxe5 4. Qxd8 Rxd8 5. Rxd8 Kxd8 6. fxe5 h6 7. Bxf6 gxf6 
-8. exf6 Bd6 $19 {White has 3 connected unopposed pawns for the minor piece but 
-their position is lost due to the active, coordinated black pieces.}  *
+clearly better.} ) 3... dxe5 4. Qxd8+ Rxd8 5. Rxd8+ Kxd8 6. fxe5 h6 7. Bxf6+ 
+gxf6 8. exf6 Bd6 $19 {White has 3 connected unopposed pawns for the minor piece 
+but their position is lost due to the active, coordinated black pieces.}  *
 
 [ChapterId "2"]
 [ChapterTitle "Rauzer 9.f4"]
@@ -579,7 +582,7 @@ their position is lost due to the active, coordinated black pieces.}  *
 [Result "0-1"]
 
 
- {[%eval -3.19]}  Qa3 2. Kd2 Rxc2 $1 3. Kxc2 Bg6 4. Kd2 Qb4 0-1
+ {[%eval -3.19]}  Qa3+ 2. Kd2 Rxc2+ $1 3. Kxc2 Bg6+ 4. Kd2 Qb4+ 0-1
 
 
 
@@ -608,7 +611,7 @@ g5 $4 {[%eval -1.25]}  hxg5 $17 {[%eval -0.95]}  17. Bxg5 {[%eval -2.60]}  Nxe4
 [ChapterTitle "Rauzer 9.f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f3: Lines"]
 [Black "Line: 9...Nxd4"]
 [Result "*"]
@@ -628,7 +631,7 @@ Rde8 $10 *
 [ChapterTitle "Rauzer 9.f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f3: Lines"]
 [Black "Line: 9...Nxd4"]
 [Result "*"]
@@ -642,7 +645,7 @@ Nxd5 14. Nxd5 Qxd5 15. Bc4 Qxd4 16. Bxd4 O-O-O $11 {The position is equal.}  *
 [ChapterTitle "Rauzer 9.f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rauzer 9.f3: Lines"]
 [Black "Line: 9...Be7"]
 [Result "*"]
@@ -879,7 +882,7 @@ Qxg5 Rxc2 0-1
 
  {[%eval +0.07]}  Nxe4 $1 2. fxe4 Bxe4 3. Rh2 e5 {[%eval +0.49]}  4. Bd3 {[%eval 
 +0.06]}  (4. Bh3 {[%eval -0.22]}  exd4 {[%eval +0.43]}  (4... Rc4 5. Nf5 Rxc2 6. 
-Qxc2 Bxc2 7. Rxc2 $18) 5. Bxc8 Rxc8 6. Qxd4 d5 $44)  (4. h5 exd4 5. Qxd4)  (4. 
+Qxc2 Bxc2+ 7. Rxc2 $18) 5. Bxc8 Rxc8 6. Qxd4 d5 $44)  (4. h5 exd4 5. Qxd4)  (4. 
 Nb3 {[%eval -0.62]}  Bxc2+ {[%eval -0.31]}  5. Qxc2 {[%eval -0.44]}  Rxc2 
 {[%eval -0.54]}  6. Rxc2 {[%eval -0.72]}  Qf3 $15 {[%eval -0.56]} ) 4... exd4 5. 
 Bxe4 Qxe4 6. Bxd4 $13 1-0
@@ -889,7 +892,7 @@ Bxe4 Qxe4 6. Bxd4 $13 1-0
 [ContentType "Exercise"]
 [FEN "2r2rk1/2q1bppp/p2p1n2/1p2pPBP/4P3/5P2/PPPQB3/2KR3R b - - 0 1"]
 [Event "Study Tree after 18.gxf5"]
-[Date "????.??.??"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -902,13 +905,13 @@ Bxe4 Qxe4 6. Bxd4 $13 1-0
 [ContentType "Exercise"]
 [FEN "3qk2r/4bpp1/p1rpbn2/1p2p1B1/4P2P/5P2/PPPQN3/1K1R1B1R b k - 0 1"]
 [Event "Study Tree after 17.Bxg5"]
-[Date "????.??.??"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
 
 
- {[%eval -2.52]}  Nxe4 2. fxe4 Bxg5 3. hxg5 Rxh1 4. Ng3 Rh7 5. Nf5 g6 6. Nxd6 
+ {[%eval -2.52]}  Nxe4 2. fxe4 Bxg5 3. hxg5 Rxh1 4. Ng3 Rh7 5. Nf5 g6 6. Nxd6+ 
 Rxd6 7. Qxd6 Qxd6 8. Rxd6 Bg4 $1 {White will lose material now that the rook 
 cannot return to d1  (Mladenov - Benidze, Plovdiv 2012)}  *
 
@@ -939,7 +942,7 @@ disrupt it with e4-e5.}  (7. Nb3 e6 8. O-O Be7 9. Be3 Qc7 10. f4 a6 {[%eval
 -1.53]}  Rxe3 24. Qxe3 Bc5 $19 {[%eval -6.39]} ) ) 21... Qxc2 {[%eval -1.47]}  
 22. Ra5 {[%eval -1.68]}  O-O {[%eval -1.56]}  23. f6 {[%eval -2.43]}  Bxf6 
 {[%eval -2.44]}  24. Nf3 {[%eval -5.32]}  Nxa6 25. Rxd5 Qe4 $19 {[%eval -7.24]} 
-)  (7. Ndb5 a6 8. Be3 Qa5 9. Nd4 Ne5 10. Bd3 e6 11. f4 Nxd3 12. Qxd3 Bd7 13. 
+)  (7. Ndb5 a6 8. Be3 Qa5 9. Nd4 Ne5 10. Bd3 e6 11. f4 Nxd3+ 12. Qxd3 Bd7 13. 
 O-O-O Rc8 14. Nb3 Qc7 15. h3 Bc6 16. g4 d5 $11 {[%eval -0.12]} )  (7. Nde2 e6 8. 
 O-O Be7 9. Bb3 O-O 10. Be3 Qc7 11. Ng3 a6 12. f4 Na5 13. f5 {[%eval -0.30]}  Nc4 
 $11 {[%eval +0.30]} ) 7... bxc6 8. O-O e6 9. Qe2 Be7 {[%eval +0.39]}  10. e5 
@@ -957,7 +960,7 @@ b3 {[%eval +0.43]} ) 12... Ba6 {[%eval -0.13]}  13. Re1 c5 14. Na4 {[%eval
 [ChapterTitle "Anti-Sozin"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Anti-Sozin: Lines"]
 [Black "Line: 7.Be3"]
 [Result "*"]
@@ -977,7 +980,7 @@ Qf3+ {[%eval -0.32]}  Kg8 $15 {[%eval -0.31]}  *
 [ChapterTitle "Anti-Sozin"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Anti-Sozin: Lines"]
 [Black "Line: 7.Be3"]
 [Result "*"]
@@ -991,7 +994,7 @@ popular move.}  e6 8. O-O Be7 9. Be3 Qc7 10. f4 a6 {[%eval 0.00]}  11. Bd3 b5
 [ChapterTitle "Anti-Sozin"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Anti-Sozin: Lines"]
 [Black "Line: 7.Nxc6"]
 [Result "*"]
@@ -1005,7 +1008,7 @@ O-O g6 9. Qe1 Qc7 10. Bf4 Nd7 11. Qd2 Bg7 12. Bh6 O-O 13. Bxg7 Kxg7 14. Rad1 Rb8
 [ChapterTitle "Anti-Sozin"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Anti-Sozin: Lines"]
 [Black "Line: 7.Ndb5"]
 [Result "*"]
@@ -1021,7 +1024,7 @@ moves, to a standard position of the Sozin variation.} ) 10. Nb3 Qc7 11. Be2 e6
 [ChapterTitle "Anti-Sozin"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Anti-Sozin: Lines"]
 [Black "Line: 7.Nde2"]
 [Result "*"]
@@ -1158,8 +1161,8 @@ Rf4 exf5 21. exf5 Rfe8 22. Qf2 Re1+ 0-1
 [Result "0-1"]
 
 
- {[%eval -7.02]}  Bb5 $1 2. Nxb5 Rxc2 3. Kf3 axb5 4. Rxb4 Nxb4 5. Qxb4 R8c3 
-(5... R8c3 6. Ke4 Rc4)  0-1
+ {[%eval -7.02]}  Bb5+ $1 2. Nxb5 Rxc2+ 3. Kf3 axb5 4. Rxb4 Nxb4 5. Qxb4 R8c3+ 
+(5... R8c3+ 6. Ke4 Rc4+)  0-1
 
 
 
@@ -1197,13 +1200,13 @@ the Sicilian. In this particular position, however, it is not very effective and
 the advantage stays with White.}  17. bxc3 Qxc3 18. Qd2 Nxe4 19. Qxc3 Nxc3 20. 
 Bd2 Nbd5 {with Black's advantage.} ) 13. Bxf4 $6 {[%eval -1.05]}  (13. Rxf4 {is 
 better} ) 13... Nxc2 {This mini-combination is occurring regularly in many 
-variants of this position.}  14. Qxc2 Qb6 15. Kh1 Bxb3 $15 {[%eval -0.61]}  *
+variants of this position.}  14. Qxc2 Qb6+ 15. Kh1 Bxb3 $15 {[%eval -0.61]}  *
 
 [ChapterId "5"]
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.f5"]
 [Result "*"]
@@ -1217,7 +1220,7 @@ dxe3 $15 *
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.exd5"]
 [Result "*"]
@@ -1231,7 +1234,7 @@ Qxd5 Bxd5 14. Rad1 Rfd8 15. fxe5 Nxe5 16. Rfe1 f6 *
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.exd5"]
 [Result "*"]
@@ -1246,7 +1249,7 @@ lead to equality too.} )  *
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.exd5"]
 [Result "*"]
@@ -1261,7 +1264,7 @@ on the board.}  13. fxe5 Nxe5 14. Qd4 Bf6 {Black is no worse.}  *
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.exd5"]
 [Result "*"]
@@ -1275,7 +1278,7 @@ f5 Re8 14. Rf2 Na5 $10 *
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.exd5"]
 [Result "*"]
@@ -1290,7 +1293,7 @@ c4 Be4 14. Qe1 exf4 15. Rd1 Qc8 16. Rxf4 Bg6 17. Bg4 Qc7 18. Rd7 Qb8 19. Rf1 Bd6
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.exd5"]
 [Result "*"]
@@ -1305,7 +1308,7 @@ c4 Be4 14. Qe1 exf4 15. Rd1 Qc8 16. Bxf4 Bg6 17. Bf3 Re8 18. Qg3 a5 19. Bg4 Bf5
 [ChapterTitle "Boleslavsky 6.Be2"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.Bf3"]
 [Result "*"]
@@ -1423,7 +1426,7 @@ Ne3+ 22. Ke2 Nc2 $19 {[%eval -7.59]} ) 20... b6 21. Bb4 Bg5 22. Nd1 exd4 0-1
 [ContentType "Exercise"]
 [FEN "r2q1rk1/pp2bppp/2npbn2/4p3/4PP2/1NN1B3/PPP1B1PP/R2Q1RK1 b - - 0 1"]
 [Event ""]
-[Date ""]
+[Date "????.??.??"]
 [White "Boleslavsky: Lines"]
 [Black "Line: 10.f4 d5 11.f5"]
 [Result "*"]
@@ -1436,14 +1439,14 @@ Ne3+ 22. Ke2 Nc2 $19 {[%eval -7.59]} ) 20... b6 21. Bb4 Bg5 22. Nd1 exd4 0-1
 [ContentType "Exercise"]
 [FEN "r1b2rk1/pp2bppp/1qnp1n2/4pPB1/4P3/1NN5/PPP1B1PP/R2QK2R b KQ - 1 1"]
 [Event "Study Tree after 10.Bg5"]
-[Date "????.??.??"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
 
 
  {[%eval -1.62]}  Nxe4 {[%eval -1.80]}  2. Bxe7 $4 {[%eval -#1]}  (2. Nxe4 
-{[%eval -1.90]}  Qb4 $17 {[%eval -1.74]} ) 2... Qf2 {[%eval #]}  *
+{[%eval -1.90]}  Qb4+ $17 {[%eval -1.74]} ) 2... Qf2# {[%eval #]}  *
 
 
 
@@ -1471,14 +1474,14 @@ g2-g4-g5.}  10. Bb5 Be6 11. O-O-O Nb4 12. a3 d5 $5 {[%eval +1.25]}  (12... Qc7
 {[%eval +0.31] is more accurate.} ) 13. axb4 d4 {[%eval +1.25]}  14. Bxd4 
 {[%eval +1.21]}  (14. Nd5 $2 {[%eval -2.89]}  Bxd5 {[%eval -2.43]}  15. exd5 
 {[%eval -2.45]}  Nxd5 {[%eval -2.31]}  16. Nxd4 Nxe3 17. Ne6 {[%eval -6.45]}  
-fxe6 18. Qxe3 Bg5 $19) 14... exd4 15. Qxd4 axb4 16. Qxd8 Rfxd8 17. Rxd8 Rxd8 18. 
-Na4 Bxb3 19. cxb3 $14 {[%eval +0.36]}  *
+fxe6 18. Qxe3 Bg5 $19) 14... exd4 15. Qxd4 axb4 16. Qxd8 Rfxd8 17. Rxd8+ Rxd8 
+18. Na4 Bxb3 19. cxb3 $14 {[%eval +0.36]}  *
 
 [ChapterId "6"]
 [ChapterTitle "6. f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.f3: Lines"]
 [Black "Line: 10.0-0-0 11.Kb1"]
 [Result "*"]
@@ -1493,7 +1496,7 @@ Nb4 {Leads to some tactics typical for this variation.}  14. g4 d5 15. g5 Nxe4
 [ChapterTitle "6. f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.f3: Lines"]
 [Black "Line: 10.0-0-0 11.Bb5"]
 [Result "*"]
@@ -1506,7 +1509,7 @@ Be3 O-O 9. Qd2 Be6 10. O-O-O a5 11. Bb5 Nb4 12. a3 Qc7 13. axb4 Bxb3 $15 *
 [ChapterTitle "6. f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.f3: Lines"]
 [Black "Line: 10.Nd5"]
 [Result "*"]
@@ -1519,7 +1522,7 @@ Be3 O-O 9. Qd2 Be6 10. Nd5 a5 11. Bb5 Bxd5 12. exd5 Na7 13. Be2 a4 $11 *
 [ChapterTitle "6. f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.f3: Lines"]
 [Black "Line: 10.Bb5 12.0-0-0"]
 [Result "*"]
@@ -1533,7 +1536,7 @@ $165 7. Nb3 Be7 8. Be3 O-O 9. Qd2 a5 10. Bb5 $1 Na7 11. Bd3 Be6 12. O-O-O Nc8
 [ChapterTitle "6. f3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.f3: Lines"]
 [Black "Line: 10.Bb5 12.Rd1"]
 [Result "*"]
@@ -1609,7 +1612,7 @@ Bxb3 14. cxb3 axb4 15. Kb1 Qa5 16. Na4 Qxb5 17. Qd3 Qa5 18. Bb6 Qa6 19. Qe3 Rfc8
 [ContentType "Exercise"]
 [FEN "r2q1rk1/1p2bppp/4bn2/3pp1P1/1n2P3/pPN1BP2/P1PQ3P/1KNR1B1R b - - 0 1"]
 [Event ""]
-[Date ""]
+[Date "????.??.??"]
 [White "6.f3: Lines"]
 [Black "Line: 10.0-0-0 11.Kb1"]
 [Result "*"]
@@ -1628,16 +1631,16 @@ Bxb3 14. cxb3 axb4 15. Kb1 Qa5 16. Na4 Qxb5 17. Qd3 Qa5 18. Bb6 Qa6 19. Qe3 Rfc8
 Nc3 d6 6. Be3 Ng4 (6... e5 7. Nf3 (7. Ndb5 a6 8. Na3 b5 9. Nd5 Nxd5 10. exd5 Ne7 
 11. c4 Nf5 $11)  (7. Nb3 Be7 8. f3 {Transposes to 6.f3} ) 7... Be7 8. Bc4 O-O 9. 
 O-O Be6 10. Bb3 Na5 $11) 7. Bg5 h6 8. Bh4 g5 9. Bg3 Bg7 10. Bb5 $6 (10. Nb3 {was 
-better}  h5 11. h4 $11) 10... Qb6 11. Bxc6 $6 {White should play 11.Nde2 
+better}  h5 11. h4 $11) 10... Qb6 11. Bxc6+ $6 {White should play 11.Nde2 
 instead, to keep Black's advantage to a minimum.}  bxc6 12. Nb3 h5 13. h3 {13.h4 
-was more tenacious.}  h4 14. hxg4 hxg3 15. Rxh8 Bxh8 16. fxg3 Qe3 17. Kf1 Bxc3 
-18. bxc3 Ba6 {Agrusti - Lazarev, Lyon 2005.}  *
+was more tenacious.}  h4 14. hxg4 hxg3 15. Rxh8+ Bxh8 16. fxg3 Qe3+ 17. Kf1 Bxc3 
+18. bxc3 Ba6+ {Agrusti - Lazarev, Lyon 2005.}  *
 
 [ChapterId "7"]
 [ChapterTitle "6. Be3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.Be3 Lines"]
 [Black "Line: 6.Be3 Ng4 7.Bb5 h6"]
 [Result "*"]
@@ -1650,7 +1653,7 @@ Qb6 $11 *
 [ChapterTitle "6. Be3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.Be3 Lines"]
 [Black "Line: 6.Be3 Ng4 7.Bb5 Nxe3"]
 [Result "*"]
@@ -1663,7 +1666,7 @@ fxe3 Bd7 9. O-O e6 $11 *
 [ChapterTitle "6. Be3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.Be3 Lines"]
 [Black "Line: 6.Be3 e5 7.Nf3"]
 [Result "*"]
@@ -1678,7 +1681,7 @@ Nxb3 13. axb3 Qc7 14. Bg5 Rac8 15. Bxf6 Bxf6 16. Rac1 $11) 12... g6 *
 [ChapterTitle "6. Be3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.Be3 Lines"]
 [Black "Line: 6.Be3 e5 7.Ndb5"]
 [Result "*"]
@@ -1693,7 +1696,7 @@ Nxf6+ Qxf6 11. Be2 Be7 (11... Nd4 $5 {See the next game.} ) 12. O-O O-O $11 *
 [ChapterTitle "6. Be3"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.Be3 Lines"]
 [Black "Line: 6.Be3 e5 7.Ndb5"]
 [Result "*"]
@@ -1787,7 +1790,7 @@ Bxb2 22. Rb1 Be5 23. Rff1 fxe4 24. Rxf8+ Rxf8 25. Bxa7 c5 26. a4 e3 0-1
 [Result "0-1"]
 
 
- {[%eval -9.37]}  Nf3 $1 0-1
+ {[%eval -9.37]}  Nf3+ $1 0-1
 
 [ChapterId "7"]
 [ChapterTitle "6. Be3"]
@@ -1801,9 +1804,9 @@ Bxb2 22. Rb1 Be5 23. Rff1 fxe4 24. Rxf8+ Rxf8 25. Bxa7 c5 26. a4 e3 0-1
 
 
  {[%eval -4.15]}  Qxd4 {[%eval -4.47]}  2. Qxd4 {[%eval -4.54]}  Nxd4 {[%eval 
--4.57]}  3. Nc7 {[%eval -4.17]}  Kd8 {[%eval -4.34]}  4. Nxa8 {[%eval -4.34]}  
-Nxc2 {[%eval -4.04]}  5. Kd2 Nxa1 6. Be2 (6. Bd3 {[%eval +6.80]}  b6 7. Rxa1 Bb7 
-8. Nxb6 axb6 $19) 6... Nxf2 7. Rxa1 Nxe4 8. Ke3 Nxg5 9. Rc1 Ne6 10. Bg4 g6 0-1
+-4.57]}  3. Nc7+ {[%eval -4.17]}  Kd8 {[%eval -4.34]}  4. Nxa8 {[%eval -4.34]}  
+Nxc2+ {[%eval -4.04]}  5. Kd2 Nxa1 6. Be2 (6. Bd3 {[%eval +6.80]}  b6 7. Rxa1 
+Bb7 8. Nxb6 axb6 $19) 6... Nxf2 7. Rxa1 Nxe4+ 8. Ke3 Nxg5 9. Rc1 Ne6 10. Bg4 g6 0-1
 
 [ChapterId "7"]
 [ChapterTitle "6. Be3"]
@@ -1821,7 +1824,7 @@ Nxc2 {[%eval -4.04]}  5. Kd2 Nxa1 6. Be2 (6. Bd3 {[%eval +6.80]}  b6 7. Rxa1 Bb7
 O-O {[%eval -3.20]}  5. Kh1 {[%eval -3.22]}  Rae8 {[%eval -3.49]}  6. Rf4 
 {[%eval -5.33]}  f5 {[%eval -5.17]}  7. h3 {[%eval -5.87]}  Bxe2 {[%eval -5.80]} 
  8. Qxe2 {[%eval -5.21]}  Qxd4 {[%eval -5.25]}  9. Be3 Qxb2 10. Qxb2 Bxb2 11. 
-Rb1 Be5 12. Rff1 fxe4 13. Rxf8 Rxf8 14. Bxa7 c5 15. a4 e3 0-1
+Rb1 Be5 12. Rff1 fxe4 13. Rxf8+ Rxf8 14. Bxa7 c5 15. a4 e3 0-1
 
 
 
@@ -1840,7 +1843,7 @@ on d3 rather than c4 or b3 makes it easier for black to prepare d6-d5 or
 Nc6-d4.}  O-O {[%eval -0.60]}  10. Qe2 {[%eval -1.82]}  Re8 {[%eval -0.99]}  11. 
 Rb1 {[%eval -3.74]}  (11. Bc4 {[%eval -1.75]This line illustrates another tactic 
 typical for this variation}  Nd4 {[%eval -1.36]}  12. Nxd4 exd4 {[%eval -2.41]}  
-13. Nd5 Nxd5 14. Bxd5 Bxf5 15. exf5 Bh4 {[%eval -11.04]}  16. g3 Qa5) 11... d5 
+13. Nd5 Nxd5 14. Bxd5 Bxf5 15. exf5 Bh4+ {[%eval -11.04]}  16. g3 Qa5+) 11... d5 
 $1 {[%eval -3.63]}  12. Kf1 {[%eval -4.19]}  (12. Nxd5 $2 {[%eval -6.41]With the 
 black rook opposite the white queen on the e-file, White cannot help himself to 
 the pawn on d5}  Nd4 {[%eval +8.28]}  13. Qd1 {[%eval -5.80]}  Bb4+ {[%eval 
@@ -1851,7 +1854,7 @@ $19 {[%eval -4.55]}  *
 [ChapterTitle "6. f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date ""]
+[Date "????.??.??"]
 [White "6.f4 Lines"]
 [Black "6.f4 e5 7.Nb3"]
 [Result "*"]
@@ -1866,7 +1869,7 @@ Rc8 13. a3 exf4 14. Bxf4 Ne5 $15 *
 [ChapterTitle "6. f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date ""]
+[Date "????.??.??"]
 [White "6.f4 Lines"]
 [Black "6.f4 e5 7.Nf3 Be7 8.Bd3"]
 [Result "*"]
@@ -1880,7 +1883,7 @@ Bxf4 Rac8 $11 *
 [ChapterTitle "6. f4"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "6.f4 Lines"]
 [Black "6.f4 e5 7.Nf3 Be7 8.Bc4"]
 [Result "*"]
@@ -1970,9 +1973,9 @@ Qxe3 Nc4 21. Qe2 h6 22. Ngxe4 Nxe4 23. Nxe4 Rxe4 0-1
 [Result "0-1"]
 
 
- {[%eval -8.55]}  Ra1 {[%eval -8.81]}  2. Kd2 Bxc3 3. Qxc3 (3. bxc3 Qf2 4. Re2 
-Rd8 { with an inevitable mate.} ) 3... Qf2 4. Re2 Rd8 5. Bd6 Rxd6 6. Bd3 Qf4 7. 
-Re3 Rxd3 8. Qxd3 Bxd3 9. Rxa1 Ba6 0-1
+ {[%eval -8.55]}  Ra1+ {[%eval -8.81]}  2. Kd2 Bxc3+ 3. Qxc3 (3. bxc3 Qf2+ 4. 
+Re2 Rd8+ { with an inevitable mate.} ) 3... Qf2+ 4. Re2 Rd8+ 5. Bd6 Rxd6+ 6. Bd3 
+Qf4+ 7. Re3 Rxd3+ 8. Qxd3 Bxd3 9. Rxa1 Ba6 0-1
 
 [ChapterId "8"]
 [ChapterTitle "6. f4"]
@@ -1985,7 +1988,7 @@ Re3 Rxd3 8. Qxd3 Bxd3 9. Rxa1 Ba6 0-1
 [Result "0-1"]
 
 
- {[%eval -0.36]}  Nxf3 0-1
+ {[%eval -0.36]}  Nxf3+ 0-1
 
 
 
@@ -2006,7 +2009,7 @@ position with opposite side castling. Objectively, it is better for White to
 castle kingside and play 10.Be2 or 10.Nd5}  O-O {[%eval -0.55]}  11. O-O-O Qb6 
 12. Qg3 a5 13. Rxd6 a4 14. Nd2 a3 15. b3 Rfd8 $17) 7... Be6 8. Be3 {[%eval 
 -0.45]}  (8. Ng3 d5 $15 {[%eval -0.42]} )  (8. g4 d5 9. exd5 Nxd5 10. Bg2 Nxc3 
-11. Nxc3 Qxd1 12. Nxd1 O-O-O 13. O-O Nd4 14. Ne3 {[%eval -2.98]}  Ne2+ $17 
+11. Nxc3 Qxd1+ 12. Nxd1 O-O-O 13. O-O Nd4 14. Ne3 {[%eval -2.98]}  Ne2+ $17 
 {[%eval -3.36]} ) 8... Be7 (8... d5 { is good here too but Black may choose to 
 keep the tension for a bit longer while finishing his development.} ) 9. Qd2 O-O 
 {Black is ready to play d6-d5. White puts his rook on d1 to prevent it.}  10. 
@@ -2017,7 +2020,7 @@ O-O-O Qa5 {[%eval -1.08]}  11. a3 (11. Kb1 $2 {[%eval -4.23]}  Nxe4) 11... Rad8
 [ChapterTitle "Rare Moves"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rare Moves: Ideas"]
 [Black "6.h3: Black pushes d5"]
 [Result "*"]
@@ -2039,7 +2042,7 @@ d5 $15 *
 [ChapterTitle "Rare Moves"]
 [ContentType "Model Game"]
 [Event ""]
-[Date "????.??.??"]
+[Date ""]
 [White "Rare Moves: Ideas"]
 [Black "6.h3: White prevents d5"]
 [Result "*"]
@@ -2139,7 +2142,7 @@ Bd4 41. Kh2 Kf7 42. Kg3 Kg6 43. Kf3 Bf2 0-1
 [ContentType "Exercise"]
 [FEN "r4rk1/pp2bppp/2npbn2/q3p3/4P3/2N1B2P/PPPQNPP1/1K1R1B1R b - - 1 1"]
 [Event ""]
-[Date ""]
+[Date "????.??.??"]
 [White "Rare Moves: Ideas"]
 [Black "6.h3: Black pushes d5"]
 [Result "*"]
