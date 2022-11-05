@@ -2126,6 +2126,8 @@ namespace ChessForge
             {
                 _chaptersView.BuildFlowDocumentForChaptersView();
             }
+
+            RestoreSelectedLineAndMoveInActiveView();
         }
 
         /// <summary>
