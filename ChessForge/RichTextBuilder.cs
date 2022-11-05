@@ -25,6 +25,11 @@ namespace ChessForge
         internal abstract Dictionary<string, RichTextPara> RichTextParas { get; }
 
         /// <summary>
+        /// Base size of the font when fixed size font is selected for the views..
+        /// </summary>
+        private const int BASE_FIXED_SIZE = 14;
+
+        /// <summary>
         /// Constructs the object and sets pointer to its associated FlowDocument.
         /// </summary>
         /// <param name="doc"></param>
@@ -46,7 +51,27 @@ namespace ChessForge
             {
                 RichTextParas.TryGetValue("default", out para);
             }
-            return para;
+
+            RichTextPara attrs = para.CloneMe();
+            attrs.FontSize = AdjustFontSize(para.FontSize);
+            return attrs;
+        }
+
+        /// <summary>
+        /// Adjusts the configured font size per configuration parameters.
+        /// </summary>
+        /// <param name="origSize"></param>
+        /// <returns></returns>
+        private int AdjustFontSize(int origSize)
+        {
+            if (Configuration.UseFixedFont)
+            {
+                return BASE_FIXED_SIZE + Configuration.FontSizeDiff;
+            }
+            else
+            {
+                return origSize + Configuration.FontSizeDiff;
+            }
         }
 
         /// <summary>
@@ -83,7 +108,7 @@ namespace ChessForge
             Table table = new Table
             {
                 Margin = new Thickness(indent, 0, indent, 0),
-                FontSize = 14,
+                FontSize = 14 + Configuration.FontSizeDiff,
                 FontWeight = FontWeights.Normal,
                 TextAlignment = TextAlignment.Left,
                 Foreground = Brushes.Black

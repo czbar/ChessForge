@@ -313,6 +313,44 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the default chessboard orientation for the Study view.
+        /// </summary>
+        /// <returns></returns>
+        public string GetStudyBoardOrientation(out string key)
+        {
+            string headerKey = PgnHeaders.KEY_STUDY_BOARD_ORIENTATION;
+
+            key = headerKey;
+            return _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+        }
+
+
+        /// <summary>
+        /// Returns the default chessboard orientation for the Games view.
+        /// </summary>
+        /// <returns></returns>
+        public string GetGameBoardOrientation(out string key)
+        {
+            string headerKey = PgnHeaders.KEY_GAME_BOARD_ORIENTATION;
+
+            key = headerKey;
+            return _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+        }
+
+
+        /// <summary>
+        /// Returns the default chessboard orientation for the Exercises view.
+        /// </summary>
+        /// <returns></returns>
+        public string GetExerciseBoardOrientation(out string key)
+        {
+            string headerKey = PgnHeaders.KEY_EXERCISE_BOARD_ORIENTATION;
+
+            key = headerKey;
+            return _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+        }
+
+        /// <summary>
         /// Returns the Content Type string value.
         /// </summary>
         /// <returns></returns>

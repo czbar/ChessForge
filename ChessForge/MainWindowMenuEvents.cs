@@ -206,7 +206,7 @@ namespace ChessForge
             // prepare document
             AppStateManager.RestartInIdleMode(false);
             WorkbookManager.CreateNewWorkbook();
-            _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this);
+            _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
 
             // ask for the options
             if (!ShowWorkbookOptionsDialog(false))
@@ -2097,9 +2097,37 @@ namespace ChessForge
             if (Configuration.FontSizeDiff < Configuration.MAX_UP_FONT_SIZE_DIFF)
             {
                 Configuration.FontSizeDiff++;
+                SetupMenuBarControls();
+                RebuildAllTreeViews();
+            }
+        }
+
+        /// <summary>
+        /// Rebuilds all tree views
+        /// </summary>
+        private void RebuildAllTreeViews()
+        {
+            if (_studyTreeView != null)
+            {
+                _studyTreeView.BuildFlowDocumentForVariationTree();
             }
 
-            SetupMenuBarControls();
+            if (_modelGameTreeView != null)
+            {
+                _modelGameTreeView.BuildFlowDocumentForVariationTree();
+            }
+
+            if (_exerciseTreeView != null)
+            {
+                _exerciseTreeView.BuildFlowDocumentForVariationTree();
+            }
+
+            if (_chaptersView != null)
+            {
+                _chaptersView.BuildFlowDocumentForChaptersView();
+            }
+
+            RestoreSelectedLineAndMoveInActiveView();
         }
 
         /// <summary>
@@ -2115,9 +2143,9 @@ namespace ChessForge
             if (Configuration.FontSizeDiff > MAX_DOWN_DIFF)
             {
                 Configuration.FontSizeDiff--;
+                SetupMenuBarControls();
+                RebuildAllTreeViews();
             }
-
-            SetupMenuBarControls();
         }
 
         /// <summary>
@@ -2129,6 +2157,7 @@ namespace ChessForge
         {
             Configuration.UseFixedFont = true;
             SetupMenuBarControls();
+            RebuildAllTreeViews();
         }
 
         /// <summary>
@@ -2140,6 +2169,7 @@ namespace ChessForge
         {
             Configuration.UseFixedFont = false;
             SetupMenuBarControls();
+            RebuildAllTreeViews();
         }
 
         /// <summary>

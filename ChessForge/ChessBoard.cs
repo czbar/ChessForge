@@ -480,7 +480,7 @@ namespace ChessForge
         /// <param name="sideAtBottom"></param>
         public void FlipBoard(PieceColor sideAtBottom)
         {
-            if (sideAtBottom == PieceColor.White && _isFlipped
+            if ((sideAtBottom == PieceColor.White || sideAtBottom == PieceColor.None) && _isFlipped
                 || sideAtBottom == PieceColor.Black && !_isFlipped)
             {
                 FlipBoard();
@@ -497,6 +497,14 @@ namespace ChessForge
             {
                 FlipBoard();
             }
+        }
+
+        /// <summary>
+        /// Returns the side/color shown at the bottom of the board.
+        /// </summary>
+        public PieceColor SideAtBottom
+        {
+            get => _isFlipped ? PieceColor.Black : PieceColor.White;    
         }
 
         /// <summary>

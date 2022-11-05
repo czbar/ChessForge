@@ -18,10 +18,6 @@ namespace ChessForge
     /// </summary>
     public partial class WorkbookOptionsDialog : Window
     {
-        private readonly string _strWhite = "WHITE";
-        private readonly string _strBlack = "BLACK";
-        private readonly string _strTrainingSide = "TRAINING SIDE";
-
         /// <summary>
         /// The Training Side selected in the dialog.
         /// </summary>
@@ -52,6 +48,17 @@ namespace ChessForge
         /// </summary>
         public bool ExitOK = false;
 
+        // string for White to display in the UI 
+        private readonly static string _strWhite = "WHITE";
+
+        // string for Black to display in the UI 
+        private readonly static string _strBlack = "BLACK";
+
+        // the most recent values set by the user when Training Side was Black
+        private string _lastStudyOnBlack = _strBlack;
+        private string _lastGameOnBlack = _strBlack;
+        private string _lastExerciseOnBlack = _strWhite;
+
         /// <summary>
         /// Creates the dialog, initializes controls
         /// </summary>
@@ -61,21 +68,59 @@ namespace ChessForge
             WorkbookTitle = _workbook.Title;
             TrainingSide = _workbook.TrainingSide;
 
-            _tbTitle.Text = _workbook.Title;
-            UiLblSideToMove.Content = _workbook.TrainingSide == PieceColor.Black ? _strBlack : _strWhite;
-
             StudyBoardOrientation = _workbook.StudyBoardOrientation;
             GameBoardOrientation = _workbook.GameBoardOrientation;
             ExerciseBoardOrientation = _workbook.ExerciseBoardOrientation;
 
-            EnableBoardOrientationControls();
+            UiTbTitle.Text = _workbook.Title;
+            UiLblSideToMove.Content = _workbook.TrainingSide == PieceColor.Black ? _strBlack : _strWhite;
+
+            StudyBoardOrientation = GetBoardOrientation(_workbook.StudyBoardOrientation);
+            UiLblBoardStudyOrient.Content = _workbook.StudyBoardOrientation == PieceColor.Black ? _strBlack : _strWhite;
+
+            GameBoardOrientation = GetBoardOrientation(_workbook.GameBoardOrientation);
+            UiLblBoardGamesOrient.Content = _workbook.GameBoardOrientation == PieceColor.Black ? _strBlack : _strWhite;
+
+            ExerciseBoardOrientation = GetBoardOrientation(_workbook.ExerciseBoardOrientation);
+            UiLblBoardExercisesOrient.Content = _workbook.ExerciseBoardOrientation == PieceColor.Black ? _strBlack : _strWhite;
+
+            EnableBoardOrientationControls(true);
+        }
+
+        /// <summary>
+        /// Returns the board orientation color to show in the GUI.
+        /// Returns White or Black, never None.
+        /// </summary>
+        /// <param name="proposed"></param>
+        /// <returns></returns>
+        private PieceColor GetBoardOrientation(PieceColor proposed)
+        {
+            PieceColor color;
+
+            if (TrainingSide == PieceColor.White)
+            {
+                color = PieceColor.White;
+            }
+            else
+            {
+                if (proposed != PieceColor.None)
+                {
+                    color = proposed;
+                }
+                else
+                {
+                    color = TrainingSide != PieceColor.None ? TrainingSide : PieceColor.White;
+                }
+            }
+
+            return color;
         }
 
         /// <summary>
         /// Enables the Board Orientation controls based on the
         /// current setting of Training Side.
         /// </summary>
-        private void EnableBoardOrientationControls()
+        private void EnableBoardOrientationControls(bool init)
         {
             bool enable = (string)(UiLblSideToMove.Content) == _strBlack;
 
@@ -89,15 +134,26 @@ namespace ChessForge
 
             if (enable)
             {
-                UiLblBoardStudyOrient.IsEnabled = true;
-                UiLblBoardGamesOrient.IsEnabled = true;
-                UiLblBoardExercisesOrient.IsEnabled = true;
+                if (!init)
+                {
+                    // restore last values for Black Training, or defaults if none found
+                    UiLblBoardStudyOrient.Content = _lastStudyOnBlack;
+                    UiLblBoardGamesOrient.Content = _lastGameOnBlack;
+                    UiLblBoardExercisesOrient.Content = _lastExerciseOnBlack;
+                }
             }
             else
             {
-                UiLblBoardStudyOrient.Content = _strTrainingSide;
-                UiLblBoardGamesOrient.Content = _strTrainingSide;
-                UiLblBoardExercisesOrient.Content = _strTrainingSide;
+                if (!init)
+                {
+                    // store the values for Black Training
+                    _lastStudyOnBlack = (string)UiLblBoardStudyOrient.Content;
+                    _lastGameOnBlack = (string)UiLblBoardGamesOrient.Content;
+                    _lastExerciseOnBlack = (string)UiLblBoardExercisesOrient.Content;
+                }
+                UiLblBoardStudyOrient.Content = _strWhite;
+                UiLblBoardGamesOrient.Content = _strWhite;
+                UiLblBoardExercisesOrient.Content = _strWhite;
             }
         }
 
@@ -109,7 +165,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOK_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            WorkbookTitle = _tbTitle.Text;
+            WorkbookTitle = UiTbTitle.Text;
 
             if ((string)UiLblSideToMove.Content == _strBlack)
             {
@@ -175,7 +231,7 @@ namespace ChessForge
         {
             if ((string)label.Content == _strWhite)
             {
-                label.Content = _strTrainingSide;
+                label.Content = _strBlack;
             }
             else
             {
@@ -192,7 +248,8 @@ namespace ChessForge
         private void UiImgSwapColor_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SwapTrainingSide();
-            EnableBoardOrientationControls();        }
+            EnableBoardOrientationControls(false);
+        }
 
         /// <summary>
         /// Handles the Swap Board Orientation for the Study event.

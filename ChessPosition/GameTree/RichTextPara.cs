@@ -41,6 +41,15 @@ namespace GameTree
             ForegroundColor = rtp.ForegroundColor;
         }
 
+        /// <summary>
+        /// Clones this object
+        /// </summary>
+        /// <returns></returns>
+        public RichTextPara CloneMe()
+        {
+            return this.MemberwiseClone() as RichTextPara;
+        }
+
         public int LeftIndent { get; set; }
 
         public int BottomMargin { get; set; }

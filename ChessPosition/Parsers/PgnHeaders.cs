@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Xml.Linq;
 using ChessPosition;
 
@@ -34,6 +35,21 @@ namespace GameTree
         /// only.
         /// </summary>
         public const string KEY_TRAINING_SIDE = "TrainingSide";
+
+        /// <summary>
+        /// Determines the initial board orientation in the Study view.
+        /// </summary>
+        public const string KEY_STUDY_BOARD_ORIENTATION = "StudyBoardOrientation";
+
+        /// <summary>
+        /// Determines the initial board orientation in the Games view.
+        /// </summary>
+        public const string KEY_GAME_BOARD_ORIENTATION = "GameBoardOrientation";
+
+        /// <summary>
+        /// Determines the initial board orientation in the Exercises view.
+        /// </summary>
+        public const string KEY_EXERCISE_BOARD_ORIENTATION = "ExerciseBoardOrientation";
 
         /// <summary>
         /// Event Name.
@@ -104,6 +120,8 @@ namespace GameTree
         /// </summary>
         public const string KEY_PREAMBLE = "Preamble";
 
+
+
         public const string VALUE_WHITE = "White";
         public const string VALUE_BLACK = "Black";
         public const string VALUE_NO_COLOR = "None";
@@ -143,25 +161,83 @@ namespace GameTree
             return header;
         }
 
+        /// <summary>
+        /// Returns the header text for the color of the training side
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
         public static string GetTrainingSideText(PieceColor color)
         {
             string sColor;
             switch (color)
             {
                 case PieceColor.White:
-                    sColor = KEY_WHITE;
+                    sColor = VALUE_WHITE;
                     break;
                 case PieceColor.Black:
-                    sColor = KEY_BLACK;
+                    sColor = VALUE_BLACK;
                     break;
                 default:
                     sColor = VALUE_NO_COLOR;
                     break;
-
             }
             return BuildHeaderLine(KEY_TRAINING_SIDE, sColor);
         }
 
+        /// <summary>
+        /// Returns the header text for the initial board orientation in the Study view.
+        /// </summary>
+        public static string GetStudyBoardOrientationText(PieceColor color)
+        {
+            return BuildHeaderLine(KEY_STUDY_BOARD_ORIENTATION, GetColorValueText(color));
+        }
+
+        /// <summary>
+        /// Returns the header text for the initial board orientation in the Games view.
+        /// </summary>
+        public static string GetGameBoardOrientationText(PieceColor color)
+        {
+            return BuildHeaderLine(KEY_GAME_BOARD_ORIENTATION, GetColorValueText(color));
+        }
+
+        /// <summary>
+        /// Returns the header text for the initial board orientation in the Study view.
+        /// </summary>
+        public static string GetExerciseBoardOrientationText(PieceColor color)
+        {
+            return BuildHeaderLine(KEY_EXERCISE_BOARD_ORIENTATION, GetColorValueText(color));
+        }
+
+        /// <summary>
+        /// Builds a string (a word) to represent
+        /// the color value in the output file.
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        private static string GetColorValueText(PieceColor color)
+        {
+            string sColor;
+            switch (color)
+            {
+                case PieceColor.White:
+                    sColor = VALUE_WHITE;
+                    break;
+                case PieceColor.Black:
+                    sColor = VALUE_BLACK;
+                    break;
+                default:
+                    sColor = VALUE_NO_COLOR;
+                    break;
+            }
+
+            return sColor;
+        }
+
+        /// <summary>
+        /// Return the Date in the PGN format
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
         public static string GetDateText(DateTime? dt)
         {
             if (dt == null)
