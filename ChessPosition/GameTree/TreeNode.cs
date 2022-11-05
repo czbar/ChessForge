@@ -412,13 +412,13 @@ namespace GameTree
         /// <returns></returns>
         private string GetCheckOrMateSign()
         {
-            if (Position.IsCheck)
-            {
-                return "+";
-            }
-            else if (Position.IsCheckmate)
+            if (Position.IsCheckmate)
             {
                 return "#";
+            }
+            else if (Position.IsCheck)
+            {
+                return "+";
             }
             else
             {
