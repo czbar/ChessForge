@@ -24,6 +24,43 @@ namespace ChessForge
     public class VariationTreeView : RichTextBuilder
     {
         /// <summary>
+        /// Indicates whether the view is "fresh"
+        /// or if it requires a rebuild.
+        /// The Fresh flag only applies if the view is invoked for the
+        /// same enitity, same index and same chapter. 
+        /// </summary>
+        public bool IsFresh
+        {
+            get => _isFresh;
+            set => _isFresh = value;
+        }
+
+        /// <summary>
+        /// Content Type in this view
+        /// </summary>
+        public GameData.ContentType ContentType
+        {
+            get => _contentType;
+        }
+
+        /// <summary>
+        /// Index of the entity (game or exercise) in the Active Chapter.
+        /// </summary>
+        public int EntityIndex
+        {
+            get => _entityIndex;
+        }
+
+        // flags freshness of the view
+        private bool _isFresh = false;
+
+        // content type in this view
+        private GameData.ContentType _contentType;
+
+        // game/exercise index in this view
+        private int _entityIndex = -1;
+
+        /// <summary>
         /// For unknown reason the first right click in the app (some views anyway) does not
         /// bring up the context menu unless we force it with IsOpen
         /// </summary>
@@ -48,9 +85,10 @@ namespace ChessForge
         /// a call to the base class's constructor.
         /// </summary>
         /// <param name="doc"></param>
-        public VariationTreeView(FlowDocument doc, MainWindow mainWin) : base(doc)
+        public VariationTreeView(FlowDocument doc, MainWindow mainWin, GameData.ContentType contentType, int entityIndex) : base(doc)
         {
             _mainWin = mainWin;
+            _contentType = contentType;
         }
 
         /// <summary>
@@ -177,6 +215,103 @@ namespace ChessForge
             LEAF, // a node with no children
             FORK_WITH_LEAF_LINES_ONLY, // a fork with no further forks down any of the branches starting from it
             FORK_WITH_FORK_LINES // a fork with at least one other fork down any of the branches starting from it.
+        }
+
+        /// <summary>
+        /// Builds the FlowDocument from the entire Variation Tree for the RichTextBox to display.
+        /// Inserts dummy (no text) run for the starting position (NodeId == 0)
+        /// </summary>
+        public void BuildFlowDocumentForVariationTree(int rootNodeId = 0, bool includeStem = true)
+        {
+            GameData.ContentType contentType = GameData.ContentType.NONE;
+            if (_contentType == GameData.ContentType.STUDY_TREE)
+            {
+                _variationTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree;
+            }
+            else
+            {
+                _variationTree = _mainWin.ActiveVariationTree;
+            }
+
+            if (_variationTree == null || _variationTree.ContentType != this.ContentType)
+            {
+                return;
+            }
+
+            contentType = _variationTree.Header.GetContentType(out _);
+
+            Clear(GameData.ContentType.GENERIC);
+
+            BuildPreviousNextBar(contentType);
+
+            Document.Blocks.Add(BuildDummyPararaph());
+
+            Paragraph titlePara = BuildPageHeader(contentType);
+            if (titlePara != null)
+            {
+                Document.Blocks.Add(titlePara);
+            }
+
+            Paragraph boardPara = BuildExercisesChessboardParagraph();
+            if (boardPara != null)
+            {
+                Document.Blocks.Add(boardPara);
+            }
+
+            Paragraph buttonShowHide = BuildExerciseShowHideButton();
+            if (buttonShowHide != null)
+            {
+                Document.Blocks.Add(buttonShowHide);
+            }
+
+            Paragraph preamblePara = BuildPreamble();
+            if (preamblePara != null)
+            {
+                Document.Blocks.Add(preamblePara);
+            }
+
+            if (contentType != GameData.ContentType.EXERCISE || _variationTree.ShowTreeLines)
+            {
+                // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
+                // and note the distances in the Nodes so that we can use them when creating the document
+                // in the forward traversing
+                SetNodeDistances();
+
+                TreeNode root;
+                if (rootNodeId == 0)
+                {
+                    root = _variationTree.Nodes[0];
+                }
+                else
+                {
+                    root = _variationTree.GetNodeFromNodeId(rootNodeId);
+                    if (includeStem)
+                    {
+                        Paragraph paraStem = BuildWorkbookStemLine(root);
+                        Document.Blocks.Add(paraStem);
+                    }
+                }
+
+                // start by creating a level 1 paragraph.
+                Paragraph para = CreateParagraph("0");
+                Document.Blocks.Add(para);
+
+                CreateStartingNode(para);
+
+                // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
+                BuildTreeLineText(root, para, includeStem);
+
+                if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
+                {
+                    Paragraph resultPara = BuildResultPara();
+                    if (resultPara != null)
+                    {
+                        Document.Blocks.Add(resultPara);
+                    }
+                }
+            }
+
+            RemoveEmptyParagraphs();
         }
 
         /// <summary>
@@ -543,94 +678,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds the FlowDocument from the entire Variation Tree for the RichTextBox to display.
-        /// Inserts dummy (no text) run for the starting position (NodeId == 0)
-        /// </summary>
-        public void BuildFlowDocumentForVariationTree(int rootNodeId = 0, bool includeStem = true)
-        {
-            GameData.ContentType contentType = GameData.ContentType.NONE;
-            _variationTree = _mainWin.ActiveVariationTree;
-
-            if (_variationTree != null)
-            {
-                contentType = _variationTree.Header.GetContentType(out _);
-            }
-
-            Clear(GameData.ContentType.GENERIC);
-
-            BuildPreviousNextBar(contentType);
-
-            Document.Blocks.Add(BuildDummyPararaph());
-
-            Paragraph titlePara = BuildPageHeader(contentType);
-            if (titlePara != null)
-            {
-                Document.Blocks.Add(titlePara);
-            }
-
-            Paragraph boardPara = BuildExercisesChessboardParagraph();
-            if (boardPara != null)
-            {
-                Document.Blocks.Add(boardPara);
-            }
-
-            Paragraph buttonShowHide = BuildExerciseShowHideButton();
-            if (buttonShowHide != null)
-            {
-                Document.Blocks.Add(buttonShowHide);
-            }
-
-            Paragraph preamblePara = BuildPreamble();
-            if (preamblePara != null)
-            {
-                Document.Blocks.Add(preamblePara);
-            }
-
-            if (contentType != GameData.ContentType.EXERCISE || _variationTree.ShowTreeLines)
-            {
-                // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
-                // and note the distances in the Nodes so that we can use them when creating the document
-                // in the forward traversing
-                SetNodeDistances();
-
-                TreeNode root;
-                if (rootNodeId == 0)
-                {
-                    root = _variationTree.Nodes[0];
-                }
-                else
-                {
-                    root = _variationTree.GetNodeFromNodeId(rootNodeId);
-                    if (includeStem)
-                    {
-                        Paragraph paraStem = BuildWorkbookStemLine(root);
-                        Document.Blocks.Add(paraStem);
-                    }
-                }
-
-                // start by creating a level 1 paragraph.
-                Paragraph para = CreateParagraph("0");
-                Document.Blocks.Add(para);
-
-                CreateStartingNode(para);
-
-                // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
-                BuildTreeLineText(root, para, includeStem);
-
-                if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
-                {
-                    Paragraph resultPara = BuildResultPara();
-                    if (resultPara != null)
-                    {
-                        Document.Blocks.Add(resultPara);
-                    }
-                }
-            }
-
-            RemoveEmptyParagraphs();
-        }
-
-        /// <summary>
         /// Creates a dummy paragraph to use for spacing before
         /// the first "real" paragraph. 
         /// </summary>
@@ -945,7 +992,7 @@ namespace ChessForge
                 _forkTable = CreateTable(para.Margin.Left);
 
                 // constant settings
-                _forkTable.FontSize = 14;
+                _forkTable.FontSize = 14 + Configuration.FontSizeDiff;
                 _forkTable.CellSpacing = 2;
                 int columnsPerRow = 4;
 
@@ -1172,7 +1219,7 @@ namespace ChessForge
                 }
 
                 btn.Foreground = Brushes.Black;
-                btn.FontSize = 12;
+                btn.FontSize = 12 + Configuration.FontSizeDiff;
                 btn.Width = 120;
                 btn.Height = 20;
                 btn.PreviewMouseDown += EventShowHideButtonClicked;
