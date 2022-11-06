@@ -547,7 +547,7 @@ namespace ChessForge
             }
             else
             {
-                isChessForgeFile = true;
+                isChessForgeFile = false;
                 if (AppStateManager.MainWin.ShowGenericPgnInfoDialog())
                 {
                     return CreateWorkbookFromGenericGames(ref games);
@@ -694,7 +694,7 @@ namespace ChessForge
                                 try
                                 {
                                     // special treatment for the first one
-                                    PgnGameParser pgp = new PgnGameParser(games[i].GameText, AppStateManager.MainWin.ActiveVariationTree, out bool multi);
+                                    PgnGameParser pgp = new PgnGameParser(games[i].GameText, WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree, out bool multi);
                                 }
                                 catch (Exception ex)
                                 {
