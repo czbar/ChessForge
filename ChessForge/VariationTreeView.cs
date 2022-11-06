@@ -14,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media.Media3D;
 using System.Xml.Linq;
+using ChessPosition.GameTree;
 
 namespace ChessForge
 {
@@ -392,6 +393,36 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Merges the selected line in the game into the Study tree
+        /// </summary>
+        public void MergeIntoStudy()
+        {
+            try
+            {
+                GameData.ContentType contentType = _variationTree.ContentType;
+                if (_variationTree.ContentType != GameData.ContentType.MODEL_GAME)
+                {
+                    return;
+                }
+
+                TreeNode nd = _variationTree.GetNodeFromNodeId(_lastClickedNodeId);
+                List<TreeNode> lstNodes = _variationTree.GetSubTree(nd, true);
+
+                VariationTree treeFromGame = new VariationTree(GameData.ContentType.GENERIC);
+                treeFromGame.CreateNew(lstNodes);
+                VariationTree merged = WorkbookTreeMerge.MergeWorkbooks(WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree, treeFromGame);
+                WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree = merged;
+
+                AppStateManager.IsDirty = true;
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("MergeIntoStudy()", ex);
+            }
+        }
+
+
+        /// <summary>
         /// Sets up ActiveTreeView's context menu.
         /// </summary>
         /// <param name="cmn"></param>
@@ -509,6 +540,9 @@ namespace ChessForge
                                 menuItem.IsEnabled = true;
                                 break;
                             case "_mnGame_StartTrainingFromHere":
+                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && _lastClickedNodeId >= 0;
+                                break;
+                            case "_mnGame_MergeToStudy":
                                 menuItem.IsEnabled = isEnabled && gameIndex >= 0 && _lastClickedNodeId >= 0;
                                 break;
                             case "_mnGame_CreateExercise":
