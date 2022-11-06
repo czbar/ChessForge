@@ -1043,24 +1043,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Bookmarks the last Node that fits the Training Side
-        /// or the root node if nothing found.
-        /// Called when user called Generate Bookmarks if there is
-        /// no fork whose children can be reasonably bookmarked.
-        /// </summary>
-        private void BookmarkAnything()
-        {
-            for (int i = Nodes.Count - 1; i >= 0; i--)
-            {
-                if (Nodes[i].ColorToMove == TrainingSide || i == 0)
-                {
-                    AddBookmark(Nodes[i]);
-                    break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Identifies all nodes of a subtree with the root
         /// at the passed Node. Saves them in the
         /// _subTree list.
@@ -1088,6 +1070,24 @@ namespace GameTree
             }
 
             return _subTree;
+        }
+
+        /// <summary>
+        /// Bookmarks the last Node that fits the Training Side
+        /// or the root node if nothing found.
+        /// Called when user called Generate Bookmarks if there is
+        /// no fork whose children can be reasonably bookmarked.
+        /// </summary>
+        private void BookmarkAnything()
+        {
+            for (int i = Nodes.Count - 1; i >= 0; i--)
+            {
+                if (Nodes[i].ColorToMove == TrainingSide || i == 0)
+                {
+                    AddBookmark(Nodes[i]);
+                    break;
+                }
+            }
         }
 
         /// <summary>
