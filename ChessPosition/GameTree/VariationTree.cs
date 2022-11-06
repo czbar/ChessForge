@@ -197,10 +197,6 @@ namespace GameTree
                 }
             }
         }
-        /// <summary>
-        /// "Stem" of this tree i.e., the starting moves up until the first fork.
-        /// </summary>
-        public List<TreeNode> Stem;
 
         /// <summary>
         /// References to bookmarked psoitions.
@@ -381,26 +377,37 @@ namespace GameTree
 
         /// <summary>
         /// Returns the list of Nodes from the starting position to the
-        /// last position before the fork.
+        /// last node before the passed node or to the last position before the first fork  
+        /// if the passed node is null.
         /// </summary>
         /// <returns></returns>
-        public List<TreeNode> BuildStem()
+        public List<TreeNode> BuildStem(TreeNode ndLast)
         {
-            Stem = new List<TreeNode>();
-
-            foreach (TreeNode nd in Nodes)
+            List<TreeNode> stem = new List<TreeNode>();
+            if (ndLast == null)
             {
-                if (nd.Children.Count > 1)
+                foreach (TreeNode nd in Nodes)
                 {
-                    break;
+                    if (nd.Children.Count > 1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        stem.Add(nd);
+                    }
                 }
-                else
+            }
+            else
+            {
+                while (ndLast.Parent != null)
                 {
-                    Stem.Add(nd);
+                    stem.Insert(0, ndLast.Parent);
+                    ndLast = ndLast.Parent;
                 }
             }
 
-            return Stem;
+            return stem;
         }
 
         /// <summary>
@@ -1059,12 +1066,12 @@ namespace GameTree
         /// _subTree list.
         /// </summary>
         /// <param name="nd"></param>
-        private void GetSubTree(TreeNode nd)
+        public List<TreeNode> GetSubTree(TreeNode nd, bool includeStem = false)
         {
             _subTree.Add(nd);
             if (nd.Children.Count == 0)
             {
-                return;
+                return _subTree;
             }
             else
             {
@@ -1073,6 +1080,14 @@ namespace GameTree
                     GetSubTree(nd.Children[i]);
                 }
             }
+
+            if (includeStem)
+            {
+                List<TreeNode> stem = BuildStem(nd);
+                _subTree.InsertRange(0, stem);
+            }
+
+            return _subTree;
         }
 
         /// <summary>
