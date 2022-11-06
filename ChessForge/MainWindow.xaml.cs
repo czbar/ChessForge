@@ -951,11 +951,14 @@ namespace ChessForge
             BoardCommentBox.ShowWorkbookTitle();
             InitializeChaptersView();
 
-            SetupGuiForActiveStudyTree(false);
+            SetupGuiForActiveStudyTree(!isChessForgeFile);
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-            UiTabChapters.Focus();
-            SetupGuiForChapters();
+            if (isChessForgeFile)
+            {
+                UiTabChapters.Focus();
+                SetupGuiForChapters();
+            }
         }
 
         /// <summary>
