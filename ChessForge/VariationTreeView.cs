@@ -1022,6 +1022,7 @@ namespace ChessForge
                 for (int i = 0; i < cellCount; i++)
                 {
                     int rowIndex = (int)(i / columnsPerRow);
+                    int columnIndex = i - (rowIndex * columnsPerRow);
                     TableRow row = _forkTable.RowGroups[0].Rows[rowIndex];
 
                     TableCell cell;
@@ -1040,11 +1041,11 @@ namespace ChessForge
 
                     if ((i % 2 + rowIndex % 2) % 2 == 0)
                     {
-                        cell.Background = _forkTable.Columns[i].Background = Brushes.LightBlue;
+                        cell.Background = _forkTable.Columns[columnIndex].Background = Brushes.LightBlue;
                     }
                     else
                     {
-                        cell.Background = _forkTable.Columns[i].Background = Brushes.LightSteelBlue;
+                        cell.Background = _forkTable.Columns[columnIndex].Background = Brushes.LightSteelBlue;
                     }
                     cell.BorderThickness = new Thickness(2, 2, 2, 2);
                     cell.BorderBrush = Brushes.White;
