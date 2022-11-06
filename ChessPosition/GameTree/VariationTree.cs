@@ -213,7 +213,7 @@ namespace GameTree
         public ObservableCollection<VariationLine> VariationLines = new ObservableCollection<VariationLine>();
 
         /// <summary>
-        /// Creates a new Tree with the root node at the statrting position. 
+        /// Creates a new Tree with the root node at the starting position. 
         /// </summary>
         public void CreateNew()
         {
@@ -239,6 +239,18 @@ namespace GameTree
             TreeNode root = new TreeNode(null, "", 0);
             FenParser.ParseFenIntoBoard(fen, ref root.Position);
             AddNode(root);
+            BuildLines();
+        }
+
+        /// <summary>
+        /// Creates a new Tree given the list of Nodes.
+        /// </summary>
+        /// <param name="nodes"></param>
+        public void CreateNew(List<TreeNode> nodes)
+        {
+            VariationLines.Clear();
+            Nodes = nodes;
+
             BuildLines();
         }
 
@@ -402,7 +414,11 @@ namespace GameTree
             {
                 while (ndLast.Parent != null)
                 {
-                    stem.Insert(0, ndLast.Parent);
+                    TreeNode ndToInsert = ndLast.Parent.CloneMe(true);
+                    ndToInsert.Children.Clear();
+                    ndToInsert.AddChild(ndLast);
+
+                    stem.Insert(0, ndToInsert);
                     ndLast = ndLast.Parent;
                 }
             }
