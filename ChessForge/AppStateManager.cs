@@ -212,7 +212,7 @@ namespace ChessForge
                 {
                     string chfText = WorkbookFileTextBuilder.BuildWorkbookText();
                     File.WriteAllText(WorkbookFilePath, chfText);
-                    _isDirty = false;
+                    IsDirty = false;
                 }
             }
             catch (Exception ex)
