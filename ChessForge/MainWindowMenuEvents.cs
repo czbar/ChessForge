@@ -1656,6 +1656,17 @@ namespace ChessForge
         }
 
 
+        /// <summary>
+        /// The user requested to merge the currently selected subtree into the Study Tree
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMGame_MergeToStudy_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveTreeView.MergeIntoStudy();
+            _studyTreeView.BuildFlowDocumentForVariationTree();
+        }
+
 
         //*********************
         //
