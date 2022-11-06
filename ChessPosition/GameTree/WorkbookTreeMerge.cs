@@ -120,6 +120,19 @@ namespace ChessPosition.GameTree
             // and call this method recursively
             for (int i = 0; i < _dupes1.Count; i++)
             {
+                // combine comments if any
+                if (_dupes1[i].Comment != null)
+                {
+                    if (_dupes2[i].Comment != null)
+                    {
+                        _dupes1[i].Comment = _dupes1[i].Comment + "; " + _dupes2[i].Comment;
+                    }
+                }
+                else if (_dupes2[i].Comment != null)
+                {
+                    _dupes1[i].Comment = _dupes2[i].Comment;
+                }
+
                 TreeNode outNode = InsertNode(_dupes1[i], outParent);
                 MergeTrees(_dupes1[i], _dupes2[i], outNode);
             }

@@ -197,10 +197,6 @@ namespace GameTree
                 }
             }
         }
-        /// <summary>
-        /// "Stem" of this tree i.e., the starting moves up until the first fork.
-        /// </summary>
-        public List<TreeNode> Stem;
 
         /// <summary>
         /// References to bookmarked psoitions.
@@ -217,7 +213,7 @@ namespace GameTree
         public ObservableCollection<VariationLine> VariationLines = new ObservableCollection<VariationLine>();
 
         /// <summary>
-        /// Creates a new Tree with the root node at the statrting position. 
+        /// Creates a new Tree with the root node at the starting position. 
         /// </summary>
         public void CreateNew()
         {
@@ -243,6 +239,18 @@ namespace GameTree
             TreeNode root = new TreeNode(null, "", 0);
             FenParser.ParseFenIntoBoard(fen, ref root.Position);
             AddNode(root);
+            BuildLines();
+        }
+
+        /// <summary>
+        /// Creates a new Tree given the list of Nodes.
+        /// </summary>
+        /// <param name="nodes"></param>
+        public void CreateNew(List<TreeNode> nodes)
+        {
+            VariationLines.Clear();
+            Nodes = nodes;
+
             BuildLines();
         }
 
@@ -381,26 +389,41 @@ namespace GameTree
 
         /// <summary>
         /// Returns the list of Nodes from the starting position to the
-        /// last position before the fork.
+        /// last node before the passed node or to the last position before the first fork  
+        /// if the passed node is null.
         /// </summary>
         /// <returns></returns>
-        public List<TreeNode> BuildStem()
+        public List<TreeNode> BuildStem(TreeNode ndLast)
         {
-            Stem = new List<TreeNode>();
-
-            foreach (TreeNode nd in Nodes)
+            List<TreeNode> stem = new List<TreeNode>();
+            if (ndLast == null)
             {
-                if (nd.Children.Count > 1)
+                foreach (TreeNode nd in Nodes)
                 {
-                    break;
+                    if (nd.Children.Count > 1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        stem.Add(nd);
+                    }
                 }
-                else
+            }
+            else
+            {
+                while (ndLast.Parent != null)
                 {
-                    Stem.Add(nd);
+                    TreeNode ndToInsert = ndLast.Parent.CloneMe(true);
+                    ndToInsert.Children.Clear();
+                    ndToInsert.AddChild(ndLast);
+
+                    stem.Insert(0, ndToInsert);
+                    ndLast = ndLast.Parent;
                 }
             }
 
-            return Stem;
+            return stem;
         }
 
         /// <summary>
@@ -1036,6 +1059,36 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Identifies all nodes of a subtree with the root
+        /// at the passed Node. Saves them in the
+        /// _subTree list.
+        /// </summary>
+        /// <param name="nd"></param>
+        public List<TreeNode> GetSubTree(TreeNode nd, bool includeStem = false)
+        {
+            _subTree.Add(nd);
+            if (nd.Children.Count == 0)
+            {
+                return _subTree;
+            }
+            else
+            {
+                for (int i = 0; i < nd.Children.Count; i++)
+                {
+                    GetSubTree(nd.Children[i]);
+                }
+            }
+
+            if (includeStem)
+            {
+                List<TreeNode> stem = BuildStem(nd);
+                _subTree.InsertRange(0, stem);
+            }
+
+            return _subTree;
+        }
+
+        /// <summary>
         /// Bookmarks the last Node that fits the Training Side
         /// or the root node if nothing found.
         /// Called when user called Generate Bookmarks if there is
@@ -1049,28 +1102,6 @@ namespace GameTree
                 {
                     AddBookmark(Nodes[i]);
                     break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Identifies all nodes of a subtree with the root
-        /// at the passed Node. Saves them in the
-        /// _subTree list.
-        /// </summary>
-        /// <param name="nd"></param>
-        private void GetSubTree(TreeNode nd)
-        {
-            _subTree.Add(nd);
-            if (nd.Children.Count == 0)
-            {
-                return;
-            }
-            else
-            {
-                for (int i = 0; i < nd.Children.Count; i++)
-                {
-                    GetSubTree(nd.Children[i]);
                 }
             }
         }
