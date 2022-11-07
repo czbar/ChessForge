@@ -467,6 +467,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Brings the select run into view.
+        /// </summary>
+        public void BringSelectedRunIntoView()
+        {
+            if (_selectedRun != null)
+            {
+                _selectedRun.BringIntoView();
+            }
+        }
+
+        /// <summary>
         /// Sets up StudyTrees's context menu.
         /// </summary>
         /// <param name="cmn"></param>
