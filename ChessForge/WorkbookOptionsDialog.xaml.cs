@@ -84,7 +84,7 @@ namespace ChessForge
             ExerciseBoardOrientation = GetBoardOrientation(_workbook.ExerciseBoardOrientation);
             UiLblBoardExercisesOrient.Content = _workbook.ExerciseBoardOrientation == PieceColor.Black ? _strBlack : _strWhite;
 
-            EnableBoardOrientationControls(true);
+            //            EnableBoardOrientationControls(true);
         }
 
         /// <summary>
@@ -97,64 +97,16 @@ namespace ChessForge
         {
             PieceColor color;
 
-            if (TrainingSide == PieceColor.White)
+            if (proposed == PieceColor.None)
             {
-                color = PieceColor.White;
+                color = TrainingSide != PieceColor.None ? TrainingSide : PieceColor.White;
             }
             else
             {
-                if (proposed != PieceColor.None)
-                {
-                    color = proposed;
-                }
-                else
-                {
-                    color = TrainingSide != PieceColor.None ? TrainingSide : PieceColor.White;
-                }
+                color = proposed;
             }
 
             return color;
-        }
-
-        /// <summary>
-        /// Enables the Board Orientation controls based on the
-        /// current setting of Training Side.
-        /// </summary>
-        private void EnableBoardOrientationControls(bool init)
-        {
-            bool enable = (string)(UiLblSideToMove.Content) == _strBlack;
-
-            UiLblBoardStudyOrient.IsEnabled = enable;
-            UiLblBoardGamesOrient.IsEnabled = enable;
-            UiLblBoardExercisesOrient.IsEnabled = enable;
-
-            UiImgSwapStudyOrient.IsEnabled = enable;
-            UiImgSwapGameOrient.IsEnabled = enable;
-            UiImgSwapExerciseOrient.IsEnabled = enable;
-
-            if (enable)
-            {
-                if (!init)
-                {
-                    // restore last values for Black Training, or defaults if none found
-                    UiLblBoardStudyOrient.Content = _lastStudyOnBlack;
-                    UiLblBoardGamesOrient.Content = _lastGameOnBlack;
-                    UiLblBoardExercisesOrient.Content = _lastExerciseOnBlack;
-                }
-            }
-            else
-            {
-                if (!init)
-                {
-                    // store the values for Black Training
-                    _lastStudyOnBlack = (string)UiLblBoardStudyOrient.Content;
-                    _lastGameOnBlack = (string)UiLblBoardGamesOrient.Content;
-                    _lastExerciseOnBlack = (string)UiLblBoardExercisesOrient.Content;
-                }
-                UiLblBoardStudyOrient.Content = _strWhite;
-                UiLblBoardGamesOrient.Content = _strWhite;
-                UiLblBoardExercisesOrient.Content = _strWhite;
-            }
         }
 
         /// <summary>
@@ -176,9 +128,9 @@ namespace ChessForge
                 TrainingSide = PieceColor.White;
             }
 
-            StudyBoardOrientation = ((string)UiLblBoardStudyOrient.Content == _strWhite) ? PieceColor.White : TrainingSide;
-            GameBoardOrientation = ((string)UiLblBoardGamesOrient.Content == _strWhite) ? PieceColor.White : TrainingSide;
-            ExerciseBoardOrientation = ((string)UiLblBoardExercisesOrient.Content == _strWhite) ? PieceColor.White : TrainingSide;
+            StudyBoardOrientation = ((string)UiLblBoardStudyOrient.Content == _strBlack) ? PieceColor.Black : PieceColor.White;
+            GameBoardOrientation = ((string)UiLblBoardGamesOrient.Content == _strBlack) ? PieceColor.Black : PieceColor.White;
+            ExerciseBoardOrientation = ((string)UiLblBoardExercisesOrient.Content == _strBlack) ? PieceColor.Black : PieceColor.White;
 
             ExitOK = true;
             this.Close();
@@ -220,6 +172,21 @@ namespace ChessForge
                 UiLblSideToMove.Content = _strWhite;
                 TrainingSide = PieceColor.White;
             }
+            SetAllBoardOrientations(TrainingSide);
+        }
+
+        /// <summary>
+        /// Sets all boards' orientation to the passed color.
+        /// </summary>
+        /// <param name="color"></param>
+        private void SetAllBoardOrientations(PieceColor color)
+        {
+            if (color != PieceColor.None)
+            {
+                UiLblBoardStudyOrient.Content = (color == PieceColor.White ? _strWhite : _strBlack);
+                UiLblBoardGamesOrient.Content = (color == PieceColor.White ? _strWhite : _strBlack);
+                UiLblBoardExercisesOrient.Content = (color == PieceColor.White ? _strWhite : _strBlack);
+            }
         }
 
         /// <summary>
@@ -248,7 +215,6 @@ namespace ChessForge
         private void UiImgSwapColor_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SwapTrainingSide();
-            EnableBoardOrientationControls(false);
         }
 
         /// <summary>
