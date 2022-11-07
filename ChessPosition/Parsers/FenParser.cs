@@ -209,15 +209,15 @@ namespace GameTree
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        private static string FenEnPassantSquare(BoardPosition pos)
+        public static string FenEnPassantSquare(BoardPosition pos)
         {
-            if (pos.InheritedEnPassantSquare == 0)
+            if (pos.EnPassantSquare == 0)
             {
                 return "-";
             }
 
-            char columnCharCode = (char)((pos.InheritedEnPassantSquare >> 4) + (int)'a');
-            char rowCharCode = (char)((pos.InheritedEnPassantSquare & 0x0F) + (int)'1');
+            char columnCharCode = (char)((pos.EnPassantSquare >> 4) + (int)'a');
+            char rowCharCode = (char)((pos.EnPassantSquare & 0x0F) + (int)'1');
 
             StringBuilder sb = new StringBuilder();
             sb.Append(columnCharCode);
