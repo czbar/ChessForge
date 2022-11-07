@@ -393,13 +393,23 @@ namespace ChessForge
         //**************************************************************
 
         /// <summary>
-        /// A mouse down events occurred in the Active Line data grid.
+        /// A mouse down event occurred in the Active Line data grid.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ActiveLine_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             ActiveLine.PreviewMouseDown(sender, e);
+        }
+
+        /// <summary>
+        /// A mouse up event occurred in the Active Line data grid.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ActiveLine_OnPreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ActiveLine.PreviewMouseUp(sender, e);
         }
 
         /// <summary>
