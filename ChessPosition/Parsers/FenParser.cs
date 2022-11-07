@@ -339,6 +339,11 @@ namespace GameTree
             }
         }
 
+        /// <summary>
+        /// Sets the castling rights based on the castling part of the fen string
+        /// </summary>
+        /// <param name="castling"></param>
+        /// <param name="board"></param>
         private static void DetermineCastlingRights(string castling, ref BoardPosition board)
         {
             foreach (char c in castling)
@@ -361,6 +366,11 @@ namespace GameTree
             }
         }
 
+        /// <summary>
+        /// Determines the color of the side to move.
+        /// </summary>
+        /// <param name="side"></param>
+        /// <param name="board"></param>
         private static void DetermineSideToMove(string side, ref BoardPosition board)
         {
             if (side.ToLower() == "w")
@@ -369,6 +379,12 @@ namespace GameTree
             }
         }
 
+        /// <summary>
+        /// Parses piece locations on the board
+        /// </summary>
+        /// <param name="fenPieces"></param>
+        /// <param name="board"></param>
+        /// <exception cref="Exception"></exception>
         private static void ParsePieceLocations(string fenPieces, ref BoardPosition board)
         {
             // the FEN's first field must represent exactly 8 rows, separated by a slash
@@ -388,6 +404,14 @@ namespace GameTree
                 fenRowNo--;
             }
         }
+
+        /// <summary>
+        /// Parses a single row representation from the string
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="fenRow"></param>
+        /// <param name="board"></param>
+        /// <exception cref="Exception"></exception>
         private static void ParseRow(int row, string fenRow, ref BoardPosition board)
         {
             // process the string character by character
@@ -413,7 +437,21 @@ namespace GameTree
                     currentColumn++;
                 }
             }
+
+            if (currentColumn != 8)
+            {
+                throw new Exception("Error: row " + row.ToString() + " does not define 8 squares.");
+
+            }
         }
+
+        /// <summary>
+        /// Sets empty squares on the board.
+        /// </summary>
+        /// <param name="fromColumn"></param>
+        /// <param name="row"></param>
+        /// <param name="emptyCount"></param>
+        /// <param name="board"></param>
         private static void SetEmptySquares(int fromColumn, int row, int emptyCount, ref BoardPosition board)
         {
             for (int i = fromColumn; i < fromColumn + emptyCount; i++)
