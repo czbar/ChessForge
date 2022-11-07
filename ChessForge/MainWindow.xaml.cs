@@ -517,6 +517,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Brings into view the selected run in the Active View
+        /// </summary>
+        public void BringSelectedRunIntoView()
+        {
+            if (ActiveTreeView != null)
+            {
+                ActiveTreeView.BringSelectedRunIntoView();
+            }
+        }
+
+        /// <summary>
         /// Creates menu items for the Recent Files and 
         /// adds them to the File menu.
         /// </summary>
@@ -1498,6 +1509,21 @@ namespace ChessForge
             if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
             {
                 ActiveLine.PreviewKeyDown(sender, e);
+            }
+        }
+
+
+        /// <summary>
+        /// Main Window received a Key Up event.
+        /// If we are in Manual Review, pass it on to the ActiveLine.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ChessForgeMain_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
+            {
+                ActiveLine.PreviewKeyUp(sender, e);
             }
         }
 
