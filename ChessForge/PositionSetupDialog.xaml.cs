@@ -99,6 +99,9 @@ namespace ChessForge
                 SetupInitialPosition(tree.RootNode);
                 SetSideToMove(tree.RootNode.ColorToMove);
             }
+
+            PositionSetup.HalfMove50Clock = 1;
+            SetFen();
         }
 
         /// <summary>
@@ -110,10 +113,26 @@ namespace ChessForge
         {
             PositionSetup = new BoardPosition(nd.Position);
             SetupImagesForPosition();
+            SetCastlingCheckboxes();
+        }
+
+        /// <summary>
+        /// Sets the state of castling check boxes according to the position's properties.
+        /// </summary>
+        private void SetCastlingCheckboxes()
+        {
             UiCbWhiteCastleShort.IsChecked = (PositionSetup.DynamicProperties & Constants.WhiteKingsideCastle) > 0;
             UiCbWhiteCastleLong.IsChecked = (PositionSetup.DynamicProperties & Constants.WhiteQueensideCastle) > 0;
             UiCbBlackCastleShort.IsChecked = (PositionSetup.DynamicProperties & Constants.BlackKingsideCastle) > 0;
             UiCbBlackCastleLong.IsChecked = (PositionSetup.DynamicProperties & Constants.BlackQueensideCastle) > 0;
+        }
+
+        /// <summary>
+        /// Generates FEN from the positions and populates the FEN text box with the result.
+        /// </summary>
+        private void SetFen()
+        {
+            UiTbFen.Text = FenParser.GenerateFenFromPosition(PositionSetup);
         }
 
         /// <summary>
@@ -194,6 +213,7 @@ namespace ChessForge
                 }
                 _draggedPiece.Clear();
             }
+            SetFen();
             e.Handled = true;
         }
 
@@ -562,7 +582,16 @@ namespace ChessForge
             {
                 for (int y = 0; y <= 7; y++)
                 {
-                    byte square = PositionSetup.Board[x, y];
+                   byte square = PositionSetup.Board[x, y];
+
+                    // clear previous content
+                    if (_pieceImagesOnBoard[x, y] != null)
+                    {
+                        UiCnvSetup.Children.Remove(_pieceImagesOnBoard[x, y]);
+                        _pieceImagesOnBoard[x, y].Source = null;
+                        _pieceImagesOnBoard[x, y] = null;
+                    }
+
                     if (square != 0)
                     {
                         Image img = new Image();
@@ -572,15 +601,6 @@ namespace ChessForge
                         PlacePieceOnSquare(new SquareCoords(x, y), img);
                         _pieceImagesOnBoard[x, y] = img;
                         UiCnvSetup.Children.Add(img);
-                    }
-                    else
-                    {
-                        if (_pieceImagesOnBoard[x, y] != null)
-                        {
-                            UiCnvSetup.Children.Remove(_pieceImagesOnBoard[x, y]);
-                            _pieceImagesOnBoard[x, y].Source = null;
-                            _pieceImagesOnBoard[x, y] = null;
-                        }
                     }
                 }
             }
@@ -634,6 +654,8 @@ namespace ChessForge
                 UiLblSideToMove.Content = WHITE_TO_MOVE;
                 _sideToMove = PieceColor.White;
             }
+            PositionSetup.ColorToMove = _sideToMove;
+            SetFen();
         }
 
         /// <summary>
@@ -647,6 +669,7 @@ namespace ChessForge
             UiCbWhiteCastleLong.IsChecked = allow;
             UiCbBlackCastleShort.IsChecked = allow;
             UiCbBlackCastleLong.IsChecked = allow;
+            SetFen();
         }
 
 
@@ -690,6 +713,7 @@ namespace ChessForge
 
             SetSideToMove(PieceColor.White);
             ResetCastlingRights(true);
+            SetFen();
         }
 
         /// <summary>
@@ -703,6 +727,7 @@ namespace ChessForge
 
             SetSideToMove(PieceColor.White);
             ResetCastlingRights(false);
+            SetFen();
         }
 
         /// <summary>
@@ -863,6 +888,60 @@ namespace ChessForge
         private void UiDebug_Click(object sender, RoutedEventArgs e)
         {
             ShowChessBoard();
+        }
+
+        /// <summary>
+        /// Responds to any of the castling check boxes changing its status.
+        /// Updates the FEN string accordingly. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCastleCheckBoxChanged(object sender, RoutedEventArgs e)
+        {
+            PositionSetup.DynamicProperties = (byte)(PositionSetup.DynamicProperties 
+                & ~(Constants.WhiteKingsideCastle | Constants.WhiteQueensideCastle | Constants.BlackKingsideCastle | Constants.BlackQueensideCastle));
+
+            if (UiCbWhiteCastleShort.IsChecked == true)
+            {
+                PositionSetup.DynamicProperties |= Constants.WhiteKingsideCastle;
+            }
+            if (UiCbWhiteCastleLong.IsChecked == true)
+            {
+                PositionSetup.DynamicProperties |= Constants.WhiteQueensideCastle;
+            }
+            if (UiCbBlackCastleShort.IsChecked == true)
+            {
+                PositionSetup.DynamicProperties |= Constants.BlackKingsideCastle;
+            }
+            if (UiCbBlackCastleLong.IsChecked == true)
+            {
+                PositionSetup.DynamicProperties |= Constants.BlackQueensideCastle;
+            }
+
+            SetFen();
+        }
+
+        /// <summary>
+        /// Responds to the text change in the FEN text box.
+        /// If the FEN is valid updates the position and its attributes.
+        /// Otherwise, ignores the change.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTbFen_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                BoardPosition temp = new BoardPosition();
+                FenParser.ParseFenIntoBoard(UiTbFen.Text, ref temp);
+                PositionSetup = temp;
+                SetupImagesForPosition();
+                SetCastlingCheckboxes();
+                SetSideToMove(PositionSetup.ColorToMove);
+            }
+            catch
+            {
+            }
         }
     }
 }
