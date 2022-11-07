@@ -1726,7 +1726,21 @@ namespace ChessForge
                     AppStateManager.SaveWorkbookFile();
                 }
 
-                MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientation);
+                switch (WorkbookManager.ActiveTab)
+                {
+                    case WorkbookManager.TabViewType.CHAPTERS:
+                    case WorkbookManager.TabViewType.STUDY:
+                    case WorkbookManager.TabViewType.BOOKMARKS:
+                        MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientation);
+                        break;
+                    case WorkbookManager.TabViewType.MODEL_GAME:
+                        MainChessBoard.FlipBoard(SessionWorkbook.GameBoardOrientation);
+                        break;
+                    case WorkbookManager.TabViewType.EXERCISE:
+                        MainChessBoard.FlipBoard(SessionWorkbook.ExerciseBoardOrientation);
+                        break;
+                }
+
                 if (_chaptersView != null)
                 {
                     _chaptersView.BuildFlowDocumentForChaptersView();
