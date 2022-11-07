@@ -211,13 +211,13 @@ namespace GameTree
         /// <returns></returns>
         private static string FenEnPassantSquare(BoardPosition pos)
         {
-            if (pos.EnPassantSquare == 0)
+            if (pos.InheritedEnPassantSquare == 0)
             {
                 return "-";
             }
 
-            char columnCharCode = (char)((pos.EnPassantSquare >> 4) + (int)'a');
-            char rowCharCode = (char)((pos.EnPassantSquare & 0x0F) + (int)'1');
+            char columnCharCode = (char)((pos.InheritedEnPassantSquare >> 4) + (int)'a');
+            char rowCharCode = (char)((pos.InheritedEnPassantSquare & 0x0F) + (int)'1');
 
             StringBuilder sb = new StringBuilder();
             sb.Append(columnCharCode);
@@ -320,15 +320,22 @@ namespace GameTree
         /// </summary>
         /// <param name="enpassant"></param>
         /// <param name="board"></param>
-        private static void GetEnPassantSquare(string enpassant, ref BoardPosition board)
+        public static void GetEnPassantSquare(string enpassant, ref BoardPosition board)
         {
             // if we have an en passant square, it will be in the algebraic notation
             // like "e4"
-            if (enpassant.Length == 2)
+            if (enpassant != null && enpassant.Length == 2)
             {
                 byte xPos = (byte)(enpassant[0] - 'a');
                 byte yPos = (byte)(enpassant[1] - '1');
-                board.InheritedEnPassantSquare = (byte)((xPos << 4) | yPos);
+                if (xPos >= 0 && xPos <= 7 && yPos >= 0 && yPos <= 7)
+                {
+                    board.InheritedEnPassantSquare = (byte)((xPos << 4) | yPos);
+                }
+                else
+                {
+                    board.InheritedEnPassantSquare = 0;
+                }
             }
             else
             {
