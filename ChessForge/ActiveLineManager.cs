@@ -206,9 +206,9 @@ namespace ChessForge
             {
                 return index;
             }
-            else 
+            else
             {
-                return bZeroOnNoSelection ? 0  : -1;
+                return bZeroOnNoSelection ? 0 : -1;
             }
         }
 
@@ -329,7 +329,7 @@ namespace ChessForge
             {
                 _dgActiveLine.SelectedCells.Add(cell);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLog.Message("_dgActiveLine.SelectedCells.Add(cell) in SelectPly", ex);
             }
@@ -410,7 +410,7 @@ namespace ChessForge
             }
         }
 
-        
+
         /// <summary>
         /// Intercepts the MouseDown event when occuring within the Active Line view.
         /// If the click was on a non-selectable column,
@@ -422,7 +422,7 @@ namespace ChessForge
         public void PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out int row, out int column);
-            
+
             _mainWin.BoardCommentBox.ShowWorkbookTitle();
 
             if (IsSelectableCell(row, column))
@@ -452,7 +452,7 @@ namespace ChessForge
                     }
 
                     _selectedRow = row;
-                    _selectedRow = column;
+                    _selectedColumn = column;
 
                     _mainWin.DisplayPosition(nd);
                     _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, Line.GetLineId(), moveIndex);
@@ -476,6 +476,18 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Bring the selected run in the Active View into view on mouse up. 
+        /// It may not have happened in the mouse down handler if we were updating 
+        /// the RTB Document as part of the handling.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            _mainWin.BringSelectedRunIntoView();
+        }
+
+        /// <summary>
         /// Intercepts and handles key events in the Active Line view.
         /// Facilitates scrolling through the game using the keyboard.
         /// If the key modifier is CTRL do not mark as handled as we need
@@ -488,6 +500,24 @@ namespace ChessForge
             if (Keyboard.Modifiers != ModifierKeys.Control)
             {
                 if (HandleKeyDown(e.Key))
+                {
+                    e.Handled = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Bring the selected run in the Active View into view on key up. 
+        /// It may not have happened in the key down handler if we were updating 
+        /// the RTB Document as part of the handling.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (Keyboard.Modifiers != ModifierKeys.Control)
+            {
+                if (HandleKeyUp(e.Key))
                 {
                     e.Handled = true;
                 }
@@ -508,7 +538,7 @@ namespace ChessForge
             }
 
             bool handled = false;
-            
+
             GetSelectedRowColumn(out int currRow, out int currColumn);
 
             //if row and column == -1, it means there is no selection.
@@ -580,6 +610,13 @@ namespace ChessForge
             }
 
             return handled;
+        }
+
+        public bool HandleKeyUp(Key key)
+        {
+            _mainWin.BringSelectedRunIntoView();
+
+            return true;
         }
 
         /// <summary>

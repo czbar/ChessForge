@@ -517,6 +517,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Brings into view the selected run in the Active View
+        /// </summary>
+        public void BringSelectedRunIntoView()
+        {
+            if (ActiveTreeView != null)
+            {
+                ActiveTreeView.BringSelectedRunIntoView();
+            }
+        }
+
+        /// <summary>
         /// Creates menu items for the Recent Files and 
         /// adds them to the File menu.
         /// </summary>
@@ -1501,6 +1512,21 @@ namespace ChessForge
             }
         }
 
+
+        /// <summary>
+        /// Main Window received a Key Up event.
+        /// If we are in Manual Review, pass it on to the ActiveLine.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ChessForgeMain_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
+            {
+                ActiveLine.PreviewKeyUp(sender, e);
+            }
+        }
+
         /// <summary>
         /// A key pressed event has been received.
         /// </summary>
@@ -1700,7 +1726,21 @@ namespace ChessForge
                     AppStateManager.SaveWorkbookFile();
                 }
 
-                MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientation);
+                switch (WorkbookManager.ActiveTab)
+                {
+                    case WorkbookManager.TabViewType.CHAPTERS:
+                    case WorkbookManager.TabViewType.STUDY:
+                    case WorkbookManager.TabViewType.BOOKMARKS:
+                        MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientation);
+                        break;
+                    case WorkbookManager.TabViewType.MODEL_GAME:
+                        MainChessBoard.FlipBoard(SessionWorkbook.GameBoardOrientation);
+                        break;
+                    case WorkbookManager.TabViewType.EXERCISE:
+                        MainChessBoard.FlipBoard(SessionWorkbook.ExerciseBoardOrientation);
+                        break;
+                }
+
                 if (_chaptersView != null)
                 {
                     _chaptersView.BuildFlowDocumentForChaptersView();

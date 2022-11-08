@@ -822,6 +822,41 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Given a position identifies potential enpassant squares based on the pawn
+        /// positions and which side is on move.
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public static List<SquareCoords> GetPotentialEnpassantSquares(BoardPosition pos)
+        {
+            int vertIncrement = (pos.ColorToMove == PieceColor.White ? 1 : -1);
+            int enpassantRow = (pos.ColorToMove == PieceColor.White ? 5 : 2);
+            byte pawnForCapture = (byte)(Constants.PieceToFlag[PieceType.Pawn] | (pos.ColorToMove == PieceColor.White ? 0 : Constants.Color));
+            byte pawnAttacking = (byte)(Constants.PieceToFlag[PieceType.Pawn] | (pos.ColorToMove == PieceColor.White ? Constants.Color : 0));
+
+            List<SquareCoords> res = new List<SquareCoords>();
+
+            for (int x = 0; x <= 7; x++)
+            {
+                if (pos.Board[x, enpassantRow - vertIncrement] == pawnForCapture)
+                {
+                    // is there an attacking pawn next to it
+                    if (x > 0 && pos.Board[x - 1, enpassantRow - vertIncrement] == pawnAttacking
+                        || x < 7 && pos.Board[x + 1, enpassantRow - vertIncrement] == pawnAttacking)
+                    {
+                        // was last move by 2 squares possible?
+                        if (pos.Board[x, enpassantRow] == 0 && pos.Board[x, enpassantRow + vertIncrement] == 0)
+                        {
+                            res.Add(new SquareCoords(x, enpassantRow));
+                        }
+                    }
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
         /// Builds a list of MoveWithEval objects from the list of Nodes.
         /// This is useful e.g. when building a ScoreSheet object.
         /// Must handle the case when the first move is Black's.

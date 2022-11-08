@@ -75,7 +75,19 @@ namespace ChessForge
         /// <summary>
         /// Determines the initial board orientation in the Exercises view.
         /// </summary>
-        public PieceColor ExerciseBoardOrientation = PieceColor.White;
+        public PieceColor ExerciseBoardOrientation
+        {
+            get
+            {
+                return PieceColor.White;
+            }
+            set
+            {
+                _exerciseBoardOrientation = value;
+            }
+        }
+
+        private PieceColor _exerciseBoardOrientation = PieceColor.None;
 
         // chapter currently open in the session
         private Chapter _activeChapter;

@@ -3,6 +3,7 @@ using GameTree;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -25,6 +26,16 @@ namespace ChessForge
         // square side's size
         private int _squareSize = 30;
 
+        /// <summary>
+        /// A string to use as an item to click to unselect enpassant
+        /// </summary>
+        private string _dummyEnpassant = " -";
+
+        /// <summary>
+        /// Currently selected enpassant square in the List Box
+        /// </summary>
+        private string _selectedEnPassant;
+
 
         // left offset between the SetupCanvas and BoardCanvas
         private double _boardCanvasToSetupCanvasLeftOffset;
@@ -35,8 +46,8 @@ namespace ChessForge
 
         // left offset between the the Board Image and BoardCanvas
         private double _boardImageToBoardCanvasLeftOffset;
-        // top offset between the the Board Image and BoardCanvas
 
+        // top offset between the the Board Image and BoardCanvas
         private double _boardImageToBoardCanvasTopOffset;
 
 
@@ -96,9 +107,11 @@ namespace ChessForge
 
             if (_tree != null)
             {
-                SetupInitialPosition(tree.RootNode);
-                SetSideToMove(tree.RootNode.ColorToMove);
+                InitializePosition(tree.RootNode);
             }
+
+            PositionSetup.HalfMove50Clock = 1;
+            SetFen();
         }
 
         /// <summary>
@@ -106,14 +119,169 @@ namespace ChessForge
         /// was passed.
         /// </summary>
         /// <param name="nd"></param>
-        private void SetupInitialPosition(TreeNode nd)
+        private void InitializePosition(TreeNode nd)
         {
             PositionSetup = new BoardPosition(nd.Position);
+            SetEnPassant(PositionSetup.EnPassantSquare);
             SetupImagesForPosition();
+            SetSideToMove(nd.ColorToMove);
+            SetCastlingCheckboxes();
+            //SetSelectedEnpassantSquare();
+        }
+
+        /// <summary>
+        /// Sets the state of castling check boxes according to the position's properties.
+        /// </summary>
+        private void SetCastlingCheckboxes()
+        {
             UiCbWhiteCastleShort.IsChecked = (PositionSetup.DynamicProperties & Constants.WhiteKingsideCastle) > 0;
             UiCbWhiteCastleLong.IsChecked = (PositionSetup.DynamicProperties & Constants.WhiteQueensideCastle) > 0;
             UiCbBlackCastleShort.IsChecked = (PositionSetup.DynamicProperties & Constants.BlackKingsideCastle) > 0;
             UiCbBlackCastleLong.IsChecked = (PositionSetup.DynamicProperties & Constants.BlackQueensideCastle) > 0;
+        }
+
+        /// <summary>
+        /// Generates FEN from the positions and populates the FEN text box with the result.
+        /// </summary>
+        private void SetFen(bool checkEnpassant = true)
+        {
+            // temporarily setup InheritedEnpassant because GenerateFenFromPosition uses it
+            PositionSetup.InheritedEnPassantSquare = PositionSetup.EnPassantSquare;
+            UiTbFen.Text = FenParser.GenerateFenFromPosition(PositionSetup);
+            PositionSetup.InheritedEnPassantSquare = 0;
+        }
+
+
+        //****************************************************************************
+        //
+        // HANDLE EN PASSANT LOGIC
+        //
+        //****************************************************************************
+
+        /// <summary>
+        /// A request is made to update the enpassant property
+        /// in the PositionSetup according to the current position
+        /// on the board.
+        /// </summary>
+        private void UpdateEnpassant()
+        {
+            // repopulate the List Box with potential enpassant moves
+            int count = RepopulateEnpassantListBox();
+
+            // check if we have the selected item in the list
+            if ((string)UiLbEnPassant.SelectedItem != _selectedEnPassant)
+            {
+                // if not reset the selection to nothing
+                _selectedEnPassant = null;
+                if (count > 0)
+                {
+                    UiLbEnPassant.SelectedItem = _dummyEnpassant;
+                }
+                else
+                {
+                    UiLbEnPassant.SelectedItem = null;
+                }
+            }
+
+            // set the enpassant field in the PositionSetup object
+            FenParser.SetEnpassantSquare(_selectedEnPassant, ref PositionSetup);
+        }
+
+        /// <summary>
+        /// The FEN text has changed and the request came to set enpassant
+        /// accordingly.
+        /// If we have an enpassant square selected, see it is still valid.
+        /// </summary>
+        private void SetEnPassant(byte enpassant)
+        {
+            if (enpassant != 0)
+            {
+                SquareCoords sq = PositionUtils.DecodeEnPassantSquare(enpassant);
+                _selectedEnPassant = PositionUtils.ConvertXYtoAlgebraic(sq.Xcoord, sq.Ycoord);
+            }
+
+            UpdateEnpassant();
+        }
+
+        /// <summary>
+        /// Identifies potential enpassant squares base on the pawn position
+        /// and the side on move.
+        /// Repopulates the list of potential enpassant squares in the list.
+        /// If the current selection exists in the list, select it,
+        /// otherwise indicate no selection.
+        /// </summary>
+        /// <returns></returns>
+        private int RepopulateEnpassantListBox()
+        {
+            List<SquareCoords> lst = PositionUtils.GetPotentialEnpassantSquares(PositionSetup);
+            UiLbEnPassant.Items.Clear();
+            if (lst.Count > 0)
+            {
+                UiLbEnPassant.Items.Add(_dummyEnpassant);
+                foreach (SquareCoords sq in lst)
+                {
+                    UiLbEnPassant.Items.Add(PositionUtils.ConvertXYtoAlgebraic(sq.Xcoord, sq.Ycoord));
+                }
+
+                if (string.IsNullOrEmpty(_selectedEnPassant))
+                {
+                    _selectedEnPassant = _dummyEnpassant;
+                    UiLbEnPassant.SelectedItem = _selectedEnPassant;
+                }
+                else
+                {
+                    UiLbEnPassant.SelectedItem = _selectedEnPassant;
+                    if (UiLbEnPassant.SelectedItem == null)
+                    {
+                        _selectedEnPassant = null;
+                    }
+                }
+            }
+            else
+            {
+                _selectedEnPassant = null;
+                UiLbEnPassant.SelectedItem = null;
+            }
+
+            return lst.Count;
+        }
+
+        /// <summary>
+        /// Sets the enapassant square as per the value 
+        /// in the current PositionSetup object.
+        /// </summary>
+        private void SetSelectedEnpassantSquare()
+        {
+            if (PositionSetup.EnPassantSquare != 0)
+            {
+                _selectedEnPassant = FenParser.FenEnPassantSquare(PositionSetup);
+                RepopulateEnpassantListBox();
+            }
+            else
+            {
+                _selectedEnPassant = null;
+                UiLbEnPassant.Items.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Updates the selected enpassant square if selection has chnaged
+        /// in the ListBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLbEnPassant_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                _selectedEnPassant = (string)e.AddedItems[0];
+            }
+
+            UiLbEnPassant.SelectedItem = _selectedEnPassant;
+
+            FenParser.SetEnpassantSquare(_selectedEnPassant, ref PositionSetup);
+
+            SetFen();
         }
 
         /// <summary>
@@ -194,6 +362,9 @@ namespace ChessForge
                 }
                 _draggedPiece.Clear();
             }
+
+            UpdateEnpassant();
+            SetFen();
             e.Handled = true;
         }
 
@@ -329,127 +500,6 @@ namespace ChessForge
 
 
         /// <summary>
-        /// Off-the-board White King image was clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgWhiteKing_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            StartDrag(PieceType.King, PieceColor.White, e);
-        }
-
-
-        /// <summary>
-        /// Off-the-board White Queen image was clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgWhiteQueen_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            StartDrag(PieceType.Queen, PieceColor.White, e);
-        }
-
-        /// <summary>
-        /// Off-the-board White Rook image was clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgWhiteRook_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            StartDrag(PieceType.Rook, PieceColor.White, e);
-        }
-
-        /// <summary>
-        /// Off-the-board White Bishop image was clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgWhiteBishop_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            StartDrag(PieceType.Bishop, PieceColor.White, e);
-        }
-
-        /// <summary>
-        /// Off-the-board White Knight image was clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgWhiteKnight_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            StartDrag(PieceType.Knight, PieceColor.White, e);
-        }
-
-        /// <summary>
-        /// Off-the-board White Pawn image was clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgWhitePawn_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            StartDrag(PieceType.Pawn, PieceColor.White, e);
-        }
-
-        /// <summary>
-        /// Off-the-board Black King image was clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgBlackKing_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            StartDrag(PieceType.King, PieceColor.Black, e);
-        }
-
-        /// <summary>
-        /// Off-the-board Black Queen image was clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgBlackQueen_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            StartDrag(PieceType.Queen, PieceColor.Black, e);
-        }
-
-        /// <summary>
-        /// Off-the-board Black Rook image was clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgBlackRook_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            StartDrag(PieceType.Rook, PieceColor.Black, e);
-        }
-
-        /// <summary>
-        /// Off-the-board Black Bishop image was clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgBlackBishop_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            StartDrag(PieceType.Bishop, PieceColor.Black, e);
-        }
-
-        /// <summary>
-        /// Off-the-board Black Knight image was clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgBlackKnight_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            StartDrag(PieceType.Knight, PieceColor.Black, e);
-        }
-
-        /// <summary>
-        /// Off-the-board Black Pawn image was clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgBlackPawn_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            StartDrag(PieceType.Pawn, PieceColor.Black, e);
-        }
-
-        /// <summary>
         /// Returns square coordinates of the clicked square or null
         /// if the click occured outside the board.
         /// The passed Point must be offset from the Setup Canvas.
@@ -563,6 +613,15 @@ namespace ChessForge
                 for (int y = 0; y <= 7; y++)
                 {
                     byte square = PositionSetup.Board[x, y];
+
+                    // clear previous content
+                    if (_pieceImagesOnBoard[x, y] != null)
+                    {
+                        UiCnvSetup.Children.Remove(_pieceImagesOnBoard[x, y]);
+                        _pieceImagesOnBoard[x, y].Source = null;
+                        _pieceImagesOnBoard[x, y] = null;
+                    }
+
                     if (square != 0)
                     {
                         Image img = new Image();
@@ -572,15 +631,6 @@ namespace ChessForge
                         PlacePieceOnSquare(new SquareCoords(x, y), img);
                         _pieceImagesOnBoard[x, y] = img;
                         UiCnvSetup.Children.Add(img);
-                    }
-                    else
-                    {
-                        if (_pieceImagesOnBoard[x, y] != null)
-                        {
-                            UiCnvSetup.Children.Remove(_pieceImagesOnBoard[x, y]);
-                            _pieceImagesOnBoard[x, y].Source = null;
-                            _pieceImagesOnBoard[x, y] = null;
-                        }
                     }
                 }
             }
@@ -619,24 +669,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Sets the color of the side on move.
-        /// </summary>
-        /// <param name="color"></param>
-        private void SetSideToMove(PieceColor color)
-        {
-            if (color == PieceColor.Black)
-            {
-                UiLblSideToMove.Content = BLACK_TO_MOVE;
-                _sideToMove = PieceColor.Black;
-            }
-            else
-            {
-                UiLblSideToMove.Content = WHITE_TO_MOVE;
-                _sideToMove = PieceColor.White;
-            }
-        }
-
-        /// <summary>
         /// Resets all castling rights to either allowed
         /// or disallowed.
         /// </summary>
@@ -647,14 +679,165 @@ namespace ChessForge
             UiCbWhiteCastleLong.IsChecked = allow;
             UiCbBlackCastleShort.IsChecked = allow;
             UiCbBlackCastleLong.IsChecked = allow;
+
+            SetFen();
         }
 
 
         //************************************************************
         //
-        // Button click handlers.
+        //  CONTROLS AFFECTING THE POSITION (FEN)
         //
         //************************************************************
+
+        /// <summary>
+        /// Responds to the text change in the FEN text box.
+        /// If the FEN is invalid, ignores the change by catching the exception and exiting.
+        /// If the FEN is valid, copies aside the current position and updates the PositionSetup 
+        /// object per the FEN string.
+        /// Checks what the differences are between the old and the new postions
+        /// and issues relevant update requests to the GUI.
+        /// We want to prevent mutual calls when the user changes a setting which then updates FEN which
+        /// then invokes this method, which without these checks would attempt to set the changed control again.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTbFen_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                //BoardPosition temp = new BoardPosition();
+                //FenParser.ParseFenIntoBoard(UiTbFen.Text, ref temp);
+                //// the above sets Inherited EnPassant which is not what we need here
+                //temp.EnPassantSquare = temp.InheritedEnPassantSquare;
+                //bool isDiff = PositionChanges(temp, PositionSetup, out bool position, out bool colorToMove, out bool castling, out bool enpassant);
+                bool isDiff = DiffPositionSetupWithFenText(UiTbFen.Text, out bool position, out bool colorToMove, out bool castling, out bool enpassant);
+                if (isDiff)
+                {
+                    if (position)
+                    {
+                        SetupImagesForPosition();
+                    }
+
+                    if (castling)
+                    {
+                        SetCastlingCheckboxes();
+                    }
+
+                    if (colorToMove)
+                    {
+                        SetSideToMove(PositionSetup.ColorToMove);
+                    }
+
+                    if (enpassant)
+                    {
+                        SetEnPassant(PositionSetup.EnPassantSquare);
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        private bool DiffPositionSetupWithFenText(string fen, out bool position, out bool colorToMove, out bool castling, out bool enpassant)
+        {
+            BoardPosition temp = new BoardPosition();
+            FenParser.ParseFenIntoBoard(UiTbFen.Text, ref temp);
+            // the above sets Inherited EnPassant which is not what we need here
+            temp.EnPassantSquare = temp.InheritedEnPassantSquare;
+
+            bool isDiff = PositionChanges(temp, PositionSetup, out position, out colorToMove, out castling, out enpassant);
+            if (isDiff)
+            {
+                PositionSetup = temp;
+            }
+
+            return isDiff;
+        }
+
+        /// <summary>
+        /// Checks the differences between 2 positions except
+        /// for move and half-move numbers.
+        /// </summary>
+        /// <param name="pos1"></param>
+        /// <param name="pos2"></param>
+        /// <param name="position"></param>
+        /// <param name="colorToMove"></param>
+        /// <param name="castling"></param>
+        /// <param name="enpassant"></param>
+        /// <returns></returns>
+        private bool PositionChanges(BoardPosition pos1, BoardPosition pos2, out bool position, out bool colorToMove, out bool castling, out bool enpassant)
+        {
+            position = true;
+            colorToMove = true;
+            castling = true;
+            enpassant = true;
+
+            string fen1 = FenParser.GenerateFenFromPosition(pos1);
+            string[] tokens1 = fen1.Split(' ');
+
+            string fen2 = FenParser.GenerateFenFromPosition(pos2);
+            string[] tokens2 = fen2.Split(' ');
+
+            if (tokens1.Length < 4 || tokens2.Length < 4)
+            {
+                return true;
+            }
+
+            if (tokens1[0] == tokens2[0])
+            {
+                position = false;
+            }
+
+            if (tokens1[1] == tokens2[1])
+            {
+                colorToMove = false;
+            }
+
+            if (tokens1[2] == tokens2[2])
+            {
+                castling = false;
+            }
+
+            if (tokens1[3] == tokens2[3])
+            {
+                enpassant = false;
+            }
+
+            return position | colorToMove | castling | enpassant;
+        }
+
+        /// <summary>
+        /// Responds to any of the castling check boxes changing its status.
+        /// Updates the FEN string accordingly. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCastleCheckBoxChanged(object sender, RoutedEventArgs e)
+        {
+            PositionSetup.DynamicProperties = (byte)(PositionSetup.DynamicProperties
+                & ~(Constants.WhiteKingsideCastle | Constants.WhiteQueensideCastle | Constants.BlackKingsideCastle | Constants.BlackQueensideCastle));
+
+            if (UiCbWhiteCastleShort.IsChecked == true)
+            {
+                PositionSetup.DynamicProperties |= Constants.WhiteKingsideCastle;
+            }
+            if (UiCbWhiteCastleLong.IsChecked == true)
+            {
+                PositionSetup.DynamicProperties |= Constants.WhiteQueensideCastle;
+            }
+            if (UiCbBlackCastleShort.IsChecked == true)
+            {
+                PositionSetup.DynamicProperties |= Constants.BlackKingsideCastle;
+            }
+            if (UiCbBlackCastleLong.IsChecked == true)
+            {
+                PositionSetup.DynamicProperties |= Constants.BlackQueensideCastle;
+            }
+
+            SetFen();
+        }
 
         /// <summary>
         /// Swaps the side to move.
@@ -690,10 +873,12 @@ namespace ChessForge
 
             SetSideToMove(PieceColor.White);
             ResetCastlingRights(true);
+            SetFen();
         }
 
         /// <summary>
-        /// Handles the Clear button being pressed.
+        /// Clears the psotion in the GUI.
+        /// All pieces are removed from the board.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -703,7 +888,39 @@ namespace ChessForge
 
             SetSideToMove(PieceColor.White);
             ResetCastlingRights(false);
+            SetFen();
         }
+
+        /// <summary>
+        /// Sets the color of the side on move.
+        /// This may change the FEN and enpassant squares.
+        /// </summary>
+        /// <param name="color"></param>
+        private void SetSideToMove(PieceColor color)
+        {
+            if (color == PieceColor.Black)
+            {
+                UiLblSideToMove.Content = BLACK_TO_MOVE;
+                _sideToMove = PieceColor.Black;
+            }
+            else
+            {
+                UiLblSideToMove.Content = WHITE_TO_MOVE;
+                _sideToMove = PieceColor.White;
+            }
+            PositionSetup.ColorToMove = _sideToMove;
+
+            UpdateEnpassant();
+            SetFen();
+        }
+
+
+        //************************************************************
+        //
+        //  VALIDATE LINES AND POSITIONS IF THIS SESSION WAS UPDATING
+        //  AN EXISTING EXERCISE
+        //
+        //************************************************************
 
         /// <summary>
         /// Checks if the moves in the Exercise remain valid after the initial
@@ -783,6 +1000,12 @@ namespace ChessForge
             return sb.ToString();
         }
 
+        //************************************************************
+        //
+        //  MAIN BUTTONS
+        //
+        //************************************************************
+
         /// <summary>
         /// Exits the dialog on user pressing the OK button.
         /// </summary>
@@ -833,6 +1056,140 @@ namespace ChessForge
             Close();
         }
 
+
+        //************************************************************
+        //
+        //  OFF THE BOARD IMAGE CLICKED
+        //
+        //************************************************************
+
+        /// <summary>
+        /// Off-the-board White King image was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgWhiteKing_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            StartDrag(PieceType.King, PieceColor.White, e);
+        }
+
+        /// <summary>
+        /// Off-the-board White Queen image was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgWhiteQueen_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            StartDrag(PieceType.Queen, PieceColor.White, e);
+        }
+
+        /// <summary>
+        /// Off-the-board White Rook image was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgWhiteRook_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            StartDrag(PieceType.Rook, PieceColor.White, e);
+        }
+
+        /// <summary>
+        /// Off-the-board White Bishop image was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgWhiteBishop_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            StartDrag(PieceType.Bishop, PieceColor.White, e);
+        }
+
+        /// <summary>
+        /// Off-the-board White Knight image was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgWhiteKnight_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            StartDrag(PieceType.Knight, PieceColor.White, e);
+        }
+
+        /// <summary>
+        /// Off-the-board White Pawn image was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgWhitePawn_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            StartDrag(PieceType.Pawn, PieceColor.White, e);
+        }
+
+        /// <summary>
+        /// Off-the-board Black King image was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgBlackKing_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            StartDrag(PieceType.King, PieceColor.Black, e);
+        }
+
+        /// <summary>
+        /// Off-the-board Black Queen image was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgBlackQueen_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            StartDrag(PieceType.Queen, PieceColor.Black, e);
+        }
+
+        /// <summary>
+        /// Off-the-board Black Rook image was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgBlackRook_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            StartDrag(PieceType.Rook, PieceColor.Black, e);
+        }
+
+        /// <summary>
+        /// Off-the-board Black Bishop image was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgBlackBishop_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            StartDrag(PieceType.Bishop, PieceColor.Black, e);
+        }
+
+        /// <summary>
+        /// Off-the-board Black Knight image was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgBlackKnight_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            StartDrag(PieceType.Knight, PieceColor.Black, e);
+        }
+
+        /// <summary>
+        /// Off-the-board Black Pawn image was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgBlackPawn_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            StartDrag(PieceType.Pawn, PieceColor.Black, e);
+        }
+
+
+        //************************************************************
+        //
+        //  DEBUG FEATURES
+        //
+        //************************************************************
+
         /// <summary>
         /// Makes the Debug button visible.
         /// </summary>
@@ -846,6 +1203,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Debug Button click event handler.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiDebug_Click(object sender, RoutedEventArgs e)
+        {
+            ShowChessBoard();
+        }
+
+        /// <summary>
         /// Shows the currently setup position on the main board.
         /// Useful for debugging this dialog's logic.
         /// </summary>
@@ -855,14 +1222,5 @@ namespace ChessForge
             AppStateManager.MainWin.DisplayPosition(PositionSetup);
         }
 
-        /// <summary>
-        /// Debug Button click event handler.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiDebug_Click(object sender, RoutedEventArgs e)
-        {
-            ShowChessBoard();
-        }
     }
 }

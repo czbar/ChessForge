@@ -61,6 +61,9 @@ namespace ChessForge
         // game/exercise index in this view
         private int _entityIndex = -1;
 
+        // The small chessboard shown in Exercises.
+        private ChessBoardSmall _exercisePassiveChessBoard;
+
         /// <summary>
         /// For unknown reason the first right click in the app (some views anyway) does not
         /// bring up the context menu unless we force it with IsOpen
@@ -463,6 +466,29 @@ namespace ChessForge
                     break;
                 default:
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Brings the select run into view.
+        /// </summary>
+        public void BringSelectedRunIntoView()
+        {
+            if (_selectedRun != null)
+            {
+                _selectedRun.BringIntoView();
+            }
+        }
+
+        /// <summary>
+        /// Sets the "passive" exercise board to the same
+        /// orientation as the main board.
+        /// </summary>
+        public void AlignExerciseAndMainBoards()
+        {
+            if (_exercisePassiveChessBoard != null)
+            {
+                _exercisePassiveChessBoard.FlipBoard(_mainWin.MainChessBoard.SideAtBottom);
             }
         }
 
@@ -1158,8 +1184,10 @@ namespace ChessForge
                 Image img = new Image();
                 img.Margin = new Thickness(5, 5, 5, 5);
                 img.Source = ChessBoards.ChessBoardGreySmall;
-                ChessBoardSmall cb = new ChessBoardSmall(cnv, img, null, false, false);
-                cb.DisplayPosition(_variationTree.Nodes[0]);
+                
+                _exercisePassiveChessBoard = new ChessBoardSmall(cnv, img, null, false, false);
+                _exercisePassiveChessBoard.DisplayPosition(_variationTree.Nodes[0]);
+                AlignExerciseAndMainBoards();
 
                 cnv.PreviewMouseLeftButtonDown += EventDummyBoardMouseDown;
                 cnv.PreviewMouseLeftButtonUp += EventDummyBoardMouseUp;

@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="Chess Forge" Height="900" Width="1676" Loaded="Window_Loaded" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" Closing="ChessForgeMain_Closing" PreviewMouseWheel="OnPreviewMouseWheel" PreviewKeyDown="ChessForgeMain_PreviewKeyDown" MouseEnter="ChessForgeMain_MouseEnter">
+        Title="Chess Forge" Height="900" Width="1676" Loaded="Window_Loaded" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" Closing="ChessForgeMain_Closing" 
+        PreviewMouseWheel="OnPreviewMouseWheel" 
+        PreviewKeyDown="ChessForgeMain_PreviewKeyDown" MouseEnter="ChessForgeMain_MouseEnter" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
 
     <Window.Resources>
         <ContextMenu x:Key="_cmTrainingView">
@@ -510,7 +512,7 @@
                   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
                   CanUserSortColumns="False" GridLinesVisibility="None" Grid.Row="1" 
                   MouseDoubleClick="ActiveLine_OnMouseDoubleClick" PreviewMouseDown="ActiveLine_OnPreviewMouseDown" 
-                  PreviewKeyDown="ViewActiveLine_PreviewKeyDown"   >
+                  PreviewKeyDown="ViewActiveLine_PreviewKeyDown" PreviewMouseUp="ActiveLine_OnPreviewMouseUp"  >
                     <DataGrid.Resources>
                         <Style x:Key="DisableSelection" TargetType="{x:Type DataGridCell}">
                             <Setter Property="Focusable" Value="False"/>
