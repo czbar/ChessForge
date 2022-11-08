@@ -79,7 +79,7 @@ namespace ChessForge
         {
             get
             {
-                return PieceColor.White;
+                return _exerciseBoardOrientation != PieceColor.None ? _exerciseBoardOrientation : TrainingSide;
             }
             set
             {
