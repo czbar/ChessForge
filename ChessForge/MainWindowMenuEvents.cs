@@ -1755,12 +1755,21 @@ namespace ChessForge
 
         /// <summary>
         /// Flips the main chess board upside down.
+        /// If we are in the Exercise view, make sure the little "passive" board
+        /// is oriented the same way.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiMnFlipBoard_Click(object sender, RoutedEventArgs e)
         {
             MainChessBoard.FlipBoard();
+            if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
+            {
+                if (_exerciseTreeView != null)
+                {
+                    _exerciseTreeView.AlignExerciseAndMainBoards();
+                }
+            }
         }
 
         /// <summary>
