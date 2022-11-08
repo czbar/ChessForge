@@ -130,7 +130,7 @@ namespace GameTree
         public static string GenerateFenFromPosition(BoardPosition pos)
         {
             StringBuilder sb = new StringBuilder();
-            
+
             // Field 1: locations of the pieces
             sb.Append(FenPieceLocations(pos) + " ");
 
@@ -174,7 +174,7 @@ namespace GameTree
         private static string FenCastleRights(BoardPosition pos)
         {
             StringBuilder sb = new StringBuilder();
-            
+
             if ((pos.DynamicProperties & Constants.WhiteKingsideCastle) != 0)
             {
                 sb.Append("K");
@@ -202,7 +202,7 @@ namespace GameTree
 
             return sb.ToString();
         }
-        
+
 
         /// <summary>
         /// If the En Passant square is set,
@@ -322,27 +322,36 @@ namespace GameTree
         /// <param name="board"></param>
         public static void SetInheritedEnpassantSquare(string enpassant, ref BoardPosition board)
         {
-            bool valid = false;
-
-            // if we have an en passant square, it will be in the algebraic notation
-            // like "e4"
-            if (enpassant != null && enpassant.Length == 2)
+            if (string.IsNullOrEmpty(enpassant) || enpassant.Length > 2)
             {
-                byte xPos = (byte)(enpassant[0] - 'a');
-                byte yPos = (byte)(enpassant[1] - '1');
-                if (xPos >= 0 && xPos <= 7 && yPos >= 0 && yPos <= 7)
-                {
-                    board.InheritedEnPassantSquare = (byte)((xPos << 4) | yPos);
-                    valid = true;
-                }
+                throw new Exception("Error: invalid enpassant field");
             }
 
-            if (!valid)
+            // do we have a '-'
+            if (enpassant.Length == 1 && enpassant[0] == '-')
             {
                 // while 0 represents a valid square ("a1") it is not
                 // a valid en passant square, hence we can use it to
                 // indicate that ther is no en passant square in the position. 
                 board.InheritedEnPassantSquare = 0;
+            }
+            else if (enpassant.Length == 2)
+            {
+                // if we have an en passant square, it will be in the algebraic notation like "e4"
+                byte xPos = (byte)(enpassant[0] - 'a');
+                byte yPos = (byte)(enpassant[1] - '1');
+                if (xPos >= 0 && xPos <= 7 && yPos >= 0 && yPos <= 7)
+                {
+                    board.InheritedEnPassantSquare = (byte)((xPos << 4) | yPos);
+                }
+                else
+                {
+                    throw new Exception("Error: invalid enpassant field");
+                }
+            }
+            else
+            {
+                throw new Exception("Error: invalid enpassant field");
             }
         }
 
@@ -415,6 +424,10 @@ namespace GameTree
             if (side.ToLower() == "w")
             {
                 board.DynamicProperties |= Constants.Color;
+            }
+            else if (side.ToLower() != "b")
+            {
+                throw new Exception("Error: color to move not specified");
             }
         }
 
