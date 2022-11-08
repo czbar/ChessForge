@@ -28,17 +28,17 @@
 
         <Label x:Name="UiLblSideToMove" Content="White to Play" BorderThickness="1" BorderBrush="Black" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="501,153,0,0" VerticalAlignment="Top" Width="136" MouseDown="UiLblSideToMove_MouseDown"/>
         <Image x:Name="UiImgSwapSides" HorizontalAlignment="Left" Height="25" Margin="648,157,0,0" VerticalAlignment="Top" Width="25" Source="/Resources/Images/swap_vert.png" RenderTransformOrigin="0.082,0.705" MouseDown="UiImgSwapSides_MouseDown"/>
-        <GroupBox x:Name="UiGbCastling" HorizontalAlignment="Left" Height="93" Header="Castling" Margin="433,196,0,0" VerticalAlignment="Top" Width="293">
+        <GroupBox x:Name="UiGbCastling" HorizontalAlignment="Left" Height="93" Header="Castling" Margin="473,196,0,0" VerticalAlignment="Top" Width="253">
         </GroupBox>
-        <Label x:Name="UiLblWhite" Content="White" HorizontalAlignment="Left" Margin="456,220,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="UiLblBlack" Content="Black" HorizontalAlignment="Left" Margin="456,245,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="UiCbWhiteCastleShort" Content="" HorizontalAlignment="Left" Margin="586,226,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.389,0.951" Checked="UiCastleCheckBoxChanged" Unchecked="UiCastleCheckBoxChanged"/>
-        <Label x:Name="UiLblWhiteCastleShort" Content="O-O" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="551,221,0,0"/>
+        <Label x:Name="UiLblWhite" Content="White" HorizontalAlignment="Left" Margin="500,220,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblBlack" Content="Black" HorizontalAlignment="Left" Margin="500,245,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="UiCbWhiteCastleShort" Content="" HorizontalAlignment="Left" Margin="605,226,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.389,0.951" Checked="UiCastleCheckBoxChanged" Unchecked="UiCastleCheckBoxChanged"/>
+        <Label x:Name="UiLblWhiteCastleShort" Content="O-O" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="570,221,0,0"/>
         <CheckBox x:Name="UiCbWhiteCastleLong" Content="" HorizontalAlignment="Left" Margin="682,226,0,0" VerticalAlignment="Top" Checked="UiCastleCheckBoxChanged" Unchecked="UiCastleCheckBoxChanged"/>
         <Label x:Name="UiLblWhiteCastleLong" Content="O-O-O" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="631,220,0,0"/>
 
-        <CheckBox x:Name="UiCbBlackCastleShort" Content="" HorizontalAlignment="Left" Margin="586,250,0,0" VerticalAlignment="Top" Checked="UiCastleCheckBoxChanged" Unchecked="UiCastleCheckBoxChanged"/>
-        <Label x:Name="UiLblBlackCastleShort" Content="O-O" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="551,244,0,0"/>
+        <CheckBox x:Name="UiCbBlackCastleShort" Content="" HorizontalAlignment="Left" Margin="605,250,0,0" VerticalAlignment="Top" Checked="UiCastleCheckBoxChanged" Unchecked="UiCastleCheckBoxChanged"/>
+        <Label x:Name="UiLblBlackCastleShort" Content="O-O" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="570,244,0,0"/>
         <CheckBox x:Name="UiCbBlackCastleLong" Content="" HorizontalAlignment="Left" Margin="682,250,0,0" VerticalAlignment="Top" Checked="UiCastleCheckBoxChanged" Unchecked="UiCastleCheckBoxChanged"/>
         <Label x:Name="UiLblBlackCastleLong" Content="O-O-O" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="631,244,0,0"/>
         <Button x:Name="UiBtnOk" Content="OK" Width="80" HorizontalAlignment="Left" Margin="322,431,0,0" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
@@ -48,6 +48,31 @@
         <Button x:Name="UiDebug" Content="Debug Position" Visibility="Collapsed" HorizontalAlignment="Left" Margin="501,23,0,0" Width="160" VerticalAlignment="Top" Click="UiDebug_Click"/>
         <TextBox x:Name="UiTbFen" Text="" HorizontalAlignment="Left"  HorizontalContentAlignment="Center" BorderThickness="1" BorderBrush="Black"  Margin="394,51,0,0" Width="380" Height="24" VerticalAlignment="Top" VerticalContentAlignment="Center" TextChanged="UiTbFen_TextChanged"/>
         <Label x:Name="UiLblFenLabel" Content="FEN" HorizontalAlignment="Left" Margin="354,52,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.356,-0.268"/>
-
+        <GroupBox x:Name="UiGbEnpasssant" HorizontalAlignment="Left" Height="93" Header="En Passant" Margin="360,196,0,0" VerticalAlignment="Top" Width="80">
+            <ListBox x:Name="UiLbEnPassant" Margin="10,2,10,2" SelectionChanged="UiLbEnPassant_SelectionChanged" >
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border Name="_Border" Padding="2" SnapsToDevicePixels="true">
+                                        <ContentPresenter />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="true">
+                                            <Setter TargetName="_Border" Property="Background" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                                            <Setter Property="Foreground" Value="Black"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="false">
+                                            <Setter Property="Foreground" Value="Black"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+        </GroupBox>
     </Grid>
 </Window>
