@@ -147,7 +147,7 @@
                     </Canvas>
                 </Viewbox>
 
-                <DataGrid x:Name="UiDgEngineGame" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="670" Margin="10,5,0,0" VerticalAlignment="Top" Width="180"  
+                <DataGrid x:Name="UiDgEngineGame" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="648" Margin="10,27,0,0" VerticalAlignment="Top" Width="180"  
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" CanUserSortColumns="False"
                   GridLinesVisibility="None" Grid.Row="1" Background="White" PreviewMouseDown="EngineGame_OnPreviewMouseDown"  PreviewMouseUp="EngineGame_OnPreviewMouseUp"   >
                     <DataGrid.Resources>
@@ -507,7 +507,7 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <DataGrid x:Name="UiDgActiveLine" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="670" Margin="10,5,0,0" VerticalAlignment="Top" Width="260"  
+                <DataGrid x:Name="UiDgActiveLine" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="648" Margin="10,27,0,0" VerticalAlignment="Top" Width="260"  
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" 
                   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
                   CanUserSortColumns="False" GridLinesVisibility="None" Grid.Row="1" 
