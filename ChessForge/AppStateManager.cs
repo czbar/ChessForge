@@ -594,7 +594,7 @@ namespace ChessForge
                     _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
-                    _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
+                    _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
 
                     _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
                     _mainWin.UiTabStudyTree.Visibility = Visibility.Hidden;
@@ -611,7 +611,7 @@ namespace ChessForge
                     _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
-                    _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
+                    _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
 
                     _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
                     _mainWin.UiTabStudyTree.Visibility = Visibility.Visible;
@@ -899,8 +899,7 @@ namespace ChessForge
                 if (ActiveContentType == GameData.ContentType.STUDY_TREE
                     && CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
-                    //_mainWin.UiDgEngineGame.Visibility = show ? Visibility.Visible : Visibility.Hidden;
-                    _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
+                    _mainWin.UiDgEngineGame.Visibility = show ? Visibility.Visible : Visibility.Hidden;
                     _mainWin.UiDgEngineGame.Width = 160;
 
                     // adjust tab controls position
