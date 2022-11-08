@@ -275,10 +275,10 @@ namespace ChessForge
             if (Configuration.ScoreSheetPosition == 0)
             {
                 UiDgActiveLine.HorizontalAlignment = HorizontalAlignment.Right;
-                UiDgActiveLine.Margin = new Thickness(0, 5, 10, 0);
+                UiDgActiveLine.Margin = new Thickness(0, 27, 10, 0);
 
                 UiDgEngineGame.HorizontalAlignment = HorizontalAlignment.Right;
-                UiDgEngineGame.Margin = new Thickness(0, 5, 10, 0);
+                UiDgEngineGame.Margin = new Thickness(0, 27, 10, 0);
 
                 UiTabCtrlManualReview.HorizontalAlignment = HorizontalAlignment.Right;
 
@@ -287,10 +287,10 @@ namespace ChessForge
             else
             {
                 UiDgActiveLine.HorizontalAlignment = HorizontalAlignment.Left;
-                UiDgActiveLine.Margin = new Thickness(0, 10, 5, 0);
+                UiDgActiveLine.Margin = new Thickness(0, 27, 5, 0);
 
                 UiDgEngineGame.HorizontalAlignment = HorizontalAlignment.Left;
-                UiDgEngineGame.Margin = new Thickness(0, 10, 5, 0);
+                UiDgEngineGame.Margin = new Thickness(0, 27, 5, 0);
 
                 UiTabCtrlManualReview.HorizontalAlignment = HorizontalAlignment.Left;
 
