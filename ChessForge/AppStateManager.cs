@@ -513,6 +513,8 @@ namespace ChessForge
                     _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
                 }
 
+                MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+
                 if (AppStateManager.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
