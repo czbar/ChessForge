@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using ChessPosition;
 //
 // Documentation: https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
@@ -112,7 +113,7 @@ namespace GameTree
             DetermineCastlingRights(fenFields[2], ref board);
 
             // Field 4: the en passant square
-            GetEnPassantSquare(fenFields[3], ref board);
+            SetInheritedEnpassantSquare(fenFields[3], ref board);
 
             // Field 5: the half moves count since the last capture or a pawn move
             SetHalfMove50Clock(fenFields[4], ref board);
@@ -313,15 +314,16 @@ namespace GameTree
             board.MoveNumber = Convert.ToUInt32(moveNo);
         }
 
-
         /// <summary>
-        /// Parses the en passant string and sets the en passant
+        /// Parses the en passant string and sets the InheritedEnPassantSquare
         /// square (if defined) on the board.
         /// </summary>
         /// <param name="enpassant"></param>
         /// <param name="board"></param>
-        public static void GetEnPassantSquare(string enpassant, ref BoardPosition board)
+        public static void SetInheritedEnpassantSquare(string enpassant, ref BoardPosition board)
         {
+            bool valid = false;
+
             // if we have an en passant square, it will be in the algebraic notation
             // like "e4"
             if (enpassant != null && enpassant.Length == 2)
@@ -331,18 +333,48 @@ namespace GameTree
                 if (xPos >= 0 && xPos <= 7 && yPos >= 0 && yPos <= 7)
                 {
                     board.InheritedEnPassantSquare = (byte)((xPos << 4) | yPos);
-                }
-                else
-                {
-                    board.InheritedEnPassantSquare = 0;
+                    valid = true;
                 }
             }
-            else
+
+            if (!valid)
             {
                 // while 0 represents a valid square ("a1") it is not
                 // a valid en passant square, hence we can use it to
                 // indicate that ther is no en passant square in the position. 
                 board.InheritedEnPassantSquare = 0;
+            }
+        }
+
+        /// <summary>
+        /// Parses the en passant string and sets the EnPassantSquare
+        /// square (if defined) on the board.
+        /// </summary>
+        /// <param name="enpassant"></param>
+        /// <param name="board"></param>
+        public static void SetEnpassantSquare(string enpassant, ref BoardPosition board)
+        {
+            bool valid = false;
+
+            // if we have an en passant square, it will be in the algebraic notation
+            // like "e4"
+            if (enpassant != null && enpassant.Length == 2)
+            {
+                byte xPos = (byte)(enpassant[0] - 'a');
+                byte yPos = (byte)(enpassant[1] - '1');
+                if (xPos >= 0 && xPos <= 7 && yPos >= 0 && yPos <= 7)
+                {
+                    board.EnPassantSquare = (byte)((xPos << 4) | yPos);
+                    valid = true;
+                }
+            }
+
+            if (!valid)
+            {
+                // while 0 represents a valid square ("a1") it is not
+                // a valid en passant square, hence we can use it to
+                // indicate that ther is no en passant square in the position. 
+                board.EnPassantSquare = 0;
             }
         }
 
