@@ -62,7 +62,7 @@ namespace ChessForge
         private int _entityIndex = -1;
 
         // The small chessboard shown in Exercises.
-        private ChessBoardSmall _exercisePassiveChessBoard;
+        protected ChessBoardSmall _exercisePassiveChessBoard;
 
         /// <summary>
         /// For unknown reason the first right click in the app (some views anyway) does not
@@ -150,7 +150,7 @@ namespace ChessForge
         /// <summary>
         /// The variation tree shown in the view.
         /// </summary>
-        private VariationTree _variationTree;
+        protected VariationTree _variationTree;
 
         /// <summary>
         /// Maps Node Ids to Runs for quick access.
@@ -256,17 +256,7 @@ namespace ChessForge
                 Document.Blocks.Add(titlePara);
             }
 
-            Paragraph boardPara = BuildExercisesChessboardParagraph();
-            if (boardPara != null)
-            {
-                Document.Blocks.Add(boardPara);
-            }
-
-            Paragraph buttonShowHide = BuildExerciseShowHideButton();
-            if (buttonShowHide != null)
-            {
-                Document.Blocks.Add(buttonShowHide);
-            }
+            BuildExerciseParagraphs();
 
             Paragraph preamblePara = BuildPreamble();
             if (preamblePara != null)
@@ -291,13 +281,13 @@ namespace ChessForge
                     root = _variationTree.GetNodeFromNodeId(rootNodeId);
                     if (includeStem)
                     {
-                        Paragraph paraStem = BuildWorkbookStemLine(root);
+                        Paragraph paraStem = BuildWorkbookStemLine(root, true);
                         Document.Blocks.Add(paraStem);
                     }
                 }
 
                 // start by creating a level 1 paragraph.
-                Paragraph para = CreateParagraph("0");
+                Paragraph para = CreateParagraph("0", true);
                 Document.Blocks.Add(para);
 
                 CreateStartingNode(para);
@@ -945,25 +935,25 @@ namespace ChessForge
                         string whitePlayer = _variationTree.Header.GetWhitePlayer(out _);
                         string blackPlayer = _variationTree.Header.GetBlackPlayer(out _);
 
-                        para = CreateParagraph("0");
+                        para = CreateParagraph("0", true);
                         para.Margin = new Thickness(0, 0, 0, 0);
 
                         bool hasPlayerNames = !(string.IsNullOrWhiteSpace(whitePlayer) && string.IsNullOrWhiteSpace(blackPlayer));
 
                         if (hasPlayerNames)
                         {
-                            Run rWhiteSquare = CreateRun("0", (Constants.CharWhiteSquare.ToString() + " "));
+                            Run rWhiteSquare = CreateRun("0", (Constants.CharWhiteSquare.ToString() + " "), true);
                             rWhiteSquare.FontWeight = FontWeights.Normal;
                             para.Inlines.Add(rWhiteSquare);
 
-                            Run rWhite = CreateRun("0", (whitePlayer ?? "NN") + "\n");
+                            Run rWhite = CreateRun("0", (whitePlayer ?? "NN") + "\n", true);
                             para.Inlines.Add(rWhite);
 
-                            Run rBlackSquare = CreateRun("0", (Constants.CharBlackSquare.ToString() + " "));
+                            Run rBlackSquare = CreateRun("0", (Constants.CharBlackSquare.ToString() + " "), true);
                             rBlackSquare.FontWeight = FontWeights.Normal;
                             para.Inlines.Add(rBlackSquare);
 
-                            Run rBlack = CreateRun("0", (blackPlayer ?? "NN") + "\n");
+                            Run rBlack = CreateRun("0", (blackPlayer ?? "NN") + "\n", true);
                             para.Inlines.Add(rBlack);
                         }
 
@@ -971,12 +961,12 @@ namespace ChessForge
                         {
                             if (hasPlayerNames)
                             {
-                                Run rEvent = CreateRun("1", "      " + _variationTree.Header.GetEventName(out _) + "\n");
+                                Run rEvent = CreateRun("1", "      " + _variationTree.Header.GetEventName(out _) + "\n", true);
                                 para.Inlines.Add(rEvent);
                             }
                             else
                             {
-                                Run rEvent = CreateRun("0", _variationTree.Header.GetEventName(out _) + "\n");
+                                Run rEvent = CreateRun("0", _variationTree.Header.GetEventName(out _) + "\n", true);
                                 para.Inlines.Add(rEvent);
                             }
                         }
@@ -986,7 +976,7 @@ namespace ChessForge
                         {
                             if (TextUtils.GetDateFromPgnString(date) != null)
                             {
-                                Run rDate = CreateRun("1", "      Date: " + date + "\n");
+                                Run rDate = CreateRun("1", "      Date: " + date + "\n", true);
                                 para.Inlines.Add(rDate);
                             }
                         }
@@ -1004,7 +994,7 @@ namespace ChessForge
                         if (WorkbookManager.SessionWorkbook.ActiveChapter != null)
                         {
                             int no = WorkbookManager.SessionWorkbook.ActiveChapterNumber;
-                            para = CreateParagraph("0");
+                            para = CreateParagraph("0", true);
                             //                            para.Margin = new Thickness(0, 0, 0, 0);
                             Run r = new Run("Chapter " + no.ToString() + ": " + WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle(true));
                             para.Inlines.Add(r);
@@ -1127,7 +1117,7 @@ namespace ChessForge
             string result = _variationTree.Header.GetResult(out _);
             if (!string.IsNullOrWhiteSpace(result))
             {
-                Paragraph para = CreateParagraph("0");
+                Paragraph para = CreateParagraph("0", true);
                 para.Margin = new Thickness(0, 0, 0, 0);
                 Run rResult = new Run("     " + result);
                 para.Inlines.Add(rResult);
@@ -1148,7 +1138,7 @@ namespace ChessForge
             string preamble = _variationTree.Header.BuildPreambleText();
             if (!string.IsNullOrWhiteSpace(preamble))
             {
-                Paragraph para = CreateParagraph("preamble");
+                Paragraph para = CreateParagraph("preamble", true);
                 para.Margin = new Thickness(20, 20, 20, 20);
                 Run rPreamble = new Run(preamble);
                 para.Inlines.Add(rPreamble);
@@ -1164,51 +1154,11 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds the chessboard image for the Exercises view.
+        /// To be overridden in the Exercise view
         /// </summary>
         /// <returns></returns>
-        private Paragraph BuildExercisesChessboardParagraph()
+        virtual protected void BuildExerciseParagraphs()
         {
-            if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
-            {
-                Paragraph para = CreateParagraph("2");
-                para.Margin = new Thickness(60, 0, 0, 20);
-
-                InlineUIContainer uIContainer = new InlineUIContainer();
-                Viewbox vb = new Viewbox();
-                Canvas cnv = new Canvas();
-                cnv.Background = Brushes.Black;
-                cnv.Width = 250;
-                cnv.Height = 250;
-
-                Image img = new Image();
-                img.Margin = new Thickness(5, 5, 5, 5);
-                img.Source = ChessBoards.ChessBoardGreySmall;
-                
-                _exercisePassiveChessBoard = new ChessBoardSmall(cnv, img, null, false, false);
-                _exercisePassiveChessBoard.DisplayPosition(_variationTree.Nodes[0]);
-                AlignExerciseAndMainBoards();
-
-                cnv.PreviewMouseLeftButtonDown += EventDummyBoardMouseDown;
-                cnv.PreviewMouseLeftButtonUp += EventDummyBoardMouseUp;
-                cnv.PreviewMouseMove += EventDummyBoardMouseMove;
-
-                cnv.Children.Add(img);
-                vb.Child = cnv;
-
-                uIContainer.Child = vb;
-
-                vb.Width = 250;
-                vb.Height = 250;
-                vb.Visibility = Visibility.Visible;
-
-                para.Inlines.Add(uIContainer);
-                return para;
-            }
-            else
-            {
-                return null;
-            }
         }
 
         /// <summary>
@@ -1217,7 +1167,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventShowHideButtonMouseUp(object sender, RoutedEventArgs e)
+        protected void EventShowHideButtonMouseUp(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -1237,71 +1187,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventShowHideButtonClicked(object sender, RoutedEventArgs e)
+        protected void EventShowHideButtonClicked(object sender, RoutedEventArgs e)
         {
             _contextMenuPrimed = true;
             _variationTree.ShowTreeLines = !_variationTree.ShowTreeLines;
             BuildFlowDocumentForVariationTree();
             e.Handled = true;
-        }
-
-        /// <summary>
-        /// Creates a Show/Hide button.
-        /// </summary>
-        /// <returns></returns>
-        private Paragraph BuildExerciseShowHideButton()
-        {
-            if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
-            {
-                Paragraph para = CreateParagraph("2");
-                para.Margin = new Thickness(130, 0, 0, 40);
-
-                PieceColor color = WorkbookManager.SessionWorkbook.ActiveChapter.GetSideToSolveExercise();
-                Run rToMove = new Run();
-                if (color == PieceColor.Black)
-                {
-                    rToMove.Text = "   Black to move\n\n";
-                }
-                else
-                {
-                    rToMove.Text = "   White to move\n\n";
-                }
-                rToMove.FontWeight = FontWeights.Bold;
-                para.Inlines.Add(rToMove);
-
-                InlineUIContainer uIContainer = new InlineUIContainer();
-
-                Button btn = new Button();
-                if (_variationTree.ShowTreeLines)
-                {
-                    btn.Content = "Hide Solution";
-                }
-                else
-                {
-                    btn.Content = "Show Solution";
-                }
-
-                btn.Foreground = Brushes.Black;
-                btn.FontSize = 12 + Configuration.FontSizeDiff;
-                btn.Width = 120;
-                btn.Height = 20;
-                btn.PreviewMouseDown += EventShowHideButtonClicked;
-                btn.PreviewMouseUp += EventShowHideButtonMouseUp;
-
-                btn.HorizontalContentAlignment = HorizontalAlignment.Center;
-                btn.VerticalContentAlignment = VerticalAlignment.Center;
-
-                btn.Visibility = Visibility.Visible;
-
-                uIContainer.Child = btn;
-                para.Inlines.Add(uIContainer);
-
-                return para;
-            }
-            else
-            {
-                return null;
-            }
         }
 
         /// <summary>
@@ -1535,11 +1426,11 @@ namespace ChessForge
                             {
                                 _currParagraphLevel++;
                                 ColorLastRun();
-                                para2 = CreateParagraph(_currParagraphLevel.ToString());
+                                para2 = CreateParagraph(_currParagraphLevel.ToString(), true);
                             }
                             else
                             {
-                                para2 = CreateParagraph(_currParagraphLevel.ToString());
+                                para2 = CreateParagraph(_currParagraphLevel.ToString(), true);
                                 para2.Margin = new Thickness(para.Margin.Left, 0, 0, 5);
                             }
                             Document.Blocks.Add(para2);
@@ -1560,7 +1451,7 @@ namespace ChessForge
                         if (multi && i == nd.Children.Count - 1)
                         {
                             _currParagraphLevel--;
-                            para = CreateParagraph(_currParagraphLevel.ToString());
+                            para = CreateParagraph(_currParagraphLevel.ToString(), true);
                             Document.Blocks.Add(para);
                         }
                         else
@@ -1587,7 +1478,7 @@ namespace ChessForge
                     if (specialTopLineCase)
                     {
                         _currParagraphLevel--;
-                        Paragraph spec = CreateParagraph(_currParagraphLevel.ToString());
+                        Paragraph spec = CreateParagraph(_currParagraphLevel.ToString(), true);
                         Document.Blocks.Add(spec);
                         BuildTreeLineText(nd.Children[0], spec, true);
                     }
@@ -1615,7 +1506,7 @@ namespace ChessForge
             {
                 if (!nd.IsFirstChild())
                 {
-                    fontColor = GetParaAttrs(_currParagraphLevel.ToString()).FirstCharColor;
+                    fontColor = GetParaAttrs(_currParagraphLevel.ToString(), true).FirstCharColor;
                 }
             }
 
@@ -1688,7 +1579,7 @@ namespace ChessForge
                 if (_isIntraFork)
                 {
                     r.FontStyle = _intraForkFontStyle;
-                    r.FontSize = GetParaAttrs((_currParagraphLevel + 1).ToString()).FontSize;
+                    r.FontSize = GetParaAttrs((_currParagraphLevel + 1).ToString(), true).FontSize;
                 }
 
                 if (fontColor != null && para.Inlines.Count == 0)
@@ -2013,7 +1904,7 @@ namespace ChessForge
             if (_lastAddedRun != null)
             {
                 string style = _currParagraphLevel.ToString();
-                RichTextPara attrs = GetParaAttrs(style);
+                RichTextPara attrs = GetParaAttrs(style, true);
                 _lastAddedRun.Foreground = attrs.FirstCharColor;
                 _lastAddedRun.FontWeight = FontWeights.Bold;
             }
@@ -2031,7 +1922,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventDummyBoardMouseDown(object sender, RoutedEventArgs e)
+        protected void EventDummyBoardMouseDown(object sender, RoutedEventArgs e)
         {
             _dummyBoardLeftClicked = true;
             e.Handled = true;
@@ -2045,7 +1936,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventDummyBoardMouseMove(object sender, RoutedEventArgs e)
+        protected void EventDummyBoardMouseMove(object sender, RoutedEventArgs e)
         {
             if (_dummyBoardLeftClicked)
             {
@@ -2064,7 +1955,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventDummyBoardMouseUp(object sender, RoutedEventArgs e)
+        protected void EventDummyBoardMouseUp(object sender, RoutedEventArgs e)
         {
             if (_dummyBoardInDrag)
             {
