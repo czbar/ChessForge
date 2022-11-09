@@ -99,6 +99,7 @@
     <Compile Include="EvaluationActiveLine.cs" />
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
+    <Compile Include="ExerciseTreeView.cs" />
     <Compile Include="GameHeaderDialog.xaml.cs">
       <DependentUpon>GameHeaderDialog.xaml</DependentUpon>
     </Compile>
@@ -341,6 +342,8 @@
     <Resource Include="Resources\Images\FontSizeUp.png" />
     <Resource Include="Resources\Images\FontSizeFixed.png" />
     <Resource Include="Resources\Images\FontSizeVariable.png" />
+    <Resource Include="Resources\Images\guess_move.png" />
+    <Resource Include="Resources\Images\solve.png" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
