@@ -45,15 +45,18 @@ namespace ChessForge
         /// </summary>
         /// <param name="style"></param>
         /// <returns></returns>
-        public RichTextPara GetParaAttrs(string style)
+        public RichTextPara GetParaAttrs(string style, bool adjustFontSize)
         {
-            if (!RichTextParas.TryGetValue(style, out RichTextPara para))
+            if (!RichTextParas.TryGetValue(style, out RichTextPara rtAttrs))
             {
-                RichTextParas.TryGetValue("default", out para);
+                RichTextParas.TryGetValue("default", out rtAttrs);
             }
 
-            RichTextPara attrs = para.CloneMe();
-            attrs.FontSize = AdjustFontSize(para.FontSize);
+            RichTextPara attrs = rtAttrs.CloneMe();
+            if (adjustFontSize)
+            {
+                attrs.FontSize = AdjustFontSize(rtAttrs.FontSize);
+            }
             return attrs;
         }
 
@@ -79,9 +82,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="style"></param>
         /// <returns></returns>
-        public Paragraph CreateParagraph(string style)
+        public Paragraph CreateParagraph(string style, bool adjustFontSize)
         {
-            RichTextPara attrs = GetParaAttrs(style);
+            RichTextPara attrs = GetParaAttrs(style, adjustFontSize);
 
             Paragraph para = new Paragraph
             {
@@ -123,9 +126,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="style"></param>
         /// <returns></returns>
-        public Paragraph CreateParagraphWithText(string style, string text)
+        public Paragraph CreateParagraphWithText(string style, string text, bool adjustFontSize)
         {
-            Paragraph para = CreateParagraph(style);
+            Paragraph para = CreateParagraph(style, adjustFontSize);
 
             if (text != null)
             {
@@ -142,9 +145,9 @@ namespace ChessForge
         /// <param name="style"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        public Run CreateRun(string style, string text)
+        public Run CreateRun(string style, string text, bool adjustFontSize)
         {
-            RichTextPara attrs = GetParaAttrs(style);
+            RichTextPara attrs = GetParaAttrs(style, adjustFontSize);
 
             Run r = new Run
             {
@@ -167,7 +170,7 @@ namespace ChessForge
         /// <returns></returns>
         public Paragraph AddNewParagraphToDoc(string style, string text, Paragraph insertAfter = null)
         {
-            Paragraph para = CreateParagraphWithText(style, text);
+            Paragraph para = CreateParagraphWithText(style, text, false);
             if (insertAfter == null)
             {
                 Document.Blocks.Add(para);
@@ -231,9 +234,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        public Paragraph BuildWorkbookStemLine(TreeNode nd)
+        public Paragraph BuildWorkbookStemLine(TreeNode nd, bool adjustFontSize)
         {
-            Paragraph para = CreateParagraph("0");
+            Paragraph para = CreateParagraph("0", adjustFontSize);
             para.Foreground = CHF_Colors.RTB_GRAY_FOREGROUND;
 
             string prefix = GetStemLineText(nd);
