@@ -37,7 +37,7 @@ namespace ChessForge
         /// <summary>
         /// The RichTextBox based Exercise view
         /// </summary>
-        private VariationTreeView _exerciseTreeView;
+        private ExerciseTreeView _exerciseTreeView;
 
         /// <summary>
         /// The Tree view corresponding to the type of the current ActiveVariationTree
@@ -275,10 +275,10 @@ namespace ChessForge
             if (Configuration.ScoreSheetPosition == 0)
             {
                 UiDgActiveLine.HorizontalAlignment = HorizontalAlignment.Right;
-                UiDgActiveLine.Margin = new Thickness(0, 5, 10, 0);
+                UiDgActiveLine.Margin = new Thickness(0, 27, 10, 0);
 
                 UiDgEngineGame.HorizontalAlignment = HorizontalAlignment.Right;
-                UiDgEngineGame.Margin = new Thickness(0, 5, 10, 0);
+                UiDgEngineGame.Margin = new Thickness(0, 27, 10, 0);
 
                 UiTabCtrlManualReview.HorizontalAlignment = HorizontalAlignment.Right;
 
@@ -287,10 +287,10 @@ namespace ChessForge
             else
             {
                 UiDgActiveLine.HorizontalAlignment = HorizontalAlignment.Left;
-                UiDgActiveLine.Margin = new Thickness(0, 10, 5, 0);
+                UiDgActiveLine.Margin = new Thickness(0, 27, 5, 0);
 
                 UiDgEngineGame.HorizontalAlignment = HorizontalAlignment.Left;
-                UiDgEngineGame.Margin = new Thickness(0, 10, 5, 0);
+                UiDgEngineGame.Margin = new Thickness(0, 27, 5, 0);
 
                 UiTabCtrlManualReview.HorizontalAlignment = HorizontalAlignment.Left;
 
@@ -1083,7 +1083,7 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForActiveExercise(int exerciseIndex, bool focusOnExercise)
         {
-            _exerciseTreeView = new VariationTreeView(UiRtbExercisesView.Document, this, GameData.ContentType.EXERCISE, exerciseIndex);
+            _exerciseTreeView = new ExerciseTreeView(UiRtbExercisesView.Document, this, GameData.ContentType.EXERCISE, exerciseIndex);
             UiRtbExercisesView.IsDocumentEnabled = true;
 
             if (ActiveVariationTree.Nodes.Count == 0)
@@ -1885,32 +1885,32 @@ namespace ChessForge
                     case TabControlSizeMode.SHOW_ACTIVE_LINE:
                         ctrl.Margin = new Thickness(5, 5, 275, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
-                        UiDgEngineGame.Visibility = Visibility.Hidden;
+                        //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.HIDE_ACTIVE_LINE:
                         ctrl.Margin = new Thickness(5, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
-                        UiDgEngineGame.Visibility = Visibility.Hidden;
+                        //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL:
                         ctrl.Margin = new Thickness(5, 5, 175, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
-                        UiDgEngineGame.Visibility = Visibility.Hidden;
+                        //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
                         ctrl.Margin = new Thickness(5, 5, 180, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
-                        UiDgEngineGame.Visibility = Visibility.Hidden;
+                        //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.HIDE_ENGINE_GAME_LINE:
                         ctrl.Margin = new Thickness(5, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
-                        UiDgEngineGame.Visibility = Visibility.Hidden;
+                        //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     default:
                         ctrl.Margin = new Thickness(5, 5, 180, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
-                        UiDgEngineGame.Visibility = Visibility.Hidden;
+                        //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                 }
             }

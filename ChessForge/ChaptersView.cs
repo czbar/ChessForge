@@ -205,13 +205,13 @@ namespace ChessForge
                 para.Name = _par_chapter_ + chapter.Id.ToString();
 
                 char expandCollapse = chapter.IsViewExpanded ? Constants.CharCollapse : Constants.CharExpand;
-                Run rExpandChar = CreateRun(STYLE_CHAPTER_TITLE, expandCollapse.ToString() + " ");
+                Run rExpandChar = CreateRun(STYLE_CHAPTER_TITLE, expandCollapse.ToString() + " ", true);
                 rExpandChar.Name = _run_chapter_expand_char_ + chapter.Id.ToString();
                 rExpandChar.MouseDown += EventChapterExpandSymbolClicked;
                 para.Inlines.Add(rExpandChar);
 
                 string chapterNo = WorkbookManager.SessionWorkbook.GetChapterNumber(chapter).ToString();
-                Run rTitle = CreateRun(STYLE_CHAPTER_TITLE, chapterNo.ToString() + ". " + chapter.GetTitle());
+                Run rTitle = CreateRun(STYLE_CHAPTER_TITLE, chapterNo.ToString() + ". " + chapter.GetTitle(), true);
                 if (chapter.Id == WorkbookManager.SessionWorkbook.ActiveChapter.Id)
                 {
                     rTitle.FontWeight = FontWeights.Bold;
@@ -244,7 +244,7 @@ namespace ChessForge
         private Run InsertStudyRun(Paragraph para, Chapter chapter)
         {
             para.Inlines.Add(new Run("\n"));
-            Run r = CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT + "Study Tree");
+            Run r = CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT + "Study Tree", true);
             r.Name = _run_study_tree_ + chapter.Id.ToString();
             r.MouseDown += EventStudyTreeHeaderClicked;
             para.Inlines.Add(r);
@@ -260,9 +260,9 @@ namespace ChessForge
         private Run InsertModelGamesRuns(Paragraph para, Chapter chapter)
         {
             para.Inlines.Add(new Run("\n"));
-            para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT));
+            para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT, true));
             InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.Id, GameData.ContentType.MODEL_GAME, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
-            Run r = CreateRun(STYLE_SUBHEADER, "Model Games");
+            Run r = CreateRun(STYLE_SUBHEADER, "Model Games", true);
             r.Name = _run_model_games_header_ + chapter.Id.ToString();
             r.MouseDown += EventModelGamesHeaderClicked;
             para.Inlines.Add(r);
@@ -272,7 +272,7 @@ namespace ChessForge
                 for (int i = 0; i < chapter.ModelGames.Count; i++)
                 {
                     para.Inlines.Add(new Run("\n"));
-                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.ModelGames[i].Header.BuildGameHeaderLine());
+                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.ModelGames[i].Header.BuildGameHeaderLine(), true);
                     rGame.Name = _run_model_game_ + i.ToString();
                     rGame.MouseDown += EventModelGameRunClicked;
                     if (i == chapter.ActiveModelGameIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
@@ -295,9 +295,9 @@ namespace ChessForge
         private Run InsertExercisesRuns(Paragraph para, Chapter chapter)
         {
             para.Inlines.Add(new Run("\n"));
-            para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT));
+            para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT, true));
             InsertExpandCollapseSymbolRun(para, _run_exercises_expand_char_, chapter.Id, GameData.ContentType.EXERCISE, chapter.IsExercisesListExpanded, chapter.HasAnyExercise);
-            Run r = CreateRun(STYLE_SUBHEADER, "Exercises");
+            Run r = CreateRun(STYLE_SUBHEADER, "Exercises", true);
             r.Name = _run_exercises_header_ + chapter.Id.ToString();
             r.MouseDown += EventExercisesHeaderClicked;
             para.Inlines.Add(r);
@@ -307,7 +307,7 @@ namespace ChessForge
                 for (int i = 0; i < chapter.Exercises.Count; i++)
                 {
                     para.Inlines.Add(new Run("\n"));
-                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.Exercises[i].Header.BuildGameHeaderLine(true));
+                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.Exercises[i].Header.BuildGameHeaderLine(true), true);
                     rGame.Name = _run_exercise_ + i.ToString();
                     rGame.MouseDown += EventExerciseRunClicked;
                     if (i == chapter.ActiveExerciseIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
@@ -333,7 +333,7 @@ namespace ChessForge
             if (hasContent)
             {
                 char expandCollapse = isExpanded ? Constants.CharCollapse : Constants.CharExpand;
-                Run rExpandChar = CreateRun(STYLE_SUBHEADER, expandCollapse.ToString() + " ");
+                Run rExpandChar = CreateRun(STYLE_SUBHEADER, expandCollapse.ToString() + " ", true);
                 rExpandChar.Name = prefix + chapterId;
                 switch (contentType)
                 {

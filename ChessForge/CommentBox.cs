@@ -151,10 +151,10 @@ namespace ChessForge
                     FlowDocument note = new FlowDocument();
                     _mainWin.UiRtbBoardComment.Document = note;
 
-                    Paragraph dummy = CreateParagraphWithText("dummy", "");
+                    Paragraph dummy = CreateParagraphWithText("dummy", "", false);
                     note.Blocks.Add(dummy);
 
-                    Paragraph para = CreateParagraphWithText("big_red", txt);
+                    Paragraph para = CreateParagraphWithText("big_red", txt, false);
                     note.Blocks.Add(para);
                     para.Foreground = Brushes.Red;
 
@@ -257,7 +257,7 @@ namespace ChessForge
             {
                 Document.Blocks.Clear();
 
-                Paragraph dummy = CreateParagraphWithText("dummy", "");
+                Paragraph dummy = CreateParagraphWithText("dummy", "", false);
                 Document.Blocks.Add(dummy);
 
                 string txt;
@@ -281,7 +281,7 @@ namespace ChessForge
                     txt = "You have been checkmated by the engine. Better luck next time!";
                 }
 
-                Paragraph para = CreateParagraphWithText("end_of_game", txt);
+                Paragraph para = CreateParagraphWithText("end_of_game", txt, false);
                 Document.Blocks.Add(para);
                 para.Foreground = Brushes.Red;
             });
@@ -296,12 +296,12 @@ namespace ChessForge
             {
                 Document.Blocks.Clear();
 
-                Paragraph dummy = CreateParagraphWithText("dummy", "");
+                Paragraph dummy = CreateParagraphWithText("dummy", "", false);
                 Document.Blocks.Add(dummy);
 
                 string txt = "This is a stalemate! You have drawn the game.";
 
-                Paragraph para = CreateParagraphWithText("end_of_game", txt);
+                Paragraph para = CreateParagraphWithText("end_of_game", txt, false);
                 Document.Blocks.Add(para);
                 para.Foreground = Brushes.Red;
             });
@@ -325,10 +325,10 @@ namespace ChessForge
             {
                 Document.Blocks.Clear();
 
-                Paragraph dummy = CreateParagraphWithText("dummy", "");
+                Paragraph dummy = CreateParagraphWithText("dummy", "", false);
                 Document.Blocks.Add(dummy);
 
-                Paragraph para = CreateParagraphWithText("user_wait", txt);
+                Paragraph para = CreateParagraphWithText("user_wait", txt, false);
                 Document.Blocks.Add(para);
                 para.Foreground = brush;
             });

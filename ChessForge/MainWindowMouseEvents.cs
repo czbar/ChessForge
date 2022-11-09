@@ -748,18 +748,17 @@ namespace ChessForge
                 {
                     UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
                     ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
-                }
-
-                if (WorkbookManager.SessionWorkbook != null)
-                {
-
-                    MainChessBoard.FlipBoard(WorkbookManager.SessionWorkbook.StudyBoardOrientation);
-
-                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                    if (chapter != null)
+                    if (WorkbookManager.SessionWorkbook != null)
                     {
-                        chapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
-                        RestoreSelectedLineAndMoveInActiveView();
+
+                        MainChessBoard.FlipBoard(WorkbookManager.SessionWorkbook.StudyBoardOrientation);
+
+                        Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                        if (chapter != null)
+                        {
+                            chapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
+                            RestoreSelectedLineAndMoveInActiveView();
+                        }
                     }
                 }
             }
