@@ -37,7 +37,7 @@ namespace ChessForge
         /// <summary>
         /// The RichTextBox based Exercise view
         /// </summary>
-        private VariationTreeView _exerciseTreeView;
+        private ExerciseTreeView _exerciseTreeView;
 
         /// <summary>
         /// The Tree view corresponding to the type of the current ActiveVariationTree
@@ -1083,7 +1083,7 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForActiveExercise(int exerciseIndex, bool focusOnExercise)
         {
-            _exerciseTreeView = new VariationTreeView(UiRtbExercisesView.Document, this, GameData.ContentType.EXERCISE, exerciseIndex);
+            _exerciseTreeView = new ExerciseTreeView(UiRtbExercisesView.Document, this, GameData.ContentType.EXERCISE, exerciseIndex);
             UiRtbExercisesView.IsDocumentEnabled = true;
 
             if (ActiveVariationTree.Nodes.Count == 0)
