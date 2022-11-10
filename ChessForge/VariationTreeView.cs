@@ -375,6 +375,21 @@ namespace ChessForge
                         Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter(newTree, false);
                         chapter.SetTitle("Chapter " + chapter.Id.ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
                         _mainWin.RebuildChaptersView();
+
+                        ChapterFromLineDialog dlg = new ChapterFromLineDialog(chapter)
+                        {
+                            Left = _mainWin.ChessForgeMain.Left + 100,
+                            Top = _mainWin.ChessForgeMain.Top + 100,
+                            Topmost = false,
+                            Owner = _mainWin
+                        };
+                        dlg.ShowDialog();
+                        if (dlg.ExitOK)
+                        {
+                            DeleteRemainingMoves();
+                            _mainWin.SelectChapter(chapter.Id, true);
+                        }
+
                         AppStateManager.IsDirty = true;
                     }
                 }
