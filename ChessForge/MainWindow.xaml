@@ -253,6 +253,7 @@
                                     <Separator />
                                     <MenuItem x:Name="UiMnPromoteLine" Header="Promote Line" Click="UiMnPromoteLine_Click" />
                                     <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnDeleteMovesFromHere_Click" />
+                                    <MenuItem x:Name="UiMnCreateChapterFromLine" Header="Create New Chapter From Line" Click="UiMnCreateChapterFromLine_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Bookmark This Position" Click="UiMnWorkbookSelectAsBookmark_Click" />
                                     <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="Bookmark All Options Here" Click="UiMnWorkbookBookmarkAlternatives_Click" />

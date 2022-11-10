@@ -1605,6 +1605,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Creates a new Chapter from the currently selected line.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnCreateChapterFromLine_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveTreeView.CreateChapterFromLine();
+        }
+
+        /// <summary>
         /// The user requested from the Exercises menu to promote the currently selected line.
         /// </summary>
         /// <param name="sender"></param>
