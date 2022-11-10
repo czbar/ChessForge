@@ -1239,7 +1239,9 @@ namespace ChessForge
             {
                 if (_variationTree.ShowTreeLines)
                 {
-                    SelectLineAndMove("1", _variationTree.Nodes[0].Children[0].NodeId);
+                    //SelectLineAndMove("1", _variationTree.Nodes[0].Children[0].NodeId);
+                    _mainWin.SetActiveLine("1", 0);
+                    SelectLineAndMove("1", 0);
                 }
             }
             catch
