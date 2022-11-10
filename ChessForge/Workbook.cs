@@ -388,14 +388,19 @@ namespace ChessForge
         /// Creates a new chapter and adds the passed tree as the chapter's Study Tree.
         /// </summary>
         /// <param name="tree"></param>
-        public Chapter CreateNewChapter(VariationTree tree)
+        public Chapter CreateNewChapter(VariationTree tree, bool makeActive = true)
         {
             Chapter chapter = new Chapter();
             chapter.StudyTree = tree;
-            chapter.Id = 1;
+//            chapter.Id = 1;
+            chapter.Id = GenerateChapterId();
 
             Chapters.Add(chapter);
-            _activeChapter = chapter;
+
+            if (makeActive)
+            {
+                _activeChapter = chapter;
+            }
 
             TrainingSide = tree.TrainingSide;
 
