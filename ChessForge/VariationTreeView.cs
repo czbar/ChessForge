@@ -357,6 +357,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Copies FEN of the selected position to the clipboard.
+        /// </summary>
+        public void CopyFenToClipboard()
+        {
+            try
+            {
+                TreeNode nd = GetSelectedNode();
+                if (nd != null)
+                {
+                    Clipboard.SetText(FenParser.GenerateFenFromPosition(nd.Position));
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Makes a copy of the currently selected line
         /// and creates a new chapter for it.
         /// </summary>
@@ -1039,7 +1057,7 @@ namespace ChessForge
                         {
                             int no = WorkbookManager.SessionWorkbook.ActiveChapterNumber;
                             para = CreateParagraph("0", true);
-                            
+
                             Run rPrefix = new Run("CH " + no.ToString() + ":");
                             rPrefix.TextDecorations = TextDecorations.Underline;
                             para.Inlines.Add(rPrefix);
