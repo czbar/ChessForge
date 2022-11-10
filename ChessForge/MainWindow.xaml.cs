@@ -436,6 +436,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Rebuilds the Chapters view.
+        /// </summary>
+        public void RebuildChaptersView()
+        {
+            _chaptersView.BuildFlowDocumentForChaptersView();
+        }
+
+        /// <summary>
         /// Clears the TreeViews' documents in the tab control.
         /// </summary>
         private void ClearTabViews()
@@ -1988,6 +1996,5 @@ namespace ChessForge
                 ReturnDraggedPiece(false);
             }
         }
-
     }
 }
