@@ -357,6 +357,35 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Makes a copy of the currently selected line
+        /// and creates a new chapter for it.
+        /// </summary>
+        public void CreateChapterFromLine()
+        {
+            try
+            {
+                GameData.ContentType contentType = _variationTree.ContentType;
+                if (_variationTree.ContentType == GameData.ContentType.STUDY_TREE || _variationTree.ContentType == GameData.ContentType.MODEL_GAME)
+                {
+                    TreeNode nd = _variationTree.GetNodeFromNodeId(_lastClickedNodeId);
+                    List<TreeNode> lstNodes = _variationTree.BuildSubTreeNodeList(nd, true);
+                    if (lstNodes.Count > 0)
+                    {
+                        VariationTree newTree = TreeUtils.CreateNewTreeFromNode(lstNodes[0], GameData.ContentType.STUDY_TREE);
+                        Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter(newTree, false);
+                        chapter.SetTitle("Chapter " + chapter.Id.ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
+                        _mainWin.RebuildChaptersView();
+                        AppStateManager.IsDirty = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("CreateChapterFromLine()", ex);
+            }
+        }
+
+        /// <summary>
         /// Deletes the current move and all moves that follow it.
         /// </summary>
         public void DeleteRemainingMoves()
@@ -399,7 +428,7 @@ namespace ChessForge
                 }
 
                 TreeNode nd = _variationTree.GetNodeFromNodeId(_lastClickedNodeId);
-                List<TreeNode> lstNodes = _variationTree.GetSubTree(nd, true);
+                List<TreeNode> lstNodes = _variationTree.BuildSubTreeNodeList(nd, true);
 
                 VariationTree treeFromGame = new VariationTree(GameData.ContentType.GENERIC);
                 treeFromGame.CreateNew(lstNodes);
@@ -995,8 +1024,12 @@ namespace ChessForge
                         {
                             int no = WorkbookManager.SessionWorkbook.ActiveChapterNumber;
                             para = CreateParagraph("0", true);
-                            //                            para.Margin = new Thickness(0, 0, 0, 0);
-                            Run r = new Run("Chapter " + no.ToString() + ": " + WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle(true));
+                            
+                            Run rPrefix = new Run("CH " + no.ToString() + ":");
+                            rPrefix.TextDecorations = TextDecorations.Underline;
+                            para.Inlines.Add(rPrefix);
+
+                            Run r = new Run(" " + WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle(true));
                             para.Inlines.Add(r);
                         }
                         break;
