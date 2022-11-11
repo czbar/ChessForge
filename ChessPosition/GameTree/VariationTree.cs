@@ -393,33 +393,63 @@ namespace GameTree
         /// if the passed node is null.
         /// </summary>
         /// <returns></returns>
-        public List<TreeNode> BuildStem(TreeNode ndLast)
+        public List<TreeNode> BuildStem()
         {
             List<TreeNode> stem = new List<TreeNode>();
-            if (ndLast == null)
+            foreach (TreeNode nd in Nodes)
             {
-                foreach (TreeNode nd in Nodes)
+                if (nd.Children.Count > 1)
                 {
-                    if (nd.Children.Count > 1)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        stem.Add(nd);
-                    }
+                    break;
+                }
+                else
+                {
+                    stem.Add(nd);
                 }
             }
-            else
-            {
-                while (ndLast.Parent != null)
-                {
-                    TreeNode ndToInsert = ndLast.Parent.CloneMe(true);
-                    ndToInsert.Children.Clear();
-                    ndToInsert.AddChild(ndLast);
 
-                    stem.Insert(0, ndToInsert);
-                    ndLast = ndLast.Parent;
+            return stem;
+        }
+
+        /// <summary>
+        /// Builds a pseudo-stem i.e. the single line
+        /// leading from node 0 to the passed node.
+        /// </summary>
+        /// <param name="ndLast"></param>
+        /// <returns></returns>
+        public List<TreeNode> BuildPseudoStem(TreeNode ndLast)
+        {
+            List<TreeNode> stem = new List<TreeNode>();
+
+            TreeNode origNode = ndLast;
+            // make shallow copies down to Node 0
+            while (ndLast.Parent != null)
+            {
+                TreeNode ndToInsert = ndLast.Parent.CloneMe(true);
+                ndToInsert.Children.Clear();
+                stem.Insert(0, ndToInsert);
+                ndLast = ndLast.Parent;
+            }
+
+            // set children and parents
+            for (int i = 0; i < stem.Count; i++)
+            {
+                if (i == stem.Count - 1)
+                {
+                    stem[i].AddChild(origNode);
+                }
+                else
+                {
+                    stem[i].AddChild(stem[i + 1]);
+                }
+
+                if (i == 0)
+                {
+                    stem[i].Parent = null;
+                }
+                else
+                {
+                    stem[i].Parent = stem[i - 1];
                 }
             }
 
@@ -1059,12 +1089,25 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Builds a list of Nodes belonging to a subtree
+        /// identified by the passed node.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="includeStem"></param>
+        /// <returns></returns>
+        public List<TreeNode> BuildSubTreeNodeList(TreeNode nd, bool includeStem = false)
+        {
+            _subTree.Clear();
+            return GetSubTree(nd, includeStem);
+        }
+
+        /// <summary>
         /// Identifies all nodes of a subtree with the root
         /// at the passed Node. Saves them in the
         /// _subTree list.
         /// </summary>
         /// <param name="nd"></param>
-        public List<TreeNode> GetSubTree(TreeNode nd, bool includeStem = false)
+        private List<TreeNode> GetSubTree(TreeNode nd, bool includeStem = false)
         {
             _subTree.Add(nd);
             if (nd.Children.Count == 0)
@@ -1081,7 +1124,7 @@ namespace GameTree
 
             if (includeStem)
             {
-                List<TreeNode> stem = BuildStem(nd);
+                List<TreeNode> stem = BuildPseudoStem(nd);
                 _subTree.InsertRange(0, stem);
             }
 

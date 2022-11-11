@@ -128,6 +128,7 @@
                                 <MenuItem x:Name="UiMnciExitTraining" Header="Exit Training" Click="UiMnStopTraining_Click"/>
                                 <Separator x:Name="UiMncMainBoardSepar_1" />
                                 <MenuItem x:Name="UiMnMain_CreateExercise" Header="Create Exercise from Here..." Click="UiMnStudy_CreateExercise_Click"  />
+                                <MenuItem x:Name="UiMnciCopyFen" Header="Copy FEN to Clipboard" Click="UiMnciCopyFen_Click" />
                                 <Separator x:Name="UiMncMainBoardSepar_1a" />
                                 <MenuItem x:Name="UiMnciEvalPos" Header="Evaluate Position" Click="UiMnEvaluatePosition_Click" />
                                 <MenuItem x:Name="UiMnciEvalLine" Header="Evaluate Line" Click="UiMnEvaluateLine_Click" />
@@ -250,9 +251,11 @@
                                 <ContextMenu x:Name="UiCmnWorkbookRightClick">
                                     <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="UiMnStudy_CreateExercise" Header="Create Exercise from Here..." Click="UiMnStudy_CreateExercise_Click"  />
+                                    <MenuItem x:Name="UiMnCopyFen" Header="Copy FEN to Clipboard" Click="UiMnCopyFen_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnPromoteLine" Header="Promote Line" Click="UiMnPromoteLine_Click" />
                                     <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnDeleteMovesFromHere_Click" />
+                                    <MenuItem x:Name="UiMnCreateChapterFromLine" Header="Create New Chapter From Line" Click="UiMnCreateChapterFromLine_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Bookmark This Position" Click="UiMnWorkbookSelectAsBookmark_Click" />
                                     <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="Bookmark All Options Here" Click="UiMnWorkbookBookmarkAlternatives_Click" />
@@ -438,6 +441,7 @@
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_StartTrainingFromHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="_mnGame_CreateExercise" Header="Create Exercise from Here..." Click="UiMnGame_CreateExercise_Click" />
+                                    <MenuItem x:Name="_mnGame_CopyFen" Header="Copy FEN to Clipboard" Click="UiMnGame_CopyFen_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_PromoteLine" Header="Promote Line" Click="UiMnGame_PromoteLine_Click" />
                                     <MenuItem x:Name="_mnGame_DeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnGame_DeleteMovesFromHere_Click" />
@@ -480,6 +484,7 @@
                                     <Separator />
                                     <MenuItem x:Name="_mnExerc_CreateExercise" Header="Create New Exercise" Click="UiMnExerc_CreateExercise_Click" />
                                     <MenuItem x:Name="_mnExerc_ImportExercises" Header="Import Exercises" Click="UiMnExerc_ImportExercises_Click"  />
+                                    <MenuItem x:Name="_mnExerc_CopyFen" Header="Copy FEN to Clipboard" Click="UiMnExerc_CopyFen_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnExerc_PromoteLine" Header="Promote Line" Click="UiMnExerc_PromoteLine_Click" />
                                     <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnExerc_DeleteMovesFromHere_Click" />

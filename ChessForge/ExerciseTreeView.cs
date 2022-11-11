@@ -27,9 +27,16 @@ namespace ChessForge
         public enum SolvingMode
         {
             NONE,
+            EDITING,
             GUESS_MOVE,
             FULL_SOLUTION
         }
+
+        /// <summary>
+        /// The solving mode that the view is currently in.
+        /// </summary>
+        public SolvingMode CurrentSolvingMode
+        { get; set; }
 
         /// <summary>
         /// Calls the base class constructor.
@@ -41,6 +48,7 @@ namespace ChessForge
         public ExerciseTreeView(FlowDocument doc, MainWindow mainWin, GameData.ContentType contentType, int entityIndex)
             : base(doc, mainWin, contentType, entityIndex)
         {
+            CurrentSolvingMode= SolvingMode.NONE;
         }
 
         /// <summary>

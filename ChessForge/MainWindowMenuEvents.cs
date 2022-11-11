@@ -805,6 +805,18 @@ namespace ChessForge
             CreateNewModelGame();
         }
 
+
+        /// <summary>
+        /// Copy FEN of the selected position to the clipboard.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnGame_CopyFen_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveTreeView.CopyFenToClipboard();
+        }
+
+
         /// <summary>
         /// Creates a new Exercise from the Model Games View context menu.
         /// </summary>
@@ -855,6 +867,16 @@ namespace ChessForge
             {
                 AppLog.Message("UiMnStudy_CreateExercise_Click()", ex);
             }
+        }
+
+        /// <summary>
+        /// Copy FEN of the selected position to the clipboard.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnCopyFen_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveTreeView.CopyFenToClipboard();
         }
 
         /// <summary>
@@ -1234,18 +1256,34 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnBookmarkPosition_Click(object sender, RoutedEventArgs e)
         {
-            int moveIndex = ActiveLine.GetSelectedPlyNodeIndex(false);
-            if (moveIndex < 0)
+            try
             {
-                return;
+                int moveIndex = ActiveLine.GetSelectedPlyNodeIndex(false);
+                if (moveIndex < 0)
+                {
+                    return;
+                }
+                else
+                {
+                    int posIndex = moveIndex;
+                    TreeNode nd = ActiveLine.GetNodeAtIndex(posIndex);
+                    BookmarkManager.AddBookmark(nd);
+                    UiTabBookmarks.Focus();
+                }
             }
-            else
+            catch
             {
-                int posIndex = moveIndex;
-                TreeNode nd = ActiveLine.GetNodeAtIndex(posIndex);
-                BookmarkManager.AddBookmark(nd);
-                UiTabBookmarks.Focus();
             }
+        }
+
+        /// <summary>
+        /// Copies FEN of the selected position to the Clipboard.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnciCopyFen_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveTreeView.CopyFenToClipboard();
         }
 
         /// <summary>
@@ -1594,6 +1632,17 @@ namespace ChessForge
             }
         }
 
+        
+        /// <summary>
+        /// Copies FEN of the selected move to Clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExerc_CopyFen_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveTreeView.CopyFenToClipboard();
+        }
+
         /// <summary>
         /// The user requested from the Study menu to promote the currently selected line.
         /// </summary>
@@ -1602,6 +1651,16 @@ namespace ChessForge
         private void UiMnPromoteLine_Click(object sender, RoutedEventArgs e)
         {
             ActiveTreeView.PromoteCurrentLine();
+        }
+
+        /// <summary>
+        /// Creates a new Chapter from the currently selected line.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnCreateChapterFromLine_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveTreeView.CreateChapterFromLine();
         }
 
         /// <summary>
