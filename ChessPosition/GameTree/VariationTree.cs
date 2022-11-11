@@ -28,6 +28,18 @@ namespace GameTree
         public VariationTree AssociatedTree { get; set; }
 
         /// <summary>
+        /// Indicates whether the Associated Tree is active. 
+        /// </summary>
+        public bool IsAssociatedTreeActive
+        {
+            get => _isAssociatedTreeActive; 
+            set => _isAssociatedTreeActive = value;
+        }
+
+        // whether the Associated Tree is active
+        private bool _isAssociatedTreeActive = false;
+
+        /// <summary>
         /// Constructor. Creates a VariationTree of the requested type.
         /// </summary>
         /// <param name="contentType"></param>
