@@ -24,7 +24,7 @@ namespace GameTree
         /// Constructor. Creates a VariationTree of the requested type.
         /// </summary>
         /// <param name="contentType"></param>
-        public VariationTree(GameData.ContentType contentType)
+        public VariationTree(GameData.ContentType contentType, TreeNode root = null)
         {
             Header.SetContentType(contentType);
             if (contentType == GameData.ContentType.EXERCISE)
@@ -34,6 +34,11 @@ namespace GameTree
             else
             {
                 ShowTreeLines = true;
+            }
+
+            if (root != null)
+            {
+                Nodes[0] = root;
             }
         }
 
