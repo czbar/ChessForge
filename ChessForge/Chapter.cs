@@ -31,12 +31,6 @@ namespace ChessForge
         /// </summary>
         public List<VariationTree> Exercises = new List<VariationTree>();
 
-        /// <summary>
-        /// The Solving Tree is only used when we are in the Exercise view
-        /// and in the solving mode.
-        /// </summary>
-        public VariationTree SolvingTree = new VariationTree(GameData.ContentType.EXERCISE);
-
         // number of this chapter
         private int _id;
 
@@ -154,16 +148,6 @@ namespace ChessForge
                     _activeTree = null;
                     break;
             }
-        }
-
-        /// <summary>
-        /// Sets the solving as Active Variation Tree.
-        /// </summary>
-        public void ActivateSolvingTree(TreeNode root)
-        {
-            SolvingTree = new VariationTree(GameData.ContentType.EXERCISE, root.CloneMe(true));
-            SolvingTree.ShowTreeLines= true;
-            _activeTree = SolvingTree;
         }
 
         /// <summary>
