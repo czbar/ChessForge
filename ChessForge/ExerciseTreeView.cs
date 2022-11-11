@@ -38,6 +38,10 @@ namespace ChessForge
         public SolvingMode CurrentSolvingMode
         { get; set; }
 
+        // flag indictating a possible attempt by the user to drag on the "dummy" board
+        private bool _dummyBoardLeftClicked = false;
+        private bool _dummyBoardInDrag = false;
+
         /// <summary>
         /// Calls the base class constructor.
         /// </summary>
@@ -48,7 +52,7 @@ namespace ChessForge
         public ExerciseTreeView(FlowDocument doc, MainWindow mainWin, GameData.ContentType contentType, int entityIndex)
             : base(doc, mainWin, contentType, entityIndex)
         {
-            CurrentSolvingMode= SolvingMode.NONE;
+            CurrentSolvingMode = SolvingMode.NONE;
         }
 
         /// <summary>
@@ -82,10 +86,10 @@ namespace ChessForge
                 Paragraph para = CreateParagraph("2", false);
                 para.Margin = new Thickness(20, 0, 0, 20);
 
-                
+
                 Canvas canvas = SetupExerciseCanvas();
                 Image imgChessBoard = CreatePassiveChessBoard(canvas);
-                
+
                 canvas.Children.Add(imgChessBoard);
                 PopulateSolvingPanel(canvas);
 
@@ -130,9 +134,9 @@ namespace ChessForge
             canvas.Width = 250;
             canvas.Height = 250;
 
-            canvas.PreviewMouseLeftButtonDown += EventDummyBoardMouseDown;
-            canvas.PreviewMouseLeftButtonUp += EventDummyBoardMouseUp;
-            canvas.PreviewMouseMove += EventDummyBoardMouseMove;
+            canvas.MouseLeftButtonDown += EventDummyBoardMouseDown;
+            canvas.MouseLeftButtonUp += EventDummyBoardMouseUp;
+            canvas.MouseMove += EventDummyBoardMouseMove;
 
             return canvas;
         }
@@ -167,7 +171,7 @@ namespace ChessForge
                 para.Margin = new Thickness(90, 0, 0, 20);
 
                 PieceColor color = WorkbookManager.SessionWorkbook.ActiveChapter.GetSideToSolveExercise();
-                                
+
                 para.Inlines.Add(BuildSideToMoveRun(color));
                 para.Inlines.Add(BuildShowEditButtonRun());
 
@@ -246,16 +250,30 @@ namespace ChessForge
         /// <param name="mode"></param>
         /// <param name="left"></param>
         /// <param name="top"></param>
-        private void AddSolvingButton(Canvas canvas, SolvingMode mode, double left, double top)
+        private Button AddSolvingButton(Canvas canvas, SolvingMode mode, double left, double top)
         {
-            Button btnGuess = BuildSolvingModeButton(SolvingMode.GUESS_MOVE);
+            Button btnGuess = BuildSolvingModeButton(mode);
             canvas.Children.Add(btnGuess);
             Canvas.SetLeft(btnGuess, left);
             Canvas.SetTop(btnGuess, top);
+
+            // set event handlers
+            switch (mode)
+            {
+                case SolvingMode.GUESS_MOVE:
+                    btnGuess.PreviewMouseDown += UiBtnGuessMoveDown_Click;
+                    btnGuess.PreviewMouseUp += UiBtnGuessMoveUp_Click;
+                    break;
+                case SolvingMode.FULL_SOLUTION:
+                    btnGuess.PreviewMouseDown += UiBtnFullSolutionDown_Click;
+                    btnGuess.PreviewMouseUp += UiBtnFullSolutionUp_Click;
+                    break;
+            }
+            return btnGuess;
         }
 
         /// <summary>
-        /// Creats a GroupBox frame for the Solving Modes panel.
+        /// Creates a GroupBox frame for the Solving Modes panel.
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="left"></param>
@@ -337,5 +355,118 @@ namespace ChessForge
 
             return btnGuessMove;
         }
+
+        //*******************************************************************
+        //
+        // SOLVING MODE EVENTS
+        //
+        //*******************************************************************
+
+        /// <summary>
+        /// Activates the Solving Tree which is an Associated Tree 
+        /// in the Active Exercise Tree. 
+        /// </summary>
+        /// <param name="mode"></param>
+        private void ActivateSolvingMode(SolvingMode mode)
+        {
+            //WorkbookManager.SessionWorkbook.ActiveChapter.ActivateSolvingTree(_variationTree.RootNode);
+            //_variationTree = WorkbookManager.SessionWorkbook.ActiveChapter.SolvingTree;
+            //BuildFlowDocumentForVariationTree();
+        }
+
+        /// <summary>
+        /// Mouse Down event on the Guess Move button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnGuessMoveDown_Click(object sender, RoutedEventArgs e)
+        {
+            ActivateSolvingMode(SolvingMode.GUESS_MOVE);
+        }
+
+        /// <summary>
+        /// Mouse Up event on the Guess Move button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnGuessMoveUp_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Mouse Down event on the Full Solution button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnFullSolutionDown_Click(object sender, RoutedEventArgs e)
+        {
+            ActivateSolvingMode(SolvingMode.FULL_SOLUTION);
+        }
+
+        /// <summary>
+        /// Mouse Up event on the Full Solution button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnFullSolutionUp_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+
+        //****************************************************************
+        //
+        // MOUSE EVENTS ON THE DUMMY BOARD
+        //
+        //****************************************************************
+
+        /// <summary>
+        /// Registers the dummy board having a mouse down event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void EventDummyBoardMouseDown(object sender, RoutedEventArgs e)
+        {
+            _dummyBoardLeftClicked = true;
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Registers the dummy board having a mouse move event
+        /// following a mouse left button down.
+        /// This may indicate an attempt by the user to drag a piece on the
+        /// dummy board.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void EventDummyBoardMouseMove(object sender, RoutedEventArgs e)
+        {
+            if (_dummyBoardLeftClicked)
+            {
+                _dummyBoardInDrag = true;
+            }
+            else
+            {
+                _dummyBoardInDrag = false;
+            }
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Looks like a user attempted to make a move on the dummy board.
+        /// Give them some info.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void EventDummyBoardMouseUp(object sender, RoutedEventArgs e)
+        {
+            if (_dummyBoardInDrag)
+            {
+                AppStateManager.MainWin.BoardCommentBox.ShowFlashAnnouncement("This is just a picture! Make your moves on the big board.");
+                _dummyBoardInDrag = false;
+            }
+            _dummyBoardLeftClicked = false;
+            e.Handled = true;
+        }
+
     }
 }
