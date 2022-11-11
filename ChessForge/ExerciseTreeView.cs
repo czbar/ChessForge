@@ -81,7 +81,7 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph BuildExercisesChessboardParagraph()
         {
-            if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
+            if (_mainVariationTree != null && _mainVariationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2", false);
                 para.Margin = new Thickness(20, 0, 0, 20);
@@ -153,7 +153,7 @@ namespace ChessForge
             imgChessBoard.Source = ChessBoards.ChessBoardGreySmall;
 
             _exercisePassiveChessBoard = new ChessBoardSmall(canvas, imgChessBoard, null, false, false);
-            _exercisePassiveChessBoard.DisplayPosition(_variationTree.Nodes[0]);
+            _exercisePassiveChessBoard.DisplayPosition(_mainVariationTree.Nodes[0]);
             AlignExerciseAndMainBoards();
 
             return imgChessBoard;
@@ -165,7 +165,7 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph BuildExerciseBoardControls()
         {
-            if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
+            if (_mainVariationTree != null && _mainVariationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2", false);
                 para.Margin = new Thickness(90, 0, 0, 20);
@@ -231,7 +231,7 @@ namespace ChessForge
             int leftMargin = 280;
             int topMargin = 60;
 
-            if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
+            if (_mainVariationTree != null && _mainVariationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
             {
                 AddSolvingPanelGroupBox(canvas, leftMargin, topMargin);
 
@@ -369,9 +369,20 @@ namespace ChessForge
         /// <param name="mode"></param>
         private void ActivateSolvingMode(SolvingMode mode)
         {
-            //WorkbookManager.SessionWorkbook.ActiveChapter.ActivateSolvingTree(_variationTree.RootNode);
-            //_variationTree = WorkbookManager.SessionWorkbook.ActiveChapter.SolvingTree;
-            //BuildFlowDocumentForVariationTree();
+            try
+            {
+                if (_mainVariationTree.AssociatedTree == null)
+                {
+                    _mainVariationTree.AssociatedTree = new VariationTree(GameData.ContentType.SOLVING, _mainVariationTree.RootNode.CloneMe(true));
+                }
+
+                _mainVariationTree.IsAssociatedTreeActive = true;
+                
+                BuildFlowDocumentForVariationTree();
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
