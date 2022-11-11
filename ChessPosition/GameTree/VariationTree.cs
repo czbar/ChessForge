@@ -2,29 +2,58 @@
 using System.Text;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ChessPosition;
 using System.Xml.Linq;
-using System.Reflection;
-using System.Windows.Shapes;
-using System.Runtime.Remoting.Messaging;
 using ChessPosition.GameTree;
 
 namespace GameTree
 {
     /// <summary>
-    /// This object is used to for storing analysis trees, games and combinations. 
+    /// This object stores study trees, games and exercises. 
     /// </summary>
     public class VariationTree
     {
         /// <summary>
+        /// A tree associated with this tree. 
+        /// For example, it will be a Tree with user's solution while
+        /// this Tree holds the Exercise.
+        /// </summary>
+        public VariationTree AssociatedTree { get; set; }
+
+        /// <summary>
+        /// Available Exercise Solving modes.
+        /// </summary>
+        public enum SolvingMode
+        {
+            // No solving in progress. Lines are hidden. 
+            NONE,
+            // No solving in progress. Lines are shown and can be edited.
+            EDITING,
+            // "Guess move" solving in progress
+            GUESS_MOVE,
+            // "Analysis" solving in progress.
+            ANALYSIS
+        }
+
+        /// <summary>
+        /// Indicates whether the Associated Tree is active. 
+        /// </summary>
+        public bool IsAssociatedTreeActive
+        {
+            get => _isAssociatedTreeActive; 
+            set => _isAssociatedTreeActive = value;
+        }
+
+        // whether the Associated Tree is active
+        private bool _isAssociatedTreeActive = false;
+
+        /// <summary>
         /// Constructor. Creates a VariationTree of the requested type.
         /// </summary>
         /// <param name="contentType"></param>
-        public VariationTree(GameData.ContentType contentType)
+        public VariationTree(GameData.ContentType contentType, TreeNode root = null)
         {
             Header.SetContentType(contentType);
             if (contentType == GameData.ContentType.EXERCISE)
@@ -34,6 +63,11 @@ namespace GameTree
             else
             {
                 ShowTreeLines = true;
+            }
+
+            if (root != null)
+            {
+                Nodes.Add(root);
             }
         }
 
@@ -81,6 +115,18 @@ namespace GameTree
         /// Header lines of the game/tree
         /// </summary>
         public GameHeader Header = new GameHeader();
+
+        /// <summary>
+        /// The solving mode that the view for this tree is currently in.
+        /// </summary>
+        public SolvingMode CurrentSolvingMode
+        {
+            get => _solvingMode;
+            set => _solvingMode = value;
+        }
+
+        // current solving mode
+        private SolvingMode _solvingMode = SolvingMode.NONE;
 
         // a list of nodes from a subtree
         private List<TreeNode> _subTree = new List<TreeNode>();

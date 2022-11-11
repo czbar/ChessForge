@@ -22,21 +22,100 @@ namespace ChessForge
     public class ExerciseTreeView : VariationTreeView
     {
         /// <summary>
-        /// Available Exercise Solving modes.
+        /// Sets the visibility of the controls in the Solving panel
+        /// according to the passed Solving Mode.
         /// </summary>
-        public enum SolvingMode
+        /// <param name="mode"></param>
+        public void SetSolvingMode(VariationTree.SolvingMode mode)
         {
-            NONE,
-            EDITING,
-            GUESS_MOVE,
-            FULL_SOLUTION
+            _mainVariationTree.CurrentSolvingMode = mode;
         }
 
         /// <summary>
-        /// The solving mode that the view is currently in.
+        /// Sets up visibility of the controls
+        /// in the Solving Panel
         /// </summary>
-        public SolvingMode CurrentSolvingMode
-        { get; set; }
+        /// <param name="mode"></param>
+        public void SetupGuiForSolvingMode(VariationTree.SolvingMode mode)
+        {
+
+            if (mode == VariationTree.SolvingMode.GUESS_MOVE || mode == VariationTree.SolvingMode.ANALYSIS)
+            {
+                _gbSolvingPanel.Header = "Solving in Progress ...";
+                _btnGuessMove.Visibility = Visibility.Collapsed;
+                _btnAnalysis.Visibility = Visibility.Collapsed;
+                _lblGuessMove.Visibility = Visibility.Collapsed;
+                _lblAnalysis.Visibility = Visibility.Collapsed;
+
+                _btnSubmitAnalysis.Visibility = Visibility.Visible;
+                _btnCancel.Visibility = Visibility.Visible;
+                _lblSubmitAnalysis.Visibility = Visibility.Visible;
+                _lblCancel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                _gbSolvingPanel.Header = "Select Solving Mode";
+                _btnGuessMove.Visibility = Visibility.Visible;
+                _btnAnalysis.Visibility = Visibility.Visible;
+                _lblGuessMove.Visibility = Visibility.Visible;
+                _lblAnalysis.Visibility = Visibility.Visible;
+
+                _btnSubmitAnalysis.Visibility = Visibility.Collapsed;
+                _btnCancel.Visibility = Visibility.Collapsed;
+                _lblSubmitAnalysis.Visibility = Visibility.Collapsed;
+                _lblCancel.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        /// <summary>
+        /// Sets up text for the Show/Hide Run button
+        /// </summary>
+        /// <param name="mode"></param>
+        private void UpdateShowEditButton(VariationTree.SolvingMode mode)
+        {
+            if (mode == VariationTree.SolvingMode.GUESS_MOVE || mode == VariationTree.SolvingMode.ANALYSIS)
+            {
+                _runShowEdit.Text = "";
+
+            }
+            else
+            {
+                if (_mainVariationTree.ShowTreeLines)
+                {
+                    _runShowEdit.Text = "    " + Constants.CharCollapse.ToString() + " " + "Hide Solution";
+                }
+                else
+                {
+                    _runShowEdit.Text = Constants.CharExpand.ToString() + " " + "Show/Edit Solution";
+                }
+            }
+        }
+
+
+        //*******************************************
+        // Solving Panel control references
+        //*******************************************
+        private GroupBox _gbSolvingPanel;
+        private Button _btnGuessMove;
+        private Button _btnAnalysis;
+
+        private Button _btnSubmitAnalysis;
+        private Button _btnCancel;
+
+        private Label _lblGuessMove;
+        private Label _lblAnalysis;
+
+        private Label _lblSubmitAnalysis;
+        private Label _lblCancel;
+
+        private Run _runShowEdit;
+
+        //******************************************
+
+
+        // flag indictating a possible attempt by the user to drag on the "dummy" board
+        private bool _dummyBoardLeftClicked = false;
+        private bool _dummyBoardInDrag = false;
 
         /// <summary>
         /// Calls the base class constructor.
@@ -48,7 +127,6 @@ namespace ChessForge
         public ExerciseTreeView(FlowDocument doc, MainWindow mainWin, GameData.ContentType contentType, int entityIndex)
             : base(doc, mainWin, contentType, entityIndex)
         {
-            CurrentSolvingMode= SolvingMode.NONE;
         }
 
         /// <summary>
@@ -77,15 +155,15 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph BuildExercisesChessboardParagraph()
         {
-            if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
+            if (_mainVariationTree != null && _mainVariationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2", false);
                 para.Margin = new Thickness(20, 0, 0, 20);
 
-                
+
                 Canvas canvas = SetupExerciseCanvas();
                 Image imgChessBoard = CreatePassiveChessBoard(canvas);
-                
+
                 canvas.Children.Add(imgChessBoard);
                 PopulateSolvingPanel(canvas);
 
@@ -130,9 +208,9 @@ namespace ChessForge
             canvas.Width = 250;
             canvas.Height = 250;
 
-            canvas.PreviewMouseLeftButtonDown += EventDummyBoardMouseDown;
-            canvas.PreviewMouseLeftButtonUp += EventDummyBoardMouseUp;
-            canvas.PreviewMouseMove += EventDummyBoardMouseMove;
+            canvas.MouseLeftButtonDown += EventDummyBoardMouseDown;
+            canvas.MouseLeftButtonUp += EventDummyBoardMouseUp;
+            canvas.MouseMove += EventDummyBoardMouseMove;
 
             return canvas;
         }
@@ -149,7 +227,7 @@ namespace ChessForge
             imgChessBoard.Source = ChessBoards.ChessBoardGreySmall;
 
             _exercisePassiveChessBoard = new ChessBoardSmall(canvas, imgChessBoard, null, false, false);
-            _exercisePassiveChessBoard.DisplayPosition(_variationTree.Nodes[0]);
+            _exercisePassiveChessBoard.DisplayPosition(_mainVariationTree.Nodes[0]);
             AlignExerciseAndMainBoards();
 
             return imgChessBoard;
@@ -161,13 +239,13 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph BuildExerciseBoardControls()
         {
-            if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
+            if (_mainVariationTree != null && _mainVariationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2", false);
                 para.Margin = new Thickness(90, 0, 0, 20);
 
                 PieceColor color = WorkbookManager.SessionWorkbook.ActiveChapter.GetSideToSolveExercise();
-                                
+
                 para.Inlines.Add(BuildSideToMoveRun(color));
                 para.Inlines.Add(BuildShowEditButtonRun());
 
@@ -206,16 +284,17 @@ namespace ChessForge
         /// <returns></returns>
         private Run BuildShowEditButtonRun()
         {
-            Run rShowEdit = new Run();
-            rShowEdit.Text = Constants.CharExpand.ToString() + " " + "Show/Edit Solution";
-            rShowEdit.FontWeight = FontWeights.Normal;
-            rShowEdit.FontSize = 12;
+            _runShowEdit = new Run();
 
-            rShowEdit.PreviewMouseDown += EventShowHideButtonClicked;
-            rShowEdit.PreviewMouseUp += EventShowHideButtonMouseUp;
-            rShowEdit.Cursor = Cursors.Hand;
+            UpdateShowEditButton(_mainVariationTree.CurrentSolvingMode);
+            _runShowEdit.FontWeight = FontWeights.Normal;
+            _runShowEdit.FontSize = 12;
 
-            return rShowEdit;
+            _runShowEdit.PreviewMouseDown += EventShowHideButtonClicked;
+            _runShowEdit.PreviewMouseUp += EventShowHideButtonMouseUp;
+            _runShowEdit.Cursor = Cursors.Hand;
+
+            return _runShowEdit;
         }
 
         /// <summary>
@@ -225,17 +304,25 @@ namespace ChessForge
         private void PopulateSolvingPanel(Canvas canvas)
         {
             int leftMargin = 280;
-            int topMargin = 60;
+            int topMargin = 56;
 
-            if (_variationTree != null && _variationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
+            if (_mainVariationTree != null && _mainVariationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
             {
                 AddSolvingPanelGroupBox(canvas, leftMargin, topMargin);
 
-                AddSolvingButton(canvas, SolvingMode.GUESS_MOVE, 15 + leftMargin, 30 + topMargin);
-                AddSolvingButtonLabel(canvas, SolvingMode.GUESS_MOVE, 57 + leftMargin, 35 + topMargin);
+                AddSolvingButton(canvas, VariationTree.SolvingMode.GUESS_MOVE, 15 + leftMargin, 32 + topMargin);
+                AddSolvingButtonLabel(canvas, VariationTree.SolvingMode.GUESS_MOVE, 57 + leftMargin, 37 + topMargin);
 
-                AddSolvingButton(canvas, SolvingMode.FULL_SOLUTION, 15 + leftMargin, 75 + topMargin);
-                AddSolvingButtonLabel(canvas, SolvingMode.FULL_SOLUTION, 57 + leftMargin, 77 + topMargin);
+                AddSubmitAnalysisButton(canvas, 15 + leftMargin, 32 + topMargin);
+                AddSubmitAnalysisButtonLabel(canvas, 57 + leftMargin, 37 + topMargin);
+
+                AddSolvingButton(canvas, VariationTree.SolvingMode.ANALYSIS, 15 + leftMargin, 77 + topMargin);
+                AddSolvingButtonLabel(canvas, VariationTree.SolvingMode.ANALYSIS, 57 + leftMargin, 79 + topMargin);
+
+                AddCancelButton(canvas, 15 + leftMargin, 77 + topMargin);
+                AddCancelButtonLabel(canvas, 57 + leftMargin, 79 + topMargin);
+
+                SetupGuiForSolvingMode(_mainVariationTree.CurrentSolvingMode);
             }
         }
 
@@ -246,31 +333,91 @@ namespace ChessForge
         /// <param name="mode"></param>
         /// <param name="left"></param>
         /// <param name="top"></param>
-        private void AddSolvingButton(Canvas canvas, SolvingMode mode, double left, double top)
+        private Button AddSolvingButton(Canvas canvas, VariationTree.SolvingMode mode, double left, double top)
         {
-            Button btnGuess = BuildSolvingModeButton(SolvingMode.GUESS_MOVE);
-            canvas.Children.Add(btnGuess);
-            Canvas.SetLeft(btnGuess, left);
-            Canvas.SetTop(btnGuess, top);
+            Button btn = BuildSolvingModeButton(mode);
+            canvas.Children.Add(btn);
+            Canvas.SetLeft(btn, left);
+            Canvas.SetTop(btn, top);
+
+            // set event handlers
+            switch (mode)
+            {
+                case VariationTree.SolvingMode.GUESS_MOVE:
+                    btn.PreviewMouseDown += UiBtnGuessMoveDown_Click;
+                    btn.PreviewMouseUp += UiBtnGuessMoveUp_Click;
+                    _btnGuessMove = btn;
+                    break;
+                case VariationTree.SolvingMode.ANALYSIS:
+                    btn.PreviewMouseDown += UiBtnAnalysisDown_Click;
+                    btn.PreviewMouseUp += UiBtnAnalysisUp_Click;
+                    _btnAnalysis = btn;
+                    break;
+            }
+            return btn;
         }
 
         /// <summary>
-        /// Creats a GroupBox frame for the Solving Modes panel.
+        /// Adds the Cancel button to the panel.
+        /// </summary>
+        /// <param name="canvas"></param>
+        /// <param name="left"></param>
+        /// <param name="top"></param>
+        /// <returns></returns>
+        private Button AddCancelButton(Canvas canvas, double left, double top)
+        {
+            Button btn = BuildSolvingModeButton(VariationTree.SolvingMode.NONE,
+                         new BitmapImage(new Uri("pack://application:,,,/Resources/Images/cancel.png", UriKind.RelativeOrAbsolute)));
+            canvas.Children.Add(btn);
+            Canvas.SetLeft(btn, left);
+            Canvas.SetTop(btn, top);
+
+            //btn.PreviewMouseDown += UiBtnGuessMoveDown_Click;
+            //btn.PreviewMouseUp += UiBtnGuessMoveUp_Click;
+            _btnCancel = btn;
+
+            return btn;
+        }
+
+        /// <summary>
+        /// Adds the submit analysis button to the panel.
+        /// </summary>
+        /// <param name="canvas"></param>
+        /// <param name="left"></param>
+        /// <param name="top"></param>
+        /// <returns></returns>
+        private Button AddSubmitAnalysisButton(Canvas canvas, double left, double top)
+        {
+            Button btn = BuildSolvingModeButton(VariationTree.SolvingMode.NONE,
+                         new BitmapImage(new Uri("pack://application:,,,/Resources/Images/solve_complete.png", UriKind.RelativeOrAbsolute)));
+            canvas.Children.Add(btn);
+            Canvas.SetLeft(btn, left);
+            Canvas.SetTop(btn, top);
+
+            btn.PreviewMouseDown += UiBtnGuessMoveDown_Click;
+            btn.PreviewMouseUp += UiBtnGuessMoveUp_Click;
+            _btnSubmitAnalysis = btn;
+
+            return btn;
+        }
+
+        /// <summary>
+        /// Creates a GroupBox frame for the Solving Modes panel.
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="left"></param>
         /// <param name="top"></param>
         private void AddSolvingPanelGroupBox(Canvas canvas, double left, double top)
         {
-            GroupBox gb = new GroupBox();
-            gb.Margin = new Thickness(left, top, 0, 0);
-            gb.Width = 265;
-            gb.Height = 125;
-            gb.FontSize = 12; // not configurable!
-            gb.BorderBrush = Brushes.Black;
-            gb.Header = "Select Solving Mode";
-            gb.FontWeight = FontWeights.Bold;
-            canvas.Children.Add(gb);
+            _gbSolvingPanel = new GroupBox();
+            _gbSolvingPanel.Margin = new Thickness(left, top, 0, 0);
+            _gbSolvingPanel.Width = 265;
+            _gbSolvingPanel.Height = 130;
+            _gbSolvingPanel.FontSize = 12; // not configurable!
+            _gbSolvingPanel.BorderBrush = Brushes.Black;
+            _gbSolvingPanel.Header = "";
+            _gbSolvingPanel.FontWeight = FontWeights.Bold;
+            canvas.Children.Add(_gbSolvingPanel);
         }
 
         /// <summary>
@@ -281,25 +428,65 @@ namespace ChessForge
         /// <param name="mode"></param>
         /// <param name="left"></param>
         /// <param name="top"></param>
-        private void AddSolvingButtonLabel(Canvas canvas, SolvingMode mode, double left, double top)
+        private void AddSolvingButtonLabel(Canvas canvas, VariationTree.SolvingMode mode, double left, double top)
         {
-            Label lblGuessMove = new Label();
-            lblGuessMove.FontSize = 12; // not configurable!
+            Label lbl = new Label();
+            lbl.FontSize = 12; // not configurable!
             switch (mode)
             {
-                case SolvingMode.GUESS_MOVE:
-                    lblGuessMove.Content = "Guess the next move";
+                case VariationTree.SolvingMode.GUESS_MOVE:
+                    lbl.Content = "Guess the next move";
+                    _lblGuessMove = lbl;
                     break;
-                case SolvingMode.FULL_SOLUTION:
-                    lblGuessMove.Content = "Enter the full solution and submit";
+                case VariationTree.SolvingMode.ANALYSIS:
+                    lbl.Content = "Enter your analysis and submit";
+                    _lblAnalysis = lbl;
                     break;
                 default:
-                    lblGuessMove.Content = "";
+                    lbl.Content = "";
                     break;
             }
-            canvas.Children.Add(lblGuessMove);
-            Canvas.SetLeft(lblGuessMove, left);
-            Canvas.SetTop(lblGuessMove, top);
+            canvas.Children.Add(lbl);
+            Canvas.SetLeft(lbl, left);
+            Canvas.SetTop(lbl, top);
+        }
+
+        /// <summary>
+        /// Adds the Cancel Button's label to the panel
+        /// </summary>
+        /// <param name="canvas"></param>
+        /// <param name="left"></param>
+        /// <param name="top"></param>
+        private void AddCancelButtonLabel(Canvas canvas, double left, double top)
+        {
+            Label lbl = new Label();
+            lbl.FontSize = 12; // not configurable!
+            lbl.Content = "Cancel";
+            
+            _lblCancel = lbl;
+
+            canvas.Children.Add(lbl);
+            Canvas.SetLeft(lbl, left);
+            Canvas.SetTop(lbl, top);
+        }
+
+        /// <summary>
+        /// Adds the Submit Analysis Button's label to the panel
+        /// </summary>
+        /// <param name="canvas"></param>
+        /// <param name="left"></param>
+        /// <param name="top"></param>
+        private void AddSubmitAnalysisButtonLabel(Canvas canvas, double left, double top)
+        {
+            Label lbl = new Label();
+            lbl.FontSize = 12; // not configurable!
+            lbl.Content = "Submit Your Analysis";
+
+            _lblSubmitAnalysis = lbl;
+
+            canvas.Children.Add(lbl);
+            Canvas.SetLeft(lbl, left);
+            Canvas.SetTop(lbl, top);
         }
 
         /// <summary>
@@ -308,19 +495,19 @@ namespace ChessForge
         /// </summary>
         /// <param name="solvingMode"></param>
         /// <returns></returns>
-        private Button BuildSolvingModeButton(SolvingMode solvingMode)
+        private Button BuildSolvingModeButton(VariationTree.SolvingMode solvingMode, BitmapImage img = null)
         {
             BitmapImage imgForButton;
             switch (solvingMode)
             {
-                case SolvingMode.FULL_SOLUTION:
+                case VariationTree.SolvingMode.ANALYSIS:
                     imgForButton = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/solve.png", UriKind.RelativeOrAbsolute));
                     break;
-                case SolvingMode.GUESS_MOVE:
+                case VariationTree.SolvingMode.GUESS_MOVE:
                     imgForButton = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/guess_move.png", UriKind.RelativeOrAbsolute));
                     break;
                 default:
-                    imgForButton = null;
+                    imgForButton = img;
                     break;
             }
 
@@ -337,5 +524,132 @@ namespace ChessForge
 
             return btnGuessMove;
         }
+
+        //*******************************************************************
+        //
+        // SOLVING MODE EVENTS
+        //
+        //*******************************************************************
+
+        /// <summary>
+        /// Activates the Solving Tree which is an Associated Tree 
+        /// in the Active Exercise Tree. 
+        /// </summary>
+        /// <param name="mode"></param>
+        private void ActivateSolvingMode(VariationTree.SolvingMode mode)
+        {
+            try
+            {
+                SetSolvingMode(mode);
+
+                if (_mainVariationTree.AssociatedTree == null)
+                {
+                    _mainVariationTree.AssociatedTree = new VariationTree(GameData.ContentType.SOLVING, _mainVariationTree.RootNode.CloneMe(true));
+                }
+
+                _mainVariationTree.IsAssociatedTreeActive = true;
+
+                BuildFlowDocumentForVariationTree();
+                SetupGuiForSolvingMode(mode);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Mouse Down event on the Guess Move button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnGuessMoveDown_Click(object sender, RoutedEventArgs e)
+        {
+            ActivateSolvingMode(VariationTree.SolvingMode.GUESS_MOVE);
+        }
+
+        /// <summary>
+        /// Mouse Up event on the Guess Move button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnGuessMoveUp_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Mouse Down event on the Analysis button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnAnalysisDown_Click(object sender, RoutedEventArgs e)
+        {
+            ActivateSolvingMode(VariationTree.SolvingMode.ANALYSIS);
+        }
+
+        /// <summary>
+        /// Mouse Up event on the Analysis button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnAnalysisUp_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+
+        //****************************************************************
+        //
+        // MOUSE EVENTS ON THE DUMMY BOARD
+        //
+        //****************************************************************
+
+        /// <summary>
+        /// Registers the dummy board having a mouse down event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void EventDummyBoardMouseDown(object sender, RoutedEventArgs e)
+        {
+            _dummyBoardLeftClicked = true;
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Registers the dummy board having a mouse move event
+        /// following a mouse left button down.
+        /// This may indicate an attempt by the user to drag a piece on the
+        /// dummy board.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void EventDummyBoardMouseMove(object sender, RoutedEventArgs e)
+        {
+            if (_dummyBoardLeftClicked)
+            {
+                _dummyBoardInDrag = true;
+            }
+            else
+            {
+                _dummyBoardInDrag = false;
+            }
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Looks like a user attempted to make a move on the dummy board.
+        /// Give them some info.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void EventDummyBoardMouseUp(object sender, RoutedEventArgs e)
+        {
+            if (_dummyBoardInDrag)
+            {
+                AppStateManager.MainWin.BoardCommentBox.ShowFlashAnnouncement("This is just a picture! Make your moves on the big board.");
+                _dummyBoardInDrag = false;
+            }
+            _dummyBoardLeftClicked = false;
+            e.Handled = true;
+        }
+
     }
 }

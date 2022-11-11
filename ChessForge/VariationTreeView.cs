@@ -15,6 +15,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media.Media3D;
 using System.Xml.Linq;
 using ChessPosition.GameTree;
+using System.Windows.Resources;
 
 namespace ChessForge
 {
@@ -78,10 +79,6 @@ namespace ChessForge
 
         // currently showing fork table
         private Table _forkTable;
-
-        // flag indictating a possible attempt by the user to drag on the "dummy" board
-        private bool _dummyBoardLeftClicked = false;
-        private bool _dummyBoardInDrag = false;
 
         /// <summary>
         /// Constructor. Sets a reference to the 
@@ -148,9 +145,17 @@ namespace ChessForge
         private FontStyle _intraForkFontStyle = FontStyles.Italic;
 
         /// <summary>
-        /// The variation tree shown in the view.
+        /// The main variation tree in this view.
         /// </summary>
-        protected VariationTree _variationTree;
+        protected VariationTree _mainVariationTree;
+
+        /// <summary>
+        /// The shown variation tree is either the main _variationTreeOld or the associated tree
+        /// </summary>
+        protected VariationTree _shownVariationTree
+        {
+            get => _mainVariationTree.IsAssociatedTreeActive ? _mainVariationTree.AssociatedTree : _mainVariationTree;
+        }
 
         /// <summary>
         /// Maps Node Ids to Runs for quick access.
@@ -230,19 +235,19 @@ namespace ChessForge
             GameData.ContentType contentType = GameData.ContentType.NONE;
             if (_contentType == GameData.ContentType.STUDY_TREE)
             {
-                _variationTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree;
+                _mainVariationTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree;
             }
             else
             {
-                _variationTree = _mainWin.ActiveVariationTree;
+                _mainVariationTree = _mainWin.ActiveVariationTree;
             }
 
-            if (_variationTree == null || _variationTree.ContentType != this.ContentType)
+            if (_mainVariationTree == null || _mainVariationTree.ContentType != this.ContentType)
             {
                 return;
             }
 
-            contentType = _variationTree.Header.GetContentType(out _);
+            contentType = _mainVariationTree.Header.GetContentType(out _);
 
             Clear(GameData.ContentType.GENERIC);
 
@@ -264,7 +269,7 @@ namespace ChessForge
                 Document.Blocks.Add(preamblePara);
             }
 
-            if (contentType != GameData.ContentType.EXERCISE || _variationTree.ShowTreeLines)
+            if (contentType != GameData.ContentType.EXERCISE || _shownVariationTree.ShowTreeLines)
             {
                 // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
                 // and note the distances in the Nodes so that we can use them when creating the document
@@ -274,11 +279,11 @@ namespace ChessForge
                 TreeNode root;
                 if (rootNodeId == 0)
                 {
-                    root = _variationTree.Nodes[0];
+                    root = _shownVariationTree.Nodes[0];
                 }
                 else
                 {
-                    root = _variationTree.GetNodeFromNodeId(rootNodeId);
+                    root = _shownVariationTree.GetNodeFromNodeId(rootNodeId);
                     if (includeStem)
                     {
                         Paragraph paraStem = BuildWorkbookStemLine(root, true);
@@ -320,7 +325,7 @@ namespace ChessForge
                 if (_selectedRun != null)
                 {
                     int nodeId = TextUtils.GetIdFromPrefixedString(_selectedRun.Name);
-                    node = _variationTree.GetNodeFromNodeId(nodeId);
+                    node = _shownVariationTree.GetNodeFromNodeId(nodeId);
                 }
             }
             catch (Exception ex)
@@ -339,12 +344,12 @@ namespace ChessForge
         {
             try
             {
-                TreeNode nd = _variationTree.GetNodeFromNodeId(_lastClickedNodeId);
+                TreeNode nd = _shownVariationTree.GetNodeFromNodeId(_lastClickedNodeId);
                 // TODO: it would be more precise to get the last move of the line being promoted and set it as line id
                 // otherwise we end up selecting a different line that the one we are promoting.
                 // However, with the current GUI logic, the selected line changes when the user right-clicks on the
                 // move to promote the line, so the end result wouldn't change. But it may if we change that other logic.
-                _variationTree.PromoteLine(nd);
+                _shownVariationTree.PromoteLine(nd);
                 _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
                 BuildFlowDocumentForVariationTree();
                 _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
@@ -382,11 +387,11 @@ namespace ChessForge
         {
             try
             {
-                GameData.ContentType contentType = _variationTree.ContentType;
-                if (_variationTree.ContentType == GameData.ContentType.STUDY_TREE || _variationTree.ContentType == GameData.ContentType.MODEL_GAME)
+                GameData.ContentType contentType = _mainVariationTree.ContentType;
+                if (_mainVariationTree.ContentType == GameData.ContentType.STUDY_TREE || _mainVariationTree.ContentType == GameData.ContentType.MODEL_GAME)
                 {
-                    TreeNode nd = _variationTree.GetNodeFromNodeId(_lastClickedNodeId);
-                    List<TreeNode> lstNodes = _variationTree.BuildSubTreeNodeList(nd, true);
+                    TreeNode nd = _mainVariationTree.GetNodeFromNodeId(_lastClickedNodeId);
+                    List<TreeNode> lstNodes = _mainVariationTree.BuildSubTreeNodeList(nd, true);
                     if (lstNodes.Count > 0)
                     {
                         VariationTree newTree = TreeUtils.CreateNewTreeFromNode(lstNodes[0], GameData.ContentType.STUDY_TREE);
@@ -425,12 +430,12 @@ namespace ChessForge
         {
             try
             {
-                GameData.ContentType contentType = _variationTree.ContentType;
+                GameData.ContentType contentType = _shownVariationTree.ContentType;
 
-                TreeNode nd = _variationTree.GetNodeFromNodeId(_lastClickedNodeId);
+                TreeNode nd = _shownVariationTree.GetNodeFromNodeId(_lastClickedNodeId);
                 TreeNode parent = nd.Parent;
-                _variationTree.DeleteRemainingMoves(nd);
-                _variationTree.BuildLines();
+                _shownVariationTree.DeleteRemainingMoves(nd);
+                _shownVariationTree.BuildLines();
                 _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
                 BuildFlowDocumentForVariationTree();
                 _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true));
@@ -454,14 +459,14 @@ namespace ChessForge
         {
             try
             {
-                GameData.ContentType contentType = _variationTree.ContentType;
-                if (_variationTree.ContentType != GameData.ContentType.MODEL_GAME)
+                GameData.ContentType contentType = _mainVariationTree.ContentType;
+                if (_mainVariationTree.ContentType != GameData.ContentType.MODEL_GAME)
                 {
                     return;
                 }
 
-                TreeNode nd = _variationTree.GetNodeFromNodeId(_lastClickedNodeId);
-                List<TreeNode> lstNodes = _variationTree.BuildSubTreeNodeList(nd, true);
+                TreeNode nd = _mainVariationTree.GetNodeFromNodeId(_lastClickedNodeId);
+                List<TreeNode> lstNodes = _mainVariationTree.BuildSubTreeNodeList(nd, true);
 
                 VariationTree treeFromGame = new VariationTree(GameData.ContentType.GENERIC);
                 treeFromGame.CreateNew(lstNodes);
@@ -702,7 +707,7 @@ namespace ChessForge
         /// <param name="lineId"></param>
         public void SelectLineAndMove(string lineId, int nodeId)
         {
-            if (_variationTree.ShowTreeLines)
+            if (_shownVariationTree.ShowTreeLines)
             {
                 try
                 {
@@ -714,7 +719,7 @@ namespace ChessForge
                         _selectedRun.Foreground = _selectedRunFore;
                     }
 
-                    ObservableCollection<TreeNode> lineToSelect = _variationTree.SelectLine(lineId);
+                    ObservableCollection<TreeNode> lineToSelect = _shownVariationTree.SelectLine(lineId);
                     foreach (TreeNode nd in lineToSelect)
                     {
                         if (nd.NodeId != 0)
@@ -988,14 +993,14 @@ namespace ChessForge
         {
             Paragraph para = null;
 
-            if (_variationTree != null)
+            if (_mainVariationTree != null)
             {
                 switch (contentType)
                 {
                     case GameData.ContentType.MODEL_GAME:
                     case GameData.ContentType.EXERCISE:
-                        string whitePlayer = _variationTree.Header.GetWhitePlayer(out _);
-                        string blackPlayer = _variationTree.Header.GetBlackPlayer(out _);
+                        string whitePlayer = _mainVariationTree.Header.GetWhitePlayer(out _);
+                        string blackPlayer = _mainVariationTree.Header.GetBlackPlayer(out _);
 
                         para = CreateParagraph("0", true);
                         para.Margin = new Thickness(0, 0, 0, 0);
@@ -1019,21 +1024,21 @@ namespace ChessForge
                             para.Inlines.Add(rBlack);
                         }
 
-                        if (!string.IsNullOrEmpty(_variationTree.Header.GetEventName(out _)))
+                        if (!string.IsNullOrEmpty(_mainVariationTree.Header.GetEventName(out _)))
                         {
                             if (hasPlayerNames)
                             {
-                                Run rEvent = CreateRun("1", "      " + _variationTree.Header.GetEventName(out _) + "\n", true);
+                                Run rEvent = CreateRun("1", "      " + _mainVariationTree.Header.GetEventName(out _) + "\n", true);
                                 para.Inlines.Add(rEvent);
                             }
                             else
                             {
-                                Run rEvent = CreateRun("0", _variationTree.Header.GetEventName(out _) + "\n", true);
+                                Run rEvent = CreateRun("0", _mainVariationTree.Header.GetEventName(out _) + "\n", true);
                                 para.Inlines.Add(rEvent);
                             }
                         }
 
-                        string date = _variationTree.Header.GetDate(out _);
+                        string date = _mainVariationTree.Header.GetDate(out _);
                         if (!string.IsNullOrEmpty(date))
                         {
                             if (TextUtils.GetDateFromPgnString(date) != null)
@@ -1043,7 +1048,7 @@ namespace ChessForge
                             }
                         }
 
-                        string result = _variationTree.Header.GetResult(out _);
+                        string result = _mainVariationTree.Header.GetResult(out _);
                         if (!string.IsNullOrWhiteSpace(result) && result != "*")
                         {
                             Run rResult = new Run("      (" + result + ")\n");
@@ -1092,7 +1097,7 @@ namespace ChessForge
             Document.Blocks.Remove(_forkTable);
             _forkTable = null;
 
-            TreeNode node = _variationTree.GetNodeFromNodeId(nodeId);
+            TreeNode node = _shownVariationTree.GetNodeFromNodeId(nodeId);
 
             if (node == null || node.Children.Count <= 2)
             {
@@ -1103,7 +1108,7 @@ namespace ChessForge
             Paragraph para = _dictRunToParagraph[r];
             _forkTable = null;
 
-            if (_variationTree != null)
+            if (_shownVariationTree != null)
             {
                 _forkTable = CreateTable(para.Margin.Left);
 
@@ -1180,7 +1185,7 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph BuildResultPara()
         {
-            string result = _variationTree.Header.GetResult(out _);
+            string result = _shownVariationTree.Header.GetResult(out _);
             if (!string.IsNullOrWhiteSpace(result))
             {
                 Paragraph para = CreateParagraph("0", true);
@@ -1201,7 +1206,7 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph BuildPreamble()
         {
-            string preamble = _variationTree.Header.BuildPreambleText();
+            string preamble = _mainVariationTree.Header.BuildPreambleText();
             if (!string.IsNullOrWhiteSpace(preamble))
             {
                 Paragraph para = CreateParagraph("preamble", true);
@@ -1237,7 +1242,7 @@ namespace ChessForge
         {
             try
             {
-                if (_variationTree.ShowTreeLines)
+                if (_mainVariationTree.ShowTreeLines)
                 {
                     //SelectLineAndMove("1", _variationTree.Nodes[0].Children[0].NodeId);
                     _mainWin.SetActiveLine("1", 0);
@@ -1258,7 +1263,7 @@ namespace ChessForge
         protected void EventShowHideButtonClicked(object sender, RoutedEventArgs e)
         {
             _contextMenuPrimed = true;
-            _variationTree.ShowTreeLines = !_variationTree.ShowTreeLines;
+            _mainVariationTree.ShowTreeLines = !_mainVariationTree.ShowTreeLines;
             BuildFlowDocumentForVariationTree();
             e.Handled = true;
         }
@@ -1269,13 +1274,13 @@ namespace ChessForge
         /// </summary>
         private void SetNodeDistances()
         {
-            foreach (TreeNode nd in _variationTree.Nodes)
+            foreach (TreeNode nd in _shownVariationTree.Nodes)
             {
                 nd.DistanceToLeaf = -1;
                 nd.DistanceToNextFork = 0;
             }
 
-            foreach (TreeNode nd in _variationTree.Nodes)
+            foreach (TreeNode nd in _shownVariationTree.Nodes)
             {
                 // if the node is a leaf start traversing
                 if (IsLeaf(nd))
@@ -1726,7 +1731,7 @@ namespace ChessForge
                 if (r != null)
                 {
                     int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-                    TreeNode nd = _variationTree.GetNodeFromNodeId(nodeId);
+                    TreeNode nd = _shownVariationTree.GetNodeFromNodeId(nodeId);
                     if (_mainWin.InvokeAnnotationsDialog(nd))
                     {
                         InsertOrUpdateCommentRun(nd);
@@ -1770,11 +1775,11 @@ namespace ChessForge
                 if (r.Name != null && r.Name.StartsWith(_run_))
                 {
                     nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-                    TreeNode foundNode = _variationTree.GetNodeFromNodeId(nodeId);
-                    string lineId = _variationTree.GetDefaultLineIdForNode(nodeId);
+                    TreeNode foundNode = _shownVariationTree.GetNodeFromNodeId(nodeId);
+                    string lineId = _shownVariationTree.GetDefaultLineIdForNode(nodeId);
 
                     // TODO: do not select line and therefore repaint everything if the clicked line is already selected
-                    ObservableCollection<TreeNode> lineToSelect = _variationTree.SelectLine(lineId);
+                    ObservableCollection<TreeNode> lineToSelect = _shownVariationTree.SelectLine(lineId);
                     WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nodeId);
                     foreach (TreeNode nd in lineToSelect)
                     {
@@ -1976,62 +1981,6 @@ namespace ChessForge
                 _lastAddedRun.Foreground = attrs.FirstCharColor;
                 _lastAddedRun.FontWeight = FontWeights.Bold;
             }
-        }
-
-
-        //****************************************************************
-        //
-        // MOUSE EVENTS ON THE EXERCISE BOARD
-        //
-        //****************************************************************
-
-        /// <summary>
-        /// Registers the dummy board having a mouse down event.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void EventDummyBoardMouseDown(object sender, RoutedEventArgs e)
-        {
-            _dummyBoardLeftClicked = true;
-            e.Handled = true;
-        }
-
-        /// <summary>
-        /// Registers the dummy board having a mouse move event
-        /// following a mouse left button down.
-        /// This may indicate an attempt by the user to drag a piece on the
-        /// dummy board.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void EventDummyBoardMouseMove(object sender, RoutedEventArgs e)
-        {
-            if (_dummyBoardLeftClicked)
-            {
-                _dummyBoardInDrag = true;
-            }
-            else
-            {
-                _dummyBoardInDrag = false;
-            }
-            e.Handled = true;
-        }
-
-        /// <summary>
-        /// Looks like a user attempted to make a move on the dummy board.
-        /// Give them some info.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void EventDummyBoardMouseUp(object sender, RoutedEventArgs e)
-        {
-            if (_dummyBoardInDrag)
-            {
-                _mainWin.BoardCommentBox.ShowFlashAnnouncement("This is just a picture! Make your moves on the big board.");
-                _dummyBoardInDrag = false;
-            }
-            _dummyBoardLeftClicked = false;
-            e.Handled = true;
         }
 
     }
