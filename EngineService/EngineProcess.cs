@@ -181,23 +181,29 @@ namespace EngineService
         /// </summary>
         public void StopEngine()
         {
-            StopMessagePollTimer();
-
-            if (_engineProcess != null && _isEngineRunning)
+            try
             {
-                _strmReader.Close();
-                _strmReader = null;
-                _strmWriter.Close();
-                if (_engineProcess.ProcessName != null)
+                StopMessagePollTimer();
+
+                if (_engineProcess != null && _isEngineRunning)
                 {
-                    _engineProcess.Close();
+                    _strmReader.Close();
+                    _strmReader = null;
+                    _strmWriter.Close();
+                    if (_engineProcess.ProcessName != null)
+                    {
+                        _engineProcess.Close();
+                    }
                 }
+
+                _isEngineRunning = false;
+                _isEngineReady = false;
+
+                _currentState = State.NOT_READY;
             }
-
-            _isEngineRunning = false;
-            _isEngineReady = false;
-
-            _currentState = State.NOT_READY;
+            catch
+            {
+            }
         }
 
         /// <summary>
