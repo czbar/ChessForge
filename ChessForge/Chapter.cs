@@ -15,6 +15,28 @@ namespace ChessForge
     /// </summary>
     public class Chapter
     {
+        /// <summary>
+        /// The Study Tree of the chapter. There is exactly one
+        /// Study Tree in a chapter.
+        /// </summary>
+        public VariationTree StudyTree = new VariationTree(GameData.ContentType.STUDY_TREE);
+
+        /// <summary>
+        /// The list of Model Games Trees
+        /// </summary>
+        public List<VariationTree> ModelGames = new List<VariationTree>();
+
+        /// <summary>
+        /// The list of Exercises Tress.
+        /// </summary>
+        public List<VariationTree> Exercises = new List<VariationTree>();
+
+        /// <summary>
+        /// The Solving Tree is only used when we are in the Exercise view
+        /// and in the solving mode.
+        /// </summary>
+        public VariationTree SolvingTree = new VariationTree(GameData.ContentType.EXERCISE);
+
         // number of this chapter
         private int _id;
 
@@ -75,7 +97,6 @@ namespace ChessForge
 
         /// <summary>
         /// Returns Tree "active" in this chapter.
-        /// If none set, StudyTree is returned as default.
         /// </summary>
         public VariationTree ActiveVariationTree
         {
@@ -133,6 +154,16 @@ namespace ChessForge
                     _activeTree = null;
                     break;
             }
+        }
+
+        /// <summary>
+        /// Sets the solving as Active Variation Tree.
+        /// </summary>
+        public void ActivateSolvingTree(TreeNode root)
+        {
+            SolvingTree = new VariationTree(GameData.ContentType.EXERCISE, root.CloneMe(true));
+            SolvingTree.ShowTreeLines= true;
+            _activeTree = SolvingTree;
         }
 
         /// <summary>
@@ -282,22 +313,6 @@ namespace ChessForge
         {
             Exercises.Add(game);
         }
-
-        /// <summary>
-        /// The analysis tree of the chapter. There is exactly one
-        /// analysis tree in a chapter.
-        /// </summary>
-        public VariationTree StudyTree = new VariationTree(GameData.ContentType.STUDY_TREE);
-
-        /// <summary>
-        /// The list of Model Games
-        /// </summary>
-        public List<VariationTree> ModelGames = new List<VariationTree>();
-
-        /// <summary>
-        /// The list of combinations.
-        /// </summary>
-        public List<VariationTree> Exercises = new List<VariationTree>();
 
         /// <summary>
         /// Adds a new game to this chapter.
