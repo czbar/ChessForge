@@ -2,15 +2,10 @@
 using System.Text;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ChessPosition;
 using System.Xml.Linq;
-using System.Reflection;
-using System.Windows.Shapes;
-using System.Runtime.Remoting.Messaging;
 using ChessPosition.GameTree;
 
 namespace GameTree
@@ -26,6 +21,21 @@ namespace GameTree
         /// this Tree holds the Exercise.
         /// </summary>
         public VariationTree AssociatedTree { get; set; }
+
+        /// <summary>
+        /// Available Exercise Solving modes.
+        /// </summary>
+        public enum SolvingMode
+        {
+            // No solving in progress. Lines are hidden. 
+            NONE,
+            // No solving in progress. Lines are shown and can be edited.
+            EDITING,
+            // "Guess move" solving in progress
+            GUESS_MOVE,
+            // "Full solution" solving in progress.
+            FULL_SOLUTION
+        }
 
         /// <summary>
         /// Indicates whether the Associated Tree is active. 
@@ -105,6 +115,18 @@ namespace GameTree
         /// Header lines of the game/tree
         /// </summary>
         public GameHeader Header = new GameHeader();
+
+        /// <summary>
+        /// The solving mode that the view for this tree is currently in.
+        /// </summary>
+        public SolvingMode CurrentSolvingMode
+        {
+            get => _solvingMode;
+            set => _solvingMode = value;
+        }
+
+        // current solving mode
+        private SolvingMode _solvingMode = SolvingMode.NONE;
 
         // a list of nodes from a subtree
         private List<TreeNode> _subTree = new List<TreeNode>();
