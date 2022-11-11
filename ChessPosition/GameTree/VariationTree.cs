@@ -33,8 +33,8 @@ namespace GameTree
             EDITING,
             // "Guess move" solving in progress
             GUESS_MOVE,
-            // "Full solution" solving in progress.
-            FULL_SOLUTION
+            // "Analysis" solving in progress.
+            ANALYSIS
         }
 
         /// <summary>
