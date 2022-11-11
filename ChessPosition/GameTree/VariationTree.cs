@@ -16,10 +16,17 @@ using ChessPosition.GameTree;
 namespace GameTree
 {
     /// <summary>
-    /// This object is used to for storing analysis trees, games and combinations. 
+    /// This object stores study trees, games and exercises. 
     /// </summary>
     public class VariationTree
     {
+        /// <summary>
+        /// A tree associated with this tree. 
+        /// For example, it will be a Tree with user's solution while
+        /// this Tree holds the Exercise.
+        /// </summary>
+        public VariationTree AssociatedTree { get; set; }
+
         /// <summary>
         /// Constructor. Creates a VariationTree of the requested type.
         /// </summary>
@@ -38,7 +45,7 @@ namespace GameTree
 
             if (root != null)
             {
-                Nodes[0] = root;
+                Nodes.Add(root);
             }
         }
 
