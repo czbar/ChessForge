@@ -96,7 +96,15 @@ namespace ChessForge
         {
             get
             {
-                return _activeTree;
+                if (_activeTree != null && _activeTree.IsAssociatedTreeActive && _activeTree.AssociatedSecondary != null)
+                {
+
+                    return _activeTree.AssociatedSecondary;
+                }
+                else
+                {
+                    return _activeTree;
+                }
             }
         }
 

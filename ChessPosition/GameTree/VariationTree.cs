@@ -16,11 +16,16 @@ namespace GameTree
     public class VariationTree
     {
         /// <summary>
-        /// A tree associated with this tree. 
+        /// A secondary tree associated with this tree. 
         /// For example, it will be a Tree with user's solution while
         /// this Tree holds the Exercise.
         /// </summary>
-        public VariationTree AssociatedTree { get; set; }
+        public VariationTree AssociatedSecondary { get; set; }
+
+        /// <summary>
+        /// The Primary team in an association where this tree is secondary.
+        /// </summary>
+        public VariationTree AssociatedPrimary { get; set; }
 
         /// <summary>
         /// Available Exercise Solving modes.

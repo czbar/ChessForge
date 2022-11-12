@@ -25,6 +25,11 @@ namespace ChessForge
         public bool ExitOK = false;
 
         /// <summary>
+        /// Title of the chapter.
+        /// </summary>
+        public string ChapterTitle;
+
+        /// <summary>
         /// Whether the user chose to go to the new chapter
         /// after creating it.
         /// </summary>
@@ -44,7 +49,7 @@ namespace ChessForge
         public ChapterFromLineDialog(Chapter chapter)
         {
             InitializeComponent();
-            UiLblChapterTitle.Content = chapter.GetTitle();
+            UiTbChapterTitle.Text = chapter.GetTitle();
         }
 
         /// <summary>
@@ -53,7 +58,8 @@ namespace ChessForge
         private void CollectResponses()
         {
             GoToNewChapter = UiCbGoToNew.IsChecked == true;
-            ExitOK = true;
+            DeleteOriginal = UiCbDeleteOrig.IsChecked == true;
+            ChapterTitle = UiTbChapterTitle.Text ?? "";
         }
 
         /// <summary>
@@ -61,10 +67,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiBtnYes_Click(object sender, RoutedEventArgs e)
+        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            DeleteOriginal = true;
             CollectResponses();
+
+            ExitOK = true;
             Close();
         }
 
@@ -73,10 +80,8 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiBtnNo_Click(object sender, RoutedEventArgs e)
+        private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            DeleteOriginal = false;
-            CollectResponses();
             Close();
         }
     }

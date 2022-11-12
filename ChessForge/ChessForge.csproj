@@ -353,6 +353,8 @@
     <Resource Include="Resources\Images\solve.png" />
     <Resource Include="Resources\Images\cancel.png" />
     <Resource Include="Resources\Images\solve_complete.png" />
+    <Resource Include="Resources\Images\checkmark.png" />
+    <Resource Include="Resources\Images\cross_red 16.png" />
     <Content Include="Resources\Sounds\Capture.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

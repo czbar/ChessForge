@@ -34,6 +34,15 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Shallow copy to use in Associated Tree.
+        /// </summary>
+        /// <returns></returns>
+        public GameHeader CloneMe()
+        {
+            return (GameHeader)this.MemberwiseClone();
+        }
+
+        /// <summary>
         /// Divides the passed string into lines and stores them in the _preamble list
         /// </summary>
         /// <param name="text"></param>
