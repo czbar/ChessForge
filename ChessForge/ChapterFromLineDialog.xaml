@@ -10,7 +10,10 @@
         <Button x:Name="UiBtnYes" Content="Yes" HorizontalAlignment="Center" Margin="-100,131,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnYes_Click"/>
         <Button x:Name="UiBtnNo" Content="No" HorizontalAlignment="Center" Margin="100,131,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnNo_Click"/>
         <Label x:Name="UiLblNewChapterCreated" Content="A new chapter has been created from the selected sub-tree" HorizontalAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="UiLblChapterTitle" Content="Title" HorizontalAlignment="Center" Margin="0,47,0,0" VerticalAlignment="Top" Width="319" BorderBrush="Black" BorderThickness="1" />
+
+        <Label x:Name="UiLblTitle" Content="Title" HorizontalAlignment="Left" Margin="32,43,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="UiTbChapterTitle" Text="" HorizontalAlignment="Center" Margin="30,47,0,0" VerticalAlignment="Top" Width="280" BorderBrush="Black" BorderThickness="1" />
+        
         <CheckBox x:Name="UiCbGoToNew" Content="Go to the newly created chapter" HorizontalAlignment="Center" Margin="0,169,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblDeleteQuestion" Content="Do you want to delete the sub-tree from the original chapter?" HorizontalAlignment="Center" Margin="0,89,0,0" VerticalAlignment="Top"/>
 

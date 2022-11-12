@@ -25,6 +25,11 @@ namespace ChessForge
         public bool ExitOK = false;
 
         /// <summary>
+        /// Title of the chapter.
+        /// </summary>
+        public string ChapterTitle;
+
+        /// <summary>
         /// Whether the user chose to go to the new chapter
         /// after creating it.
         /// </summary>
@@ -44,7 +49,7 @@ namespace ChessForge
         public ChapterFromLineDialog(Chapter chapter)
         {
             InitializeComponent();
-            UiLblChapterTitle.Content = chapter.GetTitle();
+            UiTbChapterTitle.Text = chapter.GetTitle();
         }
 
         /// <summary>
@@ -53,6 +58,7 @@ namespace ChessForge
         private void CollectResponses()
         {
             GoToNewChapter = UiCbGoToNew.IsChecked == true;
+            ChapterTitle = UiTbChapterTitle.Text ?? "";
             ExitOK = true;
         }
 

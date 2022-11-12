@@ -453,6 +453,8 @@ namespace ChessForge
                         if (dlg.ExitOK)
                         {
                             DeleteRemainingMoves();
+                            chapter.SetTitle(dlg.ChapterTitle);
+                            _mainWin.RebuildChaptersView();
                             _mainWin.SelectChapter(chapter.Id, true);
                         }
 
