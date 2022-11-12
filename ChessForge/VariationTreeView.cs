@@ -1106,11 +1106,11 @@ namespace ChessForge
                             int no = WorkbookManager.SessionWorkbook.ActiveChapterNumber;
                             para = CreateParagraph("0", true);
 
-                            Run rPrefix = new Run("CH " + no.ToString() + ":");
+                            Run rPrefix = new Run();
                             rPrefix.TextDecorations = TextDecorations.Underline;
                             para.Inlines.Add(rPrefix);
 
-                            Run r = new Run(" " + WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle(true));
+                            Run r = new Run(WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle(true));
                             para.Inlines.Add(r);
                         }
                         break;
