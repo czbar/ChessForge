@@ -12,6 +12,7 @@ using ChessPosition;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Input;
+using System.Collections.ObjectModel;
 
 namespace ChessForge
 {
@@ -29,6 +30,10 @@ namespace ChessForge
         public void SetSolvingMode(VariationTree.SolvingMode mode)
         {
             _mainVariationTree.CurrentSolvingMode = mode;
+            if (_mainVariationTree.AssociatedSecondary != null)
+            {
+                _mainVariationTree.AssociatedSecondary.CurrentSolvingMode = mode;
+            }
         }
 
         /// <summary>
@@ -462,7 +467,7 @@ namespace ChessForge
             Label lbl = new Label();
             lbl.FontSize = 12; // not configurable!
             lbl.Content = "Cancel";
-            
+
             _lblCancel = lbl;
 
             canvas.Children.Add(lbl);
@@ -480,7 +485,14 @@ namespace ChessForge
         {
             Label lbl = new Label();
             lbl.FontSize = 12; // not configurable!
-            lbl.Content = "Submit Your Analysis";
+            if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS)
+            {
+                lbl.Content = "Submit Your Analysis";
+            }
+            else
+            {
+                lbl.Content = "Done";
+            }
 
             _lblSubmitAnalysis = lbl;
 
@@ -542,15 +554,34 @@ namespace ChessForge
             {
                 SetSolvingMode(mode);
 
-                if (_mainVariationTree.AssociatedTree == null)
+                if (_mainVariationTree.AssociatedSecondary == null)
                 {
-                    _mainVariationTree.AssociatedTree = new VariationTree(GameData.ContentType.SOLVING, _mainVariationTree.RootNode.CloneMe(true));
+                    _mainVariationTree.AssociatedSecondary = new VariationTree(GameData.ContentType.EXERCISE, _mainVariationTree.RootNode.CloneMe(true));
+                    _mainVariationTree.AssociatedSecondary.Header = _mainVariationTree.Header.CloneMe();
+                    _mainVariationTree.AssociatedSecondary.AssociatedPrimary = _mainVariationTree;
                 }
 
                 _mainVariationTree.IsAssociatedTreeActive = true;
+                _shownVariationTree.ShowTreeLines = true;
 
-                BuildFlowDocumentForVariationTree();
+                string lineId = _shownVariationTree.SelectedLineId;
+                if (string.IsNullOrEmpty(lineId))
+                {
+                    lineId = "1";
+                }
+
+                int nodeId = _shownVariationTree.SelectedNodeId;
+                if (nodeId < 0)
+                {
+                    nodeId = 0;
+                }
+                SelectLineAndMove(lineId, nodeId);
+
+                ObservableCollection<TreeNode> lineToSelect = _shownVariationTree.SelectLine(lineId);
+                _mainWin.SetActiveLine(lineToSelect, nodeId);
+
                 SetupGuiForSolvingMode(mode);
+                BuildFlowDocumentForVariationTree();
             }
             catch
             {
