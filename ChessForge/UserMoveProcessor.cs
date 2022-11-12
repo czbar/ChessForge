@@ -245,7 +245,8 @@ namespace ChessForge
                     if (nd.IsNewUserMove && !preExist)
                     {
                         AppStateManager.MainWin.AppendNodeToActiveLine(nd, false);
-                        if (nd.Parent == null || AppStateManager.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
+                        // in exercise this can be the first move (nd.Parent.NodeId == 0) in which case we want to call a Rebuild so we get the move number
+                        if (nd.Parent == null || nd.Parent.NodeId == 0 || AppStateManager.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
                         {
                             AppStateManager.MainWin.RebuildActiveTreeView();
                         }
