@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="New Chapter Created" Height="260" Width="390">
+        Title="Create New Chapter From Line" Height="232" Width="390">
     <Grid>
-        <Button x:Name="UiBtnYes" Content="Yes" HorizontalAlignment="Center" Margin="-100,131,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnYes_Click"/>
-        <Button x:Name="UiBtnNo" Content="No" HorizontalAlignment="Center" Margin="100,131,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnNo_Click"/>
-        <Label x:Name="UiLblNewChapterCreated" Content="A new chapter has been created from the selected sub-tree" HorizontalAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnOk" Content="Ok" HorizontalAlignment="Center" Margin="-100,146,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" Content="Cancel" HorizontalAlignment="Center" Margin="100,146,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Label x:Name="UiLblNewChapterCreated" Content="A new chapter will be created from the selected sub-tree." HorizontalAlignment="Center" Margin="0,11,0,0" VerticalAlignment="Top"/>
 
-        <Label x:Name="UiLblTitle" Content="Title" HorizontalAlignment="Left" Margin="32,43,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="UiTbChapterTitle" Text="" HorizontalAlignment="Center" Margin="30,47,0,0" VerticalAlignment="Top" Width="280" BorderBrush="Black" BorderThickness="1" />
-        
-        <CheckBox x:Name="UiCbGoToNew" Content="Go to the newly created chapter" HorizontalAlignment="Center" Margin="0,169,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="UiLblDeleteQuestion" Content="Do you want to delete the sub-tree from the original chapter?" HorizontalAlignment="Center" Margin="0,89,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblTitle" Content="Title" HorizontalAlignment="Left" Margin="30,43,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="UiTbChapterTitle" Text="" HorizontalAlignment="Center" Margin="40,47,0,0" VerticalAlignment="Top" Width="270" BorderBrush="Black" BorderThickness="1" />
+
+        <CheckBox x:Name="UiCbDeleteOrig" Content="Delete the sub-tree from the original chapter" HorizontalAlignment="Left" Margin="70,83,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="UiCbGoToNew" Content="Go to the newly created chapter" HorizontalAlignment="Left" Margin="70,110,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

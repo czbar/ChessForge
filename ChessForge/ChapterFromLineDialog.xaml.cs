@@ -58,8 +58,8 @@ namespace ChessForge
         private void CollectResponses()
         {
             GoToNewChapter = UiCbGoToNew.IsChecked == true;
+            DeleteOriginal = UiCbDeleteOrig.IsChecked == true;
             ChapterTitle = UiTbChapterTitle.Text ?? "";
-            ExitOK = true;
         }
 
         /// <summary>
@@ -67,10 +67,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiBtnYes_Click(object sender, RoutedEventArgs e)
+        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            DeleteOriginal = true;
             CollectResponses();
+
+            ExitOK = true;
             Close();
         }
 
@@ -79,10 +80,8 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiBtnNo_Click(object sender, RoutedEventArgs e)
+        private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            DeleteOriginal = false;
-            CollectResponses();
             Close();
         }
     }

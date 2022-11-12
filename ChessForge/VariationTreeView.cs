@@ -440,7 +440,6 @@ namespace ChessForge
                         VariationTree newTree = TreeUtils.CreateNewTreeFromNode(lstNodes[0], GameData.ContentType.STUDY_TREE);
                         Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter(newTree, false);
                         chapter.SetTitle("Chapter " + chapter.Id.ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
-                        _mainWin.RebuildChaptersView();
 
                         ChapterFromLineDialog dlg = new ChapterFromLineDialog(chapter)
                         {
@@ -452,13 +451,20 @@ namespace ChessForge
                         dlg.ShowDialog();
                         if (dlg.ExitOK)
                         {
-                            DeleteRemainingMoves();
                             chapter.SetTitle(dlg.ChapterTitle);
+                            if (dlg.DeleteOriginal)
+                            {
+                                DeleteRemainingMoves();
+                            }
                             _mainWin.RebuildChaptersView();
                             _mainWin.SelectChapter(chapter.Id, true);
-                        }
 
-                        AppStateManager.IsDirty = true;
+                            AppStateManager.IsDirty = true;
+                        }
+                        else
+                        {
+                            WorkbookManager.SessionWorkbook.Chapters.Remove(chapter);
+                        }
                     }
                 }
             }
