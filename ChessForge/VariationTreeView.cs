@@ -72,7 +72,7 @@ namespace ChessForge
         private static bool _contextMenuPrimed = false;
 
         // Application's Main Window
-        private MainWindow _mainWin;
+        protected MainWindow _mainWin;
 
         // tracks the last added run as we may need to change its color
         private Run _lastAddedRun;
@@ -154,7 +154,7 @@ namespace ChessForge
         /// </summary>
         protected VariationTree _shownVariationTree
         {
-            get => _mainVariationTree.IsAssociatedTreeActive ? _mainVariationTree.AssociatedTree : _mainVariationTree;
+            get => _mainVariationTree.IsAssociatedTreeActive ? _mainVariationTree.AssociatedSecondary : _mainVariationTree;
         }
 
         /// <summary>
@@ -240,6 +240,11 @@ namespace ChessForge
             else
             {
                 _mainVariationTree = _mainWin.ActiveVariationTree;
+                if (_mainVariationTree != null && _mainVariationTree.AssociatedPrimary != null)
+                {
+                    // ActiveVariationTree may return a secondary tree which we don' want so check for it
+                    _mainVariationTree = _mainVariationTree.AssociatedPrimary;
+                }
             }
 
             if (_mainVariationTree == null || _mainVariationTree.ContentType != this.ContentType)
@@ -267,6 +272,12 @@ namespace ChessForge
             if (preamblePara != null)
             {
                 Document.Blocks.Add(preamblePara);
+            }
+
+            Paragraph movePromptPara = BuildYourMovePrompt();
+            if (movePromptPara != null)
+            {
+                Document.Blocks.Add(movePromptPara);
             }
 
             if (contentType != GameData.ContentType.EXERCISE || _shownVariationTree.ShowTreeLines)
@@ -311,6 +322,38 @@ namespace ChessForge
             }
 
             RemoveEmptyParagraphs();
+        }
+
+        /// <summary>
+        /// If this is an Exercise view in the solving mode and there are no moves yet,
+        /// prompt the user to start entering them.
+        /// </summary>
+        /// <returns></returns>
+        public Paragraph BuildYourMovePrompt()
+        {
+            Paragraph para = null;
+
+            if ((_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS
+                || _mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
+                && _shownVariationTree.Nodes.Count == 1)
+            {
+                para = CreateParagraph("0", true);
+
+                Run r = new Run();
+                r.Foreground = Brushes.DarkGreen;
+                if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS)
+                {
+                    r.Text = "   Enter your analysis by making moves on the main chessboard.";
+                }
+                else
+                {
+                    r.Text = "   Start guessing moves.\n   Make them on the main chessboard.";
+                }
+
+                para.Inlines.Add(r);
+            }
+            return para;
+
         }
 
         /// <summary>
@@ -1185,14 +1228,21 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph BuildResultPara()
         {
-            string result = _shownVariationTree.Header.GetResult(out _);
-            if (!string.IsNullOrWhiteSpace(result))
+            if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.NONE)
             {
-                Paragraph para = CreateParagraph("0", true);
-                para.Margin = new Thickness(0, 0, 0, 0);
-                Run rResult = new Run("     " + result);
-                para.Inlines.Add(rResult);
-                return para;
+                string result = _shownVariationTree.Header.GetResult(out _);
+                if (!string.IsNullOrWhiteSpace(result))
+                {
+                    Paragraph para = CreateParagraph("0", true);
+                    para.Margin = new Thickness(0, 0, 0, 0);
+                    Run rResult = new Run("     " + result);
+                    para.Inlines.Add(rResult);
+                    return para;
+                }
+                else
+                {
+                    return null;
+                }
             }
             else
             {
