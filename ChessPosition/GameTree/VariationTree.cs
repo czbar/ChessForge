@@ -776,26 +776,30 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Checks if the node already exists in the tree 
-        /// by checking if it has the same position as one of the children.
+        /// Checks if the node already exists in the tree. 
+        /// It looks for a node with identical position
+        /// optionally checking the move number as well.
         /// If so returns the already exisiting. Otherwise, returns null 
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        public TreeNode FindExistingNode(TreeNode nd)
+        public TreeNode FindIdenticalNode(TreeNode nd, bool compareMoveNumber)
         {
-            if (nd.Parent == null)
-                return null;
+            TreeNode ret = null;
 
-            foreach (TreeNode child in nd.Parent.Children)
+            foreach (TreeNode node in Nodes)
             {
-                if (ArePositionsIdentical(child.Position, nd.Position))
+                if (!compareMoveNumber || nd.MoveNumber == node.MoveNumber)
                 {
-                    return child;
+                    if (ArePositionsIdentical(node.Position, nd.Position))
+                    {
+                        ret = node;
+                        break;
+                    }
                 }
             }
 
-            return null;
+            return ret;
         }
 
         /// <summary>
