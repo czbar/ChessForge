@@ -218,7 +218,7 @@ namespace ChessForge
         /// <returns></returns>
         private static bool ProcessMoveInManualReviewMode(string move, out TreeNode nd, out bool isCastle)
         {
-            if (CreateNewPlyNode(move, out nd, out isCastle, out bool preExist ))
+            if (CreateNewPlyNode(move, out nd, out isCastle, out bool preExist))
             {
                 if (PositionUtils.IsCheckmate(nd.Position))
                 {
@@ -268,10 +268,14 @@ namespace ChessForge
                     // if it is new and has siblings, rebuild line ids
                     // Workbook view will need a full update unless TODO this node AND its parent have no siblings
                     AppStateManager.MainWin.ActiveVariationTree.SetLineIdForNewNode(nd);
-                    //AppStateManager.MainWin.ActiveLine.Line.AddPlyAndMove(nd);
                     AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
                     AppStateManager.MainWin.RebuildActiveTreeView();
                     AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveTreeView, AppStateManager.MainWin.ActiveLine.GetLineId(), AppStateManager.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
+                }
+
+                if (SolvingManager.GetAppSolvingMode() == VariationTree.SolvingMode.GUESS_MOVE)
+                {
+                    AppStateManager.MainWin.Timers.Start(AppTimers.TimerId.SOLVING_GUESS_MOVE_MADE);
                 }
 
                 return true;
@@ -321,6 +325,16 @@ namespace ChessForge
                 nd.Position.ColorToMove = nd.Position.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
                 nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
                 nd.LastMoveAlgebraicNotation = algMove;
+
+                if (MoveUtils.IsCaptureOrPawnMove(algMove))
+                {
+                    nd.Position.HalfMove50Clock = 0;
+                }
+                else
+                {
+                    nd.Position.HalfMove50Clock += 1;
+                }
+
                 TreeNode sib = AppStateManager.MainWin.ActiveVariationTree.GetIdenticalSibling(nd);
                 if (sib == null)
                 {

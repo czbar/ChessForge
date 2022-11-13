@@ -68,6 +68,29 @@ namespace ChessPosition
             return newNode;
         }
 
+        /// <summary>
+        /// Checks if the passed algebraic move notations
+        /// indicates a capture or a pawn move.
+        /// </summary>
+        /// <param name="alg"></param>
+        /// <returns></returns>
+        public static bool IsCaptureOrPawnMove(string alg)
+        {
+            if (string.IsNullOrEmpty(alg) || alg.Length < 2)
+            {
+                return false;
+            }
+
+            if (alg.IndexOf('x') > 0 || Char.IsLower(alg[0]))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         // TODO: remove dupe from PgnParser
         public static TreeNode ProcessAlgMove(string algMove, TreeNode parentNode, int nodeId)
         {

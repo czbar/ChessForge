@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,27 @@ namespace ChessPosition
 {
     public class TextUtils
     {
+        /// <summary>
+        /// Returns the passed string after removing invalid file name chars from it.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static string RemoveInvalidCharsFromFileName(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return fileName;
+            }
+
+            string charsToRemove = new string(Path.GetInvalidFileNameChars());
+            foreach (var c in charsToRemove)
+            {
+                fileName = fileName.Replace(c.ToString(), string.Empty);
+            }
+
+            return fileName;
+        }
+
         /// <summary>
         /// Builds text for variation line passed as a list
         /// of nodes. Depending on the fromIndex and toIndex arguments,

@@ -128,6 +128,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the last Node of the Line.
+        /// </summary>
+        /// <returns></returns>
+        public TreeNode GetLastNode()
+        {
+            return Line.GetLastNode();
+        }
+
+        /// <summary>
         /// Gets the Node object from the Line
         /// given its id.
         /// </summary>

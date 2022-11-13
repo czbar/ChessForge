@@ -242,7 +242,7 @@ namespace ChessForge
                 _mainVariationTree = _mainWin.ActiveVariationTree;
                 if (_mainVariationTree != null && _mainVariationTree.AssociatedPrimary != null)
                 {
-                    // ActiveVariationTree may return a secondary tree which we don' want so check for it
+                    // ActiveVariationTree may return a secondary tree which we don't want so check for it
                     _mainVariationTree = _mainVariationTree.AssociatedPrimary;
                 }
             }
@@ -451,13 +451,23 @@ namespace ChessForge
                         dlg.ShowDialog();
                         if (dlg.ExitOK)
                         {
+                            bool viewRebuilt = false;
                             chapter.SetTitle(dlg.ChapterTitle);
                             if (dlg.DeleteOriginal)
                             {
                                 DeleteRemainingMoves();
+                                viewRebuilt = true;
                             }
                             _mainWin.RebuildChaptersView();
-                            _mainWin.SelectChapter(chapter.Id, true);
+                            if (dlg.GoToNewChapter)
+                            {
+                                _mainWin.SelectChapter(chapter.Id, true);
+                                viewRebuilt = true;
+                            }
+                            if (!viewRebuilt)
+                            {
+                                BuildFlowDocumentForVariationTree();
+                            }
 
                             AppStateManager.IsDirty = true;
                         }

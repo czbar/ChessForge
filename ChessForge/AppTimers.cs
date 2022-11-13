@@ -27,6 +27,7 @@ namespace ChessForge
             CHECK_FOR_USER_MOVE,
             CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE,
             REQUEST_WORKBOOK_MOVE,
+            SOLVING_GUESS_MOVE_MADE,
             SHOW_TRAINING_PROGRESS_POPUP_MENU,
             FLASH_ANNOUNCEMENT,
             APP_START,
@@ -57,6 +58,12 @@ namespace ChessForge
         /// requests appropriate processing.
         /// </summary>
         private Timer _checkForUserMoveTimer;
+
+        /// <summary>
+        /// This timer is started after the user made a move in the Solving
+        /// Guess Move mode.
+        /// </summary>
+        private Timer _solvingGuessMoveMadeTimer;
 
         /// <summary>
         /// Checks if the program responded with a workbook-based move yet.
@@ -125,6 +132,10 @@ namespace ChessForge
             _checkForUserMoveTimer = new Timer();
             InitCheckForUserMoveTimer();
             _dictTimers.Add(TimerId.CHECK_FOR_USER_MOVE, _checkForUserMoveTimer);
+
+            _solvingGuessMoveMadeTimer = new Timer();
+            InitSolvingGuessMoveMadeTimer();
+            _dictTimers.Add(TimerId.SOLVING_GUESS_MOVE_MADE, _solvingGuessMoveMadeTimer);
 
             _checkForTrainingWorkbookMoveMade = new Timer();
             InitCheckForTrainingWorkbookMoveMade();
@@ -259,6 +270,13 @@ namespace ChessForge
             _checkForUserMoveTimer.Elapsed += new ElapsedEventHandler(_mainWin.CheckForUserMoveTimerEvent);
             _checkForUserMoveTimer.Interval = 50;
             _checkForUserMoveTimer.Enabled = false;
+        }
+
+        private void InitSolvingGuessMoveMadeTimer()
+        {
+            _solvingGuessMoveMadeTimer.Elapsed += new ElapsedEventHandler(_mainWin.SolvingGuessMoveMadeTimerEvent);
+            _solvingGuessMoveMadeTimer.Interval = 100;
+            _solvingGuessMoveMadeTimer.Enabled = false;
         }
 
         private void InitCheckForTrainingWorkbookMoveMade()

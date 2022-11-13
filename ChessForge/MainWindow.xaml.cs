@@ -658,7 +658,7 @@ namespace ChessForge
         /// Checks if the main board can be used i.e. if the active tab has a variation tree to use.
         /// </summary>
         /// <returns></returns>
-        private bool IsACtiveMainBoard()
+        private bool IsActiveMainBoard()
         {
             if (WorkbookManager.SessionWorkbook == null || WorkbookManager.SessionWorkbook.ActiveChapter == null)
             {
@@ -688,7 +688,7 @@ namespace ChessForge
         /// <returns></returns>
         private bool CanMovePiece(SquareCoords sqNorm)
         {
-            if (IsACtiveMainBoard())
+            if (IsActiveMainBoard() && SolvingManager.IsMovingAllowed())
             {
                 PieceColor pieceColor = MainChessBoard.GetPieceColor(sqNorm);
 
@@ -1456,6 +1456,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The app is in the Solving GUESS_MOVE mode
+        /// and the user made their move.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public void SolvingGuessMoveMadeTimerEvent(object source, ElapsedEventArgs e)
+        {
+            // stop the timer
+            Timers.Stop(AppTimers.TimerId.SOLVING_GUESS_MOVE_MADE);
+            SolvingManager.ProcessUserMoveInGuessMode();
+        }
+
+        /// <summary>
         /// Reset controls and restore selection in the ActiveLine
         /// control.
         /// We are going back to the MANUAL REVIEW mode
@@ -1728,6 +1741,8 @@ namespace ChessForge
                 SessionWorkbook.StudyBoardOrientation = dlg.StudyBoardOrientation;
                 SessionWorkbook.GameBoardOrientation = dlg.GameBoardOrientation;
                 SessionWorkbook.ExerciseBoardOrientation = dlg.ExerciseBoardOrientation;
+
+                AppStateManager.IsDirty = true;
 
                 if (save)
                 {

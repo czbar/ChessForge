@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Runtime.CompilerServices;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace ChessForge
 {
@@ -984,6 +985,16 @@ namespace ChessForge
             {
                 Filter = "Workbook files (*.pgn)|*.pgn"
             };
+
+            // if this is a new Workbook suggest file name based on title.
+            if (pgnFileName == null && WorkbookManager.SessionWorkbook != null && !string.IsNullOrWhiteSpace(WorkbookManager.SessionWorkbook.Title))
+            {
+                string title =  TextUtils.RemoveInvalidCharsFromFileName(WorkbookManager.SessionWorkbook.Title);
+                if (!string.IsNullOrWhiteSpace(title))
+                {
+                    saveDlg.FileName = title + ".pgn";
+                }
+            }
 
             if (typeConversion)
             {
