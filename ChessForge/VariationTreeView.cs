@@ -242,7 +242,7 @@ namespace ChessForge
                 _mainVariationTree = _mainWin.ActiveVariationTree;
                 if (_mainVariationTree != null && _mainVariationTree.AssociatedPrimary != null)
                 {
-                    // ActiveVariationTree may return a secondary tree which we don' want so check for it
+                    // ActiveVariationTree may return a secondary tree which we don't want so check for it
                     _mainVariationTree = _mainVariationTree.AssociatedPrimary;
                 }
             }
