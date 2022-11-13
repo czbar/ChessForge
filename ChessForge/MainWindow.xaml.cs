@@ -1456,6 +1456,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The app is in the Solving GUESS_MOVE mode
+        /// and the user made their move.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public void SolvingGuessMoveMadeTimerEvent(object source, ElapsedEventArgs e)
+        {
+            // stop the timer
+            Timers.Stop(AppTimers.TimerId.SOLVING_GUESS_MOVE_MADE);
+            SolvingManager.ProcessUserMoveInGuessMode();
+        }
+
+        /// <summary>
         /// Reset controls and restore selection in the ActiveLine
         /// control.
         /// We are going back to the MANUAL REVIEW mode
