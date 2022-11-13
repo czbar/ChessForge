@@ -138,6 +138,17 @@ namespace ChessPosition
         public const char CharBlackSquare = '\u2B1B';
 
         /// <summary>
+        /// Check mark character
+        /// </summary>
+        public const char CharCheckMark = '\u2713';
+
+        /// <summary>
+        /// Check mark character
+        /// </summary>
+        public const char CharCrossMark = '\u2716';
+
+
+        /// <summary>
         /// Min and Max dimensions of the chess board
         /// when starting from 0.
         /// </summary>
