@@ -147,6 +147,7 @@
     <Compile Include="SelectGamesDialog.xaml.cs">
       <DependentUpon>SelectGamesDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SolvingManager.cs" />
     <Compile Include="SoundPlayer.cs" />
     <Compile Include="TextBoxDialog.xaml.cs">
       <DependentUpon>TextBoxDialog.xaml</DependentUpon>
