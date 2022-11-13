@@ -451,13 +451,23 @@ namespace ChessForge
                         dlg.ShowDialog();
                         if (dlg.ExitOK)
                         {
+                            bool viewRebuilt = false;
                             chapter.SetTitle(dlg.ChapterTitle);
                             if (dlg.DeleteOriginal)
                             {
                                 DeleteRemainingMoves();
+                                viewRebuilt = true;
                             }
                             _mainWin.RebuildChaptersView();
-                            _mainWin.SelectChapter(chapter.Id, true);
+                            if (dlg.GoToNewChapter)
+                            {
+                                _mainWin.SelectChapter(chapter.Id, true);
+                                viewRebuilt = true;
+                            }
+                            if (!viewRebuilt)
+                            {
+                                BuildFlowDocumentForVariationTree();
+                            }
 
                             AppStateManager.IsDirty = true;
                         }
