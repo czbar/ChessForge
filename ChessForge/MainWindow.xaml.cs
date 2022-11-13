@@ -658,7 +658,7 @@ namespace ChessForge
         /// Checks if the main board can be used i.e. if the active tab has a variation tree to use.
         /// </summary>
         /// <returns></returns>
-        private bool IsACtiveMainBoard()
+        private bool IsActiveMainBoard()
         {
             if (WorkbookManager.SessionWorkbook == null || WorkbookManager.SessionWorkbook.ActiveChapter == null)
             {
@@ -688,7 +688,7 @@ namespace ChessForge
         /// <returns></returns>
         private bool CanMovePiece(SquareCoords sqNorm)
         {
-            if (IsACtiveMainBoard())
+            if (IsActiveMainBoard() && SolvingManager.IsMovingAllowed())
             {
                 PieceColor pieceColor = MainChessBoard.GetPieceColor(sqNorm);
 
