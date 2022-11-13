@@ -245,45 +245,32 @@ namespace ChessForge
                     if (nd.IsNewUserMove && !preExist)
                     {
                         AppStateManager.MainWin.AppendNodeToActiveLine(nd, false);
-                        // if in GUESS MOVE solving mode we don't want the move added to the view.
-                        if (SolvingManager.GetAppSolvingMode() != VariationTree.SolvingMode.GUESS_MOVE)
+                        // in exercise this can be the first move (nd.Parent.NodeId == 0) in which case we want to call a Rebuild so we get the move number
+                        if (nd.Parent == null || nd.Parent.NodeId == 0 || AppStateManager.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
                         {
-                            // in exercise this can be the first move (nd.Parent.NodeId == 0) in which case we want to call a Rebuild so we get the move number
-                            if (nd.Parent == null || nd.Parent.NodeId == 0 || AppStateManager.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
-                            {
-                                AppStateManager.MainWin.RebuildActiveTreeView();
-                            }
-                            else
-                            {
-                                AppStateManager.MainWin.AddNewNodeToVariationTreeView(nd);
-                            }
-                            AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveTreeView, AppStateManager.MainWin.ActiveLine.GetLineId(), AppStateManager.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
+                            AppStateManager.MainWin.RebuildActiveTreeView();
                         }
+                        else
+                        {
+                            AppStateManager.MainWin.AddNewNodeToVariationTreeView(nd);
+                        }
+                        AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveTreeView, AppStateManager.MainWin.ActiveLine.GetLineId(), AppStateManager.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
                     }
                     else
                     {
-                        // if in GUESS MOVE solving mode we don't want the move added to the view.
-                        if (SolvingManager.GetAppSolvingMode() != VariationTree.SolvingMode.GUESS_MOVE)
-                        {
-                            AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
-                            AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveTreeView, AppStateManager.MainWin.ActiveLine.GetLineId(), AppStateManager.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
-                        }
+                        AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
+                        AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveTreeView, AppStateManager.MainWin.ActiveLine.GetLineId(), AppStateManager.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
                     }
                 }
                 else
                 {
-                    // if in GUESS MOVE solving mode we don't want the move added to the view.
-                    if (SolvingManager.GetAppSolvingMode() != VariationTree.SolvingMode.GUESS_MOVE)
-                    {
-                        // new move for which we need a new line id
-                        // if it is new and has siblings, rebuild line ids
-                        // Workbook view will need a full update unless TODO this node AND its parent have no siblings
-                        AppStateManager.MainWin.ActiveVariationTree.SetLineIdForNewNode(nd);
-                        //AppStateManager.MainWin.ActiveLine.Line.AddPlyAndMove(nd);
-                        AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
-                        AppStateManager.MainWin.RebuildActiveTreeView();
-                        AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveTreeView, AppStateManager.MainWin.ActiveLine.GetLineId(), AppStateManager.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
-                    }
+                    // new move for which we need a new line id
+                    // if it is new and has siblings, rebuild line ids
+                    // Workbook view will need a full update unless TODO this node AND its parent have no siblings
+                    AppStateManager.MainWin.ActiveVariationTree.SetLineIdForNewNode(nd);
+                    AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
+                    AppStateManager.MainWin.RebuildActiveTreeView();
+                    AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveTreeView, AppStateManager.MainWin.ActiveLine.GetLineId(), AppStateManager.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
                 }
 
                 if (SolvingManager.GetAppSolvingMode() == VariationTree.SolvingMode.GUESS_MOVE)
@@ -338,7 +325,7 @@ namespace ChessForge
                 nd.Position.ColorToMove = nd.Position.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
                 nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
                 nd.LastMoveAlgebraicNotation = algMove;
-                
+
                 if (MoveUtils.IsCaptureOrPawnMove(algMove))
                 {
                     nd.Position.HalfMove50Clock = 0;
