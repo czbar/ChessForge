@@ -1729,6 +1729,8 @@ namespace ChessForge
                 SessionWorkbook.GameBoardOrientation = dlg.GameBoardOrientation;
                 SessionWorkbook.ExerciseBoardOrientation = dlg.ExerciseBoardOrientation;
 
+                AppStateManager.IsDirty = true;
+
                 if (save)
                 {
                     AppStateManager.SaveWorkbookFile();
