@@ -18,7 +18,26 @@ namespace ChessForge
         private bool _guessingFinished = false;
 
         // whether the solving has started yet
-        public bool SolvingStarted { get; set; } 
+        public bool SolvingStarted { get; set; }
+
+        /// <summary>
+        /// Whether the solving has been completed
+        /// </summary>
+        public bool SolvingFinished 
+        {
+            get
+            {
+                if (AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE
+                    && IsGuessingFinished)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
 
         /// <summary>
         /// While solving the moves are allowed when the Tree is showing lines
@@ -157,10 +176,12 @@ namespace ChessForge
             if (inPrimaryTree.Children.Count == 0)
             {
                 _guessingFinished = true;
+                AppStateManager.MainWin.ActiveVariationTree.SelectedNodeId = guess.NodeId;
             }
             else
             {
                 TreeNode response = inPrimaryTree.Children[0].CloneMe(true);
+                SoundPlayer.PlayMoveSound(response.LastMoveAlgebraicNotation);
                 response.Parent = guess;
                 guess.Children.Add(response);
                 secondaryTree.AddNode(response);
@@ -171,6 +192,7 @@ namespace ChessForge
                     AppStateManager.MainWin.DisplayPosition(response);
                     // AppStateManager.MainWin.ActiveTreeView.SelectLineAndMove("", response.NodeId);
                 });
+                AppStateManager.MainWin.ActiveVariationTree.SelectedNodeId = response.NodeId;
 
                 if (inPrimaryTree.Children[0].Children.Count == 0)
                 {
@@ -188,7 +210,9 @@ namespace ChessForge
         {
             // report incorrect move and (defensively) remove from the view it is there
             guess.Parent.Comment = Constants.CharCrossMark.ToString() + " " + MoveUtils.BuildSingleMoveText(guess, true) + " is not correct.";
+            AppStateManager.MainWin.ActiveVariationTree.SelectedNodeId = guess.Parent.NodeId;
             AppStateManager.MainWin.ActiveLine.Line.RemoveLastPly();
+
             AppStateManager.MainWin.Dispatcher.Invoke(() =>
             {
                 secondaryTree.DeleteRemainingMoves(guess);
