@@ -37,6 +37,43 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// If this is an Exercise view in the solving mode and there are no moves yet,
+        /// prompt the user to start entering them.
+        /// </summary>
+        /// <returns></returns>
+        override public Paragraph BuildYourMovePrompt()
+        {
+            if (_mainWin.ActiveGameUnit != null && _mainWin.ActiveGameUnit.Solver != null && _mainWin.ActiveGameUnit.Solver.SolvingStarted)
+            {
+                return null;
+            }
+
+            Paragraph para = null;
+
+            if ((_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS
+                || _mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
+                && _shownVariationTree.Nodes.Count == 1)
+            {
+                para = CreateParagraph("0", true);
+
+                Run r = new Run();
+                r.Foreground = Brushes.DarkGreen;
+                if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS)
+                {
+                    r.Text = "   Enter your analysis by making moves on the main chessboard.";
+                }
+                else
+                {
+                    r.Text = "   Start guessing moves.\n   Make them on the main chessboard.";
+                }
+
+                para.Inlines.Add(r);
+            }
+            return para;
+        }
+
+
+        /// <summary>
         /// Sets up visibility of the controls
         /// in the Solving Panel
         /// </summary>
@@ -46,16 +83,32 @@ namespace ChessForge
 
             if (mode == VariationTree.SolvingMode.GUESS_MOVE || mode == VariationTree.SolvingMode.ANALYSIS)
             {
-                _gbSolvingPanel.Header = "Solving in Progress ...";
+                if (_mainWin.ActiveGameUnit.Solver.SolvingFinished)
+                {
+                    _gbSolvingPanel.Header = "Solving Completed";
+                }
+                else
+                {
+                    _gbSolvingPanel.Header = "Solving in Progress ...";
+                }
+
                 _btnGuessMove.Visibility = Visibility.Collapsed;
                 _btnAnalysis.Visibility = Visibility.Collapsed;
                 _lblGuessMove.Visibility = Visibility.Collapsed;
                 _lblAnalysis.Visibility = Visibility.Collapsed;
 
-                _btnSubmitAnalysis.Visibility = Visibility.Visible;
-                _btnCancel.Visibility = Visibility.Visible;
-                _lblSubmitAnalysis.Visibility = Visibility.Visible;
-                _lblCancel.Visibility = Visibility.Visible;
+                if (mode == VariationTree.SolvingMode.ANALYSIS)
+                {
+                    _btnSubmitAnalysis.Visibility = Visibility.Visible;
+                    _lblSubmitAnalysis.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    _btnSubmitAnalysis.Visibility = Visibility.Collapsed;
+                    _lblSubmitAnalysis.Visibility = Visibility.Collapsed;
+                }
+                _btnExit.Visibility = Visibility.Visible;
+                _lblExit.Visibility = Visibility.Visible;
             }
             else
             {
@@ -66,9 +119,9 @@ namespace ChessForge
                 _lblAnalysis.Visibility = Visibility.Visible;
 
                 _btnSubmitAnalysis.Visibility = Visibility.Collapsed;
-                _btnCancel.Visibility = Visibility.Collapsed;
+                _btnExit.Visibility = Visibility.Collapsed;
                 _lblSubmitAnalysis.Visibility = Visibility.Collapsed;
-                _lblCancel.Visibility = Visibility.Collapsed;
+                _lblExit.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -105,13 +158,13 @@ namespace ChessForge
         private Button _btnAnalysis;
 
         private Button _btnSubmitAnalysis;
-        private Button _btnCancel;
+        private Button _btnExit;
 
         private Label _lblGuessMove;
         private Label _lblAnalysis;
 
         private Label _lblSubmitAnalysis;
-        private Label _lblCancel;
+        private Label _lblExit;
 
         private Run _runShowEdit;
 
@@ -132,6 +185,44 @@ namespace ChessForge
         public ExerciseTreeView(FlowDocument doc, MainWindow mainWin, GameData.ContentType contentType, int entityIndex)
             : base(doc, mainWin, contentType, entityIndex)
         {
+        }
+
+        /// <summary>
+        /// Whether move/node selection is allowed in the current mode.
+        /// </summary>
+        /// <returns></returns>
+        override protected bool IsSelectionEnabled()
+        {
+            if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Appends this paragraph to the document to advise the user that the
+        /// solving is over.
+        /// </summary>
+        override public Paragraph BuildGuessingFinishedParagraph()
+        {
+            if (_mainWin.ActiveGameUnit != null && _mainWin.ActiveGameUnit.Solver != null && _mainWin.ActiveGameUnit.Solver.IsGuessingFinished)
+            {
+                Paragraph para = CreateParagraph("1", true);
+
+                Run r = new Run("Congratulations! You have completed the guessing exercise.");
+                r.Foreground = Brushes.DarkGreen;
+                para.Inlines.Add(r);
+
+                return para;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -309,7 +400,7 @@ namespace ChessForge
         private void PopulateSolvingPanel(Canvas canvas)
         {
             int leftMargin = 280;
-            int topMargin = 56;
+            int topMargin = 50;
 
             if (_mainVariationTree != null && _mainVariationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
             {
@@ -324,8 +415,16 @@ namespace ChessForge
                 AddSolvingButton(canvas, VariationTree.SolvingMode.ANALYSIS, 15 + leftMargin, 77 + topMargin);
                 AddSolvingButtonLabel(canvas, VariationTree.SolvingMode.ANALYSIS, 57 + leftMargin, 79 + topMargin);
 
-                AddCancelButton(canvas, 15 + leftMargin, 77 + topMargin);
-                AddCancelButtonLabel(canvas, 57 + leftMargin, 79 + topMargin);
+                if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
+                {
+                    AddExitButton(canvas, 15 + leftMargin, 32 + topMargin);
+                    AddExitButtonLabel(canvas, 57 + leftMargin, 37 + topMargin);
+                }
+                else
+                {
+                    AddExitButton(canvas, 15 + leftMargin, 77 + topMargin);
+                    AddExitButtonLabel(canvas, 57 + leftMargin, 79 + topMargin);
+                }
 
                 SetupGuiForSolvingMode(_mainVariationTree.CurrentSolvingMode);
             }
@@ -363,23 +462,23 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Adds the Cancel button to the panel.
+        /// Adds the Exit button to the panel.
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="left"></param>
         /// <param name="top"></param>
         /// <returns></returns>
-        private Button AddCancelButton(Canvas canvas, double left, double top)
+        private Button AddExitButton(Canvas canvas, double left, double top)
         {
             Button btn = BuildSolvingModeButton(VariationTree.SolvingMode.NONE,
-                         new BitmapImage(new Uri("pack://application:,,,/Resources/Images/cancel.png", UriKind.RelativeOrAbsolute)));
+                         new BitmapImage(new Uri("pack://application:,,,/Resources/Images/exit.png", UriKind.RelativeOrAbsolute)));
             canvas.Children.Add(btn);
             Canvas.SetLeft(btn, left);
             Canvas.SetTop(btn, top);
 
-            //btn.PreviewMouseDown += UiBtnGuessMoveDown_Click;
-            //btn.PreviewMouseUp += UiBtnGuessMoveUp_Click;
-            _btnCancel = btn;
+            btn.PreviewMouseDown += UiBtnExitDown_Click;
+            btn.PreviewMouseUp += UiBtnExitUp_Click;
+            _btnExit = btn;
 
             return btn;
         }
@@ -416,8 +515,15 @@ namespace ChessForge
         {
             _gbSolvingPanel = new GroupBox();
             _gbSolvingPanel.Margin = new Thickness(left, top, 0, 0);
+            if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
+            {
+                _gbSolvingPanel.Height = 80;
+            }
+            else
+            {
+                _gbSolvingPanel.Height = 130;
+            }
             _gbSolvingPanel.Width = 265;
-            _gbSolvingPanel.Height = 130;
             _gbSolvingPanel.FontSize = 12; // not configurable!
             _gbSolvingPanel.BorderBrush = Brushes.Black;
             _gbSolvingPanel.Header = "";
@@ -426,7 +532,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creats a label for a solving mode button
+        /// Creates a label for a solving mode button
         /// and adds it to the canvas.
         /// </summary>
         /// <param name="canvas"></param>
@@ -457,18 +563,18 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Adds the Cancel Button's label to the panel
+        /// Adds the Exit Button's label to the panel
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="left"></param>
         /// <param name="top"></param>
-        private void AddCancelButtonLabel(Canvas canvas, double left, double top)
+        private void AddExitButtonLabel(Canvas canvas, double left, double top)
         {
             Label lbl = new Label();
             lbl.FontSize = 12; // not configurable!
-            lbl.Content = "Cancel";
+            lbl.Content = "Exit";
 
-            _lblCancel = lbl;
+            _lblExit = lbl;
 
             canvas.Children.Add(lbl);
             Canvas.SetLeft(lbl, left);
@@ -590,6 +696,44 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Leaves the Solving Mode and returns
+        /// to main tree viewing editing
+        /// </summary>
+        private void DeactivateSolvingMode(VariationTree.SolvingMode mode)
+        {
+            try
+            {
+                SetSolvingMode(mode);
+
+                _mainVariationTree.IsAssociatedTreeActive = false;
+                _mainVariationTree.AssociatedSecondary = null;
+                _mainVariationTree.ShowTreeLines = (mode == VariationTree.SolvingMode.EDITING);
+
+                string lineId = _mainVariationTree.SelectedLineId;
+                if (string.IsNullOrEmpty(lineId))
+                {
+                    lineId = "1";
+                }
+
+                int nodeId = _mainVariationTree.SelectedNodeId;
+                if (nodeId < 0)
+                {
+                    nodeId = 0;
+                }
+                SelectLineAndMove(lineId, nodeId);
+
+                ObservableCollection<TreeNode> lineToSelect = _mainVariationTree.SelectLine(lineId);
+                _mainWin.SetActiveLine(lineToSelect, nodeId);
+
+                SetupGuiForSolvingMode(mode);
+                BuildFlowDocumentForVariationTree();
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Mouse Down event on the Guess Move button.
         /// </summary>
         /// <param name="sender"></param>
@@ -624,6 +768,25 @@ namespace ChessForge
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiBtnAnalysisUp_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Mouse Down event on the Exit button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnExitDown_Click(object sender, RoutedEventArgs e)
+        {
+            DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
+        }
+
+        /// <summary>
+        /// Mouse Up event on the Exit button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnExitUp_Click(object sender, RoutedEventArgs e)
         {
         }
 

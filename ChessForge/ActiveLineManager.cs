@@ -376,6 +376,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if the currently selected item is last
+        /// </summary>
+        /// <returns></returns>
+        public bool IsLastMoveSelected()
+        {
+            return GetSelectedPlyNodeIndex(true) == GetNodeCount() - 1;
+        }
+
+        /// <summary>
+        /// Returns the number of nodes in the list.
+        /// </summary>
+        /// <returns></returns>
+        public int GetNodeCount()
+        {
+            return Line.NodeList.Count;
+        }
+
+        /// <summary>
         /// A double click triggers a replay animation from the currently
         /// selected Node.
         /// </summary>
@@ -755,6 +773,24 @@ namespace ChessForge
             else
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Returns the color of the side making the first move.
+        /// It is always White except for exercises with Black 
+        /// to move first.
+        /// </summary>
+        /// <returns></returns>
+        public PieceColor GetStartingColor()
+        {
+            if (Line.NodeList.Count == 0)
+            {
+                return PieceColor.None;
+            }
+            else
+            {
+                return Line.NodeList[0].ColorToMove;
             }
         }
 

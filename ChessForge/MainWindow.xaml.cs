@@ -176,6 +176,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The variation tree currently being processed
+        /// </summary>
+        public GameUnit ActiveGameUnit
+        {
+            get
+            {
+                if (SessionWorkbook == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return SessionWorkbook.ActiveGameUnit;
+                }
+            }
+        }
+
+        /// <summary>
         /// Determines if the program is running in Debug mode.
         /// </summary>
         private bool _isDebugMode = false;
@@ -688,7 +706,7 @@ namespace ChessForge
         /// <returns></returns>
         private bool CanMovePiece(SquareCoords sqNorm)
         {
-            if (IsActiveMainBoard() && SolvingManager.IsMovingAllowed())
+            if (IsActiveMainBoard() && (ActiveGameUnit == null || ActiveGameUnit.Solver == null || ActiveGameUnit.Solver.IsMovingAllowed()))
             {
                 PieceColor pieceColor = MainChessBoard.GetPieceColor(sqNorm);
 
@@ -1465,7 +1483,10 @@ namespace ChessForge
         {
             // stop the timer
             Timers.Stop(AppTimers.TimerId.SOLVING_GUESS_MOVE_MADE);
-            SolvingManager.ProcessUserMoveInGuessMode();
+            if (ActiveGameUnit.Solver != null)
+            {
+                ActiveGameUnit.Solver.ProcessUserMoveInGuessMode();
+            }
         }
 
         /// <summary>

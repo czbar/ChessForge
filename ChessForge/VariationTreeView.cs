@@ -235,7 +235,7 @@ namespace ChessForge
             GameData.ContentType contentType = GameData.ContentType.NONE;
             if (_contentType == GameData.ContentType.STUDY_TREE)
             {
-                _mainVariationTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree;
+                _mainVariationTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree;
             }
             else
             {
@@ -321,7 +321,20 @@ namespace ChessForge
                 }
             }
 
+            Paragraph guessFinished = BuildGuessingFinishedParagraph();
+            {
+                if (guessFinished != null)
+                {
+                    Document.Blocks.Add(guessFinished);
+                }
+            }
+
             RemoveEmptyParagraphs();
+        }
+
+        virtual public Paragraph BuildGuessingFinishedParagraph()
+        {
+            return null;
         }
 
         /// <summary>
@@ -329,31 +342,9 @@ namespace ChessForge
         /// prompt the user to start entering them.
         /// </summary>
         /// <returns></returns>
-        public Paragraph BuildYourMovePrompt()
+        virtual public Paragraph BuildYourMovePrompt()
         {
-            Paragraph para = null;
-
-            if ((_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS
-                || _mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
-                && _shownVariationTree.Nodes.Count == 1)
-            {
-                para = CreateParagraph("0", true);
-
-                Run r = new Run();
-                r.Foreground = Brushes.DarkGreen;
-                if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS)
-                {
-                    r.Text = "   Enter your analysis by making moves on the main chessboard.";
-                }
-                else
-                {
-                    r.Text = "   Start guessing moves.\n   Make them on the main chessboard.";
-                }
-
-                para.Inlines.Add(r);
-            }
-            return para;
-
+            return null;
         }
 
         /// <summary>
@@ -531,8 +522,8 @@ namespace ChessForge
 
                 VariationTree treeFromGame = new VariationTree(GameData.ContentType.GENERIC);
                 treeFromGame.CreateNew(lstNodes);
-                VariationTree merged = WorkbookTreeMerge.MergeWorkbooks(WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree, treeFromGame);
-                WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree = merged;
+                VariationTree merged = WorkbookTreeMerge.MergeWorkbooks(WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, treeFromGame);
+                WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree = merged;
 
                 AppStateManager.IsDirty = true;
             }
@@ -768,6 +759,11 @@ namespace ChessForge
         /// <param name="lineId"></param>
         public void SelectLineAndMove(string lineId, int nodeId)
         {
+            if (!IsSelectionEnabled())
+            {
+                return;
+            }
+
             if (_shownVariationTree.ShowTreeLines)
             {
                 try
@@ -1787,6 +1783,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Whether move/node selection is allowed in the current mode.
+        /// </summary>
+        /// <returns></returns>
+        virtual protected bool IsSelectionEnabled()
+        {
+            return true;
+        }
+
+        /// <summary>
         /// Select a Run.
         /// </summary>
         /// <param name="r"></param>
@@ -1794,6 +1799,11 @@ namespace ChessForge
         /// <param name="changedButton"></param>
         private void SelectRun(Run r, int clickCount, MouseButton changedButton)
         {
+            if (!IsSelectionEnabled())
+            {
+                return;
+            }
+
             if (clickCount == 2)
             {
                 if (r != null)
@@ -1906,6 +1916,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventCommentRunClicked(object sender, MouseButtonEventArgs e)
         {
+            if (!IsSelectionEnabled())
+            {
+                return;
+            }
+
             if (e.ClickCount == 2)
             {
                 Run r = (Run)e.Source;
@@ -1915,11 +1930,6 @@ namespace ChessForge
                 if (_mainWin.InvokeAnnotationsDialog(nd))
                 {
                     InsertOrUpdateCommentRun(nd);
-                    //r.Text = BuildCommentRunText(nd);
-                    //if (string.IsNullOrEmpty(r.Text))
-                    //{
-                    //    RemoveRunFromHostingParagraph(r);
-                    //}
                 }
             }
         }

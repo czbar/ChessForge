@@ -272,7 +272,7 @@ namespace ChessForge
                 for (int i = 0; i < chapter.ModelGames.Count; i++)
                 {
                     para.Inlines.Add(new Run("\n"));
-                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.ModelGames[i].Header.BuildGameHeaderLine(), true);
+                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.ModelGames[i].Tree.Header.BuildGameHeaderLine(), true);
                     rGame.Name = _run_model_game_ + i.ToString();
                     rGame.MouseDown += EventModelGameRunClicked;
                     if (i == chapter.ActiveModelGameIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
@@ -307,7 +307,7 @@ namespace ChessForge
                 for (int i = 0; i < chapter.Exercises.Count; i++)
                 {
                     para.Inlines.Add(new Run("\n"));
-                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.Exercises[i].Header.BuildGameHeaderLine(true), true);
+                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.Exercises[i].Tree.Header.BuildGameHeaderLine(true), true);
                     rGame.Name = _run_exercise_ + i.ToString();
                     rGame.MouseDown += EventExerciseRunClicked;
                     if (i == chapter.ActiveExerciseIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)

@@ -332,17 +332,20 @@ namespace ChessForge
         /// </summary>
         public void RemoveLastPly()
         {
-            NodeList.RemoveAt(NodeList.Count - 1);
+            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            {
+                NodeList.RemoveAt(NodeList.Count - 1);
 
-            MoveWithEval lastMove = MoveList[MoveList.Count - 1];
-            if (!string.IsNullOrEmpty(lastMove.BlackPly))
-            {
-                lastMove.BlackPly = null;
-            }
-            else
-            {
-                MoveList.RemoveAt(MoveList.Count - 1);
-            }
+                MoveWithEval lastMove = MoveList[MoveList.Count - 1];
+                if (!string.IsNullOrEmpty(lastMove.BlackPly))
+                {
+                    lastMove.BlackPly = null;
+                }
+                else
+                {
+                    MoveList.RemoveAt(MoveList.Count - 1);
+                }
+            });
         }
 
         public void ReplaceLastPly(TreeNode nd)
