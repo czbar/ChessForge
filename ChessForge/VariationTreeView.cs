@@ -321,7 +321,20 @@ namespace ChessForge
                 }
             }
 
+            Paragraph guessFinished = BuildGuessingFinishedParagraph();
+            {
+                if (guessFinished != null)
+                {
+                    Document.Blocks.Add(guessFinished);
+                }
+            }
+
             RemoveEmptyParagraphs();
+        }
+
+        virtual public Paragraph BuildGuessingFinishedParagraph()
+        {
+            return null;
         }
 
         /// <summary>
@@ -329,31 +342,9 @@ namespace ChessForge
         /// prompt the user to start entering them.
         /// </summary>
         /// <returns></returns>
-        public Paragraph BuildYourMovePrompt()
+        virtual public Paragraph BuildYourMovePrompt()
         {
-            Paragraph para = null;
-
-            if ((_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS
-                || _mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
-                && _shownVariationTree.Nodes.Count == 1)
-            {
-                para = CreateParagraph("0", true);
-
-                Run r = new Run();
-                r.Foreground = Brushes.DarkGreen;
-                if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS)
-                {
-                    r.Text = "   Enter your analysis by making moves on the main chessboard.";
-                }
-                else
-                {
-                    r.Text = "   Start guessing moves.\n   Make them on the main chessboard.";
-                }
-
-                para.Inlines.Add(r);
-            }
-            return para;
-
+            return null;
         }
 
         /// <summary>

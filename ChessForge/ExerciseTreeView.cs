@@ -37,6 +37,43 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// If this is an Exercise view in the solving mode and there are no moves yet,
+        /// prompt the user to start entering them.
+        /// </summary>
+        /// <returns></returns>
+        override public Paragraph BuildYourMovePrompt()
+        {
+            if (SolvingManager.SolvingStarted)
+            {
+                return null;
+            }
+
+            Paragraph para = null;
+
+            if ((_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS
+                || _mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
+                && _shownVariationTree.Nodes.Count == 1)
+            {
+                para = CreateParagraph("0", true);
+
+                Run r = new Run();
+                r.Foreground = Brushes.DarkGreen;
+                if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS)
+                {
+                    r.Text = "   Enter your analysis by making moves on the main chessboard.";
+                }
+                else
+                {
+                    r.Text = "   Start guessing moves.\n   Make them on the main chessboard.";
+                }
+
+                para.Inlines.Add(r);
+            }
+            return para;
+        }
+
+
+        /// <summary>
         /// Sets up visibility of the controls
         /// in the Solving Panel
         /// </summary>
@@ -132,6 +169,28 @@ namespace ChessForge
         public ExerciseTreeView(FlowDocument doc, MainWindow mainWin, GameData.ContentType contentType, int entityIndex)
             : base(doc, mainWin, contentType, entityIndex)
         {
+        }
+
+        /// <summary>
+        /// Appends this paragraph to the document to advise the user that the
+        /// solving is over.
+        /// </summary>
+        override public Paragraph BuildGuessingFinishedParagraph()
+        {
+            if (SolvingManager.IsGuessingFinished)
+            {
+                Paragraph para = CreateParagraph("1", true);
+
+                Run r = new Run("Congratulations! You have completed the guessing exercise.");
+                r.Foreground = Brushes.DarkGreen;
+                para.Inlines.Add(r);
+
+                return para;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -309,7 +368,7 @@ namespace ChessForge
         private void PopulateSolvingPanel(Canvas canvas)
         {
             int leftMargin = 280;
-            int topMargin = 56;
+            int topMargin = 50;
 
             if (_mainVariationTree != null && _mainVariationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
             {
