@@ -298,6 +298,12 @@
     <Resource Include="ChessForge2.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Sounds\Buzz.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\WrongMove.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Images\Stop.png" />
     <Resource Include="Resources\Images\BlackPromo.png" />
     <Resource Include="Resources\Images\WhitePromo.png" />
