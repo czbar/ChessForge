@@ -349,7 +349,11 @@ namespace ChessForge
                     if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
                     {
                         nd.IsNewUserMove = true;
-                        AppStateManager.IsDirty = true;
+                        if (AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.GUESS_MOVE
+                            && AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.ANALYSIS)
+                        {
+                            AppStateManager.IsDirty = true;
+                        }
                     }
                     else
                     {
