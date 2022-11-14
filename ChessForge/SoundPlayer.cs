@@ -19,6 +19,10 @@ namespace ChessForge
         // plays a move-with-capture sound
         private static MediaPlayer _soundCapture = new MediaPlayer();
 
+        // plays the Wormg Move soound
+        private static MediaPlayer _soundWrongMove = new MediaPlayer();
+        
+
         // indicates if the players have been initialized yet
         private static bool _isInitialized = false;
 
@@ -29,6 +33,7 @@ namespace ChessForge
         {
             _soundMove.Open(new Uri("Resources/Sounds/Move.mp3", UriKind.Relative));
             _soundCapture.Open(new Uri("Resources/Sounds/Capture.mp3", UriKind.Relative));
+            _soundWrongMove.Open(new Uri("Resources/Sounds/Buzz.mp3", UriKind.Relative));
         }
 
         /// <summary>
@@ -63,5 +68,22 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Playes the wormg move (error) sound.
+        /// </summary>
+        public static void PlayWrongMoveSound()
+        {
+            if (!_isInitialized)
+            {
+                Initialize();
+                _isInitialized = true;
+            }
+
+            _soundWrongMove.Dispatcher.Invoke(() =>
+            {
+                _soundWrongMove.Position = TimeSpan.FromMilliseconds(0);
+                _soundWrongMove.Play();
+            });
+        }
     }
 }
