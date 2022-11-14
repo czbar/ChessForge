@@ -43,7 +43,7 @@ namespace ChessForge
         /// <returns></returns>
         override public Paragraph BuildYourMovePrompt()
         {
-            if (SolvingManager.SolvingStarted)
+            if (_mainWin.ActiveGameUnit != null && _mainWin.ActiveGameUnit.Solver != null && _mainWin.ActiveGameUnit.Solver.SolvingStarted)
             {
                 return null;
             }
@@ -177,7 +177,7 @@ namespace ChessForge
         /// </summary>
         override public Paragraph BuildGuessingFinishedParagraph()
         {
-            if (SolvingManager.IsGuessingFinished)
+            if (_mainWin.ActiveGameUnit != null && _mainWin.ActiveGameUnit.Solver != null && _mainWin.ActiveGameUnit.Solver.IsGuessingFinished)
             {
                 Paragraph para = CreateParagraph("1", true);
 

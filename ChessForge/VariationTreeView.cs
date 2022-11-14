@@ -235,7 +235,7 @@ namespace ChessForge
             GameData.ContentType contentType = GameData.ContentType.NONE;
             if (_contentType == GameData.ContentType.STUDY_TREE)
             {
-                _mainVariationTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree;
+                _mainVariationTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree;
             }
             else
             {
@@ -522,8 +522,8 @@ namespace ChessForge
 
                 VariationTree treeFromGame = new VariationTree(GameData.ContentType.GENERIC);
                 treeFromGame.CreateNew(lstNodes);
-                VariationTree merged = WorkbookTreeMerge.MergeWorkbooks(WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree, treeFromGame);
-                WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree = merged;
+                VariationTree merged = WorkbookTreeMerge.MergeWorkbooks(WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, treeFromGame);
+                WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree = merged;
 
                 AppStateManager.IsDirty = true;
             }

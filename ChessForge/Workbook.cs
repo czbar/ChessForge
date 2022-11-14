@@ -251,6 +251,30 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the Active Tree which
+        /// is the Active Tree of the active chapter.
+        /// </summary>
+        public GameUnit ActiveGameUnit
+        {
+            get
+            {
+                if (_activeChapter == null)
+                {
+                    SelectDefaultActiveChapter();
+                }
+
+                if (_activeChapter == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return _activeChapter.ActiveGameUnit;
+                }
+            }
+        }
+
+        /// <summary>
         /// Returns the Content Type of the current tab.
         /// </summary>
         public GameData.ContentType ActiveContentType
@@ -373,8 +397,8 @@ namespace ChessForge
         public Chapter CreateNewChapter()
         {
             Chapter chapter = new Chapter();
-            chapter.StudyTree = new VariationTree(GameData.ContentType.STUDY_TREE);
-            chapter.StudyTree.CreateNew();
+            chapter.StudyTree = new GameUnit(GameData.ContentType.STUDY_TREE);
+            chapter.StudyTree.Tree.CreateNew();
             //TODO: we need to have a chapter specific version of SetupGuiForNewSession 
             chapter.Id = GenerateChapterId();
 
@@ -391,8 +415,7 @@ namespace ChessForge
         public Chapter CreateNewChapter(VariationTree tree, bool makeActive = true)
         {
             Chapter chapter = new Chapter();
-            chapter.StudyTree = tree;
-//            chapter.Id = 1;
+            chapter.StudyTree = new GameUnit(tree);
             chapter.Id = GenerateChapterId();
 
             Chapters.Add(chapter);

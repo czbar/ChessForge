@@ -273,9 +273,16 @@ namespace ChessForge
                     AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveTreeView, AppStateManager.MainWin.ActiveLine.GetLineId(), AppStateManager.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
                 }
 
-                if (SolvingManager.GetAppSolvingMode() == VariationTree.SolvingMode.GUESS_MOVE)
+                try
                 {
-                    AppStateManager.MainWin.Timers.Start(AppTimers.TimerId.SOLVING_GUESS_MOVE_MADE);
+                    if (AppStateManager.MainWin.ActiveGameUnit.Solver.GetAppSolvingMode() == VariationTree.SolvingMode.GUESS_MOVE)
+                    {
+                        AppStateManager.MainWin.Timers.Start(AppTimers.TimerId.SOLVING_GUESS_MOVE_MADE);
+                    }
+                }
+                catch 
+                {
+                    return false;
                 }
 
                 return true;

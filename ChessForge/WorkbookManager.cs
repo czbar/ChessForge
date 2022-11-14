@@ -604,7 +604,7 @@ namespace ChessForge
             SessionWorkbook = new Workbook();
             Chapter chapter = SessionWorkbook.CreateDefaultChapter();
 
-            int processedGames = MergeGames(ref chapter.StudyTree, ref games);
+            int processedGames = MergeGames(ref chapter.StudyTree.Tree, ref games);
 
             if (processedGames == 0)
             {
@@ -695,7 +695,7 @@ namespace ChessForge
                                 try
                                 {
                                     // special treatment for the first one
-                                    PgnGameParser pgp = new PgnGameParser(games[i].GameText, WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree, out bool multi);
+                                    PgnGameParser pgp = new PgnGameParser(games[i].GameText, WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, out bool multi);
                                 }
                                 catch (Exception ex)
                                 {

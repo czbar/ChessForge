@@ -458,7 +458,7 @@ namespace ChessForge
                 int gamesCount = WorkbookManager.ReadPgnFile(fileName, ref games, GameData.ContentType.GENERIC);
                 if (gamesCount > 0)
                 {
-                    int processedGames = WorkbookManager.MergeGames(ref chapter.StudyTree, ref games);
+                    int processedGames = WorkbookManager.MergeGames(ref chapter.StudyTree.Tree, ref games);
                     if (processedGames == 0)
                     {
                         MessageBox.Show("No valid games found. No new chapter has been created.", "PGN Import", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -564,7 +564,7 @@ namespace ChessForge
 
                 if (index > 0 && index < gameCount)
                 {
-                    VariationTree hold = chapter.ModelGames[index];
+                    GameUnit hold = chapter.ModelGames[index];
                     chapter.ModelGames[index] = chapter.ModelGames[index - 1];
                     chapter.ModelGames[index - 1] = hold;
                     chapter.ActiveModelGameIndex = index - 1;
@@ -594,7 +594,7 @@ namespace ChessForge
 
                 if (index > 0 && index < exerciseCount)
                 {
-                    VariationTree hold = chapter.Exercises[index];
+                    GameUnit hold = chapter.Exercises[index];
                     chapter.Exercises[index] = chapter.Exercises[index - 1];
                     chapter.Exercises[index - 1] = hold;
                     chapter.ActiveExerciseIndex = index - 1;
@@ -625,7 +625,7 @@ namespace ChessForge
 
                 if (index >= 0 && index < gameCount - 1)
                 {
-                    VariationTree hold = chapter.ModelGames[index];
+                    GameUnit hold = chapter.ModelGames[index];
                     chapter.ModelGames[index] = chapter.ModelGames[index + 1];
                     chapter.ModelGames[index + 1] = hold;
                     chapter.ActiveModelGameIndex = index + 1;
@@ -655,7 +655,7 @@ namespace ChessForge
 
                 if (index >= 0 && index < exerciseCount - 1)
                 {
-                    VariationTree hold = chapter.Exercises[index];
+                    GameUnit hold = chapter.Exercises[index];
                     chapter.Exercises[index] = chapter.Exercises[index + 1];
                     chapter.Exercises[index + 1] = hold;
                     chapter.ActiveExerciseIndex = index + 1;
@@ -855,7 +855,7 @@ namespace ChessForge
                 {
                     VariationTree tree = TreeUtils.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                    CopyHeaderFromGame(tree, chapter.StudyTree.Header);
+                    CopyHeaderFromGame(tree, chapter.StudyTree.Tree.Header);
                     if (string.IsNullOrEmpty(tree.Header.GetEventName(out _)))
                     {
                         tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, "Study Tree after " + MoveUtils.BuildSingleMoveText(nd, true, true));
@@ -964,7 +964,7 @@ namespace ChessForge
                 int index = chapter.ActiveExerciseIndex;
                 if (index >= 0)
                 {
-                    VariationTree tree = chapter.Exercises[index];
+                    VariationTree tree = chapter.Exercises[index].Tree;
                     PositionSetupDialog dlg = new PositionSetupDialog(tree)
                     {
                         Left = ChessForgeMain.Left + 100,
@@ -975,7 +975,7 @@ namespace ChessForge
                     dlg.ShowDialog();
                     if (dlg.ExitOK)
                     {
-                        chapter.Exercises[index] = dlg.FixedTree;
+                        chapter.Exercises[index].Tree = dlg.FixedTree;
                         //chapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, index);
                         //_exerciseTreeView.BuildFlowDocumentForVariationTree();
                         SelectExercise(index, false);
@@ -1971,7 +1971,7 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 if (chapter.ActiveModelGameIndex >= 0)
                 {
-                    string gameTitle = chapter.ModelGames[chapter.ActiveModelGameIndex].Header.BuildGameHeaderLine();
+                    string gameTitle = chapter.ModelGames[chapter.ActiveModelGameIndex].Tree.Header.BuildGameHeaderLine();
                     if (MessageBox.Show("Delete this Game?\n\n  " + gameTitle, "Delete Model Game", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         DeleteModelGame(chapter.ActiveModelGameIndex);
@@ -2011,7 +2011,7 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 if (chapter.ActiveExerciseIndex >= 0)
                 {
-                    string exerciseTitle = chapter.Exercises[chapter.ActiveExerciseIndex].Header.BuildGameHeaderLine();
+                    string exerciseTitle = chapter.Exercises[chapter.ActiveExerciseIndex].Tree.Header.BuildGameHeaderLine();
                     if (MessageBox.Show("Delete this Exercise?\n\n  " + exerciseTitle, "Delete Exercise", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         DeleteExercise(chapter.ActiveExerciseIndex);
@@ -2080,7 +2080,7 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
-                VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames[chapter.ActiveModelGameIndex];
+                VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames[chapter.ActiveModelGameIndex].Tree;
                 var dlg = new GameHeaderDialog(game, "Game Header")
                 {
                     Left = ChessForgeMain.Left + 100,
@@ -2114,7 +2114,7 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
-                VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.Exercises[chapter.ActiveExerciseIndex];
+                VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.Exercises[chapter.ActiveExerciseIndex].Tree;
                 var dlg = new GameHeaderDialog(game, "Exercise Header")
                 {
                     Left = ChessForgeMain.Left + 100,

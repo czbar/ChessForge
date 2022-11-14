@@ -134,7 +134,7 @@ namespace ChessForge
         /// <returns></returns>
         private static string BuildStudyTreeText(Chapter chapter, int chapterIndex)
         {
-            VariationTree tree = chapter.StudyTree;
+            VariationTree tree = chapter.StudyTree.Tree;
             if (tree != null && tree.Nodes.Count >= 1)
             {
                 string headerText = BuildStudyTreeHeaderText(chapter);
@@ -177,11 +177,11 @@ namespace ChessForge
             StringBuilder sb = new StringBuilder();
             StringBuilder sbOutput = new StringBuilder();
 
-            foreach (VariationTree tree in chapter.ModelGames)
+            foreach (GameUnit unit in chapter.ModelGames)
             {
-                string headerText = BuildModelGameHeaderText(chapter, tree);
+                string headerText = BuildModelGameHeaderText(chapter, unit.Tree);
 
-                TreeNode root = tree.Nodes[0];
+                TreeNode root = unit.Tree.Nodes[0];
 
                 // There may be a comment or command before the first move. Add if so.
                 _fileText.Append(BuildCommandAndCommentText(root));
@@ -191,7 +191,7 @@ namespace ChessForge
                 sbOutput.Append(headerText + DivideLine(sb.ToString(), 80));
 
                 // add result
-                sbOutput.Append(" " + tree.Header.GetResult(out _));
+                sbOutput.Append(" " + unit.Tree.Header.GetResult(out _));
                 sbOutput.AppendLine();
                 sbOutput.AppendLine();
 
@@ -215,11 +215,11 @@ namespace ChessForge
             StringBuilder sb = new StringBuilder();
             StringBuilder sbOutput = new StringBuilder();
 
-            foreach (VariationTree tree in chapter.Exercises)
+            foreach (GameUnit unit in chapter.Exercises)
             {
-                string headerText = BuildExercisesHeaderText(chapter, tree);
+                string headerText = BuildExercisesHeaderText(chapter, unit.Tree);
 
-                TreeNode root = tree.Nodes[0];
+                TreeNode root = unit.Tree.Nodes[0];
 
                 // There may be a comment or command before the first move. Add if so.
                 _fileText.Append(BuildCommandAndCommentText(root));
@@ -229,7 +229,7 @@ namespace ChessForge
                 sbOutput.Append(headerText + DivideLine(sb.ToString(), 80));
 
                 // add result
-                sbOutput.Append(" " + tree.Header.GetResult(out _));
+                sbOutput.Append(" " + unit.Tree.Header.GetResult(out _));
                 sbOutput.AppendLine();
                 sbOutput.AppendLine();
 
@@ -255,7 +255,7 @@ namespace ChessForge
 
             sb.Append(BuildCommonGameHeaderText(chapter));
 
-            VariationTree tree = chapter.StudyTree;
+            VariationTree tree = chapter.StudyTree.Tree;
 
             value = tree.Header.GetContentTypeString(out key, PgnHeaders.VALUE_STUDY_TREE);
             sb.AppendLine(PgnHeaders.BuildHeaderLine(key, value));
