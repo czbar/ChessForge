@@ -759,6 +759,11 @@ namespace ChessForge
         /// <param name="lineId"></param>
         public void SelectLineAndMove(string lineId, int nodeId)
         {
+            if (!IsSelectionEnabled())
+            {
+                return;
+            }
+
             if (_shownVariationTree.ShowTreeLines)
             {
                 try
@@ -1778,6 +1783,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Whether move/node selection is allowed in the current mode.
+        /// </summary>
+        /// <returns></returns>
+        virtual protected bool IsSelectionEnabled()
+        {
+            return true;
+        }
+
+        /// <summary>
         /// Select a Run.
         /// </summary>
         /// <param name="r"></param>
@@ -1785,6 +1799,11 @@ namespace ChessForge
         /// <param name="changedButton"></param>
         private void SelectRun(Run r, int clickCount, MouseButton changedButton)
         {
+            if (!IsSelectionEnabled())
+            {
+                return;
+            }
+
             if (clickCount == 2)
             {
                 if (r != null)
@@ -1897,6 +1916,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventCommentRunClicked(object sender, MouseButtonEventArgs e)
         {
+            if (!IsSelectionEnabled())
+            {
+                return;
+            }
+
             if (e.ClickCount == 2)
             {
                 Run r = (Run)e.Source;
@@ -1906,11 +1930,6 @@ namespace ChessForge
                 if (_mainWin.InvokeAnnotationsDialog(nd))
                 {
                     InsertOrUpdateCommentRun(nd);
-                    //r.Text = BuildCommentRunText(nd);
-                    //if (string.IsNullOrEmpty(r.Text))
-                    //{
-                    //    RemoveRunFromHostingParagraph(r);
-                    //}
                 }
             }
         }
