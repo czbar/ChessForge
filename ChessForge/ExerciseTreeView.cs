@@ -33,6 +33,16 @@ namespace ChessForge
             if (_mainVariationTree.AssociatedSecondary != null)
             {
                 _mainVariationTree.AssociatedSecondary.CurrentSolvingMode = mode;
+                if (mode == VariationTree.SolvingMode.ANALYSIS)
+                {
+                    // calculate available points
+                    _mainWin.ActiveGameUnit.Solver.CalculateAvailableQuizPoints(_mainVariationTree);
+                }
+            }
+            if (mode != VariationTree.SolvingMode.ANALYSIS)
+            {
+                _mainWin.ActiveGameUnit.Solver.ResetQuizPoints();
+                _mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted = false;
             }
         }
 
@@ -54,22 +64,96 @@ namespace ChessForge
                 || _mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
                 && _shownVariationTree.Nodes.Count == 1)
             {
-                para = CreateParagraph("0", true);
+                para = CreateParagraph("1", true);
 
                 Run r = new Run();
                 r.Foreground = Brushes.DarkGreen;
                 if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS)
                 {
-                    r.Text = "   Enter your analysis by making moves on the main chessboard.";
+                    r.Text = "Enter your analysis by making moves on the main chessboard.";
                 }
                 else
                 {
-                    r.Text = "   Start guessing moves.\n   Make them on the main chessboard.";
+                    r.Text = "Start guessing moves.  Make them on the main chessboard.";
                 }
+                r.FontStyle = FontStyles.Italic;
 
                 para.Inlines.Add(r);
             }
             return para;
+        }
+
+        /// <summary>
+        /// If this is an Exercise view in the ANALYSIS solving mode 
+        /// and there are quiz points to be awarded,
+        /// advise the user.
+        /// </summary>
+        /// <returns></returns>
+        override public Paragraph BuildQuizInfoPara()
+        {
+            if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS)
+            {
+                int mainQuizPoints = _mainWin.ActiveGameUnit.Solver.MainQuizPoints;
+                int sideLineQuizPoints = _mainWin.ActiveGameUnit.Solver.SideLineQuizPoints;
+
+                if (_mainVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.ANALYSIS
+                    || (mainQuizPoints == 0 && sideLineQuizPoints == 0))
+                {
+                    return null;
+                }
+
+                Paragraph para = null;
+
+                para = CreateParagraph("1", true);
+
+                Run r = new Run();
+                r.Foreground = Brushes.Black;
+                if (mainQuizPoints + sideLineQuizPoints != 1)
+                {
+                    r.Text = "There are " + (mainQuizPoints + sideLineQuizPoints).ToString() + " quiz points available in this exercise. ";
+                }
+                else
+                {
+                    r.Text = "There is 1 quiz point available in this exercise. ";
+                }
+
+                if (sideLineQuizPoints != 0)
+                {
+                    if (sideLineQuizPoints != 1)
+                    {
+                        r.Text += "That includes " + sideLineQuizPoints.ToString() + " quiz points in a sideline.";
+                    }
+                    else
+                    {
+                        r.Text += "That includes 1 quiz point in a sideline.";
+                    }
+                }
+                r.TextDecorations = TextDecorations.Underline;
+                para.Inlines.Add(r);
+
+                if (_mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted)
+                {
+                    Run rScore = new Run();
+                    rScore.Text = "\nYou have scored " + _mainWin.ActiveGameUnit.Solver.PointsScored.ToString();
+                    if (_mainWin.ActiveGameUnit.Solver.PointsScored == 1)
+                    {
+                        rScore.Text += " point.";
+                    }
+                    else
+                    {
+                        rScore.Text += " points.";
+                    }
+                    rScore.FontWeight= FontWeights.Bold;
+                    para.Inlines.Add(rScore);
+                }
+
+
+                return para;
+            }
+            else
+            {
+                return null;
+            }
         }
 
 
@@ -83,7 +167,9 @@ namespace ChessForge
 
             if (mode == VariationTree.SolvingMode.GUESS_MOVE || mode == VariationTree.SolvingMode.ANALYSIS)
             {
-                if (_mainWin.ActiveGameUnit.Solver.SolvingFinished)
+                if (_mainWin.ActiveGameUnit.Solver.SolvingFinished
+                    ||
+                    mode == VariationTree.SolvingMode.ANALYSIS && _mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted)
                 {
                     _gbSolvingPanel.Header = "Solving Completed";
                 }
@@ -97,7 +183,9 @@ namespace ChessForge
                 _lblGuessMove.Visibility = Visibility.Collapsed;
                 _lblAnalysis.Visibility = Visibility.Collapsed;
 
-                if (mode == VariationTree.SolvingMode.ANALYSIS)
+                if (mode == VariationTree.SolvingMode.ANALYSIS
+                    &&
+                    !_mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted)
                 {
                     _btnSubmitAnalysis.Visibility = Visibility.Visible;
                     _lblSubmitAnalysis.Visibility = Visibility.Visible;
@@ -415,7 +503,8 @@ namespace ChessForge
                 AddSolvingButton(canvas, VariationTree.SolvingMode.ANALYSIS, 15 + leftMargin, 77 + topMargin);
                 AddSolvingButtonLabel(canvas, VariationTree.SolvingMode.ANALYSIS, 57 + leftMargin, 79 + topMargin);
 
-                if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
+                if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE
+                    || _mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS && _mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted)
                 {
                     AddExitButton(canvas, 15 + leftMargin, 32 + topMargin);
                     AddExitButtonLabel(canvas, 57 + leftMargin, 37 + topMargin);
@@ -498,8 +587,8 @@ namespace ChessForge
             Canvas.SetLeft(btn, left);
             Canvas.SetTop(btn, top);
 
-            btn.PreviewMouseDown += UiBtnGuessMoveDown_Click;
-            btn.PreviewMouseUp += UiBtnGuessMoveUp_Click;
+            btn.PreviewMouseDown += UiBtnSubmitDown_Click;
+            //            btn.PreviewMouseUp += UiBtnGuessMoveUp_Click;
             _btnSubmitAnalysis = btn;
 
             return btn;
@@ -515,7 +604,9 @@ namespace ChessForge
         {
             _gbSolvingPanel = new GroupBox();
             _gbSolvingPanel.Margin = new Thickness(left, top, 0, 0);
-            if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
+            if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE
+                ||
+                _mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS && _mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted)
             {
                 _gbSolvingPanel.Height = 80;
             }
@@ -658,8 +749,6 @@ namespace ChessForge
         {
             try
             {
-                SetSolvingMode(mode);
-
                 if (_mainVariationTree.AssociatedSecondary == null)
                 {
                     _mainVariationTree.AssociatedSecondary = new VariationTree(GameData.ContentType.EXERCISE, _mainVariationTree.RootNode.CloneMe(true));
@@ -670,6 +759,8 @@ namespace ChessForge
 
                 _mainVariationTree.IsAssociatedTreeActive = true;
                 _shownVariationTree.ShowTreeLines = true;
+
+                SetSolvingMode(mode);
 
                 string lineId = _shownVariationTree.SelectedLineId;
                 if (string.IsNullOrEmpty(lineId))
@@ -790,6 +881,52 @@ namespace ChessForge
         {
         }
 
+        /// <summary>
+        /// The user submitted their solution. Check the score and save.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnSubmitDown_Click(object sender, RoutedEventArgs e)
+        {
+            // for all nodes in the main tree that have quiz points assigned, look for an identical node in the solution
+            // and update the comment if found
+            int pointsScored = 0;
+            FindMoveInSolution(_mainVariationTree.RootNode, ref pointsScored);
+            _mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted = true;
+            _mainWin.ActiveGameUnit.Solver.PointsScored = pointsScored;
+
+            BuildFlowDocumentForVariationTree();
+        }
+
+        /// <summary>
+        /// Recursively find the nodes in the solution that correspond to the scoring nodes
+        /// in the exercise.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="pointsScored"></param>
+        private void FindMoveInSolution(TreeNode node, ref int pointsScored)
+        {
+            TreeNode found = _mainVariationTree.AssociatedSecondary.FindIdenticalNode(node, false);
+            if (found != null && node.QuizPoints != 0)
+            {
+                int quizPoints = node.QuizPoints;
+                pointsScored += quizPoints;
+                found.Comment = quizPoints.ToString();
+                if (quizPoints == 1)
+                {
+                    found.Comment += " point";
+                }
+                else
+                {
+                    found.Comment += " points";
+                }
+            }
+
+            foreach (TreeNode child in node.Children)
+            {
+                FindMoveInSolution(child, ref pointsScored);
+            }
+        }
 
         //****************************************************************
         //
