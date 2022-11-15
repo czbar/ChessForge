@@ -564,6 +564,7 @@ namespace ChessForge
             if (nd.IsBookmark
                 || !string.IsNullOrEmpty(nd.Comment)
                 || !string.IsNullOrEmpty(nd.EngineEvaluation)
+                || nd.QuizPoints != 0
                 || !string.IsNullOrEmpty(nd.Arrows)
                 || !string.IsNullOrEmpty(nd.Circles)
                 || nd.UnprocessedChfCommands.Count > 0)
@@ -583,6 +584,13 @@ namespace ChessForge
                 if (!string.IsNullOrEmpty(nd.EngineEvaluation))
                 {
                     string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ENGINE_EVALUATION_V2) + " " + nd.EngineEvaluation;
+                    sb.Append("[" + sCmd + "]");
+                }
+
+                // Process the Quiz command
+                if (nd.QuizPoints != 0)
+                {
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.QUIZ_POINTS) + " " + nd.QuizPoints;
                     sb.Append("[" + sCmd + "]");
                 }
 

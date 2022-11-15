@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,6 +20,11 @@ namespace ChessForge
         /// Comment for the move for which this dialog was invoked.
         /// </summary>
         public string Comment { get; set; }
+
+        /// <summary>
+        /// Quiz points
+        /// </summary>
+        public int QuizPoints { get; set; }
 
         /// <summary>
         /// NAGs string for the position.
@@ -43,6 +49,7 @@ namespace ChessForge
             SetMoveButtons(nd.Nags);
             Nags = nd.Nags;
             UiTbComment.Text = nd.Comment ?? "";
+            UiTbQuizPoints.Text = nd.QuizPoints == 0 ? "" : nd.QuizPoints.ToString();
         }
 
         /// <summary>
@@ -204,9 +211,41 @@ namespace ChessForge
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
             Comment = UiTbComment.Text;
+            QuizPoints = ParseQuizPoints(UiTbQuizPoints.Text);
             BuildNagsString();
             ExitOk = true;
             Close();
+        }
+
+        /// <summary>
+        /// Converts the content of the Quiz Points text box into an integer.
+        /// </summary>
+        /// <param name="pts"></param>
+        /// <returns></returns>
+        private int ParseQuizPoints(string pts)
+        {
+            if (string.IsNullOrWhiteSpace(pts))
+            {
+                return 0;
+            }
+            else 
+            {
+                if (int.TryParse(pts, out int quizPoints))
+                {
+                    if (quizPoints > 100 || quizPoints < 0)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return quizPoints;
+                    }
+                }
+                else
+                {
+                    return 0;
+                }
+            }
         }
 
         /// <summary>
@@ -307,6 +346,16 @@ namespace ChessForge
             UiRbBlackBetter.IsChecked = false;
             UiRbWhiteWin.IsChecked = false;
             UiRbBlackWin.IsChecked = false;
+        }
+
+        /// <summary>
+        /// Links to the relevant Wiki page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Annotation-Editor");
         }
     }
 }

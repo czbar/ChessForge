@@ -22,6 +22,7 @@ namespace GameTree
             BOOKMARK_V2,
             ENGINE_EVALUATION,
             ENGINE_EVALUATION_V2,
+            QUIZ_POINTS,
 
             ARROWS,
             CIRCLES
@@ -32,10 +33,11 @@ namespace GameTree
         /// </summary>
         private static Dictionary<string, Command> _dictCommands = new Dictionary<string, Command>()
         {
-            ["%chf-bkm"] = Command.BOOKMARK,
+            ["%chf-bkm"] = Command.BOOKMARK,           // DEPRECATED
             ["%bkm"] = Command.BOOKMARK_V2,
-            ["%chf-eev"] = Command.ENGINE_EVALUATION,
+            ["%chf-eev"] = Command.ENGINE_EVALUATION,  // DEPRECATED
             ["%eval"] = Command.ENGINE_EVALUATION_V2,
+            ["%quiz"] = Command.QUIZ_POINTS,
 
             ["%csl"] = Command.CIRCLES,
             ["%cal"] = Command.ARROWS
