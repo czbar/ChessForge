@@ -14,16 +14,59 @@ namespace ChessForge
     /// </summary>
     public class SolvingManager
     {
+        // Quiz points available in the main line.
+        private int _mainQuizPoints = 0;
+
+        // Quiz points available in sidelines.
+        private int _sideLineQuizPoints = 0;
+
+        // Points scored in the solution.
+        private int _pointsScored = 0;
+
+        /// <summary>
+        /// Quiz points available in the main line.
+        /// </summary>
+        public int MainQuizPoints
+        {
+            get => _mainQuizPoints;
+            set => _mainQuizPoints = value;
+        }
+
+        /// <summary>
+        /// Quiz points available in sidelines.
+        /// </summary>
+        public int SideLineQuizPoints
+        {
+            get => _sideLineQuizPoints;
+            set => _sideLineQuizPoints = value;
+        }
+
+        /// <summary>
+        /// Points scored in the solution.
+        /// </summary>
+        public int PointsScored
+        {
+            get => _pointsScored;
+            set => _pointsScored = value;
+        }
+
         // whether the guessing exercise is finished
         private bool _guessingFinished = false;
 
-        // whether the solving has started yet
+        /// <summary>
+        // Whether the solving has started yet
+        /// </summary>
         public bool SolvingStarted { get; set; }
+
+        /// <summary>
+        /// Whether solution has been submitted.
+        /// </summary>
+        public bool IsAnalysisSubmitted { get; set; }
 
         /// <summary>
         /// Whether the solving has been completed
         /// </summary>
-        public bool SolvingFinished 
+        public bool SolvingFinished
         {
             get
             {
@@ -47,18 +90,25 @@ namespace ChessForge
         /// <returns></returns>
         public bool IsMovingAllowed()
         {
-            if (AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.GUESS_MOVE)
+            if (AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
             {
-                return AppStateManager.MainWin.ActiveVariationTree.ShowTreeLines;
-            }
-            else
-            {
-                return
-                AppStateManager.MainWin.ActiveLine.IsLastMoveSelected()
+                bool awaitingMoveinGuessMode = 
+                    AppStateManager.MainWin.ActiveLine.IsLastMoveSelected()
                     && AppStateManager.MainWin.ActiveLine.GetStartingColor() == AppStateManager.MainWin.ActiveLine.GetLastNode().ColorToMove
                     && !_guessingFinished;
-
-                //TODO or there are no more moves
+                return awaitingMoveinGuessMode;
+            }
+            else 
+            {
+                if (AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS
+                    && IsAnalysisSubmitted)
+                {
+                    return false;
+                }
+                else
+                {
+                    return AppStateManager.MainWin.ActiveVariationTree.ShowTreeLines;
+                }
             }
         }
 
@@ -149,6 +199,64 @@ namespace ChessForge
                 {
                     AppStateManager.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
                 });
+            }
+        }
+
+        /// <summary>
+        /// Calculates quiz points available in the exercise.
+        /// The "main line" points are those specified for the moves of the
+        /// solving side where the move is the first child of its parent (LineId is "1").
+        /// The "side line" points are those specified for the moves of the
+        /// solving side where the move is not the first child of its parent i.e.
+        /// the solver must find alternative response from the opponent.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="sideLine"></param>
+        /// <returns></returns>
+        public int CalculateAvailableQuizPoints(VariationTree tree)
+        {
+            PieceColor sideToMove = tree.RootNode.ColorToMove;
+            TreeNode node = tree.RootNode;
+            int mainPoints = 0;
+            CountQuizPoints(node, sideToMove, ref _mainQuizPoints, ref _sideLineQuizPoints);
+
+            return mainPoints;
+        }
+
+        /// <summary>
+        /// Resets all quiz related data.
+        /// </summary>
+        public void ResetQuizPoints()
+        {
+            _mainQuizPoints = 0;
+            _sideLineQuizPoints = 0;
+            _pointsScored= 0;
+        }
+
+        /// <summary>
+        /// Recursively count available quiz points.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="sideToMove"></param>
+        /// <param name="main"></param>
+        /// <param name="side"></param>
+        private void CountQuizPoints(TreeNode node, PieceColor sideToMove, ref int main, ref int side)
+        {
+            if (node.Parent != null && node.Parent.ColorToMove == sideToMove && node.QuizPoints != 0)
+            {
+                // if (node.Parent.Children[0].NodeId == node.NodeId)
+                if (node.IsMainLine())
+                {
+                    main += node.QuizPoints;
+                }
+                else
+                {
+                    side += node.QuizPoints;
+                }
+            }
+            foreach (TreeNode child in node.Children)
+            {
+                CountQuizPoints(child, sideToMove, ref main, ref side);
             }
         }
 
