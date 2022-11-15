@@ -232,7 +232,7 @@ namespace ChessForge
             {
                 if (int.TryParse(pts, out int quizPoints))
                 {
-                    if (quizPoints > 100 || quizPoints < -100)
+                    if (quizPoints > 100 || quizPoints < 0)
                     {
                         return 0;
                     }
