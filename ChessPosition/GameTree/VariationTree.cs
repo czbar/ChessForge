@@ -362,6 +362,15 @@ namespace GameTree
                             nd.EngineEvaluation = tokens[1];
                         }
                         break;
+                    case ChfCommands.Command.QUIZ_POINTS:
+                        if (tokens.Length > 1)
+                        {
+                            if (int.TryParse(tokens[1], out int pts))
+                            {
+                                nd.QuizPoints = pts;
+                            }
+                        }
+                        break;
                     case ChfCommands.Command.ARROWS:
                         if (tokens.Length > 1)
                         {

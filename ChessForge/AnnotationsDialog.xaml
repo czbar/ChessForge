@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="Annotations" Height="350" Width="630">
+        Title="Annotations" Height="320" Width="600">
     <Grid Margin="0,0,0,0">
         <GroupBox x:Name="UiGbMove" Header="Move" Margin="28,15" Width="65" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top">
             <StackPanel Margin="0,0,0,0" HorizontalAlignment="Center" >
@@ -31,10 +31,14 @@
                 <Button x:Name="UiBtnClearEval" Margin="0,7" Content="Clear" Click="UiBtnClearPosition_Click"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="UiGbComment" Header="Comment" Margin="201,15,0,0" Width="400" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBox x:Name="UiTbComment" HorizontalAlignment="Left" Margin="14,10" TextWrapping="Wrap" Text="" Width="360" Height="202" VerticalAlignment="Top" />
+        <GroupBox x:Name="UiGbComment" Header="Comment" Margin="201,15,0,0" Width="370" Height="198" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBox x:Name="UiTbComment" HorizontalAlignment="Left" Margin="14,10" TextWrapping="Wrap" Text="" Width="330" Height="150" VerticalAlignment="Top" />
         </GroupBox>
-        <Button x:Name="UiBtnOk" Content="OK" Width="80" HorizontalAlignment="Center" Margin="0,280,100,0" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" Content="Cancel" Width="80" HorizontalAlignment="Center" Margin="100,280,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnOk" Content="OK" Width="70" HorizontalAlignment="Left" Margin="304,237,0,0" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" Content="Cancel" Width="70" HorizontalAlignment="Left" Margin="390,237,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnHelp" Content="Help" Width="70" HorizontalAlignment="Left" Margin="495,237,0,0" VerticalAlignment="Top" Click="UiBtnHelp_Click" />
+        <GroupBox x:Name="UiGbQuizPoints" Header="Quiz Points" Margin="201,215,0,0" Width="85" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left"   >
+            <TextBox x:Name="UiTbQuizPoints" HorizontalAlignment="Left" Margin="18,2,0,0" TextWrapping="Wrap" Text="" Width="40" Height="20"/>
+        </GroupBox>
     </Grid>
 </Window>

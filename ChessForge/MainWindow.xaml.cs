@@ -1901,11 +1901,12 @@ namespace ChessForge
                 dlg.ShowDialog();
                 if (dlg.ExitOk)
                 {
-                    if (nd.Comment != dlg.Comment || nd.Nags != dlg.Nags)
+                    if (nd.Comment != dlg.Comment || nd.Nags != dlg.Nags || nd.QuizPoints != dlg.QuizPoints)
                     {
                         changed = true;
                         nd.Comment = dlg.Comment;
                         nd.SetNags(dlg.Nags);
+                        nd.QuizPoints = dlg.QuizPoints;
                         AppStateManager.IsDirty = true;
                     }
                 }

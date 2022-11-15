@@ -49,6 +49,34 @@ namespace GameTree
         public BoardPosition Position = new BoardPosition();
 
         /// <summary>
+        /// Move number property exposing
+        /// the MoveNumber property from Position.
+        /// </summary>
+        public uint MoveNumber
+        {
+            get { return Position.MoveNumber; }
+            set { Position.MoveNumber = value; }
+        }
+
+        /// <summary>
+        /// Holds engine evaluation if available.
+        /// </summary>
+        public string EngineEvaluation
+        {
+            get => _engEval;
+            set => _engEval = value;
+        }
+
+        /// <summary>
+        /// Points awarded in the analysis solving mode.
+        /// </summary>
+        public int QuizPoints
+        {
+            get => _quizPoints;
+            set => _quizPoints = value;
+        }
+
+        /// <summary>
         /// Indicates whether this position is a bookmark.
         /// </summary>
         public bool IsBookmark = false;
@@ -116,6 +144,9 @@ namespace GameTree
 
         // engine evaluation
         private string _engEval;
+
+        // points awarded in the solving analysis mode
+        private int _quizPoints;
 
         /// <summary>
         /// Numeric Annotation Glyphs associated with this
@@ -355,21 +386,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Move number property exposing
-        /// the MoveNumber property from Position.
-        /// </summary>
-        public uint MoveNumber
-        {
-            get { return Position.MoveNumber; }
-            set { Position.MoveNumber = value; }
-        }
-
-        /// <summary>
-        /// Holds engine evaluation if available.
-        /// </summary>
-        public string EngineEvaluation { get => _engEval; set => _engEval = value; }
-
-        /// <summary>
         /// Text for the ply to show without the move number
         /// with check / mate symbol and optionally with NAGs
         /// </summary>
@@ -397,7 +413,7 @@ namespace GameTree
         /// <returns></returns>
         private string GetNagSubstring()
         {
-            if (LastMoveAlgebraicNotationWithNag == null || LastMoveAlgebraicNotation == null 
+            if (LastMoveAlgebraicNotationWithNag == null || LastMoveAlgebraicNotation == null
                 || LastMoveAlgebraicNotationWithNag.Length <= LastMoveAlgebraicNotation.Length)
             {
                 return "";
