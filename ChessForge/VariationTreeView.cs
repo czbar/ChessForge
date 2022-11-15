@@ -125,6 +125,7 @@ namespace ChessForge
         // prefixes for run names
         private readonly string _run_fork_move_ = "_run_fork_move_";
         private readonly string _run_ = "run_";
+        private readonly string _run_comment_ = "run_comment_";
 
         /// <summary>
         /// Most recent clicked node.
@@ -1763,7 +1764,7 @@ namespace ChessForge
                 Run rNode = _dictNodeToRun[nd.NodeId];
 
                 Run r = new Run(BuildCommentRunText(nd));
-                r.Name = _run_ + nd.NodeId.ToString() + "_comment";
+                r.Name = _run_comment_ + nd.NodeId.ToString();
                 r.PreviewMouseDown += EventCommentRunClicked;
 
                 r.FontStyle = FontStyles.Normal;
