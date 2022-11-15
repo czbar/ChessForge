@@ -605,6 +605,8 @@ namespace ChessForge
             Chapter chapter = SessionWorkbook.CreateDefaultChapter();
 
             int processedGames = MergeGames(ref chapter.StudyTree.Tree, ref games);
+            // the content type may have been reset to generic
+            chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
 
             if (processedGames == 0)
             {
