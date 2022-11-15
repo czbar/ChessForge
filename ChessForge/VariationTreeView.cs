@@ -275,6 +275,12 @@ namespace ChessForge
                 Document.Blocks.Add(preamblePara);
             }
 
+            Paragraph quizInfoPara = BuildQuizInfoPara();
+            if (quizInfoPara != null)
+            {
+                Document.Blocks.Add(quizInfoPara);
+            }
+
             Paragraph movePromptPara = BuildYourMovePrompt();
             if (movePromptPara != null)
             {
@@ -344,6 +350,17 @@ namespace ChessForge
         /// </summary>
         /// <returns></returns>
         virtual public Paragraph BuildYourMovePrompt()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// If this is an Exercise view in the ANALYSIS solving mode 
+        /// and there are quiz points to be awarded,
+        /// advise the user.
+        /// </summary>
+        /// <returns></returns>
+        virtual public Paragraph BuildQuizInfoPara()
         {
             return null;
         }
@@ -1329,6 +1346,10 @@ namespace ChessForge
         {
             _contextMenuPrimed = true;
             _mainVariationTree.ShowTreeLines = !_mainVariationTree.ShowTreeLines;
+            if (_mainVariationTree.ShowTreeLines)
+            {
+                _mainVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.EDITING;
+            }
             BuildFlowDocumentForVariationTree();
             e.Handled = true;
         }
@@ -1756,7 +1777,10 @@ namespace ChessForge
             try
             {
                 // check if there is anything to show
-                if (string.IsNullOrEmpty(nd.Comment))
+                if (string.IsNullOrEmpty(nd.Comment) 
+                    && 
+                    (_mainVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.EDITING || nd.QuizPoints == 0)
+                    )
                 {
                     return;
                 }
@@ -2026,7 +2050,10 @@ namespace ChessForge
         /// <returns></returns>
         private string BuildCommentRunText(TreeNode nd)
         {
-            if (string.IsNullOrEmpty(nd.Comment))
+            if (string.IsNullOrEmpty(nd.Comment) 
+                &&
+                (_mainVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.EDITING || nd.QuizPoints == 0)
+                )
             {
                 return "";
             }
@@ -2036,6 +2063,24 @@ namespace ChessForge
             {
                 sb.Append(nd.Comment);
             }
+            
+            if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0)
+            {
+                if (!string.IsNullOrEmpty(nd.Comment))
+                {
+                    sb.Append(" /");
+                }
+                sb.Append(" " + nd.QuizPoints.ToString() + " quiz ");
+                if (nd.QuizPoints == 1)
+                {
+                    sb.Append("point ");
+                }
+                else
+                {
+                    sb.Append("points ");
+                }
+            }
+
             sb.Append("]");
 
             // if this is a root node add a space because the first move does not have it in front.
