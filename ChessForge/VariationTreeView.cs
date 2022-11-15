@@ -1124,7 +1124,7 @@ namespace ChessForge
                             rPrefix.TextDecorations = TextDecorations.Underline;
                             para.Inlines.Add(rPrefix);
 
-                            Run r = new Run(WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle(true));
+                            Run r = new Run(WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle());
                             para.Inlines.Add(r);
                         }
                         break;
