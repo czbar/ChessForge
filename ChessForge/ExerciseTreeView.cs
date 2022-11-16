@@ -907,18 +907,30 @@ namespace ChessForge
         private void FindMoveInSolution(TreeNode node, ref int pointsScored)
         {
             TreeNode found = _mainVariationTree.AssociatedSecondary.FindIdenticalNode(node, false);
-            if (found != null && node.QuizPoints != 0)
+            if (found != null)
             {
                 int quizPoints = node.QuizPoints;
-                pointsScored += quizPoints;
-                found.Comment = quizPoints.ToString();
-                if (quizPoints == 1)
+                if (found.ColorToMove != _mainVariationTree.AssociatedSecondary.RootNode.ColorToMove)
                 {
-                    found.Comment += " point";
+                    found.Comment = found.IsMainLine() ? Constants.CharCheckMark.ToString() : "";
                 }
-                else
+
+                if (quizPoints != 0)
                 {
-                    found.Comment += " points";
+                    if (!string.IsNullOrEmpty(found.Comment))
+                    {
+                        found.Comment += " ";
+                    }
+                    pointsScored += quizPoints;
+                    found.Comment += quizPoints.ToString();
+                    if (quizPoints == 1)
+                    {
+                        found.Comment += " point";
+                    }
+                    else
+                    {
+                        found.Comment += " points";
+                    }
                 }
             }
 
