@@ -53,6 +53,20 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the current solving mode, if any/
+        /// </summary>
+        public static VariationTree.SolvingMode CurrentSolvingMode
+        {
+            get
+            {
+                if (AppStateManager.MainWin.ActiveVariationTree == null)
+                    return VariationTree.SolvingMode.NONE;
+                else
+                    return AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode;
+            }
+        }
+
+        /// <summary>
         /// Returns the ContentType of the curent ActiveVariationTree
         /// </summary>
         public static GameData.ContentType ActiveContentType
