@@ -322,6 +322,7 @@ namespace GameTree
             {
                 Position.InheritedEnPassantSquare = parent.Position.EnPassantSquare;
                 Position.DynamicProperties = parent.Position.DynamicProperties;
+                Position.HalfMove50Clock = parent.Position.HalfMove50Clock;
             }
             NodeId = nodeId;
         }
