@@ -661,7 +661,7 @@ namespace ChessForge
 
                 try
                 {
-                    chapter.AddGame(gm);
+                    chapter.AddGame(gm, GameData.ContentType.GENERIC);
                 }
                 catch (Exception ex)
                 {
