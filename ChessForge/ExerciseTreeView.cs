@@ -44,6 +44,13 @@ namespace ChessForge
                 _mainWin.ActiveGameUnit.Solver.ResetQuizPoints();
                 _mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted = false;
             }
+
+            if (mode == VariationTree.SolvingMode.NONE)
+            {
+                _mainWin.ActiveGameUnit.Solver.SolvingStarted = false;
+                _mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted = false;
+                _mainWin.ActiveGameUnit.Solver.IsGuessingFinished = false;
+            }
         }
 
         /// <summary>
@@ -167,7 +174,7 @@ namespace ChessForge
 
             if (mode == VariationTree.SolvingMode.GUESS_MOVE || mode == VariationTree.SolvingMode.ANALYSIS)
             {
-                if (_mainWin.ActiveGameUnit.Solver.SolvingFinished
+                if (_mainWin.ActiveGameUnit.Solver.IsSolvingFinished
                     ||
                     mode == VariationTree.SolvingMode.ANALYSIS && _mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted)
                 {
