@@ -1632,7 +1632,7 @@ namespace ChessForge
             }
         }
 
-        
+
         /// <summary>
         /// Copies FEN of the selected move to Clipboard
         /// </summary>
@@ -2166,22 +2166,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The increase font button was clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiBtnFontSizeUp_Click(object sender, RoutedEventArgs e)
-        {
-            // lets limit the increase to 4 pixels
-            if (Configuration.FontSizeDiff < Configuration.MAX_UP_FONT_SIZE_DIFF)
-            {
-                Configuration.FontSizeDiff++;
-                SetupMenuBarControls();
-                RebuildAllTreeViews();
-            }
-        }
-
-        /// <summary>
         /// Rebuilds all tree views
         /// </summary>
         private void RebuildAllTreeViews()
@@ -2210,21 +2194,38 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The increase font button was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnFontSizeUp_Click(object sender, RoutedEventArgs e)
+        {
+            // lets limit the increase to 4 pixels
+            if (!Configuration.IsFontSizeAtMax)
+            {
+                Configuration.FontSizeDiff++;
+                SetupMenuBarControls();
+                RebuildAllTreeViews();
+            }
+            AppStateManager.ConfigureFontSizeMenus();
+        }
+
+        /// <summary>
         /// The decrease font button was clicked.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiBtnFontSizeDown_Click(object sender, RoutedEventArgs e)
         {
-            const int MAX_DOWN_DIFF = -2;
-
             // do not allow decrease by more than 2 pixels
-            if (Configuration.FontSizeDiff > MAX_DOWN_DIFF)
+            if (!Configuration.IsFontSizeAtMin)
             {
                 Configuration.FontSizeDiff--;
                 SetupMenuBarControls();
                 RebuildAllTreeViews();
             }
+
+            AppStateManager.ConfigureFontSizeMenus();
         }
 
         /// <summary>
@@ -2237,6 +2238,7 @@ namespace ChessForge
             Configuration.UseFixedFont = true;
             SetupMenuBarControls();
             RebuildAllTreeViews();
+            AppStateManager.ConfigureFontSizeMenus();
         }
 
         /// <summary>
@@ -2249,6 +2251,37 @@ namespace ChessForge
             Configuration.UseFixedFont = false;
             SetupMenuBarControls();
             RebuildAllTreeViews();
+            AppStateManager.ConfigureFontSizeMenus();
+        }
+
+        /// <summary>
+        /// A menu item was clciked requesting a flip between a fixed and variable font size.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnFixVariableFont_Click(object sender, RoutedEventArgs e)
+        {
+            if (Configuration.UseFixedFont == true)
+            {
+                UiBtnFontSizeVariable_Click(sender, e);
+            }
+            else
+            {
+                UiBtnFontSizeFixed_Click(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// The user requested that the font defaults be restored.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnFontDefaults_Click(object sender, RoutedEventArgs e)
+        {
+            Configuration.FontSizeDiff = 0;
+            // note that the next call causes a rebuild of the views so do not call it explicitly 
+            UiBtnFontSizeVariable_Click(sender, e);
+            AppStateManager.ConfigureFontSizeMenus();
         }
 
         /// <summary>
@@ -2259,8 +2292,8 @@ namespace ChessForge
             UiImgAutoSaveOn.Visibility = Configuration.AutoSave ? Visibility.Visible : Visibility.Hidden;
             UiImgAutoSaveOff.Visibility = Configuration.AutoSave ? Visibility.Hidden : Visibility.Visible;
 
-            UiBtnFontSizeUp.IsEnabled = Configuration.FontSizeDiff < Configuration.MAX_UP_FONT_SIZE_DIFF ? true : false;
-            UiBtnFontSizeDown.IsEnabled = Configuration.FontSizeDiff > Configuration.MAX_DOWN_FONT_SIZE_DIFF ? true : false;
+            UiBtnFontSizeUp.IsEnabled = !Configuration.IsFontSizeAtMax;
+            UiBtnFontSizeDown.IsEnabled = !Configuration.IsFontSizeAtMin;
 
             UiBtnFontSizeFixed.Visibility = Configuration.UseFixedFont ? Visibility.Hidden : Visibility.Visible;
             UiBtnFontSizeVariable.Visibility = Configuration.UseFixedFont ? Visibility.Visible : Visibility.Hidden;

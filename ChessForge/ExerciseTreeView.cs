@@ -44,6 +44,13 @@ namespace ChessForge
                 _mainWin.ActiveGameUnit.Solver.ResetQuizPoints();
                 _mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted = false;
             }
+
+            if (mode == VariationTree.SolvingMode.NONE)
+            {
+                _mainWin.ActiveGameUnit.Solver.SolvingStarted = false;
+                _mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted = false;
+                _mainWin.ActiveGameUnit.Solver.IsGuessingFinished = false;
+            }
         }
 
         /// <summary>
@@ -167,7 +174,7 @@ namespace ChessForge
 
             if (mode == VariationTree.SolvingMode.GUESS_MOVE || mode == VariationTree.SolvingMode.ANALYSIS)
             {
-                if (_mainWin.ActiveGameUnit.Solver.SolvingFinished
+                if (_mainWin.ActiveGameUnit.Solver.IsSolvingFinished
                     ||
                     mode == VariationTree.SolvingMode.ANALYSIS && _mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted)
                 {
@@ -559,8 +566,7 @@ namespace ChessForge
         /// <returns></returns>
         private Button AddExitButton(Canvas canvas, double left, double top)
         {
-            Button btn = BuildSolvingModeButton(VariationTree.SolvingMode.NONE,
-                         new BitmapImage(new Uri("pack://application:,,,/Resources/Images/exit.png", UriKind.RelativeOrAbsolute)));
+            Button btn = BuildSolvingModeButton(VariationTree.SolvingMode.NONE, ImageSources.SolvingExit);
             canvas.Children.Add(btn);
             Canvas.SetLeft(btn, left);
             Canvas.SetTop(btn, top);
@@ -581,8 +587,7 @@ namespace ChessForge
         /// <returns></returns>
         private Button AddSubmitAnalysisButton(Canvas canvas, double left, double top)
         {
-            Button btn = BuildSolvingModeButton(VariationTree.SolvingMode.NONE,
-                         new BitmapImage(new Uri("pack://application:,,,/Resources/Images/solve_complete.png", UriKind.RelativeOrAbsolute)));
+            Button btn = BuildSolvingModeButton(VariationTree.SolvingMode.NONE, ImageSources.SolvingComplete);
             canvas.Children.Add(btn);
             Canvas.SetLeft(btn, left);
             Canvas.SetTop(btn, top);
@@ -710,10 +715,10 @@ namespace ChessForge
             switch (solvingMode)
             {
                 case VariationTree.SolvingMode.ANALYSIS:
-                    imgForButton = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/solve.png", UriKind.RelativeOrAbsolute));
+                    imgForButton = ImageSources.SolveAnalysis;
                     break;
                 case VariationTree.SolvingMode.GUESS_MOVE:
-                    imgForButton = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/guess_move.png", UriKind.RelativeOrAbsolute));
+                    imgForButton = ImageSources.SolveGuess;
                     break;
                 default:
                     imgForButton = img;
@@ -907,18 +912,30 @@ namespace ChessForge
         private void FindMoveInSolution(TreeNode node, ref int pointsScored)
         {
             TreeNode found = _mainVariationTree.AssociatedSecondary.FindIdenticalNode(node, false);
-            if (found != null && node.QuizPoints != 0)
+            if (found != null)
             {
                 int quizPoints = node.QuizPoints;
-                pointsScored += quizPoints;
-                found.Comment = quizPoints.ToString();
-                if (quizPoints == 1)
+                if (found.ColorToMove != _mainVariationTree.AssociatedSecondary.RootNode.ColorToMove)
                 {
-                    found.Comment += " point";
+                    found.Comment = found.IsMainLine() ? Constants.CharCheckMark.ToString() : "";
                 }
-                else
+
+                if (quizPoints != 0)
                 {
-                    found.Comment += " points";
+                    if (!string.IsNullOrEmpty(found.Comment))
+                    {
+                        found.Comment += " ";
+                    }
+                    pointsScored += quizPoints;
+                    found.Comment += quizPoints.ToString();
+                    if (quizPoints == 1)
+                    {
+                        found.Comment += " point";
+                    }
+                    else
+                    {
+                        found.Comment += " points";
+                    }
                 }
             }
 

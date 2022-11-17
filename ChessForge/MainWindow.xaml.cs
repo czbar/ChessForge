@@ -1887,6 +1887,11 @@ namespace ChessForge
         /// <param name="nd"></param>
         public bool InvokeAnnotationsDialog(TreeNode nd)
         {
+            if (!WorkbookManager.IsAnyGameUnitTabActive)
+            {
+                return false;
+            }
+
             bool changed = false;
 
             if (nd != null)

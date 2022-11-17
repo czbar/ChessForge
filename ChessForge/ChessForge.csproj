@@ -142,6 +142,7 @@
     </Compile>
     <Compile Include="Resources\ChessBoards.cs" />
     <Compile Include="Resources\Colors.cs" />
+    <Compile Include="Resources\ImageSources.cs" />
     <Compile Include="Resources\Pieces.cs" />
     <Compile Include="Resources\Strings.cs" />
     <Compile Include="RichTextBuilder.cs" />

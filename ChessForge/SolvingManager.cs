@@ -66,7 +66,7 @@ namespace ChessForge
         /// <summary>
         /// Whether the solving has been completed
         /// </summary>
-        public bool SolvingFinished
+        public bool IsSolvingFinished
         {
             get
             {
@@ -129,7 +129,7 @@ namespace ChessForge
 
         /// <summary>
         /// Which side is doing the solving.
-        /// The user will be prevented from making moved for the other side.
+        /// The user will be prevented from making moves for the other side.
         /// </summary>
         public PieceColor SolvingSide
         {
@@ -244,7 +244,6 @@ namespace ChessForge
         {
             if (node.Parent != null && node.Parent.ColorToMove == sideToMove && node.QuizPoints != 0)
             {
-                // if (node.Parent.Children[0].NodeId == node.NodeId)
                 if (node.IsMainLine())
                 {
                     main += node.QuizPoints;
