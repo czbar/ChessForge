@@ -332,7 +332,7 @@ namespace ChessForge
         /// The caller must handle exceptions.
         /// </summary>
         /// <param name="gm"></param>
-        public int AddGame(GameData gm, GameData.ContentType typ = GameData.ContentType.GENERIC)
+        public int AddGame(GameData gm, GameData.ContentType typ, GameData.ContentType targetcontentType = GameData.ContentType.GENERIC)
         {
             int index = -1;
 
@@ -353,13 +353,27 @@ namespace ChessForge
                     StudyTree = unit;
                     break;
                 case GameData.ContentType.MODEL_GAME:
-                    ModelGames.Add(unit);
-                    index = ModelGames.Count - 1;
+                    if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.MODEL_GAME)
+                    {
+                        ModelGames.Add(unit);
+                        index = ModelGames.Count - 1;
+                    }
+                    else
+                    {
+                        index = -1;
+                    }
                     break;
                 case GameData.ContentType.EXERCISE:
-                    TreeUtils.RestartMoveNumbering(unit.Tree);
-                    Exercises.Add(unit);
-                    index = Exercises.Count - 1;
+                    if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.EXERCISE)
+                    {
+                        TreeUtils.RestartMoveNumbering(unit.Tree);
+                        Exercises.Add(unit);
+                        index = Exercises.Count - 1;
+                    }
+                    else
+                    {
+                        index = -1;
+                    }
                     break;
             }
 
