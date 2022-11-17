@@ -79,6 +79,23 @@
                         <MenuItem Header="Application Options..." Click="UiMnApplicationOptions_Click" />
                         <MenuItem Header="Workbook Options..." Click="UiMnWorkbookOptions_Click" />
                         <MenuItem Header="Analysis Engine..." Click="UiMnSelectEngine_Click" />
+                        <Separator />
+                        <MenuItem x:Name="UiMnIncreaseFontSize" Header="Increase Font Size" Click="UiBtnFontSizeUp_Click" >
+                            <MenuItem.Icon>
+                                <Image Source="Resources/Images/FontSizeUp.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem x:Name="UiMnDecreaseFontSize" Header="Decrease Font Size" Click="UiBtnFontSizeDown_Click">
+                            <MenuItem.Icon>
+                                <Image Source="Resources/Images/FontSizeDown.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem x:Name="UiMnFixVariableFontSize" Header="Use Fix/Variable Font Size" Click="UiMnFixVariableFont_Click">
+                            <MenuItem.Icon>
+                                <Image Source="Resources/Images/FontSizeFixed.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem  x:Name="UiMnFontDefaults" Header="Restore Font Defaults" Click="UiMnFontDefaults_Click" />
                     </MenuItem>
                     <MenuItem Header="Help" Margin="0,0,0,0">
                         <MenuItem Header="Wiki" Click="UiMnHelpWiki_Click" />
