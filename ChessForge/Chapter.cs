@@ -332,8 +332,10 @@ namespace ChessForge
         /// The caller must handle exceptions.
         /// </summary>
         /// <param name="gm"></param>
-        public void AddGame(GameData gm, GameData.ContentType typ = GameData.ContentType.GENERIC)
+        public int AddGame(GameData gm, GameData.ContentType typ, GameData.ContentType targetcontentType = GameData.ContentType.GENERIC)
         {
+            int index = -1;
+
             GameUnit unit = new GameUnit(typ);
             //VariationTree tree = new VariationTree(typ);
             PgnGameParser pp = new PgnGameParser(gm.GameText, unit.Tree, gm.Header.GetFenString());
@@ -351,13 +353,31 @@ namespace ChessForge
                     StudyTree = unit;
                     break;
                 case GameData.ContentType.MODEL_GAME:
-                    ModelGames.Add(unit);
+                    if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.MODEL_GAME)
+                    {
+                        ModelGames.Add(unit);
+                        index = ModelGames.Count - 1;
+                    }
+                    else
+                    {
+                        index = -1;
+                    }
                     break;
                 case GameData.ContentType.EXERCISE:
-                    TreeUtils.RestartMoveNumbering(unit.Tree);
-                    Exercises.Add(unit);
+                    if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.EXERCISE)
+                    {
+                        TreeUtils.RestartMoveNumbering(unit.Tree);
+                        Exercises.Add(unit);
+                        index = Exercises.Count - 1;
+                    }
+                    else
+                    {
+                        index = -1;
+                    }
                     break;
             }
+
+            return index;
         }
     }
 }

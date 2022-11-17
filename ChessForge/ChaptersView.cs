@@ -116,6 +116,38 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Brings the title line of the chapter into view.
+        /// </summary>
+        /// <param name="chapterId"></param>
+        public void BringChapterIntoView(int chapterId)
+        {
+            Run rChapter = FindChapterTitleRun(chapterId);
+            if (rChapter != null)
+            {
+                rChapter.BringIntoView();
+            }
+        }
+
+        /// <summary>
+        /// Brings the the title line of the model game or exercise into view.
+        /// </summary>
+        /// <param name="chapterId"></param>
+        /// <param name="contentType"></param>
+        /// <param name="index"></param>
+        public void BringGameUnitIntoView(int chapterId, GameData.ContentType contentType, int index)
+        {
+            Paragraph paraChapter = FindChapterParagraph(chapterId);
+            if (paraChapter != null)
+            {
+                Run r = FindGameUnitRunInParagraph(paraChapter, contentType, index);
+                if (r != null)
+                {
+                    r.BringIntoView();
+                }
+            }
+        }
+
+        /// <summary>
         /// Highlights the title of the ActiveChapter.
         /// </summary>
         public void HighlightActiveChapter()
@@ -233,6 +265,94 @@ namespace ChessForge
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Finds the Paragraph for a given chapter.
+        /// </summary>
+        /// <param name="chapterId"></param>
+        /// <returns></returns>
+        private Paragraph FindChapterParagraph(int chapterId)
+        {
+            Paragraph paraChapter = null;
+            string paraName = _par_chapter_ + chapterId.ToString();
+            foreach (Block block in Document.Blocks)
+            {
+                if (block is Paragraph)
+                {
+                    if (block.Name == paraName)
+                    {
+                        paraChapter = (Paragraph)block;
+                        break;
+                    }
+                }
+            }
+            return paraChapter;
+        }
+
+        /// <summary>
+        /// Finds the Run for a game unit with at a given index in a given chapter.
+        /// </summary>
+        /// <param name="paraChapter"></param>
+        /// <param name="contentType"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private Run FindGameUnitRunInParagraph(Paragraph paraChapter, GameData.ContentType contentType, int index)
+        {
+            Run r = null;
+
+            string runName = "";
+            if (contentType == GameData.ContentType.MODEL_GAME)
+            {
+                runName = _run_model_game_ + index.ToString();
+            }
+            else if (contentType == GameData.ContentType.EXERCISE)
+            {
+                runName = _run_exercise_ + index.ToString();
+            }
+
+            foreach (Inline inl in paraChapter.Inlines)
+            {
+                if (inl is Run && inl.Name == runName)
+                {
+                    r = inl as Run;
+                    break;
+                }
+            }
+
+            return r;
+        }
+
+
+        /// <summary>
+        /// Finds the Run with the title of a given chapter.
+        /// </summary>
+        /// <param name="chapterId"></param>
+        /// <returns></returns>
+        private Run FindChapterTitleRun(int chapterId)
+        {
+            Run rChapter = null;
+            string runName = _run_chapter_title_ + chapterId.ToString();
+            foreach (Block block in Document.Blocks)
+            {
+                if (block is Paragraph)
+                {
+                    foreach (Inline inl in (block as Paragraph).Inlines)
+                    {
+                        if (inl is Run && inl.Name == runName)
+                        {
+                            rChapter = inl as Run;
+                            break;
+                        }
+                    }
+                }
+                if (rChapter != null)
+                {
+                    break;
+                }
+            }
+
+            return rChapter;
         }
 
         /// <summary>
