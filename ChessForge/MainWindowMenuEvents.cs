@@ -710,6 +710,7 @@ namespace ChessForge
         private int ImportGamesFromPgn(GameData.ContentType contentType, GameData.ContentType targetcontentType)
         {
             int gameCount = 0;
+            int skippedDueToType = 0;
             int firstImportedGameIndex = -1;
             if ((contentType == GameData.ContentType.GENERIC || contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
                 && WorkbookManager.SessionWorkbook.ActiveChapter != null)
@@ -737,8 +738,12 @@ namespace ChessForge
                                     {
                                         try
                                         {
-                                            int index = chapter.AddGame(games[i], contentType);
-                                            if (firstImportedGameIndex < 0)
+                                            int index = chapter.AddGame(games[i], contentType, targetcontentType);
+                                            if (index < 0)
+                                            {
+                                                skippedDueToType++;
+                                            }
+                                            else if (firstImportedGameIndex < 0)
                                             {
                                                 firstImportedGameIndex = index;
                                             }
@@ -767,8 +772,33 @@ namespace ChessForge
                         ShowNoGamesError(contentType, fileName);
                     }
 
-                    if (errorCount > 0)
+                    if (errorCount > 0 || skippedDueToType > 0)
                     {
+                        if (skippedDueToType > 0)
+                        {
+                            if (skippedDueToType == 1)
+                            {
+                                sbErrors.Append("1 entity was valid ");
+                            }
+                            else
+                            {
+                                sbErrors.Append(skippedDueToType.ToString() + " entities were valid ");
+                            }
+                            sbErrors.Append("but not imported due to not being of the ");
+                            if (targetcontentType == GameData.ContentType.MODEL_GAME)
+                            {
+                                sbErrors.Append("GAME ");
+                            }
+                            else if (targetcontentType == GameData.ContentType.EXERCISE)
+                            {
+                                sbErrors.Append("EXERCISE ");
+                            }
+                            else
+                            {
+                                sbErrors.Append("required ");
+                            }
+                            sbErrors.AppendLine("type.");
+                        }
                         TextBoxDialog tbDlg = new TextBoxDialog("PGN Parsing Errors", sbErrors.ToString())
                         {
                             Left = ChessForgeMain.Left + 100,
