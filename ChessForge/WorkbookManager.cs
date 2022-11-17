@@ -48,6 +48,17 @@ namespace ChessForge
             set { _activeTab = value; }
         }
 
+        /// <summary>
+        /// Determines if any of the tabs hosting a Game Unit (study, game, exercise) is active and if there is an ActiveTree
+        /// </summary>
+        public static bool IsAnyGameUnitTabActive
+        {
+            get
+            {
+                return (SessionWorkbook != null && SessionWorkbook.ActiveVariationTree != null
+                    && (_activeTab == TabViewType.STUDY || _activeTab == TabViewType.MODEL_GAME || _activeTab == TabViewType.EXERCISE));
+            }
+        }
 
         /// <summary>
         /// Workbook for the current session.
