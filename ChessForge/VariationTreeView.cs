@@ -1777,8 +1777,8 @@ namespace ChessForge
             try
             {
                 // check if there is anything to show
-                if (string.IsNullOrEmpty(nd.Comment) 
-                    && 
+                if (string.IsNullOrEmpty(nd.Comment)
+                    &&
                     (_mainVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.EDITING || nd.QuizPoints == 0)
                     )
                 {
@@ -2003,7 +2003,10 @@ namespace ChessForge
             Run r_comment;
             _dictNodeToCommentRun.TryGetValue(nd.NodeId, out r_comment);
 
-            if (string.IsNullOrEmpty(nd.Comment))
+            if (string.IsNullOrEmpty(nd.Comment)
+                &&
+                (_mainVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.EDITING || nd.QuizPoints == 0)
+                )
             {
                 // if the comment run existed, remove it
                 if (r_comment != null)
@@ -2050,7 +2053,7 @@ namespace ChessForge
         /// <returns></returns>
         private string BuildCommentRunText(TreeNode nd)
         {
-            if (string.IsNullOrEmpty(nd.Comment) 
+            if (string.IsNullOrEmpty(nd.Comment)
                 &&
                 (_mainVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.EDITING || nd.QuizPoints == 0)
                 )
@@ -2063,7 +2066,7 @@ namespace ChessForge
             {
                 sb.Append(nd.Comment);
             }
-            
+
             if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0)
             {
                 if (!string.IsNullOrEmpty(nd.Comment))
