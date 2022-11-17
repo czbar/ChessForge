@@ -6,6 +6,8 @@ using ChessPosition;
 using GameTree;
 using Path = System.IO.Path;
 using System.Timers;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace ChessForge
 {
@@ -360,6 +362,7 @@ namespace ChessForge
             ShowEvaluationControlsForCurrentStates();
             ConfigureMainBoardContextMenu();
             ConfigureSaveMenus();
+            ConfigureFontSizeMenus();
         }
         /// <summary>
         /// Enables Move/Line evaluation menus.
@@ -510,6 +513,27 @@ namespace ChessForge
             });
         }
 
+        /// <summary>
+        /// Sets up Font Size menus state
+        /// </summary>
+        public static void ConfigureFontSizeMenus()
+        {
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                _mainWin.UiMnIncreaseFontSize.IsEnabled = !Configuration.IsFontSizeAtMax;
+                _mainWin.UiMnDecreaseFontSize.IsEnabled = !Configuration.IsFontSizeAtMin;
+                if (Configuration.UseFixedFont)
+                {
+                    _mainWin.UiMnFixVariableFontSize.Header = "Use Variable Size Font";
+                    (_mainWin.UiMnFixVariableFontSize.Icon as Image).Source = ImageSources.FontSizeVariable;
+                }
+                else
+                {
+                    _mainWin.UiMnFixVariableFontSize.Header = "Use Fixed Size Font";
+                    (_mainWin.UiMnFixVariableFontSize.Icon as Image).Source = ImageSources.FontSizeFixed;
+                }
+            });
+        }
 
         /// <summary>
         /// Sets up GUI elements for the Manual Review mode.
