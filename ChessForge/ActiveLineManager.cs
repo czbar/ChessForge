@@ -559,7 +559,7 @@ namespace ChessForge
         public bool HandleKeyDown(Key key)
         {
             // prevent "cheating" in exercises
-            if (_mainWin.ActiveVariationTree == null || !_mainWin.ActiveVariationTree.ShowTreeLines)
+            if (_mainWin.ActiveVariationTree == null || !_mainWin.ActiveVariationTree.ShowTreeLines || AppStateManager.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
             {
                 return true;
             }
@@ -650,6 +650,11 @@ namespace ChessForge
 
         public bool HandleKeyUp(Key key)
         {
+            if (_mainWin.ActiveVariationTree == null || !_mainWin.ActiveVariationTree.ShowTreeLines || AppStateManager.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
+            {
+                return true;
+            }
+
             _mainWin.BringSelectedRunIntoView();
 
             return true;
