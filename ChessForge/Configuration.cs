@@ -11,11 +11,6 @@ namespace ChessForge
 {
     public class Configuration
     {
-        // max value by which a font size can be increased from the standard size
-        public const int MAX_UP_FONT_SIZE_DIFF = 4;
-        // max value by which a font size can be decreased from the standard size
-        public const int MAX_DOWN_FONT_SIZE_DIFF = -2;
-
         //*********************************
         // CONFIGURATION ITEMS
         //*********************************
@@ -134,6 +129,14 @@ namespace ChessForge
         /// </summary>
         public static int DebugLevel = 0;
 
+
+        // max value by which a font size can be increased from the standard size
+        private const int MAX_UP_FONT_SIZE_DIFF = 4;
+
+        // max value by which a font size can be decreased from the standard size
+        private const int MAX_DOWN_FONT_SIZE_DIFF = -2;
+
+
         //*********************************
         // CONFIGUARTION ITEM NAMES
         //*********************************
@@ -192,6 +195,22 @@ namespace ChessForge
 
         // application's main window
         private static MainWindow MainWin;
+
+        /// <summary>
+        /// Returns true if the font size is set to its max allowed value
+        /// </summary>
+        public static bool IsFontSizeAtMax
+        {
+            get => FontSizeDiff >= MAX_UP_FONT_SIZE_DIFF;
+        }
+
+        /// <summary>
+        /// Returns true if the font size is set to its min allowed value
+        /// </summary>
+        public static bool IsFontSizeAtMin
+        {
+            get => FontSizeDiff <=  MAX_DOWN_FONT_SIZE_DIFF;
+        }
 
         /// <summary>
         /// Adds a file to the list of recently opened files.
