@@ -6,6 +6,7 @@
     - ChessForge.exe
     - ChessPosition.dll 
     - EngineService.dll
+    - Resources folder with subfolders
     - README.MD
     - LICENSE.MD
     - Classical Sicilian.pgn
