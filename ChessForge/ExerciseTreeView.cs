@@ -51,6 +51,8 @@ namespace ChessForge
                 _mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted = false;
                 _mainWin.ActiveGameUnit.Solver.IsGuessingFinished = false;
             }
+
+            _mainWin.BoardCommentBox.ShowWorkbookTitle();
         }
 
         /// <summary>
@@ -835,6 +837,8 @@ namespace ChessForge
 
                 SetupGuiForSolvingMode(mode);
                 BuildFlowDocumentForVariationTree();
+
+                _mainWin.BoardCommentBox.ShowWorkbookTitle();
             }
             catch
             {

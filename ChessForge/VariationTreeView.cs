@@ -1351,7 +1351,12 @@ namespace ChessForge
             {
                 _mainVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.EDITING;
             }
+            else
+            {
+                _mainVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.NONE;
+            }
             BuildFlowDocumentForVariationTree();
+            _mainWin.BoardCommentBox.ShowWorkbookTitle();
             e.Handled = true;
         }
 
