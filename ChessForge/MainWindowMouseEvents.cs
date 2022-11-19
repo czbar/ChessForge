@@ -646,6 +646,7 @@ namespace ChessForge
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.CHAPTERS;
+            BoardCommentBox.ShowWorkbookTitle();
             try
             {
                 if (KeepFocusOnGame() || WorkbookManager.SessionWorkbook == null)
@@ -681,6 +682,7 @@ namespace ChessForge
             UiImgEngineOff.IsEnabled = true;
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.STUDY;
+            BoardCommentBox.ShowWorkbookTitle();
             try
             {
                 SetStudyStateOnFocus();
@@ -718,6 +720,7 @@ namespace ChessForge
         private void UiTabBookmarks_GotFocus(object sender, RoutedEventArgs e)
         {
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.BOOKMARKS;
+            BoardCommentBox.ShowWorkbookTitle();
             try
             {
                 if (KeepFocusOnGame())
@@ -798,6 +801,7 @@ namespace ChessForge
             UiImgEngineOff.IsEnabled = true;
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.MODEL_GAME;
+            BoardCommentBox.ShowWorkbookTitle();
             try
             {
                 if (KeepFocusOnGame())
@@ -869,6 +873,7 @@ namespace ChessForge
             UiImgEngineOff.IsEnabled = true;
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.EXERCISE;
+            BoardCommentBox.ShowWorkbookTitle();
             try
             {
                 if (KeepFocusOnGame())
