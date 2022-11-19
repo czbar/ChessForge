@@ -8,6 +8,7 @@ using Path = System.IO.Path;
 using System.Timers;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using ChessForge;
 
 namespace ChessForge
 {
@@ -37,6 +38,14 @@ namespace ChessForge
 
         // last active tab in the Manual Review tab control
         private static WorkbookManager.TabViewType _lastActiveManualReviewTab = WorkbookManager.TabViewType.NONE;
+
+        /// <summary>
+        /// The currently Active Tab.
+        /// </summary>
+        public static WorkbookManager.TabViewType ActiveTab
+        {
+            get => WorkbookManager.ActiveTab;
+        }
 
         /// <summary>
         /// The most recent active tab in the Manual Review tab control.
@@ -70,6 +79,42 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the number of Model Games in the Active Chapter.
+        /// </summary>
+        public static int ActiveChapterGamesCount
+        {
+            get
+            {
+                if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
+                {
+                    return WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames.Count;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns the number of Exercises in the Active Chapter.
+        /// </summary>
+        public static int ActiveChapterExerciseCount
+        {
+            get
+            {
+                if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
+                {
+                    return WorkbookManager.SessionWorkbook.ActiveChapter.Exercises.Count;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
+        /// <summary>
         /// Returns the current solving mode, if any/
         /// </summary>
         public static VariationTree.SolvingMode CurrentSolvingMode
@@ -77,9 +122,13 @@ namespace ChessForge
             get
             {
                 if (AppStateManager.MainWin.ActiveVariationTree == null)
+                {
                     return VariationTree.SolvingMode.NONE;
+                }
                 else
+                {
                     return AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode;
+                }
             }
         }
 
