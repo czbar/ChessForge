@@ -1506,7 +1506,7 @@ namespace ChessForge
                     MainChessBoard.RemoveMoveSquareColors();
                     LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
                     AppStateManager.SetupGuiForCurrentStates();
-                    SetStudyStateOnFocus();
+                    //SetStudyStateOnFocus();
 
                     ActiveLine.DisplayPositionForSelectedCell();
                     AppStateManager.SwapCommentBoxForEngineLines(false);
@@ -1593,7 +1593,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRtbTrainingProgress_GotFocus(object sender, RoutedEventArgs e)
         {
-            AppStateManager.SetupGuiForTrainingProgressMode();
+//            AppStateManager.SetupGuiForTrainingProgressMode();
         }
 
         /// <summary>
