@@ -35,6 +35,21 @@ namespace ChessForge
         // main application window
         private static MainWindow _mainWin;
 
+        // last active tab in the Manual Review tab control
+        private static WorkbookManager.TabViewType _lastActiveManualReviewTab = WorkbookManager.TabViewType.NONE;
+
+        /// <summary>
+        /// The most recent active tab in the Manual Review tab control.
+        /// This value does not include the Training tab which is in a different
+        /// tab control.
+        /// </summary>
+        public static WorkbookManager.TabViewType LastActiveManualReviewTab
+        {
+            get => _lastActiveManualReviewTab;
+            set => _lastActiveManualReviewTab = value;
+        }
+
+
         /// <summary>
         /// Accessor to the current ActiveVariationTree
         /// </summary>
@@ -536,6 +551,37 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the image for the main chessboard matching the current active tab.
+        /// </summary>
+        /// <param name="tabType"></param>
+        public static void SetChessboardForTab(WorkbookManager.TabViewType tabType)
+        {
+            switch (tabType)
+            {
+                case WorkbookManager.TabViewType.CHAPTERS:
+                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                    break;
+                case WorkbookManager.TabViewType.STUDY:
+                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                    break;
+                case WorkbookManager.TabViewType.MODEL_GAME:
+                    //bool res = UiTabModelGames.Focus();
+                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardLightBlue;
+                    break;
+                case WorkbookManager.TabViewType.EXERCISE:
+                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardLightGreen;
+                    break;
+                case WorkbookManager.TabViewType.BOOKMARKS:
+                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                    break;
+                default:
+                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                    break;
+            }
+        }
+
+
+        /// <summary>
         /// Sets up GUI elements for the Manual Review mode.
         /// </summary>
         private static void SetupGuiForManualReview()
@@ -551,7 +597,8 @@ namespace ChessForge
                     _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
                 }
 
-                MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                //MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                SetChessboardForActiveTab();
 
                 if (AppStateManager.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY)
                 {
@@ -564,8 +611,8 @@ namespace ChessForge
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
                 }
 
-                _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
                 _mainWin.UiTabCtrlTraining.Visibility = Visibility.Hidden;
+                _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
 
                 _mainWin.UiTabStudyTree.Visibility = Visibility.Visible;
                 _mainWin.UiTabBookmarks.Visibility = Visibility.Visible;
@@ -587,6 +634,14 @@ namespace ChessForge
 
                 ConfigureMenusForManualReview();
             });
+        }
+
+        /// <summary>
+        /// Sets the chessboard image according to the current tab.
+        /// </summary>
+        private static void SetChessboardForActiveTab()
+        {
+            SetChessboardForTab(WorkbookManager.ActiveTab);
         }
 
         /// <summary>
