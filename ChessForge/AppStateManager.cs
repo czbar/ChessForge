@@ -489,6 +489,7 @@ namespace ChessForge
                     _mainWin.UiTabCtrlTraining.Margin = new Thickness(5, 5, 5, 5);
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                    _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
 
                     _mainWin.DisplayPosition(EngineGame.GetLastGameNode());
                 });
@@ -603,11 +604,13 @@ namespace ChessForge
                 if (AppStateManager.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
+                    _mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
                 }
                 else
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                    _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
                 }
 
@@ -656,6 +659,7 @@ namespace ChessForge
                 _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
                 _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
                 ShowGuiEngineGameLine(false);
 
                 _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
@@ -689,6 +693,7 @@ namespace ChessForge
                     _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                    _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
 
                     _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
@@ -706,6 +711,7 @@ namespace ChessForge
                     _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                    _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
 
                     _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
@@ -961,11 +967,12 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                // only applicable to StydyTree
+                // only applicable to StudyTree
                 if (ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY
                     && CurrentLearningMode != LearningMode.Mode.ENGINE_GAME)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
+                    _mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
                     _mainWin.UiDgActiveLine.Columns[2].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
                     _mainWin.UiDgActiveLine.Columns[4].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
                     _mainWin.UiDgActiveLine.Width = includeEvals ? 260 : 160;
