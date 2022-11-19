@@ -2038,5 +2038,43 @@ namespace ChessForge
                 ReturnDraggedPiece(false);
             }
         }
+
+        /// <summary>
+        /// Upon start up or when returning from Training the tab control will receive an th IsVisibleChnaged 
+        /// notification.  We store the active tab when losing visibility and send focus to it when regaining it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabCtrlManualReview_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            bool visible = (bool)e.NewValue;
+            if (visible == true)
+            {
+                switch (AppStateManager.LastActiveManualReviewTab)
+                {
+                    case WorkbookManager.TabViewType.CHAPTERS:
+                        UiTabChapters_GotFocus(null, null);
+                        break;
+                    case WorkbookManager.TabViewType.STUDY:
+                        UiTabStudyTree_GotFocus(null, null);
+                        break;
+                    case WorkbookManager.TabViewType.MODEL_GAME:
+                        UiTabModelGames_GotFocus(null, null);
+                        break;
+                    case WorkbookManager.TabViewType.EXERCISE:
+                        UiTabExercises_GotFocus(null, null);
+                        break;
+                    case WorkbookManager.TabViewType.BOOKMARKS:
+                        UiTabBookmarks_GotFocus(null, null);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                AppStateManager.LastActiveManualReviewTab = WorkbookManager.ActiveTab;
+            }
+        }
     }
 }
