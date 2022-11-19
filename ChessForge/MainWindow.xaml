@@ -208,7 +208,7 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1">
+                <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1" IsVisibleChanged="UiTabCtrlManualReview_IsVisibleChanged">
                     <TabItem x:Name="UiTabChapters"  Header="Chapters" GotFocus="UiTabChapters_GotFocus" >
                         <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" ContextMenuOpening="SupressContextMenu" PreviewMouseUp="Chapters_PreviewMouseUp" >
                             <Grid.ContextMenu>
