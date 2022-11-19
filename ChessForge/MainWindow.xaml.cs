@@ -295,6 +295,9 @@ namespace ChessForge
                 UiDgActiveLine.HorizontalAlignment = HorizontalAlignment.Right;
                 UiDgActiveLine.Margin = new Thickness(0, 27, 10, 0);
 
+                UiLblScoresheet.HorizontalAlignment = HorizontalAlignment.Right;
+                UiLblScoresheet.Margin = new Thickness(0, 0, 10 + (UiDgActiveLine.Width - UiLblScoresheet.Width), 0);
+
                 UiDgEngineGame.HorizontalAlignment = HorizontalAlignment.Right;
                 UiDgEngineGame.Margin = new Thickness(0, 27, 10, 0);
 
@@ -305,7 +308,10 @@ namespace ChessForge
             else
             {
                 UiDgActiveLine.HorizontalAlignment = HorizontalAlignment.Left;
-                UiDgActiveLine.Margin = new Thickness(0, 27, 5, 0);
+                UiDgActiveLine.Margin = new Thickness(5, 27, 5, 0);
+
+                UiLblScoresheet.HorizontalAlignment = HorizontalAlignment.Left;
+                UiLblScoresheet.Margin = new Thickness(5, 0, 5, 0);
 
                 UiDgEngineGame.HorizontalAlignment = HorizontalAlignment.Left;
                 UiDgEngineGame.Margin = new Thickness(0, 27, 5, 0);
@@ -1934,32 +1940,40 @@ namespace ChessForge
                 {
                     case TabControlSizeMode.SHOW_ACTIVE_LINE:
                         ctrl.Margin = new Thickness(5, 5, 275, 5);
-                        UiDgActiveLine.Visibility = Visibility.Visible;
+
+                        UiDgActiveLine.Visibility = Visibility.Visible;                        
+                        UiLblScoresheet.Visibility = Visibility.Visible;
+
                         //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.HIDE_ACTIVE_LINE:
                         ctrl.Margin = new Thickness(5, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
+                        UiLblScoresheet.Visibility = Visibility.Hidden;
                         //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL:
                         ctrl.Margin = new Thickness(5, 5, 175, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
+                        UiLblScoresheet.Visibility = Visibility.Visible;
                         //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
                         ctrl.Margin = new Thickness(5, 5, 180, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
+                        UiLblScoresheet.Visibility = Visibility.Hidden;
                         //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.HIDE_ENGINE_GAME_LINE:
                         ctrl.Margin = new Thickness(5, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
+                        UiLblScoresheet.Visibility = Visibility.Hidden;
                         //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     default:
                         ctrl.Margin = new Thickness(5, 5, 180, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
+                        UiLblScoresheet.Visibility = Visibility.Visible;
                         //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                 }
@@ -1971,22 +1985,27 @@ namespace ChessForge
                     case TabControlSizeMode.SHOW_ACTIVE_LINE:
                         ctrl.Margin = new Thickness(275, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
+                        UiLblScoresheet.Visibility = Visibility.Visible;
                         break;
                     case TabControlSizeMode.HIDE_ACTIVE_LINE:
                         ctrl.Margin = new Thickness(5, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
+                        UiLblScoresheet.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL:
                         ctrl.Margin = new Thickness(175, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
+                        UiLblScoresheet.Visibility = Visibility.Visible;
                         break;
                     case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
                         ctrl.Margin = new Thickness(180, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
+                        UiLblScoresheet.Visibility = Visibility.Hidden;
                         break;
                     default:
                         ctrl.Margin = new Thickness(180, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
+                        UiLblScoresheet.Visibility = Visibility.Visible;
                         break;
                 }
             }
@@ -2036,6 +2055,44 @@ namespace ChessForge
             {
                 DraggedPiece.isDragInProgress = false;
                 ReturnDraggedPiece(false);
+            }
+        }
+
+        /// <summary>
+        /// Upon start up or when returning from Training the tab control will receive an th IsVisibleChnaged 
+        /// notification.  We store the active tab when losing visibility and send focus to it when regaining it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabCtrlManualReview_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            bool visible = (bool)e.NewValue;
+            if (visible == true)
+            {
+                switch (AppStateManager.LastActiveManualReviewTab)
+                {
+                    case WorkbookManager.TabViewType.CHAPTERS:
+                        UiTabChapters_GotFocus(null, null);
+                        break;
+                    case WorkbookManager.TabViewType.STUDY:
+                        UiTabStudyTree_GotFocus(null, null);
+                        break;
+                    case WorkbookManager.TabViewType.MODEL_GAME:
+                        UiTabModelGames_GotFocus(null, null);
+                        break;
+                    case WorkbookManager.TabViewType.EXERCISE:
+                        UiTabExercises_GotFocus(null, null);
+                        break;
+                    case WorkbookManager.TabViewType.BOOKMARKS:
+                        UiTabBookmarks_GotFocus(null, null);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                AppStateManager.LastActiveManualReviewTab = WorkbookManager.ActiveTab;
             }
         }
     }

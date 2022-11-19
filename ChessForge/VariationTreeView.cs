@@ -1143,6 +1143,7 @@ namespace ChessForge
                             para.Inlines.Add(rPrefix);
 
                             Run r = new Run(WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle());
+                            r.TextDecorations= TextDecorations.Underline;
                             para.Inlines.Add(r);
                         }
                         break;
@@ -1350,7 +1351,12 @@ namespace ChessForge
             {
                 _mainVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.EDITING;
             }
+            else
+            {
+                _mainVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.NONE;
+            }
             BuildFlowDocumentForVariationTree();
+            _mainWin.BoardCommentBox.ShowWorkbookTitle();
             e.Handled = true;
         }
 

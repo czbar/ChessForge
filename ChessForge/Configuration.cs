@@ -101,6 +101,11 @@ namespace ChessForge
         public static bool AutoSave = false;
 
         /// <summary>
+        /// Whether sound in turned on
+        /// </summary>
+        public static bool SoundOn = true;
+
+        /// <summary>
         /// Whether fixed size font should be used.
         /// </summary>
         public static bool UseFixedFont = false;
@@ -173,6 +178,7 @@ namespace ChessForge
         private const string CFG_PGN_EXP_EVALS = "PgnExportEvals";
 
         private const string CFG_AUTO_SAVE = "AutoSave";
+        private const string CFG_SOUND_ON = "SoundOn";
         private const string CFG_USE_FIXED_FONT = "UseFixedFont";
         private const string CFG_SHOW_MOVES_AT_FORK = "ShowMovesAtFork";
         private const string CFG_SHOW_GENERIC_PGN_INFO = "ShowGenericPgnInfo";
@@ -329,6 +335,7 @@ namespace ChessForge
                 sb.Append(CFG_PGN_EXP_EVALS + "=" + (PgnExportEvaluations ? "1" : "0") + Environment.NewLine);
 
                 sb.Append(CFG_AUTO_SAVE + "=" + (AutoSave ? "1" : "0") + Environment.NewLine);
+                sb.Append(CFG_SOUND_ON + "=" + (SoundOn ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_USE_FIXED_FONT + "=" + (UseFixedFont ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_MOVES_AT_FORK + "=" + (ShowMovesAtFork ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_GENERIC_PGN_INFO + "=" + (ShowGenericPgnInfo ? "1" : "0") + Environment.NewLine);
@@ -609,6 +616,9 @@ namespace ChessForge
                             break;
                         case CFG_AUTO_SAVE:
                             AutoSave = value != "0" ? true : false;
+                            break;
+                        case CFG_SOUND_ON:
+                            SoundOn = value != "0" ? true : false;
                             break;
                         case CFG_USE_FIXED_FONT:
                             UseFixedFont = value != "0" ? true : false;

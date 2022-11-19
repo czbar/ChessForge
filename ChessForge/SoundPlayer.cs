@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using ChessForge.Resources;
 using GameTree;
 
 namespace ChessForge
@@ -31,9 +33,9 @@ namespace ChessForge
         /// </summary>
         public static void Initialize()
         {
-            _soundMove.Open(new Uri("Resources/Sounds/Move.mp3", UriKind.Relative));
-            _soundCapture.Open(new Uri("Resources/Sounds/Capture.mp3", UriKind.Relative));
-            _soundWrongMove.Open(new Uri("Resources/Sounds/Buzz.mp3", UriKind.Relative));
+            _soundMove.Open(SoundSources.Move);
+            _soundCapture.Open(SoundSources.Capture);
+            _soundWrongMove.Open(SoundSources.InvalidMove);
         }
 
         /// <summary>
@@ -44,6 +46,11 @@ namespace ChessForge
         /// <param name="algMove"></param>
         public static void PlayMoveSound(string algMove)
         {
+            if (!Configuration.SoundOn)
+            {
+                return;
+            }
+
             if (!_isInitialized)
             {
                 Initialize();
@@ -73,6 +80,11 @@ namespace ChessForge
         /// </summary>
         public static void PlayWrongMoveSound()
         {
+            if (!Configuration.SoundOn)
+            {
+                return;
+            }
+
             if (!_isInitialized)
             {
                 Initialize();

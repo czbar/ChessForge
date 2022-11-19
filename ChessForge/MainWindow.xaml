@@ -208,7 +208,7 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1">
+                <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1" IsVisibleChanged="UiTabCtrlManualReview_IsVisibleChanged">
                     <TabItem x:Name="UiTabChapters"  Header="Chapters" GotFocus="UiTabChapters_GotFocus" >
                         <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" ContextMenuOpening="SupressContextMenu" PreviewMouseUp="Chapters_PreviewMouseUp" >
                             <Grid.ContextMenu>
@@ -529,6 +529,7 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
+                <Label x:Name="UiLblScoresheet" FontWeight="Bold" Content="Scoresheet"  Grid.Column="1" Grid.ColumnSpan="2"  HorizontalAlignment="Right" VerticalContentAlignment="Center" Height="24" Margin="0,0,68,0" Width="80" VerticalAlignment="Top" Visibility="Visible" Grid.Row="1" />
                 <DataGrid x:Name="UiDgActiveLine" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="648" Margin="10,27,0,0" VerticalAlignment="Top" Width="260"  
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" 
                   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"

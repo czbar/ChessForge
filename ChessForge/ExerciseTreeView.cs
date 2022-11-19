@@ -51,6 +51,8 @@ namespace ChessForge
                 _mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted = false;
                 _mainWin.ActiveGameUnit.Solver.IsGuessingFinished = false;
             }
+
+            _mainWin.BoardCommentBox.ShowWorkbookTitle();
         }
 
         /// <summary>
@@ -501,25 +503,26 @@ namespace ChessForge
             {
                 AddSolvingPanelGroupBox(canvas, leftMargin, topMargin);
 
-                AddSolvingButton(canvas, VariationTree.SolvingMode.GUESS_MOVE, 15 + leftMargin, 32 + topMargin);
+                // add label first as AddSolvingButton is relying on it being non-null
                 AddSolvingButtonLabel(canvas, VariationTree.SolvingMode.GUESS_MOVE, 57 + leftMargin, 37 + topMargin);
+                AddSolvingButton(canvas, VariationTree.SolvingMode.GUESS_MOVE, 15 + leftMargin, 32 + topMargin);
 
-                AddSubmitAnalysisButton(canvas, 15 + leftMargin, 32 + topMargin);
                 AddSubmitAnalysisButtonLabel(canvas, 57 + leftMargin, 37 + topMargin);
+                AddSubmitAnalysisButton(canvas, 15 + leftMargin, 32 + topMargin);
 
-                AddSolvingButton(canvas, VariationTree.SolvingMode.ANALYSIS, 15 + leftMargin, 77 + topMargin);
                 AddSolvingButtonLabel(canvas, VariationTree.SolvingMode.ANALYSIS, 57 + leftMargin, 79 + topMargin);
+                AddSolvingButton(canvas, VariationTree.SolvingMode.ANALYSIS, 15 + leftMargin, 77 + topMargin);
 
                 if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE
                     || _mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS && _mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted)
                 {
-                    AddExitButton(canvas, 15 + leftMargin, 32 + topMargin);
                     AddExitButtonLabel(canvas, 57 + leftMargin, 37 + topMargin);
+                    AddExitButton(canvas, 15 + leftMargin, 32 + topMargin);
                 }
                 else
                 {
-                    AddExitButton(canvas, 15 + leftMargin, 77 + topMargin);
                     AddExitButtonLabel(canvas, 57 + leftMargin, 79 + topMargin);
+                    AddExitButton(canvas, 15 + leftMargin, 77 + topMargin);
                 }
 
                 SetupGuiForSolvingMode(_mainVariationTree.CurrentSolvingMode);
@@ -546,11 +549,17 @@ namespace ChessForge
                 case VariationTree.SolvingMode.GUESS_MOVE:
                     btn.PreviewMouseDown += UiBtnGuessMoveDown_Click;
                     btn.PreviewMouseUp += UiBtnGuessMoveUp_Click;
+                    // click on the label has the same effect
+                    _lblGuessMove.PreviewMouseDown += UiBtnGuessMoveDown_Click;
+                    _lblGuessMove.PreviewMouseUp += UiBtnGuessMoveUp_Click;
                     _btnGuessMove = btn;
                     break;
                 case VariationTree.SolvingMode.ANALYSIS:
                     btn.PreviewMouseDown += UiBtnAnalysisDown_Click;
                     btn.PreviewMouseUp += UiBtnAnalysisUp_Click;
+                    // click on the label has the same effect
+                    _lblAnalysis.PreviewMouseDown += UiBtnAnalysisDown_Click;
+                    _lblAnalysis.PreviewMouseUp += UiBtnAnalysisUp_Click;
                     _btnAnalysis = btn;
                     break;
             }
@@ -573,6 +582,10 @@ namespace ChessForge
 
             btn.PreviewMouseDown += UiBtnExitDown_Click;
             btn.PreviewMouseUp += UiBtnExitUp_Click;
+
+            _lblExit.PreviewMouseDown += UiBtnExitDown_Click;
+            _lblExit.PreviewMouseUp += UiBtnExitUp_Click;
+
             _btnExit = btn;
 
             return btn;
@@ -593,8 +606,9 @@ namespace ChessForge
             Canvas.SetTop(btn, top);
 
             btn.PreviewMouseDown += UiBtnSubmitDown_Click;
-            //            btn.PreviewMouseUp += UiBtnGuessMoveUp_Click;
             _btnSubmitAnalysis = btn;
+
+            _lblSubmitAnalysis.PreviewMouseDown += UiBtnSubmitDown_Click;
 
             return btn;
         }
@@ -823,6 +837,8 @@ namespace ChessForge
 
                 SetupGuiForSolvingMode(mode);
                 BuildFlowDocumentForVariationTree();
+
+                _mainWin.BoardCommentBox.ShowWorkbookTitle();
             }
             catch
             {

@@ -144,6 +144,7 @@
     <Compile Include="Resources\Colors.cs" />
     <Compile Include="Resources\ImageSources.cs" />
     <Compile Include="Resources\Pieces.cs" />
+    <Compile Include="Resources\SoundSources.cs" />
     <Compile Include="Resources\Strings.cs" />
     <Compile Include="RichTextBuilder.cs" />
     <Compile Include="SelectGamesDialog.xaml.cs">
@@ -301,10 +302,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\exit.png" />
-    <Content Include="Resources\Sounds\Buzz.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Sounds\WrongMove.mp3">
+    <Content Include="Resources\Sounds\InvalidMove.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Images\Stop.png" />

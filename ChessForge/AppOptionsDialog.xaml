@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="Source Forge Options" Height="300" Width="600">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >
-        <Button x:Name="_btnSave" Content="Save" HorizontalAlignment="Left" Margin="202,220,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnSave_Click"/>
-        <Button x:Name="_btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="328,220,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnCancel_Click" />
+        <Button x:Name="_btnSave" Content="Save" HorizontalAlignment="Left" Margin="207,220,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnSave_Click"/>
+        <Button x:Name="_btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="323,220,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnCancel_Click" />
         <GroupBox x:Name="_boxEngThinkTime" HorizontalAlignment="Left" Height="115" Header="Engine Time per Move (s)" Margin="13,86,0,0" VerticalAlignment="Top" Width="165"/>
         <Label x:Name="_lblThinkTimeInGame" Content="In Game" HorizontalAlignment="Left" Margin="23,117,0,0" VerticalAlignment="Top" Width="84"/>
         <TextBox x:Name="UiTbEngTimeInGame" HorizontalAlignment="Left" HorizontalContentAlignment="Center"  Margin="101,120,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60"/>
@@ -23,7 +23,8 @@
         <Button x:Name="_btnLocateEngine" Content=". . ." HorizontalAlignment="Left" Margin="536,34,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.681,0.002" Width="28" Click="UiBtnLocateEngine_Click"/>
         <TextBox x:Name="UiTbEngineExe" IsEnabled="False" HorizontalAlignment="Left" Margin="132,36,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="387"/>
         <CheckBox x:Name="UiCbShowForkMoves" Content="Show Moves at Fork" HorizontalAlignment="Left" Margin="420,125,0,0" VerticalAlignment="Top"/>
-        <GroupBox x:Name="UiGbViews" Header="Views" HorizontalAlignment="Left" Height="115" Margin="400,86,0,0" VerticalAlignment="Top" Width="180" />
+        <CheckBox x:Name="UiCbSoundOn" Content="Sound On" HorizontalAlignment="Left" Margin="420,157,0,0" VerticalAlignment="Top"/>
+        <GroupBox x:Name="UiGbViews" Header="Views" HorizontalAlignment="Left" Height="115" Margin="395,86,0,0" VerticalAlignment="Top" Width="180" />
 
     </Grid>
 </Window>

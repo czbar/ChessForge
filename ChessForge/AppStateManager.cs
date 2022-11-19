@@ -8,6 +8,7 @@ using Path = System.IO.Path;
 using System.Timers;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using ChessForge;
 
 namespace ChessForge
 {
@@ -35,6 +36,29 @@ namespace ChessForge
         // main application window
         private static MainWindow _mainWin;
 
+        // last active tab in the Manual Review tab control
+        private static WorkbookManager.TabViewType _lastActiveManualReviewTab = WorkbookManager.TabViewType.NONE;
+
+        /// <summary>
+        /// The currently Active Tab.
+        /// </summary>
+        public static WorkbookManager.TabViewType ActiveTab
+        {
+            get => WorkbookManager.ActiveTab;
+        }
+
+        /// <summary>
+        /// The most recent active tab in the Manual Review tab control.
+        /// This value does not include the Training tab which is in a different
+        /// tab control.
+        /// </summary>
+        public static WorkbookManager.TabViewType LastActiveManualReviewTab
+        {
+            get => _lastActiveManualReviewTab;
+            set => _lastActiveManualReviewTab = value;
+        }
+
+
         /// <summary>
         /// Accessor to the current ActiveVariationTree
         /// </summary>
@@ -55,6 +79,42 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the number of Model Games in the Active Chapter.
+        /// </summary>
+        public static int ActiveChapterGamesCount
+        {
+            get
+            {
+                if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
+                {
+                    return WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames.Count;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns the number of Exercises in the Active Chapter.
+        /// </summary>
+        public static int ActiveChapterExerciseCount
+        {
+            get
+            {
+                if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
+                {
+                    return WorkbookManager.SessionWorkbook.ActiveChapter.Exercises.Count;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
+        /// <summary>
         /// Returns the current solving mode, if any/
         /// </summary>
         public static VariationTree.SolvingMode CurrentSolvingMode
@@ -62,9 +122,13 @@ namespace ChessForge
             get
             {
                 if (AppStateManager.MainWin.ActiveVariationTree == null)
+                {
                     return VariationTree.SolvingMode.NONE;
+                }
                 else
+                {
                     return AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode;
+                }
             }
         }
 
@@ -474,6 +538,7 @@ namespace ChessForge
                     _mainWin.UiTabCtrlTraining.Margin = new Thickness(5, 5, 5, 5);
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                    _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
 
                     _mainWin.DisplayPosition(EngineGame.GetLastGameNode());
                 });
@@ -536,6 +601,37 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the image for the main chessboard matching the current active tab.
+        /// </summary>
+        /// <param name="tabType"></param>
+        public static void SetChessboardForTab(WorkbookManager.TabViewType tabType)
+        {
+            switch (tabType)
+            {
+                case WorkbookManager.TabViewType.CHAPTERS:
+                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                    break;
+                case WorkbookManager.TabViewType.STUDY:
+                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                    break;
+                case WorkbookManager.TabViewType.MODEL_GAME:
+                    //bool res = UiTabModelGames.Focus();
+                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardLightBlue;
+                    break;
+                case WorkbookManager.TabViewType.EXERCISE:
+                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardLightGreen;
+                    break;
+                case WorkbookManager.TabViewType.BOOKMARKS:
+                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                    break;
+                default:
+                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                    break;
+            }
+        }
+
+
+        /// <summary>
         /// Sets up GUI elements for the Manual Review mode.
         /// </summary>
         private static void SetupGuiForManualReview()
@@ -551,21 +647,24 @@ namespace ChessForge
                     _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
                 }
 
-                MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                //MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                SetChessboardForActiveTab();
 
                 if (AppStateManager.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
+                    _mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
                 }
                 else
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                    _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
                 }
 
-                _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
                 _mainWin.UiTabCtrlTraining.Visibility = Visibility.Hidden;
+                _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
 
                 _mainWin.UiTabStudyTree.Visibility = Visibility.Visible;
                 _mainWin.UiTabBookmarks.Visibility = Visibility.Visible;
@@ -590,6 +689,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the chessboard image according to the current tab.
+        /// </summary>
+        private static void SetChessboardForActiveTab()
+        {
+            SetChessboardForTab(WorkbookManager.ActiveTab);
+        }
+
+        /// <summary>
         /// Sets up GUI elements for the Training mode.
         /// </summary>
         private static void SetupGuiForTraining()
@@ -601,6 +708,7 @@ namespace ChessForge
                 _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
                 _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
                 ShowGuiEngineGameLine(false);
 
                 _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
@@ -634,6 +742,7 @@ namespace ChessForge
                     _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                    _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
 
                     _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
@@ -651,6 +760,7 @@ namespace ChessForge
                     _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                    _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
 
                     _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
@@ -906,11 +1016,12 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                // only applicable to StydyTree
+                // only applicable to StudyTree
                 if (ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY
                     && CurrentLearningMode != LearningMode.Mode.ENGINE_GAME)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
+                    _mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
                     _mainWin.UiDgActiveLine.Columns[2].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
                     _mainWin.UiDgActiveLine.Columns[4].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
                     _mainWin.UiDgActiveLine.Width = includeEvals ? 260 : 160;
