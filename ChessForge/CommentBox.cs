@@ -56,7 +56,7 @@ namespace ChessForge
         /// </summary>
         internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
-            ["title"] = new RichTextPara(0, 10, 24, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
+            ["title"] = new RichTextPara(0, 0, 24, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
             ["big_red"] = new RichTextPara(0, 10, 20, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
             ["user_wait"] = new RichTextPara(0, 10, 20, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
             ["bold_prompt"] = new RichTextPara(0, 5, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
@@ -67,7 +67,7 @@ namespace ChessForge
             ["dummy"] = new RichTextPara(0, 16, 10, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
             ["bold_16"] = new RichTextPara(0, 0, 16, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
             ["bold_18"] = new RichTextPara(0, 5, 18, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
-            ["end_of_game"] = new RichTextPara(0, 5, 18, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),            
+            ["end_of_game"] = new RichTextPara(0, 5, 18, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
         };
 
         /// <summary>
@@ -205,7 +205,52 @@ namespace ChessForge
                     }
                     AddNewParagraphToDoc("title", title);
                     AddNewParagraphToDoc("bold_prompt", "Some available actions are:");
-                    AddNewParagraphToDoc("normal", Strings.QUICK_INSTRUCTION);
+                    string commentText = "";
+                    switch (AppStateManager.ActiveTab)
+                    {
+                        case WorkbookManager.TabViewType.CHAPTERS:
+                            commentText = Strings.QUICK_INSTRUCTION_CHAPTERS;
+                            break;
+                        case WorkbookManager.TabViewType.STUDY:
+                            commentText = Strings.QUICK_INSTRUCTION_STUDY;
+                            break;
+                        case WorkbookManager.TabViewType.BOOKMARKS:
+                            commentText = Strings.QUICK_INSTRUCTION_BOOKMARKS;
+                            break;
+                        case WorkbookManager.TabViewType.MODEL_GAME:
+                            if (AppStateManager.ActiveChapterGamesCount > 0)
+                            {
+                                commentText = Strings.QUICK_INSTRUCTION_MODEL_GAMES_NON_EMPTY;
+                            }
+                            else
+                            {
+                                commentText = Strings.QUICK_INSTRUCTION_MODEL_GAMES_EMPTY;
+                            }
+                            break;
+                        case WorkbookManager.TabViewType.EXERCISE:
+                            if (AppStateManager.ActiveChapterExerciseCount == 0)
+                            {
+                                commentText = Strings.QUICK_INSTRUCTION_EXERCISES_EMPTY;
+                            }
+                            else
+                            {
+                                switch (AppStateManager.CurrentSolvingMode)
+                                {
+                                    case VariationTree.SolvingMode.ANALYSIS:
+                                    case VariationTree.SolvingMode.GUESS_MOVE:
+                                        commentText = Strings.QUICK_INSTRUCTION_EXERCISES_SOLVING;
+                                        break;
+                                    case VariationTree.SolvingMode.EDITING:
+                                        commentText = Strings.QUICK_INSTRUCTION_EXERCISES_EDIT;
+                                        break;
+                                    default:
+                                        commentText = Strings.QUICK_INSTRUCTION_EXERCISES_HIDDEN;
+                                        break;
+                                }
+                            }
+                            break;
+                    }
+                    AddNewParagraphToDoc("normal", commentText);
                 }
                 AppStateManager.SwapCommentBoxForEngineLines(false);
             });
@@ -271,7 +316,7 @@ namespace ChessForge
                     {
                         txt = "You have checkmated the coach. Congratulations!";
                     }
-                    else 
+                    else
                     {
                         txt = "Check and Mate!";
                     }
