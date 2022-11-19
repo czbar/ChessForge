@@ -46,6 +46,11 @@ namespace ChessForge
         /// <param name="algMove"></param>
         public static void PlayMoveSound(string algMove)
         {
+            if (!Configuration.SoundOn)
+            {
+                return;
+            }
+
             if (!_isInitialized)
             {
                 Initialize();
@@ -75,6 +80,11 @@ namespace ChessForge
         /// </summary>
         public static void PlayWrongMoveSound()
         {
+            if (!Configuration.SoundOn)
+            {
+                return;
+            }
+
             if (!_isInitialized)
             {
                 Initialize();
