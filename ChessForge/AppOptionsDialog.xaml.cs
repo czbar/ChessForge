@@ -29,6 +29,8 @@ namespace ChessForge
 
         public bool ShowMovesAtFork;
 
+        public bool SoundOn;
+
         // indicates whether the engine path was changed by the user in this dialog.
         public bool ChangedEnginePath = false;
 
@@ -45,6 +47,7 @@ namespace ChessForge
             EngineTimePerMoveInEvaluation = (double)Configuration.EngineEvaluationTime / 1000.0;
             AllowMouseWheel = Configuration.AllowMouseWheelForMoves;
             ShowMovesAtFork = Configuration.ShowMovesAtFork;
+            SoundOn = Configuration.SoundOn;
 
             UiTbEngineExe.Text = EnginePath;
             UiTbReplaySpeed.Text = ReplaySpeed.ToString("F1");
@@ -52,6 +55,7 @@ namespace ChessForge
             UiTbEngEvalTime.Text = EngineTimePerMoveInEvaluation.ToString("F1");
             UiCbAllowWheel.IsChecked = (AllowMouseWheel == true);
             UiCbShowForkMoves.IsChecked = (ShowMovesAtFork == true);
+            UiCbSoundOn.IsChecked= (SoundOn == true);
         }
 
         /// <summary>
@@ -105,6 +109,7 @@ namespace ChessForge
 
             Configuration.AllowMouseWheelForMoves = (UiCbAllowWheel.IsChecked == true); 
             Configuration.ShowMovesAtFork = (UiCbShowForkMoves.IsChecked == true);
+            Configuration.SoundOn = (UiCbSoundOn.IsChecked == true);
 
             ExitOK = true;
             this.Close();
