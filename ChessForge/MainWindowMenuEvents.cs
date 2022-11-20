@@ -1016,6 +1016,7 @@ namespace ChessForge
                         //chapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, index);
                         //_exerciseTreeView.BuildFlowDocumentForVariationTree();
                         SelectExercise(index, false);
+                        AppStateManager.IsDirty= true;
                     }
                 }
             }
@@ -1972,6 +1973,7 @@ namespace ChessForge
                     if (dlgHeader.ExitOK)
                     {
                         CreateNewExerciseFromTree(tree);
+                        AppStateManager.IsDirty = true;
                     }
                 }
             }
