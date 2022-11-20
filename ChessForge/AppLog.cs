@@ -142,6 +142,8 @@ namespace ChessForge
                     sb.Append("Node Id = " + nd.NodeId.ToString() + Environment.NewLine);
                     sb.Append("Parent Node Id = " + (nd.Parent == null ? "-" : nd.Parent.NodeId.ToString()) + Environment.NewLine);
                     sb.Append("Move alg = " + nd.LastMoveAlgebraicNotationWithNag + Environment.NewLine);
+                    sb.Append("EnPassant = " + nd.Position.EnPassantSquare.ToString() + Environment.NewLine);
+                    sb.Append("InheritedEnPassant = " + nd.Position.InheritedEnPassantSquare.ToString() + Environment.NewLine);
                     if (nd.NodeId != 0)
                     {
                         sb.Append("Origin = " + nd.Position.LastMove.Origin.Xcoord.ToString() + " " + nd.Position.LastMove.Origin.Ycoord.ToString() + Environment.NewLine);
