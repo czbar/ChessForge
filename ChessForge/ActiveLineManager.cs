@@ -359,6 +359,11 @@ namespace ChessForge
         /// <returns></returns>
         public TreeNode GetSelectedTreeNode()
         {
+            if (_mainWin.ActiveVariationTree == null)
+            {
+                return null;
+            }
+
             if (GetPlyCount() == 1)
             {
                 // game with no moves
