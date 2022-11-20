@@ -649,6 +649,9 @@ namespace ChessForge
         {
             Chapter chapter = null;
 
+            StringBuilder sbErrors = new StringBuilder();
+            int errorCount = 0;
+
             for (int i = 1; i < GameList.Count; i++)
             {
                 GameData gm = GameList[i];
@@ -665,8 +668,14 @@ namespace ChessForge
                 }
                 catch (Exception ex)
                 {
-                    //TODO: report errors
+                    errorCount++;
+                    sbErrors.AppendLine(BuildGameParseErrorText(chapter, i + 1, GameList[i], ex));
                 }
+            }
+
+            if (errorCount > 0)
+            {
+                ShowPgnProcessingErrors("Workbook Parsing Errors", ref sbErrors);
             }
         }
 
@@ -712,7 +721,7 @@ namespace ChessForge
                                 }
                                 catch (Exception ex)
                                 {
-                                    sbErrors.AppendLine(BuildGameParseErrorText(i + 1, games[i], ex));
+                                    sbErrors.AppendLine(BuildGameParseErrorText(null, i + 1, games[i], ex));
                                     errorCount++;
                                 }
                                 // make sure it is not a FEN position
@@ -727,7 +736,7 @@ namespace ChessForge
                                 }
                                 catch (Exception ex)
                                 {
-                                    sbErrors.AppendLine(BuildGameParseErrorText(i + 1, games[i], ex));
+                                    sbErrors.AppendLine(BuildGameParseErrorText(null, i + 1, games[i], ex));
                                     errorCount++;
                                 }
                                 tree = WorkbookTreeMerge.MergeWorkbooks(tree, workbook2);
@@ -737,7 +746,7 @@ namespace ChessForge
                     }
                     if (errorCount > 0)
                     {
-                        ShowMergeErrors(errorCount, mergedCount, ref sbErrors);
+                        ShowPgnProcessingErrors("Merge Errors", ref sbErrors);
                     }
                 }
                 catch
@@ -750,11 +759,29 @@ namespace ChessForge
             return mergedCount;
         }
 
-        private static string BuildGameParseErrorText(int gameNo, GameData game, Exception ex)
+        /// <summary>
+        /// Builds text for the individual parsing error.
+        /// If chapter != null this is occurring while reading a Workbook
+        /// otherwise while reading generic PGN (e.g. importing)
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="gameNo"></param>
+        /// <param name="game"></param>
+        /// <param name="ex"></param>
+        /// <returns></returns>
+        private static string BuildGameParseErrorText(Chapter chapter, int gameNo, GameData game, Exception ex)
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("Game #" + gameNo.ToString() + " : " + game.Header.BuildGameHeaderLine());
+            if (chapter != null)
+            {
+                sb.Append("Chapter " + chapter.Id.ToString() + ": " + game.GetContentType().ToString() + ": " + game.Header.BuildGameHeaderLine());
+            }
+            else
+            {
+                sb.Append("PGN Item #" + gameNo.ToString() + " : " + game.Header.BuildGameHeaderLine());
+            }
+
             sb.Append(Environment.NewLine);
             sb.Append("     " + ex.Message);
             sb.Append(Environment.NewLine);
@@ -765,11 +792,9 @@ namespace ChessForge
         /// <summary>
         /// Reports errors encountered while merging
         /// </summary>
-        /// <param name="errorCount"></param>
-        /// <param name="mergedCount"></param>
-        private static void ShowMergeErrors(int errorCount, int mergedCount, ref StringBuilder sb)
+        private static void ShowPgnProcessingErrors(string dlgTitle, ref StringBuilder sb)
         {
-            TextBoxDialog dlg = new TextBoxDialog("Merge Errors", sb.ToString())
+            TextBoxDialog dlg = new TextBoxDialog(dlgTitle, sb.ToString())
             {
                 Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
                 Top = AppStateManager.MainWin.ChessForgeMain.Top + 100,
