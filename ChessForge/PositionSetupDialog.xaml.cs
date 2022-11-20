@@ -122,11 +122,10 @@ namespace ChessForge
         private void InitializePosition(TreeNode nd)
         {
             PositionSetup = new BoardPosition(nd.Position);
-            SetEnPassant(PositionSetup.EnPassantSquare);
+            SetEnPassant(PositionSetup);
             SetupImagesForPosition();
             SetSideToMove(nd.ColorToMove);
             SetCastlingCheckboxes();
-            //SetSelectedEnpassantSquare();
         }
 
         /// <summary>
@@ -145,10 +144,7 @@ namespace ChessForge
         /// </summary>
         private void SetFen(bool checkEnpassant = true)
         {
-            // temporarily setup InheritedEnpassant because GenerateFenFromPosition uses it
-            PositionSetup.InheritedEnPassantSquare = PositionSetup.EnPassantSquare;
             UiTbFen.Text = FenParser.GenerateFenFromPosition(PositionSetup);
-            PositionSetup.InheritedEnPassantSquare = 0;
         }
 
 
@@ -184,7 +180,7 @@ namespace ChessForge
             }
 
             // set the enpassant field in the PositionSetup object
-            FenParser.SetEnpassantSquare(_selectedEnPassant, ref PositionSetup);
+            FenParser.SetEnpassantSquares(_selectedEnPassant, ref PositionSetup);
         }
 
         /// <summary>
@@ -192,8 +188,12 @@ namespace ChessForge
         /// accordingly.
         /// If we have an enpassant square selected, see it is still valid.
         /// </summary>
-        private void SetEnPassant(byte enpassant)
+        private void SetEnPassant(BoardPosition position)
         {
+            // TODO: investigate the use of EnPassant and InheritedEnPassant across the app
+            // here use the combo just in case
+            byte enpassant = (byte)(position.EnPassantSquare | position.InheritedEnPassantSquare);
+
             if (enpassant != 0)
             {
                 SquareCoords sq = PositionUtils.DecodeEnPassantSquare(enpassant);
@@ -247,24 +247,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Sets the enapassant square as per the value 
-        /// in the current PositionSetup object.
-        /// </summary>
-        private void SetSelectedEnpassantSquare()
-        {
-            if (PositionSetup.EnPassantSquare != 0)
-            {
-                _selectedEnPassant = FenParser.FenEnPassantSquare(PositionSetup);
-                RepopulateEnpassantListBox();
-            }
-            else
-            {
-                _selectedEnPassant = null;
-                UiLbEnPassant.Items.Clear();
-            }
-        }
-
-        /// <summary>
         /// Updates the selected enpassant square if selection has chnaged
         /// in the ListBox
         /// </summary>
@@ -279,7 +261,7 @@ namespace ChessForge
 
             UiLbEnPassant.SelectedItem = _selectedEnPassant;
 
-            FenParser.SetEnpassantSquare(_selectedEnPassant, ref PositionSetup);
+            FenParser.SetEnpassantSquares(_selectedEnPassant, ref PositionSetup);
 
             SetFen();
         }
@@ -706,11 +688,6 @@ namespace ChessForge
         {
             try
             {
-                //BoardPosition temp = new BoardPosition();
-                //FenParser.ParseFenIntoBoard(UiTbFen.Text, ref temp);
-                //// the above sets Inherited EnPassant which is not what we need here
-                //temp.EnPassantSquare = temp.InheritedEnPassantSquare;
-                //bool isDiff = PositionChanges(temp, PositionSetup, out bool position, out bool colorToMove, out bool castling, out bool enpassant);
                 bool isDiff = DiffPositionSetupWithFenText(UiTbFen.Text, out bool position, out bool colorToMove, out bool castling, out bool enpassant);
                 if (isDiff)
                 {
@@ -731,7 +708,7 @@ namespace ChessForge
 
                     if (enpassant)
                     {
-                        SetEnPassant(PositionSetup.EnPassantSquare);
+                        SetEnPassant(PositionSetup);
                     }
                 }
             }
@@ -740,12 +717,19 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Identifies differences betwee 2 BoardPositions.
+        /// </summary>
+        /// <param name="fen"></param>
+        /// <param name="position"></param>
+        /// <param name="colorToMove"></param>
+        /// <param name="castling"></param>
+        /// <param name="enpassant"></param>
+        /// <returns></returns>
         private bool DiffPositionSetupWithFenText(string fen, out bool position, out bool colorToMove, out bool castling, out bool enpassant)
         {
             BoardPosition temp = new BoardPosition();
             FenParser.ParseFenIntoBoard(UiTbFen.Text, ref temp);
-            // the above sets Inherited EnPassant which is not what we need here
-            temp.EnPassantSquare = temp.InheritedEnPassantSquare;
 
             bool isDiff = PositionChanges(temp, PositionSetup, out position, out colorToMove, out castling, out enpassant);
             if (isDiff)
