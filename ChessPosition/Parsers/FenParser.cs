@@ -356,12 +356,12 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Parses the en passant string and sets the EnPassantSquare
-        /// square (if defined) on the board.
+        /// Parses the en passant string and sets both the EnPassantSquare
+        /// and the InheritedEnPassantSquare on the board.
         /// </summary>
         /// <param name="enpassant"></param>
         /// <param name="board"></param>
-        public static void SetEnpassantSquare(string enpassant, ref BoardPosition board)
+        public static void SetEnpassantSquares(string enpassant, ref BoardPosition board)
         {
             bool valid = false;
 
@@ -374,6 +374,7 @@ namespace GameTree
                 if (xPos >= 0 && xPos <= 7 && yPos >= 0 && yPos <= 7)
                 {
                     board.EnPassantSquare = (byte)((xPos << 4) | yPos);
+                    board.InheritedEnPassantSquare = board.EnPassantSquare;
                     valid = true;
                 }
             }
@@ -384,6 +385,7 @@ namespace GameTree
                 // a valid en passant square, hence we can use it to
                 // indicate that ther is no en passant square in the position. 
                 board.EnPassantSquare = 0;
+                board.InheritedEnPassantSquare = 0;
             }
         }
 
