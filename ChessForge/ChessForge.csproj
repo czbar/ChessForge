@@ -272,6 +272,10 @@
       <Project>{689b24e1-c24b-4e56-9e91-f32388f1dc33}</Project>
       <Name>EngineService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebClient\WebClient.csproj">
+      <Project>{58b448d8-69cb-4c59-a515-30ef78f7873e}</Project>
+      <Name>WebClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\BlackBishop.png" />
