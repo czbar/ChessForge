@@ -184,6 +184,8 @@ namespace ChessForge
             if (nd != null)
             {
                 BoardPosition workingPosition = new BoardPosition(nd.Position);
+                workingPosition.InheritedEnPassantSquare = nd.Position.EnPassantSquare;
+
                 bool firstMove = true;
                 try
                 {

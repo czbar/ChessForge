@@ -180,7 +180,7 @@ namespace ChessForge
             }
 
             // set the enpassant field in the PositionSetup object
-            FenParser.SetEnpassantSquares(_selectedEnPassant, ref PositionSetup);
+            FenParser.SetEnpassantSquare(_selectedEnPassant, ref PositionSetup);
         }
 
         /// <summary>
@@ -190,9 +190,7 @@ namespace ChessForge
         /// </summary>
         private void SetEnPassant(BoardPosition position)
         {
-            // TODO: investigate the use of EnPassant and InheritedEnPassant across the app
-            // here use the combo just in case
-            byte enpassant = (byte)(position.EnPassantSquare | position.InheritedEnPassantSquare);
+            byte enpassant = (byte)(position.EnPassantSquare);
 
             if (enpassant != 0)
             {
@@ -261,7 +259,7 @@ namespace ChessForge
 
             UiLbEnPassant.SelectedItem = _selectedEnPassant;
 
-            FenParser.SetEnpassantSquares(_selectedEnPassant, ref PositionSetup);
+            FenParser.SetEnpassantSquare(_selectedEnPassant, ref PositionSetup);
 
             SetFen();
         }
