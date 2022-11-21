@@ -9,6 +9,7 @@ using System.Timers;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using ChessForge;
+using System.Reflection;
 
 namespace ChessForge
 {
@@ -38,6 +39,17 @@ namespace ChessForge
 
         // last active tab in the Manual Review tab control
         private static WorkbookManager.TabViewType _lastActiveManualReviewTab = WorkbookManager.TabViewType.NONE;
+
+        /// <summary>
+        /// Gets the version of this Assembly
+        /// </summary>
+        /// <returns></returns>
+        public static Version GetAssemblyVersion()
+        {
+            Assembly assem = typeof(AppStateManager).Assembly;
+            AssemblyName assemName = assem.GetName();
+            return assemName.Version;
+        }
 
         /// <summary>
         /// The currently Active Tab.

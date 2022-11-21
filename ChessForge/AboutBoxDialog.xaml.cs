@@ -74,14 +74,12 @@ namespace ChessForge
             para.TextAlignment = TextAlignment.Left;
             para.Foreground = Brushes.Black;
 
-            Assembly assem = typeof(AboutBoxDialog).Assembly;
-            AssemblyName assemName = assem.GetName();
-            string ver = assemName.Version.Major + "." + assemName.Version.Minor + "." + assemName.Version.Build + "." + assemName.Version.Revision;
+            Version ver = AppStateManager.GetAssemblyVersion();
 
             para.Inlines.Add(new Run("License: Open Source\n" +
                                "     for unrestricted free use\n"));
 
-            para.Inlines.Add(new Run("\nVersion: " + ver));
+            para.Inlines.Add(new Run("\nVersion: " + ver.ToString()));
             para.Inlines.Add(new Run("\nChess Engine: " + AppStateManager.EngineName));
 
             return para;
