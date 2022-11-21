@@ -77,6 +77,14 @@ namespace GameTree
         }
 
         /// <summary>
+        /// General purpose property to assist certain
+        /// processing scnearios e.g. analysing a submitted
+        /// solution.
+        /// Not persisted with the Workbook.
+        /// </summary>
+        public bool IsProcessed = false;
+
+        /// <summary>
         /// Indicates whether this position is a bookmark.
         /// </summary>
         public bool IsBookmark = false;
