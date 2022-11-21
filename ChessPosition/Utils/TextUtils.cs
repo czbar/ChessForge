@@ -12,6 +12,70 @@ namespace ChessPosition
     public class TextUtils
     {
         /// <summary>
+        /// Parses the supplied string into tokens split by '.'.
+        /// Somewhere in the string there must be a sequence of 3 numbers in the form of 1.1.1 
+        /// or the version string will be considered invalid and will return false.
+        /// </summary>
+        /// <param name="sVer"></param>
+        /// <param name="major"></param>
+        /// <param name="minor"></param>
+        /// <param name="patch"></param>
+        /// <returns></returns>
+        public static bool GetVersionNumbers(string sVer, out int major, out int minor, out int patch)
+        {
+            bool result = false;
+            major = 0;
+            minor = 0;
+            patch = 0;
+
+            try
+            {
+                string[] tokens = sVer.Split('.');
+
+                int lastPart = 0;
+                for (int i = 0; i < tokens.Length; i++)
+                {
+                    int val;
+                    if (int.TryParse(tokens[i], out val))
+                    {
+                        lastPart++;
+                        switch (lastPart)
+                        {
+                            case 1:
+                                major = val;
+                                break;
+                            case 2:
+                                minor = val;
+                                break;
+                            case 3:
+                                patch = val;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        if (lastPart != 0)
+                        {
+                            break;
+                        }
+                    }
+
+                    if (lastPart == 3)
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+            catch
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Returns the passed string after removing invalid file name chars from it.
         /// </summary>
         /// <param name="fileName"></param>

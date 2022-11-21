@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>ChessPositionTest</RootNamespace>
     <AssemblyName>ChessPositionTest</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -56,6 +56,10 @@
     <ProjectReference Include="..\ChessPosition\ChessPosition.csproj">
       <Project>{cc1fec02-2e5b-47b0-81ed-c21017fe00f5}</Project>
       <Name>ChessPosition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebClient\WebClient.csproj">
+      <Project>{58b448d8-69cb-4c59-a515-30ef78f7873e}</Project>
+      <Name>WebClient</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
