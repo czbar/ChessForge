@@ -161,6 +161,9 @@
     <Compile Include="TextBoxDialog.xaml.cs">
       <DependentUpon>TextBoxDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UpdateAvailableDialog.xaml.cs">
+      <DependentUpon>UpdateAvailableDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Workbook.cs" />
     <Compile Include="WorkbookManager.cs" />
     <Compile Include="WorkbookOptionsDialog.xaml.cs">
@@ -228,6 +231,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TextBoxDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UpdateAvailableDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
