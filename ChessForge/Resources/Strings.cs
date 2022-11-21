@@ -30,5 +30,7 @@ namespace ChessForge
 
         public static string ROW_COLOR_WHITE = "white";
         public static string ROW_COLOR_BLACK = "black";
+
+        public static string EXERCISE_THIS_IS_SOLUTION = "This is the solution!";
     }
 }
