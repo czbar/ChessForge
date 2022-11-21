@@ -5,6 +5,7 @@ using ChessPosition;
 using GameTree;
 using System.Xml;
 using ChessPosition.GameTree;
+using System.Threading.Tasks;
 
 namespace ChessPositionTest
 {
@@ -31,9 +32,11 @@ namespace ChessPositionTest
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            var ver = WebClient.SourceForgeCheck.GetVersion();
             TestTreeMerge();
             TestPgnGameParser();
             TestFenParser();
+            Console.ReadLine();
         }
 
         /// <summary>
