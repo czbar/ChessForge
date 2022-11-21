@@ -152,7 +152,7 @@ namespace ChessForge
                     {
                         rScore.Text += " points.";
                     }
-                    rScore.FontWeight= FontWeights.Bold;
+                    rScore.FontWeight = FontWeights.Bold;
                     para.Inlines.Add(rScore);
                 }
 
@@ -913,10 +913,36 @@ namespace ChessForge
             // and update the comment if found
             int pointsScored = 0;
             FindMoveInSolution(_mainVariationTree.RootNode, ref pointsScored);
+            MarkWrongSolutionMove(_mainVariationTree.AssociatedSecondary.RootNode, _mainVariationTree.AssociatedSecondary.RootNode.ColorToMove);
             _mainWin.ActiveGameUnit.Solver.IsAnalysisSubmitted = true;
             _mainWin.ActiveGameUnit.Solver.PointsScored = pointsScored;
 
             BuildFlowDocumentForVariationTree();
+        }
+
+        /// <summary>
+        /// Puts crosses next to all moves made by the solving side that have
+        /// not been found in the solution.
+        /// </summary>
+        /// <param name="node"></param>
+        private void MarkWrongSolutionMove(TreeNode node, PieceColor color)
+        {
+            if (node.ColorToMove != color && !node.IsProcessed)
+            {
+                if (string.IsNullOrEmpty(node.Comment))
+                {
+                    node.Comment = Constants.CharCrossMark.ToString();
+                }
+                else
+                {
+                    node.Comment = Constants.CharCrossMark.ToString() + " " + node.Comment;
+                }
+            }
+
+            foreach (TreeNode child in node.Children)
+            {
+                MarkWrongSolutionMove(child, color);
+            }
         }
 
         /// <summary>
@@ -930,10 +956,27 @@ namespace ChessForge
             TreeNode found = _mainVariationTree.AssociatedSecondary.FindIdenticalNode(node, false);
             if (found != null)
             {
+                found.IsProcessed = true;
+
                 int quizPoints = node.QuizPoints;
                 if (found.ColorToMove != _mainVariationTree.AssociatedSecondary.RootNode.ColorToMove)
                 {
-                    found.Comment = found.IsMainLine() ? Constants.CharCheckMark.ToString() : "";
+                    if (found.IsMainLine())
+                    {
+                        found.Comment = Constants.CharCheckMark.ToString();
+                    }
+                    else
+                    {
+                        if (found.Parent != null && found.Parent.Parent != null && found.Parent.Parent.Comment != null
+                            && found.Parent.Parent.Comment.Contains(Strings.EXERCISE_THIS_IS_SOLUTION))
+                        {
+                            found.Comment = "";
+                        }
+                        else
+                        {
+                            found.Comment = Strings.EXERCISE_THIS_IS_SOLUTION;
+                        }
+                    }
                 }
 
                 if (quizPoints != 0)
