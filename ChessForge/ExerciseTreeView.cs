@@ -964,6 +964,7 @@ namespace ChessForge
                     if (found.IsMainLine())
                     {
                         found.Comment = Constants.CharCheckMark.ToString();
+                        pointsScored += quizPoints;
                     }
                     else
                     {
@@ -985,7 +986,6 @@ namespace ChessForge
                     {
                         found.Comment += " ";
                     }
-                    pointsScored += quizPoints;
                     found.Comment += quizPoints.ToString();
                     if (quizPoints == 1)
                     {
