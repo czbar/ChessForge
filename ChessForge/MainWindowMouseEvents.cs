@@ -487,7 +487,7 @@ namespace ChessForge
                 return;
             }
 
-            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && ActiveVariationTree != null)
             {
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
                 UiImgEngineOff.Visibility = Visibility.Collapsed;

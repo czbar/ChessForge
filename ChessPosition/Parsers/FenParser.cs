@@ -113,7 +113,8 @@ namespace GameTree
             DetermineCastlingRights(fenFields[2], ref board);
 
             // Field 4: the en passant square
-            SetInheritedEnpassantSquare(fenFields[3], ref board);
+//            SetInheritedEnpassantSquare(fenFields[3], ref board);
+            SetEnpassantSquare(fenFields[3], ref board);
 
             // Field 5: the half moves count since the last capture or a pawn move
             SetHalfMove50Clock(fenFields[4], ref board);
@@ -356,8 +357,8 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Parses the en passant string and sets the EnPassantSquare
-        /// square (if defined) on the board.
+        /// Parses the en passant string and sets both the EnPassantSquare
+        /// and the InheritedEnPassantSquare on the board.
         /// </summary>
         /// <param name="enpassant"></param>
         /// <param name="board"></param>
@@ -374,6 +375,7 @@ namespace GameTree
                 if (xPos >= 0 && xPos <= 7 && yPos >= 0 && yPos <= 7)
                 {
                     board.EnPassantSquare = (byte)((xPos << 4) | yPos);
+//                    board.InheritedEnPassantSquare = board.EnPassantSquare;
                     valid = true;
                 }
             }
@@ -384,6 +386,7 @@ namespace GameTree
                 // a valid en passant square, hence we can use it to
                 // indicate that ther is no en passant square in the position. 
                 board.EnPassantSquare = 0;
+                board.InheritedEnPassantSquare = 0;
             }
         }
 

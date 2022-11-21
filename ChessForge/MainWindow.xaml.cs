@@ -1343,8 +1343,17 @@ namespace ChessForge
             AppLog.DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
         }
 
+        /// <summary>
+        /// Requests evaluation of a position currently selected
+        /// in the Active Line.
+        /// </summary>
         private void EvaluateActiveLineSelectedPosition()
         {
+            if (ActiveVariationTree == null)
+            {
+                return;
+            }
+
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
             if (nd == null)
             {

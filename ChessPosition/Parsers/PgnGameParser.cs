@@ -214,6 +214,7 @@ namespace GameTree
             else
             {
                 FenParser.ParseFenIntoBoard(fen, ref rootNode.Position);
+                //rootNode.Position.EnPassantSquare = rootNode.Position.InheritedEnPassantSquare;
                 BackShiftOnePly(ref rootNode);
             }
             tree.AddNode(rootNode);

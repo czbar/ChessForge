@@ -122,11 +122,10 @@ namespace ChessForge
         private void InitializePosition(TreeNode nd)
         {
             PositionSetup = new BoardPosition(nd.Position);
-            SetEnPassant(PositionSetup.EnPassantSquare);
+            SetEnPassant(PositionSetup);
             SetupImagesForPosition();
             SetSideToMove(nd.ColorToMove);
             SetCastlingCheckboxes();
-            //SetSelectedEnpassantSquare();
         }
 
         /// <summary>
@@ -145,10 +144,7 @@ namespace ChessForge
         /// </summary>
         private void SetFen(bool checkEnpassant = true)
         {
-            // temporarily setup InheritedEnpassant because GenerateFenFromPosition uses it
-            PositionSetup.InheritedEnPassantSquare = PositionSetup.EnPassantSquare;
             UiTbFen.Text = FenParser.GenerateFenFromPosition(PositionSetup);
-            PositionSetup.InheritedEnPassantSquare = 0;
         }
 
 
@@ -192,8 +188,10 @@ namespace ChessForge
         /// accordingly.
         /// If we have an enpassant square selected, see it is still valid.
         /// </summary>
-        private void SetEnPassant(byte enpassant)
+        private void SetEnPassant(BoardPosition position)
         {
+            byte enpassant = (byte)(position.EnPassantSquare);
+
             if (enpassant != 0)
             {
                 SquareCoords sq = PositionUtils.DecodeEnPassantSquare(enpassant);
@@ -244,24 +242,6 @@ namespace ChessForge
             }
 
             return lst.Count;
-        }
-
-        /// <summary>
-        /// Sets the enapassant square as per the value 
-        /// in the current PositionSetup object.
-        /// </summary>
-        private void SetSelectedEnpassantSquare()
-        {
-            if (PositionSetup.EnPassantSquare != 0)
-            {
-                _selectedEnPassant = FenParser.FenEnPassantSquare(PositionSetup);
-                RepopulateEnpassantListBox();
-            }
-            else
-            {
-                _selectedEnPassant = null;
-                UiLbEnPassant.Items.Clear();
-            }
         }
 
         /// <summary>
@@ -706,11 +686,6 @@ namespace ChessForge
         {
             try
             {
-                //BoardPosition temp = new BoardPosition();
-                //FenParser.ParseFenIntoBoard(UiTbFen.Text, ref temp);
-                //// the above sets Inherited EnPassant which is not what we need here
-                //temp.EnPassantSquare = temp.InheritedEnPassantSquare;
-                //bool isDiff = PositionChanges(temp, PositionSetup, out bool position, out bool colorToMove, out bool castling, out bool enpassant);
                 bool isDiff = DiffPositionSetupWithFenText(UiTbFen.Text, out bool position, out bool colorToMove, out bool castling, out bool enpassant);
                 if (isDiff)
                 {
@@ -731,7 +706,7 @@ namespace ChessForge
 
                     if (enpassant)
                     {
-                        SetEnPassant(PositionSetup.EnPassantSquare);
+                        SetEnPassant(PositionSetup);
                     }
                 }
             }
@@ -740,12 +715,19 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Identifies differences betwee 2 BoardPositions.
+        /// </summary>
+        /// <param name="fen"></param>
+        /// <param name="position"></param>
+        /// <param name="colorToMove"></param>
+        /// <param name="castling"></param>
+        /// <param name="enpassant"></param>
+        /// <returns></returns>
         private bool DiffPositionSetupWithFenText(string fen, out bool position, out bool colorToMove, out bool castling, out bool enpassant)
         {
             BoardPosition temp = new BoardPosition();
             FenParser.ParseFenIntoBoard(UiTbFen.Text, ref temp);
-            // the above sets Inherited EnPassant which is not what we need here
-            temp.EnPassantSquare = temp.InheritedEnPassantSquare;
 
             bool isDiff = PositionChanges(temp, PositionSetup, out position, out colorToMove, out castling, out enpassant);
             if (isDiff)

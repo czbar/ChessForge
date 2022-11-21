@@ -278,22 +278,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Creates a new Tree starting from the position
-        /// passed in the fen string.
-        /// </summary>
-        /// <param name="fen"></param>
-        public void CreateNew(string fen)
-        {
-            VariationLines.Clear();
-            Nodes.Clear();
-
-            TreeNode root = new TreeNode(null, "", 0);
-            FenParser.ParseFenIntoBoard(fen, ref root.Position);
-            AddNode(root);
-            BuildLines();
-        }
-
-        /// <summary>
         /// Creates a new Tree given the list of Nodes.
         /// </summary>
         /// <param name="nodes"></param>
