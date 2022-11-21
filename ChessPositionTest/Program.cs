@@ -32,7 +32,7 @@ namespace ChessPositionTest
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            var ver = WebClient.SourceForgeCheck.GetVersion();
+            var ver = WebAccess.SourceForgeCheck.GetVersion();
             TestTreeMerge();
             TestPgnGameParser();
             TestFenParser();
