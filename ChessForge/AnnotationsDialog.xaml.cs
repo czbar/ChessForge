@@ -37,6 +37,12 @@ namespace ChessForge
         public bool ExitOk = false;
 
         /// <summary>
+        /// Whether we are editing an Exercise and therefore should allow
+        /// editing quiz points.
+        /// </summary>
+        private bool _isExerciseEditing = false;
+
+        /// <summary>
         /// Constructs the dialog.
         /// Sets the values passed by the caller.
         /// </summary>
@@ -47,9 +53,35 @@ namespace ChessForge
             InitializeComponent();
             SetPositionButtons(nd.Nags);
             SetMoveButtons(nd.Nags);
-            Nags = nd.Nags;
             UiTbComment.Text = nd.Comment ?? "";
-            UiTbQuizPoints.Text = nd.QuizPoints == 0 ? "" : nd.QuizPoints.ToString();
+            Nags = nd.Nags;
+
+            QuizPoints = nd.QuizPoints;
+            _isExerciseEditing = AppStateManager.CurrentSolvingMode != VariationTree.SolvingMode.EDITING;
+            if (_isExerciseEditing)
+            {
+                UiGbQuizPoints.Visibility = Visibility.Collapsed;
+                UiTbQuizPoints.Visibility = Visibility.Collapsed;
+
+                MoveButtonHporizontally(UiBtnOk, -50);
+                MoveButtonHporizontally(UiBtnCancel, -50);
+                MoveButtonHporizontally(UiBtnHelp, -50);
+            }
+            else
+            {
+                UiTbQuizPoints.Text = nd.QuizPoints == 0 ? "" : nd.QuizPoints.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Moves a Button control horizontally.
+        /// </summary>
+        /// <param name="btn"></param>
+        /// <param name="shift"></param>
+        private void MoveButtonHporizontally(Button btn, double shift)
+        {
+            btn.HorizontalAlignment = HorizontalAlignment.Left;
+            btn.Margin = new Thickness(btn.Margin.Left + shift, btn.Margin.Top, btn.Margin.Right, btn.Margin.Bottom);
         }
 
         /// <summary>
@@ -211,7 +243,10 @@ namespace ChessForge
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
             Comment = UiTbComment.Text;
-            QuizPoints = ParseQuizPoints(UiTbQuizPoints.Text);
+            if (_isExerciseEditing)
+            {
+                QuizPoints = ParseQuizPoints(UiTbQuizPoints.Text);
+            }
             BuildNagsString();
             ExitOk = true;
             Close();
