@@ -1186,70 +1186,81 @@ namespace ChessForge
 
             if (_shownVariationTree != null)
             {
-                _forkTable = CreateTable(para.Margin.Left);
-
-                // constant settings
-                _forkTable.FontSize = 14 + Configuration.FontSizeDiff;
-                _forkTable.CellSpacing = 2;
-                int columnsPerRow = 4;
-
-                // number of move to put in the table
-                int moveCount = node.Children.Count;
-
-                // required number of rows
-                int rowCount = (int)((moveCount - 1) / columnsPerRow) + 1;
-                _forkTable.RowGroups.Add(new TableRowGroup());
-                for (int i = 0; i < rowCount; i++)
+                try
                 {
-                    _forkTable.RowGroups[0].Rows.Add(new TableRow());
+                    _forkTable = CreateTable(para.Margin.Left);
+
+                    // constant settings
+                    _forkTable.FontSize = 14 + Configuration.FontSizeDiff;
+                    _forkTable.CellSpacing = 2;
+                    int columnsPerRow = 4;
+
+                    // number of move to put in the table
+                    int moveCount = node.Children.Count;
+
+                    // required number of rows
+                    int rowCount = (int)((moveCount - 1) / columnsPerRow) + 1;
+                    _forkTable.RowGroups.Add(new TableRowGroup());
+                    for (int i = 0; i < rowCount; i++)
+                    {
+                        _forkTable.RowGroups[0].Rows.Add(new TableRow());
+                    }
+
+                    // required number of columns 
+                    int columnCount = moveCount <= columnsPerRow ? moveCount : columnsPerRow;
+                    // total cells in the table, with moves or without
+                    int cellCount = columnCount * rowCount;
+
+                    // create columns
+                    for (int i = 0; i < columnCount; i++)
+                    {
+                        _forkTable.Columns.Add(new TableColumn());
+                    }
+
+                    // populate cells
+                    for (int i = 0; i < cellCount; i++)
+                    {
+                        int rowIndex = (int)(i / columnsPerRow);
+                        int columnIndex = i - (rowIndex * columnsPerRow);
+                        TableRow row = _forkTable.RowGroups[0].Rows[rowIndex];
+
+                        TableCell cell;
+                        if (i < moveCount)
+                        {
+                            Run rCell = new Run(MoveUtils.BuildSingleMoveText(node.Children[i], true, true));
+                            rCell.Name = _run_fork_move_ + node.Children[i].NodeId.ToString();
+                            rCell.MouseDown += EventForkChildClicked;
+
+                            cell = new TableCell(new Paragraph(rCell));
+                            // click on the Cell to have the same effect as click on the Run
+                            cell.MouseDown += EventForkChildClicked;
+                            cell.Blocks.First().Name = _run_fork_move_ + node.Children[i].NodeId.ToString();
+                        }
+                        else
+                        {
+                            cell = new TableCell(new Paragraph(new Run("")));
+                        }
+                        cell.TextAlignment = TextAlignment.Center;
+
+                        if ((i % 2 + rowIndex % 2) % 2 == 0)
+                        {
+                            cell.Background = _forkTable.Columns[columnIndex].Background = Brushes.LightBlue;
+                        }
+                        else
+                        {
+                            cell.Background = _forkTable.Columns[columnIndex].Background = Brushes.LightSteelBlue;
+                        }
+                        cell.BorderThickness = new Thickness(2, 2, 2, 2);
+                        cell.BorderBrush = Brushes.White;
+                        row.Cells.Add(cell);
+                    }
+
+                    Document.Blocks.InsertAfter(para, _forkTable);
                 }
-
-                // required number of columns 
-                int columnCount = moveCount <= columnsPerRow ? moveCount : columnsPerRow;
-                // total cells in the table, with moves or without
-                int cellCount = columnCount * rowCount;
-
-                // create columns
-                for (int i = 0; i < columnCount; i++)
+                catch (Exception ex)
                 {
-                    _forkTable.Columns.Add(new TableColumn());
+                    AppLog.Message("EventForkChildClicked()", ex);
                 }
-
-                // populate cells
-                for (int i = 0; i < cellCount; i++)
-                {
-                    int rowIndex = (int)(i / columnsPerRow);
-                    int columnIndex = i - (rowIndex * columnsPerRow);
-                    TableRow row = _forkTable.RowGroups[0].Rows[rowIndex];
-
-                    TableCell cell;
-                    if (i < moveCount)
-                    {
-                        Run rCell = new Run(MoveUtils.BuildSingleMoveText(node.Children[i], true, true));
-                        rCell.Name = _run_fork_move_ + node.Children[i].NodeId.ToString();
-                        rCell.MouseDown += EventForkChildClicked;
-                        cell = new TableCell(new Paragraph(rCell));
-                    }
-                    else
-                    {
-                        cell = new TableCell(new Paragraph(new Run("")));
-                    }
-                    cell.TextAlignment = TextAlignment.Center;
-
-                    if ((i % 2 + rowIndex % 2) % 2 == 0)
-                    {
-                        cell.Background = _forkTable.Columns[columnIndex].Background = Brushes.LightBlue;
-                    }
-                    else
-                    {
-                        cell.Background = _forkTable.Columns[columnIndex].Background = Brushes.LightSteelBlue;
-                    }
-                    cell.BorderThickness = new Thickness(2, 2, 2, 2);
-                    cell.BorderBrush = Brushes.White;
-                    row.Cells.Add(cell);
-                }
-
-                Document.Blocks.InsertAfter(para, _forkTable);
             }
 
             return _forkTable;
@@ -1974,11 +1985,18 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventForkChildClicked(object sender, MouseButtonEventArgs e)
         {
-            Run r = (Run)e.Source;
-            int id = TextUtils.GetIdFromPrefixedString(r.Name);
-            Run rPly = _dictNodeToRun[id];
-            SelectRun(rPly, 1, MouseButton.Left);
-            rPly.BringIntoView();
+            try
+            {
+                TextElement r = e.Source as TextElement;
+                int id = TextUtils.GetIdFromPrefixedString(r.Name);
+                Run rPly = _dictNodeToRun[id];
+                SelectRun(rPly, 1, MouseButton.Left);
+                rPly.BringIntoView();
+            }
+            catch(Exception ex) 
+            {
+                AppLog.Message("EventForkChildClicked()", ex);
+            }
         }
 
         /// <summary>
