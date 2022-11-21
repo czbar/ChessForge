@@ -218,6 +218,7 @@ namespace ChessForge
         public MainWindow()
         {
             AppStateManager.MainWin = this;
+            _ = WebAccess.SourceForgeCheck.GetVersion();
 
             EvaluationMgr = new EvaluationManager();
 
@@ -371,6 +372,8 @@ namespace ChessForge
         /// <param name="e"></param>
         public void AppStartTimeUp(object source, ElapsedEventArgs e)
         {
+            Timers.Stop(AppTimers.TimerId.APP_START);
+
             lock (_appStartLock)
             {
 
@@ -388,12 +391,12 @@ namespace ChessForge
                 else if (_appStartStage == 1)
                 {
                     _appStartStage = 2;
+                    Timers.Stop(AppTimers.TimerId.APP_START);
                     this.Dispatcher.Invoke(() =>
                     {
                         CreateRecentFilesMenuItems();
                         Timers.Stop(AppTimers.TimerId.APP_START);
                         bool engineStarted = EngineMessageProcessor.StartEngineService();
-                        Timers.Start(AppTimers.TimerId.APP_START);
                         if (!engineStarted)
                         {
                             MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -440,8 +443,48 @@ namespace ChessForge
 
             if (_appStartStage == 2)
             {
-                Timers.Stop(AppTimers.TimerId.APP_START);
+                ReportNewVersionAvailable(true);
             }
+            else
+            {
+                Timers.Start(AppTimers.TimerId.APP_START);
+            }
+        }
+
+        /// <summary>
+        /// If there is a new version available for download, shows the informational dialog
+        /// and returns true.
+        /// Otherwise returns false.
+        /// </summary>
+        /// <returns></returns>
+        public bool ReportNewVersionAvailable(bool suppress)
+        {
+            bool res = false;
+
+            if (WebAccess.SourceForgeCheck.ChessForgeVersion != null)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    if (!suppress || WebAccess.SourceForgeCheck.ChessForgeVersion.ToString() != Configuration.DoNotShowVersion)
+                    {
+                        int verCompare = AppStateManager.GetAssemblyVersion().CompareTo(WebAccess.SourceForgeCheck.ChessForgeVersion);
+                        if (verCompare < 0)
+                        {
+                            UpdateAvailableDialog dlg = new UpdateAvailableDialog(WebAccess.SourceForgeCheck.ChessForgeVersion)
+                            {
+                                Left = ChessForgeMain.Left + 100,
+                                Top = ChessForgeMain.Top + 100,
+                                Topmost = false,
+                                Owner = this
+                            };
+                            dlg.ShowDialog();
+                            res = true;
+                        }
+                    }
+                });
+            }
+
+            return res;
         }
 
         /// <summary>
@@ -1950,7 +1993,7 @@ namespace ChessForge
                     case TabControlSizeMode.SHOW_ACTIVE_LINE:
                         ctrl.Margin = new Thickness(5, 5, 275, 5);
 
-                        UiDgActiveLine.Visibility = Visibility.Visible;                        
+                        UiDgActiveLine.Visibility = Visibility.Visible;
                         UiLblScoresheet.Visibility = Visibility.Visible;
 
                         //UiDgEngineGame.Visibility = Visibility.Hidden;
