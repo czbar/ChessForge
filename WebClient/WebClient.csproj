@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OpeningExplorer.cs" />
     <Compile Include="RestApiRequest.cs" />
     <Compile Include="SourceForgeCheck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
