@@ -145,7 +145,7 @@ namespace ChessPosition
         /// <summary>
         /// Check mark character
         /// </summary>
-        public const char CharCrossMark = '\u2716';
+        public const char CharCrossMark = '\u2715';
 
 
         /// <summary>
