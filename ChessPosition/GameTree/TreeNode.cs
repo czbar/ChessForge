@@ -78,7 +78,7 @@ namespace GameTree
 
         /// <summary>
         /// General purpose property to assist certain
-        /// processing scnearios e.g. analysing a submitted
+        /// processing scenarios e.g. analysing a submitted
         /// solution.
         /// Not persisted with the Workbook.
         /// </summary>
