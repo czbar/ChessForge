@@ -158,7 +158,11 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The variation tree currently being processed
+        /// The variation tree currently being processed.
+        /// Note that this can only be Study, Game or Exercise.
+        /// The Training tree does not become Active when opened.
+        /// The previously opened tree remains active.
+        /// Also note that the retun can be null;
         /// </summary>
         public VariationTree ActiveVariationTree
         {
