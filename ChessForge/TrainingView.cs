@@ -754,11 +754,24 @@ namespace ChessForge
         {
             _dictParas[ParaType.STEM] = AddNewParagraphToDoc(STYLE_STEM_LINE, null);
 
-            Run r_prefix = new Run("\nThis training session with your virtual Coach starts from the position arising after: \n");
+            string sPrefix;
+            if (node.NodeId != 0)
+            {
+                sPrefix = "\nThis training session with your virtual Coach begins in the starting position: \n";
+            }
+            else
+            {
+                sPrefix = "\nStarting a training session with your virtual Coach. \n";
+            }
+            Run r_prefix = new Run(sPrefix);
+
             r_prefix.FontWeight = FontWeights.Normal;
             _dictParas[ParaType.STEM].Inlines.Add(r_prefix);
 
-            InsertPrefixRuns(_dictParas[ParaType.STEM], node);
+            if (node.NodeId != 0)
+            {
+                InsertPrefixRuns(_dictParas[ParaType.STEM], node);
+            }
         }
 
         /// <summary>
@@ -774,7 +787,7 @@ namespace ChessForge
             // NOTE without nd.Parent != null we'd be getting "starting position" text in front
             while (nd != null && nd.Parent != null)
             {
-                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, false) + " ", _run_stem_move_ + nd.NodeId.ToString(), Brushes.Black);
+                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0) + " ", _run_stem_move_ + nd.NodeId.ToString(), Brushes.Black);
                 nd = nd.Parent;
 
                 if (prevRun == null)
