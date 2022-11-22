@@ -888,7 +888,27 @@ namespace ChessForge
                 buttons = MessageBoxButton.YesNo;
             }
 
-            res = MessageBox.Show("Merge and Save new moves from this session into the Workbook?", "Chess Forge Save Workbook",
+            string origin;
+
+            switch (AppStateManager.ActiveVariationTree.ContentType)
+            {
+                case GameData.ContentType.STUDY_TREE:
+                    origin = "Study";
+                    break;
+                case GameData.ContentType.MODEL_GAME:
+                    origin = "Game";
+                    break;
+                case GameData.ContentType.EXERCISE:
+                    origin = "Exercise";
+                    break;
+                default:
+                    origin = "Workbook";
+                    break;
+            }
+
+            string message = string.Format("Merge and Save new moves from this session into the {0}?", origin);
+
+            res = MessageBox.Show(message, "Chess Forge Save Workbook",
                 buttons, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
