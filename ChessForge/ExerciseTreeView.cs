@@ -809,7 +809,7 @@ namespace ChessForge
         /// Leaves the Solving Mode and returns
         /// to main tree viewing editing
         /// </summary>
-        private void DeactivateSolvingMode(VariationTree.SolvingMode mode)
+        public void DeactivateSolvingMode(VariationTree.SolvingMode mode)
         {
             try
             {
