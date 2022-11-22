@@ -41,6 +41,11 @@ namespace ChessForge
         public static string EngineExePath = "";
 
         /// <summary>
+        /// Version for which not show the update alert
+        /// </summary>
+        public static string DoNotShowVersion = "";
+
+        /// <summary>
         /// By how many pixels to adjust font size
         /// in the views.
         /// (in milliseconds)
@@ -153,6 +158,7 @@ namespace ChessForge
         private const string CFG_RECENT_FILES = "RecentFiles";
         private const string CFG_MAIN_WINDOW_POS = "MainWindowPosition";
         private const string CFG_ENGINE_EXE = "EngineExe";
+        private const string CFG_DO_NOT_SHOW_VERSION = "DoNotShowVersion";
 
         /// <summary>
         /// Time the engine has to make a move in a training game
@@ -320,6 +326,8 @@ namespace ChessForge
                 sb.Append(Environment.NewLine);
 
                 sb.Append(CFG_ENGINE_EXE + "=" + EngineExePath + Environment.NewLine);
+                sb.Append(CFG_DO_NOT_SHOW_VERSION + "=" + DoNotShowVersion + Environment.NewLine);
+                
                 sb.Append(CFG_ENGINE_MOVE_TIME + "=" + EngineMoveTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_EVALUATION_TIME + "=" + EngineEvaluationTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_MPV + "=" + EngineMpv.ToString() + Environment.NewLine);
@@ -578,6 +586,9 @@ namespace ChessForge
                             break;
                         case CFG_ENGINE_EXE:
                             EngineExePath = value;
+                            break;
+                        case CFG_DO_NOT_SHOW_VERSION:
+                            DoNotShowVersion = value;
                             break;
                         case CFG_FONT_SIZE_DIFF:
                             int.TryParse(value, out FontSizeDiff);

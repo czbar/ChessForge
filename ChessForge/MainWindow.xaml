@@ -99,6 +99,7 @@
                     </MenuItem>
                     <MenuItem Header="Help" Margin="0,0,0,0">
                         <MenuItem Header="Wiki" Click="UiMnHelpWiki_Click" />
+                        <MenuItem Header="Check for Updates" Click="UiMnCheckForUpdates_Click" />
                         <Separator />
                         <MenuItem Header="About" Click="UiMnHelpAbout_Click" />
                     </MenuItem>

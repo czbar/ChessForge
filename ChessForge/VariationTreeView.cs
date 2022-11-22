@@ -693,7 +693,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = true;
                                 break;
                             case "_mnGame_StartTrainingFromHere":
-                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && _lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = gameIndex >= 0;
                                 break;
                             case "_mnGame_MergeToStudy":
                                 menuItem.IsEnabled = isEnabled && gameIndex >= 0 && _lastClickedNodeId >= 0;
@@ -744,6 +744,9 @@ namespace ChessForge
                                 menuItem.IsEnabled = exerciseIndex >= 0;
                                 break;
                             case "_mnExerc_EditPosition":
+                                menuItem.IsEnabled = exerciseIndex >= 0;
+                                break;
+                            case "_mnExerc_StartTrainingFromHere":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
                                 break;
                             case "_mnExerc_CreateExercise":

@@ -1506,8 +1506,11 @@ namespace ChessForge
                     TrainingSession.IsTrainingInProgress = false;
                     MainChessBoard.RemoveMoveSquareColors();
                     LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
+                    if (ActiveVariationTree.ContentType == GameData.ContentType.EXERCISE)
+                    {
+                        _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
+                    }
                     AppStateManager.SetupGuiForCurrentStates();
-                    //SetStudyStateOnFocus();
 
                     ActiveLine.DisplayPositionForSelectedCell();
                     AppStateManager.SwapCommentBoxForEngineLines(false);
@@ -1905,6 +1908,22 @@ namespace ChessForge
         //
         //********************************************************
 
+
+        /// <summary>
+        /// Checks for updates.
+        /// If there is a newer version shows the update info dialog.
+        /// Otherwise shows a MessageBox info.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnCheckForUpdates_Click(object sender, RoutedEventArgs e)
+        {
+            if (!ReportNewVersionAvailable(false))
+            {
+                MessageBox.Show("No new version available.", "Update Check", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+        }
 
         /// <summary>
         /// Creates a new Model Game and makes it "Active".

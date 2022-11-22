@@ -65,13 +65,17 @@ namespace ChessForge
         /// </summary>
         public void DisplayPositionForSelectedCell()
         {
+            int nodeIndex = 0;
             if (!GetSelectedRowColumn(out int row, out int column))
             {
-                row = 0;
-                column = 1;
+                ClearSelection();
             }
-            SelectPly(row, column == 1 ? PieceColor.White : PieceColor.Black);
-            int nodeIndex = GetNodeIndexFromRowColumn(row, column);
+            else
+            {
+                nodeIndex = GetNodeIndexFromRowColumn(row, column);
+                SelectPly(row, column == 1 ? PieceColor.White : PieceColor.Black);
+            }
+
             TreeNode nd = GetNodeAtIndex(nodeIndex);
             if (nd != null)
             {

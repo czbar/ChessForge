@@ -9,6 +9,7 @@ using System.Timers;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using ChessForge;
+using System.Reflection;
 
 namespace ChessForge
 {
@@ -40,6 +41,17 @@ namespace ChessForge
         private static WorkbookManager.TabViewType _lastActiveManualReviewTab = WorkbookManager.TabViewType.NONE;
 
         /// <summary>
+        /// Gets the version of this Assembly
+        /// </summary>
+        /// <returns></returns>
+        public static Version GetAssemblyVersion()
+        {
+            Assembly assem = typeof(AppStateManager).Assembly;
+            AssemblyName assemName = assem.GetName();
+            return assemName.Version;
+        }
+
+        /// <summary>
         /// The currently Active Tab.
         /// </summary>
         public static WorkbookManager.TabViewType ActiveTab
@@ -64,18 +76,7 @@ namespace ChessForge
         /// </summary>
         public static VariationTree ActiveVariationTree
         {
-            get
-            {
-                if (WorkbookManager.SessionWorkbook != null
-                    && WorkbookManager.SessionWorkbook.ActiveVariationTree != null)
-                {
-                    return WorkbookManager.SessionWorkbook.ActiveVariationTree;
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            get => MainWin.ActiveVariationTree;
         }
 
         /// <summary>

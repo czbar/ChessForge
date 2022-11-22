@@ -809,7 +809,7 @@ namespace ChessForge
         /// Leaves the Solving Mode and returns
         /// to main tree viewing editing
         /// </summary>
-        private void DeactivateSolvingMode(VariationTree.SolvingMode mode)
+        public void DeactivateSolvingMode(VariationTree.SolvingMode mode)
         {
             try
             {
@@ -819,17 +819,11 @@ namespace ChessForge
                 _mainVariationTree.AssociatedSecondary = null;
                 _mainVariationTree.ShowTreeLines = (mode == VariationTree.SolvingMode.EDITING);
 
-                string lineId = _mainVariationTree.SelectedLineId;
-                if (string.IsNullOrEmpty(lineId))
-                {
-                    lineId = "1";
-                }
+                _mainVariationTree.SelectedLineId = "1";
+                string lineId = "1";
 
-                int nodeId = _mainVariationTree.SelectedNodeId;
-                if (nodeId < 0)
-                {
-                    nodeId = 0;
-                }
+                _mainVariationTree.SelectedNodeId = 0;
+                int nodeId = 0; 
                 SelectLineAndMove(lineId, nodeId);
 
                 ObservableCollection<TreeNode> lineToSelect = _mainVariationTree.SelectLine(lineId);

@@ -54,8 +54,8 @@
     <ApplicationIcon>icon_blue.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -161,6 +161,9 @@
     <Compile Include="TextBoxDialog.xaml.cs">
       <DependentUpon>TextBoxDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UpdateAvailableDialog.xaml.cs">
+      <DependentUpon>UpdateAvailableDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Workbook.cs" />
     <Compile Include="WorkbookManager.cs" />
     <Compile Include="WorkbookOptionsDialog.xaml.cs">
@@ -231,6 +234,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UpdateAvailableDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WorkbookOptionsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -271,6 +278,10 @@
     <ProjectReference Include="..\EngineService\EngineService.csproj">
       <Project>{689b24e1-c24b-4e56-9e91-f32388f1dc33}</Project>
       <Name>EngineService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebClient\WebClient.csproj">
+      <Project>{58b448d8-69cb-4c59-a515-30ef78f7873e}</Project>
+      <Name>WebClient</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
