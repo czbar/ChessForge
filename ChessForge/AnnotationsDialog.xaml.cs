@@ -57,8 +57,12 @@ namespace ChessForge
             Nags = nd.Nags;
 
             QuizPoints = nd.QuizPoints;
-            _isExerciseEditing = AppStateManager.CurrentSolvingMode != VariationTree.SolvingMode.EDITING;
+            _isExerciseEditing = AppStateManager.CurrentSolvingMode == VariationTree.SolvingMode.EDITING;
             if (_isExerciseEditing)
+            {
+                UiTbQuizPoints.Text = nd.QuizPoints == 0 ? "" : nd.QuizPoints.ToString();
+            }
+            else
             {
                 UiGbQuizPoints.Visibility = Visibility.Collapsed;
                 UiTbQuizPoints.Visibility = Visibility.Collapsed;
@@ -66,10 +70,6 @@ namespace ChessForge
                 MoveButtonHporizontally(UiBtnOk, -50);
                 MoveButtonHporizontally(UiBtnCancel, -50);
                 MoveButtonHporizontally(UiBtnHelp, -50);
-            }
-            else
-            {
-                UiTbQuizPoints.Text = nd.QuizPoints == 0 ? "" : nd.QuizPoints.ToString();
             }
         }
 
