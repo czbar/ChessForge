@@ -1506,8 +1506,11 @@ namespace ChessForge
                     TrainingSession.IsTrainingInProgress = false;
                     MainChessBoard.RemoveMoveSquareColors();
                     LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
+                    if (ActiveVariationTree.ContentType == GameData.ContentType.EXERCISE)
+                    {
+                        _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
+                    }
                     AppStateManager.SetupGuiForCurrentStates();
-                    //SetStudyStateOnFocus();
 
                     ActiveLine.DisplayPositionForSelectedCell();
                     AppStateManager.SwapCommentBoxForEngineLines(false);
