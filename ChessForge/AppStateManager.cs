@@ -76,18 +76,7 @@ namespace ChessForge
         /// </summary>
         public static VariationTree ActiveVariationTree
         {
-            get
-            {
-                if (WorkbookManager.SessionWorkbook != null
-                    && WorkbookManager.SessionWorkbook.ActiveVariationTree != null)
-                {
-                    return WorkbookManager.SessionWorkbook.ActiveVariationTree;
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            get => MainWin.ActiveVariationTree;
         }
 
         /// <summary>
