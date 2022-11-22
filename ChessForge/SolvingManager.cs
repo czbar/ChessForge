@@ -107,7 +107,8 @@ namespace ChessForge
                 }
                 else
                 {
-                    return AppStateManager.MainWin.ActiveVariationTree.ShowTreeLines;
+                    // do not allow moves if tree is not shown unless we went into training
+                    return AppStateManager.MainWin.ActiveVariationTree.ShowTreeLines || AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING;
                 }
             }
         }
