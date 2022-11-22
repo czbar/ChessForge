@@ -57,7 +57,7 @@ namespace ChessForge
         /// <summary>
         /// Reference to the main application window.
         /// </summary>
-        private static MainWindow _mainWin  { get => AppStateManager.MainWin; }
+        private static MainWindow _mainWin { get => AppStateManager.MainWin; }
 
         /// <summary>
         /// Changes the current state of the game.
@@ -166,10 +166,9 @@ namespace ChessForge
             if (TrainingSession.IsTrainingInProgress && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
             {
                 TrainingSession.ChangeCurrentState(TrainingSession.State.USER_MOVE_COMPLETED);
-                if (!endOfGame)
-                {
-                    _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-                }
+                // here we are in the play against Workbook mode so even if endOfGame == true
+                // start the CHECK_FOR_USER_MOVE timer so that we can report the mate properly in response
+                _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
             }
             else
             {
