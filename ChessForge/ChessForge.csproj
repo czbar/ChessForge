@@ -139,6 +139,7 @@
     <Compile Include="ActiveLineManager.cs" />
     <Compile Include="ManualReviewState.cs" />
     <Compile Include="MoveEvaluation.cs" />
+    <Compile Include="OpeningStatsView.cs" />
     <Compile Include="PositionSetupDialog.xaml.cs">
       <DependentUpon>PositionSetupDialog.xaml</DependentUpon>
     </Compile>

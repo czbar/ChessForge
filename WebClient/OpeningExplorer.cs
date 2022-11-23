@@ -16,13 +16,24 @@ namespace WebAccess
     public class OpeningExplorer
     {
         /// <summary>
+        /// Handler for the DataReceived event
+        /// </summary>
+        public static event EventHandler DataReceived;
+
+        /// <summary>
+        /// Statistics and data received from Lichess
+        /// </summary>
+        public static LichessOpeningsStats Stats;
+
+        /// <summary>
         /// Gets the version number of Chess Forge currently available from Source Forge.
         /// </summary>
         /// <returns></returns>
         public static async Task<string> OpeningStats(string fen)
         {
             var json = await RestApiRequest.Client.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
-            LichessOpeningsStats stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
+            Stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
+            DataReceived?.Invoke(null, null);
             return json;
         }
     }
@@ -32,11 +43,11 @@ namespace WebAccess
     /// </summary>
     public class LichessOpeningsStats
     {
-        public string white;
-        public string black;
-        public LichessMoveStats[] moves;
-        public LichessTopGame[] topgames;
-        public LichessOpening opening;
+        public string White;
+        public string Black;
+        public LichessMoveStats[] Moves;
+        public LichessTopGame[] TopGames;
+        public LichessOpening Opening;
     }
 
     /// <summary>
@@ -44,13 +55,13 @@ namespace WebAccess
     /// </summary>
     public class LichessMoveStats
     {
-        public string uci;
-        public string san;
-        public string averageRating;
-        public string white;
-        public string draws;
-        public string black;
-        public string game;
+        public string Uci;
+        public string San;
+        public string AverageRating;
+        public string White;
+        public string Draws;
+        public string Black;
+        public string Game;
     }
 
     /// <summary>
@@ -58,13 +69,13 @@ namespace WebAccess
     /// </summary>
     public class LichessTopGame
     {
-        public string uci;
-        public string id;
-        public string winner;
-        public LichessPlayer black;
-        public LichessPlayer white;
-        public string year;
-        public string month;
+        public string Uci;
+        public string Id;
+        public string Winner;
+        public LichessPlayer Black;
+        public LichessPlayer White;
+        public string Year;
+        public string Month;
     }
 
     /// <summary>
@@ -72,8 +83,8 @@ namespace WebAccess
     /// </summary>
     public class LichessPlayer
     {
-        public string name;
-        public string rating;
+        public string Name;
+        public string Rating;
     }
 
     /// <summary>
@@ -81,7 +92,7 @@ namespace WebAccess
     /// </summary>
     public class LichessOpening
     {
-        public string eco;
-        public string name;
+        public string Eco;
+        public string Name;
     }
 }
