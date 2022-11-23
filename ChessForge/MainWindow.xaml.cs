@@ -40,6 +40,11 @@ namespace ChessForge
         private ExerciseTreeView _exerciseTreeView;
 
         /// <summary>
+        /// The RichTextBox based Opening Stats view
+        /// </summary>
+        private OpeningStatsView _openingStatsView;
+
+        /// <summary>
         /// The Tree view corresponding to the type of the current ActiveVariationTree
         /// </summary>
         public VariationTreeView ActiveTreeView
@@ -263,6 +268,8 @@ namespace ChessForge
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             UiDgActiveLine.ContextMenu = UiMnMainBoard;
+            _openingStatsView = new OpeningStatsView(UiRtbOpenings.Document);
+
             AddDebugMenu();
 
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
