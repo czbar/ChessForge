@@ -107,18 +107,25 @@
                 <Label Grid.Column="1"  Content="AutoSave" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,2,0,0" Height="28" Width="60"  />
                 <Image x:Name="UiImgAutoSaveOn" ToolTip="Turn AutoSave Off" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOn.png" Visibility="Hidden" MouseDown="UiImgAutoSaveOn_MouseDown" />
                 <Image x:Name="UiImgAutoSaveOff" ToolTip="Turn AutoSave On" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOff.png" MouseDown="UiImgAutoSaveOff_MouseDown" />
-                <Button Name="UiBtnFontSizeUp" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="200,0,0,0" ToolTip="Increase Font Size" Click="UiBtnFontSizeUp_Click">
+                <Button Name="UiBtnFontSizeUp" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="145,0,0,0" ToolTip="Increase Font Size" Click="UiBtnFontSizeUp_Click">
                     <Image Source="Resources/Images/FontSizeUp.png" Width="18" Height="18"></Image>
                 </Button>
-                <Button Name="UiBtnFontSizeDown" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="235,0,0,0" ToolTip="Decrease Font Size" Click="UiBtnFontSizeDown_Click">
+                <Button Name="UiBtnFontSizeDown" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="180,0,0,0" ToolTip="Decrease Font Size" Click="UiBtnFontSizeDown_Click">
                     <Image Source="Resources/Images/FontSizeDown.png" Width="18" Height="18"></Image>
                 </Button>
-                <Button Name="UiBtnFontSizeFixed" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="270,0,0,0" ToolTip="Click to use Fixed Font Sizes" Click="UiBtnFontSizeFixed_Click" >
+                <Button Name="UiBtnFontSizeFixed" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="215,0,0,0" ToolTip="Click to use Fixed Font Sizes" Click="UiBtnFontSizeFixed_Click" >
                     <Image Source="Resources/Images/FontSizeFixed.png" Width="18" Height="18"></Image>
                 </Button>
                 <Button Name="UiBtnFontSizeVariable" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="270,0,0,0" ToolTip="Click to use Variable Font Size" Visibility="Hidden" Click="UiBtnFontSizeVariable_Click">
                     <Image Source="Resources/Images/FontSizeVariable.png" Width="18" Height="18"></Image>
                 </Button>
+                <Label Grid.Column="1"  Content="Explorers" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="290,2,0,0" Height="28" Width="60"  />
+                <Image x:Name="UiImgBookOn" ToolTip="Disable Opening Explorer and Tablebases" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="355,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOn.png" Visibility="Hidden" />
+                <Image x:Name="UiImgBookOff" ToolTip="Use Opening Explorer and Tablebases" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="355,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOff.png" />
+                <Label Grid.Column="1"  Content="Engine" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="425,2,0,0" Height="28" Width="60"  />
+                <Image x:Name="UiImgEngineOn" Cursor="Hand" ToolTip="Turn the Engine Off" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="475,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOn.png" Visibility="Collapsed" PreviewMouseLeftButtonDown="EngineToggleOn_OnPreviewMouseLeftButtonDown" />
+                <Image x:Name="UiImgEngineOff" Cursor="Hand" ToolTip="Turn the Engine On" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="475,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOff.png" Visibility="Visible"  PreviewMouseLeftButtonDown="EngineToggleOff_OnPreviewMouseLeftButtonDown" />
+                <ProgressBar x:Name="UiPbEngineThinking" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="5" Margin="530,0,0,0" VerticalAlignment="Center" Width="100"/>
             </Grid>
         </StackPanel>
 
@@ -583,9 +590,6 @@
                     </FlowDocument>
                 </RichTextBox>
                 <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
-                <ProgressBar x:Name="UiPbEngineThinking" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="6" Margin="10,13,0,0" Grid.Row="2" VerticalAlignment="Top" Width="160"/>
-                <Image x:Name="UiImgEngineOn" Cursor="Hand" Grid.Column="1" Grid.Row="2" Margin="65,40,0,0" Source="Resources/Images/switch-on-64.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="64" Height="64" Visibility="Collapsed" PreviewMouseLeftButtonDown="EngineToggleOn_OnPreviewMouseLeftButtonDown" />
-                <Image x:Name="UiImgEngineOff" Cursor="Hand" Grid.Column="1" Grid.Row="2" Margin="65,40,0,0" Source="Resources/Images/switch-off-64.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="64" Height="64" Visibility="Visible" PreviewMouseLeftButtonDown="EngineToggleOff_OnPreviewMouseLeftButtonDown" />
                 <Label x:Name="UiLblEvaluating" Grid.Column="1" Content="Evaluating: " HorizontalAlignment="Left" Margin="25,31,0,0" Grid.Row="2" VerticalAlignment="Top"/>
                 <Label x:Name="UiLblMoveUnderEval" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="95,30,0,0" Grid.Row="2" FontWeight="Bold" FontSize="14"  VerticalAlignment="Top"/>
                 <Label x:Name="UiLblEvalSecretMode" Grid.Column="1" Content="Engine is thinking ..." HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
