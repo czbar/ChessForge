@@ -571,7 +571,7 @@
                         <DataGridTextColumn Header="Ev" Width="50" Binding="{Binding BlackEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <RichTextBox x:Name="UiRtbBoardComment" Panel.ZIndex="0" HorizontalAlignment="Left" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
+                <RichTextBox x:Name="UiRtbBoardComment" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
                             <Setter Property="Margin" Value="0" />
@@ -589,7 +589,15 @@
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
-                <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" Height="132" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
+                <RichTextBox x:Name="UiRtbOpenings" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="10,10,0,0" Grid.Row="2" 
+                             Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="800" BorderThickness="1" IsReadOnly="True">
+                    <RichTextBox.Resources>
+                        <Style TargetType="{x:Type Paragraph}">
+                            <Setter Property="Margin" Value="0" />
+                        </Style>
+                    </RichTextBox.Resources>
+                </RichTextBox>
+                <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" Height="150" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
                 <Label x:Name="UiLblEvaluating" Grid.Column="1" Content="Evaluating: " HorizontalAlignment="Left" Margin="25,31,0,0" Grid.Row="2" VerticalAlignment="Top"/>
                 <Label x:Name="UiLblMoveUnderEval" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="95,30,0,0" Grid.Row="2" FontWeight="Bold" FontSize="14"  VerticalAlignment="Top"/>
                 <Label x:Name="UiLblEvalSecretMode" Grid.Column="1" Content="Engine is thinking ..." HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
