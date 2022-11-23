@@ -6,6 +6,8 @@ using GameTree;
 using System.Xml;
 using ChessPosition.GameTree;
 using System.Threading.Tasks;
+using WebAccess;
+using System.Diagnostics;
 
 namespace ChessPositionTest
 {
@@ -26,17 +28,35 @@ namespace ChessPositionTest
         /// </summary>
         private static VariationTree _treeOut;
 
+        static Stopwatch watch = new System.Diagnostics.Stopwatch();
+
         /// <summary>
         /// Tessts aspects of variation trees and text parsing.
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            WebAccess.OpeningExplorer.DataReceived += OpeningStatsReceived;
+            Console.WriteLine("Sending Request");
+            watch.Start(); 
             var json = WebAccess.OpeningExplorer.OpeningStats("rnbqkb1r/ppp1pp1p/5np1/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 0 4");
+
             //TestTreeMerge();
             //TestPgnGameParser();
             //TestFenParser();
             Console.ReadLine();
+        }
+
+        public static void OpeningStatsReceived(object sender, EventArgs e)
+        {
+            watch.Stop();
+            Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
+            LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats; 
+            Console.WriteLine(stats.Opening.Name);
+            foreach (WebAccess.LichessMoveStats move in stats.Moves)
+            {
+                Console.WriteLine(move.San + "   :   " + move.White.ToString() + " : " + move.Draws.ToString() + " : " + move.Black.ToString());
+            }
         }
 
         /// <summary>
