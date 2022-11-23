@@ -277,6 +277,7 @@
                                     <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="UiMnStudy_CreateExercise" Header="Create Exercise from Here..." Click="UiMnStudy_CreateExercise_Click"  />
                                     <MenuItem x:Name="UiMnCopyFen" Header="Copy FEN to Clipboard" Click="UiMnCopyFen_Click" />
+                                    <MenuItem x:Name="UiMnOpeningStats" Header="Opening Stats" Click="UiMnOpeningStats_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnPromoteLine" Header="Promote Line" Click="UiMnPromoteLine_Click" />
                                     <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnDeleteMovesFromHere_Click" />
@@ -589,7 +590,7 @@
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
-                <RichTextBox x:Name="UiRtbOpenings" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="5,10,0,0" Grid.Row="2" 
+                <RichTextBox x:Name="UiRtbOpenings" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="5,10,0,0" Grid.Row="2" VerticalScrollBarVisibility="Auto"
                              Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="590" BorderThickness="1" IsReadOnly="True">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">

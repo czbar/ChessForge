@@ -916,6 +916,13 @@ namespace ChessForge
             ActiveTreeView.CopyFenToClipboard();
         }
 
+
+        private void UiMnOpeningStats_Click(object sender, RoutedEventArgs e)
+        {
+            TreeNode nd = ActiveTreeView.GetSelectedNode();
+            _ = WebAccess.OpeningExplorer.OpeningStats(FenParser.GenerateFenFromPosition(nd.Position));
+        }
+
         /// <summary>
         /// Copies a header from a GameHeader object to the Tree.
         /// </summary>
