@@ -357,7 +357,6 @@ namespace ChessForge
                     EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
                 }
 
-                //TODO: we want to pass the node rather than position (as to show Arrows if any). Check how to do this safely.
                 _mainWin.DisplayPosition(nd);
 
                 if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
