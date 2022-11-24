@@ -51,7 +51,7 @@ namespace ChessForge
         /// <summary>
         /// Layout definitions for paragraphs at different levels.
         /// </summary>
-        private Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
+        private readonly Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
             [STYLE_WORKBOOK_TITLE] = new RichTextPara(0, 10, 18, FontWeights.Bold, null, TextAlignment.Left),
             ["default"] = new RichTextPara(140, 5, 11, FontWeights.Normal, null, TextAlignment.Left),
@@ -159,16 +159,18 @@ namespace ChessForge
         /// <returns></returns>
         private Label BuildPercentLabel(int pct, double scaleFactor)
         {
-            Label lbl = new Label();
-            lbl.Width = pct * scaleFactor;
-            lbl.Height = 20;
-            lbl.FontSize = 12;
-            lbl.VerticalContentAlignment = VerticalAlignment.Center;
-            lbl.HorizontalContentAlignment = HorizontalAlignment.Center;
-            lbl.Content = pct.ToString() + "%";
+            Label lbl = new Label
+            {
+                Width = pct * scaleFactor,
+                Height = 20,
+                FontSize = 12,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                Content = pct.ToString() + "%",
 
-            lbl.BorderThickness = new Thickness(0, 0, 0, 0);
-            lbl.Padding = new Thickness(0, 0, 0, 0);
+                BorderThickness = new Thickness(0, 0, 0, 0),
+                Padding = new Thickness(0, 0, 0, 0)
+            };
 
             return lbl;
         }
@@ -185,10 +187,12 @@ namespace ChessForge
         {
             Paragraph para = new Paragraph();
 
-            Canvas canvas = new Canvas();
-            canvas.Width = scaleFactor * 110;
-            canvas.Height = 20;
-            canvas.Background = Brushes.White;
+            Canvas canvas = new Canvas
+            {
+                Width = scaleFactor * 110,
+                Height = 20,
+                Background = Brushes.White
+            };
 
             Label lblWhite = BuildPercentLabel(pctWhite, scaleFactor);
             Label lblDraws = BuildPercentLabel(pctDraws, scaleFactor);
@@ -210,8 +214,10 @@ namespace ChessForge
             Canvas.SetLeft(lblDraws, Canvas.GetLeft(lblWhite) + lblWhite.Width);
             Canvas.SetLeft(lblBlack, Canvas.GetLeft(lblDraws) + lblDraws.Width);
 
-            InlineUIContainer uIContainer = new InlineUIContainer();
-            uIContainer.Child = canvas;
+            InlineUIContainer uIContainer = new InlineUIContainer
+            {
+                Child = canvas
+            };
             para.Inlines.Add(uIContainer);
 
 
