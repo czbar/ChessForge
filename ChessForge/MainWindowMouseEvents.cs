@@ -455,6 +455,41 @@ namespace ChessForge
         // 
         //**************************************************************
 
+
+        /// <summary>
+        /// Turns off the Explorers Toggle and stops Web queries.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExplorersToggleOn_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UiImgExplorersOff.Visibility = Visibility.Visible;
+            UiImgExplorersOn.Visibility = Visibility.Collapsed;
+
+            WebAccessManager.IsEnabledOpeningStats = false;
+
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Turns on the Explorers Toggle and allows Web queries.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExplorersToggleOff_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UiImgExplorersOff.Visibility = Visibility.Collapsed;
+            UiImgExplorersOn.Visibility = Visibility.Visible;
+            WebAccessManager.IsEnabledOpeningStats = true;
+
+            if (ActiveVariationTree != null && ActiveVariationTree.SelectedNode != null)
+            {
+                WebAccessManager.RequestOpeningStats(AppStateManager.ActiveTreeId, ActiveVariationTree.SelectedNode);
+            }
+
+            e.Handled = true;
+        }
+
         /// <summary>
         /// Handles the Evaluation toggle being clicked while in the ON mode.
         /// Any evaluation in progress will be stopped.

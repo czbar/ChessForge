@@ -40,7 +40,7 @@ namespace ChessForge
         /// <summary>
         /// Layout definitions for paragraphs at different levels.
         /// </summary>
-        private Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
+        private readonly Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
             [STYLE_WORKBOOK_TITLE] = new RichTextPara(0, 10, 18, FontWeights.Bold, null, TextAlignment.Left),
             [STYLE_CHAPTER_TITLE] = new RichTextPara(10, 10, 16, FontWeights.Normal, null, TextAlignment.Left),
@@ -53,7 +53,7 @@ namespace ChessForge
         /// <summary>
         /// Maps chapter Ids to Chapter objects
         /// </summary>
-        private Dictionary<int, Paragraph> _dictChapterParas = new Dictionary<int, Paragraph>();
+        private readonly Dictionary<int, Paragraph> _dictChapterParas = new Dictionary<int, Paragraph>();
 
         /// <summary>
         /// Names and prefixes for the Runs.
@@ -77,7 +77,7 @@ namespace ChessForge
         /// <summary>
         /// Names and prefixes for the Paragraphs.
         /// </summary>
-        private readonly string _par_workbook_title_ = "par_workbook_title_";
+//        private readonly string _par_workbook_title_ = "par_workbook_title_";
         private readonly string _par_chapter_ = "par_chapter_";
 
         // attributes of the Run to bring to view
@@ -122,10 +122,7 @@ namespace ChessForge
         public void BringChapterIntoView(int chapterId)
         {
             Run rChapter = FindChapterTitleRun(chapterId);
-            if (rChapter != null)
-            {
-                rChapter.BringIntoView();
-            }
+            rChapter?.BringIntoView();
         }
 
         /// <summary>
@@ -140,10 +137,7 @@ namespace ChessForge
             if (paraChapter != null)
             {
                 Run r = FindGameUnitRunInParagraph(paraChapter, contentType, index);
-                if (r != null)
-                {
-                    r.BringIntoView();
-                }
+                r?.BringIntoView();
             }
         }
 

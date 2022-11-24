@@ -19,6 +19,21 @@ namespace ChessForge
         private Table _openingStatsTable;
 
         /// <summary>
+        /// Id of the tree to which the node being handled belongs.
+        /// </summary>
+        private int _treeId;
+
+        /// <summary>
+        /// Node for which we are showing the stats
+        /// </summary>
+        private TreeNode _node;
+
+        /// <summary>
+        /// The move number string to prefix the moves in the table with
+        /// </summary>
+        private string _moveNumberString;
+
+        /// <summary>
         /// Creates the view and registers a listener with WebAccess
         /// </summary>
         /// <param name="doc"></param>
@@ -37,8 +52,34 @@ namespace ChessForge
         {
             if (e.Success)
             {
+                _treeId = e.TreeId;
+                if (AppStateManager.ActiveVariationTree != null)
+                {
+                    _node = AppStateManager.ActiveVariationTree.GetNodeFromNodeId(e.NodeId);
+                }
+                _moveNumberString = BuildMoveNumberString(_node);
                 BuildFlowDocument();
             }
+        }
+
+        /// <summary>
+        /// Builds the move number string to suffix the moves in the table with.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private string BuildMoveNumberString(TreeNode nd)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (nd.ColorToMove == ChessPosition.PieceColor.Black)
+            {
+                sb.Append(nd.MoveNumber.ToString() + "...");
+            }
+            else
+            {
+                sb.Append((nd.MoveNumber + 1).ToString() + ".");
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
@@ -107,7 +148,7 @@ namespace ChessForge
         {
             try
             {
-                TableCell cellMove = new TableCell(new Paragraph(new Run(move.San)));
+                TableCell cellMove = new TableCell(new Paragraph(new Run(_moveNumberString + move.San)));
                 row.Cells.Add(cellMove);
 
                 int whiteWins = int.Parse(move.White);
@@ -121,6 +162,8 @@ namespace ChessForge
                 int drawsPercent = 100 - (whiteWinsPercent + blackWinsPercent);
 
                 TableCell cellTotal = new TableCell(new Paragraph(new Run((int.Parse(move.White) + int.Parse(move.Draws) + int.Parse(move.Black)).ToString("N0"))));
+                cellTotal.FontSize= 12 + Configuration.FontSizeDiff;
+;
                 row.Cells.Add(cellTotal);
 
                 TableCell cellScoring = new TableCell(CreatePercentBarToParagraph(whiteWinsPercent, drawsPercent, blackWinsPercent, scaleFactor));
@@ -163,7 +206,7 @@ namespace ChessForge
             {
                 Width = pct * scaleFactor,
                 Height = 20,
-                FontSize = 12,
+                FontSize = 12 + Configuration.FontSizeDiff,
                 VerticalContentAlignment = VerticalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 Content = pct.ToString() + "%",
