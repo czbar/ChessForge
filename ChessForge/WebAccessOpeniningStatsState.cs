@@ -13,6 +13,24 @@ namespace ChessForge
     public class WebAccessOpeniningStatsState
     {
         /// <summary>
+        /// Whether querying Opening Stats is enabled.
+        /// </summary>
+        public static bool IsEnabledOpeningStats
+        {
+            get
+            {
+                return _isEnabledOpeningStats;
+            }
+            set
+            {
+                _isEnabledOpeningStats = value;
+                QueuedNode = null;
+                QueuedNodeTreeId = 0;
+                IsOpeningStatsRequestInProgress = false;
+            }
+        }
+
+        /// <summary>
         /// A node that had to be queued while another request
         /// was in porogress
         /// </summary>
@@ -32,5 +50,8 @@ namespace ChessForge
         /// Whether the OpeningStats handlers have been initialized
         /// </summary>
         public static bool IsOpeningStatsInitialized = false;
+
+        // whether querying opening stats is enabled
+        private static bool _isEnabledOpeningStats = false;
     }
 }
