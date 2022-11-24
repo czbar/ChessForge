@@ -28,6 +28,11 @@ namespace GameTree
         public VariationTree AssociatedPrimary { get; set; }
 
         /// <summary>
+        /// Tree Id assigned uniquely assigned for the current session only.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Available Exercise Solving modes.
         /// </summary>
         public enum SolvingMode
