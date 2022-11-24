@@ -80,6 +80,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Session Id of the Active Tree
+        /// </summary>
+        public static int ActiveTreeId
+        {
+            get => ActiveVariationTree == null ? -1 : ActiveVariationTree.Id;
+        }
+
+        /// <summary>
         /// Returns the number of Model Games in the Active Chapter.
         /// </summary>
         public static int ActiveChapterGamesCount
