@@ -920,7 +920,7 @@ namespace ChessForge
         private void UiMnOpeningStats_Click(object sender, RoutedEventArgs e)
         {
             TreeNode nd = ActiveTreeView.GetSelectedNode();
-            WebAccess.OpeningExplorer.OpeningStats(FenParser.GenerateFenFromPosition(nd.Position));
+            WebAccessManager.RequestOpeningStats(0, nd);
         }
 
         /// <summary>
