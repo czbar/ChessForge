@@ -29,12 +29,21 @@ namespace WebAccess
         /// Gets the version number of Chess Forge currently available from Source Forge.
         /// </summary>
         /// <returns></returns>
-        public static async Task<string> OpeningStats(string fen)
+        public static async void OpeningStats(string fen)
         {
-            var json = await RestApiRequest.Client.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
-            Stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
-            DataReceived?.Invoke(null, null);
-            return json;
+            WebAccessEventArgs eventArgs = new WebAccessEventArgs();
+            try
+            {
+                var json = await RestApiRequest.Client.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
+                Stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
+                eventArgs.Sucess = true;
+                DataReceived?.Invoke(null, eventArgs);
+            }
+            catch
+            {
+                eventArgs.Sucess = false;
+                DataReceived?.Invoke(null, eventArgs);
+            }
         }
     }
 
