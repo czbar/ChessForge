@@ -1,5 +1,6 @@
 ﻿using ChessPosition;
 using ChessPosition.Utils;
+using GameTree;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -26,12 +27,15 @@ namespace WebAccess
         public static LichessOpeningsStats Stats;
 
         /// <summary>
-        /// Gets the version number of Chess Forge currently available from Source Forge.
+        /// Requests Opening Stats from lichess
         /// </summary>
         /// <returns></returns>
-        public static async void OpeningStats(string fen)
+        public static async void OpeningStats(int treeId, TreeNode nd)
         {
+            string fen = FenParser.GenerateFenFromPosition(nd.Position);
             WebAccessEventArgs eventArgs = new WebAccessEventArgs();
+            eventArgs.TreeId= treeId;
+            eventArgs.NodeId = nd.NodeId;
             try
             {
                 var json = await RestApiRequest.Client.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
