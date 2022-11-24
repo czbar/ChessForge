@@ -7,8 +7,8 @@
     <ProjectGuid>{58B448D8-69CB-4C59-A515-30EF78F7873E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WebClient</RootNamespace>
-    <AssemblyName>WebClient</AssemblyName>
+    <RootNamespace>WebAccess</RootNamespace>
+    <AssemblyName>WebAccess</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

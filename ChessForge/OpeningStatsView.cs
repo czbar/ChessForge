@@ -19,13 +19,13 @@ namespace ChessForge
         private Table _openingStatsTable;
 
         /// <summary>
-        /// Creates the view and registers a listener with WebClient
+        /// Creates the view and registers a listener with WebAccess
         /// </summary>
         /// <param name="doc"></param>
         public OpeningStatsView(FlowDocument doc) : base(doc)
         {
             // listen to Data Received events
-            WebAccess.OpeningExplorer.DataReceived += OpeningStatsReceived;
+            OpeningExplorer.DataReceived += OpeningStatsReceived;
         }
 
         /// <summary>
@@ -33,9 +33,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void OpeningStatsReceived(object sender, EventArgs e)
+        public void OpeningStatsReceived(object sender, WebAccessEventArgs e)
         {
-            BuildFlowDocument();
+            if (e.Success)
+            {
+                BuildFlowDocument();
+            }
         }
 
         /// <summary>

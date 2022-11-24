@@ -18,7 +18,7 @@ namespace WebAccess
         /// <summary>
         /// Handler for the DataReceived event
         /// </summary>
-        public static event EventHandler DataReceived;
+        public static event EventHandler<WebAccessEventArgs> DataReceived;
 
         /// <summary>
         /// Statistics and data received from Lichess
@@ -36,12 +36,12 @@ namespace WebAccess
             {
                 var json = await RestApiRequest.Client.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
                 Stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
-                eventArgs.Sucess = true;
+                eventArgs.Success = true;
                 DataReceived?.Invoke(null, eventArgs);
             }
             catch
             {
-                eventArgs.Sucess = false;
+                eventArgs.Success = false;
                 DataReceived?.Invoke(null, eventArgs);
             }
         }
@@ -70,7 +70,7 @@ namespace WebAccess
         public string White;
         public string Draws;
         public string Black;
-        public string Game;
+        public object Game;
     }
 
     /// <summary>

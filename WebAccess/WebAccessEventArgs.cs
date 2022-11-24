@@ -11,6 +11,6 @@ namespace WebAccess
     /// </summary>
     public class WebAccessEventArgs : EventArgs
     {
-        public bool Sucess { get; set; }
+        public bool Success { get; set; }
     }
 }

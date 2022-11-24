@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngineService", "EngineServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessForge", "ChessForge\ChessForge.csproj", "{FEC392A5-8944-4AE8-867D-260E72E8150B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient", "WebClient\WebClient.csproj", "{58B448D8-69CB-4C59-A515-30EF78F7873E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAccess", "WebAccess\WebAccess.csproj", "{58B448D8-69CB-4C59-A515-30EF78F7873E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
