@@ -15,28 +15,39 @@ namespace ChessForge
     public class WebAccessManager
     {
         /// <summary>
+        /// Whether querying Opening Stats is enabled.
+        /// </summary>
+        public static bool IsEnabledOpeningStats
+        {
+            get => WebAccessOpeniningStatsState.IsEnabledOpeningStats;
+            set => WebAccessOpeniningStatsState.IsEnabledOpeningStats = value;
+        }
+
+        /// <summary>
         /// Calls WebAccess to retrieve Opening Stats.
         /// </summary>
         /// <param name="treeId"></param>
         /// <param name="nd"></param>
         public static void RequestOpeningStats(int treeId, TreeNode nd)
         {
-            if (!WebAccessOpeniningStatsState.IsOpeningStatsInitialized)
+            if (IsEnabledOpeningStats)
             {
-                InitializeOpeningStats();
-            }
+                if (!WebAccessOpeniningStatsState.IsOpeningStatsInitialized)
+                {
+                    InitializeOpeningStats();
+                }
 
-            if (WebAccessOpeniningStatsState.IsOpeningStatsRequestInProgress)
-            {
-                WebAccessOpeniningStatsState.QueuedNode = nd;
-                WebAccessOpeniningStatsState.QueuedNodeTreeId = treeId;
-            }
-            else
-            {
-                WebAccessOpeniningStatsState.IsOpeningStatsRequestInProgress = true;
-                WebAccessOpeniningStatsState.QueuedNode = null;
-                OpeningExplorer.OpeningStats(FenParser.GenerateFenFromPosition(nd.Position));
-                WebAccessOpeniningStatsState.IsOpeningStatsRequestInProgress = false;
+                if (WebAccessOpeniningStatsState.IsOpeningStatsRequestInProgress)
+                {
+                    WebAccessOpeniningStatsState.QueuedNode = nd;
+                    WebAccessOpeniningStatsState.QueuedNodeTreeId = treeId;
+                }
+                else
+                {
+                    WebAccessOpeniningStatsState.IsOpeningStatsRequestInProgress = true;
+                    WebAccessOpeniningStatsState.QueuedNode = null;
+                    OpeningExplorer.OpeningStats(treeId, nd);
+                }
             }
         }
 
@@ -56,13 +67,13 @@ namespace ChessForge
         /// <param name="e"></param>
         private static void OpeningStatsRequestCompleted(object sender, WebAccessEventArgs e)
         {
+            WebAccessOpeniningStatsState.IsOpeningStatsRequestInProgress = false;
+
             // check if we have anything queued and if so run it
             if (WebAccessOpeniningStatsState.QueuedNode != null)
             {
-                WebAccessOpeniningStatsState.IsOpeningStatsRequestInProgress = true;
                 RequestOpeningStats(0, WebAccessOpeniningStatsState.QueuedNode);
                 WebAccessOpeniningStatsState.QueuedNode = null;
-                WebAccessOpeniningStatsState.IsOpeningStatsRequestInProgress = false;
             }
         }
     }
