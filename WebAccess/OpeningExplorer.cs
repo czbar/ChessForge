@@ -18,7 +18,7 @@ namespace WebAccess
         /// <summary>
         /// Handler for the DataReceived event
         /// </summary>
-        public static event EventHandler DataReceived;
+        public static event EventHandler<WebAccessEventArgs> DataReceived;
 
         /// <summary>
         /// Statistics and data received from Lichess
@@ -29,12 +29,21 @@ namespace WebAccess
         /// Gets the version number of Chess Forge currently available from Source Forge.
         /// </summary>
         /// <returns></returns>
-        public static async Task<string> OpeningStats(string fen)
+        public static async void OpeningStats(string fen)
         {
-            var json = await RestApiRequest.Client.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
-            Stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
-            DataReceived?.Invoke(null, null);
-            return json;
+            WebAccessEventArgs eventArgs = new WebAccessEventArgs();
+            try
+            {
+                var json = await RestApiRequest.Client.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
+                Stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
+                eventArgs.Success = true;
+                DataReceived?.Invoke(null, eventArgs);
+            }
+            catch
+            {
+                eventArgs.Success = false;
+                DataReceived?.Invoke(null, eventArgs);
+            }
         }
     }
 
@@ -61,7 +70,7 @@ namespace WebAccess
         public string White;
         public string Draws;
         public string Black;
-        public string Game;
+        public object Game;
     }
 
     /// <summary>

@@ -39,7 +39,7 @@ namespace ChessPositionTest
             WebAccess.OpeningExplorer.DataReceived += OpeningStatsReceived;
             Console.WriteLine("Sending Request");
             watch.Start(); 
-            var json = WebAccess.OpeningExplorer.OpeningStats("rnbqkb1r/ppp1pp1p/5np1/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 0 4");
+            WebAccess.OpeningExplorer.OpeningStats("rnbqkb1r/ppp1pp1p/5np1/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 0 4");
 
             //TestTreeMerge();
             //TestPgnGameParser();

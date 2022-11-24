@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WebClient")]
+[assembly: AssemblyTitle("WebAccess")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MindRose Pty Ltd")]
-[assembly: AssemblyProduct("WebClient")]
+[assembly: AssemblyProduct("WebAccess")]
 [assembly: AssemblyCopyright("Copyright © MindRose Pty Ltd 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
