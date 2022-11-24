@@ -11,6 +11,19 @@ namespace WebAccess
     /// </summary>
     public class WebAccessEventArgs : EventArgs
     {
+        /// <summary>
+        /// Whether event's result was success
+        /// </summary>
         public bool Success { get; set; }
+        
+        /// <summary>
+        /// Id of the tree to which the handled Node belongs
+        /// </summary>
+        public int TreeId { get; set; }
+
+        /// <summary>
+        /// Id of the Node being handled.
+        /// </summary>
+        public int NodeId { get; set; }
     }
 }
