@@ -45,6 +45,11 @@ namespace ChessForge
         private OpeningStatsView _openingStatsView;
 
         /// <summary>
+        /// The RichTextBox based Top Games from lichess view
+        /// </summary>
+        private TopGamesView _topGamesView;
+
+        /// <summary>
         /// The Tree view corresponding to the type of the current ActiveVariationTree
         /// </summary>
         public VariationTreeView ActiveTreeView
@@ -269,6 +274,9 @@ namespace ChessForge
         {
             UiDgActiveLine.ContextMenu = UiMnMainBoard;
             _openingStatsView = new OpeningStatsView(UiRtbOpenings.Document);
+            _topGamesView = new TopGamesView(UiRtbTopGames.Document);
+            UiRtbTopGames.IsDocumentEnabled = true;
+
 
             AddDebugMenu();
 

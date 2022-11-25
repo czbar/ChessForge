@@ -162,6 +162,7 @@
     <Compile Include="TextBoxDialog.xaml.cs">
       <DependentUpon>TextBoxDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TopGamesView.cs" />
     <Compile Include="UpdateAvailableDialog.xaml.cs">
       <DependentUpon>UpdateAvailableDialog.xaml</DependentUpon>
     </Compile>

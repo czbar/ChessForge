@@ -11,7 +11,7 @@ namespace ChessForge
         public static string QUICK_INSTRUCTION_CHAPTERS = "Click Study header or double click chapter\'s title to open the Study Tree \n "
             + "Right click to open context menu";
         public static string QUICK_INSTRUCTION_STUDY = "Click through the moves \n Double click to annotate move \n "
-            + "Right click to open menu for advanced, FEN, creating exercise \n " + "Double click in the Scoresheet for auto-replay";
+            + "Right click to open menu for advanced editing, FEN, creating exercise \n " + "Double click in the Scoresheet for auto-replay";
         public static string QUICK_INSTRUCTION_MODEL_GAMES_NON_EMPTY = "Click through the moves \n Double click to annotate move \n "
             + "Right click to open menu for creating, importing or editing games";
         public static string QUICK_INSTRUCTION_MODEL_GAMES_EMPTY = "Click through the moves \n Double click to annotate move \n "

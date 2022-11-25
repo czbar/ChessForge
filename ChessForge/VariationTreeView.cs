@@ -1237,6 +1237,7 @@ namespace ChessForge
                             cell = new TableCell(new Paragraph(rCell));
                             // click on the Cell to have the same effect as click on the Run
                             cell.MouseDown += EventForkChildClicked;
+                            cell.Cursor = Cursors.Hand;
                             cell.Blocks.First().Name = _run_fork_move_ + node.Children[i].NodeId.ToString();
                         }
                         else
