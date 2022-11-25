@@ -9,12 +9,19 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Xml.Linq;
 using WebAccess;
 
 namespace ChessForge
 {
     public class OpeningStatsView : RichTextBuilder
     {
+        // scale factor for table cell sizes
+        private double scaleFactor = 3.5;
+
+        // The top table showing the name of the opening 
+        private Table _openingNameTable;
+
         // The main table holding the stats
         private Table _openingStatsTable;
 
@@ -41,6 +48,24 @@ namespace ChessForge
         {
             // listen to Data Received events
             OpeningExplorer.DataReceived += OpeningStatsReceived;
+        }
+
+        // column widths in the stats table
+        private readonly double _moveColumnWidth = 20;
+        private readonly double _totalGamesColumnWidth = 20;
+        private readonly double _statsColumnWidth = 110;
+
+        // column widths in the stats table's header
+        private readonly double _ecoColumnWidth = 20;
+        private readonly double _openingNameColumnWidth = 130;
+
+        /// <summary>
+        /// The width of the stats table being a sum of
+        /// the declared column widths.
+        /// </summary>
+        private double TotalStatsTableWidth
+        {
+            get => _moveColumnWidth + _totalGamesColumnWidth + _statsColumnWidth;
         }
 
         /// <summary>
@@ -108,9 +133,62 @@ namespace ChessForge
             Document.Blocks.Clear();
             Document.PageWidth = 590;
 
-            BuildOpeningStatsTable();
+            BuildOpeningNameTable();
+            if (_openingNameTable != null)
+            {
+                Document.Blocks.Add(_openingNameTable);
+            }
 
+            BuildOpeningStatsTable();
             Document.Blocks.Add(_openingStatsTable);
+        }
+
+        /// <summary>
+        /// Builds the header table for the main table
+        /// </summary>
+        private void BuildOpeningNameTable()
+        {
+            // get the data
+            LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats;
+            string eco;
+            string openingName;
+            if (stats.Opening == null)
+            {
+                eco = "-";
+                openingName = "";
+            }
+            else
+            {
+                eco = stats.Opening.Eco;
+                openingName = stats.Opening.Name;
+            }
+
+            _openingNameTable = CreateTable(0);
+            _openingNameTable.FontSize = 14 + Configuration.FontSizeDiff;
+            _openingNameTable.CellSpacing = 0;
+            _openingNameTable.Background = Brushes.LightGreen;
+            _openingNameTable.RowGroups.Add(new TableRowGroup());
+
+            _openingNameTable.Columns.Add(new TableColumn());
+            _openingNameTable.Columns[0].Width = new GridLength(_ecoColumnWidth * scaleFactor);
+
+            _openingNameTable.Columns.Add(new TableColumn());
+            _openingNameTable.Columns[1].Width = new GridLength(_openingNameColumnWidth * scaleFactor);
+
+            TableRow row = new TableRow();
+            _openingNameTable.RowGroups[0].Rows.Add(row);
+
+            Run rEco = new Run(eco ?? "");
+
+            TableCell cellEco = new TableCell(BuildEcoPara(eco));
+            cellEco.FontSize = 14 + Configuration.FontSizeDiff;
+            cellEco.FontWeight = FontWeights.Bold;
+            cellEco.Background = Brushes.LightGreen;
+            row.Cells.Add(cellEco);
+
+            TableCell cellOpeningName = new TableCell(BuildOpeningNamePara(openingName ?? ""));
+            cellEco.FontSize = 14 + Configuration.FontSizeDiff;
+            row.Cells.Add(cellOpeningName);
         }
 
         /// <summary>
@@ -120,13 +198,12 @@ namespace ChessForge
         {
             _openingStatsTable = CreateTable(0);
             _openingStatsTable.FontSize = 14 + Configuration.FontSizeDiff;
-            _openingStatsTable.CellSpacing = 2;
+            _openingStatsTable.CellSpacing = 0;
             _openingStatsTable.RowGroups.Add(new TableRowGroup());
 
             // get the data
             LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats;
 
-            double scaleFactor = 3.5;
             CreateStatsTableColumns(scaleFactor);
 
             foreach (WebAccess.LichessMoveStats move in stats.Moves)
@@ -161,9 +238,8 @@ namespace ChessForge
                 int blackWinsPercent = (int)Math.Round((double)(blackWins * 100) / (double)totalGames);
                 int drawsPercent = 100 - (whiteWinsPercent + blackWinsPercent);
 
-                TableCell cellTotal = new TableCell(new Paragraph(new Run((int.Parse(move.White) + int.Parse(move.Draws) + int.Parse(move.Black)).ToString("N0"))));
-                cellTotal.FontSize= 12 + Configuration.FontSizeDiff;
-;
+                TableCell cellTotal = new TableCell(BuildTotalGamesPara(totalGames));
+                cellTotal.FontSize = 12 + Configuration.FontSizeDiff;
                 row.Cells.Add(cellTotal);
 
                 TableCell cellScoring = new TableCell(CreatePercentBarToParagraph(whiteWinsPercent, drawsPercent, blackWinsPercent, scaleFactor));
@@ -183,15 +259,15 @@ namespace ChessForge
         {
             // Move
             _openingStatsTable.Columns.Add(new TableColumn());
-            _openingStatsTable.Columns[0].Width = new GridLength(20 * scaleFactor);
+            _openingStatsTable.Columns[0].Width = new GridLength(_moveColumnWidth * scaleFactor);
 
             // Total games
             _openingStatsTable.Columns.Add(new TableColumn());
-            _openingStatsTable.Columns[1].Width = new GridLength(20 * scaleFactor);
+            _openingStatsTable.Columns[1].Width = new GridLength(_totalGamesColumnWidth * scaleFactor);
 
             // Scoring
             _openingStatsTable.Columns.Add(new TableColumn());
-            _openingStatsTable.Columns[2].Width = new GridLength(110 * scaleFactor);
+            _openingStatsTable.Columns[2].Width = new GridLength(_statsColumnWidth * scaleFactor);
         }
 
         /// <summary>
@@ -205,7 +281,7 @@ namespace ChessForge
             Label lbl = new Label
             {
                 Width = pct * scaleFactor,
-                Height = 20,
+                Height = 18 + Configuration.FontSizeDiff,
                 FontSize = 12 + Configuration.FontSizeDiff,
                 VerticalContentAlignment = VerticalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Center,
@@ -233,7 +309,7 @@ namespace ChessForge
             Canvas canvas = new Canvas
             {
                 Width = scaleFactor * 110,
-                Height = 20,
+                Height = 20 + Configuration.FontSizeDiff,
                 Background = Brushes.White
             };
 
@@ -263,6 +339,140 @@ namespace ChessForge
             };
             para.Inlines.Add(uIContainer);
 
+
+            return para;
+        }
+
+        /// <summary>
+        /// Builds Paragraph showing the total number of games.
+        /// </summary>
+        /// <param name="totalGames"></param>
+        /// <returns></returns>
+        private Paragraph BuildTotalGamesPara(int totalGames)
+        {
+            Paragraph para = new Paragraph();
+
+            Canvas canvas = new Canvas
+            {
+                Width = scaleFactor * (_totalGamesColumnWidth),
+                Height = 20 + Configuration.FontSizeDiff,
+                Background = Brushes.White
+            };
+
+            Label lbl = new Label
+            {
+                Width = scaleFactor * _totalGamesColumnWidth,
+                Height = 18 + Configuration.FontSizeDiff,
+                FontSize = 12 + Configuration.FontSizeDiff,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Right,
+                Content = totalGames.ToString("N0"),
+
+                BorderThickness = new Thickness(0, 0, 0, 0),
+                Padding = new Thickness(0, 0, 0, 0)
+            };
+
+            lbl.Background = Brushes.White;
+
+            canvas.Children.Add(lbl);
+
+            Canvas.SetLeft(lbl, 0 * scaleFactor);
+
+            InlineUIContainer uIContainer = new InlineUIContainer
+            {
+                Child = canvas
+            };
+            para.Inlines.Add(uIContainer);
+
+
+            return para;
+        }
+
+        /// <summary>
+        /// Builds Paragraph with the name of the Opening.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private Paragraph BuildOpeningNamePara(string name)
+        {
+            Paragraph para = new Paragraph();
+
+            Canvas canvas = new Canvas
+            {
+                Width = scaleFactor * (TotalStatsTableWidth - _ecoColumnWidth),
+                Height = 22 + Configuration.FontSizeDiff,
+                Background = Brushes.White
+            };
+
+            Label lbl = new Label
+            {
+                Width = scaleFactor * (TotalStatsTableWidth - _ecoColumnWidth),
+                Height = 22 + Configuration.FontSizeDiff,
+                FontSize = 14 + Configuration.FontSizeDiff,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Left,
+                Content = name,
+
+                BorderThickness = new Thickness(0, 0, 0, 0),
+                Padding = new Thickness(0, 0, 0, 0)
+            };
+
+            lbl.Background = Brushes.LightGreen;
+
+            canvas.Children.Add(lbl);
+
+            Canvas.SetLeft(lbl, 0 * scaleFactor);
+
+            InlineUIContainer uIContainer = new InlineUIContainer
+            {
+                Child = canvas
+            };
+            para.Inlines.Add(uIContainer);
+
+
+            return para;
+        }
+
+        /// <summary>
+        /// Builds Paragraph showing the ECO code.
+        /// </summary>
+        /// <param name="eco"></param>
+        /// <returns></returns>
+        private Paragraph BuildEcoPara(string eco)
+        {
+            Paragraph para = new Paragraph();
+
+            Canvas canvas = new Canvas
+            {
+                Width = scaleFactor * _ecoColumnWidth,
+                Height = 22 + Configuration.FontSizeDiff,
+                Background = Brushes.White
+            };
+
+            Label lbl = new Label
+            {
+                Width = scaleFactor * (_ecoColumnWidth),
+                Height = 22 + Configuration.FontSizeDiff,
+                FontSize = 14 + Configuration.FontSizeDiff,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Left,
+                Content = "  " + eco,
+
+                BorderThickness = new Thickness(0, 0, 0, 0),
+                Padding = new Thickness(0, 0, 0, 0)
+            };
+
+            lbl.Background = Brushes.LightGreen;
+
+            canvas.Children.Add(lbl);
+
+            Canvas.SetLeft(lbl, 0 * scaleFactor);
+
+            InlineUIContainer uIContainer = new InlineUIContainer
+            {
+                Child = canvas
+            };
+            para.Inlines.Add(uIContainer);
 
             return para;
         }
