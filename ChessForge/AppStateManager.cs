@@ -37,8 +37,20 @@ namespace ChessForge
         // main application window
         private static MainWindow _mainWin;
 
+        // whether Openings and Top Games explorers are turned on
+        private static bool _areExplorersOn;
+
         // last active tab in the Manual Review tab control
         private static WorkbookManager.TabViewType _lastActiveManualReviewTab = WorkbookManager.TabViewType.NONE;
+
+        /// <summary>
+        /// Determines whether the Explorers are on.
+        /// </summary>
+        public static bool AreExplorersOn
+        {
+            get => _areExplorersOn;
+            set => _areExplorersOn = value;
+        }
 
         /// <summary>
         /// Gets the version of this Assembly
@@ -424,12 +436,15 @@ namespace ChessForge
                 case LearningMode.Mode.IDLE:
                 case LearningMode.Mode.MANUAL_REVIEW:
                     SetupGuiForManualReview();
+                    ShowExplorers(AreExplorersOn);
                     break;
                 case LearningMode.Mode.TRAINING:
                     SetupGuiForTraining();
+                    ShowExplorers(false);
                     break;
                 case LearningMode.Mode.ENGINE_GAME:
                     SetupGuiForEngineGame();
+                    ShowExplorers(false);
                     break;
             }
             ShowEvaluationControlsForCurrentStates();
@@ -437,6 +452,26 @@ namespace ChessForge
             ConfigureSaveMenus();
             ConfigureFontSizeMenus();
         }
+
+        /// <summary>
+        /// Shows/Hides Openings and Top Games
+        /// explorers.
+        /// </summary>
+        /// <param name="visible"></param>
+        public static void ShowExplorers(bool visible)
+        {
+            if (visible)
+            {
+                MainWin.UiRtbOpenings.Visibility = Visibility.Visible;
+                MainWin.UiRtbTopGames.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MainWin.UiRtbOpenings.Visibility = Visibility.Hidden;
+                MainWin.UiRtbTopGames.Visibility = Visibility.Hidden;
+            }
+        }
+
         /// <summary>
         /// Enables Move/Line evaluation menus.
         /// Hides engine evaluation progress bar.
