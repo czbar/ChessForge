@@ -241,7 +241,7 @@ namespace ChessForge
 
             Label lblWhite = new Label
             {
-                Width = _namesColumnWidth,
+                Width = _namesColumnWidth - 8,
                 Height = 20 + Configuration.FontSizeDiff,
                 FontSize = _baseFontSize + Configuration.FontSizeDiff,
                 VerticalContentAlignment = VerticalAlignment.Center,
@@ -252,12 +252,12 @@ namespace ChessForge
                 Padding = new Thickness(0, 0, 0, 0)
             };
             canvas.Children.Add(lblWhite);
-            Canvas.SetLeft(lblWhite, 0);
+            Canvas.SetLeft(lblWhite, 4);
             Canvas.SetTop(lblWhite, 2);
 
             Label lblBlack = new Label
             {
-                Width = _namesColumnWidth,
+                Width = _namesColumnWidth - 8,
                 Height = 20 + Configuration.FontSizeDiff,
                 FontSize = _baseFontSize + Configuration.FontSizeDiff,
                 VerticalContentAlignment = VerticalAlignment.Center,
@@ -268,7 +268,7 @@ namespace ChessForge
                 Padding = new Thickness(0, 0, 0, 0)
             };
             canvas.Children.Add(lblBlack);
-            Canvas.SetLeft(lblBlack, 0);
+            Canvas.SetLeft(lblBlack, 4);
             Canvas.SetTop(lblBlack, 20);
 
             InlineUIContainer uIContainer = new InlineUIContainer
