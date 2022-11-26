@@ -463,10 +463,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void ExplorersToggleOn_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            AppStateManager.AreExplorersOn = false;
+
             UiImgExplorersOff.Visibility = Visibility.Visible;
             UiImgExplorersOn.Visibility = Visibility.Collapsed;
-
             WebAccessManager.IsEnabledOpeningStats = false;
+
+            AppStateManager.AreExplorersOn = false;
+            AppStateManager.ShowExplorers(false);
 
             e.Handled = true;
         }
@@ -486,6 +490,9 @@ namespace ChessForge
             {
                 WebAccessManager.RequestOpeningStats(AppStateManager.ActiveTreeId, ActiveVariationTree.SelectedNode);
             }
+
+            AppStateManager.AreExplorersOn = true;
+            AppStateManager.ShowExplorers(true);
 
             e.Handled = true;
         }

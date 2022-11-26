@@ -114,6 +114,9 @@ namespace ChessForge
 
         private static readonly string STYLE_WORKBOOK_TITLE = "workbook_title";
 
+        // base font size for the control
+        private int _baseFontSize = 11;
+
         /// <summary>
         /// Layout definitions for paragraphs at different levels.
         /// </summary>
@@ -164,8 +167,9 @@ namespace ChessForge
             }
 
             _openingNameTable = CreateTable(0);
-            _openingNameTable.FontSize = 14 + Configuration.FontSizeDiff;
+            _openingNameTable.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
             _openingNameTable.CellSpacing = 0;
+            _openingNameTable.Foreground = Brushes.Black;
             _openingNameTable.Background = Brushes.LightGreen;
             _openingNameTable.RowGroups.Add(new TableRowGroup());
 
@@ -178,16 +182,16 @@ namespace ChessForge
             TableRow row = new TableRow();
             _openingNameTable.RowGroups[0].Rows.Add(row);
 
-            Run rEco = new Run(eco ?? "");
-
             TableCell cellEco = new TableCell(BuildEcoPara(eco));
-            cellEco.FontSize = 14 + Configuration.FontSizeDiff;
+            cellEco.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
             cellEco.FontWeight = FontWeights.Bold;
+            cellEco.Foreground = Brushes.Black;
             cellEco.Background = Brushes.LightGreen;
             row.Cells.Add(cellEco);
 
             TableCell cellOpeningName = new TableCell(BuildOpeningNamePara(openingName ?? ""));
-            cellEco.FontSize = 14 + Configuration.FontSizeDiff;
+            cellOpeningName.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
+            cellOpeningName.Foreground = Brushes.Black;
             row.Cells.Add(cellOpeningName);
         }
 
@@ -197,7 +201,7 @@ namespace ChessForge
         private void BuildOpeningStatsTable()
         {
             _openingStatsTable = CreateTable(0);
-            _openingStatsTable.FontSize = 14 + Configuration.FontSizeDiff;
+            _openingStatsTable.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
             _openingStatsTable.CellSpacing = 0;
             _openingStatsTable.RowGroups.Add(new TableRowGroup());
 
@@ -239,7 +243,7 @@ namespace ChessForge
                 int drawsPercent = 100 - (whiteWinsPercent + blackWinsPercent);
 
                 TableCell cellTotal = new TableCell(BuildTotalGamesPara(totalGames));
-                cellTotal.FontSize = 12 + Configuration.FontSizeDiff;
+                cellTotal.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
                 row.Cells.Add(cellTotal);
 
                 TableCell cellScoring = new TableCell(CreatePercentBarToParagraph(whiteWinsPercent, drawsPercent, blackWinsPercent, scaleFactor));
@@ -282,7 +286,7 @@ namespace ChessForge
             {
                 Width = pct * scaleFactor,
                 Height = 18 + Configuration.FontSizeDiff,
-                FontSize = 12 + Configuration.FontSizeDiff,
+                FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff,
                 VerticalContentAlignment = VerticalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 Content = pct.ToString() + "%",
@@ -363,7 +367,7 @@ namespace ChessForge
             {
                 Width = scaleFactor * _totalGamesColumnWidth,
                 Height = 18 + Configuration.FontSizeDiff,
-                FontSize = 12 + Configuration.FontSizeDiff,
+                FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff,
                 VerticalContentAlignment = VerticalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Right,
                 Content = totalGames.ToString("N0"),
@@ -408,7 +412,7 @@ namespace ChessForge
             {
                 Width = scaleFactor * (TotalStatsTableWidth - _ecoColumnWidth),
                 Height = 22 + Configuration.FontSizeDiff,
-                FontSize = 14 + Configuration.FontSizeDiff,
+                FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff,
                 VerticalContentAlignment = VerticalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Left,
                 Content = name,
@@ -417,6 +421,7 @@ namespace ChessForge
                 Padding = new Thickness(0, 0, 0, 0)
             };
 
+            lbl.Foreground = Brushes.Black;
             lbl.Background = Brushes.LightGreen;
 
             canvas.Children.Add(lbl);
@@ -453,7 +458,7 @@ namespace ChessForge
             {
                 Width = scaleFactor * (_ecoColumnWidth),
                 Height = 22 + Configuration.FontSizeDiff,
-                FontSize = 14 + Configuration.FontSizeDiff,
+                FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff,
                 VerticalContentAlignment = VerticalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Left,
                 Content = "  " + eco,
@@ -462,6 +467,7 @@ namespace ChessForge
                 Padding = new Thickness(0, 0, 0, 0)
             };
 
+            lbl.Foreground = Brushes.Black;
             lbl.Background = Brushes.LightGreen;
 
             canvas.Children.Add(lbl);
