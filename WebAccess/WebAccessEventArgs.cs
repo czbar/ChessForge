@@ -25,5 +25,11 @@ namespace WebAccess
         /// Id of the Node being handled.
         /// </summary>
         public int NodeId { get; set; }
+
+        /// <summary>
+        /// A message to pass back to the caller
+        /// e.g. the Exception error message.
+        /// </summary>
+        public string Message { get; set; }
     }
 }
