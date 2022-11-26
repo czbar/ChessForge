@@ -43,9 +43,10 @@ namespace WebAccess
                 eventArgs.Success = true;
                 DataReceived?.Invoke(null, eventArgs);
             }
-            catch
+            catch(Exception ex) 
             {
                 eventArgs.Success = false;
+                eventArgs.Message = ex.Message;
                 DataReceived?.Invoke(null, eventArgs);
             }
         }
