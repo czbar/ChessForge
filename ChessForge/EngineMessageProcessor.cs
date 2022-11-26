@@ -367,7 +367,6 @@ namespace ChessForge
             });
 
             AppStateManager.ShowMoveEvaluationControls(true);
-            _mainWin.UpdateLastMoveTextBox(nodeIndex);
 
             string fen = AppStateManager.PrepareMoveEvaluation(EvaluationManager.GetEvaluatedNode(out _).Position, true);
             RequestEngineEvaluation(nd, fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
@@ -392,7 +391,6 @@ namespace ChessForge
         {
             EvaluationManager.SetSingleNodeToEvaluate(nd);
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
-            _mainWin.UpdateLastMoveTextBox(nd);
 
             AppStateManager.ShowMoveEvaluationControls(true, false);
             AppStateManager.PrepareMoveEvaluation(fen, true);
@@ -470,8 +468,6 @@ namespace ChessForge
 
             if (nd != null)
             {
-                _mainWin.UpdateLastMoveTextBox(nd);
-
                 string fen = FenParser.GenerateFenFromPosition(nd.Position);
 
                 RequestEngineEvaluation(nd, fen, mpv, movetime);

@@ -607,10 +607,6 @@
                     </RichTextBox.Resources>
                 </RichTextBox>
                 <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" Height="150" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
-                <Label x:Name="UiLblEvaluating" Grid.Column="1" Content="Evaluating: " HorizontalAlignment="Left" Margin="25,31,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-                <Label x:Name="UiLblMoveUnderEval" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="95,30,0,0" Grid.Row="2" FontWeight="Bold" FontSize="14"  VerticalAlignment="Top"/>
-                <Label x:Name="UiLblEvalSecretMode" Grid.Column="1" Content="Engine is thinking ..." HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
-               Margin="10,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="160" Grid.Row="2" />
                 <Button x:Name="UiBtnExitTraining" Panel.ZIndex="1" Grid.Column="1" Content="Exit Training" FontWeight="Bold" HorizontalAlignment="Left" Margin="52,105,0,0" Width="85" Height="25" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitTraining_Click"/>
                 <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="0" Content="Exit Game" HorizontalAlignment="Right" Margin="30,20,20,0" Width="100" Height="25" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitGame_Click"/>
 

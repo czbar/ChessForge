@@ -998,10 +998,6 @@ namespace ChessForge
                          _mainWin.UiMnciEvalPos.IsEnabled = false;
 
                          _mainWin.UiPbEngineThinking.Visibility = Visibility.Collapsed;
-
-                         _mainWin.UiLblEvaluating.Visibility = Visibility.Visible;
-                         _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Visible;
-                         _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Collapsed;
                      }
                      else
                      {
@@ -1012,19 +1008,6 @@ namespace ChessForge
                          _mainWin.UiMnciEvalPos.IsEnabled = false;
 
                          _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
-
-                         if (game)
-                         {
-                             _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
-                             _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
-                             _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Visible;
-                         }
-                         else
-                         {
-                             _mainWin.UiLblEvaluating.Visibility = Visibility.Visible;
-                             _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Visible;
-                             _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
-                         }
                      }
                  }
                  else
@@ -1043,9 +1026,6 @@ namespace ChessForge
                      _mainWin.UiMnciEvalPos.IsEnabled = true;
 
                      _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
-                     _mainWin.UiLblEvaluating.Visibility = Visibility.Hidden;
-                     _mainWin.UiLblMoveUnderEval.Visibility = Visibility.Hidden;
-                     _mainWin.UiLblEvalSecretMode.Visibility = Visibility.Hidden;
                  }
              });
         }

@@ -1434,35 +1434,6 @@ namespace ChessForge
             EngineMessageProcessor.RequestPositionEvaluation(nd, Configuration.EngineMpv, 0);
         }
 
-        public void UpdateLastMoveTextBox(TreeNode nd)
-        {
-            string moveTxt = MoveUtils.BuildSingleMoveText(nd, true);
-
-            UpdateLastMoveTextBox(moveTxt);
-        }
-
-        public void UpdateLastMoveTextBox(int posIndex)
-        {
-            string moveTxt = EvaluationManager.GetEvaluatedNode(out _).Position.MoveNumber.ToString()
-                    + (EvaluationManager.GetEvaluatedNode(out _).Position.ColorToMove == PieceColor.Black ? "." : "...")
-                    + ActiveLine.GetNodeAtIndex(posIndex).LastMoveAlgebraicNotation;
-
-            UpdateLastMoveTextBox(moveTxt);
-        }
-
-        /// <summary>
-        /// Sets text for the label showing the last/current
-        /// move (depending on the context it can be e.g. the move being evaluated).
-        /// </summary>
-        /// <param name="moveTxt"></param>
-        public void UpdateLastMoveTextBox(string moveTxt)
-        {
-            UiLblMoveUnderEval.Dispatcher.Invoke(() =>
-            {
-                UiLblMoveUnderEval.Content = moveTxt;
-            });
-        }
-
         public void ResetEvaluationProgressBar()
         {
             EngineLinesBox.ResetEvaluationProgressBar();
