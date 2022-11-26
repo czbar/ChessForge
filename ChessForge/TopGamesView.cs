@@ -1,4 +1,5 @@
-﻿using GameTree;
+﻿using ChessPosition;
+using GameTree;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -33,9 +34,9 @@ namespace ChessForge
 
         // columns widths
         private int _ratingColumnWidth = 30;
-        private int _namesColumnWidth = 175;
-        private int _resultColumnWidth = 25;
-        private int _dateColumnWidth = 30;
+        private int _namesColumnWidth = 155;
+        private int _resultColumnWidth = 35;
+        private int _dateColumnWidth = 35;
 
         private int _tableWidth = 260;
 
@@ -152,6 +153,12 @@ namespace ChessForge
 
             TableCell cellNames = new TableCell(BuildNamesPara(gamesTable, game));
             row.Cells.Add(cellNames);
+
+            TableCell cellResult = new TableCell(BuildResultPara(gamesTable, game));
+            row.Cells.Add(cellResult);
+
+            TableCell cellDate = new TableCell(BuildDatePara(gamesTable, game));
+            row.Cells.Add(cellDate);
 
             return row;
         }
@@ -270,6 +277,106 @@ namespace ChessForge
             };
             para.Inlines.Add(uIContainer);
 
+            return para;
+        }
+
+        /// <summary>
+        /// Builds a Paragraph with a string representing the result.
+        /// </summary>
+        /// <param name="gamesTable"></param>
+        /// <param name="game"></param>
+        /// <returns></returns>
+        private Paragraph BuildResultPara(Table gamesTable, LichessTopGame game)
+        {
+            Paragraph para = new Paragraph();
+
+            Canvas canvas = new Canvas
+            {
+                Width = _resultColumnWidth,
+                Height = 44 + Configuration.FontSizeDiff,
+            };
+
+            Label lblResult = new Label
+            {
+                Width = _resultColumnWidth,
+                Height = 20 + Configuration.FontSizeDiff,
+                FontSize = _baseFontSize - 1 + Configuration.FontSizeDiff,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+
+                BorderThickness = new Thickness(0, 0, 0, 0),
+                Padding = new Thickness(0, 0, 0, 0)
+            };
+
+            switch (game.Winner)
+            {
+                case "white":
+                    lblResult.Content = "1-0";
+                    lblResult.Background = Brushes.White;
+                    break;
+                case "black":
+                    lblResult.Content = "0-1";
+                    lblResult.Background = Brushes.Black;
+                    lblResult.Foreground = Brushes.White;
+                    break;
+                default:
+                    lblResult.Content = Constants.HalfPoint.ToString() + "-" + Constants.HalfPoint.ToString();
+                    lblResult.Background = Brushes.Gray;
+                    lblResult.Foreground = Brushes.White;
+                    break;
+            }
+
+            canvas.Children.Add(lblResult);
+            Canvas.SetLeft(lblResult, 0);
+            Canvas.SetTop(lblResult, (canvas.Height - 20) / 2);
+
+            InlineUIContainer uIContainer = new InlineUIContainer
+            {
+                Child = canvas
+            };
+            para.Inlines.Add(uIContainer);
+
+            return para;
+        }
+
+        /// <summary>
+        /// Builds a Paragraph with a string representing the date.
+        /// </summary>
+        /// <param name="gamesTable"></param>
+        /// <param name="game"></param>
+        /// <returns></returns>
+        private Paragraph BuildDatePara(Table gamesTable, LichessTopGame game)
+        {
+            Paragraph para = new Paragraph();
+
+            Canvas canvas = new Canvas
+            {
+                Width = _resultColumnWidth,
+                Height = 44 + Configuration.FontSizeDiff,
+            };
+
+            Label lblDate = new Label
+            {
+                Width = _dateColumnWidth - 6,
+                Height = 20 + Configuration.FontSizeDiff,
+                FontSize = _baseFontSize - 1 + Configuration.FontSizeDiff,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                Content = game.Year ?? "",
+
+                BorderThickness = new Thickness(0, 0, 0, 0),
+                Padding = new Thickness(0, 0, 0, 0)
+            };
+
+            canvas.Children.Add(lblDate);
+            Canvas.SetLeft(lblDate, 0);
+            Canvas.SetTop(lblDate, (canvas.Height - 20) / 2);
+
+            InlineUIContainer uIContainer = new InlineUIContainer
+            {
+                Child = canvas
+            };
+            para.Inlines.Add(uIContainer);
 
             return para;
         }
@@ -317,7 +424,7 @@ namespace ChessForge
             {
                 Width = _tableWidth,
                 Height = 22 + Configuration.FontSizeDiff,
-                FontSize = 14 + Configuration.FontSizeDiff,
+                FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff,
                 VerticalContentAlignment = VerticalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Left,
                 Content = "  Top Games",
