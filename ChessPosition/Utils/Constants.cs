@@ -147,6 +147,10 @@ namespace ChessPosition
         /// </summary>
         public const char CharCrossMark = '\u2715';
 
+        /// <summary>
+        /// A half point notation ('1/2')
+        /// </summary>
+        public const char HalfPoint = '\u00BD';
 
         /// <summary>
         /// Min and Max dimensions of the chess board
