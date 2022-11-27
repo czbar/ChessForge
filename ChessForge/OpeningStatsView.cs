@@ -53,8 +53,9 @@ namespace ChessForge
         // column widths in the stats table
         private readonly double _moveColumnWidth = 20;
         private readonly double _totalGamesColumnWidth = 20;
+        // 100 for the percentage bar and 10 for the left margin
         private readonly double _statsColumnWidth = 110;
-
+ 
         // column widths in the stats table's header
         private readonly double _ecoColumnWidth = 20;
         private readonly double _openingNameColumnWidth = 130;
@@ -170,14 +171,14 @@ namespace ChessForge
             _openingNameTable.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
             _openingNameTable.CellSpacing = 0;
             _openingNameTable.Foreground = Brushes.Black;
-            _openingNameTable.Background = Brushes.LightGreen;
+            _openingNameTable.Background = ChessForgeColors.TABLE_HEADER_GREEN;
             _openingNameTable.RowGroups.Add(new TableRowGroup());
 
             _openingNameTable.Columns.Add(new TableColumn());
             _openingNameTable.Columns[0].Width = new GridLength(_ecoColumnWidth * scaleFactor);
 
             _openingNameTable.Columns.Add(new TableColumn());
-            _openingNameTable.Columns[1].Width = new GridLength(_openingNameColumnWidth * scaleFactor);
+            _openingNameTable.Columns[1].Width = new GridLength((_openingNameColumnWidth * scaleFactor) + 1);
 
             TableRow row = new TableRow();
             _openingNameTable.RowGroups[0].Rows.Add(row);
@@ -186,7 +187,7 @@ namespace ChessForge
             cellEco.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
             cellEco.FontWeight = FontWeights.Bold;
             cellEco.Foreground = Brushes.Black;
-            cellEco.Background = Brushes.LightGreen;
+            cellEco.Background = ChessForgeColors.TABLE_HEADER_GREEN;
             row.Cells.Add(cellEco);
 
             TableCell cellOpeningName = new TableCell(BuildOpeningNamePara(openingName ?? ""));
@@ -271,7 +272,7 @@ namespace ChessForge
 
             // Scoring
             _openingStatsTable.Columns.Add(new TableColumn());
-            _openingStatsTable.Columns[2].Width = new GridLength(_statsColumnWidth * scaleFactor);
+            _openingStatsTable.Columns[2].Width = new GridLength(_statsColumnWidth * scaleFactor + 1);
         }
 
         /// <summary>
@@ -285,8 +286,8 @@ namespace ChessForge
             Label lbl = new Label
             {
                 Width = pct * scaleFactor,
-                Height = 18 + Configuration.FontSizeDiff,
-                FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff,
+                Height = 14 + Configuration.FontSizeDiff,
+                FontSize = _baseFontSize + Configuration.FontSizeDiff,
                 VerticalContentAlignment = VerticalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 Content = pct.ToString() + "%",
@@ -312,7 +313,7 @@ namespace ChessForge
 
             Canvas canvas = new Canvas
             {
-                Width = scaleFactor * 110,
+                Width = scaleFactor * 110 + 2,
                 Height = 20 + Configuration.FontSizeDiff,
                 Background = Brushes.White
             };
@@ -321,21 +322,38 @@ namespace ChessForge
             Label lblDraws = BuildPercentLabel(pctDraws, scaleFactor);
             Label lblBlack = BuildPercentLabel(pctBlack, scaleFactor);
 
-            lblWhite.Background = Brushes.LightGray;
+            lblWhite.Background = ChessForgeColors.WhiteWinLinearBrush;
 
-            lblDraws.Background = Brushes.Gray;
-            lblDraws.Foreground = Brushes.Black;
+            lblDraws.Background = ChessForgeColors.DrawLinearBrush;
+            lblDraws.Foreground = Brushes.White;
 
-            lblBlack.Background = Brushes.Black;
+            lblBlack.Background = ChessForgeColors.BlackWinLinearBrush;
             lblBlack.Foreground = Brushes.White;
+
+
+            Border border = new Border
+            {
+                BorderBrush = ChessForgeColors.TABLE_ROW_LIGHT_GRAY,
+                Width = (100 * scaleFactor + 2),
+                Height = 16 + Configuration.FontSizeDiff,
+                BorderThickness = new Thickness(1),
+                CornerRadius = new CornerRadius(3),
+            };
 
             canvas.Children.Add(lblWhite);
             canvas.Children.Add(lblDraws);
             canvas.Children.Add(lblBlack);
+            canvas.Children.Add(border);
 
+            Canvas.SetLeft(border, 10 * scaleFactor - 1);
             Canvas.SetLeft(lblWhite, 10 * scaleFactor);
             Canvas.SetLeft(lblDraws, Canvas.GetLeft(lblWhite) + lblWhite.Width);
             Canvas.SetLeft(lblBlack, Canvas.GetLeft(lblDraws) + lblDraws.Width);
+
+            Canvas.SetTop(border, 2);
+            Canvas.SetTop(lblWhite, 3);
+            Canvas.SetTop(lblDraws, 3);
+            Canvas.SetTop(lblBlack, 3);
 
             InlineUIContainer uIContainer = new InlineUIContainer
             {
@@ -403,14 +421,14 @@ namespace ChessForge
 
             Canvas canvas = new Canvas
             {
-                Width = scaleFactor * (TotalStatsTableWidth - _ecoColumnWidth),
+                Width = scaleFactor * (TotalStatsTableWidth - _ecoColumnWidth) + 1,
                 Height = 22 + Configuration.FontSizeDiff,
                 Background = Brushes.White
             };
 
             Label lbl = new Label
             {
-                Width = scaleFactor * (TotalStatsTableWidth - _ecoColumnWidth),
+                Width = scaleFactor * (TotalStatsTableWidth - _ecoColumnWidth) + 1,
                 Height = 22 + Configuration.FontSizeDiff,
                 FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff,
                 VerticalContentAlignment = VerticalAlignment.Center,
@@ -422,7 +440,7 @@ namespace ChessForge
             };
 
             lbl.Foreground = Brushes.Black;
-            lbl.Background = Brushes.LightGreen;
+            lbl.Background = ChessForgeColors.TABLE_HEADER_GREEN;
 
             canvas.Children.Add(lbl);
 
@@ -468,7 +486,7 @@ namespace ChessForge
             };
 
             lbl.Foreground = Brushes.Black;
-            lbl.Background = Brushes.LightGreen;
+            lbl.Background = ChessForgeColors.TABLE_HEADER_GREEN;
 
             canvas.Children.Add(lbl);
 
