@@ -258,6 +258,7 @@ namespace ChessForge
             BookmarkManager.InitBookmarksGui(this);
 
             ActiveLineReplay = new GameReplay(this, MainChessBoard, BoardCommentBox);
+            ChessForgeColors.Initialize();
 
             _isDebugMode = Configuration.DebugLevel != 0;
         }
@@ -273,6 +274,9 @@ namespace ChessForge
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             UiDgActiveLine.ContextMenu = UiMnMainBoard;
+            UiBtnExitGame.Background = ChessForgeColors.ExitButtonLinearBrush;
+            UiBtnExitTraining.Background = ChessForgeColors.ExitButtonLinearBrush;
+
             _openingStatsView = new OpeningStatsView(UiRtbOpenings.Document);
             _topGamesView = new TopGamesView(UiRtbTopGames.Document);
             UiRtbTopGames.IsDocumentEnabled = true;
@@ -1331,24 +1335,31 @@ namespace ChessForge
         /// <param name="displayPosition"></param>
         public void SetActiveLine(ObservableCollection<TreeNode> line, int selectedNodeId, bool displayPosition = true)
         {
-            ActiveLine.SetNodeList(line);
-
-            if (selectedNodeId >= 0)
+            try
             {
-                TreeNode nd = ActiveLine.GetNodeFromId(selectedNodeId);
-                if (selectedNodeId > 0)
+                ActiveLine.SetNodeList(line);
+
+                if (selectedNodeId >= 0)
                 {
-                    ActiveLine.SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
+                    TreeNode nd = ActiveLine.GetNodeFromId(selectedNodeId);
+                    if (selectedNodeId > 0)
+                    {
+                        ActiveLine.SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
+                    }
+                    if (displayPosition)
+                    {
+                        MainChessBoard.DisplayPosition(nd);
+                        WebAccessManager.RequestOpeningStats(AppStateManager.ActiveTreeId, nd);
+                    }
+                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                    {
+                        EvaluateActiveLineSelectedPosition(nd);
+                    }
                 }
-                if (displayPosition)
-                {
-                    MainChessBoard.DisplayPosition(nd);
-                    WebAccessManager.RequestOpeningStats(AppStateManager.ActiveTreeId, nd);
-                }
-                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
-                {
-                    EvaluateActiveLineSelectedPosition(nd);
-                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("SetActiveLine()", ex);
             }
         }
 

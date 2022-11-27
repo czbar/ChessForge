@@ -20,6 +20,29 @@
             <MenuItem x:Name="_mnTrainRestartTraining" Header="Restart Training" Click="UiMnTrainRestartTraining_Click" />
             <MenuItem x:Name="_mnTrainExitTraining" Header="Exit Training"  Click="UiMnStopTraining_Click" />
         </ContextMenu>
+        <Style  x:Key="RoundedBorder" TargetType="Label">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Label}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}" 
+                                Padding="{TemplateBinding Padding}" 
+                                SnapsToDevicePixels="true" 
+                                CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Window.CommandBindings>
@@ -107,16 +130,16 @@
                 <Label Grid.Column="1"  Content="AutoSave" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,2,0,0" Height="28" Width="60"  />
                 <Image x:Name="UiImgAutoSaveOn" ToolTip="Turn AutoSave Off" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOn.png" Visibility="Hidden" MouseDown="UiImgAutoSaveOn_MouseDown" />
                 <Image x:Name="UiImgAutoSaveOff" ToolTip="Turn AutoSave On" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOff.png" MouseDown="UiImgAutoSaveOff_MouseDown" />
-                <Button Name="UiBtnFontSizeUp" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="145,0,0,0" ToolTip="Increase Font Size" Click="UiBtnFontSizeUp_Click">
+                <Button Name="UiBtnFontSizeUp" BorderThickness="0"  Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="145,0,0,0" ToolTip="Increase Font Size" Click="UiBtnFontSizeUp_Click">
                     <Image Source="Resources/Images/FontSizeUp.png" Width="18" Height="18"></Image>
                 </Button>
-                <Button Name="UiBtnFontSizeDown" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="180,0,0,0" ToolTip="Decrease Font Size" Click="UiBtnFontSizeDown_Click">
+                <Button Name="UiBtnFontSizeDown" BorderThickness="0" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="180,0,0,0" ToolTip="Decrease Font Size" Click="UiBtnFontSizeDown_Click">
                     <Image Source="Resources/Images/FontSizeDown.png" Width="18" Height="18"></Image>
                 </Button>
-                <Button Name="UiBtnFontSizeFixed" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="215,0,0,0" ToolTip="Click to use Fixed Font Sizes" Click="UiBtnFontSizeFixed_Click" >
+                <Button Name="UiBtnFontSizeFixed" BorderThickness="0" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="215,0,0,0" ToolTip="Use Fixed Font Sizes" Click="UiBtnFontSizeFixed_Click" >
                     <Image Source="Resources/Images/FontSizeFixed.png" Width="18" Height="18"></Image>
                 </Button>
-                <Button Name="UiBtnFontSizeVariable" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="270,0,0,0" ToolTip="Click to use Variable Font Size" Visibility="Hidden" Click="UiBtnFontSizeVariable_Click">
+                <Button Name="UiBtnFontSizeVariable" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="270,0,0,0" ToolTip="Use Variable Font Size" Visibility="Hidden" Click="UiBtnFontSizeVariable_Click">
                     <Image Source="Resources/Images/FontSizeVariable.png" Width="18" Height="18"></Image>
                 </Button>
                 <Label Grid.Column="1"  Content="Explorers" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="290,2,0,0" Height="28" Width="60"  />
@@ -473,6 +496,9 @@
                                     <MenuItem x:Name="_mnGame_DeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnGame_DeleteMovesFromHere_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_DeleteModelGame" Header="Delete This Game" Click="UiMnGame_DeleteModelGame_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnGame_EvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
+                                    <MenuItem x:Name="_mnGame_EvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvModelGamePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
@@ -517,6 +543,9 @@
                                     <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnExerc_DeleteMovesFromHere_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnExerc_DeleteThisExercise" Header="Delete This Exercise" Click="UiMnExerc_DeleteExercise_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnExerc_EvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
+                                    <MenuItem x:Name="_mnExerc_EvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
@@ -540,7 +569,7 @@
                     </TabItem>
                 </TabControl>
                 <Label x:Name="UiLblScoresheet" FontWeight="Bold" Content="Scoresheet"  Grid.Column="1" Grid.ColumnSpan="2"  HorizontalAlignment="Right" VerticalContentAlignment="Center" Height="24" Margin="0,0,68,0" Width="80" VerticalAlignment="Top" Visibility="Visible" Grid.Row="1" />
-                <DataGrid x:Name="UiDgActiveLine" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="648" Margin="10,27,0,0" VerticalAlignment="Top" Width="260"  
+                <DataGrid x:Name="UiDgActiveLine" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Height="648" Margin="0,27,10,0" VerticalAlignment="Top" Width="260"  
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" 
                   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
                   CanUserSortColumns="False" GridLinesVisibility="None" Grid.Row="1" 
@@ -607,8 +636,8 @@
                     </RichTextBox.Resources>
                 </RichTextBox>
                 <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" Height="150" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
-                <Button x:Name="UiBtnExitTraining" Panel.ZIndex="1" Grid.Column="1" Content="Exit Training" FontWeight="Bold" HorizontalAlignment="Left" Margin="52,105,0,0" Width="85" Height="25" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitTraining_Click"/>
-                <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="1" Content="Exit Game" FontWeight="Bold" HorizontalAlignment="Left" Margin="52,70,20,0" Width="85" Height="25" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitGame_Click"/>
+                <Button x:Name="UiBtnExitTraining" Panel.ZIndex="1" Grid.Column="1" Content="Exit Training" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,0,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitTraining_Click"/>
+                <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="1" Content="Exit Game" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,20,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitGame_Click"/>
 
             </Grid>
         </Viewbox>

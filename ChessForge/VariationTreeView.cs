@@ -551,7 +551,6 @@ namespace ChessForge
             }
         }
 
-
         /// <summary>
         /// Sets up ActiveTreeView's context menu.
         /// </summary>
@@ -573,10 +572,10 @@ namespace ChessForge
             switch (WorkbookManager.ActiveTab)
             {
                 case WorkbookManager.TabViewType.STUDY:
-                    EnableStudyTreeMenus(_mainWin.UiCmnWorkbookRightClick, isEnabled);
+                    AppStateManager.EnableTabViewMenuItems(WorkbookManager.TabViewType.STUDY, LastClickedNodeId, isEnabled);
                     break;
                 case WorkbookManager.TabViewType.MODEL_GAME:
-                    EnableModelGamesMenus(_mainWin.UiCmModelGames, true);
+                    AppStateManager.EnableTabViewMenuItems(WorkbookManager.TabViewType.MODEL_GAME, LastClickedNodeId, true);
                     if (!_contextMenuPrimed)
                     {
                         _mainWin.UiCmModelGames.IsOpen = true;
@@ -584,7 +583,7 @@ namespace ChessForge
                     }
                     break;
                 case WorkbookManager.TabViewType.EXERCISE:
-                    EnableExercisesMenus(_mainWin.UiCmExercises, true);
+                    AppStateManager.EnableTabViewMenuItems(WorkbookManager.TabViewType.EXERCISE, LastClickedNodeId, true);
                     if (!_contextMenuPrimed)
                     {
                         _mainWin.UiCmExercises.IsOpen = true;
@@ -619,158 +618,7 @@ namespace ChessForge
             }
         }
 
-        /// <summary>
-        /// Sets up StudyTrees's context menu.
-        /// </summary>
-        /// <param name="cmn"></param>
-        /// <param name="isEnabled"></param>
-        private void EnableStudyTreeMenus(ContextMenu cmn, bool isEnabled)
-        {
-            try
-            {
-                foreach (var item in cmn.Items)
-                {
-                    if (item is MenuItem)
-                    {
-                        MenuItem menuItem = item as MenuItem;
-                        switch (menuItem.Name)
-                        {
-                            case "_mnWorkbookSelectAsBookmark":
-                                menuItem.IsEnabled = isEnabled;
-                                break;
-                            case "_mnWorkbookBookmarkAlternatives":
-                                if (_mainWin.ActiveVariationTree.NodeHasSiblings(LastClickedNodeId))
-                                {
-                                    menuItem.Visibility = Visibility.Visible;
-                                    menuItem.IsEnabled = isEnabled;
-                                }
-                                else
-                                {
-                                    menuItem.Visibility = Visibility.Collapsed;
-                                    menuItem.IsEnabled = false;
-                                }
-                                break;
-                            case "_mnWorkbookEvalMove":
-                                menuItem.IsEnabled = _mainWin.ActiveVariationTree.SelectedNode != null;
-                                break;
-                            case "_mnWorkbookEvalLine":
-                                menuItem.IsEnabled = _mainWin.ActiveVariationTree.Nodes.Count > 1;
-                                break;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("EnableStudyTreeMenus()", ex);
-            }
-        }
-
-        /// <summary>
-        /// Sets up ModelGames's context menu.
-        /// </summary>
-        /// <param name="cmn"></param>
-        /// <param name="isEnabled"></param>
-        private void EnableModelGamesMenus(ContextMenu cmn, bool isEnabled)
-        {
-            try
-            {
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int gameCount = chapter.GetModelGameCount();
-                int gameIndex = chapter.ActiveModelGameIndex;
-
-                foreach (var item in cmn.Items)
-                {
-                    if (item is MenuItem)
-                    {
-                        MenuItem menuItem = item as MenuItem;
-                        switch (menuItem.Name)
-                        {
-                            case "_mnGame_EditHeader":
-                                menuItem.IsEnabled = gameIndex >= 0;
-                                break;
-                            case "_mnGame_CreateModelGame":
-                                menuItem.IsEnabled = true;
-                                break;
-                            case "_mnGame_StartTrainingFromHere":
-                                menuItem.IsEnabled = gameIndex >= 0;
-                                break;
-                            case "_mnGame_MergeToStudy":
-                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && _lastClickedNodeId >= 0;
-                                break;
-                            case "_mnGame_CreateExercise":
-                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && _lastClickedNodeId >= 0;
-                                break;
-                            case "_mnGame_PromoteLine":
-                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && _lastClickedNodeId >= 0;
-                                break;
-                            case "_mnGame_DeleteMovesFromHere":
-                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && _lastClickedNodeId >= 0;
-                                break;
-                            case "_mnGame_DeleteModelGame":
-                                menuItem.IsEnabled = isEnabled && gameIndex >= 0;
-                                break;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("EnableModelGamesMenus()", ex);
-            }
-        }
-
-        /// <summary>
-        /// Sets up Exercises's context menu.
-        /// </summary>
-        /// <param name="cmn"></param>
-        /// <param name="isEnabled"></param>
-        private void EnableExercisesMenus(ContextMenu cmn, bool isEnabled)
-        {
-            try
-            {
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int exerciseCount = chapter.GetExerciseCount();
-                int exerciseIndex = chapter.ActiveExerciseIndex;
-
-                foreach (var item in cmn.Items)
-                {
-                    if (item is MenuItem)
-                    {
-                        MenuItem menuItem = item as MenuItem;
-                        switch (menuItem.Name)
-                        {
-                            case "_mnExerc_EditHeader":
-                                menuItem.IsEnabled = exerciseIndex >= 0;
-                                break;
-                            case "_mnExerc_EditPosition":
-                                menuItem.IsEnabled = exerciseIndex >= 0;
-                                break;
-                            case "_mnExerc_StartTrainingFromHere":
-                                menuItem.IsEnabled = exerciseIndex >= 0;
-                                break;
-                            case "_mnExerc_CreateExercise":
-                                menuItem.IsEnabled = true;
-                                break;
-                            case "_mnExerc_PromoteLine":
-                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0 && _lastClickedNodeId >= 0;
-                                break;
-                            case "_mnExerc_DeleteMovesFromHere":
-                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0 && _lastClickedNodeId >= 0;
-                                break;
-                            case "_mnExerc_DeleteThisExercise":
-                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0;
-                                break;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("EnableModelGamesMenus()", ex);
-            }
-        }
-
+ 
         /// <summary>
         /// Selects the move and the line in this view on a request from another view (as opposed
         /// to a user request).

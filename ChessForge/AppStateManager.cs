@@ -190,7 +190,6 @@ namespace ChessForge
             }
         }
 
-
         /// <summary>
         /// Types of files that Chess Forge can handle.
         /// PGN can only be viewed, not edited.
@@ -249,6 +248,28 @@ namespace ChessForge
                 {
                     _workbookFileType = FileType.CHESS_FORGE_PGN;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Enable/Disable menu items for the Active Tab's context menu.
+        /// </summary>
+        /// <param name="tabType"></param>
+        /// <param name="lastClickedNodeId"></param>
+        /// <param name="isEnabled"></param>
+        public static void EnableTabViewMenuItems(WorkbookManager.TabViewType tabType, int lastClickedNodeId, bool isEnabled)
+        {
+            switch (tabType)
+            {
+                case WorkbookManager.TabViewType.STUDY:
+                    EnableStudyTreeMenuItems(lastClickedNodeId, isEnabled);
+                    break;
+                case WorkbookManager.TabViewType.MODEL_GAME:
+                    EnableModelGamesMenuItems(lastClickedNodeId, isEnabled);
+                    break;
+                case WorkbookManager.TabViewType.EXERCISE:
+                    EnableExercisesMenuItems(lastClickedNodeId, isEnabled);
+                    break;
             }
         }
 
@@ -431,26 +452,30 @@ namespace ChessForge
         /// </summary>
         public static void SetupGuiForCurrentStates()
         {
-            switch (CurrentLearningMode)
+            _mainWin.Dispatcher.Invoke(() =>
             {
-                case LearningMode.Mode.IDLE:
-                case LearningMode.Mode.MANUAL_REVIEW:
-                    SetupGuiForManualReview();
-                    ShowExplorers(AreExplorersOn);
-                    break;
-                case LearningMode.Mode.TRAINING:
-                    SetupGuiForTraining();
-                    ShowExplorers(false);
-                    break;
-                case LearningMode.Mode.ENGINE_GAME:
-                    SetupGuiForEngineGame();
-                    ShowExplorers(false);
-                    break;
-            }
-            ShowEvaluationControlsForCurrentStates();
-            ConfigureMainBoardContextMenu();
-            ConfigureSaveMenus();
-            ConfigureFontSizeMenus();
+                MainWin.UiRtbStudyTreeView.IsEnabled = true;
+                switch (CurrentLearningMode)
+                {
+                    case LearningMode.Mode.IDLE:
+                    case LearningMode.Mode.MANUAL_REVIEW:
+                        SetupGuiForManualReview();
+                        ShowExplorers(AreExplorersOn);
+                        break;
+                    case LearningMode.Mode.TRAINING:
+                        SetupGuiForTraining();
+                        ShowExplorers(false);
+                        break;
+                    case LearningMode.Mode.ENGINE_GAME:
+                        SetupGuiForEngineGame();
+                        ShowExplorers(false);
+                        break;
+                }
+                ShowEvaluationControlsForCurrentStates();
+                ConfigureMainBoardContextMenu();
+                ConfigureSaveMenus();
+                ConfigureFontSizeMenus();
+            });
         }
 
         /// <summary>
@@ -674,6 +699,164 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Sets up StudyTrees's context menu.
+        /// </summary>
+        /// <param name="lastClickedNodeId"></param>
+        /// <param name="isEnabled"></param>
+        private static void EnableStudyTreeMenuItems(int lastClickedNodeId, bool isEnabled)
+        {
+            try
+            {
+                VariationTree tree = ActiveVariationTree;
+                foreach (var item in MainWin.UiCmnWorkbookRightClick.Items)
+                {
+                    if (item is MenuItem)
+                    {
+                        MenuItem menuItem = item as MenuItem;
+                        switch (menuItem.Name)
+                        {
+                            case "_mnWorkbookSelectAsBookmark":
+                                menuItem.IsEnabled = isEnabled;
+                                break;
+                            case "_mnWorkbookBookmarkAlternatives":
+                                if (tree != null && tree.NodeHasSiblings(lastClickedNodeId))
+                                {
+                                    menuItem.Visibility = Visibility.Visible;
+                                    menuItem.IsEnabled = isEnabled;
+                                }
+                                else
+                                {
+                                    menuItem.Visibility = Visibility.Collapsed;
+                                    menuItem.IsEnabled = false;
+                                }
+                                break;
+                            case "_mnWorkbookEvalMove":
+                                menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
+                                break;
+                            case "_mnWorkbookEvalLine":
+                                menuItem.IsEnabled = tree != null && tree.Nodes.Count > 1;
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("EnableStudyTreeMenus()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Sets up ModelGames's context menu.
+        /// </summary>
+        /// <param name="lastClickedNodeId"></param>
+        /// <param name="isEnabled"></param>
+        private static void EnableModelGamesMenuItems(int lastClickedNodeId, bool isEnabled)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int gameCount = chapter.GetModelGameCount();
+                int gameIndex = chapter.ActiveModelGameIndex;
+
+                foreach (var item in MainWin.UiCmModelGames.Items)
+                {
+                    if (item is MenuItem)
+                    {
+                        MenuItem menuItem = item as MenuItem;
+                        switch (menuItem.Name)
+                        {
+                            case "_mnGame_EditHeader":
+                                menuItem.IsEnabled = gameIndex >= 0;
+                                break;
+                            case "_mnGame_CreateModelGame":
+                                menuItem.IsEnabled = true;
+                                break;
+                            case "_mnGame_StartTrainingFromHere":
+                                menuItem.IsEnabled = gameIndex >= 0;
+                                break;
+                            case "_mnGame_MergeToStudy":
+                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && lastClickedNodeId >= 0;
+                                break;
+                            case "_mnGame_CopyFen":
+                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && lastClickedNodeId >= 0;
+                                break;
+                            case "_mnGame_CreateExercise":
+                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && lastClickedNodeId >= 0;
+                                break;
+                            case "_mnGame_PromoteLine":
+                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && lastClickedNodeId >= 0;
+                                break;
+                            case "_mnGame_DeleteMovesFromHere":
+                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && lastClickedNodeId >= 0;
+                                break;
+                            case "_mnGame_DeleteModelGame":
+                                menuItem.IsEnabled = isEnabled && gameIndex >= 0;
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("EnableModelGamesMenus()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Sets up Exercises's context menu.
+        /// </summary>
+        /// <param name="lastClickedNodeId"></param>
+        /// <param name="isEnabled"></param>
+        private static void EnableExercisesMenuItems(int lastClickedNodeId, bool isEnabled)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int exerciseCount = chapter.GetExerciseCount();
+                int exerciseIndex = chapter.ActiveExerciseIndex;
+
+                foreach (var item in MainWin.UiCmExercises.Items)
+                {
+                    if (item is MenuItem)
+                    {
+                        MenuItem menuItem = item as MenuItem;
+                        switch (menuItem.Name)
+                        {
+                            case "_mnExerc_EditHeader":
+                                menuItem.IsEnabled = exerciseIndex >= 0;
+                                break;
+                            case "_mnExerc_EditPosition":
+                                menuItem.IsEnabled = exerciseIndex >= 0;
+                                break;
+                            case "_mnExerc_StartTrainingFromHere":
+                                menuItem.IsEnabled = exerciseIndex >= 0;
+                                break;
+                            case "_mnExerc_CreateExercise":
+                                menuItem.IsEnabled = true;
+                                break;
+                            case "_mnExerc_CopyFen":
+                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0 && lastClickedNodeId >= 0;
+                                break;
+                            case "_mnExerc_PromoteLine":
+                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0 && lastClickedNodeId >= 0;
+                                break;
+                            case "_mnExerc_DeleteMovesFromHere":
+                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0 && lastClickedNodeId >= 0;
+                                break;
+                            case "_mnExerc_DeleteThisExercise":
+                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0;
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("EnableModelGamesMenus()", ex);
+            }
+        }
 
         /// <summary>
         /// Sets up GUI elements for the Manual Review mode.
@@ -802,6 +985,7 @@ namespace ChessForge
                 else
                 {
                     _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
+                    MainWin.UiRtbStudyTreeView.IsEnabled = false;
 
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
                     _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;

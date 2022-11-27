@@ -248,7 +248,7 @@ namespace ChessForge
                         AppLog.Message("Continue evaluation next move after index " + index.ToString());
                         ClearMoveCandidates(false);
                         AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                        RequestMoveEvaluation(index, EvaluationManager.GetNextLineNodeToEvaluate());
+                        RequestMoveEvaluation(index + 1, EvaluationManager.GetNextLineNodeToEvaluate());
 
                         _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                     }
