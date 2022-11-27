@@ -130,16 +130,16 @@
                 <Label Grid.Column="1"  Content="AutoSave" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,2,0,0" Height="28" Width="60"  />
                 <Image x:Name="UiImgAutoSaveOn" ToolTip="Turn AutoSave Off" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOn.png" Visibility="Hidden" MouseDown="UiImgAutoSaveOn_MouseDown" />
                 <Image x:Name="UiImgAutoSaveOff" ToolTip="Turn AutoSave On" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOff.png" MouseDown="UiImgAutoSaveOff_MouseDown" />
-                <Button Name="UiBtnFontSizeUp" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="145,0,0,0" ToolTip="Increase Font Size" Click="UiBtnFontSizeUp_Click">
+                <Button Name="UiBtnFontSizeUp" BorderThickness="0"  Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="145,0,0,0" ToolTip="Increase Font Size" Click="UiBtnFontSizeUp_Click">
                     <Image Source="Resources/Images/FontSizeUp.png" Width="18" Height="18"></Image>
                 </Button>
-                <Button Name="UiBtnFontSizeDown" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="180,0,0,0" ToolTip="Decrease Font Size" Click="UiBtnFontSizeDown_Click">
+                <Button Name="UiBtnFontSizeDown" BorderThickness="0" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="180,0,0,0" ToolTip="Decrease Font Size" Click="UiBtnFontSizeDown_Click">
                     <Image Source="Resources/Images/FontSizeDown.png" Width="18" Height="18"></Image>
                 </Button>
-                <Button Name="UiBtnFontSizeFixed" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="215,0,0,0" ToolTip="Click to use Fixed Font Sizes" Click="UiBtnFontSizeFixed_Click" >
+                <Button Name="UiBtnFontSizeFixed" BorderThickness="0" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="215,0,0,0" ToolTip="Use Fixed Font Sizes" Click="UiBtnFontSizeFixed_Click" >
                     <Image Source="Resources/Images/FontSizeFixed.png" Width="18" Height="18"></Image>
                 </Button>
-                <Button Name="UiBtnFontSizeVariable" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="270,0,0,0" ToolTip="Click to use Variable Font Size" Visibility="Hidden" Click="UiBtnFontSizeVariable_Click">
+                <Button Name="UiBtnFontSizeVariable" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="270,0,0,0" ToolTip="Use Variable Font Size" Visibility="Hidden" Click="UiBtnFontSizeVariable_Click">
                     <Image Source="Resources/Images/FontSizeVariable.png" Width="18" Height="18"></Image>
                 </Button>
                 <Label Grid.Column="1"  Content="Explorers" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="290,2,0,0" Height="28" Width="60"  />
@@ -636,8 +636,8 @@
                     </RichTextBox.Resources>
                 </RichTextBox>
                 <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" Height="150" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
-                <Button x:Name="UiBtnExitTraining" Panel.ZIndex="1" Grid.Column="1" Content="Exit Training" FontWeight="Bold" HorizontalAlignment="Left" Margin="52,105,0,0" Width="85" Height="25" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitTraining_Click"/>
-                <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="1" Content="Exit Game" FontWeight="Bold" HorizontalAlignment="Left" Margin="52,70,20,0" Width="85" Height="25" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitGame_Click"/>
+                <Button x:Name="UiBtnExitTraining" Panel.ZIndex="1" Grid.Column="1" Content="Exit Training" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,0,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitTraining_Click"/>
+                <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="1" Content="Exit Game" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,20,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitGame_Click"/>
 
             </Grid>
         </Viewbox>
