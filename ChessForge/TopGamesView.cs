@@ -36,9 +36,9 @@ namespace ChessForge
 
         // columns widths
         private int _ratingColumnWidth = 30;
-        private int _namesColumnWidth = 155;
+        private int _namesColumnWidth = 150;
         private int _resultColumnWidth = 35;
-        private int _dateColumnWidth = 35;
+        private int _dateColumnWidth = 40;
 
         private int _tableWidth = 260;
 
@@ -249,6 +249,7 @@ namespace ChessForge
                 VerticalContentAlignment = VerticalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Left,
                 Content = game.White.Name,
+                ToolTip = game.White.Name,
 
                 BorderThickness = new Thickness(0, 0, 0, 0),
                 Padding = new Thickness(0, 0, 0, 0)
@@ -265,6 +266,7 @@ namespace ChessForge
                 VerticalContentAlignment = VerticalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Left,
                 Content = game.Black.Name,
+                ToolTip = game.Black.Name,
 
                 BorderThickness = new Thickness(0, 0, 0, 0),
                 Padding = new Thickness(0, 0, 0, 0)
