@@ -460,14 +460,17 @@ namespace ChessForge
         /// <param name="e"></param>
         private void ExplorersToggleOn_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            AppStateManager.AreExplorersOn = false;
+            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.ENGINE_GAME)
+            {
+                AppStateManager.AreExplorersOn = false;
 
-            UiImgExplorersOff.Visibility = Visibility.Visible;
-            UiImgExplorersOn.Visibility = Visibility.Collapsed;
-            WebAccessManager.IsEnabledOpeningStats = false;
+                UiImgExplorersOff.Visibility = Visibility.Visible;
+                UiImgExplorersOn.Visibility = Visibility.Collapsed;
+                WebAccessManager.IsEnabledOpeningStats = false;
 
-            AppStateManager.AreExplorersOn = false;
-            AppStateManager.ShowExplorers(false);
+                AppStateManager.AreExplorersOn = false;
+                AppStateManager.ShowExplorers(false);
+            }
 
             e.Handled = true;
         }
@@ -479,17 +482,20 @@ namespace ChessForge
         /// <param name="e"></param>
         private void ExplorersToggleOff_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            UiImgExplorersOff.Visibility = Visibility.Collapsed;
-            UiImgExplorersOn.Visibility = Visibility.Visible;
-            WebAccessManager.IsEnabledOpeningStats = true;
-
-            if (ActiveVariationTree != null && ActiveVariationTree.SelectedNode != null)
+            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.ENGINE_GAME)
             {
-                WebAccessManager.RequestOpeningStats(AppStateManager.ActiveTreeId, ActiveVariationTree.SelectedNode);
-            }
+                UiImgExplorersOff.Visibility = Visibility.Collapsed;
+                UiImgExplorersOn.Visibility = Visibility.Visible;
+                WebAccessManager.IsEnabledOpeningStats = true;
 
-            AppStateManager.AreExplorersOn = true;
-            AppStateManager.ShowExplorers(true);
+                if (ActiveVariationTree != null && ActiveVariationTree.SelectedNode != null)
+                {
+                    WebAccessManager.RequestOpeningStats(AppStateManager.ActiveTreeId, ActiveVariationTree.SelectedNode);
+                }
+
+                AppStateManager.AreExplorersOn = true;
+                AppStateManager.ShowExplorers(true);
+            }
 
             e.Handled = true;
         }
