@@ -258,6 +258,7 @@ namespace ChessForge
             BookmarkManager.InitBookmarksGui(this);
 
             ActiveLineReplay = new GameReplay(this, MainChessBoard, BoardCommentBox);
+            ChessForgeColors.Initialize();
 
             _isDebugMode = Configuration.DebugLevel != 0;
         }
