@@ -237,7 +237,7 @@ namespace ChessForge
         public Paragraph BuildWorkbookStemLine(TreeNode nd, bool adjustFontSize)
         {
             Paragraph para = CreateParagraph("0", adjustFontSize);
-            para.Foreground = CHF_Colors.RTB_GRAY_FOREGROUND;
+            para.Foreground = ChessForgeColors.RTB_GRAY_FOREGROUND;
 
             string prefix = GetStemLineText(nd);
 
