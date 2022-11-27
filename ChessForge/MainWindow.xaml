@@ -496,6 +496,9 @@
                                     <MenuItem x:Name="_mnGame_DeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnGame_DeleteMovesFromHere_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_DeleteModelGame" Header="Delete This Game" Click="UiMnGame_DeleteModelGame_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnGame_EvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
+                                    <MenuItem x:Name="_mnGame_EvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvModelGamePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
@@ -540,6 +543,9 @@
                                     <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnExerc_DeleteMovesFromHere_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnExerc_DeleteThisExercise" Header="Delete This Exercise" Click="UiMnExerc_DeleteExercise_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnExerc_EvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
+                                    <MenuItem x:Name="_mnExerc_EvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
