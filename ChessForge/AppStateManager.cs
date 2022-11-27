@@ -454,6 +454,7 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
+                MainWin.UiRtbStudyTreeView.IsEnabled = true;
                 switch (CurrentLearningMode)
                 {
                     case LearningMode.Mode.IDLE:
@@ -984,6 +985,7 @@ namespace ChessForge
                 else
                 {
                     _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
+                    MainWin.UiRtbStudyTreeView.IsEnabled = false;
 
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
                     _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
