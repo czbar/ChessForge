@@ -4,6 +4,7 @@ using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +13,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using WebAccess;
+using Label = System.Windows.Controls.Label;
 
 namespace ChessForge
 {
@@ -144,7 +146,7 @@ namespace ChessForge
             }
             else
             {
-                row.Background = Brushes.LightGray;
+                row.Background = ChessForgeColors.TABLE_ROW_LIGHT_GRAY;
             }
 
             TableCell cellRatings = new TableCell(BuildRatingsPara(gamesTable, game));
@@ -308,20 +310,23 @@ namespace ChessForge
                 Padding = new Thickness(0, 0, 0, 0)
             };
 
+            Style style = AppStateManager.MainWin.FindResource("RoundedBorder") as Style;
+            lblResult.Style = style;
+
             switch (game.Winner)
             {
                 case "white":
                     lblResult.Content = "1-0";
-                    lblResult.Background = Brushes.White;
+                    lblResult.Background = ChessForgeColors.WhiteWinLinearBrush;
                     break;
                 case "black":
                     lblResult.Content = "0-1";
-                    lblResult.Background = Brushes.Black;
+                    lblResult.Background = ChessForgeColors.BlackWinLinearBrush;
                     lblResult.Foreground = Brushes.White;
                     break;
                 default:
                     lblResult.Content = Constants.HalfPoint.ToString() + "-" + Constants.HalfPoint.ToString();
-                    lblResult.Background = Brushes.Gray;
+                    lblResult.Background = ChessForgeColors.DrawLinearBrush;
                     lblResult.Foreground = Brushes.White;
                     break;
             }
@@ -433,7 +438,7 @@ namespace ChessForge
                 Padding = new Thickness(0, 0, 0, 0)
             };
 
-            lbl.Background = Brushes.LightGreen;
+            lbl.Background = ChessForgeColors.TABLE_HEADER_GREEN;
 
             canvas.Children.Add(lbl);
 
