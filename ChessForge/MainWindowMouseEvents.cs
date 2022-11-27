@@ -294,11 +294,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void VariationTreeView_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (ActiveTreeView != null)
-            {
-                ActiveTreeView.LastClickedNodeId = -1;
-                ActiveTreeView.EnableActiveTreeViewMenus(e.ChangedButton, false);
-            }
+            int lastClickedNode = -1;
+            AppStateManager.EnableTabViewMenuItems(WorkbookManager.ActiveTab, lastClickedNode, false);
         }
 
         /// <summary>
