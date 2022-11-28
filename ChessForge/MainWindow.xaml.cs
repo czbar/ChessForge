@@ -1286,7 +1286,7 @@ namespace ChessForge
                 {
                     EvaluateActiveLineSelectedPosition(nd);
                 }
-                WebAccessManager.RequestOpeningStats(AppStateManager.ActiveTreeId, ActiveVariationTree.SelectedNode);
+                WebAccessManager.ExplorerRequest(AppStateManager.ActiveTreeId, ActiveVariationTree.SelectedNode);
             }
         }
 
@@ -1349,7 +1349,7 @@ namespace ChessForge
                     if (displayPosition)
                     {
                         MainChessBoard.DisplayPosition(nd);
-                        WebAccessManager.RequestOpeningStats(AppStateManager.ActiveTreeId, nd);
+                        WebAccessManager.ExplorerRequest(AppStateManager.ActiveTreeId, nd);
                     }
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
                     {

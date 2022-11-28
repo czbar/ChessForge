@@ -56,6 +56,7 @@ namespace ChessForge
         {
             // listen to Data Received events
             OpeningExplorer.DataReceived += TopGamesReceived;
+            TablebaseExplorer.DataReceived += TablebaseDataReceived;
         }
 
         /// <summary>
@@ -70,6 +71,21 @@ namespace ChessForge
             {
                 BuildFlowDocument();
             }
+            else
+            {
+                ClearDocument();
+            }
+        }
+
+        /// <summary>
+        /// If Tablebase data was received there is nothing to show in this view
+        /// and we want to cleare if anything was shown.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void TablebaseDataReceived(object sender, WebAccessEventArgs e)
+        {
+            ClearDocument();
         }
 
         /// <summary>
@@ -83,6 +99,14 @@ namespace ChessForge
 
             Document.Blocks.Add(BuildHeaderLabel());
             Document.Blocks.Add(BuildTopGamesTable());
+        }
+
+        /// <summary>
+        /// Builds an empty document.
+        /// </summary>
+        public void ClearDocument()
+        {
+            Document.Blocks.Clear();
         }
 
         /// <summary>

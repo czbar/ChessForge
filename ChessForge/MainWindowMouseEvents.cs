@@ -466,7 +466,7 @@ namespace ChessForge
 
                 UiImgExplorersOff.Visibility = Visibility.Visible;
                 UiImgExplorersOn.Visibility = Visibility.Collapsed;
-                WebAccessManager.IsEnabledOpeningStats = false;
+                WebAccessManager.IsEnabledExplorerQueries = false;
 
                 AppStateManager.AreExplorersOn = false;
                 AppStateManager.ShowExplorers(false);
@@ -486,11 +486,11 @@ namespace ChessForge
             {
                 UiImgExplorersOff.Visibility = Visibility.Collapsed;
                 UiImgExplorersOn.Visibility = Visibility.Visible;
-                WebAccessManager.IsEnabledOpeningStats = true;
+                WebAccessManager.IsEnabledExplorerQueries = true;
 
                 if (ActiveVariationTree != null && ActiveVariationTree.SelectedNode != null)
                 {
-                    WebAccessManager.RequestOpeningStats(AppStateManager.ActiveTreeId, ActiveVariationTree.SelectedNode);
+                    WebAccessManager.ExplorerRequest(AppStateManager.ActiveTreeId, ActiveVariationTree.SelectedNode);
                 }
 
                 AppStateManager.AreExplorersOn = true;

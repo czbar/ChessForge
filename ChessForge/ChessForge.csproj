@@ -167,7 +167,7 @@
       <DependentUpon>UpdateAvailableDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="WebAccessManager.cs" />
-    <Compile Include="WebAccessOpeniningStatsState.cs" />
+    <Compile Include="WebAccessExplorersState.cs" />
     <Compile Include="Workbook.cs" />
     <Compile Include="WorkbookManager.cs" />
     <Compile Include="WorkbookOptionsDialog.xaml.cs">
