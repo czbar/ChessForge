@@ -76,11 +76,22 @@ namespace ChessForge
 
             Version ver = AppStateManager.GetAssemblyVersion();
 
-            para.Inlines.Add(new Run("License: Open Source\n" +
-                               "     for unrestricted free use\n"));
+            para.Inlines.Add(new Run("Free and Open Source Software (FOSS)\n"));
 
-            para.Inlines.Add(new Run("\nVersion: " + ver.ToString()));
-            para.Inlines.Add(new Run("\nChess Engine: " + AppStateManager.EngineName));
+            para.Inlines.Add(new Run("\nVersion: "));
+            Run rVer = new Run(ver.ToString());
+            rVer.FontWeight = FontWeights.Bold;
+            para.Inlines.Add(rVer);
+
+            para.Inlines.Add(new Run("\nChess Engine: "));
+            Run rEng = new Run(AppStateManager.EngineName);
+            rEng.FontWeight = FontWeights.Bold;
+            para.Inlines.Add(rEng);
+
+            para.Inlines.Add(new Run("\nOpenings/Tablebases: "));
+            Run rLichess = new Run("lichess.org");
+            rLichess.FontWeight = FontWeights.Bold;
+            para.Inlines.Add(rLichess);
 
             return para;
         }
