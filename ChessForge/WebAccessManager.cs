@@ -17,36 +17,44 @@ namespace ChessForge
         /// <summary>
         /// Whether querying Opening Stats is enabled.
         /// </summary>
-        public static bool IsEnabledOpeningStats
+        public static bool IsEnabledExplorerQueries
         {
-            get => WebAccessOpeniningStatsState.IsEnabledOpeningStats;
-            set => WebAccessOpeniningStatsState.IsEnabledOpeningStats = value;
+            get => WebAccessExplorersState.IsEnabledExplorerQueries;
+            set => WebAccessExplorersState.IsEnabledExplorerQueries = value;
         }
 
         /// <summary>
-        /// Calls WebAccess to retrieve Opening Stats.
+        /// Calls WebAccess with an Explorer Query.
         /// </summary>
         /// <param name="treeId"></param>
         /// <param name="nd"></param>
-        public static void RequestOpeningStats(int treeId, TreeNode nd)
+        public static void ExplorerRequest(int treeId, TreeNode nd)
         {
-            if (IsEnabledOpeningStats)
+            if (IsEnabledExplorerQueries)
             {
-                if (!WebAccessOpeniningStatsState.IsOpeningStatsInitialized)
+                if (!WebAccessExplorersState.IsExplorerQueriesInitialized)
                 {
-                    InitializeOpeningStats();
+                    InitializeExplorerQueries();
                 }
 
-                if (WebAccessOpeniningStatsState.IsOpeningStatsRequestInProgress)
+                if (WebAccessExplorersState.IsExplorerRequestInProgress)
                 {
-                    WebAccessOpeniningStatsState.QueuedNode = nd;
-                    WebAccessOpeniningStatsState.QueuedNodeTreeId = treeId;
+                    WebAccessExplorersState.QueuedNode = nd;
+                    WebAccessExplorersState.QueuedNodeTreeId = treeId;
                 }
                 else
                 {
-                    WebAccessOpeniningStatsState.IsOpeningStatsRequestInProgress = true;
-                    WebAccessOpeniningStatsState.QueuedNode = null;
-                    OpeningExplorer.OpeningStats(treeId, nd);
+                    WebAccessExplorersState.IsExplorerRequestInProgress = true;
+                    WebAccessExplorersState.QueuedNode = null;
+                    int pieceCount = PositionUtils.GetPieceCount(nd.Position);
+                    if (pieceCount > 7)
+                    {
+                        OpeningExplorer.OpeningStats(treeId, nd);
+                    }
+                    else
+                    {
+                        TablebaseExplorer.TablebaseRequest(treeId, nd);
+                    }
                 }
             }
         }
@@ -54,26 +62,27 @@ namespace ChessForge
         /// <summary>
         /// Sets the event handling delegate.
         /// </summary>
-        private static void InitializeOpeningStats()
+        private static void InitializeExplorerQueries()
         {
-            OpeningExplorer.DataReceived += OpeningStatsRequestCompleted;
-            WebAccessOpeniningStatsState.IsOpeningStatsInitialized = true;
+            OpeningExplorer.DataReceived += ExplorerRequestCompleted;
+            TablebaseExplorer.DataReceived += ExplorerRequestCompleted;
+            WebAccessExplorersState.IsExplorerQueriesInitialized = true;
         }
 
         /// <summary>
-        /// Delegate listening to the OpeningStats request completed event.
+        /// Delegate listening to the Explorer request completed events.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void OpeningStatsRequestCompleted(object sender, WebAccessEventArgs e)
+        private static void ExplorerRequestCompleted(object sender, WebAccessEventArgs e)
         {
-            WebAccessOpeniningStatsState.IsOpeningStatsRequestInProgress = false;
+            WebAccessExplorersState.IsExplorerRequestInProgress = false;
 
             // check if we have anything queued and if so run it
-            if (WebAccessOpeniningStatsState.QueuedNode != null)
+            if (WebAccessExplorersState.QueuedNode != null)
             {
-                RequestOpeningStats(0, WebAccessOpeniningStatsState.QueuedNode);
-                WebAccessOpeniningStatsState.QueuedNode = null;
+                ExplorerRequest(0, WebAccessExplorersState.QueuedNode);
+                WebAccessExplorersState.QueuedNode = null;
             }
         }
     }
