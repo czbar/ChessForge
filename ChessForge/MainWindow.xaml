@@ -139,7 +139,7 @@
                 <Button Name="UiBtnFontSizeFixed" BorderThickness="0" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="215,0,0,0" ToolTip="Use Fixed Font Sizes" Click="UiBtnFontSizeFixed_Click" >
                     <Image Source="Resources/Images/FontSizeFixed.png" Width="18" Height="18"></Image>
                 </Button>
-                <Button Name="UiBtnFontSizeVariable" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="270,0,0,0" ToolTip="Use Variable Font Size" Visibility="Hidden" Click="UiBtnFontSizeVariable_Click">
+                <Button Name="UiBtnFontSizeVariable" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="215,0,0,0" ToolTip="Use Variable Font Size" Visibility="Hidden" Click="UiBtnFontSizeVariable_Click">
                     <Image Source="Resources/Images/FontSizeVariable.png" Width="18" Height="18"></Image>
                 </Button>
                 <Label Grid.Column="1"  Content="Explorers" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="290,2,0,0" Height="28" Width="60"  />
