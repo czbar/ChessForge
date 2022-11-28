@@ -81,6 +81,27 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Counts the number of pieces on the board.
+        /// </summary>
+        public static int GetPieceCount(BoardPosition position)
+        {
+            int count = 0;
+
+            for (int x = 0; x <= 7; x++)
+            {
+                for (int y = 0; y <= 7; y++)
+                {
+                    if (position.Board[x, y] != 0)
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            return count;
+        }
+
+        /// <summary>
         /// Removes castling rights, if they conflict with the king or rook positions. 
         /// </summary>
         /// <param name="pos"></param>
