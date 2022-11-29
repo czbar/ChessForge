@@ -25,6 +25,11 @@ namespace WebAccess
         public static event EventHandler<WebAccessEventArgs> GameReceived;
 
         /// <summary>
+        /// Received text of the game.
+        /// </summary>
+        public static string GameText;
+
+        /// <summary>
         /// Gets a game from lichess.org.
         /// </summary>
         /// <param name="gameId"></param>
@@ -40,7 +45,7 @@ namespace WebAccess
                     await response.Content.CopyToAsync(fs);
                     fs.Position = 0;
                     StreamReader sr = new StreamReader(fs);
-                    string s = sr.ReadToEnd();
+                    GameText = sr.ReadToEnd();
                 }
                 eventArgs.Success = true;
                 GameReceived?.Invoke(null, eventArgs);

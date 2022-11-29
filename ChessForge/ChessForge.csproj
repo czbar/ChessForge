@@ -147,6 +147,9 @@
     <Compile Include="PromotionDialog.xaml.cs">
       <DependentUpon>PromotionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="QuickReplayDialog.xaml.cs">
+      <DependentUpon>QuickReplayDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\ChessBoards.cs" />
     <Compile Include="Resources\Colors.cs" />
     <Compile Include="Resources\ImageSources.cs" />
@@ -227,6 +230,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PromotionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QuickReplayDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -324,6 +331,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\exit.png" />
+    <Resource Include="Resources\Images\FirstMove.png" />
+    <Resource Include="Resources\Images\LastMove.png" />
+    <Resource Include="Resources\Images\NextMove.png" />
+    <Resource Include="Resources\Images\Pause.png" />
+    <Resource Include="Resources\Images\Play.png" />
+    <Resource Include="Resources\Images\PreviousMove.png" />
     <Content Include="Resources\Sounds\InvalidMove.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

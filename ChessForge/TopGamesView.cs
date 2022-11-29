@@ -145,12 +145,22 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Row_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Row_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender is TableRow)
+            if (sender is TableRow && e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
             {
                 string id = ((TableRow)sender).Name;
-                System.Diagnostics.Process.Start("https://lichess.org/" + id.Substring(_rowNamePrefix.Length));
+                id = id.Substring(_rowNamePrefix.Length);
+                //System.Diagnostics.Process.Start("https://lichess.org/" + id);
+
+                QuickReplayDialog dlg = new QuickReplayDialog(id)
+                {
+                    Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
+                    Top = AppStateManager.MainWin.Top + 100,
+                    Topmost = false,
+                    Owner = AppStateManager.MainWin
+                };
+                dlg.ShowDialog();
             }
         }
 
