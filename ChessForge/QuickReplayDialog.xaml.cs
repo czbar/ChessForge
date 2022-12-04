@@ -25,6 +25,9 @@ namespace ChessForge
         private ObservableCollection<TreeNode> _mainLine;
         private bool _isAutoReplay = false;
         private bool _isExiting = false;
+        private int _animatedMoveIndex = 0;
+
+        private MoveAnimator _animator;
 
         /// <summary>
         /// Creates the dialog and requests game's text from lichess.
@@ -36,9 +39,12 @@ namespace ChessForge
 
             ShowControls(false);
             _chessBoard = new ChessBoardSmall(UiCnvBoard, UiImgChessBoard, null, false, false);
-            GameDownload.GameReceived += GameReceived;
+            _animator = new MoveAnimator(_chessBoard);
 
+            GameDownload.GameReceived += GameReceived;
             GameDownload.GetGame(lichessGameId);
+
+            _animator.AnimationCompleted += AnimationFinished;
         }
 
         /// <summary>
@@ -70,6 +76,8 @@ namespace ChessForge
                     _mainLine = _tree.SelectLine("1");
                     _isAutoReplay = true;
                     ShowControls(true);
+                    _animatedMoveIndex = 1;
+                    RequestMoveAnimation(_animatedMoveIndex);
                 }
                 else
                 {
@@ -87,11 +95,19 @@ namespace ChessForge
             }
         }
 
-        /// <summary>
-        /// Shows/Hides controls according to the value of hasGames.
-        /// </summary>
-        /// <param name="hasGame"></param>
-        private void ShowControls(bool hasGame)
+        private void RequestMoveAnimation(int moveIndex)
+        {
+            if (moveIndex > 0 && moveIndex < _mainLine.Count)
+            {
+                _animator.AnimateMove(_mainLine[moveIndex]);
+            }
+        }
+
+    /// <summary>
+    /// Shows/Hides controls according to the value of hasGames.
+    /// </summary>
+    /// <param name="hasGame"></param>
+    private void ShowControls(bool hasGame)
         {
             UiImgChessBoard.Opacity = hasGame ? 1 : 0.6;
             UiLblLoading.Visibility = hasGame ?  Visibility.Collapsed : Visibility.Visible;
@@ -111,6 +127,12 @@ namespace ChessForge
                 UiImgPlay.Visibility = _isAutoReplay ? Visibility.Collapsed : Visibility.Visible;
                 UiImgPause.Visibility = _isAutoReplay ? Visibility.Visible : Visibility.Collapsed;
             }
+        }
+
+        private void AnimationFinished(object sender, EventArgs e)
+        {
+            _animatedMoveIndex++;
+            RequestMoveAnimation(_animatedMoveIndex);
         }
 
         /// <summary>
