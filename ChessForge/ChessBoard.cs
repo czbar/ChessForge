@@ -189,6 +189,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returned Point position of a top left corner of a square.
+        /// </summary>
+        /// <param name="sq"></param>
+        /// <returns></returns>
+        public Point GetSquareTopLeftPoint(SquareCoords sq)
+        {
+            double left = SquareSize * sq.Xcoord;
+            double top = SquareSize * (7 - sq.Ycoord);
+
+            return new Point(left, top);
+        }
+
+        /// <summary>
         /// Creates the coordinates labels.
         /// </summary>
         private void InitializeCoordinateLabels()
@@ -421,6 +434,26 @@ namespace ChessForge
             {
                 Pieces[7 - xcoord, 7 - ycoord] = img;
             }
+        }
+
+        /// <summary>
+        /// Removes from Canvas the existing image object
+        /// and replaces it with a new one.
+        /// This is required after animation.
+        /// </summary>
+        /// <param name="xCoord"></param>
+        /// <param name="yCoord"></param>
+        /// <param name="ignoreFlip"></param>
+        public void ReconstructSquareImage(int xCoord, int yCoord, bool ignoreFlip)
+        {
+            Image old = GetPieceImage(xCoord, yCoord, ignoreFlip);
+            CanvasCtrl.Children.Remove(old);
+
+            Image reconstructed = new Image();
+            SetPieceImage(reconstructed, xCoord, yCoord, ignoreFlip);
+            CanvasCtrl.Children.Add(reconstructed);
+            Canvas.SetLeft(reconstructed, SquareSize * xCoord + BoardImgCtrl.Margin.Left);
+            Canvas.SetTop(reconstructed, SquareSize * (7 - yCoord) + BoardImgCtrl.Margin.Top);
         }
 
         /// <summary>
@@ -682,13 +715,11 @@ namespace ChessForge
 
         /// <summary>
         /// Places an image of a piece (or empty image object)
-        /// on the request square.
-        /// NOTE: we override in ChessBoardSmall because it uses different
-        /// way of placing the board (TODO: make it consistent)
+        /// on the requested square.
         /// </summary>
         /// <param name="xPos"></param>
         /// <param name="yPos"></param>
-        virtual protected void PlacePieceImageOnSquare(int xPos, int yPos)
+        public void PlacePieceImageOnSquare(int xPos, int yPos)
         {
             Canvas.SetLeft(Pieces[xPos, yPos], SquareSize * xPos + BoardImgCtrl.Margin.Left);
             Canvas.SetTop(Pieces[xPos, yPos], SquareSize * (7 - yPos) + BoardImgCtrl.Margin.Top);
