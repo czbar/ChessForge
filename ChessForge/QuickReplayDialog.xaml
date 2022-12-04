@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="Game Preview" Height="430" Width="455" Closing="Window_Closing">
+        Title="Game Preview" Height="430" Width="520" Closing="Window_Closing">
     <Grid>
         <Canvas x:Name="UiCnvOver"  Background="Black" Height="268" Width="268" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,34,0,0" >
             <Canvas x:Name="UiCnvBoard" Canvas.Left="14" Canvas.Top="14">
@@ -25,10 +25,20 @@
         <Image x:Name="UiImgLastMove" Width="24" Height="24" HorizontalAlignment="Left" Margin="263,325,0,0" VerticalAlignment="Top"
                Source="Resources/Images/LastMove.png" ></Image>
 
-        <Button x:Name="UiBtnImport" Content="Import" HorizontalAlignment="Left" Width="60" Margin="359,50,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnExit" Content="Exit" HorizontalAlignment="Left" Width="60" Margin="359,93,0,0" VerticalAlignment="Top" Click="UiBtnExit_Click" RenderTransformOrigin="0.359,-5.966"/>
+
+        <Button x:Name="UiBtnImport" Content="Import into Chapter" HorizontalAlignment="Left" Width="120" Margin="342,50,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnLichess" Content="View on lichess.org" HorizontalAlignment="Left" Width="120" Margin="342,80,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnNextGame" Content="Next Game" HorizontalAlignment="Left" Width="120" Margin="342,110,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnPreviousGame" Content="Previous Game" HorizontalAlignment="Left" Width="120" Margin="342,140,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnExit" Content="Exit" HorizontalAlignment="Left" Width="120" Margin="342,327,0,0" VerticalAlignment="Top" Click="UiBtnExit_Click" />
         <Label x:Name="UiLblLoading" Background="Blue" Foreground="White" FontSize="16" FontWeight="Bold" Content="Downloading game from lichess.org. Please wait..." HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblDownloadError" Visibility="Collapsed" FontSize="14"  FontWeight="Bold" Foreground="red" Content="Error downloading from lichess.org" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbError" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0,191,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="220" Height="64" BorderThickness="0" IsEnabled="False"/>
+        <RadioButton x:Name="UiRbFastReplay" Content="Fast" HorizontalAlignment="Left" Margin="365,226,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbMediumReplay" Content="Medium" HorizontalAlignment="Left" Margin="365,246,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbSlowReplay" Content="Slow" HorizontalAlignment="Left" Margin="365,266,0,0" VerticalAlignment="Top"/>
+        <GroupBox x:Name="UiGReplaySpeed" Header="Replay Speed" Margin="355,200,52,100" />
+        <Label x:Name="UiLblWhite" Content="Players" HorizontalAlignment="Left" Margin="40,5,0,0" Width="270" VerticalAlignment="Top"/>
+
     </Grid>
 </Window>
