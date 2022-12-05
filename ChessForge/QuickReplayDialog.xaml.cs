@@ -80,7 +80,7 @@ namespace ChessForge
             _gameIdList = gameIdList;
             _currentGameId = lichessGameId;
 
-            ShowControls(false);
+            ShowControls(false, false);
             _chessBoard = new ChessBoardSmall(UiCnvBoard, UiImgChessBoard, null, false, false);
             _animator = new MoveAnimator(_chessBoard);
 
@@ -137,7 +137,7 @@ namespace ChessForge
                     _currentNodeMoveIndex = 1;
                     RequestMoveAnimation(_currentNodeMoveIndex);
 
-                    ShowControls(true);
+                    ShowControls(true, false);
                 }
                 else
                 {
@@ -145,13 +145,8 @@ namespace ChessForge
             }
             catch (Exception ex)
             {
-                UiLblLoading.Visibility = Visibility.Collapsed;
-                UiImgChessBoard.Visibility = Visibility.Collapsed;
-                UiBtnImport.Visibility = Visibility.Collapsed;
-
-                UiLblDownloadError.Visibility = Visibility.Visible;
-                UiTbError.Visibility = Visibility.Visible;
-                UiTbError.Text = ex.Message;
+                ShowControls(false, true);
+                MessageBox.Show("Game download error: " + ex.Message, "Chess Forge Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -195,16 +190,16 @@ namespace ChessForge
             {
                 _isAnimating = false;
             }
-            ShowControls(true);
+            ShowControls(true, false);
         }
 
         /// <summary>
         /// Shows/Hides controls according to the value of hasGames.
         /// </summary>
         /// <param name="hasGame"></param>
-        private void ShowControls(bool hasGame)
+        private void ShowControls(bool hasGame, bool isError)
         {
-            UiLblLoading.Visibility = hasGame ? Visibility.Collapsed : Visibility.Visible;
+            UiLblLoading.Visibility = (hasGame || isError) ? Visibility.Collapsed : Visibility.Visible;
 
             UiImgFirstMove.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
             UiImgPreviousMove.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
@@ -214,11 +209,15 @@ namespace ChessForge
             UiImgLastMove.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
 
             UiBtnImport.IsEnabled = hasGame;
+            UiBtnLichess.IsEnabled = hasGame;
 
             UiImgFirstMove.IsEnabled = _currentNodeMoveIndex > 1;
             UiImgPreviousMove.IsEnabled = _currentNodeMoveIndex > 1;
             UiImgNextMove.IsEnabled = _mainLine != null &&  (_currentNodeMoveIndex < _mainLine.Count - 1);
             UiImgLastMove.IsEnabled = _mainLine != null && (_currentNodeMoveIndex < _mainLine.Count - 1);
+
+            UiBtnNextGame.IsEnabled = !IsCurrentGameLast();
+            UiBtnPreviousGame.IsEnabled = !IsCurrentGameFirst();
 
             if (hasGame)
             {
@@ -281,8 +280,26 @@ namespace ChessForge
             else
             {
                 _isAnimating = false;
-                ShowControls(true);
+                ShowControls(true, false);
             }
+        }
+
+        /// <summary>
+        /// Returns true if the currently viewed game is last on the list.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsCurrentGameLast()
+        {
+            return _gameIdList.Count == 0 || _gameIdList[_gameIdList.Count - 1] == _currentGameId;
+        }
+
+        /// <summary>
+        /// Returns true if the currently viewed game is first on the list.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsCurrentGameFirst()
+        {
+            return _gameIdList.Count == 0 || _gameIdList[0] == _currentGameId;
         }
 
         /// <summary>

@@ -26,8 +26,8 @@
                Source="Resources/Images/LastMove.png" MouseDown="UiImgLastMove_MouseDown" ></Image>
 
 
-        <Button x:Name="UiBtnImport" Content="Import into Chapter" HorizontalAlignment="Left" Width="120" Margin="342,72,0,0" VerticalAlignment="Top" Click="UiBtnImport_Click"/>
-        <Button x:Name="UiBtnLichess" Content="View on lichess.org" HorizontalAlignment="Left" Width="120" Margin="342,102,0,0" VerticalAlignment="Top" Click="UiBtnLichess_Click"/>
+        <Button x:Name="UiBtnImport" Content="Import into Chapter" HorizontalAlignment="Left" Width="120" Height="30" Margin="342,52,0,0" VerticalAlignment="Top" Click="UiBtnImport_Click"/>
+        <Button x:Name="UiBtnLichess" Content="View on lichess.org" HorizontalAlignment="Left" Width="120" Height="30" Margin="342,92,0,0" VerticalAlignment="Top" Click="UiBtnLichess_Click"/>
         <Button x:Name="UiBtnNextGame" Content="Next Game" HorizontalAlignment="Left" Width="120" Margin="342,152,0,0" VerticalAlignment="Top" Click="UiBtnNextGame_Click"/>
         <Button x:Name="UiBtnPreviousGame" Content="Previous Game" HorizontalAlignment="Left" Width="120" Margin="342,182,0,0" VerticalAlignment="Top" Click="UiBtnPreviousGame_Click"/>
         <Button x:Name="UiBtnExit" Content="Exit" HorizontalAlignment="Left" Width="120" Margin="342,353,0,0" VerticalAlignment="Top" Click="UiBtnExit_Click" />
