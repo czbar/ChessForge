@@ -10,6 +10,8 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using ChessForge;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using WebAccess;
 
 namespace ChessForge
 {
@@ -82,6 +84,23 @@ namespace ChessForge
             set => _lastActiveManualReviewTab = value;
         }
 
+        /// <summary>
+        /// Accessor to the ActiveChapter object
+        /// </summary>
+        public static Chapter ActiveChapter
+        {
+            get
+            {
+                if (WorkbookManager.SessionWorkbook != null)
+                {
+                    return WorkbookManager.SessionWorkbook.ActiveChapter;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
 
         /// <summary>
         /// Accessor to the current ActiveVariationTree
@@ -381,6 +400,45 @@ namespace ChessForge
         public static EngineGame.GameState CurrentGameState
         {
             get { return EngineGame.CurrentState; }
+        }
+
+        /// <summary>
+        /// Download a game from lichess and add to ActiveChapter
+        /// </summary>
+        /// <param name="gameId"></param>
+        public static async void DownloadModelGameToActiveChapter(string gameId)
+        {
+            try
+            {
+                await WebAccess.GameDownload.GetGame(gameId);
+
+                Chapter chapter = AppStateManager.ActiveChapter;
+                if (chapter != null)
+                {
+                    VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
+                    PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, tree);
+                    if (string.IsNullOrEmpty(GameDownload.GameText))
+                    {
+                        throw new Exception("no text received.");
+                    }
+                    chapter.AddModelGame(tree);
+                    MainWin.RefreshChaptersViewAfterImport(GameData.ContentType.MODEL_GAME, chapter, chapter.GetModelGameCount() - 1);
+                    IsDirty = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not import game: " + ex.Message, "Chess Forge Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Opens the last clicked Top Game in the browser.
+        /// </summary>
+        /// <param name="gameId"></param>
+        public static void ViewGameOnLichess(string gameId)
+        {
+            System.Diagnostics.Process.Start("https://lichess.org/" + gameId);
         }
 
         /// <summary>

@@ -816,6 +816,44 @@ namespace ChessForge
 
         //*****************************************************************************
         //
+        //   TOP GAMES EXPLORER
+        //
+        //*****************************************************************************
+
+
+        /// <summary>
+        /// Opens the Game Preview dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnTopGamePreview_Click(object sender, RoutedEventArgs e)
+        {
+            _topGamesView.OpenReplayDialog();
+        }
+
+        /// <summary>
+        /// Downloads the game last clicked in the Top Games view
+        /// and adds it to the Active Chapter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnTopGameImport_Click(object sender, RoutedEventArgs e)
+        {
+            AppStateManager.DownloadModelGameToActiveChapter(_topGamesView.CurrentGameId);
+        }
+
+        /// <summary>
+        /// Opens the last clicked Top Game in the browser,
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnTopGameLichessView_Click(object sender, RoutedEventArgs e)
+        {
+            AppStateManager.ViewGameOnLichess(_topGamesView.CurrentGameId);
+        }
+
+        //*****************************************************************************
+        //
         //   MODEL GAMES and EXERCISES MENUS
         //
         //*****************************************************************************

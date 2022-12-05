@@ -134,7 +134,7 @@ namespace ChessForge
             // Method 1 below keeps the animated image at the spot it was when the stop request came.
             // Method 2 returns it to the initial position.
             // Neither works fully to our satisfaction. They seem to not be exiting immediately and are leaving some garbage
-            // behind which prevents us from immediatey changing the speed of animation on user's request 
+            // behind which prevents us from immediately changing the speed of animation on user's request 
             if (LearningMode.CurrentAnimationX != null && LearningMode.CurrentAnimationY != null && LearningMode.CurrentTranslateTransform != null)
             {
                 // *** Method 1.

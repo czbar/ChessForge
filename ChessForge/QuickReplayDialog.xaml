@@ -5,40 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="Game Preview" Height="430" Width="520" Closing="Window_Closing">
+        Title="Game Preview" Height="440" Width="525" Closing="Window_Closing">
     <Grid>
-        <Canvas x:Name="UiCnvOver"  Background="Black" Height="268" Width="268" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,34,0,0" >
+        <Canvas x:Name="UiCnvOver"  Background="Black" Height="268" Width="268" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,65,0,0" >
             <Canvas x:Name="UiCnvBoard" Canvas.Left="14" Canvas.Top="14">
                 <Image x:Name="UiImgChessBoard" HorizontalAlignment="Left" Height="240" VerticalAlignment="Top" Width="240" Source="/Resources/Images/ChessBoardGreySmall.png"  />
             </Canvas>
         </Canvas>
-        <Image x:Name="UiImgFirstMove" Width="24" Height="24" HorizontalAlignment="Left" Margin="63,325,0,0" VerticalAlignment="Top"
-               Source="Resources/Images/FirstMove.png" ></Image>
-        <Image x:Name="UiImgPreviousMove" Width="24" Height="24" HorizontalAlignment="Left" Margin="111,325,0,0" VerticalAlignment="Top"
-               Source="Resources/Images/PreviousMove.png" ></Image>
-        <Image x:Name="UiImgPlay" Width="24" Height="24" HorizontalAlignment="Left" Margin="161,325,0,0" VerticalAlignment="Top"
-               Source="Resources/Images/Play.png" Visibility="Collapsed"></Image>
-        <Image x:Name="UiImgPause" Width="24" Height="24" HorizontalAlignment="Left" Margin="161,325,0,0" VerticalAlignment="Top"
-               Source="Resources/Images/Pause.png" ></Image>
-        <Image x:Name="UiImgNextMove" Width="24" Height="24" HorizontalAlignment="Left" Margin="211,325,0,0" VerticalAlignment="Top"
-               Source="Resources/Images/NextMove.png" ></Image>
-        <Image x:Name="UiImgLastMove" Width="24" Height="24" HorizontalAlignment="Left" Margin="263,325,0,0" VerticalAlignment="Top"
-               Source="Resources/Images/LastMove.png" ></Image>
+        <Image x:Name="UiImgFirstMove" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="63,351,0,0" VerticalAlignment="Top"
+               Source="Resources/Images/FirstMove.png" MouseDown="UiImgFirstMove_MouseDown" ></Image>
+        <Image x:Name="UiImgPreviousMove" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="111,351,0,0" VerticalAlignment="Top"
+               Source="Resources/Images/PreviousMove.png" MouseDown="UiImgPreviousMove_MouseDown" ></Image>
+        <Image x:Name="UiImgPlay" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="161,351,0,0" VerticalAlignment="Top"
+               Source="Resources/Images/Play.png" Visibility="Collapsed" MouseDown="UiImgPlay_MouseDown"></Image>
+        <Image x:Name="UiImgPause" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="161,351,0,0" VerticalAlignment="Top"
+               Source="Resources/Images/Pause.png" MouseDown="UiImgPause_MouseDown" ></Image>
+        <Image x:Name="UiImgNextMove" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="211,351,0,0" VerticalAlignment="Top"
+               Source="Resources/Images/NextMove.png" MouseDown="UiImgNextMove_MouseDown" ></Image>
+        <Image x:Name="UiImgLastMove" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="263,351,0,0" VerticalAlignment="Top"
+               Source="Resources/Images/LastMove.png" MouseDown="UiImgLastMove_MouseDown" ></Image>
 
 
-        <Button x:Name="UiBtnImport" Content="Import into Chapter" HorizontalAlignment="Left" Width="120" Margin="342,50,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnLichess" Content="View on lichess.org" HorizontalAlignment="Left" Width="120" Margin="342,80,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnNextGame" Content="Next Game" HorizontalAlignment="Left" Width="120" Margin="342,110,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnPreviousGame" Content="Previous Game" HorizontalAlignment="Left" Width="120" Margin="342,140,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnExit" Content="Exit" HorizontalAlignment="Left" Width="120" Margin="342,327,0,0" VerticalAlignment="Top" Click="UiBtnExit_Click" />
-        <Label x:Name="UiLblLoading" Background="Blue" Foreground="White" FontSize="16" FontWeight="Bold" Content="Downloading game from lichess.org. Please wait..." HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnImport" Content="Import into Chapter" HorizontalAlignment="Left" Width="120" Height="30" Margin="342,52,0,0" VerticalAlignment="Top" Click="UiBtnImport_Click"/>
+        <Button x:Name="UiBtnLichess" Content="View on lichess.org" HorizontalAlignment="Left" Width="120" Height="30" Margin="342,92,0,0" VerticalAlignment="Top" Click="UiBtnLichess_Click"/>
+        <Button x:Name="UiBtnNextGame" Content="Next Game" HorizontalAlignment="Left" Width="120" Margin="342,152,0,0" VerticalAlignment="Top" Click="UiBtnNextGame_Click"/>
+        <Button x:Name="UiBtnPreviousGame" Content="Previous Game" HorizontalAlignment="Left" Width="120" Margin="342,182,0,0" VerticalAlignment="Top" Click="UiBtnPreviousGame_Click"/>
+        <Button x:Name="UiBtnExit" Content="Exit" HorizontalAlignment="Left" Width="120" Margin="342,353,0,0" VerticalAlignment="Top" Click="UiBtnExit_Click" />
+        <Label x:Name="UiLblLoading" Background="Blue" Foreground="White" FontSize="16" FontWeight="Bold" Content="Downloading game from lichess.org. Please wait..." HorizontalAlignment="Center" Margin="0,182,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblDownloadError" Visibility="Collapsed" FontSize="14"  FontWeight="Bold" Foreground="red" Content="Error downloading from lichess.org" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbError" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0,191,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="220" Height="64" BorderThickness="0" IsEnabled="False"/>
-        <RadioButton x:Name="UiRbFastReplay" Content="Fast" HorizontalAlignment="Left" Margin="365,226,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="UiRbMediumReplay" Content="Medium" HorizontalAlignment="Left" Margin="365,246,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="UiRbSlowReplay" Content="Slow" HorizontalAlignment="Left" Margin="365,266,0,0" VerticalAlignment="Top"/>
-        <GroupBox x:Name="UiGReplaySpeed" Header="Replay Speed" Margin="355,200,52,100" />
-        <Label x:Name="UiLblWhite" Content="Players" HorizontalAlignment="Left" Margin="40,5,0,0" Width="270" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbFastReplay" Content="Fast" HorizontalAlignment="Left" Margin="360,254,0,0" VerticalAlignment="Top" Checked="UiRbFastReplay_Checked"/>
+        <RadioButton x:Name="UiRbMediumReplay" Content="Medium" HorizontalAlignment="Left" Margin="360,274,0,0" VerticalAlignment="Top" Checked="UiRbMediumReplay_Checked"/>
+        <RadioButton x:Name="UiRbSlowReplay" Content="Slow" HorizontalAlignment="Left" Margin="360,294,0,0" VerticalAlignment="Top" Checked="UiRbSlowReplay_Checked"/>
+        <GroupBox x:Name="UiGReplaySpeed" Header="Replay Speed" Margin="340,225,0,0" Width="124" Height="100" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Label x:Name="UiLblWhiteSquare" Content="" HorizontalAlignment="Left" Margin="35,5,0,0" Width="22" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblWhite" Content="" HorizontalAlignment="Left" Margin="55,5,0,0" Width="180" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblBlackSquare" Content="" HorizontalAlignment="Left" Margin="35,27,0,0" Width="22" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblBlack" Content="" HorizontalAlignment="Left" Margin="55,27,0,0" Width="180" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblResult" Content="" HorizontalAlignment="Left" Margin="245,16,0,0" Width="60" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

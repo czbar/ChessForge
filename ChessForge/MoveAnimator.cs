@@ -66,6 +66,11 @@ namespace ChessForge
             _chessBoard = chessboard;
         }
 
+        public void SetAnimationSpeed(int millisec)
+        {
+            _moveSpeed = millisec;
+        }
+
         /// <summary>
         /// Animates the move by:
         /// - identifying the origin and destination squares.
@@ -94,16 +99,14 @@ namespace ChessForge
             if (_animatedImage.RenderTransform != null)
                 _animatedImage.RenderTransform = trans;
 
-            DoubleAnimation animX = new DoubleAnimation(0, dest.X - orig.X, TimeSpan.FromMilliseconds(_moveSpeed));
-            DoubleAnimation animY = new DoubleAnimation(0, dest.Y - orig.Y, TimeSpan.FromMilliseconds(_moveSpeed));
+            _currentAnimationX = new DoubleAnimation(0, dest.X - orig.X, TimeSpan.FromMilliseconds(_moveSpeed));
+            _currentAnimationY = new DoubleAnimation(0, dest.Y - orig.Y, TimeSpan.FromMilliseconds(_moveSpeed));
 
             _currentTranslateTransform = trans;
-            _currentAnimationX = animX;
-            _currentAnimationY = animY;
 
-            animX.Completed += new EventHandler(MoveAnimationCompleted);
-            trans.BeginAnimation(TranslateTransform.XProperty, animX);
-            trans.BeginAnimation(TranslateTransform.YProperty, animY);
+            _currentAnimationX.Completed += new EventHandler(MoveAnimationCompleted);
+            _currentTranslateTransform.BeginAnimation(TranslateTransform.XProperty, _currentAnimationX);
+            _currentTranslateTransform.BeginAnimation(TranslateTransform.YProperty, _currentAnimationY);
         }
 
         /// <summary>
@@ -116,16 +119,16 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MoveAnimationCompleted(object sender, EventArgs e)
         {
+            _currentTranslateTransform = null;
+            _currentAnimationX = null;
+            _currentAnimationY = null;
+
             // put the dragged image on the destination square
             _chessBoard.GetPieceImage(_destination.Xcoord, _destination.Ycoord, true).Source = _animatedImage.Source;
 
-            // place the dragged image back on its original square
-            Point orig = _chessBoard.GetSquareTopLeftPoint(_origin);
             _animatedImage.Source = null;
-
             // reconstruct the Image object at origin and set its Source to null
             _chessBoard.ReconstructSquareImage(_origin.Xcoord, _origin.Ycoord, true);
-            _chessBoard.DisplayPosition(_nodeAnimated);
 
             AnimationCompleted?.Invoke(null, null);
         }
