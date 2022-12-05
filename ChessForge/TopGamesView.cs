@@ -34,6 +34,13 @@ namespace ChessForge
         {
         };
 
+        public string CurrentGameId
+        {
+            get => _clickedGameId;
+        }
+
+        private string _clickedGameId;
+
         // columns widths
         private int _ratingColumnWidth = 30;
         private int _namesColumnWidth = 150;
@@ -47,6 +54,8 @@ namespace ChessForge
 
         // prefix for the Rows' names
         private readonly string _rowNamePrefix = "name_";
+
+        private List<string> _gameIdList = new List<string>();
 
         /// <summary>
         /// Creates the view and registers a listener with WebAccess
@@ -124,12 +133,14 @@ namespace ChessForge
             CreateColumns(gamesTable);
             LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats;
             int rowNo = 0;
+            _gameIdList.Clear();
             foreach (LichessTopGame game in stats.TopGames)
             {
                 TableRow row = BuildGameRow(gamesTable, game, rowNo);
                 gamesTable.RowGroups[0].Rows.Add(row);
                 if (!string.IsNullOrWhiteSpace(game.Id))
                 {
+                    _gameIdList.Add(game.Id);
                     row.Name = _rowNamePrefix + game.Id;
                     row.PreviewMouseDown += Row_PreviewMouseDown;
                     row.Cursor = Cursors.Hand;
@@ -141,26 +152,45 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Opens the Game Review dialog.
+        /// </summary>
+        public void OpenReplayDialog()
+        {
+            QuickReplayDialog dlg = new QuickReplayDialog(_clickedGameId, _gameIdList)
+            {
+                Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
+                Top = AppStateManager.MainWin.Top + 100,
+                Topmost = false,
+                Owner = AppStateManager.MainWin
+            };
+            dlg.ShowDialog();
+        }
+
+        /// <summary>
         /// Handler of the mouse click on the Row event.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Row_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender is TableRow && e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+            if (sender is TableRow)
             {
                 string id = ((TableRow)sender).Name;
                 id = id.Substring(_rowNamePrefix.Length);
-                //System.Diagnostics.Process.Start("https://lichess.org/" + id);
+                _clickedGameId = id;
 
-                QuickReplayDialog dlg = new QuickReplayDialog(id)
+                if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
                 {
-                    Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
-                    Top = AppStateManager.MainWin.Top + 100,
-                    Topmost = false,
-                    Owner = AppStateManager.MainWin
-                };
-                dlg.ShowDialog();
+                    OpenReplayDialog();
+                }
+                else if (e.ChangedButton == MouseButton.Right)
+                {
+                    if (!string.IsNullOrWhiteSpace(id))
+                    {
+                        AppStateManager.MainWin.UiCmTopGames.IsOpen = true;
+                        e.Handled = true;
+                    }
+                }
             }
         }
 
