@@ -33,7 +33,7 @@ namespace WebAccess
         /// Gets a game from lichess.org.
         /// </summary>
         /// <param name="gameId"></param>
-        public static async void GetGame(string gameId)
+        public static async Task<string> GetGame(string gameId)
         {
             WebAccessEventArgs eventArgs = new WebAccessEventArgs();
             try
@@ -49,12 +49,14 @@ namespace WebAccess
                 }
                 eventArgs.Success = true;
                 GameReceived?.Invoke(null, eventArgs);
+                return GameText;
             }
             catch (Exception ex)
             {
                 eventArgs.Success = true;
                 eventArgs.Message= ex.Message;
                 GameReceived?.Invoke(null, eventArgs);
+                return "";
             }
         }
 
