@@ -67,6 +67,10 @@ namespace ChessForge
         // 100 for the percentage bar and 10 for the left margin
         private readonly double _statsColumnWidth = 110;
 
+        private readonly double _tablebaseMoveColumnWidth = 60;
+        private readonly double _dtzColumnWidth = 40;
+        private readonly double _dtmColumnWidth = 40;
+
         // column widths in the stats table's header
         private readonly double _ecoColumnWidth = 20;
         private readonly double _openingNameColumnWidth = 130;
@@ -616,7 +620,13 @@ namespace ChessForge
             table.RowGroups.Add(new TableRowGroup());
 
             table.Columns.Add(new TableColumn());
-            table.Columns[0].Width = new GridLength(_moveColumnWidth * scaleFactor);
+            table.Columns[0].Width = new GridLength(_tablebaseMoveColumnWidth * scaleFactor);
+
+            table.Columns.Add(new TableColumn());
+            table.Columns[1].Width = new GridLength(_dtzColumnWidth * scaleFactor);
+
+            table.Columns.Add(new TableColumn());
+            table.Columns[2].Width = new GridLength(_dtmColumnWidth * scaleFactor);
 
             LichessTablebaseMove[] moves = TablebaseExplorer.Response.Moves;
             foreach (LichessTablebaseMove move in moves)
@@ -628,6 +638,19 @@ namespace ChessForge
 
                     TableCell cellMove = new TableCell(new Paragraph(new Run(move.San)));
                     row.Cells.Add(cellMove);
+
+                    if (category != "draw")
+                    {
+                        Run rDtz = new Run("DTZ " + move.dtz.ToString());
+                        rDtz.FontSize = _baseFontSize + Configuration.FontSizeDiff;
+                        TableCell cellDtz = new TableCell(new Paragraph(rDtz));
+                        row.Cells.Add(cellDtz);
+
+                        Run rDtm = new Run("DTZ " + move.dtm.ToString());
+                        rDtm.FontSize = _baseFontSize + Configuration.FontSizeDiff;
+                        TableCell cellDtm = new TableCell(new Paragraph(rDtm));
+                        row.Cells.Add(cellDtm);
+                    }
                 }
             }
 
