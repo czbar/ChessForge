@@ -689,6 +689,7 @@ namespace ChessForge
             UiImgEngineOn.IsEnabled = false;
             UiImgEngineOff.IsEnabled = false;
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+            AppStateManager.ShowExplorers(false);
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.CHAPTERS;
             BoardCommentBox.ShowWorkbookTitle();
@@ -725,6 +726,7 @@ namespace ChessForge
         {
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
+            AppStateManager.ShowExplorers(AppStateManager.AreExplorersOn);
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.STUDY;
             BoardCommentBox.ShowWorkbookTitle();
@@ -765,6 +767,8 @@ namespace ChessForge
         private void UiTabBookmarks_GotFocus(object sender, RoutedEventArgs e)
         {
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.BOOKMARKS;
+            AppStateManager.ShowExplorers(false);
+
             BoardCommentBox.ShowWorkbookTitle();
             try
             {
@@ -844,6 +848,14 @@ namespace ChessForge
         {
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
+            if (AppStateManager.ActiveChapterGamesCount > 0)
+            {
+                AppStateManager.ShowExplorers(AppStateManager.AreExplorersOn);
+            }
+            else
+            {
+                AppStateManager.ShowExplorers(false);
+            }
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.MODEL_GAME;
             BoardCommentBox.ShowWorkbookTitle();
@@ -916,6 +928,14 @@ namespace ChessForge
         {
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
+            if (AppStateManager.ActiveChapterExerciseCount > 0)
+            {
+                AppStateManager.ShowExplorers(AppStateManager.AreExplorersOn);
+            }
+            else
+            {
+                AppStateManager.ShowExplorers(false);
+            }
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.EXERCISE;
             BoardCommentBox.ShowWorkbookTitle();
