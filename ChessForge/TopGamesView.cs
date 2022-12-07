@@ -143,7 +143,7 @@ namespace ChessForge
                     _gameIdList.Add(game.Id);
                     row.Name = _rowNamePrefix + game.Id;
                     row.PreviewMouseDown += Row_PreviewMouseDown;
-                    row.Cursor = Cursors.Hand;
+                    row.Cursor = Cursors.Arrow;
                 }
                 rowNo++;
             }
@@ -179,7 +179,7 @@ namespace ChessForge
                 id = id.Substring(_rowNamePrefix.Length);
                 _clickedGameId = id;
 
-                if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+                if (e.ChangedButton == MouseButton.Left)
                 {
                     OpenReplayDialog();
                 }
