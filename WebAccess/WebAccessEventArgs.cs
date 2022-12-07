@@ -27,6 +27,11 @@ namespace WebAccess
         public int NodeId { get; set; }
 
         /// <summary>
+        /// Lichess Id of a game 
+        /// </summary>
+        public string GameId { get; set; }
+
+        /// <summary>
         /// A message to pass back to the caller
         /// e.g. the Exception error message.
         /// </summary>
