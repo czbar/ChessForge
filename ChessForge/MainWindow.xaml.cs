@@ -278,8 +278,9 @@ namespace ChessForge
             UiBtnExitTraining.Background = ChessForgeColors.ExitButtonLinearBrush;
 
             _openingStatsView = new OpeningStatsView(UiRtbOpenings.Document);
-            _topGamesView = new TopGamesView(UiRtbTopGames.Document);
+            _topGamesView = new TopGamesView(UiRtbTopGames.Document, true);
             UiRtbTopGames.IsDocumentEnabled = true;
+            UiRtbOpenings.IsDocumentEnabled = true;
 
 
             AddDebugMenu();

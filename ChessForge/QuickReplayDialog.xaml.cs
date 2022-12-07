@@ -56,12 +56,15 @@ namespace ChessForge
         private enum CachedOperation
         {
             NONE,
-            FIRST,
-            LAST,
-            NEXT,
-            PREV,
-            PAUSE,
-            PLAY
+            FIRST_MOVE,
+            LAST_MOVE,
+            NEXT_MOVE,
+            PREV_MOVE,
+            PAUSE_AUTO,
+            PLAY_AUTO,
+            NEXT_GAME,
+            PREV_GAME,
+            SELECT_GAME
         }
 
         // currently cached operation
@@ -69,6 +72,9 @@ namespace ChessForge
 
         private List<string> _gameIdList = new List<string>();
         private string _currentGameId;
+
+        // hosted TopGamesView
+        private TopGamesView _topGamesView;
 
         /// <summary>
         /// Creates the dialog and requests game's text from lichess.
@@ -88,10 +94,42 @@ namespace ChessForge
             UiRbFastReplay.IsChecked = true;
             _animator.SetAnimationSpeed(_animationSpeed);
 
+            ConfigureTopGamesView();
+
             GameDownload.GameReceived += GameReceived;
             DownloadGame(_currentGameId);
 
             _animator.AnimationCompleted += AnimationFinished;
+
+            UiCnvPlayers.Background = ChessForgeColors.TABLE_ROW_LIGHT_GRAY;
+        }
+
+        /// <summary>
+        /// Configures the hosted TopGamesView
+        /// </summary>
+        private void ConfigureTopGamesView()
+        {
+            _topGamesView = new TopGamesView(UiRtbGames.Document, false);
+            UiRtbGames.IsDocumentEnabled = true;
+            _topGamesView.BuildFlowDocument();
+            _topGamesView.TopGameClicked += EventSelectGame;
+
+        }
+
+        /// <summary>
+        /// Handler for the click event on a game row
+        /// in the hosted TopGamesView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventSelectGame(object sender, WebAccessEventArgs e)
+        {
+            try
+            {
+                _currentGameId = e.GameId;
+                PlaySelectGame();
+            }
+            catch { }
         }
 
         /// <summary>
@@ -101,6 +139,7 @@ namespace ChessForge
         private void DownloadGame(string gameId)
         {
             _ = GameDownload.GetGame(gameId);
+            _topGamesView.SetRowBackgorunds(gameId);
         }
 
         /// <summary>
@@ -213,7 +252,7 @@ namespace ChessForge
 
             UiImgFirstMove.IsEnabled = _currentNodeMoveIndex > 1;
             UiImgPreviousMove.IsEnabled = _currentNodeMoveIndex > 1;
-            UiImgNextMove.IsEnabled = _mainLine != null &&  (_currentNodeMoveIndex < _mainLine.Count - 1);
+            UiImgNextMove.IsEnabled = _mainLine != null && (_currentNodeMoveIndex < _mainLine.Count - 1);
             UiImgLastMove.IsEnabled = _mainLine != null && (_currentNodeMoveIndex < _mainLine.Count - 1);
 
             UiBtnNextGame.IsEnabled = !IsCurrentGameLast();
@@ -251,23 +290,32 @@ namespace ChessForge
 
                 switch (_cachedOperation)
                 {
-                    case CachedOperation.FIRST:
+                    case CachedOperation.FIRST_MOVE:
                         UiImgFirstMove_MouseDown(null, null);
                         break;
-                    case CachedOperation.LAST:
+                    case CachedOperation.LAST_MOVE:
                         UiImgLastMove_MouseDown(null, null);
                         break;
-                    case CachedOperation.PREV:
+                    case CachedOperation.PREV_MOVE:
                         UiImgPreviousMove_MouseDown(null, null);
                         break;
-                    case CachedOperation.NEXT:
+                    case CachedOperation.NEXT_MOVE:
                         UiImgNextMove_MouseDown(null, null);
                         break;
-                    case CachedOperation.PAUSE:
+                    case CachedOperation.PAUSE_AUTO:
                         UiImgPause_MouseDown(null, null);
                         break;
-                    case CachedOperation.PLAY:
+                    case CachedOperation.PLAY_AUTO:
                         UiImgPlay_MouseDown(null, null);
+                        break;
+                    case CachedOperation.NEXT_GAME:
+                        UiBtnNextGame_Click(null, null);
+                        break;
+                    case CachedOperation.PREV_GAME:
+                        UiBtnPreviousGame_Click(null, null);
+                        break;
+                    case CachedOperation.SELECT_GAME:
+                        PlaySelectGame();
                         break;
                 }
                 _cachedOperation = CachedOperation.NONE;
@@ -340,7 +388,7 @@ namespace ChessForge
             if (_isAnimating)
             {
                 _pauseRequested = true;
-                _cachedOperation = CachedOperation.PAUSE;
+                _cachedOperation = CachedOperation.PAUSE_AUTO;
             }
             else
             {
@@ -359,7 +407,7 @@ namespace ChessForge
             if (_isAnimating)
             {
                 _pauseRequested = true;
-                _cachedOperation = CachedOperation.PLAY;
+                _cachedOperation = CachedOperation.PLAY_AUTO;
             }
             else
             {
@@ -384,7 +432,7 @@ namespace ChessForge
             if (_isAnimating)
             {
                 _pauseRequested = true;
-                _cachedOperation = CachedOperation.FIRST;
+                _cachedOperation = CachedOperation.FIRST_MOVE;
             }
             else
             {
@@ -401,12 +449,10 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiImgPreviousMove_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //BreakOutOfAnimation();
-
             if (_isAnimating)
             {
                 _pauseRequested = true;
-                _cachedOperation = CachedOperation.PREV;
+                _cachedOperation = CachedOperation.PREV_MOVE;
             }
             else
             {
@@ -430,7 +476,7 @@ namespace ChessForge
             if (_isAnimating)
             {
                 _pauseRequested = true;
-                _cachedOperation = CachedOperation.NEXT;
+                _cachedOperation = CachedOperation.NEXT_MOVE;
             }
             else
             {
@@ -453,7 +499,7 @@ namespace ChessForge
             if (_isAnimating)
             {
                 _pauseRequested = true;
-                _cachedOperation = CachedOperation.NEXT;
+                _cachedOperation = CachedOperation.NEXT_MOVE;
             }
             else
             {
@@ -530,19 +576,27 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnNextGame_Click(object sender, RoutedEventArgs e)
         {
-            if (_gameIdList.Count > 0)
+            if (_isAnimating)
             {
-                int index = FindGameIndex(_currentGameId);
-                if (index == -1)
+                _pauseRequested = true;
+                _cachedOperation = CachedOperation.NEXT_GAME;
+            }
+            else
+            {
+                if (_gameIdList.Count > 0)
                 {
-                    index = 0;
-                }
-                if (index < _gameIdList.Count - 1)
-                {
-                    index++;
-                    _currentGameId = _gameIdList[index];
-                    _isAnimating = false;
-                    DownloadGame(_currentGameId);
+                    int index = FindGameIndex(_currentGameId);
+                    if (index == -1)
+                    {
+                        index = 0;
+                    }
+                    if (index < _gameIdList.Count - 1)
+                    {
+                        index++;
+                        _currentGameId = _gameIdList[index];
+                        _isAnimating = false;
+                        DownloadGame(_currentGameId);
+                    }
                 }
             }
         }
@@ -554,20 +608,45 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnPreviousGame_Click(object sender, RoutedEventArgs e)
         {
-            if (_gameIdList.Count > 0)
+            if (_isAnimating)
             {
-                int index = FindGameIndex(_currentGameId);
-                if (index == -1)
+                _pauseRequested = true;
+                _cachedOperation = CachedOperation.PREV_GAME;
+            }
+            else
+            {
+                if (_gameIdList.Count > 0)
                 {
-                    index = 0;
+                    int index = FindGameIndex(_currentGameId);
+                    if (index == -1)
+                    {
+                        index = 0;
+                    }
+                    if (index > 0)
+                    {
+                        index--;
+                        _currentGameId = _gameIdList[index];
+                        _isAnimating = false;
+                        DownloadGame(_currentGameId);
+                    }
                 }
-                if (index > 0)
-                {
-                    index--;
-                    _currentGameId = _gameIdList[index];
-                    _isAnimating = false;
-                    DownloadGame(_currentGameId);
-                }
+            }
+        }
+
+        /// <summary>
+        /// Prepares replay of the selected game.
+        /// </summary>
+        private void PlaySelectGame()
+        {
+            if (_isAnimating)
+            {
+                _pauseRequested = true;
+                _cachedOperation = CachedOperation.SELECT_GAME;
+            }
+            else
+            {
+                _isAnimating = false;
+                DownloadGame(_currentGameId);
             }
         }
 

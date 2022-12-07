@@ -34,11 +34,20 @@ namespace ChessForge
         {
         };
 
+        /// <summary>
+        /// Currently selected game.
+        /// </summary>
         public string CurrentGameId
         {
             get => _clickedGameId;
         }
 
+        /// <summary>
+        /// The Table shown in this view
+        /// </summary>
+        private Table _gamesTable;
+
+        // Id of the last clicked game
         private string _clickedGameId;
 
         // columns widths
@@ -55,14 +64,19 @@ namespace ChessForge
         // prefix for the Rows' names
         private readonly string _rowNamePrefix = "name_";
 
+        // lisy of game Ids listed in this view
         private List<string> _gameIdList = new List<string>();
+
+        // true if this view is hosted in the main windows, false if in the Game Preview dialog
+        private bool _isMainWin;
 
         /// <summary>
         /// Creates the view and registers a listener with WebAccess
         /// </summary>
         /// <param name="doc"></param>
-        public TopGamesView(FlowDocument doc) : base(doc)
+        public TopGamesView(FlowDocument doc, bool mainWin) : base(doc)
         {
+            _isMainWin = mainWin;
             // listen to Data Received events
             OpeningExplorer.DataReceived += TopGamesReceived;
             TablebaseExplorer.DataReceived += TablebaseDataReceived;
@@ -124,31 +138,66 @@ namespace ChessForge
         /// <returns></returns>
         private Table BuildTopGamesTable()
         {
-            Table gamesTable = new Table();
-            gamesTable.FontSize = _baseFontSize + Configuration.FontSizeDiff;
-            gamesTable.CellSpacing = 0;
-            gamesTable.Margin = new Thickness(0);
-            gamesTable.RowGroups.Add(new TableRowGroup());
+            _gamesTable = new Table();
+            _gamesTable.FontSize = _baseFontSize + Configuration.FontSizeDiff;
+            _gamesTable.CellSpacing = 0;
+            _gamesTable.Margin = new Thickness(0);
+            _gamesTable.RowGroups.Add(new TableRowGroup());
 
-            CreateColumns(gamesTable);
+            CreateColumns(_gamesTable);
             LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats;
             int rowNo = 0;
             _gameIdList.Clear();
             foreach (LichessTopGame game in stats.TopGames)
             {
-                TableRow row = BuildGameRow(gamesTable, game, rowNo);
-                gamesTable.RowGroups[0].Rows.Add(row);
+                TableRow row = BuildGameRow(_gamesTable, game, rowNo);
+                _gamesTable.RowGroups[0].Rows.Add(row);
                 if (!string.IsNullOrWhiteSpace(game.Id))
                 {
                     _gameIdList.Add(game.Id);
                     row.Name = _rowNamePrefix + game.Id;
                     row.PreviewMouseDown += Row_PreviewMouseDown;
-                    row.Cursor = Cursors.Hand;
+                    row.Cursor = Cursors.Arrow;
                 }
                 rowNo++;
             }
+            
+            return _gamesTable;
+        }
 
-            return gamesTable;
+        /// <summary>
+        /// Sets alternating background for the rows.
+        /// Highlights the row with the selected game.
+        /// </summary>
+        /// <param name="highlightedGameId"></param>
+        public void SetRowBackgorunds(string highlightedGameId)
+        {
+            for (int i = 0; i < _gamesTable.RowGroups[0].Rows.Count; i++)
+            {
+                TableRow row = _gamesTable.RowGroups[0].Rows[i];
+                try
+                {
+                    string gameId = row.Name.Substring(_rowNamePrefix.Length);
+                    if (gameId == highlightedGameId)
+                    {
+                        row.Background= ChessForgeColors.TABLE_HIGHLIGHT_GREEN;
+                        continue;
+                    }
+                }
+                catch 
+                { 
+                }
+
+                if (i % 2 == 0)
+                {
+                    row.Background = Brushes.White;
+                }
+                else
+                {
+                    row.Background = ChessForgeColors.TABLE_ROW_LIGHT_GRAY;
+                }
+
+            }
         }
 
         /// <summary>
@@ -167,6 +216,11 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Handler for the clicked game event
+        /// </summary>
+        public event EventHandler<WebAccessEventArgs> TopGameClicked;
+
+        /// <summary>
         /// Handler of the mouse click on the Row event.
         /// </summary>
         /// <param name="sender"></param>
@@ -179,17 +233,27 @@ namespace ChessForge
                 id = id.Substring(_rowNamePrefix.Length);
                 _clickedGameId = id;
 
-                if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+                // we act depending on whether this view is hosted in the main window or the Game Preview dialog
+                if (_isMainWin)
                 {
-                    OpenReplayDialog();
-                }
-                else if (e.ChangedButton == MouseButton.Right)
-                {
-                    if (!string.IsNullOrWhiteSpace(id))
+                    if (e.ChangedButton == MouseButton.Left)
                     {
-                        AppStateManager.MainWin.UiCmTopGames.IsOpen = true;
-                        e.Handled = true;
+                        OpenReplayDialog();
                     }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        if (!string.IsNullOrWhiteSpace(id))
+                        {
+                            AppStateManager.MainWin.UiCmTopGames.IsOpen = true;
+                            e.Handled = true;
+                        }
+                    }
+                }
+                else
+                {
+                    WebAccessEventArgs eventArgs = new WebAccessEventArgs();
+                    eventArgs.GameId = _clickedGameId;
+                    TopGameClicked?.Invoke(null, eventArgs);
                 }
             }
         }
@@ -204,15 +268,6 @@ namespace ChessForge
         private TableRow BuildGameRow(Table gamesTable, LichessTopGame game, int rowNo)
         {
             TableRow row = new TableRow();
-            if (rowNo % 2 == 0)
-            {
-                row.Background = Brushes.White;
-            }
-            else
-            {
-                row.Background = ChessForgeColors.TABLE_ROW_LIGHT_GRAY;
-            }
-
             TableCell cellRatings = new TableCell(BuildRatingsPara(gamesTable, game));
             row.Cells.Add(cellRatings);
 

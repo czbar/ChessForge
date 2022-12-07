@@ -1,4 +1,5 @@
-﻿using GameTree;
+﻿using ChessPosition;
+using GameTree;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Xml.Linq;
 using WebAccess;
@@ -67,9 +69,15 @@ namespace ChessForge
         // 100 for the percentage bar and 10 for the left margin
         private readonly double _statsColumnWidth = 110;
 
+        private readonly double _tablebaseMoveColumnWidth = 60;
+        private readonly double _dtzColumnWidth = 40;
+        private readonly double _dtmColumnWidth = 40;
+
         // column widths in the stats table's header
         private readonly double _ecoColumnWidth = 20;
         private readonly double _openingNameColumnWidth = 130;
+
+        private readonly string MOVE_PREFIX = "_move_";
 
         /// <summary>
         /// RichTextPara dictionary accessor
@@ -186,9 +194,18 @@ namespace ChessForge
                     Document.Blocks.Add(_openingStatsTable);
                     break;
                 case DataMode.TABLEBASE:
-                    InsertTablebaseCategoryTable("win");
-                    InsertTablebaseCategoryTable("draw");
-                    InsertTablebaseCategoryTable("losss");
+                    if (_node.ColorToMove == PieceColor.White)
+                    {
+                        InsertTablebaseCategoryTable("loss");
+                        InsertTablebaseCategoryTable("draw");
+                        InsertTablebaseCategoryTable("win");
+                    }
+                    else
+                    {
+                        InsertTablebaseCategoryTable("win");
+                        InsertTablebaseCategoryTable("draw");
+                        InsertTablebaseCategoryTable("loss");
+                    }
                     break;
                 case DataMode.NO_DATA:
                     Document.Blocks.Add(BuildErrorMessagePara(errorMessage));
@@ -286,7 +303,12 @@ namespace ChessForge
         {
             try
             {
-                TableCell cellMove = new TableCell(new Paragraph(new Run(_moveNumberString + move.San)));
+                Run rMove = new Run(_moveNumberString + move.San);
+                rMove.MouseLeftButtonDown += EventMoveClicked;
+                rMove.Name = MOVE_PREFIX + move.Uci;
+                rMove.Cursor = Cursors.Arrow;
+
+                TableCell cellMove = new TableCell(new Paragraph(rMove));
                 row.Cells.Add(cellMove);
 
                 int whiteWins = int.Parse(move.White);
@@ -310,6 +332,44 @@ namespace ChessForge
             {
                 AppLog.Message("PopulateCellsInRow", ex);
             }
+        }
+
+        /// <summary>
+        /// A move Run was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventMoveClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Run rMove = e.Source as Run;
+                WorkbookManager.TabViewType tab = AppStateManager.ActiveTab;
+                if (tab == WorkbookManager.TabViewType.STUDY 
+                    || tab == WorkbookManager.TabViewType.MODEL_GAME 
+                    || tab == WorkbookManager.TabViewType.EXERCISE)
+                {
+                    string moveEngCode = GetMoveCodeFromCellName(rMove.Name);
+                    UserMoveProcessor.ProcessMove(moveEngCode, out TreeNode node, out bool isCastle);
+                    AppStateManager.MainWin.DisplayPosition(node);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("EventMoveClicked()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Gets the move notation from the name of the cell.
+        /// The name should consist of the MOVE_PREFIX prefix
+        /// and the move code.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private string GetMoveCodeFromCellName(string name)
+        {
+            return name.Substring(MOVE_PREFIX.Length);
         }
 
         /// <summary>
@@ -616,7 +676,13 @@ namespace ChessForge
             table.RowGroups.Add(new TableRowGroup());
 
             table.Columns.Add(new TableColumn());
-            table.Columns[0].Width = new GridLength(_moveColumnWidth * scaleFactor);
+            table.Columns[0].Width = new GridLength(_tablebaseMoveColumnWidth * scaleFactor);
+
+            table.Columns.Add(new TableColumn());
+            table.Columns[1].Width = new GridLength(_dtzColumnWidth * scaleFactor);
+
+            table.Columns.Add(new TableColumn());
+            table.Columns[2].Width = new GridLength(_dtmColumnWidth * scaleFactor);
 
             LichessTablebaseMove[] moves = TablebaseExplorer.Response.Moves;
             foreach (LichessTablebaseMove move in moves)
@@ -626,8 +692,26 @@ namespace ChessForge
                     TableRow row = new TableRow();
                     table.RowGroups[0].Rows.Add(row);
 
-                    TableCell cellMove = new TableCell(new Paragraph(new Run(move.San)));
+                    Run rMove = new Run(move.San);
+                    rMove.MouseLeftButtonDown += EventMoveClicked;
+                    rMove.Name = MOVE_PREFIX + move.Uci;
+                    rMove.Cursor = Cursors.Arrow;
+
+                    TableCell cellMove = new TableCell(new Paragraph(rMove));
                     row.Cells.Add(cellMove);
+
+                    if (category != "draw")
+                    {
+                        Run rDtz = new Run("DTZ " + Math.Abs(move.dtz).ToString());
+                        rDtz.FontSize = _baseFontSize + Configuration.FontSizeDiff;
+                        TableCell cellDtz = new TableCell(new Paragraph(rDtz));
+                        row.Cells.Add(cellDtz);
+
+                        Run rDtm = new Run("DTM " + Math.Abs(move.dtm).ToString());
+                        rDtm.FontSize = _baseFontSize + Configuration.FontSizeDiff;
+                        TableCell cellDtm = new TableCell(new Paragraph(rDtm));
+                        row.Cells.Add(cellDtm);
+                    }
                 }
             }
 

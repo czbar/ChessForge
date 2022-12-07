@@ -543,7 +543,11 @@ namespace ChessForge
         /// <param name="visible"></param>
         public static void ShowExplorers(bool visible)
         {
-            if (visible)
+            if (visible && 
+                (ActiveTab == WorkbookManager.TabViewType.STUDY
+                || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
+                || ActiveTab == WorkbookManager.TabViewType.EXERCISE
+                ))
             {
                 MainWin.UiRtbOpenings.Visibility = Visibility.Visible;
                 MainWin.UiRtbTopGames.Visibility = Visibility.Visible;
