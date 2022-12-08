@@ -25,6 +25,11 @@ namespace ChessForge
         public readonly string APP_NAME = "Chess Forge";
 
         /// <summary>
+        /// The RichTextBox based Chapters view
+        /// </summary>
+        private ChaptersView _chaptersView;
+
+        /// <summary>
         /// The RichTextBox based Study Tree view
         /// </summary>
         private VariationTreeView _studyTreeView;
@@ -118,11 +123,6 @@ namespace ChessForge
                 DisplayPosition(tree.SelectedNode);
             }
         }
-
-        /// <summary>
-        /// The RichTextBox based Chapters view
-        /// </summary>
-        private ChaptersView _chaptersView;
 
         /// <summary>
         /// The RichTextBox based training view
