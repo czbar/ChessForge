@@ -18,5 +18,10 @@ namespace ChessForge
         public static BitmapImage SolvingComplete = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/solve_complete.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage SolveAnalysis = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/solve.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage SolveGuess = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/guess_move.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ChevronLeft = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/chevron-left.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ChevronRight = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/chevron-right.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ChevronUp = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/chevron-up.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ChevronDown = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/chevron-down.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage LichessLogo = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/lichess_logo.png", UriKind.RelativeOrAbsolute));
     }
 }
