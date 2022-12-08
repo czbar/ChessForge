@@ -9,6 +9,8 @@ using WebAccess;
 using System.Text;
 using System.Linq;
 using ChessPosition;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace ChessForge
 {
@@ -167,6 +169,7 @@ namespace ChessForge
                     }
                     _tree = new VariationTree(GameData.ContentType.MODEL_GAME);
                     PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, _tree);
+                    _tree.ContentType = GameData.ContentType.MODEL_GAME;
 
                     PopulateHeaderLine();
 
@@ -248,15 +251,15 @@ namespace ChessForge
             UiImgLastMove.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
 
             UiBtnImport.IsEnabled = hasGame;
-            UiBtnLichess.IsEnabled = hasGame;
+            UiLblViewOnLichess.IsEnabled = hasGame;
 
             UiImgFirstMove.IsEnabled = _currentNodeMoveIndex > 1;
             UiImgPreviousMove.IsEnabled = _currentNodeMoveIndex > 1;
             UiImgNextMove.IsEnabled = _mainLine != null && (_currentNodeMoveIndex < _mainLine.Count - 1);
             UiImgLastMove.IsEnabled = _mainLine != null && (_currentNodeMoveIndex < _mainLine.Count - 1);
 
-            UiBtnNextGame.IsEnabled = !IsCurrentGameLast();
-            UiBtnPreviousGame.IsEnabled = !IsCurrentGameFirst();
+            UiLblNextGame.IsEnabled = !IsCurrentGameLast();
+            UiLblPrevGame.IsEnabled = !IsCurrentGameFirst();
 
             if (hasGame)
             {
@@ -309,10 +312,10 @@ namespace ChessForge
                         UiImgPlay_MouseDown(null, null);
                         break;
                     case CachedOperation.NEXT_GAME:
-                        UiBtnNextGame_Click(null, null);
+                        UiNextGame_Click(null, null);
                         break;
                     case CachedOperation.PREV_GAME:
-                        UiBtnPreviousGame_Click(null, null);
+                        UiPreviousGame_Click(null, null);
                         break;
                     case CachedOperation.SELECT_GAME:
                         PlaySelectGame();
@@ -574,7 +577,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiBtnNextGame_Click(object sender, RoutedEventArgs e)
+        private void UiNextGame_Click(object sender, RoutedEventArgs e)
         {
             if (_isAnimating)
             {
@@ -606,7 +609,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiBtnPreviousGame_Click(object sender, RoutedEventArgs e)
+        private void UiPreviousGame_Click(object sender, RoutedEventArgs e)
         {
             if (_isAnimating)
             {
@@ -651,16 +654,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Opens the browser and navigates to the game on lichess. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiBtnLichess_Click(object sender, RoutedEventArgs e)
-        {
-            AppStateManager.ViewGameOnLichess(_currentGameId);
-        }
-
-        /// <summary>
         /// Imports the current game into the active chapter.
         /// </summary>
         /// <param name="sender"></param>
@@ -670,10 +663,32 @@ namespace ChessForge
             Chapter chapter = AppStateManager.ActiveChapter;
             if (chapter != null)
             {
+                AppStateManager.MainWin.UiTabChapters.Focus();
                 chapter.AddModelGame(_tree);
                 AppStateManager.MainWin.RefreshChaptersViewAfterImport(GameData.ContentType.MODEL_GAME, chapter, chapter.GetModelGameCount() - 1);
                 AppStateManager.IsDirty = true;
             }
         }
+
+        /// <summary>
+        /// Opens the browser and navigates to the game on lichess. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLblViewOnLichess_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            AppStateManager.ViewGameOnLichess(_currentGameId);
+        }
+
+        /// <summary>
+        /// Opens the browser and navigates to the game on lichess. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgLichess_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            AppStateManager.ViewGameOnLichess(_currentGameId);
+        }
+
     }
 }
