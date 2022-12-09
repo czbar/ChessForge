@@ -378,7 +378,7 @@ namespace ChessForge
             {
                 if (stats.Opening == null)
                 {
-                    _node.Eco = "-";
+                    _node.Eco = "";
                     _node.OpeningName = "";
                 }
                 else
@@ -411,7 +411,12 @@ namespace ChessForge
             cellEco.Background = ChessForgeColors.TABLE_HEADER_GREEN;
             row.Cells.Add(cellEco);
 
-            TableCell cellOpeningName = new TableCell(BuildOpeningNamePara(_node.OpeningName ?? ""));
+            string openingName = _node.OpeningName;
+            if (string.IsNullOrEmpty(openingName) || openingName == POSITION_NOT_NAMED)
+            {
+                openingName = string.Empty;
+            }
+            TableCell cellOpeningName = new TableCell(BuildOpeningNamePara(openingName));
             cellOpeningName.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
             cellOpeningName.Foreground = Brushes.Black;
             row.Cells.Add(cellOpeningName);
