@@ -284,10 +284,10 @@ namespace ChessForge
                     EnableStudyTreeMenuItems(lastClickedNodeId, isEnabled);
                     break;
                 case WorkbookManager.TabViewType.MODEL_GAME:
-                    EnableModelGamesMenuItems(lastClickedNodeId, isEnabled);
+                    EnableModelGamesMenuItems(lastClickedNodeId);
                     break;
                 case WorkbookManager.TabViewType.EXERCISE:
-                    EnableExercisesMenuItems(lastClickedNodeId, isEnabled);
+                    EnableExercisesMenuItems(lastClickedNodeId);
                     break;
             }
         }
@@ -814,7 +814,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="lastClickedNodeId"></param>
         /// <param name="isEnabled"></param>
-        private static void EnableModelGamesMenuItems(int lastClickedNodeId, bool isEnabled)
+        private static void EnableModelGamesMenuItems(int lastClickedNodeId)
         {
             try
             {
@@ -839,22 +839,22 @@ namespace ChessForge
                                 menuItem.IsEnabled = gameIndex >= 0;
                                 break;
                             case "_mnGame_MergeToStudy":
-                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
                                 break;
                             case "_mnGame_CopyFen":
-                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
                                 break;
                             case "_mnGame_CreateExercise":
-                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
                                 break;
                             case "_mnGame_PromoteLine":
-                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
                                 break;
                             case "_mnGame_DeleteMovesFromHere":
-                                menuItem.IsEnabled = isEnabled && gameIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
                                 break;
                             case "_mnGame_DeleteModelGame":
-                                menuItem.IsEnabled = isEnabled && gameIndex >= 0;
+                                menuItem.IsEnabled = gameIndex >= 0;
                                 break;
                         }
                     }
@@ -870,8 +870,7 @@ namespace ChessForge
         /// Sets up Exercises's context menu.
         /// </summary>
         /// <param name="lastClickedNodeId"></param>
-        /// <param name="isEnabled"></param>
-        private static void EnableExercisesMenuItems(int lastClickedNodeId, bool isEnabled)
+        private static void EnableExercisesMenuItems(int lastClickedNodeId)
         {
             try
             {
@@ -899,16 +898,16 @@ namespace ChessForge
                                 menuItem.IsEnabled = true;
                                 break;
                             case "_mnExerc_CopyFen":
-                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = exerciseIndex >= 0 && lastClickedNodeId >= 0;
                                 break;
                             case "_mnExerc_PromoteLine":
-                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = exerciseIndex >= 0 && lastClickedNodeId >= 0;
                                 break;
                             case "_mnExerc_DeleteMovesFromHere":
-                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = exerciseIndex >= 0 && lastClickedNodeId >= 0;
                                 break;
                             case "_mnExerc_DeleteThisExercise":
-                                menuItem.IsEnabled = isEnabled && exerciseIndex >= 0;
+                                menuItem.IsEnabled = exerciseIndex >= 0;
                                 break;
                         }
                     }
