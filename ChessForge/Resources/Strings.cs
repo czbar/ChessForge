@@ -31,6 +31,7 @@ namespace ChessForge
         public static string ROW_COLOR_WHITE = "white";
         public static string ROW_COLOR_BLACK = "black";
 
-        public static string EXERCISE_THIS_IS_SOLUTION = "This is the solution!";
+        public static string EXERCISE_THIS_IS_SOLUTION = "This was the solution!";
+        public static string EXERCISE_RESPONSE_NOT_IN_SOLUTION = "This response is not covered in the solution.";
     }
 }

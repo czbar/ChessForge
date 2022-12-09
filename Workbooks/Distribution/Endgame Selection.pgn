@@ -1,0 +1,64 @@
+[ChessForgeWorkbook "Endgame Selection"]
+[TrainingSide "White"]
+[StudyBoardOrientation "White"]
+[GameBoardOrientation "White"]
+[ExerciseBoardOrientation "White"]
+[White "Chess Forge"]
+[Black "Workbook File"]
+[Result "*"]
+
+*
+
+[ChapterId "1"]
+[ChapterTitle "Pawn Endgames"]
+[ContentType "Study Tree"]
+
+
+ *
+
+[ChapterId "1"]
+[ChapterTitle "Pawn Endgames"]
+[ContentType "Exercise"]
+[FEN "7K/8/k1P5/7p/8/8/8/8 w - - 1 1"]
+[Event ""]
+[Date "1921.??.??"]
+[White "R. Reti"]
+[Black ""]
+[Result "1/2-1/2"]
+
+
+1. Kg7 {[%quiz 2]}  h4 2. Kf6 Kb6 3. Ke5 Kxc6 4. Kf4 1/2-1/2
+
+[ChapterId "1"]
+[ChapterTitle "Pawn Endgames"]
+[ContentType "Exercise"]
+[FEN "8/1pPK3b/8/8/8/5k2/8/8 w - - 1 1"]
+[Event ""]
+[Date "1928.??.??"]
+[White "A & K Sarychev"]
+[Black ""]
+[Result "1/2-1/2"]
+
+
+1. Kc8 $3 {[%quiz 2]}  (1. c8=Q $2 Bf5+ 2. Kc7 Bxc8 $19)  (1. Kd6 $2 Bf5 2. Kc5 
+Ke4 3. Kb6 Bc8 4. Ka7 b5 $19) 1... b5 2. Kd7 {[%quiz 1]}  b4 3. Kd6 Bf5 4. Ke5 
+$1 {[%quiz 1]}  Bc8 5. Kd4 1/2-1/2
+
+[ChapterId "1"]
+[ChapterTitle "Pawn Endgames"]
+[ContentType "Exercise"]
+[FEN "8/1p1k4/1P6/2PK4/8/8/8/8 w - - 1 1"]
+[Event ""]
+[Date ""]
+[White "Triangulation"]
+[Black ""]
+[Result "*"]
+[Preamble "Triangulation is a king maneuver resulting in a loss of a tempo and passing the turn to your opponent which is to their disadvantage.  "]
+
+
+1. Ke5 $1 {[%quiz 2]}  (1. c6+ $2 Kc8 $1 2. Kd6 Kb8 $1 3. Kd7 bxc6 $11) 1... Kc6 
+2. Kd4 Kd7 3. Kd5 {We are back to the starting position but it's Black's move.}  
+Kc8 4. Ke6 $1 {[%quiz 2]}  Kd8 5. Kd6 Kc8 6. Ke7 Kb8 7. Kd7 Ka8 8. c6 $18 *
+
+
+
