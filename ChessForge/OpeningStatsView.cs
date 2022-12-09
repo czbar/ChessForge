@@ -18,6 +18,9 @@ namespace ChessForge
 {
     public class OpeningStatsView : RichTextBuilder
     {
+        // string to use when query returned no opening name for the position
+        private const string POSITION_NOT_NAMED = "[not named]";
+
         // scale factor for table cell sizes
         private double scaleFactor = 3.5;
 
@@ -61,6 +64,7 @@ namespace ChessForge
             // listen to Data Received events
             OpeningExplorer.DataReceived += OpeningStatsReceived;
             TablebaseExplorer.DataReceived += TablebaseDataReceived;
+            OpeningExplorer.OpeningNameReceived += OpeningNameRequestCompleted;
         }
 
         // column widths in the stats table
@@ -186,6 +190,11 @@ namespace ChessForge
             {
                 case DataMode.OPENINGS:
                     BuildOpeningNameTable();
+                    if (string.IsNullOrEmpty(_node.OpeningName))
+                    {
+                        WebAccessManager.OpeningNamesRequest(_node);
+                    }
+
                     if (_openingNameTable != null)
                     {
                         Document.Blocks.Add(_openingNameTable);
@@ -213,6 +222,144 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// If the received value is of the currect node or one of its predecessors
+        /// set the value in the correct Node and check if we now have 
+        /// the name for the current node.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpeningNameRequestCompleted(object sender, WebAccessEventArgs e)
+        {
+            try
+            {
+                TreeNode nd = _node;
+                while (nd != null)
+                {
+                    if (e.NodeId == nd.NodeId)
+                    {
+                        if (string.IsNullOrEmpty(e.Eco))
+                        {
+                            nd.Eco = "";
+                        }
+                        else
+                        {
+                            nd.Eco = e.Eco;
+                        }
+
+                        if (string.IsNullOrEmpty(e.OpeningName))
+                        {
+                            nd.OpeningName = POSITION_NOT_NAMED;
+                        }
+                        else
+                        {
+                            nd.OpeningName = e.OpeningName;
+                            SetAllNotNamedChildrenPositions(nd);
+                        }
+                        break;
+                    }
+                    nd = nd.Parent;
+                }
+
+                if (_node.Parent != null && !NodeHasOpeningName(_node))
+                {
+                    string opName = FindOpeningNameFromPredecessors(_node, out string eco);
+
+                    if (opName != null)
+                    {
+                        _node.OpeningName = opName;
+                        _node.Eco = eco;
+
+                        if (NodeHasOpeningName(_node))
+                        {
+                            Document.Blocks.Remove(_openingNameTable);
+                            BuildOpeningNameTable();
+                            Document.Blocks.InsertBefore(_openingStatsTable, _openingNameTable);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Recursively sets the opening name for all children that currently have 
+        /// Opening Name == POSITION_NOT_NAMED which means they are "not named"
+        /// and should inherit the opening name from predecessors.
+        /// A "real" name or empty name (meaning position not queried yet)
+        /// stops the recurssion branch.
+        /// </summary>
+        /// <param name="nd"></param>
+        private void SetAllNotNamedChildrenPositions(TreeNode nd)
+        {
+            // sfatey check that the node indeed has a "real" opening name
+            if (string.IsNullOrEmpty(nd.OpeningName) || nd.OpeningName == POSITION_NOT_NAMED)
+            {
+                return;
+            }
+            else
+            {
+                foreach (TreeNode child in nd.Children)
+                {
+                    if (child.OpeningName == POSITION_NOT_NAMED)
+                    {
+                        child.Eco = nd.Eco;
+                        child.OpeningName = nd.OpeningName;
+                        SetAllNotNamedChildrenPositions(child);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks if the node has a real Opening name.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private bool NodeHasOpeningName(TreeNode node)
+        {
+            return !string.IsNullOrEmpty(node.OpeningName) && node.OpeningName != POSITION_NOT_NAMED;
+        }
+
+        /// <summary>
+        /// Finds the name of the opening and the Eco for
+        /// a given node checking if there is a value in the 
+        /// predecessors.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="eco"></param>
+        /// <returns></returns>
+        private string FindOpeningNameFromPredecessors(TreeNode nd, out string eco)
+        {
+            string name = null;
+            eco = "";
+
+            while (nd != null)
+            {
+                if (string.IsNullOrEmpty(nd.OpeningName))
+                {
+                    // the chain is "broken" yet and we don't want incorrect name
+                    break;
+                }
+
+                name = nd.OpeningName;
+                eco = nd.Eco;
+                if (nd.OpeningName != POSITION_NOT_NAMED)
+                {
+                    // we have a valid name
+                    break;
+                }
+                else
+                {
+                    // keep looking 
+                    nd = nd.Parent;
+                }
+            }
+
+            return name;
+        }
 
         //*************************************************************
         //
@@ -227,17 +374,18 @@ namespace ChessForge
         {
             // get the data
             LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats;
-            string eco;
-            string openingName;
-            if (stats.Opening == null)
+            if (string.IsNullOrEmpty(_node.OpeningName))
             {
-                eco = "-";
-                openingName = "";
-            }
-            else
-            {
-                eco = stats.Opening.Eco;
-                openingName = stats.Opening.Name;
+                if (stats.Opening == null)
+                {
+                    _node.Eco = "-";
+                    _node.OpeningName = "";
+                }
+                else
+                {
+                    _node.Eco = stats.Opening.Eco;
+                    _node.OpeningName = stats.Opening.Name;
+                }
             }
 
             _openingNameTable = CreateTable(0);
@@ -256,14 +404,14 @@ namespace ChessForge
             TableRow row = new TableRow();
             _openingNameTable.RowGroups[0].Rows.Add(row);
 
-            TableCell cellEco = new TableCell(BuildEcoPara(eco));
+            TableCell cellEco = new TableCell(BuildEcoPara(_node.Eco));
             cellEco.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
             cellEco.FontWeight = FontWeights.Bold;
             cellEco.Foreground = Brushes.Black;
             cellEco.Background = ChessForgeColors.TABLE_HEADER_GREEN;
             row.Cells.Add(cellEco);
 
-            TableCell cellOpeningName = new TableCell(BuildOpeningNamePara(openingName ?? ""));
+            TableCell cellOpeningName = new TableCell(BuildOpeningNamePara(_node.OpeningName ?? ""));
             cellOpeningName.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
             cellOpeningName.Foreground = Brushes.Black;
             row.Cells.Add(cellOpeningName);
@@ -345,8 +493,8 @@ namespace ChessForge
             {
                 Run rMove = e.Source as Run;
                 WorkbookManager.TabViewType tab = AppStateManager.ActiveTab;
-                if (tab == WorkbookManager.TabViewType.STUDY 
-                    || tab == WorkbookManager.TabViewType.MODEL_GAME 
+                if (tab == WorkbookManager.TabViewType.STUDY
+                    || tab == WorkbookManager.TabViewType.MODEL_GAME
                     || tab == WorkbookManager.TabViewType.EXERCISE)
                 {
                     string moveEngCode = GetMoveCodeFromCellName(rMove.Name);
