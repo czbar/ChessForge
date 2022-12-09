@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ChessPosition;
 using WebAccess;
+using System.Web;
 
 namespace ChessForge
 {
@@ -56,6 +57,23 @@ namespace ChessForge
                         TablebaseExplorer.TablebaseRequest(treeId, nd);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Requests the opening name for the passed position
+        /// and all positions earlier in the line that have no Opening Name set.
+        /// </summary>
+        /// <param name="nd"></param>
+        public static void OpeningNamesRequest(TreeNode nd)
+        {
+            while (nd != null)
+            {
+                if (string.IsNullOrEmpty(nd.OpeningName))
+                {
+                    OpeningExplorer.RequestOpeningName(nd);
+                }
+                nd = nd.Parent;
             }
         }
 

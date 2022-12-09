@@ -32,6 +32,16 @@ namespace WebAccess
         public string GameId { get; set; }
 
         /// <summary>
+        /// Opening code
+        /// </summary>
+        public string Eco { get; set; }
+
+        /// <summary>
+        /// Opening name
+        /// </summary>
+        public string OpeningName { get; set; }
+
+        /// <summary>
         /// A message to pass back to the caller
         /// e.g. the Exception error message.
         /// </summary>

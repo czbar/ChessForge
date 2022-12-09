@@ -32,6 +32,16 @@ namespace GameTree
         public int NodeId;
 
         /// <summary>
+        /// Encyclopaedia of chess openings code
+        /// </summary>
+        public string Eco;
+
+        /// <summary>
+        /// Opening's name
+        /// </summary>
+        public string OpeningName;
+
+        /// <summary>
         /// Child nodes.
         /// </summary>
         public List<TreeNode> Children = new List<TreeNode>();
