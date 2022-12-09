@@ -823,7 +823,7 @@ namespace ChessForge
                 string lineId = "1";
 
                 _mainVariationTree.SelectedNodeId = 0;
-                int nodeId = 0; 
+                int nodeId = 0;
                 SelectLineAndMove(lineId, nodeId);
 
                 ObservableCollection<TreeNode> lineToSelect = _mainVariationTree.SelectLine(lineId);
@@ -916,20 +916,46 @@ namespace ChessForge
 
         /// <summary>
         /// Puts crosses next to all moves made by the solving side that have
-        /// not been found in the solution.
+        /// not been found in the solution unless they were in response
+        /// to a move that wasn't found in the solution (as marken by IsProcessed).
         /// </summary>
         /// <param name="node"></param>
         private void MarkWrongSolutionMove(TreeNode node, PieceColor color)
         {
-            if (node.ColorToMove != color && !node.IsProcessed)
+            if (!node.IsProcessed)
             {
-                if (string.IsNullOrEmpty(node.Comment))
+                if (node.ColorToMove != color) // solving side's move
                 {
-                    node.Comment = Constants.CharCrossMark.ToString();
+                    if (node.Parent == null || node.Parent.IsProcessed)
+                    {
+                        if (string.IsNullOrEmpty(node.Comment))
+                        {
+                            node.Comment = Constants.CharCrossMark.ToString();
+                        }
+                        else
+                        {
+                            node.Comment = Constants.CharCrossMark.ToString() + " " + node.Comment;
+                        }
+                    }
                 }
-                else
+                else // response side
                 {
-                    node.Comment = Constants.CharCrossMark.ToString() + " " + node.Comment;
+                    // this is not response so see if a predecessor was already marked
+                    bool alreadyMarked = false;
+                    TreeNode pred = node;
+                    while (pred.Parent != null)
+                    {
+                        if (pred.Comment != null && pred.Comment.Contains(Strings.EXERCISE_RESPONSE_NOT_IN_SOLUTION))
+                        {
+                            alreadyMarked = true;
+                            break;
+                        }
+                        pred = pred.Parent;
+                    }
+                    if (!alreadyMarked)
+                    {
+                        node.Comment = Strings.EXERCISE_RESPONSE_NOT_IN_SOLUTION;
+                    }
                 }
             }
 
@@ -952,10 +978,11 @@ namespace ChessForge
             {
                 found.IsProcessed = true;
 
+                bool isMainLine = found.IsMainLine();
                 int quizPoints = node.QuizPoints;
                 if (found.ColorToMove != _mainVariationTree.AssociatedSecondary.RootNode.ColorToMove)
                 {
-                    if (found.IsMainLine())
+                    if (isMainLine)
                     {
                         found.Comment = Constants.CharCheckMark.ToString();
                         pointsScored += quizPoints;
@@ -980,6 +1007,10 @@ namespace ChessForge
                     {
                         found.Comment += " ";
                     }
+                    if (!isMainLine)
+                    {
+                        found.Comment += "(missed out on ";
+                    }
                     found.Comment += quizPoints.ToString();
                     if (quizPoints == 1)
                     {
@@ -988,6 +1019,10 @@ namespace ChessForge
                     else
                     {
                         found.Comment += " points";
+                    }
+                    if (!isMainLine)
+                    {
+                        found.Comment += ")";
                     }
                 }
             }
