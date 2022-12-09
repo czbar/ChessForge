@@ -1905,6 +1905,9 @@ namespace ChessForge
             {
                 chapter.SetTitle(dlg.ChapterTitle);
                 _chaptersView.BuildFlowDocumentForChaptersView();
+                // study tree also shows title so update it there
+                // TODO: update only the Header
+                _studyTreeView.BuildFlowDocumentForVariationTree();
                 AppStateManager.IsDirty = true;
                 return true;
             }
