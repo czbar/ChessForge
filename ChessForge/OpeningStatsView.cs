@@ -338,15 +338,16 @@ namespace ChessForge
 
             while (nd != null)
             {
-                if (string.IsNullOrEmpty(nd.OpeningName))
+                if (string.IsNullOrEmpty(nd.OpeningName) && nd.MoveNumber <= Constants.OPENING_MAX_MOVE)
                 {
                     // the chain is "broken" yet and we don't want incorrect name
+                    // unless the move number is higher than OPENING_MAX_MOVE.
                     break;
                 }
 
                 name = nd.OpeningName;
                 eco = nd.Eco;
-                if (nd.OpeningName != POSITION_NOT_NAMED)
+                if (nd.OpeningName != POSITION_NOT_NAMED  && nd.MoveNumber <= Constants.OPENING_MAX_MOVE)
                 {
                     // we have a valid name
                     break;
@@ -356,6 +357,11 @@ namespace ChessForge
                     // keep looking 
                     nd = nd.Parent;
                 }
+            }
+
+            if (name == POSITION_NOT_NAMED)
+            {
+                name = null;
             }
 
             return name;
@@ -374,7 +380,7 @@ namespace ChessForge
         {
             // get the data
             LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats;
-            if (string.IsNullOrEmpty(_node.OpeningName))
+            if (string.IsNullOrEmpty(_node.OpeningName) && _node.MoveNumber <= Constants.OPENING_MAX_MOVE)
             {
                 if (stats.Opening == null)
                 {
@@ -386,6 +392,19 @@ namespace ChessForge
                     _node.Eco = stats.Opening.Eco;
                     _node.OpeningName = stats.Opening.Name;
                 }
+            }
+            else
+            {
+                if (_node.OpeningName == POSITION_NOT_NAMED || _node.MoveNumber > Constants.OPENING_MAX_MOVE)
+                {
+                    string opName = FindOpeningNameFromPredecessors(_node, out string eco);
+                    if (opName != null)
+                    {
+                        _node.Eco = eco;
+                        _node.OpeningName = opName;
+                    }
+                }
+
             }
 
             _openingNameTable = CreateTable(0);
