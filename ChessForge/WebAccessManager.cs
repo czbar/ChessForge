@@ -69,7 +69,7 @@ namespace ChessForge
         {
             while (nd != null)
             {
-                if (string.IsNullOrEmpty(nd.OpeningName))
+                if (string.IsNullOrEmpty(nd.OpeningName) && nd.MoveNumber <= Constants.OPENING_MAX_MOVE)
                 {
                     OpeningExplorer.RequestOpeningName(nd);
                 }
