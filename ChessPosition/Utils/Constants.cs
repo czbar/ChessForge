@@ -118,6 +118,13 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Last move number considered to part of the opening.  
+        /// We won't be querying Lichess for opening name if the move
+        /// number is greater than this.
+        /// </summary>
+        public static int OPENING_MAX_MOVE = 15;
+
+        /// <summary>
         /// Character to use as an "expand" symbol in the tree/table views.
         /// </summary>
         public const char CharExpand = '\u229E';
