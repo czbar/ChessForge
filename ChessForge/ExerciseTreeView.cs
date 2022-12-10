@@ -978,11 +978,11 @@ namespace ChessForge
             {
                 found.IsProcessed = true;
 
-                bool isMainLine = found.IsMainLine();
+                bool isFirstChild = found.IsFirstChild();
                 int quizPoints = node.QuizPoints;
                 if (found.ColorToMove != _mainVariationTree.AssociatedSecondary.RootNode.ColorToMove)
                 {
-                    if (isMainLine)
+                    if (isFirstChild)
                     {
                         found.Comment = Constants.CharCheckMark.ToString();
                         pointsScored += quizPoints;
@@ -1007,7 +1007,7 @@ namespace ChessForge
                     {
                         found.Comment += " ";
                     }
-                    if (!isMainLine)
+                    if (!isFirstChild)
                     {
                         found.Comment += "(missed out on ";
                     }
@@ -1020,7 +1020,7 @@ namespace ChessForge
                     {
                         found.Comment += " points";
                     }
-                    if (!isMainLine)
+                    if (!isFirstChild)
                     {
                         found.Comment += ")";
                     }
