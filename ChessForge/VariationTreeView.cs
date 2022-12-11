@@ -93,6 +93,27 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns true if the view has any entitites of the appropriate type to show.
+        /// </summary>
+        public bool HasEntities
+        {
+            get
+            {
+                switch (ContentType)
+                {
+                    case GameData.ContentType.STUDY_TREE: 
+                        return true;
+                    case GameData.ContentType.MODEL_GAME:
+                        return AppStateManager.ActiveChapter != null && AppStateManager.ActiveChapter.HasAnyModelGame;
+                    case GameData.ContentType.EXERCISE:
+                        return AppStateManager.ActiveChapter != null && AppStateManager.ActiveChapter.HasAnyExercise;
+                    default:
+                        return false;
+                }
+            }
+        }
+
+        /// <summary>
         /// RichTextPara dictionary accessor
         /// </summary>
         override internal Dictionary<string, RichTextPara> RichTextParas { get { return _richTextParas; } }
@@ -618,7 +639,7 @@ namespace ChessForge
             }
         }
 
- 
+
         /// <summary>
         /// Selects the move and the line in this view on a request from another view (as opposed
         /// to a user request).
@@ -994,7 +1015,7 @@ namespace ChessForge
                             para.Inlines.Add(rPrefix);
 
                             Run r = new Run(WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle());
-                            r.TextDecorations= TextDecorations.Underline;
+                            r.TextDecorations = TextDecorations.Underline;
                             para.Inlines.Add(r);
                         }
                         break;
@@ -1845,7 +1866,7 @@ namespace ChessForge
                 SelectRun(rPly, 1, MouseButton.Left);
                 rPly.BringIntoView();
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 AppLog.Message("EventForkChildClicked()", ex);
             }
