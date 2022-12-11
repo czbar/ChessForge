@@ -23,6 +23,7 @@ namespace ChessForge
             BlackWinLinearBrush = CreateGradientBrushForResult(EXPLORER_PCT_BLACK_GRAD.Color, EXPLORER_PCT_BLACK.Color);
 
             ExitButtonLinearBrush = CreateGradientBrushForResult(EXIT_BUTTON_GREEN.Color, EXIT_BUTTON_BLUE.Color);
+            ShowExplorerLinearBrush = CreateGradientBrushForResult(TABLE_HEADER_GREEN.Color, TABLE_HIGHLIGHT_GREEN.Color);
         }
 
         public static SolidColorBrush WORKBOOK_TABLE_HILITE_FORE = new SolidColorBrush(Color.FromRgb(255, 0, 0));
@@ -49,6 +50,7 @@ namespace ChessForge
         public static LinearGradientBrush DrawLinearBrush;
         public static LinearGradientBrush BlackWinLinearBrush;
         public static LinearGradientBrush ExitButtonLinearBrush;
+        public static LinearGradientBrush ShowExplorerLinearBrush;
 
         /// <summary>
         /// Creates gradient brushes for the result and percentage labels in the Explorers.

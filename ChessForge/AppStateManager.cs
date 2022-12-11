@@ -518,15 +518,15 @@ namespace ChessForge
                     case LearningMode.Mode.IDLE:
                     case LearningMode.Mode.MANUAL_REVIEW:
                         SetupGuiForManualReview();
-                        ShowExplorers(AreExplorersOn);
+                        ShowExplorers(AreExplorersOn, MainWin.ActiveTreeView != null && MainWin.ActiveTreeView.HasEntities);
                         break;
                     case LearningMode.Mode.TRAINING:
                         SetupGuiForTraining();
-                        ShowExplorers(false);
+                        ShowExplorers(false, false);
                         break;
                     case LearningMode.Mode.ENGINE_GAME:
                         SetupGuiForEngineGame();
-                        ShowExplorers(false);
+                        ShowExplorers(false, false);
                         break;
                 }
                 ShowEvaluationControlsForCurrentStates();
@@ -541,21 +541,23 @@ namespace ChessForge
         /// explorers.
         /// </summary>
         /// <param name="visible"></param>
-        public static void ShowExplorers(bool visible)
+        public static void ShowExplorers(bool visible, bool anythingToShow)
         {
-            if (visible && 
-                (ActiveTab == WorkbookManager.TabViewType.STUDY
+            bool validTabActive = ActiveTab == WorkbookManager.TabViewType.STUDY
                 || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
-                || ActiveTab == WorkbookManager.TabViewType.EXERCISE
-                ))
+                || ActiveTab == WorkbookManager.TabViewType.EXERCISE;
+
+            if (visible && validTabActive)
             {
                 MainWin.UiRtbOpenings.Visibility = Visibility.Visible;
                 MainWin.UiRtbTopGames.Visibility = Visibility.Visible;
+                MainWin.UiBtnShowExplorer.Visibility = Visibility.Collapsed;
             }
             else
             {
                 MainWin.UiRtbOpenings.Visibility = Visibility.Hidden;
                 MainWin.UiRtbTopGames.Visibility = Visibility.Hidden;
+                MainWin.UiBtnShowExplorer.Visibility = (!AreExplorersOn && validTabActive && anythingToShow) ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 

@@ -469,7 +469,7 @@ namespace ChessForge
                 WebAccessManager.IsEnabledExplorerQueries = false;
 
                 AppStateManager.AreExplorersOn = false;
-                AppStateManager.ShowExplorers(false);
+                AppStateManager.ShowExplorers(false, ActiveTreeView != null && ActiveTreeView.HasEntities);
             }
 
             e.Handled = true;
@@ -494,10 +494,23 @@ namespace ChessForge
                 }
 
                 AppStateManager.AreExplorersOn = true;
-                AppStateManager.ShowExplorers(true);
+                AppStateManager.ShowExplorers(ActiveTreeView != null, ActiveTreeView != null && ActiveTreeView.HasEntities);
             }
 
-            e.Handled = true;
+            if (e != null)
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// "Show Explorer" button clicked in lieu of the switching the toggle.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnShowExplorer_Click(object sender, RoutedEventArgs e)
+        {
+            ExplorersToggleOff_PreviewMouseDown(sender, null);
         }
 
         /// <summary>
@@ -691,7 +704,7 @@ namespace ChessForge
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.CHAPTERS;
-            AppStateManager.ShowExplorers(false);
+            AppStateManager.ShowExplorers(false, false);
 
             BoardCommentBox.ShowWorkbookTitle();
             try
@@ -729,7 +742,7 @@ namespace ChessForge
             UiImgEngineOff.IsEnabled = true;
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.STUDY;
-            AppStateManager.ShowExplorers(AppStateManager.AreExplorersOn);
+            AppStateManager.ShowExplorers(AppStateManager.AreExplorersOn, true);
 
             BoardCommentBox.ShowWorkbookTitle();
             try
@@ -769,7 +782,7 @@ namespace ChessForge
         private void UiTabBookmarks_GotFocus(object sender, RoutedEventArgs e)
         {
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.BOOKMARKS;
-            AppStateManager.ShowExplorers(false);
+            AppStateManager.ShowExplorers(false, false);
 
             BoardCommentBox.ShowWorkbookTitle();
             try
@@ -854,11 +867,11 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.MODEL_GAME;
             if (AppStateManager.ActiveChapterGamesCount > 0)
             {
-                AppStateManager.ShowExplorers(AppStateManager.AreExplorersOn);
+                AppStateManager.ShowExplorers(AppStateManager.AreExplorersOn, true);
             }
             else
             {
-                AppStateManager.ShowExplorers(false);
+                AppStateManager.ShowExplorers(false, false);
             }
 
             BoardCommentBox.ShowWorkbookTitle();
@@ -935,11 +948,11 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.EXERCISE;
             if (AppStateManager.ActiveChapterExerciseCount > 0)
             {
-                AppStateManager.ShowExplorers(AppStateManager.AreExplorersOn);
+                AppStateManager.ShowExplorers(AppStateManager.AreExplorersOn, true);
             }
             else
             {
-                AppStateManager.ShowExplorers(false);
+                AppStateManager.ShowExplorers(false, false);
             }
 
             BoardCommentBox.ShowWorkbookTitle();
