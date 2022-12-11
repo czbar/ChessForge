@@ -376,12 +376,16 @@ namespace ChessPosition
                 {
                     case "e1g1":
                     case "e8g8":
+                    case "e1h1": // lichess 960 
+                    case "e8h8": // lichess 960
                         alg = "O-O";
                         move.CastlingType = move.Color == PieceColor.White ? Constants.WhiteKingsideCastle : Constants.BlackKingsideCastle;
                         isCastle = true;
                         break;
                     case "e1c1":
                     case "e8c8":
+                    case "e1a1": // lichess 960 
+                    case "e8a8": // lichess 960 
                         alg = "O-O-O";
                         move.CastlingType = move.Color == PieceColor.White ? Constants.WhiteQueensideCastle : Constants.BlackQueensideCastle;
                         isCastle = true;
