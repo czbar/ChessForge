@@ -1,0 +1,16 @@
+ChessForge.exe
+ChessPosition.dll
+EngineService.dll
+WebAccess.dll
+
+Newtonsoft.Json.dll
+System.Net.Http.Formatting.dll
+ChessForge.exe.config
+Newtonsoft.Json.xml
+System.Net.Http.Formatting.xml
+
+stockfish_15_x64_avx2.exe
+
+Resources/Sounds/Capture.mp3
+Resources/Sounds/InvalidMove.mp3
+Resources/Sounds/Move.mp3
