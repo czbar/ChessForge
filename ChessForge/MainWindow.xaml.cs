@@ -276,6 +276,7 @@ namespace ChessForge
             UiDgActiveLine.ContextMenu = UiMnMainBoard;
             UiBtnExitGame.Background = ChessForgeColors.ExitButtonLinearBrush;
             UiBtnExitTraining.Background = ChessForgeColors.ExitButtonLinearBrush;
+            UiBtnShowExplorer.Background = ChessForgeColors.ShowExplorerLinearBrush;
 
             _openingStatsView = new OpeningStatsView(UiRtbOpenings.Document);
             _topGamesView = new TopGamesView(UiRtbTopGames.Document, true);
