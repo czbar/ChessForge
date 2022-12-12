@@ -284,7 +284,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void AnimationFinished(object sender, EventArgs e)
         {
-            _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex]);
+            _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
 
             if (_pauseRequested)
             {
@@ -396,7 +396,7 @@ namespace ChessForge
             else
             {
                 ShowPlayPauseButtons();
-                _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex]);
+                _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
             }
         }
 
@@ -441,7 +441,7 @@ namespace ChessForge
             {
                 _cachedOperation = CachedOperation.NONE;
                 _currentNodeMoveIndex = 1;
-                _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex - 1]);
+                _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex - 1], false);
             }
         }
 
@@ -464,7 +464,7 @@ namespace ChessForge
                 if (_currentNodeMoveIndex > 1)
                 {
                     _currentNodeMoveIndex--;
-                    _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex - 1]);
+                    _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex - 1], false);
                 }
             }
         }
@@ -487,7 +487,7 @@ namespace ChessForge
                 if (_currentNodeMoveIndex < _mainLine.Count - 1)
                 {
                     _currentNodeMoveIndex++;
-                    _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex - 1]);
+                    _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex - 1], false);
                 }
             }
         }
@@ -508,7 +508,7 @@ namespace ChessForge
             {
                 _cachedOperation = CachedOperation.NONE;
                 _currentNodeMoveIndex = _mainLine.Count - 1;
-                _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex]);
+                _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
             }
         }
 

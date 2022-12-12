@@ -420,7 +420,7 @@ namespace ChessForge
             imgChessBoard.Source = ChessBoards.ChessBoardGreySmall;
 
             _exercisePassiveChessBoard = new ChessBoardSmall(canvas, imgChessBoard, null, false, false);
-            _exercisePassiveChessBoard.DisplayPosition(_mainVariationTree.Nodes[0]);
+            _exercisePassiveChessBoard.DisplayPosition(_mainVariationTree.Nodes[0], false);
             AlignExerciseAndMainBoards();
 
             return imgChessBoard;
