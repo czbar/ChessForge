@@ -95,6 +95,20 @@ namespace ChessForge
                             Canvas.SetLeft(DraggedPiece.ImageControl, ptLeftTop.X + (clickedPoint.X - ptCenter.X));
                             Canvas.SetTop(DraggedPiece.ImageControl, ptLeftTop.Y + (clickedPoint.Y - ptCenter.Y));
                         }
+                        else
+                        {
+                            // if we can't move because we're in exercise hiding mode, try to help the user
+                            if (ActiveGameUnit != null && ActiveGameUnit.Solver != null && !ActiveGameUnit.Solver.IsMovingAllowed())
+                            {
+                                if (_exerciseTreeView != null)
+                                {
+                                    if (MessageBox.Show("Enable View/Edit Mode?", "Exercise Mode", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                                    {
+                                        _exerciseTreeView.EventShowHideButtonClicked(null, null);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
