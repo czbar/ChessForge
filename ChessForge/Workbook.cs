@@ -404,6 +404,7 @@ namespace ChessForge
 
             Chapters.Add(chapter);
             _activeChapter = chapter;
+            _activeChapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
 
             return chapter;
         }
