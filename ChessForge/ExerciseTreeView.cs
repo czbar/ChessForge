@@ -420,7 +420,7 @@ namespace ChessForge
             imgChessBoard.Source = ChessBoards.ChessBoardGreySmall;
 
             _exercisePassiveChessBoard = new ChessBoardSmall(canvas, imgChessBoard, null, false, false);
-            _exercisePassiveChessBoard.DisplayPosition(_mainVariationTree.Nodes[0]);
+            _exercisePassiveChessBoard.DisplayPosition(_mainVariationTree.Nodes[0], false);
             AlignExerciseAndMainBoards();
 
             return imgChessBoard;
@@ -1044,9 +1044,17 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void EventDummyBoardMouseDown(object sender, RoutedEventArgs e)
+        protected void EventDummyBoardMouseDown(object sender, MouseButtonEventArgs e)
         {
-            _dummyBoardLeftClicked = true;
+            if (e.ClickCount == 2)
+            {
+                _dummyBoardLeftClicked = false;
+                _mainWin.UiMnExerc_EditPosition_Click(null, null);
+            }
+            else
+            {
+                _dummyBoardLeftClicked = true;
+            }
             e.Handled = true;
         }
 

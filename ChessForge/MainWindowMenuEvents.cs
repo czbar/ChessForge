@@ -407,9 +407,18 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnRenameChapter_Click(object sender, RoutedEventArgs e)
+        public void UiMnRenameChapter_Click(object sender, RoutedEventArgs e)
         {
             Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
+            RenameChapter(chapter);
+        }
+
+        /// <summary>
+        /// Invokes the Chapter Title dialog.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public void RenameChapter(Chapter chapter)
+        {
             if (chapter != null && ShowChapterTitleDialog(chapter))
             {
                 AppStateManager.IsDirty = true;
@@ -1038,7 +1047,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnExerc_EditPosition_Click(object sender, RoutedEventArgs e)
+        public void UiMnExerc_EditPosition_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -2181,7 +2190,7 @@ namespace ChessForge
         /// <summary>
         /// Invokes the dialog for editing game header.
         /// </summary>
-        private void EditGameHeader()
+        public void EditGameHeader()
         {
             try
             {
@@ -2215,7 +2224,7 @@ namespace ChessForge
         /// <summary>
         /// Invokes the dialog for editing game header.
         /// </summary>
-        private void EditExerciseHeader()
+        public void EditExerciseHeader()
         {
             try
             {

@@ -1311,7 +1311,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public void DisplayPosition(TreeNode nd)
         {
-            MainChessBoard.DisplayPosition(nd);
+            MainChessBoard.DisplayPosition(nd, true);
         }
 
         /// <summary>
@@ -1350,7 +1350,7 @@ namespace ChessForge
                     }
                     if (displayPosition)
                     {
-                        MainChessBoard.DisplayPosition(nd);
+                        MainChessBoard.DisplayPosition(nd, true);
                         WebAccessManager.ExplorerRequest(AppStateManager.ActiveTreeId, nd);
                     }
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
@@ -1378,7 +1378,7 @@ namespace ChessForge
                 ActiveLine.SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
                 if (displayPosition)
                 {
-                    MainChessBoard.DisplayPosition(nd);
+                    MainChessBoard.DisplayPosition(nd, true);
                 }
             }
         }
@@ -1700,7 +1700,7 @@ namespace ChessForge
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
             LearningMode.TrainingSide = startNode.ColorToMove;
-            MainChessBoard.DisplayPosition(startNode);
+            MainChessBoard.DisplayPosition(startNode, true);
 
             UiTrainingView = new TrainingView(UiRtbTrainingProgress.Document, this);
             UiTrainingView.Initialize(startNode, ActiveVariationTree.ContentType);

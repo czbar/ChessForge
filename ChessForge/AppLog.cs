@@ -149,7 +149,9 @@ namespace ChessForge
                         sb.Append("Origin = " + nd.Position.LastMove.Origin.Xcoord.ToString() + " " + nd.Position.LastMove.Origin.Ycoord.ToString() + Environment.NewLine);
                         sb.Append("Destination = " + nd.Position.LastMove.Destination.Xcoord.ToString() + " " + nd.Position.LastMove.Destination.Ycoord.ToString() + Environment.NewLine);
                     }
-                    sb.Append("Comment = " + (nd.Comment == null ? "" : nd.Comment)  + Environment.NewLine);
+                    sb.Append("Comment = " + (nd.Comment == null ? "" : nd.Comment) + Environment.NewLine);
+                    sb.Append("Arrows = " + (nd.Arrows == null ? "" : nd.Arrows) + Environment.NewLine);
+                    sb.Append("Circles = " + (nd.Circles == null ? "" : nd.Circles) + Environment.NewLine);
                     sb.Append("DistanceToLeaf = " + nd.DistanceToLeaf.ToString() + Environment.NewLine);
                     sb.Append("DistanceToFork = " + nd.DistanceToNextFork.ToString() + Environment.NewLine);
                     for (int j = 0; j < nd.Children.Count; j++)
