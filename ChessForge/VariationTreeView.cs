@@ -148,6 +148,9 @@ namespace ChessForge
         private readonly string _run_ = "run_";
         private readonly string _run_comment_ = "run_comment_";
 
+        // name of the header paragraph
+        private readonly string _para_header_ = "para_header_";
+
         /// <summary>
         /// Most recent clicked node.
         /// This allows the context menu to reference the correct move.
@@ -951,6 +954,8 @@ namespace ChessForge
 
                         para = CreateParagraph("0", true);
                         para.Margin = new Thickness(0, 0, 0, 0);
+                        para.Name = _para_header_;
+                        para.MouseLeftButtonDown += EventPageHeaderClicked;
 
                         bool hasPlayerNames = !(string.IsNullOrWhiteSpace(whitePlayer) && string.IsNullOrWhiteSpace(blackPlayer));
 
@@ -1009,6 +1014,7 @@ namespace ChessForge
                         {
                             int no = WorkbookManager.SessionWorkbook.ActiveChapterNumber;
                             para = CreateParagraph("0", true);
+                            para.MouseLeftButtonDown += EventPageHeaderClicked;
 
                             Run rPrefix = new Run();
                             rPrefix.TextDecorations = TextDecorations.Underline;
@@ -1849,6 +1855,37 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// The Page Header paragraph was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventPageHeaderClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (e.ClickCount == 2)
+                {
+                    GameData.ContentType contentType = _mainVariationTree.Header.GetContentType(out _);
+                    switch (contentType)
+                    {
+                        case GameData.ContentType.EXERCISE:
+                            _mainWin.EditExerciseHeader();
+                            break;
+                        case GameData.ContentType.MODEL_GAME:
+                            _mainWin.EditGameHeader();
+                            break;
+                        case GameData.ContentType.STUDY_TREE:
+                            _mainWin.RenameChapter(AppStateManager.ActiveChapter);
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("EventPageHeaderClicked()", ex);
+            }
+        }
 
         /// <summary>
         /// A run in the fork table was clicked.
