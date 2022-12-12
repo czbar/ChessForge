@@ -1233,7 +1233,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void EventShowHideButtonClicked(object sender, RoutedEventArgs e)
+        public void EventShowHideButtonClicked(object sender, RoutedEventArgs e)
         {
             _contextMenuPrimed = true;
             _mainVariationTree.ShowTreeLines = !_mainVariationTree.ShowTreeLines;
@@ -1247,7 +1247,10 @@ namespace ChessForge
             }
             BuildFlowDocumentForVariationTree();
             _mainWin.BoardCommentBox.ShowWorkbookTitle();
-            e.Handled = true;
+            if (e != null)
+            {
+                e.Handled = true;
+            }
         }
 
         /// <summary>
