@@ -1047,7 +1047,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnExerc_EditPosition_Click(object sender, RoutedEventArgs e)
+        public void UiMnExerc_EditPosition_Click(object sender, RoutedEventArgs e)
         {
             try
             {
