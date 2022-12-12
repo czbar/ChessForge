@@ -545,14 +545,14 @@ namespace ChessForge
         /// reflecting the passed TreeNode object.
         /// </summary>
         /// <param name="pos"></param>
-        public void DisplayPosition(TreeNode node)
+        public void DisplayPosition(TreeNode node, bool isActiveBoard = true)
         {
             if (node != null)
             {
                 DisplayedNode = node;
 
                 _position = new BoardPosition(node.Position);
-                DisplayPosition(node, node.Position);
+                DisplayPosition(node, node.Position, isActiveBoard);
             }
         }
 
@@ -561,18 +561,24 @@ namespace ChessForge
         /// reflecting the passed TreeNode or BoardPosition object.
         /// </summary>
         /// <param name="pos"></param>
-        public void DisplayPosition(TreeNode node, BoardPosition pos = null)
+        public void DisplayPosition(TreeNode node, BoardPosition pos = null, bool isActiveBoard = true)
         {
             DisplayedNode = node;
             if (node != null)
             {
                 _position = new BoardPosition(node.Position);
-                BoardShapesManager.Reset(node.Arrows, node.Circles, false);
+                if (isActiveBoard)
+                {
+                    BoardShapesManager.Reset(node.Arrows, node.Circles, false);
+                }
             }
             else
             {
                 _position = new BoardPosition(pos);
-                BoardShapesManager.Reset(false);
+                if (isActiveBoard)
+                {
+                    BoardShapesManager.Reset(false);
+                }
             }
 
             for (int xcoord = 0; xcoord < 8; xcoord++)
