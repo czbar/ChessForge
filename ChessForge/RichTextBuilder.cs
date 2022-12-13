@@ -1,8 +1,10 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using ChessPosition;
@@ -285,6 +287,28 @@ namespace ChessForge
         {
             Paragraph parent = insertAfter.Parent as Paragraph;
             parent.Inlines.InsertAfter(insertAfter, runToIsert);
+        }
+
+        /// <summary>
+        /// Finds the first paragraph with the passed name.
+        /// Return null if not found.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public Paragraph FindParagraphByName(string name)
+        {
+            Paragraph para = null;
+
+            foreach (Block block in Document.Blocks)
+            {
+                if (block is Paragraph && (block as Paragraph).Name == name)
+                {
+                    para = block as Paragraph;
+                    break;
+                }
+            }
+
+            return para;
         }
 
         /// <summary>
