@@ -220,7 +220,7 @@ namespace ChessForge
                         case WorkbookManager.TabViewType.MODEL_GAME:
                             if (AppStateManager.ActiveChapterGamesCount > 0)
                             {
-                                commentText = Strings.QUICK_INSTRUCTION_MODEL_GAMES_NON_EMPTY;
+                                commentText = Strings.QUICK_INSTRUCTION_MODEL_GAMES;
                             }
                             else
                             {
@@ -241,7 +241,7 @@ namespace ChessForge
                                         commentText = Strings.QUICK_INSTRUCTION_EXERCISES_SOLVING;
                                         break;
                                     case VariationTree.SolvingMode.EDITING:
-                                        commentText = Strings.QUICK_INSTRUCTION_EXERCISES_EDIT;
+                                        commentText = Strings.QUICK_INSTRUCTION_EXERCISES;
                                         break;
                                     default:
                                         commentText = Strings.QUICK_INSTRUCTION_EXERCISES_HIDDEN;
