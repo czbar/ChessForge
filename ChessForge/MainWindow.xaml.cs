@@ -1196,6 +1196,10 @@ namespace ChessForge
             }
 
             _exerciseTreeView.BuildFlowDocumentForVariationTree();
+            if (ActiveVariationTree.Nodes.Count == 1 && !_exerciseTreeView.AreLinesShown)
+            {
+                _exerciseTreeView.EventShowHideButtonClicked(null, null);
+            }
 
             string startLineId;
             int startNodeId = 0;
