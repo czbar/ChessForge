@@ -733,10 +733,6 @@ namespace ChessForge
                 {
                     SetupGuiForChapters();
                     DisplayPosition(PositionUtils.SetupStartingPosition());
-                    if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
-                    {
-                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-                    }
                 }
             }
             catch
