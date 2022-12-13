@@ -1246,7 +1246,7 @@ namespace ChessForge
                 _mainVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.NONE;
             }
             BuildFlowDocumentForVariationTree();
-            _mainWin.BoardCommentBox.ShowWorkbookTitle();
+            _mainWin.BoardCommentBox.ShowTabHints();
             if (e != null)
             {
                 e.Handled = true;

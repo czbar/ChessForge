@@ -459,7 +459,7 @@ namespace ChessForge
         {
             GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out int row, out int column);
 
-            _mainWin.BoardCommentBox.ShowWorkbookTitle();
+            _mainWin.BoardCommentBox.ShowTabHints();
 
             if (IsSelectableCell(row, column))
             {

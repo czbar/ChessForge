@@ -720,7 +720,7 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.CHAPTERS;
             AppStateManager.ShowExplorers(false, false);
 
-            BoardCommentBox.ShowWorkbookTitle();
+            BoardCommentBox.ShowTabHints();
             try
             {
                 if (KeepFocusOnGame() || WorkbookManager.SessionWorkbook == null)
@@ -754,7 +754,7 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.STUDY;
             AppStateManager.ShowExplorers(AppStateManager.AreExplorersOn, true);
 
-            BoardCommentBox.ShowWorkbookTitle();
+            BoardCommentBox.ShowTabHints();
             try
             {
                 SetStudyStateOnFocus();
@@ -794,7 +794,7 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.BOOKMARKS;
             AppStateManager.ShowExplorers(false, false);
 
-            BoardCommentBox.ShowWorkbookTitle();
+            BoardCommentBox.ShowTabHints();
             try
             {
                 if (KeepFocusOnGame())
@@ -884,7 +884,7 @@ namespace ChessForge
                 AppStateManager.ShowExplorers(false, false);
             }
 
-            BoardCommentBox.ShowWorkbookTitle();
+            BoardCommentBox.ShowTabHints();
             try
             {
                 if (KeepFocusOnGame())
@@ -965,7 +965,7 @@ namespace ChessForge
                 AppStateManager.ShowExplorers(false, false);
             }
 
-            BoardCommentBox.ShowWorkbookTitle();
+            BoardCommentBox.ShowTabHints();
             try
             {
                 if (KeepFocusOnGame())

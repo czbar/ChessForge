@@ -190,7 +190,7 @@ namespace ChessForge
         /// more relevant is to be shown.
         /// </summary>
         /// <param name="title"></param>
-        public void ShowWorkbookTitle()
+        public void ShowTabHints()
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
@@ -264,7 +264,7 @@ namespace ChessForge
         {
             if (_mainWin.SessionWorkbook != null)
             {
-                ShowWorkbookTitle();
+                ShowTabHints();
             }
         }
 

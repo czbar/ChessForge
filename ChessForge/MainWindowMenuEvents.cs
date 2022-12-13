@@ -221,7 +221,7 @@ namespace ChessForge
                 return;
             }
 
-            BoardCommentBox.ShowWorkbookTitle();
+            BoardCommentBox.ShowTabHints();
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
 
