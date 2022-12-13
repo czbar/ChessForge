@@ -911,6 +911,9 @@ namespace ChessForge
                             case "_mnExerc_DeleteThisExercise":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
                                 break;
+                            case "_mnExerc_EvalLine":
+                                menuItem.Visibility = Visibility.Collapsed;
+                                break;
                         }
                     }
                 }
@@ -940,7 +943,8 @@ namespace ChessForge
                 //MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
                 SetChessboardForActiveTab();
 
-                if (AppStateManager.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY)
+                if (AppStateManager.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY
+                   || WorkbookManager.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
                     _mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
@@ -1347,7 +1351,6 @@ namespace ChessForge
                         {
                             MainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.HIDE_ENGINE_GAME_LINE);
                         }
-                        //_mainWin.UiTabCtrlManualReview.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
 
                         _mainWin.UiTabStudyTree.Focus();
                     }
