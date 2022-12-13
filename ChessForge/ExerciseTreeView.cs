@@ -301,6 +301,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Whether the lines are currently shown.
+        /// </summary>
+        public bool AreLinesShown
+        {
+            get => (_mainVariationTree != null && _mainVariationTree.ShowTreeLines);
+        }
+
+        /// <summary>
         /// Appends this paragraph to the document to advise the user that the
         /// solving is over.
         /// </summary>
