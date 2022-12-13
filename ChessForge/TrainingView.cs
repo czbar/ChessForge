@@ -292,15 +292,49 @@ namespace ChessForge
                 _userMove = EngineGame.GetLastGameNode();
                 TreeNode parent = _userMove.Parent;
 
+                StringBuilder wbMoves = new StringBuilder();
+                TreeNode foundMove = null;
+                foreach (TreeNode child in parent.Children)
+                {
+                    // we cannot use ArePositionsIdentical() because _userMove only has static position
+                    if (child.LastMoveEngineNotation == _userMove.LastMoveEngineNotation && !_userMove.IsNewTrainingMove)
+                    {
+                        // replace the TreeNode with the one from the Workbook so that
+                        // we stay with the workbook as long as the user does.
+                        EngineGame.ReplaceLastPly(child);
+                        foundMove = child;
+                        _userMove = child;
+                    }
+                    else
+                    {
+                        if (!child.IsNewTrainingMove)
+                        {
+                            wbMoves.Append(MoveUtils.BuildSingleMoveText(child, false, true));
+                            wbMoves.Append("; ");
+                            _otherMovesInWorkbook.Add(child);
+                        }
+                    }
+                }
+
                 if (PositionUtils.IsCheckmate(_userMove.Position))
                 {
+                    _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
                     _userMove.Position.IsCheckmate = true;
                     BuildMoveParagraph(_userMove, true);
+                    if (foundMove == null)
+                    {
+                        BuildCommentParagraph(false);
+                    }
                     BuildCheckmateParagraph(_userMove, true);
                 }
                 else if (PositionUtils.IsStalemate(_userMove.Position))
                 {
+                    _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
                     BuildMoveParagraph(_userMove, true);
+                    if (foundMove == null)
+                    {
+                        BuildCommentParagraph(false);
+                    }
                     BuildStalemateParagraph(_userMove);
                 }
                 else
@@ -311,30 +345,6 @@ namespace ChessForge
                         // we are "out of the book" in our training so there is nothing to report
                         DebugUtils.ShowDebugMessage("ReportLastMoveVsWorkbook() : parent not found");
                         return;
-                    }
-
-                    StringBuilder wbMoves = new StringBuilder();
-                    TreeNode foundMove = null;
-                    foreach (TreeNode child in parent.Children)
-                    {
-                        // we cannot use ArePositionsIdentical() because _userMove only has static position
-                        if (child.LastMoveEngineNotation == _userMove.LastMoveEngineNotation && !_userMove.IsNewTrainingMove)
-                        {
-                            // replace the TreeNode with the one from the Workbook so that
-                            // we stay with the workbook as long as the user does.
-                            EngineGame.ReplaceLastPly(child);
-                            foundMove = child;
-                            _userMove = child;
-                        }
-                        else
-                        {
-                            if (!child.IsNewTrainingMove)
-                            {
-                                wbMoves.Append(MoveUtils.BuildSingleMoveText(child, false, true));
-                                wbMoves.Append("; ");
-                                _otherMovesInWorkbook.Add(child);
-                            }
-                        }
                     }
 
                     BuildMoveParagraph(_userMove, true);

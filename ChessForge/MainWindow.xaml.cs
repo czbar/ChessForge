@@ -1043,7 +1043,7 @@ namespace ChessForge
             // and Active Tree to the Study Tree in that chapter.
             WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(0, GameData.ContentType.STUDY_TREE);
             AppStateManager.UpdateAppTitleBar();
-            BoardCommentBox.ShowWorkbookTitle();
+            BoardCommentBox.ShowTabHints();
 
             if (SessionWorkbook.TrainingSide == PieceColor.None)
             {
@@ -1059,7 +1059,7 @@ namespace ChessForge
                 WorkbookManager.UpdateRecentFilesList(fileName);
             }
 
-            BoardCommentBox.ShowWorkbookTitle();
+            BoardCommentBox.ShowTabHints();
             InitializeChaptersView();
 
             SetupGuiForActiveStudyTree(!isChessForgeFile);
@@ -1196,6 +1196,10 @@ namespace ChessForge
             }
 
             _exerciseTreeView.BuildFlowDocumentForVariationTree();
+            if (ActiveVariationTree.Nodes.Count == 1 && !_exerciseTreeView.AreLinesShown)
+            {
+                _exerciseTreeView.EventShowHideButtonClicked(null, null);
+            }
 
             string startLineId;
             int startNodeId = 0;
@@ -1853,7 +1857,7 @@ namespace ChessForge
                     _chaptersView.BuildFlowDocumentForChaptersView();
                 }
 
-                BoardCommentBox.ShowWorkbookTitle();
+                BoardCommentBox.ShowTabHints();
                 return true;
             }
             else

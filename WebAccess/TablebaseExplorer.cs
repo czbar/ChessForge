@@ -59,9 +59,9 @@ namespace WebAccess
         public bool Variant_win;
         public bool Variant_loss;
         public bool Insufficient_material;
-        public int dtz;
-        public int precise_dtz;
-        public int dtm;
+        public int? dtz;
+        public int? precise_dtz;
+        public int? dtm;
         public string category;
         public LichessTablebaseMove[] Moves;
     }
@@ -79,9 +79,9 @@ namespace WebAccess
         public bool Variant_win;
         public bool Variant_loss;
         public bool Insufficient_material;
-        public int dtz;
-        public int precise_dtz;
-        public int dtm;
+        public int? dtz;
+        public int? precise_dtz;
+        public int? dtm;
         public string category;
     }
 

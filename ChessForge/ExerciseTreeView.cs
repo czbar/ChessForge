@@ -52,7 +52,7 @@ namespace ChessForge
                 _mainWin.ActiveGameUnit.Solver.IsGuessingFinished = false;
             }
 
-            _mainWin.BoardCommentBox.ShowWorkbookTitle();
+            _mainWin.BoardCommentBox.ShowTabHints();
         }
 
         /// <summary>
@@ -298,6 +298,14 @@ namespace ChessForge
             {
                 return true;
             }
+        }
+
+        /// <summary>
+        /// Whether the lines are currently shown.
+        /// </summary>
+        public bool AreLinesShown
+        {
+            get => (_mainVariationTree != null && _mainVariationTree.ShowTreeLines);
         }
 
         /// <summary>
@@ -832,7 +840,7 @@ namespace ChessForge
                 SetupGuiForSolvingMode(mode);
                 BuildFlowDocumentForVariationTree();
 
-                _mainWin.BoardCommentBox.ShowWorkbookTitle();
+                _mainWin.BoardCommentBox.ShowTabHints();
             }
             catch
             {

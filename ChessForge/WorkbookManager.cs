@@ -825,7 +825,7 @@ namespace ChessForge
         {
             MessageBoxResult res = MessageBoxResult.None;
 
-            if (AppStateManager.MainWin.ActiveVariationTree.HasTrainingMoves())
+            if (AppStateManager.ActiveVariationTree != null && AppStateManager.ActiveVariationTree.HasTrainingMoves())
             {
                 res = PromptAndSaveTrainingMoves(userRequest, isAppClosing);
             }

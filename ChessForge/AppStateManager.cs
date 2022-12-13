@@ -278,16 +278,21 @@ namespace ChessForge
         /// <param name="isEnabled"></param>
         public static void EnableTabViewMenuItems(WorkbookManager.TabViewType tabType, int lastClickedNodeId, bool isEnabled)
         {
+            TreeNode selectedNode = null;
+            if (MainWin.ActiveTreeView != null)
+            {
+                selectedNode = MainWin.ActiveTreeView.GetSelectedNode();
+            }
             switch (tabType)
             {
                 case WorkbookManager.TabViewType.STUDY:
-                    EnableStudyTreeMenuItems(lastClickedNodeId, isEnabled);
+                    EnableStudyTreeMenuItems((selectedNode == null || selectedNode.NodeId == 0) ? -1 : selectedNode.NodeId, isEnabled);
                     break;
                 case WorkbookManager.TabViewType.MODEL_GAME:
-                    EnableModelGamesMenuItems(lastClickedNodeId);
+                    EnableModelGamesMenuItems((selectedNode == null || selectedNode.NodeId == 0) ? -1 : selectedNode.NodeId);
                     break;
                 case WorkbookManager.TabViewType.EXERCISE:
-                    EnableExercisesMenuItems(lastClickedNodeId);
+                    EnableExercisesMenuItems((selectedNode == null || selectedNode.NodeId == 0) ? -1 : selectedNode.NodeId);
                     break;
             }
         }
@@ -911,6 +916,9 @@ namespace ChessForge
                             case "_mnExerc_DeleteThisExercise":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
                                 break;
+                            case "_mnExerc_EvalLine":
+                                menuItem.Visibility = Visibility.Collapsed;
+                                break;
                         }
                     }
                 }
@@ -940,7 +948,8 @@ namespace ChessForge
                 //MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
                 SetChessboardForActiveTab();
 
-                if (AppStateManager.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY)
+                if (AppStateManager.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY
+                   || WorkbookManager.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
                     _mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
@@ -1347,7 +1356,6 @@ namespace ChessForge
                         {
                             MainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.HIDE_ENGINE_GAME_LINE);
                         }
-                        //_mainWin.UiTabCtrlManualReview.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
 
                         _mainWin.UiTabStudyTree.Focus();
                     }

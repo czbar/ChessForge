@@ -221,7 +221,7 @@ namespace ChessForge
                 return;
             }
 
-            BoardCommentBox.ShowWorkbookTitle();
+            BoardCommentBox.ShowTabHints();
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
 
@@ -2110,6 +2110,7 @@ namespace ChessForge
                         }
                     }
                 }
+                BoardCommentBox.ShowTabHints();
             }
             catch (Exception ex)
             {
@@ -2150,6 +2151,7 @@ namespace ChessForge
                         }
                     }
                 }
+                BoardCommentBox.ShowTabHints();
             }
             catch (Exception ex)
             {
