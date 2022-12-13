@@ -917,6 +917,7 @@ namespace ChessForge
                     }
 
                     AppStateManager.ConfigureMainBoardContextMenu();
+                    ActiveLine.Clear();
                     ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
                 }
             }
