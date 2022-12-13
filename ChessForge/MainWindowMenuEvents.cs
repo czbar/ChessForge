@@ -2110,6 +2110,7 @@ namespace ChessForge
                         }
                     }
                 }
+                BoardCommentBox.ShowTabHints();
             }
             catch (Exception ex)
             {
@@ -2150,6 +2151,7 @@ namespace ChessForge
                         }
                     }
                 }
+                BoardCommentBox.ShowTabHints();
             }
             catch (Exception ex)
             {
