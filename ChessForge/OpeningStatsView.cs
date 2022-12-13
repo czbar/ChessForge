@@ -874,12 +874,12 @@ namespace ChessForge
 
                     if (category != "draw")
                     {
-                        Run rDtz = new Run("DTZ " + Math.Abs(move.dtz).ToString());
+                        Run rDtz = new Run("DTZ " + Math.Abs(move.dtz ?? 0).ToString());
                         rDtz.FontSize = _baseFontSize + Configuration.FontSizeDiff;
                         TableCell cellDtz = new TableCell(new Paragraph(rDtz));
                         row.Cells.Add(cellDtz);
 
-                        Run rDtm = new Run("DTM " + Math.Abs(move.dtm).ToString());
+                        Run rDtm = new Run("DTM " + Math.Abs(move.dtm ?? 0).ToString());
                         rDtm.FontSize = _baseFontSize + Configuration.FontSizeDiff;
                         TableCell cellDtm = new TableCell(new Paragraph(rDtm));
                         row.Cells.Add(cellDtm);
