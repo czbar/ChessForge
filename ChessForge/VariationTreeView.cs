@@ -1813,7 +1813,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    _lastClickedNodeId = -1;
+                    _lastClickedNodeId = nodeId;
                 }
             }
         }
