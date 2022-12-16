@@ -186,41 +186,45 @@ namespace ChessForge
             Document.Blocks.Clear();
             Document.PageWidth = 590;
 
-            switch (mode)
+            // makes no sense to show Opening Explorer in Exercise view
+            if (_node != null && (AppStateManager.ActiveTab != WorkbookManager.TabViewType.EXERCISE || mode == DataMode.TABLEBASE))
             {
-                case DataMode.OPENINGS:
-                    BuildOpeningNameTable();
-                    if (string.IsNullOrEmpty(_node.OpeningName))
-                    {
-                        WebAccessManager.OpeningNamesRequest(_node);
-                    }
+                switch (mode)
+                {
+                    case DataMode.OPENINGS:
+                        BuildOpeningNameTable();
+                        if (string.IsNullOrEmpty(_node.OpeningName))
+                        {
+                            WebAccessManager.OpeningNamesRequest(_node);
+                        }
 
-                    if (_openingNameTable != null)
-                    {
-                        Document.Blocks.Add(_openingNameTable);
-                    }
-                    BuildOpeningStatsTable();
-                    Document.Blocks.Add(_openingStatsTable);
-                    break;
-                case DataMode.TABLEBASE:
-                    if (_node.ColorToMove == PieceColor.White)
-                    {
-                        InsertTablebaseCategoryTable("loss");
-                        InsertTablebaseCategoryTable("unknown");
-                        InsertTablebaseCategoryTable("draw");
-                        InsertTablebaseCategoryTable("win");
-                    }
-                    else
-                    {
-                        InsertTablebaseCategoryTable("win");
-                        InsertTablebaseCategoryTable("unknown");
-                        InsertTablebaseCategoryTable("draw");
-                        InsertTablebaseCategoryTable("loss");
-                    }
-                    break;
-                case DataMode.NO_DATA:
-                    Document.Blocks.Add(BuildErrorMessagePara(errorMessage));
-                    break;
+                        if (_openingNameTable != null)
+                        {
+                            Document.Blocks.Add(_openingNameTable);
+                        }
+                        BuildOpeningStatsTable();
+                        Document.Blocks.Add(_openingStatsTable);
+                        break;
+                    case DataMode.TABLEBASE:
+                        if (_node.ColorToMove == PieceColor.White)
+                        {
+                            InsertTablebaseCategoryTable("loss");
+                            InsertTablebaseCategoryTable("unknown");
+                            InsertTablebaseCategoryTable("draw");
+                            InsertTablebaseCategoryTable("win");
+                        }
+                        else
+                        {
+                            InsertTablebaseCategoryTable("win");
+                            InsertTablebaseCategoryTable("unknown");
+                            InsertTablebaseCategoryTable("draw");
+                            InsertTablebaseCategoryTable("loss");
+                        }
+                        break;
+                    case DataMode.NO_DATA:
+                        Document.Blocks.Add(BuildErrorMessagePara(errorMessage));
+                        break;
+                }
             }
         }
 
