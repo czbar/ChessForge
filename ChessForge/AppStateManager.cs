@@ -283,16 +283,18 @@ namespace ChessForge
             {
                 selectedNode = MainWin.ActiveTreeView.GetSelectedNode();
             }
+
+            int activeNode = selectedNode == null ? -1 : selectedNode.NodeId;
             switch (tabType)
             {
                 case WorkbookManager.TabViewType.STUDY:
-                    EnableStudyTreeMenuItems((selectedNode == null || selectedNode.NodeId == 0) ? -1 : selectedNode.NodeId, isEnabled);
+                    EnableStudyTreeMenuItems(selectedNode == null ? -1 : selectedNode.NodeId, isEnabled);
                     break;
                 case WorkbookManager.TabViewType.MODEL_GAME:
-                    EnableModelGamesMenuItems((selectedNode == null || selectedNode.NodeId == 0) ? -1 : selectedNode.NodeId);
+                    EnableModelGamesMenuItems(selectedNode == null ? -1 : selectedNode.NodeId);
                     break;
                 case WorkbookManager.TabViewType.EXERCISE:
-                    EnableExercisesMenuItems((selectedNode == null || selectedNode.NodeId == 0) ? -1 : selectedNode.NodeId);
+                    EnableExercisesMenuItems(activeNode);
                     break;
             }
         }
@@ -849,7 +851,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
                                 break;
                             case "_mnGame_CopyFen":
-                                menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = gameIndex >= 0 && ActiveVariationTree != null;
                                 break;
                             case "_mnGame_CreateExercise":
                                 menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
@@ -905,7 +907,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = true;
                                 break;
                             case "_mnExerc_CopyFen":
-                                menuItem.IsEnabled = exerciseIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = exerciseIndex >= 0 && ActiveVariationTree != null;
                                 break;
                             case "_mnExerc_PromoteLine":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && lastClickedNodeId >= 0;
