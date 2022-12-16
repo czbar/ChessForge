@@ -472,7 +472,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ExplorersToggleOn_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        public void ExplorersToggleOn_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (AppStateManager.CurrentLearningMode != LearningMode.Mode.ENGINE_GAME)
             {
@@ -486,7 +486,10 @@ namespace ChessForge
                 AppStateManager.ShowExplorers(false, ActiveTreeView != null && ActiveTreeView.HasEntities);
             }
 
-            e.Handled = true;
+            if (e != null)
+            {
+                e.Handled = true;
+            }
         }
 
         /// <summary>
