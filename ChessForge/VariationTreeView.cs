@@ -445,6 +445,11 @@ namespace ChessForge
             try
             {
                 TreeNode nd = GetSelectedNode();
+                if (nd == null && _mainVariationTree != null)
+                {
+                    nd = _mainVariationTree.Nodes[0];
+                }
+
                 if (nd != null)
                 {
                     Clipboard.SetText(FenParser.GenerateFenFromPosition(nd.Position));
