@@ -85,4 +85,36 @@ namespace WebAccess
         public string category;
     }
 
+    //
+    // Documentation at https://github.com/lichess-org/lila-tablebase
+    //
+    //  {
+    //    "dtz": 1, // dtz50'' with rounding or null if unknown
+    //    "precise_dtz": 1, // dtz50'' (only if guaranteed to be not rounded) or null if unknown
+    //    "dtm": 17, // depth to mate or null if unknown
+    //    "checkmate": false,
+    //    "stalemate": false,
+    //    "variant_win": false, // only in chess variants (atomic, antichess)
+    //    "variant_loss": false, // only in chess variants
+    //    "insufficient_material": false,
+    //    "category": "win", // win, unknown, maybe-win, cursed-win, draw, blessed-loss, maybe-loss, loss
+    //    "moves": [ // information about legal moves, best first
+    //      {
+    //        "uci": "h7h8q",
+    //        "san": "h8=Q+",
+    //        "dtz": -2,
+    //        "precise_dtz": -2,
+    //        "dtm": -16,
+    //        "zeroing": true,
+    //        "checkmate": false,
+    //        "stalemate": false,
+    //        "variant_win": false,
+    //        "variant_loss": false,
+    //        "insufficient_material": false,
+    //        "category": "loss" // loss, unknown, maybe-loss, blessed-loss, draw, cursed-win, maybe-win, win
+    //      },
+    //      // ...
+    //    ]
+    //  }
+
 }

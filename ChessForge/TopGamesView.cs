@@ -120,8 +120,12 @@ namespace ChessForge
             Document.Blocks.Clear();
             Document.PageWidth = 590;
 
-            Document.Blocks.Add(BuildHeaderLabel());
-            Document.Blocks.Add(BuildTopGamesTable());
+            // do not show Top Games in Exercise view (since we don't have any opening)
+            if (AppStateManager.ActiveTab != WorkbookManager.TabViewType.EXERCISE)
+            {
+                Document.Blocks.Add(BuildHeaderLabel());
+                Document.Blocks.Add(BuildTopGamesTable());
+            }
         }
 
         /// <summary>

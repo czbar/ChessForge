@@ -186,39 +186,45 @@ namespace ChessForge
             Document.Blocks.Clear();
             Document.PageWidth = 590;
 
-            switch (mode)
+            // makes no sense to show Opening Explorer in Exercise view
+            if (_node != null && (AppStateManager.ActiveTab != WorkbookManager.TabViewType.EXERCISE || mode == DataMode.TABLEBASE))
             {
-                case DataMode.OPENINGS:
-                    BuildOpeningNameTable();
-                    if (string.IsNullOrEmpty(_node.OpeningName))
-                    {
-                        WebAccessManager.OpeningNamesRequest(_node);
-                    }
+                switch (mode)
+                {
+                    case DataMode.OPENINGS:
+                        BuildOpeningNameTable();
+                        if (string.IsNullOrEmpty(_node.OpeningName))
+                        {
+                            WebAccessManager.OpeningNamesRequest(_node);
+                        }
 
-                    if (_openingNameTable != null)
-                    {
-                        Document.Blocks.Add(_openingNameTable);
-                    }
-                    BuildOpeningStatsTable();
-                    Document.Blocks.Add(_openingStatsTable);
-                    break;
-                case DataMode.TABLEBASE:
-                    if (_node.ColorToMove == PieceColor.White)
-                    {
-                        InsertTablebaseCategoryTable("loss");
-                        InsertTablebaseCategoryTable("draw");
-                        InsertTablebaseCategoryTable("win");
-                    }
-                    else
-                    {
-                        InsertTablebaseCategoryTable("win");
-                        InsertTablebaseCategoryTable("draw");
-                        InsertTablebaseCategoryTable("loss");
-                    }
-                    break;
-                case DataMode.NO_DATA:
-                    Document.Blocks.Add(BuildErrorMessagePara(errorMessage));
-                    break;
+                        if (_openingNameTable != null)
+                        {
+                            Document.Blocks.Add(_openingNameTable);
+                        }
+                        BuildOpeningStatsTable();
+                        Document.Blocks.Add(_openingStatsTable);
+                        break;
+                    case DataMode.TABLEBASE:
+                        if (_node.ColorToMove == PieceColor.White)
+                        {
+                            InsertTablebaseCategoryTable("loss");
+                            InsertTablebaseCategoryTable("unknown");
+                            InsertTablebaseCategoryTable("draw");
+                            InsertTablebaseCategoryTable("win");
+                        }
+                        else
+                        {
+                            InsertTablebaseCategoryTable("win");
+                            InsertTablebaseCategoryTable("unknown");
+                            InsertTablebaseCategoryTable("draw");
+                            InsertTablebaseCategoryTable("loss");
+                        }
+                        break;
+                    case DataMode.NO_DATA:
+                        Document.Blocks.Add(BuildErrorMessagePara(errorMessage));
+                        break;
+                }
             }
         }
 
@@ -347,7 +353,7 @@ namespace ChessForge
 
                 name = nd.OpeningName;
                 eco = nd.Eco;
-                if (nd.OpeningName != POSITION_NOT_NAMED  && nd.MoveNumber <= Constants.OPENING_MAX_MOVE)
+                if (nd.OpeningName != POSITION_NOT_NAMED && nd.MoveNumber <= Constants.OPENING_MAX_MOVE)
                 {
                     // we have a valid name
                     break;
@@ -872,22 +878,69 @@ namespace ChessForge
                     TableCell cellMove = new TableCell(new Paragraph(rMove));
                     row.Cells.Add(cellMove);
 
-                    if (category != "draw")
-                    {
-                        Run rDtz = new Run("DTZ " + Math.Abs(move.dtz ?? 0).ToString());
-                        rDtz.FontSize = _baseFontSize + Configuration.FontSizeDiff;
-                        TableCell cellDtz = new TableCell(new Paragraph(rDtz));
-                        row.Cells.Add(cellDtz);
+                    Run rDtz = new Run(GetDtzText(move, category));
+                    rDtz.FontSize = _baseFontSize + Configuration.FontSizeDiff;
+                    TableCell cellDtz = new TableCell(new Paragraph(rDtz));
+                    row.Cells.Add(cellDtz);
 
-                        Run rDtm = new Run("DTM " + Math.Abs(move.dtm ?? 0).ToString());
-                        rDtm.FontSize = _baseFontSize + Configuration.FontSizeDiff;
-                        TableCell cellDtm = new TableCell(new Paragraph(rDtm));
-                        row.Cells.Add(cellDtm);
-                    }
+                    Run rDtm = new Run(GetDtmText(move, category));
+                    rDtm.FontSize = _baseFontSize + Configuration.FontSizeDiff;
+                    TableCell cellDtm = new TableCell(new Paragraph(rDtm));
+                    row.Cells.Add(cellDtm);
                 }
             }
 
             return table;
+        }
+
+
+        /// <summary>
+        /// Gets text for the DTM cell.
+        /// </summary>
+        /// <param name="move"></param>
+        /// <returns></returns>
+        private string GetDtmText(LichessTablebaseMove move, string category)
+        {
+            string txt = "";
+            if (move.Checkmate)
+            {
+                txt = "checkmate";
+            }
+            else if (move.Stalemate)
+            {
+                txt = "stalemate";
+            }
+            else if (move.Insufficient_material)
+            {
+                txt = "insufficient material";
+            }
+            else if (category == "draw")
+            {
+                txt = "draw";
+            }
+            else if (move.dtm != null && category != "unknown")
+            {
+                txt += "DTM " + Math.Abs(move.dtm.Value).ToString();
+            }
+
+            return txt;
+        }
+
+        /// <summary>
+        /// Gets text for the DTZ cell.
+        /// </summary>
+        /// <param name="move"></param>
+        /// <returns></returns>
+        private string GetDtzText(LichessTablebaseMove move, string category)
+        {
+            if (move.dtz != null && category != "draw" && category != "unknown")
+            {
+                return "DTZ " + Math.Abs(move.dtz.Value).ToString();
+            }
+            else
+            {
+                return "";
+            }
         }
 
         /// <summary>
@@ -915,6 +968,9 @@ namespace ChessForge
             {
                 case "win":
                     title = "Losing";
+                    break;
+                case "unknown":
+                    title = "Unknown";
                     break;
                 case "draw":
                     title = "Drawing";

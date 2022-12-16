@@ -309,6 +309,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Whether any solution has been provided.
+        /// </summary>
+        public bool IsMainVariationTreeEmpty
+        {
+            get => (_mainVariationTree == null || _mainVariationTree.Nodes.Count <= 1);
+        }
+
+        /// <summary>
         /// Appends this paragraph to the document to advise the user that the
         /// solving is over.
         /// </summary>
@@ -409,10 +417,6 @@ namespace ChessForge
             canvas.Width = 250;
             canvas.Height = 250;
 
-            canvas.MouseLeftButtonDown += EventDummyBoardMouseDown;
-            canvas.MouseLeftButtonUp += EventDummyBoardMouseUp;
-            canvas.MouseMove += EventDummyBoardMouseMove;
-
             return canvas;
         }
 
@@ -430,6 +434,11 @@ namespace ChessForge
             _exercisePassiveChessBoard = new ChessBoardSmall(canvas, imgChessBoard, null, false, false);
             _exercisePassiveChessBoard.DisplayPosition(_mainVariationTree.Nodes[0], false);
             AlignExerciseAndMainBoards();
+
+            imgChessBoard.MouseLeftButtonDown += EventDummyBoardMouseDown;
+            imgChessBoard.MouseLeftButtonUp += EventDummyBoardMouseUp;
+            imgChessBoard.MouseMove += EventDummyBoardMouseMove;
+            imgChessBoard.MouseLeave += EventDummyBoardMouseLeave;
 
             return imgChessBoard;
         }
@@ -774,42 +783,51 @@ namespace ChessForge
         /// <param name="mode"></param>
         private void ActivateSolvingMode(VariationTree.SolvingMode mode)
         {
-            try
+            if (IsMainVariationTreeEmpty)
             {
-                if (_mainVariationTree.AssociatedSecondary == null)
-                {
-                    _mainVariationTree.AssociatedSecondary = new VariationTree(GameData.ContentType.EXERCISE, _mainVariationTree.RootNode.CloneMe(true));
-                    _mainVariationTree.AssociatedSecondary.CurrentSolvingMode = mode;
-                    _mainVariationTree.AssociatedSecondary.Header = _mainVariationTree.Header.CloneMe();
-                    _mainVariationTree.AssociatedSecondary.AssociatedPrimary = _mainVariationTree;
-                }
-
-                _mainVariationTree.IsAssociatedTreeActive = true;
-                _shownVariationTree.ShowTreeLines = true;
-
-                SetSolvingMode(mode);
-
-                string lineId = _shownVariationTree.SelectedLineId;
-                if (string.IsNullOrEmpty(lineId))
-                {
-                    lineId = "1";
-                }
-
-                int nodeId = _shownVariationTree.SelectedNodeId;
-                if (nodeId < 0)
-                {
-                    nodeId = 0;
-                }
-                SelectLineAndMove(lineId, nodeId);
-
-                ObservableCollection<TreeNode> lineToSelect = _shownVariationTree.SelectLine(lineId);
-                _mainWin.SetActiveLine(lineToSelect, nodeId);
-
-                SetupGuiForSolvingMode(mode);
-                BuildFlowDocumentForVariationTree();
+                MessageBox.Show("This exercise has no solution provided.", "Chess Forge Exercise", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
-            catch
+            else
             {
+                try
+                {
+                    if (_mainVariationTree.AssociatedSecondary == null)
+                    {
+                        _mainVariationTree.AssociatedSecondary = new VariationTree(GameData.ContentType.EXERCISE, _mainVariationTree.RootNode.CloneMe(true));
+                        _mainVariationTree.AssociatedSecondary.CurrentSolvingMode = mode;
+                        _mainVariationTree.AssociatedSecondary.Header = _mainVariationTree.Header.CloneMe();
+                        _mainVariationTree.AssociatedSecondary.AssociatedPrimary = _mainVariationTree;
+                    }
+
+                    _mainVariationTree.IsAssociatedTreeActive = true;
+                    _shownVariationTree.ShowTreeLines = true;
+
+                    SetSolvingMode(mode);
+                    _mainWin.EngineToggleOn_OnPreviewMouseLeftButtonDown(null, null);
+                    _mainWin.ExplorersToggleOn_PreviewMouseDown(null, null);
+
+                    string lineId = _shownVariationTree.SelectedLineId;
+                    if (string.IsNullOrEmpty(lineId))
+                    {
+                        lineId = "1";
+                    }
+
+                    int nodeId = _shownVariationTree.SelectedNodeId;
+                    if (nodeId < 0)
+                    {
+                        nodeId = 0;
+                    }
+                    SelectLineAndMove(lineId, nodeId);
+
+                    ObservableCollection<TreeNode> lineToSelect = _shownVariationTree.SelectLine(lineId);
+                    _mainWin.SetActiveLine(lineToSelect, nodeId);
+
+                    SetupGuiForSolvingMode(mode);
+                    BuildFlowDocumentForVariationTree();
+                }
+                catch
+                {
+                }
             }
         }
 
@@ -1062,6 +1080,7 @@ namespace ChessForge
             else
             {
                 _dummyBoardLeftClicked = true;
+                _dummyBoardInDrag = false;
             }
             e.Handled = true;
         }
@@ -1085,6 +1104,17 @@ namespace ChessForge
                 _dummyBoardInDrag = false;
             }
             e.Handled = true;
+        }
+
+        /// <summary>
+        /// Clears dummy board mouse move events.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void EventDummyBoardMouseLeave(object sender, RoutedEventArgs e)
+        {
+            _dummyBoardInDrag = false;
+            _dummyBoardLeftClicked = false;
         }
 
         /// <summary>
