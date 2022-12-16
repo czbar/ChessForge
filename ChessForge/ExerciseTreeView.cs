@@ -409,10 +409,6 @@ namespace ChessForge
             canvas.Width = 250;
             canvas.Height = 250;
 
-            canvas.MouseLeftButtonDown += EventDummyBoardMouseDown;
-            canvas.MouseLeftButtonUp += EventDummyBoardMouseUp;
-            canvas.MouseMove += EventDummyBoardMouseMove;
-
             return canvas;
         }
 
@@ -430,6 +426,11 @@ namespace ChessForge
             _exercisePassiveChessBoard = new ChessBoardSmall(canvas, imgChessBoard, null, false, false);
             _exercisePassiveChessBoard.DisplayPosition(_mainVariationTree.Nodes[0], false);
             AlignExerciseAndMainBoards();
+
+            imgChessBoard.MouseLeftButtonDown += EventDummyBoardMouseDown;
+            imgChessBoard.MouseLeftButtonUp += EventDummyBoardMouseUp;
+            imgChessBoard.MouseMove += EventDummyBoardMouseMove;
+            imgChessBoard.MouseLeave += EventDummyBoardMouseLeave;
 
             return imgChessBoard;
         }
@@ -788,6 +789,7 @@ namespace ChessForge
                 _shownVariationTree.ShowTreeLines = true;
 
                 SetSolvingMode(mode);
+                _mainWin.EngineToggleOn_OnPreviewMouseLeftButtonDown(null, null);
 
                 string lineId = _shownVariationTree.SelectedLineId;
                 if (string.IsNullOrEmpty(lineId))
@@ -1062,6 +1064,7 @@ namespace ChessForge
             else
             {
                 _dummyBoardLeftClicked = true;
+                _dummyBoardInDrag = false;
             }
             e.Handled = true;
         }
@@ -1085,6 +1088,17 @@ namespace ChessForge
                 _dummyBoardInDrag = false;
             }
             e.Handled = true;
+        }
+
+        /// <summary>
+        /// Clears dummy board mouse move events.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void EventDummyBoardMouseLeave(object sender, RoutedEventArgs e)
+        {
+            _dummyBoardInDrag = false;
+            _dummyBoardLeftClicked = false;
         }
 
         /// <summary>
