@@ -150,14 +150,15 @@ namespace ChessForge
                             if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
                             {
                                 StopEvaluation(true);
-                                // TODO: After the previous change this is probably no longer necessary
-                                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE
-                                    && (LearningMode.CurrentMode != LearningMode.Mode.MANUAL_REVIEW || EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS))
-                                {
-                                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-                                }
-                                UserMoveProcessor.FinalizeUserMove(targetSquare);
                             }
+
+                            // TODO: After the previous change this is probably no longer necessary
+                            if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE
+                                && (LearningMode.CurrentMode != LearningMode.Mode.MANUAL_REVIEW || EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS))
+                            {
+                                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                            }
+                            UserMoveProcessor.FinalizeUserMove(targetSquare);
                         }
                         else
                         {
