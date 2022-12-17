@@ -210,7 +210,7 @@ namespace ChessForge
         /// The word to use in messaging the user; Workbook or Game, depending on
         /// when the training started from.
         /// </summary>
-        private static string TRAINING_SOURCE = "Workbook"; 
+        private static string TRAINING_SOURCE = "Workbook";
 
         /// <summary>
         /// Layout definitions for paragraphs at different levels.
@@ -417,6 +417,33 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Removes all nodes marked "IsNewTrainingNode" unless they exist in the EngineGame.Line
+        /// </summary>
+        public void CleanupVariationTree()
+        {
+            // for each child 
+            while (true)
+            {
+                bool allClear = true;
+                for (int i = 0; i < _mainWin.ActiveVariationTree.Nodes.Count; i++)
+                {
+                    TreeNode nd = _mainWin.ActiveVariationTree.Nodes[i];
+                    if (nd.IsNewTrainingMove && EngineGame.Line.NodeList.FirstOrDefault(x => x.NodeId == nd.NodeId) == null)
+                    {
+                        _mainWin.ActiveVariationTree.DeleteRemainingMoves(nd);
+                        allClear = false;
+                        break;
+                    }
+                }
+
+                if (allClear)
+                {
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
         /// Removes the paragraph for the ply
         /// with the move number and color-to-move same
         /// as in the passed Node.
@@ -613,7 +640,7 @@ namespace ChessForge
                 return;
             }
 
-            
+
             _mainWin.Dispatcher.Invoke(() =>
             {
                 Run runEvaluated = GetRunForNodeId(nd.NodeId);

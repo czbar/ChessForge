@@ -1552,6 +1552,7 @@ namespace ChessForge
         {
             if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
+                UiTrainingView.CleanupVariationTree();
                 if (WorkbookManager.PromptAndSaveWorkbook(false))
                 {
                     EngineMessageProcessor.StopEngineEvaluation();
