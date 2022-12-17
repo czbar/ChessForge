@@ -1716,6 +1716,7 @@ namespace ChessForge
             }
 
             AppStateManager.ShowMoveEvaluationControls(false, false);
+            AppStateManager.ShowExplorers(false, false);
             BoardCommentBox.TrainingSessionStart();
 
             // The Line display is the same as when playing a game against the computer 
