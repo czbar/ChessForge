@@ -13,6 +13,7 @@
         <ContextMenu x:Key="_cmTrainingView">
             <MenuItem x:Name="_mnTrainSwitchToWorkbook" Header="Play Move %0% Instead of Text" Click="UiMnTrainSwitchToWorkbook_Click" />
             <MenuItem x:Name="_mnTrainRestartGame" Header="Restart Game After " Click="UiMnTrainRestartGame_Click" />
+            <MenuItem x:Name="_mnRollBackTraining" Header="Roll Back to " Click="UiMnRollBackTraining_Click" />
             <Separator x:Name="_mnTrainSepar_1" />
             <MenuItem x:Name="_mnTrainEvalMove" Header="Evaluate Position" Click="UiMnTrainEvalMove_Click" />
             <MenuItem x:Name="_mnTrainEvalLine" Header="Evaluate Line" Click="UiMnTrainEvalLine_Click" />

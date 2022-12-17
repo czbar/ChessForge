@@ -295,16 +295,19 @@ namespace ChessForge
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public Paragraph FindParagraphByName(string name)
+        public Paragraph FindParagraphByName(string name, bool partialName)
         {
             Paragraph para = null;
 
             foreach (Block block in Document.Blocks)
             {
-                if (block is Paragraph && (block as Paragraph).Name == name)
+                if (block is Paragraph && (block as Paragraph).Name != null)
                 {
-                    para = block as Paragraph;
-                    break;
+                    if (partialName && (block as Paragraph).Name.StartsWith(name) || (block as Paragraph).Name == name)
+                    {
+                        para = block as Paragraph;
+                        break;
+                    }
                 }
             }
 

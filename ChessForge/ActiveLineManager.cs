@@ -484,7 +484,7 @@ namespace ChessForge
 
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                     {
-                        _mainWin.StopEvaluation();
+                        _mainWin.StopEvaluation(false);
                     }
 
                     _selectedRow = row;

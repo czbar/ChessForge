@@ -1024,6 +1024,7 @@ namespace ChessForge
                 _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
 
                 ShowEvaluationControlsForCurrentStates();
+                MainWin.ExplorersToggleOn_PreviewMouseDown(null, null);
 
                 ConfigureMenusForTraining();
             });

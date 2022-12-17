@@ -54,7 +54,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    initDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    initDir = App.AppPath;
                 }
 
                 openFileDialog.InitialDirectory = initDir;
@@ -147,7 +147,7 @@ namespace ChessForge
         {
             AppLog.Message("Application Closing");
 
-            StopEvaluation(false);
+            StopEvaluation(true, false);
 
             EngineMessageProcessor.ChessEngineService.StopEngine();
 
@@ -278,7 +278,7 @@ namespace ChessForge
 
             if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
             {
-                StopEvaluation();
+                StopEvaluation(true);
             }
 
             // we will start with the first move of the active line
@@ -1552,6 +1552,7 @@ namespace ChessForge
         {
             if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
+                UiTrainingView.CleanupVariationTree();
                 if (WorkbookManager.PromptAndSaveWorkbook(false))
                 {
                     EngineMessageProcessor.StopEngineEvaluation();
@@ -1596,6 +1597,17 @@ namespace ChessForge
         private void UiMnTrainRestartGame_Click(object sender, RoutedEventArgs e)
         {
             UiTrainingView.RestartGameAfter(sender, e);
+        }
+
+        /// <summary>
+        /// The user requested to roll back training to the most recently
+        /// clicked run/move.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnRollBackTraining_Click(object sender, RoutedEventArgs e)
+        {
+            UiTrainingView.RollbackTraining();
         }
 
         /// <summary>

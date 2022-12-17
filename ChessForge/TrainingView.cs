@@ -151,6 +151,11 @@ namespace ChessForge
         private MoveContext _moveContext;
 
         /// <summary>
+        /// Id of the node over which to temporarily suspend floating board.
+        /// </summary>
+        private int _nodeIdSuppressFloatingBoard = -1;
+
+        /// <summary>
         /// Names and prefixes for Runs.
         /// NOTE: prefixes that are to be followed by NodeId 
         /// must end with the undesrscore character.
@@ -201,10 +206,16 @@ namespace ChessForge
         private static readonly string STYLE_DEFAULT = "default";
 
         /// <summary>
+        /// Training Side for this session.
+        /// Note it does not have to be the LearningMode.TrainingSide
+        /// </summary>
+        private PieceColor _trainingSide;
+
+        /// <summary>
         /// The word to use in messaging the user; Workbook or Game, depending on
         /// when the training started from.
         /// </summary>
-        private static string TRAINING_SOURCE = "Workbook"; 
+        private static string TRAINING_SOURCE = "Workbook";
 
         /// <summary>
         /// Layout definitions for paragraphs at different levels.
@@ -258,6 +269,8 @@ namespace ChessForge
             }
 
             _currentEngineGameMoveCount = 0;
+            _trainingSide = node.ColorToMove;
+
             TrainingSession.ResetTrainingLine(node);
             Document.Blocks.Clear();
             InitParaDictionary();
@@ -406,6 +419,55 @@ namespace ChessForge
 
             RemoveParagraphsFromMove(_lastClickedNode);
             ReportLastMoveVsWorkbook();
+        }
+
+        /// <summary>
+        /// The user requested rollback to one of their moves.
+        /// </summary>
+        public void RollbackToUserMove()
+        {
+            _currentEngineGameMoveCount = 0;
+
+            TrainingSession.RollbackTrainingLine(_lastClickedNode);
+            EngineGame.RollbackGame(_lastClickedNode);
+
+            TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
+
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
+            AppStateManager.SetupGuiForCurrentStates();
+
+            _mainWin.BoardCommentBox.GameMoveMade(_lastClickedNode, false);
+
+            RemoveParagraphsFromMove(_lastClickedNode);
+            BuildSecondPromptParagraph();
+            _mainWin.DisplayPosition(_lastClickedNode);
+        }
+
+        /// <summary>
+        /// Removes all nodes marked "IsNewTrainingNode" unless they exist in the EngineGame.Line
+        /// </summary>
+        public void CleanupVariationTree()
+        {
+            // for each child 
+            while (true)
+            {
+                bool allClear = true;
+                for (int i = 0; i < _mainWin.ActiveVariationTree.Nodes.Count; i++)
+                {
+                    TreeNode nd = _mainWin.ActiveVariationTree.Nodes[i];
+                    if (nd.IsNewTrainingMove && EngineGame.Line.NodeList.FirstOrDefault(x => x.NodeId == nd.NodeId) == null)
+                    {
+                        _mainWin.ActiveVariationTree.DeleteRemainingMoves(nd);
+                        allClear = false;
+                        break;
+                    }
+                }
+
+                if (allClear)
+                {
+                    break;
+                }
+            }
         }
 
         /// <summary>
@@ -605,7 +667,7 @@ namespace ChessForge
                 return;
             }
 
-            
+
             _mainWin.Dispatcher.Invoke(() =>
             {
                 Run runEvaluated = GetRunForNodeId(nd.NodeId);
@@ -987,12 +1049,17 @@ namespace ChessForge
             return r;
         }
 
-        private string BuildMoveTextForMenu(out string midTxt)
+        /// <summary>
+        /// Builds a move text for use in the context menu 
+        /// </summary>
+        /// <param name="midTxt"></param>
+        /// <returns></returns>
+        private string BuildMoveTextForMenu(TreeNode nd, out string midTxt)
         {
             midTxt = " ";
             if (_moveContext == MoveContext.GAME || _moveContext == MoveContext.LINE)
             {
-                if (_lastClickedNode.ColorToMove != LearningMode.TrainingSide)
+                if (nd.ColorToMove != _trainingSide)
                 {
                     midTxt = " Your ";
                 }
@@ -1002,7 +1069,7 @@ namespace ChessForge
                 }
             }
 
-            return MoveUtils.BuildSingleMoveText(_lastClickedNode, true);
+            return MoveUtils.BuildSingleMoveText(nd, true);
         }
 
         /// <summary>
@@ -1021,7 +1088,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 string midTxt;
-                string moveTxt = BuildMoveTextForMenu(out midTxt);
+                string moveTxt = BuildMoveTextForMenu(_lastClickedNode, out midTxt);
 
                 ContextMenu cm = _mainWin.FindResource("_cmTrainingView") as ContextMenu;
                 foreach (object o in cm.Items)
@@ -1039,8 +1106,12 @@ namespace ChessForge
                                 mi.Visibility = _moveContext == MoveContext.WORKBOOK_COMMENT ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnTrainRestartGame":
-                                mi.Header = "Restart Game After" + midTxt + "Move " + moveTxt;
+                                mi.Header = "Roll Back Game to" + midTxt + "Move " + moveTxt;
                                 mi.Visibility = _moveContext == MoveContext.GAME ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "_mnRollBackTraining":
+                                mi.Header = "Roll Back Training to " + moveTxt;
+                                mi.Visibility = (_moveContext == MoveContext.LINE || _moveContext == MoveContext.WORKBOOK_COMMENT) ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "_mnTrainSwitchToWorkbook":
                                 mi.Header = "Play " + moveTxt + " instead of Your Move";
@@ -1054,13 +1125,13 @@ namespace ChessForge
                                 break;
                         }
                     }
-                    else
-                    {
-                        if (o is Separator && (o as Separator).Name == "_mnTrainSepar_1")
-                        {
-                            (o as Separator).Visibility = _moveContext == MoveContext.LINE ? Visibility.Collapsed : Visibility.Visible;
-                        }
-                    }
+                    //else
+                    //{
+                    //    if (o is Separator && (o as Separator).Name == "_mnTrainSepar_1")
+                    //    {
+                    //        (o as Separator).Visibility = _moveContext == MoveContext.LINE ? Visibility.Collapsed : Visibility.Visible;
+                    //    }
+                    //}
                 }
                 cm.PlacementTarget = _mainWin.UiRtbTrainingProgress;
                 cm.IsOpen = true;
@@ -1108,7 +1179,7 @@ namespace ChessForge
         /// Requests evaluation of a  line.
         /// Checks if this is for the Main Line or an Engine Game,
         /// sets up a list of Nodes and Runs to evaluate 
-        /// and calls RequestMpoveEvaluation().
+        /// and calls RequestMoveEvaluation().
         /// Sets Evaluation.CurrentMode to TRAINING_LINE to ensure
         /// that evaluation does not stop after the first move.
         /// </summary>
@@ -1134,6 +1205,11 @@ namespace ChessForge
                     {
                         EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, EvaluationManager.LineSource.TRAINING_LINE);
                         SetMainLineRunsToEvaluate(paraName, _lastClickedRun);
+                        Paragraph gamePara = FindParagraphByName(_par_game_moves_, true);
+                        if (gamePara != null)
+                        {
+                            SetGameRunsToEvaluate(gamePara, null);
+                        }
                         RequestMoveEvaluation();
                     }
                     else if (paraName.StartsWith(_par_game_moves_))
@@ -1197,7 +1273,7 @@ namespace ChessForge
             {
                 if (inl is Run)
                 {
-                    if (!started && inl.Name == firstRun.Name)
+                    if (!started && (firstRun == null || inl.Name == firstRun.Name))
                     {
                         started = true;
                     }
@@ -1220,7 +1296,7 @@ namespace ChessForge
             TreeNode nd = _lastClickedNode;
             if (nd != null)
             {
-                if (_lastClickedNode.ColorToMove != LearningMode.TrainingSide)
+                if (_lastClickedNode.ColorToMove != _trainingSide)
                 {
                     EngineGame.RestartAtUserMove(nd);
                     _mainWin.BoardCommentBox.GameMoveMade(nd, true);
@@ -1286,14 +1362,57 @@ namespace ChessForge
                     }
                     else if (e.ChangedButton == MouseButton.Left)
                     {
-                        if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                        _mainWin.ShowFloatingChessboard(false);
+                        if (_lastClickedNode != null)
                         {
-                            RequestMoveEvaluation();
+                            // flip the visibility for the floating board
+                            if (_nodeIdSuppressFloatingBoard == _lastClickedNode.NodeId)
+                            {
+                                _nodeIdSuppressFloatingBoard = -1;
+                            }
+                            else
+                            {
+                                _nodeIdSuppressFloatingBoard = _lastClickedNode.NodeId;
+                            }
+                        }
+                        if (e.ClickCount == 2)
+                        {
+                            // restart training
+                            if (_moveContext == MoveContext.LINE || _moveContext == MoveContext.WORKBOOK_COMMENT)
+                            {
+                                RollbackTraining();
+                            }
+                        }
+                        else
+                        {
+                            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                            {
+                                RequestMoveEvaluation();
+                            }
                         }
                     }
                 }
             }
+        }
 
+        /// <summary>
+        /// Roll back training to the last selected node.
+        /// </summary>
+        public void RollbackTraining()
+        {
+            _mainWin.StopEvaluation(true);
+            if (_lastClickedNode != null)
+            {
+                // if this is workbook's move, go one ply back
+                if (_lastClickedNode.ColorToMove == _trainingSide)
+                {
+                    RollbackToUserMove();
+                }
+                else
+                {
+                    RollbackToWorkbookMove();
+                }
+            }
         }
 
         /// <summary>
@@ -1336,7 +1455,11 @@ namespace ChessForge
                 _mainWin.FloatingChessBoard.DisplayPosition(_mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId), false);
                 int yOffset = r.Name.StartsWith(_run_stem_move_) ? 25 : -165;
                 _mainWin.UiVbFloatingChessboard.Margin = new Thickness(pt.X, pt.Y + yOffset, 0, 0);
-                _mainWin.ShowFloatingChessboard(true);
+                if (_nodeIdSuppressFloatingBoard != nodeId)
+                {
+                    _mainWin.ShowFloatingChessboard(true);
+                    _nodeIdSuppressFloatingBoard = -1;
+                }
             }
         }
 

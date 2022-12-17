@@ -149,21 +149,16 @@ namespace ChessForge
                         {
                             if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
                             {
-                                BoardCommentBox.ShowFlashAnnouncement("Stop evaluation before making your move.");
-                                ReturnDraggedPiece(false);
+                                StopEvaluation(true);
                             }
-                            else
+
+                            // TODO: After the previous change this is probably no longer necessary
+                            if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE
+                                && (LearningMode.CurrentMode != LearningMode.Mode.MANUAL_REVIEW || EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS))
                             {
-                                // we made a move and we are not in a game,
-                                // so we can switch off all evaluations except if we are in the CONTINUOUS
-                                // mode in MANUAL REVIEW
-                                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE
-                                    && (LearningMode.CurrentMode != LearningMode.Mode.MANUAL_REVIEW || EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS))
-                                {
-                                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-                                }
-                                UserMoveProcessor.FinalizeUserMove(targetSquare);
+                                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
                             }
+                            UserMoveProcessor.FinalizeUserMove(targetSquare);
                         }
                         else
                         {
@@ -474,17 +469,14 @@ namespace ChessForge
         /// <param name="e"></param>
         public void ExplorersToggleOn_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.ENGINE_GAME)
-            {
-                AppStateManager.AreExplorersOn = false;
+            AppStateManager.AreExplorersOn = false;
 
-                UiImgExplorersOff.Visibility = Visibility.Visible;
-                UiImgExplorersOn.Visibility = Visibility.Collapsed;
-                WebAccessManager.IsEnabledExplorerQueries = false;
+            UiImgExplorersOff.Visibility = Visibility.Visible;
+            UiImgExplorersOn.Visibility = Visibility.Collapsed;
+            WebAccessManager.IsEnabledExplorerQueries = false;
 
-                AppStateManager.AreExplorersOn = false;
-                AppStateManager.ShowExplorers(false, ActiveTreeView != null && ActiveTreeView.HasEntities);
-            }
+            AppStateManager.AreExplorersOn = false;
+            AppStateManager.ShowExplorers(false, ActiveTreeView != null && ActiveTreeView.HasEntities);
 
             if (e != null)
             {
@@ -499,7 +491,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void ExplorersToggleOff_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.ENGINE_GAME)
+            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.ENGINE_GAME && AppStateManager.CurrentLearningMode != LearningMode.Mode.TRAINING)
             {
                 UiImgExplorersOff.Visibility = Visibility.Collapsed;
                 UiImgExplorersOn.Visibility = Visibility.Visible;
@@ -542,7 +534,7 @@ namespace ChessForge
             UiImgEngineOff.Visibility = Visibility.Visible;
             UiImgEngineOn.Visibility = Visibility.Collapsed;
 
-            StopEvaluation();
+            StopEvaluation(false);
 
             if (e != null)
             {
@@ -572,6 +564,10 @@ namespace ChessForge
                 UiImgEngineOn.Visibility = Visibility.Visible;
                 Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                 EvaluateActiveLineSelectedPosition();
+            }
+            else if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING)
+            {
+                UiTrainingView.RequestMoveEvaluation();
             }
 
             e.Handled = true;
