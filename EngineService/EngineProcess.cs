@@ -303,6 +303,7 @@ namespace EngineService
                     }
                     else
                     {
+                        _ignoreNextBestMove = false;
                         EngineLog.Message("Command rejected: " + command + " : State=" + _currentState.ToString());
                     }
                 }
