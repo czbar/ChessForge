@@ -151,6 +151,11 @@ namespace ChessForge
         private MoveContext _moveContext;
 
         /// <summary>
+        /// Id of the node over which to temporarily suspend floating board.
+        /// </summary>
+        private int _nodeIdSuppressFloatingBoard = -1;
+
+        /// <summary>
         /// Names and prefixes for Runs.
         /// NOTE: prefixes that are to be followed by NodeId 
         /// must end with the undesrscore character.
@@ -414,6 +419,28 @@ namespace ChessForge
 
             RemoveParagraphsFromMove(_lastClickedNode);
             ReportLastMoveVsWorkbook();
+        }
+
+        /// <summary>
+        /// The user requested rollback to one of their moves.
+        /// </summary>
+        public void RollbackToUserMove()
+        {
+            _currentEngineGameMoveCount = 0;
+
+            TrainingSession.RollbackTrainingLine(_lastClickedNode);
+            EngineGame.RollbackGame(_lastClickedNode);
+
+            TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
+
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
+            AppStateManager.SetupGuiForCurrentStates();
+
+            _mainWin.BoardCommentBox.GameMoveMade(_lastClickedNode, false);
+
+            RemoveParagraphsFromMove(_lastClickedNode);
+            BuildSecondPromptParagraph();
+            _mainWin.DisplayPosition(_lastClickedNode);
         }
 
         /// <summary>
@@ -1083,10 +1110,6 @@ namespace ChessForge
                                 mi.Visibility = _moveContext == MoveContext.GAME ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "_mnRollBackTraining":
-                                if (_lastClickedNode.ColorToMove == _trainingSide)
-                                {
-                                    moveTxt = BuildMoveTextForMenu(_lastClickedNode.Parent, out midTxt);
-                                }
                                 mi.Header = "Roll Back Training to " + moveTxt;
                                 mi.Visibility = (_moveContext == MoveContext.LINE || _moveContext == MoveContext.WORKBOOK_COMMENT) ? Visibility.Visible : Visibility.Collapsed;
                                 break;
@@ -1339,6 +1362,19 @@ namespace ChessForge
                     }
                     else if (e.ChangedButton == MouseButton.Left)
                     {
+                        _mainWin.ShowFloatingChessboard(false);
+                        if (_lastClickedNode != null)
+                        {
+                            // flip the visibility for the floating board
+                            if (_nodeIdSuppressFloatingBoard == _lastClickedNode.NodeId)
+                            {
+                                _nodeIdSuppressFloatingBoard = -1;
+                            }
+                            else
+                            {
+                                _nodeIdSuppressFloatingBoard = _lastClickedNode.NodeId;
+                            }
+                        }
                         if (e.ClickCount == 2)
                         {
                             // restart training
@@ -1365,15 +1401,17 @@ namespace ChessForge
         public void RollbackTraining()
         {
             _mainWin.StopEvaluation(true);
-
-            // if this is workbook's move, go one ply back
-            if (_lastClickedNode.ColorToMove == _trainingSide)
-            {
-                _lastClickedNode = _lastClickedNode.Parent;
-            }
             if (_lastClickedNode != null)
             {
-                RollbackToWorkbookMove();
+                // if this is workbook's move, go one ply back
+                if (_lastClickedNode.ColorToMove == _trainingSide)
+                {
+                    RollbackToUserMove();
+                }
+                else
+                {
+                    RollbackToWorkbookMove();
+                }
             }
         }
 
@@ -1417,7 +1455,11 @@ namespace ChessForge
                 _mainWin.FloatingChessBoard.DisplayPosition(_mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId), false);
                 int yOffset = r.Name.StartsWith(_run_stem_move_) ? 25 : -165;
                 _mainWin.UiVbFloatingChessboard.Margin = new Thickness(pt.X, pt.Y + yOffset, 0, 0);
-                _mainWin.ShowFloatingChessboard(true);
+                if (_nodeIdSuppressFloatingBoard != nodeId)
+                {
+                    _mainWin.ShowFloatingChessboard(true);
+                    _nodeIdSuppressFloatingBoard = -1;
+                }
             }
         }
 
