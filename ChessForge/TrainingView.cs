@@ -201,6 +201,12 @@ namespace ChessForge
         private static readonly string STYLE_DEFAULT = "default";
 
         /// <summary>
+        /// Training Side for this session.
+        /// Note it does not have to be the LearningMode.TrainingSide
+        /// </summary>
+        private PieceColor _trainingSide;
+
+        /// <summary>
         /// The word to use in messaging the user; Workbook or Game, depending on
         /// when the training started from.
         /// </summary>
@@ -258,6 +264,8 @@ namespace ChessForge
             }
 
             _currentEngineGameMoveCount = 0;
+            _trainingSide = node.ColorToMove;
+
             TrainingSession.ResetTrainingLine(node);
             Document.Blocks.Clear();
             InitParaDictionary();
@@ -987,12 +995,17 @@ namespace ChessForge
             return r;
         }
 
+        /// <summary>
+        /// Builds a move text for use in the context menu 
+        /// </summary>
+        /// <param name="midTxt"></param>
+        /// <returns></returns>
         private string BuildMoveTextForMenu(out string midTxt)
         {
             midTxt = " ";
             if (_moveContext == MoveContext.GAME || _moveContext == MoveContext.LINE)
             {
-                if (_lastClickedNode.ColorToMove != LearningMode.TrainingSide)
+                if (_lastClickedNode.ColorToMove != _trainingSide)
                 {
                     midTxt = " Your ";
                 }
@@ -1108,7 +1121,7 @@ namespace ChessForge
         /// Requests evaluation of a  line.
         /// Checks if this is for the Main Line or an Engine Game,
         /// sets up a list of Nodes and Runs to evaluate 
-        /// and calls RequestMpoveEvaluation().
+        /// and calls RequestMoveEvaluation().
         /// Sets Evaluation.CurrentMode to TRAINING_LINE to ensure
         /// that evaluation does not stop after the first move.
         /// </summary>
@@ -1134,6 +1147,11 @@ namespace ChessForge
                     {
                         EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, EvaluationManager.LineSource.TRAINING_LINE);
                         SetMainLineRunsToEvaluate(paraName, _lastClickedRun);
+                        Paragraph gamePara = FindParagraphByName(_par_game_moves_, true);
+                        if (gamePara != null)
+                        {
+                            SetGameRunsToEvaluate(gamePara, null);
+                        }
                         RequestMoveEvaluation();
                     }
                     else if (paraName.StartsWith(_par_game_moves_))
@@ -1197,7 +1215,7 @@ namespace ChessForge
             {
                 if (inl is Run)
                 {
-                    if (!started && inl.Name == firstRun.Name)
+                    if (!started && (firstRun == null || inl.Name == firstRun.Name))
                     {
                         started = true;
                     }
@@ -1220,7 +1238,7 @@ namespace ChessForge
             TreeNode nd = _lastClickedNode;
             if (nd != null)
             {
-                if (_lastClickedNode.ColorToMove != LearningMode.TrainingSide)
+                if (_lastClickedNode.ColorToMove != _trainingSide)
                 {
                     EngineGame.RestartAtUserMove(nd);
                     _mainWin.BoardCommentBox.GameMoveMade(nd, true);
@@ -1286,9 +1304,29 @@ namespace ChessForge
                     }
                     else if (e.ChangedButton == MouseButton.Left)
                     {
-                        if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                        if (e.ClickCount == 2)
                         {
-                            RequestMoveEvaluation();
+                            // restart training
+                            if (_moveContext == MoveContext.LINE || _moveContext == MoveContext.WORKBOOK_COMMENT)
+                            {
+                                _mainWin.StopEvaluation(true);
+                                // if this is workbook's move, go one ply back
+                                if (_lastClickedNode.ColorToMove == _trainingSide)
+                                {
+                                    _lastClickedNode = _lastClickedNode.Parent;
+                                }
+                                if (_lastClickedNode != null)
+                                {
+                                    RollbackToWorkbookMove();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                            {
+                                RequestMoveEvaluation();
+                            }
                         }
                     }
                 }
