@@ -149,14 +149,8 @@ namespace ChessForge
                         {
                             if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
                             {
-                                BoardCommentBox.ShowFlashAnnouncement("Stop evaluation before making your move.");
-                                ReturnDraggedPiece(false);
-                            }
-                            else
-                            {
-                                // we made a move and we are not in a game,
-                                // so we can switch off all evaluations except if we are in the CONTINUOUS
-                                // mode in MANUAL REVIEW
+                                StopEvaluation(true);
+                                // TODO: After the previous change this is probably no longer necessary
                                 if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE
                                     && (LearningMode.CurrentMode != LearningMode.Mode.MANUAL_REVIEW || EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS))
                                 {
@@ -542,7 +536,7 @@ namespace ChessForge
             UiImgEngineOff.Visibility = Visibility.Visible;
             UiImgEngineOn.Visibility = Visibility.Collapsed;
 
-            StopEvaluation();
+            StopEvaluation(false);
 
             if (e != null)
             {
