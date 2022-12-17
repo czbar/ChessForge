@@ -467,10 +467,13 @@ namespace ChessForge
                 int gamesCount = WorkbookManager.ReadPgnFile(fileName, ref games, GameData.ContentType.GENERIC);
                 if (gamesCount > 0)
                 {
-                    int processedGames = WorkbookManager.MergeGames(ref chapter.StudyTree.Tree, ref games);
+                    int processedGames = WorkbookManager.MergeGames(ref chapter.StudyTree.Tree, ref games, out bool processed);
                     if (processedGames == 0)
                     {
-                        MessageBox.Show("No valid games found. No new chapter has been created.", "PGN Import", MessageBoxButton.OK, MessageBoxImage.Error);
+                        if (processed)
+                        {
+                            MessageBox.Show("No valid games found. No new chapter has been created.", "PGN Import", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                     else
                     {
