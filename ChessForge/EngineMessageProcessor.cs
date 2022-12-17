@@ -126,9 +126,9 @@ namespace ChessForge
         /// <summary>
         /// Stops engine evaluation. Sends the "stop" command to the Engine.
         /// </summary>
-        public static void StopEngineEvaluation()
+        public static void StopEngineEvaluation(bool ignoreNextBestMove = false)
         {
-            ChessEngineService.SendStopCommand();
+            ChessEngineService.SendStopCommand(ignoreNextBestMove);
         }
 
         /// <summary>
