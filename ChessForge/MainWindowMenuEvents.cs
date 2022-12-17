@@ -54,7 +54,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    initDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    initDir = App.AppPath;
                 }
 
                 openFileDialog.InitialDirectory = initDir;
