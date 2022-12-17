@@ -1080,14 +1080,15 @@ namespace ChessForge
         public void SetupGuiForActiveStudyTree(bool focusOnStudyTree)
         {
             _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
-            // TODO: below, it should not be ActiveVariationTree but the active study tree
-            if (ActiveVariationTree.Nodes.Count == 0)
+
+            VariationTree studyTree = AppStateManager.ActiveChapter.StudyTree.Tree;
+            if (studyTree.Nodes.Count == 0)
             {
-                ActiveVariationTree.CreateNew();
+                studyTree.CreateNew();
             }
             else
             {
-                ActiveVariationTree.BuildLines();
+                studyTree.BuildLines();
             }
 
             _studyTreeView.BuildFlowDocumentForVariationTree();
@@ -1095,10 +1096,10 @@ namespace ChessForge
             string startLineId;
             int startNodeId = 0;
 
-            startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
+            startLineId = studyTree.GetDefaultLineIdForNode(0);
 
-            ActiveVariationTree.SelectedLineId = startLineId;
-            ActiveVariationTree.SelectedNodeId = startNodeId;
+            studyTree.SelectedLineId = startLineId;
+            studyTree.SelectedNodeId = startNodeId;
 
             if (focusOnStudyTree)
             {

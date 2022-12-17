@@ -476,6 +476,8 @@ namespace ChessForge
                     {
                         success = true;
                     }
+                    // content type may have been reset to GENERIC in MergeGames above
+                    chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
                 }
                 else
                 {
