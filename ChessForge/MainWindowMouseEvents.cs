@@ -469,17 +469,14 @@ namespace ChessForge
         /// <param name="e"></param>
         public void ExplorersToggleOn_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.ENGINE_GAME)
-            {
-                AppStateManager.AreExplorersOn = false;
+            AppStateManager.AreExplorersOn = false;
 
-                UiImgExplorersOff.Visibility = Visibility.Visible;
-                UiImgExplorersOn.Visibility = Visibility.Collapsed;
-                WebAccessManager.IsEnabledExplorerQueries = false;
+            UiImgExplorersOff.Visibility = Visibility.Visible;
+            UiImgExplorersOn.Visibility = Visibility.Collapsed;
+            WebAccessManager.IsEnabledExplorerQueries = false;
 
-                AppStateManager.AreExplorersOn = false;
-                AppStateManager.ShowExplorers(false, ActiveTreeView != null && ActiveTreeView.HasEntities);
-            }
+            AppStateManager.AreExplorersOn = false;
+            AppStateManager.ShowExplorers(false, ActiveTreeView != null && ActiveTreeView.HasEntities);
 
             if (e != null)
             {
@@ -494,7 +491,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void ExplorersToggleOff_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.ENGINE_GAME)
+            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.ENGINE_GAME && AppStateManager.CurrentLearningMode != LearningMode.Mode.TRAINING)
             {
                 UiImgExplorersOff.Visibility = Visibility.Collapsed;
                 UiImgExplorersOn.Visibility = Visibility.Visible;
@@ -567,6 +564,10 @@ namespace ChessForge
                 UiImgEngineOn.Visibility = Visibility.Visible;
                 Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                 EvaluateActiveLineSelectedPosition();
+            }
+            else if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING)
+            {
+                UiTrainingView.RequestMoveEvaluation();
             }
 
             e.Handled = true;
