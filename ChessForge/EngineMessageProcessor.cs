@@ -389,31 +389,34 @@ namespace ChessForge
         /// <param name="nd"></param>
         public static void RequestMoveEvaluationInTraining(TreeNode nd)
         {
-            EvaluationManager.SetSingleNodeToEvaluate(nd);
-            string fen = FenParser.GenerateFenFromPosition(nd.Position);
-
-            AppStateManager.ShowMoveEvaluationControls(true, false);
-            AppStateManager.PrepareMoveEvaluation(fen, true);
-
-            int moveTime;
-            switch (EvaluationManager.CurrentMode)
+            if (nd != null)
             {
-                case EvaluationManager.Mode.ENGINE_GAME:
-                    moveTime = Configuration.EngineMoveTime;
-                    break;
-                case EvaluationManager.Mode.LINE:
-                    moveTime = Configuration.EngineEvaluationTime;
-                    break;
-                case EvaluationManager.Mode.CONTINUOUS:
-                    moveTime = 0;
-                    break;
-                default:
-                    AppLog.Message("ERROR: RequestMoveEvaluationInTraining() invalid mode: " + EvaluationManager.CurrentMode.ToString());
-                    moveTime = Configuration.EngineEvaluationTime;
-                    break;
-            }
+                EvaluationManager.SetSingleNodeToEvaluate(nd);
+                string fen = FenParser.GenerateFenFromPosition(nd.Position);
 
-            RequestEngineEvaluation(nd, fen, Configuration.EngineMpv, moveTime);
+                AppStateManager.ShowMoveEvaluationControls(true, false);
+                AppStateManager.PrepareMoveEvaluation(fen, true);
+
+                int moveTime;
+                switch (EvaluationManager.CurrentMode)
+                {
+                    case EvaluationManager.Mode.ENGINE_GAME:
+                        moveTime = Configuration.EngineMoveTime;
+                        break;
+                    case EvaluationManager.Mode.LINE:
+                        moveTime = Configuration.EngineEvaluationTime;
+                        break;
+                    case EvaluationManager.Mode.CONTINUOUS:
+                        moveTime = 0;
+                        break;
+                    default:
+                        AppLog.Message("ERROR: RequestMoveEvaluationInTraining() invalid mode: " + EvaluationManager.CurrentMode.ToString());
+                        moveTime = Configuration.EngineEvaluationTime;
+                        break;
+                }
+
+                RequestEngineEvaluation(nd, fen, Configuration.EngineMpv, moveTime);
+            }
         }
 
         /// <summary>
