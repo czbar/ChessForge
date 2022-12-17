@@ -1697,7 +1697,7 @@ namespace ChessForge
             }
 
             // Set up the training mode
-            StopEvaluation();
+            StopEvaluation(true);
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             TrainingSession.IsTrainingInProgress = true;
             TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
@@ -1927,9 +1927,9 @@ namespace ChessForge
         /// Stops any evaluation that is currently happening.
         /// Resets evaluation state and adjusts the GUI accordingly. 
         /// </summary>
-        public void StopEvaluation(bool updateGui = true)
+        public void StopEvaluation(bool ignoreBestMoveResponse, bool updateGui = true)
         {
-            EngineMessageProcessor.StopEngineEvaluation();
+            EngineMessageProcessor.StopEngineEvaluation(ignoreBestMoveResponse);
 
             if (updateGui)
             {

@@ -147,7 +147,7 @@ namespace ChessForge
         {
             AppLog.Message("Application Closing");
 
-            StopEvaluation(false);
+            StopEvaluation(true, false);
 
             EngineMessageProcessor.ChessEngineService.StopEngine();
 
@@ -278,7 +278,7 @@ namespace ChessForge
 
             if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
             {
-                StopEvaluation();
+                StopEvaluation(true);
             }
 
             // we will start with the first move of the active line
