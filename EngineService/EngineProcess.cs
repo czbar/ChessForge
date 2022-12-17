@@ -121,6 +121,9 @@ namespace EngineService
         // a "go"+"position" command that was received while there was another one being calculated.
         private GoFenCommand _goFenQueued;
 
+        // whether to ignore the next bestmove response (because the caller abandoned evaluation mode)
+        private bool _ignoreNextBestMove = false;
+
         /// <summary>
         /// Creates the Engine Service object.
         /// </summary>
@@ -249,8 +252,9 @@ namespace EngineService
         /// <summary>
         /// Sends the "stop" command to the engine.
         /// </summary>
-        public void SendStopCommand()
+        public void SendStopCommand(bool ignoreNextBestMove)
         {
+            _ignoreNextBestMove = ignoreNextBestMove;
             SendCommand(UciCommands.ENG_STOP);
         }
 
@@ -400,8 +404,15 @@ namespace EngineService
                                 if (message.Contains(UciCommands.ENG_BEST_MOVE))
                                 {
                                     HandleBestMove();
+                                    if (!_ignoreNextBestMove)
+                                    {
+                                        EngineMessage?.Invoke(message);
+                                    }
                                 }
-                                EngineMessage?.Invoke(message);
+                                else
+                                {
+                                    EngineMessage?.Invoke(message);
+                                }
                             }
                         }
 
