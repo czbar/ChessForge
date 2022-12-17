@@ -1600,6 +1600,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The user requested to roll back training to the most recently
+        /// clicked run/move.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnRollBackTraining_Click(object sender, RoutedEventArgs e)
+        {
+            UiTrainingView.RollbackTraining();
+        }
+
+        /// <summary>
         /// The user requested to roll back training to the most recently clicked
         /// Workbook move.
         /// </summary>

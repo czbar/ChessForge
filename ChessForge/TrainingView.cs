@@ -1027,12 +1027,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="midTxt"></param>
         /// <returns></returns>
-        private string BuildMoveTextForMenu(out string midTxt)
+        private string BuildMoveTextForMenu(TreeNode nd, out string midTxt)
         {
             midTxt = " ";
             if (_moveContext == MoveContext.GAME || _moveContext == MoveContext.LINE)
             {
-                if (_lastClickedNode.ColorToMove != _trainingSide)
+                if (nd.ColorToMove != _trainingSide)
                 {
                     midTxt = " Your ";
                 }
@@ -1042,7 +1042,7 @@ namespace ChessForge
                 }
             }
 
-            return MoveUtils.BuildSingleMoveText(_lastClickedNode, true);
+            return MoveUtils.BuildSingleMoveText(nd, true);
         }
 
         /// <summary>
@@ -1061,7 +1061,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 string midTxt;
-                string moveTxt = BuildMoveTextForMenu(out midTxt);
+                string moveTxt = BuildMoveTextForMenu(_lastClickedNode, out midTxt);
 
                 ContextMenu cm = _mainWin.FindResource("_cmTrainingView") as ContextMenu;
                 foreach (object o in cm.Items)
@@ -1079,8 +1079,16 @@ namespace ChessForge
                                 mi.Visibility = _moveContext == MoveContext.WORKBOOK_COMMENT ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnTrainRestartGame":
-                                mi.Header = "Restart Game After" + midTxt + "Move " + moveTxt;
+                                mi.Header = "Roll Back Game to" + midTxt + "Move " + moveTxt;
                                 mi.Visibility = _moveContext == MoveContext.GAME ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "_mnRollBackTraining":
+                                if (_lastClickedNode.ColorToMove == _trainingSide)
+                                {
+                                    moveTxt = BuildMoveTextForMenu(_lastClickedNode.Parent, out midTxt);
+                                }
+                                mi.Header = "Roll Back Training to " + moveTxt;
+                                mi.Visibility = (_moveContext == MoveContext.LINE || _moveContext == MoveContext.WORKBOOK_COMMENT) ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "_mnTrainSwitchToWorkbook":
                                 mi.Header = "Play " + moveTxt + " instead of Your Move";
@@ -1094,13 +1102,13 @@ namespace ChessForge
                                 break;
                         }
                     }
-                    else
-                    {
-                        if (o is Separator && (o as Separator).Name == "_mnTrainSepar_1")
-                        {
-                            (o as Separator).Visibility = _moveContext == MoveContext.LINE ? Visibility.Collapsed : Visibility.Visible;
-                        }
-                    }
+                    //else
+                    //{
+                    //    if (o is Separator && (o as Separator).Name == "_mnTrainSepar_1")
+                    //    {
+                    //        (o as Separator).Visibility = _moveContext == MoveContext.LINE ? Visibility.Collapsed : Visibility.Visible;
+                    //    }
+                    //}
                 }
                 cm.PlacementTarget = _mainWin.UiRtbTrainingProgress;
                 cm.IsOpen = true;
@@ -1336,16 +1344,7 @@ namespace ChessForge
                             // restart training
                             if (_moveContext == MoveContext.LINE || _moveContext == MoveContext.WORKBOOK_COMMENT)
                             {
-                                _mainWin.StopEvaluation(true);
-                                // if this is workbook's move, go one ply back
-                                if (_lastClickedNode.ColorToMove == _trainingSide)
-                                {
-                                    _lastClickedNode = _lastClickedNode.Parent;
-                                }
-                                if (_lastClickedNode != null)
-                                {
-                                    RollbackToWorkbookMove();
-                                }
+                                RollbackTraining();
                             }
                         }
                         else
@@ -1358,7 +1357,24 @@ namespace ChessForge
                     }
                 }
             }
+        }
 
+        /// <summary>
+        /// Roll back training to the last selected node.
+        /// </summary>
+        public void RollbackTraining()
+        {
+            _mainWin.StopEvaluation(true);
+
+            // if this is workbook's move, go one ply back
+            if (_lastClickedNode.ColorToMove == _trainingSide)
+            {
+                _lastClickedNode = _lastClickedNode.Parent;
+            }
+            if (_lastClickedNode != null)
+            {
+                RollbackToWorkbookMove();
+            }
         }
 
         /// <summary>
