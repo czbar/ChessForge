@@ -1749,7 +1749,7 @@ namespace ChessForge
             {
                 if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                 {
-                    _mainWin.StopEvaluation();
+                    _mainWin.StopEvaluation(true);
                     AppStateManager.SwapCommentBoxForEngineLines(false);
                 }
 
