@@ -1671,6 +1671,22 @@ namespace ChessForge
 //            AppStateManager.SetupGuiForTrainingProgressMode();
         }
 
+
+        /// <summary>
+        /// TODO: gradually replace all Got/LostFocus with IsVisibleChanged.
+        /// Sets ActiveTab to Training when Training Tab becomes visible.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabTrainingProgress_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            bool visible = (bool)e.NewValue;
+            if (visible == true)
+            {
+                WorkbookManager.ActiveTab = WorkbookManager.TabViewType.TRAINING;
+            }
+        }
+
         /// <summary>
         /// The "Exit Training" button was clicked.
         /// </summary>
