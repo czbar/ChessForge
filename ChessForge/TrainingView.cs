@@ -556,7 +556,9 @@ namespace ChessForge
         /// </summary>
         public void EngineMoveMade()
         {
-            AddMoveToEngineGamePara(EngineGame.GetLastGameNode(), false);
+            TreeNode nd = EngineGame.GetLastGameNode();
+            nd.IsNewTrainingMove = true;
+            AddMoveToEngineGamePara(nd, false);
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
