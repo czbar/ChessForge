@@ -340,7 +340,10 @@ namespace ChessForge
             }
 
             DeleteAllBookmarks(false);
-            _mainWin.ActiveVariationTree.GenerateBookmarks();
+            if (WorkbookManager.SessionWorkbook != null)
+            {
+                _mainWin.ActiveVariationTree.GenerateBookmarks(WorkbookManager.SessionWorkbook.TrainingSideConfig);
+            }
             _mainWin.UiTabBookmarks.Focus();
             ShowBookmarks();
         }
