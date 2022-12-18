@@ -217,7 +217,9 @@ namespace ChessForge
         /// This method does not check the validity of the text of the game. 
         /// Returns the number of games in the file.
         /// </summary>
-        public static int ReadPgnFile(string path, ref ObservableCollection<GameData> games, GameData.ContentType contentType)
+        public static int ReadPgnFile(string path, ref ObservableCollection<GameData> games,
+                                      GameData.ContentType contentType,
+                                      GameData.ContentType targetContentType)
         {
             games.Clear();
 
@@ -283,20 +285,47 @@ namespace ChessForge
                 }
             }
 
-            if (contentType != GameData.ContentType.GENERIC)
+            if (contentType != GameData.ContentType.GENERIC || targetContentType != GameData.ContentType.NONE)
             {
-                RemoveGamesOfWrongType(ref games, contentType);
+                RemoveGamesOfWrongType(ref games, contentType, targetContentType);
             }
 
             return games.Count;
         }
 
-        private static void RemoveGamesOfWrongType(ref ObservableCollection<GameData> games, GameData.ContentType contentType)
+        /// <summary>
+        /// Removes games of certain type from the list.
+        /// If targetContentType == NONE then all games of type 
+        /// other than contentType will be removed.
+        /// If targetContentType == MODEL_GAME then GENERIC and MODEL_GAMES
+        /// will be retained.
+        /// </summary>
+        /// <param name="games"></param>
+        /// <param name="contentType"></param>
+        /// <param name="targetContentType"></param>
+        private static void RemoveGamesOfWrongType(ref ObservableCollection<GameData> games,
+                                                   GameData.ContentType contentType,
+                                                   GameData.ContentType targetContentType)
         {
             List<GameData> gamesToRemove = new List<GameData>();
             foreach (GameData game in games)
             {
-                if (game.Header.GetContentType(out _) != contentType)
+                bool keep = false;
+                GameData.ContentType gameType = game.Header.GetContentType(out _);
+
+                if (string.IsNullOrEmpty(game.GetWorkbookTitle()))
+                {
+                    if (gameType == contentType || gameType == targetContentType)
+                    {
+                        keep = true;
+                    }
+                    else if (gameType == GameData.ContentType.GENERIC && targetContentType == GameData.ContentType.MODEL_GAME)
+                    {
+                        keep = true;
+                    }
+                }
+
+                if (!keep)
                 {
                     gamesToRemove.Add(game);
                 }
@@ -1059,7 +1088,7 @@ namespace ChessForge
             // if this is a new Workbook suggest file name based on title.
             if (pgnFileName == null && WorkbookManager.SessionWorkbook != null && !string.IsNullOrWhiteSpace(WorkbookManager.SessionWorkbook.Title))
             {
-                string title =  TextUtils.RemoveInvalidCharsFromFileName(WorkbookManager.SessionWorkbook.Title);
+                string title = TextUtils.RemoveInvalidCharsFromFileName(WorkbookManager.SessionWorkbook.Title);
                 if (!string.IsNullOrWhiteSpace(title))
                 {
                     saveDlg.FileName = title + ".pgn";
