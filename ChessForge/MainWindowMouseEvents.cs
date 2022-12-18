@@ -565,9 +565,10 @@ namespace ChessForge
                 Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                 EvaluateActiveLineSelectedPosition();
             }
-            else if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING)
+            else if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING 
+                || AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME && TrainingSession.IsTrainingInProgress)
             {
-                UiTrainingView.RequestMoveEvaluation();
+                UiTrainingView.RequestMoveEvaluation(true);
             }
 
             e.Handled = true;
