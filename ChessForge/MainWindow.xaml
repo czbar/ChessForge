@@ -287,7 +287,7 @@
                             </RichTextBox>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="UiTabStudyTree"  Header="Study" GotFocus="UiTabStudyTree_GotFocus" LostFocus="UiTabStudyTree_LostFocus" >
+                    <TabItem x:Name="UiTabStudyTree"  Header="Study" GotFocus="UiTabStudyTree_GotFocus" IsVisibleChanged="UiTabStudyTree_IsVisibleChanged" >
                         <Grid x:Name="UiGridStudyTree"  Background="#FFE5E5E5" PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0"/>
