@@ -467,15 +467,20 @@ namespace ChessForge
                 int gamesCount = WorkbookManager.ReadPgnFile(fileName, ref games, GameData.ContentType.GENERIC);
                 if (gamesCount > 0)
                 {
-                    int processedGames = WorkbookManager.MergeGames(ref chapter.StudyTree.Tree, ref games);
+                    int processedGames = WorkbookManager.MergeGames(ref chapter.StudyTree.Tree, ref games, out bool processed);
                     if (processedGames == 0)
                     {
-                        MessageBox.Show("No valid games found. No new chapter has been created.", "PGN Import", MessageBoxButton.OK, MessageBoxImage.Error);
+                        if (processed)
+                        {
+                            MessageBox.Show("No valid games found. No new chapter has been created.", "PGN Import", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                     else
                     {
                         success = true;
                     }
+                    // content type may have been reset to GENERIC in MergeGames above
+                    chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
                 }
                 else
                 {
@@ -1664,6 +1669,22 @@ namespace ChessForge
         private void UiRtbTrainingProgress_GotFocus(object sender, RoutedEventArgs e)
         {
 //            AppStateManager.SetupGuiForTrainingProgressMode();
+        }
+
+
+        /// <summary>
+        /// TODO: gradually replace all Got/LostFocus with IsVisibleChanged.
+        /// Sets ActiveTab to Training when Training Tab becomes visible.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabTrainingProgress_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            bool visible = (bool)e.NewValue;
+            if (visible == true)
+            {
+                WorkbookManager.ActiveTab = WorkbookManager.TabViewType.TRAINING;
+            }
         }
 
         /// <summary>

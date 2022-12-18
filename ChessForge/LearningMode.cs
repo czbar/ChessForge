@@ -77,10 +77,16 @@ namespace ChessForge
         /// The side, White or Black, that is training in 
         /// this session.
         /// </summary>
-        public static PieceColor TrainingSide
+        public static PieceColor TrainingSideConfig
         {
-            get { return AppStateManager.MainWin.SessionWorkbook.TrainingSide; }
-            set { AppStateManager.MainWin.SessionWorkbook.TrainingSide = value; }
+            get { return AppStateManager.MainWin.SessionWorkbook.TrainingSideConfig; }
+            set { AppStateManager.MainWin.SessionWorkbook.TrainingSideConfig = value; }
+        }
+
+        public static PieceColor TrainingSideCurrent
+        {
+            get { return AppStateManager.MainWin.SessionWorkbook.TrainingSideCurrent; }
+            set { AppStateManager.MainWin.SessionWorkbook.TrainingSideCurrent = value; }
         }
 
         /// <summary>

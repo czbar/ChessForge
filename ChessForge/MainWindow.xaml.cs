@@ -572,7 +572,7 @@ namespace ChessForge
                     WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
                     WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.MODEL_GAME, gameIndex);
 
-                    MainChessBoard.FlipBoard(WorkbookManager.SessionWorkbook.GameBoardOrientation);
+                    MainChessBoard.FlipBoard(WorkbookManager.SessionWorkbook.GameBoardOrientationCurrent);
 
                     SetupGuiForActiveModelGame(gameIndex, setFocus);
                 }
@@ -602,7 +602,7 @@ namespace ChessForge
                     WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = exerciseIndex;
                     WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, exerciseIndex);
 
-                    MainChessBoard.FlipBoard(WorkbookManager.SessionWorkbook.ExerciseBoardOrientation);
+                    MainChessBoard.FlipBoard(WorkbookManager.SessionWorkbook.ExerciseBoardOrientationCurrent);
                     SetupGuiForActiveExercise(exerciseIndex, setFocus);
                 }
                 else
@@ -1045,14 +1045,14 @@ namespace ChessForge
             AppStateManager.UpdateAppTitleBar();
             BoardCommentBox.ShowTabHints();
 
-            if (SessionWorkbook.TrainingSide == PieceColor.None)
+            if (SessionWorkbook.TrainingSideConfig == PieceColor.None)
             {
                 ShowWorkbookOptionsDialog(false);
             }
 
             //PieceColor sideAtBoardBottom =
             //    SessionWorkbook.StudyBoardOrientation != PieceColor.None ? SessionWorkbook.StudyBoardOrientation : SessionWorkbook.TrainingSide;
-            MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientation);
+            MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientationConfig);
 
             if (isChessForgeFile)
             {
@@ -1080,14 +1080,15 @@ namespace ChessForge
         public void SetupGuiForActiveStudyTree(bool focusOnStudyTree)
         {
             _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
-            // TODO: below, it should not be ActiveVariationTree but the active study tree
-            if (ActiveVariationTree.Nodes.Count == 0)
+
+            VariationTree studyTree = AppStateManager.ActiveChapter.StudyTree.Tree;
+            if (studyTree.Nodes.Count == 0)
             {
-                ActiveVariationTree.CreateNew();
+                studyTree.CreateNew();
             }
             else
             {
-                ActiveVariationTree.BuildLines();
+                studyTree.BuildLines();
             }
 
             _studyTreeView.BuildFlowDocumentForVariationTree();
@@ -1095,10 +1096,10 @@ namespace ChessForge
             string startLineId;
             int startNodeId = 0;
 
-            startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
+            startLineId = studyTree.GetDefaultLineIdForNode(0);
 
-            ActiveVariationTree.SelectedLineId = startLineId;
-            ActiveVariationTree.SelectedNodeId = startNodeId;
+            studyTree.SelectedLineId = startLineId;
+            studyTree.SelectedNodeId = startNodeId;
 
             if (focusOnStudyTree)
             {
@@ -1703,14 +1704,14 @@ namespace ChessForge
             TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
-            LearningMode.TrainingSide = startNode.ColorToMove;
+            LearningMode.TrainingSideCurrent = startNode.ColorToMove;
             MainChessBoard.DisplayPosition(startNode, true);
 
             UiTrainingView = new TrainingView(UiRtbTrainingProgress.Document, this);
             UiTrainingView.Initialize(startNode, ActiveVariationTree.ContentType);
 
-            if (LearningMode.TrainingSide == PieceColor.Black && !MainChessBoard.IsFlipped
-                || LearningMode.TrainingSide == PieceColor.White && MainChessBoard.IsFlipped)
+            if (LearningMode.TrainingSideCurrent == PieceColor.Black && !MainChessBoard.IsFlipped
+                || LearningMode.TrainingSideCurrent == PieceColor.White && MainChessBoard.IsFlipped)
             {
                 MainChessBoard.FlipBoard();
             }
@@ -1825,11 +1826,16 @@ namespace ChessForge
             if (dlg.ExitOK)
             {
                 SessionWorkbook.Title = dlg.WorkbookTitle;
-                SessionWorkbook.TrainingSide = dlg.TrainingSide;
+                SessionWorkbook.TrainingSideConfig = dlg.TrainingSide;
+                SessionWorkbook.TrainingSideCurrent = dlg.TrainingSide;
 
-                SessionWorkbook.StudyBoardOrientation = dlg.StudyBoardOrientation;
-                SessionWorkbook.GameBoardOrientation = dlg.GameBoardOrientation;
-                SessionWorkbook.ExerciseBoardOrientation = dlg.ExerciseBoardOrientation;
+                SessionWorkbook.StudyBoardOrientationConfig = dlg.StudyBoardOrientation;
+                SessionWorkbook.GameBoardOrientationConfig = dlg.GameBoardOrientation;
+                SessionWorkbook.ExerciseBoardOrientationConfig = dlg.ExerciseBoardOrientation;
+
+                SessionWorkbook.StudyBoardOrientationCurrent = dlg.StudyBoardOrientation;
+                SessionWorkbook.GameBoardOrientationCurrent = dlg.GameBoardOrientation;
+                SessionWorkbook.ExerciseBoardOrientationCurrent = dlg.ExerciseBoardOrientation;
 
                 AppStateManager.IsDirty = true;
 
@@ -1843,13 +1849,13 @@ namespace ChessForge
                     case WorkbookManager.TabViewType.CHAPTERS:
                     case WorkbookManager.TabViewType.STUDY:
                     case WorkbookManager.TabViewType.BOOKMARKS:
-                        MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientation);
+                        MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientationCurrent);
                         break;
                     case WorkbookManager.TabViewType.MODEL_GAME:
-                        MainChessBoard.FlipBoard(SessionWorkbook.GameBoardOrientation);
+                        MainChessBoard.FlipBoard(SessionWorkbook.GameBoardOrientationCurrent);
                         break;
                     case WorkbookManager.TabViewType.EXERCISE:
-                        MainChessBoard.FlipBoard(SessionWorkbook.ExerciseBoardOrientation);
+                        MainChessBoard.FlipBoard(SessionWorkbook.ExerciseBoardOrientationCurrent);
                         break;
                 }
 
@@ -2124,7 +2130,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Upon start up or when returning from Training the tab control will receive an th IsVisibleChnaged 
+        /// Upon start up or when returning from Training the tab control will receive an IsVisibleChanged 
         /// notification.  We store the active tab when losing visibility and send focus to it when regaining it.
         /// </summary>
         /// <param name="sender"></param>

@@ -221,40 +221,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Default training side for the Workbook
-        /// </summary>
-        public PieceColor TrainingSide
-        {
-            get
-            {
-                string trainingSide = Header.GetTrainingSide(out _);
-                if (!string.IsNullOrEmpty(trainingSide))
-                {
-                    return (trainingSide.Trim().ToLower() == "black" ? PieceColor.Black : PieceColor.White);
-                }
-                else
-                {
-                    return PieceColor.None;
-                };
-            }
-            set
-            {
-                if (value == PieceColor.White)
-                {
-                    Header.SetHeaderValue(PgnHeaders.KEY_TRAINING_SIDE, "white");
-                }
-                else if (value == PieceColor.Black)
-                {
-                    Header.SetHeaderValue(PgnHeaders.KEY_TRAINING_SIDE, "black");
-                }
-                else
-                {
-                    Header.SetHeaderValue(PgnHeaders.KEY_TRAINING_SIDE, "none");
-                }
-            }
-        }
-
-        /// <summary>
         /// References to bookmarked psoitions.
         /// </summary>
         public List<Bookmark> Bookmarks = new List<Bookmark>();
@@ -391,7 +357,7 @@ namespace GameTree
         /// If the fork is for the training side, the parent
         /// may be a good candidate for bookmarking.
         /// </summary>
-        public void GenerateBookmarks()
+        public void GenerateBookmarks(PieceColor _trainingSide)
         {
             if (Nodes.Count == 0)
                 return;
@@ -403,7 +369,7 @@ namespace GameTree
             if (fork != null)
             {
                 // bookmark children of the first fork
-                if (fork.ColorToMove != TrainingSide)
+                if (fork.ColorToMove != _trainingSide)
                 {
                     BookmarkChildren(fork, MAX_BOOKMARKS);
                 }
@@ -418,7 +384,7 @@ namespace GameTree
                     TreeNode nextFork = FindNextFork(nd);
                     if (nextFork != null)
                     {
-                        if (nextFork.ColorToMove != TrainingSide)
+                        if (nextFork.ColorToMove != _trainingSide)
                         {
                             BookmarkChildren(nextFork, MAX_BOOKMARKS);
                         }
@@ -432,7 +398,7 @@ namespace GameTree
 
             if (Bookmarks.Count == 0)
             {
-                BookmarkAnything();
+                BookmarkAnything(_trainingSide);
             }
         }
 
@@ -1190,11 +1156,11 @@ namespace GameTree
         /// Called when user called Generate Bookmarks if there is
         /// no fork whose children can be reasonably bookmarked.
         /// </summary>
-        private void BookmarkAnything()
+        private void BookmarkAnything(PieceColor _trainingSide)
         {
             for (int i = Nodes.Count - 1; i >= 0; i--)
             {
-                if (Nodes[i].ColorToMove == TrainingSide || i == 0)
+                if (Nodes[i].ColorToMove == _trainingSide || i == 0)
                 {
                     AddBookmark(Nodes[i]);
                     break;

@@ -32,7 +32,8 @@ namespace ChessForge
             STUDY,
             BOOKMARKS,
             MODEL_GAME,
-            EXERCISE
+            EXERCISE,
+            TRAINING
         }
 
         // which tab control had focus most recently
@@ -555,7 +556,8 @@ namespace ChessForge
             if (IsChessForgeWorkbook(ref games))
             {
                 isChessForgeFile = true;
-                return CreateWorkbookFromGameList(ref games);
+                SessionWorkbook = new Workbook();
+                return CreateWorkbookFromGameList(ref SessionWorkbook, ref games);
             }
             else
             {
@@ -575,24 +577,28 @@ namespace ChessForge
         /// Creates the Workbook object and populates it based on
         /// the content of the GameList.
         /// </summary>
-        private static bool CreateWorkbookFromGameList(ref ObservableCollection<GameData> GameList)
+        private static bool CreateWorkbookFromGameList(ref Workbook workbook, ref ObservableCollection<GameData> GameList)
         {
             try
             {
                 // the first "game" identifies the file as Chess Forge Workbook
                 // while the rest are Study Trees, Model Games and Exercises.
-                SessionWorkbook = new Workbook();
 
                 VariationTree preface = new VariationTree(GameData.ContentType.STUDY_TREE);
                 PgnGameParser pp = new PgnGameParser(GameList[0].GameText, preface);
-                SessionWorkbook.Description = preface.Nodes[0].Comment;
+                workbook.Description = preface.Nodes[0].Comment;
 
-                SessionWorkbook.Title = GameList[0].GetWorkbookTitle();
-                SessionWorkbook.TrainingSide = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetTrainingSide(out _));
+                workbook.Title = GameList[0].GetWorkbookTitle();
+                workbook.TrainingSideConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetTrainingSide(out _));
+                workbook.TrainingSideCurrent = workbook.TrainingSideConfig;
 
-                SessionWorkbook.StudyBoardOrientation = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetStudyBoardOrientation(out _));
-                SessionWorkbook.GameBoardOrientation = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetGameBoardOrientation(out _));
-                SessionWorkbook.ExerciseBoardOrientation = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetExerciseBoardOrientation(out _));
+                workbook.StudyBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetStudyBoardOrientation(out _));
+                workbook.GameBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetGameBoardOrientation(out _));
+                workbook.ExerciseBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetExerciseBoardOrientation(out _));
+
+                workbook.StudyBoardOrientationCurrent = workbook.StudyBoardOrientationConfig;
+                workbook.GameBoardOrientationCurrent = workbook.GameBoardOrientationConfig;
+                workbook.ExerciseBoardOrientationCurrent = workbook.ExerciseBoardOrientationConfig;
 
                 ProcessGames(ref WorkbookManager.VariationTreeList);
             }
@@ -615,13 +621,16 @@ namespace ChessForge
             SessionWorkbook = new Workbook();
             Chapter chapter = SessionWorkbook.CreateDefaultChapter();
 
-            int processedGames = MergeGames(ref chapter.StudyTree.Tree, ref games);
+            int processedGames = MergeGames(ref chapter.StudyTree.Tree, ref games, out bool processed);
             // the content type may have been reset to generic
             chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
 
             if (processedGames == 0)
             {
-                MessageBox.Show("No valid games found. No Workbook has been created.", "PGN Import", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (processed)
+                {
+                    MessageBox.Show("No valid games found. No Workbook has been created.", "PGN Import", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
@@ -685,10 +694,11 @@ namespace ChessForge
         /// <param name="tree"></param>
         /// <param name="games"></param>
         /// <returns></returns>
-        public static int MergeGames(ref VariationTree tree, ref ObservableCollection<GameData> games)
+        public static int MergeGames(ref VariationTree tree, ref ObservableCollection<GameData> games, out bool processed)
         {
             StringBuilder sbErrors = new StringBuilder();
             int errorCount = 0;
+            processed = false;
 
             SelectGamesDialog dlg = new SelectGamesDialog(ref games, "Select Games to Merge into the Study Tree")
             {
@@ -707,6 +717,8 @@ namespace ChessForge
                 Mouse.SetCursor(Cursors.Wait);
                 try
                 {
+                    processed = true;
+
                     // merge workbooks
                     for (int i = 0; i < games.Count; i++)
                     {

@@ -556,7 +556,9 @@ namespace ChessForge
         /// </summary>
         public void EngineMoveMade()
         {
-            AddMoveToEngineGamePara(EngineGame.GetLastGameNode(), false);
+            TreeNode nd = EngineGame.GetLastGameNode();
+            nd.IsNewTrainingMove = true;
+            AddMoveToEngineGamePara(nd, false);
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
@@ -1146,7 +1148,7 @@ namespace ChessForge
         /// Alternatively, can be called as part of line 
         /// evaluation.
         /// </summary>
-        public void RequestMoveEvaluation()
+        public void RequestMoveEvaluation(bool lastMove = false)
         {
             if (!EngineMessageProcessor.IsEngineAvailable)
             {
@@ -1171,6 +1173,10 @@ namespace ChessForge
             else
             {
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
+                if (_lastClickedNode == null || lastMove)
+                {
+                    _lastClickedNode = EngineGame.GetLastGameNode();
+                }
                 EngineMessageProcessor.RequestMoveEvaluationInTraining(_lastClickedNode);
             }
         }

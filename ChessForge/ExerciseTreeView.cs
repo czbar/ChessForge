@@ -435,10 +435,10 @@ namespace ChessForge
             _exercisePassiveChessBoard.DisplayPosition(_mainVariationTree.Nodes[0], false);
             AlignExerciseAndMainBoards();
 
-            imgChessBoard.MouseLeftButtonDown += EventDummyBoardMouseDown;
-            imgChessBoard.MouseLeftButtonUp += EventDummyBoardMouseUp;
-            imgChessBoard.MouseMove += EventDummyBoardMouseMove;
-            imgChessBoard.MouseLeave += EventDummyBoardMouseLeave;
+            canvas.MouseLeftButtonDown += EventDummyBoardMouseDown;
+            canvas.MouseLeftButtonUp += EventDummyBoardMouseUp;
+            canvas.MouseMove += EventDummyBoardMouseMove;
+            canvas.MouseLeave += EventDummyBoardMouseLeave;
 
             return imgChessBoard;
         }
