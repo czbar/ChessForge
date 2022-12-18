@@ -66,25 +66,23 @@ namespace ChessForge
         {
             InitializeComponent();
             WorkbookTitle = _workbook.Title;
-            TrainingSide = _workbook.TrainingSide;
+            TrainingSide = _workbook.TrainingSideConfig;
 
-            StudyBoardOrientation = _workbook.StudyBoardOrientation;
-            GameBoardOrientation = _workbook.GameBoardOrientation;
-            ExerciseBoardOrientation = _workbook.ExerciseBoardOrientation;
+            //StudyBoardOrientation = _workbook.StudyBoardOrientationConfig;
+            //GameBoardOrientation = _workbook.GameBoardOrientationConfig;
+            //ExerciseBoardOrientation = _workbook.ExerciseBoardOrientationConfig;
 
             UiTbTitle.Text = _workbook.Title;
-            UiLblSideToMove.Content = _workbook.TrainingSide == PieceColor.Black ? _strBlack : _strWhite;
+            UiLblSideToMove.Content = _workbook.TrainingSideConfig == PieceColor.Black ? _strBlack : _strWhite;
 
-            StudyBoardOrientation = GetBoardOrientation(_workbook.StudyBoardOrientation);
-            UiLblBoardStudyOrient.Content = _workbook.StudyBoardOrientation == PieceColor.Black ? _strBlack : _strWhite;
+            StudyBoardOrientation = GetBoardOrientation(_workbook.StudyBoardOrientationConfig);
+            UiLblBoardStudyOrient.Content = _workbook.StudyBoardOrientationConfig == PieceColor.Black ? _strBlack : _strWhite;
 
-            GameBoardOrientation = GetBoardOrientation(_workbook.GameBoardOrientation);
-            UiLblBoardGamesOrient.Content = _workbook.GameBoardOrientation == PieceColor.Black ? _strBlack : _strWhite;
+            GameBoardOrientation = GetBoardOrientation(_workbook.GameBoardOrientationConfig);
+            UiLblBoardGamesOrient.Content = _workbook.GameBoardOrientationConfig == PieceColor.Black ? _strBlack : _strWhite;
 
-            ExerciseBoardOrientation = GetBoardOrientation(_workbook.ExerciseBoardOrientation);
-            UiLblBoardExercisesOrient.Content = _workbook.ExerciseBoardOrientation == PieceColor.Black ? _strBlack : _strWhite;
-
-            //            EnableBoardOrientationControls(true);
+            ExerciseBoardOrientation = GetBoardOrientation(_workbook.ExerciseBoardOrientationConfig);
+            UiLblBoardExercisesOrient.Content = _workbook.ExerciseBoardOrientationConfig == PieceColor.Black ? _strBlack : _strWhite;
         }
 
         /// <summary>

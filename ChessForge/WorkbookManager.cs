@@ -589,11 +589,16 @@ namespace ChessForge
                 workbook.Description = preface.Nodes[0].Comment;
 
                 workbook.Title = GameList[0].GetWorkbookTitle();
-                workbook.TrainingSide = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetTrainingSide(out _));
+                workbook.TrainingSideConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetTrainingSide(out _));
+                workbook.TrainingSideCurrent = workbook.TrainingSideConfig;
 
-                workbook.StudyBoardOrientation = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetStudyBoardOrientation(out _));
-                workbook.GameBoardOrientation = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetGameBoardOrientation(out _));
-                workbook.ExerciseBoardOrientation = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetExerciseBoardOrientation(out _));
+                workbook.StudyBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetStudyBoardOrientation(out _));
+                workbook.GameBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetGameBoardOrientation(out _));
+                workbook.ExerciseBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetExerciseBoardOrientation(out _));
+
+                workbook.StudyBoardOrientationCurrent = workbook.StudyBoardOrientationConfig;
+                workbook.GameBoardOrientationCurrent = workbook.GameBoardOrientationConfig;
+                workbook.ExerciseBoardOrientationCurrent = workbook.ExerciseBoardOrientationConfig;
 
                 ProcessGames(ref WorkbookManager.VariationTreeList);
             }

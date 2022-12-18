@@ -62,11 +62,11 @@ namespace ChessForge
 
             // workbook headers
             sb.AppendLine(PgnHeaders.GetWorkbookTitleText(_workbook.Title));
-            sb.AppendLine(PgnHeaders.GetTrainingSideText(_workbook.TrainingSide));
+            sb.AppendLine(PgnHeaders.GetTrainingSideText(_workbook.TrainingSideConfig));
 
-            sb.AppendLine(PgnHeaders.GetStudyBoardOrientationText(_workbook.StudyBoardOrientation));
-            sb.AppendLine(PgnHeaders.GetGameBoardOrientationText(_workbook.GameBoardOrientation));
-            sb.AppendLine(PgnHeaders.GetExerciseBoardOrientationText(_workbook.ExerciseBoardOrientation));
+            sb.AppendLine(PgnHeaders.GetStudyBoardOrientationText(_workbook.StudyBoardOrientationConfig));
+            sb.AppendLine(PgnHeaders.GetGameBoardOrientationText(_workbook.GameBoardOrientationConfig));
+            sb.AppendLine(PgnHeaders.GetExerciseBoardOrientationText(_workbook.ExerciseBoardOrientationConfig));
 
             if (_workbook.LastUpdate != null)
             {
