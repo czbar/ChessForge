@@ -1404,6 +1404,10 @@ namespace ChessForge
                             {
                                 RollbackTraining();
                             }
+                            else if (_moveContext == MoveContext.GAME)
+                            {
+                                RestartGameAfter(null, null);
+                            }
                         }
                         else
                         {
