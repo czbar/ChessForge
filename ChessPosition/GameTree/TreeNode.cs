@@ -87,6 +87,18 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Whether this node has siblings.
+        /// We check that the parent has more than one child.
+        /// </summary>
+        public bool HasSiblings
+        {
+            get
+            {
+                return Parent != null && Parent.Children.Count > 1;
+            }
+        }
+
+        /// <summary>
         /// General purpose property to assist certain
         /// processing scenarios e.g. analysing a submitted
         /// solution.
