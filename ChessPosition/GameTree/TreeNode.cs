@@ -90,12 +90,23 @@ namespace GameTree
         /// Whether this node has siblings.
         /// We check that the parent has more than one child.
         /// </summary>
-        public bool HasSiblings
+        public bool HasSiblings(bool excludeTrainingMoves = true)
         {
-            get
+            if (Parent == null || Parent.Children.Count <= 1)
             {
-                return Parent != null && Parent.Children.Count > 1;
+                return false;
             }
+
+            int childrenCount = 0;
+            foreach (TreeNode child in Parent.Children)
+            {
+                if (!excludeTrainingMoves || !child.IsNewTrainingMove)
+                {
+                    childrenCount++;
+                }
+            }
+
+            return childrenCount > 1;
         }
 
         /// <summary>
