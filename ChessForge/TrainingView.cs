@@ -533,9 +533,7 @@ namespace ChessForge
             _mainWin.DisplayPosition(userChoiceNode);
             _mainWin.ColorMoveSquares(_userMove.LastMoveEngineNotation);
 
-            TreeNode nd = _mainWin.ActiveVariationTree.SelectRandomChild(nodeId);
-
-            // Selecting a random response to the user's choice from the Workbook
+            TreeNode nd = _mainWin.ActiveVariationTree.SelectNextChild(nodeId);
             EngineGame.AddPlyToGame(nd);
 
             // The move will be visualized in response to CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE timer's elapsed event
