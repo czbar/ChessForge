@@ -975,6 +975,31 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Selects the next child of the given node
+        /// based on the last stored index.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        public TreeNode SelectNextChild(int nodeId)
+        {
+            TreeNode nd = GetNodeFromNodeId(nodeId);
+            int childCount = nd.Children.Count;
+            if (childCount == 0)
+            {
+                return null;
+            }
+            else
+            {
+                nd.SelectedChildIndex++;
+                if (nd.SelectedChildIndex > childCount - 1)
+                {
+                    nd.SelectedChildIndex = 0;
+                }
+                return nd.Children[nd.SelectedChildIndex];
+            }
+        }
+
+        /// <summary>
         /// Each invocation of this method builds a Line for 
         /// the flattened view of the Workbook.
         /// The method calls itself recursively to build
