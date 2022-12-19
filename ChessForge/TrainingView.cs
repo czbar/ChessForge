@@ -768,6 +768,10 @@ namespace ChessForge
             para.Inlines.Add(r_prefix);
 
             Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true) + " ", runName, Brushes.Black);
+            if (nd.HasSiblings)
+            {
+                r.Text = r.Text + Constants.Fork.ToString();
+            }
             para.Inlines.Add(r);
 
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
