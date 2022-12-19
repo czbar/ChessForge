@@ -32,6 +32,12 @@ namespace GameTree
         public int NodeId;
 
         /// <summary>
+        /// Used in some context to keep track of selection
+        /// e.g. in Training.
+        /// </summary>
+        public int SelectedChildIndex = -1;
+
+        /// <summary>
         /// Encyclopaedia of chess openings code
         /// </summary>
         public string Eco;
