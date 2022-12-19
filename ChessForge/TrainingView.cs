@@ -372,6 +372,12 @@ namespace ChessForge
                     }
                     else
                     {
+                        // delete if exists
+                        Paragraph oldPara = FindParagraphByName(_par_game_moves_, false);
+                        if (oldPara != null)
+                        {
+                            Document.Blocks.Remove(oldPara);
+                        }
                         _paraCurrentEngineGame = AddNewParagraphToDoc(STYLE_ENGINE_GAME, "");
                         _paraCurrentEngineGame.Name = _par_game_moves_;
                         if (foundMove != null)
@@ -751,30 +757,34 @@ namespace ChessForge
             string paraName = _par_line_moves_ + nd.NodeId.ToString();
             string runName = _run_line_move_ + nd.NodeId.ToString();
 
-            Paragraph para = AddNewParagraphToDoc(STYLE_MOVES_MAIN, "");
-            para.Name = paraName;
-
-            Run r_prefix = new Run();
-            if (userMove)
+            // check if already exists. Due to timing issues it may be called multiple times
+            if (FindParagraphByName(paraName, false) == null)
             {
-                r_prefix.Text = "You played:   ";
-            }
-            else
-            {
-                r_prefix.Text = "Coach's response:   ";
-            }
-            r_prefix.FontWeight = FontWeights.Normal;
+                Paragraph para = AddNewParagraphToDoc(STYLE_MOVES_MAIN, "");
+                para.Name = paraName;
 
-            para.Inlines.Add(r_prefix);
+                Run r_prefix = new Run();
+                if (userMove)
+                {
+                    r_prefix.Text = "You played:   ";
+                }
+                else
+                {
+                    r_prefix.Text = "Coach's response:   ";
+                }
+                r_prefix.FontWeight = FontWeights.Normal;
 
-            Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true) + " ", runName, Brushes.Black);
-            if (nd.HasSiblings)
-            {
-                r.Text = r.Text + Constants.Fork.ToString();
+                para.Inlines.Add(r_prefix);
+
+                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true) + " ", runName, Brushes.Black);
+                if (nd.HasSiblings())
+                {
+                    r.Text = r.Text + Constants.Fork.ToString();
+                }
+                para.Inlines.Add(r);
+
+                _mainWin.UiRtbTrainingProgress.ScrollToEnd();
             }
-            para.Inlines.Add(r);
-
-            _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
         /// <summary>
@@ -950,71 +960,75 @@ namespace ChessForge
         {
             string paraName = _par_coach_moves_ + _userMove.NodeId.ToString();
 
-            Paragraph para = AddNewParagraphToDoc(STYLE_COACH_NOTES, "");
-            para.Name = paraName;
-
-            Run coach = new Run("Coach says:");
-            coach.TextDecorations = TextDecorations.Underline;
-            para.Inlines.Add(coach);
-
-            string txt = "  ";
-            if (_otherMovesInWorkbook.Count == 0)
+            // check that it does not exists yet
+            if (FindParagraphByName(paraName, false) == null)
             {
-                if (isWorkbookMove)
-                {
-                    txt += "The move you made is the only move in the " + TRAINING_SOURCE + ".";
-                    Run r_only = new Run(txt);
-                    para.Inlines.Add(r_only);
-                }
-                else
-                {
-                    txt += "The Workbook line has ended. ";
-                    Run r_notWb = new Run(txt);
-                    para.Inlines.Add(r_notWb);
-                }
-            }
-            else
-            {
+                Paragraph para = AddNewParagraphToDoc(STYLE_COACH_NOTES, "");
+                para.Name = paraName;
 
-                if (!isWorkbookMove)
-                {
-                    txt += "This is not in the " + TRAINING_SOURCE + ". ";
-                    Run r_notWb = new Run(txt);
-                    para.Inlines.Add(r_notWb);
+                Run coach = new Run("Coach says:");
+                coach.TextDecorations = TextDecorations.Underline;
+                para.Inlines.Add(coach);
 
-                    txt = "";
-                }
-
-                if (!isWorkbookMove)
+                string txt = "  ";
+                if (_otherMovesInWorkbook.Count == 0)
                 {
-                    if (_otherMovesInWorkbook.Count == 1)
+                    if (isWorkbookMove)
                     {
-                        txt += "The only " + TRAINING_SOURCE + " move is ";
+                        txt += "The move you made is the only move in the " + TRAINING_SOURCE + ".";
+                        Run r_only = new Run(txt);
+                        para.Inlines.Add(r_only);
                     }
                     else
                     {
-                        txt += "The " + TRAINING_SOURCE + " moves are ";
+                        txt += "The Workbook line has ended. ";
+                        Run r_notWb = new Run(txt);
+                        para.Inlines.Add(r_notWb);
                     }
-                    Run r_wb = new Run(txt);
-                    para.Inlines.Add(r_wb);
                 }
                 else
                 {
-                    if (_otherMovesInWorkbook.Count == 1)
+
+                    if (!isWorkbookMove)
                     {
-                        txt += "The only other " + TRAINING_SOURCE + " move is ";
+                        txt += "This is not in the " + TRAINING_SOURCE + ". ";
+                        Run r_notWb = new Run(txt);
+                        para.Inlines.Add(r_notWb);
+
+                        txt = "";
+                    }
+
+                    if (!isWorkbookMove)
+                    {
+                        if (_otherMovesInWorkbook.Count == 1)
+                        {
+                            txt += "The only " + TRAINING_SOURCE + " move is ";
+                        }
+                        else
+                        {
+                            txt += "The " + TRAINING_SOURCE + " moves are ";
+                        }
+                        Run r_wb = new Run(txt);
+                        para.Inlines.Add(r_wb);
                     }
                     else
                     {
-                        txt += "Other " + TRAINING_SOURCE + " moves are ";
+                        if (_otherMovesInWorkbook.Count == 1)
+                        {
+                            txt += "The only other " + TRAINING_SOURCE + " move is ";
+                        }
+                        else
+                        {
+                            txt += "Other " + TRAINING_SOURCE + " moves are ";
+                        }
+                        Run r_wb = new Run(txt);
+                        para.Inlines.Add(r_wb);
                     }
-                    Run r_wb = new Run(txt);
-                    para.Inlines.Add(r_wb);
-                }
 
-                BuildOtherWorkbookMovesRun(para);
+                    BuildOtherWorkbookMovesRun(para);
+                }
+                _mainWin.UiRtbTrainingProgress.ScrollToEnd();
             }
-            _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
         /// <summary>
