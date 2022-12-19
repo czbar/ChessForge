@@ -464,7 +464,7 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
                 ObservableCollection<GameData> games = new ObservableCollection<GameData>();
 
-                int gamesCount = WorkbookManager.ReadPgnFile(fileName, ref games, GameData.ContentType.GENERIC);
+                int gamesCount = WorkbookManager.ReadPgnFile(fileName, ref games, GameData.ContentType.GENERIC, GameData.ContentType.MODEL_GAME);
                 if (gamesCount > 0)
                 {
                     int processedGames = WorkbookManager.MergeGames(ref chapter.StudyTree.Tree, ref games, out bool processed);
@@ -734,7 +734,7 @@ namespace ChessForge
                 {
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     ObservableCollection<GameData> games = new ObservableCollection<GameData>();
-                    gameCount = WorkbookManager.ReadPgnFile(fileName, ref games, contentType);
+                    gameCount = WorkbookManager.ReadPgnFile(fileName, ref games, contentType, targetcontentType);
 
                     int errorCount = 0;
                     StringBuilder sbErrors = new StringBuilder();

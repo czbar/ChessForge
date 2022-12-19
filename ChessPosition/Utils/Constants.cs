@@ -160,6 +160,11 @@ namespace ChessPosition
         public const char HalfPoint = '\u00BD';
 
         /// <summary>
+        /// A Fork character
+        /// </summary>
+        public const char Fork = '\u2442';
+
+        /// <summary>
         /// Min and Max dimensions of the chess board
         /// when starting from 0.
         /// </summary>

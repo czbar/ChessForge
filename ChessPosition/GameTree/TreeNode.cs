@@ -32,6 +32,12 @@ namespace GameTree
         public int NodeId;
 
         /// <summary>
+        /// Used in some context to keep track of selection
+        /// e.g. in Training.
+        /// </summary>
+        public int SelectedChildIndex = -1;
+
+        /// <summary>
         /// Encyclopaedia of chess openings code
         /// </summary>
         public string Eco;
@@ -84,6 +90,29 @@ namespace GameTree
         {
             get => _quizPoints;
             set => _quizPoints = value;
+        }
+
+        /// <summary>
+        /// Whether this node has siblings.
+        /// We check that the parent has more than one child.
+        /// </summary>
+        public bool HasSiblings(bool excludeTrainingMoves = true)
+        {
+            if (Parent == null || Parent.Children.Count <= 1)
+            {
+                return false;
+            }
+
+            int childrenCount = 0;
+            foreach (TreeNode child in Parent.Children)
+            {
+                if (!excludeTrainingMoves || !child.IsNewTrainingMove)
+                {
+                    childrenCount++;
+                }
+            }
+
+            return childrenCount > 1;
         }
 
         /// <summary>
