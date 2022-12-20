@@ -69,13 +69,22 @@ namespace ChessForge
                 Message("ColorToMove=" + (nd.ColorToMove.ToString()));
                 Message("MoveNumber=" + nd.MoveNumber.ToString());
 
-                List<string> list = DebugUtils.BuildStringForPosition(nd.Position);
-                foreach (string item in list)
-                {
-                    Message(item);
-                }
+                LogPosition(nd.Position);
                 Message("*** END TreeNode:");
                 Message("");
+            }
+        }
+
+        /// <summary>
+        /// Logs position in readable form.
+        /// </summary>
+        /// <param name="position"></param>
+        public static void LogPosition(BoardPosition position)
+        {
+            List<string> list = DebugUtils.BuildStringForPosition(position);
+            foreach (string item in list)
+            {
+                Message(item);
             }
         }
 
