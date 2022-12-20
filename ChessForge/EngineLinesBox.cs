@@ -118,7 +118,7 @@ namespace ChessForge
         {
             try
             {
-//                TreeNode evalNode = EvaluationManager.GetEvaluatedNode(out _);
+                //                TreeNode evalNode = EvaluationManager.GetEvaluatedNode(out _);
                 TreeNode evalNode = EngineMessageProcessor.LastMessageNode;
 
                 BoardPosition position = evalNode.Position;
@@ -187,10 +187,16 @@ namespace ChessForge
                 workingPosition.InheritedEnPassantSquare = nd.Position.EnPassantSquare;
 
                 bool firstMove = true;
+
+                string debugMove = "";
                 try
                 {
                     foreach (string move in moves)
                     {
+                        if (Configuration.DebugLevel != 0)
+                        {
+                            debugMove = move;
+                        }
                         if (workingPosition.ColorToMove == PieceColor.White && !firstMove)
                         {
                             sb.Append(workingPosition.MoveNumber.ToString() + ".");
@@ -198,6 +204,8 @@ namespace ChessForge
                         firstMove = false;
                         bool isCastle;
                         sb.Append(MoveUtils.EngineNotationToAlgebraic(move, ref workingPosition, out isCastle));
+                        workingPosition.InheritedEnPassantSquare = workingPosition.EnPassantSquare;
+                        
                         // invert colors
                         workingPosition.ColorToMove = workingPosition.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
                         sb.Append(" ");
@@ -212,6 +220,9 @@ namespace ChessForge
                     if (Configuration.DebugLevel != 0)
                     {
                         AppLog.Message("Exception in BuildMoveSequence(): " + ex.Message);
+                        AppLog.LogPosition(workingPosition);
+                        AppLog.Message("Move: " + debugMove);
+                        AppLog.Message("Returned string: " + sb.ToString());
                     }
                 }
 
