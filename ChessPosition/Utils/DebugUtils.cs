@@ -103,18 +103,14 @@ namespace ChessPosition
 
             sb = new StringBuilder();
             sb.Append("En Passant square: ");
-            if (board.EnPassantSquare == 0)
-            {
-                sb.Append("none");
-            }
-            else
-            {
-                char columnCharCode = (char)((board.EnPassantSquare >> 4) + (int)'a');
-                char rowCharCode = (char)((board.EnPassantSquare & 0x0F) + (int)'1');
-                sb.Append((char)columnCharCode);
-                sb.Append((char)rowCharCode);
-            }
+            sb.Append(EnpassantString(board.EnPassantSquare));
             list.Add(sb.ToString());
+            sb.Clear();
+
+            sb.Append("Inherited En Passant square: ");
+            sb.Append(EnpassantString(board.InheritedEnPassantSquare));
+            list.Add(sb.ToString());
+            sb.Clear();
 
             list.Add("Halfmove50 clock: " + board.HalfMove50Clock);
             list.Add("Move number     : " + board.MoveNumber);
@@ -185,6 +181,25 @@ namespace ChessPosition
             Console.WriteLine("");
             Console.WriteLine("=====================");
             Console.WriteLine("");
+        }
+
+        /// <summary>
+        /// Builds a string with the decoded enpassant square
+        /// </summary>
+        /// <param name="square"></param>
+        /// <returns></returns>
+        private static string EnpassantString(byte square)
+        {
+            if (square == 0)
+            {
+                return "none";
+            }
+            else
+            {
+                char columnCharCode = (char)((square >> 4) + (int)'a');
+                char rowCharCode = (char)((square & 0x0F) + (int)'1');
+                return ((char)columnCharCode).ToString() + ((char)rowCharCode).ToString();
+            }
         }
 
         /// <summary>
