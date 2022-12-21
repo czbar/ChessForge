@@ -438,6 +438,11 @@ namespace ChessForge
             {
                 SelectChapter(chapter.Id, false);
                 AppStateManager.IsDirty = true;
+                if (_chaptersView != null)
+                {
+                    AppStateManager.DoEvents();
+                    _chaptersView.BringChapterIntoView(chapter.Id);
+                }
             }
             else
             {
