@@ -589,9 +589,9 @@ namespace ChessForge
         {
             try
             {
-                if (WorkbookManager.SessionWorkbook.ActiveChapterNumber > 1)
+                if (WorkbookManager.SessionWorkbook.ActiveChapterIndex > 1)
                 {
-                    SelectChapter(WorkbookManager.SessionWorkbook.ActiveChapterNumber - 1, true);
+                    SelectChapter(WorkbookManager.SessionWorkbook.ActiveChapterIndex - 1, true);
                 }
             }
             catch
@@ -609,10 +609,10 @@ namespace ChessForge
         {
             try
             {
-                if (WorkbookManager.SessionWorkbook.ActiveChapterNumber > 0
-                    && WorkbookManager.SessionWorkbook.ActiveChapterNumber < WorkbookManager.SessionWorkbook.Chapters.Count)
+                if (WorkbookManager.SessionWorkbook.ActiveChapterIndex > 0
+                    && WorkbookManager.SessionWorkbook.ActiveChapterIndex < WorkbookManager.SessionWorkbook.Chapters.Count)
                 {
-                    SelectChapter(WorkbookManager.SessionWorkbook.ActiveChapterNumber + 1, true);
+                    SelectChapter(WorkbookManager.SessionWorkbook.ActiveChapterIndex + 1, true);
                 }
             }
             catch

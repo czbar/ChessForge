@@ -181,7 +181,7 @@ namespace ChessForge
         ///  Returns the 1-based Active Chapter number.
         ///  Returns 0 if there is no active chapter.
         /// </summary>
-        public int ActiveChapterNumber
+        public int ActiveChapterIndex
         {
             get
             {
