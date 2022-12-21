@@ -999,7 +999,7 @@ namespace ChessForge
                         bool res = WorkbookManager.PrepareWorkbook(ref GameList, out isChessForgeFile);
                         if (res)
                         {
-                            WorkbookManager.AssignChaptersIds();
+                            WorkbookManager.AssignChaptersIds(ref WorkbookManager.SessionWorkbook);
                             acceptFile = true;
                         }
                         else
