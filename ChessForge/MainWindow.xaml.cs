@@ -516,7 +516,7 @@ namespace ChessForge
         /// Selects the chapter.
         /// </summary>
         /// <param name="chapterId"></param>
-        public void SelectChapter(int chapterId, bool focusOnStudyTree)
+        public void SelectChapterById(int chapterId, bool focusOnStudyTree)
         {
             if (chapterId >= 0)
             {

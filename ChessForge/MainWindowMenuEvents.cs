@@ -399,7 +399,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnSelectChapter_Click(object sender, RoutedEventArgs e)
         {
-            SelectChapter(WorkbookManager.LastClickedChapterId, true);
+            SelectChapterById(WorkbookManager.LastClickedChapterId, true);
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
             if (ShowChapterTitleDialog(chapter))
             {
-                SelectChapter(chapter.Id, false);
+                SelectChapterById(chapter.Id, false);
                 AppStateManager.IsDirty = true;
                 if (_chaptersView != null)
                 {
@@ -545,7 +545,7 @@ namespace ChessForge
             if (success)
             {
                 _chaptersView.BuildFlowDocumentForChaptersView();
-                SelectChapter(chapter.Id, false);
+                SelectChapterById(chapter.Id, false);
                 AppStateManager.DoEvents();
                 _chaptersView.BringChapterIntoView(chapter.Id);
             }

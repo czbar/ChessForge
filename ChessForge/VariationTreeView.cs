@@ -499,7 +499,7 @@ namespace ChessForge
                             _mainWin.RebuildChaptersView();
                             if (dlg.GoToNewChapter)
                             {
-                                _mainWin.SelectChapter(chapter.Id, true);
+                                _mainWin.SelectChapterById(chapter.Id, true);
                                 viewRebuilt = true;
                             }
                             if (!viewRebuilt)
