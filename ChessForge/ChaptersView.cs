@@ -236,8 +236,8 @@ namespace ChessForge
                 rExpandChar.MouseDown += EventChapterExpandSymbolClicked;
                 para.Inlines.Add(rExpandChar);
 
-                string chapterNo = WorkbookManager.SessionWorkbook.GetChapterNumber(chapter).ToString();
-                Run rTitle = CreateRun(STYLE_CHAPTER_TITLE, chapterNo.ToString() + ". " + chapter.GetTitle(), true);
+                string chapterNo = (WorkbookManager.SessionWorkbook.GetChapterIndex(chapter) + 1).ToString();
+                Run rTitle = CreateRun(STYLE_CHAPTER_TITLE, chapterNo + ". " + chapter.GetTitle(), true);
                 if (chapter.Id == WorkbookManager.SessionWorkbook.ActiveChapter.Id)
                 {
                     rTitle.FontWeight = FontWeights.Bold;
@@ -500,6 +500,7 @@ namespace ChessForge
                     else if (e.ChangedButton == MouseButton.Right)
                     {
                         WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.GENERIC);
+                        // TODO: this rebuilds the Study Tree. Performance!
                         SelectChapter(chapterId, false);
                     }
                 }
@@ -1000,7 +1001,7 @@ namespace ChessForge
         {
             Chapter prevActiveChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
-            _mainWin.SelectChapter(chapterId, focusOnStudyTree);
+            _mainWin.SelectChapterById(chapterId, focusOnStudyTree);
 
             if (prevActiveChapter.Id != chapterId)
             {

@@ -513,14 +513,30 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Selects the chapter.
+        /// Selects the chapter given its Id.
         /// </summary>
         /// <param name="chapterId"></param>
-        public void SelectChapter(int chapterId, bool focusOnStudyTree)
+        public void SelectChapterById(int chapterId, bool focusOnStudyTree)
         {
             if (chapterId >= 0)
             {
                 WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameData.ContentType.STUDY_TREE);
+                ClearTabViews();
+                _chaptersView.HighlightActiveChapter();
+                SetupGuiForActiveStudyTree(focusOnStudyTree);
+            }
+        }
+
+        /// <summary>
+        /// Selects the chapter given its index.
+        /// </summary>
+        /// <param name="chapterIndex"></param>
+        /// <param name="focusOnStudyTree"></param>
+        public void SelectChapterByIndex(int chapterIndex, bool focusOnStudyTree)
+        {
+            if (chapterIndex >= 0 && chapterIndex < WorkbookManager.SessionWorkbook.Chapters.Count)
+            {
+                WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(chapterIndex, GameData.ContentType.STUDY_TREE);
                 ClearTabViews();
                 _chaptersView.HighlightActiveChapter();
                 SetupGuiForActiveStudyTree(focusOnStudyTree);
@@ -999,7 +1015,7 @@ namespace ChessForge
                         bool res = WorkbookManager.PrepareWorkbook(ref GameList, out isChessForgeFile);
                         if (res)
                         {
-                            WorkbookManager.AssignChaptersIds();
+                            WorkbookManager.AssignChaptersIds(ref WorkbookManager.SessionWorkbook);
                             acceptFile = true;
                         }
                         else

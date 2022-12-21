@@ -499,7 +499,7 @@ namespace ChessForge
                             _mainWin.RebuildChaptersView();
                             if (dlg.GoToNewChapter)
                             {
-                                _mainWin.SelectChapter(chapter.Id, true);
+                                _mainWin.SelectChapterById(chapter.Id, true);
                                 viewRebuilt = true;
                             }
                             if (!viewRebuilt)
@@ -800,7 +800,7 @@ namespace ChessForge
             if (WorkbookManager.SessionWorkbook != null)
             {
                 chapterCount = WorkbookManager.SessionWorkbook.GetChapterCount();
-                chapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterNumber - 1;
+                chapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex;
             }
 
             if (chapterCount > 1)
@@ -1017,7 +1017,6 @@ namespace ChessForge
                     case GameData.ContentType.STUDY_TREE:
                         if (WorkbookManager.SessionWorkbook.ActiveChapter != null)
                         {
-                            int no = WorkbookManager.SessionWorkbook.ActiveChapterNumber;
                             para = CreateParagraph("0", true);
                             para.MouseLeftButtonDown += EventPageHeaderClicked;
 

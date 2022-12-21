@@ -158,6 +158,9 @@
     <Compile Include="Resources\SoundSources.cs" />
     <Compile Include="Resources\Strings.cs" />
     <Compile Include="RichTextBuilder.cs" />
+    <Compile Include="SelectChaptersDialog.xaml.cs">
+      <DependentUpon>SelectChaptersDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectGamesDialog.xaml.cs">
       <DependentUpon>SelectGamesDialog.xaml</DependentUpon>
     </Compile>
@@ -235,6 +238,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="QuickReplayDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectChaptersDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
