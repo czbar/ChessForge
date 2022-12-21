@@ -104,19 +104,28 @@ namespace ChessForge
             Chapter chapter = SessionWorkbook.CreateNewChapter();
             SessionWorkbook.ActiveChapter = chapter;
             SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
-            AssignChaptersIds();
+            AssignChaptersIds(ref SessionWorkbook);
         }
 
         /// <summary>
         /// Assigns Chapter Ids per their position on the Chapters list.
         /// The first chapter gets the id of 1.
         /// </summary>
-        public static void AssignChaptersIds()
+        public static void AssignChaptersIds(ref Workbook workbook)
         {
-            for (int i = 0; i < SessionWorkbook.Chapters.Count; i++)
+            for (int i = 0; i < workbook.Chapters.Count; i++)
             {
-                SessionWorkbook.Chapters[i].Id = i + 1;
+                workbook.Chapters[i].Id = i + 1;
             }
+        }
+
+        /// <summary>
+        /// Returns id of the last chapter
+        /// </summary>
+        /// <returns></returns>
+        public static int GetLastChapterId(Workbook workbook)
+        {
+            return workbook.Chapters[workbook.Chapters.Count - 1].Id;
         }
 
         /// <summary>
@@ -303,7 +312,7 @@ namespace ChessForge
         /// <param name="games"></param>
         /// <param name="contentType"></param>
         /// <param name="targetContentType"></param>
-        private static void RemoveGamesOfWrongType(ref ObservableCollection<GameData> games,
+        public static void RemoveGamesOfWrongType(ref ObservableCollection<GameData> games,
                                                    GameData.ContentType contentType,
                                                    GameData.ContentType targetContentType)
         {
@@ -606,7 +615,7 @@ namespace ChessForge
         /// Creates the Workbook object and populates it based on
         /// the content of the GameList.
         /// </summary>
-        private static bool CreateWorkbookFromGameList(ref Workbook workbook, ref ObservableCollection<GameData> GameList)
+        public static bool CreateWorkbookFromGameList(ref Workbook workbook, ref ObservableCollection<GameData> GameList)
         {
             try
             {
@@ -629,7 +638,8 @@ namespace ChessForge
                 workbook.GameBoardOrientationCurrent = workbook.GameBoardOrientationConfig;
                 workbook.ExerciseBoardOrientationCurrent = workbook.ExerciseBoardOrientationConfig;
 
-                ProcessGames(ref WorkbookManager.VariationTreeList);
+                //ProcessGames(ref WorkbookManager.VariationTreeList, ref workbook);
+                ProcessGames(ref GameList, ref workbook);
             }
             catch
             {
@@ -683,7 +693,7 @@ namespace ChessForge
         /// <summary>
         /// Processes all games in the file creating chapters as required.
         /// </summary>
-        private static void ProcessGames(ref ObservableCollection<GameData> GameList)
+        private static void ProcessGames(ref ObservableCollection<GameData> GameList, ref Workbook workbook)
         {
             Chapter chapter = null;
 
@@ -696,7 +706,7 @@ namespace ChessForge
 
                 if (gm.GetContentType() == GameData.ContentType.STUDY_TREE)
                 {
-                    chapter = SessionWorkbook.CreateNewChapter();
+                    chapter = workbook.CreateNewChapter();
                     chapter.SetTitle(gm.Header.GetChapterTitle());
                 }
 

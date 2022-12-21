@@ -463,48 +463,97 @@ namespace ChessForge
             string fileName = SelectPgnFile();
             if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
             {
-                bool success = false;
-                Chapter previousActiveChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-
-                Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
                 ObservableCollection<GameData> games = new ObservableCollection<GameData>();
 
-                int gamesCount = WorkbookManager.ReadPgnFile(fileName, ref games, GameData.ContentType.GENERIC, GameData.ContentType.MODEL_GAME);
-                if (gamesCount > 0)
+                //int gamesCount = WorkbookManager.ReadPgnFile(fileName, ref games, GameData.ContentType.GENERIC, GameData.ContentType.MODEL_GAME);
+                int gamesCount = WorkbookManager.ReadPgnFile(fileName, ref games, GameData.ContentType.GENERIC, GameData.ContentType.NONE);
+
+                // if this is ChessForge Workbook, list the chapters and allow the user to copy them over
+                if (WorkbookManager.IsChessForgeWorkbook(ref games))
                 {
-                    int processedGames = WorkbookManager.MergeGames(ref chapter.StudyTree.Tree, ref games, out bool processed);
-                    if (processedGames == 0)
+                    Workbook workbook = new Workbook();
+                    WorkbookManager.CreateWorkbookFromGameList(ref workbook, ref games);
+                    SelectChaptersDialog dlg = new SelectChaptersDialog(workbook)
                     {
-                        if (processed)
+                        Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
+                        Top = AppStateManager.MainWin.ChessForgeMain.Top + 100,
+                        Topmost = false,
+                        Owner = AppStateManager.MainWin
+                    };
+
+                    dlg.ShowDialog();
+                    if (dlg.ExitOK)
+                    {
+                        foreach (SelectedChapter ch in dlg.ChapterList)
                         {
-                            MessageBox.Show("No valid games found. No new chapter has been created.", "PGN Import", MessageBoxButton.OK, MessageBoxImage.Error);
+                            WorkbookManager.SessionWorkbook.Chapters.Add(ch.Chapter);
+                            WorkbookManager.AssignChaptersIds(ref WorkbookManager.SessionWorkbook);
+                            if (_chaptersView != null)
+                            {
+                                _chaptersView.BuildFlowDocumentForChaptersView();
+                                AppStateManager.DoEvents();
+                                _chaptersView.BringChapterIntoView(WorkbookManager.GetLastChapterId(WorkbookManager.SessionWorkbook));
+                            }
+                            AppStateManager.IsDirty = true;
                         }
                     }
-                    else
-                    {
-                        success = true;
-                    }
-                    // content type may have been reset to GENERIC in MergeGames above
-                    chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
                 }
                 else
                 {
-                    ShowNoGamesError(GameData.ContentType.GENERIC, fileName);
+                    WorkbookManager.RemoveGamesOfWrongType(ref games, GameData.ContentType.GENERIC, GameData.ContentType.MODEL_GAME);
+                    CreateChapterFromNewGames(gamesCount, ref games, fileName);
                 }
+            }
+        }
 
-                if (success)
+        /// <summary>
+        /// Let's the user select games to merge into a StudyTree
+        /// for which a new chapter will be created.
+        /// </summary>
+        /// <param name="gamesCount"></param>
+        /// <param name="games"></param>
+        /// <param name="fileName"></param>
+        private void CreateChapterFromNewGames(int gamesCount, ref ObservableCollection<GameData> games, string fileName)
+        {
+            bool success = false;
+
+            Chapter previousActiveChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+            Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
+
+            if (gamesCount > 0)
+            {
+                int processedGames = WorkbookManager.MergeGames(ref chapter.StudyTree.Tree, ref games, out bool processed);
+                if (processedGames == 0)
                 {
-                    _chaptersView.BuildFlowDocumentForChaptersView();
-                    SelectChapter(chapter.Id, false);
-                    AppStateManager.DoEvents();
-                    _chaptersView.BringChapterIntoView(chapter.Id);
+                    if (processed)
+                    {
+                        MessageBox.Show("No valid games found. No new chapter has been created.", "PGN Import", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {
-                    // delete the above created chapter and activate the previously active one
-                    WorkbookManager.SessionWorkbook.ActiveChapter = previousActiveChapter;
-                    WorkbookManager.SessionWorkbook.Chapters.Remove(chapter);
+                    success = true;
                 }
+                // content type may have been reset to GENERIC in MergeGames above
+                chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
+            }
+            else
+            {
+                ShowNoGamesError(GameData.ContentType.GENERIC, fileName);
+            }
+
+            if (success)
+            {
+                _chaptersView.BuildFlowDocumentForChaptersView();
+                SelectChapter(chapter.Id, false);
+                AppStateManager.DoEvents();
+                _chaptersView.BringChapterIntoView(chapter.Id);
+            }
+            else
+            {
+                // delete the above created chapter and activate the previously active one
+                WorkbookManager.SessionWorkbook.ActiveChapter = previousActiveChapter;
+                WorkbookManager.SessionWorkbook.Chapters.Remove(chapter);
             }
         }
 
