@@ -1588,14 +1588,6 @@ namespace ChessForge
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
             if (nd != null)
             {
-                // only offer to save bookmark if training in the Study Tree
-                if (ActiveVariationTree.ContentType == GameData.ContentType.STUDY_TREE && !BookmarkManager.IsBookmarked(nd.NodeId))
-                {
-                    if (MessageBox.Show("Do you want to bookmark this move?", "Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                    {
-                        BookmarkManager.AddBookmark(nd);
-                    }
-                }
                 SetAppInTrainingMode(nd);
             }
             else
