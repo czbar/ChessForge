@@ -1001,10 +1001,9 @@ namespace ChessForge
         {
             Chapter prevActiveChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
-            _mainWin.SelectChapterById(chapterId, focusOnStudyTree);
-
-            if (prevActiveChapter.Id != chapterId)
+            if (focusOnStudyTree || prevActiveChapter.Id != chapterId)
             {
+                _mainWin.SelectChapterById(chapterId, focusOnStudyTree);
                 BuildChapterParagraph(prevActiveChapter, _dictChapterParas[prevActiveChapter.Id]);
             }
         }
