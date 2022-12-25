@@ -160,7 +160,7 @@ namespace ChessForge
             if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
             {
                 // we are in a game
-                MoveEvaluationFinishedInGame();
+                MoveEvaluationFinishedInGame(nd);
             }
             else if (TrainingSession.IsTrainingInProgress)
             {
@@ -180,11 +180,11 @@ namespace ChessForge
         /// started in MANUAL_REVIEW learning mode,
         /// or during the training i.e. in TRAINING learning mode.
         /// </summary>
-        private static void MoveEvaluationFinishedInGame()
+        private static void MoveEvaluationFinishedInGame(TreeNode nd)
         {
             if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
             {
-                ProcessEngineGameMove();
+                ProcessEngineGameMove(nd);
                 _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                 _mainWin.ResetEvaluationProgressBar();
 
@@ -280,9 +280,8 @@ namespace ChessForge
         /// the move from the list of candidates, show it on the board
         /// and display in the Engine Game Line view.
         /// </summary>
-        private static void ProcessEngineGameMove()
+        private static void ProcessEngineGameMove(TreeNode nd)
         {
-            TreeNode nd = null;
             BoardPosition pos = null;
 
             // NOTE: need to invoke from the Dispatcher here or the program
@@ -423,8 +422,8 @@ namespace ChessForge
         /// Prepares controls, timers 
         /// and requests the engine to make move.
         /// </summary>
-        /// <param name="position"></param>
-        public static void RequestEngineMove(BoardPosition position)
+        /// <param name="node"></param>
+        public static void RequestEngineMove(TreeNode node)
         {
             if (!IsEngineAvailable)
             {
@@ -434,8 +433,8 @@ namespace ChessForge
 
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.ENGINE_GAME);
 
-            string fen = AppStateManager.PrepareMoveEvaluation(position, false);
-            RequestEngineEvaluation(null, fen, Configuration.EngineMpv, Configuration.EngineMoveTime);
+            string fen = AppStateManager.PrepareMoveEvaluation(node.Position, false);
+            RequestEngineEvaluation(node, fen, Configuration.EngineMpv, Configuration.EngineMoveTime);
         }
 
         /// <summary>
@@ -514,9 +513,12 @@ namespace ChessForge
                     TreeNode evalNode = AppStateManager.GetNodeByIds(treeId, nodeId);
                     _lastMessageNode = evalNode;
 
-                    // TODO: fix GAME implementation so we can get a non-null eval node there too!
                     if ((LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME) || evalNode != null)
                     {
+                        if (evalNode == null)
+                        {
+                            AppLog.Message("null evalNode in EngineMessageReceived()");
+                        }
                         if (message.StartsWith(UciCommands.ENG_INFO))
                         {
                             ProcessInfoMessage(message);

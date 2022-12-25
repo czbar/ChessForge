@@ -1519,7 +1519,7 @@ namespace ChessForge
                 }
             }
 
-            EngineMessageProcessor.RequestEngineMove(startNode.Position);
+            EngineMessageProcessor.RequestEngineMove(startNode);
         }
 
         /// <summary>
@@ -1552,7 +1552,7 @@ namespace ChessForge
                 if (EngineGame.CurrentState == EngineGame.GameState.ENGINE_THINKING)
                 {
                     Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-                    EngineMessageProcessor.RequestEngineMove(EngineGame.GetLastPosition());
+                    EngineMessageProcessor.RequestEngineMove(EngineGame.GetLastGameNode());
                 }
             }
         }
