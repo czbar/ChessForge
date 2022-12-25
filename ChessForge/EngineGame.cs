@@ -128,6 +128,8 @@ namespace ChessForge
 
             TreeNode curr = GetLastGameNode();
             BoardPosition pos = new BoardPosition(curr.Position);
+            pos.InheritedEnPassantSquare = curr.Position.EnPassantSquare;
+            pos.EnPassantSquare = 0;
 
             string algMove = MoveUtils.EngineNotationToAlgebraic(engMove, ref pos, out bool isCastle);
 
