@@ -315,6 +315,29 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Finds the first run with the passed name.
+        /// Return null if not found.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public Run FindRunByName(string name, Paragraph para)
+        {
+            Run r = null;
+
+            foreach (Inline inl in para.Inlines)
+            {
+                if (inl is Run && inl.Name == name)
+                {
+                    r = inl as Run;
+                    break;
+                }
+            }
+
+            return r;
+        }
+
+        /// <summary>
         /// Assuming the format "[prefix]" + "_" + NodeId
         /// find paragrpah that hosts a run for the Node with passed
         /// NodeId.
