@@ -1422,20 +1422,27 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Roll back training to the last selected node.
+        /// Roll back training to the last selected node
+        /// or the move before.
         /// </summary>
         public void RollbackTraining()
         {
             _mainWin.StopEvaluation(true);
             if (_lastClickedNode != null)
             {
-                // if this is workbook's move, go one ply back
                 if (_lastClickedNode.ColorToMove == _trainingSide)
                 {
-                    RollbackToUserMove();
+                    // we have a position after Workbook move, roll back to parent Workbook move
+                    // to force a different Workbook move if it is a from
+                    if (_lastClickedNode.Parent != null)
+                    {
+                        _lastClickedNode = _lastClickedNode.Parent;
+                        RollbackToWorkbookMove();
+                    }
                 }
                 else
                 {
+                    // A user move was clicked so rollback to the previous Workbook move
                     RollbackToWorkbookMove();
                 }
             }
