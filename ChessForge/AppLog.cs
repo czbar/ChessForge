@@ -9,6 +9,7 @@ using System.Windows;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using ChessPosition;
+using System.Threading;
 
 namespace ChessForge
 {
@@ -106,6 +107,19 @@ namespace ChessForge
                 Log.Add(timeStamp + "Exception in " + location + " " + ex.Message);
             }
         }
+
+        /// <summary>
+        /// Returns the numbers of threads that are still avaliable.
+        /// </summary>
+        /// <param name="workerThreads"></param>
+        /// <param name="asyncIoThreads"></param>
+        [Conditional("DEBUG")]
+        public static void LogAvailableThreadsCounts()
+        {
+            ThreadPool.GetAvailableThreads(out int workerThreads, out int asyncIoThreads);
+            Message("ThreadPool available threads: workers=" + workerThreads.ToString() + " async=" + asyncIoThreads.ToString());
+        }
+
 
         /// <summary>
         /// Writes the logged messages out to a file.
