@@ -209,6 +209,9 @@ namespace ChessForge
         /// </summary>
         public void OpenReplayDialog()
         {
+            // we may change focus while in the dialog so note it here and restore
+            WorkbookManager.TabViewType activeTab = AppStateManager.ActiveTab;
+
             QuickReplayDialog dlg = new QuickReplayDialog(_clickedGameId, _gameIdList)
             {
                 Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
@@ -217,6 +220,16 @@ namespace ChessForge
                 Owner = AppStateManager.MainWin
             };
             dlg.ShowDialog();
+
+            switch (activeTab)
+            {
+                case WorkbookManager.TabViewType.STUDY:
+                    AppStateManager.MainWin.UiTabStudyTree.Focus();
+                    break;
+                case WorkbookManager.TabViewType.MODEL_GAME:
+                    AppStateManager.MainWin.UiTabModelGames.Focus();
+                    break;
+            }
         }
 
         /// <summary>
