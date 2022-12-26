@@ -168,9 +168,9 @@ namespace ChessForge
         private readonly string _run_line_move_ = "line_move_";
         private readonly string _run_move_eval_ = "move_eval_";
         private readonly string _run_stem_move_ = "stem_move_";
+        private readonly string _run_coach_comment_ = "coach_comment_";
 
         private readonly string _par_line_moves_ = "par_line_moves_";
-        private readonly string _par_coach_moves_ = "par_coach_moves_";
         private readonly string _par_game_moves_ = "par_game_moves_";
 
         // Application's Main Window
@@ -336,7 +336,7 @@ namespace ChessForge
                     BuildMoveParagraph(_userMove, true);
                     if (foundMove == null)
                     {
-                        BuildCommentParagraph(false);
+                        InsertCommentIntoMovePara(false, _userMove);
                     }
                     BuildCheckmateParagraph(_userMove, true);
                 }
@@ -346,7 +346,7 @@ namespace ChessForge
                     BuildMoveParagraph(_userMove, true);
                     if (foundMove == null)
                     {
-                        BuildCommentParagraph(false);
+                        InsertCommentIntoMovePara(false, _userMove);
                     }
                     BuildStalemateParagraph(_userMove);
                 }
@@ -361,7 +361,7 @@ namespace ChessForge
                     }
 
                     BuildMoveParagraph(_userMove, true);
-                    BuildCommentParagraph(foundMove != null);
+                    InsertCommentIntoMovePara(foundMove != null, _userMove);
 
                     // if we found a move and this is not the last move in the Workbbook, request response.
                     if (foundMove != null && foundMove.Children.Count > 0)
@@ -666,6 +666,11 @@ namespace ChessForge
         /// </summary>
         public void ShowEvaluationResult(TreeNode nd)
         {
+            if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS && EvaluationManager.CurrentMode != EvaluationManager.Mode.LINE)
+            {
+                return;
+            }
+
             // insert the evaluation result after the move.
             List<MoveEvaluation> moveCandidates = EngineLinesBox.Lines;
             if (moveCandidates.Count == 0 || nd == null)
@@ -764,11 +769,11 @@ namespace ChessForge
                 Run r_prefix = new Run();
                 if (userMove)
                 {
-                    r_prefix.Text = "You played:   ";
+                    //r_prefix.Text = Constants.CharRightArrow + " ";
                 }
                 else
                 {
-                    r_prefix.Text = "Coach's response:   ";
+                    r_prefix.Text = Constants.CharResponse + " ";
                 }
                 r_prefix.FontWeight = FontWeights.Normal;
 
@@ -777,7 +782,7 @@ namespace ChessForge
                 Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true) + " ", runName, Brushes.Black);
                 if (nd.HasSiblings())
                 {
-                    r.Text = r.Text + Constants.Fork.ToString();
+                    r.Text = r.Text + Constants.CharFork.ToString();
                 }
                 para.Inlines.Add(r);
 
@@ -954,80 +959,87 @@ namespace ChessForge
         /// Builds the paragraph with "coach's" comments.
         /// </summary>
         /// <param name="isWorkbookMove"></param>
-        private void BuildCommentParagraph(bool isWorkbookMove)
+        private void InsertCommentIntoMovePara(bool isWorkbookMove, TreeNode userMove)
         {
-            string paraName = _par_coach_moves_ + _userMove.NodeId.ToString();
-
-            // check that it does not exists yet
-            if (FindParagraphByName(paraName, false) == null)
+            Paragraph para = FindUserMoveParagraph(userMove);
+            if (para != null)
             {
-                Paragraph para = AddNewParagraphToDoc(STYLE_COACH_NOTES, "");
-                para.Name = paraName;
+                string commentRunName = _run_coach_comment_ + userMove.NodeId.ToString();
 
-                Run coach = new Run("Coach says:");
-                coach.TextDecorations = TextDecorations.Underline;
-                para.Inlines.Add(coach);
-
-                string txt = "  ";
-                if (_otherMovesInWorkbook.Count == 0)
+                // do not build if already built
+                if (FindRunByName(commentRunName, para) == null)
                 {
-                    if (isWorkbookMove)
+                    para.FontWeight = FontWeights.Normal;
+
+                    Run commentRun = new Run();
+                    commentRun.Name = commentRunName;
+
+                    string txt = " ";
+                    if (_otherMovesInWorkbook.Count == 0)
                     {
-                        txt += "The move you made is the only move in the " + TRAINING_SOURCE + ".";
-                        Run r_only = new Run(txt);
-                        para.Inlines.Add(r_only);
+                        txt += Constants.CharCheckMark.ToString();
+                        if (!isWorkbookMove)
+                        {
+                            txt += " The Workbook line has ended. ";
+                        }
+                        commentRun.Text = txt;
+                        para.Inlines.Add(commentRun);
                     }
                     else
                     {
-                        txt += "The Workbook line has ended. ";
-                        Run r_notWb = new Run(txt);
-                        para.Inlines.Add(r_notWb);
-                    }
-                }
-                else
-                {
-
-                    if (!isWorkbookMove)
-                    {
-                        txt += "This is not in the " + TRAINING_SOURCE + ". ";
-                        Run r_notWb = new Run(txt);
-                        para.Inlines.Add(r_notWb);
-
-                        txt = "";
-                    }
-
-                    if (!isWorkbookMove)
-                    {
-                        if (_otherMovesInWorkbook.Count == 1)
+                        txt += Constants.CharCrossMark.ToString() + " ";
+                        if (!isWorkbookMove)
                         {
-                            txt += "The only " + TRAINING_SOURCE + " move is ";
+                            txt += "This is not in the " + TRAINING_SOURCE + ". ";
+                            commentRun.Text = txt;
+
+                            txt = "";
+                        }
+
+                        if (!isWorkbookMove)
+                        {
+                            if (_otherMovesInWorkbook.Count == 1)
+                            {
+                                txt += "The only " + TRAINING_SOURCE + " move is ";
+                            }
+                            else
+                            {
+                                txt += "The " + TRAINING_SOURCE + " moves are ";
+                            }
+                            commentRun.Text += txt;
                         }
                         else
                         {
-                            txt += "The " + TRAINING_SOURCE + " moves are ";
+                            if (_otherMovesInWorkbook.Count == 1)
+                            {
+                                txt += "The only other " + TRAINING_SOURCE + " move is ";
+                            }
+                            else
+                            {
+                                txt += "Other " + TRAINING_SOURCE + " moves are ";
+                            }
+                            commentRun.Text += txt;
                         }
-                        Run r_wb = new Run(txt);
-                        para.Inlines.Add(r_wb);
-                    }
-                    else
-                    {
-                        if (_otherMovesInWorkbook.Count == 1)
-                        {
-                            txt += "The only other " + TRAINING_SOURCE + " move is ";
-                        }
-                        else
-                        {
-                            txt += "Other " + TRAINING_SOURCE + " moves are ";
-                        }
-                        Run r_wb = new Run(txt);
-                        para.Inlines.Add(r_wb);
-                    }
+                        para.Inlines.Add(commentRun);
 
-                    BuildOtherWorkbookMovesRun(para);
+                        BuildOtherWorkbookMovesRun(para);
+                    }
+                    _mainWin.UiRtbTrainingProgress.ScrollToEnd();
                 }
-                _mainWin.UiRtbTrainingProgress.ScrollToEnd();
             }
         }
+
+        /// <summary>
+        /// Finds paragraph with a given user move.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private Paragraph FindUserMoveParagraph(TreeNode nd)
+        {
+            string paraName = _par_line_moves_ + nd.NodeId.ToString();
+            return FindParagraphByName(paraName, false);
+        }
+
 
         /// <summary>
         /// Adds plies from _otherMovesInWorkbook to the
