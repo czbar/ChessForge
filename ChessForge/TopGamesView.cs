@@ -463,7 +463,7 @@ namespace ChessForge
                     lblResult.Foreground = Brushes.White;
                     break;
                 default:
-                    lblResult.Content = Constants.HalfPoint.ToString() + "-" + Constants.HalfPoint.ToString();
+                    lblResult.Content = Constants.CharHalfPoint.ToString() + "-" + Constants.CharHalfPoint.ToString();
                     lblResult.Background = ChessForgeColors.DrawLinearBrush;
                     lblResult.Foreground = Brushes.White;
                     break;
