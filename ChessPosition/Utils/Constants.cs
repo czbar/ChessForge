@@ -155,14 +155,24 @@ namespace ChessPosition
         public const char CharCrossMark = '\u2715';
 
         /// <summary>
-        /// A half point notation ('1/2')
+        /// The half point notation ('1/2')
         /// </summary>
-        public const char HalfPoint = '\u00BD';
+        public const char CharHalfPoint = '\u00BD';
 
         /// <summary>
-        /// A Fork character
+        /// The Fork character
         /// </summary>
-        public const char Fork = '\u2442';
+        public const char CharFork = '\u2442';
+
+        /// <summary>
+        /// The response (left arrow with hook) character
+        /// </summary>
+        public const char CharResponse = '\u21A9';
+
+        /// <summary>
+        /// The right arrow character
+        /// </summary>
+        public const char CharRightArrow = '\u2192';
 
         /// <summary>
         /// Min and Max dimensions of the chess board

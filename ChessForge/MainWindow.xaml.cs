@@ -291,6 +291,8 @@ namespace ChessForge
             AppStateManager.SetupGuiForCurrentStates();
 
             Timers.Start(AppTimers.TimerId.APP_START);
+
+            AppLog.LogAvailableThreadsCounts();
         }
 
         /// <summary>
@@ -1415,6 +1417,7 @@ namespace ChessForge
         public void DumpDebugLogs(bool userRequested)
         {
             string distinct = null;
+            AppLog.LogAvailableThreadsCounts();
 
             if (userRequested)
             {
