@@ -115,7 +115,7 @@ namespace ChessForge
         /// </summary>
         public static int ActiveTreeId
         {
-            get => ActiveVariationTree == null ? -1 : ActiveVariationTree.Id;
+            get => ActiveVariationTree == null ? -1 : ActiveVariationTree.TreeId;
         }
 
         /// <summary>
@@ -676,7 +676,7 @@ namespace ChessForge
                 {
                     TrainingSession.IsBrowseActive = false;
                     _mainWin.UiTabCtrlTraining.Margin = new Thickness(5, 5, 5, 5);
-                    _mainWin.UiDgEngineGame.Visibility = Visibility.Hidden;
+                    _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
                     _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
 
@@ -1008,9 +1008,11 @@ namespace ChessForge
 
                 _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
-                _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
-                _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
-                ShowGuiEngineGameLine(false);
+                //_mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
+                //_mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
+                //_mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
+                MainWin.ResizeTabControl(MainWin.UiTabCtrlTraining, TabControlSizeMode.SHOW_ENGINE_GAME_LINE);
+//                ShowGuiEngineGameLine(true);
 
                 _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
                 _mainWin.UiTabCtrlTraining.Visibility = Visibility.Visible;

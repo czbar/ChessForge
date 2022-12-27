@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using ChessPosition;
 using System.Xml.Linq;
 using ChessPosition.GameTree;
+using ChessForge;
 
 namespace GameTree
 {
@@ -30,7 +31,7 @@ namespace GameTree
         /// <summary>
         /// Tree Id assigned uniquely assigned for the current session only.
         /// </summary>
-        public int Id { get; set; }
+        public int TreeId { get; set; }
 
         /// <summary>
         /// Available Exercise Solving modes.
@@ -59,12 +60,16 @@ namespace GameTree
         // whether the Associated Tree is active
         private bool _isAssociatedTreeActive = false;
 
+        // currently the highest NodeId in the tree (can be not set so NodeId of the last node must ne checked too)
+        private int _maxNodeId = 0;
+
         /// <summary>
         /// Constructor. Creates a VariationTree of the requested type.
         /// </summary>
         /// <param name="contentType"></param>
         public VariationTree(GameData.ContentType contentType, TreeNode root = null)
         {
+            TreeId = TreeManager.GetNewTreeId(); 
             Header.SetContentType(contentType);
             if (contentType == GameData.ContentType.EXERCISE)
             {
@@ -618,13 +623,16 @@ namespace GameTree
         /// <summary>
         /// Returns a new NodeId that can be used by the caller in a newly
         /// created Node.  
-        /// This is the id of the node currently last in the list of nodes
-        /// incremented by one.
+        /// This should be the value of _maxNodeId incremented by one
+        /// but it may not be set so needs to be checked against the node currently last in the list of nodes
+        /// incremented by one or.
         /// </summary>
         /// <returns></returns>
         public int GetNewNodeId()
         {
-            return Nodes[Nodes.Count - 1].NodeId + 1;
+            int currentMax = Math.Max(_maxNodeId, Nodes[Nodes.Count - 1].NodeId);
+            _maxNodeId = currentMax + 1;
+            return _maxNodeId;
         }
 
         /// <summary>

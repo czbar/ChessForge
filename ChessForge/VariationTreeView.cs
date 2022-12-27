@@ -1618,9 +1618,12 @@ namespace ChessForge
         /// <param name="para"></param>
         private void CreateStartingNode(Paragraph para)
         {
-            TreeNode nd = _mainWin.ActiveVariationTree.Nodes[0];
-            AddRunToParagraph(nd, para, "", Brushes.White);
-            AddCommentRunToParagraph(nd, para);
+            if (_mainWin.ActiveVariationTree != null)
+            {
+                TreeNode nd = _mainWin.ActiveVariationTree.Nodes[0];
+                AddRunToParagraph(nd, para, "", Brushes.White);
+                AddCommentRunToParagraph(nd, para);
+            }
         }
 
         /// <summary>
