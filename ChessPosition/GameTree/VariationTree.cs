@@ -59,6 +59,9 @@ namespace GameTree
         // whether the Associated Tree is active
         private bool _isAssociatedTreeActive = false;
 
+        // currently the highest NodeId in the tree (can be not set so NodeId of the last node must ne checked too)
+        private int _maxNodeId = 0;
+
         /// <summary>
         /// Constructor. Creates a VariationTree of the requested type.
         /// </summary>
@@ -618,13 +621,16 @@ namespace GameTree
         /// <summary>
         /// Returns a new NodeId that can be used by the caller in a newly
         /// created Node.  
-        /// This is the id of the node currently last in the list of nodes
-        /// incremented by one.
+        /// This should be the value of _maxNodeId incremented by one
+        /// but it may not be set so needs to be checked against the node currently last in the list of nodes
+        /// incremented by one or.
         /// </summary>
         /// <returns></returns>
         public int GetNewNodeId()
         {
-            return Nodes[Nodes.Count - 1].NodeId + 1;
+            int currentMax = Math.Max(_maxNodeId, Nodes[Nodes.Count - 1].NodeId);
+            _maxNodeId = currentMax++;
+            return _maxNodeId;
         }
 
         /// <summary>
