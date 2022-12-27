@@ -116,6 +116,31 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the number of children for this node.
+        /// </summary>
+        /// <param name="inclTrainingMoves"></param>
+        /// <returns></returns>
+        public int GetChildrenCount(bool inclTrainingMoves = true)
+        {
+            int count = 0;
+            if (inclTrainingMoves)
+            {
+                count = Children.Count; 
+            }
+            else
+            {
+                foreach (TreeNode child in Children)
+                {
+                    if (!child.IsNewTrainingMove)
+                    {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
+
+        /// <summary>
         /// General purpose property to assist certain
         /// processing scenarios e.g. analysing a submitted
         /// solution.
