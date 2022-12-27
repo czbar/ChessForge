@@ -2032,7 +2032,9 @@ namespace ChessForge
                         ctrl.Margin = new Thickness(5, 5, 275, 5);
 
                         UiDgActiveLine.Visibility = Visibility.Visible;
+                        PositionScoresheetLabel(UiDgActiveLine);
                         UiLblScoresheet.Visibility = Visibility.Visible;
+                        UiLblScoresheet.Margin = new Thickness(0, 0, 10 + (UiDgActiveLine.Width - UiLblScoresheet.Width), 0);
 
                         //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
@@ -2043,16 +2045,18 @@ namespace ChessForge
                         //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL:
-                        ctrl.Margin = new Thickness(5, 5, 175, 5);
+                        ctrl.Margin = new Thickness(5, 5, 195, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
+                        PositionScoresheetLabel(UiDgActiveLine);
                         UiLblScoresheet.Visibility = Visibility.Visible;
                         //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
-                        ctrl.Margin = new Thickness(5, 5, 180, 5);
+                        ctrl.Margin = new Thickness(5, 5, 195, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
-                        UiLblScoresheet.Visibility = Visibility.Hidden;
-                        //UiDgEngineGame.Visibility = Visibility.Hidden;
+                        PositionScoresheetLabel(UiDgEngineGame);
+                        UiLblScoresheet.Visibility = Visibility.Visible;
+                        UiDgEngineGame.Visibility = Visibility.Visible;
                         break;
                     case TabControlSizeMode.HIDE_ENGINE_GAME_LINE:
                         ctrl.Margin = new Thickness(5, 5, 5, 5);
@@ -2061,10 +2065,9 @@ namespace ChessForge
                         //UiDgEngineGame.Visibility = Visibility.Hidden;
                         break;
                     default:
-                        ctrl.Margin = new Thickness(5, 5, 180, 5);
+                        ctrl.Margin = new Thickness(5, 5, 190, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
-                        UiLblScoresheet.Visibility = Visibility.Visible;
-                        //UiDgEngineGame.Visibility = Visibility.Hidden;
+                        UiLblScoresheet.Visibility = Visibility.Hidden;
                         break;
                 }
             }
@@ -2076,6 +2079,7 @@ namespace ChessForge
                         ctrl.Margin = new Thickness(275, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
                         UiLblScoresheet.Visibility = Visibility.Visible;
+                        PositionScoresheetLabel(UiDgActiveLine);
                         break;
                     case TabControlSizeMode.HIDE_ACTIVE_LINE:
                         ctrl.Margin = new Thickness(5, 5, 5, 5);
@@ -2085,20 +2089,33 @@ namespace ChessForge
                     case TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL:
                         ctrl.Margin = new Thickness(175, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
+                        PositionScoresheetLabel(UiDgActiveLine);
                         UiLblScoresheet.Visibility = Visibility.Visible;
                         break;
                     case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
-                        ctrl.Margin = new Thickness(180, 5, 5, 5);
+                        ctrl.Margin = new Thickness(175, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Hidden;
-                        UiLblScoresheet.Visibility = Visibility.Hidden;
+                        UiDgEngineGame.Visibility = Visibility.Visible;
+                        PositionScoresheetLabel(UiDgEngineGame);
+                        UiLblScoresheet.Visibility = Visibility.Visible;
                         break;
                     default:
-                        ctrl.Margin = new Thickness(180, 5, 5, 5);
+                        ctrl.Margin = new Thickness(175, 5, 5, 5);
                         UiDgActiveLine.Visibility = Visibility.Visible;
-                        UiLblScoresheet.Visibility = Visibility.Visible;
+                        UiLblScoresheet.Visibility = Visibility.Hidden;
                         break;
                 }
             }
+        }
+
+        /// <summary>
+        /// Adjusts the position of the "Scoresheet" label in relation
+        /// to the Scoresheet (DataGrid) control it associated with
+        /// </summary>
+        /// <param name="dgControl"></param>
+        public void PositionScoresheetLabel(DataGrid dgControl)
+        {
+            UiLblScoresheet.Margin = new Thickness(0, 0, 10 + (dgControl.Width - UiLblScoresheet.Width), 0);
         }
 
         /// <summary>
