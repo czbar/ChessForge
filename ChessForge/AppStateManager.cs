@@ -115,7 +115,7 @@ namespace ChessForge
         /// </summary>
         public static int ActiveTreeId
         {
-            get => ActiveVariationTree == null ? -1 : ActiveVariationTree.Id;
+            get => ActiveVariationTree == null ? -1 : ActiveVariationTree.TreeId;
         }
 
         /// <summary>

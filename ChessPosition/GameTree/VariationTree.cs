@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using ChessPosition;
 using System.Xml.Linq;
 using ChessPosition.GameTree;
+using ChessForge;
 
 namespace GameTree
 {
@@ -30,7 +31,7 @@ namespace GameTree
         /// <summary>
         /// Tree Id assigned uniquely assigned for the current session only.
         /// </summary>
-        public int Id { get; set; }
+        public int TreeId { get; set; }
 
         /// <summary>
         /// Available Exercise Solving modes.
@@ -68,6 +69,7 @@ namespace GameTree
         /// <param name="contentType"></param>
         public VariationTree(GameData.ContentType contentType, TreeNode root = null)
         {
+            TreeId = TreeManager.GetNewTreeId(); 
             Header.SetContentType(contentType);
             if (contentType == GameData.ContentType.EXERCISE)
             {
