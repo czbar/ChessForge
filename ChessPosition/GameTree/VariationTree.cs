@@ -629,7 +629,7 @@ namespace GameTree
         public int GetNewNodeId()
         {
             int currentMax = Math.Max(_maxNodeId, Nodes[Nodes.Count - 1].NodeId);
-            _maxNodeId = currentMax++;
+            _maxNodeId = currentMax + 1;
             return _maxNodeId;
         }
 
