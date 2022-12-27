@@ -168,7 +168,8 @@ namespace ChessForge
         private readonly string _run_line_move_ = "line_move_";
         private readonly string _run_move_eval_ = "move_eval_";
         private readonly string _run_stem_move_ = "stem_move_";
-        private readonly string _run_coach_comment_ = "coach_comment_";
+        private readonly string _run_user_move_comment_ = "user_move_comment_";
+        private readonly string _run_wb_move_comment_ = "wb_move_comment_";
 
         private readonly string _par_line_moves_ = "par_line_moves_";
         private readonly string _par_game_moves_ = "par_game_moves_";
@@ -305,7 +306,6 @@ namespace ChessForge
                 _userMove = EngineGame.GetLastGameNode();
                 TreeNode parent = _userMove.Parent;
 
-                StringBuilder wbMoves = new StringBuilder();
                 TreeNode foundMove = null;
                 foreach (TreeNode child in parent.Children)
                 {
@@ -322,8 +322,6 @@ namespace ChessForge
                     {
                         if (!child.IsNewTrainingMove)
                         {
-                            wbMoves.Append(MoveUtils.BuildSingleMoveText(child, false, true));
-                            wbMoves.Append("; ");
                             _otherMovesInWorkbook.Add(child);
                         }
                     }
@@ -336,7 +334,7 @@ namespace ChessForge
                     BuildMoveParagraph(_userMove, true);
                     if (foundMove == null)
                     {
-                        InsertCommentIntoMovePara(false, _userMove);
+                        InsertCommentIntoUserMovePara(false, _userMove);
                     }
                     BuildCheckmateParagraph(_userMove, true);
                 }
@@ -346,7 +344,7 @@ namespace ChessForge
                     BuildMoveParagraph(_userMove, true);
                     if (foundMove == null)
                     {
-                        InsertCommentIntoMovePara(false, _userMove);
+                        InsertCommentIntoUserMovePara(false, _userMove);
                     }
                     BuildStalemateParagraph(_userMove);
                 }
@@ -361,10 +359,10 @@ namespace ChessForge
                     }
 
                     BuildMoveParagraph(_userMove, true);
-                    InsertCommentIntoMovePara(foundMove != null, _userMove);
+                    InsertCommentIntoUserMovePara(foundMove != null, _userMove);
 
                     // if we found a move and this is not the last move in the Workbbook, request response.
-                    if (foundMove != null && foundMove.Children.Count > 0)
+                    if (foundMove != null && foundMove.GetChildrenCount(false) > 0)
                     {
                         // start the timer that will trigger a workbook response by RequestWorkbookResponse()
                         TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_WORKBOOK_RESPONSE);
@@ -521,25 +519,32 @@ namespace ChessForge
         /// </summary>
         public void RequestWorkbookResponse()
         {
-            int nodeId = _userMove.NodeId;
-            _mainWin.Timers.Stop(AppTimers.TimerId.REQUEST_WORKBOOK_MOVE);
+            try
+            {
+                int nodeId = _userMove.NodeId;
+                _mainWin.Timers.Stop(AppTimers.TimerId.REQUEST_WORKBOOK_MOVE);
 
-            // user may have chosen a different move to what we originally had
-            // TODO: after the re-think of the GUI that probably cannot happen (?)
-            EngineGame.ReplaceLastPly(nodeId);
+                // user may have chosen a different move to what we originally had
+                // TODO: after the re-think of the GUI that probably cannot happen (?)
+                EngineGame.ReplaceLastPly(nodeId);
 
-            TreeNode userChoiceNode = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
+                TreeNode userChoiceNode = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
 
-            _mainWin.DisplayPosition(userChoiceNode);
-            _mainWin.ColorMoveSquares(_userMove.LastMoveEngineNotation);
+                _mainWin.DisplayPosition(userChoiceNode);
+                _mainWin.ColorMoveSquares(_userMove.LastMoveEngineNotation);
 
-            TreeNode nd = _mainWin.ActiveVariationTree.SelectNextChild(nodeId);
-            EngineGame.AddPlyToGame(nd);
+                TreeNode nd = _mainWin.ActiveVariationTree.SelectNextChild(nodeId);
+                EngineGame.AddPlyToGame(nd);
 
-            // The move will be visualized in response to CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE timer's elapsed event
-            EngineGame.IsTrainingWorkbookMoveMade = true;
-            _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
-            AppStateManager.SwapCommentBoxForEngineLines(false);
+                // The move will be visualized in response to CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE timer's elapsed event
+                EngineGame.IsTrainingWorkbookMoveMade = true;
+                _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
+                AppStateManager.SwapCommentBoxForEngineLines(false);
+            }
+            catch
+            {
+                MessageBox.Show("Unexpected error while processing user\'s move", "Chess Forge Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         /// <summary>
@@ -770,21 +775,27 @@ namespace ChessForge
                 if (userMove)
                 {
                     //r_prefix.Text = Constants.CharRightArrow + " ";
+                    r_prefix.FontWeight = FontWeights.Normal;
+                    para.Inlines.Add(r_prefix);
                 }
                 else
                 {
-                    r_prefix.Text = Constants.CharResponse + " ";
+                    r_prefix.Text = TRAINING_SOURCE + ": ";
+                    r_prefix.FontWeight = FontWeights.Normal;
+                    para.Inlines.Add(r_prefix);
                 }
-                r_prefix.FontWeight = FontWeights.Normal;
-
-                para.Inlines.Add(r_prefix);
 
                 Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true) + " ", runName, Brushes.Black);
                 if (nd.HasSiblings())
                 {
-                    r.Text = r.Text + Constants.CharFork.ToString();
+                    // r.Text = r.Text + Constants.CharFork.ToString();
                 }
                 para.Inlines.Add(r);
+
+                if (!userMove)
+                {
+                    InsertCommentIntoWorkbookMovePara(para, nd);
+                }
 
                 _mainWin.UiRtbTrainingProgress.ScrollToEnd();
             }
@@ -902,12 +913,12 @@ namespace ChessForge
             StringBuilder sbInstruction = new StringBuilder();
             sbInstruction.Append("You will be making moves for");
             sbInstruction.Append(TrainingSession.StartPosition.ColorToMove == PieceColor.White ? " White " : " Black ");
-            sbInstruction.Append("and the program (a.k.a. the \"Coach\") will respond for");
+            sbInstruction.Append("and the program will respond for");
             sbInstruction.Append(TrainingSession.StartPosition.ColorToMove == PieceColor.White ? " Black." : " White.");
             sbInstruction.AppendLine();
-            sbInstruction.Append("The Coach will comment on your every move based on the content of the " + TRAINING_SOURCE + ".\n");
+            //            sbInstruction.Append("The Coach will comment on your every move based on the content of the " + TRAINING_SOURCE + ".\n");
             sbInstruction.Append("\nRemember that you can:\n");
-            sbInstruction.Append("- click on an alternative move in the Coach's comment to play it instead of your original choice,\n");
+            sbInstruction.Append("- double click on an alternative move highlighted in the comment to play it instead of your original choice,\n");
             sbInstruction.Append("- right click on any move to invoke a context menu where, among other options, you can request engine evaluation of the move.\n");
 
             _dictParas[ParaType.INSTRUCTIONS] = AddNewParagraphToDoc(STYLE_INTRO, sbInstruction.ToString());
@@ -956,15 +967,15 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds the paragraph with "coach's" comments.
+        /// Inserts a comment run into the user move paragraph.
         /// </summary>
         /// <param name="isWorkbookMove"></param>
-        private void InsertCommentIntoMovePara(bool isWorkbookMove, TreeNode userMove)
+        private void InsertCommentIntoUserMovePara(bool isWorkbookMove, TreeNode userMove)
         {
             Paragraph para = FindUserMoveParagraph(userMove);
             if (para != null)
             {
-                string commentRunName = _run_coach_comment_ + userMove.NodeId.ToString();
+                string commentRunName = _run_user_move_comment_ + userMove.NodeId.ToString();
 
                 // do not build if already built
                 if (FindRunByName(commentRunName, para) == null)
@@ -974,59 +985,135 @@ namespace ChessForge
                     Run commentRun = new Run();
                     commentRun.Name = commentRunName;
 
-                    string txt = " ";
+                    StringBuilder sbComment = new StringBuilder();
+                    sbComment.Append(" " + (isWorkbookMove ? Constants.CharCheckMark : Constants.CharCrossMark) + " ");
+                    if (!string.IsNullOrWhiteSpace(_userMove.Comment))
+                    {
+                        sbComment.Append("[" + userMove.Comment + "] ");
+                    }
+
                     if (_otherMovesInWorkbook.Count == 0)
                     {
-                        txt += Constants.CharCheckMark.ToString();
                         if (!isWorkbookMove)
                         {
-                            txt += " The Workbook line has ended. ";
+                            sbComment.Append("The Workbook line has ended. ");
                         }
-                        commentRun.Text = txt;
+                        commentRun.Text = sbComment.ToString();
                         para.Inlines.Add(commentRun);
                     }
                     else
                     {
-                        txt += Constants.CharCrossMark.ToString() + " ";
                         if (!isWorkbookMove)
                         {
-                            txt += "This is not in the " + TRAINING_SOURCE + ". ";
-                            commentRun.Text = txt;
-
-                            txt = "";
+                            sbComment.Append("This is not in the " + TRAINING_SOURCE + ". ");
+                            commentRun.Text = sbComment.ToString();
                         }
 
                         if (!isWorkbookMove)
                         {
                             if (_otherMovesInWorkbook.Count == 1)
                             {
-                                txt += "The only " + TRAINING_SOURCE + " move is ";
+                                sbComment.Append("The only " + TRAINING_SOURCE + " move is ");
                             }
                             else
                             {
-                                txt += "The " + TRAINING_SOURCE + " moves are ";
+                                sbComment.Append("The " + TRAINING_SOURCE + " moves are ");
                             }
-                            commentRun.Text += txt;
+                            commentRun.Text += sbComment;
                         }
                         else
                         {
                             if (_otherMovesInWorkbook.Count == 1)
                             {
-                                txt += "The only other " + TRAINING_SOURCE + " move is ";
+                                sbComment.Append("The only other " + TRAINING_SOURCE + " move is ");
                             }
                             else
                             {
-                                txt += "Other " + TRAINING_SOURCE + " moves are ";
+                                sbComment.Append("Other " + TRAINING_SOURCE + " moves are ");
                             }
-                            commentRun.Text += txt;
+                            commentRun.Text += sbComment;
                         }
                         para.Inlines.Add(commentRun);
 
-                        BuildOtherWorkbookMovesRun(para);
+                        BuildOtherWorkbookMovesRun(para, _otherMovesInWorkbook, true);
                     }
                     _mainWin.UiRtbTrainingProgress.ScrollToEnd();
                 }
             }
+        }
+
+        /// <summary>
+        /// Inserts a comment run into the Workbook move paragraph.
+        /// It will include any comment found in the workbook and clickable
+        /// other workbook moves
+        /// </summary>
+        /// <param name="moveNode"></param>
+        private void InsertCommentIntoWorkbookMovePara(Paragraph para, TreeNode moveNode)
+        {
+            string commentRunName = _run_wb_move_comment_ + moveNode.NodeId.ToString();
+
+            // do not build if already built
+            if (FindRunByName(commentRunName, para) == null)
+            {
+                para.FontWeight = FontWeights.Normal;
+
+                Run commentRun = new Run();
+                commentRun.Name = commentRunName;
+
+                StringBuilder sbComment = new StringBuilder();
+                if (!string.IsNullOrWhiteSpace(_userMove.Comment))
+                {
+                    sbComment.Append("[" + moveNode.Comment + "] ");
+                }
+
+                List<TreeNode> lstAlternatives = GetWorkbookSiblings(moveNode);
+
+                if (lstAlternatives.Count == 0)
+                {
+                    commentRun.Text = sbComment.ToString();
+                    para.Inlines.Add(commentRun);
+                }
+                else
+                {
+                    if (lstAlternatives.Count == 1)
+                    {
+                        sbComment.Append(TRAINING_SOURCE + " alternative: ");
+                    }
+                    else
+                    {
+                        sbComment.Append(TRAINING_SOURCE + " alternatives: ");
+                    }
+
+                    commentRun.Text += sbComment;
+                    para.Inlines.Add(commentRun);
+
+                    BuildOtherWorkbookMovesRun(para, lstAlternatives, false);
+                }
+                _mainWin.UiRtbTrainingProgress.ScrollToEnd();
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of non-new-training siblings of the passed node.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private List<TreeNode> GetWorkbookSiblings(TreeNode nd)
+        {
+            List<TreeNode> lstNodes = new List<TreeNode>();
+            if (nd != null && nd.Parent != null)
+            {
+                foreach (TreeNode child in nd.Parent.Children)
+                {
+                    // we cannot use ArePositionsIdentical() because nd only has static position
+                    if (child.LastMoveEngineNotation != nd.LastMoveEngineNotation && !child.IsNewTrainingMove)
+                    {
+                        lstNodes.Add(child);
+                    }
+                }
+            }
+
+            return lstNodes;
         }
 
         /// <summary>
@@ -1046,11 +1133,12 @@ namespace ChessForge
         /// passed paragraph.
         /// </summary>
         /// <param name="para"></param>
-        private void BuildOtherWorkbookMovesRun(Paragraph para)
+        private void BuildOtherWorkbookMovesRun(Paragraph para, List<TreeNode> moves, bool isUserMove)
         {
-            foreach (TreeNode nd in _otherMovesInWorkbook)
+            foreach (TreeNode nd in moves)
             {
-                para.Inlines.Add(CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true), _run_wb_move_ + nd.NodeId.ToString(), Brushes.Green));
+                Brush brush = isUserMove ? Brushes.Green : Brushes.Blue;
+                para.Inlines.Add(CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true), _run_wb_move_ + nd.NodeId.ToString(), brush));
                 Run r_semi = new Run("; ");
                 para.Inlines.Add(r_semi);
             }
@@ -1444,13 +1532,14 @@ namespace ChessForge
             {
                 if (_lastClickedNode.ColorToMove == _trainingSide)
                 {
-                    // we have a position after Workbook move, roll back to parent Workbook move
-                    // to force a different Workbook move if it is a from
-                    if (_lastClickedNode.Parent != null)
-                    {
-                        _lastClickedNode = _lastClickedNode.Parent;
-                        RollbackToWorkbookMove();
-                    }
+                    RollbackToUserMove();
+                    //// we have a position after Workbook move, roll back to parent Workbook move
+                    //// to force a different Workbook move if it is a from
+                    //if (_lastClickedNode.Parent != null)
+                    //{
+                    //    _lastClickedNode = _lastClickedNode.Parent;
+                    //    RollbackToWorkbookMove();
+                    //}
                 }
                 else
                 {
