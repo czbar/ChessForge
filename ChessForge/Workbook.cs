@@ -155,10 +155,17 @@ namespace ChessForge
         private string _title;
 
         /// <summary>
-        /// Empty constructor.
+        /// An object managing identities of the trees.
+        /// </summary>
+        private TreeManager _treeManager = new TreeManager();
+
+        /// <summary>
+        /// The constructor.
+        /// Resets the TreeManager. 
         /// </summary>
         public Workbook()
         {
+            TreeManager.Reset();
         }
 
         /// <summary>
