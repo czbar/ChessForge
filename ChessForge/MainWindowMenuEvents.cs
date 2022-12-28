@@ -117,6 +117,42 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The user requested Undo. 
+        /// If the active view is Chapters then this is a workbook/chapter operation that needs undoing.
+        /// If we are in Study, Game or Exercise view, it could be a tree operation
+        /// or an Delete Game/Exercise operation. If there is no Active Tree (e.g. because 
+        /// we deleted the last game) then it was a Delete operation, otherwise compare the timestamps
+        /// on the Wokbook and Tree operations.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnUndo_Click(object sender, RoutedEventArgs e)
+        {
+            if (WorkbookManager.SessionWorkbook == null)
+            {
+                return;
+            }
+
+            if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppStateManager.ActiveVariationTree == null)
+            {
+                // perform a WorkbookOperation undo 
+            }
+            else if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.STUDY
+                 || AppStateManager.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
+                 || AppStateManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
+            {
+                if (WorkbookManager.SessionWorkbook.OpsManager.Timestamp > AppStateManager.ActiveVariationTree.OpsManager.Timestamp)
+                {
+                    // perform a WorkbookOperation undo 
+                }
+                else
+                {
+                    AppStateManager.ActiveVariationTree.OpsManager.Undo();
+                }
+            }
+        }
+
+        /// <summary>
         /// Writes out all debug files.
         /// </summary>
         /// <param name="sender"></param>
@@ -1131,7 +1167,7 @@ namespace ChessForge
                         //chapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, index);
                         //_exerciseTreeView.BuildFlowDocumentForVariationTree();
                         SelectExercise(index, false);
-                        AppStateManager.IsDirty= true;
+                        AppStateManager.IsDirty = true;
                     }
                 }
             }
@@ -1716,7 +1752,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRtbTrainingProgress_GotFocus(object sender, RoutedEventArgs e)
         {
-//            AppStateManager.SetupGuiForTrainingProgressMode();
+            //            AppStateManager.SetupGuiForTrainingProgressMode();
         }
 
 

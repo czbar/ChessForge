@@ -49,10 +49,12 @@
     <Window.CommandBindings>
         <CommandBinding Command="local:CustomCommands.FlipBoard" Executed="UiMnFlipBoard_Click"/>
         <CommandBinding Command="local:CustomCommands.SaveWorkbook" Executed="CustomCommand_SaveWorkbook"/>
+        <CommandBinding Command="local:CustomCommands.Undo" Executed="UiMnUndo_Click"/>
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Key="F" Modifiers="Control" Command="local:CustomCommands.FlipBoard"/>
         <KeyBinding Key="S" Modifiers="Control" Command="local:CustomCommands.SaveWorkbook"/>
+        <KeyBinding Key="Z" Modifiers="Control" Command="local:CustomCommands.Undo"/>
     </Window.InputBindings>
 
     <Grid x:Name="_gridUber" ShowGridLines="False">
@@ -91,6 +93,9 @@
                     </MenuItem>
                     <MenuItem Header="Edit" Margin="0,0,0,0">
                         <MenuItem Header="Annotations" Click="UiMnAnnotationsDialog_Click" >
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Header="Undo" Click="UiMnUndo_Click" InputGestureText="Ctrl+Z" >
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="View" Margin="0,0,0,0">
