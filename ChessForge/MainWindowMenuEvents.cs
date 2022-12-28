@@ -148,8 +148,14 @@ namespace ChessForge
                 else
                 {
                     AppStateManager.ActiveVariationTree.OpsManager.Undo();
+                    if (AppStateManager.MainWin.ActiveTreeView != null)
+                    {
+                        AppStateManager.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                    }
                 }
             }
+
+            AppStateManager.IsDirty = true;
         }
 
         /// <summary>
