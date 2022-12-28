@@ -49,12 +49,12 @@
     <Window.CommandBindings>
         <CommandBinding Command="local:CustomCommands.FlipBoard" Executed="UiMnFlipBoard_Click"/>
         <CommandBinding Command="local:CustomCommands.SaveWorkbook" Executed="CustomCommand_SaveWorkbook"/>
-        <CommandBinding Command="local:CustomCommands.Undo" Executed="UiMnUndo_Click"/>
+        <CommandBinding Command="ApplicationCommands.Undo" Executed="UiMnUndo_Click"/>
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Key="F" Modifiers="Control" Command="local:CustomCommands.FlipBoard"/>
         <KeyBinding Key="S" Modifiers="Control" Command="local:CustomCommands.SaveWorkbook"/>
-        <KeyBinding Key="Z" Modifiers="Control" Command="local:CustomCommands.Undo"/>
+        <KeyBinding Key="Z" Modifiers="Control" Command="ApplicationCommands.Undo"/>
     </Window.InputBindings>
 
     <Grid x:Name="_gridUber" ShowGridLines="False">
@@ -223,7 +223,7 @@
                     VerticalAlignment="Top" Grid.RowSpan="1" Visibility="Hidden">
                     <TabItem x:Name="UiTabTrainingProgress"  Header="Training" IsVisibleChanged="UiTabTrainingProgress_IsVisibleChanged">
                         <Grid Background="#FFE5E5E5">
-                            <RichTextBox x:Name="UiRtbTrainingProgress" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                            <RichTextBox x:Name="UiRtbTrainingProgress" IsUndoEnabled="False" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                  IsReadOnly="True"  MinHeight="640" PreviewMouseMove="TrainingView_OnPreviewMouseMove" GotFocus="UiRtbTrainingProgress_GotFocus">
                                 <RichTextBox.Resources>
@@ -279,7 +279,7 @@
                                     <MenuItem x:Name="_mnDeleteExercise" Header="Delete This Exercise" Click="UiMnChpt_DeleteExercise_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            <RichTextBox x:Name="UiRtbChaptersView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                            <RichTextBox x:Name="UiRtbChaptersView" IsUndoEnabled="False" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
                                    Height="640" MinHeight="500" IsReadOnly="True"  >
                                 <RichTextBox.Resources>
@@ -325,7 +325,7 @@
                                 <Label x:Name="UiLblChapterPrevNextHint" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="170,-3,0,0" Width="100"  FontWeight="Bold" />
                                 <Image x:Name="UiImgChapterRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
                             </Canvas>
-                            <RichTextBox x:Name="UiRtbStudyTreeView" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                            <RichTextBox x:Name="UiRtbStudyTreeView" IsUndoEnabled="False"  Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbStudyTree_PreviewKeyDown">
                                 <RichTextBox.Resources>
@@ -513,7 +513,7 @@
                                 <Label x:Name="UiLblModelGamePrevNextHint" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="170,-3,0,0" Width="100"  FontWeight="Bold"/>
                                 <Image x:Name="UiImgModelGameRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"   />
                             </Canvas>
-                            <RichTextBox x:Name="UiRtbModelGamesView" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                            <RichTextBox x:Name="UiRtbModelGamesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True" >
                                 <RichTextBox.Resources>
@@ -560,7 +560,7 @@
                                 <Label x:Name="UiLblExcercisePrevNextHint" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="170,-3,0,0" Width="100"  FontWeight="Bold"/>
                                 <Image x:Name="UiImgExerciseRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
                             </Canvas>
-                            <RichTextBox x:Name="UiRtbExercisesView" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                            <RichTextBox x:Name="UiRtbExercisesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True"  BorderThickness="0">
                                 <RichTextBox.Resources>
@@ -607,7 +607,7 @@
                         <DataGridTextColumn Header="Ev" Width="50" Binding="{Binding BlackEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <RichTextBox x:Name="UiRtbBoardComment" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
+                <RichTextBox x:Name="UiRtbBoardComment" IsUndoEnabled="False" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
                             <Setter Property="Margin" Value="0" />
@@ -625,7 +625,7 @@
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
-                <RichTextBox x:Name="UiRtbOpenings" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="5,10,0,0" Grid.Row="2" VerticalScrollBarVisibility="Auto"
+                <RichTextBox x:Name="UiRtbOpenings" IsUndoEnabled="False" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="5,10,0,0" Grid.Row="2" VerticalScrollBarVisibility="Auto"
                              Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="590" BorderThickness="1" IsReadOnly="True">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
@@ -633,7 +633,7 @@
                         </Style>
                     </RichTextBox.Resources>
                 </RichTextBox>
-                <RichTextBox x:Name="UiRtbTopGames" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="600,10,0,0" Grid.Row="2" VerticalScrollBarVisibility="Auto"
+                <RichTextBox x:Name="UiRtbTopGames" IsUndoEnabled="False" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="600,10,0,0" Grid.Row="2" VerticalScrollBarVisibility="Auto"
                              Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="260" BorderThickness="1" IsReadOnly="True">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
