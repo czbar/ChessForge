@@ -159,13 +159,18 @@ namespace ChessForge
         /// </summary>
         private TreeManager _treeManager = new TreeManager();
 
+        // associated OperationsManager
+        private WorkbookOperationsManager _opsManager;
+
         /// <summary>
         /// The constructor.
         /// Resets the TreeManager. 
+        /// Creates Operations Manager,
         /// </summary>
         public Workbook()
         {
             TreeManager.Reset();
+            _opsManager = new WorkbookOperationsManager(this);
         }
 
         /// <summary>

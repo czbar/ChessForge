@@ -59,6 +59,17 @@ namespace ChessForge
         // whether the Exercises list is expanded in the ChaptersView
         private bool _isExercisesListExpanded;
 
+        // associated OperationsManager
+        private WorkbookOperationsManager _opsManager;
+
+        /// <summary>
+        /// Creates the object. Initializes Operations Manager
+        /// </summary>
+        public Chapter()
+        {
+            _opsManager = new WorkbookOperationsManager(this);
+        }
+
         /// <summary>
         // Index of the currently shown Game in the Model Games list
         /// </summary>

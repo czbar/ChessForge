@@ -63,13 +63,17 @@ namespace GameTree
         // currently the highest NodeId in the tree (can be not set so NodeId of the last node must ne checked too)
         private int _maxNodeId = 0;
 
+        // associated OperationsManager
+        private EditOperationsManager _opsManager;
+
         /// <summary>
         /// Constructor. Creates a VariationTree of the requested type.
         /// </summary>
         /// <param name="contentType"></param>
         public VariationTree(GameData.ContentType contentType, TreeNode root = null)
         {
-            TreeId = TreeManager.GetNewTreeId(); 
+            TreeId = TreeManager.GetNewTreeId();
+            _opsManager = new EditOperationsManager(this);
             Header.SetContentType(contentType);
             if (contentType == GameData.ContentType.EXERCISE)
             {

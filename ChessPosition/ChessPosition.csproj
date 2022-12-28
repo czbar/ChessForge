@@ -49,6 +49,8 @@
     <Compile Include="BoardPosition\MoveUI.cs" />
     <Compile Include="GameTree\Bookmark.cs" />
     <Compile Include="GameTree\ChfCommands.cs" />
+    <Compile Include="GameTree\EditOperation.cs" />
+    <Compile Include="GameTree\EditOperationsManager.cs" />
     <Compile Include="GameTree\TreeManager.cs" />
     <Compile Include="Parsers\GameHeader.cs" />
     <Compile Include="GameTree\PlyForTreeView.cs" />
