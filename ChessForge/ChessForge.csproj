@@ -141,6 +141,8 @@
     <Compile Include="MoveAnimator.cs" />
     <Compile Include="MoveEvaluation.cs" />
     <Compile Include="OpeningStatsView.cs" />
+    <Compile Include="WorkbookOperation.cs" />
+    <Compile Include="WorkbookOperationsManager.cs" />
     <Compile Include="PositionSetupDialog.xaml.cs">
       <DependentUpon>PositionSetupDialog.xaml</DependentUpon>
     </Compile>

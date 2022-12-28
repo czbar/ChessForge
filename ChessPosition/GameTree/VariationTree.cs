@@ -53,7 +53,7 @@ namespace GameTree
         /// </summary>
         public bool IsAssociatedTreeActive
         {
-            get => _isAssociatedTreeActive; 
+            get => _isAssociatedTreeActive;
             set => _isAssociatedTreeActive = value;
         }
 
@@ -63,13 +63,17 @@ namespace GameTree
         // currently the highest NodeId in the tree (can be not set so NodeId of the last node must ne checked too)
         private int _maxNodeId = 0;
 
+        // associated OperationsManager
+        public EditOperationsManager OpsManager;
+
         /// <summary>
         /// Constructor. Creates a VariationTree of the requested type.
         /// </summary>
         /// <param name="contentType"></param>
         public VariationTree(GameData.ContentType contentType, TreeNode root = null)
         {
-            TreeId = TreeManager.GetNewTreeId(); 
+            TreeId = TreeManager.GetNewTreeId();
+            OpsManager = new EditOperationsManager(this);
             Header.SetContentType(contentType);
             if (contentType == GameData.ContentType.EXERCISE)
             {
@@ -84,6 +88,26 @@ namespace GameTree
             {
                 Nodes.Add(root);
             }
+        }
+
+        /// <summary>
+        /// Adds a node to the Workbook tree.
+        /// </summary>
+        /// <param name="node"></param>
+        public void AddNode(TreeNode node)
+        {
+            Nodes.Add(node);
+        }
+
+        /// <summary>
+        /// Adds a new Node to the Workbook
+        /// and to its parent node 
+        /// </summary>
+        /// <param name="node"></param>
+        public void AddNodeToParent(TreeNode node)
+        {
+            Nodes.Add(node);
+            node.Parent.AddChild(node);
         }
 
         /// <summary>
@@ -636,15 +660,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Adds a node to the Workbook tree.
-        /// </summary>
-        /// <param name="node"></param>
-        public void AddNode(TreeNode node)
-        {
-            Nodes.Add(node);
-        }
-
-        /// <summary>
         /// Inserts an external subtree into this tree.
         /// Recursively clones the nodes from the external tree,
         /// assigns NodeIds, sets parent object, adds to the parent's
@@ -688,17 +703,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Adds a new Node to the Workbook
-        /// and to its parent node 
-        /// </summary>
-        /// <param name="node"></param>
-        public void AddNodeToParent(TreeNode node)
-        {
-            Nodes.Add(node);
-            node.Parent.AddChild(node);
-        }
-
-        /// <summary>
         /// Returns a sibling move of found to represent the same
         /// move as the passed node.
         /// Otherwise returns null.
@@ -724,6 +728,31 @@ namespace GameTree
             }
 
             return ret;
+        }
+
+        /// <summary>
+        /// Gets the index of the node in its parent's children list
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public int GetChildIndex(TreeNode nd)
+        {
+            if (nd.Parent == null)
+            {
+                return -1;
+            }
+
+            int idx = -1;
+            for (int i = 0; i < nd.Parent.Children.Count; i++)
+            {
+                if (nd.NodeId == nd.Parent.Children[i].NodeId)
+                {
+                    idx = i;
+                    break;
+                }
+            }
+
+            return idx;
         }
 
         /// <summary>
@@ -1125,11 +1154,17 @@ namespace GameTree
         /// <returns></returns>
         public bool DeleteRemainingMoves(TreeNode nd)
         {
+            // need child index for unod
+            int childIndex = GetChildIndex(nd);
+
             // identify moves to delete
             _subTree.Clear();
             nd.Parent.Children.Remove(nd);
-
             GetSubTree(nd);
+
+            // Store info about this deletion for a possible undo
+            EditOperation op = new EditOperation(EditOperation.EditType.DELETE_LINE, nd, CopySubtree(_subTree), childIndex);
+            OpsManager.QueueOperation(op);
 
             foreach (TreeNode node in _subTree)
             {
@@ -1138,6 +1173,32 @@ namespace GameTree
             }
 
             return _subTree.Count > 0;
+        }
+
+        /// <summary>
+        /// Restore the subtree that was removed e.g. by the DeleteRemainingMoves() call.
+        /// Inserts the start node at its original index and then simply adds all other
+        /// nodes to the tree as all parent and children references will be good there.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="nodeList"></param>
+        /// <param name="childIndex"></param>
+        public void RestoreSubtree(TreeNode start, List<TreeNode> nodeList, int childIndex)
+        {
+            try
+            {
+                start.Parent.Children.Insert(childIndex, start);
+                if (nodeList != null)
+                {
+                    foreach (TreeNode nd in nodeList)
+                    {
+                        Nodes.Add(nd);
+                    }
+                }
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -1151,6 +1212,22 @@ namespace GameTree
         {
             _subTree.Clear();
             return GetSubTree(nd, includeStem);
+        }
+
+        /// <summary>
+        /// Makes a copy of a list of nodes for later use.
+        /// </summary>
+        /// <param name="subTree"></param>
+        /// <returns></returns>
+        private List<TreeNode> CopySubtree(List<TreeNode> subTree)
+        {
+            List<TreeNode> copy = new List<TreeNode>();
+            foreach (TreeNode node in subTree)
+            {
+                copy.Add(node);
+            }
+
+            return copy;
         }
 
         /// <summary>

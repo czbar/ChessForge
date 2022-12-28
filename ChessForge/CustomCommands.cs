@@ -14,5 +14,6 @@ namespace ChessForge
     {
         public static RoutedCommand FlipBoard = new RoutedCommand();
         public static RoutedCommand SaveWorkbook = new RoutedCommand();
+        public static RoutedCommand Undo = new RoutedCommand();
     }
 }
