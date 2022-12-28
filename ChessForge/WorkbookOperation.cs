@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ChessForge
 {
-    public class WorkbookOperation
+    public class WorkbookOperation : Operation
     {
         /// <summary>
         /// Types of supported operations.
@@ -50,7 +50,7 @@ namespace ChessForge
         /// <summary>
         /// Constructor for DELETE_CHAPTER.
         /// </summary>
-        public WorkbookOperation(WorkbookOperationType tp, Chapter ch, int chapterIndex)
+        public WorkbookOperation(WorkbookOperationType tp, Chapter ch, int chapterIndex) : base()
         {
             _opType = tp;
             _chapter = ch;
@@ -60,7 +60,7 @@ namespace ChessForge
         /// <summary>
         /// Constructor for DELETE_GAME or DELETE_EXERCISE.
         /// </summary>
-        public WorkbookOperation(WorkbookOperationType tp, Chapter ch, VariationTree tree, int gameIndex)
+        public WorkbookOperation(WorkbookOperationType tp, Chapter ch, VariationTree tree, int gameIndex) : base()
         {
             _opType = tp;
             _chapter = ch;

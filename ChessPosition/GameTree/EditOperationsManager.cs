@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace GameTree
 {
-    public class EditOperationsManager
+    public class EditOperationsManager : OperationsManager
     {
-        // queue of operations
-        private Queue<EditOperation> _operations = new Queue<EditOperation>();
-
         // parent tree
         private VariationTree _owningTree;
 
@@ -24,11 +21,23 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Clears the Operations queue
+        /// Performs the undo of the Operation in the queue.
         /// </summary>
-        public void Reset()
+        public void Undo()
         {
-            _operations.Clear();
+            if (_operations.Count == 0)
+            {
+                return;
+            }
+
+            EditOperation op = _operations.Dequeue() as EditOperation;
+            switch (op.OpType)
+            {
+                case EditOperation.EditType.DELETE_LINE:
+                    // restore line
+                    // _owningTree.RestoreLine(op.StartNode, op.NodeList)
+                    break;
+            }
         }
     }
 }

@@ -64,7 +64,7 @@ namespace GameTree
         private int _maxNodeId = 0;
 
         // associated OperationsManager
-        private EditOperationsManager _opsManager;
+        public EditOperationsManager OpsManager;
 
         /// <summary>
         /// Constructor. Creates a VariationTree of the requested type.
@@ -73,7 +73,7 @@ namespace GameTree
         public VariationTree(GameData.ContentType contentType, TreeNode root = null)
         {
             TreeId = TreeManager.GetNewTreeId();
-            _opsManager = new EditOperationsManager(this);
+            OpsManager = new EditOperationsManager(this);
             Header.SetContentType(contentType);
             if (contentType == GameData.ContentType.EXERCISE)
             {
@@ -88,6 +88,26 @@ namespace GameTree
             {
                 Nodes.Add(root);
             }
+        }
+
+        /// <summary>
+        /// Adds a node to the Workbook tree.
+        /// </summary>
+        /// <param name="node"></param>
+        public void AddNode(TreeNode node)
+        {
+            Nodes.Add(node);
+        }
+
+        /// <summary>
+        /// Adds a new Node to the Workbook
+        /// and to its parent node 
+        /// </summary>
+        /// <param name="node"></param>
+        public void AddNodeToParent(TreeNode node)
+        {
+            Nodes.Add(node);
+            node.Parent.AddChild(node);
         }
 
         /// <summary>
@@ -640,15 +660,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Adds a node to the Workbook tree.
-        /// </summary>
-        /// <param name="node"></param>
-        public void AddNode(TreeNode node)
-        {
-            Nodes.Add(node);
-        }
-
-        /// <summary>
         /// Inserts an external subtree into this tree.
         /// Recursively clones the nodes from the external tree,
         /// assigns NodeIds, sets parent object, adds to the parent's
@@ -689,17 +700,6 @@ namespace GameTree
             newChild.Position = pos;
 
             return newChild;
-        }
-
-        /// <summary>
-        /// Adds a new Node to the Workbook
-        /// and to its parent node 
-        /// </summary>
-        /// <param name="node"></param>
-        public void AddNodeToParent(TreeNode node)
-        {
-            Nodes.Add(node);
-            node.Parent.AddChild(node);
         }
 
         /// <summary>
@@ -1135,6 +1135,10 @@ namespace GameTree
 
             GetSubTree(nd);
 
+            // Store info about this deletion for a possible undo
+            EditOperation op = new EditOperation(EditOperation.EditType.DELETE_LINE, nd, CopySubtree(_subTree));
+            OpsManager.QueueOperation(op);
+
             foreach (TreeNode node in _subTree)
             {
                 Nodes.Remove(node);
@@ -1155,6 +1159,22 @@ namespace GameTree
         {
             _subTree.Clear();
             return GetSubTree(nd, includeStem);
+        }
+
+        /// <summary>
+        /// Makes a copy of a list of nodes for later use.
+        /// </summary>
+        /// <param name="subTree"></param>
+        /// <returns></returns>
+        private List<TreeNode> CopySubtree(List<TreeNode> subTree)
+        {
+            List<TreeNode> copy = new List<TreeNode>();
+            foreach (TreeNode node in subTree)
+            {
+                copy.Add(node);
+            }
+
+            return copy;
         }
 
         /// <summary>

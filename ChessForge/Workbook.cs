@@ -160,7 +160,7 @@ namespace ChessForge
         private TreeManager _treeManager = new TreeManager();
 
         // associated OperationsManager
-        private WorkbookOperationsManager _opsManager;
+        public WorkbookOperationsManager OpsManager;
 
         /// <summary>
         /// The constructor.
@@ -170,7 +170,7 @@ namespace ChessForge
         public Workbook()
         {
             TreeManager.Reset();
-            _opsManager = new WorkbookOperationsManager(this);
+            OpsManager = new WorkbookOperationsManager(this);
         }
 
         /// <summary>

@@ -15,11 +15,8 @@ namespace ChessForge
     /// - Chapters: for undoing Game/Exercise deletions
     /// - Workbook: for undoing Chapter deletions
     /// </summary>
-    public class WorkbookOperationsManager
+    public class WorkbookOperationsManager : OperationsManager
     {
-        // queue of operations
-        private Queue<WorkbookOperation> _operations = new Queue<WorkbookOperation>();
-
         // parent tree if hosted in a VariationTree
         private VariationTree _owningTree;
 
@@ -54,14 +51,6 @@ namespace ChessForge
         public WorkbookOperationsManager(Workbook workbook)
         {
             _owningWorkbook = workbook;
-        }
-
-        /// <summary>
-        /// Clears the Operations queue
-        /// </summary>
-        public void Reset()
-        {
-            _operations.Clear();
         }
     }
 }
