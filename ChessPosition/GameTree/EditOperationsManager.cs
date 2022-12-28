@@ -35,7 +35,7 @@ namespace GameTree
             {
                 case EditOperation.EditType.DELETE_LINE:
                     // restore line
-                    // _owningTree.RestoreLine(op.StartNode, op.NodeList)
+                    _owningTree.RestoreSubtree(op.Node, op.NodeList, op.ChildIndex);
                     break;
             }
         }

@@ -53,7 +53,7 @@ namespace GameTree
         /// </summary>
         public bool IsAssociatedTreeActive
         {
-            get => _isAssociatedTreeActive; 
+            get => _isAssociatedTreeActive;
             set => _isAssociatedTreeActive = value;
         }
 
@@ -731,6 +731,31 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Gets the index of the node in its parent's children list
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public int GetChildIndex(TreeNode nd)
+        {
+            if (nd.Parent == null)
+            {
+                return -1;
+            }
+
+            int idx = -1;
+            for (int i = 0; i < nd.Parent.Children.Count; i++)
+            {
+                if (nd.NodeId == nd.Parent.Children[i].NodeId)
+                {
+                    idx = i;
+                    break;
+                }
+            }
+
+            return idx;
+        }
+
+        /// <summary>
         /// Returns true if the specified node has at least one sibling.
         /// </summary>
         /// <param name="nodeId"></param>
@@ -1129,14 +1154,16 @@ namespace GameTree
         /// <returns></returns>
         public bool DeleteRemainingMoves(TreeNode nd)
         {
+            // need child index for unod
+            int childIndex = GetChildIndex(nd);
+
             // identify moves to delete
             _subTree.Clear();
             nd.Parent.Children.Remove(nd);
-
             GetSubTree(nd);
 
             // Store info about this deletion for a possible undo
-            EditOperation op = new EditOperation(EditOperation.EditType.DELETE_LINE, nd, CopySubtree(_subTree));
+            EditOperation op = new EditOperation(EditOperation.EditType.DELETE_LINE, nd, CopySubtree(_subTree), childIndex);
             OpsManager.QueueOperation(op);
 
             foreach (TreeNode node in _subTree)
@@ -1146,6 +1173,32 @@ namespace GameTree
             }
 
             return _subTree.Count > 0;
+        }
+
+        /// <summary>
+        /// Restore the subtree that was removed e.g. by the DeleteRemainingMoves() call.
+        /// Inserts the start node at its original index and then simply adds all other
+        /// nodes to the tree as all parent and children references will be good there.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="nodeList"></param>
+        /// <param name="childIndex"></param>
+        public void RestoreSubtree(TreeNode start, List<TreeNode> nodeList, int childIndex)
+        {
+            try
+            {
+                start.Parent.Children.Insert(childIndex, start);
+                if (nodeList != null)
+                {
+                    foreach (TreeNode nd in nodeList)
+                    {
+                        Nodes.Add(nd);
+                    }
+                }
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
