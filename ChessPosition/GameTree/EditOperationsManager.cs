@@ -37,6 +37,9 @@ namespace GameTree
                     // restore line
                     _owningTree.RestoreSubtree(op.Node, op.NodeList, op.ChildIndex);
                     break;
+                case EditOperation.EditType.PROMOTE_LINE:
+                    _owningTree.UndoPromoteLine(op.Node, op.ChildIndex);
+                    break;
             }
         }
     }
