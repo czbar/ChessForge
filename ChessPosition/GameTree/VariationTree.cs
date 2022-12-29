@@ -1223,6 +1223,24 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Restores annotation from before the last edit.
+        /// </summary>
+        /// <param name="dummyNode"></param>
+        public void UndoUpdateAnnotation(TreeNode dummyNode)
+        {
+            try
+            {
+                TreeNode nd = GetNodeFromNodeId(dummyNode.NodeId);
+                nd.SetNags(dummyNode.Nags);
+                nd.Comment = dummyNode.Comment;
+                nd.QuizPoints = dummyNode.QuizPoints;
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Builds a list of Nodes belonging to a subtree
         /// identified by the passed node.
         /// </summary>

@@ -18,6 +18,7 @@ namespace GameTree
             DELETE_LINE,
             PROMOTE_LINE,
             ADD_MOVE,
+            UPDATE_ANNOTATION,
         }
 
         /// <summary>
@@ -81,12 +82,33 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Constructor for ADD_MOVE.
+        /// Constructor for ADD_MOVE and UPDATE_ANNOTATION.
         /// </summary>
-        public EditOperation(EditType tp, TreeNode move) : base()
+        public EditOperation(EditType tp, TreeNode nd) : base()
         {
             _opType = tp;
-            _node = move;
+            if (tp == EditType.UPDATE_ANNOTATION)
+            {
+                // create a dummy node to keep the data of relevance
+                _node = new TreeNode(null, "", nd.NodeId);
+                _node.Nags = nd.Nags;
+                _node.Comment= nd.Comment;
+                _node.QuizPoints= nd.QuizPoints;
+            }
+            else
+            {
+                _node = nd;
+            }
+        }
+
+        /// <summary>
+        /// Constructor for "other" operations.
+        /// </summary>
+        public EditOperation(EditType tp, object data_1, object data_2) : base()
+        {
+            _opType = tp;
+            _opData_1 = data_1;
+            _opData_2 = data_2;
         }
     }
 }
