@@ -1975,6 +1975,13 @@ namespace ChessForge
 
             if (nd != null)
             {
+                EditOperation op = null;
+
+                if (AppStateManager.ActiveVariationTree != null)
+                {
+                    op = new EditOperation(EditOperation.EditType.UPDATE_ANNOTATION, nd);
+                }
+
                 AnnotationsDialog dlg = new AnnotationsDialog(nd)
                 {
                     Left = ChessForgeMain.Left + 100,
@@ -1992,6 +1999,11 @@ namespace ChessForge
                         nd.SetNags(dlg.Nags);
                         nd.QuizPoints = dlg.QuizPoints;
                         AppStateManager.IsDirty = true;
+
+                        if (op != null)
+                        {
+                            AppStateManager.ActiveVariationTree.OpsManager.PushOperation(op);
+                        }
                     }
                 }
             }
