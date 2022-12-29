@@ -30,7 +30,7 @@ namespace GameTree
                 return;
             }
 
-            EditOperation op = _operations.Dequeue() as EditOperation;
+            EditOperation op = _operations.Pop() as EditOperation;
             switch (op.OpType)
             {
                 case EditOperation.EditType.DELETE_LINE:
