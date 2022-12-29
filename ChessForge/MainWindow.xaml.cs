@@ -273,6 +273,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            if (Configuration.IsMainWinMaximized())
+            {
+                this.WindowState = WindowState.Maximized;
+            }
+
             UiDgActiveLine.ContextMenu = UiMnMainBoard;
             UiBtnExitGame.Background = ChessForgeColors.ExitButtonLinearBrush;
             UiBtnExitTraining.Background = ChessForgeColors.ExitButtonLinearBrush;
@@ -303,11 +308,7 @@ namespace ChessForge
             Configuration.Initialize(this);
             Configuration.StartDirectory = App.AppPath;
             Configuration.ReadConfigurationFile();
-            if (Configuration.IsMainWinMaximized())
-            {
-                this.WindowState = WindowState.Maximized;
-            }
-            else if (Configuration.IsMainWinPosValid())
+            if (Configuration.IsMainWinPosValid())
             {
                 this.Left = Configuration.MainWinPos.Left;
                 this.Top = Configuration.MainWinPos.Top;
