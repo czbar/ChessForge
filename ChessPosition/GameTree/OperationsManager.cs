@@ -15,7 +15,7 @@ namespace GameTree
         /// Queued a new operation.
         /// </summary>
         /// <param name="op"></param>
-        public void QueueOperation(Operation op)
+        public void PushOperation(Operation op)
         {
             _operations.Push(op);
         }
@@ -24,7 +24,7 @@ namespace GameTree
         /// Removes and returns the first operation in the queue.
         /// </summary>
         /// <returns></returns>
-        public Operation DequeueOperation()
+        public Operation PopOperation()
         {
             return _operations.Pop();
         }
