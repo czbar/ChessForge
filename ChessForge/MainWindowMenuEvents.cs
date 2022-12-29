@@ -148,6 +148,7 @@ namespace ChessForge
                 else
                 {
                     AppStateManager.ActiveVariationTree.OpsManager.Undo();
+                    AppStateManager.ActiveVariationTree.BuildLines();
                     if (AppStateManager.MainWin.ActiveTreeView != null)
                     {
                         AppStateManager.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
