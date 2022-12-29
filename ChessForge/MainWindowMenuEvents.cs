@@ -147,16 +147,46 @@ namespace ChessForge
                 }
                 else
                 {
-                    AppStateManager.ActiveVariationTree.OpsManager.Undo();
-                    AppStateManager.ActiveVariationTree.BuildLines();
-                    if (AppStateManager.MainWin.ActiveTreeView != null)
-                    {
-                        AppStateManager.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
-                    }
+                    UndoTreeEditOperation();
                 }
             }
 
             AppStateManager.IsDirty = true;
+        }
+
+        /// <summary>
+        /// Undo the last EditOperation 
+        /// </summary>
+        private void UndoTreeEditOperation()
+        {
+            AppStateManager.ActiveVariationTree.OpsManager.Undo(out EditOperation.EditType opType, out string selectedLineId, out int selectedNodeId);
+            TreeNode selectedNode = AppStateManager.ActiveVariationTree.GetNodeFromNodeId(selectedNodeId);
+            AppStateManager.ActiveVariationTree.BuildLines();
+            if (AppStateManager.MainWin.ActiveTreeView != null)
+            {
+                if (!string.IsNullOrEmpty(selectedLineId))
+                {
+                    AppStateManager.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
+                }
+                else if (selectedNodeId >= 0)
+                {
+                    if (selectedNode != null)
+                    {
+                        selectedLineId = selectedNode.LineId;
+                        AppStateManager.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
+                    }
+                }
+
+                AppStateManager.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                if (opType == EditOperation.EditType.UPDATE_ANNOTATION)
+                {
+                    AppStateManager.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(selectedNode);
+                }
+                if (!string.IsNullOrEmpty(selectedLineId))
+                {
+                    AppStateManager.MainWin.ActiveTreeView.SelectLineAndMove(selectedLineId, selectedNodeId);
+                }
+            }
         }
 
         /// <summary>
