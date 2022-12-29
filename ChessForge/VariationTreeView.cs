@@ -1928,50 +1928,61 @@ namespace ChessForge
         /// <param name="nd"></param>
         public void InsertOrUpdateCommentRun(TreeNode nd)
         {
-            Run r;
-            _dictNodeToRun.TryGetValue(nd.NodeId, out r);
-
-            if (r == null)
+            if (nd == null)
             {
-                // something seriously wrong
-                AppLog.Message("ERROR: InsertOrUpdateCommentRun()- Run " + nd.NodeId.ToString() + " not found in _dictNodeToRun");
                 return;
             }
 
-            // we are refreshing the move's text in case we have a change in NAG,
-            // be sure to keep any leading spaces
-            string spaces = TextUtils.GetLeadingSpaces(r.Text);
-            r.Text = BuildNodeText(nd, IsMoveTextWithNumber(r.Text));
-            r.Text = spaces + r.Text.TrimStart();
-
-            Run r_comment;
-            _dictNodeToCommentRun.TryGetValue(nd.NodeId, out r_comment);
-
-            if (string.IsNullOrEmpty(nd.Comment)
-                &&
-                (_mainVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.EDITING || nd.QuizPoints == 0)
-                )
+            try
             {
-                // if the comment run existed, remove it
-                if (r_comment != null)
+                Run r;
+                _dictNodeToRun.TryGetValue(nd.NodeId, out r);
+
+                if (r == null)
                 {
-                    _dictNodeToCommentRun.Remove(nd.NodeId);
-                    RemoveRunFromHostingParagraph(r_comment);
+                    // something seriously wrong
+                    AppLog.Message("ERROR: InsertOrUpdateCommentRun()- Run " + nd.NodeId.ToString() + " not found in _dictNodeToRun");
+                    return;
                 }
-            }
-            else
-            {
-                // if the comment run existed update it
-                if (r_comment != null)
+
+                // we are refreshing the move's text in case we have a change in NAG,
+                // be sure to keep any leading spaces
+                string spaces = TextUtils.GetLeadingSpaces(r.Text);
+                r.Text = BuildNodeText(nd, IsMoveTextWithNumber(r.Text));
+                r.Text = spaces + r.Text.TrimStart();
+
+                Run r_comment;
+                _dictNodeToCommentRun.TryGetValue(nd.NodeId, out r_comment);
+
+                if (string.IsNullOrEmpty(nd.Comment)
+                    &&
+                    (_mainVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.EDITING || nd.QuizPoints == 0)
+                    )
                 {
-                    r_comment.Text = BuildCommentRunText(nd);
+                    // if the comment run existed, remove it
+                    if (r_comment != null)
+                    {
+                        _dictNodeToCommentRun.Remove(nd.NodeId);
+                        RemoveRunFromHostingParagraph(r_comment);
+                    }
                 }
-                // if did not exists, create it
                 else
                 {
-                    Paragraph para = r.Parent as Paragraph;
-                    AddCommentRunToParagraph(nd, para);
+                    // if the comment run existed update it
+                    if (r_comment != null)
+                    {
+                        r_comment.Text = BuildCommentRunText(nd);
+                    }
+                    // if did not exists, create it
+                    else
+                    {
+                        Paragraph para = r.Parent as Paragraph;
+                        AddCommentRunToParagraph(nd, para);
+                    }
                 }
+            }
+            catch
+            {
             }
         }
 

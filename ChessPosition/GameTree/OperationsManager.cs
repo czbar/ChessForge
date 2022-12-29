@@ -9,24 +9,24 @@ namespace GameTree
     public class OperationsManager
     {
         // queue of operations
-        protected Queue<Operation> _operations = new Queue<Operation>();
+        protected Stack<Operation> _operations = new Stack<Operation>();
 
         /// <summary>
         /// Queued a new operation.
         /// </summary>
         /// <param name="op"></param>
-        public void QueueOperation(Operation op)
+        public void PushOperation(Operation op)
         {
-            _operations.Enqueue(op);
+            _operations.Push(op);
         }
 
         /// <summary>
         /// Removes and returns the first operation in the queue.
         /// </summary>
         /// <returns></returns>
-        public Operation DequeueOperation()
+        public Operation PopOperation()
         {
-            return _operations.Dequeue();
+            return _operations.Pop();
         }
 
         /// <summary>

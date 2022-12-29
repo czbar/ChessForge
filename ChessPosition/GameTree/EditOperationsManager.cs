@@ -23,19 +23,32 @@ namespace GameTree
         /// <summary>
         /// Performs the undo of the Operation in the queue.
         /// </summary>
-        public void Undo()
+        public void Undo(out EditOperation.EditType tp, out string selectedLineId, out int selectedNodeId)
         {
+            tp = EditOperation.EditType.NONE;
+            selectedLineId = "";
+            selectedNodeId = -1;
+
             if (_operations.Count == 0)
             {
                 return;
             }
 
-            EditOperation op = _operations.Dequeue() as EditOperation;
-            switch (op.OpType)
+            EditOperation op = _operations.Pop() as EditOperation;
+            tp = op.OpType;
+
+            switch (tp)
             {
                 case EditOperation.EditType.DELETE_LINE:
                     // restore line
                     _owningTree.RestoreSubtree(op.Node, op.NodeList, op.ChildIndex);
+                    break;
+                case EditOperation.EditType.PROMOTE_LINE:
+                    _owningTree.UndoPromoteLine(op.Node, op.ChildIndex);
+                    break;
+                case EditOperation.EditType.UPDATE_ANNOTATION:
+                    _owningTree.UndoUpdateAnnotation(op.Node);
+                    selectedNodeId = op.Node.NodeId;
                     break;
             }
         }

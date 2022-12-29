@@ -1118,6 +1118,7 @@ namespace GameTree
                 return changed;
             }
 
+            int childIndex = GetChildIndex(nd);
             TreeNode currNode = nd;
             while (currNode.Parent != null)
             {
@@ -1139,12 +1140,32 @@ namespace GameTree
                 currNode = currNode.Parent;
             }
 
+            // Store info about this promotion for a possible undo
+            EditOperation op = new EditOperation(EditOperation.EditType.PROMOTE_LINE, nd, childIndex);
+            OpsManager.PushOperation(op);
+
             if (changed)
             {
                 BuildLines();
             }
 
             return changed;
+        }
+
+        /// <summary>
+        /// Undoes promotion of a line.
+        /// Moves the root of promotion to its original position
+        /// on the parent's child list.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="origIndex"></param>
+        public void UndoPromoteLine(TreeNode nd, int origIndex)
+        {
+            if (nd != null && nd.Parent != null && origIndex >= 0 && origIndex < nd.Parent.GetChildrenCount())
+            {
+                nd.Parent.Children.Remove(nd);
+                nd.Parent.Children.Insert(origIndex, nd);
+            }
         }
 
         /// <summary>
@@ -1164,7 +1185,7 @@ namespace GameTree
 
             // Store info about this deletion for a possible undo
             EditOperation op = new EditOperation(EditOperation.EditType.DELETE_LINE, nd, CopySubtree(_subTree), childIndex);
-            OpsManager.QueueOperation(op);
+            OpsManager.PushOperation(op);
 
             foreach (TreeNode node in _subTree)
             {
@@ -1195,6 +1216,24 @@ namespace GameTree
                         Nodes.Add(nd);
                     }
                 }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Restores annotation from before the last edit.
+        /// </summary>
+        /// <param name="dummyNode"></param>
+        public void UndoUpdateAnnotation(TreeNode dummyNode)
+        {
+            try
+            {
+                TreeNode nd = GetNodeFromNodeId(dummyNode.NodeId);
+                nd.SetNags(dummyNode.Nags);
+                nd.Comment = dummyNode.Comment;
+                nd.QuizPoints = dummyNode.QuizPoints;
             }
             catch
             {

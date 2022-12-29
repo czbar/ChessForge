@@ -85,6 +85,12 @@ namespace ChessForge
         public static int EngineMpv = 5;
 
         /// <summary>
+        /// Whether the main window was maximized
+        /// when Chess Forge closed last time.
+        /// </summary>
+        public static bool MainWinMaximized = false;
+
+        /// <summary>
         /// Whether to show the generic PGN file info
         /// when opening a non-Chess Forge file.
         /// </summary>
@@ -181,9 +187,10 @@ namespace ChessForge
         private const string CFG_SOUND_ON = "SoundOn";
         private const string CFG_USE_FIXED_FONT = "UseFixedFont";
         private const string CFG_SHOW_MOVES_AT_FORK = "ShowMovesAtFork";
+        private const string CFG_MAIN_WIN_MAXIMIZED = "MainWinMaximized";
         private const string CFG_SHOW_GENERIC_PGN_INFO = "ShowGenericPgnInfo";
         private const string CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES = "AllowMouseWheelForMoves";
-        
+
         public static string StartDirectory = "";
 
         // name of the file in which this configuration is stored.
@@ -215,7 +222,7 @@ namespace ChessForge
         /// </summary>
         public static bool IsFontSizeAtMin
         {
-            get => FontSizeDiff <=  MAX_DOWN_FONT_SIZE_DIFF;
+            get => FontSizeDiff <= MAX_DOWN_FONT_SIZE_DIFF;
         }
 
         /// <summary>
@@ -321,7 +328,7 @@ namespace ChessForge
 
                 sb.Append(CFG_ENGINE_EXE + "=" + EngineExePath + Environment.NewLine);
                 sb.Append(CFG_DO_NOT_SHOW_VERSION + "=" + DoNotShowVersion + Environment.NewLine);
-                
+
                 sb.Append(CFG_ENGINE_MOVE_TIME + "=" + EngineMoveTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_EVALUATION_TIME + "=" + EngineEvaluationTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_MPV + "=" + EngineMpv.ToString() + Environment.NewLine);
@@ -346,7 +353,9 @@ namespace ChessForge
                 sb.Append(GetRecentFiles());
                 sb.Append(Environment.NewLine);
 
-                sb.Append(GetWindowPosition());
+                sb.Append(GetWindowPosition(out bool isMaximized));
+                sb.Append(CFG_MAIN_WIN_MAXIMIZED + "=" + (isMaximized ? "1" : "0") + Environment.NewLine);
+
                 sb.Append(Environment.NewLine);
 
 
@@ -356,23 +365,28 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Gets the position of the Main Window and encodes it
+        /// Gets the position of the Main Window and encodes it.
+        /// Detects maximized state.
         /// for saving.
         /// </summary>
         /// <returns></returns>
-        public static string GetWindowPosition()
+        public static string GetWindowPosition(out bool isMaximized)
         {
-            double left = 0;
-            double top = 0;
-            double right = 0;
-            double bottom = 0;
+            isMaximized = Application.Current.MainWindow.WindowState == WindowState.Maximized;
 
-            if (Application.Current.MainWindow.WindowState != WindowState.Maximized)
+            double left = Application.Current.MainWindow.Left;
+            double top = Application.Current.MainWindow.Top;
+            double right = left + Application.Current.MainWindow.Width;
+            double bottom = top + Application.Current.MainWindow.Height;
+
+            // if is maximized adjust the coordinates so they are within the virtual screen and do not cause
+            // IsValidPosition to return false.
+            if (isMaximized)
             {
-                left = Application.Current.MainWindow.Left;
-                top = Application.Current.MainWindow.Top;
-                right = left + Application.Current.MainWindow.Width;
-                bottom = top + Application.Current.MainWindow.Height;
+                left = Math.Max(left, SystemParameters.VirtualScreenLeft);
+                top = Math.Max(top, SystemParameters.VirtualScreenTop);
+                right = Math.Min(left + Application.Current.MainWindow.Width, SystemParameters.VirtualScreenWidth);
+                bottom = Math.Min(top + Application.Current.MainWindow.Height, SystemParameters.VirtualScreenHeight);
             }
 
             return CFG_MAIN_WINDOW_POS + " = " + left.ToString() + "," + top.ToString() + ","
@@ -382,14 +396,23 @@ namespace ChessForge
         /// <summary>
         /// Checks if the saved Window position is valid and can be used
         /// when reopening the application.
-        /// We consider the position valid if both width and length are greater than 100.
+        /// We consider the position valid if both width and length are greater than 100
+        /// and it is fully within the Virtual Screen.
         /// </summary>
         /// <returns></returns>
         public static bool IsMainWinPosValid()
         {
-            if (MainWinPos.Right > MainWinPos.Left + 100 && MainWinPos.Bottom > MainWinPos.Top + 100)
+            if (MainWinPos.Right > MainWinPos.Left + 400 && MainWinPos.Bottom > MainWinPos.Top + 200)
             {
-                return true;
+                if (SystemParameters.VirtualScreenLeft <= MainWinPos.Left && SystemParameters.VirtualScreenWidth >= MainWinPos.Right
+                    && SystemParameters.VirtualScreenTop <= MainWinPos.Top && SystemParameters.VirtualScreenHeight >= MainWinPos.Bottom)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
@@ -399,11 +422,12 @@ namespace ChessForge
 
         /// <summary>
         /// Checks if the last Window position was recorded as maximized.
+        /// In the older versions this was expressed by having all coords == 0.
         /// </summary>
         /// <returns></returns>
         public static bool IsMainWinMaximized()
         {
-            return MainWinPos.Right == 0 && MainWinPos.Left == 0 && MainWinPos.Bottom == 0 && MainWinPos.Top == 0; 
+            return MainWinMaximized || (MainWinPos.Right == 0 && MainWinPos.Left == 0 && MainWinPos.Bottom == 0 && MainWinPos.Top == 0);
         }
 
         /// <summary>
@@ -613,6 +637,9 @@ namespace ChessForge
                             break;
                         case CFG_SHOW_MOVES_AT_FORK:
                             ShowMovesAtFork = value != "0" ? true : false;
+                            break;
+                        case CFG_MAIN_WIN_MAXIMIZED:
+                            MainWinMaximized = value != "0" ? true : false;
                             break;
                         case CFG_AUTO_SAVE:
                             AutoSave = value != "0" ? true : false;

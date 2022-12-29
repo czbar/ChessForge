@@ -19,7 +19,17 @@ namespace GameTree
         /// <summary>
         /// This operation's creation time.
         /// </summary>
-        public long Timestamp {get { return _timestamp; } } 
+        public long Timestamp {get { return _timestamp; } }
+
+        /// <summary>
+        /// Operation's data
+        /// </summary>
+        protected object _opData_1;
+
+        /// <summary>
+        /// Operation's data
+        /// </summary>
+        protected object _opData_2;
 
         /// <summary>
         /// Sets the timestamp
