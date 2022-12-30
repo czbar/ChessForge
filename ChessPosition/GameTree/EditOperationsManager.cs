@@ -41,7 +41,7 @@ namespace GameTree
             {
                 case EditOperation.EditType.DELETE_LINE:
                     // restore line
-                    _owningTree.RestoreSubtree(op.Node, op.NodeList, op.ChildIndex);
+                    _owningTree.UndoDeleteSubtree(op.Node, op.NodeList, op.ChildIndex);
                     break;
                 case EditOperation.EditType.PROMOTE_LINE:
                     _owningTree.UndoPromoteLine(op.Node, op.ChildIndex);

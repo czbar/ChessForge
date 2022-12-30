@@ -1204,7 +1204,7 @@ namespace GameTree
         /// <param name="start"></param>
         /// <param name="nodeList"></param>
         /// <param name="childIndex"></param>
-        public void RestoreSubtree(TreeNode start, List<TreeNode> nodeList, int childIndex)
+        public void UndoDeleteSubtree(TreeNode start, List<TreeNode> nodeList, int childIndex)
         {
             try
             {
