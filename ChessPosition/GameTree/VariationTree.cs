@@ -1260,6 +1260,27 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Removes the passed node from the Tree.
+        /// In case of some issues with the Undo system, only removes
+        /// the node if there are no children.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void UndoAddMove(TreeNode nd)
+        {
+            try
+            {
+                if (nd != null && nd.Parent != null && nd.GetChildrenCount() == 0)
+                {
+                    nd.Parent.Children.Remove(nd);
+                    Nodes.Remove(nd);
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Builds a list of Nodes belonging to a subtree
         /// identified by the passed node.
         /// </summary>

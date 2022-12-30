@@ -28,34 +28,44 @@ namespace GameTree
             tp = EditOperation.EditType.NONE;
             selectedLineId = "";
             selectedNodeId = -1;
-
             if (_operations.Count == 0)
             {
                 return;
             }
 
-            EditOperation op = _operations.Pop() as EditOperation;
-            tp = op.OpType;
-
-            switch (tp)
+            try
             {
-                case EditOperation.EditType.DELETE_LINE:
-                    // restore line
-                    _owningTree.UndoDeleteSubtree(op.Node, op.NodeList, op.ChildIndex);
-                    break;
-                case EditOperation.EditType.PROMOTE_LINE:
-                    _owningTree.UndoPromoteLine(op.Node, op.ChildIndex);
-                    break;
-                case EditOperation.EditType.UPDATE_ANNOTATION:
-                    _owningTree.UndoUpdateAnnotation(op.Node);
-                    selectedNodeId = op.Node.NodeId;
-                    break;
-                case EditOperation.EditType.MERGE_TREE:
-                    _owningTree.UndoAddedNodeList(op.OpData_1);
-                    break;
-                case EditOperation.EditType.SAVE_TRAINING_MOVES:
-                    _owningTree.UndoAddedNodeList(op.OpData_1);
-                    break;
+                EditOperation op = _operations.Pop() as EditOperation;
+                tp = op.OpType;
+
+                switch (tp)
+                {
+                    case EditOperation.EditType.DELETE_LINE:
+                        // restore line
+                        _owningTree.UndoDeleteSubtree(op.Node, op.NodeList, op.ChildIndex);
+                        break;
+                    case EditOperation.EditType.PROMOTE_LINE:
+                        _owningTree.UndoPromoteLine(op.Node, op.ChildIndex);
+                        break;
+                    case EditOperation.EditType.UPDATE_ANNOTATION:
+                        _owningTree.UndoUpdateAnnotation(op.Node);
+                        selectedNodeId = op.Node.NodeId;
+                        break;
+                    case EditOperation.EditType.MERGE_TREE:
+                        _owningTree.UndoAddedNodeList(op.OpData_1);
+                        break;
+                    case EditOperation.EditType.SAVE_TRAINING_MOVES:
+                        _owningTree.UndoAddedNodeList(op.OpData_1);
+                        break;
+                    case EditOperation.EditType.ADD_MOVE:
+                        _owningTree.UndoAddMove(op.Node);
+                        selectedNodeId= op.Node.Parent.NodeId;
+                        selectedLineId= op.Node.Parent.LineId;
+                        break;
+                }
+            }
+            catch
+            {
             }
         }
     }

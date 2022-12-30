@@ -360,6 +360,13 @@ namespace ChessForge
                         nd.IsNewTrainingMove = true;
                     }
                     AppStateManager.MainWin.ActiveVariationTree.AddNodeToParent(nd);
+
+                    //if we are in MANUAL_REVIEW prepare UndoAddMove
+                    if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+                    {
+                        EditOperation op = new EditOperation(EditOperation.EditType.ADD_MOVE, nd);
+                        AppStateManager.ActiveVariationTree.OpsManager.PushOperation(op);
+                    }
                 }
                 else
                 {
