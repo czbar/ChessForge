@@ -204,7 +204,7 @@ namespace ChessForge
         // List of recently opened files
         public static List<string> RecentFiles = new List<string>();
 
-        private static int MAX_RECENT_FILES = 5;
+        private static int MAX_RECENT_FILES = 8;
 
         // application's main window
         private static MainWindow MainWin;
