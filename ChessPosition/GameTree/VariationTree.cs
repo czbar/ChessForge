@@ -1299,12 +1299,15 @@ namespace GameTree
         /// This will be used e.g. when undoing tree merge.
         /// </summary>
         /// <returns></returns>
-        public List<int> GetListOfNodeIds()
+        public List<int> GetListOfNodeIds(bool includeTrainingMoves)
         {
             List<int> nodeIds= new List<int>();
             foreach (TreeNode nd in Nodes)
             {
-                nodeIds.Add(nd.NodeId);
+                if (includeTrainingMoves || !nd.IsNewTrainingMove)
+                {
+                    nodeIds.Add(nd.NodeId);
+                }
             }
 
             return nodeIds;
