@@ -963,12 +963,17 @@ namespace ChessForge
                 buttons, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                AppStateManager.MainWin.ActiveVariationTree.ClearTrainingFlags();
-                AppStateManager.MainWin.ActiveVariationTree.BuildLines();
+                VariationTree activeTree = AppStateManager.ActiveVariationTree;
+
+                // prepare data for undo
+                EditOperation op = new EditOperation(EditOperation.EditType.SAVE_TRAINING_MOVES, activeTree.GetListOfNodeIds(false), null);
+                activeTree.OpsManager.PushOperation(op);
+
+                activeTree.ClearTrainingFlags();
+                activeTree.BuildLines();
                 AppStateManager.SaveWorkbookFile();
                 AppStateManager.MainWin.RebuildActiveTreeView();
                 AppStateManager.MainWin.RefreshSelectedActiveLineAndNode();
-                //    saved = true;
             }
             else if (res == MessageBoxResult.No)
             {

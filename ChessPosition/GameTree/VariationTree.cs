@@ -1247,11 +1247,58 @@ namespace GameTree
         /// We remove all added nodes with children and from the parent's list
         /// </summary>
         /// <param name="opData"></param>
-        public void UndoMergeTree(object opData)
+        public void UndoAddedNodeList(object opData)
         {
             try
             {
                 List<int> nodeIds = opData as List<int>;
+                RemoveNodesFromTree(nodeIds);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Builds a list of Nodes belonging to a subtree
+        /// identified by the passed node.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="includeStem"></param>
+        /// <returns></returns>
+        public List<TreeNode> BuildSubTreeNodeList(TreeNode nd, bool includeStem = false)
+        {
+            _subTree.Clear();
+            return GetSubTree(nd, includeStem);
+        }
+
+        /// <summary>
+        /// Returns a list of NodeIds.
+        /// This will be used e.g. when undoing tree merge.
+        /// </summary>
+        /// <returns></returns>
+        public List<int> GetListOfNodeIds(bool includeTrainingMoves)
+        {
+            List<int> nodeIds = new List<int>();
+            foreach (TreeNode nd in Nodes)
+            {
+                if (includeTrainingMoves || !nd.IsNewTrainingMove)
+                {
+                    nodeIds.Add(nd.NodeId);
+                }
+            }
+
+            return nodeIds;
+        }
+
+        /// <summary>
+        /// Removes nodes with the passed Ids from the tree.
+        /// </summary>
+        /// <param name="nodeIds"></param>
+        private void RemoveNodesFromTree(List<int> nodeIds)
+        {
+            try
+            {
                 // loop until no node to delete found
                 while (true)
                 {
@@ -1281,37 +1328,6 @@ namespace GameTree
             }
         }
 
-        /// <summary>
-        /// Builds a list of Nodes belonging to a subtree
-        /// identified by the passed node.
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <param name="includeStem"></param>
-        /// <returns></returns>
-        public List<TreeNode> BuildSubTreeNodeList(TreeNode nd, bool includeStem = false)
-        {
-            _subTree.Clear();
-            return GetSubTree(nd, includeStem);
-        }
-
-        /// <summary>
-        /// Returns a list of NodeIds.
-        /// This will be used e.g. when undoing tree merge.
-        /// </summary>
-        /// <returns></returns>
-        public List<int> GetListOfNodeIds(bool includeTrainingMoves)
-        {
-            List<int> nodeIds= new List<int>();
-            foreach (TreeNode nd in Nodes)
-            {
-                if (includeTrainingMoves || !nd.IsNewTrainingMove)
-                {
-                    nodeIds.Add(nd.NodeId);
-                }
-            }
-
-            return nodeIds;
-        }
 
         /// <summary>
         /// Makes a copy of a list of nodes for later use.
