@@ -492,7 +492,7 @@
                                     <MenuItem x:Name="_mnGame_CreateModelGame" Header="Create New Game" Click="_UiMnGame_CreateModelGame_Click" />
                                     <MenuItem x:Name="_mnGame_ImportGames" Header="Import Games" Click="UiMnGame_ImportGames_Click"  />
                                     <Separator />
-                                    <MenuItem x:Name="_mnGame_MergeToStudy" Header="Merge Selection Into Study" Click="UiMGame_MergeToStudy_Click"  />
+                                    <MenuItem x:Name="_mnGame_MergeToStudy" Header="Merge Selection Into Study" Click="UiGame_MergeToStudy_Click"  />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_StartTrainingFromHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="_mnGame_CreateExercise" Header="Create Exercise from Here..." Click="UiMnGame_CreateExercise_Click" />
