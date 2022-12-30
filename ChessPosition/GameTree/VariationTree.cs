@@ -1204,7 +1204,7 @@ namespace GameTree
         /// <param name="start"></param>
         /// <param name="nodeList"></param>
         /// <param name="childIndex"></param>
-        public void RestoreSubtree(TreeNode start, List<TreeNode> nodeList, int childIndex)
+        public void UndoDeleteSubtree(TreeNode start, List<TreeNode> nodeList, int childIndex)
         {
             try
             {
@@ -1241,6 +1241,46 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Undoes the merge of trees by removing all added nodes.
+        /// The passed argument is the list of of nodes that the 
+        /// original tree had.
+        /// We remove all added nodes with children and from the parent's list
+        /// </summary>
+        /// <param name="opData"></param>
+        public void UndoAddedNodeList(object opData)
+        {
+            try
+            {
+                List<int> nodeIds = opData as List<int>;
+                RemoveNodesFromTree(nodeIds);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Removes the passed node from the Tree.
+        /// In case of some issues with the Undo system, only removes
+        /// the node if there are no children.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void UndoAddMove(TreeNode nd)
+        {
+            try
+            {
+                if (nd != null && nd.Parent != null && nd.GetChildrenCount() == 0)
+                {
+                    nd.Parent.Children.Remove(nd);
+                    Nodes.Remove(nd);
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Builds a list of Nodes belonging to a subtree
         /// identified by the passed node.
         /// </summary>
@@ -1252,6 +1292,63 @@ namespace GameTree
             _subTree.Clear();
             return GetSubTree(nd, includeStem);
         }
+
+        /// <summary>
+        /// Returns a list of NodeIds.
+        /// This will be used e.g. when undoing tree merge.
+        /// </summary>
+        /// <returns></returns>
+        public List<int> GetListOfNodeIds(bool includeTrainingMoves)
+        {
+            List<int> nodeIds = new List<int>();
+            foreach (TreeNode nd in Nodes)
+            {
+                if (includeTrainingMoves || !nd.IsNewTrainingMove)
+                {
+                    nodeIds.Add(nd.NodeId);
+                }
+            }
+
+            return nodeIds;
+        }
+
+        /// <summary>
+        /// Removes nodes with the passed Ids from the tree.
+        /// </summary>
+        /// <param name="nodeIds"></param>
+        private void RemoveNodesFromTree(List<int> nodeIds)
+        {
+            try
+            {
+                // loop until no node to delete found
+                while (true)
+                {
+                    bool found = false;
+                    foreach (TreeNode nd in Nodes)
+                    {
+                        // 0 (default) returned can be ignored because that would be the root node
+                        // that we always want to keep.
+                        if (nodeIds.Find(x => x == nd.NodeId) == 0 && nd.NodeId != 0)
+                        {
+                            RemoveTailAfter(nd);
+                            nd.Parent.Children.Remove(nd);
+                            Nodes.Remove(nd);
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found)
+                    {
+                        break;
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
 
         /// <summary>
         /// Makes a copy of a list of nodes for later use.

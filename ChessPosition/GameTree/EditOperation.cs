@@ -19,6 +19,8 @@ namespace GameTree
             PROMOTE_LINE,
             ADD_MOVE,
             UPDATE_ANNOTATION,
+            MERGE_TREE,
+            SAVE_TRAINING_MOVES,
         }
 
         /// <summary>
