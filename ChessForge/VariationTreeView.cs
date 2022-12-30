@@ -569,9 +569,18 @@ namespace ChessForge
 
                 VariationTree treeFromGame = new VariationTree(GameData.ContentType.GENERIC);
                 treeFromGame.CreateNew(lstNodes);
-                VariationTree merged = WorkbookTreeMerge.MergeWorkbooks(WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, treeFromGame);
-                WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree = merged;
+                VariationTree targetTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree;
+                
+                // Prepare info for potential Undo
+                EditOperation op = new EditOperation(EditOperation.EditType.MERGE_TREE, targetTree.GetListOfNodeIds(), null);
 
+                VariationTree merged = WorkbookTreeMerge.MergeWorkbooks(targetTree, treeFromGame);
+                WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree = merged;
+                merged.BuildLines();
+
+                // Save info for undo in the new tree
+                WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree.OpsManager.PushOperation(op);
+                
                 AppStateManager.IsDirty = true;
             }
             catch (Exception ex)

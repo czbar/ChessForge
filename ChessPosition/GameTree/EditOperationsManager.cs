@@ -50,6 +50,9 @@ namespace GameTree
                     _owningTree.UndoUpdateAnnotation(op.Node);
                     selectedNodeId = op.Node.NodeId;
                     break;
+                case EditOperation.EditType.MERGE_TREE:
+                    _owningTree.UndoMergeTree(op.OpData_1);
+                    break;
             }
         }
     }
