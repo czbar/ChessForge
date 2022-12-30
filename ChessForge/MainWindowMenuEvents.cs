@@ -128,7 +128,9 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnUndo_Click(object sender, RoutedEventArgs e)
         {
-            if (WorkbookManager.SessionWorkbook == null)
+            if (WorkbookManager.SessionWorkbook == null 
+                || AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING 
+                || AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
             {
                 return;
             }
@@ -1973,10 +1975,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMGame_MergeToStudy_Click(object sender, RoutedEventArgs e)
+        private void UiGame_MergeToStudy_Click(object sender, RoutedEventArgs e)
         {
             ActiveTreeView.MergeIntoStudy();
             _studyTreeView.BuildFlowDocumentForVariationTree();
+            UiTabStudyTree.Focus();
         }
 
 
