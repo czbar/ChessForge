@@ -52,5 +52,36 @@ namespace ChessForge
         {
             _owningWorkbook = workbook;
         }
+
+        /// <summary>
+        /// Performs the undo of the Operation in the queue.
+        /// </summary>
+        public void Undo(out WorkbookOperation.WorkbookOperationType tp, out int selectedChapterIndex, out int selectedUnitIndex)
+        {
+            tp = WorkbookOperation.WorkbookOperationType.NONE;
+            selectedChapterIndex = -1;
+            selectedUnitIndex = -1;
+            if (_operations.Count == 0)
+            {
+                return;
+            }
+
+            try
+            {
+                WorkbookOperation op = _operations.Pop() as WorkbookOperation;
+                tp = op.OpType;
+
+                switch (tp)
+                {
+                    case WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER:
+                        WorkbookManager.SessionWorkbook.UndoRenameChapter(op.Chapter, op.OpData_1);
+                        break;
+                }
+            }
+            catch
+            {
+            }
+        }
+
     }
 }

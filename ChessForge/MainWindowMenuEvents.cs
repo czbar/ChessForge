@@ -137,7 +137,7 @@ namespace ChessForge
 
             if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppStateManager.ActiveVariationTree == null)
             {
-                // perform a WorkbookOperation undo 
+                UndoWorkbookOperation(); 
             }
             else if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.STUDY
                  || AppStateManager.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
@@ -145,7 +145,7 @@ namespace ChessForge
             {
                 if (WorkbookManager.SessionWorkbook.OpsManager.Timestamp > AppStateManager.ActiveVariationTree.OpsManager.Timestamp)
                 {
-                    // perform a WorkbookOperation undo 
+                    UndoWorkbookOperation();
                 }
                 else
                 {
@@ -188,6 +188,24 @@ namespace ChessForge
                 {
                     AppStateManager.MainWin.ActiveTreeView.SelectLineAndMove(selectedLineId, selectedNodeId);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Undo the last WorkbookOperation 
+        /// </summary>
+        private void UndoWorkbookOperation()
+        {
+            WorkbookManager.SessionWorkbook.OpsManager.Undo(out WorkbookOperation.WorkbookOperationType opType, out int selectedChapterIndex, out int selectedUnitIndex);
+            switch (opType)
+            {
+                case WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER:
+                    if (AppStateManager.MainWin.ActiveTreeView != null)
+                    {
+                        AppStateManager.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                    }
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    break;
             }
         }
 
@@ -494,8 +512,16 @@ namespace ChessForge
         /// <param name="chapter"></param>
         public void RenameChapter(Chapter chapter)
         {
-            if (chapter != null && ShowChapterTitleDialog(chapter))
+            if (chapter == null)
             {
+                return;
+            }
+
+            string prevTitle = chapter.GetTitle();
+            if (ShowChapterTitleDialog(chapter) && chapter.GetTitle() != prevTitle)
+            {
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER, chapter, prevTitle);
+                WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                 AppStateManager.IsDirty = true;
             }
         }

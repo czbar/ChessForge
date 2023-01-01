@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using static GameTree.EditOperation;
 
 namespace ChessForge
 {
@@ -17,9 +18,20 @@ namespace ChessForge
         {
             NONE,
             DELETE_CHAPTER,
+            RENAME_CHAPTER,
             DELETE_GAME,
             DELETE_EXERCISE
         }
+
+        /// <summary>
+        /// Operation type.
+        /// </summary>
+        public WorkbookOperationType OpType { get { return _opType; } }
+
+        /// <summary>
+        /// Chapter object reference.
+        /// </summary>
+        public Chapter Chapter { get { return _chapter; } }
 
         /// <summary>
         /// Type of this operation.
@@ -46,6 +58,17 @@ namespace ChessForge
         /// Saved VariationTree so that a Game or Exercise can be retored.
         /// </summary>
         private VariationTree _tree;
+
+        /// <summary>
+        /// Constructor for RENAME_CHAPTER. The object data holds
+        /// the previous title.
+        /// </summary>
+        public WorkbookOperation(WorkbookOperationType tp, Chapter ch, object data) : base()
+        {
+            _opType = tp;
+            _chapter = ch;
+            _opData_1= data;
+        }
 
         /// <summary>
         /// Constructor for DELETE_CHAPTER.

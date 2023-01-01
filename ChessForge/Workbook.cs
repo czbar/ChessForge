@@ -407,6 +407,23 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Undo renaming of a chapter,
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="previousName"></param>
+        public void UndoRenameChapter(Chapter chapter, object previousName)
+        {
+            try
+            {
+                string prevName = (previousName ?? "") as string;
+                chapter.SetTitle(prevName);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Returns the Chapter object with the passed id.
         /// </summary>
         /// <param name="id"></param>
