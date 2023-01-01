@@ -1006,7 +1006,6 @@ namespace ChessForge
                         if (!isWorkbookMove)
                         {
                             sbComment.Append("This is not in the " + TRAINING_SOURCE + ". ");
-                            commentRun.Text = sbComment.ToString();
                         }
 
                         if (!isWorkbookMove)
@@ -1019,7 +1018,6 @@ namespace ChessForge
                             {
                                 sbComment.Append("The " + TRAINING_SOURCE + " moves are ");
                             }
-                            commentRun.Text += sbComment;
                         }
                         else
                         {
@@ -1031,8 +1029,8 @@ namespace ChessForge
                             {
                                 sbComment.Append("Other " + TRAINING_SOURCE + " moves are ");
                             }
-                            commentRun.Text += sbComment;
                         }
+                        commentRun.Text = sbComment.ToString();
                         para.Inlines.Add(commentRun);
 
                         BuildOtherWorkbookMovesRun(para, _otherMovesInWorkbook, true);
