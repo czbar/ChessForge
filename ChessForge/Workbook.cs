@@ -407,6 +407,78 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Undo renaming of a chapter,
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="previousName"></param>
+        public void UndoRenameChapter(Chapter chapter, object previousName)
+        {
+            try
+            {
+                string prevName = (previousName ?? "") as string;
+                chapter.SetTitle(prevName);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Undo deletion of a chapter.
+        /// Inserts the chapter at its original index.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="index"></param>
+        public void UndoDeleteChapter(Chapter chapter, int index)
+        {
+            try
+            {
+                Chapters.Insert(index, chapter);
+                ActiveChapter = chapter;
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Undo deletion of a Model Game
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="unit"></param>
+        /// <param name="index"></param>
+        public void UndoDeleteModelGame(Chapter chapter, GameUnit unit, int index)
+        {
+            try
+            {
+                chapter.InsertModelGame(unit, index);
+                chapter.ActiveModelGameIndex = index;
+            }
+            catch
+            {
+            }
+        }
+
+
+        /// <summary>
+        /// Undo deletion of a Model Game
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="unit"></param>
+        /// <param name="index"></param>
+        public void UndoDeleteExercise(Chapter chapter, GameUnit unit, int index)
+        {
+            try
+            {
+                chapter.InsertExercise(unit, index);
+                chapter.ActiveExerciseIndex = index;
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Returns the Chapter object with the passed id.
         /// </summary>
         /// <param name="id"></param>
@@ -494,6 +566,21 @@ namespace ChessForge
             //TrainingSideConfig = tree.TrainingSide;
 
             return chapter;
+        }
+
+        /// <summary>
+        /// Deletes a chapter from this workbook
+        /// </summary>
+        /// <param name="ch"></param>
+        public void DeleteChapter(Chapter ch)
+        {
+            int index = Chapters.IndexOf(ch);
+            if (index >= 0)
+            {
+                Chapters.Remove(ch);
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperation.WorkbookOperationType.DELETE_CHAPTER, ch, index);
+                WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+            }
         }
 
         /// <summary>

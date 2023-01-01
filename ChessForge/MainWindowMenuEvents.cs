@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static ChessForge.WorkbookOperation;
 
 namespace ChessForge
 {
@@ -128,8 +129,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnUndo_Click(object sender, RoutedEventArgs e)
         {
-            if (WorkbookManager.SessionWorkbook == null 
-                || AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING 
+            if (WorkbookManager.SessionWorkbook == null
+                || AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING
                 || AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
             {
                 return;
@@ -137,7 +138,7 @@ namespace ChessForge
 
             if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppStateManager.ActiveVariationTree == null)
             {
-                // perform a WorkbookOperation undo 
+                UndoWorkbookOperation();
             }
             else if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.STUDY
                  || AppStateManager.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
@@ -145,11 +146,16 @@ namespace ChessForge
             {
                 if (WorkbookManager.SessionWorkbook.OpsManager.Timestamp > AppStateManager.ActiveVariationTree.OpsManager.Timestamp)
                 {
-                    // perform a WorkbookOperation undo 
+                    UndoWorkbookOperation();
                 }
                 else
                 {
-                    UndoTreeEditOperation();
+                    // if no operations for the tree
+                    // try the Workbook level undo
+                    if (!UndoTreeEditOperation())
+                    {
+                        UndoWorkbookOperation();
+                    }
                 }
             }
 
@@ -159,36 +165,79 @@ namespace ChessForge
         /// <summary>
         /// Undo the last EditOperation 
         /// </summary>
-        private void UndoTreeEditOperation()
+        private bool UndoTreeEditOperation()
         {
+            if (AppStateManager.ActiveVariationTree == null || AppStateManager.ActiveVariationTree.OpsManager.IsEmpty)
+            {
+                return false;
+            }
+
             AppStateManager.ActiveVariationTree.OpsManager.Undo(out EditOperation.EditType opType, out string selectedLineId, out int selectedNodeId);
             TreeNode selectedNode = AppStateManager.ActiveVariationTree.GetNodeFromNodeId(selectedNodeId);
             AppStateManager.ActiveVariationTree.BuildLines();
-            if (AppStateManager.MainWin.ActiveTreeView != null)
+            if (!string.IsNullOrEmpty(selectedLineId))
             {
-                if (!string.IsNullOrEmpty(selectedLineId))
+                AppStateManager.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
+            }
+            else if (selectedNodeId >= 0)
+            {
+                if (selectedNode != null)
                 {
+                    selectedLineId = selectedNode.LineId;
                     AppStateManager.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
                 }
-                else if (selectedNodeId >= 0)
-                {
-                    if (selectedNode != null)
-                    {
-                        selectedLineId = selectedNode.LineId;
-                        AppStateManager.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
-                    }
-                }
-
-                AppStateManager.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
-                if (opType == EditOperation.EditType.UPDATE_ANNOTATION)
-                {
-                    AppStateManager.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(selectedNode);
-                }
-                if (!string.IsNullOrEmpty(selectedLineId))
-                {
-                    AppStateManager.MainWin.ActiveTreeView.SelectLineAndMove(selectedLineId, selectedNodeId);
-                }
             }
+
+            AppStateManager.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+            if (opType == EditOperation.EditType.UPDATE_ANNOTATION)
+            {
+                AppStateManager.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(selectedNode);
+            }
+            if (!string.IsNullOrEmpty(selectedLineId))
+            {
+                AppStateManager.MainWin.ActiveTreeView.SelectLineAndMove(selectedLineId, selectedNodeId);
+            }
+
+            AppStateManager.IsDirty = true;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Undo the last WorkbookOperation 
+        /// </summary>
+        private void UndoWorkbookOperation()
+        {
+            WorkbookManager.SessionWorkbook.OpsManager.Undo(out WorkbookOperation.WorkbookOperationType opType, out int selectedChapterIndex, out int selectedUnitIndex);
+            switch (opType)
+            {
+                case WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER:
+                    if (AppStateManager.MainWin.ActiveTreeView != null)
+                    {
+                        AppStateManager.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                    }
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    break;
+                case WorkbookOperation.WorkbookOperationType.DELETE_CHAPTER:
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    if (AppStateManager.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
+                    {
+                        UiTabChapters.Focus();
+                    }
+                    AppStateManager.DoEvents();
+                    _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
+                    break;
+                case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAME:
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    SelectModelGame(selectedUnitIndex, AppStateManager.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
+                    break;
+                case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISE:
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    SelectExercise(selectedUnitIndex, AppStateManager.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
+                    break;
+            }
+
+            AppStateManager.IsDirty = true;
         }
 
         /// <summary>
@@ -494,8 +543,16 @@ namespace ChessForge
         /// <param name="chapter"></param>
         public void RenameChapter(Chapter chapter)
         {
-            if (chapter != null && ShowChapterTitleDialog(chapter))
+            if (chapter == null)
             {
+                return;
+            }
+
+            string prevTitle = chapter.GetTitle();
+            if (ShowChapterTitleDialog(chapter) && chapter.GetTitle() != prevTitle)
+            {
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER, chapter, prevTitle);
+                WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                 AppStateManager.IsDirty = true;
             }
         }
@@ -639,21 +696,27 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnDeleteChapter_Click(object sender, RoutedEventArgs e)
         {
-            Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
-            if (chapter != null)
+            try
             {
-                var res = MessageBox.Show("Deleting chapter \"" + chapter.GetTitle() + ". Are you sure?", "Delete Chapter", MessageBoxButton.YesNoCancel);
-                if (res == MessageBoxResult.Yes)
+                Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
+                if (chapter != null)
                 {
-                    WorkbookManager.SessionWorkbook.Chapters.Remove(chapter);
-                    if (chapter.Id == WorkbookManager.SessionWorkbook.ActiveChapter.Id)
+                    var res = MessageBox.Show("Deleting chapter \"" + chapter.GetTitle() + ". Are you sure?", "Delete Chapter", MessageBoxButton.YesNoCancel);
+                    if (res == MessageBoxResult.Yes)
                     {
-                        WorkbookManager.SessionWorkbook.SelectDefaultActiveChapter();
+                        WorkbookManager.SessionWorkbook.DeleteChapter(chapter); // .Remove(chapter);
+                        if (chapter.Id == WorkbookManager.SessionWorkbook.ActiveChapter.Id)
+                        {
+                            WorkbookManager.SessionWorkbook.SelectDefaultActiveChapter();
+                        }
+                        _chaptersView.BuildFlowDocumentForChaptersView();
+                        SetupGuiForActiveStudyTree(false);
+                        AppStateManager.IsDirty = true;
                     }
-                    _chaptersView.BuildFlowDocumentForChaptersView();
-                    SetupGuiForActiveStudyTree(false);
-                    AppStateManager.IsDirty = true;
                 }
+            }
+            catch
+            {
             }
         }
 
@@ -2322,12 +2385,21 @@ namespace ChessForge
         /// <param name="index"></param>
         private void DeleteModelGame(int index)
         {
-            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-            int gameCount = chapter.GetModelGameCount();
-            if (index >= 0 && index < gameCount)
+            try
             {
-                chapter.ModelGames.RemoveAt(index);
-                AppStateManager.IsDirty = true;
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int gameCount = chapter.GetModelGameCount();
+                if (index >= 0 && index < gameCount)
+                {
+                    GameUnit unit = chapter.GetModelGameAtIndex(index);
+                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_MODEL_GAME, chapter, unit, index);
+                    chapter.ModelGames.RemoveAt(index);
+                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                    AppStateManager.IsDirty = true;
+                }
+            }
+            catch
+            {
             }
         }
 
@@ -2337,12 +2409,21 @@ namespace ChessForge
         /// <param name="index"></param>
         private void DeleteExercise(int index)
         {
-            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-            int exerciseCount = chapter.GetExerciseCount();
-            if (index >= 0 && index < exerciseCount)
+            try
             {
-                chapter.Exercises.RemoveAt(index);
-                AppStateManager.IsDirty = true;
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int exerciseCount = chapter.GetExerciseCount();
+                if (index >= 0 && index < exerciseCount)
+                {
+                    GameUnit unit = chapter.GetExerciseAtIndex(index);
+                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_EXERCISE, chapter, unit, index);
+                    chapter.Exercises.RemoveAt(index);
+                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                    AppStateManager.IsDirty = true;
+                }
+            }
+            catch
+            {
             }
         }
 

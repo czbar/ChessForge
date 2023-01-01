@@ -71,6 +71,42 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns Model Game stored at a given index.
+        /// Null if invalid index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public GameUnit GetModelGameAtIndex(int index)
+        {
+            if (index >= 0 && index < ModelGames.Count)
+            {
+                return ModelGames[index];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns Exercise stored at a given index.
+        /// Null if invalid index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public GameUnit GetExerciseAtIndex(int index)
+        {
+            if (index >= 0 && index < Exercises.Count)
+            {
+                return Exercises[index];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         // Index of the currently shown Game in the Model Games list
         /// </summary>
         public int ActiveModelGameIndex
@@ -329,6 +365,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Inserts GameUnit at a requested index.
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="index"></param>
+        public void InsertModelGame(GameUnit unit, int index)
+        {
+            ModelGames.Insert(index, unit);   
+        }
+
+        /// <summary>
         /// Adds a VariationTree to the list of Exercises
         /// </summary>
         /// <param name="game"></param>
@@ -336,6 +382,16 @@ namespace ChessForge
         {
             GameUnit unit = new GameUnit(game);
             Exercises.Add(unit);
+        }
+
+        /// <summary>
+        /// Inserts Exercise at a requested index.
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="index"></param>
+        public void InsertExercise(GameUnit unit, int index)
+        {
+            Exercises.Insert(index, unit);
         }
 
         /// <summary>

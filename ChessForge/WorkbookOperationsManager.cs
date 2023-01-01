@@ -52,5 +52,51 @@ namespace ChessForge
         {
             _owningWorkbook = workbook;
         }
+
+        /// <summary>
+        /// Performs the undo of the Operation in the queue.
+        /// </summary>
+        public void Undo(out WorkbookOperation.WorkbookOperationType tp, out int selectedChapterIndex, out int selectedUnitIndex)
+        {
+            tp = WorkbookOperation.WorkbookOperationType.NONE;
+            selectedChapterIndex = -1;
+            selectedUnitIndex = -1;
+            if (_operations.Count == 0)
+            {
+                return;
+            }
+
+            try
+            {
+                WorkbookOperation op = _operations.Pop() as WorkbookOperation;
+                tp = op.OpType;
+
+                switch (tp)
+                {
+                    case WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER:
+                        WorkbookManager.SessionWorkbook.UndoRenameChapter(op.Chapter, op.OpData_1);
+                        break;
+                    case WorkbookOperation.WorkbookOperationType.DELETE_CHAPTER:
+                        selectedChapterIndex = op.ChapterIndex;
+                        WorkbookManager.SessionWorkbook.UndoDeleteChapter(op.Chapter, op.ChapterIndex);
+                        WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
+                        break;
+                    case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAME:
+                        WorkbookManager.SessionWorkbook.UndoDeleteModelGame(op.Chapter, op.GameUnit, op.GameUnitIndex);
+                        selectedUnitIndex = op.GameUnitIndex;
+                        WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
+                        break;
+                    case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISE:
+                        WorkbookManager.SessionWorkbook.UndoDeleteExercise(op.Chapter, op.GameUnit, op.GameUnitIndex);
+                        selectedUnitIndex = op.GameUnitIndex;
+                        WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
+                        break;
+                }
+            }
+            catch
+            {
+            }
+        }
+
     }
 }

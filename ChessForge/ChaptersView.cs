@@ -126,6 +126,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Brings the title line of the chapter into view.
+        /// </summary>
+        /// <param name="chapterId"></param>
+        public void BringChapterIntoViewByIndex(int chapterIndex)
+        {
+            int chapterId = WorkbookManager.SessionWorkbook.Chapters[chapterIndex].Id;
+            Run rChapter = FindChapterTitleRun(chapterId);
+            rChapter?.BringIntoView();
+        }
+
+        /// <summary>
         /// Brings the the title line of the model game or exercise into view.
         /// </summary>
         /// <param name="chapterId"></param>

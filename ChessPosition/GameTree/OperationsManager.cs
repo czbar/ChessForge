@@ -30,6 +30,11 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns true if there are no operations on the stack.
+        /// </summary>
+        public bool IsEmpty { get => _operations.Count == 0; }
+
+        /// <summary>
         /// Returns the timestamp of the first Operation in the queue 
         /// </summary>
         public long Timestamp
