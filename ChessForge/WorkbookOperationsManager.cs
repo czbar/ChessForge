@@ -76,6 +76,11 @@ namespace ChessForge
                     case WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER:
                         WorkbookManager.SessionWorkbook.UndoRenameChapter(op.Chapter, op.OpData_1);
                         break;
+                    case WorkbookOperation.WorkbookOperationType.DELETE_CHAPTER:
+                        selectedChapterIndex = op.ChapterIndex;
+                        WorkbookManager.SessionWorkbook.UndoDeleteChapter(op.Chapter, op.ChapterIndex);
+                        WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
+                        break;
                 }
             }
             catch

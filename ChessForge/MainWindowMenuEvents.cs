@@ -188,6 +188,8 @@ namespace ChessForge
                 {
                     AppStateManager.MainWin.ActiveTreeView.SelectLineAndMove(selectedLineId, selectedNodeId);
                 }
+
+                AppStateManager.IsDirty = true;
             }
         }
 
@@ -206,7 +208,18 @@ namespace ChessForge
                     }
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     break;
+                case WorkbookOperation.WorkbookOperationType.DELETE_CHAPTER:
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    if (AppStateManager.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
+                    {
+                        UiTabChapters.Focus();
+                    }
+                    AppStateManager.DoEvents();
+                    _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
+                    break;
             }
+
+            AppStateManager.IsDirty = true;
         }
 
         /// <summary>
@@ -665,21 +678,27 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnDeleteChapter_Click(object sender, RoutedEventArgs e)
         {
-            Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
-            if (chapter != null)
+            try
             {
-                var res = MessageBox.Show("Deleting chapter \"" + chapter.GetTitle() + ". Are you sure?", "Delete Chapter", MessageBoxButton.YesNoCancel);
-                if (res == MessageBoxResult.Yes)
+                Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
+                if (chapter != null)
                 {
-                    WorkbookManager.SessionWorkbook.Chapters.Remove(chapter);
-                    if (chapter.Id == WorkbookManager.SessionWorkbook.ActiveChapter.Id)
+                    var res = MessageBox.Show("Deleting chapter \"" + chapter.GetTitle() + ". Are you sure?", "Delete Chapter", MessageBoxButton.YesNoCancel);
+                    if (res == MessageBoxResult.Yes)
                     {
-                        WorkbookManager.SessionWorkbook.SelectDefaultActiveChapter();
+                        WorkbookManager.SessionWorkbook.DeleteChapter(chapter); // .Remove(chapter);
+                        if (chapter.Id == WorkbookManager.SessionWorkbook.ActiveChapter.Id)
+                        {
+                            WorkbookManager.SessionWorkbook.SelectDefaultActiveChapter();
+                        }
+                        _chaptersView.BuildFlowDocumentForChaptersView();
+                        SetupGuiForActiveStudyTree(false);
+                        AppStateManager.IsDirty = true;
                     }
-                    _chaptersView.BuildFlowDocumentForChaptersView();
-                    SetupGuiForActiveStudyTree(false);
-                    AppStateManager.IsDirty = true;
                 }
+            }
+            catch
+            {
             }
         }
 

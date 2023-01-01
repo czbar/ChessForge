@@ -424,6 +424,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Undo deletion of a chapter.
+        /// Inserts the chapter at its original index.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="index"></param>
+        public void UndoDeleteChapter(Chapter chapter, int index)
+        {
+            try
+            {
+                Chapters.Insert(index, chapter);
+                ActiveChapter = chapter;
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Returns the Chapter object with the passed id.
         /// </summary>
         /// <param name="id"></param>
@@ -511,6 +529,21 @@ namespace ChessForge
             //TrainingSideConfig = tree.TrainingSide;
 
             return chapter;
+        }
+
+        /// <summary>
+        /// Deletes a chapter from this workbook
+        /// </summary>
+        /// <param name="ch"></param>
+        public void DeleteChapter(Chapter ch)
+        {
+            int index = Chapters.IndexOf(ch);
+            if (index >= 0)
+            {
+                Chapters.Remove(ch);
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperation.WorkbookOperationType.DELETE_CHAPTER, ch, index);
+                WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+            }
         }
 
         /// <summary>

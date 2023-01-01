@@ -34,6 +34,11 @@ namespace ChessForge
         public Chapter Chapter { get { return _chapter; } }
 
         /// <summary>
+        /// Index of the chapter in the Workbook's chapter list.
+        /// </summary>
+        public int ChapterIndex { get { return _chapterIndex; } }
+
+        /// <summary>
         /// Type of this operation.
         /// </summary>
         private WorkbookOperationType _opType;
