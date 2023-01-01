@@ -365,6 +365,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Inserts GameUnit at a requested index.
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="index"></param>
+        public void InsertModelGame(GameUnit unit, int index)
+        {
+            ModelGames.Insert(index, unit);   
+        }
+
+        /// <summary>
         /// Adds a VariationTree to the list of Exercises
         /// </summary>
         /// <param name="game"></param>
@@ -372,6 +382,16 @@ namespace ChessForge
         {
             GameUnit unit = new GameUnit(game);
             Exercises.Add(unit);
+        }
+
+        /// <summary>
+        /// Inserts Exercise at a requested index.
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="index"></param>
+        public void InsertExercise(GameUnit unit, int index)
+        {
+            Exercises.Insert(index, unit);
         }
 
         /// <summary>
