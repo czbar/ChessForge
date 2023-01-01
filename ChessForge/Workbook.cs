@@ -442,6 +442,43 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Undo deletion of a Model Game
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="unit"></param>
+        /// <param name="index"></param>
+        public void UndoDeleteModelGame(Chapter chapter, GameUnit unit, int index)
+        {
+            try
+            {
+                chapter.InsertModelGame(unit, index);
+                chapter.ActiveModelGameIndex = index;
+            }
+            catch
+            {
+            }
+        }
+
+
+        /// <summary>
+        /// Undo deletion of a Model Game
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="unit"></param>
+        /// <param name="index"></param>
+        public void UndoDeleteExercise(Chapter chapter, GameUnit unit, int index)
+        {
+            try
+            {
+                chapter.InsertExercise(unit, index);
+                chapter.ActiveExerciseIndex = index;
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Returns the Chapter object with the passed id.
         /// </summary>
         /// <param name="id"></param>
