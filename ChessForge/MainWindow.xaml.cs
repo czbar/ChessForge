@@ -295,6 +295,10 @@ namespace ChessForge
             LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
             AppStateManager.SetupGuiForCurrentStates();
 
+            if (Configuration.ShowExplorers)
+            {
+                TurnExplorersOn();
+            }
             Timers.Start(AppTimers.TimerId.APP_START);
 
             AppLog.LogAvailableThreadsCounts();
