@@ -469,14 +469,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void ExplorersToggleOn_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            AppStateManager.AreExplorersOn = false;
-
-            UiImgExplorersOff.Visibility = Visibility.Visible;
-            UiImgExplorersOn.Visibility = Visibility.Collapsed;
-            WebAccessManager.IsEnabledExplorerQueries = false;
-
-            AppStateManager.AreExplorersOn = false;
-            AppStateManager.ShowExplorers(false, ActiveTreeView != null && ActiveTreeView.HasEntities);
+            TurnExplorersOff();
 
             if (e != null)
             {
@@ -493,17 +486,7 @@ namespace ChessForge
         {
             if (AppStateManager.CurrentLearningMode != LearningMode.Mode.ENGINE_GAME && AppStateManager.CurrentLearningMode != LearningMode.Mode.TRAINING)
             {
-                UiImgExplorersOff.Visibility = Visibility.Collapsed;
-                UiImgExplorersOn.Visibility = Visibility.Visible;
-                WebAccessManager.IsEnabledExplorerQueries = true;
-
-                if (ActiveVariationTree != null && ActiveVariationTree.SelectedNode != null)
-                {
-                    WebAccessManager.ExplorerRequest(AppStateManager.ActiveTreeId, ActiveVariationTree.SelectedNode);
-                }
-
-                AppStateManager.AreExplorersOn = true;
-                AppStateManager.ShowExplorers(ActiveTreeView != null, ActiveTreeView != null && ActiveTreeView.HasEntities);
+                TurnExplorersOn();
             }
 
             if (e != null)
@@ -523,6 +506,43 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Activates and shows the Explorers
+        /// </summary>
+        private void TurnExplorersOn()
+        {
+            Configuration.ShowExplorers = true;
+
+            UiImgExplorersOff.Visibility = Visibility.Collapsed;
+            UiImgExplorersOn.Visibility = Visibility.Visible;
+            WebAccessManager.IsEnabledExplorerQueries = true;
+
+            if (ActiveVariationTree != null && ActiveVariationTree.SelectedNode != null)
+            {
+                WebAccessManager.ExplorerRequest(AppStateManager.ActiveTreeId, ActiveVariationTree.SelectedNode);
+            }
+
+            AppStateManager.AreExplorersOn = true;
+            AppStateManager.ShowExplorers(ActiveTreeView != null, ActiveTreeView != null && ActiveTreeView.HasEntities);
+        }
+
+        /// <summary>
+        /// Deactivates and hides explorers.
+        /// </summary>
+        private void TurnExplorersOff()
+        {
+            Configuration.ShowExplorers = false;
+
+            AppStateManager.AreExplorersOn = false;
+
+            UiImgExplorersOff.Visibility = Visibility.Visible;
+            UiImgExplorersOn.Visibility = Visibility.Collapsed;
+            WebAccessManager.IsEnabledExplorerQueries = false;
+
+            AppStateManager.AreExplorersOn = false;
+            AppStateManager.ShowExplorers(false, ActiveTreeView != null && ActiveTreeView.HasEntities);
+        }
+
+        /// <summary>
         /// Handles the Evaluation toggle being clicked while in the ON mode.
         /// Any evaluation in progress will be stopped.
         /// to CONTINUOUS.
@@ -535,6 +555,7 @@ namespace ChessForge
             UiImgEngineOn.Visibility = Visibility.Collapsed;
 
             StopEvaluation(false);
+            TrainingSession.IsContinuousEvaluation = false;
 
             if (e != null)
             {
@@ -568,6 +589,7 @@ namespace ChessForge
             else if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING 
                 || AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME && TrainingSession.IsTrainingInProgress)
             {
+                TrainingSession.IsContinuousEvaluation = true;
                 UiTrainingView.RequestMoveEvaluation(true);
             }
 

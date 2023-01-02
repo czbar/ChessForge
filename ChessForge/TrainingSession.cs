@@ -37,20 +37,17 @@ namespace ChessForge
             USER_MOVE_COMPLETED,
         }
 
-        // Flags if a Training Session is in progress
-        private static bool _isTrainingInProgress;
-
-        // Flags if the Browse view is active.
-        private static bool _isBrowseActive;
-
-        // The current state of the Training sessioin.
-        private static State _currentState;
-
         /// <summary>
         /// Whether a training session is in progress.
         /// </summary>
         public static bool IsTrainingInProgress
         { get => _isTrainingInProgress; set => _isTrainingInProgress = value; }
+
+        /// <summary>
+        /// Whether continuous engine evaluation is on during Training.
+        /// </summary>
+        public static bool IsContinuousEvaluation
+        { get => _isContinuousEvaluation; set => _isContinuousEvaluation = value; }
 
         /// <summary>
         /// The current state of the Training session.
@@ -94,6 +91,18 @@ namespace ChessForge
         {
             get { return TrainingLine[0]; }
         }
+
+        // whether continuous evaluation is enabled
+        private static bool _isContinuousEvaluation;
+
+        // Flags if a Training Session is in progress
+        private static bool _isTrainingInProgress;
+
+        // Flags if the Browse view is active.
+        private static bool _isBrowseActive;
+
+        // The current state of the Training sessioin.
+        private static State _currentState;
 
         /// <summary>
         /// Rolls back training line to the move corresponding

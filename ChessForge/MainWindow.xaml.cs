@@ -295,6 +295,10 @@ namespace ChessForge
             LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
             AppStateManager.SetupGuiForCurrentStates();
 
+            if (Configuration.ShowExplorers)
+            {
+                TurnExplorersOn();
+            }
             Timers.Start(AppTimers.TimerId.APP_START);
 
             AppLog.LogAvailableThreadsCounts();
@@ -1703,6 +1707,7 @@ namespace ChessForge
             StopEvaluation(true);
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             TrainingSession.IsTrainingInProgress = true;
+            TrainingSession.IsContinuousEvaluation = false;
             TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 

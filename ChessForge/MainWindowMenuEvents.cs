@@ -1750,6 +1750,7 @@ namespace ChessForge
                     EvaluationManager.Reset();
 
                     TrainingSession.IsTrainingInProgress = false;
+                    TrainingSession.IsContinuousEvaluation = false;
                     MainChessBoard.RemoveMoveSquareColors();
                     LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
                     if (ActiveVariationTree.ContentType == GameData.ContentType.EXERCISE)

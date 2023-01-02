@@ -102,6 +102,11 @@ namespace ChessForge
         public static bool ShowMovesAtFork = true;
 
         /// <summary>
+        /// Whether to show the Explorers.
+        /// </summary>
+        public static bool ShowExplorers = true;
+
+        /// <summary>
         /// Whether AutoSave is On.
         /// </summary>
         public static bool AutoSave = false;
@@ -187,6 +192,7 @@ namespace ChessForge
         private const string CFG_SOUND_ON = "SoundOn";
         private const string CFG_USE_FIXED_FONT = "UseFixedFont";
         private const string CFG_SHOW_MOVES_AT_FORK = "ShowMovesAtFork";
+        private const string CFG_SHOW_EXPLORERS = "ShowExplorers";
         private const string CFG_MAIN_WIN_MAXIMIZED = "MainWinMaximized";
         private const string CFG_SHOW_GENERIC_PGN_INFO = "ShowGenericPgnInfo";
         private const string CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES = "AllowMouseWheelForMoves";
@@ -345,6 +351,7 @@ namespace ChessForge
                 sb.Append(CFG_SOUND_ON + "=" + (SoundOn ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_USE_FIXED_FONT + "=" + (UseFixedFont ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_MOVES_AT_FORK + "=" + (ShowMovesAtFork ? "1" : "0") + Environment.NewLine);
+                sb.Append(CFG_SHOW_EXPLORERS + "=" + (ShowExplorers ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_GENERIC_PGN_INFO + "=" + (ShowGenericPgnInfo ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES + "=" + (AllowMouseWheelForMoves ? "1" : "0") + Environment.NewLine);
 
@@ -637,6 +644,9 @@ namespace ChessForge
                             break;
                         case CFG_SHOW_MOVES_AT_FORK:
                             ShowMovesAtFork = value != "0" ? true : false;
+                            break;
+                        case CFG_SHOW_EXPLORERS:
+                            ShowExplorers = value != "0" ? true : false;
                             break;
                         case CFG_MAIN_WIN_MAXIMIZED:
                             MainWinMaximized = value != "0" ? true : false;
