@@ -1707,6 +1707,7 @@ namespace ChessForge
             StopEvaluation(true);
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             TrainingSession.IsTrainingInProgress = true;
+            TrainingSession.IsContinuousEvaluation = false;
             TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 

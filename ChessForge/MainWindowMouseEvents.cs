@@ -555,6 +555,7 @@ namespace ChessForge
             UiImgEngineOn.Visibility = Visibility.Collapsed;
 
             StopEvaluation(false);
+            TrainingSession.IsContinuousEvaluation = false;
 
             if (e != null)
             {
@@ -588,6 +589,7 @@ namespace ChessForge
             else if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING 
                 || AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME && TrainingSession.IsTrainingInProgress)
             {
+                TrainingSession.IsContinuousEvaluation = true;
                 UiTrainingView.RequestMoveEvaluation(true);
             }
 
