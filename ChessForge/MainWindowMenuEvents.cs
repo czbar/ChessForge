@@ -768,8 +768,8 @@ namespace ChessForge
             try
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                //int index = chapter.ActiveModelGameIndex;
-                int index = WorkbookManager.LastClickedModelGameIndex;
+                int index = chapter.ActiveModelGameIndex;
+                //int index = WorkbookManager.LastClickedModelGameIndex;
                 int gameCount = chapter.GetModelGameCount();
 
                 if (index > 0 && index < gameCount)
@@ -799,7 +799,8 @@ namespace ChessForge
             try
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int index = WorkbookManager.LastClickedExerciseIndex;
+                int index = chapter.ActiveExerciseIndex;
+                //                int index = WorkbookManager.LastClickedExerciseIndex;
                 int exerciseCount = chapter.GetExerciseCount();
 
                 if (index > 0 && index < exerciseCount)
@@ -829,8 +830,8 @@ namespace ChessForge
             try
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                //int index = chapter.ActiveModelGameIndex;
-                int index = WorkbookManager.LastClickedModelGameIndex;
+                int index = chapter.ActiveModelGameIndex;
+                //int index = WorkbookManager.LastClickedModelGameIndex;
                 int gameCount = chapter.GetModelGameCount();
 
                 if (index >= 0 && index < gameCount - 1)
@@ -860,7 +861,8 @@ namespace ChessForge
             try
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int index = WorkbookManager.LastClickedExerciseIndex;
+                int index = chapter.ActiveExerciseIndex;
+                //int index = WorkbookManager.LastClickedExerciseIndex;
                 int exerciseCount = chapter.GetExerciseCount();
 
                 if (index >= 0 && index < exerciseCount - 1)
@@ -2170,6 +2172,56 @@ namespace ChessForge
             if (UiMnWorkbookSave.IsEnabled == true)
             {
                 UiMnWorkbookSave_Click(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// Moves an item (chapter, game, exercise)
+        /// up in the list of items, depending which one was the last highlighted.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void CustomCommand_MoveItemUp(object sender, RoutedEventArgs e)
+        {
+            if (_chaptersView != null && AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            {
+                switch (_chaptersView.LastClickedItemType)
+                {
+                    case WorkbookManager.ItemType.CHAPTER:
+                        UiMnChapterUp_Click(sender, e);
+                        break;
+                    case WorkbookManager.ItemType.MODEL_GAME:
+                        UiMnGameUp_Click(sender, e);
+                        break;
+                    case WorkbookManager.ItemType.EXERCISE:
+                        UiMnExerciseUp_Click(sender, e);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Moves an item (chapter, game, exercise)
+        /// up in the list of items, depending which one was the last highlighted.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void CustomCommand_MoveItemDown(object sender, RoutedEventArgs e)
+        {
+            if (_chaptersView != null && AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            {
+                switch (_chaptersView.LastClickedItemType)
+                {
+                    case WorkbookManager.ItemType.CHAPTER:
+                        UiMnChapterDown_Click(sender, e);
+                        break;
+                    case WorkbookManager.ItemType.MODEL_GAME:
+                        UiMnGameDown_Click(sender, e);
+                        break;
+                    case WorkbookManager.ItemType.EXERCISE:
+                        UiMnExerciseDown_Click(sender, e);
+                        break;
+                }
             }
         }
 
