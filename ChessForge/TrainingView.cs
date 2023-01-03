@@ -715,13 +715,13 @@ namespace ChessForge
 
                         TreeNode nodeEvaluated = nd;
                         // show the last clicked node where our mouse is now 
-                        if (_lastClickedNode != null)
-                        {
-                            _mainWin.FloatingChessBoard.FlipBoard(_mainWin.MainChessBoard.IsFlipped);
-                            _mainWin.FloatingChessBoard.DisplayPosition(_lastClickedNode, false);
-                            _mainWin.UiVbFloatingChessboard.Margin = new Thickness(_lastClickedPoint.X, _lastClickedPoint.Y - 165, 0, 0);
-                            _mainWin.ShowFloatingChessboard(true);
-                        }
+                        //if (_lastClickedNode != null)
+                        //{
+                        //    _mainWin.FloatingChessBoard.FlipBoard(_mainWin.MainChessBoard.IsFlipped);
+                        //    _mainWin.FloatingChessBoard.DisplayPosition(_lastClickedNode, false);
+                        //    _mainWin.UiVbFloatingChessboard.Margin = new Thickness(_lastClickedPoint.X, _lastClickedPoint.Y - 165, 0, 0);
+                        //    _mainWin.ShowFloatingChessboard(true);
+                        //}
 
                         if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                         {
