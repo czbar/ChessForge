@@ -540,6 +540,21 @@ namespace ChessForge
                     e.Handled = true;
                 }
             }
+            else
+            {
+                if ((Keyboard.Modifiers & ModifierKeys.Control) > 0)
+                {
+                    switch (e.Key)
+                    {
+                        case Key.U:
+                            _mainWin.CustomCommand_MoveItemUp(null, null);
+                            break;
+                        case Key.D:
+                            _mainWin.CustomCommand_MoveItemDown(null, null);
+                            break;
+                    }
+                }
+            }
         }
 
         /// <summary>
