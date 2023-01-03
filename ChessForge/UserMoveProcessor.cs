@@ -273,6 +273,9 @@ namespace ChessForge
                     AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveTreeView, AppStateManager.MainWin.ActiveLine.GetLineId(), AppStateManager.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
                 }
 
+                AppStateManager.DoEvents();
+                AppStateManager.MainWin.ActiveTreeView.BringSelectedRunIntoView();
+
                 try
                 {
                     if (AppStateManager.MainWin.ActiveGameUnit.Solver.GetAppSolvingMode() == VariationTree.SolvingMode.GUESS_MOVE)

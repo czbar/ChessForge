@@ -38,6 +38,13 @@ namespace ChessForge
         private const string SUBHEADER_DOUBLE_INDENT = "            ";
 
         /// <summary>
+        /// The type of item most recently clicked. It is required when handling an
+        /// ambiguous user command e.g. Move Up/Down when we don't know which item we should
+        /// apply it to.
+        /// </summary>
+        public WorkbookManager.ItemType LastClickedItemType = WorkbookManager.ItemType.NONE;
+
+        /// <summary>
         /// Layout definitions for paragraphs at different levels.
         /// </summary>
         private readonly Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
@@ -489,6 +496,8 @@ namespace ChessForge
         {
             try
             {
+                LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
+
                 Run r = (Run)e.Source;
                 int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
                 if (chapterId >= 0)
@@ -530,6 +539,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventChapterExpandSymbolClicked(object sender, MouseButtonEventArgs e)
         {
+            LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
+
             EventChapterHeaderClicked(sender, e);
         }
 
@@ -545,6 +556,8 @@ namespace ChessForge
         {
             try
             {
+                LastClickedItemType = WorkbookManager.ItemType.NONE;
+
                 Run r = (Run)e.Source;
                 int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
@@ -596,6 +609,8 @@ namespace ChessForge
         {
             try
             {
+                LastClickedItemType = WorkbookManager.ItemType.NONE;
+
                 Run r = (Run)e.Source;
                 int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
@@ -645,6 +660,8 @@ namespace ChessForge
         {
             try
             {
+                LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
+
                 Run r = (Run)e.Source;
                 int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
                 if (chapterId >= 0)
@@ -677,6 +694,8 @@ namespace ChessForge
         {
             try
             {
+                LastClickedItemType = WorkbookManager.ItemType.MODEL_GAME;
+
                 Run r = (Run)e.Source;
                 int chapterId = GetChapterIdFromChildRun(r);
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
@@ -719,6 +738,8 @@ namespace ChessForge
         {
             try
             {
+                LastClickedItemType = WorkbookManager.ItemType.EXERCISE;
+
                 Run r = (Run)e.Source;
                 int chapterId = GetChapterIdFromChildRun(r);
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
@@ -762,6 +783,8 @@ namespace ChessForge
         {
             try
             {
+                LastClickedItemType = WorkbookManager.ItemType.NONE;
+
                 Run r = (Run)e.Source;
                 int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
                 Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
@@ -788,6 +811,8 @@ namespace ChessForge
         {
             try
             {
+                LastClickedItemType = WorkbookManager.ItemType.NONE;
+
                 Run r = (Run)e.Source;
                 int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
                 Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);

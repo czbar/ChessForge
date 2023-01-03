@@ -727,14 +727,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnChapterUp_Click(object sender, RoutedEventArgs e)
         {
-            int index = WorkbookManager.SessionWorkbook.GetChapterIndexFromId(WorkbookManager.LastClickedChapterId);
+            int index = WorkbookManager.SessionWorkbook.ActiveChapterIndex;
             if (index > 0)
             {
                 Chapter hold = WorkbookManager.SessionWorkbook.Chapters[index];
                 WorkbookManager.SessionWorkbook.Chapters[index] = WorkbookManager.SessionWorkbook.Chapters[index - 1];
                 WorkbookManager.SessionWorkbook.Chapters[index - 1] = hold;
                 _chaptersView.BuildFlowDocumentForChaptersView();
-                SelectChapterByIndex(index, false);
+                SelectChapterByIndex(index - 1, false);
                 AppStateManager.IsDirty = true;
             }
         }
@@ -746,14 +746,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnChapterDown_Click(object sender, RoutedEventArgs e)
         {
-            int index = WorkbookManager.SessionWorkbook.GetChapterIndexFromId(WorkbookManager.LastClickedChapterId);
+            int index = WorkbookManager.SessionWorkbook.ActiveChapterIndex;
             if (index >= 0 && index < WorkbookManager.SessionWorkbook.Chapters.Count - 1)
             {
                 Chapter hold = WorkbookManager.SessionWorkbook.Chapters[index];
                 WorkbookManager.SessionWorkbook.Chapters[index] = WorkbookManager.SessionWorkbook.Chapters[index + 1];
                 WorkbookManager.SessionWorkbook.Chapters[index + 1] = hold;
                 _chaptersView.BuildFlowDocumentForChaptersView();
-                SelectChapterByIndex(index, false);
+                SelectChapterByIndex(index + 1, false);
                 AppStateManager.IsDirty = true;
             }
         }
@@ -768,8 +768,8 @@ namespace ChessForge
             try
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                //int index = chapter.ActiveModelGameIndex;
-                int index = WorkbookManager.LastClickedModelGameIndex;
+                int index = chapter.ActiveModelGameIndex;
+                //int index = WorkbookManager.LastClickedModelGameIndex;
                 int gameCount = chapter.GetModelGameCount();
 
                 if (index > 0 && index < gameCount)
@@ -799,7 +799,8 @@ namespace ChessForge
             try
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int index = WorkbookManager.LastClickedExerciseIndex;
+                int index = chapter.ActiveExerciseIndex;
+                //                int index = WorkbookManager.LastClickedExerciseIndex;
                 int exerciseCount = chapter.GetExerciseCount();
 
                 if (index > 0 && index < exerciseCount)
@@ -829,8 +830,8 @@ namespace ChessForge
             try
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                //int index = chapter.ActiveModelGameIndex;
-                int index = WorkbookManager.LastClickedModelGameIndex;
+                int index = chapter.ActiveModelGameIndex;
+                //int index = WorkbookManager.LastClickedModelGameIndex;
                 int gameCount = chapter.GetModelGameCount();
 
                 if (index >= 0 && index < gameCount - 1)
@@ -860,7 +861,8 @@ namespace ChessForge
             try
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int index = WorkbookManager.LastClickedExerciseIndex;
+                int index = chapter.ActiveExerciseIndex;
+                //int index = WorkbookManager.LastClickedExerciseIndex;
                 int exerciseCount = chapter.GetExerciseCount();
 
                 if (index >= 0 && index < exerciseCount - 1)
@@ -1743,25 +1745,32 @@ namespace ChessForge
         {
             if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                UiTrainingView.CleanupVariationTree();
-                if (WorkbookManager.PromptAndSaveWorkbook(false))
+                try
                 {
-                    EngineMessageProcessor.StopEngineEvaluation();
-                    EvaluationManager.Reset();
-
-                    TrainingSession.IsTrainingInProgress = false;
-                    TrainingSession.IsContinuousEvaluation = false;
-                    MainChessBoard.RemoveMoveSquareColors();
-                    LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-                    if (ActiveVariationTree.ContentType == GameData.ContentType.EXERCISE)
+                    UiTrainingView.CleanupVariationTree();
+                    if (WorkbookManager.PromptAndSaveWorkbook(false))
                     {
-                        _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
-                    }
-                    AppStateManager.SetupGuiForCurrentStates();
+                        EngineMessageProcessor.StopEngineEvaluation();
+                        EvaluationManager.Reset();
 
-                    ActiveLine.DisplayPositionForSelectedCell();
-                    AppStateManager.SwapCommentBoxForEngineLines(false);
-                    BoardCommentBox.RestoreTitleMessage();
+                        TrainingSession.IsTrainingInProgress = false;
+                        TrainingSession.IsContinuousEvaluation = false;
+                        MainChessBoard.RemoveMoveSquareColors();
+                        LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
+                        if (ActiveVariationTree.ContentType == GameData.ContentType.EXERCISE)
+                        {
+                            _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
+                        }
+                        AppStateManager.SetupGuiForCurrentStates();
+
+                        ActiveLine.DisplayPositionForSelectedCell();
+                        AppStateManager.SwapCommentBoxForEngineLines(false);
+                        BoardCommentBox.RestoreTitleMessage();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("UiMnStopTraining_Click()", ex);
                 }
             }
         }
@@ -2163,6 +2172,56 @@ namespace ChessForge
             if (UiMnWorkbookSave.IsEnabled == true)
             {
                 UiMnWorkbookSave_Click(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// Moves an item (chapter, game, exercise)
+        /// up in the list of items, depending which one was the last highlighted.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void CustomCommand_MoveItemUp(object sender, RoutedEventArgs e)
+        {
+            if (_chaptersView != null && AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            {
+                switch (_chaptersView.LastClickedItemType)
+                {
+                    case WorkbookManager.ItemType.CHAPTER:
+                        UiMnChapterUp_Click(sender, e);
+                        break;
+                    case WorkbookManager.ItemType.MODEL_GAME:
+                        UiMnGameUp_Click(sender, e);
+                        break;
+                    case WorkbookManager.ItemType.EXERCISE:
+                        UiMnExerciseUp_Click(sender, e);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Moves an item (chapter, game, exercise)
+        /// up in the list of items, depending which one was the last highlighted.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void CustomCommand_MoveItemDown(object sender, RoutedEventArgs e)
+        {
+            if (_chaptersView != null && AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            {
+                switch (_chaptersView.LastClickedItemType)
+                {
+                    case WorkbookManager.ItemType.CHAPTER:
+                        UiMnChapterDown_Click(sender, e);
+                        break;
+                    case WorkbookManager.ItemType.MODEL_GAME:
+                        UiMnGameDown_Click(sender, e);
+                        break;
+                    case WorkbookManager.ItemType.EXERCISE:
+                        UiMnExerciseDown_Click(sender, e);
+                        break;
+                }
             }
         }
 

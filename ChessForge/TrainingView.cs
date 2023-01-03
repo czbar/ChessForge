@@ -175,8 +175,6 @@ namespace ChessForge
         private readonly string _run_move_eval_ = "move_eval_";
         private readonly string _run_stem_move_ = "stem_move_";
         private readonly string _run_user_wb_alignment_ = "user_wb_alignment_";
-//        private readonly string _run_user_wb_comment_ = "user_wb_comment_";
-//        private readonly string _run_user_wb_mark_ = "user_wb_mark_";
         private readonly string _run_wb_alternatives_ = "wb_alternatives_";
         private readonly string _run_wb_comment_ = "wb_comment_";
 
@@ -680,18 +678,20 @@ namespace ChessForge
         /// </summary>
         public void ShowEvaluationResult(TreeNode nd)
         {
+            if (nd == null)
+            {
+                AppLog.Message("TrainingView:ShowEvaluationResult(): null node received ");
+                DebugUtils.ShowDebugMessage("Null node in Training ShowEvaluationResult");
+                return;
+            }
+
+            AppLog.Message("TrainingView:ShowEvaluationResult() Evaluation Mode:" + EvaluationManager.CurrentMode.ToString()
+                + ", node=" + nd.LastMoveAlgebraicNotation);
+
             if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS && EvaluationManager.CurrentMode != EvaluationManager.Mode.LINE)
             {
                 return;
             }
-
-            // insert the evaluation result after the move.
-            List<MoveEvaluation> moveCandidates = EngineLinesBox.Lines;
-            if (moveCandidates.Count == 0 || nd == null)
-            {
-                return;
-            }
-
 
             _mainWin.Dispatcher.Invoke(() =>
             {
@@ -701,30 +701,19 @@ namespace ChessForge
                     Paragraph para = runEvaluated.Parent as Paragraph;
                     if (para != null)
                     {
-                        MoveEvaluation eval = moveCandidates[0];
-
                         string runEvalName = _run_move_eval_ + nd.NodeId.ToString();
 
                         // Remove previous evaluation if exists
                         var r_prev = para.Inlines.FirstOrDefault(x => x.Name == runEvalName);
                         para.Inlines.Remove(r_prev);
 
-                        Run r_eval = CreateEvaluationRun(eval, runEvalName, nd);
+                        Run r_eval = CreateEvaluationRun(nd.EngineEvaluation, runEvalName, nd);
 
                         para.Inlines.InsertAfter(runEvaluated, r_eval);
 
-                        TreeNode nodeEvaluated = nd;
-                        // show the last clicked node where our mouse is now 
-                        if (_lastClickedNode != null)
-                        {
-                            _mainWin.FloatingChessBoard.FlipBoard(_mainWin.MainChessBoard.IsFlipped);
-                            _mainWin.FloatingChessBoard.DisplayPosition(_lastClickedNode, false);
-                            _mainWin.UiVbFloatingChessboard.Margin = new Thickness(_lastClickedPoint.X, _lastClickedPoint.Y - 165, 0, 0);
-                            _mainWin.ShowFloatingChessboard(true);
-                        }
-
                         if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                         {
+                            AppLog.Message("Request next node in LINE EVAL");
                             RequestMoveEvaluation();
                         }
                         else if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
@@ -756,9 +745,9 @@ namespace ChessForge
         /// <param name="eval"></param>
         /// <param name="runName"></param>
         /// <returns></returns>
-        private Run CreateEvaluationRun(MoveEvaluation eval, string runName, TreeNode nd)
+        private Run CreateEvaluationRun(string strEval, string runName, TreeNode nd)
         {
-            Run r_eval = new Run("(" + EvaluationManager.BuildEvaluationText(eval, nd.Position.ColorToMove) + ") ");
+            Run r_eval = new Run("(" + strEval + ") ");
             r_eval.Name = runName;
             r_eval.FontWeight = FontWeights.Normal;
             r_eval.Foreground = Brushes.Black;
@@ -1286,13 +1275,6 @@ namespace ChessForge
                                 break;
                         }
                     }
-                    //else
-                    //{
-                    //    if (o is Separator && (o as Separator).Name == "_mnTrainSepar_1")
-                    //    {
-                    //        (o as Separator).Visibility = _moveContext == MoveContext.LINE ? Visibility.Collapsed : Visibility.Visible;
-                    //    }
-                    //}
                 }
                 cm.PlacementTarget = _mainWin.UiRtbTrainingProgress;
                 cm.IsOpen = true;
@@ -1326,6 +1308,7 @@ namespace ChessForge
                 }
                 else
                 {
+                    AppLog.Message("TrainingView:RequestMoveEvaluation " + nd.LastMoveAlgebraicNotation);
                     EngineMessageProcessor.RequestMoveEvaluationInTraining(nd);
                 }
             }
@@ -1522,7 +1505,10 @@ namespace ChessForge
                 {
                     if (e.ChangedButton == MouseButton.Right)
                     {
-                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                        if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
+                        {
+                            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                        }
                         _mainWin.Timers.Start(AppTimers.TimerId.SHOW_TRAINING_PROGRESS_POPUP_MENU);
                     }
                     else if (e.ChangedButton == MouseButton.Left)

@@ -36,6 +36,18 @@ namespace ChessForge
             TRAINING
         }
 
+        /// <summary>
+        /// Types of items that can be manipulated in the GUI
+        /// </summary>
+        public enum ItemType
+        {
+            NONE,
+            CHAPTER,
+            STUDY,
+            MODEL_GAME,
+            EXERCISE
+        }
+
         // which tab control had focus most recently
         private static TabViewType _activeTab = TabViewType.NONE;
 
