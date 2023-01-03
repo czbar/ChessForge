@@ -1743,25 +1743,32 @@ namespace ChessForge
         {
             if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                UiTrainingView.CleanupVariationTree();
-                if (WorkbookManager.PromptAndSaveWorkbook(false))
+                try
                 {
-                    EngineMessageProcessor.StopEngineEvaluation();
-                    EvaluationManager.Reset();
-
-                    TrainingSession.IsTrainingInProgress = false;
-                    TrainingSession.IsContinuousEvaluation = false;
-                    MainChessBoard.RemoveMoveSquareColors();
-                    LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-                    if (ActiveVariationTree.ContentType == GameData.ContentType.EXERCISE)
+                    UiTrainingView.CleanupVariationTree();
+                    if (WorkbookManager.PromptAndSaveWorkbook(false))
                     {
-                        _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
-                    }
-                    AppStateManager.SetupGuiForCurrentStates();
+                        EngineMessageProcessor.StopEngineEvaluation();
+                        EvaluationManager.Reset();
 
-                    ActiveLine.DisplayPositionForSelectedCell();
-                    AppStateManager.SwapCommentBoxForEngineLines(false);
-                    BoardCommentBox.RestoreTitleMessage();
+                        TrainingSession.IsTrainingInProgress = false;
+                        TrainingSession.IsContinuousEvaluation = false;
+                        MainChessBoard.RemoveMoveSquareColors();
+                        LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
+                        if (ActiveVariationTree.ContentType == GameData.ContentType.EXERCISE)
+                        {
+                            _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
+                        }
+                        AppStateManager.SetupGuiForCurrentStates();
+
+                        ActiveLine.DisplayPositionForSelectedCell();
+                        AppStateManager.SwapCommentBoxForEngineLines(false);
+                        BoardCommentBox.RestoreTitleMessage();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("UiMnStopTraining_Click()", ex);
                 }
             }
         }
