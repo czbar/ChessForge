@@ -118,8 +118,11 @@ namespace ChessForge
         {
             try
             {
-                //                TreeNode evalNode = EvaluationManager.GetEvaluatedNode(out _);
                 TreeNode evalNode = EngineMessageProcessor.LastMessageNode;
+                if (evalNode == null)
+                {
+                    return "";
+                }
 
                 BoardPosition position = evalNode.Position;
                 if (line == null || position == null)
