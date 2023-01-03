@@ -208,6 +208,7 @@ namespace ChessForge
             // NOTE do not reset Evaluation.CurrentMode as this will be done 
             // later down the chain
             _mainWin.ResetEvaluationProgressBar();
+            _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
 
             EvaluationManager.SetSingleNodeToEvaluate(null);
 
