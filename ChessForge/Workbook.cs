@@ -190,8 +190,8 @@ namespace ChessForge
         }
 
         /// <summary>
-        ///  Returns the 1-based Active Chapter number.
-        ///  Returns 0 if there is no active chapter.
+        ///  Returns 0-based Active Chapter index.
+        ///  Returns -1 if there is no active chapter.
         /// </summary>
         public int ActiveChapterIndex
         {
@@ -202,7 +202,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        ///  Returns the 1-based chapter number.
+        ///  Returns 0-based chapter index.
         ///  Returns 0 if not found.
         /// </summary>
         /// <param name="chapter"></param>
@@ -215,7 +215,7 @@ namespace ChessForge
                     return i;
             }
 
-            return 0;
+            return -1;
         }
 
         /// <summary>
