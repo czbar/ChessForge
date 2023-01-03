@@ -322,8 +322,9 @@
                             <Canvas x:Name="UiCnvStudyTreePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
                                 <Label x:Name="UiLblChapterCounter" Content="Chapter 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
                                 <Image x:Name="UiImgChapterLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="140,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown" />
-                                <Label x:Name="UiLblChapterPrevNextHint" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="170,-3,0,0" Width="100"  FontWeight="Bold" />
-                                <Image x:Name="UiImgChapterRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiLblChapterPrevHint" Cursor="Hand" Content="Previous" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="165,-3,0,0" Width="60"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown" />
+                                <Label x:Name="UiLblChapterNextHint" Cursor="Hand" Content="Next" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="235,-3,0,0" Width="40"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
+                                <Image x:Name="UiImgChapterRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown" />
                             </Canvas>
                             <RichTextBox x:Name="UiRtbStudyTreeView" IsUndoEnabled="False"  Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
@@ -510,7 +511,8 @@
                             <Canvas x:Name="UiCnvModelGamePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
                                 <Label x:Name="UiLblGameCounter" Content="Game 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
                                 <Image x:Name="UiImgModelGameLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="140,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown"  />
-                                <Label x:Name="UiLblModelGamePrevNextHint" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="170,-3,0,0" Width="100"  FontWeight="Bold"/>
+                                <Label x:Name="UiLblModelGamePrevHint" Cursor="Hand" Content="Previous" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="165,-3,0,0" Width="60"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown" />
+                                <Label x:Name="UiLblModelGameNextHint" Cursor="Hand" Content="Next" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="235,-3,0,0" Width="40"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"  />
                                 <Image x:Name="UiImgModelGameRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"   />
                             </Canvas>
                             <RichTextBox x:Name="UiRtbModelGamesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
@@ -557,7 +559,8 @@
                             <Canvas x:Name="UiCnvExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
                                 <Label x:Name="UiLblExerciseCounter" Content="Exercise 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
                                 <Image x:Name="UiImgExerciseLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="140,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown"  />
-                                <Label x:Name="UiLblExcercisePrevNextHint" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="170,-3,0,0" Width="100"  FontWeight="Bold"/>
+                                <Label x:Name="UiLblExercisePrevHint" Cursor="Hand" Content="Previous" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="165,-3,0,0" Width="60"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown" />
+                                <Label x:Name="UiLblExerciseNextHint" Cursor="Hand" Content="Next" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="235,-3,0,0" Width="40"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
                                 <Image x:Name="UiImgExerciseRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
                             </Canvas>
                             <RichTextBox x:Name="UiRtbExercisesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
