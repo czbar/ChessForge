@@ -2197,6 +2197,7 @@ namespace ChessForge
                 switch (_chaptersView.LastClickedItemType)
                 {
                     case WorkbookManager.ItemType.CHAPTER:
+                    case WorkbookManager.ItemType.NONE:
                         UiMnChapterUp_Click(sender, e);
                         break;
                     case WorkbookManager.ItemType.MODEL_GAME:
