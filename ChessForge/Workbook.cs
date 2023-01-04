@@ -76,71 +76,19 @@ namespace ChessForge
 
         /// <summary>
         /// Determines the initial board orientation in the Exercises view.
+        /// Piece.None is valid as it indicates "side-to-move"
         /// </summary>
         public PieceColor ExerciseBoardOrientationConfig
         {
             get
             {
-                return _exerciseBoardOrientationConfig != PieceColor.None ? _exerciseBoardOrientationConfig : TrainingSideConfig;
+                return _exerciseBoardOrientationConfig;
             }
             set
             {
                 _exerciseBoardOrientationConfig = value;
             }
         }
-
-
-        private PieceColor _studyBoardOrientationCurrent = PieceColor.None;
-        private PieceColor _gameBoardOrientationCurrent = PieceColor.None;
-        private PieceColor _exerciseBoardOrientationCurrent = PieceColor.None;
-
-        /// <summary>
-        /// Determines the initial board orientation in the Study view.
-        /// </summary>
-        public PieceColor StudyBoardOrientationCurrent
-        {
-            get
-            {
-                return _studyBoardOrientationCurrent != PieceColor.None ? _studyBoardOrientationCurrent : TrainingSideCurrent;
-            }
-            set
-            {
-                _studyBoardOrientationCurrent = value;
-            }
-        }
-
-        /// <summary>
-        /// Determines the initial board orientation in the Games view.
-        /// </summary>
-        public PieceColor GameBoardOrientationCurrent
-        {
-            get
-            {
-                return _gameBoardOrientationCurrent != PieceColor.None ? _gameBoardOrientationCurrent : TrainingSideCurrent;
-            }
-            set
-            {
-                _gameBoardOrientationCurrent = value;
-            }
-        }
-
-
-        /// <summary>
-        /// Determines the initial board orientation in the Exercises view.
-        /// </summary>
-        public PieceColor ExerciseBoardOrientationCurrent
-        {
-            get
-            {
-                return _exerciseBoardOrientationCurrent != PieceColor.None ? _exerciseBoardOrientationCurrent : TrainingSideCurrent;
-            }
-            set
-            {
-                _exerciseBoardOrientationCurrent = value;
-            }
-        }
-
-
 
         // chapter currently open in the session
         private Chapter _activeChapter;

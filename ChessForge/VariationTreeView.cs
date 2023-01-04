@@ -101,7 +101,7 @@ namespace ChessForge
             {
                 switch (ContentType)
                 {
-                    case GameData.ContentType.STUDY_TREE: 
+                    case GameData.ContentType.STUDY_TREE:
                         return true;
                     case GameData.ContentType.MODEL_GAME:
                         return AppStateManager.ActiveChapter != null && AppStateManager.ActiveChapter.HasAnyModelGame;
@@ -570,7 +570,7 @@ namespace ChessForge
                 VariationTree treeFromGame = new VariationTree(GameData.ContentType.GENERIC);
                 treeFromGame.CreateNew(lstNodes);
                 VariationTree targetTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree;
-                
+
                 // Prepare info for potential Undo
                 EditOperation op = new EditOperation(EditOperation.EditType.MERGE_TREE, targetTree.GetListOfNodeIds(true), null);
 
@@ -580,7 +580,7 @@ namespace ChessForge
 
                 // Save info for undo in the new tree
                 WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree.OpsManager.PushOperation(op);
-                
+
                 AppStateManager.IsDirty = true;
             }
             catch (Exception ex)
@@ -823,7 +823,7 @@ namespace ChessForge
                 {
                     _mainWin.UiImgChapterRightArrow.Visibility = Visibility.Visible;
                     _mainWin.UiImgChapterLeftArrow.Visibility = Visibility.Hidden;
-                    
+
                     _mainWin.UiLblChapterPrevHint.Visibility = Visibility.Collapsed;
                     _mainWin.UiLblChapterNextHint.Visibility = Visibility.Visible;
                 }
@@ -1028,15 +1028,9 @@ namespace ChessForge
                             }
                         }
 
-                        string date = _mainVariationTree.Header.GetDate(out _);
-                        if (!string.IsNullOrEmpty(date))
-                        {
-                            if (TextUtils.GetDateFromPgnString(date) != null)
-                            {
-                                Run rDate = CreateRun("1", "      Date: " + date + "\n", true);
-                                para.Inlines.Add(rDate);
-                            }
-                        }
+                        string dateForDisplay = TextUtils.BuildDateFromDisplayFromPgnString(_mainVariationTree.Header.GetDate(out _));
+                        Run rDate = CreateRun("1", "      Date: " + dateForDisplay + "\n", true);
+                        para.Inlines.Add(rDate);
 
                         string result = _mainVariationTree.Header.GetResult(out _);
                         if (!string.IsNullOrWhiteSpace(result) && result != "*")
@@ -1252,12 +1246,9 @@ namespace ChessForge
         {
             try
             {
-                if (_mainVariationTree.ShowTreeLines)
-                {
-                    //SelectLineAndMove("1", _variationTree.Nodes[0].Children[0].NodeId);
-                    _mainWin.SetActiveLine("1", 0);
-                    SelectLineAndMove("1", 0);
-                }
+                _mainWin.SetActiveLine("1", 0);
+                SelectLineAndMove("1", 0);
+                _mainWin.DisplayPosition(_mainVariationTree.Nodes[0]);
             }
             catch
             {

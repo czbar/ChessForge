@@ -54,10 +54,8 @@ namespace ChessForge
         // string for Black to display in the UI 
         private readonly static string _strBlack = "BLACK";
 
-        // the most recent values set by the user when Training Side was Black
-        private string _lastStudyOnBlack = _strBlack;
-        private string _lastGameOnBlack = _strBlack;
-        private string _lastExerciseOnBlack = _strWhite;
+        // string for side_to_move 
+        private readonly static string _strSideToMove = "SIDE TO MOVE";
 
         /// <summary>
         /// Creates the dialog, initializes controls
@@ -68,10 +66,6 @@ namespace ChessForge
             WorkbookTitle = _workbook.Title;
             TrainingSide = _workbook.TrainingSideConfig;
 
-            //StudyBoardOrientation = _workbook.StudyBoardOrientationConfig;
-            //GameBoardOrientation = _workbook.GameBoardOrientationConfig;
-            //ExerciseBoardOrientation = _workbook.ExerciseBoardOrientationConfig;
-
             UiTbTitle.Text = _workbook.Title;
             UiLblSideToMove.Content = _workbook.TrainingSideConfig == PieceColor.Black ? _strBlack : _strWhite;
 
@@ -81,8 +75,16 @@ namespace ChessForge
             GameBoardOrientation = GetBoardOrientation(_workbook.GameBoardOrientationConfig);
             UiLblBoardGamesOrient.Content = _workbook.GameBoardOrientationConfig == PieceColor.Black ? _strBlack : _strWhite;
 
-            ExerciseBoardOrientation = GetBoardOrientation(_workbook.ExerciseBoardOrientationConfig);
-            UiLblBoardExercisesOrient.Content = _workbook.ExerciseBoardOrientationConfig == PieceColor.Black ? _strBlack : _strWhite;
+            // in Exercise, PieceColor.None is valid as it indicates "side to move"
+            ExerciseBoardOrientation = _workbook.ExerciseBoardOrientationConfig;
+            if (ExerciseBoardOrientation == PieceColor.None)
+            {
+                UiLblBoardExercisesOrient.Content = _strSideToMove;
+            }
+            else
+            {
+                UiLblBoardExercisesOrient.Content = _workbook.ExerciseBoardOrientationConfig == PieceColor.Black ? _strBlack : _strWhite;
+            }
         }
 
         /// <summary>
@@ -128,7 +130,15 @@ namespace ChessForge
 
             StudyBoardOrientation = ((string)UiLblBoardStudyOrient.Content == _strBlack) ? PieceColor.Black : PieceColor.White;
             GameBoardOrientation = ((string)UiLblBoardGamesOrient.Content == _strBlack) ? PieceColor.Black : PieceColor.White;
-            ExerciseBoardOrientation = ((string)UiLblBoardExercisesOrient.Content == _strBlack) ? PieceColor.Black : PieceColor.White;
+            
+            if ((string)UiLblBoardExercisesOrient.Content == _strSideToMove)
+            {
+                ExerciseBoardOrientation = PieceColor.None;
+            }
+            else
+            {
+                ExerciseBoardOrientation = ((string)UiLblBoardExercisesOrient.Content == _strBlack) ? PieceColor.Black : PieceColor.White;
+            }
 
             ExitOK = true;
             this.Close();
@@ -183,7 +193,11 @@ namespace ChessForge
             {
                 UiLblBoardStudyOrient.Content = (color == PieceColor.White ? _strWhite : _strBlack);
                 UiLblBoardGamesOrient.Content = (color == PieceColor.White ? _strWhite : _strBlack);
-                UiLblBoardExercisesOrient.Content = (color == PieceColor.White ? _strWhite : _strBlack);
+
+                if ((string)UiLblBoardExercisesOrient.Content != _strSideToMove)
+                {
+                    UiLblBoardExercisesOrient.Content = (color == PieceColor.White ? _strWhite : _strBlack);
+                }
             }
         }
 
@@ -192,11 +206,15 @@ namespace ChessForge
         /// represented by the passed label.
         /// </summary>
         /// <param name="label"></param>
-        private void SwapBoardOrientation(Label label)
+        private void SwapBoardOrientation(Label label, bool includeNone)
         {
             if ((string)label.Content == _strWhite)
             {
                 label.Content = _strBlack;
+            }
+            else if ((string)label.Content == _strBlack)
+            {
+                label.Content = includeNone ? _strSideToMove : _strWhite;
             }
             else
             {
@@ -222,7 +240,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiLblBoardStudyOrient_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            SwapBoardOrientation(UiLblBoardStudyOrient);
+            SwapBoardOrientation(UiLblBoardStudyOrient, false);
         }
 
         /// <summary>
@@ -232,7 +250,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiLblBoardGamesOrient_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            SwapBoardOrientation(UiLblBoardGamesOrient);
+            SwapBoardOrientation(UiLblBoardGamesOrient, false);
         }
 
         /// <summary>
@@ -242,7 +260,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiLblBoardExercisesOrient_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            SwapBoardOrientation(UiLblBoardExercisesOrient);
+            SwapBoardOrientation(UiLblBoardExercisesOrient, true);
         }
 
     }

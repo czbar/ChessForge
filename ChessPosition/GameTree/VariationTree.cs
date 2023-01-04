@@ -57,14 +57,30 @@ namespace GameTree
             set => _isAssociatedTreeActive = value;
         }
 
+        // associated OperationsManager
+        public EditOperationsManager OpsManager;
+
+        /// <summary>
+        /// If the user changed the board orientation and it is not the same
+        /// as Workbook settings then store it here.
+        /// Otherwise the value should be NONE.
+        /// It is responsibiliy of the caller to maintain that logic
+        /// as this object does not know app settings.
+        /// </summary>
+        public PieceColor CustomBoardOrientation
+        {
+            get => _customBoardOrientation;
+            set => _customBoardOrientation = value;
+        }
+
         // whether the Associated Tree is active
         private bool _isAssociatedTreeActive = false;
 
         // currently the highest NodeId in the tree (can be not set so NodeId of the last node must ne checked too)
         private int _maxNodeId = 0;
 
-        // associated OperationsManager
-        public EditOperationsManager OpsManager;
+        // board orientation if not per Workbook settings
+        private PieceColor _customBoardOrientation = PieceColor.None;
 
         /// <summary>
         /// Constructor. Creates a VariationTree of the requested type.

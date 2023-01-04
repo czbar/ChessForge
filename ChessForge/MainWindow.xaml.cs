@@ -577,7 +577,8 @@ namespace ChessForge
                     WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
                     WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.MODEL_GAME, gameIndex);
 
-                    MainChessBoard.FlipBoard(WorkbookManager.SessionWorkbook.GameBoardOrientationCurrent);
+                    PieceColor orient = EffectiveBoardOrientation(WorkbookManager.ItemType.MODEL_GAME);
+                    MainChessBoard.FlipBoard(orient);
 
                     SetupGuiForActiveModelGame(gameIndex, setFocus);
                 }
@@ -594,6 +595,50 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns desired board orientaion based on Workbook settings
+        /// and potential user selected custom.
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <returns></returns>
+        private PieceColor EffectiveBoardOrientation(WorkbookManager.ItemType itemType)
+        {
+            PieceColor effectiveOrientation = PieceColor.None;
+            switch (itemType)
+            {
+                case WorkbookManager.ItemType.STUDY:
+                    effectiveOrientation = WorkbookManager.SessionWorkbook.StudyBoardOrientationConfig;
+                    break;
+                case WorkbookManager.ItemType.MODEL_GAME:
+                    effectiveOrientation = WorkbookManager.SessionWorkbook.GameBoardOrientationConfig;
+                    break;
+                case WorkbookManager.ItemType.EXERCISE:
+                    effectiveOrientation = WorkbookManager.SessionWorkbook.ExerciseBoardOrientationConfig;
+                    break;
+            }
+
+            if (ActiveVariationTree != null)
+            {
+                PieceColor customBoardOrientation = ActiveVariationTree.CustomBoardOrientation;
+
+                if (customBoardOrientation != PieceColor.None)
+                {
+                    // if settings changed in the meantime, reset custom
+                    if (effectiveOrientation == customBoardOrientation)
+                    {
+                        ResetCustomBoardOrientation(ActiveVariationTree);
+                        ActiveVariationTree.CustomBoardOrientation = PieceColor.None;
+                    }
+                    else
+                    {
+                        effectiveOrientation = customBoardOrientation;
+                    }
+                }
+            }
+
+            return effectiveOrientation;
+        }
+
+        /// <summary>
         /// Select and activate view for the exercise in the ActiveChapter
         /// at the passed index.
         /// </summary>
@@ -607,7 +652,13 @@ namespace ChessForge
                     WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = exerciseIndex;
                     WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, exerciseIndex);
 
-                    MainChessBoard.FlipBoard(WorkbookManager.SessionWorkbook.ExerciseBoardOrientationCurrent);
+                    PieceColor orient = EffectiveBoardOrientation(WorkbookManager.ItemType.EXERCISE);
+                    if (orient == PieceColor.None)
+                    {
+                        orient = ActiveVariationTree.RootNode.ColorToMove;
+                    }
+                    MainChessBoard.FlipBoard(orient);
+
                     SetupGuiForActiveExercise(exerciseIndex, setFocus);
                 }
                 else
@@ -1101,7 +1152,15 @@ namespace ChessForge
             string startLineId;
             int startNodeId = 0;
 
-            startLineId = studyTree.GetDefaultLineIdForNode(0);
+            if (!string.IsNullOrEmpty(studyTree.SelectedLineId) && studyTree.SelectedNodeId >= 0)
+            {
+                startLineId = ActiveVariationTree.SelectedLineId;
+                startNodeId = ActiveVariationTree.SelectedNodeId;
+            }
+            else
+            {
+                startLineId = studyTree.GetDefaultLineIdForNode(0);
+            }
 
             studyTree.SelectedLineId = startLineId;
             studyTree.SelectedNodeId = startNodeId;
@@ -1840,10 +1899,6 @@ namespace ChessForge
                 SessionWorkbook.GameBoardOrientationConfig = dlg.GameBoardOrientation;
                 SessionWorkbook.ExerciseBoardOrientationConfig = dlg.ExerciseBoardOrientation;
 
-                SessionWorkbook.StudyBoardOrientationCurrent = dlg.StudyBoardOrientation;
-                SessionWorkbook.GameBoardOrientationCurrent = dlg.GameBoardOrientation;
-                SessionWorkbook.ExerciseBoardOrientationCurrent = dlg.ExerciseBoardOrientation;
-
                 AppStateManager.IsDirty = true;
 
                 if (save)
@@ -1856,13 +1911,13 @@ namespace ChessForge
                     case WorkbookManager.TabViewType.CHAPTERS:
                     case WorkbookManager.TabViewType.STUDY:
                     case WorkbookManager.TabViewType.BOOKMARKS:
-                        MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientationCurrent);
+                        MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.STUDY));
                         break;
                     case WorkbookManager.TabViewType.MODEL_GAME:
-                        MainChessBoard.FlipBoard(SessionWorkbook.GameBoardOrientationCurrent);
+                        MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.MODEL_GAME));
                         break;
                     case WorkbookManager.TabViewType.EXERCISE:
-                        MainChessBoard.FlipBoard(SessionWorkbook.ExerciseBoardOrientationCurrent);
+                        MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.EXERCISE));
                         break;
                 }
 
@@ -2078,6 +2133,73 @@ namespace ChessForge
         public void PositionScoresheetLabel(DataGrid dgControl)
         {
             UiLblScoresheet.Margin = new Thickness(0, 0, 10 + (dgControl.Width - UiLblScoresheet.Width), 0);
+        }
+
+        /// <summary>
+        /// Resets the board orientation to Workbook default
+        /// by clearing the custom setting.
+        /// </summary>
+        /// <param name="tree"></param>
+        private void ResetCustomBoardOrientation(VariationTree tree)
+        {
+            if (tree != null)
+            {
+                tree.CustomBoardOrientation = PieceColor.None;
+                if (tree.AssociatedPrimary != null)
+                {
+                    tree.AssociatedPrimary.CustomBoardOrientation = PieceColor.None;
+                }
+                if (tree.AssociatedSecondary != null)
+                {
+                    tree.AssociatedSecondary.CustomBoardOrientation = PieceColor.None;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets custom board orientation.
+        /// </summary>
+        /// <param name="customOrient"></param>
+        /// <param name="itemType"></param>
+        private void SetCustomBoardOrientation(PieceColor customOrient, WorkbookManager.ItemType itemType)
+        {
+            if (ActiveVariationTree != null)
+            {
+                VariationTree tree = ActiveVariationTree;
+                PieceColor config = PieceColor.None;
+                switch (itemType)
+                {
+                    case WorkbookManager.ItemType.STUDY:
+                        config = WorkbookManager.SessionWorkbook.StudyBoardOrientationConfig;
+                        break;
+                    case WorkbookManager.ItemType.MODEL_GAME:
+                        config = WorkbookManager.SessionWorkbook.GameBoardOrientationConfig;
+                        break;
+                    case WorkbookManager.ItemType.EXERCISE:
+                        config = WorkbookManager.SessionWorkbook.ExerciseBoardOrientationConfig;
+                        break;
+                }
+
+                PieceColor orientToSet;
+                if (config == customOrient)
+                {
+                    orientToSet = PieceColor.None;
+                }
+                else
+                {
+                    orientToSet = customOrient;
+                }
+
+                tree.CustomBoardOrientation = orientToSet;
+                if (tree.AssociatedPrimary != null)
+                {
+                    tree.AssociatedPrimary.CustomBoardOrientation = orientToSet;
+                }
+                if (tree.AssociatedSecondary != null)
+                {
+                    tree.AssociatedSecondary.CustomBoardOrientation = orientToSet;
+                }
+            }
         }
 
         /// <summary>

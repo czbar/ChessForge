@@ -646,10 +646,6 @@ namespace ChessForge
                 workbook.GameBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetGameBoardOrientation(out _));
                 workbook.ExerciseBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetExerciseBoardOrientation(out _));
 
-                workbook.StudyBoardOrientationCurrent = workbook.StudyBoardOrientationConfig;
-                workbook.GameBoardOrientationCurrent = workbook.GameBoardOrientationConfig;
-                workbook.ExerciseBoardOrientationCurrent = workbook.ExerciseBoardOrientationConfig;
-
                 //ProcessGames(ref WorkbookManager.VariationTreeList, ref workbook);
                 ProcessGames(ref GameList, ref workbook);
             }

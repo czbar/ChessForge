@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -471,7 +470,7 @@ namespace ChessForge
         /// If it is already flipped it will go back
         /// to normal.
         /// </summary>
-        public void FlipBoard()
+        public bool FlipBoard()
         {
             System.Windows.Media.ImageSource temp;
 
@@ -503,6 +502,8 @@ namespace ChessForge
             SetCoordinateLabelsText(_isFlipped);
 
             BoardShapesManager.Flip();
+
+            return _isFlipped;
         }
 
         /// <summary>

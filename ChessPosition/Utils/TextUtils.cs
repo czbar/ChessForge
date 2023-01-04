@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using ChessPosition.GameTree;
 using GameTree;
 
@@ -330,6 +331,70 @@ namespace ChessPosition
             }
 
             return dt;
+        }
+
+        /// <summary>
+        /// Massages a pgn date string into a more display friendly value
+        /// i.e. removing the question marks indicating missing value.
+        /// </summary>
+        /// <param name="pgn"></param>
+        /// <returns></returns>
+        public static string BuildDateFromDisplayFromPgnString(string pgn)
+        {
+            StringBuilder sb = new StringBuilder("");
+            GetYearMonthDayFromPgnDate(pgn, out int year, out int month, out int day);
+            if (year > 0)
+            {
+                sb.Append(year.ToString());
+                if (month > 0)
+                {
+                    sb.Append("." + month.ToString());
+                    if (day > 0)
+                    {
+                        sb.Append("." + day.ToString());
+                    }
+                }
+            }
+
+            return sb.ToString();
+        }
+
+
+        /// <summary>
+        /// Parses the PGN string to extract year, month and day.
+        /// For not found values, returns -1.
+        /// </summary>
+        /// <param name="date"></param>
+        public static void GetYearMonthDayFromPgnDate(string pgn, out int year, out int month, out int day)
+        {
+            year = -1;
+            month= -1;
+            day = -1;
+
+            if (!string.IsNullOrEmpty(pgn))
+            {
+                string[] tokens = pgn.Split('.');
+                if (int.TryParse(tokens[0], out year))
+                {
+                    if (tokens.Length > 1)
+                    {
+                        if (int.TryParse(tokens[1], out month))
+                        {
+                            if (tokens.Length > 2)
+                            {
+                                if (!int.TryParse(tokens[2], out day))
+                                {
+                                    day = -1;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            month = -1;
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>

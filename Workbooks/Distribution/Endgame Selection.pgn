@@ -21,28 +21,31 @@
 [ContentType "Exercise"]
 [FEN "5k2/8/8/8/1P6/8/8/3K4 w - - 1 1"]
 [Event "Opposition"]
-[Date ""]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
+[Preamble "Find a way for White to get the opposition in front of the pawn and win the game"]
 
 
-1. Kc2 $1 Ke7 2. Kb3 Kd6 3. Ka4 (3. Kc4 $2 Kc6 $11) 3... Kc6 4. Ka5 Kb7 5. Kb5 
-$18 {[%csl Bb5,Bb7]Opposition.}  1-0
+ {[%eval 0.00]} 1. Kc2 $1 Ke7 2. Kb3 Kd6 3. Ka4 (3. Kc4 $2 Kc6 $11) 3... Kc6 4. 
+Ka5 Kb7 5. Kb5 $18 {[%eval +5.93][%csl Bb5,Bb7]Opposition.}  1-0
 
 [ChapterId "1"]
 [ChapterTitle "Pawn Endgames"]
 [ContentType "Exercise"]
 [FEN "8/8/8/4p1p1/8/5P2/6K1/3k4 w - - 1 1"]
 [Event "Distant Opposition"]
-[Date "????.??.??"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1/2-1/2"]
+[Preamble "Short opposition allows Black to sacrifice g4 pawn and win a tempo with a check leading to converting Black's e pawn 2 moves ahead of White converting their g pawn. Find a way for White to keepdistant opposition and draw a game."]
 
 
-1. Kh1 $3 Kd2 (1... Ke1 2. Kg1)  (1... g4 2. Kg2 $1 Kd2 3. fxg4 $11) 2. Kh2 Kd3 
-3. Kh3 $11 1/2-1/2
+ {[%eval 0.00]} 1. Kh1 $3 {[%eval 0.00]}  Kd2 {[%eval 0.00]}  (1... Ke1 2. Kg1)  
+(1... g4 2. Kg2 $1 Kd2 3. fxg4 $11) 2. Kh2 {[%eval 0.00]}  Kd3 {[%eval 0.00]}  
+3. Kh3 $11 {[%eval +#18]}  1/2-1/2
 
 [ChapterId "1"]
 [ChapterTitle "Pawn Endgames"]
@@ -52,13 +55,14 @@ $18 {[%csl Bb5,Bb7]Opposition.}  1-0
 [Date "1952.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
+[Preamble "Find a way for White to get the opposition in front of the pawn and win the game"]
 
 
 1. Kf2 $1 (1. Kg1 $2 Kd7 $11) 1... h4 $1 (1... Kd7 $2 2. Kg3 Ke6 3. Kh4 $18) 2. 
 Kg1 $3 (2. Kf3 $2 h3 $11 3. g4 Kd7 4. Kg3 Ke6 5. Kxh3 Kf6 6. Kh4 Kg6 $11 {White 
 cannot gain control of the key squares.} ) 2... h3 3. g3 $1 Kd7 4. Kh2 Ke6 5. 
-Kxh3 Kf5 6. Kh4 Kg6 7. Kg4 $18 {[%csl Bg6,Bg4]Gaining opposition and winning.}  *
+Kxh3 Kf5 6. Kh4 Kg6 7. Kg4 $18 {[%csl Bg6,Bg4]Gaining opposition and winning.}  1-0
 
 [ChapterId "1"]
 [ChapterTitle "Pawn Endgames"]
@@ -68,13 +72,13 @@ Kxh3 Kf5 6. Kh4 Kg6 7. Kg4 $18 {[%csl Bg6,Bg4]Gaining opposition and winning.}  
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
-[Preamble "Triangulation is a king maneuver resulting in a loss of a tempo and passing the turn to your opponent which is to their disadvantage."]
+[Result "1-0"]
+[Preamble "Find king maneuver (Triangulation) resulting in a loss of a tempo and passing the turn to Black which is to their disadvantage"]
 
 
 1. Ke5 $1 {[%quiz 2]}  (1. c6+ $2 Kc8 $1 2. Kd6 Kb8 $1 3. Kd7 bxc6 $11) 1... Kc6 
 2. Kd4 Kd7 3. Kd5 {We are back to the starting position but it's Black's move.}  
-Kc8 4. Ke6 $1 {[%quiz 2]}  Kd8 5. Kd6 Kc8 6. Ke7 Kb8 7. Kd7 Ka8 8. c6 $18 *
+Kc8 4. Ke6 $1 {[%quiz 2]}  Kd8 5. Kd6 Kc8 6. Ke7 Kb8 7. Kd7 Ka8 8. c6 $18 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Pawn Endgames"]
@@ -85,9 +89,11 @@ Kc8 4. Ke6 $1 {[%quiz 2]}  Kd8 5. Kd6 Kc8 6. Ke7 Kb8 7. Kd7 Ka8 8. c6 $18 *
 [White ""]
 [Black ""]
 [Result "1/2-1/2"]
+[Preamble "Find a way for White to draw by moving the king closer to the opponent's h pawn as well as to supporting convertion of their b pawn"]
 
 
-1. Kg7 {[%quiz 2]}  h4 2. Kf6 Kb6 3. Ke5 {[%quiz 1]}  Kxc6 4. Kf4 1/2-1/2
+ {[%eval -0.06]} 1. Kg7 {[%quiz 2]}  h4 2. Kf6 Kb6 3. Ke5 {[%quiz 1]}  Kxc6 4. 
+Kf4 1/2-1/2
 
 [ChapterId "1"]
 [ChapterTitle "Pawn Endgames"]
@@ -98,11 +104,14 @@ Kc8 4. Ke6 $1 {[%quiz 2]}  Kd8 5. Kd6 Kc8 6. Ke7 Kb8 7. Kd7 Ka8 8. c6 $18 *
 [White ""]
 [Black ""]
 [Result "1/2-1/2"]
+[Preamble "Find a way for White to draw by forcing Black to advance b pawn and then moving the king closer to the opponent's h pawn as well as to supporting convertion of their c pawn"]
 
 
-1. Kc8 $3 {[%quiz 2]}  (1. c8=Q $2 Bf5+ 2. Kc7 Bxc8 $19)  (1. Kd6 $2 Bf5 2. Kc5 
-Ke4 3. Kb6 Bc8 4. Ka7 b5 $19) 1... b5 2. Kd7 {[%quiz 1]}  b4 3. Kd6 Bf5 4. Ke5 
-$1 {[%quiz 1]}  Bc8 5. Kd4 1/2-1/2
+ {[%eval 0.00]} 1. Kc8 $3 {[%eval 0.00][%quiz 2]}  (1. c8=Q $2 Bf5+ {[%eval 
++#29]}  2. Kc7 Bxc8 $19)  (1. Kd6 $2 Bf5 2. Kc5 Ke4 3. Kb6 Bc8 4. Ka7 b5 $19) 
+1... b5 {[%eval 0.00]}  2. Kd7 {[%eval 0.00][%quiz 1]}  b4 {[%eval 0.00]}  3. 
+Kd6 {[%eval 0.00]}  Bf5 {[%eval 0.00]}  4. Ke5 $1 {[%eval 0.00][%quiz 1]}  Bc8 
+{[%eval 0.00]}  5. Kd4 {[%eval 0.00]}  1/2-1/2
 
 
 
@@ -118,27 +127,31 @@ $1 {[%quiz 1]}  Bc8 5. Kd4 1/2-1/2
 [ContentType "Exercise"]
 [FEN "4K3/4P1k1/8/8/8/8/r7/5R2 w - - 1 1"]
 [Event "Pawn on the Seventh Rank"]
-[Date ""]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
+[Preamble "Find a way to win for White by pushing Black;s king to teh edge of the board and then building a barricade with a rook an the forth rank"]
 
 
-1. Rg1+ Kh7 2. Rg4 $1 Rd2 3. Kf7 Rf2+ 4. Ke6 Re2+ 5. Kf6 Rf2+ 6. Ke5 Re2+ 7. Re4 
-$18 1-0
+1. Rg1+ {[%eval +7.29]}  Kh7 2. Rg4 $1 Rd2 {[%eval +#12]}  3. Kf7 Rf2+ 4. Ke6 
+Re2+ 5. Kf6 Rf2+ 6. Ke5 Re2+ 7. Re4 $18 {[%eval +#6]}  1-0
 
 [ChapterId "2"]
 [ChapterTitle "Rook and Pawn vs Rook"]
 [ContentType "Exercise"]
 [FEN "r5k1/8/5PK1/8/8/8/8/1R6 w - - 1 1"]
-[Event "The Pawn on the Sixth Rank"]
+[Event "Pawn on the Sixth Rank"]
 [Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
+[Preamble "Find a way for White to win by taking control of the seventh rank with a rook and advancing f pawn with a tempo and winning Black's rook"]
 
 
-1. Rb7 Rc8 2. Rg7+ $1 Kf8 3. Rh7 Kg8 4. f7+ $18 1-0
+ {[%eval +#15]} 1. Rb7 {[%eval +#14]}  Rc8 {[%eval +#13]}  2. Rg7+ $1 {[%eval 
++#12]}  Kf8 {[%eval +#12]}  3. Rh7 {[%eval +#11]}  Kg8 {[%eval +#7]}  4. f7+ $18 
+{[%eval +#6]}  1-0
 
 
 
