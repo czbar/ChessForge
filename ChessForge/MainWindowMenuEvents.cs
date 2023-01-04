@@ -2150,13 +2150,22 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnFlipBoard_Click(object sender, RoutedEventArgs e)
         {
-            MainChessBoard.FlipBoard();
-            if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
+            bool isFlipped = MainChessBoard.FlipBoard();
+            switch (WorkbookManager.ActiveTab)
             {
-                if (_exerciseTreeView != null)
-                {
-                    _exerciseTreeView.AlignExerciseAndMainBoards();
-                }
+                case WorkbookManager.TabViewType.STUDY:
+                    SetCustomBoardOrientation((isFlipped ? PieceColor.Black : PieceColor.White), WorkbookManager.ItemType.STUDY);
+                    break;
+                case WorkbookManager.TabViewType.MODEL_GAME:
+                    SetCustomBoardOrientation((isFlipped ? PieceColor.Black : PieceColor.White), WorkbookManager.ItemType.MODEL_GAME);
+                    break;
+                case WorkbookManager.TabViewType.EXERCISE:
+                    if (_exerciseTreeView != null)
+                    {
+                        _exerciseTreeView.AlignExerciseAndMainBoards();
+                    }
+                    SetCustomBoardOrientation((isFlipped ? PieceColor.Black : PieceColor.White), WorkbookManager.ItemType.EXERCISE);
+                    break;
             }
         }
 
