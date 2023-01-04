@@ -24,11 +24,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move, where the king and queen force the opponent's king to the edge of the board"]
 
 
-1. Qd7# *
+1. Qd7# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -38,11 +38,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move, where the king and rook force the opponent's king to the edge of the board"]
 
 
-1. Ra8# *
+1. Ra8# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -52,11 +52,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move, where the king with two bishops force the opponent's king to the corner of the board to force mate"]
 
 
-1. Bf6# *
+1. Bf6# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -66,11 +66,11 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move, where the king with bishop and knight force the opponent's king to the corner of the board to force mate"]
 
 
-1. Bf6# *
+1. Bf6# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -80,11 +80,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move after Black king blundered and moved to the corner of the board"]
 
 
-1. Ng6# *
+1. Ng6# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -94,11 +94,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in two moves, where two major pieces work together to push the enemy king to one side of the board"]
 
 
-1. Rb7+ Kg8 2. Ra8# *
+1. Rb7+ Kg8 2. Ra8# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -108,11 +108,11 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find Checkmate in one move, where two attacking bishops on parallel diagonals deliver checkmate to a king obstructed by a friendly piece"]
 
 
-1. Bc3# *
+1. Bc3# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -122,11 +122,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in two moves, utilising the king being trapped behind friendly pawns and blocked by a friendly piece to the side, where the king is checked by a knight and forced into a position in which it can be checkmated by the other knight"]
 
 
-1. Nd7+ Ka8 2. Nc7# *
+1. Nd7+ Ka8 2. Nc7# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -136,11 +136,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move, where a knight and rook team up to trap the opposing king between the side of the board and a friendly piece"]
 
 
-1. Rh3# (1. Kf2)  *
+1. Rh3# (1. Kf2)  1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -150,11 +150,11 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move, where a major piece supported by a diagonally attacking piece (pawn or bishop) checkmates the opposing king along the last rank"]
 
 
-1. Rh8# *
+1. Rh8# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -164,11 +164,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move, where a knight and rook team up to trap the opposing king in a corner of the board"]
 
 
-1. Rh7# *
+1. Rh7# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -178,11 +178,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move, where a major piece checkmates a king that is blocked in by its own pieces on the last rank"]
 
 
-1. Re8# *
+1. Re8# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -192,11 +192,11 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move, where a queen is cutting off the king's escape both diagonally and vertically whilst the bishop delivers checkmate"]
 
 
-1. Be6# *
+1. Be6# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -206,11 +206,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move utilising the king blocked by its own piece, where the knight confines the enemy king's sideways escape, while a bishop pair takes the remaining two diagonals off from the enemy king"]
 
 
-1. Bh7# *
+1. Bh7# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -220,11 +220,11 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in three moves utilising the rooks on the second last rank"]
 
 
-1. Rxg7+ Kh8 2. Rxh7+ Kg8 3. Rcg7# *
+1. Rxg7+ Kh8 2. Rxh7+ Kg8 3. Rcg7# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -234,11 +234,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find Checkmate in one move, where two attacking bishops on criss-crossing diagonals deliver checkmate to a king obstructed by friendly pieces"]
 
 
-1. Ba6# *
+1. Ba6# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -248,11 +248,11 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move with minor piece, utilising the king's confinment to the corner by major piece and a friendly pawn blocking the final escape square"]
 
 
-1. Nf7# *
+1. Nf7# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -262,11 +262,11 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move with the queen supported by a bishop"]
 
 
-1. Qf7# *
+1. Qf7# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -276,11 +276,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move with the queen utilising the king's confinment to the edge of the board and a friendly pieces blocking the final escape squares"]
 
 
-1. Qh7# *
+1. Qh7# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -290,11 +290,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move utilising the diagonal and opponent's king position in a corner being blocked by fiendly pieces"]
 
 
-1. Be5# *
+1. Be5# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -304,11 +304,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move with the queen utilising the king being cut off by two friendly pieces (neither is an unpinned knight)"]
 
 
-1. Qh3# *
+1. Qh3# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -318,11 +318,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move, where two parallel retreat squares for a checked king are occupied by its own pieces"]
 
 
-1. Qd6# *
+1. Qd6# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -332,11 +332,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move utilising the king's confinment with a friendly pawn, where a bishop is cutting off the king's escape whilst the major piece delivers checkmate"]
 
 
-1. Qh5# *
+1. Qh5# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -346,11 +346,11 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move involving the use of a rook, knight, and pawn along with one friendly pawn limiting the king's escape (the rook is protected by the knight, and the knight is protected by the pawn, while the pawn also attacks one of the king's escape squares)"]
 
 
-1. Re8# *
+1. Re8# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -360,11 +360,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move with a rook assisted by the queen, where the rook is adjacent to the king, while the queen supports the rook, being separated from it by one empty square on the same diagonal (this forms a 3 by 3 box shape, inside which the enemy king is trapped. The king could be anywhere on the board, but must have no escape squares due to being on the edge of the board or being blocked off by friendly or enemy pieces)"]
 
 
-1. Ra6# *
+1. Ra6# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -374,11 +374,11 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move utilising friendly pieces blocking the king, where 3 minor pieces coordinate to administer checkmate"]
 
 
-1. Nd5# *
+1. Nd5# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -388,11 +388,11 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move, where a pawn and queen infiltrate the opponent's fianchetto position"]
 
 
-1. Qg7# *
+1. Qg7# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -402,11 +402,11 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move, where a queen and bishop team up to trap the opposing king between the side of the board and friendly pieces"]
 
 
-1. Qg8# *
+1. Qg8# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -416,11 +416,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move using a rook supported by a bishop"]
 
 
-1. Rh8# *
+1. Rh8# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -430,11 +430,11 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move with a bishop, utilising the king's confinment to the corner by major piece and a friendly pawn blocking the final escape square"]
 
 
-1. Bf6# *
+1. Bf6# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -444,11 +444,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move utilising the king's confinment to the corner by a friendly piece (other then a knight), by attacking an uncastled king on the back rank with a rook using a bishop to protect it"]
 
 
-1. Rd8# *
+1. Rd8# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -458,11 +458,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move with a pawn utilising king's confinment by a friendly pawns"]
 
 
-1. a3# *
+1. a3# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -472,11 +472,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move  by attacking the king with the rook while the bishop is cutting off the king"]
 
 
-1. Bf6# *
+1. Bf6# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -486,11 +486,11 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move by trapping the enemy king with four of its own pieces that are situated on flight squares and attacking it with a bishop protected by a major piece"]
 
 
-1. Bd8# *
+1. Bd8# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -500,11 +500,11 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move with a knight utilising the opponent's king being smothered (surrounded) by friendly pieces"]
 
 
-1. Nf7# *
+1. Nf7# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -514,11 +514,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move using the knight to attack the opponent's king and the bishop to confine the king's escape routes"]
 
 
-1. Ne7# *
+1. Ne7# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -528,11 +528,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move with a queen protected by another piece, utilising king's confinment by friendly pieces"]
 
 
-1. Qe6# *
+1. Qe6# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -542,12 +542,12 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move utilising king's confinment by the edge of the board or friendly pieces, with a queen supported by a rook on the same file two squares away (the queen, rook, and king together form a triangular shape)"]
 [Preamble ""]
 
 
-1. Qd6# *
+1. Qd6# 1-0
 
 [ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
@@ -557,11 +557,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in one move with a rook protected by a piece and a knight covering the remaining escape squares, utilising the king's position at the edge of the board"]
 
 
-1. Re7# *
+1. Re7# 1-0
 
 
 
@@ -580,11 +580,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in three moves, where a knight and rook team up to trap the opposing king between the side of the board and a friendly piece"]
 
 
-1. Ne7+ Kh8 2. Qxh7+ $1 {[%quiz 1]}  Kxh7 3. Rh1# *
+1. Ne7+ Kh8 2. Qxh7+ $1 {[%quiz 1]}  Kxh7 3. Rh1# 1-0
 
 [ChapterId "2"]
 [ChapterTitle "Complex Exercises using Basic Patterns"]
@@ -594,11 +594,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in two moves with the queen utilising the king's confinment to the edge of the board"]
 
 
-1. Rh8+ $1 {[%quiz 1]}  Kxh8 2. Qg8# *
+1. Rh8+ $1 {[%quiz 1]}  Kxh8 2. Qg8# 1-0
 
 [ChapterId "2"]
 [ChapterTitle "Complex Exercises using Basic Patterns"]
@@ -608,11 +608,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find Checkmate in two moves, where two attacking bishops on criss-crossing diagonals deliver checkmate to a king obstructed by friendly pieces"]
 
 
-1. Qxc6+ $1 {[%quiz 1]}  bxc6 2. Ba6# *
+1. Qxc6+ $1 {[%quiz 1]}  bxc6 2. Ba6# 1-0
 
 [ChapterId "2"]
 [ChapterTitle "Complex Exercises using Basic Patterns"]
@@ -622,11 +622,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in three moves involving the use of a rook, knight, and pawn along with friendly piees limiting the king's escape"]
 
 
-1. Qxf8+ $1 {[%eval +#2][%quiz 1]}  Kxf8 2. Re8+ Kg7 3. Rg8# *
+1. Qxf8+ $1 {[%eval +#2][%quiz 1]}  Kxf8 2. Re8+ Kg7 3. Rg8# 1-0
 
 [ChapterId "2"]
 [ChapterTitle "Complex Exercises using Basic Patterns"]
@@ -636,12 +636,12 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in two moves by sacrificing major piece and utilising the enemy's king position on the edge of the board"]
 
 
  {[%eval +#2]} 1. Qxh6+ $1 {[%eval +#2][%quiz 1]}  gxh6 {[%eval +#1]}  2. Rhxh6+ 
-{[%eval #]}  *
+{[%eval #]}  1-0
 
 [ChapterId "2"]
 [ChapterTitle "Complex Exercises using Basic Patterns"]
@@ -651,11 +651,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in two moves with a queen protected by another piece, utilising king's confinment by friendly pieces"]
 
 
- {[%eval +#2]} 1. Rf8+ $1 {[%eval +#1][%quiz 1]}  Qxf8 2. Qxh7# *
+ {[%eval +#2]} 1. Rf8+ $1 {[%eval +#1][%quiz 1]}  Qxf8 2. Qxh7# 1-0
 
 [ChapterId "2"]
 [ChapterTitle "Complex Exercises using Basic Patterns"]
@@ -665,11 +665,11 @@
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in two moves by sacrificing major piece and utilising the enemy's king position on the edge of the board"]
 
 
- {[%eval +#2]} 1. Qxh6+ $1 {[%eval +#1][%quiz 1]}  Bxh6 2. Rxh6# *
+ {[%eval +#2]} 1. Qxh6+ $1 {[%eval +#1][%quiz 1]}  Bxh6 2. Rxh6# 1-0
 
 [ChapterId "2"]
 [ChapterTitle "Complex Exercises using Basic Patterns"]
@@ -679,11 +679,11 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find Checkmate in two moves, where two attacking bishops on criss-crossing diagonals deliver checkmate to a king obstructed by friendly pieces"]
 
 
- {[%eval +#2]} 1. Rxc6+ $1 {[%eval +#1][%quiz 1]}  bxc6 2. Ba6# *
+ {[%eval +#2]} 1. Rxc6+ $1 {[%eval +#1][%quiz 1]}  bxc6 2. Ba6# 1-0
 
 [ChapterId "2"]
 [ChapterTitle "Complex Exercises using Basic Patterns"]
@@ -693,14 +693,14 @@
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "0-1"]
 [Preamble "Find checkmate in six moves, where a major piece supported by a diagonally attacking piece checkmates the opposing king along the last rank"]
 
 
  {[%eval -#6]}  Rh8+ {[%eval -#5]}  2. Kg1 {[%eval -#5]}  Rh1+ $1 {[%eval 
 -#4][%quiz 1]}  3. Kxh1 {[%eval -#4]}  Rh8+ {[%eval -#3]}  4. Kg1 {[%eval -#3]}  
 Rh1+ {[%eval -#2]}  5. Kxh1 {[%eval -#2]}  Qh8+ {[%eval -#1]}  6. Kg1 {[%eval 
--#1]}  Qh2# {[%eval #]}  *
+-#1]}  Qh2# {[%eval #]}  0-1
 
 [ChapterId "2"]
 [ChapterTitle "Complex Exercises using Basic Patterns"]
@@ -710,7 +710,7 @@ Rh1+ {[%eval -#2]}  5. Kxh1 {[%eval -#2]}  Qh8+ {[%eval -#1]}  6. Kg1 {[%eval
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in 5 moves utilising friendly pieces blocking the king and sacrificing major piece and then depending on the opponents reply, either:"]
 [Preamble "* delivering Damiano's Bishop Mate with the queen supported by a bishop"]
 [Preamble "* delivering Légal's mate by coordinating 3 minor pieces to administer the checkmate"]
@@ -718,7 +718,7 @@ Rh1+ {[%eval -#2]}  5. Kxh1 {[%eval -#2]}  Qh8+ {[%eval -#1]}  6. Kg1 {[%eval
 
  {[%eval +#5]} 1. Qh5 $1 {[%eval +#4][%quiz 1]}  h6 {[%eval +#4]}  (1... gxh5 2. 
 Bxh7#) 2. Qxh6 {[%eval +#3]}  Nf6 {[%eval +#3]}  3. Bxf6 {[%eval +#2]}  Bb4+ 
-{[%eval +#2]}  4. axb4 {[%eval +#1]}  Re8 {[%eval +#1]}  5. Qg7# {[%eval #]}  *
+{[%eval +#2]}  4. axb4 {[%eval +#1]}  Re8 {[%eval +#1]}  5. Qg7# {[%eval #]}  1-0
 
 [ChapterId "2"]
 [ChapterTitle "Complex Exercises using Basic Patterns"]
@@ -728,12 +728,12 @@ Bxh7#) 2. Qxh6 {[%eval +#3]}  Nf6 {[%eval +#3]}  3. Bxf6 {[%eval +#2]}  Bb4+
 [Date ""]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "1-0"]
 [Preamble "Find checkmate in five moves with the queen utilising the king's confinment to the edge of the board and a friendly pieces blocking the final escape squares"]
 
 
  {[%eval +#5]} 1. Rh8+ $1 {[%eval +#4][%quiz 1]}  Kxh8 2. Qh5+ Kg8 3. g6 Rf5 4. 
-Qh7+ Kf8 5. Qh8# {[%cal Gf8f7,Gh8d8,Gg6f7][%csl Gf7,Gd8]}  *
+Qh7+ Kf8 5. Qh8# {[%cal Gf8f7,Gh8d8,Gg6f7][%csl Gf7,Gd8]}  1-0
 
 [ChapterId "2"]
 [ChapterTitle "Complex Exercises using Basic Patterns"]
@@ -743,7 +743,7 @@ Qh7+ Kf8 5. Qh8# {[%cal Gf8f7,Gh8d8,Gg6f7][%csl Gf7,Gd8]}  *
 [Date "????.??.??"]
 [White ""]
 [Black ""]
-[Result "*"]
+[Result "0-1"]
 [Preamble "Find checkmate in five moves with a bishop by sacrificing the queen and forcing the king's confinment to the corner by a rook and a friendly pawn blocking the final escape square"]
 
 
@@ -751,7 +751,7 @@ Qh7+ Kf8 5. Qh8# {[%cal Gf8f7,Gh8d8,Gg6f7][%csl Gf7,Gd8]}  *
 Qxg6+ {[%eval -#4]Delaying the check mate by a couple of moves.}  hxg6 {[%eval 
 -#3]}  3. Rd5 {[%eval -#3]}  Bxd5 {[%eval -#2]}  4. gxf3 {[%eval -#2]}  Rg5+ 
 {[%eval -#1]}  5. Kh1 {[%eval -#1]}  Bxf3# {[%eval #]} ) 2... Rg5+ {[%eval -#1]} 
- 3. Kh1 {[%eval -#1]}  Bxf3# {[%eval #]}  *
+ 3. Kh1 {[%eval -#1]}  Bxf3# {[%eval #]}  0-1
 
 
 
