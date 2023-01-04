@@ -1152,7 +1152,15 @@ namespace ChessForge
             string startLineId;
             int startNodeId = 0;
 
-            startLineId = studyTree.GetDefaultLineIdForNode(0);
+            if (!string.IsNullOrEmpty(studyTree.SelectedLineId) && studyTree.SelectedNodeId >= 0)
+            {
+                startLineId = ActiveVariationTree.SelectedLineId;
+                startNodeId = ActiveVariationTree.SelectedNodeId;
+            }
+            else
+            {
+                startLineId = studyTree.GetDefaultLineIdForNode(0);
+            }
 
             studyTree.SelectedLineId = startLineId;
             studyTree.SelectedNodeId = startNodeId;
