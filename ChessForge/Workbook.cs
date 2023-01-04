@@ -76,12 +76,13 @@ namespace ChessForge
 
         /// <summary>
         /// Determines the initial board orientation in the Exercises view.
+        /// Piece.None is valid as it indicates "side-to-move"
         /// </summary>
         public PieceColor ExerciseBoardOrientationConfig
         {
             get
             {
-                return _exerciseBoardOrientationConfig != PieceColor.None ? _exerciseBoardOrientationConfig : TrainingSideConfig;
+                return _exerciseBoardOrientationConfig;
             }
             set
             {

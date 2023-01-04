@@ -653,6 +653,10 @@ namespace ChessForge
                     WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, exerciseIndex);
 
                     PieceColor orient = EffectiveBoardOrientation(WorkbookManager.ItemType.EXERCISE);
+                    if (orient == PieceColor.None)
+                    {
+                        orient = ActiveVariationTree.RootNode.ColorToMove;
+                    }
                     MainChessBoard.FlipBoard(orient);
 
                     SetupGuiForActiveExercise(exerciseIndex, setFocus);
