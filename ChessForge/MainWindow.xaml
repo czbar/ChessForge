@@ -87,7 +87,7 @@
                         <Separator />
                     </MenuItem>
                     <MenuItem Header="Training" Margin="0,0,0,0">
-                        <MenuItem x:Name="UiMnStartTraining"  Header="Start New Session" Click="UiMnStartTraining_Click"/>
+                        <MenuItem x:Name="UiMnStartTraining"  Header="Start New Session"  Click="UiMnStartTrainingHere_Click"/>
                         <MenuItem x:Name="UiMnRestartTraining"  Header="Restart Training" Click="UiMnTrainRestartTraining_Click"/>
                         <MenuItem x:Name="UiMnExitTraining" Header="Exit Training" Click="UiMnStopTraining_Click"/>
                     </MenuItem>
