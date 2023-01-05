@@ -118,7 +118,7 @@ namespace ChessForge
         /// Selects the move from the candidate moves supplied by the engine,
         /// processes it, builds a new ply (TreeNode) and adds it to the
         /// game line.
-        /// Also adds the is move to the Workbook.
+        /// Also adds the move to the Workbook.
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
