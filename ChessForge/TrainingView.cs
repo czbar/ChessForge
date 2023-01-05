@@ -598,7 +598,10 @@ namespace ChessForge
             if (EvaluationManager.CurrentMode == EvaluationManager.Mode.IDLE)
             {
                 _lastClickedNode = nd;
-                StartEvaluationInContinuousMode(true);
+                if (TrainingSession.IsContinuousEvaluation)
+                {
+                    StartEvaluationInContinuousMode(true);
+                }
             }
         }
 
