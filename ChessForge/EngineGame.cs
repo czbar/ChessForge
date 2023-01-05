@@ -180,7 +180,7 @@ namespace ChessForge
                     // We know, therefore, that this is a new move.
                     nd.IsNewTrainingMove = true;
                     nd.NodeId = _mainWin.ActiveVariationTree.GetNewNodeId();
-                    _mainWin.UiTrainingView.UserMoveMade();
+                    _mainWin.UiTrainingView.UserGameMoveMade();
                 }
                 if (endOfGame)
                 {
