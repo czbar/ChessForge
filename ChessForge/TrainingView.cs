@@ -306,6 +306,11 @@ namespace ChessForge
                 if (TrainingSession.CurrentState != TrainingSession.State.USER_MOVE_COMPLETED)
                     return;
 
+                if (TrainingSession.IsContinuousEvaluation)
+                {
+                    RequestMoveEvaluation(true);
+                }
+
                 RemoveIntroParas();
 
                 _otherMovesInWorkbook.Clear();
@@ -430,6 +435,10 @@ namespace ChessForge
 
             RemoveParagraphsFromMove(_lastClickedNode);
             ReportLastMoveVsWorkbook();
+            if (TrainingSession.IsContinuousEvaluation)
+            {
+                RequestMoveEvaluation(true);
+            }
         }
 
         /// <summary>
@@ -452,6 +461,10 @@ namespace ChessForge
             RemoveParagraphsFromMove(_lastClickedNode);
             BuildSecondPromptParagraph();
             _mainWin.DisplayPosition(_lastClickedNode);
+            if (TrainingSession.IsContinuousEvaluation)
+            {
+                RequestMoveEvaluation(true);
+            }
         }
 
         /// <summary>
@@ -546,7 +559,7 @@ namespace ChessForge
                 // The move will be visualized in response to CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE timer's elapsed event
                 EngineGame.IsTrainingWorkbookMoveMade = true;
                 _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
-                AppStateManager.SwapCommentBoxForEngineLines(false);
+                AppStateManager.SwapCommentBoxForEngineLines(TrainingSession.IsContinuousEvaluation);
             }
             catch
             {
@@ -576,16 +589,33 @@ namespace ChessForge
             nd.IsNewTrainingMove = true;
             AddMoveToEngineGamePara(nd, false);
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
+            if (TrainingSession.IsContinuousEvaluation)
+            {
+                ShowEvaluationResult(nd);
+            }
+
+            // double check that the Evaluation Mode is IDLE and switch to CONTINUOUS if enabled.
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.IDLE)
+            {
+                _lastClickedNode = nd;
+                StartEvaluationInContinuousMode(true);
+            }
         }
 
         /// <summary>
         /// This is called from EngineGame.ProcessUserGameMove()
         /// when engine produced a move while playing with the user.
         /// </summary>
-        public void UserMoveMade()
+        public void UserGameMoveMade()
         {
-            AddMoveToEngineGamePara(EngineGame.GetLastGameNode(), true);
+            TreeNode nd = EngineGame.GetLastGameNode();
+            AddMoveToEngineGamePara(nd, true);
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
+            if (TrainingSession.IsContinuousEvaluation)
+            {
+                ShowEvaluationResult(nd);
+                //AppStateManager.SwapCommentBoxForEngineLines(true);
+            }
         }
 
         /// <summary>
@@ -688,7 +718,7 @@ namespace ChessForge
             AppLog.Message("TrainingView:ShowEvaluationResult() Evaluation Mode:" + EvaluationManager.CurrentMode.ToString()
                 + ", node=" + nd.LastMoveAlgebraicNotation);
 
-            if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS && EvaluationManager.CurrentMode != EvaluationManager.Mode.LINE)
+            if (!TrainingSession.IsContinuousEvaluation && EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS && EvaluationManager.CurrentMode != EvaluationManager.Mode.LINE)
             {
                 return;
             }
@@ -707,16 +737,18 @@ namespace ChessForge
                         var r_prev = para.Inlines.FirstOrDefault(x => x.Name == runEvalName);
                         para.Inlines.Remove(r_prev);
 
-                        Run r_eval = CreateEvaluationRun(nd.EngineEvaluation, runEvalName, nd);
-
-                        para.Inlines.InsertAfter(runEvaluated, r_eval);
+                        if (!string.IsNullOrEmpty(nd.EngineEvaluation))
+                        {
+                            Run r_eval = CreateEvaluationRun(nd.EngineEvaluation, runEvalName, nd);
+                            para.Inlines.InsertAfter(runEvaluated, r_eval);
+                        }
 
                         if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                         {
                             AppLog.Message("Request next node in LINE EVAL");
                             RequestMoveEvaluation();
                         }
-                        else if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
+                        else if (!TrainingSession.IsContinuousEvaluation && EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
                         {
                             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
                         }
@@ -958,6 +990,10 @@ namespace ChessForge
                 _mainWin.BoardCommentBox.GameMoveMade(nd, false);
             }
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
+            if (TrainingSession.IsContinuousEvaluation)
+            {
+                RequestMoveEvaluation(true);
+            }
         }
 
         /// <summary>
@@ -1302,9 +1338,18 @@ namespace ChessForge
                 TreeNode nd = EvaluationManager.GetNextLineNodeToEvaluate();
                 if (nd == null)
                 {
-                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                    // the LINE evaluation has finished
                     EvaluationManager.ResetLineNodesToEvaluate();
                     EvaluationManager.SetSingleNodeToEvaluate(null);
+
+                    if (TrainingSession.IsContinuousEvaluation)
+                    {
+                        StartEvaluationInContinuousMode(true);
+                    }
+                    else
+                    {
+                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                    }
                 }
                 else
                 {
@@ -1314,12 +1359,7 @@ namespace ChessForge
             }
             else
             {
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
-                if (_lastClickedNode == null || lastMove)
-                {
-                    _lastClickedNode = EngineGame.GetLastGameNode();
-                }
-                EngineMessageProcessor.RequestMoveEvaluationInTraining(_lastClickedNode);
+                StartEvaluationInContinuousMode(lastMove);
             }
         }
 
@@ -1368,6 +1408,20 @@ namespace ChessForge
                     }
                 }
             });
+        }
+
+        /// <summary>
+        /// Request evaluation of a move in the CONTNUOUS mode.
+        /// </summary>
+        /// <param name="lastMove"></param>
+        private void StartEvaluationInContinuousMode(bool lastMove)
+        {
+            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
+            if (_lastClickedNode == null || lastMove)
+            {
+                _lastClickedNode = EngineGame.GetLastGameNode();
+            }
+            EngineMessageProcessor.RequestMoveEvaluationInTraining(_lastClickedNode);
         }
 
         /// <summary>
