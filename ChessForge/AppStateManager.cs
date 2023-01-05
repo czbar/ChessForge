@@ -1242,9 +1242,6 @@ namespace ChessForge
         private static void ShowEvaluationControlsForCurrentStates()
         {
             bool eval = EvaluationManager.IsRunning;
-            // hide eval info if this is a game AND we are not requesting eval durin game in Training mode
-            bool game = LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME &&
-                    (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME || EvaluationManager.CurrentMode == EvaluationManager.Mode.IDLE);
 
             _mainWin.Dispatcher.Invoke(() =>
              {
