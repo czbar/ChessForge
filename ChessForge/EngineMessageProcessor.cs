@@ -154,13 +154,20 @@ namespace ChessForge
         /// a game in progress i.e. AppState.Mode is or is not equal to GAME_VS_COMPUTER.
         /// To distinguish we need to check Evaluation.Mode.
         /// </summary>
-        public static void MoveEvaluationFinished(TreeNode nd)
+        public static void MoveEvaluationFinished(TreeNode nd, GoFenCommand.EvaluationMode mode)
         {
             ClearMoveCandidates(false);
-            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
+            // it could be that we switched to a game mode while awaiting "normal" evaluation,
+            // so double check to avoid complications
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME && mode == GoFenCommand.EvaluationMode.GAME)
             {
-                // we are in a game
-                MoveEvaluationFinishedInGame(nd);
+                if (mode == GoFenCommand.EvaluationMode.GAME)
+                {
+                    MoveEvaluationFinishedInGame(nd);
+                }
+                else
+                {
+                }
             }
             else if (TrainingSession.IsTrainingInProgress)
             {
@@ -187,12 +194,12 @@ namespace ChessForge
                 ProcessEngineGameMove(nd);
                 _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                 _mainWin.ResetEvaluationProgressBar();
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
                 if (TrainingSession.IsTrainingInProgress)
                 {
                     _mainWin.EngineTrainingGameMoveMade();
                 }
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
             }
         }
 
@@ -369,7 +376,28 @@ namespace ChessForge
             AppStateManager.ShowMoveEvaluationControls(true);
 
             string fen = AppStateManager.PrepareMoveEvaluation(EvaluationManager.GetEvaluatedNode(out _).Position, true);
-            RequestEngineEvaluation(nd, fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
+            GoFenCommand.EvaluationMode mode = ConvertEvaluationManagertoFenEvaluationMode(EvaluationManager.CurrentMode);
+            RequestEngineEvaluation(mode, nd, fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
+        }
+
+        /// <summary>
+        /// Converts EvaluationManager.Mode to GoFenCommand.EvaluationMode 
+        /// </summary>
+        /// <param name="mgrMode"></param>
+        /// <returns></returns>
+        public static GoFenCommand.EvaluationMode ConvertEvaluationManagertoFenEvaluationMode(EvaluationManager.Mode mgrMode)
+        {
+            switch (mgrMode)
+            {
+                case EvaluationManager.Mode.CONTINUOUS:
+                    return GoFenCommand.EvaluationMode.CONTINUOUS;
+                case EvaluationManager.Mode.LINE:
+                    return GoFenCommand.EvaluationMode.LINE;
+                case EvaluationManager.Mode.ENGINE_GAME:
+                    return GoFenCommand.EvaluationMode.GAME;
+                default:
+                    return GoFenCommand.EvaluationMode.NONE;
+            }
         }
 
         /// <summary>
@@ -415,7 +443,8 @@ namespace ChessForge
                         break;
                 }
 
-                RequestEngineEvaluation(nd, fen, Configuration.EngineMpv, moveTime);
+                GoFenCommand.EvaluationMode mode = ConvertEvaluationManagertoFenEvaluationMode(EvaluationManager.CurrentMode);
+                RequestEngineEvaluation(mode, nd, fen, Configuration.EngineMpv, moveTime);
             }
         }
 
@@ -435,7 +464,7 @@ namespace ChessForge
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.ENGINE_GAME);
 
             string fen = AppStateManager.PrepareMoveEvaluation(node.Position, false);
-            RequestEngineEvaluation(node, fen, Configuration.EngineMpv, Configuration.EngineMoveTime);
+            RequestEngineEvaluation(GoFenCommand.EvaluationMode.GAME, node, fen, Configuration.EngineMpv, Configuration.EngineMoveTime);
         }
 
         /// <summary>
@@ -445,11 +474,12 @@ namespace ChessForge
         /// <param name="fen">The position to analyze in the FEN format.</param>
         /// <param name="mpv">Number of options to return.</param>
         /// <param name="movetime">Time to think per move (milliseconds)</param>
-        private static void RequestEngineEvaluation(TreeNode nd, string fen, int mpv, int movetime)
+        private static void RequestEngineEvaluation(GoFenCommand.EvaluationMode evalMode, TreeNode nd, string fen, int mpv, int movetime)
         {
             GoFenCommand gfc = new GoFenCommand();
             gfc.Fen = fen;
             gfc.Mpv = mpv;
+            gfc.EvalMode = evalMode;
             gfc.GoCommandString = movetime > 0 ? UciCommands.ENG_GO_MOVE_TIME + " " + movetime.ToString() : UciCommands.ENG_GO;
             if (nd != null)
             {
@@ -473,7 +503,8 @@ namespace ChessForge
             {
                 string fen = FenParser.GenerateFenFromPosition(nd.Position);
 
-                RequestEngineEvaluation(nd, fen, mpv, movetime);
+                GoFenCommand.EvaluationMode mode = ConvertEvaluationManagertoFenEvaluationMode(EvaluationManager.CurrentMode);
+                RequestEngineEvaluation(mode, nd, fen, mpv, movetime);
 
                 AppStateManager.ShowMoveEvaluationControls(true);
                 _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
@@ -508,7 +539,7 @@ namespace ChessForge
                 if (message != null)
                 {
                     // Info and Best Move messages will begin with TreeId
-                    message = ParseMessagePrefix(message, out int treeId, out int nodeId);
+                    message = ParseMessagePrefix(message, out int treeId, out int nodeId, out GoFenCommand.EvaluationMode mode);
 
                     // only process if treeId and nodeId are what is supposed to be evaluated
                     TreeNode evalNode = AppStateManager.GetNodeByIds(treeId, nodeId);
@@ -526,7 +557,7 @@ namespace ChessForge
                         }
                         else if (message.StartsWith(UciCommands.ENG_BEST_MOVE))
                         {
-                            ProcessBestMoveMessage(message, evalNode);
+                            ProcessBestMoveMessage(message, evalNode, mode);
                         }
                     }
                     else
@@ -554,19 +585,21 @@ namespace ChessForge
         /// <param name="treeId"></param>
         /// <param name="nodeId"></param>
         /// <returns></returns>
-        private static string ParseMessagePrefix(string message, out int treeId, out int nodeId)
+        private static string ParseMessagePrefix(string message, out int treeId, out int nodeId, out GoFenCommand.EvaluationMode mode)
         {
             treeId = -1;
             nodeId = -1;
+            mode = GoFenCommand.EvaluationMode.NONE;
 
             if (message != null && message.StartsWith(UciCommands.CHF_TREE_ID_PREFIX))
             {
-                int pos = FindSecondSpaceInString(message);
+                int pos = FindThirdSpaceInString(message);
                 if (pos > 0)
                 {
                     string[] idTokens = message.Substring(0, pos).Split(' ');
                     treeId = GetIntValueFromPair(idTokens[0], '=');
                     nodeId = GetIntValueFromPair(idTokens[1], '=');
+                    mode = (GoFenCommand.EvaluationMode)GetIntValueFromPair(idTokens[2], '=');
                     return message.Substring(pos + 1);
                 }
                 else
@@ -604,23 +637,28 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Finds the second occurence of the space character
+        /// Finds the third occurence of the space character
         /// in the passed string.
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        private static int FindSecondSpaceInString(string str)
+        private static int FindThirdSpaceInString(string str)
         {
-            int secondSpacePos = -1;
+            int thirdSpacePos = -1;
 
             bool firstSpaceFound = false;
+            bool secondSpaceFound = false;
             for (int i = 0; i < str.Length; i++)
             {
                 if (str[i] == ' ')
                 {
-                    if (firstSpaceFound)
+                    if (firstSpaceFound && !secondSpaceFound)
                     {
-                        secondSpacePos = i;
+                        secondSpaceFound = true;
+                    }
+                    else if (secondSpaceFound)
+                    {
+                        thirdSpacePos = i;
                         break;
                     }
                     else
@@ -630,7 +668,7 @@ namespace ChessForge
                 }
             }
 
-            return secondSpacePos;
+            return thirdSpacePos;
         }
 
         /// <summary>
@@ -639,7 +677,7 @@ namespace ChessForge
         /// Invoke the final processing
         /// </summary>
         /// <param name="message"></param>
-        private static void ProcessBestMoveMessage(string message, TreeNode nd)
+        private static void ProcessBestMoveMessage(string message, TreeNode nd, GoFenCommand.EvaluationMode mode)
         {
             try
             {
@@ -655,7 +693,7 @@ namespace ChessForge
                 }
 
                 // tell the app that the evaluation has finished
-                MoveEvaluationFinished(nd);
+                MoveEvaluationFinished(nd, mode);
             }
             catch (Exception ex)
             {

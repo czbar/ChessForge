@@ -147,17 +147,7 @@ namespace ChessForge
                             || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE
                             || LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
                         {
-                            if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
-                            {
-                                StopEvaluation(true);
-                            }
-
-                            // TODO: After the previous change this is probably no longer necessary
-                            if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE
-                                && (LearningMode.CurrentMode != LearningMode.Mode.MANUAL_REVIEW || EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS))
-                            {
-                                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-                            }
+                            AdjustEvaluationModeAfterUserMove();
                             UserMoveProcessor.FinalizeUserMove(targetSquare);
                         }
                         else
@@ -166,6 +156,27 @@ namespace ChessForge
                         }
                     }
                     Canvas.SetZIndex(DraggedPiece.ImageControl, Constants.ZIndex_PieceOnBoard);
+                }
+            }
+        }
+
+        /// <summary>
+        /// This is called when the user made their move.
+        /// We want to make sure that any current evaluation is stopped if this is a GAME mode, in which case
+        /// the caller is responsible to trigger a response and set evaluation to GAME...
+        /// In the other modes we stop evaluations if not in CONTINUOUS mode.
+        /// </summary>
+        private void AdjustEvaluationModeAfterUserMove()
+        {
+            if (EvaluationManager.CurrentMode != EvaluationManager.Mode.IDLE)
+            {
+                if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME)
+                {
+                    StopEvaluation(true);
+                }
+                else if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
+                {
+                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
                 }
             }
         }

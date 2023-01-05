@@ -14,6 +14,26 @@ namespace EngineService
     public class GoFenCommand
     {
         /// <summary>
+        /// Evaluation mode passed by the caller
+        /// to be returned with the result.
+        /// </summary>
+        public enum EvaluationMode
+        {
+            NONE = 0,
+            CONTINUOUS = 1,
+            LINE = 2,
+            GAME = 3
+        }
+
+        /// <summary>
+        /// Evaluation mode to be returned back
+        /// to the caller so it does not confused
+        /// if it gets back evaluation for a node
+        /// but it is already in a game mode
+        /// </summary>
+        public EvaluationMode EvalMode;
+
+        /// <summary>
         /// The Fen string to be sent with the position command
         /// </summary>
         public string Fen { get; set; }
