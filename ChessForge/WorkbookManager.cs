@@ -911,6 +911,7 @@ namespace ChessForge
                         if (Configuration.AutoSave || res == MessageBoxResult.Yes)
                         {
                             AppStateManager.SaveWorkbookFile();
+                            res = MessageBoxResult.Yes;
                         }
                     }
                     else
