@@ -401,7 +401,7 @@ namespace EngineService
                             }
                             else
                             {
-                                message = InsertIdsPrefix(message);
+                                message = InsertBestMovePrefixes(message);
                                 if (message.Contains(UciCommands.ENG_BEST_MOVE))
                                 {
                                     HandleBestMove();
@@ -442,13 +442,14 @@ namespace EngineService
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        private string InsertIdsPrefix(string message)
+        private string InsertBestMovePrefixes(string message)
         {
             if (_goFenCurrent != null)
             {
                 return UciCommands.CHF_TREE_ID_PREFIX + _goFenCurrent.TreeId.ToString() + " "
-                     + UciCommands.CHF_NODE_ID_PREFIX + _goFenCurrent.NodeId.ToString()
-                     + " " + message;
+                     + UciCommands.CHF_NODE_ID_PREFIX + _goFenCurrent.NodeId.ToString() + " "
+                     + UciCommands.CHF_EVAL_MODE_PREFIX + ((int)_goFenCurrent.EvalMode).ToString() + " "
+                     + message;
             }
             else
             {
