@@ -86,7 +86,7 @@ namespace ChessForge
 
                         if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                         {
-                            AppStateManager.ShowMoveEvaluationControls(false, false);
+                            AppStateManager.ShowMoveEvaluationControls(TrainingSession.IsContinuousEvaluation, false);
                         }
 
                         if (nd.Position.IsCheckmate)

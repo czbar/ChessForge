@@ -643,7 +643,7 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                if (visible && CurrentEvaluationMode != EvaluationManager.Mode.ENGINE_GAME)
+                if (visible && (CurrentEvaluationMode != EvaluationManager.Mode.ENGINE_GAME || TrainingSession.IsContinuousEvaluation))
                 {
                     _mainWin.UiRtbBoardComment.Visibility = Visibility.Hidden;
                     _mainWin.UiTbEngineLines.Visibility = Visibility.Visible;
