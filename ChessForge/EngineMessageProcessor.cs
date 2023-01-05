@@ -187,12 +187,12 @@ namespace ChessForge
                 ProcessEngineGameMove(nd);
                 _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                 _mainWin.ResetEvaluationProgressBar();
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
                 if (TrainingSession.IsTrainingInProgress)
                 {
                     _mainWin.EngineTrainingGameMoveMade();
                 }
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
             }
         }
 
