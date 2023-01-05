@@ -110,7 +110,8 @@ namespace ChessForge
             Document.PageWidth = 2000; // prevent word wrap
             _dictChapterParas.Clear();
 
-            AddNewParagraphToDoc(STYLE_WORKBOOK_TITLE, WorkbookManager.SessionWorkbook.Title);
+            Paragraph paraWorkbookTitle = AddNewParagraphToDoc(STYLE_WORKBOOK_TITLE, WorkbookManager.SessionWorkbook.Title);
+            paraWorkbookTitle.MouseDown += EventWorkbookTitleClicked;
 
             foreach (Chapter chapter in WorkbookManager.SessionWorkbook.Chapters)
             {
@@ -484,6 +485,27 @@ namespace ChessForge
             else
             {
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// The Worbook title was clicked.
+        /// Invoke the Workbook options dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventWorkbookTitleClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+                {
+                    _mainWin.ShowWorkbookOptionsDialog(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventWorkbookTitleClicked(): " + ex.Message);
             }
         }
 
