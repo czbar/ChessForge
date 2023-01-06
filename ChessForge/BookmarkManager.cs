@@ -78,15 +78,15 @@ namespace ChessForge
 
             Bookmarks.Clear();
 
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_1, _mainWin.UiImgBookmark_1, _mainWin.UiLblBookmark_1, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_2, _mainWin.UiImgBookmark_2, _mainWin.UiLblBookmark_2, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_3, _mainWin.UiImgBookmark_3, _mainWin.UiLblBookmark_3, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_4, _mainWin.UiImgBookmark_4, _mainWin.UiLblBookmark_4, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_5, _mainWin.UiImgBookmark_5, _mainWin.UiLblBookmark_5, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_6, _mainWin.UiImgBookmark_6, _mainWin.UiLblBookmark_6, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_7, _mainWin.UiImgBookmark_7, _mainWin.UiLblBookmark_7, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_8, _mainWin.UiImgBookmark_8, _mainWin.UiLblBookmark_8, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(_mainWin.UiCnvBookmark_9, _mainWin.UiImgBookmark_9, _mainWin.UiLblBookmark_9, false, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_1, _mainWin.UiImgBookmark_1, _mainWin.UiLblBookmark_1, false, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_2, _mainWin.UiImgBookmark_2, _mainWin.UiLblBookmark_2, false, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_3, _mainWin.UiImgBookmark_3, _mainWin.UiLblBookmark_3, false, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_4, _mainWin.UiImgBookmark_4, _mainWin.UiLblBookmark_4, false, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_5, _mainWin.UiImgBookmark_5, _mainWin.UiLblBookmark_5, false, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_6, _mainWin.UiImgBookmark_6, _mainWin.UiLblBookmark_6, false, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_7, _mainWin.UiImgBookmark_7, _mainWin.UiLblBookmark_7, false, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_8, _mainWin.UiImgBookmark_8, _mainWin.UiLblBookmark_8, false, false)));
+            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_9, _mainWin.UiImgBookmark_9, _mainWin.UiLblBookmark_9, false, false)));
         }
 
         /// <summary>

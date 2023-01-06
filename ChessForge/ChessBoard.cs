@@ -23,6 +23,11 @@ namespace ChessForge
         public TreeNode DisplayedNode;
 
         /// <summary>
+        /// Manager for arrows and circles.
+        /// </summary>
+        public BoardShapesManager Shapes;
+
+        /// <summary>
         /// Images for White pieces 80x80.
         /// </summary>
         protected Dictionary<PieceType, BitmapImage> _dictWhitePieces =
@@ -146,8 +151,12 @@ namespace ChessForge
         /// <param name="BoardCtrl"></param>
         /// <param name="labelCtrl"></param>
         /// <param name="startPos"></param>
-        public ChessBoard(Canvas cnv, Image BoardCtrl, Label labelCtrl, bool startPos, bool includeCoords)
+        public ChessBoard(bool hasShapes, Canvas cnv, Image BoardCtrl, Label labelCtrl, bool startPos, bool includeCoords)
         {
+            if (hasShapes)
+            {
+                Shapes = new BoardShapesManager();
+            }
             CanvasCtrl = cnv;
             BoardImgCtrl = BoardCtrl;
             LabelCtrl = labelCtrl;
