@@ -17,28 +17,28 @@ namespace ChessForge
     public class BoardShapesManager
     {
         // completed arrows 
-        private static List<BoardArrow> _boardArrows = new List<BoardArrow>();
+        private List<BoardArrow> _boardArrows = new List<BoardArrow>();
 
         // completed circles 
-        private static List<BoardCircle> _boardCircles = new List<BoardCircle>();
+        private List<BoardCircle> _boardCircles = new List<BoardCircle>();
 
         // flags if there is a new arrow being built
-        private static bool _isShapeBuildInProgress;
+        private bool _isShapeBuildInProgress;
 
         // flags if the shape build is started tentatively
-        private static bool _isShapeBuildTentative;
+        private bool _isShapeBuildTentative;
 
         // Arrow currently being drawn
-        private static BoardArrow _arrowInProgress;
+        private BoardArrow _arrowInProgress;
 
         // Circle currently being drawn
-        private static BoardCircle _circleInProgress;
+        private BoardCircle _circleInProgress;
 
         // start square for the arrow being drawn
-        private static SquareCoords _startSquare;
+        private SquareCoords _startSquare;
 
         // end square for the arrow being drawn
-        private static SquareCoords _endSquare;
+        private SquareCoords _endSquare;
 
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace ChessForge
         /// on the passed coded string
         /// </summary>
         /// <param name="arrows"></param>
-        public static void Reset(string arrows, string circles, bool markDirty)
+        public void Reset(string arrows, string circles, bool markDirty)
         {
             // only draw in MANUAL_REVIEW mode
             if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
@@ -92,7 +92,7 @@ namespace ChessForge
         /// <summary>
         /// Removes all created arrows and circles from the board
         /// </summary>
-        public static void Reset(bool markDirty, bool save = true)
+        public void Reset(bool markDirty, bool save = true)
         {
             AppStateManager.MainWin.Dispatcher.Invoke(() =>
             {
@@ -124,7 +124,7 @@ namespace ChessForge
         /// <summary>
         // Flags if there is a new arrow being built
         /// </summary>
-        public static bool IsShapeBuildInProgress
+        public bool IsShapeBuildInProgress
         {
             get => _isShapeBuildInProgress;
             set => _isShapeBuildInProgress = value;
@@ -133,7 +133,7 @@ namespace ChessForge
         /// <summary>
         // Flags if there is a new arrow being built
         /// </summary>
-        public static bool IsShapeBuildTentative
+        public bool IsShapeBuildTentative
         {
             get => _isShapeBuildTentative;
             set => _isShapeBuildTentative = value;
@@ -142,7 +142,7 @@ namespace ChessForge
         /// <summary>
         /// Flips the shapes (called when the board flips)
         /// </summary>
-        public static void Flip()
+        public void Flip()
         {
             foreach (BoardArrow arrow in _boardArrows)
             {
@@ -160,7 +160,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="start"></param>
         /// <param name="color"></param>
-        public static void StartShapeDraw(SquareCoords start, string color, bool isTentative)
+        public void StartShapeDraw(SquareCoords start, string color, bool isTentative)
         {
             _startSquare = new SquareCoords(start);
             _isShapeBuildInProgress = true;
@@ -177,7 +177,7 @@ namespace ChessForge
         /// Finishes drawing the shape and saves it in the list.
         /// </summary>
         /// <param name="current"></param>
-        public static void FinalizeShape(SquareCoords current, bool isNew, bool markDirty)
+        public void FinalizeShape(SquareCoords current, bool isNew, bool markDirty)
         {
             AppStateManager.MainWin.Dispatcher.Invoke(() =>
             {
@@ -232,7 +232,7 @@ namespace ChessForge
         /// Redraws the existing shape as the user changes the position of the mouse.
         /// </summary>
         /// <param name="current"></param>
-        public static void UpdateShapeDraw(SquareCoords current)
+        public void UpdateShapeDraw(SquareCoords current)
         {
             try
             {
@@ -264,7 +264,7 @@ namespace ChessForge
         /// <summary>
         /// Cancels the shape currently being drawn.
         /// </summary>
-        public static void CancelShapeDraw(bool removeCurrent)
+        public void CancelShapeDraw(bool removeCurrent)
         {
             _startSquare = null;
             _endSquare = null;
@@ -294,7 +294,7 @@ namespace ChessForge
         /// <param name="arr"></param>
         /// <param name="isSameColor"></param>
         /// <returns></returns>
-        private static bool RemoveDuplicate(BoardArrow arr, out bool isSameColor)
+        private bool RemoveDuplicate(BoardArrow arr, out bool isSameColor)
         {
             isSameColor = false;
 
@@ -332,7 +332,7 @@ namespace ChessForge
         /// <param name="cir"></param>
         /// <param name="isSameColor"></param>
         /// <returns></returns>
-        private static bool RemoveDuplicate(BoardCircle cir, out bool isSameColor)
+        private bool RemoveDuplicate(BoardCircle cir, out bool isSameColor)
         {
             isSameColor = false;
 
@@ -365,7 +365,7 @@ namespace ChessForge
         /// <summary>
         /// Saves the shape positions to the Node.
         /// </summary>
-        private static bool SaveShapesStrings()
+        private bool SaveShapesStrings()
         {
             bool arrRes = AppStateManager.MainWin.SaveArrowsStringInCurrentNode(CodeArrowsString());
             bool cirRes = AppStateManager.MainWin.SaveCirclesStringInCurrentNode(CodeCirclesString());
@@ -381,7 +381,7 @@ namespace ChessForge
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-        private static bool DecodeArrowsString(string code, out string color, out SquareCoords start, out SquareCoords end)
+        private bool DecodeArrowsString(string code, out string color, out SquareCoords start, out SquareCoords end)
         {
             start = end = null;
             color = "";
@@ -409,7 +409,7 @@ namespace ChessForge
         /// <param name="color"></param>
         /// <param name="square"></param>
         /// <returns></returns>
-        private static bool DecodeCirclesString(string code, out string color, out SquareCoords square)
+        private bool DecodeCirclesString(string code, out string color, out SquareCoords square)
         {
             square = null;
             color = "";
@@ -432,7 +432,7 @@ namespace ChessForge
         /// Encodes Arrow positions into a string.
         /// </summary>
         /// <returns></returns>
-        private static string CodeArrowsString()
+        private string CodeArrowsString()
         {
             StringBuilder sb = new StringBuilder();
             bool first = true;
@@ -465,7 +465,7 @@ namespace ChessForge
         /// Encodes Circle positions into a string.
         /// </summary>
         /// <returns></returns>
-        private static string CodeCirclesString()
+        private string CodeCirclesString()
         {
             StringBuilder sb = new StringBuilder();
             bool first = true;
@@ -497,7 +497,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        private static string GetColorName(char c)
+        private string GetColorName(char c)
         {
             switch (c)
             {
@@ -519,7 +519,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="color"></param>
         /// <returns></returns>
-        private static char GetCharForColor(string color)
+        private char GetCharForColor(string color)
         {
             switch (color)
             {

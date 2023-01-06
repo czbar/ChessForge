@@ -510,7 +510,10 @@ namespace ChessForge
 
             SetCoordinateLabelsText(_isFlipped);
 
-            BoardShapesManager.Flip();
+            if (Shapes != null)
+            {
+                Shapes.Flip();
+            }
 
             return _isFlipped;
         }
@@ -577,17 +580,17 @@ namespace ChessForge
             if (node != null)
             {
                 _position = new BoardPosition(node.Position);
-                if (isActiveBoard)
+                if (isActiveBoard && Shapes != null)
                 {
-                    BoardShapesManager.Reset(node.Arrows, node.Circles, false);
+                    Shapes.Reset(node.Arrows, node.Circles, false);
                 }
             }
             else
             {
                 _position = new BoardPosition(pos);
-                if (isActiveBoard)
+                if (isActiveBoard && Shapes != null)
                 {
-                    BoardShapesManager.Reset(false);
+                    Shapes.Reset(false);
                 }
             }
 
