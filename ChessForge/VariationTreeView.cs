@@ -1608,6 +1608,11 @@ namespace ChessForge
         /// <returns></returns>
         private string BuildNodeText(TreeNode nd, bool includeNumber)
         {
+            if (nd.NodeId == 0)
+            {
+                return "";
+            }
+
             StringBuilder sb = new StringBuilder();
 
             if (nd.Position.ColorToMove == PieceColor.Black)
@@ -1715,8 +1720,6 @@ namespace ChessForge
                     return;
                 }
 
-                Run rNode = _dictNodeToRun[nd.NodeId];
-
                 Run r = new Run(BuildCommentRunText(nd));
                 r.Name = _run_comment_ + nd.NodeId.ToString();
                 r.PreviewMouseDown += EventCommentRunClicked;
@@ -1726,6 +1729,7 @@ namespace ChessForge
                 r.Foreground = Brushes.Black;
                 r.FontWeight = FontWeights.Normal;
 
+                Run rNode = _dictNodeToRun[nd.NodeId];
                 para.Inlines.InsertAfter(rNode, r);
 
                 _dictNodeToCommentRun.Add(nd.NodeId, r);
