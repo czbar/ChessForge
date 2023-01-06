@@ -480,6 +480,8 @@ namespace ChessForge
                 isEnabled = false;
             }
 
+            int chapterCount = SessionWorkbook == null ? 0 : SessionWorkbook.GetChapterCount();
+
             foreach (var item in cmn.Items)
             {
                 if (item is MenuItem)
@@ -498,6 +500,10 @@ namespace ChessForge
                         case "_mnSelectGame":
                             menuItem.IsEnabled = isEnabled;
                             menuItem.Visibility = (isGamesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnGameToChapter":
+                            menuItem.IsEnabled = isEnabled;
+                            menuItem.Visibility = (isGamesMenu && !isMini && chapterCount > 1) ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnRenameGame":
                             menuItem.IsEnabled = isEnabled;
@@ -544,6 +550,8 @@ namespace ChessForge
                 isEnabled = false;
             }
 
+            int chapterCount = SessionWorkbook == null ? 0 : SessionWorkbook.GetChapterCount();
+
             foreach (var item in cmn.Items)
             {
                 if (item is MenuItem)
@@ -562,6 +570,10 @@ namespace ChessForge
                         case "_mnSelectExercise":
                             menuItem.IsEnabled = isEnabled;
                             menuItem.Visibility = (isExercisesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "_mnExerciseToChapter":
+                            menuItem.IsEnabled = isEnabled;
+                            menuItem.Visibility = (isExercisesMenu && !isMini && chapterCount > 1) ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnRenameExercise":
                             menuItem.IsEnabled = isEnabled;

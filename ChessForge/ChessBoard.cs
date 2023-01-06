@@ -23,6 +23,11 @@ namespace ChessForge
         public TreeNode DisplayedNode;
 
         /// <summary>
+        /// Manager for arrows and circles.
+        /// </summary>
+        public BoardShapesManager Shapes;
+
+        /// <summary>
         /// Images for White pieces 80x80.
         /// </summary>
         protected Dictionary<PieceType, BitmapImage> _dictWhitePieces =
@@ -146,8 +151,12 @@ namespace ChessForge
         /// <param name="BoardCtrl"></param>
         /// <param name="labelCtrl"></param>
         /// <param name="startPos"></param>
-        public ChessBoard(Canvas cnv, Image BoardCtrl, Label labelCtrl, bool startPos, bool includeCoords)
+        public ChessBoard(bool hasShapes, Canvas cnv, Image BoardCtrl, Label labelCtrl, bool startPos, bool includeCoords)
         {
+            if (hasShapes)
+            {
+                Shapes = new BoardShapesManager();
+            }
             CanvasCtrl = cnv;
             BoardImgCtrl = BoardCtrl;
             LabelCtrl = labelCtrl;
@@ -501,7 +510,10 @@ namespace ChessForge
 
             SetCoordinateLabelsText(_isFlipped);
 
-            BoardShapesManager.Flip();
+            if (Shapes != null)
+            {
+                Shapes.Flip();
+            }
 
             return _isFlipped;
         }
@@ -568,17 +580,17 @@ namespace ChessForge
             if (node != null)
             {
                 _position = new BoardPosition(node.Position);
-                if (isActiveBoard)
+                if (isActiveBoard && Shapes != null)
                 {
-                    BoardShapesManager.Reset(node.Arrows, node.Circles, false);
+                    Shapes.Reset(node.Arrows, node.Circles, false);
                 }
             }
             else
             {
                 _position = new BoardPosition(pos);
-                if (isActiveBoard)
+                if (isActiveBoard && Shapes != null)
                 {
-                    BoardShapesManager.Reset(false);
+                    Shapes.Reset(false);
                 }
             }
 

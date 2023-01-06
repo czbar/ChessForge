@@ -250,7 +250,7 @@ namespace ChessForge
             Timers = new AppTimers(this);
 
             // main chess board
-            MainChessBoard = new ChessBoard(MainCanvas, UiImgMainChessboard, null, true, true);
+            MainChessBoard = new ChessBoard(true, MainCanvas, UiImgMainChessboard, null, true, true);
 
             FloatingChessBoard = new ChessBoardSmall(_cnvFloat, _imgFloatingBoard, null, true, false);
 
@@ -746,7 +746,7 @@ namespace ChessForge
                 color = Constants.COLOR_GREEN;
             }
 
-            BoardShapesManager.StartShapeDraw(sq, color, isTentative);
+            MainChessBoard.Shapes.StartShapeDraw(sq, color, isTentative);
         }
 
         /// <summary>
@@ -2212,9 +2212,9 @@ namespace ChessForge
             if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY)
             {
                 _lastRightClickedPoint = null;
-                if (BoardShapesManager.IsShapeBuildInProgress)
+                if (MainChessBoard.Shapes.IsShapeBuildInProgress)
                 {
-                    BoardShapesManager.CancelShapeDraw(true);
+                    MainChessBoard.Shapes.CancelShapeDraw(true);
                 }
                 UiMnMainBoard.Visibility = Visibility.Visible;
             }

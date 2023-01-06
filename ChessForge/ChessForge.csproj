@@ -141,6 +141,9 @@
     <Compile Include="MoveAnimator.cs" />
     <Compile Include="MoveEvaluation.cs" />
     <Compile Include="OpeningStatsView.cs" />
+    <Compile Include="SelectSingleChapterDialog.xaml.cs">
+      <DependentUpon>SelectSingleChapterDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WorkbookOperation.cs" />
     <Compile Include="WorkbookOperationsManager.cs" />
     <Compile Include="PositionSetupDialog.xaml.cs">
@@ -248,6 +251,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SelectGamesDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectSingleChapterDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

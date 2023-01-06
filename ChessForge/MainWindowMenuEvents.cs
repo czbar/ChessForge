@@ -639,7 +639,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Let's the user select games to merge into a StudyTree
+        /// Lets the user select games to merge into a StudyTree
         /// for which a new chapter will be created.
         /// </summary>
         /// <param name="gamesCount"></param>
@@ -882,6 +882,111 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Invokes the InvokeSelectSingleChapter dialog
+        /// and returns the selected index.
+        /// </summary>
+        /// <returns></returns>
+        private int InvokeSelectSingleChapterDialog()
+        {
+            try
+            {
+                SelectSingleChapterDialog dlg = new SelectSingleChapterDialog()
+                {
+                    Left = ChessForgeMain.Left + 100,
+                    Top = ChessForgeMain.Top + 100,
+                    Topmost = false,
+                    Owner = this
+                };
+                dlg.ShowDialog();
+
+                return dlg.ExitOk ? dlg.SelectedIndex : -1;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// Lets the user select a chapter to move the curently selected game to.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnMoveGameToChapter_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int selectedChapterIndex = InvokeSelectSingleChapterDialog();
+
+                if (selectedChapterIndex >= 0)
+                {
+                    Chapter activeChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    int activeChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex;
+                    int gameIndex = activeChapter.ActiveModelGameIndex;
+                    if (selectedChapterIndex >= 0 && selectedChapterIndex != activeChapterIndex)
+                    {
+                        Chapter targetChapter = WorkbookManager.SessionWorkbook.Chapters[selectedChapterIndex];
+
+                        GameUnit game = activeChapter.GetModelGameAtIndex(gameIndex);                        
+                        targetChapter.ModelGames.Add(game);
+                        activeChapter.ModelGames.Remove(game);
+                        
+                        targetChapter.IsModelGamesListExpanded = true;
+                        WorkbookManager.SessionWorkbook.ActiveChapter = targetChapter;
+                        targetChapter.ActiveModelGameIndex = targetChapter.GetModelGameCount() - 1;
+
+                        AppStateManager.IsDirty = true;
+                        _chaptersView.BuildFlowDocumentForChaptersView();
+                        AppStateManager.DoEvents();
+                        _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Lets the user select a chapter to move the curently selected exercise to.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnMoveExerciseToChapter_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int selectedChapterIndex = InvokeSelectSingleChapterDialog();
+
+                if (selectedChapterIndex >= 0)
+                {
+                    Chapter activeChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    int activeChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex;
+                    int exerciseIndex = activeChapter.ActiveExerciseIndex;
+                    if (selectedChapterIndex >= 0 && selectedChapterIndex != activeChapterIndex)
+                    {
+                        Chapter targetChapter = WorkbookManager.SessionWorkbook.Chapters[selectedChapterIndex];
+
+                        GameUnit exercise = activeChapter.GetExerciseAtIndex(exerciseIndex);
+                        targetChapter.Exercises.Add(exercise);
+                        activeChapter.Exercises.Remove(exercise);
+
+                        targetChapter.IsExercisesListExpanded = true;
+                        WorkbookManager.SessionWorkbook.ActiveChapter = targetChapter;
+                        targetChapter.ActiveExerciseIndex = targetChapter.GetExerciseCount() - 1;
+
+                        AppStateManager.IsDirty = true;
+                        _chaptersView.BuildFlowDocumentForChaptersView();
+                        AppStateManager.DoEvents();
+                        _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
 
         /// <summary>
         /// Requests import of Model Games from a PGN file
@@ -2377,7 +2482,7 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 if (chapter.ActiveModelGameIndex >= 0)
                 {
-                    string gameTitle = chapter.ModelGames[chapter.ActiveModelGameIndex].Tree.Header.BuildGameHeaderLine();
+                    string gameTitle = chapter.ModelGames[chapter.ActiveModelGameIndex].Tree.Header.BuildGameHeaderLine(true);
                     if (MessageBox.Show("Delete this Game?\n\n  " + gameTitle, "Delete Model Game", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         DeleteModelGame(chapter.ActiveModelGameIndex);
@@ -2418,7 +2523,7 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 if (chapter.ActiveExerciseIndex >= 0)
                 {
-                    string exerciseTitle = chapter.Exercises[chapter.ActiveExerciseIndex].Tree.Header.BuildGameHeaderLine();
+                    string exerciseTitle = chapter.Exercises[chapter.ActiveExerciseIndex].Tree.Header.BuildGameHeaderLine(true);
                     if (MessageBox.Show("Delete this Exercise?\n\n  " + exerciseTitle, "Delete Exercise", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         DeleteExercise(chapter.ActiveExerciseIndex);

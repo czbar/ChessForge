@@ -75,7 +75,7 @@ namespace ChessForge
         /// <param name="startPos"></param>
         /// <param name="includeCoords"></param>
         public ChessBoardSmall(Canvas cnv, Image BoardCtrl, Label labelCtrl, bool startPos, bool includeCoords)
-            : base (cnv, BoardCtrl, labelCtrl, startPos, includeCoords)
+            : base (false, cnv, BoardCtrl, labelCtrl, startPos, includeCoords)
         {
         }
 

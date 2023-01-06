@@ -72,7 +72,7 @@ namespace ChessForge
 
                         if (MainChessBoard.GetPieceColor(sqNorm) == PieceColor.None)
                         {
-                            BoardShapesManager.Reset(true);
+                            MainChessBoard.Shapes.Reset(true);
                         }
 
                         if (CanMovePiece(sqNorm))
@@ -201,9 +201,9 @@ namespace ChessForge
             else
             {
                 _lastRightClickedPoint = null;
-                if (BoardShapesManager.IsShapeBuildInProgress)
+                if (MainChessBoard.Shapes.IsShapeBuildInProgress)
                 {
-                    BoardShapesManager.CancelShapeDraw(true);
+                    MainChessBoard.Shapes.CancelShapeDraw(true);
                 }
                 if (DraggedPiece.isDragInProgress)
                 {
@@ -224,16 +224,16 @@ namespace ChessForge
         /// </summary>
         private void HandleMouseMoveRightButton(SquareCoords sq, Point ptCurrent)
         {
-            if (BoardShapesManager.IsShapeBuildInProgress)
+            if (MainChessBoard.Shapes.IsShapeBuildInProgress)
             {
                 bool proceed = true;
 
                 // check if we are tentative
-                if (BoardShapesManager.IsShapeBuildTentative)
+                if (MainChessBoard.Shapes.IsShapeBuildTentative)
                 {
                     if (_lastRightClickedPoint == null)
                     {
-                        BoardShapesManager.CancelShapeDraw(true);
+                        MainChessBoard.Shapes.CancelShapeDraw(true);
                         proceed = false;
                     }
                     else
@@ -241,7 +241,7 @@ namespace ChessForge
                         // check if we should proceed or let context menu show
                         if (Math.Abs(GuiUtilities.CalculateDistance(_lastRightClickedPoint.Value, ptCurrent)) > 5)
                         {
-                            BoardShapesManager.IsShapeBuildTentative = false;
+                            MainChessBoard.Shapes.IsShapeBuildTentative = false;
                             _lastRightClickedPoint = null;
                             proceed = true;
                         }
@@ -254,7 +254,7 @@ namespace ChessForge
 
                 if (proceed)
                 {
-                    BoardShapesManager.UpdateShapeDraw(sq);
+                    MainChessBoard.Shapes.UpdateShapeDraw(sq);
                 }
             }
         }
@@ -267,9 +267,9 @@ namespace ChessForge
         /// <param name="e"></param>
         private void HandleMouseUpRightButton(SquareCoords targetSquare, MouseButtonEventArgs e)
         {
-            if (BoardShapesManager.IsShapeBuildInProgress && !BoardShapesManager.IsShapeBuildTentative)
+            if (MainChessBoard.Shapes.IsShapeBuildInProgress && !MainChessBoard.Shapes.IsShapeBuildTentative)
             {
-                BoardShapesManager.FinalizeShape(targetSquare, true, true);
+                MainChessBoard.Shapes.FinalizeShape(targetSquare, true, true);
                 _lastRightClickedPoint = null;
 
                 // we have been building a shape so ensure context menu does not pop up
