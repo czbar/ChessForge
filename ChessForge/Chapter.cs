@@ -234,6 +234,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Unadorned chapter title
+        /// </summary>
+        public string Title
+        {
+            get => _title ?? "";
+        }
+
+        /// <summary>
         /// The Title of this chapter.
         /// If raw is set to false and the title is empty
         /// it returns the default title.
