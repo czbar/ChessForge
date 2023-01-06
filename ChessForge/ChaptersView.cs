@@ -535,8 +535,14 @@ namespace ChessForge
                         }
                         else
                         {
-                            ExpandChapterList(chapter);
-                            SelectChapter(chapterId, false);
+                            if (WorkbookManager.SessionWorkbook.ActiveChapter != null && WorkbookManager.SessionWorkbook.ActiveChapter == chapter)
+                            {
+                                ExpandChapterList(chapter);
+                            }
+                            else
+                            {
+                                SelectChapter(chapterId, false);
+                            }
                         }
                     }
                     else if (e.ChangedButton == MouseButton.Right)
