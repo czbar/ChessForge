@@ -741,7 +741,10 @@ namespace ChessForge
                 {
                     if (e.ChangedButton == MouseButton.Left)
                     {
-                        _mainWin.SelectModelGame(gameIndex, true);
+                        if (e.ClickCount == 2)
+                        {
+                            _mainWin.SelectModelGame(gameIndex, true);
+                        }
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
@@ -785,7 +788,10 @@ namespace ChessForge
                 {
                     if (e.ChangedButton == MouseButton.Left)
                     {
-                        _mainWin.SelectExercise(exerciseIndex, true);
+                        if (e.ClickCount == 2)
+                        {
+                            _mainWin.SelectExercise(exerciseIndex, true);
+                        }
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
