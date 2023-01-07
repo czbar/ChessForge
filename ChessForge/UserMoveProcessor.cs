@@ -24,10 +24,10 @@ namespace ChessForge
         public static void FinalizeUserMove(SquareCoords destSquare)
         {
             // if the move is valid swap image at destination and clear image at origin
-            if (destSquare.Xcoord != DraggedPiece.Square.Xcoord || destSquare.Ycoord != DraggedPiece.Square.Ycoord)
+            if (destSquare.Xcoord != DraggedPiece.OriginSquare.Xcoord || destSquare.Ycoord != DraggedPiece.OriginSquare.Ycoord)
             {
                 StringBuilder moveEngCode = new StringBuilder();
-                SquareCoords origSquareNorm = new SquareCoords(DraggedPiece.Square);
+                SquareCoords origSquareNorm = new SquareCoords(DraggedPiece.OriginSquare);
                 SquareCoords destSquareNorm = new SquareCoords(destSquare);
                 if (AppStateManager.MainWin.MainChessBoard.IsFlipped)
                 {

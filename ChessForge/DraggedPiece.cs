@@ -15,9 +15,15 @@ namespace ChessForge
     /// </summary>
     public class DraggedPiece
     {
+        /// <summary>
+        /// Image being dragged.
+        /// </summary>
         public static Image ImageControl;
 
-        public static SquareCoords Square;
+        /// <summary>
+        /// Square from which the piece is being dragged.
+        /// </summary>
+        public static SquareCoords OriginSquare;
 
         /// <summary>
         /// Whether we are currently dragging a piece
@@ -27,13 +33,13 @@ namespace ChessForge
         /// <summary>
         /// The point we clicked to start the dragging
         /// </summary>
-        public static Point ptStartDragLocation;
+        public static Point PtStartDragLocation;
 
         /// <summary>
         /// Left and Top of the Image control when we started dragging
         /// so that we can return it to the right spot.
         /// </summary>
-        public static Point ptDraggedPieceOrigin; // Left and Top of the Image control
+        public static Point PtDraggedPieceOrigin; // Left and Top of the Image control
 
     }
 }

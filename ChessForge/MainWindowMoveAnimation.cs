@@ -73,8 +73,8 @@ namespace ChessForge
             {
                 DraggedPiece.ImageControl.Source = null;
             }
-            Canvas.SetLeft(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.X);
-            Canvas.SetTop(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.Y);
+            Canvas.SetLeft(DraggedPiece.ImageControl, DraggedPiece.PtDraggedPieceOrigin.X);
+            Canvas.SetTop(DraggedPiece.ImageControl, DraggedPiece.PtDraggedPieceOrigin.Y);
         }
 
         /// <summary>
