@@ -395,7 +395,7 @@ namespace ChessForge
             para.Inlines.Add(new Run("\n"));
             para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT, true));
             InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.Id, GameData.ContentType.MODEL_GAME, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
-            Run r = CreateRun(STYLE_SUBHEADER, "Model Games", true);
+            Run r = CreateRun(STYLE_SUBHEADER, "Games", true);
             r.Name = _run_model_games_header_ + chapter.Id.ToString();
             r.MouseDown += EventModelGamesHeaderClicked;
             para.Inlines.Add(r);
