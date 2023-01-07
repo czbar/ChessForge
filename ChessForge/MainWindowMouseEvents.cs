@@ -88,16 +88,16 @@ namespace ChessForge
                         if (CanMovePiece(sqNorm))
                         {
                             DraggedPiece.isDragInProgress = true;
-                            DraggedPiece.Square = sq;
+                            DraggedPiece.OriginSquare = sq;
 
                             DraggedPiece.ImageControl = MainChessBoardUtils.GetImageFromPoint(clickedPoint);
                             Point ptLeftTop = MainChessBoardUtils.GetSquareTopLeftPoint(sq);
-                            DraggedPiece.ptDraggedPieceOrigin = ptLeftTop;
+                            DraggedPiece.PtDraggedPieceOrigin = ptLeftTop;
 
                             // for the remainder, we need absolute point
                             clickedPoint.X += UiImgMainChessboard.Margin.Left;
                             clickedPoint.Y += UiImgMainChessboard.Margin.Top;
-                            DraggedPiece.ptStartDragLocation = clickedPoint;
+                            DraggedPiece.PtStartDragLocation = clickedPoint;
 
 
                             Point ptCenter = MainChessBoardUtils.GetSquareCenterPoint(sq);
@@ -147,8 +147,8 @@ namespace ChessForge
                     if (targetSquare == null)
                     {
                         // just put the piece back
-                        Canvas.SetLeft(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.X);
-                        Canvas.SetTop(DraggedPiece.ImageControl, DraggedPiece.ptDraggedPieceOrigin.Y);
+                        Canvas.SetLeft(DraggedPiece.ImageControl, DraggedPiece.PtDraggedPieceOrigin.X);
+                        Canvas.SetTop(DraggedPiece.ImageControl, DraggedPiece.PtDraggedPieceOrigin.Y);
                     }
                     else
                     {

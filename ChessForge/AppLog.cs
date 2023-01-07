@@ -117,8 +117,8 @@ namespace ChessForge
             StringBuilder sb = new StringBuilder("Dragged Piece: ");
             {
                 sb.Append("IsDragInProgress = " + DraggedPiece.isDragInProgress); 
-                sb.Append("  originX = " + DraggedPiece.Square.Xcoord.ToString());
-                sb.Append("  originY = " + DraggedPiece.Square.Ycoord.ToString());
+                sb.Append("  originX = " + DraggedPiece.OriginSquare.Xcoord.ToString());
+                sb.Append("  originY = " + DraggedPiece.OriginSquare.Ycoord.ToString());
             }
         }
 
