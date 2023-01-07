@@ -109,6 +109,20 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Logs details of the dragged piece
+        /// </summary>
+        [Conditional("DEBUG")]
+        public static void LogDraggedPiece()
+        {
+            StringBuilder sb = new StringBuilder("Dragged Piece: ");
+            {
+                sb.Append("IsDragInProgress = " + DraggedPiece.isDragInProgress); 
+                sb.Append("  originX = " + DraggedPiece.Square.Xcoord.ToString());
+                sb.Append("  originY = " + DraggedPiece.Square.Ycoord.ToString());
+            }
+        }
+
+        /// <summary>
         /// Returns the numbers of threads that are still avaliable.
         /// </summary>
         /// <param name="workerThreads"></param>

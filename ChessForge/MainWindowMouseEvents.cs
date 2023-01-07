@@ -45,6 +45,16 @@ namespace ChessForge
             }
             else
             {
+                // sanity check
+                if (DraggedPiece.isDragInProgress)
+                {
+                    // if Drag is in progress there is something wrong
+                    DebugUtils.ShowDebugMessage("Incomplete drag event. Dump all logs and report!");
+                    AppLog.LogDraggedPiece();
+                    // restore the dragged piece to its origin square
+                    ReturnDraggedPiece(false);
+                }
+
                 _lastRightClickedPoint = null;
                 if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                 {
