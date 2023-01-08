@@ -872,6 +872,11 @@ namespace ChessForge
                         if (chapter != null)
                         {
                             chapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
+                            // under some circumstamces we may be showing the tree from the wrong chapter so check...
+                            if (chapter.ActiveVariationTree != _studyTreeView.ShownVariationTree)
+                            {
+                                _studyTreeView.BuildFlowDocumentForVariationTree();
+                            }
                             RestoreSelectedLineAndMoveInActiveView();
                         }
                         MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.STUDY));
