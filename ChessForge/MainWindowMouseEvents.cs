@@ -607,7 +607,7 @@ namespace ChessForge
                 Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                 EvaluateActiveLineSelectedPosition();
             }
-            else if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING 
+            else if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING
                 || AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME && TrainingSession.IsTrainingInProgress)
             {
                 TrainingSession.IsContinuousEvaluation = true;
@@ -850,6 +850,37 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Moves selection in the ChaptersView up or down.
+        /// </summary>
+        /// <param name="upOrDown"></param>
+        public void ChaptersViewSelectionMove(bool upOrDown)
+        {
+            try
+            {
+                _chaptersView.MoveSelection(upOrDown);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Acts on the current selection i.e. opens the selected
+        /// game, exercise or study tree.
+        /// 
+        /// </summary>
+        public void ChaptersViewActivateSelection()
+        {
+            try
+            {
+                _chaptersView.ActOnSelection();
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Sets the board orientation and active line according
         /// the last StudyTree state.
         /// </summary>
@@ -872,6 +903,11 @@ namespace ChessForge
                         if (chapter != null)
                         {
                             chapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
+                            // under some circumstamces we may be showing the tree from the wrong chapter so check...
+                            if (chapter.ActiveVariationTree != _studyTreeView.ShownVariationTree)
+                            {
+                                _studyTreeView.BuildFlowDocumentForVariationTree();
+                            }
                             RestoreSelectedLineAndMoveInActiveView();
                         }
                         MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.STUDY));

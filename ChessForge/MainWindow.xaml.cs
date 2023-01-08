@@ -196,7 +196,9 @@ namespace ChessForge
         {
             get
             {
-                if (SessionWorkbook == null)
+                if (SessionWorkbook == null 
+                    || AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS 
+                    || AppStateManager.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
                 {
                     return null;
                 }
@@ -521,14 +523,18 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapterIndex"></param>
         /// <param name="focusOnStudyTree"></param>
-        public void SelectChapterByIndex(int chapterIndex, bool focusOnStudyTree)
+        public void SelectChapterByIndex(int chapterIndex, bool focusOnStudyTree, bool rebuild = true)
         {
             if (chapterIndex >= 0 && chapterIndex < WorkbookManager.SessionWorkbook.Chapters.Count)
             {
                 WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(chapterIndex, GameData.ContentType.STUDY_TREE);
-                ClearTabViews();
                 _chaptersView.HighlightActiveChapter();
-                SetupGuiForActiveStudyTree(focusOnStudyTree);
+
+                if (rebuild)
+                {
+                    ClearTabViews();
+                    SetupGuiForActiveStudyTree(focusOnStudyTree);
+                }
             }
         }
 

@@ -582,6 +582,19 @@ namespace ChessForge
         /// <returns></returns>
         public bool HandleKeyDown(Key key)
         {
+            if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppStateManager.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
+            {
+                if (key == Key.Up || key == Key.Down)
+                {
+                    _mainWin.ChaptersViewSelectionMove(key == Key.Up);
+                }
+                else if (key == Key.Enter)
+                {
+                    _mainWin.ChaptersViewActivateSelection();
+                }
+                return true;
+            }
+
             // prevent "cheating" in exercises
             if (_mainWin.ActiveVariationTree == null || !_mainWin.ActiveVariationTree.ShowTreeLines || AppStateManager.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
             {
