@@ -145,6 +145,26 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the last position of the tree i.e. the leaf of the main line.
+        /// </summary>
+        /// <returns></returns>
+        public TreeNode GetFinalPosition()
+        {
+            if (RootNode == null)
+            {
+                return null;
+            }
+
+            TreeNode lastNode = RootNode;
+            while (lastNode.Children.Count > 0)
+            {
+                lastNode = lastNode.Children[0];
+            }
+
+            return lastNode;
+        }
+
+        /// <summary>
         /// Accessors to the ContentType value kept
         /// in the Header.
         /// </summary>
