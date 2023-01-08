@@ -607,7 +607,7 @@ namespace ChessForge
                 Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                 EvaluateActiveLineSelectedPosition();
             }
-            else if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING 
+            else if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING
                 || AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME && TrainingSession.IsTrainingInProgress)
             {
                 TrainingSession.IsContinuousEvaluation = true;
@@ -843,6 +843,37 @@ namespace ChessForge
                     return;
                 }
                 SetStudyStateOnFocus();
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Moves selection in the ChaptersView up or down.
+        /// </summary>
+        /// <param name="upOrDown"></param>
+        public void ChaptersViewSelectionMove(bool upOrDown)
+        {
+            try
+            {
+                _chaptersView.MoveSelection(upOrDown);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Acts on the current selection i.e. opens the selected
+        /// game, exercise or study tree.
+        /// 
+        /// </summary>
+        public void ChaptersViewActivateSelection()
+        {
+            try
+            {
+                _chaptersView.ActOnSelection();
             }
             catch
             {
