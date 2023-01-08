@@ -1508,7 +1508,6 @@ namespace ChessForge
             }
 
             _chaptersView.BuildFlowDocumentForChaptersView();
-            AppStateManager.DoEvents();
             _chaptersView.BringGameUnitIntoView(chapter.Id, contentType, gameUinitIndex);
         }
 
