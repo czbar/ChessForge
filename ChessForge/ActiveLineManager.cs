@@ -584,6 +584,14 @@ namespace ChessForge
         {
             if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppStateManager.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
             {
+                if (key == Key.Up || key == Key.Down)
+                {
+                    _mainWin.ChaptersViewSelectionMove(key == Key.Up);
+                }
+                else if (key == Key.Enter)
+                {
+                    _mainWin.ChaptersViewActivateSelection();
+                }
                 return true;
             }
 
