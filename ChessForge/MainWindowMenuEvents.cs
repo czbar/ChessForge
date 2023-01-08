@@ -734,7 +734,7 @@ namespace ChessForge
                 WorkbookManager.SessionWorkbook.Chapters[index] = WorkbookManager.SessionWorkbook.Chapters[index - 1];
                 WorkbookManager.SessionWorkbook.Chapters[index - 1] = hold;
                 _chaptersView.BuildFlowDocumentForChaptersView();
-                SelectChapterByIndex(index - 1, false);
+                SelectChapterByIndex(index - 1, false, false);
                 AppStateManager.IsDirty = true;
             }
         }
@@ -753,7 +753,7 @@ namespace ChessForge
                 WorkbookManager.SessionWorkbook.Chapters[index] = WorkbookManager.SessionWorkbook.Chapters[index + 1];
                 WorkbookManager.SessionWorkbook.Chapters[index + 1] = hold;
                 _chaptersView.BuildFlowDocumentForChaptersView();
-                SelectChapterByIndex(index + 1, false);
+                SelectChapterByIndex(index + 1, false, false);
                 AppStateManager.IsDirty = true;
             }
         }
@@ -2328,6 +2328,7 @@ namespace ChessForge
                 switch (_chaptersView.LastClickedItemType)
                 {
                     case WorkbookManager.ItemType.CHAPTER:
+                    case WorkbookManager.ItemType.NONE:
                         UiMnChapterDown_Click(sender, e);
                         break;
                     case WorkbookManager.ItemType.MODEL_GAME:
