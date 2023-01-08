@@ -196,7 +196,9 @@ namespace ChessForge
         {
             get
             {
-                if (SessionWorkbook == null)
+                if (SessionWorkbook == null 
+                    || AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS 
+                    || AppStateManager.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
                 {
                     return null;
                 }
