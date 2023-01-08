@@ -155,6 +155,7 @@ namespace ChessForge
             Paragraph paraChapter = FindChapterParagraph(chapterId);
             if (paraChapter != null)
             {
+                AppStateManager.DoEvents();
                 Run r = FindGameUnitRunInParagraph(paraChapter, contentType, index);
                 r?.BringIntoView();
             }
@@ -569,6 +570,8 @@ namespace ChessForge
         /// If there is an item of the current selection type available to move it,
         /// we will select it.
         /// Otherwise, we will change the selected item.
+        /// Note that if we change the type of the selected item we need to rebuild
+        /// the entire view so that the highlights are reset correctly
         /// </summary>
         /// <param name="upOrDown"></param>
         public void MoveSelection(bool upOrDown)
@@ -592,20 +595,56 @@ namespace ChessForge
         /// <param name="unitIndex"></param>
         private void MoveSelectedItemUpOrDown(WorkbookManager.ItemType itemType, Chapter chapter, int unitIndex, bool upOrDown)
         {
+            int index = -1;
+
             switch (itemType)
             {
                 case WorkbookManager.ItemType.CHAPTER:
                     Chapter newSelChapter = upOrDown ? GetPreviousChapter(chapter) : GetNextChapter(chapter);
                     if (newSelChapter != null)
                     {
-                        WorkbookManager.SessionWorkbook.ActiveChapter = newSelChapter;
-                        newSelChapter.IsViewExpanded = true;
-                        RebuildChapterParagraph(newSelChapter);
-                        RebuildChapterParagraph(chapter);
+                        ActivateAndHighlightChapter(newSelChapter, chapter, true);
                     }
-                    //SelectChapterHeader(prevChapter, true);
+                    break;
+                case WorkbookManager.ItemType.MODEL_GAME:
+                    GameUnit newSelGame = GetAdjacentModelGame(out index, upOrDown);
+                    if (newSelGame != null)
+                    {
+                        chapter.ActiveModelGameIndex = index;
+                        RebuildChapterParagraph(chapter);
+                        _mainWin.DisplayPosition(newSelGame.Tree.GetFinalPosition());
+                        BringGameUnitIntoView(chapter.Id, GameData.ContentType.MODEL_GAME, index);
+                    }
+                    break;
+                case WorkbookManager.ItemType.EXERCISE:
+                    GameUnit newSelExercise = GetAdjacentExercise(out index, upOrDown);
+                    if (newSelExercise != null)
+                    {
+                        chapter.ActiveExerciseIndex = index;
+                        RebuildChapterParagraph(chapter);
+                        _mainWin.DisplayPosition(newSelExercise.Tree.RootNode);
+                        BringGameUnitIntoView(chapter.Id, GameData.ContentType.EXERCISE, index);
+                    }
                     break;
             }
+        }
+
+        /// <summary>
+        /// Changes the ActiveChapter and highlights the headers in the GUI accordingly.
+        /// </summary>
+        /// <param name="newChapter"></param>
+        /// <param name="oldChapter"></param>
+        /// <param name="expandView"></param>
+        private void ActivateAndHighlightChapter(Chapter newChapter, Chapter oldChapter, bool expandView)
+        {
+            WorkbookManager.SessionWorkbook.ActiveChapter = newChapter;
+            if (expandView)
+            {
+                newChapter.IsViewExpanded = true;
+            }
+
+            RebuildChapterParagraph(newChapter);
+            RebuildChapterParagraph(oldChapter);
         }
 
         /// <summary>
@@ -627,7 +666,6 @@ namespace ChessForge
             }
         }
 
-
         /// <summary>
         /// Returns the Chapter object in the list after the passed one.
         /// </summary>
@@ -646,6 +684,103 @@ namespace ChessForge
                 return null;
             }
         }
+
+        /// <summary>
+        /// Returns the adjacent (previous or next) game.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="upOrDown"></param>
+        /// <returns></returns>
+        private GameUnit GetAdjacentModelGame(out int index, bool upOrDown)
+        {
+            index = -1;
+
+            try
+            {
+                bool allow = false;
+
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                if (upOrDown)
+                {
+                    if (chapter.ActiveModelGameIndex > 0)
+                    {
+                        chapter.ActiveModelGameIndex--;
+                        allow = true;
+                    }
+                }
+                else
+                {
+                    if (chapter.ActiveModelGameIndex < chapter.GetModelGameCount() - 1)
+                    {
+                        chapter.ActiveModelGameIndex++;
+                        allow = true;
+                    }
+                }
+
+                if (allow)
+                {
+                    index = chapter.ActiveModelGameIndex;    
+                    return chapter.ModelGames[chapter.ActiveModelGameIndex];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns the adjacent (previous or next) exercise.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="upOrDown"></param>
+        /// <returns></returns>
+        private GameUnit GetAdjacentExercise(out int index, bool upOrDown)
+        {
+            index = -1;
+
+            try
+            {
+                bool allow = false;
+
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                if (upOrDown)
+                {
+                    if (chapter.ActiveExerciseIndex > 0)
+                    {
+                        chapter.ActiveExerciseIndex--;
+                        allow = true;
+                    }
+                }
+                else
+                {
+                    if (chapter.ActiveExerciseIndex < chapter.GetExerciseCount() - 1)
+                    {
+                        chapter.ActiveExerciseIndex++;
+                        allow = true;
+                    }
+                }
+
+                if (allow)
+                {
+                    index = chapter.ActiveExerciseIndex;
+                    return chapter.Exercises[chapter.ActiveExerciseIndex];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// Returns details of the currently selected unit which could be chapter, study tree, game or exercise.
