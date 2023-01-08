@@ -379,6 +379,10 @@ namespace ChessForge
             para.Inlines.Add(new Run("\n"));
             Run r = CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT + "Study Tree", true);
             r.Name = _run_study_tree_ + chapter.Id.ToString();
+            if (LastClickedItemType == WorkbookManager.ItemType.STUDY)
+            {
+                r.FontWeight = FontWeights.Bold;
+            }
             r.MouseDown += EventStudyTreeHeaderClicked;
             para.Inlines.Add(r);
             return r;
@@ -408,7 +412,7 @@ namespace ChessForge
                     Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.ModelGames[i].Tree.Header.BuildGameHeaderLine(), true);
                     rGame.Name = _run_model_game_ + i.ToString();
                     rGame.MouseDown += EventModelGameRunClicked;
-                    if (i == chapter.ActiveModelGameIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
+                    if (LastClickedItemType == WorkbookManager.ItemType.MODEL_GAME && i == chapter.ActiveModelGameIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
                     {
                         rGame.FontWeight = FontWeights.Bold;
                     }
@@ -443,7 +447,7 @@ namespace ChessForge
                     Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.Exercises[i].Tree.Header.BuildGameHeaderLine(true), true);
                     rGame.Name = _run_exercise_ + i.ToString();
                     rGame.MouseDown += EventExerciseRunClicked;
-                    if (i == chapter.ActiveExerciseIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
+                    if (LastClickedItemType == WorkbookManager.ItemType.EXERCISE && i == chapter.ActiveExerciseIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
                     {
                         rGame.FontWeight = FontWeights.Bold;
                     }
@@ -493,17 +497,24 @@ namespace ChessForge
         /// on its current state.
         /// </summary>
         /// <param name="chapter"></param>
-        private void ExpandChapterList(Chapter chapter)
+        private void ExpandChapterList(Chapter chapter, bool forceExpand)
         {
-            bool? isExpanded = chapter.IsViewExpanded;
-
-            if (isExpanded == true)
-            {
-                chapter.IsViewExpanded = false;
-            }
-            else if (isExpanded == false)
+            if (forceExpand)
             {
                 chapter.IsViewExpanded = true;
+            }
+            else
+            {
+                bool? isExpanded = chapter.IsViewExpanded;
+
+                if (isExpanded == true)
+                {
+                    chapter.IsViewExpanded = false;
+                }
+                else if (isExpanded == false)
+                {
+                    chapter.IsViewExpanded = true;
+                }
             }
 
             BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
@@ -551,6 +562,118 @@ namespace ChessForge
             }
 
             BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
+        }
+
+        /// <summary>
+        /// Moves current selection up or down.
+        /// If there is an item of the current selection type available to move it,
+        /// we will select it.
+        /// Otherwise, we will change the selected item.
+        /// </summary>
+        /// <param name="upOrDown"></param>
+        public void MoveSelection(bool upOrDown)
+        {
+            GetSelectedUnit(out WorkbookManager.ItemType itemType, out Chapter chapter, out int unitIndex);
+            MoveSelectedItemUpOrDown(itemType, chapter, unitIndex, upOrDown);
+        }
+
+        /// <summary>
+        /// Acts on selection i.e. opens the selected Study Tree, Game or Exercise.
+        /// </summary>
+        public void ActOnSelection()
+        {
+        }
+
+        /// <summary>
+        /// Moves selection up or down in the view
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <param name="chapter"></param>
+        /// <param name="unitIndex"></param>
+        private void MoveSelectedItemUpOrDown(WorkbookManager.ItemType itemType, Chapter chapter, int unitIndex, bool upOrDown)
+        {
+            switch (itemType)
+            {
+                case WorkbookManager.ItemType.CHAPTER:
+                    Chapter newSelChapter = upOrDown ? GetPreviousChapter(chapter) : GetNextChapter(chapter);
+                    if (newSelChapter != null)
+                    {
+                        WorkbookManager.SessionWorkbook.ActiveChapter = newSelChapter;
+                        newSelChapter.IsViewExpanded = true;
+                        RebuildChapterParagraph(newSelChapter);
+                        RebuildChapterParagraph(chapter);
+                    }
+                    //SelectChapterHeader(prevChapter, true);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Returns the Chapter object in the list before the passed one.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        private Chapter GetPreviousChapter(Chapter chapter)
+        {
+            int index = WorkbookManager.SessionWorkbook.GetChapterIndex(chapter);
+            if (index > 0)
+            {
+                index--;
+                return WorkbookManager.SessionWorkbook.Chapters[index];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+        /// <summary>
+        /// Returns the Chapter object in the list after the passed one.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        private Chapter GetNextChapter(Chapter chapter)
+        {
+            int index = WorkbookManager.SessionWorkbook.GetChapterIndex(chapter);
+            if (index < WorkbookManager.SessionWorkbook.GetChapterCount() - 1)
+            {
+                index++;
+                return WorkbookManager.SessionWorkbook.Chapters[index];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns details of the currently selected unit which could be chapter, study tree, game or exercise.
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <param name="chapter"></param>
+        /// <param name="unitIndex"></param>
+        private void GetSelectedUnit(out WorkbookManager.ItemType itemType, out Chapter chapter, out int unitIndex)
+        {
+            itemType = WorkbookManager.ItemType.NONE;
+            chapter = null;
+            unitIndex = -1;
+
+            try
+            {
+                itemType = LastClickedItemType == WorkbookManager.ItemType.NONE ? WorkbookManager.ItemType.CHAPTER : LastClickedItemType;
+                chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                unitIndex = -1;
+                if (itemType == WorkbookManager.ItemType.MODEL_GAME)
+                {
+                    unitIndex = chapter.ActiveModelGameIndex;
+                }
+                else if (itemType == WorkbookManager.ItemType.EXERCISE)
+                {
+                    unitIndex = chapter.ActiveExerciseIndex;
+                }
+            }
+            catch { }
         }
 
         /// <summary>
@@ -762,14 +885,7 @@ namespace ChessForge
                         }
                         else
                         {
-                            if (WorkbookManager.SessionWorkbook.ActiveChapter != null && WorkbookManager.SessionWorkbook.ActiveChapter == chapter)
-                            {
-                                ExpandChapterList(chapter);
-                            }
-                            else
-                            {
-                                SelectChapter(chapterId, false);
-                            }
+                            SelectChapterHeader(chapter, false);
                         }
                     }
                     else if (e.ChangedButton == MouseButton.Right)
@@ -783,6 +899,32 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("Exception in EventChapterRunClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Selects the header od the passed chapter in this view.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="forceExpand"></param>
+        private void SelectChapterHeader(Chapter chapter, bool forceExpand)
+        {
+            if (chapter == null)
+            {
+                return;
+            }
+
+            if (WorkbookManager.SessionWorkbook.ActiveChapter != null && WorkbookManager.SessionWorkbook.ActiveChapter == chapter)
+            {
+                ExpandChapterList(chapter, forceExpand);
+            }
+            else
+            {
+                if (forceExpand)
+                {
+                    chapter.IsViewExpanded = true;
+                }
+                SelectChapter(chapter.Id, false);
             }
         }
 
