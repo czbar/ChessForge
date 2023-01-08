@@ -489,381 +489,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The Worbook title was clicked.
-        /// Invoke the Workbook options dialog.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventWorkbookTitleClicked(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
-                {
-                    _mainWin.ShowWorkbookOptionsDialog(false);
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("Exception in EventWorkbookTitleClicked(): " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Event handler invoked when a Chapter Run was clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventChapterHeaderClicked(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
-
-                Run r = (Run)e.Source;
-                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
-                if (chapterId >= 0)
-                {
-                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
-                    WorkbookManager.LastClickedChapterId = chapterId;
-
-                    if (e.ChangedButton == MouseButton.Left)
-                    {
-                        if (e.ClickCount == 2)
-                        {
-                            SelectChapter(chapterId, true);
-                        }
-                        else
-                        {
-                            if (WorkbookManager.SessionWorkbook.ActiveChapter != null && WorkbookManager.SessionWorkbook.ActiveChapter == chapter)
-                            {
-                                ExpandChapterList(chapter);
-                            }
-                            else
-                            {
-                                SelectChapter(chapterId, false);
-                            }
-                        }
-                    }
-                    else if (e.ChangedButton == MouseButton.Right)
-                    {
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.GENERIC);
-                        // TODO: this rebuilds the Study Tree. Performance!
-                        SelectChapter(chapterId, false);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("Exception in EventChapterRunClicked(): " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// An expand/collapse character for the chapter was clicked.
-        /// Establish which chapter this is for, check its expand/collapse status and flip it.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventChapterExpandSymbolClicked(object sender, MouseButtonEventArgs e)
-        {
-            LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
-
-            EventChapterHeaderClicked(sender, e);
-        }
-
-
-        /// <summary>
-        /// Event handler invoked when the Model Games header was clicked.
-        /// On left click, expend/collapse the list.
-        /// On right click select chapter and show the context menu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventModelGamesHeaderClicked(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                LastClickedItemType = WorkbookManager.ItemType.NONE;
-
-                Run r = (Run)e.Source;
-                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-
-                if (chapter.Id != chapterId)
-                {
-                    SelectChapter(chapterId, false);
-                    chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                }
-
-                if (chapter != null)
-                {
-                    WorkbookManager.LastClickedChapterId = chapterId;
-                    if (e.ChangedButton == MouseButton.Left)
-                    {
-                        if (chapter.GetModelGameCount() > 0)
-                        {
-                            ExpandModelGamesList(chapter);
-                        }
-                        else
-                        {
-                            WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.MODEL_GAME, true);
-                            _mainWin._cmChapters.IsOpen = true;
-                            e.Handled = true;
-                        }
-                    }
-                    else if (e.ChangedButton == MouseButton.Right)
-                    {
-                        WorkbookManager.LastClickedModelGameIndex = -1;
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.MODEL_GAME);
-                        SelectChapter(chapterId, false);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("Exception in EventModelGamesHeaderClicked(): " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Event handler invoked when the Exercises header was clicked.
-        /// On left click, expend/collapse the list.
-        /// On right click select chapter and show the context menu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventExercisesHeaderClicked(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                LastClickedItemType = WorkbookManager.ItemType.NONE;
-
-                Run r = (Run)e.Source;
-                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-
-                if (chapter.Id != chapterId)
-                {
-                    SelectChapter(chapterId, false);
-                    chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                }
-
-                if (chapter != null)
-                {
-                    WorkbookManager.LastClickedChapterId = chapterId;
-                    if (e.ChangedButton == MouseButton.Left)
-                    {
-                        if (chapter.GetExerciseCount() > 0)
-                        {
-                            ExpandExercisesList(chapter);
-                        }
-                        else
-                        {
-                            WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.EXERCISE, true);
-                            _mainWin._cmChapters.IsOpen = true;
-                            e.Handled = true;
-                        }
-                    }
-                    else if (e.ChangedButton == MouseButton.Right)
-                    {
-                        WorkbookManager.LastClickedExerciseIndex = -1;
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.EXERCISE);
-                        SelectChapter(chapterId, false);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("Exception in EventModelGamesHeaderClicked(): " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Event handler invoked when a Study Tree was clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventStudyTreeHeaderClicked(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
-
-                Run r = (Run)e.Source;
-                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
-                if (chapterId >= 0)
-                {
-                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
-                    WorkbookManager.LastClickedChapterId = chapterId;
-                    if (e.ChangedButton == MouseButton.Left)
-                    {
-                        SelectChapter(chapterId, true);
-                    }
-                    else if (e.ChangedButton == MouseButton.Right)
-                    {
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.STUDY_TREE);
-                        SelectChapter(chapterId, false);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("Exception in EventStudyTreeRunClicked(): " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Event handler invoked when a Model Game Run was clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventModelGameRunClicked(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                LastClickedItemType = WorkbookManager.ItemType.MODEL_GAME;
-
-                Run r = (Run)e.Source;
-                int chapterId = GetChapterIdFromChildRun(r);
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                if (chapter.Id != chapterId)
-                {
-                    SelectChapter(chapterId, false);
-                    chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                }
-
-                int gameIndex = TextUtils.GetIdFromPrefixedString(r.Name);
-                WorkbookManager.LastClickedModelGameIndex = gameIndex;
-                WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
-
-                if (chapter != null && gameIndex >= 0 && gameIndex < chapter.ModelGames.Count)
-                {
-                    if (e.ChangedButton == MouseButton.Left)
-                    {
-                        if (e.ClickCount == 2)
-                        {
-                            _mainWin.SelectModelGame(gameIndex, true);
-                        }
-                    }
-                    else if (e.ChangedButton == MouseButton.Right)
-                    {
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.MODEL_GAME);
-                    }
-                }
-
-                RebuildChapterParagraph(chapter);
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("Exception in EventModelGameRunClicked(): " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Event handler invoked when an Exercise Run was clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventExerciseRunClicked(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                LastClickedItemType = WorkbookManager.ItemType.EXERCISE;
-
-                Run r = (Run)e.Source;
-                int chapterId = GetChapterIdFromChildRun(r);
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                if (chapter.Id != chapterId)
-                {
-                    SelectChapter(chapterId, false);
-                    chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                }
-
-                int exerciseIndex = TextUtils.GetIdFromPrefixedString(r.Name);
-                WorkbookManager.LastClickedExerciseIndex = exerciseIndex;
-                WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = exerciseIndex;
-
-                if (chapter != null && exerciseIndex >= 0 && exerciseIndex < chapter.Exercises.Count)
-                {
-                    if (e.ChangedButton == MouseButton.Left)
-                    {
-                        if (e.ClickCount == 2)
-                        {
-                            _mainWin.SelectExercise(exerciseIndex, true);
-                        }
-                    }
-                    else if (e.ChangedButton == MouseButton.Right)
-                    {
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.EXERCISE);
-                    }
-                }
-
-                RebuildChapterParagraph(chapter);
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("Exception in EventExerciseRunClicked(): " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// An expand/collapse character on the Model Games list was clicked.
-        /// Establish which chapter this is for, check its expand/collapse status and flip it.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventModelGamesExpandSymbolClicked(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                LastClickedItemType = WorkbookManager.ItemType.NONE;
-
-                Run r = (Run)e.Source;
-                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
-                Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
-                if (chapter.Id != WorkbookManager.SessionWorkbook.ActiveChapter.Id)
-                {
-                    SelectChapter(chapterId, false);
-                }
-                chapter.IsModelGamesListExpanded = !chapter.IsModelGamesListExpanded;
-                BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("Exception in EventExpandSymbolClicked(): " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// An expand/collapse character on the Exercises list was clicked.
-        /// Establish which chapter this is for, check its expand/collapse status and flip it.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventExercisesExpandSymbolClicked(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                LastClickedItemType = WorkbookManager.ItemType.NONE;
-
-                Run r = (Run)e.Source;
-                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
-                Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
-                if (chapter.Id != WorkbookManager.SessionWorkbook.ActiveChapter.Id)
-                {
-                    SelectChapter(chapterId, false);
-                }
-                chapter.IsExercisesListExpanded = !chapter.IsExercisesListExpanded;
-                BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("Exception in EventExercisesExpandSymbolClicked(): " + ex.Message);
-            }
-        }
-
-        /// <summary>
         /// Expands or collapses the list of chapters depending
         /// on its current state.
         /// </summary>
@@ -1075,6 +700,425 @@ namespace ChessForge
             {
                 _mainWin.SelectChapterById(chapterId, focusOnStudyTree);
                 BuildChapterParagraph(prevActiveChapter, _dictChapterParas[prevActiveChapter.Id]);
+            }
+        }
+
+
+
+        //*******************************************************************************************
+        //
+        //   EVENT HANDLERS 
+        //
+        //*******************************************************************************************
+
+        /// <summary>
+        /// The Worbook title was clicked.
+        /// Invoke the Workbook options dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventWorkbookTitleClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+
+                if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+                {
+                    _mainWin.ShowWorkbookOptionsDialog(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventWorkbookTitleClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Event handler invoked when a Chapter Run was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventChapterHeaderClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+
+                LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
+
+                Run r = (Run)e.Source;
+                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapterId >= 0)
+                {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                    WorkbookManager.LastClickedChapterId = chapterId;
+
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        if (e.ClickCount == 2)
+                        {
+                            SelectChapter(chapterId, true);
+                        }
+                        else
+                        {
+                            if (WorkbookManager.SessionWorkbook.ActiveChapter != null && WorkbookManager.SessionWorkbook.ActiveChapter == chapter)
+                            {
+                                ExpandChapterList(chapter);
+                            }
+                            else
+                            {
+                                SelectChapter(chapterId, false);
+                            }
+                        }
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.GENERIC);
+                        // TODO: this rebuilds the Study Tree. Performance!
+                        SelectChapter(chapterId, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventChapterRunClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// An expand/collapse character for the chapter was clicked.
+        /// Establish which chapter this is for, check its expand/collapse status and flip it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventChapterExpandSymbolClicked(object sender, MouseButtonEventArgs e)
+        {
+            _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+
+            LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
+
+            EventChapterHeaderClicked(sender, e);
+        }
+
+
+        /// <summary>
+        /// Event handler invoked when the Model Games header was clicked.
+        /// On left click, expend/collapse the list.
+        /// On right click select chapter and show the context menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventModelGamesHeaderClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+
+                LastClickedItemType = WorkbookManager.ItemType.NONE;
+
+                Run r = (Run)e.Source;
+                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+
+                if (chapter.Id != chapterId)
+                {
+                    SelectChapter(chapterId, false);
+                    chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                }
+
+                if (chapter != null)
+                {
+                    WorkbookManager.LastClickedChapterId = chapterId;
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        if (chapter.GetModelGameCount() > 0)
+                        {
+                            ExpandModelGamesList(chapter);
+                        }
+                        else
+                        {
+                            WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.MODEL_GAME, true);
+                            _mainWin._cmChapters.IsOpen = true;
+                            e.Handled = true;
+                        }
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        WorkbookManager.LastClickedModelGameIndex = -1;
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.MODEL_GAME);
+                        SelectChapter(chapterId, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventModelGamesHeaderClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Event handler invoked when the Exercises header was clicked.
+        /// On left click, expend/collapse the list.
+        /// On right click select chapter and show the context menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventExercisesHeaderClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+
+                LastClickedItemType = WorkbookManager.ItemType.NONE;
+
+                Run r = (Run)e.Source;
+                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+
+                if (chapter.Id != chapterId)
+                {
+                    SelectChapter(chapterId, false);
+                    chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                }
+
+                if (chapter != null)
+                {
+                    WorkbookManager.LastClickedChapterId = chapterId;
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        if (chapter.GetExerciseCount() > 0)
+                        {
+                            ExpandExercisesList(chapter);
+                        }
+                        else
+                        {
+                            WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.EXERCISE, true);
+                            _mainWin._cmChapters.IsOpen = true;
+                            e.Handled = true;
+                        }
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        WorkbookManager.LastClickedExerciseIndex = -1;
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.EXERCISE);
+                        SelectChapter(chapterId, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventModelGamesHeaderClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Event handler invoked when a Study Tree was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventStudyTreeHeaderClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+
+                LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
+
+                Run r = (Run)e.Source;
+                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapterId >= 0)
+                {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                    WorkbookManager.LastClickedChapterId = chapterId;
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        SelectChapter(chapterId, true);
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.STUDY_TREE);
+                        SelectChapter(chapterId, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventStudyTreeRunClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Event handler invoked when a Model Game Run was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventModelGameRunClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                LastClickedItemType = WorkbookManager.ItemType.MODEL_GAME;
+
+                Run r = (Run)e.Source;
+                int chapterId = GetChapterIdFromChildRun(r);
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                if (chapter.Id != chapterId)
+                {
+                    SelectChapter(chapterId, false);
+                    chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                }
+
+                int gameIndex = TextUtils.GetIdFromPrefixedString(r.Name);
+                WorkbookManager.LastClickedModelGameIndex = gameIndex;
+                WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
+
+                GameUnit activeGame = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameAtIndex(gameIndex);
+                if (activeGame != null)
+                {
+                    _mainWin.DisplayPosition(activeGame.Tree.GetFinalPosition());
+                }
+                else
+                {
+                    _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+                }
+
+                if (chapter != null && gameIndex >= 0 && gameIndex < chapter.ModelGames.Count)
+                {
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        if (e.ClickCount == 2)
+                        {
+                            _mainWin.SelectModelGame(gameIndex, true);
+                        }
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.MODEL_GAME);
+                    }
+                }
+
+                RebuildChapterParagraph(chapter);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventModelGameRunClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Event handler invoked when an Exercise Run was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventExerciseRunClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                LastClickedItemType = WorkbookManager.ItemType.EXERCISE;
+
+                Run r = (Run)e.Source;
+                int chapterId = GetChapterIdFromChildRun(r);
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                if (chapter.Id != chapterId)
+                {
+                    SelectChapter(chapterId, false);
+                    chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                }
+
+                int exerciseIndex = TextUtils.GetIdFromPrefixedString(r.Name);
+                WorkbookManager.LastClickedExerciseIndex = exerciseIndex;
+                WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = exerciseIndex;
+
+                GameUnit activeEcercise = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseAtIndex(exerciseIndex);
+                if (activeEcercise != null)
+                {
+                    _mainWin.DisplayPosition(activeEcercise.Tree.RootNode);
+                }
+                else
+                {
+                    _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+                }
+
+                if (chapter != null && exerciseIndex >= 0 && exerciseIndex < chapter.Exercises.Count)
+                {
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        if (e.ClickCount == 2)
+                        {
+                            _mainWin.SelectExercise(exerciseIndex, true);
+                        }
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.EXERCISE);
+                    }
+                }
+
+                RebuildChapterParagraph(chapter);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventExerciseRunClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// An expand/collapse character on the Model Games list was clicked.
+        /// Establish which chapter this is for, check its expand/collapse status and flip it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventModelGamesExpandSymbolClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+
+                LastClickedItemType = WorkbookManager.ItemType.NONE;
+
+                Run r = (Run)e.Source;
+                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                if (chapter.Id != WorkbookManager.SessionWorkbook.ActiveChapter.Id)
+                {
+                    SelectChapter(chapterId, false);
+                }
+                chapter.IsModelGamesListExpanded = !chapter.IsModelGamesListExpanded;
+                BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventExpandSymbolClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// An expand/collapse character on the Exercises list was clicked.
+        /// Establish which chapter this is for, check its expand/collapse status and flip it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventExercisesExpandSymbolClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+
+                LastClickedItemType = WorkbookManager.ItemType.NONE;
+
+                Run r = (Run)e.Source;
+                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                if (chapter.Id != WorkbookManager.SessionWorkbook.ActiveChapter.Id)
+                {
+                    SelectChapter(chapterId, false);
+                }
+                chapter.IsExercisesListExpanded = !chapter.IsExercisesListExpanded;
+                BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventExercisesExpandSymbolClicked(): " + ex.Message);
             }
         }
 
