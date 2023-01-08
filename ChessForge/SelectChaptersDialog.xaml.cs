@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,7 +31,7 @@ namespace ChessForge
         private Workbook _workbook;
 
         // The list of properties to bind to the List View
-        public List<SelectedChapter> ChapterList = new List<SelectedChapter>();
+        public ObservableCollection<SelectedChapter> ChapterList = new ObservableCollection<SelectedChapter>();
 
         /// <summary>
         /// Initializes the dialog abd builds a list of chapters
@@ -37,7 +40,6 @@ namespace ChessForge
         /// <param name="workbook"></param>
         public SelectChaptersDialog(Workbook workbook)
         {
-            InitializeComponent();
             _workbook = workbook;
 
             foreach (Chapter ch in _workbook.Chapters)
@@ -48,6 +50,8 @@ namespace ChessForge
                 sel.IsSelected = true;
                 ChapterList.Add(sel);
             }
+            InitializeComponent();
+
             UiLvChapters.ItemsSource = ChapterList;
         }
 
@@ -103,7 +107,7 @@ namespace ChessForge
     /// <summary>
     /// Helper class to bind with the list view
     /// </summary>
-    public class SelectedChapter
+    public class SelectedChapter : INotifyPropertyChanged
     {
         // Chapter object
         public Chapter Chapter { get; set; }
@@ -112,6 +116,35 @@ namespace ChessForge
         public string ChapterTitle { get; set; }
 
         // Chapter selection flag
-        public bool IsSelected { get; set; }
+        private bool _isSelected;
+
+        /// <summary>
+        /// PropertChange event handler
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Accessor to _isSelected.
+        /// This is the only property that can be changed
+        /// from the GUI.
+        /// </summary>
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Notifies the framework of the change in the bound data.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

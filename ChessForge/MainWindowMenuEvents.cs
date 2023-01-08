@@ -618,15 +618,18 @@ namespace ChessForge
                     {
                         foreach (SelectedChapter ch in dlg.ChapterList)
                         {
-                            WorkbookManager.SessionWorkbook.Chapters.Add(ch.Chapter);
-                            WorkbookManager.AssignChaptersIds(ref WorkbookManager.SessionWorkbook);
-                            if (_chaptersView != null)
+                            if (ch.IsSelected)
                             {
-                                _chaptersView.BuildFlowDocumentForChaptersView();
-                                AppStateManager.DoEvents();
-                                _chaptersView.BringChapterIntoView(WorkbookManager.GetLastChapterId(WorkbookManager.SessionWorkbook));
+                                WorkbookManager.SessionWorkbook.Chapters.Add(ch.Chapter);
+                                WorkbookManager.AssignChaptersIds(ref WorkbookManager.SessionWorkbook);
+                                if (_chaptersView != null)
+                                {
+                                    _chaptersView.BuildFlowDocumentForChaptersView();
+                                    AppStateManager.DoEvents();
+                                    _chaptersView.BringChapterIntoView(WorkbookManager.GetLastChapterId(WorkbookManager.SessionWorkbook));
+                                }
+                                AppStateManager.IsDirty = true;
                             }
-                            AppStateManager.IsDirty = true;
                         }
                     }
                 }
