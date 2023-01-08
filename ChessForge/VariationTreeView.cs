@@ -46,6 +46,22 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns reference to the main variation tree
+        /// </summary>
+        public VariationTree MainVariationTree
+        {
+            get => _mainVariationTree;
+        }
+
+        /// <summary>
+        /// Returns reference to the shown variation tree
+        /// </summary>
+        public VariationTree ShownVariationTree
+        {
+            get => _shownVariationTree;
+        }
+
+        /// <summary>
         /// Index of the entity (game or exercise) in the Active Chapter.
         /// </summary>
         public int EntityIndex
