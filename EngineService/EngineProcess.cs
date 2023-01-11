@@ -232,6 +232,7 @@ namespace EngineService
                 WriteOut(UciCommands.ENG_SET_MULTIPV + " " + mpv.ToString());
                 WriteOut(UciCommands.ENG_POSITION_FEN + " " + gfc.Fen);
                 WriteOut(gfc.GoCommandString);
+                EngineLog.Message("NodeId=" + gfc.NodeId.ToString() + " TreeId=" + gfc.TreeId.ToString());
                 StartMessagePollTimer();
 
                 _currentState = State.CALCULATING;
@@ -404,8 +405,7 @@ namespace EngineService
                                 message = InsertBestMovePrefixes(message);
                                 if (message.Contains(UciCommands.ENG_BEST_MOVE))
                                 {
-                                    HandleBestMove();
-                                    if (!_ignoreNextBestMove)
+                                    if (HandleBestMove() && !_ignoreNextBestMove)
                                     {
                                         EngineMessage?.Invoke(message);
                                     }
@@ -471,11 +471,20 @@ namespace EngineService
         /// Receiving the "bestmove" message (or timing out waiting for it)
         /// completes the evaluation process.
         /// We change state to IDLE and send the queued commands, if any.
+        /// If there was an command currently being evaluated, this method returns
+        /// false so that the caller does not invoke the processing in the app.
+        /// Otherwise it could lead to serious problems with managing timing 
+        /// of commands and respones.
         /// </summary>
-        private void HandleBestMove()
+        /// <returns></returns>
+        private bool HandleBestMove()
         {
+            bool result = true;
+
             _goFenCompleted = _goFenCurrent;
             _goFenCurrent = null;
+
+            EngineLog.Message("Best Move rx: NodeId=" + _goFenCompleted.NodeId.ToString() + " TreeId=" + _goFenCompleted.TreeId.ToString());
 
             lock (_lockStateChange)
             {
@@ -484,8 +493,12 @@ namespace EngineService
 
                 if (_goFenQueued != null)
                 {
+                    result = false;
+                    EngineLog.Message("Discarding bestmove for NodeId=" + _goFenCompleted.NodeId.ToString());
+
                     _goFenCurrent = _goFenQueued;
                     _goFenQueued = null;
+                    EngineLog.Message("Sending queued command for NodeId=" + _goFenCurrent.NodeId.ToString() + ", State = " + _currentState.ToString()); 
                     SendFenGoCommand(_goFenCurrent);
                     stopPoll = false;
                 }
@@ -495,6 +508,8 @@ namespace EngineService
                     StopMessagePollTimer();
                 }
             }
+
+            return result;
         }
     }
 }

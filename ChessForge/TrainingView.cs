@@ -1295,11 +1295,11 @@ namespace ChessForge
                                 mi.Visibility = _moveContext == MoveContext.WORKBOOK_COMMENT ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnTrainRestartGame":
-                                mi.Header = "Roll Back Game to" + midTxt + "Move " + moveTxt;
+                                mi.Header = "Restart game from " + midTxt + "Move " + moveTxt;
                                 mi.Visibility = _moveContext == MoveContext.GAME ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "_mnRollBackTraining":
-                                mi.Header = "Roll Back Training to " + moveTxt;
+                                mi.Header = "Restart Training from " + moveTxt;
                                 mi.Visibility = (_moveContext == MoveContext.LINE || _moveContext == MoveContext.WORKBOOK_COMMENT) ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "_mnTrainSwitchToWorkbook":
@@ -1582,24 +1582,25 @@ namespace ChessForge
                             {
                                 _nodeIdSuppressFloatingBoard = _lastClickedNode.NodeId;
                             }
-                        }
-                        if (e.ClickCount == 2)
-                        {
-                            // restart training
-                            if (_moveContext == MoveContext.LINE || _moveContext == MoveContext.WORKBOOK_COMMENT)
+
+                            bool restart = false;
+                            // if not the last move, ask if to restart
+                            if (EngineGame.GetLastGameNode() != _lastClickedNode)
                             {
-                                RollbackTraining();
+                                string moveTxt = BuildMoveTextForMenu(_lastClickedNode, out _);
+                                if (MessageBox.Show("Restart from " + moveTxt + "?", "Chess Forge Training", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                                {
+                                    RestartFromClickedMove(_moveContext);
+                                    restart = true;
+                                }
                             }
-                            else if (_moveContext == MoveContext.GAME)
+
+                            if (!restart)
                             {
-                                RestartGameAfter(null, null);
-                            }
-                        }
-                        else
-                        {
-                            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
-                            {
-                                RequestMoveEvaluation();
+                                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                                {
+                                    RequestMoveEvaluation();
+                                }
                             }
                         }
                     }
@@ -1632,6 +1633,22 @@ namespace ChessForge
                     // A user move was clicked so rollback to the previous Workbook move
                     RollbackToWorkbookMove();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Restarts training form the clicked mode.
+        /// </summary>
+        /// <param name="context"></param>
+        private void RestartFromClickedMove(MoveContext context)
+        {
+            if (context == MoveContext.LINE || _moveContext == MoveContext.WORKBOOK_COMMENT)
+            {
+                RollbackTraining();
+            }
+            else if (context == MoveContext.GAME)
+            {
+                RestartGameAfter(null, null);
             }
         }
 

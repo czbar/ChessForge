@@ -271,8 +271,7 @@ namespace ChessForge
         {
             AppLog.Message("Application Closing");
 
-            StopEvaluation(true, false);
-
+            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
             EngineMessageProcessor.ChessEngineService.StopEngine();
 
             if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE
@@ -1919,17 +1918,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The user requested to roll back training to the most recently clicked
-        /// Workbook move.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnTrainSwitchToWorkbook_Click(object sender, RoutedEventArgs e)
-        {
-            UiTrainingView.RollbackToWorkbookMove();
-        }
-
-        /// <summary>
         /// The user requested evaluation of the most recently clicked run/move.
         /// </summary>
         /// <param name="sender"></param>
@@ -2036,7 +2024,6 @@ namespace ChessForge
             {
             }
         }
-
 
         /// <summary>
         /// Handles Exercise import from the Exercises context menu
