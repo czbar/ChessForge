@@ -8,6 +8,7 @@ using ChessPosition;
 using System.Xml.Linq;
 using ChessPosition.GameTree;
 using ChessForge;
+using System.Windows.Controls;
 
 namespace GameTree
 {
@@ -91,6 +92,10 @@ namespace GameTree
             TreeId = TreeManager.GetNewTreeId();
             OpsManager = new EditOperationsManager(this);
             Header.SetContentType(contentType);
+
+            // create GUID (it will be overwritten when parsing entities from a file)
+            Header.SetHeaderValue(PgnHeaders.KEY_GUID, Guid.NewGuid().ToString());
+
             if (contentType == GameData.ContentType.EXERCISE)
             {
                 ShowTreeLines = false;

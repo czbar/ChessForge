@@ -67,6 +67,11 @@ namespace GameTree
         public const string KEY_FEN_STRING = "FEN";
 
         /// <summary>
+        /// Guid as a unique identifier of a ChessForge element.
+        /// </summary>
+        public const string KEY_GUID = "Guid";
+
+        /// <summary>
         /// The number of a chapter. The same number may appear in multiple
         /// Variation Trees thus organizing them into chapters.
         /// </summary>

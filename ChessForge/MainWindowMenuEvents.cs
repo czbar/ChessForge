@@ -1223,7 +1223,7 @@ namespace ChessForge
                 {
                     VariationTree tree = TreeUtils.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                    CopyHeaderFromGame(tree, chapter.GetActiveModelGameHeader());
+                    CopyHeaderFromGame(tree, chapter.GetActiveModelGameHeader(), false);
                     CreateNewExerciseFromTree(tree);
                 }
             }
@@ -1247,7 +1247,7 @@ namespace ChessForge
                 {
                     VariationTree tree = TreeUtils.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                    CopyHeaderFromGame(tree, chapter.StudyTree.Tree.Header);
+                    CopyHeaderFromGame(tree, chapter.StudyTree.Tree.Header, false);
                     if (string.IsNullOrEmpty(tree.Header.GetEventName(out _)))
                     {
                         tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, "Study Tree after " + MoveUtils.BuildSingleMoveText(nd, true, true));
@@ -1283,12 +1283,16 @@ namespace ChessForge
         /// </summary>
         /// <param name="tree"></param>
         /// <param name="header"></param>
-        private void CopyHeaderFromGame(VariationTree tree, GameHeader header)
+        private void CopyHeaderFromGame(VariationTree tree, GameHeader header, bool overrideGuid = false)
         {
             tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE, header.GetWhitePlayer(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, header.GetBlackPlayer(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_RESULT, header.GetResult(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, header.GetEventName(out _));
+            if (overrideGuid)
+            {
+                tree.Header.SetHeaderValue(PgnHeaders.KEY_GUID, header.GetGuid(out _));
+            }
             tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, header.GetDate(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_ROUND, header.GetRound(out _));
 

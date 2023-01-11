@@ -658,7 +658,6 @@ namespace ChessForge
                 workbook.GameBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetGameBoardOrientation(out _));
                 workbook.ExerciseBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetExerciseBoardOrientation(out _));
 
-                //ProcessGames(ref WorkbookManager.VariationTreeList, ref workbook);
                 ProcessGames(ref GameList, ref workbook);
             }
             catch
@@ -732,6 +731,8 @@ namespace ChessForge
 
                 try
                 {
+                    // force creation of GUID if absent
+                    gm.Header.GetGuid(out _);
                     chapter.AddGame(gm, GameData.ContentType.GENERIC);
                 }
                 catch (Exception ex)
