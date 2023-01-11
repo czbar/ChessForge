@@ -412,7 +412,6 @@ namespace ChessForge
             int index = -1;
 
             GameUnit unit = new GameUnit(typ);
-            //VariationTree tree = new VariationTree(typ);
             PgnGameParser pp = new PgnGameParser(gm.GameText, unit.Tree, gm.Header.GetFenString());
             unit.Tree.Header = gm.Header;
 

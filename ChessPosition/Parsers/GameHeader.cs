@@ -291,6 +291,26 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the Guid.
+        /// If there is no Guid, generates and saves it.
+        /// </summary>
+        /// <returns></returns>
+        public string GetGuid(out string key)
+        {
+            string headerKey = PgnHeaders.KEY_GUID;
+            key = headerKey;
+
+            string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            if (string.IsNullOrEmpty(value))
+            {
+                value = Guid.NewGuid().ToString();
+                SetHeaderValue(PgnHeaders.KEY_GUID, value);
+            }
+
+            return value;
+        }
+
+        /// <summary>
         /// Returns the training side value.
         /// </summary>
         /// <returns></returns>

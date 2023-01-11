@@ -611,7 +611,7 @@ namespace ChessForge
                 || AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME && TrainingSession.IsTrainingInProgress)
             {
                 TrainingSession.IsContinuousEvaluation = true;
-                UiTrainingView.RequestMoveEvaluation(true);
+                UiTrainingView.RequestMoveEvaluation(ActiveVariationTreeId, true);
             }
 
             e.Handled = true;

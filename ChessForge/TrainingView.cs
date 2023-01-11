@@ -308,7 +308,7 @@ namespace ChessForge
 
                 if (TrainingSession.IsContinuousEvaluation)
                 {
-                    RequestMoveEvaluation(true);
+                    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
                 }
 
                 RemoveIntroParas();
@@ -437,7 +437,7 @@ namespace ChessForge
             ReportLastMoveVsWorkbook();
             if (TrainingSession.IsContinuousEvaluation)
             {
-                RequestMoveEvaluation(true);
+                RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
             }
         }
 
@@ -463,7 +463,7 @@ namespace ChessForge
             _mainWin.DisplayPosition(_lastClickedNode);
             if (TrainingSession.IsContinuousEvaluation)
             {
-                RequestMoveEvaluation(true);
+                RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
             }
         }
 
@@ -749,7 +749,7 @@ namespace ChessForge
                         if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                         {
                             AppLog.Message("Request next node in LINE EVAL");
-                            RequestMoveEvaluation();
+                            RequestMoveEvaluation(_mainWin.ActiveVariationTreeId);
                         }
                         else if (!TrainingSession.IsContinuousEvaluation && EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
                         {
@@ -995,7 +995,7 @@ namespace ChessForge
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
             if (TrainingSession.IsContinuousEvaluation)
             {
-                RequestMoveEvaluation(true);
+                RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
             }
         }
 
@@ -1328,7 +1328,7 @@ namespace ChessForge
         /// Alternatively, can be called as part of line 
         /// evaluation.
         /// </summary>
-        public void RequestMoveEvaluation(bool lastMove = false)
+        public void RequestMoveEvaluation(int treeId, bool lastMove = false)
         {
             if (!EngineMessageProcessor.IsEngineAvailable)
             {
@@ -1357,7 +1357,7 @@ namespace ChessForge
                 else
                 {
                     AppLog.Message("TrainingView:RequestMoveEvaluation " + nd.LastMoveAlgebraicNotation);
-                    EngineMessageProcessor.RequestMoveEvaluationInTraining(nd);
+                    EngineMessageProcessor.RequestMoveEvaluationInTraining(nd, treeId);
                 }
             }
             else
@@ -1401,13 +1401,13 @@ namespace ChessForge
                         {
                             SetGameRunsToEvaluate(gamePara, null);
                         }
-                        RequestMoveEvaluation();
+                        RequestMoveEvaluation(_mainWin.ActiveVariationTreeId);
                     }
                     else if (paraName.StartsWith(_par_game_moves_))
                     {
                         EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, EvaluationManager.LineSource.TRAINING_LINE);
                         SetGameRunsToEvaluate(parentPara, _lastClickedRun);
-                        RequestMoveEvaluation();
+                        RequestMoveEvaluation(_mainWin.ActiveVariationTreeId);
                     }
                 }
             });
@@ -1424,7 +1424,7 @@ namespace ChessForge
             {
                 _lastClickedNode = EngineGame.GetLastGameNode();
             }
-            EngineMessageProcessor.RequestMoveEvaluationInTraining(_lastClickedNode);
+            EngineMessageProcessor.RequestMoveEvaluationInTraining(_lastClickedNode, _mainWin.ActiveVariationTreeId);
         }
 
         /// <summary>
@@ -1599,7 +1599,7 @@ namespace ChessForge
                             {
                                 if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
                                 {
-                                    RequestMoveEvaluation();
+                                    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId);
                                 }
                             }
                         }
@@ -1637,7 +1637,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Restarts training form the clicked mode.
+        /// Restarts training from the clicked mode.
         /// </summary>
         /// <param name="context"></param>
         private void RestartFromClickedMove(MoveContext context)

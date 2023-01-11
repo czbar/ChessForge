@@ -344,28 +344,37 @@ namespace ChessForge
             _mainWin.Title = _mainWin.APP_NAME + " - " + Path.GetFileName(WorkbookFilePath);
         }
 
+
+        // A lock preventing serving of multiple save requests.
+        // Otherwise manual save while AutoSave is running
+        // could corrupt the file
+        private static object _lockFileSave = new object();
+
         /// <summary>
-        /// Saves the workbook to a file.
-        /// It will only write to the file if the 
-        /// session's file type is CHF
+        /// Saves the workbook to its PGN file.
         /// </summary>
         public static void SaveWorkbookFile(bool checkDirty = false)
         {
             if (checkDirty && !IsDirty)
+            {
                 return;
-
-            try
-            {
-                if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
-                {
-                    string chfText = WorkbookFileTextBuilder.BuildWorkbookText();
-                    File.WriteAllText(WorkbookFilePath, chfText);
-                    IsDirty = false;
-                }
             }
-            catch (Exception ex)
+
+            lock (_lockFileSave)
             {
-                MessageBox.Show("Failed to save file: " + ex.Message, "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                try
+                {
+                    if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
+                    {
+                        string chfText = WorkbookFileTextBuilder.BuildWorkbookText();
+                        File.WriteAllText(WorkbookFilePath, chfText);
+                        IsDirty = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed to save file: " + ex.Message, "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
