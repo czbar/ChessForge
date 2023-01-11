@@ -416,7 +416,7 @@ namespace ChessForge
                 UiDgActiveLine.SelectedCells.Clear();
 
 
-                EngineMessageProcessor.RequestMoveEvaluation(idx, nd);
+                EngineMessageProcessor.RequestMoveEvaluation(idx, nd, ActiveVariationTreeId);
             }
             else
             {
@@ -1924,7 +1924,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnTrainEvalMove_Click(object sender, RoutedEventArgs e)
         {
-            UiTrainingView.RequestMoveEvaluation();
+            UiTrainingView.RequestMoveEvaluation(ActiveVariationTree.TreeId);
         }
 
         /// <summary>

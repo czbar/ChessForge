@@ -190,6 +190,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns id of the Active Tree or -1 if no active tree.
+        /// </summary>
+        public int ActiveVariationTreeId
+        {
+            get
+            {
+                if (SessionWorkbook == null || SessionWorkbook.ActiveVariationTree == null)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return SessionWorkbook.ActiveVariationTree.TreeId;
+                }
+            }
+        }
+
+        /// <summary>
         /// The variation tree currently being processed
         /// </summary>
         public GameUnit ActiveGameUnit
@@ -1514,13 +1532,13 @@ namespace ChessForge
             }
             EvaluationManager.SetSingleNodeToEvaluate(nd);
             // stop the timer to prevent showing garbage after position is set but engine has not received our commands yet
-            EngineMessageProcessor.RequestPositionEvaluation(nd, Configuration.EngineMpv, 0);
+            EngineMessageProcessor.RequestPositionEvaluation(nd, ActiveVariationTreeId, Configuration.EngineMpv, 0);
         }
 
         private void EvaluateActiveLineSelectedPosition(TreeNode nd)
         {
             EvaluationManager.SetSingleNodeToEvaluate(nd);
-            EngineMessageProcessor.RequestPositionEvaluation(nd, Configuration.EngineMpv, 0);
+            EngineMessageProcessor.RequestPositionEvaluation(nd, ActiveVariationTreeId, Configuration.EngineMpv, 0);
         }
 
         public void ResetEvaluationProgressBar()
@@ -1574,7 +1592,7 @@ namespace ChessForge
                 }
             }
 
-            EngineMessageProcessor.RequestEngineMove(startNode);
+            EngineMessageProcessor.RequestEngineMove(startNode, ActiveVariationTreeId);
         }
 
         /// <summary>
@@ -1607,7 +1625,7 @@ namespace ChessForge
                 if (EngineGame.CurrentState == EngineGame.GameState.ENGINE_THINKING)
                 {
                     Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-                    EngineMessageProcessor.RequestEngineMove(EngineGame.GetLastGameNode());
+                    EngineMessageProcessor.RequestEngineMove(EngineGame.GetLastGameNode(), ActiveVariationTreeId);
                 }
             }
         }
