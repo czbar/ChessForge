@@ -1073,9 +1073,19 @@ namespace ChessForge
         {
             _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
 
-            LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
-
-            EventChapterHeaderClicked(sender, e);
+            try
+            {
+                Run r = (Run)e.Source;
+                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapterId >= 0)
+                {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                    ExpandChapterList(chapter, false);
+                }
+            }
+            catch
+            {
+            }
         }
 
 
