@@ -198,8 +198,7 @@ namespace ChessForge
         /// <returns></returns>
         public static TreeNode GetNodeByIds(int treeId, int nodeId)
         {
-            // TODO: handle treeId
-            if (treeId < 0 && ActiveVariationTree != null)
+            if (ActiveVariationTree != null && ActiveVariationTree.TreeId == treeId)
             {
                 return ActiveVariationTree.GetNodeFromNodeId(nodeId);
             }
