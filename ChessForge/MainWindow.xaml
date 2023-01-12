@@ -91,11 +91,11 @@
                         <MenuItem x:Name="UiMnExitTraining" Header="Exit Training" Click="UiMnStopTraining_Click"/>
                     </MenuItem>
                     <MenuItem Header="Edit" Margin="0,0,0,0">
-                        <MenuItem Header="Annotations" Click="UiMnAnnotationsDialog_Click" >
-                        </MenuItem>
+                        <MenuItem x:Name="UiMnAnnotations" Header="Annotations" Click="UiMnAnnotationsDialog_Click" />
                         <Separator />
-                        <MenuItem Header="Undo" Click="UiMnUndo_Click" InputGestureText="Ctrl+Z" >
-                        </MenuItem>
+                        <MenuItem x:Name="UiMnMergeChapters" Header="Merge Chapters" Click="UiMnMergeChapters_Click" />
+                        <Separator />
+                        <MenuItem x:Name="UiMnUndo" Header="Undo" Click="UiMnUndo_Click" InputGestureText="Ctrl+Z" />
                     </MenuItem>
                     <MenuItem Header="View" Margin="0,0,0,0">
                         <MenuItem Header="Flip Board" Click="UiMnFlipBoard_Click" InputGestureText="Ctrl+F" >

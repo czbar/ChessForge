@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using static ChessForge.WorkbookOperation;
+using ChessPosition.GameTree;
 
 namespace ChessForge
 {
@@ -114,6 +115,115 @@ namespace ChessForge
             if (InvokeAnnotationsDialog(nd))
             {
                 ActiveTreeView.InsertOrUpdateCommentRun(nd);
+            }
+        }
+
+        /// <summary>
+        /// The users requesting merging of chapters.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnMergeChapters_Click(object sender, RoutedEventArgs e)
+        {
+            SelectChaptersDialog dlg = new SelectChaptersDialog(WorkbookManager.SessionWorkbook, "Select Chapters to Merge")
+            {
+                Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
+                Top = AppStateManager.MainWin.ChessForgeMain.Top + 100,
+                Topmost = false,
+                Owner = AppStateManager.MainWin
+            };
+
+            dlg.ShowDialog();
+            if (dlg.ExitOK)
+            {
+                int mergedCount = 0;
+                VariationTree merged = null;
+                string title = "";
+
+                foreach (SelectedChapter ch in dlg.ChapterList)
+                {
+                    if (ch.IsSelected)
+                    {
+                        if (mergedCount == 0)
+                        {
+                            title = ch.Chapter.Title;
+                            merged = ch.Chapter.StudyTree.Tree;
+                        }
+                        else
+                        {
+                            merged = WorkbookTreeMerge.MergeWorkbooks(merged, ch.Chapter.StudyTree.Tree);
+                        }
+                        mergedCount++;
+                    }
+                }
+
+                if (mergedCount > 1 && _chaptersView != null)
+                {
+                    Chapter mergedChapter = WorkbookManager.SessionWorkbook.CreateNewChapter(merged);
+                    mergedChapter.SetTitle(title);
+                    CopyGamesToChapter(mergedChapter, dlg.ChapterList);
+                    CopyExercisesToChapter(mergedChapter, dlg.ChapterList);
+                    DeleteChapters(dlg.ChapterList);
+
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    AppStateManager.DoEvents();
+                    _chaptersView.BringChapterIntoView(WorkbookManager.GetLastChapterId(WorkbookManager.SessionWorkbook));
+                }
+
+                AppStateManager.IsDirty = mergedCount > 1;
+            }
+        }
+
+        /// <summary>
+        /// Copies all games from the selected chapters in the list to the target chapter
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="sources"></param>
+        private void CopyGamesToChapter(Chapter target, ObservableCollection<SelectedChapter> sources)
+        {
+            foreach (SelectedChapter ch in sources)
+            {
+                if (ch.IsSelected)
+                {
+                    foreach (GameUnit game in ch.Chapter.ModelGames)
+                    {
+                        target.AddModelGame(game.Tree);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Copies all exercises from the selected chapters in the list to the target chapter
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="sources"></param>
+        private void CopyExercisesToChapter(Chapter target, ObservableCollection<SelectedChapter> sources)
+        {
+            foreach (SelectedChapter ch in sources)
+            {
+                if (ch.IsSelected)
+                {
+                    foreach (GameUnit item in ch.Chapter.Exercises)
+                    {
+                        target.AddExercise(item.Tree);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deletes all selected chapters.
+        /// </summary>
+        /// <param name="sources"></param>
+        private void DeleteChapters(ObservableCollection<SelectedChapter> chapters)
+        {
+            foreach (SelectedChapter ch in chapters)
+            {
+                if (ch.IsSelected)
+                {
+                    WorkbookManager.SessionWorkbook.DeleteChapter(ch.Chapter);
+                }
             }
         }
 
@@ -930,10 +1040,10 @@ namespace ChessForge
                     {
                         Chapter targetChapter = WorkbookManager.SessionWorkbook.Chapters[selectedChapterIndex];
 
-                        GameUnit game = activeChapter.GetModelGameAtIndex(gameIndex);                        
+                        GameUnit game = activeChapter.GetModelGameAtIndex(gameIndex);
                         targetChapter.ModelGames.Add(game);
                         activeChapter.ModelGames.Remove(game);
-                        
+
                         targetChapter.IsModelGamesListExpanded = true;
                         WorkbookManager.SessionWorkbook.ActiveChapter = targetChapter;
                         targetChapter.ActiveModelGameIndex = targetChapter.GetModelGameCount() - 1;
