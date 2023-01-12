@@ -1029,12 +1029,17 @@ namespace ChessForge
         /// </summary>
         /// <param name="thumb"></param>
         /// <param name="e"></param>
-        private void ShowFloatingBoard(TreeNode thumb, MouseEventArgs e)
+        private void ShowFloatingBoard(TreeNode thumb, MouseEventArgs e, PieceColor sideAtBottom = PieceColor.None)
         {
             if (thumb != null)
             {
+                if (sideAtBottom == PieceColor.None)
+                {
+                    sideAtBottom = WorkbookManager.SessionWorkbook.TrainingSideConfig;
+                }
+
                 Point pt = e.GetPosition(_mainWin.UiRtbChaptersView);
-                _mainWin.ChaptersFloatingBoard.FlipBoard(WorkbookManager.SessionWorkbook.TrainingSideConfig == PieceColor.Black);
+                _mainWin.ChaptersFloatingBoard.FlipBoard(sideAtBottom == PieceColor.Black);
                 _mainWin.ChaptersFloatingBoard.DisplayPosition(thumb, false);
                 int xOffset = 20;
                 int yOffset = 20;
@@ -1519,7 +1524,7 @@ namespace ChessForge
                 GameUnit exer = chapter.GetExerciseAtIndex(index);
                 TreeNode thumb = exer.Tree.GetThumbnail();
 
-                ShowFloatingBoard(thumb, e);
+                ShowFloatingBoard(thumb, e, exer.Tree.RootNode.ColorToMove);
             }
             catch
             {
