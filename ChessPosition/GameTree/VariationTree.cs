@@ -121,6 +121,26 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Sets a new thumbnail for the tree.
+        /// Clears the previous thumbnail.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void SetThumbnail(TreeNode nd)
+        {
+            foreach (TreeNode node in Nodes)
+            {
+                if (nd.NodeId == node.NodeId)
+                {
+                    node.IsThumbnail = true;
+                }
+                else
+                {
+                    node.IsThumbnail = false;
+                }
+            }
+        }
+
+        /// <summary>
         /// Adds a new Node to the Workbook
         /// and to its parent node 
         /// </summary>

@@ -816,6 +816,9 @@ namespace ChessForge
                             case "_mnWorkbookEvalLine":
                                 menuItem.IsEnabled = tree != null && tree.Nodes.Count > 1;
                                 break;
+                            case "_mnStudyTree_MarkThumbnail":
+                                menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
+                                break;
                         }
                     }
                 }
@@ -873,6 +876,9 @@ namespace ChessForge
                             case "_mnGame_DeleteModelGame":
                                 menuItem.IsEnabled = gameIndex >= 0;
                                 break;
+                            case "_mnGame_MarkThumbnail":
+                                menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
+                                break;
                         }
                     }
                 }
@@ -928,6 +934,9 @@ namespace ChessForge
                                 break;
                             case "_mnExerc_EvalLine":
                                 menuItem.Visibility = Visibility.Collapsed;
+                                break;
+                            case "_mnExerc_MarkThumbnail":
+                                menuItem.IsEnabled = exerciseIndex >= 0 && lastClickedNodeId >= 0;
                                 break;
                         }
                     }
