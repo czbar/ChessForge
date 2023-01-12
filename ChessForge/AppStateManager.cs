@@ -936,7 +936,7 @@ namespace ChessForge
                                 menuItem.Visibility = Visibility.Collapsed;
                                 break;
                             case "_mnExerc_MarkThumbnail":
-                                menuItem.IsEnabled = exerciseIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = exerciseIndex >= 0;
                                 break;
                         }
                     }

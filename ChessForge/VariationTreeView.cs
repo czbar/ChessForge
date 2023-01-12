@@ -480,14 +480,14 @@ namespace ChessForge
         /// Marks the current node as the thumbnail and clears
         /// previous selection.
         /// </summary>
-        public void MarkSelectedNodeAsThumbnail()
+        public void MarkSelectedNodeAsThumbnail(bool defaultToRootNode = false)
         {
             try
             {
                 TreeNode nd = GetSelectedNode();
-                if (nd != null)
+                if (nd != null || defaultToRootNode)
                 {
-                    _mainVariationTree.SetThumbnail(nd);
+                    _mainVariationTree.SetThumbnail(nd == null ? _mainVariationTree.RootNode : nd);
                     AppStateManager.IsDirty = true;
                 }
             }

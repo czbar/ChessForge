@@ -392,6 +392,8 @@ namespace ChessForge
                 r.FontWeight = FontWeights.Bold;
             }
             r.MouseDown += EventStudyTreeHeaderClicked;
+            r.MouseMove += EventStudyTreeHeaderHovered;
+            r.MouseLeave += EventStudyTreeHeaderLeft;
             para.Inlines.Add(r);
             return r;
         }
@@ -420,6 +422,8 @@ namespace ChessForge
                     Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.ModelGames[i].Tree.Header.BuildGameHeaderLine(), true);
                     rGame.Name = _run_model_game_ + i.ToString();
                     rGame.MouseDown += EventModelGameRunClicked;
+                    rGame.MouseMove += EventModelGameRunHovered;
+                    rGame.MouseLeave += EventModelGameRunLeft;
                     if (LastClickedItemType == WorkbookManager.ItemType.MODEL_GAME && i == chapter.ActiveModelGameIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
                     {
                         rGame.FontWeight = FontWeights.Bold;
@@ -455,6 +459,8 @@ namespace ChessForge
                     Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.Exercises[i].Tree.Header.BuildGameHeaderLine(true), true);
                     rGame.Name = _run_exercise_ + i.ToString();
                     rGame.MouseDown += EventExerciseRunClicked;
+                    rGame.MouseMove += EventExerciseRunHovered;
+                    rGame.MouseLeave += EventExerciseRunLeft;
                     if (LastClickedItemType == WorkbookManager.ItemType.EXERCISE && i == chapter.ActiveExerciseIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
                     {
                         rGame.FontWeight = FontWeights.Bold;
@@ -968,7 +974,82 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Returns the Chapter object and the item (Game or Exercise)
+        /// index deduced the Run's name.
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private Chapter GetChapterAndItemIndexFromRun(Run r, out int index)
+        {
+            index = -1;
+            Chapter chapter = null;
+            try
+            {
+                int chapterId = GetChapterIdFromChildRun(r);
+                chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                index = TextUtils.GetIdFromPrefixedString(r.Name);
+            }
+            catch
+            {
+            }
 
+            return chapter;
+        }
+
+        /// <summary>
+        /// Selects the header od the passed chapter in this view.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="forceExpand"></param>
+        private void SelectChapterHeader(Chapter chapter, bool forceExpand)
+        {
+            if (chapter == null)
+            {
+                return;
+            }
+
+            if (WorkbookManager.SessionWorkbook.ActiveChapter != null && WorkbookManager.SessionWorkbook.ActiveChapter == chapter)
+            {
+                ExpandChapterList(chapter, forceExpand);
+            }
+            else
+            {
+                if (forceExpand)
+                {
+                    chapter.IsViewExpanded = true;
+                }
+                SelectChapter(chapter.Id, false);
+            }
+        }
+
+        /// <summary>
+        /// Displays the floating board for the passed position.
+        /// </summary>
+        /// <param name="thumb"></param>
+        /// <param name="e"></param>
+        private void ShowFloatingBoard(TreeNode thumb, MouseEventArgs e)
+        {
+            if (thumb != null)
+            {
+                Point pt = e.GetPosition(_mainWin.UiRtbChaptersView);
+                _mainWin.ChaptersFloatingBoard.FlipBoard(WorkbookManager.SessionWorkbook.TrainingSideConfig == PieceColor.Black);
+                _mainWin.ChaptersFloatingBoard.DisplayPosition(thumb, false);
+                int xOffset = 20;
+                int yOffset = 20;
+                _mainWin.UiVbChaptersFloatingBoard.Margin = new Thickness(pt.X + xOffset, pt.Y + yOffset, 0, 0);
+                _mainWin.ShowChaptersFloatingBoard(true);
+            }
+        }
+
+        /// <summary>
+        /// Hides the floating chessboard.
+        /// </summary>
+        private void HideFloatingBoard()
+        {
+            _mainWin.ShowChaptersFloatingBoard(false);
+        }
 
         //*******************************************************************************************
         //
@@ -1076,35 +1157,14 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// The mouse no longer hovers over the chapter, so hide the floating board.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EventChapterHeaderLeft(object sender, MouseEventArgs e)
         {
-            _mainWin.ShowChaptersFloatingBoard(false);
-        }
-
-        /// <summary>
-        /// Selects the header od the passed chapter in this view.
-        /// </summary>
-        /// <param name="chapter"></param>
-        /// <param name="forceExpand"></param>
-        private void SelectChapterHeader(Chapter chapter, bool forceExpand)
-        {
-            if (chapter == null)
-            {
-                return;
-            }
-
-            if (WorkbookManager.SessionWorkbook.ActiveChapter != null && WorkbookManager.SessionWorkbook.ActiveChapter == chapter)
-            {
-                ExpandChapterList(chapter, forceExpand);
-            }
-            else
-            {
-                if (forceExpand)
-                {
-                    chapter.IsViewExpanded = true;
-                }
-                SelectChapter(chapter.Id, false);
-            }
+            HideFloatingBoard();
         }
 
         /// <summary>
@@ -1132,6 +1192,61 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Event handler invoked when a Study Tree was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventStudyTreeHeaderClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+
+                LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
+
+                Run r = (Run)e.Source;
+                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapterId >= 0)
+                {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                    WorkbookManager.LastClickedChapterId = chapterId;
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        SelectChapter(chapterId, true);
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.STUDY_TREE);
+                        SelectChapter(chapterId, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventStudyTreeRunClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Display Study Tree's Thumbnail.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventStudyTreeHeaderHovered(object sender, MouseEventArgs e)
+        {
+            EventChapterHeaderHovered(sender, e);
+        }
+
+        /// <summary>
+        /// The mouse no longer hovers over the study tree, so hide the floating board.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventStudyTreeHeaderLeft(object sender, MouseEventArgs e)
+        {
+            HideFloatingBoard();
+        }
 
         /// <summary>
         /// Event handler invoked when the Model Games header was clicked.
@@ -1244,42 +1359,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Event handler invoked when a Study Tree was clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventStudyTreeHeaderClicked(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
-
-                LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
-
-                Run r = (Run)e.Source;
-                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
-                if (chapterId >= 0)
-                {
-                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
-                    WorkbookManager.LastClickedChapterId = chapterId;
-                    if (e.ChangedButton == MouseButton.Left)
-                    {
-                        SelectChapter(chapterId, true);
-                    }
-                    else if (e.ChangedButton == MouseButton.Right)
-                    {
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.STUDY_TREE);
-                        SelectChapter(chapterId, false);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("Exception in EventStudyTreeRunClicked(): " + ex.Message);
-            }
-        }
-
-        /// <summary>
         /// Event handler invoked when a Model Game Run was clicked.
         /// </summary>
         /// <param name="sender"></param>
@@ -1337,6 +1416,38 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Display Model Game's Thumbnail.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventModelGameRunHovered(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                Run r = (Run)e.Source;
+
+                Chapter chapter = GetChapterAndItemIndexFromRun(r, out int index);
+                GameUnit game = chapter.GetModelGameAtIndex(index);
+                TreeNode thumb = game.Tree.GetThumbnail();
+
+                ShowFloatingBoard(thumb, e);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// The mouse no longer hovers over the Model Game, so hide the floating board.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventModelGameRunLeft(object sender, MouseEventArgs e)
+        {
+            HideFloatingBoard();
+        }
+
+        /// <summary>
         /// Event handler invoked when an Exercise Run was clicked.
         /// </summary>
         /// <param name="sender"></param>
@@ -1391,6 +1502,38 @@ namespace ChessForge
             {
                 AppLog.Message("Exception in EventExerciseRunClicked(): " + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Display Exercise's Thumbnail.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventExerciseRunHovered(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                Run r = (Run)e.Source;
+
+                Chapter chapter = GetChapterAndItemIndexFromRun(r, out int index);
+                GameUnit exer = chapter.GetExerciseAtIndex(index);
+                TreeNode thumb = exer.Tree.GetThumbnail();
+
+                ShowFloatingBoard(thumb, e);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// The mouse no longer hovers over the Exercise, so hide the floating board.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventExerciseRunLeft(object sender, MouseEventArgs e)
+        {
+            HideFloatingBoard();
         }
 
         /// <summary>

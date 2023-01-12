@@ -569,7 +569,7 @@
                                     <MenuItem x:Name="_mnExerc_EvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnExerc_EvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_MarkThumbnail_Click" />
+                                    <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_ExerciseMarkThumbnail_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >

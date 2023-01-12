@@ -564,6 +564,7 @@ namespace ChessForge
         private static string BuildCommandAndCommentText(TreeNode nd)
         {
             if (nd.IsBookmark
+                || nd.IsThumbnail
                 || !string.IsNullOrEmpty(nd.Comment)
                 || !string.IsNullOrEmpty(nd.EngineEvaluation)
                 || nd.QuizPoints != 0
