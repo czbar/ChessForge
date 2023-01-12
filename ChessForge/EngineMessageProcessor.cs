@@ -542,7 +542,6 @@ namespace ChessForge
                     // Info and Best Move messages will begin with TreeId
                     message = ParseMessagePrefix(message, out int treeId, out int nodeId, out GoFenCommand.EvaluationMode mode);
 
-                    // TODO: only process if treeId and nodeId are what is supposed to be evaluated
                     TreeNode evalNode = AppStateManager.GetNodeByIds(treeId, nodeId);
                     _lastMessageNode = evalNode;
 
