@@ -121,6 +121,43 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Sets a new thumbnail for the tree.
+        /// Clears the previous thumbnail.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void SetThumbnail(TreeNode nd)
+        {
+            foreach (TreeNode node in Nodes)
+            {
+                if (nd.NodeId == node.NodeId)
+                {
+                    node.IsThumbnail = true;
+                }
+                else
+                {
+                    node.IsThumbnail = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns the Thumbnail node if marked.
+        /// </summary>
+        /// <returns></returns>
+        public TreeNode GetThumbnail()
+        {
+            foreach (TreeNode nd in Nodes)
+            {
+                if (nd.IsThumbnail)
+                {
+                    return nd;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Adds a new Node to the Workbook
         /// and to its parent node 
         /// </summary>
@@ -379,6 +416,9 @@ namespace GameTree
                     case ChfCommands.Command.BOOKMARK:
                     case ChfCommands.Command.BOOKMARK_V2:
                         AddBookmark(nd);
+                        break;
+                    case ChfCommands.Command.THUMBNAIL:
+                        nd.IsThumbnail = true;
                         break;
                     case ChfCommands.Command.ENGINE_EVALUATION:
                     case ChfCommands.Command.ENGINE_EVALUATION_V2:

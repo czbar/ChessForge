@@ -19,7 +19,7 @@ namespace ChessForge
     /// </summary>
     public partial class MainWindow : Window
     {
-        // prefix use for manu items showing recent files
+        // prefix used for menu items showing recent files
         public readonly string MENUITEM_RECENT_FILES_PREFIX = "RecentFiles";
 
         public readonly string APP_NAME = "Chess Forge";
@@ -139,9 +139,14 @@ namespace ChessForge
         public ChessBoard MainChessBoard;
 
         /// <summary>
-        /// Chessboard shown over moves in different views
+        /// Chessboard shown over moves in Training View
         /// </summary>
-        public ChessBoardSmall FloatingChessBoard;
+        public ChessBoardSmall TrainingFloatingBoard;
+
+        /// <summary>
+        /// Chessboard shown over moves in Chapters View
+        /// </summary>
+        public ChessBoardSmall ChaptersFloatingBoard;
 
         /// <summary>
         /// The RichTextBox based comment box
@@ -272,7 +277,8 @@ namespace ChessForge
             // main chess board
             MainChessBoard = new ChessBoard(true, MainCanvas, UiImgMainChessboard, null, true, true);
 
-            FloatingChessBoard = new ChessBoardSmall(_cnvFloat, _imgFloatingBoard, null, true, false);
+            TrainingFloatingBoard = new ChessBoardSmall(_cnvTrainingFloat, _imgTrainingFloatingBoard, null, true, false);
+            ChaptersFloatingBoard = new ChessBoardSmall(_cnvChaptersFloat, _imgChaptersFloatingBoard, null, true, false);
 
 
             BookmarkManager.InitBookmarksGui(this);
@@ -1831,11 +1837,27 @@ namespace ChessForge
             BoardCommentBox.HideFlashAnnouncement();
         }
 
-        public void ShowFloatingChessboard(bool visible)
+        /// <summary>
+        /// Displays Floating Board in Training View
+        /// </summary>
+        /// <param name="visible"></param>
+        public void ShowTrainingFloatingBoard(bool visible)
         {
             this.Dispatcher.Invoke(() =>
             {
-                UiVbFloatingChessboard.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
+                UiVbTrainingFloatingBoard.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
+            });
+        }
+
+        /// <summary>
+        /// Displays Floating Board in Chapters View
+        /// </summary>
+        /// <param name="visible"></param>
+        public void ShowChaptersFloatingBoard(bool visible)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                UiVbChaptersFloatingBoard.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
             });
         }
 

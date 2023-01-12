@@ -356,7 +356,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void TrainingView_OnPreviewMouseMove(object sender, MouseEventArgs e)
         {
-            ShowFloatingChessboard(false);
+            ShowTrainingFloatingBoard(false);
         }
 
         //**************************************************************

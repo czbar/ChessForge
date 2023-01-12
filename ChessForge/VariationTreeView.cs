@@ -477,6 +477,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Marks the current node as the thumbnail and clears
+        /// previous selection.
+        /// </summary>
+        public void MarkSelectedNodeAsThumbnail(bool defaultToRootNode = false)
+        {
+            try
+            {
+                TreeNode nd = GetSelectedNode();
+                if (nd != null || defaultToRootNode)
+                {
+                    _mainVariationTree.SetThumbnail(nd == null ? _mainVariationTree.RootNode : nd);
+                    AppStateManager.IsDirty = true;
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Makes a copy of the currently selected line
         /// and creates a new chapter for it.
         /// </summary>

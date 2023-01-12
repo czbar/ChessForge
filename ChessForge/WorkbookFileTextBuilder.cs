@@ -564,6 +564,7 @@ namespace ChessForge
         private static string BuildCommandAndCommentText(TreeNode nd)
         {
             if (nd.IsBookmark
+                || nd.IsThumbnail
                 || !string.IsNullOrEmpty(nd.Comment)
                 || !string.IsNullOrEmpty(nd.EngineEvaluation)
                 || nd.QuizPoints != 0
@@ -579,6 +580,13 @@ namespace ChessForge
                 if (nd.IsBookmark)
                 {
                     string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.BOOKMARK_V2);
+                    sb.Append("[" + sCmd + "]");
+                }
+
+                // Process a Thumbnail command
+                if (nd.IsThumbnail)
+                {
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.THUMBNAIL);
                     sb.Append("[" + sCmd + "]");
                 }
 

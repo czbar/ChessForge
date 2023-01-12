@@ -1175,6 +1175,34 @@ namespace ChessForge
         //
         //*****************************************************************************
 
+
+        /// <summary>
+        /// Marks the current node as a Thumbnail for the current tree.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMn_MarkThumbnail_Click(object sender, RoutedEventArgs e)
+        {
+            if (ActiveTreeView != null)
+            {
+                ActiveTreeView.MarkSelectedNodeAsThumbnail();
+            }
+        }
+
+        /// <summary>
+        /// Marks the current node as a Thumbnail for the current tree
+        /// if it is exercise.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMn_ExerciseMarkThumbnail_Click(object sender, RoutedEventArgs e)
+        {
+            if (ActiveTreeView != null)
+            {
+                ActiveTreeView.MarkSelectedNodeAsThumbnail(true);
+            }
+        }
+
         /// <summary>
         /// Creates a new Model Game from the Chapters View context menu.
         /// If successfully returned, adds the Tree to the list of Model Games
