@@ -380,6 +380,9 @@ namespace GameTree
                     case ChfCommands.Command.BOOKMARK_V2:
                         AddBookmark(nd);
                         break;
+                    case ChfCommands.Command.THUMBNAIL:
+                        nd.IsThumbnail = true;
+                        break;
                     case ChfCommands.Command.ENGINE_EVALUATION:
                     case ChfCommands.Command.ENGINE_EVALUATION_V2:
                         if (tokens.Length > 1)

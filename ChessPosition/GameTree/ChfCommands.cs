@@ -23,6 +23,7 @@ namespace GameTree
             ENGINE_EVALUATION,
             ENGINE_EVALUATION_V2,
             QUIZ_POINTS,
+            THUMBNAIL,
 
             ARROWS,
             CIRCLES
@@ -38,6 +39,7 @@ namespace GameTree
             ["%chf-eev"] = Command.ENGINE_EVALUATION,  // DEPRECATED
             ["%eval"] = Command.ENGINE_EVALUATION_V2,
             ["%quiz"] = Command.QUIZ_POINTS,
+            ["%thmb"] = Command.THUMBNAIL,
 
             ["%csl"] = Command.CIRCLES,
             ["%cal"] = Command.ARROWS

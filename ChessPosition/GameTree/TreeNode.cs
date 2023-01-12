@@ -141,6 +141,11 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Whether a position from this node is used as a thumbnail.
+        /// </summary>
+        public bool IsThumbnail = false;
+
+        /// <summary>
         /// General purpose property to assist certain
         /// processing scenarios e.g. analysing a submitted
         /// solution.

@@ -582,6 +582,13 @@ namespace ChessForge
                     sb.Append("[" + sCmd + "]");
                 }
 
+                // Process a Thumbnail command
+                if (nd.IsThumbnail)
+                {
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.THUMBNAIL);
+                    sb.Append("[" + sCmd + "]");
+                }
+
                 // Process an Evaluation ChfCommand
                 if (!string.IsNullOrEmpty(nd.EngineEvaluation))
                 {
