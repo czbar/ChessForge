@@ -233,12 +233,12 @@
                                 <FlowDocument>
                                 </FlowDocument>
                             </RichTextBox>
-                            <Viewbox x:Name="UiVbFloatingChessboard" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Margin="0,0" Height="160" Width="160"  >
-                                <Canvas x:Name="_cnvFloat" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244">
+                            <Viewbox x:Name="UiVbTrainingFloatingBoard" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Margin="0,0" Height="160" Width="160"  >
+                                <Canvas x:Name="_cnvTrainingFloat" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244">
                                     <Canvas.Background>
                                         <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                     </Canvas.Background>
-                                    <Image x:Name="_imgFloatingBoard" Margin="2,2,0,0" Source="Resources/Images/ChessBoardGreySmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" />
+                                    <Image x:Name="_imgTrainingFloatingBoard" Margin="2,2,0,0" Source="Resources/Images/ChessBoardGreySmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" />
                                 </Canvas>
                             </Viewbox>
                         </Grid>
@@ -292,6 +292,14 @@
                                 <FlowDocument>
                                 </FlowDocument>
                             </RichTextBox>
+                            <Viewbox x:Name="UiVbChaptersFloatingBoard" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Margin="0,0" Height="160" Width="160"  >
+                                <Canvas x:Name="_cnvChaptersFloat" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244">
+                                    <Canvas.Background>
+                                        <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                    </Canvas.Background>
+                                    <Image x:Name="_imgChaptersFloatingBoard" Margin="2,2,0,0" Source="Resources/Images/ChessBoardGreySmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" />
+                                </Canvas>
+                            </Viewbox>
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabStudyTree"  Header="Study" GotFocus="UiTabStudyTree_GotFocus" IsVisibleChanged="UiTabStudyTree_IsVisibleChanged" >

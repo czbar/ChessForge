@@ -141,6 +141,23 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the Thumbnail node if marked.
+        /// </summary>
+        /// <returns></returns>
+        public TreeNode GetThumbnail()
+        {
+            foreach (TreeNode nd in Nodes)
+            {
+                if (nd.IsThumbnail)
+                {
+                    return nd;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Adds a new Node to the Workbook
         /// and to its parent node 
         /// </summary>

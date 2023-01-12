@@ -1272,7 +1272,7 @@ namespace ChessForge
                 return;
 
             _blockFloatingBoard = true;
-            _mainWin.ShowFloatingChessboard(false);
+            _mainWin.ShowTrainingFloatingBoard(false);
 
             _mainWin.Dispatcher.Invoke(() =>
             {
@@ -1570,7 +1570,7 @@ namespace ChessForge
                     }
                     else if (e.ChangedButton == MouseButton.Left)
                     {
-                        _mainWin.ShowFloatingChessboard(false);
+                        _mainWin.ShowTrainingFloatingBoard(false);
                         if (_lastClickedNode != null)
                         {
                             // flip the visibility for the floating board
@@ -1688,13 +1688,13 @@ namespace ChessForge
             if (nodeId >= 0)
             {
                 Point pt = e.GetPosition(_mainWin.UiRtbTrainingProgress);
-                _mainWin.FloatingChessBoard.FlipBoard(_mainWin.MainChessBoard.IsFlipped);
-                _mainWin.FloatingChessBoard.DisplayPosition(_mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId), false);
+                _mainWin.TrainingFloatingBoard.FlipBoard(_mainWin.MainChessBoard.IsFlipped);
+                _mainWin.TrainingFloatingBoard.DisplayPosition(_mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId), false);
                 int yOffset = r.Name.StartsWith(_run_stem_move_) ? 25 : -165;
-                _mainWin.UiVbFloatingChessboard.Margin = new Thickness(pt.X, pt.Y + yOffset, 0, 0);
+                _mainWin.UiVbTrainingFloatingBoard.Margin = new Thickness(pt.X, pt.Y + yOffset, 0, 0);
                 if (_nodeIdSuppressFloatingBoard != nodeId)
                 {
-                    _mainWin.ShowFloatingChessboard(true);
+                    _mainWin.ShowTrainingFloatingBoard(true);
                     _nodeIdSuppressFloatingBoard = -1;
                 }
             }

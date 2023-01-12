@@ -264,6 +264,8 @@ namespace ChessForge
                 }
                 rTitle.Name = _run_chapter_title_ + chapter.Id.ToString();
                 rTitle.MouseDown += EventChapterHeaderClicked;
+                rTitle.MouseMove += EventChapterHeaderHovered;
+                rTitle.MouseLeave += EventChapterHeaderLeft;
                 para.Inlines.Add(rTitle);
 
                 if (chapter.IsViewExpanded)
@@ -279,6 +281,11 @@ namespace ChessForge
             {
                 return null;
             }
+        }
+
+        private void RTitle_MouseMove(object sender, MouseEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -719,7 +726,7 @@ namespace ChessForge
 
                 if (allow)
                 {
-                    index = chapter.ActiveModelGameIndex;    
+                    index = chapter.ActiveModelGameIndex;
                     return chapter.ModelGames[chapter.ActiveModelGameIndex];
                 }
                 else
@@ -1035,6 +1042,43 @@ namespace ChessForge
             {
                 AppLog.Message("Exception in EventChapterRunClicked(): " + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Display Study Tree's Thumbnail.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventChapterHeaderHovered(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                Run r = (Run)e.Source;
+                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapterId >= 0)
+                {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                    TreeNode thumb = chapter.StudyTree.Tree.GetThumbnail();
+                    if (thumb != null)
+                    {
+                        Point pt = e.GetPosition(_mainWin.UiRtbChaptersView);
+                        _mainWin.ChaptersFloatingBoard.FlipBoard(WorkbookManager.SessionWorkbook.TrainingSideConfig == PieceColor.Black);
+                        _mainWin.ChaptersFloatingBoard.DisplayPosition(thumb, false);
+                        int xOffset = 20;
+                        int yOffset = 20;
+                        _mainWin.UiVbChaptersFloatingBoard.Margin = new Thickness(pt.X + xOffset, pt.Y + yOffset, 0, 0);
+                        _mainWin.ShowChaptersFloatingBoard(true);
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        private void EventChapterHeaderLeft(object sender, MouseEventArgs e)
+        {
+            _mainWin.ShowChaptersFloatingBoard(false);
         }
 
         /// <summary>

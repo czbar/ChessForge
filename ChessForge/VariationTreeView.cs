@@ -488,6 +488,7 @@ namespace ChessForge
                 if (nd != null)
                 {
                     _mainVariationTree.SetThumbnail(nd);
+                    AppStateManager.IsDirty = true;
                 }
             }
             catch
