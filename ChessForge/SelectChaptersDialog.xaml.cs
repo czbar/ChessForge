@@ -38,7 +38,7 @@ namespace ChessForge
         /// for the user to choose from.
         /// </summary>
         /// <param name="workbook"></param>
-        public SelectChaptersDialog(Workbook workbook)
+        public SelectChaptersDialog(Workbook workbook, string title = null)
         {
             _workbook = workbook;
 
@@ -51,6 +51,10 @@ namespace ChessForge
                 ChapterList.Add(sel);
             }
             InitializeComponent();
+            if (title != null)
+            {
+                UiLblInstruct.Content = title;
+            }
 
             UiLvChapters.ItemsSource = ChapterList;
         }
