@@ -8,8 +8,8 @@ using GameTree;
 namespace ChessForge
 {
     /// <summary>
-    /// Encapsulates Study, Model Game or Exercise tree
-    /// togehter with related objects.
+    /// Encapsulates Study or Model Game or Exercise tree
+    /// together with related objects.
     /// </summary>
     public class GameUnit
     {
