@@ -74,6 +74,18 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Whether a tab with an active Tree View is currently open.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsTreeViewTabActive()
+        {
+            return ActiveVariationTree != null && 
+                (ActiveTab == WorkbookManager.TabViewType.STUDY 
+                || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
+                || ActiveTab == WorkbookManager.TabViewType.EXERCISE);
+        }
+
+        /// <summary>
         /// The most recent active tab in the Manual Review tab control.
         /// This value does not include the Training tab which is in a different
         /// tab control.
@@ -528,6 +540,10 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 MainWin.UiRtbStudyTreeView.IsEnabled = true;
+
+                MainWin.UiMnAnnotations.IsEnabled = false;
+                MainWin.UiMnMergeChapters.IsEnabled = false;
+
                 switch (CurrentLearningMode)
                 {
                     case LearningMode.Mode.IDLE:
@@ -1029,7 +1045,7 @@ namespace ChessForge
                 //_mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
                 //_mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
                 MainWin.ResizeTabControl(MainWin.UiTabCtrlTraining, TabControlSizeMode.SHOW_ENGINE_GAME_LINE);
-//                ShowGuiEngineGameLine(true);
+                //                ShowGuiEngineGameLine(true);
 
                 _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
                 _mainWin.UiTabCtrlTraining.Visibility = Visibility.Visible;
@@ -1115,6 +1131,9 @@ namespace ChessForge
                 _mainWin.UiMnExitTraining.IsEnabled = false;
 
                 _mainWin.UiMnciPlayEngine.IsEnabled = true;
+
+                _mainWin.UiMnAnnotations.IsEnabled = AppStateManager.IsTreeViewTabActive();
+                _mainWin.UiMnMergeChapters.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
             });
         }
 
@@ -1157,9 +1176,13 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
+                MainWin.UiMnAnnotations.IsEnabled = false;
+                MainWin.UiMnMergeChapters.IsEnabled = false;
+
                 switch (CurrentLearningMode)
                 {
                     case LearningMode.Mode.MANUAL_REVIEW:
+                        ConfigureMenusForManualReview();
                         _mainWin.UiMnciStartTraining.Visibility = Visibility.Visible;
                         _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Visible;
                         _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
