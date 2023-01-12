@@ -19,7 +19,7 @@ namespace ChessForge
     /// </summary>
     public partial class MainWindow : Window
     {
-        // prefix use for manu items showing recent files
+        // prefix used for menu items showing recent files
         public readonly string MENUITEM_RECENT_FILES_PREFIX = "RecentFiles";
 
         public readonly string APP_NAME = "Chess Forge";
