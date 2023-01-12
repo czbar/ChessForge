@@ -1152,6 +1152,10 @@ namespace ChessForge
                         _mainWin.ChaptersFloatingBoard.DisplayPosition(thumb, false);
                         int xOffset = 20;
                         int yOffset = 20;
+                        if (_mainWin.UiRtbChaptersView.Height < pt.Y + 180)
+                        {
+                            yOffset = -170;
+                        }
                         _mainWin.UiVbChaptersFloatingBoard.Margin = new Thickness(pt.X + xOffset, pt.Y + yOffset, 0, 0);
                         _mainWin.ShowChaptersFloatingBoard(true);
                     }
