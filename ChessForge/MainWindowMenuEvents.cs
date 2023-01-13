@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using static ChessForge.WorkbookOperation;
 using ChessPosition.GameTree;
+using System.Security.Cryptography;
 
 namespace ChessForge
 {
@@ -706,10 +707,9 @@ namespace ChessForge
             {
                 ObservableCollection<GameData> games = new ObservableCollection<GameData>();
 
-                //int gamesCount = WorkbookManager.ReadPgnFile(fileName, ref games, GameData.ContentType.GENERIC, GameData.ContentType.MODEL_GAME);
                 int gamesCount = WorkbookManager.ReadPgnFile(fileName, ref games, GameData.ContentType.GENERIC, GameData.ContentType.NONE);
 
-                // if this is ChessForge Workbook, list the chapters and allow the user to copy them over
+                // if this is a ChessForge Workbook, list the chapters and allow the user to copy them over
                 if (WorkbookManager.IsChessForgeWorkbook(ref games))
                 {
                     Workbook workbook = new Workbook();
@@ -744,61 +744,108 @@ namespace ChessForge
                 }
                 else
                 {
-                    WorkbookManager.RemoveGamesOfWrongType(ref games, GameData.ContentType.GENERIC, GameData.ContentType.MODEL_GAME);
                     CreateChapterFromNewGames(gamesCount, ref games, fileName);
                 }
             }
         }
 
         /// <summary>
-        /// Lets the user select games to merge into a StudyTree
-        /// for which a new chapter will be created.
+        /// Lets the user select games exercises from which to create a new Chapter.
         /// </summary>
         /// <param name="gamesCount"></param>
         /// <param name="games"></param>
         /// <param name="fileName"></param>
         private void CreateChapterFromNewGames(int gamesCount, ref ObservableCollection<GameData> games, string fileName)
         {
-            bool success = false;
-
-            Chapter previousActiveChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-            Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
-
-            if (gamesCount > 0)
+            try
             {
-                int processedGames = WorkbookManager.MergeGames(ref chapter.StudyTree.Tree, ref games, out bool processed);
-                if (processedGames == 0)
+                Chapter previousActiveChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
+
+                if (gamesCount > 0)
                 {
-                    if (processed)
+                    if (SelectArticlesFromPgnFile(ref games, SelectGamesDialog.Mode.IMPORT_INTO_NEW_CHAPTER, out bool copyGames, out bool createStudy, out _))
                     {
-                        MessageBox.Show("No valid games found. No new chapter has been created.", "PGN Import", MessageBoxButton.OK, MessageBoxImage.Error);
+                        if (createStudy)
+                        {
+                            WorkbookManager.MergeGames(ref chapter.StudyTree.Tree, ref games);
+                        }
+                        // content type may have been reset to GENERIC in MergeGames above
+                        chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
+
+                        CopySelectedItemsToChapter(chapter, copyGames, games);
+
+                        _chaptersView.BuildFlowDocumentForChaptersView();
+                        SelectChapterById(chapter.Id, false);
+                        AppStateManager.DoEvents();
+                        _chaptersView.BringChapterIntoView(chapter.Id);
                     }
+                    AppStateManager.IsDirty = true;
                 }
                 else
                 {
-                    success = true;
-                }
-                // content type may have been reset to GENERIC in MergeGames above
-                chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
-            }
-            else
-            {
-                ShowNoGamesError(GameData.ContentType.GENERIC, fileName);
-            }
+                    ShowNoGamesError(GameData.ContentType.GENERIC, fileName);
 
-            if (success)
-            {
-                _chaptersView.BuildFlowDocumentForChaptersView();
-                SelectChapterById(chapter.Id, false);
-                AppStateManager.DoEvents();
-                _chaptersView.BringChapterIntoView(chapter.Id);
+                    // delete the above created chapter and activate the previously active one
+                    WorkbookManager.SessionWorkbook.ActiveChapter = previousActiveChapter;
+                    WorkbookManager.SessionWorkbook.Chapters.Remove(chapter);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // delete the above created chapter and activate the previously active one
-                WorkbookManager.SessionWorkbook.ActiveChapter = previousActiveChapter;
-                WorkbookManager.SessionWorkbook.Chapters.Remove(chapter);
+                DebugUtils.ShowDebugMessage(ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Copies selected items from the list
+        /// into the passed chapter
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="games"></param>
+        public void CopySelectedItemsToChapter(Chapter chapter, bool copyGames, ObservableCollection<GameData> games)
+        {
+            foreach (GameData gd in games)
+            {
+                if (gd.IsSelected)
+                {
+                    if (gd.GetContentType() == GameData.ContentType.EXERCISE)
+                    {
+                        chapter.AddArticle(gd, GameData.ContentType.EXERCISE, GameData.ContentType.EXERCISE);
+                        chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
+                    }
+                    else if (copyGames && (gd.GetContentType() == GameData.ContentType.GENERIC || gd.GetContentType() == GameData.ContentType.MODEL_GAME))
+                    {
+                        chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, GameData.ContentType.MODEL_GAME);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Calls the SelectGamesDialog to let the user select Games and/or Exercise
+        /// from the passed list.
+        /// </summary>
+        /// <param name="games"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+        public bool SelectArticlesFromPgnFile(ref ObservableCollection<GameData> games, SelectGamesDialog.Mode mode, out bool createStudy, out bool copyGames, out bool multiChapter)
+        {
+            SelectGamesDialog dlg = new SelectGamesDialog(ref games, mode)
+            {
+                Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
+                Top = AppStateManager.MainWin.ChessForgeMain.Top + 100,
+                Topmost = false,
+                Owner = AppStateManager.MainWin
+            };
+
+            bool res = dlg.ShowDialog() == true;
+            
+            createStudy = dlg.CreateStudy;
+            copyGames = dlg.CopyGames;
+            multiChapter = dlg.MultiChapter;
+
+            return res;
         }
 
         /// <summary>
@@ -1165,7 +1212,7 @@ namespace ChessForge
                                     {
                                         try
                                         {
-                                            int index = chapter.AddGame(games[i], contentType, targetcontentType);
+                                            int index = chapter.AddArticle(games[i], contentType, targetcontentType);
                                             if (index < 0)
                                             {
                                                 skippedDueToType++;
@@ -1663,25 +1710,20 @@ namespace ChessForge
         /// <returns></returns>
         private bool ShowSelectGamesDialog(GameData.ContentType contentType, ref ObservableCollection<GameData> games)
         {
-            string dlgTitle = "";
-            if (contentType == GameData.ContentType.MODEL_GAME)
+            SelectGamesDialog.Mode mode = SelectGamesDialog.Mode.IMPORT_GAMES;
+            if (contentType == GameData.ContentType.EXERCISE)
             {
-                dlgTitle = "Select Model Games to Import";
-            }
-            else if (contentType == GameData.ContentType.EXERCISE)
-            {
-                dlgTitle = "Select Exercises to Import";
+                mode = SelectGamesDialog.Mode.IMPORT_EXERCISES;
             }
 
-            SelectGamesDialog dlg = new SelectGamesDialog(ref games, dlgTitle)
+            SelectGamesDialog dlg = new SelectGamesDialog(ref games, mode)
             {
                 Left = ChessForgeMain.Left + 100,
                 Top = ChessForgeMain.Top + 100,
                 Topmost = false,
                 Owner = AppStateManager.MainWin
             };
-            dlg.ShowDialog();
-            return dlg.ExitOK;
+            return dlg.ShowDialog() == true;
         }
 
         /// <summary>
