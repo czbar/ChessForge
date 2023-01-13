@@ -215,7 +215,7 @@ namespace ChessForge
         /// <summary>
         /// The variation tree currently being processed
         /// </summary>
-        public GameUnit ActiveGameUnit
+        public Article ActiveArticle
         {
             get
             {
@@ -227,7 +227,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    return SessionWorkbook.ActiveGameUnit;
+                    return SessionWorkbook.ActiveArticle;
                 }
             }
         }
@@ -866,7 +866,7 @@ namespace ChessForge
         /// <returns></returns>
         private bool CanMovePiece(SquareCoords sqNorm)
         {
-            if (IsActiveMainBoard() && (ActiveGameUnit == null || ActiveGameUnit.Solver == null || ActiveGameUnit.Solver.IsMovingAllowed()))
+            if (IsActiveMainBoard() && (ActiveArticle == null || ActiveArticle.Solver == null || ActiveArticle.Solver.IsMovingAllowed()))
             {
                 PieceColor pieceColor = MainChessBoard.GetPieceColor(sqNorm);
 
@@ -1646,9 +1646,9 @@ namespace ChessForge
         {
             // stop the timer
             Timers.Stop(AppTimers.TimerId.SOLVING_GUESS_MOVE_MADE);
-            if (ActiveGameUnit.Solver != null)
+            if (ActiveArticle.Solver != null)
             {
-                ActiveGameUnit.Solver.ProcessUserMoveInGuessMode();
+                ActiveArticle.Solver.ProcessUserMoveInGuessMode();
             }
         }
 
@@ -2072,7 +2072,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public bool InvokeAnnotationsDialog(TreeNode nd)
         {
-            if (!WorkbookManager.IsAnyGameUnitTabActive)
+            if (!WorkbookManager.IsAnyArticleTabActive)
             {
                 return false;
             }

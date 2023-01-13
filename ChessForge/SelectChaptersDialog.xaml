@@ -14,6 +14,11 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <ListView x:Name="UiLvChapters" Grid.Row="1" ItemsSource="{Binding}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Focusable" Value="False"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.Resources>
                 <DataTemplate x:Key="SelectionCell">
                     <StackPanel Orientation="Horizontal">

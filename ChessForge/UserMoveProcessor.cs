@@ -278,7 +278,7 @@ namespace ChessForge
 
                 try
                 {
-                    if (AppStateManager.MainWin.ActiveGameUnit.Solver.GetAppSolvingMode() == VariationTree.SolvingMode.GUESS_MOVE)
+                    if (AppStateManager.MainWin.ActiveArticle.Solver.GetAppSolvingMode() == VariationTree.SolvingMode.GUESS_MOVE)
                     {
                         AppStateManager.MainWin.Timers.Start(AppTimers.TimerId.SOLVING_GUESS_MOVE_MADE);
                     }

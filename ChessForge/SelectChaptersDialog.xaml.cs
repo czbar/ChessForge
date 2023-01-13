@@ -34,7 +34,7 @@ namespace ChessForge
         public ObservableCollection<SelectedChapter> ChapterList = new ObservableCollection<SelectedChapter>();
 
         /// <summary>
-        /// Initializes the dialog abd builds a list of chapters
+        /// Initializes the dialog and builds a list of chapters
         /// for the user to choose from.
         /// </summary>
         /// <param name="workbook"></param>

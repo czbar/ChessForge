@@ -10,10 +10,15 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="400"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="140"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="UiLvGames" Grid.Row="1" ItemsSource="{Binding}">
+        <ListView x:Name="UiLvGames" Grid.Row="1" ItemsSource="{Binding}" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Focusable" Value="False"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.Resources>
                 <DataTemplate x:Key="SelectionCell">
                     <StackPanel Orientation="Horizontal">
@@ -24,15 +29,19 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn CellTemplate="{StaticResource SelectionCell}"  Width="30"/>
-                    <GridViewColumn Header="Game" DisplayMemberBinding="{Binding Path=GameTitle}" Width="640"/>
-                    <GridViewColumn Header="Date"  DisplayMemberBinding="{Binding Path=Date}" Width="100"/>
+                    <GridViewColumn Header="Item" DisplayMemberBinding="{Binding Path=GameTitleForList}" Width="640"/>
+                    <GridViewColumn Header="Date"  DisplayMemberBinding="{Binding Path=Date}" Width="90"/>
                 </GridView>
             </ListView.View>
         </ListView>
         <CheckBox x:Name="UiCbSelectAll" IsChecked="True" Grid.Row="1" Content="" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Checked="UiCbSelectAll_Checked" Unchecked="UiCbSelectAll_Unchecked"/>
-        <Button x:Name="UiBtnOk" Content="OK" HorizontalAlignment="Left" Margin="320,10,0,0" Grid.Row="2" Width="60" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" Content="Cancel" HorizontalAlignment="Right" Margin="400,10,320,0" Grid.Row="2" Width="60" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
-        <Label x:Name="UiLblInstruct" Content="Select Games" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="OK" HorizontalAlignment="Left" Margin="580,42,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="False" Content="Cancel" HorizontalAlignment="Left" Margin="580,77,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Label x:Name="UiLblInstruct" Content="Select Items" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
+        <RadioButton x:Name="UiRbStudyAndGames" Content="Merge Games into Study Tree and Copy them into Games section" HorizontalAlignment="Left" Margin="30,50,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbStudyOnly" Content="Merge Games into Study Tree only" HorizontalAlignment="Left" Margin="30,75,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbGamesOnly" Content="Copy Games into Games section only" HorizontalAlignment="Left" Margin="30,100,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <CheckBox x:Name="UiCbMultiChapter" Content="Create Chapter per Game" HorizontalAlignment="Left" Margin="30,15,0,0" Grid.Row="2" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

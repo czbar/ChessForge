@@ -100,11 +100,21 @@ namespace GameTree
         /// <summary>
         /// The property that binds in the SelectGames ListView control.
         /// </summary>
-        public string GameTitle
+        public string GameTitleForList
         {
             get
             {
-                return Header.BuildGameHeaderLine();
+                ContentType typ = GetContentType();
+                string prefix = string.Empty;
+                if (typ == ContentType.GENERIC || typ == ContentType.MODEL_GAME)
+                {
+                    prefix = "Game: ";
+                }
+                else if (typ == ContentType.EXERCISE)
+                {
+                    prefix = "Exercise: ";
+                }
+                return prefix + Header.BuildGameHeaderLine(true);
             }
         }
 

@@ -108,7 +108,7 @@ namespace ChessForge
                         else
                         {
                             // if we can't move because we're in exercise hiding mode, try to help the user
-                            if (ActiveGameUnit != null && ActiveGameUnit.Solver != null && !ActiveGameUnit.Solver.IsMovingAllowed())
+                            if (ActiveArticle != null && ActiveArticle.Solver != null && !ActiveArticle.Solver.IsMovingAllowed())
                             {
                                 if (_exerciseTreeView != null)
                                 {

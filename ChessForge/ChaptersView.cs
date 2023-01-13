@@ -150,13 +150,13 @@ namespace ChessForge
         /// <param name="chapterId"></param>
         /// <param name="contentType"></param>
         /// <param name="index"></param>
-        public void BringGameUnitIntoView(int chapterId, GameData.ContentType contentType, int index)
+        public void BringArticleIntoView(int chapterId, GameData.ContentType contentType, int index)
         {
             Paragraph paraChapter = FindChapterParagraph(chapterId);
             if (paraChapter != null)
             {
                 AppStateManager.DoEvents();
-                Run r = FindGameUnitRunInParagraph(paraChapter, contentType, index);
+                Run r = FindArticleRunInParagraph(paraChapter, contentType, index);
                 r?.BringIntoView();
             }
         }
@@ -312,13 +312,13 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Finds the Run for a game unit with at a given index in a given chapter.
+        /// Finds the Run for an Article with at a given index in a given chapter.
         /// </summary>
         /// <param name="paraChapter"></param>
         /// <param name="contentType"></param>
         /// <param name="index"></param>
         /// <returns></returns>
-        private Run FindGameUnitRunInParagraph(Paragraph paraChapter, GameData.ContentType contentType, int index)
+        private Run FindArticleRunInParagraph(Paragraph paraChapter, GameData.ContentType contentType, int index)
         {
             Run r = null;
 
@@ -589,8 +589,8 @@ namespace ChessForge
         /// <param name="upOrDown"></param>
         public void MoveSelection(bool upOrDown)
         {
-            GetSelectedUnit(out WorkbookManager.ItemType itemType, out Chapter chapter, out int unitIndex);
-            MoveSelectedItemUpOrDown(itemType, chapter, unitIndex, upOrDown);
+            GetSelectedItem(out WorkbookManager.ItemType itemType, out Chapter chapter, out int articleIndex);
+            MoveSelectedItemUpOrDown(itemType, chapter, articleIndex, upOrDown);
         }
 
         /// <summary>
@@ -605,8 +605,8 @@ namespace ChessForge
         /// </summary>
         /// <param name="itemType"></param>
         /// <param name="chapter"></param>
-        /// <param name="unitIndex"></param>
-        private void MoveSelectedItemUpOrDown(WorkbookManager.ItemType itemType, Chapter chapter, int unitIndex, bool upOrDown)
+        /// <param name="articleIndex"></param>
+        private void MoveSelectedItemUpOrDown(WorkbookManager.ItemType itemType, Chapter chapter, int articleIndex, bool upOrDown)
         {
             int index = -1;
 
@@ -620,23 +620,23 @@ namespace ChessForge
                     }
                     break;
                 case WorkbookManager.ItemType.MODEL_GAME:
-                    GameUnit newSelGame = GetAdjacentModelGame(out index, upOrDown);
+                    Article newSelGame = GetAdjacentModelGame(out index, upOrDown);
                     if (newSelGame != null)
                     {
                         chapter.ActiveModelGameIndex = index;
                         RebuildChapterParagraph(chapter);
                         _mainWin.DisplayPosition(newSelGame.Tree.GetFinalPosition());
-                        BringGameUnitIntoView(chapter.Id, GameData.ContentType.MODEL_GAME, index);
+                        BringArticleIntoView(chapter.Id, GameData.ContentType.MODEL_GAME, index);
                     }
                     break;
                 case WorkbookManager.ItemType.EXERCISE:
-                    GameUnit newSelExercise = GetAdjacentExercise(out index, upOrDown);
+                    Article newSelExercise = GetAdjacentExercise(out index, upOrDown);
                     if (newSelExercise != null)
                     {
                         chapter.ActiveExerciseIndex = index;
                         RebuildChapterParagraph(chapter);
                         _mainWin.DisplayPosition(newSelExercise.Tree.RootNode);
-                        BringGameUnitIntoView(chapter.Id, GameData.ContentType.EXERCISE, index);
+                        BringArticleIntoView(chapter.Id, GameData.ContentType.EXERCISE, index);
                     }
                     break;
             }
@@ -704,7 +704,7 @@ namespace ChessForge
         /// <param name="index"></param>
         /// <param name="upOrDown"></param>
         /// <returns></returns>
-        private GameUnit GetAdjacentModelGame(out int index, bool upOrDown)
+        private Article GetAdjacentModelGame(out int index, bool upOrDown)
         {
             index = -1;
 
@@ -752,7 +752,7 @@ namespace ChessForge
         /// <param name="index"></param>
         /// <param name="upOrDown"></param>
         /// <returns></returns>
-        private GameUnit GetAdjacentExercise(out int index, bool upOrDown)
+        private Article GetAdjacentExercise(out int index, bool upOrDown)
         {
             index = -1;
 
@@ -796,29 +796,29 @@ namespace ChessForge
 
 
         /// <summary>
-        /// Returns details of the currently selected unit which could be chapter, study tree, game or exercise.
+        /// Returns details of the currently selected item which could be chapter, study tree, game or exercise.
         /// </summary>
         /// <param name="itemType"></param>
         /// <param name="chapter"></param>
-        /// <param name="unitIndex"></param>
-        private void GetSelectedUnit(out WorkbookManager.ItemType itemType, out Chapter chapter, out int unitIndex)
+        /// <param name="articleIndex"></param>
+        private void GetSelectedItem(out WorkbookManager.ItemType itemType, out Chapter chapter, out int articleIndex)
         {
             itemType = WorkbookManager.ItemType.NONE;
             chapter = null;
-            unitIndex = -1;
+            articleIndex = -1;
 
             try
             {
                 itemType = LastClickedItemType == WorkbookManager.ItemType.NONE ? WorkbookManager.ItemType.CHAPTER : LastClickedItemType;
                 chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                unitIndex = -1;
+                articleIndex = -1;
                 if (itemType == WorkbookManager.ItemType.MODEL_GAME)
                 {
-                    unitIndex = chapter.ActiveModelGameIndex;
+                    articleIndex = chapter.ActiveModelGameIndex;
                 }
                 else if (itemType == WorkbookManager.ItemType.EXERCISE)
                 {
-                    unitIndex = chapter.ActiveExerciseIndex;
+                    articleIndex = chapter.ActiveExerciseIndex;
                 }
             }
             catch { }
@@ -1391,7 +1391,7 @@ namespace ChessForge
                 WorkbookManager.LastClickedModelGameIndex = gameIndex;
                 WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
 
-                GameUnit activeGame = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameAtIndex(gameIndex);
+                Article activeGame = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameAtIndex(gameIndex);
                 if (activeGame != null)
                 {
                     _mainWin.DisplayPosition(activeGame.Tree.GetFinalPosition());
@@ -1436,7 +1436,7 @@ namespace ChessForge
                 Run r = (Run)e.Source;
 
                 Chapter chapter = GetChapterAndItemIndexFromRun(r, out int index);
-                GameUnit game = chapter.GetModelGameAtIndex(index);
+                Article game = chapter.GetModelGameAtIndex(index);
                 TreeNode thumb = game.Tree.GetThumbnail();
 
                 ShowFloatingBoard(thumb, e);
@@ -1480,7 +1480,7 @@ namespace ChessForge
                 WorkbookManager.LastClickedExerciseIndex = exerciseIndex;
                 WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = exerciseIndex;
 
-                GameUnit activeEcercise = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseAtIndex(exerciseIndex);
+                Article activeEcercise = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseAtIndex(exerciseIndex);
                 if (activeEcercise != null)
                 {
                     _mainWin.DisplayPosition(activeEcercise.Tree.RootNode);
@@ -1525,7 +1525,7 @@ namespace ChessForge
                 Run r = (Run)e.Source;
 
                 Chapter chapter = GetChapterAndItemIndexFromRun(r, out int index);
-                GameUnit exer = chapter.GetExerciseAtIndex(index);
+                Article exer = chapter.GetExerciseAtIndex(index);
                 TreeNode thumb = exer.Tree.GetThumbnail();
 
                 ShowFloatingBoard(thumb, e, exer.Tree.RootNode.ColorToMove);

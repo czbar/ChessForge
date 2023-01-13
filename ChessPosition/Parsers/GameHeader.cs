@@ -37,9 +37,18 @@ namespace GameTree
         /// Shallow copy to use in Associated Tree.
         /// </summary>
         /// <returns></returns>
-        public GameHeader CloneMe()
+        public GameHeader CloneMe(bool deep)
         {
-            return (GameHeader)this.MemberwiseClone();
+            GameHeader header = this.MemberwiseClone() as GameHeader;
+            if (deep)
+            {
+                header._headers = new List<KeyValuePair<string, string>>();
+                foreach (KeyValuePair<string, string> pair in this._headers)
+                {
+                    header._headers.Add(pair);
+                }
+            }
+            return header;
         }
 
         /// <summary>
