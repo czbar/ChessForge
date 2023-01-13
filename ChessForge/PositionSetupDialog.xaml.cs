@@ -918,7 +918,7 @@ namespace ChessForge
             {
                 TreeNode ndRoot = _tree.Nodes[0].CloneMe(false);
                 VariationTree fixedTree = TreeUtils.CreateNewTreeFromNode(ndRoot, _tree.ContentType);
-                fixedTree.Header = _tree.Header.CloneMe();
+                fixedTree.Header = _tree.Header.CloneMe(false);
                 fixedTree.RootNode.Position = new BoardPosition(PositionSetup);
 
                 // temporarily replace the position in the root node with the one produced in this dialog

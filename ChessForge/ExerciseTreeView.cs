@@ -795,7 +795,7 @@ namespace ChessForge
                     {
                         _mainVariationTree.AssociatedSecondary = new VariationTree(GameData.ContentType.EXERCISE, _mainVariationTree.RootNode.CloneMe(true));
                         _mainVariationTree.AssociatedSecondary.CurrentSolvingMode = mode;
-                        _mainVariationTree.AssociatedSecondary.Header = _mainVariationTree.Header.CloneMe();
+                        _mainVariationTree.AssociatedSecondary.Header = _mainVariationTree.Header.CloneMe(false);
                         _mainVariationTree.AssociatedSecondary.AssociatedPrimary = _mainVariationTree;
                     }
 
