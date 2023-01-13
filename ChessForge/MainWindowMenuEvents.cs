@@ -1745,6 +1745,9 @@ namespace ChessForge
             MessageBox.Show(sError + fileName, "Import PGN", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+
+#if false
+
         /// <summary>
         /// Shows the dialog with info about generic PGN files.
         /// </summary>
@@ -1780,6 +1783,8 @@ namespace ChessForge
 
             return res;
         }
+#endif
+
 
         /// <summary>
         /// Shows the OpenFileDialog to let the user
