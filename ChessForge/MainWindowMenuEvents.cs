@@ -185,7 +185,7 @@ namespace ChessForge
             {
                 if (ch.IsSelected)
                 {
-                    foreach (GameUnit game in ch.Chapter.ModelGames)
+                    foreach (Article game in ch.Chapter.ModelGames)
                     {
                         target.AddModelGame(game.Tree);
                     }
@@ -204,7 +204,7 @@ namespace ChessForge
             {
                 if (ch.IsSelected)
                 {
-                    foreach (GameUnit item in ch.Chapter.Exercises)
+                    foreach (Article item in ch.Chapter.Exercises)
                     {
                         target.AddExercise(item.Tree);
                     }
@@ -318,7 +318,7 @@ namespace ChessForge
         /// </summary>
         private void UndoWorkbookOperation()
         {
-            WorkbookManager.SessionWorkbook.OpsManager.Undo(out WorkbookOperation.WorkbookOperationType opType, out int selectedChapterIndex, out int selectedUnitIndex);
+            WorkbookManager.SessionWorkbook.OpsManager.Undo(out WorkbookOperation.WorkbookOperationType opType, out int selectedChapterIndex, out int selectedArticleIndex);
             switch (opType)
             {
                 case WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER:
@@ -339,11 +339,11 @@ namespace ChessForge
                     break;
                 case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAME:
                     _chaptersView.BuildFlowDocumentForChaptersView();
-                    SelectModelGame(selectedUnitIndex, AppStateManager.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
+                    SelectModelGame(selectedArticleIndex, AppStateManager.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
                     break;
                 case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISE:
                     _chaptersView.BuildFlowDocumentForChaptersView();
-                    SelectExercise(selectedUnitIndex, AppStateManager.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
+                    SelectExercise(selectedArticleIndex, AppStateManager.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
                     break;
             }
 
@@ -886,7 +886,7 @@ namespace ChessForge
 
                 if (index > 0 && index < gameCount)
                 {
-                    GameUnit hold = chapter.ModelGames[index];
+                    Article hold = chapter.ModelGames[index];
                     chapter.ModelGames[index] = chapter.ModelGames[index - 1];
                     chapter.ModelGames[index - 1] = hold;
                     chapter.ActiveModelGameIndex = index - 1;
@@ -917,7 +917,7 @@ namespace ChessForge
 
                 if (index > 0 && index < exerciseCount)
                 {
-                    GameUnit hold = chapter.Exercises[index];
+                    Article hold = chapter.Exercises[index];
                     chapter.Exercises[index] = chapter.Exercises[index - 1];
                     chapter.Exercises[index - 1] = hold;
                     chapter.ActiveExerciseIndex = index - 1;
@@ -948,7 +948,7 @@ namespace ChessForge
 
                 if (index >= 0 && index < gameCount - 1)
                 {
-                    GameUnit hold = chapter.ModelGames[index];
+                    Article hold = chapter.ModelGames[index];
                     chapter.ModelGames[index] = chapter.ModelGames[index + 1];
                     chapter.ModelGames[index + 1] = hold;
                     chapter.ActiveModelGameIndex = index + 1;
@@ -979,7 +979,7 @@ namespace ChessForge
 
                 if (index >= 0 && index < exerciseCount - 1)
                 {
-                    GameUnit hold = chapter.Exercises[index];
+                    Article hold = chapter.Exercises[index];
                     chapter.Exercises[index] = chapter.Exercises[index + 1];
                     chapter.Exercises[index + 1] = hold;
                     chapter.ActiveExerciseIndex = index + 1;
@@ -1040,7 +1040,7 @@ namespace ChessForge
                     {
                         Chapter targetChapter = WorkbookManager.SessionWorkbook.Chapters[selectedChapterIndex];
 
-                        GameUnit game = activeChapter.GetModelGameAtIndex(gameIndex);
+                        Article game = activeChapter.GetModelGameAtIndex(gameIndex);
                         targetChapter.ModelGames.Add(game);
                         activeChapter.ModelGames.Remove(game);
 
@@ -1080,7 +1080,7 @@ namespace ChessForge
                     {
                         Chapter targetChapter = WorkbookManager.SessionWorkbook.Chapters[selectedChapterIndex];
 
-                        GameUnit exercise = activeChapter.GetExerciseAtIndex(exerciseIndex);
+                        Article exercise = activeChapter.GetExerciseAtIndex(exerciseIndex);
                         targetChapter.Exercises.Add(exercise);
                         activeChapter.Exercises.Remove(exercise);
 
@@ -1652,7 +1652,7 @@ namespace ChessForge
             }
 
             _chaptersView.BuildFlowDocumentForChaptersView();
-            _chaptersView.BringGameUnitIntoView(chapter.Id, contentType, gameUinitIndex);
+            _chaptersView.BringArticleIntoView(chapter.Id, contentType, gameUinitIndex);
         }
 
         /// <summary>
@@ -2698,8 +2698,8 @@ namespace ChessForge
                 int gameCount = chapter.GetModelGameCount();
                 if (index >= 0 && index < gameCount)
                 {
-                    GameUnit unit = chapter.GetModelGameAtIndex(index);
-                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_MODEL_GAME, chapter, unit, index);
+                    Article article = chapter.GetModelGameAtIndex(index);
+                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_MODEL_GAME, chapter, article, index);
                     chapter.ModelGames.RemoveAt(index);
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                     AppStateManager.IsDirty = true;
@@ -2722,8 +2722,8 @@ namespace ChessForge
                 int exerciseCount = chapter.GetExerciseCount();
                 if (index >= 0 && index < exerciseCount)
                 {
-                    GameUnit unit = chapter.GetExerciseAtIndex(index);
-                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_EXERCISE, chapter, unit, index);
+                    Article article = chapter.GetExerciseAtIndex(index);
+                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_EXERCISE, chapter, article, index);
                     chapter.Exercises.RemoveAt(index);
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                     AppStateManager.IsDirty = true;

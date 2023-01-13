@@ -177,11 +177,11 @@ namespace ChessForge
             StringBuilder sb = new StringBuilder();
             StringBuilder sbOutput = new StringBuilder();
 
-            foreach (GameUnit unit in chapter.ModelGames)
+            foreach (Article article in chapter.ModelGames)
             {
-                string headerText = BuildModelGameHeaderText(chapter, unit.Tree);
+                string headerText = BuildModelGameHeaderText(chapter, article.Tree);
 
-                TreeNode root = unit.Tree.Nodes[0];
+                TreeNode root = article.Tree.Nodes[0];
 
                 // There may be a comment or command before the first move. Add if so.
                 _fileText.Append(BuildCommandAndCommentText(root));
@@ -191,7 +191,7 @@ namespace ChessForge
                 sbOutput.Append(headerText + DivideLine(sb.ToString(), 80));
 
                 // add result
-                sbOutput.Append(" " + unit.Tree.Header.GetResult(out _));
+                sbOutput.Append(" " + article.Tree.Header.GetResult(out _));
                 sbOutput.AppendLine();
                 sbOutput.AppendLine();
 
@@ -215,11 +215,11 @@ namespace ChessForge
             StringBuilder sb = new StringBuilder();
             StringBuilder sbOutput = new StringBuilder();
 
-            foreach (GameUnit unit in chapter.Exercises)
+            foreach (Article article in chapter.Exercises)
             {
-                string headerText = BuildExercisesHeaderText(chapter, unit.Tree);
+                string headerText = BuildExercisesHeaderText(chapter, article.Tree);
 
-                TreeNode root = unit.Tree.Nodes[0];
+                TreeNode root = article.Tree.Nodes[0];
 
                 // There may be a comment or command before the first move. Add if so.
                 _fileText.Append(BuildCommandAndCommentText(root));
@@ -229,7 +229,7 @@ namespace ChessForge
                 sbOutput.Append(headerText + DivideLine(sb.ToString(), 80));
 
                 // add result
-                sbOutput.Append(" " + unit.Tree.Header.GetResult(out _));
+                sbOutput.Append(" " + article.Tree.Header.GetResult(out _));
                 sbOutput.AppendLine();
                 sbOutput.AppendLine();
 

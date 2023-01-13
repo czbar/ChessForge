@@ -62,9 +62,9 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Determines if any of the tabs hosting a Game Unit (study, game, exercise) is active and if there is an ActiveTree
+        /// Determines if any of the tabs hosting an Article (study, game, exercise) is active and if there is an ActiveTree
         /// </summary>
-        public static bool IsAnyGameUnitTabActive
+        public static bool IsAnyArticleTabActive
         {
             get
             {

@@ -112,7 +112,7 @@
     <Compile Include="GameHeaderDialog.xaml.cs">
       <DependentUpon>GameHeaderDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameUnit.cs" />
+    <Compile Include="Article.cs" />
     <Compile Include="GenericPgnInfoDialog.xaml.cs">
       <DependentUpon>GenericPgnInfoDialog.xaml</DependentUpon>
     </Compile>

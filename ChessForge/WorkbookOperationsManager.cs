@@ -56,11 +56,11 @@ namespace ChessForge
         /// <summary>
         /// Performs the undo of the Operation in the queue.
         /// </summary>
-        public void Undo(out WorkbookOperation.WorkbookOperationType tp, out int selectedChapterIndex, out int selectedUnitIndex)
+        public void Undo(out WorkbookOperation.WorkbookOperationType tp, out int selectedChapterIndex, out int selectedArticleIndex)
         {
             tp = WorkbookOperation.WorkbookOperationType.NONE;
             selectedChapterIndex = -1;
-            selectedUnitIndex = -1;
+            selectedArticleIndex = -1;
             if (_operations.Count == 0)
             {
                 return;
@@ -82,13 +82,13 @@ namespace ChessForge
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
                     case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAME:
-                        WorkbookManager.SessionWorkbook.UndoDeleteModelGame(op.Chapter, op.GameUnit, op.GameUnitIndex);
-                        selectedUnitIndex = op.GameUnitIndex;
+                        WorkbookManager.SessionWorkbook.UndoDeleteModelGame(op.Chapter, op.Article, op.ArticleIndex);
+                        selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
                     case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISE:
-                        WorkbookManager.SessionWorkbook.UndoDeleteExercise(op.Chapter, op.GameUnit, op.GameUnitIndex);
-                        selectedUnitIndex = op.GameUnitIndex;
+                        WorkbookManager.SessionWorkbook.UndoDeleteExercise(op.Chapter, op.Article, op.ArticleIndex);
+                        selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
                 }

@@ -267,7 +267,7 @@ namespace ChessForge
         /// Returns the Active Tree which
         /// is the Active Tree of the active chapter.
         /// </summary>
-        public GameUnit ActiveGameUnit
+        public Article ActiveArticle
         {
             get
             {
@@ -282,7 +282,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    return _activeChapter.ActiveGameUnit;
+                    return _activeChapter.ActiveArticle;
                 }
             }
         }
@@ -393,13 +393,13 @@ namespace ChessForge
         /// Undo deletion of a Model Game
         /// </summary>
         /// <param name="chapter"></param>
-        /// <param name="unit"></param>
+        /// <param name="article"></param>
         /// <param name="index"></param>
-        public void UndoDeleteModelGame(Chapter chapter, GameUnit unit, int index)
+        public void UndoDeleteModelGame(Chapter chapter, Article article, int index)
         {
             try
             {
-                chapter.InsertModelGame(unit, index);
+                chapter.InsertModelGame(article, index);
                 chapter.ActiveModelGameIndex = index;
             }
             catch
@@ -412,13 +412,13 @@ namespace ChessForge
         /// Undo deletion of a Model Game
         /// </summary>
         /// <param name="chapter"></param>
-        /// <param name="unit"></param>
+        /// <param name="article"></param>
         /// <param name="index"></param>
-        public void UndoDeleteExercise(Chapter chapter, GameUnit unit, int index)
+        public void UndoDeleteExercise(Chapter chapter, Article article, int index)
         {
             try
             {
-                chapter.InsertExercise(unit, index);
+                chapter.InsertExercise(article, index);
                 chapter.ActiveExerciseIndex = index;
             }
             catch
@@ -482,7 +482,7 @@ namespace ChessForge
         public Chapter CreateNewChapter()
         {
             Chapter chapter = new Chapter();
-            chapter.StudyTree = new GameUnit(GameData.ContentType.STUDY_TREE);
+            chapter.StudyTree = new Article(GameData.ContentType.STUDY_TREE);
             chapter.StudyTree.Tree.CreateNew();
             //TODO: we need to have a chapter specific version of SetupGuiForNewSession 
             chapter.Id = GenerateChapterId();
@@ -501,7 +501,7 @@ namespace ChessForge
         public Chapter CreateNewChapter(VariationTree tree, bool makeActive = true)
         {
             Chapter chapter = new Chapter();
-            chapter.StudyTree = new GameUnit(tree);
+            chapter.StudyTree = new Article(tree);
             chapter.Id = GenerateChapterId();
 
             Chapters.Add(chapter);

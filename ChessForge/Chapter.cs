@@ -20,17 +20,17 @@ namespace ChessForge
         /// The Study Tree of the chapter. There is exactly one
         /// Study Tree in a chapter.
         /// </summary>
-        public GameUnit StudyTree = new GameUnit(GameData.ContentType.STUDY_TREE);
+        public Article StudyTree = new Article(GameData.ContentType.STUDY_TREE);
 
         /// <summary>
         /// The list of Model Games Trees
         /// </summary>
-        public List<GameUnit> ModelGames = new List<GameUnit>();
+        public List<Article> ModelGames = new List<Article>();
 
         /// <summary>
         /// The list of Exercises Tress.
         /// </summary>
-        public List<GameUnit> Exercises = new List<GameUnit>();
+        public List<Article> Exercises = new List<Article>();
 
         // number of this chapter
         private int _id;
@@ -41,8 +41,8 @@ namespace ChessForge
         // VariationTree to be used when this chapter becomes active.
         private VariationTree _activeTree;
 
-        // GameUnit to be used when this chapter becomes active.
-        private GameUnit _activeGameUnit;
+        // Article to be used when this chapter becomes active.
+        private Article _activeArticle;
 
         // index of the currently shown game in the Model Games list
         private int _activeModelGameIndex = -1;
@@ -76,7 +76,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public GameUnit GetModelGameAtIndex(int index)
+        public Article GetModelGameAtIndex(int index)
         {
             if (index >= 0 && index < ModelGames.Count)
             {
@@ -94,7 +94,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public GameUnit GetExerciseAtIndex(int index)
+        public Article GetExerciseAtIndex(int index)
         {
             if (index >= 0 && index < Exercises.Count)
             {
@@ -160,13 +160,13 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Returns Unit "active" in this chapter.
+        /// Returns Article "active" in this chapter.
         /// </summary>
-        public GameUnit ActiveGameUnit
+        public Article ActiveArticle
         {
             get
             {
-                return _activeGameUnit;
+                return _activeArticle;
             }
         }
 
@@ -201,25 +201,25 @@ namespace ChessForge
             {
                 case GameData.ContentType.STUDY_TREE:
                     _activeTree = StudyTree.Tree;
-                    _activeGameUnit = StudyTree;
+                    _activeArticle = StudyTree;
                     break;
                 case GameData.ContentType.MODEL_GAME:
                     if (gameIndex >= 0 && gameIndex < ModelGames.Count)
                     {
                         _activeTree = ModelGames[gameIndex].Tree;
-                        _activeGameUnit = ModelGames[gameIndex];
+                        _activeArticle = ModelGames[gameIndex];
                     }
                     break;
                 case GameData.ContentType.EXERCISE:
                     if (gameIndex >= 0 && gameIndex < Exercises.Count)
                     {
                         _activeTree = Exercises[gameIndex].Tree;
-                        _activeGameUnit = Exercises[gameIndex];
+                        _activeArticle = Exercises[gameIndex];
                     }
                     break;
                 default:
                     _activeTree = null;
-                    _activeGameUnit = null;
+                    _activeArticle = null;
                     break;
             }
         }
@@ -368,18 +368,18 @@ namespace ChessForge
         /// <param name="game"></param>
         public void AddModelGame(VariationTree game)
         {
-            GameUnit unit = new GameUnit(game);
-            ModelGames.Add(unit);
+            Article article = new Article(game);
+            ModelGames.Add(article);
         }
 
         /// <summary>
-        /// Inserts GameUnit at a requested index.
+        /// Inserts Game Article at a requested index.
         /// </summary>
-        /// <param name="unit"></param>
+        /// <param name="article"></param>
         /// <param name="index"></param>
-        public void InsertModelGame(GameUnit unit, int index)
+        public void InsertModelGame(Article article, int index)
         {
-            ModelGames.Insert(index, unit);   
+            ModelGames.Insert(index, article);   
         }
 
         /// <summary>
@@ -388,18 +388,18 @@ namespace ChessForge
         /// <param name="game"></param>
         public void AddExercise(VariationTree game)
         {
-            GameUnit unit = new GameUnit(game);
-            Exercises.Add(unit);
+            Article article = new Article(game);
+            Exercises.Add(article);
         }
 
         /// <summary>
         /// Inserts Exercise at a requested index.
         /// </summary>
-        /// <param name="unit"></param>
+        /// <param name="article"></param>
         /// <param name="index"></param>
-        public void InsertExercise(GameUnit unit, int index)
+        public void InsertExercise(Article article, int index)
         {
-            Exercises.Insert(index, unit);
+            Exercises.Insert(index, article);
         }
 
         /// <summary>
@@ -411,25 +411,25 @@ namespace ChessForge
         {
             int index = -1;
 
-            GameUnit unit = new GameUnit(typ);
-            PgnGameParser pp = new PgnGameParser(gm.GameText, unit.Tree, gm.Header.GetFenString());
-            unit.Tree.Header = gm.Header;
+            Article article = new Article(typ);
+            PgnGameParser pp = new PgnGameParser(gm.GameText, article.Tree, gm.Header.GetFenString());
+            article.Tree.Header = gm.Header;
 
             if (typ == GameData.ContentType.GENERIC)
             {
                 typ = gm.GetContentType();
             }
-            unit.Tree.ContentType = typ;
+            article.Tree.ContentType = typ;
 
             switch (typ)
             {
                 case GameData.ContentType.STUDY_TREE:
-                    StudyTree = unit;
+                    StudyTree = article;
                     break;
                 case GameData.ContentType.MODEL_GAME:
                     if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.MODEL_GAME)
                     {
-                        ModelGames.Add(unit);
+                        ModelGames.Add(article);
                         index = ModelGames.Count - 1;
                     }
                     else
@@ -440,8 +440,8 @@ namespace ChessForge
                 case GameData.ContentType.EXERCISE:
                     if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.EXERCISE)
                     {
-                        TreeUtils.RestartMoveNumbering(unit.Tree);
-                        Exercises.Add(unit);
+                        TreeUtils.RestartMoveNumbering(article.Tree);
+                        Exercises.Add(article);
                         index = Exercises.Count - 1;
                     }
                     else

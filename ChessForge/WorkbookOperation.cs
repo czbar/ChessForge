@@ -41,14 +41,14 @@ namespace ChessForge
         public int ChapterIndex { get { return _chapterIndex; } }
 
         /// <summary>
-        /// Game Unit to operate on.
+        /// Article to operate on.
         /// </summary>
-        public GameUnit GameUnit { get { return _gameUnit; } }
+        public Article Article { get { return _article; } }
 
         /// <summary>
         /// Index of the Model Game or Exercise in the Chapter's list.
         /// </summary>
-        public int GameUnitIndex { get { return _gameUnitIndex; } }
+        public int ArticleIndex { get { return _articleIndex; } }
 
         /// <summary>
         /// Type of this operation.
@@ -61,10 +61,10 @@ namespace ChessForge
         private int _chapterIndex;
 
         /// <summary>
-        /// Index of the unit (game or exercise) on which the operation
+        /// Index of the Article (game or exercise) on which the operation
         /// was performed.
         /// </summary>
-        private int _gameUnitIndex;
+        private int _articleIndex;
 
         /// <summary>
         /// Saved Chapter do that it can be restored after deletion.
@@ -72,9 +72,9 @@ namespace ChessForge
         private Chapter _chapter;
 
         /// <summary>
-        /// Saved GameUnit so that a Game or Exercise can be restored.
+        /// Saved Article so that a Game or Exercise can be restored.
         /// </summary>
-        private GameUnit _gameUnit;
+        private Article _article;
 
         /// <summary>
         /// Constructor for RENAME_CHAPTER. The object data holds
@@ -100,12 +100,12 @@ namespace ChessForge
         /// <summary>
         /// Constructor for operations on Model Games and Exercises.
         /// </summary>
-        public WorkbookOperation(WorkbookOperationType tp, Chapter ch, GameUnit unit, int gameIndex) : base()
+        public WorkbookOperation(WorkbookOperationType tp, Chapter ch, Article article, int gameIndex) : base()
         {
             _opType = tp;
             _chapter = ch;
-            _gameUnit = unit;
-            _gameUnitIndex = gameIndex;
+            _article = article;
+            _articleIndex = gameIndex;
         }
     }
 }

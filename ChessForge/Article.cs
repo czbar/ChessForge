@@ -11,25 +11,25 @@ namespace ChessForge
     /// Encapsulates Study or Model Game or Exercise tree
     /// together with related objects.
     /// </summary>
-    public class GameUnit
+    public class Article
     {
         /// <summary>
-        /// The Variation Tree of this Unit
+        /// The Variation Tree of this Artcle.
         /// </summary>
         public VariationTree Tree;
 
         /// <summary>
-        /// The Solving Manager of this Unit.
+        /// The Solving Manager of this Article.
         /// </summary>
         public SolvingManager Solver;
 
-        public GameUnit(GameData.ContentType contentType)
+        public Article(GameData.ContentType contentType)
         {
             Tree = new VariationTree(contentType);
             Solver = new SolvingManager();
         }
 
-        public GameUnit(VariationTree tree)
+        public Article(VariationTree tree)
         {
             Tree = tree;
             Solver = new SolvingManager();
