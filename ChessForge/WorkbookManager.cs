@@ -615,17 +615,29 @@ namespace ChessForge
         /// </summary>
         public static bool PrepareWorkbook(ref ObservableCollection<GameData> games, out bool isChessForgeFile)
         {
+            bool res = false;
+
             if (IsChessForgeWorkbook(ref games))
             {
                 isChessForgeFile = true;
                 SessionWorkbook = new Workbook();
-                return CreateWorkbookFromGameList(ref SessionWorkbook, ref games);
+                res = CreateWorkbookFromGameList(ref SessionWorkbook, ref games);
             }
             else
             {
                 isChessForgeFile = true;
-                return CreateWorkbookFromGenericGames(ref games);
+                res = CreateWorkbookFromGenericGames(ref games);
+                if (res)
+                {
+                    // After import from PGN let's have a good visual indication of success
+                    SessionWorkbook.ActiveChapter = SessionWorkbook.Chapters[0];
+                    SessionWorkbook.ActiveChapter.IsViewExpanded = true;
+                    SessionWorkbook.ActiveChapter.IsModelGamesListExpanded = true;
+                    SessionWorkbook.ActiveChapter.IsExercisesListExpanded = true;
+                }
             }
+
+            return res;
         }
 
         /// <summary>
@@ -677,7 +689,7 @@ namespace ChessForge
 
                 if (AppStateManager.MainWin.SelectArticlesFromPgnFile(ref games, 
                                                                       SelectGamesDialog.Mode.CREATE_WORKBOOK, 
-                                                                      out bool copyGames, out bool createStudy, out bool multiChapter))
+                                                                      out bool createStudy, out bool copyGames, out bool multiChapter))
                 {
                     if (createStudy && !multiChapter)
                     {
@@ -688,7 +700,7 @@ namespace ChessForge
                     }
                     else
                     {
-                        CreateChaptersFromSelectedItems(chapter, createStudy, copyGames, games);
+                        CreateChaptersFromSelectedItems(chapter, multiChapter, createStudy, copyGames, games);
                         SessionWorkbook.ActiveChapter = chapter;
                         chapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
                     }
@@ -717,12 +729,14 @@ namespace ChessForge
 
         /// <summary>
         /// Walks the list of games and exercise, creating a new chapter
-        /// for every encountered game.
+        /// for every encountered game if multiChapter is true.
+        /// If multiChapter is false we assume createStudy is false too (this method should
+        /// not have been called if multiChapter was false createStudy was true).
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="copyGames"></param>
         /// <param name="games"></param>
-        public static void CreateChaptersFromSelectedItems(Chapter chapter, bool createStudy, bool copyGames, ObservableCollection<GameData> games)
+        public static void CreateChaptersFromSelectedItems(Chapter chapter, bool multiChapter, bool createStudy, bool copyGames, ObservableCollection<GameData> games)
         {
             bool firstChapter = true;
 
@@ -732,7 +746,7 @@ namespace ChessForge
                 {
                     if ((gd.GetContentType() == GameData.ContentType.GENERIC || gd.GetContentType() == GameData.ContentType.MODEL_GAME))
                     {
-                        if (!firstChapter)
+                        if (!firstChapter && multiChapter)
                         {
                             chapter = SessionWorkbook.CreateNewChapter();
                         }
