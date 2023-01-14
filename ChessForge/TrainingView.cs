@@ -591,7 +591,7 @@ namespace ChessForge
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
             if (TrainingSession.IsContinuousEvaluation)
             {
-                ShowEvaluationResult(nd);
+                ShowEvaluationResult(nd, false);
             }
 
             // double check that the Evaluation Mode is IDLE and switch to CONTINUOUS if enabled.
@@ -616,7 +616,7 @@ namespace ChessForge
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
             if (TrainingSession.IsContinuousEvaluation)
             {
-                ShowEvaluationResult(nd);
+                ShowEvaluationResult(nd, false);
                 //AppStateManager.SwapCommentBoxForEngineLines(true);
             }
         }
@@ -709,7 +709,7 @@ namespace ChessForge
         /// The EngineMessageProcessor has the results.
         /// We can be in a CONTINUOUS or LINE evaluation mode.
         /// </summary>
-        public void ShowEvaluationResult(TreeNode nd)
+        public void ShowEvaluationResult(TreeNode nd, bool delayed)
         {
             if (nd == null)
             {
@@ -748,8 +748,11 @@ namespace ChessForge
 
                         if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                         {
-                            AppLog.Message("Request next node in LINE EVAL");
-                            RequestMoveEvaluation(_mainWin.ActiveVariationTreeId);
+                            if (!delayed)
+                            {
+                                AppLog.Message("Request next node in LINE EVAL");
+                                RequestMoveEvaluation(_mainWin.ActiveVariationTreeId);
+                            }
                         }
                         else if (!TrainingSession.IsContinuousEvaluation && EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
                         {
