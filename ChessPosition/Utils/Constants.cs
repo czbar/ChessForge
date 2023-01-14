@@ -175,9 +175,14 @@ namespace ChessPosition
         public const char CHAR_RIGHT_ARROW = '\u2192';
 
         /// <summary>
-        /// The right arrow character
+        /// The low asterisk character
         /// </summary>
         public const char CHAR_LOW_ASTERISK = '\u204E';
+
+        /// <summary>
+        /// The reference mark character
+        /// </summary>
+        public const char CHAR_REFERENCE_MARK = '\u203B';
 
         /// <summary>
         /// Min and Max dimensions of the chess board
