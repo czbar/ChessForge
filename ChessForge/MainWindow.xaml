@@ -256,8 +256,8 @@
                                     <MenuItem x:Name="_mnAddExercise" Header="Create New Exercise" Click="UiMnChpt_AddExercise_Click"  />
                                     <MenuItem x:Name="_mnImportExercise" Header="Import Exercises" Click="UiMnImportExercises_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnSelectChapter" Header="Open This Chapter" Click="UiMnSelectChapter_Click" />
-                                    <MenuItem x:Name="_mnRenameChapter" Header="Rename This Chapter" Click="UiMnRenameChapter_Click" />
+                                    <MenuItem x:Name="_mnSelectChapter" Header="Open Selected Chapter" Click="UiMnSelectChapter_Click" />
+                                    <MenuItem x:Name="_mnRenameChapter" Header="Rename Selected Chapter" Click="UiMnRenameChapter_Click" />
                                     <MenuItem x:Name="_mnSelectGame" Header="Open This Game" Click="UiMnOpenGame_Click"  />
                                     <MenuItem x:Name="_mnRenameGame" Header="Edit Game Headers" Click="UiMnEditGameHeader_Click" />
                                     <MenuItem x:Name="_mnSelectExercise" Header="Open This Exercise" Click="UiMnOpenExercise_Click"  />
@@ -276,7 +276,7 @@
                                     <MenuItem x:Name="_mnImportModelGames" Header="Import Games" Click="UiMnImportModelGames_Click" />
                                     <MenuItem x:Name="_mnImportExercises" Header="Import Exercises" Click="UiMnImportExercises_Click" />
                                     <Separator x:Name="_mnChapterSepar_2" />
-                                    <MenuItem x:Name="_mnDeleteChapter" Header="Delete This Chapter" Click="UiMnDeleteChapter_Click" />
+                                    <MenuItem x:Name="_mnDeleteChapter" Header="Delete Selected Chapter" Click="UiMnDeleteChapter_Click" />
                                     <MenuItem x:Name="_mnDeleteGame" Header="Delete This Game" Click="UiMnChpt_DeleteGame_Click" />
                                     <MenuItem x:Name="_mnDeleteExercise" Header="Delete This Exercise" Click="UiMnChpt_DeleteExercise_Click" />
                                 </ContextMenu>
