@@ -256,8 +256,8 @@
                                     <MenuItem x:Name="_mnAddExercise" Header="Create New Exercise" Click="UiMnChpt_AddExercise_Click"  />
                                     <MenuItem x:Name="_mnImportExercise" Header="Import Exercises" Click="UiMnImportExercises_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnSelectChapter" Header="Open This Chapter" Click="UiMnSelectChapter_Click" />
-                                    <MenuItem x:Name="_mnRenameChapter" Header="Rename This Chapter" Click="UiMnRenameChapter_Click" />
+                                    <MenuItem x:Name="_mnSelectChapter" Header="Open Selected Chapter" Click="UiMnSelectChapter_Click" />
+                                    <MenuItem x:Name="_mnRenameChapter" Header="Rename Selected Chapter" Click="UiMnRenameChapter_Click" />
                                     <MenuItem x:Name="_mnSelectGame" Header="Open This Game" Click="UiMnOpenGame_Click"  />
                                     <MenuItem x:Name="_mnRenameGame" Header="Edit Game Headers" Click="UiMnEditGameHeader_Click" />
                                     <MenuItem x:Name="_mnSelectExercise" Header="Open This Exercise" Click="UiMnOpenExercise_Click"  />
@@ -276,7 +276,7 @@
                                     <MenuItem x:Name="_mnImportModelGames" Header="Import Games" Click="UiMnImportModelGames_Click" />
                                     <MenuItem x:Name="_mnImportExercises" Header="Import Exercises" Click="UiMnImportExercises_Click" />
                                     <Separator x:Name="_mnChapterSepar_2" />
-                                    <MenuItem x:Name="_mnDeleteChapter" Header="Delete This Chapter" Click="UiMnDeleteChapter_Click" />
+                                    <MenuItem x:Name="_mnDeleteChapter" Header="Delete Selected Chapter" Click="UiMnDeleteChapter_Click" />
                                     <MenuItem x:Name="_mnDeleteGame" Header="Delete This Game" Click="UiMnChpt_DeleteGame_Click" />
                                     <MenuItem x:Name="_mnDeleteExercise" Header="Delete This Exercise" Click="UiMnChpt_DeleteExercise_Click" />
                                 </ContextMenu>
@@ -328,7 +328,7 @@
                                     <MenuItem x:Name="_mnWorkbookEvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnStudyTree_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_MarkThumbnail_Click" />
+                                    <MenuItem x:Name="_mnStudyTree_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvStudyTreePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
@@ -519,7 +519,7 @@
                                     <MenuItem x:Name="_mnGame_EvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnGame_EvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnGame_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_MarkThumbnail_Click" />
+                                    <MenuItem x:Name="_mnGame_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvModelGamePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
@@ -569,7 +569,7 @@
                                     <MenuItem x:Name="_mnExerc_EvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnExerc_EvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_ExerciseMarkThumbnail_Click" />
+                                    <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >

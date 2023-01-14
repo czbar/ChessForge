@@ -38,9 +38,9 @@
         <Button x:Name="UiBtnOk" IsDefault="True" Content="OK" HorizontalAlignment="Left" Margin="580,42,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
         <Button x:Name="UiBtnCancel" IsCancel="False" Content="Cancel" HorizontalAlignment="Left" Margin="580,77,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
         <Label x:Name="UiLblInstruct" Content="Select Items" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
-        <RadioButton x:Name="UiRbStudyAndGames" Content="Merge Games into Study Tree and Copy them into Games section" HorizontalAlignment="Left" Margin="30,50,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-        <RadioButton x:Name="UiRbStudyOnly" Content="Merge Games into Study Tree only" HorizontalAlignment="Left" Margin="30,75,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-        <RadioButton x:Name="UiRbGamesOnly" Content="Copy Games into Games section only" HorizontalAlignment="Left" Margin="30,100,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbStudyAndGames" Content="Merge Games into the Study Tree and Copy them into the Games section" HorizontalAlignment="Left" Margin="30,50,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbStudyOnly" Content="Merge Games into the Study Tree only (do not copy games)" HorizontalAlignment="Left" Margin="30,75,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbGamesOnly" Content="Copy Games into the Games section only (leave the study tree empty)" HorizontalAlignment="Left" Margin="30,100,0,0" Grid.Row="2" VerticalAlignment="Top"/>
         <CheckBox x:Name="UiCbMultiChapter" Content="Create Chapter per Game" HorizontalAlignment="Left" Margin="30,15,0,0" Grid.Row="2" VerticalAlignment="Top"/>
 
     </Grid>

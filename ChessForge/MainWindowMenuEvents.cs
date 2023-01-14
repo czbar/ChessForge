@@ -601,17 +601,25 @@ namespace ChessForge
 
         /// <summary>
         /// The Chapters view was clicked somewhere.
-        /// Here we configured the context menu items as if no chapter was clicked.
-        /// If any chapter line was clicked the menus will be re-configured
-        /// accordingly in the event handler for the the Chapter related Run..
+        /// Here we configured the context menu items as if the currently active/selected
+        /// chapter was clicked.
+        /// If the click was on a non-chapter object, the menu items will be re-configured
+        /// accordingly in the event handler for the clicked run.
         /// All the above happens before the context menu is invoked.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Chapters_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            WorkbookManager.LastClickedChapterId = -1;
-            WorkbookManager.EnableChaptersContextMenuItems(_cmChapters, false, GameData.ContentType.GENERIC);
+            if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
+            {
+                WorkbookManager.LastClickedChapterId = WorkbookManager.SessionWorkbook.ActiveChapter.Id;
+            }
+            else
+            {
+                WorkbookManager.LastClickedChapterId = -1;
+            }
+            WorkbookManager.EnableChaptersContextMenuItems(_cmChapters, WorkbookManager.LastClickedChapterId >= 0, GameData.ContentType.GENERIC);
         }
 
         /// <summary>
@@ -840,7 +848,7 @@ namespace ChessForge
             };
 
             bool res = dlg.ShowDialog() == true;
-            
+
             createStudy = dlg.CreateStudy;
             copyGames = dlg.CopyGames;
             multiChapter = dlg.MultiChapter;
@@ -2465,6 +2473,16 @@ namespace ChessForge
             {
                 UiMnWorkbookSave_Click(sender, e);
             }
+        }
+
+        /// <summary>
+        /// Sets the current position in the ActiveTree as a Thumbnail for that tree.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void CustomCommand_SetThumbnail(object sender, RoutedEventArgs e)
+        {
+            UiMn_MarkThumbnail_Click(sender, e);
         }
 
         /// <summary>

@@ -1,0 +1,987 @@
+[Event "Beautiful Checkmates: Study by Ercole del Rio"]
+[Site "https://lichess.org/study/YtBYXc3m/5AhCCiWR"]
+[Result "*"]
+[UTCDate "2020.11.17"]
+[UTCTime "22:58:48"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "5kr1/R6p/5b2/4n3/3N2Pq/2P4P/3Q3K/5R2 w - - 0 1"]
+[SetUp "1"]
+
+{ Welcome to Beautiful Checkmates by NoseKnowsAll. This study is a compilation of all 64 of my reddit posts these past two months. Each position is a forced checkmate, with the difficulty ranging from 1500 - 2200+. I'll provide several hints that should help solidify the main themes of this study: forcing moves, deflecting/attracting defenders, intersection squares, and pure aesthetics. }
+1. Ne6+ Ke8 2. Qd8+! (2. Ra8+ { This rook was already doing an excellent job cutting off the enemy king's escape squares. How do we bring all the boys to the party in order to finish him off instead? }) 2... Bxd8 3. Rf8+ (3. Ng7+?? { We have deflected the rook off the back rank, but our knight no longer is around to control the important f8 square! } 3... Rxg7 { [%cal Gf1f8] }) 3... Rxf8 4. Ng7# { The first of many beautiful checkmates! Notice how it's crucial to first consider all forcing moves in a variation (including "crazy" moves like rook or queen sacrifices) if they further your goal of mating the enemy king. } *
+
+
+[Event "Beautiful Checkmates: Study by Ercole del Rio"]
+[Site "https://lichess.org/study/YtBYXc3m/J1YU5t87"]
+[Result "*"]
+[UTCDate "2020.11.17"]
+[UTCTime "23:07:56"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "1k6/pb6/1p6/N4q2/3Q1pr1/8/6PP/3R3K w - - 0 1"]
+[SetUp "1"]
+
+{ This is one of the hardest puzzles in this study, so don't feel bad if you can't find the all-important second move. Consider ALL forcing moves: checks, captures, and threats. }
+1. Qd6+ Ka8 { If Kc8, then Qd8 immediately mates the black king } 2. Qc6!! (2. Nc6 { A good idea, but Rg8 defends any of the back-rank threats })  (2. Qc7?? { Good idea, but after Bxg2+! white is actually the one getting mated! } 2... Bxg2+) 2... Qc8 { Did you calculate how to mate the opponent if bxa5 or Bxc6 was played? } (2... bxa5 3. Rd8+ Qc8 4. Rxc8#)  (2... Bxc6 3. Rd8+ Qc8 4. Rxc8#) 3. Rd8 Bxc6 { Did you see how to mate the opponent if Rg8 was played? } (3... Rg8 4. Qxb7#) 4. Rxc8# *
+
+
+[Event "Beautiful Checkmates: Steinitz - NN"]
+[Site "https://lichess.org/study/YtBYXc3m/sMl1wh7V"]
+[Result "*"]
+[UTCDate "2020.11.17"]
+[UTCTime "23:13:17"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "r1q3kr/1p4p1/p1p2R1p/5p2/6PP/P3Q3/1P4P1/3R3K w - - 0 1"]
+[SetUp "1"]
+
+1. Rd8+ (1. Qb3+ { A reasonable idea, but it doesn't get anywhere after Kh7 Rxh6 Kxh6! or Kh7 Qf7 Qe8! } 1... Kh7 2. Rxh6+ (2. Qf7 Qe8!)) 1... Qxd8 2. Qe6+ Kh7 3. Rxh6+ gxh6 4. Qf7# { The first rook sacrifice allows our queen into the all-important e6 square. The second rook sacrifice allows for an Epaulette mate! } *
+
+
+[Event "Beautiful Checkmates: Krause - Meinhardt"]
+[Site "https://lichess.org/study/YtBYXc3m/YV0sUPcw"]
+[Result "*"]
+[UTCDate "2020.11.17"]
+[UTCTime "23:17:15"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "4rk2/1Q3p1r/1p2bB2/p5Rp/P5pP/6P1/1Pq5/3R3K w - - 0 1"]
+[SetUp "1"]
+
+1. Qe7+! (1. Be7+ { This move also leads to mate. But aesthetics are worth something in this study. Find a more beautiful checkmate! }) 1... Rxe7 2. Rd8+ (2. Rg8+ { Yes this move also leads to mate. Switch up the move order for the solution. }) 2... Re8 3. Rg8+ Kxg8 4. Rxe8# { The weak back rank and all-important f6 bishop allowed a rook infiltration for mate! } *
+
+
+[Event "Beautiful Checkmates: Shkurovich - Khazin-Zlatanov"]
+[Site "https://lichess.org/study/YtBYXc3m/Cqo4Ir5x"]
+[Result "*"]
+[UTCDate "2020.11.17"]
+[UTCTime "23:20:04"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "r7/2qnb1kp/p2p1nP1/1p1Pp1p1/6N1/3BB2Q/PPP4P/5RK1 w - - 0 1"]
+[SetUp "1"]
+
+1. Qxh7+ (1. Qh6+ { Yes this move also mates, but it's a little slower. } 1... Kh8 2. g7+ Kg8 3. Bxh7+ Nxh7 4. Qg6 { [%cal Gg4h6] }) 1... Nxh7 2. Rf7+ Kh8 3. g7+ (3. Nh6 { Yes this move also mates, with the threat of g7# and Rxh7#. Switch the move order for the solution. })  (3. Rxh7+ { This move also mates, but it's incredibly slow. }) 3... Kg8 4. Nh6# { While there are many mates in this position, it's important to recognize that sacrificing the queen is the key ingredient to opening up our own pieces, while simultaneously uncoordinating the defenders. } *
+
+
+[Event "Beautiful Checkmates: Kekhayov - Petrov"]
+[Site "https://lichess.org/study/YtBYXc3m/r05kyMjK"]
+[Result "*"]
+[UTCDate "2020.11.17"]
+[UTCTime "23:24:19"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "6k1/1p2q1b1/p4R2/4BQ2/2pP4/2P4P/Pr3r2/6RK w - - 0 1"]
+[SetUp "1"]
+
+1. Rxg7+ (1. Rf8+?? { Not mating. After Qxf8 Qe6+ Kh7, the best white can do is repeat. } 1... Qxf8 2. Qe6+ Kh7 3. Qg6+ Kg8 4. Qe6+ $10)  (1. Qc8+? { Not mating. After Kh7 our queen has actually moved further away from the intersection squares near his king. } 1... Kh7 2. Rxf2 Rxf2 3. Rxg7+ Qxg7 4. Bxg7 $18) 1... Qxg7 (1... Kxg7 2. Rf7+ { [%cal Ge5g7,Gf7g7] } 2... Kg8 3. Qh7#) 2. Rf8+ Qxf8 3. Qg6+ Qg7 4. Qxg7# { Once we identify that getting our queen to g6 with check will be fatal, this position is simply a matter of figuring out the move order necessary to make that happen. } *
+
+
+[Event "Beautiful Checkmates: Podzerov - Kuntzevic"]
+[Site "https://lichess.org/study/YtBYXc3m/FngKY69s"]
+[Result "*"]
+[UTCDate "2020.11.17"]
+[UTCTime "23:29:21"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "r3r2k/p2n1Qbp/b7/q2NNp2/1pB5/8/P4PPP/3R1RK1 w - - 0 1"]
+[SetUp "1"]
+
+1. Qg8+!! Kxg8 (1... Rxg8 2. Nf7#) 2. Ne7+ (2. Nf6+ { This is also mating, although the checkmate itself is a bit roundabout and less aesthetic than the solution. } 2... Kf8 3. Nfxd7+ Ke7 4. Nc6#) 2... Kf8 3. N5g6+ (3. N7g6+ { This is also mating. Switch the move order for the solution. }) 3... hxg6 4. Nxg6# { One of my favorite checkmates from this study! The knight and bishop alone coordinate to checkmate the naked black king! } *
+
+
+[Event "Beautiful Checkmates: Johannson - Rey"]
+[Site "https://lichess.org/study/YtBYXc3m/faOIah54"]
+[Result "*"]
+[UTCDate "2020.11.17"]
+[UTCTime "23:33:41"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "6k1/1n3rr1/4Q3/P1pPp3/2P2pq1/3B3R/5P1K/8 w - - 0 1"]
+[SetUp "1"]
+
+1. Qe8+ Rf8 2. Rh8+! Kxh8 { I hope deflecting moves like that are starting to become routine candidates to you by now! } 3. Qxf8+ Rg8 4. Qh6# { The rook on g8 traps the king in the corner. } *
+
+
+[Event "Beautiful Checkmates: Stephensson - Brain"]
+[Site "https://lichess.org/study/YtBYXc3m/3xjRcSov"]
+[Result "*"]
+[UTCDate "2020.11.17"]
+[UTCTime "23:36:45"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "r1b3k1/1p2q2p/p5pP/4p3/1PP3r1/4Q1P1/P3N3/3RKR2 w - - 0 1"]
+[SetUp "1"]
+
+1. Rd8+ (1. Qc5! $18 { This move also wins, but the solution is much more forcing. } 1... Qe8 2. Qxe5 Qxe5 3. Rd8+ Qe8 4. Rxe8#)  (1. Qxe5? { A good idea because if black takes back then indeed you are mating your opponent. However, after Be6! there's no follow-up way to checkmate! } 1... Be6! $16) 1... Qxd8 2. Qxe5 { [%cal Ge5g7] } 2... Qd7 3. Qh8+! (3. Qf6 { This move also wins, but we want an aesthetic finish! Consider ALL forcing moves. }) 3... Kxh8 4. Rf8# { Notice how with our king extremely safe, our forcing moves need not all be checks. Sacrificing a rook in order to sacrifice our queen for a back-rank mate is just beautiful! } *
+
+
+[Event "Beautiful Checkmates: Ehrenstein - Brigmane"]
+[Site "https://lichess.org/study/YtBYXc3m/6Vjju0oF"]
+[Result "*"]
+[UTCDate "2020.11.17"]
+[UTCTime "23:43:00"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "5r1k/bp1rNppp/p7/6N1/8/4P3/PP3PPP/2R3K1 w - - 0 1"]
+[SetUp "1"]
+
+1. Nxf7+ Rxf7 2. Rc8+ Rd8 3. Rxd8+ Rf8 4. Rxf8# { The weak back-rank strikes again! } *
+
+
+[Event "Beautiful Checkmates: Borisenko - Nakhimoskaya"]
+[Site "https://lichess.org/study/YtBYXc3m/y7BN9H7u"]
+[Result "*"]
+[UTCDate "2020.11.17"]
+[UTCTime "23:49:43"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "4nqrk/r5pp/pn1p1p2/2pPpPPQ/2P4P/1P3P2/2BBK3/6RR w - - 0 1"]
+[SetUp "1"]
+
+1. Qxh7+! Kxh7 2. g6+ Kh8 3. Rg5! (3. h5?? $17 { Too slow. We have a much more direct way to open up the h file }) 3... fxg5 4. hxg5# { The f5-g6 pawn chain stops any possible defenders from getting over to the h file. } *
+
+
+[Event "Beautiful Checkmates: Piotrovsky - Tenenbaum"]
+[Site "https://lichess.org/study/YtBYXc3m/bRw88mTK"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "00:12:26"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "2Q5/p3b1k1/2p2rPp/2q5/4B3/P2P4/7P/6RK w - - 0 1"]
+[SetUp "1"]
+
+1. Qh8+! Kxh8 2. g7+ Kg8 3. Bh7+ Kxh7 4. g8=Q# { A highly instructive position showcasing how bad the king is at blockading a passed pawn. In your own games, when you have a passed pawn, do everything you can to push it! } *
+
+
+[Event "Beautiful Checkmates: Skuja - Rozenbergs"]
+[Site "https://lichess.org/study/YtBYXc3m/JLrcmgeu"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "00:14:50"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "1rb2n1k/5r1p/2pp1PpQ/4P3/p3P3/qBP2P2/P1P1N3/1K1R3R w - - 0 1"]
+[SetUp "1"]
+
+1. Qxf8+! Rxf8 2. Rxh7+ Kxh7 3. Rh1+ Bh3 4. Rxh3# { Sacrificing the queen on f8 deflects both defenders of the h7 square and highlights the power of the b3 bishop - even when it's pinned! } *
+
+
+[Event "Beautiful Checkmates: Vasiliev - Scherbakov"]
+[Site "https://lichess.org/study/YtBYXc3m/BUyDPE9T"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "00:19:40"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "4r1r1/1p3k2/b3p3/3pPp1p/1B1Q1R2/6R1/PP2q1PP/6K1 w - - 0 1"]
+[SetUp "1"]
+
+1. Rxf5+ (1. Qxd5?? { Not all the puzzles are queen sacrifices! } 1... exd5 2. Rxf5+ Ke6 3. Rf6+ Kxe5 $19) 1... exf5 2. Qxd5+ Re6 3. Qd7+ Re7 4. Qxe7# { A simple checkmate that nonetheless highlights how weak a central king can be behind a seemingly solid pawn center } *
+
+
+[Event "Beautiful Checkmates: Granberg - Dubnitsky"]
+[Site "https://lichess.org/study/YtBYXc3m/yrtbspB1"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "00:23:01"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "1nbr3k/r5p1/p4pP1/1PpBN3/8/7n/1P1K4/5R1R w - - 0 1"]
+[SetUp "1"]
+
+1. Nd7!! (1. Rf3?? { An interesting idea, but it directly loses to Rxd5+! }) 1... Bxd7 { Did you see how to checkmate the opponent if he had taken with the knight or either rook? } 2. Rf3! (2. Rf4?? { A good idea, but after Be6 (giving the king the g8 escape square), there is no followup. } 2... Be6 3. Rh4+ Kg8 $19) 2... Be6 { Not the only move, but all other moves lose to taking twice on h3 with mate. } 3. Rfxh3+ Kg8 (3... Bxh3 4. Rxh3#) 4. Rh8# { A very different puzzle from the previous ones that highlights that the most forcing moves need not always be checks or captures. In this case, Nd7 was a double interference. After capturing the knight, either the d8 rook or bishop was no longer performing its crucial defensive task. } *
+
+
+[Event "Beautiful Checkmates: Munk - NN"]
+[Site "https://lichess.org/study/YtBYXc3m/BqHole3g"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "00:26:16"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "kr3r2/1p2Rp2/pn4p1/1N5p/8/3Q2P1/PPP2q1P/1K5R w - - 0 1"]
+[SetUp "1"]
+
+1. Nc7+ Ka7 2. Qxa6+! bxa6 3. Nb5+ Ka8 4. Ra7# { The double check is the most forcing move possible, as it's not possible to block both checks simultaneously - the king must always move. } *
+
+
+[Event "Beautiful Checkmates: Study by Stamma"]
+[Site "https://lichess.org/study/YtBYXc3m/KZnVzVV8"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "00:28:59"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "k1r5/p6r/1b6/1N3n2/5Qp1/3B1pBq/5P2/R5K1 w - - 0 1"]
+[SetUp "1"]
+
+1. Be4+! (1. Qb8+?? { No mate! Figure out the correct move order! } 1... Rxb8 2. Be4+ Rbb7 3. Rxa7+ Bxa7 $19) 1... Rb7 2. Qb8+! (2. Rxa7+?? { No mate! Figure out the correct move order! } 2... Bxa7 3. Qb8+ Bxb8) 2... Rxb8 3. Rxa7+ Bxa7 4. Nc7# { A puzzle highlighting the importance of move order when constructing a mating net! } *
+
+
+[Event "Beautiful Checkmates: Capablanca - NN"]
+[Site "https://lichess.org/study/YtBYXc3m/TqdfSCq3"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "00:33:12"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "3r3k/3r1P1p/pp1Nn3/2pp4/7Q/2b3R1/Pq4PP/5RK1 w - - 0 1"]
+[SetUp "1"]
+
+{ Here Capablanca shows off his class. He's in a clearly winning position as all of his pieces are more active than his opponents'. Moreover, the mate itself is a beauty. }
+1. Qxd8+! Rxd8 2. f8=Q+ (2. f8=R+ $18 { This also wins. But let's not style on our opponent when he's about to get mated! }) 2... Rxf8 3. Rxf8+ Nxf8 4. Nf7# { Once all of the black pieces that can control f7 have been deflected/captured with check, the knight sinks in for a corner mate. } *
+
+
+[Event "Beautiful Checkmates: 2000+ Chess Tempo Problem"]
+[Site "https://lichess.org/study/YtBYXc3m/tEXIxASG"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "00:37:20"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "r7/5kp1/8/1pNnRp2/3P1P2/rp4PP/3R4/1K6 b - - 0 1"]
+[SetUp "1"]
+
+{ This position was taken from one of my 2000+ Chess Tempo puzzles. I got carried away trying to win material the first time I played this problem, but the checkmate in this position is truly aesthetic! }
+1... Ra1+ 2. Kb2 R8a2+ 3. Kxb3 Rb1+! (3... Rxd2? { After Rxd5 you're barely even ahead in material. } 4. Rxd5 $17) 4. Kxa2 Nc3+ 5. Ka3 b4# { Truly a beauty! } *
+
+
+[Event "Beautiful Checkmates: Eglitis - Kamergrauzis"]
+[Site "https://lichess.org/study/YtBYXc3m/QAgeOXta"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "00:42:08"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "r1b4k/p2nbrpB/1qn1p2p/1p1pP3/2pP1N2/P1P2N2/1P1B1KPP/RQ5R w - - 0 1"]
+[SetUp "1"]
+
+{ When looking for a forced mate, it's important to stay focused on the absolute most forcing moves first. Don't get distracted by moves that allow defenders to block the attack. }
+1. Ng6+ Kxh7 2. Nf8+ (2. Nxe7+? { Tempting, but not mating. After Kh8, the best we have is Nxc6 which is unclear at best. } 2... Kh8 3. Nxc6 Qxc6 4. Qg6 $16) 2... Kg8 3. Qh7+ Kxf8 4. Qh8# { Black's congested 7th rank allows for a back-rank mate out of seemingly nowhere! } *
+
+
+[Event "Beautiful Checkmates: Bjorquist - Timman"]
+[Site "https://lichess.org/study/YtBYXc3m/qM9xbmRb"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "00:48:28"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "r4rk1/1b2pp2/1q3npQ/4R1N1/ppp5/6NP/1PP2PP1/R5K1 w - - 0 1"]
+[SetUp "1"]
+
+1. Nh5! gxh5 { Do you see the mate if Nxh5 was played instead? } (1... Nxh5 2. Qh7#) 2. Ne6! fxe6 (2... Qxf2+ 3. Kxf2 Ng4+ 4. hxg4 fxe6+ { Annoyingly the best defense. But obviously completely losing for black. })  (2... Qxe6 3. Rg5#) 3. Rg5+ Kf7 4. Qg6# (4. Qg7+?? { Oh no! After Ke8, the black king has escaped! } 4... Ke8 $19) *
+
+
+[Event "Beautiful Checkmates: Baugard - Klesh"]
+[Site "https://lichess.org/study/YtBYXc3m/o2eDfhqi"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "00:53:43"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "r3br2/1pq2pk1/p3pNpp/4P3/1nP2Q2/5R2/PP2B1PP/R6K w - - 0 1"]
+[SetUp "1"]
+
+1. Qxh6+! (1. Nh5+?? { Tempting, but after gxh5 Rg3+ Kh7 there is no follow-up. } 1... gxh5 2. Rg3+ Kh7 3. Qe4+ Kh8 $16) 1... Kxh6 2. Rh3+ Kg5 { Did you see the checkmate if the king returns to g7? } (2... Kg7 3. Rh7#) 3. Rf1!! Qxe5 { Rf1 sealed the king in and there's no escape! On any other move, Ne4# would have been played. } 4. Nh7# { When black's king is so vulnerable and our king is completely safe, we can afford to play a forcing move that is not check but merely further closes the mating net. Rf1 was the crucial move of this mate, since black could no longer stop both Ne4# and Nh7#. } *
+
+
+[Event "Beautiful Checkmates: Fischer - Myagmarsuren"]
+[Site "https://lichess.org/study/YtBYXc3m/88AYWBz1"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "01:08:12"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "2r1q1k1/r4p1p/b3pBp1/n3P1QP/p2p3R/P5P1/2p2PB1/R5K1 w - - 0 1"]
+[SetUp "1"]
+
+{ The most famous checkmate from this series. Bobby Fischer defeats his esteemed Mongolian opponent in style! }
+1. Qh6 (1. hxg6?? { No mate! Black's rook on a7 can defend laterally after fxg6 } 1... fxg6) 1... Qf8 { Black needed to defend the mate on g7 } 2. Qxh7+! Kxh7 3. hxg6+ Kxg6 4. Be4# { Again showcasing the power of double checks in forcing attacks - the king has to move! } *
+
+
+[Event "Beautiful Checkmates: Fatalibekova - Lysenko"]
+[Site "https://lichess.org/study/YtBYXc3m/yjSkTaUc"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "01:12:28"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "5rk1/R1R4p/3p2p1/5p2/8/6QP/1qr3PK/8 w - - 0 1"]
+[SetUp "1"]
+
+1. Qb3+! Qxb3 2. Rg7+ Kh8 3. Rxh7+ Kg8 4. Rag7# { After building up a collection of mating patterns you recognize, you can pull from this catalog and apply it to your own games in order to quickly spot checkmates in positions like this one. I'd expect a lower rated player to struggle with this puzzle for quite some time, whereas a 2100 player should spot the solution in 5 seconds. } *
+
+
+[Event "Beautiful Checkmates: Popov - Angelov"]
+[Site "https://lichess.org/study/YtBYXc3m/MGfYUoVh"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "01:15:57"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "r3rk2/p3Rp1p/1qp1bQ2/8/1p1P4/6R1/PP3PPP/6K1 w - - 0 1"]
+[SetUp "1"]
+
+{ In my opinion, this is the second hardest puzzle in this study. If you're stuck, be sure to view the hint! }
+1. Rd7!! (1. Rf3 { This move is technically mating, but Qxd4 complicates matters considerably... } 1... Qxd4 2. Rxf7+ Kg8 3. Rg7+ Kh8 4. Qxd4 c5 5. Qf6 Rf8 6. Rf7+ Kg8 7. Qg7#) 1... Bxd7 { Did you see the mate if Qxd4 was played instead? } 2. Qd6+! (2. Qh6+?? { After Ke7 there is no more follow-up! } 2... Ke7 3. Re3+ Kd8 $19) 2... Re7 3. Qh6+ Ke8 4. Rg8# { One of the hardest puzzles in this study! White plays Rd7 so that in the ensuing sequence, the d7 square is unavailable to the black king and he can be back-rank mated. } *
+
+
+[Event "Beautiful Checkmates: Krebs - Ginsburg"]
+[Site "https://lichess.org/study/YtBYXc3m/AUXGEOZ9"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "01:20:04"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "rnb3Br/p1p4p/6p1/kp2b3/2Q1p3/4B3/P1PNKPPP/q6R w - - 0 1"]
+[SetUp "1"]
+
+1. Nb3+ Ka6 2. Qa4+! (2. Qxb5+ { The solution is more forcing than Qxb5, simply because now the white pieces cannot enter the fray fully with tempo }) 2... bxa4 3. Bc4+ Kb7 4. Na5# { An aesthetic finish to a romantic king-walk game! } *
+
+
+[Event "Beautiful Checkmates: Supi - Carlsen"]
+[Site "https://lichess.org/study/YtBYXc3m/2PinkTCE"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "01:23:27"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "2kr2nr/1pp2ppp/3b4/1P3q2/2Pp1B2/5Q1P/RP3PP1/R5K1 w - - 0 1"]
+[SetUp "1"]
+
+{ This position was taken from an online blitz game between Supi and Carlsen in which the current World Chess Champion played in an enterprising, but dubious manner. Can you finish off Magnus? }
+1. Qc6! (1. Qxb7+ { No mate. The king can escape to the d file. } 1... Kxb7 2. Ra7+ Kc8 3. Ra8+ Kd7) 1... bxc6 2. bxc6 Qb5 3. cxb5 (3. Ra8+ { We're already down a queen, so we can't allow Magnus to block the check by sacrificing his queen back! } 3... Qb8) 3... Re8 { There's no longer a defense... } 4. Ra8# { Exactly! One of the rare positions where a pawn is just as valuable as a queen in checkmating the enemy king! } *
+
+
+[Event "Beautiful Checkmates: Tal - Rantanen"]
+[Site "https://lichess.org/study/YtBYXc3m/L2Y2Een1"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "01:30:53"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "1rq1r2k/5Rbp/p2p1p1B/2p1p3/2P1P2Q/1P6/P5PP/3b2K1 w - - 0 1"]
+[SetUp "1"]
+
+{ We join the middle of a flurry of tactics played by Mikhail Tal, a world champion famous for his wild and crazy attacking style. How did Tal finish off his opponent? }
+1. Bxg7+ Kg8 2. Bh8!! (2. Qxf6?? { Reasonable, but Rb7 stops the follow-up idea of Bh6 and Qg7#. } 2... Rb7 $19) 2... Kxf7 { Did you see the mate if black played Kxh8 instead? } (2... Kxh8 3. Qxh7#) 3. Qxf6+ Kg8 4. Qg7# { Another beautiful attack by the Magician from Riga! } *
+
+
+[Event "Beautiful Checkmates: Winter - Friede"]
+[Site "https://lichess.org/study/YtBYXc3m/1kESDzeR"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "01:33:53"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "6k1/pp3ppp/2b1p3/2Q1P1P1/3rq3/5R2/P4R1P/6K1 w - - 0 1"]
+[SetUp "1"]
+
+1. Qf8+! Kxf8 2. Rxf7+ Ke8 3. Rf8+ Kd7 4. R2f7# { The bishop on c6 and pawn on e5 close the mating net around the black king. } *
+
+
+[Event "Beautiful Checkmates: Radovic - Kozlov"]
+[Site "https://lichess.org/study/YtBYXc3m/kiiPwlV3"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "01:37:17"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "6r1/1pp1r1pk/3p1pRn/pP1P4/4qN1P/2P3Q1/6R1/6K1 w - - 0 1"]
+[SetUp "1"]
+
+1. Rxh6+! (1. Rxg7+?? { A tempting move, but it goes nowhere fast after black simply recaptures. We want moves that disallow defenders coming into the defense! } 1... Rexg7 $19) 1... Kxh6 { Did you see the mate if black played gxh6 instead? } (1... gxh6 2. Qxg8#) 2. Qg5+!! fxg5 3. hxg5+ Kh7 4. Rh2# { The knight and g5 pawn form a wall that ensures the black king cannot escape the h file. } *
+
+
+[Event "Beautiful Checkmates: Spielmann - Hoenlinger"]
+[Site "https://lichess.org/study/YtBYXc3m/KstInxXX"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "01:40:39"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "2r1nrk1/p4p1p/1p2p1pQ/nPqbRN2/8/P2B4/1B3PPP/3R2K1 w - - 0 1"]
+[SetUp "1"]
+
+1. Ne7+ Qxe7 2. Qxh7+ Kxh7 3. Rh5+ Kg8 4. Rh8# { Spielmann was an early attacking great. } *
+
+
+[Event "Beautiful Checkmates: Bauser - Gellner"]
+[Site "https://lichess.org/study/YtBYXc3m/uBRgxSjc"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "01:43:22"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "r3n3/pp2q1pk/2p1BnRp/8/2p2P2/1P5P/PB4QK/8 w - - 0 1"]
+[SetUp "1"]
+
+1. Rxh6+ Kxh6 { The checkmate is equally beautiful if black played gxh6 instead. Did you see the win? } (1... gxh6 2. Qg8+ Nxg8 3. Bf5# { Two bishops - what else? }) 2. Qg5+ Kh7 3. Qh4+ Kg6 4. f5# { In one variation we checkmate with the two bishops. In the other we checkmate with a pawn. A great position showing off how a different combination of pieces can form different mating nets. } *
+
+
+[Event "Beautiful Checkmates: Richardson - Delmar"]
+[Site "https://lichess.org/study/YtBYXc3m/bjKz6dH1"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "01:46:15"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "rnb3kr/ppp2ppp/1b6/3q4/3pN3/Q4N2/PPP2KPP/R1B1R3 w - - 0 1"]
+[SetUp "1"]
+
+1. Nf6+! gxf6 2. Qf8+! (2. Bh6 { Consider more forcing moves! Our king is too sketchy to play quiet threats in the position. }) 2... Kxf8 3. Bh6+ Kg8 4. Re8# { A romantic attack from 1887. } *
+
+
+[Event "Beautiful Checkmates: Pillsbury - Maroczy"]
+[Site "https://lichess.org/study/YtBYXc3m/FOCgD1Vp"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "01:50:07"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "2r4k/1p1b3p/p3p3/3pPp2/1P3Q2/6RK/1q6/7R w - - 0 1"]
+[SetUp "1"]
+
+1. Qh6! (1. Qh4 { This move is also mating, but the solution produces more important threats. })  (1. Qg5 { This move is also mating, but after Qxe5 the mate is not immediate. }) 1... Qxe5 { Did you see the mate if black had played Rg8 instead? } (1... Rg8 2. Qf6+ Rg7 3. Qxg7#) 2. Qxh7+! Kxh7 3. Kg2# { Harry Nelson Pillsbury finishes off his esteemed opponent in style! } *
+
+
+[Event "Beautiful Checkmates: Iris - Nuenchert"]
+[Site "https://lichess.org/study/YtBYXc3m/3cAZRfCO"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "01:54:29"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "r2r1bk1/5b1p/p3p1pQ/q1p1Bp2/1nBP1P2/2N3R1/1P4PP/3R2K1 w - - 0 1"]
+[SetUp "1"]
+
+1. Rxg6+ (1. Qxh7+?? { This move throws the game away because black is able to block the h file with Bh6! } 1... Kxh7 2. Rh3+ Bh6) 1... Bxg6 { Did you see the checkmate if black had played hxg6 instead? } (1... hxg6 2. Qh8#) 2. Bxe6+ Bf7 3. Qg5+ Bg7 4. Qxg7# { The f7 bishop and h7 pawn were overloaded. Both needed to stop mate, but that rook sacrifice tipped the attack over the edge. } *
+
+
+[Event "Beautiful Checkmates: Strekalovsky - Shaposhlikov"]
+[Site "https://lichess.org/study/YtBYXc3m/397Hca5B"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "01:56:41"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "8/p4pkr/1n3bp1/2p1Q2p/1q2P3/1B1R2N1/Pr3PP1/2R2K2 w - - 0 1"]
+[SetUp "1"]
+
+1. Nf5+ gxf5 { Did you see the mate if black played Kf8 instead? } (1... Kf8 2. Qb8+ Bd8 3. Qxd8#)  (1... Kg8 2. Qe8#) 2. Rg3+ Kf8 3. Rg8+ (3. Qd6+ { This move also mates } 3... Be7 4. Qb8+ Bd8 5. Qxd8#) 3... Kxg8 4. Qe8+ Kg7 5. Qxf7+ Kh6 6. Qxf6# { Another Epaulette mate! } *
+
+
+[Event "Beautiful Checkmates: Mieses - von Bardeleben"]
+[Site "https://lichess.org/study/YtBYXc3m/uFuJpeJn"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "02:00:27"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "k5r1/p4b2/2P5/5p2/3P1P2/4QBrq/P5P1/4R1K1 w - - 0 1"]
+[SetUp "1"]
+
+1. Qe8+! (1. c7+ { The move was played in the game, but after Rxf3 Qe8+ Rxe8+ Kb7! black survives for a bit longer. The solution is more precise. } 1... Rxf3 2. Qe8+ Rxe8 3. Rxe8+ Kb7!) 1... Rxe8 2. Rxe8+ Bxe8 3. c7+ Rxf3 4. c8=Q# { Jacques Mieses demolishes his opponent in this romantic king hunt! } *
+
+
+[Event "Beautiful Checkmates: Branka - Wittwer"]
+[Site "https://lichess.org/study/YtBYXc3m/lP7KCU8y"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "02:04:35"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "1r4rk/1b1nqp1p/p2p1p2/1p2pP2/4P2Q/1B2BR2/PPP3PP/R5K1 w - - 0 1"]
+[SetUp "1"]
+
+1. Qxh7+ (1. Rh3 { There's no immediate breakthrough after Rg7 } 1... Rg7 2. Bh6 Rbg8) 1... Kxh7 2. Rh3+ Kg7 3. Bh6+ Kh7 4. Bf8# { The rook bishop and all-important f5 pawn are enough to form a mating net around the black king! } *
+
+
+[Event "Beautiful Checkmates: Gavrilakis - Maranovic"]
+[Site "https://lichess.org/study/YtBYXc3m/YlVPsuwt"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "02:09:33"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "6k1/R3Qpp1/8/3R3p/P7/8/KPr2q1P/6r1 w - - 0 1"]
+[SetUp "1"]
+
+1. Qf8+! (1. Qe8+ { This move also mates, but why not checkmate in style? })  (1. Qd8+ { This move also mates, but why not checkmate in style? }) 1... Kh7 { Did you see the checkmate if Kxf8 was played? } (1... Kxf8 2. Rd8#) 2. Qh8+!! Kg6 { Did you see the checkmate if Kxh8 was played? } (2... Kxh8 3. Rxh5+ Kg8 4. Ra8+ Rc8 5. Rxc8#) 3. Qxh5+ (3. Ra6+ { This also checkmates. }) 3... Kf6 4. Qxf7# { One of my favorite puzzles! White sacrifices the queen twice in a row, and black is helpless to avoid checkmate. } (4. Rd6# { This move also mates. The other solution completes the ring-around-the-rosy. }) *
+
+
+[Event "Beautiful Checkmates: Ivanchuk - Savchenko"]
+[Site "https://lichess.org/study/YtBYXc3m/X9FsPX74"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "06:40:03"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "6rk/5Qpp/2p4q/p1B1p3/P1P5/1R1B1PP1/Kb5r/8 w - - 0 1"]
+[SetUp "1"]
+
+{ Black thought he was simply winning after Bxb2 because Rxb2 Rxb2+, Kxb2 Qd2+, Bc2 Rb8+ is forced checkmate. Can you prove that his move order was completely wrong? }
+1. Qxg8+! (1. Rxb2?? Rxb2+ 2. Kxb2 Qd2+ 3. Bc2?? Rb8+ $19) 1... Kxg8 2. Rb8+ Kf7 3. Rf8+ Ke6 4. Bf5# { Ivanchuk creates a beautiful Boden's mate in the middle of the board! } *
+
+
+[Event "Beautiful Checkmates: Bogoljubov - Monticelli"]
+[Site "https://lichess.org/study/YtBYXc3m/7TmfyBn3"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "06:43:18"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "2k2r2/2p5/1pq5/p1p1n3/P1P2n1B/1R4Pp/2QR4/6K1 b - - 0 1"]
+[SetUp "1"]
+
+{ "When I'm white, I win because I'm white. When I'm black, I win because I'm Bogoljubov" Can you prove that he can't even win when he's white from this position? }
+1... Ne2+! 2. Rxe2 { Did you see the mate if Kh2 was played instead? } (2. Kh2 Rf2+ 3. Kxh3 Qh1#) 2... Rf1+! (2... Qh1+ { An interesting try, but there's no mate after Kxh1 Rf1+ Kh2 } 3. Kxh1 Rf1+ 4. Kh2) 3. Kxf1 Qh1+ 4. Kf2 Ng4# { Bogoljubov was known for his enterprising chess. Too bad he was on the receiving end of this thrashing! } *
+
+
+[Event "Beautiful Checkmates: Reshevsky - Jovanovic"]
+[Site "https://lichess.org/study/YtBYXc3m/bxHKaW5t"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "06:49:06"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "4r3/b4pk1/p3p3/Pp1pPnpp/1Pr4q/2P5/2BBRPPP/2R1Q2K b - - 0 1"]
+[SetUp "1"]
+
+1... Qxh2+! 2. Kxh2 Rh4+ 3. Kg1 Ng3! 4. Be3 { There was no defense, but this appears to be the best "try." } 4... Rh1# { From the starting position, black has 4 attackers and only white's queen and e2 rook were performing any sort of defensive duty. With those odds, a vicious attack was inevitable! } *
+
+
+[Event "Beautiful Checkmates: Lave - Mashele"]
+[Site "https://lichess.org/study/YtBYXc3m/FBvPlnBm"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "06:53:04"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "7k/5p1p/p1b2pr1/8/3R1Q2/2N2P1K/PP2Nqr1/7R b - - 0 1"]
+[SetUp "1"]
+
+1... Rh6+! (1... Bd7+! { This move also mates. Switch the move order for the solution. }) 2. Qxh6 { Did you see the mate if Qh4 was played instead? } (2. Qh4 Qxf3+ 3. Ng3 Qxg3#) 2... Bd7+! (2... Qxf3+! { This move also mates, but you must find Kh4 Rg4+! with a ridiculous mating net in the middle of the board. } 3. Kh4 Rg4+ 4. Rxg4 Qxh1+ 5. Kg3 Qg2+ 6. Kf4 (6. Kh4 Qh2#) 6... Qf2#) 3. Rxd7 Qxf3+ 4. Kh4 (4. Ng3 Qxg3#) 4... Qg4# { Another excellent example in deflecting the defenders from the crucial intersection squares near his king so that the attack can continue unabated. } *
+
+
+[Event "Beautiful Checkmates: Diemer - Mueller"]
+[Site "https://lichess.org/study/YtBYXc3m/G24TFsPM"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "06:59:18"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "1k6/1pp3Q1/p2b3p/8/3P1r2/1N2r2P/Pq4P1/R5RK b - - 0 1"]
+[SetUp "1"]
+
+1... Rxh3+ 2. gxh3 Qh2+! 3. Kxh2 Rf2+ 4. Kh1 Rh2# { Another example highlighting the power of a double check. } *
+
+
+[Event "Beautiful Checkmates: From 1001 beautiful ways to checkmate"]
+[Site "https://lichess.org/study/YtBYXc3m/pp7L54Ah"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "07:38:05"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "2r1r2k/1b5p/p2QNq2/3p1P2/3Pp3/8/6RP/6RK w - - 0 1"]
+[SetUp "1"]
+
+1. Nf8! (1. Nd8 { This also mates, but what do you do after Rc6? })  (1. Rg7 { This technically also mates, but only because white's position is so dominant it's hard to go wrong. }) 1... Rxf8 { Did you see how to checkmate if black had instead taken your queen? } (1... Qxf8 2. Rg8+ Qxg8 3. Qf6+ Qg7 4. Qxg7#)  (1... Qxd6 2. Rg8#) 2. Rg8+ Rxg8 3. Qxf6+ Rg7 4. Qxg7# *
+
+
+[Event "Beautiful Checkmates: Maedler - Uhlmann"]
+[Site "https://lichess.org/study/YtBYXc3m/1bIweWV7"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "07:41:26"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "6k1/pbR2p1p/1p1p2pQ/4r3/6qP/6N1/P4PP1/6K1 b - - 0 1"]
+[SetUp "1"]
+
+{ One of my favorites from this study. I think you'll see why after solving it! }
+1... Re1+ 2. Kh2 { Did you see how to mate if white had played Nf1? } 2... Rh1+! 3. Kxh1 { Did you see how to mate if white had played Nxh1? } (3. Nxh1 Qxg2#) 3... Qh3+ 4. Kg1 Qxg2# { A double deflection of the kingside defenders in order to break through to the g2 intersection square! } *
+
+
+[Event "Beautiful Checkmates: Barle - Iztok"]
+[Site "https://lichess.org/study/YtBYXc3m/8cVOVrxA"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "07:47:09"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "r4r1k/pppb2pp/8/3q4/2N5/P1P3Q1/BP2R2P/R3n1K1 b - - 0 1"]
+[SetUp "1"]
+
+1... Qh1+! (1... Rf1+ { A logical forcing move. But after Kxf1 Qh1+ Kf2 Rf8+ Ke3 Rf3+ Kd2 Rxg3 there is no mate, and barely enough material for the queen. } 2. Kxf1 Qh1+ 3. Kf2 Rf8+ 4. Ke3 Rf3+ 5. Kd2 $17) 2. Kxh1 Rf1+ 3. Qg1 Bc6+ 4. Rg2 Bxg2# { Attraction leads to a nice smothering! } *
+
+
+[Event "Beautiful Checkmates: Molinari - Cabral"]
+[Site "https://lichess.org/study/YtBYXc3m/wsaediIy"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "07:51:50"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "6k1/5ppp/4p3/p1b1n3/PpP1Pq2/5bBP/4B2K/R3RQ2 b - - 0 1"]
+[SetUp "1"]
+
+{ The famous conclusion to the "Uruguayan Immortal" game. }
+1... Bg1+! (1... Ng4+ { This move was not played in the game but still mates. Note that hxg4 Qh6+ does not mate due to Qh3! }) 2. Qxg1 { Excellent! Did you see how to mate if white had played Kxg1 instead? } (2. Kxg1 Qxg3+ 3. Qg2 Qxg2#) 2... Ng4+! 3. hxg4 Qh6+ 4. Bh4 Qxh4# { Beautiful! Bg1+ is both a deflection (of the queen from h3) and an attraction (of the queen to g1). } *
+
+
+[Event "Beautiful Checkmates: Jakobsen - Petersen"]
+[Site "https://lichess.org/study/YtBYXc3m/V2Kp1IFE"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "08:02:43"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "r3k3/ppp2p1r/2n3p1/1Q4B1/3PP1b1/6p1/PPP1NbBq/R2R1K2 b q - 0 1"]
+[SetUp "1"]
+
+1... Qxg2+ (1... Qh1+ { This is also mates, but one move slower than in the game. }) 2. Kxg2 Rh2+ 3. Kf1 Bh3# { Never underestimate the bishop pair! } *
+
+
+[Event "Beautiful Checkmates: Soto - Cassuto"]
+[Site "https://lichess.org/study/YtBYXc3m/BHTzCeXE"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "08:07:12"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "R1bkr3/1p5p/3Pp1q1/1B2P1p1/8/3Nb3/6PP/1R5K w - - 0 1"]
+[SetUp "1"]
+
+1. Rba1! (1. Rxc8+?? Kxc8 2. Ra1?? $19 { If your follow-up idea was Ra1, then black has Kb8! No back-rank mate for you. } (2. d7+ Kd8 3. dxe8=Q+ Qxe8 4. Bxe8 Kxe8 $18)) 1... b6 { The threat of taking on c8 and then playing Ra8# forced black to make an escape square. } 2. Bc6 (2. Rxc8+ { Equally correct. Play the other move first for the solution. } 2... Kxc8 3. Bc6 Qxd3 4. Ra8#) 2... Qxd3 3. Rxc8+ Kxc8 4. Ra8# { A beautiful conclusion to a great game. With two consecutive quiet moves, white strangles black and sets up an unavoidable opera mate. Remember: forcing moves include threats too! } *
+
+
+[Event "Beautiful Checkmates: Prokopovich - van der Mije"]
+[Site "https://lichess.org/study/YtBYXc3m/zWaPc0CP"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "08:19:00"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "6k1/1pQ3p1/3B3p/1P1rnr1q/4pp2/2P5/P2P1PPP/R4R1K b - - 0 1"]
+[SetUp "1"]
+
+1... Qxh2+ (1... f3? { A winning move, but not checkmating. After Rg1, black is doing well but not immediately winning the game. } 2. Rg1 $17) 2. Kxh2 Rh5+ (2... Nf3+! { This also mates. Switch the move order for the solution. }) 3. Kg1 Nf3+! 4. gxf3 Rdg5# { Sometimes all you need is a couple of open files. } *
+
+
+[Event "Beautiful Checkmates: Study by Ercole del Rio"]
+[Site "https://lichess.org/study/YtBYXc3m/GfRqSLrk"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "08:25:57"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "3q1rk1/6pp/5pb1/3N4/R1Q5/8/6PP/7K w - - 0 1"]
+[SetUp "1"]
+
+1. Ne7+ Kh8 2. Qg8+ Rxg8 3. Nxg6+ hxg6 4. Rh4# { This third study by Ercole del Rio highlights the strength of double check and that a back-rank mate need not be on the back rank, but a side file as well! } *
+
+
+[Event "Beautiful Checkmates: Ilyushenko - Shushina"]
+[Site "https://lichess.org/study/YtBYXc3m/Z2fdm2Uj"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "08:29:37"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "5k2/3p1p1p/pq1P1pr1/7N/2Q5/2Pn1P2/Pr4PP/R4R1K b - - 0 1"]
+[SetUp "1"]
+
+1... Qg1+! 2. Kxg1 { Did you see how white gets mated if Rxg1 was played? } (2. Rxg1 Nf2#) 2... Rgxg2+ (2... Rbxg2+! { Nice job! This is equally winning. Play Rgxg2+ instead for the solution. } 3. Kh1 Rg1+ 4. Rxg1 Nf2#) 3. Kh1 Rxh2+ 4. Kg1 Rbg2# { We have seen this checkmating pattern before. I hope by now it is part of your arsenal of mating patterns! } *
+
+
+[Event "Beautiful Checkmates: Pavlenko - Ljublinsky"]
+[Site "https://lichess.org/study/YtBYXc3m/3vkMe29I"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "08:31:32"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "7r/3P2k1/1p5r/1Pp1pp2/2Pn2p1/3PR1P1/R4KB1/4Q2q b - - 0 1"]
+[SetUp "1"]
+
+1... Qxg2+ 2. Kxg2 Rh2+ 3. Kf1 Rh1+ 4. Kf2 R8h2# { With the powerful knight sitting pretty on d4, it's no wonder there's a forced mate in this position. } *
+
+
+[Event "Beautiful Checkmates: Malikov - Zablotsky"]
+[Site "https://lichess.org/study/YtBYXc3m/CjhOYtYe"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "08:36:49"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "2k4r/pp1q4/5ppr/3pn3/PP6/2P3P1/3Q1PB1/3RR1K1 b - - 0 1"]
+[SetUp "1"]
+
+1... Rh1+ 2. Bxh1 Rxh1+ 3. Kxh1 Qh3+ 4. Kg1 Nf3# { This is one of the most practical of this study because this attacking setup can happen from a lot of different openings. The crucial ingredients for this attack are: The doubled rooks on the open h file towards a fianchetto'd kingside, a knight ready to pounce on f3, and a queen ready to join in the fight on h3 (either from the long diagonal or the h file behind the rooks). } *
+
+
+[Event "Beautiful Checkmates: Diderik - Atkins"]
+[Site "https://lichess.org/study/YtBYXc3m/KTrKxXuG"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "08:39:24"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "r7/1p1bq3/3p1nk1/3Pp1p1/1P2Ppn1/R4P2/P1B5/2Q1N1BK b - - 0 1"]
+[SetUp "1"]
+
+1... Qh7+ (1... Rh8+ { A logical forcing move to consider, but the king can safely run to f1 without any issues. } 2. Kg2) 2. Kg2 Qh3+!! 3. Kxh3 Ne3+ 4. Kh2 Rh8# { Qh3 to set up the discovered attack that covers the all-important g2 escape square - beautiful! } *
+
+
+[Event "Beautiful Checkmates: Hort - Santiago"]
+[Site "https://lichess.org/study/YtBYXc3m/f1R8WqQd"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "08:43:16"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "4RQ2/5ppk/2p2q2/5n1p/p3N3/P5P1/1P1r1P1P/6K1 b - - 0 1"]
+[SetUp "1"]
+
+{ It's clear that if we don't come up with something soon, we're both losing our queen and getting mated... }
+1... Rd1+ 2. Kg2 Ne3+ 3. Kh3 { Did you see the mate if white had taken the knight instead? } (3. fxe3 Qf1#) 3... Qf5+ 4. g4 Qxg4# { A checkmate found out of desperation, yet the underpinnings of a checkmate were there from the start with white's queen and rook doing nothing on defense, sidelined in Siberia on the 8th rank. } *
+
+
+[Event "Beautiful Checkmates: Study by Ercole del Rio"]
+[Site "https://lichess.org/study/YtBYXc3m/JwKH68sj"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "08:45:05"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "3r1q2/8/pN1p3R/2p5/1k6/1P6/1K6/2Q5 w - - 0 1"]
+[SetUp "1"]
+
+1. Qc4+ (1. Nd5+ { This move technically mates, but not in a clear fashion. } 1... Kb5 2. Qc4+ Kc6 3. Qa4+) 1... Ka5 2. Qxc5+!! dxc5 3. Nc4+ Kb5 4. Rb6# { An advanced hook mate, courtesy of our friend Ercole del Rio. } *
+
+
+[Event "Beautiful Checkmates: NN - Anderssen"]
+[Site "https://lichess.org/study/YtBYXc3m/SCnJqdAn"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "08:48:21"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "7k/1p4p1/7p/3P1n2/4Q3/2P2P1b/PP3q1P/6RK b - - 0 1"]
+[SetUp "1"]
+
+{ This one should be easy for anyone who's gone through the rest of the study so far. }
+1... Bg2+ 2. Rxg2 Qf1+ 3. Rg1 Ng3+ 4. hxg3 Qh3# { Yet another check-check-mate. Remember that the queen alone cannot checkmate a king, but with a little help from an unsuspecting friend... } *
+
+
+[Event "Beautiful Checkmates: Nisman - Dvoretsky"]
+[Site "https://lichess.org/study/YtBYXc3m/c396JMTn"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "08:50:07"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "6r1/1bp2Q2/4pBpk/1p1PP2p/7P/P7/1p3PPK/2q5 w - - 0 1"]
+[SetUp "1"]
+
+{ One of the hardest mates in this study. Take your time and work backwards from the mate you would like to deliver. If you need a hint, just ask! }
+1. g3!! (1. Bg5+? { A logical move, played by Nisman himself, but not winning after Bg5+ Qxg5 hxg5+ Kxg5 Qf6+!? Kh6 Qf4+ Kh7 Qb4 Bxd5 Qxb5 c5! Qxb2 c4, he was happy to escape with a draw. } 1... Qxg5 2. hxg5+ Kxg5 3. Qf6+ Kh6 4. Qf4+ Kh7 5. Qb4 Bxd5 6. Qxb5 c5 7. Qxb2 c4 $10)  (1. Qxg8?? { A big mistake. Black has a perpetual after Qf4+, Qg4+, etc. })  (1. Bg7+?? { Doesn't work. After Rxg7 Qf8, black has Kh7 and there is no mate. })  (1. Be7?? { Unfortunately we'll only have a perpetual check here with Bf8+. }) 1... b1=Q 2. Bg5+ Qxg5 3. hxg5+ Kxg5 4. Qf4# { Only once you've seen the idea of mating with Qf4# will you ever find the sneaky g3 move to close the net. } *
+
+
+[Event "Beautiful Checkmates: Tartakower - Schlechter"]
+[Site "https://lichess.org/study/YtBYXc3m/8V1mMOhP"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "08:54:43"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "2k3r1/1pp5/p1p5/4R2p/7n/2NP1r1P/PPP4K/6R1 b - - 0 1"]
+[SetUp "1"]
+
+1... Rf2+ 2. Kh1 { After Rg2, there are multiple ways to win. } (2. Rg2 Rfxg2+ 3. Kh1 Rg1+ 4. Kh2 R8g2#) 2... Rh2+! 3. Kxh2 Nf3+ 4. Kh1 Rxg1# { A classic Arabian mate by the famous Carl Schlechter. } *
+
+
+[Event "Beautiful Checkmates: Schlapa - Reichelt"]
+[Site "https://lichess.org/study/YtBYXc3m/zEYZthh8"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "08:58:04"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "8/5p2/1pp4k/p5p1/2P1P1K1/P3Q2P/8/5q2 b - - 0 1"]
+[SetUp "1"]
+
+1... f5+! (1... Qg2+? { A terrible mistake. After Kf5, there is no mate. } 2. Kf5 $17) 2. exf5 { After Kg3, we have f4+ winning the queen and getting a second queen. } (2. Kg3 f4+ $19) 2... Qg2+ 3. Qg3 Qe4+ 4. Qf4 Qxf4# { Even in queen endgames, king safety can be a crucial factor in the position. } *
+
+
+[Event "Beautiful Checkmates: NN - Kashan"]
+[Site "https://lichess.org/study/YtBYXc3m/CdyfXazP"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "09:01:02"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "6k1/pp3p1p/2p3p1/3p3n/1P1P1q2/P4N1P/3Qn1B1/1RR4K b - - 0 1"]
+[SetUp "1"]
+
+1... Nhg3+ 2. Kh2 Nf1+ 3. Kh1 Qh2+ 4. Nxh2 Nfg3# { A cool variation from the standard smothered mate. } *
+
+
+[Event "Beautiful Checkmates: Gergely - Ziewitz"]
+[Site "https://lichess.org/study/YtBYXc3m/iwcbMbsn"]
+[Result "*"]
+[UTCDate "2020.11.18"]
+[UTCTime "09:04:48"]
+[Variant "Standard"]
+[ECO "?"]
+[Opening "?"]
+[Annotator "https://lichess.org/@/NoseKnowsAll"]
+[FEN "4r3/1Q3pbk/1p4pp/8/1BPp4/1P2q3/P3PnB1/R3R1K1 b - - 0 1"]
+[SetUp "1"]
+
+{ The last puzzle: good luck! }
+1... Nh3+ 2. Kh1 { Did you see the mate if Kh2 was played instead? } (2. Kh2 Be5+ 3. Kh1 Qg1+ 4. Rxg1 Nf2#) 2... Qg1+ 3. Rxg1 Nf2+ 4. Kh2 Be5# { Both a smothered mate and a novel bishop/knight mate in one puzzle! Congratulations on making it all the way through my beautiful checkmates study! Be sure to check out my other instructive studies too if you're working on improving your game.
+-NoseKnowsAll
+* Beginner endgames you must know! https://lichess.org/study/wukLYIXj
+* Intermediate endgames you must know! https://lichess.org/study/UsqmCsgC
+* More endgames you must know! https://lichess.org/study/xtDSXkyi
+* Advanced endgames you must know! https://lichess.org/study/UO2zqigQ
+* Rook endgames you must know! https://lichess.org/study/bnboDhFM
+* Knights | How to dominate your opponents! https://lichess.org/study/kI8ikTU4
+* Bishops | Slice through the opposition! https://lichess.org/study/kNn68T8l
+* Always sacrifice the exchange! https://lichess.org/study/h3ccaYFE
+* Beautiful checkmates https://lichess.org/study/YtBYXc3m } *
+
+

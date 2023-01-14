@@ -1118,7 +1118,6 @@ namespace ChessForge
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.GENERIC);
                         // TODO: this rebuilds the Study Tree. Performance!
                         SelectChapter(chapterId, false);
                     }

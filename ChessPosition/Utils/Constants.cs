@@ -167,12 +167,22 @@ namespace ChessPosition
         /// <summary>
         /// The response (left arrow with hook) character
         /// </summary>
-        public const char CharResponse = '\u21A9';
+        public const char CHAR_RESPONSE = '\u21A9';
 
         /// <summary>
         /// The right arrow character
         /// </summary>
-        public const char CharRightArrow = '\u2192';
+        public const char CHAR_RIGHT_ARROW = '\u2192';
+
+        /// <summary>
+        /// The low asterisk character
+        /// </summary>
+        public const char CHAR_LOW_ASTERISK = '\u204E';
+
+        /// <summary>
+        /// The reference mark character
+        /// </summary>
+        public const char CHAR_REFERENCE_MARK = '\u203B';
 
         /// <summary>
         /// Min and Max dimensions of the chess board
