@@ -2476,6 +2476,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the current position in the ActiveTree as a Thumbnail for that tree.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void CustomCommand_SetThumbnail(object sender, RoutedEventArgs e)
+        {
+            UiMn_MarkThumbnail_Click(sender, e);
+        }
+
+        /// <summary>
         /// Moves an item (chapter, game, exercise)
         /// up in the list of items, depending which one was the last highlighted.
         /// </summary>
