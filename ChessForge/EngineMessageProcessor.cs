@@ -154,7 +154,7 @@ namespace ChessForge
         /// a game in progress i.e. AppState.Mode is or is not equal to GAME_VS_COMPUTER.
         /// To distinguish we need to check Evaluation.Mode.
         /// </summary>
-        public static void MoveEvaluationFinished(TreeNode nd, int treeId, GoFenCommand.EvaluationMode mode)
+        public static void MoveEvaluationFinished(TreeNode nd, int treeId, GoFenCommand.EvaluationMode mode, bool delayed)
         {
             ClearMoveCandidates(false);
             // it could be that we switched to a game mode while awaiting "normal" evaluation,
@@ -172,12 +172,12 @@ namespace ChessForge
             else if (TrainingSession.IsTrainingInProgress)
             {
                 // eval request was made while in training (LearningMode can be GAME or TRAINING)
-                MoveEvaluationFinishedInTraining(nd);
+                MoveEvaluationFinishedInTraining(nd, delayed);
             }
             else
             {
                 // eval request in MANUAL_REVIEW (could be for CONTINUOUS or LINE)
-                MoveEvaluationFinishedInManualReview(nd, treeId);
+                MoveEvaluationFinishedInManualReview(nd, treeId, delayed);
             }
         }
 
@@ -209,7 +209,7 @@ namespace ChessForge
         /// The engine was evaluating the move on user's request not responding
         /// to the user's move in a game.
         /// </summary>
-        private static void MoveEvaluationFinishedInTraining(TreeNode nd)
+        private static void MoveEvaluationFinishedInTraining(TreeNode nd, bool delayed)
         {
             // stop the timer, apply training mode specific handling 
             // NOTE do not reset Evaluation.CurrentMode as this will be done 
@@ -219,7 +219,7 @@ namespace ChessForge
 
             EvaluationManager.SetSingleNodeToEvaluate(null);
 
-            _mainWin.MoveEvaluationFinishedInTraining(nd);
+            _mainWin.MoveEvaluationFinishedInTraining(nd, delayed);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace ChessForge
         /// in Active Line or a LINE evaluation where we ask for 
         /// evaluation move by move automatically.
         /// </summary>
-        private static void MoveEvaluationFinishedInManualReview(TreeNode nd, int treeId)
+        private static void MoveEvaluationFinishedInManualReview(TreeNode nd, int treeId, bool delayed)
         {
             int index = AppStateManager.ActiveLine.GetIndexForNode(nd);
             if (index >= 0)
@@ -253,12 +253,15 @@ namespace ChessForge
 
                     if (ContinueLineEvaluation())
                     {
-                        AppLog.Message("Continue evaluation next move after index " + index.ToString());
-                        ClearMoveCandidates(false);
-                        AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                        RequestMoveEvaluation(index + 1, EvaluationManager.GetNextLineNodeToEvaluate(), treeId);
+                        if (!delayed)
+                        {
+                            AppLog.Message("Continue evaluation next move after index " + index.ToString());
+                            ClearMoveCandidates(false);
+                            AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                            RequestMoveEvaluation(index + 1, EvaluationManager.GetNextLineNodeToEvaluate(), treeId);
 
-                        _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                            _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                        }
                     }
                     else
                     {
@@ -348,8 +351,8 @@ namespace ChessForge
         /// <param name="posIndex"></param>
         public static void RequestMoveEvaluation(int nodeIndex, TreeNode nd, int treeId)
         {
-            if (!IsEngineAvailable 
-                || WorkbookManager.SessionWorkbook == null 
+            if (!IsEngineAvailable
+                || WorkbookManager.SessionWorkbook == null
                 || _mainWin.ActiveTreeView == null
                 || nd == null
                 || nd.Parent == null)
@@ -540,7 +543,7 @@ namespace ChessForge
                 if (message != null)
                 {
                     // Info and Best Move messages will begin with TreeId
-                    message = ParseMessagePrefix(message, out int treeId, out int nodeId, out GoFenCommand.EvaluationMode mode);
+                    message = ParseMessagePrefix(message, out int treeId, out int nodeId, out bool delayed, out GoFenCommand.EvaluationMode mode);
 
                     TreeNode evalNode = AppStateManager.GetNodeByIds(treeId, nodeId);
                     _lastMessageNode = evalNode;
@@ -557,7 +560,7 @@ namespace ChessForge
                         }
                         else if (message.StartsWith(UciCommands.ENG_BEST_MOVE))
                         {
-                            ProcessBestMoveMessage(message, evalNode, treeId, mode);
+                            ProcessBestMoveMessage(message, evalNode, treeId, mode, delayed);
                         }
                     }
                     else
@@ -585,10 +588,18 @@ namespace ChessForge
         /// <param name="treeId"></param>
         /// <param name="nodeId"></param>
         /// <returns></returns>
-        private static string ParseMessagePrefix(string message, out int treeId, out int nodeId, out GoFenCommand.EvaluationMode mode)
+        private static string ParseMessagePrefix(string message, out int treeId, out int nodeId, out bool delayed, out GoFenCommand.EvaluationMode mode)
         {
             treeId = -1;
             nodeId = -1;
+            delayed = false;
+
+            if (message != null && message.StartsWith(UciCommands.CHF_DELAYED_PREFIX))
+            {
+                delayed = true;
+                message = message.Substring(UciCommands.CHF_DELAYED_PREFIX.Length + 1);
+            }
+
             mode = GoFenCommand.EvaluationMode.NONE;
 
             if (message != null && message.StartsWith(UciCommands.CHF_TREE_ID_PREFIX))
@@ -677,7 +688,7 @@ namespace ChessForge
         /// Invoke the final processing
         /// </summary>
         /// <param name="message"></param>
-        private static void ProcessBestMoveMessage(string message, TreeNode nd, int treeId, GoFenCommand.EvaluationMode mode)
+        private static void ProcessBestMoveMessage(string message, TreeNode nd, int treeId, GoFenCommand.EvaluationMode mode, bool delayed)
         {
             try
             {
@@ -693,7 +704,7 @@ namespace ChessForge
                 }
 
                 // tell the app that the evaluation has finished
-                MoveEvaluationFinished(nd, treeId, mode);
+                MoveEvaluationFinished(nd, treeId, mode, delayed);
             }
             catch (Exception ex)
             {
