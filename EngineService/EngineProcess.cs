@@ -402,10 +402,15 @@ namespace EngineService
                             }
                             else
                             {
-                                message = InsertBestMovePrefixes(message);
+                                message = InsertIdPrefixes(message);
                                 if (message.Contains(UciCommands.ENG_BEST_MOVE))
                                 {
-                                    if (HandleBestMove() && !_ignoreNextBestMove)
+                                    if (!HandleBestMove())
+                                    {
+                                        message = InsertBestMoveDelayedPrefix(message);
+                                    }
+
+                                    if (!_ignoreNextBestMove)
                                     {
                                         EngineMessage?.Invoke(message);
                                     }
@@ -442,7 +447,7 @@ namespace EngineService
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        private string InsertBestMovePrefixes(string message)
+        private string InsertIdPrefixes(string message)
         {
             if (_goFenCurrent != null)
             {
@@ -455,6 +460,16 @@ namespace EngineService
             {
                 return message;
             }
+        }
+
+        /// <summary>
+        /// Inserts a prefix indicating that this message was received AFTER another request came in.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        private string InsertBestMoveDelayedPrefix(string message)
+        {
+            return UciCommands.CHF_DELAYED_PREFIX + " " + message;
         }
 
         /// <summary>
@@ -498,7 +513,7 @@ namespace EngineService
 
                     _goFenCurrent = _goFenQueued;
                     _goFenQueued = null;
-                    EngineLog.Message("Sending queued command for NodeId=" + _goFenCurrent.NodeId.ToString() + ", State = " + _currentState.ToString()); 
+                    EngineLog.Message("Sending queued command for NodeId=" + _goFenCurrent.NodeId.ToString() + ", State = " + _currentState.ToString());
                     SendFenGoCommand(_goFenCurrent);
                     stopPoll = false;
                 }
