@@ -328,7 +328,7 @@
                                     <MenuItem x:Name="_mnWorkbookEvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnStudyTree_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_MarkThumbnail_Click" />
+                                    <MenuItem x:Name="_mnStudyTree_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvStudyTreePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
@@ -519,7 +519,7 @@
                                     <MenuItem x:Name="_mnGame_EvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnGame_EvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnGame_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_MarkThumbnail_Click" />
+                                    <MenuItem x:Name="_mnGame_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvModelGamePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
@@ -569,7 +569,7 @@
                                     <MenuItem x:Name="_mnExerc_EvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnExerc_EvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_ExerciseMarkThumbnail_Click" />
+                                    <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
