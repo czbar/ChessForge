@@ -329,12 +329,14 @@ namespace ChessForge
 
             }
             cell = new DataGridCellInfo(_dgActiveLine.Items[_selectedRow], _dgActiveLine.Columns[_selectedColumn]);
+
             _dgActiveLine.ScrollIntoView(_dgActiveLine.Items[_selectedRow]);
 
             var cellContent = cell.Column.GetCellContent(cell.Item);
             if (cellContent == null)
             {
-                _dgActiveLine.UpdateLayout();
+                // TODO: PERF
+                // _dgActiveLine.UpdateLayout();
                 cellContent = cell.Column.GetCellContent(cell.Item);
             }
 
@@ -350,7 +352,7 @@ namespace ChessForge
             if (cellContent == null)
             {
                 string msg = "Cell content is null in SelectPly(): " + "row=" + _selectedRow.ToString() + " column=" + _selectedColumn.ToString();
-                DebugUtils.ShowDebugMessage(msg);
+                //DebugUtils.ShowDebugMessage(msg);
                 AppLog.Message(msg);
                 AppLog.Message("_dgActiveLine.Items.Count=" + _dgActiveLine.Items.Count.ToString());
                 AppLog.Message("Line.MoveList.Count=" + Line.MoveList.Count.ToString());
