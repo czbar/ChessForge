@@ -191,6 +191,12 @@ namespace ChessForge
             {
             }
 
+            if (AppStateManager.MainWin.ActiveTreeView != null)
+            {
+                AppStateManager.DoEvents();
+                AppStateManager.MainWin.ActiveTreeView.BringSelectedRunIntoView();
+            }
+
             _processingMouseUp = false;
         }
 
