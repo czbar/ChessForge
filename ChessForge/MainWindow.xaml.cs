@@ -2019,9 +2019,10 @@ namespace ChessForge
                 Topmost = false,
                 Owner = this
             };
-            dlg.ShowDialog();
 
-            if (dlg.ExitOK)
+            bool res = dlg.ShowDialog() == true;
+
+            if (res)
             {
                 chapter.SetTitle(dlg.ChapterTitle);
                 _chaptersView.BuildFlowDocumentForChaptersView();

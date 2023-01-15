@@ -24,11 +24,6 @@ namespace ChessForge
         /// </summary>
         public string ChapterTitle { get; set; }
 
-        /// <summary>
-        /// Whether exit occurred on user's pushing the OK button  
-        /// </summary>
-        public bool ExitOK = false;
-
         public ChapterTitleDialog(Chapter chapter)
         {
             InitializeComponent();
@@ -38,13 +33,12 @@ namespace ChessForge
         private void UiBtnOK_Click(object sender, RoutedEventArgs e)
         {
             ChapterTitle = UiTbChapterTitle.Text;
-            ExitOK = true;
-            Close();
+            DialogResult = true;
         }
 
         private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            DialogResult = false;
         }
     }
 }
