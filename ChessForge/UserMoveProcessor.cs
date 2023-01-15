@@ -45,7 +45,7 @@ namespace ChessForge
                 }
 
                 // do not process if this was a canceled promotion
-                if ((!isPromotion || promoteTo != PieceType.None))  // && AppStateManager.MainWin.MainChessBoard.GetPieceColor(destSquareNorm) != EngineGame.ColorToMove)
+                if ((!isPromotion || promoteTo != PieceType.None)) 
                 {
                     moveEngCode.Append((char)(origSquareNorm.Xcoord + (int)'a'));
                     moveEngCode.Append((char)(origSquareNorm.Ycoord + (int)'1'));
@@ -272,9 +272,6 @@ namespace ChessForge
                     AppStateManager.MainWin.RebuildActiveTreeView();
                     AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveTreeView, AppStateManager.MainWin.ActiveLine.GetLineId(), AppStateManager.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
                 }
-
-                AppStateManager.DoEvents();
-                AppStateManager.MainWin.ActiveTreeView.BringSelectedRunIntoView();
 
                 try
                 {

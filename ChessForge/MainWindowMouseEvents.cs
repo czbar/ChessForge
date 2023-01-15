@@ -12,6 +12,8 @@ namespace ChessForge
     /// </summary>
     public partial class MainWindow : Window
     {
+        // a flag to use to prevent processing MouseDown before MouseUp is finished.
+        private bool _processingMouseUp = false;
 
         //**************************************************************
         //
@@ -28,6 +30,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (_processingMouseUp)
+            {
+                return;
+            }
+
             Point clickedPoint = e.GetPosition(UiImgMainChessboard);
             SquareCoords sq = MainChessBoardUtils.ClickedSquare(clickedPoint);
             if (sq == null)
@@ -132,42 +139,65 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OnMouseUp(object sender, MouseButtonEventArgs e)
         {
-            Point clickedPoint = e.GetPosition(UiImgMainChessboard);
-            SquareCoords targetSquare = MainChessBoardUtils.ClickedSquare(clickedPoint);
+            _processingMouseUp = true;
 
-            if (e.ChangedButton == MouseButton.Right)
+            try
             {
-                HandleMouseUpRightButton(targetSquare, e);
-            }
-            else
-            {
-                if (DraggedPiece.isDragInProgress)
+                Point clickedPoint = e.GetPosition(UiImgMainChessboard);
+                SquareCoords targetSquare = MainChessBoardUtils.ClickedSquare(clickedPoint);
+
+                if (e.ChangedButton == MouseButton.Right)
                 {
-                    DraggedPiece.isDragInProgress = false;
-                    if (targetSquare == null)
+                    HandleMouseUpRightButton(targetSquare, e);
+                }
+                else
+                {
+                    if (DraggedPiece.isDragInProgress)
                     {
-                        // just put the piece back
-                        Canvas.SetLeft(DraggedPiece.ImageControl, DraggedPiece.PtDraggedPieceOrigin.X);
-                        Canvas.SetTop(DraggedPiece.ImageControl, DraggedPiece.PtDraggedPieceOrigin.Y);
-                    }
-                    else
-                    {
-                        // double check that we are legitimately making a move
-                        if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
-                            || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE
-                            || LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
+                        try
                         {
-                            AdjustEvaluationModeAfterUserMove();
-                            UserMoveProcessor.FinalizeUserMove(targetSquare);
+                            if (targetSquare == null)
+                            {
+                                // just put the piece back
+                                Canvas.SetLeft(DraggedPiece.ImageControl, DraggedPiece.PtDraggedPieceOrigin.X);
+                                Canvas.SetTop(DraggedPiece.ImageControl, DraggedPiece.PtDraggedPieceOrigin.Y);
+                            }
+                            else
+                            {
+                                // double check that we are legitimately making a move
+                                if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
+                                    || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE
+                                    || LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
+                                {
+                                    AdjustEvaluationModeAfterUserMove();
+                                    UserMoveProcessor.FinalizeUserMove(targetSquare);
+                                }
+                                else
+                                {
+                                    ReturnDraggedPiece(false);
+                                }
+                            }
+                            Canvas.SetZIndex(DraggedPiece.ImageControl, Constants.ZIndex_PieceOnBoard);
                         }
-                        else
+                        catch
                         {
-                            ReturnDraggedPiece(false);
                         }
+
+                        DraggedPiece.isDragInProgress = false;
                     }
-                    Canvas.SetZIndex(DraggedPiece.ImageControl, Constants.ZIndex_PieceOnBoard);
                 }
             }
+            catch
+            {
+            }
+
+            if (AppStateManager.MainWin.ActiveTreeView != null)
+            {
+                AppStateManager.DoEvents();
+                AppStateManager.MainWin.ActiveTreeView.BringSelectedRunIntoView();
+            }
+
+            _processingMouseUp = false;
         }
 
         /// <summary>
@@ -200,6 +230,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
+            if (_processingMouseUp)
+            {
+                return;
+            }
+
             Point mousePoint = e.GetPosition(UiImgMainChessboard);
             SquareCoords sq = MainChessBoardUtils.ClickedSquare(mousePoint);
 

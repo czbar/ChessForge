@@ -28,6 +28,7 @@
         public const string CHF_TREE_ID_PREFIX = "TreeId=";
         public const string CHF_NODE_ID_PREFIX = "NodeId=";
         public const string CHF_EVAL_MODE_PREFIX = "Mode=";
+        public const string CHF_DELAYED_PREFIX = "DEL";
     }
 }
 

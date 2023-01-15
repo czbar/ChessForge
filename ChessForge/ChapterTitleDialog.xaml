@@ -8,8 +8,8 @@
         Title="Chapter Title" Height="150" Width="600">
     <Grid>
         <TextBox x:Name="UiTbChapterTitle" HorizontalAlignment="Center" Margin="0,20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="428"/>
-        <Button x:Name="UiBtnOK" Content="OK" HorizontalAlignment="Center" Margin="-120,60,0,0" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOK_Click"/>
-        <Button x:Name="UiBtnCancel" Content="Cancel" HorizontalAlignment="Center" Margin="120,60,0,0" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnOK" IsDefault="True" Content="OK" HorizontalAlignment="Center" Margin="-120,60,0,0" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOK_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="Cancel" HorizontalAlignment="Center" Margin="120,60,0,0" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
 
     </Grid>
 </Window>
