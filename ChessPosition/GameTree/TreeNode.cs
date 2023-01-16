@@ -146,6 +146,12 @@ namespace GameTree
         public bool IsThumbnail = false;
 
         /// <summary>
+        /// References to Games or Exercises
+        /// in the form of GUID|GUID|...|GUID
+        /// </summary>
+        public string ArticleRefs;
+
+        /// <summary>
         /// General purpose property to assist certain
         /// processing scenarios e.g. analysing a submitted
         /// solution.

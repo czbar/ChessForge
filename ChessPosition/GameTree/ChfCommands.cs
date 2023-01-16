@@ -24,6 +24,7 @@ namespace GameTree
             ENGINE_EVALUATION_V2,
             QUIZ_POINTS,
             THUMBNAIL,
+            ARTICLE_REFS,
 
             ARROWS,
             CIRCLES
@@ -40,6 +41,7 @@ namespace GameTree
             ["%eval"] = Command.ENGINE_EVALUATION_V2,
             ["%quiz"] = Command.QUIZ_POINTS,
             ["%thmb"] = Command.THUMBNAIL,
+            ["%ref"] = Command.THUMBNAIL,
 
             ["%csl"] = Command.CIRCLES,
             ["%cal"] = Command.ARROWS

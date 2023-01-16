@@ -565,6 +565,7 @@ namespace ChessForge
         {
             if (nd.IsBookmark
                 || nd.IsThumbnail
+                || !string.IsNullOrEmpty(nd.ArticleRefs)
                 || !string.IsNullOrEmpty(nd.Comment)
                 || !string.IsNullOrEmpty(nd.EngineEvaluation)
                 || nd.QuizPoints != 0
@@ -587,6 +588,13 @@ namespace ChessForge
                 if (nd.IsThumbnail)
                 {
                     string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.THUMBNAIL);
+                    sb.Append("[" + sCmd + "]");
+                }
+
+                // Process an Article References command
+                if (!string.IsNullOrEmpty(nd.ArticleRefs))
+                {
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ARTICLE_REFS) + " " + nd.ArticleRefs;
                     sb.Append("[" + sCmd + "]");
                 }
 
