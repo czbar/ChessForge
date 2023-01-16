@@ -41,7 +41,7 @@ namespace GameTree
             ["%eval"] = Command.ENGINE_EVALUATION_V2,
             ["%quiz"] = Command.QUIZ_POINTS,
             ["%thmb"] = Command.THUMBNAIL,
-            ["%ref"] = Command.THUMBNAIL,
+            ["%ref"] = Command.ARTICLE_REFS,
 
             ["%csl"] = Command.CIRCLES,
             ["%cal"] = Command.ARROWS
