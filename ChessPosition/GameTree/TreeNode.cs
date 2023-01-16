@@ -332,6 +332,52 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Inserts a new Article Reference
+        /// </summary>
+        /// <param name="artref"></param>
+        public void AddArticleReference(string artref)
+        {
+            if (!string.IsNullOrEmpty(artref))
+            {
+                if (!string.IsNullOrEmpty(ArticleRefs))
+                {
+                    ArticleRefs += "|" + artref;
+                }
+                else
+                {
+                    ArticleRefs += artref;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes the passed Article Reference.
+        /// Returns true if the reference was found.
+        /// </summary>
+        /// <param name="artref"></param>
+        /// <returns></returns>
+        public bool RemoveArticleReference(string artref)
+        {
+            if (string.IsNullOrEmpty(ArticleRefs) || string.IsNullOrEmpty(artref))
+            {
+                return false;
+            }
+
+            int pos = ArticleRefs.IndexOf(artref);
+            if (pos >= 0)
+            {
+                ArticleRefs = ArticleRefs.Remove(pos, artref.Length);
+                // there may be double separation signs after the removal
+                ArticleRefs= ArticleRefs.Replace("||", "|");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Adds a string to the list of unprocessed CHF commands.
         /// This will be called from the parser.
         /// </summary>
