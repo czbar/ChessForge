@@ -665,6 +665,16 @@ namespace ChessForge
             {
                 AppStateManager.MainWin.UiTabChapters.Focus();
                 chapter.AddModelGame(_tree);
+                string guid = _tree.Header.GetGuid(out _);
+                // if the current active tree is Study Tree, add reference
+                if (chapter.ActiveVariationTree != null && chapter.ActiveVariationTree.ContentType == GameData.ContentType.STUDY_TREE)
+                {
+                    TreeNode nd = chapter.ActiveVariationTree.SelectedNode;
+                    if (nd != null)
+                    {
+                        nd.AddArticleReference(guid);
+                    }
+                }
                 AppStateManager.MainWin.RefreshChaptersViewAfterImport(GameData.ContentType.MODEL_GAME, chapter, chapter.GetModelGameCount() - 1);
                 AppStateManager.IsDirty = true;
             }
