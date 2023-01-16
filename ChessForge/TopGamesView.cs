@@ -212,7 +212,7 @@ namespace ChessForge
             // we may change focus while in the dialog so note it here and restore
             WorkbookManager.TabViewType activeTab = AppStateManager.ActiveTab;
 
-            QuickReplayDialog dlg = new QuickReplayDialog(_clickedGameId, _gameIdList)
+            GamesPreviewDialog dlg = new GamesPreviewDialog(_clickedGameId, _gameIdList)
             {
                 Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
                 Top = AppStateManager.MainWin.Top + 100,

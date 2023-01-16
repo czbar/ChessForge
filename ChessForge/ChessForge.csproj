@@ -153,8 +153,8 @@
     <Compile Include="PromotionDialog.xaml.cs">
       <DependentUpon>PromotionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="QuickReplayDialog.xaml.cs">
-      <DependentUpon>QuickReplayDialog.xaml</DependentUpon>
+    <Compile Include="GamesPreviewDialog.xaml.cs">
+      <DependentUpon>GamesPreviewDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\ChessBoards.cs" />
     <Compile Include="Resources\Colors.cs" />
@@ -242,7 +242,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="QuickReplayDialog.xaml">
+    <Page Include="GamesPreviewDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

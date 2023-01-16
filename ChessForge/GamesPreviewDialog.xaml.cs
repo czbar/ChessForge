@@ -15,9 +15,9 @@ using System.Windows.Media.Imaging;
 namespace ChessForge
 {
     /// <summary>
-    /// Interaction logic for QuickReplayDialog.xaml
+    /// Interaction logic for GamesPreviewDialog.xaml
     /// </summary>
-    public partial class QuickReplayDialog : Window
+    public partial class GamesPreviewDialog : Window
     {
         // chessboard object for game replay
         private ChessBoardSmall _chessBoard;
@@ -82,7 +82,7 @@ namespace ChessForge
         /// Creates the dialog and requests game's text from lichess.
         /// </summary>
         /// <param name="lichessGameId"></param>
-        public QuickReplayDialog(string lichessGameId, List<string> gameIdList)
+        public GamesPreviewDialog(string lichessGameId, List<string> gameIdList)
         {
             InitializeComponent();
             _gameIdList = gameIdList;
