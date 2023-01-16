@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
-//using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media.Media3D;
 using System.Xml.Linq;
@@ -1751,13 +1750,7 @@ namespace ChessForge
         {
             try
             {
-                // check if there is anything to show
-                if (string.IsNullOrEmpty(nd.Comment)
-                    &&
-                    !nd.IsThumbnail
-                    &&
-                    (_mainVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.EDITING || nd.QuizPoints == 0)
-                    )
+                if (!IsCommentRunToShow(nd))
                 {
                     return;
                 }
@@ -2024,12 +2017,7 @@ namespace ChessForge
                 Run r_comment;
                 _dictNodeToCommentRun.TryGetValue(nd.NodeId, out r_comment);
 
-                if (string.IsNullOrEmpty(nd.Comment)
-                    &&
-                    !nd.IsThumbnail
-                    &&
-                    (_mainVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.EDITING || nd.QuizPoints == 0)
-                    )
+                if (!IsCommentRunToShow(nd))
                 {
                     // if the comment run existed, remove it
                     if (r_comment != null)
@@ -2080,12 +2068,7 @@ namespace ChessForge
         /// <returns></returns>
         private string BuildCommentRunText(TreeNode nd)
         {
-            if (string.IsNullOrEmpty(nd.Comment)
-                &&
-                !nd.IsThumbnail
-                &&
-                (_mainVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.EDITING || nd.QuizPoints == 0)
-                )
+            if (!IsCommentRunToShow(nd))
             {
                 return "";
             }
@@ -2143,5 +2126,17 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Checks if there is anything to show in the comment run i.e.
+        /// non-empty comment text, a thumbnail indicator or quiz points if the tree is in exercise editing mode.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private bool IsCommentRunToShow(TreeNode nd)
+        {
+            return !string.IsNullOrEmpty(nd.Comment)
+                   || nd.IsThumbnail
+                   || (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0);
+        }
     }
 }
