@@ -15,9 +15,9 @@ using System.Windows.Media.Imaging;
 namespace ChessForge
 {
     /// <summary>
-    /// Interaction logic for QuickReplayDialog.xaml
+    /// Interaction logic for GamesPreviewDialog.xaml
     /// </summary>
-    public partial class QuickReplayDialog : Window
+    public partial class GamesPreviewDialog : Window
     {
         // chessboard object for game replay
         private ChessBoardSmall _chessBoard;
@@ -82,7 +82,7 @@ namespace ChessForge
         /// Creates the dialog and requests game's text from lichess.
         /// </summary>
         /// <param name="lichessGameId"></param>
-        public QuickReplayDialog(string lichessGameId, List<string> gameIdList)
+        public GamesPreviewDialog(string lichessGameId, List<string> gameIdList)
         {
             InitializeComponent();
             _gameIdList = gameIdList;
@@ -665,6 +665,16 @@ namespace ChessForge
             {
                 AppStateManager.MainWin.UiTabChapters.Focus();
                 chapter.AddModelGame(_tree);
+                string guid = _tree.Header.GetGuid(out _);
+                // if the current active tree is Study Tree, add reference
+                if (chapter.ActiveVariationTree != null && chapter.ActiveVariationTree.ContentType == GameData.ContentType.STUDY_TREE)
+                {
+                    TreeNode nd = chapter.ActiveVariationTree.SelectedNode;
+                    if (nd != null)
+                    {
+                        nd.AddArticleReference(guid);
+                    }
+                }
                 AppStateManager.MainWin.RefreshChaptersViewAfterImport(GameData.ContentType.MODEL_GAME, chapter, chapter.GetModelGameCount() - 1);
                 AppStateManager.IsDirty = true;
             }

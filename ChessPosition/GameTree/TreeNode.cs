@@ -146,6 +146,12 @@ namespace GameTree
         public bool IsThumbnail = false;
 
         /// <summary>
+        /// References to Games or Exercises
+        /// in the form of GUID|GUID|...|GUID
+        /// </summary>
+        public string ArticleRefs;
+
+        /// <summary>
         /// General purpose property to assist certain
         /// processing scenarios e.g. analysing a submitted
         /// solution.
@@ -322,6 +328,52 @@ namespace GameTree
                 {
                     AddNag(token);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Inserts a new Article Reference
+        /// </summary>
+        /// <param name="artref"></param>
+        public void AddArticleReference(string artref)
+        {
+            if (!string.IsNullOrEmpty(artref))
+            {
+                if (!string.IsNullOrEmpty(ArticleRefs))
+                {
+                    ArticleRefs += "|" + artref;
+                }
+                else
+                {
+                    ArticleRefs += artref;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes the passed Article Reference.
+        /// Returns true if the reference was found.
+        /// </summary>
+        /// <param name="artref"></param>
+        /// <returns></returns>
+        public bool RemoveArticleReference(string artref)
+        {
+            if (string.IsNullOrEmpty(ArticleRefs) || string.IsNullOrEmpty(artref))
+            {
+                return false;
+            }
+
+            int pos = ArticleRefs.IndexOf(artref);
+            if (pos >= 0)
+            {
+                ArticleRefs = ArticleRefs.Remove(pos, artref.Length);
+                // there may be double separation signs after the removal
+                ArticleRefs= ArticleRefs.Replace("||", "|");
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
