@@ -180,6 +180,11 @@ namespace ChessPosition
         public const char CHAR_LOW_ASTERISK = '\u204E';
 
         /// <summary>
+        /// Square inside a square
+        /// </summary>
+        public const char CHAR_SQUARED_SQUARE = '\u29C8';
+
+        /// <summary>
         /// The reference mark character
         /// </summary>
         public const char CHAR_REFERENCE_MARK = '\u203B';

@@ -487,7 +487,11 @@ namespace ChessForge
                 TreeNode nd = GetSelectedNode();
                 if (nd != null || defaultToRootNode)
                 {
+                    TreeNode prevThumbnail = _mainVariationTree.GetThumbnail();
                     _mainVariationTree.SetThumbnail(nd == null ? _mainVariationTree.RootNode : nd);
+
+                    InsertOrUpdateCommentRun(prevThumbnail);
+                    InsertOrUpdateCommentRun(nd);
                     AppStateManager.IsDirty = true;
                 }
             }
@@ -1750,6 +1754,8 @@ namespace ChessForge
                 // check if there is anything to show
                 if (string.IsNullOrEmpty(nd.Comment)
                     &&
+                    !nd.IsThumbnail
+                    &&
                     (_mainVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.EDITING || nd.QuizPoints == 0)
                     )
                 {
@@ -2020,6 +2026,8 @@ namespace ChessForge
 
                 if (string.IsNullOrEmpty(nd.Comment)
                     &&
+                    !nd.IsThumbnail
+                    &&
                     (_mainVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.EDITING || nd.QuizPoints == 0)
                     )
                 {
@@ -2074,6 +2082,8 @@ namespace ChessForge
         {
             if (string.IsNullOrEmpty(nd.Comment)
                 &&
+                !nd.IsThumbnail
+                &&
                 (_mainVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.EDITING || nd.QuizPoints == 0)
                 )
             {
@@ -2081,6 +2091,10 @@ namespace ChessForge
             }
 
             StringBuilder sb = new StringBuilder(" [");
+            if (nd.IsThumbnail)
+            {
+                sb.Append(Constants.CHAR_SQUARED_SQUARE);
+            }
             if (!string.IsNullOrEmpty(nd.Comment))
             {
                 sb.Append(nd.Comment);
