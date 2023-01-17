@@ -15,7 +15,8 @@
         </Grid.RowDefinitions>
         <TextBox x:Name="UiTbTitle" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="134,23,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="26" Width="231" Visibility="Visible"/>
         
-        <Label x:Name="UiLblTrainingSide" Content="Training Side:" HorizontalAlignment="Left" Margin="29,59,0,0" VerticalAlignment="Top" Width="141"/>
+        <Label x:Name="UiLblTrainingSide" Content="Training Side:" HorizontalAlignment="Left" Margin="29,59,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="UiLblVersion" Content="Version: " HorizontalAlignment="Left" Margin="286,59,0,0" VerticalAlignment="Top" Width="90"/>
         <Label x:Name="UiLblTitle" Content="Workbook Title: " HorizontalAlignment="Left" Margin="28,21,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblSideToMove" Content="WHITE" BorderThickness="1" BorderBrush="Black" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="134,59,0,0" VerticalAlignment="Top" VerticalContentAlignment="Top" Width="77" Height="26" MouseDown="UiImgSwapColor_PreviewMouseDown"/>
         
