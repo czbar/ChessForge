@@ -163,7 +163,6 @@ namespace ChessForge
 
         /// <summary>
         /// Starts a timer.
-        /// Handles ENGINE_MESSAGE_POLL timer as a special case.
         /// </summary>
         /// <param name="tt"></param>
         public void Start(TimerId tt)
@@ -174,7 +173,6 @@ namespace ChessForge
 
         /// <summary>
         /// Stops a timer.
-        /// Handles ENGINE_MESSAGE_POLL timer as a special case.
         /// </summary>
         /// <param name="tt"></param>
         public void Stop(TimerId tt)
