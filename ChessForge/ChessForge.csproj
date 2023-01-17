@@ -194,6 +194,7 @@
     <Compile Include="WorkbookFileTextBuilder.cs" />
     <Compile Include="ScoreSheet.cs" />
     <Compile Include="WorkbookTableState.cs" />
+    <Compile Include="WorkbookVersion.cs" />
     <Page Include="AboutBoxDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
