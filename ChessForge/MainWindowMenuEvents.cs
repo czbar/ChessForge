@@ -47,7 +47,7 @@ namespace ChessForge
                 OpenFileDialog openFileDialog = new OpenFileDialog
                 {
                     Multiselect = false,
-                    Filter = "Workbooks (*.pgn)|*.pgn;*.pgn|Legacy CHF (*.chf)|*.chf"
+                    Filter = "Workbooks (*.pgn)|*.pgn;*.pgn"
                 };
 
                 string initDir;

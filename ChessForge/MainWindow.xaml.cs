@@ -1051,7 +1051,6 @@ namespace ChessForge
         /// <summary>
         /// Reads in the file and builds the internal structures for the entire content.
         /// Chess Forge files are PGN files with special headers identifying them as such.
-        /// A .chf file is a legacy Chess Forge file that will be read in as a single, variation tree - only, chapter.
         /// We will also read non - Chess Forge .pgn files and process/convert them.
         /// </summary>
         /// <param name="fileName">path to the file</param>
@@ -1076,10 +1075,6 @@ namespace ChessForge
 
                 switch (fileExtension)
                 {
-                    case ".chf":
-                        acceptFile = WorkbookManager.ReadLegacyChfFile(fileName);
-                        isChessForgeFile = true;
-                        break;
                     case ".pgn":
                         WorkbookManager.ReadPgnFile(fileName, ref GameList, GameData.ContentType.GENERIC, GameData.ContentType.NONE);
                         bool res = WorkbookManager.PrepareWorkbook(ref GameList, out isChessForgeFile);

@@ -159,39 +159,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Processes a legacy CHF file.
-        /// The content of the file is considered to be a study tree
-        /// within a single chapter.
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        public static bool ReadLegacyChfFile(string fileName)
-        {
-            try
-            {
-                string studyText = File.ReadAllText(fileName);
-                VariationTree tree = new VariationTree(GameData.ContentType.STUDY_TREE);
-
-                // parse the variation tree and create a new chapter.
-                PgnGameParser pgnGame = new PgnGameParser(studyText, tree, out bool isMulti, true);
-
-                SessionWorkbook = new Workbook();
-                SessionWorkbook.Title = tree.Title;
-
-                Chapter chapter = SessionWorkbook.CreateNewChapter(tree);
-                chapter.SetTitle(tree.Title);
-
-                // ask the name of the file to save the converted workbook to
-                return SaveWorkbookToNewFileV2(fileName, true);
-            }
-            catch
-            {
-                MessageBox.Show("Error processing file: " + fileName, "Legacy CHF File", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-        }
-
-        /// <summary>
         /// Checks if file exists or is already open 
         /// and advises the user accordingly.
         /// </summary>
