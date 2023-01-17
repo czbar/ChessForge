@@ -921,7 +921,7 @@ namespace ChessForge
                 if (userRequest)
                 {
                     // user requested File->Save so proceed...
-                    AppStateManager.SaveWorkbookFile();
+                    AppStateManager.SaveWorkbookFile(null);
                 }
                 else
                 {
@@ -936,7 +936,7 @@ namespace ChessForge
                         }
                         if (Configuration.AutoSave || res == MessageBoxResult.Yes)
                         {
-                            AppStateManager.SaveWorkbookFile();
+                            AppStateManager.SaveWorkbookFile(null);
                             res = MessageBoxResult.Yes;
                         }
                     }
@@ -1006,7 +1006,7 @@ namespace ChessForge
 
                 activeTree.ClearTrainingFlags();
                 activeTree.BuildLines();
-                AppStateManager.SaveWorkbookFile();
+                AppStateManager.SaveWorkbookFile(null);
                 AppStateManager.MainWin.RebuildActiveTreeView();
                 AppStateManager.MainWin.RefreshSelectedActiveLineAndNode();
             }

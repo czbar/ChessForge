@@ -1944,7 +1944,7 @@ namespace ChessForge
 
                 if (save)
                 {
-                    AppStateManager.SaveWorkbookFile();
+                    AppStateManager.SaveWorkbookFile(null);
                 }
 
                 switch (WorkbookManager.ActiveTab)
