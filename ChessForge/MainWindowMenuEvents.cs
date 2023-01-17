@@ -432,6 +432,19 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnBackupVersion_Click(object sender, RoutedEventArgs e)
         {
+            BackupVersionDialog dlg = new BackupVersionDialog(WorkbookManager.SessionWorkbook)
+            {
+                Left = ChessForgeMain.Left + 100,
+                Top = ChessForgeMain.Top + 100,
+                Topmost = false,
+                Owner = this
+            };
+            if (dlg.ShowDialog() == true)
+            {
+                AppStateManager.SaveWorkbookFile(dlg.BackupPath);
+                WorkbookManager.SessionWorkbook.SetVersion(dlg.IncrementedVersion);
+                AppStateManager.IsDirty= true;
+            }
         }
 
         /// <summary>
