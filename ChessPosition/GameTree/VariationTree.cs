@@ -310,24 +310,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Title of this VariationTree
-        /// </summary>
-        public string Title
-        {
-            get
-            {
-                //string title;
-                //Headers.TryGetValue(PgnHeaders.NAME_LEGACY_TITLE, out title);
-                //return title ?? "";
-                return Header.GetLegacyTitle();
-            }
-            set
-            {
-                Header.SetHeaderValue(PgnHeaders.KEY_LEGACY_TITLE, value);
-            }
-        }
-
-        /// <summary>
         /// References to bookmarked psoitions.
         /// </summary>
         public List<Bookmark> Bookmarks = new List<Bookmark>();
