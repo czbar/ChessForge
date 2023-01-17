@@ -91,6 +91,9 @@
     <Compile Include="AnnotationsDialog.xaml.cs">
       <DependentUpon>AnnotationsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BackupVersionDialog.xaml.cs">
+      <DependentUpon>BackupVersionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BoardArrow.cs" />
     <Compile Include="BoardShapesManager.cs" />
     <Compile Include="BoardCircle.cs" />
@@ -194,6 +197,7 @@
     <Compile Include="WorkbookFileTextBuilder.cs" />
     <Compile Include="ScoreSheet.cs" />
     <Compile Include="WorkbookTableState.cs" />
+    <Compile Include="WorkbookVersion.cs" />
     <Page Include="AboutBoxDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -203,6 +207,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AnnotationsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BackupVersionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

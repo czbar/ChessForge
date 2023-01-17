@@ -79,8 +79,8 @@ namespace ChessForge
         /// <returns></returns>
         public static bool IsTreeViewTabActive()
         {
-            return ActiveVariationTree != null && 
-                (ActiveTab == WorkbookManager.TabViewType.STUDY 
+            return ActiveVariationTree != null &&
+                (ActiveTab == WorkbookManager.TabViewType.STUDY
                 || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
                 || ActiveTab == WorkbookManager.TabViewType.EXERCISE);
         }
@@ -222,8 +222,6 @@ namespace ChessForge
 
         /// <summary>
         /// Types of files that Chess Forge can handle.
-        /// PGN can only be viewed, not edited.
-        /// CHF can be viewed and edited.
         /// </summary>
         public enum FileType
         {
@@ -322,7 +320,7 @@ namespace ChessForge
         {
             if (IsDirty && Configuration.AutoSave)
             {
-                SaveWorkbookFile();
+                SaveWorkbookFile(null);
             }
         }
 
@@ -335,7 +333,7 @@ namespace ChessForge
         public static void SaveWorkbookToNewFile(string pgnFileName, string chfFileName, bool typeConversion)
         {
             WorkbookFilePath = chfFileName;
-            SaveWorkbookFile();
+            SaveWorkbookFile(null);
             UpdateAppTitleBar();
             if (typeConversion)
             {
@@ -364,7 +362,7 @@ namespace ChessForge
         /// <summary>
         /// Saves the workbook to its PGN file.
         /// </summary>
-        public static void SaveWorkbookFile(bool checkDirty = false)
+        public static void SaveWorkbookFile(string filePath, bool checkDirty = false)
         {
             if (checkDirty && !IsDirty)
             {
@@ -375,10 +373,11 @@ namespace ChessForge
             {
                 try
                 {
+                    string savePath = string.IsNullOrWhiteSpace(filePath) ? WorkbookFilePath : filePath;
                     if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
                     {
                         string chfText = WorkbookFileTextBuilder.BuildWorkbookText();
-                        File.WriteAllText(WorkbookFilePath, chfText);
+                        File.WriteAllText(savePath, chfText);
                         IsDirty = false;
                     }
                 }
@@ -733,11 +732,15 @@ namespace ChessForge
                 {
                     _mainWin.UiMnWorkbookSaveAs.IsEnabled = true;
                     _mainWin.UiMnWorkbookSaveAs.Header = "Save " + Path.GetFileName(WorkbookFilePath) + " As...";
+
+                    _mainWin.UiMnBackupVersion.IsEnabled = true;
                 }
                 else
                 {
                     _mainWin.UiMnWorkbookSaveAs.IsEnabled = false;
                     _mainWin.UiMnWorkbookSaveAs.Header = "Save As...";
+
+                    _mainWin.UiMnBackupVersion.IsEnabled = false;
                 }
             });
         }

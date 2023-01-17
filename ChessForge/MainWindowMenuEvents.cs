@@ -47,7 +47,7 @@ namespace ChessForge
                 OpenFileDialog openFileDialog = new OpenFileDialog
                 {
                     Multiselect = false,
-                    Filter = "Workbooks (*.pgn)|*.pgn;*.pgn|Legacy CHF (*.chf)|*.chf"
+                    Filter = "Workbooks (*.pgn)|*.pgn;*.pgn"
                 };
 
                 string initDir;
@@ -423,6 +423,28 @@ namespace ChessForge
         private void UiMnWorkbookSaveAs_Click(object sender, RoutedEventArgs e)
         {
             WorkbookManager.SaveWorkbookToNewFile(AppStateManager.WorkbookFilePath, false);
+        }
+
+        /// <summary>
+        /// Asks the user to confirm the backup with bumped worked version.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnBackupVersion_Click(object sender, RoutedEventArgs e)
+        {
+            BackupVersionDialog dlg = new BackupVersionDialog(WorkbookManager.SessionWorkbook)
+            {
+                Left = ChessForgeMain.Left + 100,
+                Top = ChessForgeMain.Top + 100,
+                Topmost = false,
+                Owner = this
+            };
+            if (dlg.ShowDialog() == true)
+            {
+                AppStateManager.SaveWorkbookFile(dlg.BackupPath);
+                WorkbookManager.SessionWorkbook.SetVersion(dlg.IncrementedVersion);
+                AppStateManager.IsDirty= true;
+            }
         }
 
         /// <summary>

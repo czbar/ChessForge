@@ -188,6 +188,15 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the version of this workbook.
+        /// </summary>
+        /// <returns></returns>
+        public string GetWorkbookVersion()
+        {
+            return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_WORKBOOK_VERSION).FirstOrDefault().Value;
+        }
+
+        /// <summary>
         /// Returns the title of the chapter.
         /// </summary>
         /// <returns></returns>
@@ -326,16 +335,6 @@ namespace GameTree
         public string GetChapterId()
         {
             return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_CHAPTER_ID).FirstOrDefault().Value;
-        }
-
-
-        /// <summary>
-        /// Returns the Legacy Title value.
-        /// </summary>
-        /// <returns></returns>
-        public string GetLegacyTitle()
-        {
-            return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_LEGACY_TITLE).FirstOrDefault().Value;
         }
 
         /// <summary>

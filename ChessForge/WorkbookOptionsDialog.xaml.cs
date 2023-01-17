@@ -69,6 +69,8 @@ namespace ChessForge
             UiTbTitle.Text = _workbook.Title;
             UiLblSideToMove.Content = _workbook.TrainingSideConfig == PieceColor.Black ? _strBlack : _strWhite;
 
+            UiLblSideToMove.ToolTip = "Determines some default settings";
+
             StudyBoardOrientation = GetBoardOrientation(_workbook.StudyBoardOrientationConfig);
             UiLblBoardStudyOrient.Content = _workbook.StudyBoardOrientationConfig == PieceColor.Black ? _strBlack : _strWhite;
 
@@ -85,6 +87,10 @@ namespace ChessForge
             {
                 UiLblBoardExercisesOrient.Content = _workbook.ExerciseBoardOrientationConfig == PieceColor.Black ? _strBlack : _strWhite;
             }
+
+            UiLblVersion.Content = "Version: " + _workbook.Version;
+            UiLblVersion.ToolTip = "To increment version select File->Backup Version";
+            
         }
 
         /// <summary>

@@ -29,6 +29,11 @@ namespace GameTree
         public const string KEY_WORKBOOK_TITLE = "ChessForgeWorkbook";
 
         /// <summary>
+        /// Version of the Workbook/
+        /// </summary>
+        public const string KEY_WORKBOOK_VERSION = "WorkbookVersion";
+
+        /// <summary>
         /// Determines which side is the default training side in 
         /// the Workbook. The value can be "White", "Black" or "None".
         /// This is part of the first set of headers (i.e. for the entire Workbook)
@@ -84,11 +89,6 @@ namespace GameTree
         public const string KEY_CHAPTER_TITLE = "ChapterTitle";
 
         /// <summary>
-        /// Legacy Title line from CHF files
-        /// </summary>
-        public const string KEY_LEGACY_TITLE = "Title";
-
-        /// <summary>
         /// Type of the game which can be "Study Tree", "Model Game" or "Exercise".
         /// </summary>
         public const string KEY_CONTENT_TYPE = "ContentType";
@@ -135,9 +135,24 @@ namespace GameTree
         public const string VALUE_MODEL_GAME = "Model Game";
         public const string VALUE_EXERCISE = "Exercise";
 
+        /// <summary>
+        /// Builds header line for the Workbook Title
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
         public static string GetWorkbookTitleText(string title)
         {
             return BuildHeaderLine(KEY_WORKBOOK_TITLE, title);
+        }
+
+        /// <summary>
+        /// Builds header line for the Workbook Version
+        /// </summary>
+        /// <param name="ver"></param>
+        /// <returns></returns>
+        public static string GetWorkbookVersionText(string ver)
+        {
+            return BuildHeaderLine(KEY_WORKBOOK_VERSION, ver);
         }
 
         /// <summary>

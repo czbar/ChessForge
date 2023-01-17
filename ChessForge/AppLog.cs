@@ -234,7 +234,7 @@ namespace ChessForge
 
             AppTimers timers = AppStateManager.MainWin.Timers;
 
-            bool isMessagePollEnabled = EngineMessageProcessor.ChessEngineService.IsMessagePollEnabled();
+            bool isMessagePollEnabled = EngineMessageProcessor.ChessEngineService.IsMessageRxLoopEnabled();
             sb.Append("ENGINE MESSAGE POLL" + ": IsEnabled = "
                 + isMessagePollEnabled.ToString() + Environment.NewLine);
 
