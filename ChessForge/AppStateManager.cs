@@ -222,8 +222,6 @@ namespace ChessForge
 
         /// <summary>
         /// Types of files that Chess Forge can handle.
-        /// PGN can only be viewed, not edited.
-        /// CHF can be viewed and edited.
         /// </summary>
         public enum FileType
         {
@@ -733,11 +731,15 @@ namespace ChessForge
                 {
                     _mainWin.UiMnWorkbookSaveAs.IsEnabled = true;
                     _mainWin.UiMnWorkbookSaveAs.Header = "Save " + Path.GetFileName(WorkbookFilePath) + " As...";
+
+                    _mainWin.UiMnBackupVersion.IsEnabled = true;
                 }
                 else
                 {
                     _mainWin.UiMnWorkbookSaveAs.IsEnabled = false;
                     _mainWin.UiMnWorkbookSaveAs.Header = "Save As...";
+
+                    _mainWin.UiMnBackupVersion.IsEnabled = false;
                 }
             });
         }

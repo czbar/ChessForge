@@ -426,6 +426,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Asks the user to confirm the backup with bumped worked version.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnBackupVersion_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Creates a new Workbook.
         /// </summary>
         /// <param name="sender"></param>
