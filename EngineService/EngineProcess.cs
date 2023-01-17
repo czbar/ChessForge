@@ -28,10 +28,6 @@ namespace EngineService
         /// After receiving a "stop" command, the engine enters the STOPPING state
         /// during which it will not accept any commands. It will await a 
         /// "best move" command to then go back to IDLE.
-        /// If the "best move" is not received within 5000 milliseconds, the engine will enter
-        /// UNEXPECTED state and will require a restart.
-        /// It is up to the client to check for this state and restart the engine
-        /// if appropriate.
         /// </summary>
         public enum State
         {
@@ -49,14 +45,6 @@ namespace EngineService
         public State CurrentState { get => _currentState; }
 
         /// <summary>
-        /// True if the engine is running and ready to accept requets 
-        /// </summary>
-        private bool _isEngineRunning = false;
-
-        // indicates engine's readiness
-        private bool _isEngineReady = false;
-
-        /// <summary>
         /// True if we have received "readyok" from the engine  
         /// </summary>
         public bool IsEngineReady
@@ -69,21 +57,31 @@ namespace EngineService
         /// </summary>
         public int Multipv { get => _multipv; set => _multipv = value; }
 
-        // Message polling interval in milliseconds
-        private static readonly int POLL_INTERVAL = 50;
+        /// <summary>
+        /// True if the engine is running and ready to accept requets 
+        /// </summary>
+        private bool _isEngineRunning = false;
 
-        // A number of polls in the STOPPING state after which we decide that the engine will not send "bestmove". 
-        // We allow 5000 ms which is rather generous.
-        private static readonly int MAX_POLL_COUNT_IN_STOPPING = (int)(5000 / POLL_INTERVAL);
+        // indicates engine's readiness
+        private bool _isEngineReady = false;
+
+        // whether the message reading loop is running
+        private bool _isMessageRxLoopRunning = false;
+
+        /// <summary>
+        /// Action invoked by ReadEngineMessage().
+        /// It is defined in EngineMessageProcessor as EngineMessageReceived().
+        /// </summary>
+        public event Action<string> EngineMessage;
+
+        // Message polling interval in milliseconds
+        private static readonly int POLL_INTERVAL = 200;
 
         // A lock object to use when reading engine messages
         private static object _lockEngineMessage = new object();
 
         // A lock object for changing _currentState
         private static object _lockStateChange = new object();
-
-        // helper counter for ReadEngineMessages
-        private int _counter = 0;
 
         // reads engine process's STDOUT 
         private StreamReader _strmReader;
@@ -94,20 +92,11 @@ namespace EngineService
         // the engine service process
         private Process _engineProcess;
 
-        // counts the number of poll events while in the STOPPING state
-        private int _pollCountInStopping;
-
-        /// <summary>
-        /// Action invoked by ReadEngineMessage().
-        /// It is defined in EngineMessageProcessor as EngineMessageReceived().
-        /// </summary>
-        public event Action<string> EngineMessage;
-
         // the current state of the engine
         private State _currentState;
 
-        // the timer polling for engine's messages
-        private Timer _messagePollTimer = new Timer();
+        // the timer starting / re-starting the message reading loop
+        private Timer _messageRxLoopTimer = new Timer();
 
         // number of lines to analyze
         private int _multipv = 5;
@@ -152,29 +141,29 @@ namespace EngineService
 
                 _engineProcess.Start();
 
+                _isEngineRunning = true;
+
+                CreateMessageRxLoopTimer();
+                StartMessageRxLoopTimer();
+
                 _strmWriter = _engineProcess.StandardInput;
                 _strmReader = _engineProcess.StandardOutput;
-
-                CreateTimer();
-
-                // start the message polling timer
-                // it will be stopped when ok is received
-                StartMessagePollTimer();
 
                 WriteOut(UciCommands.ENG_UCI);
                 WriteOut(UciCommands.ENG_ISREADY);
                 WriteOut(UciCommands.ENG_UCI_NEW_GAME);
 
-                _isEngineRunning = true;
                 _currentState = State.NOT_READY;
 
                 EngineLog.Message("Engine running.");
+
 
                 return true;
             }
             catch (Exception ex)
             {
                 EngineLog.Message("Failed to start engine: " + ex.Message);
+                _isEngineRunning = false;
                 return false;
             }
         }
@@ -186,7 +175,7 @@ namespace EngineService
         {
             try
             {
-                StopMessagePollTimer();
+                StopMessageRxLoopTimer();
 
                 if (_engineProcess != null && _isEngineRunning)
                 {
@@ -233,7 +222,7 @@ namespace EngineService
                 WriteOut(UciCommands.ENG_POSITION_FEN + " " + gfc.Fen);
                 WriteOut(gfc.GoCommandString);
                 EngineLog.Message("NodeId=" + gfc.NodeId.ToString() + " TreeId=" + gfc.TreeId.ToString());
-                StartMessagePollTimer();
+                StartMessageRxLoopTimer();
 
                 _currentState = State.CALCULATING;
             }
@@ -299,7 +288,7 @@ namespace EngineService
                     if (accept)
                     {
                         // we are sending a command so enable message polling, if not enabled
-                        StartMessagePollTimer();
+                        StartMessageRxLoopTimer();
                         WriteOut(command);
                     }
                     else
@@ -312,13 +301,13 @@ namespace EngineService
         }
 
         /// <summary>
-        /// Returns true if the Message Poll timer
+        /// Returns true if the Message Rx Loop timer
         /// is currently enabled.
         /// </summary>
         /// <returns></returns>
-        public bool IsMessagePollEnabled()
+        public bool IsMessageRxLoopEnabled()
         {
-            return _messagePollTimer.Enabled;
+            return _messageRxLoopTimer.Enabled;
         }
 
         /// <summary>
@@ -330,31 +319,44 @@ namespace EngineService
             _strmWriter.WriteLine(command);
             EngineLog.Message("Command sent: " + command + " : State=" + _currentState.ToString());
         }
+        /// <summary>
+        /// Creates a timer to poll for engine messages.
+        /// </summary>
+        private void CreateMessageRxLoopTimer()
+        {
+            _messageRxLoopTimer.Enabled = false;
+            _messageRxLoopTimer.Interval = POLL_INTERVAL;
+            _messageRxLoopTimer.Elapsed += new ElapsedEventHandler(CheckMessageRxLoop);
+        }
 
         /// <summary>
         /// Starts the message poll timer.
         /// </summary>
-        private void StartMessagePollTimer()
+        private void StartMessageRxLoopTimer()
         {
-            _messagePollTimer.Enabled = true;
+            _messageRxLoopTimer.Enabled = true;
         }
 
         /// <summary>
         /// Stops the message poll timer
         /// </summary>
-        private void StopMessagePollTimer()
+        private void StopMessageRxLoopTimer()
         {
-            _messagePollTimer.Enabled = false;
+            _messageRxLoopTimer.Enabled = false;
         }
 
         /// <summary>
-        /// Creates a timer to poll for engine messages.
+        /// Invoked by the MessageRxLoopTimer event.
+        /// Starts or re-starts the message loop if not currently running.
         /// </summary>
-        private void CreateTimer()
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private void CheckMessageRxLoop(object source, ElapsedEventArgs e)
         {
-            _messagePollTimer.Enabled = false;
-            _messagePollTimer.Interval = POLL_INTERVAL;
-            _messagePollTimer.Elapsed += new ElapsedEventHandler(ReadEngineMessages);
+            if (_isEngineRunning && !_isMessageRxLoopRunning)
+            {
+                ReadEngineMessages();
+            }
         }
 
         /// <summary>
@@ -365,27 +367,16 @@ namespace EngineService
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        private void ReadEngineMessages(object source, ElapsedEventArgs e)
+        private void ReadEngineMessages()
         {
+            _isMessageRxLoopRunning = true;
+
             lock (_lockEngineMessage)
             {
                 if (_strmReader == null)
+                {
+                    _isMessageRxLoopRunning = false;
                     return;
-
-                if (_currentState == State.STOPPING)
-                {
-                    _pollCountInStopping++;
-                    if (_pollCountInStopping >= MAX_POLL_COUNT_IN_STOPPING)
-                    {
-                        // we have not received "bestmove" message in a reasonable time,
-                        // assume the engine is available but log the problem.
-                        EngineLog.Message("ERROR: wait for bestmove timed out");
-                        _currentState = State.UNEXPECTED;
-                    }
-                }
-                else
-                {
-                    _pollCountInStopping = 0;
                 }
 
                 string message;
@@ -421,22 +412,18 @@ namespace EngineService
                                 }
                             }
                         }
-
-                        // break out every now and then if it gets to tight so that GUI updates can happen
-                        _counter++;
-                        if (_counter % 10 == 0)
-                        {
-                            _counter = 0;
-                            break;
-                        }
                     }
                 }
                 catch (Exception ex)
                 {
+                    _isMessageRxLoopRunning = false;
+
                     EngineLog.Message("ERROR: ReadEngineMessages():" + ex.Message);
                     throw new Exception("ReadEngineMessages():" + ex.Message);
                 };
             }
+
+            _isMessageRxLoopRunning = false;
         }
 
         /// <summary>
@@ -479,7 +466,6 @@ namespace EngineService
         {
             _isEngineReady = true;
             _currentState = State.IDLE;
-            StopMessagePollTimer();
         }
 
         /// <summary>
@@ -503,7 +489,6 @@ namespace EngineService
 
             lock (_lockStateChange)
             {
-                bool stopPoll = true;
                 _currentState = State.IDLE;
 
                 if (_goFenQueued != null)
@@ -515,12 +500,6 @@ namespace EngineService
                     _goFenQueued = null;
                     EngineLog.Message("Sending queued command for NodeId=" + _goFenCurrent.NodeId.ToString() + ", State = " + _currentState.ToString());
                     SendFenGoCommand(_goFenCurrent);
-                    stopPoll = false;
-                }
-
-                if (stopPoll)
-                {
-                    StopMessagePollTimer();
                 }
             }
 
