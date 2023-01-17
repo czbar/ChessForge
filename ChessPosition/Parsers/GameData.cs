@@ -143,6 +143,15 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the version of the Workbook
+        /// </summary>
+        /// <returns></returns>
+        public string GetWorkbookVersion()
+        {
+            return Header.GetWorkbookVersion();
+        }
+
+        /// <summary>
         /// Returns the number of the chapter or 0 if not found or invalid.
         /// </summary>
         /// <returns></returns>

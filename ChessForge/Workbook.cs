@@ -102,6 +102,9 @@ namespace ChessForge
         // workbook title
         private string _title;
 
+        // Version object for this Workbook
+        private WorkbookVersion _version;
+
         /// <summary>
         /// An object managing identities of the trees.
         /// </summary>
@@ -352,6 +355,23 @@ namespace ChessForge
                 }
             }
             set => _title = value;
+        }
+
+        /// <summary>
+        /// The Workbook Version object
+        /// </summary>
+        public WorkbookVersion Version
+        {
+            get => _version;
+        }
+
+        /// <summary>
+        /// Creates a WorkbookVersion object from the passed string
+        /// </summary>
+        /// <param name="ver"></param>
+        public void SetVersion(string ver)
+        {
+            _version = new WorkbookVersion(ver);
         }
 
         /// <summary>
