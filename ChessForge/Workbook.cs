@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls.Primitives;
 using ChessPosition;
 using ChessPosition.GameTree;
 using GameTree;
@@ -24,6 +22,9 @@ namespace ChessForge
         /// </summary>
         private List<Chapter> _chapters = new List<Chapter>();
 
+        /// <summary>
+        /// Returns the list of chapters.
+        /// </summary>
         public List<Chapter> Chapters
         {
             get
@@ -122,6 +123,46 @@ namespace ChessForge
         {
             TreeManager.Reset();
             OpsManager = new WorkbookOperationsManager(this);
+        }
+
+        /// <summary>
+        /// Finds and returns a Game or an Exercise with the requested Guid.
+        /// Returns null if not found.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="chapterIndex"></param>
+        /// <param name="articleIndex"></param>
+        /// <returns></returns>
+        /// 
+        public Article GetArticleByGuid(string guid, out int chapterIndex, out int articleIndex)
+        {
+            chapterIndex = -1;
+            articleIndex = -1;
+
+            for (int i = 0; i < _chapters.Count; i++)
+            {
+                for (int j = 0; j < Chapters[i].ModelGames.Count; j++)
+                {
+                    if (Chapters[i].ModelGames[j].Tree.Header.GetGuid(out _) == guid)
+                    {
+                        chapterIndex = i;
+                        articleIndex = j;
+                        return Chapters[i].ModelGames[j];
+                    }
+                }
+
+                for (int j = 0; j < Chapters[i].Exercises.Count; j++)
+                {
+                    if (Chapters[i].Exercises[j].Tree.Header.GetGuid(out _) == guid)
+                    {
+                        chapterIndex = i;
+                        articleIndex = j;
+                        return Chapters[i].Exercises[j];
+                    }
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
