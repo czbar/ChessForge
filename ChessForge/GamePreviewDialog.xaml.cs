@@ -14,7 +14,7 @@ namespace ChessForge
     /// <summary>
     /// Interaction logic for GamesPreviewDialog.xaml
     /// </summary>
-    public partial class GamePreviewDialog : Window
+    public abstract partial class GamePreviewDialog : Window
     {
         // chessboard object for game replay
         protected ChessBoardSmall _chessBoard;
@@ -100,42 +100,25 @@ namespace ChessForge
         /// <summary>
         /// Sets up the labels with players' names.
         /// </summary>
-        protected void PopulateHeaderLine()
+        protected void PopulateHeaderLine(VariationTree tree)
         {
             UiLblWhiteSquare.Content = Constants.CharWhiteSquare;
 
-            string white = _tree.Header.GetWhitePlayer(out _) ?? "";
+            string white = tree.Header.GetWhitePlayer(out _) ?? "";
             UiLblWhite.Content = white;
             UiLblWhite.FontWeight = FontWeights.Bold;
             UiLblWhite.ToolTip = white;
 
             UiLblBlackSquare.Content = Constants.CharBlackSquare;
 
-            string black = _tree.Header.GetBlackPlayer(out _) ?? "";
+            string black = tree.Header.GetBlackPlayer(out _) ?? "";
             UiLblBlack.Content = black;
             UiLblBlack.FontWeight = FontWeights.Bold;
             UiLblBlack.ToolTip = black;
 
-            string result = (_tree.Header.GetResult(out _) ?? "");
+            string result = (tree.Header.GetResult(out _) ?? "");
             UiLblResult.Content = result;
             UiLblResult.FontWeight = FontWeights.Bold;
-        }
-
-        /// <summary>
-        /// Prepares replay of the selected game.
-        /// </summary>
-        protected void PlaySelectGame()
-        {
-            if (_isAnimating)
-            {
-                _pauseRequested = true;
-                _queuedOperation = QueuedOperation.SELECT_GAME;
-            }
-            else
-            {
-                _isAnimating = false;
-                DownloadGame(_currentGameId);
-            }
         }
 
         //********************************************************
@@ -145,8 +128,9 @@ namespace ChessForge
         //********************************************************
 
         /// <summary>
-        /// Request animation of the move at a given index in the
-        /// Node list.
+        /// Request animation of the move at a given index in the Node list.
+        /// The animation makes a move from the position at moveIndex - 1
+        /// to the position at moveIndex.
         /// </summary>
         /// <param name="moveIndex"></param>
         protected void RequestMoveAnimation(int moveIndex)
@@ -204,7 +188,7 @@ namespace ChessForge
                         UiPreviousGame_Click(null, null);
                         break;
                     case QueuedOperation.SELECT_GAME:
-                        PlaySelectGame();
+                        PlaySelectedGame();
                         break;
                 }
                 _queuedOperation = QueuedOperation.NONE;
@@ -289,9 +273,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="hasGame"></param>
         /// <param name="isError"></param>
-        virtual protected void ShowGameControls(bool hasGame, bool isError)
-        {
-        }
+        abstract protected void ShowGameControls(bool hasGame, bool isError);
+
+        /// <summary>
+        /// Prepares replay of the selected game.
+        /// </summary>
+        abstract protected void PlaySelectedGame();
 
         /// <summary>
         /// Shows/Hides move related controls.
@@ -306,13 +293,16 @@ namespace ChessForge
             UiImgNextMove.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
             UiImgLastMove.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
 
-            UiImgFirstMove.IsEnabled = _currentNodeMoveIndex > 1;
-            UiImgPreviousMove.IsEnabled = _currentNodeMoveIndex > 1;
+            UiImgFirstMove.IsEnabled = _currentNodeMoveIndex > 0;
+            UiImgPreviousMove.IsEnabled = _currentNodeMoveIndex > 0;
             UiImgNextMove.IsEnabled = _mainLine != null && (_currentNodeMoveIndex < _mainLine.Count - 1);
             UiImgLastMove.IsEnabled = _mainLine != null && (_currentNodeMoveIndex < _mainLine.Count - 1);
 
             UiLblNextGame.IsEnabled = !IsCurrentGameLast();
             UiLblPrevGame.IsEnabled = !IsCurrentGameFirst();
+
+            UiImgPlay.IsEnabled = _mainLine != null && (_currentNodeMoveIndex < _mainLine.Count - 1);
+            UiImgPause.IsEnabled = _mainLine != null && (_currentNodeMoveIndex < _mainLine.Count - 1);
 
             if (hasGame)
             {
@@ -389,9 +379,11 @@ namespace ChessForge
             else
             {
                 _queuedOperation = QueuedOperation.NONE;
-                _currentNodeMoveIndex = 1;
-                _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex - 1], false);
+                _currentNodeMoveIndex = 0;
+                _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
             }
+
+            ShowMoveControls(true);
         }
 
         /// <summary>
@@ -410,12 +402,13 @@ namespace ChessForge
             {
                 _queuedOperation = QueuedOperation.NONE;
 
-                if (_currentNodeMoveIndex > 1)
+                if (_currentNodeMoveIndex > 0)
                 {
                     _currentNodeMoveIndex--;
-                    _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex - 1], false);
+                    _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
                 }
             }
+            ShowMoveControls(true);
         }
 
         /// <summary>
@@ -436,9 +429,10 @@ namespace ChessForge
                 if (_currentNodeMoveIndex < _mainLine.Count - 1)
                 {
                     _currentNodeMoveIndex++;
-                    _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex - 1], false);
+                    _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
                 }
             }
+            ShowMoveControls(true);
         }
 
         /// <summary>
@@ -459,6 +453,7 @@ namespace ChessForge
                 _currentNodeMoveIndex = _mainLine.Count - 1;
                 _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
             }
+            ShowMoveControls(true);
         }
 
         //********************************************************
@@ -588,5 +583,23 @@ namespace ChessForge
         {
         }
 
+        /// <summary>
+        /// The user changed selecttion in the Games ListBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        virtual protected void UiLbGames_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// The user clicked the Full View button so we close the dialog
+        /// and open the Game/Exercise view for the selected item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        virtual protected void UiBtnViewGame_Click(object sender, RoutedEventArgs e)
+        {
+        }
     }
 }
