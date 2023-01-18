@@ -1797,7 +1797,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates a new Reference Run and adds it to Pragraph.
+        /// Creates a new Reference Run and adds it to Paragraph.
         /// A Reference Run contains just a single symbol indicating that there are game
         /// references for the preceding Node.
         /// </summary>
