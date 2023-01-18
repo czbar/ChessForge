@@ -17,7 +17,7 @@ namespace ChessForge
     /// <summary>
     /// Interaction logic for GamesPreviewDialog.xaml
     /// </summary>
-    public partial class GamesPreviewDialog : Window
+    public partial class GamePreviewDialog : Window
     {
         // chessboard object for game replay
         private ChessBoardSmall _chessBoard;
@@ -82,7 +82,7 @@ namespace ChessForge
         /// Creates the dialog and requests game's text from lichess.
         /// </summary>
         /// <param name="lichessGameId"></param>
-        public GamesPreviewDialog(string lichessGameId, List<string> gameIdList)
+        public GamePreviewDialog(string lichessGameId, List<string> gameIdList)
         {
             InitializeComponent();
             _gameIdList = gameIdList;
