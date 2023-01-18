@@ -63,6 +63,12 @@ namespace ChessForge
             get => _entityIndex;
         }
 
+        /// <summary>
+        /// Event handler for Article selection.
+        /// MainWindow subscribes to it with EventSelectArticle().
+        /// </summary>
+        public static event EventHandler<ChessForgeEventArgs> ArticleSelected;
+
         // flags freshness of the view
         private bool _isFresh = false;
 
@@ -1999,8 +2005,47 @@ namespace ChessForge
                 return;
             }
 
-            // open games preview dialog.
-            // TODO: implement
+            try
+            {
+                TreeNode nd = GetClickedNode(e);
+                List<string> guids = new List<string>(nd.ArticleRefs.Split('|'));
+                List<Article> games = new List<Article>();
+                foreach (string guid in guids)
+                {
+                    Article art = WorkbookManager.SessionWorkbook.GetArticleByGuid(guid, out _, out _);
+                    if (art != null)
+                    {
+                        games.Add(art);
+                    }
+                }
+
+                if (games.Count > 0)
+                {
+                    ReferenceGamePreviewDialog dlg = new ReferenceGamePreviewDialog(guids, games)
+                    {
+                        Left = _mainWin.ChessForgeMain.Left + 100,
+                        Top = _mainWin.ChessForgeMain.Top + 100,
+                        Topmost = false,
+                        Owner = _mainWin
+                    };
+                    if (dlg.ShowDialog() == true)
+                    {
+                        ChessForgeEventArgs args = new ChessForgeEventArgs();
+                        args.ChapterIndex = dlg.SelectedChapterIndex;
+                        args.ArticleIndex = dlg.SelectedArticleIndex;
+                        args.ContentType = dlg.SelectedContentType;
+
+                        ArticleSelected?.Invoke(this, args);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Referenced games not found.", "Games", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -2274,5 +2319,27 @@ namespace ChessForge
                    || nd.IsThumbnail
                    || (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0);
         }
+
+        /// <summary>
+        /// Returns the clicked node from event arguments.
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        private TreeNode GetClickedNode(MouseButtonEventArgs e)
+        {
+            try
+            {
+                Run r = (Run)e.Source;
+
+                int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
+                TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
+                return nd;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
     }
 }
