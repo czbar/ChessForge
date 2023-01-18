@@ -70,7 +70,7 @@ namespace ChessForge
                     PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, _tree);
                     _tree.ContentType = GameData.ContentType.MODEL_GAME;
 
-                    PopulateHeaderLine();
+                    PopulateHeaderLine(_tree);
 
                     _chessBoard.DisplayStartingPosition();
                     _mainLine = _tree.SelectLine("1");
@@ -224,6 +224,23 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Prepares replay of the selected game.
+        /// </summary>
+        override protected void PlaySelectedGame()
+        {
+            if (_isAnimating)
+            {
+                _pauseRequested = true;
+                _queuedOperation = QueuedOperation.SELECT_GAME;
+            }
+            else
+            {
+                _isAnimating = false;
+                DownloadGame(_currentGameId);
+            }
+        }
+
+        /// <summary>
         /// Handler for the click event on a game row
         /// in the hosted TopGamesView
         /// </summary>
@@ -234,7 +251,7 @@ namespace ChessForge
             try
             {
                 _currentGameId = e.GameId;
-                PlaySelectGame();
+                PlaySelectedGame();
             }
             catch { }
         }
