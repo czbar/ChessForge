@@ -834,7 +834,14 @@ namespace ChessForge
             try
             {
                 Paragraph para = r.Parent as Paragraph;
-                return TextUtils.GetIdFromPrefixedString(para.Name);
+                if (para != null)
+                {
+                    return TextUtils.GetIdFromPrefixedString(para.Name);
+                }
+                else
+                {
+                    return -1;
+                }
             }
             catch
             {

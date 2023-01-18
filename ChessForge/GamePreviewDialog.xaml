@@ -1,4 +1,4 @@
-﻿<Window x:Class="ChessForge.GamesPreviewDialog"
+﻿<Window x:Class="ChessForge.GamePreviewDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -36,6 +36,7 @@
                Source="Resources/Images/chevron-down.png" MouseLeftButtonDown="UiNextGame_Click" ></Image>
         <Label x:Name="UiLblPrevGame" Cursor="Hand" Content="Previous Game" HorizontalAlignment="Left" Margin="340,6,0,0" VerticalAlignment="Top" MouseLeftButtonDown="UiPreviousGame_Click"/>
         <Label x:Name="UiLblNextGame" Cursor="Hand" Content="Next Game" HorizontalAlignment="Left" Margin="340,30,0,0" VerticalAlignment="Top" MouseLeftButtonDown="UiNextGame_Click"/>
+        <Button x:Name="UiBtnViewGame" Visibility="Collapsed" Content="Full View" HorizontalAlignment="Left" Width="120" Margin="342,125,0,0" VerticalAlignment="Top" Click="UiBtnViewGame_Click"  />
         <Button x:Name="UiBtnExit" Content="Exit" HorizontalAlignment="Left" Width="120" Margin="342,353,0,0" VerticalAlignment="Top" Click="UiBtnExit_Click" />
         <Label x:Name="UiLblDownloadError" Visibility="Collapsed" FontSize="14"  FontWeight="Bold" Foreground="red" Content="Error downloading from lichess.org" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblLoading" Background="Blue" Foreground="White" FontSize="16" FontWeight="Bold" Content="Downloading game from lichess.org. Please wait..." HorizontalAlignment="Center" Margin="0,182,0,0" VerticalAlignment="Top" Panel.ZIndex="1"/>
@@ -56,6 +57,7 @@
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
+        <ListBox x:Name="UiLbGames" Visibility="Collapsed" HorizontalAlignment="Left" Margin="340,2,0,0" Width="300" VerticalAlignment="Top" Height="100" SelectionChanged="UiLbGames_SelectionChanged"/>
         <Label x:Name="UiLblResult" Content="" HorizontalAlignment="Left" Margin="245,16,0,0" Width="60" VerticalAlignment="Top"/>
         <Canvas x:Name="UiCnvPlayers" HorizontalAlignment="Left" Margin="42,2,0,0" Width="268" Height="56" Background="LightGray" VerticalAlignment="Top"
                 Panel.ZIndex="-1"></Canvas>

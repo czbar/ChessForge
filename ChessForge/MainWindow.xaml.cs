@@ -11,6 +11,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WebAccess;
 
 namespace ChessForge
 {
@@ -328,6 +329,30 @@ namespace ChessForge
             Timers.Start(AppTimers.TimerId.APP_START);
 
             AppLog.LogAvailableThreadsCounts();
+
+            VariationTreeView.ArticleSelected += EventSelectArticle;
+        }
+
+        /// <summary>
+        /// Subscribes to events requiring selections of an Article.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventSelectArticle(object sender, ChessForgeEventArgs e)
+        {
+            try
+            {
+                WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(e.ChapterIndex, e.ContentType, e.ArticleIndex);
+                if (e.ContentType == GameData.ContentType.MODEL_GAME)
+                {
+                    SelectModelGame(e.ArticleIndex, true);
+                }
+                else if (e.ContentType == GameData.ContentType.EXERCISE)
+                {
+                    AppStateManager.MainWin.SelectExercise(e.ArticleIndex, true);
+                }
+            }
+            catch { }
         }
 
         /// <summary>

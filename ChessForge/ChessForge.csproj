@@ -107,6 +107,7 @@
       <DependentUpon>ChapterTitleDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ChessBoardSmall.cs" />
+    <Compile Include="ChessForgeEventArgs.cs" />
     <Compile Include="CustomCommands.cs" />
     <Compile Include="EvaluationActiveLine.cs" />
     <Compile Include="EvaluationLine.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="DraggedPiece.cs" />
     <Compile Include="EngineGame.cs" />
     <Compile Include="EvaluationManager.cs" />
+    <Compile Include="LichessGamesPreviewDialog.cs" />
     <Compile Include="ListViewHelper.cs" />
     <Compile Include="CommentBox.cs" />
     <Compile Include="EngineLinesBox.cs" />
@@ -144,6 +146,7 @@
     <Compile Include="MoveAnimator.cs" />
     <Compile Include="MoveEvaluation.cs" />
     <Compile Include="OpeningStatsView.cs" />
+    <Compile Include="ReferenceGamePreviewDialog.cs" />
     <Compile Include="SelectSingleChapterDialog.xaml.cs">
       <DependentUpon>SelectSingleChapterDialog.xaml</DependentUpon>
     </Compile>
@@ -156,8 +159,8 @@
     <Compile Include="PromotionDialog.xaml.cs">
       <DependentUpon>PromotionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GamesPreviewDialog.xaml.cs">
-      <DependentUpon>GamesPreviewDialog.xaml</DependentUpon>
+    <Compile Include="GamePreviewDialog.xaml.cs">
+      <DependentUpon>GamePreviewDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\ChessBoards.cs" />
     <Compile Include="Resources\Colors.cs" />
@@ -250,7 +253,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GamesPreviewDialog.xaml">
+    <Page Include="GamePreviewDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -9,12 +9,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Media.Media3D;
-using System.Xml.Linq;
 using ChessPosition.GameTree;
-using System.Windows.Resources;
 
 namespace ChessForge
 {
@@ -67,6 +62,12 @@ namespace ChessForge
         {
             get => _entityIndex;
         }
+
+        /// <summary>
+        /// Event handler for Article selection.
+        /// MainWindow subscribes to it with EventSelectArticle().
+        /// </summary>
+        public static event EventHandler<ChessForgeEventArgs> ArticleSelected;
 
         // flags freshness of the view
         private bool _isFresh = false;
@@ -162,6 +163,7 @@ namespace ChessForge
         private readonly string _run_fork_move_ = "_run_fork_move_";
         private readonly string _run_ = "run_";
         private readonly string _run_comment_ = "run_comment_";
+        private readonly string _run_reference_ = "run_reference_";
 
         // name of the header paragraph
         private readonly string _para_header_ = "para_header_";
@@ -208,6 +210,11 @@ namespace ChessForge
         private Dictionary<int, Run> _dictNodeToCommentRun = new Dictionary<int, Run>();
 
         /// <summary>
+        /// Maps Node Ids to Reference Runs for quick access.
+        /// </summary>
+        private Dictionary<int, Run> _dictNodeToReferenceRun = new Dictionary<int, Run>();
+
+        /// <summary>
         /// Maps Runs to Paragraphs for quick access.
         /// </summary>
         private Dictionary<Run, Paragraph> _dictRunToParagraph = new Dictionary<Run, Paragraph>();
@@ -216,6 +223,11 @@ namespace ChessForge
         /// Maps Comment Runs to Paragraphs for quick access.
         /// </summary>
         private Dictionary<Run, Paragraph> _dictCommentRunToParagraph = new Dictionary<Run, Paragraph>();
+
+        /// <summary>
+        /// Maps Reference Runs to Paragraphs for quick access.
+        /// </summary>
+        private Dictionary<Run, Paragraph> _dictReferenceRunToParagraph = new Dictionary<Run, Paragraph>();
 
         /// <summary>
         /// Current Paragraph level.
@@ -793,6 +805,9 @@ namespace ChessForge
 
             _dictNodeToCommentRun.Clear();
             _dictCommentRunToParagraph.Clear();
+
+            _dictNodeToReferenceRun.Clear();
+            _dictReferenceRunToParagraph.Clear();
 
             _currParagraphLevel = 0;
         }
@@ -1636,6 +1651,7 @@ namespace ChessForge
             }
 
             AddRunToParagraph(nd, para, nodeText, fontColor);
+            AddReferenceRunToParagraph(nd, para);
             AddCommentRunToParagraph(nd, para);
         }
 
@@ -1690,6 +1706,7 @@ namespace ChessForge
             {
                 TreeNode nd = _mainWin.ActiveVariationTree.Nodes[0];
                 AddRunToParagraph(nd, para, "", Brushes.White);
+                AddReferenceRunToParagraph(nd, para);
                 AddCommentRunToParagraph(nd, para);
             }
         }
@@ -1764,7 +1781,16 @@ namespace ChessForge
                 r.Foreground = Brushes.Black;
                 r.FontWeight = FontWeights.Normal;
 
-                Run rNode = _dictNodeToRun[nd.NodeId];
+                // insert after the reference run or immediately after the move run if no reference run
+                Run rNode;
+                if (_dictNodeToReferenceRun.ContainsKey(nd.NodeId))
+                {
+                    rNode = _dictNodeToReferenceRun[nd.NodeId];
+                }
+                else
+                {
+                    rNode = _dictNodeToRun[nd.NodeId];
+                }
                 para.Inlines.InsertAfter(rNode, r);
 
                 _dictNodeToCommentRun.Add(nd.NodeId, r);
@@ -1773,6 +1799,44 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("AddCommentRunToParagraph()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a new Reference Run and adds it to Paragraph.
+        /// A Reference Run contains just a single symbol indicating that there are game
+        /// references for the preceding Node.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="para"></param>
+        private void AddReferenceRunToParagraph(TreeNode nd, Paragraph para)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(nd.ArticleRefs))
+                {
+                    return;
+                }
+
+                Run r = new Run(BuildReferenceRunText(nd));
+
+                r.Name = _run_reference_ + nd.NodeId.ToString();
+                r.PreviewMouseDown += EventReferenceRunClicked;
+
+                r.FontStyle = FontStyles.Normal;
+
+                r.Foreground = Brushes.Black;
+                r.FontWeight = FontWeights.Normal;
+
+                Run rNode = _dictNodeToRun[nd.NodeId];
+                para.Inlines.InsertAfter(rNode, r);
+
+                _dictNodeToReferenceRun.Add(nd.NodeId, r);
+                _dictReferenceRunToParagraph.Add(r, para);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("AddReferenceRunToParagraph()", ex);
             }
         }
 
@@ -1929,6 +1993,62 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// A "reference" run was clicked.
+        /// Open the Game Preview dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventReferenceRunClicked(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsSelectionEnabled())
+            {
+                return;
+            }
+
+            try
+            {
+                TreeNode nd = GetClickedNode(e);
+                List<string> guids = new List<string>(nd.ArticleRefs.Split('|'));
+                List<Article> games = new List<Article>();
+                foreach (string guid in guids)
+                {
+                    Article art = WorkbookManager.SessionWorkbook.GetArticleByGuid(guid, out _, out _);
+                    if (art != null)
+                    {
+                        games.Add(art);
+                    }
+                }
+
+                if (games.Count > 0)
+                {
+                    ReferenceGamePreviewDialog dlg = new ReferenceGamePreviewDialog(guids, games)
+                    {
+                        Left = _mainWin.ChessForgeMain.Left + 100,
+                        Top = _mainWin.ChessForgeMain.Top + 100,
+                        Topmost = false,
+                        Owner = _mainWin
+                    };
+                    if (dlg.ShowDialog() == true)
+                    {
+                        ChessForgeEventArgs args = new ChessForgeEventArgs();
+                        args.ChapterIndex = dlg.SelectedChapterIndex;
+                        args.ArticleIndex = dlg.SelectedArticleIndex;
+                        args.ContentType = dlg.SelectedContentType;
+
+                        ArticleSelected?.Invoke(this, args);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Referenced games not found.", "Games", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// The Page Header paragraph was clicked.
         /// </summary>
         /// <param name="sender"></param>
@@ -2047,6 +2167,50 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Inserts or deleted a reference run depending
+        /// on whether we have any reference fpr the node
+        /// </summary>
+        /// <param name="nd"></param>
+        public void InsertOrDeleteReferenceRun(TreeNode nd)
+        {
+            if (nd == null)
+            {
+                return;
+            }
+
+            try
+            {
+                Run r;
+                _dictNodeToRun.TryGetValue(nd.NodeId, out r);
+
+                Run r_reference;
+                _dictNodeToReferenceRun.TryGetValue(nd.NodeId, out r_reference);
+
+                if (string.IsNullOrEmpty(nd.ArticleRefs))
+                {
+                    // if the reference run existed, remove it
+                    if (r_reference != null)
+                    {
+                        _dictNodeToReferenceRun.Remove(nd.NodeId);
+                        RemoveRunFromHostingParagraph(r_reference);
+                    }
+                }
+                else
+                {
+                    // if the reference run existed just leave it, otherwise create it
+                    if (r_reference == null)
+                    {
+                        Paragraph para = r.Parent as Paragraph;
+                        AddReferenceRunToParagraph(nd, para);
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Checks if the move's text is prefixed by move number.
         /// </summary>
         /// <param name="txt"></param>
@@ -2111,6 +2275,23 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds text for the Reference Run
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private string BuildReferenceRunText(TreeNode nd)
+        {
+            if (string.IsNullOrEmpty(nd.ArticleRefs))
+            {
+                return "";
+            }
+            else
+            {
+                return Constants.CHAR_REFERENCE_MARK.ToString();
+            }
+        }
+
+        /// <summary>
         /// Colors the last run in the paragraph with the color of the next (lower level)
         /// paragraph's first char.
         /// The idea is to provide a more obvious visual hint as to where the fork is.
@@ -2138,5 +2319,27 @@ namespace ChessForge
                    || nd.IsThumbnail
                    || (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0);
         }
+
+        /// <summary>
+        /// Returns the clicked node from event arguments.
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        private TreeNode GetClickedNode(MouseButtonEventArgs e)
+        {
+            try
+            {
+                Run r = (Run)e.Source;
+
+                int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
+                TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
+                return nd;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
     }
 }
