@@ -52,7 +52,7 @@ namespace ChessForge
         /// List of operations that can be put on hold
         /// if requested while animation is running.
         /// </summary>
-        protected enum CachedOperation
+        protected enum QueuedOperation
         {
             NONE,
             FIRST_MOVE,
@@ -66,8 +66,8 @@ namespace ChessForge
             SELECT_GAME
         }
 
-        // currently cached operation
-        protected CachedOperation _cachedOperation;
+        // currently queued operation
+        protected QueuedOperation _queuedOperation;
 
         // list of game Ids to show
         protected List<string> _gameIdList = new List<string>();
@@ -129,7 +129,7 @@ namespace ChessForge
             if (_isAnimating)
             {
                 _pauseRequested = true;
-                _cachedOperation = CachedOperation.SELECT_GAME;
+                _queuedOperation = QueuedOperation.SELECT_GAME;
             }
             else
             {
@@ -177,37 +177,37 @@ namespace ChessForge
                 _isAnimating = false;
                 _pauseRequested = false;
 
-                switch (_cachedOperation)
+                switch (_queuedOperation)
                 {
-                    case CachedOperation.FIRST_MOVE:
+                    case QueuedOperation.FIRST_MOVE:
                         UiImgFirstMove_MouseDown(null, null);
                         break;
-                    case CachedOperation.LAST_MOVE:
+                    case QueuedOperation.LAST_MOVE:
                         UiImgLastMove_MouseDown(null, null);
                         break;
-                    case CachedOperation.PREV_MOVE:
+                    case QueuedOperation.PREV_MOVE:
                         UiImgPreviousMove_MouseDown(null, null);
                         break;
-                    case CachedOperation.NEXT_MOVE:
+                    case QueuedOperation.NEXT_MOVE:
                         UiImgNextMove_MouseDown(null, null);
                         break;
-                    case CachedOperation.PAUSE_AUTO:
+                    case QueuedOperation.PAUSE_AUTO:
                         UiImgPause_MouseDown(null, null);
                         break;
-                    case CachedOperation.PLAY_AUTO:
+                    case QueuedOperation.PLAY_AUTO:
                         UiImgPlay_MouseDown(null, null);
                         break;
-                    case CachedOperation.NEXT_GAME:
+                    case QueuedOperation.NEXT_GAME:
                         UiNextGame_Click(null, null);
                         break;
-                    case CachedOperation.PREV_GAME:
+                    case QueuedOperation.PREV_GAME:
                         UiPreviousGame_Click(null, null);
                         break;
-                    case CachedOperation.SELECT_GAME:
+                    case QueuedOperation.SELECT_GAME:
                         PlaySelectGame();
                         break;
                 }
-                _cachedOperation = CachedOperation.NONE;
+                _queuedOperation = QueuedOperation.NONE;
             }
             else if (_currentNodeMoveIndex < _mainLine.Count - 1)
             {
@@ -340,7 +340,7 @@ namespace ChessForge
             if (_isAnimating)
             {
                 _pauseRequested = true;
-                _cachedOperation = CachedOperation.PAUSE_AUTO;
+                _queuedOperation = QueuedOperation.PAUSE_AUTO;
             }
             else
             {
@@ -359,7 +359,7 @@ namespace ChessForge
             if (_isAnimating)
             {
                 _pauseRequested = true;
-                _cachedOperation = CachedOperation.PLAY_AUTO;
+                _queuedOperation = QueuedOperation.PLAY_AUTO;
             }
             else
             {
@@ -384,11 +384,11 @@ namespace ChessForge
             if (_isAnimating)
             {
                 _pauseRequested = true;
-                _cachedOperation = CachedOperation.FIRST_MOVE;
+                _queuedOperation = QueuedOperation.FIRST_MOVE;
             }
             else
             {
-                _cachedOperation = CachedOperation.NONE;
+                _queuedOperation = QueuedOperation.NONE;
                 _currentNodeMoveIndex = 1;
                 _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex - 1], false);
             }
@@ -404,11 +404,11 @@ namespace ChessForge
             if (_isAnimating)
             {
                 _pauseRequested = true;
-                _cachedOperation = CachedOperation.PREV_MOVE;
+                _queuedOperation = QueuedOperation.PREV_MOVE;
             }
             else
             {
-                _cachedOperation = CachedOperation.NONE;
+                _queuedOperation = QueuedOperation.NONE;
 
                 if (_currentNodeMoveIndex > 1)
                 {
@@ -428,11 +428,11 @@ namespace ChessForge
             if (_isAnimating)
             {
                 _pauseRequested = true;
-                _cachedOperation = CachedOperation.NEXT_MOVE;
+                _queuedOperation = QueuedOperation.NEXT_MOVE;
             }
             else
             {
-                _cachedOperation = CachedOperation.NONE;
+                _queuedOperation = QueuedOperation.NONE;
                 if (_currentNodeMoveIndex < _mainLine.Count - 1)
                 {
                     _currentNodeMoveIndex++;
@@ -451,11 +451,11 @@ namespace ChessForge
             if (_isAnimating)
             {
                 _pauseRequested = true;
-                _cachedOperation = CachedOperation.NEXT_MOVE;
+                _queuedOperation = QueuedOperation.NEXT_MOVE;
             }
             else
             {
-                _cachedOperation = CachedOperation.NONE;
+                _queuedOperation = QueuedOperation.NONE;
                 _currentNodeMoveIndex = _mainLine.Count - 1;
                 _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
             }

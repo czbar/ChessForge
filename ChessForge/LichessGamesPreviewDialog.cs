@@ -159,7 +159,7 @@ namespace ChessForge
             if (_isAnimating)
             {
                 _pauseRequested = true;
-                _cachedOperation = CachedOperation.NEXT_GAME;
+                _queuedOperation = QueuedOperation.NEXT_GAME;
             }
             else
             {
@@ -191,7 +191,7 @@ namespace ChessForge
             if (_isAnimating)
             {
                 _pauseRequested = true;
-                _cachedOperation = CachedOperation.PREV_GAME;
+                _queuedOperation = QueuedOperation.PREV_GAME;
             }
             else
             {
