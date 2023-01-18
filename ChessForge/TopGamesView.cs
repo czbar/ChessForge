@@ -212,7 +212,7 @@ namespace ChessForge
             // we may change focus while in the dialog so note it here and restore
             WorkbookManager.TabViewType activeTab = AppStateManager.ActiveTab;
 
-            GamePreviewDialog dlg = new GamePreviewDialog(_clickedGameId, _gameIdList)
+            LichessGamesPreviewDialog dlg = new LichessGamesPreviewDialog(_clickedGameId, _gameIdList)
             {
                 Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
                 Top = AppStateManager.MainWin.Top + 100,

@@ -3,14 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Collections.ObjectModel;
 using WebAccess;
 using System.Text;
-using System.Linq;
 using ChessPosition;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 
 namespace ChessForge
 {
@@ -20,42 +17,42 @@ namespace ChessForge
     public partial class GamePreviewDialog : Window
     {
         // chessboard object for game replay
-        private ChessBoardSmall _chessBoard;
+        protected ChessBoardSmall _chessBoard;
 
         // VariationTree into which the current game is loaded
-        private VariationTree _tree;
+        protected VariationTree _tree;
 
         // the list of Nodes to replay
-        private ObservableCollection<TreeNode> _mainLine;
+        protected ObservableCollection<TreeNode> _mainLine;
 
         // true if we are exiting the dialog
-        private bool _isExiting = false;
+        protected bool _isExiting = false;
 
         // index in the list of Nodes of the position with the move being animated
-        private int _currentNodeMoveIndex = 0;
+        protected int _currentNodeMoveIndex = 0;
 
         // move animation speed in millieconds
-        private int _animationSpeed = 200;
+        protected int _animationSpeed = 200;
 
         // the MoveAnimator object running the animation
-        private MoveAnimator _animator;
+        protected MoveAnimator _animator;
 
         // whether the Animation was started and there was no completion event
-        private bool _isAnimating = false;
+        protected bool _isAnimating = false;
 
         // whether pause was requested by the user
-        private bool _pauseRequested = false;
+        protected bool _pauseRequested = false;
 
         // animation speeds
-        private const int _fastAnimation = 200;
-        private const int _mediumAnimation = 400;
-        private const int _slowAnimation = 800;
+        protected const int _fastAnimation = 200;
+        protected const int _mediumAnimation = 400;
+        protected const int _slowAnimation = 800;
 
         /// <summary>
         /// List of operations that can be put on hold
         /// if requested while animation is running.
         /// </summary>
-        private enum CachedOperation
+        protected enum CachedOperation
         {
             NONE,
             FIRST_MOVE,
@@ -70,23 +67,23 @@ namespace ChessForge
         }
 
         // currently cached operation
-        private CachedOperation _cachedOperation;
+        protected CachedOperation _cachedOperation;
 
-        private List<string> _gameIdList = new List<string>();
-        private string _currentGameId;
+        // list of game Ids to show
+        protected List<string> _gameIdList = new List<string>();
 
-        // hosted TopGamesView
-        private TopGamesView _topGamesView;
+        // id of the currently shown game
+        protected string _currentGameId;
 
         /// <summary>
-        /// Creates the dialog and requests game's text from lichess.
+        /// Creates the dialog for previewing games from a list.
         /// </summary>
-        /// <param name="lichessGameId"></param>
-        public GamePreviewDialog(string lichessGameId, List<string> gameIdList)
+        /// <param name="gameId"></param>
+        public GamePreviewDialog(string gameId, List<string> gameIdList)
         {
             InitializeComponent();
             _gameIdList = gameIdList;
-            _currentGameId = lichessGameId;
+            _currentGameId = gameId;
 
             ShowControls(false, false);
             _chessBoard = new ChessBoardSmall(UiCnvBoard, UiImgChessBoard, null, false, false);
@@ -96,106 +93,14 @@ namespace ChessForge
             UiRbFastReplay.IsChecked = true;
             _animator.SetAnimationSpeed(_animationSpeed);
 
-            ConfigureTopGamesView();
-
-            GameDownload.GameReceived += GameReceived;
-            DownloadGame(_currentGameId);
-
             _animator.AnimationCompleted += AnimationFinished;
-
             UiCnvPlayers.Background = ChessForgeColors.TABLE_ROW_LIGHT_GRAY;
         }
 
         /// <summary>
-        /// Configures the hosted TopGamesView
+        /// Sets up the labels with players' names.
         /// </summary>
-        private void ConfigureTopGamesView()
-        {
-            _topGamesView = new TopGamesView(UiRtbGames.Document, false);
-            UiRtbGames.IsDocumentEnabled = true;
-            _topGamesView.BuildFlowDocument();
-            _topGamesView.TopGameClicked += EventSelectGame;
-
-        }
-
-        /// <summary>
-        /// Handler for the click event on a game row
-        /// in the hosted TopGamesView
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventSelectGame(object sender, WebAccessEventArgs e)
-        {
-            try
-            {
-                _currentGameId = e.GameId;
-                PlaySelectGame();
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// Download a game.
-        /// </summary>
-        /// <param name="gameId"></param>
-        private void DownloadGame(string gameId)
-        {
-            _ = GameDownload.GetGame(gameId);
-            _topGamesView.SetRowBackgorunds(gameId);
-        }
-
-        /// <summary>
-        /// Handles the Game Received event.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void GameReceived(object sender, WebAccessEventArgs e)
-        {
-            if (_isExiting)
-            {
-                return;
-            }
-            try
-            {
-                if (e.Success)
-                {
-                    if (string.IsNullOrEmpty(GameDownload.GameText))
-                    {
-                        throw new Exception("Game text is empty.");
-                    }
-                    if (GameDownload.GameText.IndexOf("DOCTYPE") > 0 && GameDownload.GameText.IndexOf("DOCTYPE") < 10)
-                    {
-                        throw new Exception("Game not found.");
-                    }
-                    _tree = new VariationTree(GameData.ContentType.MODEL_GAME);
-                    PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, _tree);
-                    _tree.ContentType = GameData.ContentType.MODEL_GAME;
-
-                    PopulateHeaderLine();
-
-                    _chessBoard.DisplayStartingPosition();
-                    _mainLine = _tree.SelectLine("1");
-
-                    _currentNodeMoveIndex = 1;
-                    RequestMoveAnimation(_currentNodeMoveIndex);
-
-                    ShowControls(true, false);
-                }
-                else
-                {
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowControls(false, true);
-                MessageBox.Show("Game download error: " + ex.Message, "Chess Forge Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        /// <summary>
-        /// Sets up the label with players' names.
-        /// </summary>
-        private void PopulateHeaderLine()
+        protected void PopulateHeaderLine()
         {
             UiLblWhiteSquare.Content = Constants.CharWhiteSquare;
 
@@ -217,11 +122,34 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Prepares replay of the selected game.
+        /// </summary>
+        protected void PlaySelectGame()
+        {
+            if (_isAnimating)
+            {
+                _pauseRequested = true;
+                _cachedOperation = CachedOperation.SELECT_GAME;
+            }
+            else
+            {
+                _isAnimating = false;
+                DownloadGame(_currentGameId);
+            }
+        }
+
+        //********************************************************
+        //
+        // MOVE ANIMATION
+        //
+        //********************************************************
+
+        /// <summary>
         /// Request animation of the move at a given index in the
         /// Node list.
         /// </summary>
         /// <param name="moveIndex"></param>
-        private void RequestMoveAnimation(int moveIndex)
+        protected void RequestMoveAnimation(int moveIndex)
         {
             if (moveIndex > 0 && moveIndex < _mainLine.Count)
             {
@@ -236,53 +164,11 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Shows/Hides controls according to the value of hasGames.
-        /// </summary>
-        /// <param name="hasGame"></param>
-        private void ShowControls(bool hasGame, bool isError)
-        {
-            UiLblLoading.Visibility = (hasGame || isError) ? Visibility.Collapsed : Visibility.Visible;
-
-            UiImgFirstMove.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
-            UiImgPreviousMove.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
-            UiImgPlay.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
-            UiImgPause.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
-            UiImgNextMove.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
-            UiImgLastMove.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
-
-            UiBtnImport.IsEnabled = hasGame;
-            UiLblViewOnLichess.IsEnabled = hasGame;
-
-            UiImgFirstMove.IsEnabled = _currentNodeMoveIndex > 1;
-            UiImgPreviousMove.IsEnabled = _currentNodeMoveIndex > 1;
-            UiImgNextMove.IsEnabled = _mainLine != null && (_currentNodeMoveIndex < _mainLine.Count - 1);
-            UiImgLastMove.IsEnabled = _mainLine != null && (_currentNodeMoveIndex < _mainLine.Count - 1);
-
-            UiLblNextGame.IsEnabled = !IsCurrentGameLast();
-            UiLblPrevGame.IsEnabled = !IsCurrentGameFirst();
-
-            if (hasGame)
-            {
-                ShowPlayPauseButtons();
-            }
-        }
-
-        /// <summary>
-        /// Shows/hides Play/Pause buttons depending on the state
-        /// of animation.
-        /// </summary>
-        private void ShowPlayPauseButtons()
-        {
-            UiImgPause.Visibility = _isAnimating ? Visibility.Visible : Visibility.Collapsed;
-            UiImgPlay.Visibility = _isAnimating ? Visibility.Collapsed : Visibility.Visible;
-        }
-
-        /// <summary>
         /// Invoke when move animation finishes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AnimationFinished(object sender, EventArgs e)
+        protected void AnimationFinished(object sender, EventArgs e)
         {
             _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
 
@@ -335,11 +221,18 @@ namespace ChessForge
             }
         }
 
+
+        //********************************************************
+        //
+        // HELPERS
+        //
+        //********************************************************
+
         /// <summary>
         /// Returns true if the currently viewed game is last on the list.
         /// </summary>
         /// <returns></returns>
-        private bool IsCurrentGameLast()
+        protected bool IsCurrentGameLast()
         {
             return _gameIdList.Count == 0 || _gameIdList[_gameIdList.Count - 1] == _currentGameId;
         }
@@ -348,30 +241,30 @@ namespace ChessForge
         /// Returns true if the currently viewed game is first on the list.
         /// </summary>
         /// <returns></returns>
-        private bool IsCurrentGameFirst()
+        protected bool IsCurrentGameFirst()
         {
             return _gameIdList.Count == 0 || _gameIdList[0] == _currentGameId;
         }
 
         /// <summary>
-        /// User clicked Exit.
+        /// Finds the requested game in the list.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiBtnExit_Click(object sender, RoutedEventArgs e)
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        protected int FindGameIndex(string gameId)
         {
-            _isExiting = true;
-            Close();
-        }
+            int index = -1;
 
-        /// <summary>
-        /// The dialog is closing
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            _isExiting = true;
+            for (int i = 0; i < _gameIdList.Count; i++)
+            {
+                if (_gameIdList[i] == gameId)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
         }
 
 
@@ -380,6 +273,62 @@ namespace ChessForge
         // USER MOVE CONTROLS
         //
         //********************************************************
+
+        /// <summary>
+        /// Shows/Hides controls.
+        /// </summary>
+        /// <param name="hasGame"></param>
+        protected void ShowControls(bool hasGame, bool isError)
+        {
+            ShowGameControls(hasGame, isError);
+            ShowMoveControls(hasGame);
+        }
+
+        /// <summary>
+        /// Shows/Hides game operations related controls. 
+        /// </summary>
+        /// <param name="hasGame"></param>
+        /// <param name="isError"></param>
+        virtual protected void ShowGameControls(bool hasGame, bool isError)
+        {
+        }
+
+        /// <summary>
+        /// Shows/Hides move related controls.
+        /// </summary>
+        /// <param name="hasGame"></param>
+        private void ShowMoveControls(bool hasGame)
+        {
+            UiImgFirstMove.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
+            UiImgPreviousMove.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
+            UiImgPlay.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
+            UiImgPause.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
+            UiImgNextMove.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
+            UiImgLastMove.Visibility = hasGame ? Visibility.Visible : Visibility.Collapsed;
+
+            UiImgFirstMove.IsEnabled = _currentNodeMoveIndex > 1;
+            UiImgPreviousMove.IsEnabled = _currentNodeMoveIndex > 1;
+            UiImgNextMove.IsEnabled = _mainLine != null && (_currentNodeMoveIndex < _mainLine.Count - 1);
+            UiImgLastMove.IsEnabled = _mainLine != null && (_currentNodeMoveIndex < _mainLine.Count - 1);
+
+            UiLblNextGame.IsEnabled = !IsCurrentGameLast();
+            UiLblPrevGame.IsEnabled = !IsCurrentGameFirst();
+
+            if (hasGame)
+            {
+                ShowPlayPauseButtons();
+            }
+        }
+
+        /// <summary>
+        /// Shows/hides Play/Pause buttons depending on the state
+        /// of animation.
+        /// </summary>
+        protected void ShowPlayPauseButtons()
+        {
+            UiImgPause.Visibility = _isAnimating ? Visibility.Visible : Visibility.Collapsed;
+            UiImgPlay.Visibility = _isAnimating ? Visibility.Collapsed : Visibility.Visible;
+        }
 
         /// <summary>
         /// Pause button clicked.
@@ -551,57 +500,83 @@ namespace ChessForge
             _animator.SetAnimationSpeed(_animationSpeed);
         }
 
+        //*************************************************************
+        //
+        // DIALOG CONTROL EVENTS
+        //
+        //*************************************************************
+
+
         /// <summary>
-        /// Finds the requested game in the list.
+        /// User clicked Exit.
         /// </summary>
-        /// <param name="gameId"></param>
-        /// <returns></returns>
-        private int FindGameIndex(string gameId)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnExit_Click(object sender, RoutedEventArgs e)
         {
-            int index = -1;
-
-            for (int i = 0; i < _gameIdList.Count; i++)
-            {
-                if (_gameIdList[i] == gameId)
-                {
-                    index = i;
-                    break;
-                }
-            }
-
-            return index;
+            _isExiting = true;
+            Close();
         }
 
+
+        /// <summary>
+        /// The dialog is closing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _isExiting = true;
+        }
+
+
+        //*************************************************************
+        //
+        // METHODS THAT DO NOTHING IN THE BASE CLASS
+        //
+        //*************************************************************
+
+        /// <summary>
+        /// Load a game.
+        /// </summary>
+        /// <param name="gameId"></param>
+        virtual protected void DownloadGame(string gameId)
+        {
+        }
+
+        /// <summary>
+        /// The Import button was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        virtual protected void UiBtnImport_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// The View on Lichess button was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        virtual protected void UiLblViewOnLichess_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// The Lichess logo was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        virtual protected void UiImgLichess_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+        }
         /// <summary>
         /// Downloads and displayes the next game.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiNextGame_Click(object sender, RoutedEventArgs e)
+        virtual protected void UiNextGame_Click(object sender, RoutedEventArgs e)
         {
-            if (_isAnimating)
-            {
-                _pauseRequested = true;
-                _cachedOperation = CachedOperation.NEXT_GAME;
-            }
-            else
-            {
-                if (_gameIdList.Count > 0)
-                {
-                    int index = FindGameIndex(_currentGameId);
-                    if (index == -1)
-                    {
-                        index = 0;
-                    }
-                    if (index < _gameIdList.Count - 1)
-                    {
-                        index++;
-                        _currentGameId = _gameIdList[index];
-                        _isAnimating = false;
-                        DownloadGame(_currentGameId);
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -609,95 +584,8 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiPreviousGame_Click(object sender, RoutedEventArgs e)
+        virtual protected void UiPreviousGame_Click(object sender, RoutedEventArgs e)
         {
-            if (_isAnimating)
-            {
-                _pauseRequested = true;
-                _cachedOperation = CachedOperation.PREV_GAME;
-            }
-            else
-            {
-                if (_gameIdList.Count > 0)
-                {
-                    int index = FindGameIndex(_currentGameId);
-                    if (index == -1)
-                    {
-                        index = 0;
-                    }
-                    if (index > 0)
-                    {
-                        index--;
-                        _currentGameId = _gameIdList[index];
-                        _isAnimating = false;
-                        DownloadGame(_currentGameId);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Prepares replay of the selected game.
-        /// </summary>
-        private void PlaySelectGame()
-        {
-            if (_isAnimating)
-            {
-                _pauseRequested = true;
-                _cachedOperation = CachedOperation.SELECT_GAME;
-            }
-            else
-            {
-                _isAnimating = false;
-                DownloadGame(_currentGameId);
-            }
-        }
-
-        /// <summary>
-        /// Imports the current game into the active chapter.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiBtnImport_Click(object sender, RoutedEventArgs e)
-        {
-            Chapter chapter = AppStateManager.ActiveChapter;
-            if (chapter != null)
-            {
-                AppStateManager.MainWin.UiTabChapters.Focus();
-                chapter.AddModelGame(_tree);
-                string guid = _tree.Header.GetGuid(out _);
-                // if the current active tree is Study Tree, add reference
-                if (chapter.ActiveVariationTree != null && chapter.ActiveVariationTree.ContentType == GameData.ContentType.STUDY_TREE)
-                {
-                    TreeNode nd = chapter.ActiveVariationTree.SelectedNode;
-                    if (nd != null)
-                    {
-                        nd.AddArticleReference(guid);
-                    }
-                }
-                AppStateManager.MainWin.RefreshChaptersViewAfterImport(GameData.ContentType.MODEL_GAME, chapter, chapter.GetModelGameCount() - 1);
-                AppStateManager.IsDirty = true;
-            }
-        }
-
-        /// <summary>
-        /// Opens the browser and navigates to the game on lichess. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiLblViewOnLichess_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            AppStateManager.ViewGameOnLichess(_currentGameId);
-        }
-
-        /// <summary>
-        /// Opens the browser and navigates to the game on lichess. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiImgLichess_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            AppStateManager.ViewGameOnLichess(_currentGameId);
         }
 
     }

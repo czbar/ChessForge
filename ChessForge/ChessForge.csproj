@@ -131,6 +131,7 @@
     <Compile Include="DraggedPiece.cs" />
     <Compile Include="EngineGame.cs" />
     <Compile Include="EvaluationManager.cs" />
+    <Compile Include="LichessGamesPreviewDialog.cs" />
     <Compile Include="ListViewHelper.cs" />
     <Compile Include="CommentBox.cs" />
     <Compile Include="EngineLinesBox.cs" />
