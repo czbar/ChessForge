@@ -132,6 +132,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Removes all ArticleRefs to the Articles with the passed guid.
+        /// Returns the list of all affected nodes.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        public static List<FullNodeId> RemoveArticleReferences(string guid)
+        {
+            try
+            {
+                return SessionWorkbook.RemoveArticleReferences(guid);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Returns id of the last chapter
         /// </summary>
         /// <returns></returns>
