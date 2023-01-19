@@ -123,6 +123,7 @@ namespace ChessForge
         {
             TreeManager.Reset();
             OpsManager = new WorkbookOperationsManager(this);
+            _version = new WorkbookVersion();
         }
 
         /// <summary>
