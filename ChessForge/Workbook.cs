@@ -167,6 +167,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Removes all ArticleRefs to the Articles with the passed guid.
+        /// Returns the list of all affected nodes.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        public List<FullNodeId> RemoveArticleReferences(string guid)
+        {
+            List<FullNodeId> nodes = new List<FullNodeId>();
+
+            for (int i = 0; i < _chapters.Count; i++)
+            {
+                Chapters[i].StudyTree.Tree.RemoveArticleReferences(guid, ref nodes);
+            }
+
+            return nodes;
+        }
+
+        /// <summary>
         /// The chapter currently open in the session.
         /// </summary>
         public Chapter ActiveChapter
