@@ -652,7 +652,10 @@ namespace ChessForge
         /// <param name="e"></param>
         private void Chapters_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            _chaptersView.BringRunToview();
+            if (_chaptersView != null)
+            {
+                _chaptersView.BringRunToview();
+            }
         }
 
 
