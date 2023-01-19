@@ -464,7 +464,7 @@ namespace ChessPosition
 
             if (gm != null)
             {
-                sbErrors.Append("Game #" + gameNo.ToString() + " : " + gm.Header.BuildGameHeaderLine());
+                sbErrors.Append("Game #" + gameNo.ToString() + " : " + gm.Header.BuildGameHeaderLine(false));
                 sbErrors.Append(Environment.NewLine);
                 sbErrors.Append("     " + message);
                 sbErrors.Append(Environment.NewLine);
