@@ -829,6 +829,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabStudyTree_GotFocus(object sender, RoutedEventArgs e)
         {
+            if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.STUDY)
+            {
+                return;
+            }
+
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
 
@@ -978,6 +983,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabModelGames_GotFocus(object sender, RoutedEventArgs e)
         {
+            if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
+            {
+                return;
+            }
+
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
 
@@ -1059,6 +1069,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabExercises_GotFocus(object sender, RoutedEventArgs e)
         {
+            if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
+            {
+                return;
+            }
+
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
 
