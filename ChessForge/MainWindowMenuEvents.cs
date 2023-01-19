@@ -2181,6 +2181,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRtbTrainingProgress_GotFocus(object sender, RoutedEventArgs e)
         {
+            if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.TRAINING)
+            {
+                return;
+            }
+
             //            AppStateManager.SetupGuiForTrainingProgressMode();
         }
 
