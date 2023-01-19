@@ -2170,8 +2170,23 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Updates reference runs for the passed list of nodes.
+        /// This is called when the list has changed e.g. after deletion
+        /// of a referenced article.
+        /// </summary>
+        /// <param name="nodes"></param>
+        public void UpdateReferenceRuns(List<FullNodeId> nodes)
+        {
+            foreach (FullNodeId fullNode in nodes)
+            {
+                TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(fullNode.NodeId);
+                InsertOrDeleteReferenceRun(nd);
+            }
+        }
+
+        /// <summary>
         /// Inserts or deleted a reference run depending
-        /// on whether we have any reference fpr the node
+        /// on whether we have any reference for the node
         /// </summary>
         /// <param name="nd"></param>
         public void InsertOrDeleteReferenceRun(TreeNode nd)
