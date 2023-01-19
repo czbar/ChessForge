@@ -14,7 +14,7 @@ namespace ChessForge
     public class Article
     {
         /// <summary>
-        /// The Variation Tree of this Artcle.
+        /// The Variation Tree of this Article.
         /// </summary>
         public VariationTree Tree;
 

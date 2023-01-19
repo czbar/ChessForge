@@ -652,7 +652,10 @@ namespace ChessForge
         /// <param name="e"></param>
         private void Chapters_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            _chaptersView.BringRunToview();
+            if (_chaptersView != null)
+            {
+                _chaptersView.BringRunToview();
+            }
         }
 
 
@@ -2178,6 +2181,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRtbTrainingProgress_GotFocus(object sender, RoutedEventArgs e)
         {
+            if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.TRAINING)
+            {
+                return;
+            }
+
             //            AppStateManager.SetupGuiForTrainingProgressMode();
         }
 
@@ -2786,8 +2794,18 @@ namespace ChessForge
                 if (index >= 0 && index < gameCount)
                 {
                     Article article = chapter.GetModelGameAtIndex(index);
+                    string guid = article.Tree.Header.GetGuid(out _);
                     WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_MODEL_GAME, chapter, article, index);
                     chapter.ModelGames.RemoveAt(index);
+                    List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
+                    if (affectedNodes.Count > 0)
+                    {
+                        // TODO: we should save this list for the Undo operation
+                        if (_studyTreeView != null)
+                        {
+                            _studyTreeView.UpdateReferenceRuns(affectedNodes);
+                        }
+                    }
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                     AppStateManager.IsDirty = true;
                 }
@@ -2810,8 +2828,18 @@ namespace ChessForge
                 if (index >= 0 && index < exerciseCount)
                 {
                     Article article = chapter.GetExerciseAtIndex(index);
+                    string guid = article.Tree.Header.GetGuid(out _);
                     WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_EXERCISE, chapter, article, index);
                     chapter.Exercises.RemoveAt(index);
+                    List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
+                    if (affectedNodes.Count > 0)
+                    {
+                        // TODO: we should save this list for the Undo operation
+                        if (_studyTreeView != null)
+                        {
+                            _studyTreeView.UpdateReferenceRuns(affectedNodes);
+                        }
+                    }
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                     AppStateManager.IsDirty = true;
                 }

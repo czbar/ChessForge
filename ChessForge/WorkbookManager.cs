@@ -132,6 +132,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Removes all ArticleRefs to the Articles with the passed guid.
+        /// Returns the list of all affected nodes.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        public static List<FullNodeId> RemoveArticleReferences(string guid)
+        {
+            try
+            {
+                return SessionWorkbook.RemoveArticleReferences(guid);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Returns id of the last chapter
         /// </summary>
         /// <returns></returns>
@@ -860,11 +878,11 @@ namespace ChessForge
 
             if (chapter != null)
             {
-                sb.Append("Chapter " + chapter.Id.ToString() + ": " + game.GetContentType().ToString() + ": " + game.Header.BuildGameHeaderLine());
+                sb.Append("Chapter " + chapter.Id.ToString() + ": " + game.GetContentType().ToString() + ": " + game.Header.BuildGameHeaderLine(false));
             }
             else
             {
-                sb.Append("PGN Item #" + gameNo.ToString() + " : " + game.Header.BuildGameHeaderLine());
+                sb.Append("PGN Item #" + gameNo.ToString() + " : " + game.Header.BuildGameHeaderLine(false));
             }
 
             sb.Append(Environment.NewLine);

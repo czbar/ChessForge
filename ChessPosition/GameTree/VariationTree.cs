@@ -714,6 +714,29 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Removes all reference to the passed guid in this Tree.
+        /// Returns the number of affected nodes and adds them to the passed list.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="affectedNodes"></param>
+        /// <returns></returns>
+        public int RemoveArticleReferences(string guid, ref List<FullNodeId> affectedNodes)
+        {
+            int count = 0;
+
+            foreach (TreeNode nd in Nodes)
+            {
+                if (nd.RemoveArticleReference(guid))
+                {
+                    count++;
+                    affectedNodes.Add(new FullNodeId(TreeId, nd.NodeId));
+                }
+            }
+
+            return count;
+        }
+
+        /// <summary>
         /// Returns a new NodeId that can be used by the caller in a newly
         /// created Node.  
         /// This should be the value of _maxNodeId incremented by one

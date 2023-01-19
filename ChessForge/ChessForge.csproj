@@ -91,6 +91,7 @@
     <Compile Include="AnnotationsDialog.xaml.cs">
       <DependentUpon>AnnotationsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ArticleListItem.cs" />
     <Compile Include="BackupVersionDialog.xaml.cs">
       <DependentUpon>BackupVersionDialog.xaml</DependentUpon>
     </Compile>
@@ -147,6 +148,9 @@
     <Compile Include="MoveEvaluation.cs" />
     <Compile Include="OpeningStatsView.cs" />
     <Compile Include="ReferenceGamePreviewDialog.cs" />
+    <Compile Include="SelectArticlesDialog.xaml.cs">
+      <DependentUpon>SelectArticlesDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectSingleChapterDialog.xaml.cs">
       <DependentUpon>SelectSingleChapterDialog.xaml</DependentUpon>
     </Compile>
@@ -254,6 +258,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GamePreviewDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectArticlesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

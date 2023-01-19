@@ -126,7 +126,7 @@ namespace GameTree
         /// <summary>
         /// Builds text for the column with the name of the game.
         /// </summary>
-        public string BuildGameHeaderLine(bool simplified = false)
+        public string BuildGameHeaderLine(bool simplified, bool includeResult = true)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -154,6 +154,15 @@ namespace GameTree
             else
             {
                 sb.Append((white ?? "NN") + " - " + (black ?? "NN"));
+            }
+
+            if (includeResult)
+            {
+                string result = GetResult(out _);
+                if (!string.IsNullOrEmpty(result))
+                {
+                    sb.Append(' ' + result);
+                }
             }
 
             string eventName = GetEventName(out _);
