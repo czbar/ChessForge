@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChessPosition;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -115,6 +116,18 @@ namespace GameTree
                     prefix = "Exercise: ";
                 }
                 return prefix + Header.BuildGameHeaderLine(true);
+            }
+        }
+
+        /// <summary>
+        /// Date string for display
+        /// </summary>
+        public string Date
+        {
+            get
+            {
+                string date = Header.GetDate(out _);
+                return TextUtils.BuildDateFromDisplayFromPgnString(date);
             }
         }
 
