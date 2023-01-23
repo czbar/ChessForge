@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using ChessPosition;
@@ -124,6 +125,34 @@ namespace ChessForge
             TreeManager.Reset();
             OpsManager = new WorkbookOperationsManager(this);
             _version = new WorkbookVersion();
+        }
+
+        /// <summary>
+        /// Builds an Article list for use in the Select Article dialog.
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<ArticleListItem> GenerateArticleList()
+        {
+            ObservableCollection<ArticleListItem> articleList = new ObservableCollection<ArticleListItem>();
+
+            foreach (Chapter chapter in Chapters) 
+            {
+                // an item for the Chapter itself
+                ArticleListItem chaptItem = new ArticleListItem(chapter);
+                articleList.Add(chaptItem);
+                for (int i = 0; i < chapter.ModelGames.Count; i++)
+                {
+                    ArticleListItem artItem = new ArticleListItem(chapter, chapter.ModelGames[i], i);
+                    articleList.Add(artItem);
+                }
+                for (int i = 0; i < chapter.Exercises.Count; i++)
+                {
+                    ArticleListItem artItem = new ArticleListItem(chapter, chapter.Exercises[i], i);
+                    articleList.Add(artItem);
+                }
+            }
+
+            return articleList;
         }
 
         /// <summary>
