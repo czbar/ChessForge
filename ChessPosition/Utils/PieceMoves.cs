@@ -325,9 +325,9 @@ namespace ChessPosition.Utils
             }
 
             // capture en passant
-            if (position.InheritedEnPassantSquare != 0)
+            if (position.EnPassantSquare != 0)
             {
-                SquareCoords ep = PositionUtils.DecodeEnPassantSquare(position.InheritedEnPassantSquare);
+                SquareCoords ep = PositionUtils.DecodeEnPassantSquare(position.EnPassantSquare);
                 if ((orig.Xcoord == ep.Xcoord + 1 || orig.Xcoord == ep.Xcoord - 1) && orig.Ycoord + inc == ep.Ycoord)
                 {
                     bool res = AddMoveIfValid(orig, ep, color, position, ref moves);
