@@ -318,7 +318,6 @@
                                     <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="UiMnStudy_CreateExercise" Header="Create Exercise from Here..." Click="UiMnStudy_CreateExercise_Click"  />
                                     <MenuItem x:Name="UiMnCopyFen" Header="Copy FEN to Clipboard" Click="UiMnCopyFen_Click" />
-                                    <MenuItem x:Name="UiMnOpeningStats" Header="Opening Stats" Click="UiMnOpeningStats_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnPromoteLine" Header="Promote Line" Click="UiMnPromoteLine_Click" />
                                     <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnDeleteMovesFromHere_Click" />

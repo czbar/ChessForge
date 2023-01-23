@@ -1490,12 +1490,6 @@ namespace ChessForge
         }
 
 
-        private void UiMnOpeningStats_Click(object sender, RoutedEventArgs e)
-        {
-            TreeNode nd = ActiveTreeView.GetSelectedNode();
-            WebAccessManager.ExplorerRequest(0, nd);
-        }
-
         /// <summary>
         /// Copies a header from a GameHeader object to the Tree.
         /// </summary>

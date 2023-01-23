@@ -296,9 +296,6 @@ DeleteSelectedExercise=Delete Selected Exercise
 # CONTEXT MENU for Study Tree Tab
 #
 
-# Opening statistics
-OpeningStats=Opening Stats
-
 # Promote a line
 PromoteLine=Promote Line
 
