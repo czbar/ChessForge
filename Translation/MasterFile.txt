@@ -330,7 +330,8 @@ Next=Next
 Previous=Previous
 
 # Chapter counter
-#! Keep 0's as placeholders for numbers
+#! Keep $0 and $1 in the translated strong as placeholders 
+#! for the number of the current chapter and total number of chapters respectively.
 Chapter0of0=Chapter 0 of 0
 
 
