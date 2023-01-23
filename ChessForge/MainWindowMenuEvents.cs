@@ -443,7 +443,7 @@ namespace ChessForge
             {
                 AppStateManager.SaveWorkbookFile(dlg.BackupPath);
                 WorkbookManager.SessionWorkbook.SetVersion(dlg.IncrementedVersion);
-                AppStateManager.IsDirty= true;
+                AppStateManager.IsDirty = true;
             }
         }
 
@@ -1365,6 +1365,25 @@ namespace ChessForge
         //
         //*****************************************************************************
 
+
+        /// <summary>
+        /// Invokes the Select Articles dialog to allow the user
+        /// to edit Article references.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnReferenceArticles_Click(object sender, RoutedEventArgs e)
+        {
+            ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
+            SelectArticlesDialog dlg = new SelectArticlesDialog(ref articleList)
+            {
+                Left = ChessForgeMain.Left + 100,
+                Top = ChessForgeMain.Top + 100,
+                Topmost = false,
+                Owner = this
+            };
+            dlg.ShowDialog();
+        }
 
         /// <summary>
         /// Marks the current node as a Thumbnail for the current tree.

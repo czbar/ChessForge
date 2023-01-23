@@ -317,6 +317,7 @@
                                 <ContextMenu x:Name="UiCmnWorkbookRightClick">
                                     <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="UiMnStudy_CreateExercise" Header="Create Exercise from Here..." Click="UiMnStudy_CreateExercise_Click"  />
+                                    <MenuItem x:Name="UiMnReferenceArticles" Header="Game/Exercise References" Click="UiMnReferenceArticles_Click"/>
                                     <MenuItem x:Name="UiMnCopyFen" Header="Copy FEN to Clipboard" Click="UiMnCopyFen_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnPromoteLine" Header="Promote Line" Click="UiMnPromoteLine_Click" />
