@@ -61,7 +61,7 @@ MenuEdit=Edit
 Annotations=Annotations
 
 # Allows the user to merge multiple chapters into one
-MergeChapters=Merge Chapters
+MergeChapters=Merge Chapters...
 
 # Undoes the previous operation
 Undo=Undo
