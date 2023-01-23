@@ -22,6 +22,11 @@ namespace ChessForge
     public partial class SelectArticlesDialog : Window
     {
         /// <summary>
+        /// Whether to show articles fromthe current chapter only
+        /// </summary>
+        private bool _showActiveChapterOnly = true;
+
+        /// <summary>
         /// The list of games to process.
         /// </summary>
         private ObservableCollection<ArticleListItem> _articleList;
@@ -34,7 +39,27 @@ namespace ChessForge
         {
             _articleList = articleList;
             InitializeComponent();
+            _showActiveChapterOnly = true;
+            SetItemVisibility();
             UiLvGames.ItemsSource = _articleList;
+        }
+
+        /// <summary>
+        /// Sets the IsShown property on all items.
+        /// </summary>
+        private void SetItemVisibility()
+        {
+            foreach (ArticleListItem item in _articleList)
+            {
+                if (!_showActiveChapterOnly)
+                {
+                    item.IsShown = true;
+                }
+                else
+                {
+                    item.IsShown = item.Chapter == WorkbookManager.SessionWorkbook.ActiveChapter;
+                }
+            }
         }
 
         /// <summary>
@@ -81,6 +106,28 @@ namespace ChessForge
         private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
+        }
+
+        /// <summary>
+        /// The user wants to show articles from all chapters
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbAllChapters_Checked(object sender, RoutedEventArgs e)
+        {
+            _showActiveChapterOnly = false;
+            SetItemVisibility();
+        }
+
+        /// <summary>
+        /// The user wants to show articles from the active chapter only
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbAllChapters_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _showActiveChapterOnly = true;
+            SetItemVisibility();
         }
     }
 }

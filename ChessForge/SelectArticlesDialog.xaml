@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="Select Games and/or Exercises" Height="520" Width="800">
+        Title="Select Games and/or Exercises" Height="460" Width="800">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -17,6 +17,11 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="Focusable" Value="False"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsShown}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.Resources>
@@ -35,8 +40,9 @@
             </ListView.View>
         </ListView>
         <CheckBox x:Name="UiCbSelectAll" IsChecked="True" Grid.Row="1" Content="" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Checked="UiCbSelectAll_Checked" Unchecked="UiCbSelectAll_Unchecked"/>
-        <Button x:Name="UiBtnOk" IsDefault="True" Content="OK" HorizontalAlignment="Left" Margin="580,42,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="False" Content="Cancel" HorizontalAlignment="Left" Margin="580,77,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="OK" HorizontalAlignment="Center" Margin="-120,30,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="False" Content="Cancel" HorizontalAlignment="Center" Margin="120,30,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
         <Label x:Name="UiLblInstruct" Content="Select Items" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
+        <CheckBox x:Name="UiCbAllChapters" Content="Show All Chapters" HorizontalAlignment="Left" Margin="59,33,0,0" Grid.Row="2" VerticalAlignment="Top" Checked="UiCbAllChapters_Checked" Unchecked="UiCbAllChapters_Unchecked"/>
     </Grid>
 </Window>
