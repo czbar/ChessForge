@@ -443,7 +443,7 @@ namespace ChessForge
             {
                 AppStateManager.SaveWorkbookFile(dlg.BackupPath);
                 WorkbookManager.SessionWorkbook.SetVersion(dlg.IncrementedVersion);
-                AppStateManager.IsDirty= true;
+                AppStateManager.IsDirty = true;
             }
         }
 
@@ -1367,6 +1367,38 @@ namespace ChessForge
 
 
         /// <summary>
+        /// Invokes the Select Articles dialog to allow the user
+        /// to edit Article references.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnReferenceArticles_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TreeNode nd = ActiveTreeView.GetSelectedNode();
+                ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
+                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, ref articleList)
+                {
+                    Left = ChessForgeMain.Left + 100,
+                    Top = ChessForgeMain.Top + 100,
+                    Topmost = false,
+                    Owner = this
+                };
+                if (dlg.ShowDialog() == true)
+                {
+                    List<string> refGuids = dlg.GetSelectedReferenceStrings();
+                    ActiveVariationTree.SetArticleRefs(nd, refGuids);
+                    ActiveTreeView.InsertOrDeleteReferenceRun(nd);
+                    AppStateManager.IsDirty = true;
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Marks the current node as a Thumbnail for the current tree.
         /// </summary>
         /// <param name="sender"></param>
@@ -1489,12 +1521,6 @@ namespace ChessForge
             ActiveTreeView.CopyFenToClipboard();
         }
 
-
-        private void UiMnOpeningStats_Click(object sender, RoutedEventArgs e)
-        {
-            TreeNode nd = ActiveTreeView.GetSelectedNode();
-            WebAccessManager.ExplorerRequest(0, nd);
-        }
 
         /// <summary>
         /// Copies a header from a GameHeader object to the Tree.

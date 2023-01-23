@@ -1,8 +1,10 @@
-﻿using GameTree;
+﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,11 +17,14 @@ namespace ChessForge
     /// </summary>
     public class ArticleListItem : INotifyPropertyChanged
     {
+        // is items to be shown in the list
+        private bool _isShown;
+
         // whether this game is selected in the GUI
         private bool _isSelected;
 
-        // is selection checkbox visble
-        private bool _isVisible;
+        // is selection checkbox visible
+        private bool _isSelectCheckBoxVisible;
 
         // representes Article (null if this object was created for a Chapter
         private Article _article;
@@ -39,8 +44,8 @@ namespace ChessForge
         /// </summary>
         public ArticleListItem(Chapter chapter, Article art, int index)
         {
-            _isSelected = true;
-            _isVisible = true;
+            _isSelected = false;
+            _isSelectCheckBoxVisible = true;
 
             _article = art;
             _chapter = chapter;
@@ -57,6 +62,33 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Simplified constructor for the Chapter item.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public ArticleListItem(Chapter chapter) : this(chapter, null, -1)
+        {
+            _isSelected = false;
+            _isSelectCheckBoxVisible = false;
+        }
+
+        /// <summary>
+        /// Returns the chapter this item belongs to.
+        /// </summary>
+        public Chapter Chapter
+        {
+            get { return _chapter; }
+        }
+
+        /// <summary>
+        /// Returns the article object of this item.
+        /// It can be null.
+        /// </summary>
+        public Article Article
+        {
+            get { return _article; }
+        }
+
+        /// <summary>
         /// The property that binds in the SelectGames ListView control.
         /// </summary>
         public string GameTitleForList
@@ -66,21 +98,21 @@ namespace ChessForge
                 string header = string.Empty;
                 if (_article != null)
                 {
-                    header = _article.Tree.Header.BuildGameHeaderLine(true);
+                    header = _article.Tree.Header.BuildGameHeaderLine(true, _contentType == GameData.ContentType.MODEL_GAME);
                 }
                 else if (_chapter != null)
                 {
-                    header = _chapter.Title;
+                    header = "CHAPTER: " + _chapter.Title;
                 }
 
                 string prefix = string.Empty;
                 if (_contentType == GameData.ContentType.MODEL_GAME)
                 {
-                    prefix = "Game: ";
+                    prefix = "    Game: ";
                 }
                 else if (_contentType == GameData.ContentType.EXERCISE)
                 {
-                    prefix = "Exercise: ";
+                    prefix = "    Exercise: ";
                 }
 
                 return prefix + header;
@@ -88,9 +120,42 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Date string for display
+        /// </summary>
+        public string Date
+        {
+            get
+            {
+                if (_article == null)
+                {
+                    return "";
+                }
+                else
+                {
+                    string date = _article.Tree.Header.GetDate(out _);
+                    return TextUtils.BuildDateFromDisplayFromPgnString(date);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Accessor to _isShown.
+        /// Indicates whether the item should be shown in the list.
+        /// </summary>
+        public bool IsShown
+        {
+            get { return _isShown; }
+            set
+            {
+                _isShown = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+
+        /// <summary>
         /// Accessor to _isSelected.
-        /// This is the only property that can be changed
-        /// from the GUI.
+        /// Indicates wheter the item is selected.
         /// </summary>
         public bool IsSelected
         {
@@ -109,7 +174,7 @@ namespace ChessForge
         /// </summary>
         public string Visibility
         {
-            get { return _isVisible ? "Visible" : "Hidden"; }
+            get { return _isSelectCheckBoxVisible ? "Visible" : "Hidden"; }
         }
 
         /// <summary>

@@ -220,8 +220,8 @@ namespace ChessForge
         {
             get
             {
-                if (SessionWorkbook == null 
-                    || AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS 
+                if (SessionWorkbook == null
+                    || AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS
                     || AppStateManager.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
                 {
                     return null;
@@ -1220,11 +1220,8 @@ namespace ChessForge
                 UiTabStudyTree.Focus();
                 UiRtbStudyTreeView.Focus();
             }
-            else
-            {
-                // in the above branch this will be executed by the Focus() methods.
-                SetActiveLine(startLineId, startNodeId);
-            }
+
+            SetActiveLine(startLineId, startNodeId);
 
             BookmarkManager.ShowBookmarks();
 

@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using ChessPosition;
 using GameTree;
+using System.Windows.Markup.Localizer;
 
 namespace ChessForge
 {
@@ -180,6 +181,9 @@ namespace ChessForge
 
         private readonly string _par_line_moves_ = "par_line_moves_";
         private readonly string _par_game_moves_ = "par_game_moves_";
+
+        private readonly string _par_checkmate_ = "par_checkmate_";
+        private readonly string _par_stalemate_ = "par_stalemate_";
 
         // Application's Main Window
         private MainWindow _mainWin;
@@ -527,6 +531,64 @@ namespace ChessForge
             {
                 Document.Blocks.Remove(block);
             }
+
+            // if anything was removed then the position was indeed rolled back
+            if (parasToRemove.Count > 0)
+            {
+                // remove a possible checkmate/stalemate paragraph if exits
+                RemoveCheckmatePara();
+                RemoveStalematePara();
+            }
+        }
+
+        /// <summary>
+        /// Removes a checkmate para if exists.
+        /// </summary>
+        private void RemoveCheckmatePara()
+        {
+            Paragraph paraToRemove = null;
+
+            foreach (var block in Document.Blocks)
+            {
+                if (block is Paragraph)
+                {
+                    if (((Paragraph)block).Name == _par_checkmate_)
+                    {
+                        paraToRemove = block as Paragraph;
+                        break;
+                    }
+                }
+            }
+
+            if (paraToRemove != null)
+            {
+                Document.Blocks.Remove(paraToRemove);
+            }
+        }
+
+        /// <summary>
+        /// Removes a stalemate para if exists.
+        /// </summary>
+        private void RemoveStalematePara()
+        {
+            Paragraph paraToRemove = null;
+
+            foreach (var block in Document.Blocks)
+            {
+                if (block is Paragraph)
+                {
+                    if (((Paragraph)block).Name == _par_stalemate_)
+                    {
+                        paraToRemove = block as Paragraph;
+                        break;
+                    }
+                }
+            }
+
+            if (paraToRemove != null)
+            {
+                Document.Blocks.Remove(paraToRemove);
+            }
         }
 
         /// <summary>
@@ -840,8 +902,7 @@ namespace ChessForge
         /// <param name="userMove"></param>
         private void BuildCheckmateParagraph(TreeNode nd, bool userMove)
         {
-            string paraName = _par_line_moves_ + nd.NodeId.ToString();
-            string runName = _run_line_move_ + nd.NodeId.ToString();
+            string paraName = _par_checkmate_;
 
             Paragraph para = AddNewParagraphToDoc(STYLE_CHECKMATE, "");
             para.Name = paraName;
@@ -866,8 +927,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         private void BuildStalemateParagraph(TreeNode nd)
         {
-            string paraName = _par_line_moves_ + nd.NodeId.ToString();
-            string runName = _run_line_move_ + nd.NodeId.ToString();
+            string paraName = _par_stalemate_;
 
             Paragraph para = AddNewParagraphToDoc(STYLE_CHECKMATE, "");
             para.Name = paraName;
@@ -1516,6 +1576,9 @@ namespace ChessForge
                 }
                 _mainWin.DisplayPosition(nd);
                 RebuildEngineGamePara(nd);
+
+                RemoveCheckmatePara();
+                RemoveStalematePara();
             }
         }
 
