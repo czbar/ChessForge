@@ -296,6 +296,9 @@ DeleteSelectedExercise=Delete Selected Exercise
 # CONTEXT MENU for Study Tree Tab
 #
 
+# Edit references
+GameExerciseReferences=Game/Exercise References
+
 # Promote a line
 PromoteLine=Promote Line
 
@@ -322,7 +325,7 @@ MarkAsThumbnail=Mark as Thumbnail
 
 # The "Next" term
 Next=Next
-                                <Label x:Name="UiLblChapterCounter" Content="Chapter 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
+
 # The "Previous" term
 Previous=Previous
 
