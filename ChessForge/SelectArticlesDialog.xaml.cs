@@ -31,17 +31,67 @@ namespace ChessForge
         /// </summary>
         private ObservableCollection<ArticleListItem> _articleList;
 
+        // Node for which this dialog was invoked.
+        private TreeNode _node;
+
         /// <summary>
         /// The dialog for selecting Articles (games or exercises) from multiple chapters.
         /// </summary>
         /// <param name="articleList"></param>
-        public SelectArticlesDialog(ref ObservableCollection<ArticleListItem> articleList)
+        public SelectArticlesDialog(TreeNode nd, ref ObservableCollection<ArticleListItem> articleList)
         {
+            _node = nd;
             _articleList = articleList;
-            InitializeComponent();
             _showActiveChapterOnly = true;
+
+            InitializeComponent();
             SetItemVisibility();
+            SelectNodeReferences();
             UiLvGames.ItemsSource = _articleList;
+        }
+
+        /// <summary>
+        /// Returns a list of selected references.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetSelectedReferenceStrings()
+        {
+            List<string> refs = new List<string>();
+
+            foreach (ArticleListItem item in _articleList)
+            {
+                if (item.Article != null)
+                {
+                    refs.Add(item.Article.Tree.Header.GetGuid(out _));
+                }
+            }
+
+            return refs;
+        }
+
+        /// <summary>
+        /// Marks as selected all references currently in the node.
+        /// </summary>
+        private void SelectNodeReferences()
+        {
+            if (!string.IsNullOrEmpty(_node.ArticleRefs))
+            {
+                string[] refs = _node.ArticleRefs.Split('|');
+                foreach (string guid in refs)
+                {
+                    foreach (ArticleListItem item in _articleList)
+                    {
+                        if (item.Article != null)
+                        {
+                            if (item.Article.Tree.Header.GetGuid(out _) == guid)
+                            {
+                                item.IsSelected = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -64,6 +114,7 @@ namespace ChessForge
 
         /// <summary>
         /// SelectAll box was checked
+        /// Check all currently shown items.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -71,12 +122,16 @@ namespace ChessForge
         {
             foreach (var item in _articleList)
             {
-                item.IsSelected = true;
+                if (item.IsShown)
+                {
+                    item.IsSelected = true;
+                }
             }
         }
 
         /// <summary>
-        /// SelectAll box was unchecked
+        /// SelectAll box was unchecked.
+        /// Uncheck all currently shown items.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -84,7 +139,10 @@ namespace ChessForge
         {
             foreach (var item in _articleList)
             {
-                item.IsSelected = false;
+                if (item.IsShown)
+                {
+                    item.IsSelected = false;
+                }
             }
         }
 

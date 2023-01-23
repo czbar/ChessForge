@@ -1374,15 +1374,28 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnReferenceArticles_Click(object sender, RoutedEventArgs e)
         {
-            ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
-            SelectArticlesDialog dlg = new SelectArticlesDialog(ref articleList)
+            try
             {
-                Left = ChessForgeMain.Left + 100,
-                Top = ChessForgeMain.Top + 100,
-                Topmost = false,
-                Owner = this
-            };
-            dlg.ShowDialog();
+                TreeNode nd = ActiveTreeView.GetSelectedNode();
+                ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
+                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, ref articleList)
+                {
+                    Left = ChessForgeMain.Left + 100,
+                    Top = ChessForgeMain.Top + 100,
+                    Topmost = false,
+                    Owner = this
+                };
+                if (dlg.ShowDialog() == true)
+                {
+                    List<string> refGuids = dlg.GetSelectedReferenceStrings();
+                    ActiveVariationTree.SetArticleRefs(nd, refGuids);
+                    ActiveTreeView.InsertOrDeleteReferenceRun(nd);
+                    AppStateManager.IsDirty = true;
+                }
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
