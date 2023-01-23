@@ -23,7 +23,7 @@ namespace ChessForge
         // whether this game is selected in the GUI
         private bool _isSelected;
 
-        // is selection checkbox visble
+        // is selection checkbox visible
         private bool _isSelectCheckBoxVisible;
 
         // representes Article (null if this object was created for a Chapter
@@ -44,7 +44,7 @@ namespace ChessForge
         /// </summary>
         public ArticleListItem(Chapter chapter, Article art, int index)
         {
-            _isSelected = true;
+            _isSelected = false;
             _isSelectCheckBoxVisible = true;
 
             _article = art;
@@ -62,6 +62,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Simplified constructor for the Chapter item.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public ArticleListItem(Chapter chapter) : this(chapter, null, -1)
+        {
+            _isSelected = false;
+            _isSelectCheckBoxVisible = false;
+        }
+
+        /// <summary>
         /// Returns the chapter this item belongs to.
         /// </summary>
         public Chapter Chapter
@@ -70,13 +80,12 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Simplified constructor for the Chapter item.
+        /// Returns the article object of this item.
+        /// It can be null.
         /// </summary>
-        /// <param name="chapter"></param>
-        public ArticleListItem(Chapter chapter) : this(chapter, null, -1)
+        public Article Article
         {
-            _isSelected = false;
-            _isSelectCheckBoxVisible = false;
+            get { return _article; }
         }
 
         /// <summary>
