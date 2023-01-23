@@ -94,7 +94,7 @@
                     <MenuItem Header="Edit" Margin="0,0,0,0">
                         <MenuItem x:Name="UiMnAnnotations" Header="Annotations" Click="UiMnAnnotationsDialog_Click" />
                         <Separator />
-                        <MenuItem x:Name="UiMnMergeChapters" Header="Merge Chapters" Click="UiMnMergeChapters_Click" />
+                        <MenuItem x:Name="UiMnMergeChapters" Header="Merge Chapters..." Click="UiMnMergeChapters_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnUndo" Header="Undo" Click="UiMnUndo_Click" InputGestureText="Ctrl+Z" />
                     </MenuItem>
@@ -263,6 +263,7 @@
                                     <MenuItem x:Name="_mnRenameGame" Header="Edit Game Headers" Click="UiMnEditGameHeader_Click" />
                                     <MenuItem x:Name="_mnSelectExercise" Header="Open This Exercise" Click="UiMnOpenExercise_Click"  />
                                     <MenuItem x:Name="_mnRenameExercise" Header="Edit Exercise Headers" Click="UiMnEditExerciseHeader_Click" />
+                                    <MenuItem x:Name="_mnMergeChapters" Header="Merge Chapters..." Click="UiMnMergeChapters_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnChapterUp" Header="Move Chapter Up" Click="UiMnChapterUp_Click" InputGestureText="Ctrl+U"/>
                                     <MenuItem x:Name="_mnChapterDown" Header="Move Chapter Down" Click="UiMnChapterDown_Click"  InputGestureText="Ctrl+D" />
