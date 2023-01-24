@@ -291,6 +291,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the last clicked node.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void SetLastClickedNode(TreeNode nd)
+        {
+            _lastClickedNode = nd;
+        }
+
+        /// <summary>
         /// This method is invoked when user makes their move.
         /// 
         /// It gets the last ply from the EngineGame.Line (which is the
@@ -1342,7 +1351,7 @@ namespace ChessForge
                 string midTxt;
                 string moveTxt = BuildMoveTextForMenu(_lastClickedNode, out midTxt);
 
-                ContextMenu cm = _mainWin.FindResource("_cmTrainingView") as ContextMenu;
+                ContextMenu cm = _mainWin._cmTrainingView;
                 foreach (object o in cm.Items)
                 {
                     if (o is MenuItem)
@@ -1352,6 +1361,7 @@ namespace ChessForge
                         {
                             case "_mnTrainEvalMove":
                                 mi.Header = "Evaluate" + midTxt + "Move " + moveTxt;
+                                mi.Visibility = Visibility.Visible;
                                 break;
                             case "_mnTrainEvalLine":
                                 mi.Header = "Evaluate Line";
@@ -1370,12 +1380,19 @@ namespace ChessForge
                                 mi.Visibility = _moveContext == MoveContext.WORKBOOK_COMMENT ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "_mnTrainRestartTraining":
+                                mi.Visibility = Visibility.Visible;
                                 break;
                             case "_mnTrainExitTraining":
+                                mi.Visibility = Visibility.Visible;
                                 break;
                             default:
                                 break;
                         }
+                    }
+
+                    if (o is Separator)
+                    {
+                        ((Separator)o).Visibility = Visibility.Visible;
                     }
                 }
                 cm.PlacementTarget = _mainWin.UiRtbTrainingProgress;
@@ -1680,25 +1697,27 @@ namespace ChessForge
         /// </summary>
         public void RollbackTraining()
         {
-            _mainWin.StopEvaluation(true);
+            if (!TrainingSession.IsContinuousEvaluation)
+            {
+                _mainWin.StopEvaluation(true);
+            }
+
             if (_lastClickedNode != null)
             {
                 if (_lastClickedNode.ColorToMove == _trainingSide)
                 {
                     RollbackToUserMove();
-                    //// we have a position after Workbook move, roll back to parent Workbook move
-                    //// to force a different Workbook move if it is a from
-                    //if (_lastClickedNode.Parent != null)
-                    //{
-                    //    _lastClickedNode = _lastClickedNode.Parent;
-                    //    RollbackToWorkbookMove();
-                    //}
                 }
                 else
                 {
                     // A user move was clicked so rollback to the previous Workbook move
                     RollbackToWorkbookMove();
                 }
+            }
+
+            if (TrainingSession.IsContinuousEvaluation)
+            {
+                RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
             }
         }
 

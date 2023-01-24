@@ -10,16 +10,6 @@
         PreviewKeyDown="ChessForgeMain_PreviewKeyDown" MouseEnter="ChessForgeMain_MouseEnter" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
 
     <Window.Resources>
-        <ContextMenu x:Key="_cmTrainingView">
-            <MenuItem x:Name="_mnTrainRestartGame" Header="Restart Game After " Click="UiMnTrainRestartGame_Click" />
-            <MenuItem x:Name="_mnRollBackTraining" Header="Restart from " Click="UiMnRollBackTraining_Click" />
-            <Separator x:Name="_mnTrainSepar_1" />
-            <MenuItem x:Name="_mnTrainEvalMove" Header="Evaluate Position" Click="UiMnTrainEvalMove_Click" />
-            <MenuItem x:Name="_mnTrainEvalLine" Header="Evaluate Line" Click="UiMnTrainEvalLine_Click" />
-            <Separator x:Name="_mnTrainSepar_2" />
-            <MenuItem x:Name="_mnTrainRestartTraining" Header="Restart Training Session" Click="UiMnTrainRestartTraining_Click" />
-            <MenuItem x:Name="_mnTrainExitTraining" Header="Exit Training"  Click="UiMnStopTraining_Click" />
-        </ContextMenu>
         <Style  x:Key="RoundedBorder" TargetType="Label">
             <Setter Property="Template">
                 <Setter.Value>
@@ -223,9 +213,21 @@
                     VerticalAlignment="Top" Grid.RowSpan="1" Visibility="Hidden">
                     <TabItem x:Name="UiTabTrainingProgress"  Header="Training" IsVisibleChanged="UiTabTrainingProgress_IsVisibleChanged">
                         <Grid Background="#FFE5E5E5">
+                            <Grid.ContextMenu>
+                                <ContextMenu x:Name="_cmTrainingView">
+                                    <MenuItem x:Name="_mnTrainRestartTraining" Header="Restart Training Session" Click="UiMnTrainRestartTraining_Click" />
+                                    <MenuItem x:Name="_mnTrainExitTraining" Header="Exit Training"  Click="UiMnStopTraining_Click" />
+                                    <Separator x:Name="_mnTrainSepar_1" />
+                                    <MenuItem x:Name="_mnTrainRestartGame" Header="Restart Game After " Click="UiMnTrainRestartGame_Click" />
+                                    <MenuItem x:Name="_mnRollBackTraining" Header="Restart from " Click="UiMnRollBackTraining_Click" />
+                                    <Separator x:Name="_mnTrainSepar_2" />
+                                    <MenuItem x:Name="_mnTrainEvalMove" Header="Evaluate Position" Click="UiMnTrainEvalMove_Click" />
+                                    <MenuItem x:Name="_mnTrainEvalLine" Header="Evaluate Line" Click="UiMnTrainEvalLine_Click" />
+                                </ContextMenu>
+                            </Grid.ContextMenu>
                             <RichTextBox x:Name="UiRtbTrainingProgress" IsUndoEnabled="False" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                 IsReadOnly="True"  MinHeight="640" PreviewMouseMove="TrainingView_OnPreviewMouseMove" GotFocus="UiRtbTrainingProgress_GotFocus">
+                                 IsReadOnly="True"  MinHeight="640" PreviewMouseMove="TrainingView_OnPreviewMouseMove" GotFocus="UiRtbTrainingProgress_GotFocus" PreviewMouseRightButtonDown="TrainingView_PreviewMouseRightButtonDown">
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
                                         <Setter Property="Margin" Value="0" />

@@ -363,20 +363,6 @@ namespace ChessForge
             AppStateManager.EnableTabViewMenuItems(WorkbookManager.ActiveTab, lastClickedNode, false);
         }
 
-        /// <summary>
-        /// Ensure that Workbook Tree's ListView allows
-        /// mouse wheel scrolling.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void WorkbookView_OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            ScrollViewer scv = (ScrollViewer)sender;
-            scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
-            e.Handled = true;
-        }
-
-
         //**************************************************************
         //
         //  TRAINING VIEW mouse events 
@@ -392,6 +378,61 @@ namespace ChessForge
         private void TrainingView_OnPreviewMouseMove(object sender, MouseEventArgs e)
         {
             ShowTrainingFloatingBoard(false);
+        }
+
+        /// <summary>
+        /// The user right clicked in the Training View RTB.
+        /// Set LastClicked node to null.
+        /// It will be adjusted if a run was clicked and the View's handlers will
+        /// be invoked nex.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TrainingView_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //UiTrainingView.SetLastClickedNode(null);
+            Dispatcher.Invoke(() =>
+            {
+                ContextMenu cm = _cmTrainingView;
+                foreach (object o in cm.Items)
+                {
+                    if (o is MenuItem)
+                    {
+                        MenuItem mi = o as MenuItem;
+                        switch (mi.Name)
+                        {
+                            case "_mnTrainEvalMove":
+                                mi.Visibility = Visibility.Collapsed;
+                                break;
+                            case "_mnTrainEvalLine":
+                                mi.Visibility = Visibility.Collapsed;
+                                break;
+                            case "_mnTrainRestartGame":
+                                mi.Visibility = Visibility.Collapsed;
+                                break;
+                            case "_mnRollBackTraining":
+                                mi.Visibility = Visibility.Collapsed;
+                                break;
+                            case "_mnTrainSwitchToWorkbook":
+                                mi.Visibility = Visibility.Collapsed;
+                                break;
+                            case "_mnTrainRestartTraining":
+                                mi.Visibility = Visibility.Visible;
+                                break;
+                            case "_mnTrainExitTraining":
+                                mi.Visibility = Visibility.Visible;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    if (o is Separator)
+                    {
+                        ((Separator)o).Visibility = Visibility.Collapsed;
+                    }
+                }
+            });
         }
 
         //**************************************************************
