@@ -572,7 +572,7 @@ namespace ChessForge
             AppLog.Message("TrainingView:ShowEvaluationResult() Evaluation Mode:" + EvaluationManager.CurrentMode.ToString()
                 + ", node=" + nd.LastMoveAlgebraicNotation);
 
-            if (!TrainingSession.IsContinuousEvaluation && EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS && EvaluationManager.CurrentMode != EvaluationManager.Mode.LINE)
+            if (!TrainingSession.IsContinuousEvaluation)
             {
                 return;
             }
@@ -1341,7 +1341,6 @@ namespace ChessForge
                                 _nodeIdSuppressFloatingBoard = _lastClickedNode.NodeId;
                             }
 
-                            bool restart = false;
                             // if not the last move, ask if to restart
                             if (EngineGame.GetLastGameNode() != _lastClickedNode)
                             {
@@ -1349,15 +1348,6 @@ namespace ChessForge
                                 if (MessageBox.Show("Restart from " + moveTxt + "?", "Chess Forge Training", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                                 {
                                     RestartFromClickedMove(_moveContext);
-                                    restart = true;
-                                }
-                            }
-
-                            if (!restart)
-                            {
-                                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
-                                {
-                                    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId);
                                 }
                             }
                         }
