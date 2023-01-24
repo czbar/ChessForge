@@ -192,6 +192,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the IsRunning status of a stopwatch.
+        /// </summary>
+        /// <param name="sw"></param>
+        /// <returns></returns>
+        public bool IsRunning(StopwatchId sw)
+        {
+            return _dictStopwatches.ContainsKey(sw) ? _dictStopwatches[sw].IsRunning : false;
+        }
+
+        /// <summary>
         /// Sets the interval for the timer.
         /// </summary>
         /// <param name="tt"></param>
