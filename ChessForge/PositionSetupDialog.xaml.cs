@@ -1202,7 +1202,7 @@ namespace ChessForge
         [System.Diagnostics.Conditional("DEBUG")]
         private void ShowChessBoard()
         {
-            AppStateManager.MainWin.DisplayPosition(PositionSetup);
+            AppState.MainWin.DisplayPosition(PositionSetup);
         }
 
     }

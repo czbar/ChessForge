@@ -1127,7 +1127,7 @@ namespace ChessForge
         {
             if (_dummyBoardInDrag)
             {
-                AppStateManager.MainWin.BoardCommentBox.ShowFlashAnnouncement("This is just a picture! Make your moves on the big board.");
+                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement("This is just a picture! Make your moves on the big board.");
                 _dummyBoardInDrag = false;
             }
             _dummyBoardLeftClicked = false;

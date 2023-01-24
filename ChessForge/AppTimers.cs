@@ -192,6 +192,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the IsRunning status of a stopwatch.
+        /// </summary>
+        /// <param name="sw"></param>
+        /// <returns></returns>
+        public bool IsRunning(StopwatchId sw)
+        {
+            return _dictStopwatches.ContainsKey(sw) ? _dictStopwatches[sw].IsRunning : false;
+        }
+
+        /// <summary>
         /// Sets the interval for the timer.
         /// </summary>
         /// <param name="tt"></param>
@@ -256,7 +266,7 @@ namespace ChessForge
 
         private void InitAutoSaveTimer()
         {
-            _autoSaveTimer.Elapsed += new ElapsedEventHandler(AppStateManager.AutoSaveEvent);
+            _autoSaveTimer.Elapsed += new ElapsedEventHandler(AppState.AutoSaveEvent);
             // take the configured value with a sanity check
             _autoSaveTimer.Interval = Math.Max(Configuration.AutoSaveFrequency, 15) * 1000;
             _autoSaveTimer.Enabled = Configuration.AutoSave;

@@ -158,7 +158,7 @@ namespace ChessForge
                 {
                     SortBookmarks();
                     ResyncBookmarks(_currentPage);
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                     return 0;
                 }
                 else
@@ -234,7 +234,7 @@ namespace ChessForge
                 }
                 ResyncBookmarks(_currentPage);
             }
-            AppStateManager.IsDirty = true;
+            AppState.IsDirty = true;
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace ChessForge
             }
 
             ClearBookmarksGui();
-            AppStateManager.IsDirty = true;
+            AppState.IsDirty = true;
         }
 
         /// <summary>

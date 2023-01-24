@@ -57,7 +57,7 @@ namespace ChessForge
             Nags = nd.Nags;
 
             QuizPoints = nd.QuizPoints;
-            _isExerciseEditing = AppStateManager.CurrentSolvingMode == VariationTree.SolvingMode.EDITING;
+            _isExerciseEditing = AppState.CurrentSolvingMode == VariationTree.SolvingMode.EDITING;
             if (_isExerciseEditing)
             {
                 UiTbQuizPoints.Text = nd.QuizPoints == 0 ? "" : nd.QuizPoints.ToString();

@@ -26,7 +26,7 @@ namespace ChessForge
         /// <summary>
         /// Evaluation lines obtained from the engine.
         /// </summary>
-        public static List<MoveEvaluation> Lines = new List<MoveEvaluation>();
+        public static MoveCandidates EvalLinesToProcess = new MoveCandidates();
 
         // Application's Main Window
         private static MainWindow _mainWin;
@@ -66,32 +66,39 @@ namespace ChessForge
         {
             try
             {
-                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.ENGINE_GAME && EngineMessageProcessor.LastMessageNode != null)
+                if (AppState.ShowEvaluationLines())
                 {
-                    Lines.Clear();
+                    EvalLinesToProcess.Clear();
                     lock (EngineMessageProcessor.MoveCandidatesLock)
                     {
-                        // make a copy of Move candidates so we can release the lock asap
-                        foreach (MoveEvaluation me in EngineMessageProcessor.MoveCandidates)
+                        if (EngineMessageProcessor.EngineMoveCandidates.EvalNode != null)
                         {
-                            Lines.Add(new MoveEvaluation(me));
+                            EvalLinesToProcess.EvalNode = EngineMessageProcessor.EngineMoveCandidates.EvalNode;
+                            // make a copy of Move candidates so we can release the lock asap
+                            foreach (MoveEvaluation me in EngineMessageProcessor.EngineMoveCandidates.Lines)
+                            {
+                                EvalLinesToProcess.AddEvaluation(new MoveEvaluation(me));
+                            }
                         }
                     }
 
-                    StringBuilder sb = new StringBuilder();
-                    _tbEvalLines.Dispatcher.Invoke(() =>
+                    if (EvalLinesToProcess.EvalNode != null)
                     {
-                        for (int i = 0; i < Lines.Count; i++)
+                        StringBuilder sb = new StringBuilder();
+                        _tbEvalLines.Dispatcher.Invoke(() =>
                         {
-                            sb.Append(BuildLineText(i, Lines[i]));
-                            sb.Append(Environment.NewLine);
-                        }
-                        string txt = sb.ToString();
-                        if (!string.IsNullOrWhiteSpace(txt))
-                        {
-                            _tbEvalLines.Text = sb.ToString();
-                        }
-                    });
+                            for (int i = 0; i < EvalLinesToProcess.Lines.Count; i++)
+                            {
+                                sb.Append(BuildLineText(EvalLinesToProcess.EvalNode, i, EvalLinesToProcess.Lines[i]));
+                                sb.Append(Environment.NewLine);
+                            }
+                            string txt = sb.ToString();
+                            if (!string.IsNullOrWhiteSpace(txt))
+                            {
+                                _tbEvalLines.Text = sb.ToString();
+                            }
+                        });
+                    }
                 }
             }
             catch (Exception ex)
@@ -114,11 +121,10 @@ namespace ChessForge
         /// <param name="lineNo"></param>
         /// <param name="line"></param>
         /// <returns></returns>
-        private static string BuildLineText(int lineNo, MoveEvaluation line)
+        private static string BuildLineText(TreeNode evalNode, int lineNo, MoveEvaluation line)
         {
             try
             {
-                TreeNode evalNode = EngineMessageProcessor.LastMessageNode;
                 if (evalNode == null)
                 {
                     return "";
@@ -148,7 +154,7 @@ namespace ChessForge
                         sMoveNo = "";
                     }
 
-                    string moveSeq = BuildMoveSequence(line.Line);
+                    string moveSeq = BuildMoveSequence(evalNode, line.Line);
                     if (moveSeq.Length == 0)
                     {
                         return "";
@@ -157,7 +163,7 @@ namespace ChessForge
                     {
                         return (lineNo + 1).ToString() + ". (" + eval + "): "
                             + sMoveNo
-                            + BuildMoveSequence(line.Line);
+                            + BuildMoveSequence(evalNode, line.Line);
                     }
                 }
             }
@@ -177,17 +183,16 @@ namespace ChessForge
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
-        private static string BuildMoveSequence(string line)
+        private static string BuildMoveSequence(TreeNode evalNode, string line)
         {
             string[] moves = line.Split(' ');
 
             StringBuilder sb = new StringBuilder();
             // make a copy of the position under evaluation
-            TreeNode nd = EngineMessageProcessor.LastMessageNode;
-            if (nd != null)
+            if (evalNode != null)
             {
-                BoardPosition workingPosition = new BoardPosition(nd.Position);
-                workingPosition.InheritedEnPassantSquare = nd.Position.EnPassantSquare;
+                BoardPosition workingPosition = new BoardPosition(evalNode.Position);
+                workingPosition.InheritedEnPassantSquare = evalNode.Position.EnPassantSquare;
 
                 bool firstMove = true;
 

@@ -70,7 +70,7 @@ namespace ChessForge
             _previousMode = _currentMode;
             _currentMode = mode;
 
-            AppStateManager.SetupGuiForCurrentStates();
+            AppState.SetupGuiForCurrentStates();
         }
 
         /// <summary>
@@ -79,14 +79,14 @@ namespace ChessForge
         /// </summary>
         public static PieceColor TrainingSideConfig
         {
-            get { return AppStateManager.MainWin.SessionWorkbook.TrainingSideConfig; }
-            set { AppStateManager.MainWin.SessionWorkbook.TrainingSideConfig = value; }
+            get { return AppState.MainWin.SessionWorkbook.TrainingSideConfig; }
+            set { AppState.MainWin.SessionWorkbook.TrainingSideConfig = value; }
         }
 
         public static PieceColor TrainingSideCurrent
         {
-            get { return AppStateManager.MainWin.SessionWorkbook.TrainingSideCurrent; }
-            set { AppStateManager.MainWin.SessionWorkbook.TrainingSideCurrent = value; }
+            get { return AppState.MainWin.SessionWorkbook.TrainingSideCurrent; }
+            set { AppState.MainWin.SessionWorkbook.TrainingSideCurrent = value; }
         }
 
         /// <summary>

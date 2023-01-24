@@ -29,7 +29,7 @@ namespace ChessForge
                 StringBuilder moveEngCode = new StringBuilder();
                 SquareCoords origSquareNorm = new SquareCoords(DraggedPiece.OriginSquare);
                 SquareCoords destSquareNorm = new SquareCoords(destSquare);
-                if (AppStateManager.MainWin.MainChessBoard.IsFlipped)
+                if (AppState.MainWin.MainChessBoard.IsFlipped)
                 {
                     origSquareNorm.Flip();
                     destSquareNorm.Flip();
@@ -41,7 +41,7 @@ namespace ChessForge
                 if (IsMoveToPromotionSquare(origSquareNorm, destSquareNorm))
                 {
                     isPromotion = true;
-                    promoteTo = AppStateManager.MainWin.GetUserPromoSelection(destSquareNorm);
+                    promoteTo = AppState.MainWin.GetUserPromoSelection(destSquareNorm);
                 }
 
                 // do not process if this was a canceled promotion
@@ -67,59 +67,59 @@ namespace ChessForge
                         {
                             if (nd.ColorToMove == PieceColor.Black)
                             {
-                                imgSrc = AppStateManager.MainWin.MainChessBoard.GetWhitePieceRegImg(promoteTo);
+                                imgSrc = AppState.MainWin.MainChessBoard.GetWhitePieceRegImg(promoteTo);
                             }
                             else
                             {
-                                imgSrc = AppStateManager.MainWin.MainChessBoard.GetBlackPieceRegImg(promoteTo);
+                                imgSrc = AppState.MainWin.MainChessBoard.GetBlackPieceRegImg(promoteTo);
                             }
                         }
-                        AppStateManager.MainWin.MainChessBoard.GetPieceImage(destSquare.Xcoord, destSquare.Ycoord, true).Source = imgSrc;
+                        AppState.MainWin.MainChessBoard.GetPieceImage(destSquare.Xcoord, destSquare.Ycoord, true).Source = imgSrc;
 
-                        AppStateManager.MainWin.ReturnDraggedPiece(true);
+                        AppState.MainWin.ReturnDraggedPiece(true);
                         if (isCastle)
                         {
-                            AppStateManager.MainWin.MoveCastlingRook(moveEngCode.ToString());
+                            AppState.MainWin.MoveCastlingRook(moveEngCode.ToString());
                         }
 
                         SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
 
-                        if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                        if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                         {
-                            AppStateManager.ShowMoveEvaluationControls(TrainingSession.IsContinuousEvaluation, false);
+                            AppState.ShowMoveEvaluationControls(TrainingSession.IsContinuousEvaluation, false);
                         }
 
                         if (nd.Position.IsCheckmate)
                         {
-                            AppStateManager.MainWin.BoardCommentBox.ReportCheckmate(true);
+                            AppState.MainWin.BoardCommentBox.ReportCheckmate(true);
                         }
                         else if (nd.Position.IsStalemate)
                         {
-                            AppStateManager.MainWin.BoardCommentBox.ReportStalemate();
+                            AppState.MainWin.BoardCommentBox.ReportStalemate();
                         }
                         else
                         {
-                            AppStateManager.MainWin.BoardCommentBox.GameMoveMade(nd, true);
+                            AppState.MainWin.BoardCommentBox.GameMoveMade(nd, true);
                         }
-                        AppStateManager.MainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
+                        AppState.MainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
                         if (nd != null)
                         {
-                            AppStateManager.MainWin.MainChessBoard.DisplayPosition(nd, true);
+                            AppState.MainWin.MainChessBoard.DisplayPosition(nd, true);
                         }
                     }
                     else
                     {
-                        AppStateManager.MainWin.ReturnDraggedPiece(false);
+                        AppState.MainWin.ReturnDraggedPiece(false);
                     }
                 }
                 else
                 {
-                    AppStateManager.MainWin.ReturnDraggedPiece(false);
+                    AppState.MainWin.ReturnDraggedPiece(false);
                 }
             }
             else
             {
-                AppStateManager.MainWin.ReturnDraggedPiece(false);
+                AppState.MainWin.ReturnDraggedPiece(false);
             }
         }
 
@@ -132,7 +132,7 @@ namespace ChessForge
         /// <returns></returns>
         public static bool ProcessMove(string move, out TreeNode nd, out bool isCastle)
         {
-            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+            if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
             {
                 return ProcessMoveInManualReviewMode(move, out nd, out isCastle);
             }
@@ -151,11 +151,11 @@ namespace ChessForge
         /// <returns></returns>
         private static bool IsMoveToPromotionSquare(SquareCoords origSquareNorm, SquareCoords destSquareNorm)
         {
-            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+            if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
             {
-                TreeNode nd = AppStateManager.MainWin.ActiveLine.GetSelectedTreeNode();
-                PieceColor pieceColor = AppStateManager.MainWin.MainChessBoard.GetPieceColor(origSquareNorm);
-                if (AppStateManager.MainWin.MainChessBoard.GetPieceType(origSquareNorm) == PieceType.Pawn
+                TreeNode nd = AppState.MainWin.ActiveLine.GetSelectedTreeNode();
+                PieceColor pieceColor = AppState.MainWin.MainChessBoard.GetPieceColor(origSquareNorm);
+                if (AppState.MainWin.MainChessBoard.GetPieceType(origSquareNorm) == PieceType.Pawn
                  && ((nd.ColorToMove == PieceColor.White && destSquareNorm.Ycoord == 7)
                      || (nd.ColorToMove == PieceColor.Black && destSquareNorm.Ycoord == 0)))
                 {
@@ -190,12 +190,12 @@ namespace ChessForge
                 if (PositionUtils.IsCheckmate(nd.Position))
                 {
                     endOfGame = true;
-                    AppStateManager.MainWin.BoardCommentBox.ReportCheckmate(true);
+                    AppState.MainWin.BoardCommentBox.ReportCheckmate(true);
                 }
                 else if (PositionUtils.IsStalemate(nd.Position))
                 {
                     endOfGame = true;
-                    AppStateManager.MainWin.BoardCommentBox.ReportStalemate();
+                    AppState.MainWin.BoardCommentBox.ReportStalemate();
                 }
 
                 EngineGame.Line.AddPlyAndMove(nd);
@@ -234,7 +234,7 @@ namespace ChessForge
                 // and the move in the views
 
                 // if the move is new but has no siblings, "inherit" line id from the parent 
-                if (!preExist && string.IsNullOrEmpty(nd.LineId) && !AppStateManager.MainWin.ActiveVariationTree.NodeHasSiblings(nd.NodeId))
+                if (!preExist && string.IsNullOrEmpty(nd.LineId) && !AppState.MainWin.ActiveVariationTree.NodeHasSiblings(nd.NodeId))
                 {
                     nd.LineId = nd.Parent.LineId;
                 }
@@ -244,22 +244,22 @@ namespace ChessForge
                 {
                     if (nd.IsNewUserMove && !preExist)
                     {
-                        AppStateManager.MainWin.AppendNodeToActiveLine(nd, false);
+                        AppState.MainWin.AppendNodeToActiveLine(nd, false);
                         // in exercise this can be the first move (nd.Parent.NodeId == 0) in which case we want to call a Rebuild so we get the move number
-                        if (nd.Parent == null || nd.Parent.NodeId == 0 || AppStateManager.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
+                        if (nd.Parent == null || nd.Parent.NodeId == 0 || AppState.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
                         {
-                            AppStateManager.MainWin.RebuildActiveTreeView();
+                            AppState.MainWin.RebuildActiveTreeView();
                         }
                         else
                         {
-                            AppStateManager.MainWin.AddNewNodeToVariationTreeView(nd);
+                            AppState.MainWin.AddNewNodeToVariationTreeView(nd);
                         }
-                        AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveTreeView, AppStateManager.MainWin.ActiveLine.GetLineId(), AppStateManager.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
+                        AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
                     }
                     else
                     {
-                        AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
-                        AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveTreeView, AppStateManager.MainWin.ActiveLine.GetLineId(), AppStateManager.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
+                        AppState.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
+                        AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
                     }
                 }
                 else
@@ -267,17 +267,17 @@ namespace ChessForge
                     // new move for which we need a new line id
                     // if it is new and has siblings, rebuild line ids
                     // Workbook view will need a full update unless TODO this node AND its parent have no siblings
-                    AppStateManager.MainWin.ActiveVariationTree.SetLineIdForNewNode(nd);
-                    AppStateManager.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
-                    AppStateManager.MainWin.RebuildActiveTreeView();
-                    AppStateManager.MainWin.SelectLineAndMoveInWorkbookViews(AppStateManager.MainWin.ActiveTreeView, AppStateManager.MainWin.ActiveLine.GetLineId(), AppStateManager.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
+                    AppState.MainWin.ActiveVariationTree.SetLineIdForNewNode(nd);
+                    AppState.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
+                    AppState.MainWin.RebuildActiveTreeView();
+                    AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
                 }
 
                 try
                 {
-                    if (AppStateManager.MainWin.ActiveArticle.Solver.GetAppSolvingMode() == VariationTree.SolvingMode.GUESS_MOVE)
+                    if (AppState.MainWin.ActiveArticle.Solver.GetAppSolvingMode() == VariationTree.SolvingMode.GUESS_MOVE)
                     {
-                        AppStateManager.MainWin.Timers.Start(AppTimers.TimerId.SOLVING_GUESS_MOVE_MADE);
+                        AppState.MainWin.Timers.Start(AppTimers.TimerId.SOLVING_GUESS_MOVE_MADE);
                     }
                 }
                 catch 
@@ -306,16 +306,16 @@ namespace ChessForge
             preExist = false;
 
             TreeNode curr;
-            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+            if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
             {
-                curr = AppStateManager.MainWin.ActiveLine.GetSelectedTreeNode();
+                curr = AppState.MainWin.ActiveLine.GetSelectedTreeNode();
             }
             else
             {
                 curr = EngineGame.GetLastGameNode();
             }
 
-            nd = AppStateManager.MainWin.ActiveVariationTree.CreateNewChildNode(curr);
+            nd = AppState.MainWin.ActiveVariationTree.CreateNewChildNode(curr);
             string algMove;
             try
             {
@@ -342,30 +342,30 @@ namespace ChessForge
                     nd.Position.HalfMove50Clock += 1;
                 }
 
-                TreeNode sib = AppStateManager.MainWin.ActiveVariationTree.GetIdenticalSibling(nd);
+                TreeNode sib = AppState.MainWin.ActiveVariationTree.GetIdenticalSibling(nd);
                 if (sib == null)
                 {
                     // if this is a new move, mark as such and add to Workbook
-                    if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+                    if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
                     {
                         nd.IsNewUserMove = true;
-                        if (AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.GUESS_MOVE
-                            && AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.ANALYSIS)
+                        if (AppState.MainWin.ActiveVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.GUESS_MOVE
+                            && AppState.MainWin.ActiveVariationTree.CurrentSolvingMode != VariationTree.SolvingMode.ANALYSIS)
                         {
-                            AppStateManager.IsDirty = true;
+                            AppState.IsDirty = true;
                         }
                     }
                     else
                     {
                         nd.IsNewTrainingMove = true;
                     }
-                    AppStateManager.MainWin.ActiveVariationTree.AddNodeToParent(nd);
+                    AppState.MainWin.ActiveVariationTree.AddNodeToParent(nd);
 
                     //if we are in MANUAL_REVIEW prepare UndoAddMove
-                    if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+                    if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
                     {
                         EditOperation op = new EditOperation(EditOperation.EditType.ADD_MOVE, nd);
-                        AppStateManager.ActiveVariationTree.OpsManager.PushOperation(op);
+                        AppState.ActiveVariationTree.OpsManager.PushOperation(op);
                     }
                 }
                 else

@@ -49,7 +49,7 @@ namespace ChessForge
         public void Reset(string arrows, string circles, bool markDirty)
         {
             // only draw in MANUAL_REVIEW mode
-            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+            if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
             {
                 Reset(markDirty);
                 if (!string.IsNullOrWhiteSpace(arrows))
@@ -80,7 +80,7 @@ namespace ChessForge
 
                 if (SaveShapesStrings() && markDirty)
                 {
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                 }
             }
             else
@@ -94,7 +94,7 @@ namespace ChessForge
         /// </summary>
         public void Reset(bool markDirty, bool save = true)
         {
-            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            AppState.MainWin.Dispatcher.Invoke(() =>
             {
                 foreach (BoardArrow arrow in _boardArrows)
                 {
@@ -115,7 +115,7 @@ namespace ChessForge
                 {
                     if (SaveShapesStrings() && markDirty)
                     {
-                        AppStateManager.IsDirty = true;
+                        AppState.IsDirty = true;
                     }
                 }
             });
@@ -166,7 +166,7 @@ namespace ChessForge
             _isShapeBuildInProgress = true;
             _isShapeBuildTentative = isTentative;
 
-            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            AppState.MainWin.Dispatcher.Invoke(() =>
             {
                 _arrowInProgress = new BoardArrow(start, color);
                 _circleInProgress = new BoardCircle(start, color);
@@ -179,7 +179,7 @@ namespace ChessForge
         /// <param name="current"></param>
         public void FinalizeShape(SquareCoords current, bool isNew, bool markDirty)
         {
-            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            AppState.MainWin.Dispatcher.Invoke(() =>
             {
                 if (current == null)
                 {
@@ -223,7 +223,7 @@ namespace ChessForge
                 bool isChanged = SaveShapesStrings();
                 if ((isNew || isChanged) && markDirty)
                 {
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                 }
             });
         }
@@ -367,8 +367,8 @@ namespace ChessForge
         /// </summary>
         private bool SaveShapesStrings()
         {
-            bool arrRes = AppStateManager.MainWin.SaveArrowsStringInCurrentNode(CodeArrowsString());
-            bool cirRes = AppStateManager.MainWin.SaveCirclesStringInCurrentNode(CodeCirclesString());
+            bool arrRes = AppState.MainWin.SaveArrowsStringInCurrentNode(CodeArrowsString());
+            bool cirRes = AppState.MainWin.SaveCirclesStringInCurrentNode(CodeCirclesString());
 
             return arrRes || cirRes;
         }
@@ -392,7 +392,7 @@ namespace ChessForge
                 color = GetColorName(code[0]);
                 start = PositionUtils.ConvertAlgebraicToXY(code.Substring(1, 2));
                 end = PositionUtils.ConvertAlgebraicToXY(code.Substring(3, 2));
-                if (AppStateManager.MainWin.IsMainChessboardFlipped())
+                if (AppState.MainWin.IsMainChessboardFlipped())
                 {
                     start.Flip();
                     end.Flip();
@@ -419,7 +419,7 @@ namespace ChessForge
             {
                 color = GetColorName(code[0]);
                 square = PositionUtils.ConvertAlgebraicToXY(code.Substring(1, 2));
-                if (AppStateManager.MainWin.IsMainChessboardFlipped())
+                if (AppState.MainWin.IsMainChessboardFlipped())
                 {
                     square.Flip();
                 }
@@ -449,7 +449,7 @@ namespace ChessForge
                 sb.Append(GetCharForColor(arrow.Color));
                 SquareCoords start = new SquareCoords(arrow.StartSquare);
                 SquareCoords end = new SquareCoords(arrow.EndSquare);
-                if (AppStateManager.MainWin.IsMainChessboardFlipped())
+                if (AppState.MainWin.IsMainChessboardFlipped())
                 {
                     start.Flip();
                     end.Flip();
@@ -481,7 +481,7 @@ namespace ChessForge
                 }
                 sb.Append(GetCharForColor(circle.Color));
                 SquareCoords square = new SquareCoords(circle.Square);
-                if (AppStateManager.MainWin.IsMainChessboardFlipped())
+                if (AppState.MainWin.IsMainChessboardFlipped())
                 {
                     square.Flip();
                 }

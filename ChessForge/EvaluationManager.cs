@@ -167,14 +167,14 @@ namespace ChessForge
             switch (_currentMode)
             {
                 case Mode.IDLE:
-                    AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                    AppStateManager.MainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                    AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    AppState.MainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                     EngineMessageProcessor.StopEngineEvaluation();
-                    AppStateManager.SwapCommentBoxForEngineLines(TrainingSession.IsContinuousEvaluation);
+                    AppState.SwapCommentBoxForEngineLines(TrainingSession.IsContinuousEvaluation);
                     break;
                 case Mode.CONTINUOUS:
-                    AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                    AppStateManager.MainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                    AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    AppState.MainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                     break;
                 case Mode.LINE:
                     switch (lineSource)
@@ -189,16 +189,16 @@ namespace ChessForge
                             DebugUtils.ShowDebugMessage("ERROR: Line evaluation requested with no Line Type provided");
                             break;
                     }
-                    AppStateManager.MainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                    AppStateManager.MainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                    AppState.MainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    AppState.MainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                     break;
                 case Mode.ENGINE_GAME:
-                    AppStateManager.MainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                    AppStateManager.MainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                    AppState.MainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    AppState.MainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                     break;
             }
 
-            AppStateManager.SetupGuiForCurrentStates();
+            AppState.SetupGuiForCurrentStates();
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace ChessForge
             {
                 ChangeCurrentMode(Mode.IDLE);
             }
-            AppStateManager.SetupGuiForCurrentStates();
+            AppState.SetupGuiForCurrentStates();
         }
 
         /// <summary>

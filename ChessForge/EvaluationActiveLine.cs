@@ -17,7 +17,7 @@ namespace ChessForge
         /// <returns></returns>
         public override TreeNode GetCurrentEvaluatedNode()
         {
-            return AppStateManager.MainWin.ActiveLine.GetNodeAtIndex(NodeIndex);
+            return AppState.MainWin.ActiveLine.GetNodeAtIndex(NodeIndex);
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace ChessForge
         /// <returns></returns>
         public override bool IsLastPositionIndex()
         {
-            return NodeIndex == AppStateManager.MainWin.ActiveLine.GetPlyCount() - 1;
+            return NodeIndex == AppState.MainWin.ActiveLine.GetPlyCount() - 1;
         }
 
         /// <summary>

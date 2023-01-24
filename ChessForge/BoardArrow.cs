@@ -126,11 +126,11 @@ namespace ChessForge
         /// </summary>
         public void RemoveFromBoard()
         {
-            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            AppState.MainWin.Dispatcher.Invoke(() =>
             {
-                AppStateManager.MainWin.MainCanvas.Children.Remove(_triangle);
-                AppStateManager.MainWin.MainCanvas.Children.Remove(_stem);
-                AppStateManager.MainWin.MainCanvas.Children.Remove(_circle);
+                AppState.MainWin.MainCanvas.Children.Remove(_triangle);
+                AppState.MainWin.MainCanvas.Children.Remove(_stem);
+                AppState.MainWin.MainCanvas.Children.Remove(_circle);
             });
         }
 
@@ -140,7 +140,7 @@ namespace ChessForge
         /// <param name="end"></param>
         public void Draw(SquareCoords end)
         {
-            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            AppState.MainWin.Dispatcher.Invoke(() =>
             {
                 EndSquare = new SquareCoords(end);
 
@@ -201,7 +201,7 @@ namespace ChessForge
         /// </summary>
         private void Draw()
         {
-            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            AppState.MainWin.Dispatcher.Invoke(() =>
             {
                 DrawTriangle();
                 DrawStem();
@@ -214,8 +214,8 @@ namespace ChessForge
         /// </summary>
         private void DrawTriangle()
         {
-            AppStateManager.MainWin.MainCanvas.Children.Remove(_triangle);
-            AppStateManager.MainWin.MainCanvas.Children.Add(_triangle);
+            AppState.MainWin.MainCanvas.Children.Remove(_triangle);
+            AppState.MainWin.MainCanvas.Children.Add(_triangle);
             Canvas.SetLeft(_triangle, _endPoint.X - (_triangle.Source.Width / 2));
             Canvas.SetTop(_triangle, _endPoint.Y + 0);
             _triangle.RenderTransformOrigin = new Point(0.5,0);
@@ -228,8 +228,8 @@ namespace ChessForge
         /// </summary>
         private void DrawStem()
         {
-            AppStateManager.MainWin.MainCanvas.Children.Remove(_stem);
-            AppStateManager.MainWin.MainCanvas.Children.Add(_stem);
+            AppState.MainWin.MainCanvas.Children.Remove(_stem);
+            AppState.MainWin.MainCanvas.Children.Add(_stem);
             Canvas.SetLeft(_stem, _startPoint.X - (_stem.Source.Width / 2));
             Canvas.SetTop(_stem, _startPoint.Y - (_stem.Source.Height));
             _stem.RenderTransformOrigin = new Point(0.5, 1);
@@ -242,8 +242,8 @@ namespace ChessForge
         /// </summary>
         private void DrawCircle()
         {
-            AppStateManager.MainWin.MainCanvas.Children.Remove(_circle);
-            AppStateManager.MainWin.MainCanvas.Children.Add(_circle);
+            AppState.MainWin.MainCanvas.Children.Remove(_circle);
+            AppState.MainWin.MainCanvas.Children.Add(_circle);
             Canvas.SetLeft(_circle, _startPoint.X - (_circle.Source.Width / 2));
             Canvas.SetTop(_circle, _startPoint.Y - (_circle.Source.Height / 2));
             _circle.RenderTransformOrigin = new Point(0.5, 0.5);

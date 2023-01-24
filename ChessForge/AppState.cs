@@ -34,7 +34,7 @@ namespace ChessForge
     /// ENGINE_THINKING or USER_THINKING.
     /// 
     /// </summary>
-    public class AppStateManager
+    public class AppState
     {
         // main application window
         private static MainWindow _mainWin;
@@ -60,7 +60,7 @@ namespace ChessForge
         /// <returns></returns>
         public static Version GetAssemblyVersion()
         {
-            Assembly assem = typeof(AppStateManager).Assembly;
+            Assembly assem = typeof(AppState).Assembly;
             AssemblyName assemName = assem.GetName();
             return assemName.Version;
         }
@@ -173,13 +173,13 @@ namespace ChessForge
         {
             get
             {
-                if (AppStateManager.MainWin.ActiveVariationTree == null)
+                if (AppState.MainWin.ActiveVariationTree == null)
                 {
                     return VariationTree.SolvingMode.NONE;
                 }
                 else
                 {
-                    return AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode;
+                    return AppState.MainWin.ActiveVariationTree.CurrentSolvingMode;
                 }
             }
         }
@@ -438,7 +438,7 @@ namespace ChessForge
             {
                 await WebAccess.GameDownload.GetGame(gameId);
 
-                Chapter chapter = AppStateManager.ActiveChapter;
+                Chapter chapter = AppState.ActiveChapter;
                 if (chapter != null)
                 {
                     VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
@@ -655,6 +655,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Determines whether the evaluation lines can be shown to the user.
+        /// We only want to hide them when:
+        /// - we are playing a game against the engine and we are not in Training
+        /// - we are training and IsContinuousEvaluation is false
+        /// </summary>
+        /// <returns></returns>
+        public static bool ShowEvaluationLines()
+        {
+            return CurrentEvaluationMode != EvaluationManager.Mode.ENGINE_GAME 
+                                         || (TrainingSession.IsTrainingInProgress && TrainingSession.IsContinuousEvaluation);
+        }
+
+        /// <summary>
         /// Sets visibility for the controls relevant to move evaluation modes.
         /// NOTE: this is not applicable to move evaluation during a game.
         /// Engine Lines TextBox replaces the Board Comment RichTextBox if
@@ -693,7 +706,7 @@ namespace ChessForge
         /// </summary>
         public static void SetupGuiForTrainingProgressMode()
         {
-            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING)
+            if (AppState.CurrentLearningMode == LearningMode.Mode.TRAINING)
             {
                 _mainWin.Dispatcher.Invoke(() =>
                 {
@@ -986,7 +999,7 @@ namespace ChessForge
                 //MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
                 SetChessboardForActiveTab();
 
-                if (AppStateManager.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY
+                if (AppState.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY
                    || WorkbookManager.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
@@ -1135,7 +1148,7 @@ namespace ChessForge
 
                 _mainWin.UiMnciPlayEngine.IsEnabled = true;
 
-                _mainWin.UiMnAnnotations.IsEnabled = AppStateManager.IsTreeViewTabActive();
+                _mainWin.UiMnAnnotations.IsEnabled = AppState.IsTreeViewTabActive();
                 _mainWin.UiMnMergeChapters.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
             });
         }
@@ -1417,7 +1430,7 @@ namespace ChessForge
                 _mainWin.UiMnciEvalPos.IsEnabled = false;
 
                 _mainWin.UiPbEngineThinking.Minimum = 0;
-                int moveTime = AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME ?
+                int moveTime = AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME ?
                     Configuration.EngineMoveTime : Configuration.EngineEvaluationTime;
                 _mainWin.UiPbEngineThinking.Maximum = moveTime;
                 _mainWin.UiPbEngineThinking.Value = 0;

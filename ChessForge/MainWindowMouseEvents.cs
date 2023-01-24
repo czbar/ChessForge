@@ -191,10 +191,10 @@ namespace ChessForge
             {
             }
 
-            if (AppStateManager.MainWin.ActiveTreeView != null)
+            if (AppState.MainWin.ActiveTreeView != null)
             {
-                AppStateManager.DoEvents();
-                AppStateManager.MainWin.ActiveTreeView.BringSelectedRunIntoView();
+                AppState.DoEvents();
+                AppState.MainWin.ActiveTreeView.BringSelectedRunIntoView();
             }
 
             _processingMouseUp = false;
@@ -360,22 +360,8 @@ namespace ChessForge
         private void VariationTreeView_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             int lastClickedNode = -1;
-            AppStateManager.EnableTabViewMenuItems(WorkbookManager.ActiveTab, lastClickedNode, false);
+            AppState.EnableTabViewMenuItems(WorkbookManager.ActiveTab, lastClickedNode, false);
         }
-
-        /// <summary>
-        /// Ensure that Workbook Tree's ListView allows
-        /// mouse wheel scrolling.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void WorkbookView_OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            ScrollViewer scv = (ScrollViewer)sender;
-            scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
-            e.Handled = true;
-        }
-
 
         //**************************************************************
         //
@@ -392,6 +378,61 @@ namespace ChessForge
         private void TrainingView_OnPreviewMouseMove(object sender, MouseEventArgs e)
         {
             ShowTrainingFloatingBoard(false);
+        }
+
+        /// <summary>
+        /// The user right clicked in the Training View RTB.
+        /// Set LastClicked node to null.
+        /// It will be adjusted if a run was clicked and the View's handlers will
+        /// be invoked nex.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TrainingView_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //UiTrainingView.SetLastClickedNode(null);
+            Dispatcher.Invoke(() =>
+            {
+                ContextMenu cm = _cmTrainingView;
+                foreach (object o in cm.Items)
+                {
+                    if (o is MenuItem)
+                    {
+                        MenuItem mi = o as MenuItem;
+                        switch (mi.Name)
+                        {
+                            case "_mnTrainEvalMove":
+                                mi.Visibility = Visibility.Collapsed;
+                                break;
+                            case "_mnTrainEvalLine":
+                                mi.Visibility = Visibility.Collapsed;
+                                break;
+                            case "_mnTrainRestartGame":
+                                mi.Visibility = Visibility.Collapsed;
+                                break;
+                            case "_mnRollBackTraining":
+                                mi.Visibility = Visibility.Collapsed;
+                                break;
+                            case "_mnTrainSwitchToWorkbook":
+                                mi.Visibility = Visibility.Collapsed;
+                                break;
+                            case "_mnTrainRestartTraining":
+                                mi.Visibility = Visibility.Visible;
+                                break;
+                            case "_mnTrainExitTraining":
+                                mi.Visibility = Visibility.Visible;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    if (o is Separator)
+                    {
+                        ((Separator)o).Visibility = Visibility.Collapsed;
+                    }
+                }
+            });
         }
 
         //**************************************************************
@@ -540,7 +581,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void ExplorersToggleOff_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.ENGINE_GAME && AppStateManager.CurrentLearningMode != LearningMode.Mode.TRAINING)
+            if (AppState.CurrentLearningMode != LearningMode.Mode.ENGINE_GAME && AppState.CurrentLearningMode != LearningMode.Mode.TRAINING)
             {
                 TurnExplorersOn();
             }
@@ -574,11 +615,11 @@ namespace ChessForge
 
             if (ActiveVariationTree != null && ActiveVariationTree.SelectedNode != null)
             {
-                WebAccessManager.ExplorerRequest(AppStateManager.ActiveTreeId, ActiveVariationTree.SelectedNode);
+                WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
             }
 
-            AppStateManager.AreExplorersOn = true;
-            AppStateManager.ShowExplorers(ActiveTreeView != null, ActiveTreeView != null && ActiveTreeView.HasEntities);
+            AppState.AreExplorersOn = true;
+            AppState.ShowExplorers(ActiveTreeView != null, ActiveTreeView != null && ActiveTreeView.HasEntities);
         }
 
         /// <summary>
@@ -588,14 +629,14 @@ namespace ChessForge
         {
             Configuration.ShowExplorers = false;
 
-            AppStateManager.AreExplorersOn = false;
+            AppState.AreExplorersOn = false;
 
             UiImgExplorersOff.Visibility = Visibility.Visible;
             UiImgExplorersOn.Visibility = Visibility.Collapsed;
             WebAccessManager.IsEnabledExplorerQueries = false;
 
-            AppStateManager.AreExplorersOn = false;
-            AppStateManager.ShowExplorers(false, ActiveTreeView != null && ActiveTreeView.HasEntities);
+            AppState.AreExplorersOn = false;
+            AppState.ShowExplorers(false, ActiveTreeView != null && ActiveTreeView.HasEntities);
         }
 
         /// <summary>
@@ -634,7 +675,7 @@ namespace ChessForge
                 return;
             }
 
-            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && ActiveVariationTree != null)
+            if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && ActiveVariationTree != null)
             {
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
                 UiImgEngineOff.Visibility = Visibility.Collapsed;
@@ -642,8 +683,8 @@ namespace ChessForge
                 Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                 EvaluateActiveLineSelectedPosition();
             }
-            else if (AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING
-                || AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME && TrainingSession.IsTrainingInProgress)
+            else if (AppState.CurrentLearningMode == LearningMode.Mode.TRAINING
+                || AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME && TrainingSession.IsTrainingInProgress)
             {
                 TrainingSession.IsContinuousEvaluation = true;
                 UiTrainingView.RequestMoveEvaluation(ActiveVariationTreeId, true);
@@ -799,7 +840,7 @@ namespace ChessForge
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.CHAPTERS;
-            AppStateManager.ShowExplorers(false, false);
+            AppState.ShowExplorers(false, false);
 
             BoardCommentBox.ShowTabHints();
             try
@@ -829,7 +870,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabStudyTree_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.STUDY)
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.STUDY)
             {
                 return;
             }
@@ -838,7 +879,7 @@ namespace ChessForge
             UiImgEngineOff.IsEnabled = true;
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.STUDY;
-            AppStateManager.ShowExplorers(AppStateManager.AreExplorersOn, true);
+            AppState.ShowExplorers(AppState.AreExplorersOn, true);
 
             BoardCommentBox.ShowTabHints();
             try
@@ -873,7 +914,7 @@ namespace ChessForge
         private void UiTabBookmarks_GotFocus(object sender, RoutedEventArgs e)
         {
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.BOOKMARKS;
-            AppStateManager.ShowExplorers(false, false);
+            AppState.ShowExplorers(false, false);
 
             BoardCommentBox.ShowTabHints();
             try
@@ -928,8 +969,8 @@ namespace ChessForge
         {
             try
             {
-                AppStateManager.ConfigureMainBoardContextMenu();
-                if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                AppState.ConfigureMainBoardContextMenu();
+                if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
                     UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
                 }
@@ -983,7 +1024,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabModelGames_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
             {
                 return;
             }
@@ -992,13 +1033,13 @@ namespace ChessForge
             UiImgEngineOff.IsEnabled = true;
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.MODEL_GAME;
-            if (AppStateManager.ActiveChapterGamesCount > 0)
+            if (AppState.ActiveChapterGamesCount > 0)
             {
-                AppStateManager.ShowExplorers(AppStateManager.AreExplorersOn, true);
+                AppState.ShowExplorers(AppState.AreExplorersOn, true);
             }
             else
             {
-                AppStateManager.ShowExplorers(false, false);
+                AppState.ShowExplorers(false, false);
             }
 
             BoardCommentBox.ShowTabHints();
@@ -1033,7 +1074,7 @@ namespace ChessForge
                         WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.NONE);
                     }
 
-                    AppStateManager.ConfigureMainBoardContextMenu();
+                    AppState.ConfigureMainBoardContextMenu();
                     if (chapter != null && chapter.ActiveModelGameIndex < 0)
                     {
                         ActiveLine.Clear();
@@ -1069,7 +1110,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabExercises_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
             {
                 return;
             }
@@ -1078,13 +1119,13 @@ namespace ChessForge
             UiImgEngineOff.IsEnabled = true;
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.EXERCISE;
-            if (AppStateManager.ActiveChapterExerciseCount > 0)
+            if (AppState.ActiveChapterExerciseCount > 0)
             {
-                AppStateManager.ShowExplorers(AppStateManager.AreExplorersOn, true);
+                AppState.ShowExplorers(AppState.AreExplorersOn, true);
             }
             else
             {
-                AppStateManager.ShowExplorers(false, false);
+                AppState.ShowExplorers(false, false);
             }
 
             BoardCommentBox.ShowTabHints();
@@ -1116,7 +1157,7 @@ namespace ChessForge
                         ClearTreeView(_exerciseTreeView, GameData.ContentType.EXERCISE);
                     }
 
-                    AppStateManager.ConfigureMainBoardContextMenu();
+                    AppState.ConfigureMainBoardContextMenu();
                     ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
                 }
             }
@@ -1148,7 +1189,7 @@ namespace ChessForge
         /// <returns></returns>
         private bool KeepFocusOnGame()
         {
-            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+            if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
             {
                 BoardCommentBox.ShowFlashAnnouncement("Exit the game against the engine before switching tabs.");
                 if (TrainingSession.IsTrainingInProgress)

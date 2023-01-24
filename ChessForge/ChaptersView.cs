@@ -155,7 +155,7 @@ namespace ChessForge
             Paragraph paraChapter = FindChapterParagraph(chapterId);
             if (paraChapter != null)
             {
-                AppStateManager.DoEvents();
+                AppState.DoEvents();
                 Run r = FindArticleRunInParagraph(paraChapter, contentType, index);
                 r?.BringIntoView();
             }

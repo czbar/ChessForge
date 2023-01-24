@@ -186,7 +186,7 @@ namespace ChessForge
         public static bool CheckFileExists(string fileName, bool isLastOpen)
         {
             // check for idle just in case (should never be the case if WorkbookFilePath is not empty
-            if (fileName == AppStateManager.WorkbookFilePath && AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE)
+            if (fileName == AppState.WorkbookFilePath && AppState.CurrentLearningMode != LearningMode.Mode.IDLE)
             {
                 MessageBox.Show(Path.GetFileName(fileName) + " is already open.", "Chess Forge File", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return false;
@@ -198,7 +198,7 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.MainWin.BoardCommentBox.OpenFile();
+                AppState.MainWin.BoardCommentBox.OpenFile();
 
                 if (isLastOpen)
                 {
@@ -210,7 +210,7 @@ namespace ChessForge
                 }
 
                 Configuration.RemoveFromRecentFiles(fileName);
-                AppStateManager.MainWin.RecreateRecentFilesMenuItems();
+                AppState.MainWin.RecreateRecentFilesMenuItems();
 
                 return false;
             }
@@ -673,7 +673,7 @@ namespace ChessForge
                 SessionWorkbook = new Workbook();
                 Chapter chapter = SessionWorkbook.CreateDefaultChapter();
 
-                if (AppStateManager.MainWin.SelectArticlesFromPgnFile(ref games, 
+                if (AppState.MainWin.SelectArticlesFromPgnFile(ref games, 
                                                                       SelectGamesDialog.Mode.CREATE_WORKBOOK, 
                                                                       out bool createStudy, out bool copyGames, out bool multiChapter))
                 {
@@ -682,7 +682,7 @@ namespace ChessForge
                         MergeGames(ref chapter.StudyTree.Tree, ref games);
                         // the content type may have been reset to generic
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
-                        AppStateManager.MainWin.CopySelectedItemsToChapter(chapter, copyGames, games);
+                        AppState.MainWin.CopySelectedItemsToChapter(chapter, copyGames, games);
                     }
                     else
                     {
@@ -691,7 +691,7 @@ namespace ChessForge
                         chapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
                     }
 
-                    if (AppStateManager.MainWin.ShowWorkbookOptionsDialog(false))
+                    if (AppState.MainWin.ShowWorkbookOptionsDialog(false))
                     {
                         if (SaveWorkbookToNewFileV2("", false))
                         {
@@ -707,7 +707,7 @@ namespace ChessForge
 
             if (success)
             {
-                AppStateManager.IsDirty = true;
+                AppState.IsDirty = true;
             }
 
             return success;
@@ -899,10 +899,10 @@ namespace ChessForge
         {
             TextBoxDialog dlg = new TextBoxDialog(dlgTitle, sb.ToString())
             {
-                Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
-                Top = AppStateManager.MainWin.ChessForgeMain.Top + 100,
+                Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                Top = AppState.MainWin.ChessForgeMain.Top + 100,
                 Topmost = false,
-                Owner = AppStateManager.MainWin
+                Owner = AppState.MainWin
             };
             dlg.ShowDialog();
         }
@@ -928,7 +928,7 @@ namespace ChessForge
         {
             MessageBoxResult res = MessageBoxResult.None;
 
-            if (AppStateManager.ActiveVariationTree != null && AppStateManager.ActiveVariationTree.HasTrainingMoves())
+            if (AppState.ActiveVariationTree != null && AppState.ActiveVariationTree.HasTrainingMoves())
             {
                 res = PromptAndSaveTrainingMoves(userRequest, isAppClosing);
             }
@@ -939,11 +939,11 @@ namespace ChessForge
                 if (userRequest)
                 {
                     // user requested File->Save so proceed...
-                    AppStateManager.SaveWorkbookFile(null);
+                    AppState.SaveWorkbookFile(null);
                 }
                 else
                 {
-                    if (AppStateManager.IsDirty)
+                    if (AppState.IsDirty)
                     {
                         // this was prompted by an action other than File->Save 
                         // Ask, or proceed without asking of AutoSave is enabled
@@ -954,7 +954,7 @@ namespace ChessForge
                         }
                         if (Configuration.AutoSave || res == MessageBoxResult.Yes)
                         {
-                            AppStateManager.SaveWorkbookFile(null);
+                            AppState.SaveWorkbookFile(null);
                             res = MessageBoxResult.Yes;
                         }
                     }
@@ -966,7 +966,7 @@ namespace ChessForge
                 }
             }
 
-            AppStateManager.ConfigureSaveMenus();
+            AppState.ConfigureSaveMenus();
 
             return res == MessageBoxResult.Yes || res == MessageBoxResult.No;
         }
@@ -994,7 +994,7 @@ namespace ChessForge
 
             string origin;
 
-            switch (AppStateManager.ActiveVariationTree.ContentType)
+            switch (AppState.ActiveVariationTree.ContentType)
             {
                 case GameData.ContentType.STUDY_TREE:
                     origin = "Study";
@@ -1016,7 +1016,7 @@ namespace ChessForge
                 buttons, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                VariationTree activeTree = AppStateManager.ActiveVariationTree;
+                VariationTree activeTree = AppState.ActiveVariationTree;
 
                 // prepare data for undo
                 EditOperation op = new EditOperation(EditOperation.EditType.SAVE_TRAINING_MOVES, activeTree.GetListOfNodeIds(false), null);
@@ -1024,13 +1024,13 @@ namespace ChessForge
 
                 activeTree.ClearTrainingFlags();
                 activeTree.BuildLines();
-                AppStateManager.SaveWorkbookFile(null);
-                AppStateManager.MainWin.RebuildActiveTreeView();
-                AppStateManager.MainWin.RefreshSelectedActiveLineAndNode();
+                AppState.SaveWorkbookFile(null);
+                AppState.MainWin.RebuildActiveTreeView();
+                AppState.MainWin.RefreshSelectedActiveLineAndNode();
             }
             else if (res == MessageBoxResult.No)
             {
-                AppStateManager.MainWin.ActiveVariationTree.RemoveTrainingMoves();
+                AppState.MainWin.ActiveVariationTree.RemoveTrainingMoves();
             }
 
             return res;
@@ -1044,7 +1044,7 @@ namespace ChessForge
         public static bool AskToCloseWorkbook()
         {
             // if a workbook is open ask whether to close it first
-            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE)
+            if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE)
             {
                 if (MessageBox.Show("Close the current Workbook?", "Workbook", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
                 {
@@ -1054,7 +1054,7 @@ namespace ChessForge
                 {
                     WorkbookManager.AskToSaveWorkbookOnClose();
                     // if we are not in IDLE mode then the user did not close
-                    if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE)
+                    if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE)
                     {
                         return false;
                     }
@@ -1078,7 +1078,7 @@ namespace ChessForge
                 return false;
             }
 
-            AppStateManager.RestartInIdleMode();
+            AppState.RestartInIdleMode();
             return true;
         }
 
@@ -1089,7 +1089,7 @@ namespace ChessForge
         public static void UpdateRecentFilesList(string fileName)
         {
             Configuration.AddRecentFile(fileName);
-            AppStateManager.MainWin.RecreateRecentFilesMenuItems();
+            AppState.MainWin.RecreateRecentFilesMenuItems();
             Configuration.LastWorkbookFile = fileName;
         }
 
@@ -1120,16 +1120,16 @@ namespace ChessForge
             {
                 saveDlg.FileName = Path.GetFileNameWithoutExtension(chfFileName) + ".pgn";
             }
-            else if (!typeConversion && !string.IsNullOrWhiteSpace(AppStateManager.MainWin.SessionWorkbook.Title))
+            else if (!typeConversion && !string.IsNullOrWhiteSpace(AppState.MainWin.SessionWorkbook.Title))
             {
-                saveDlg.FileName = AppStateManager.MainWin.SessionWorkbook.Title + ".pgn";
+                saveDlg.FileName = AppState.MainWin.SessionWorkbook.Title + ".pgn";
             }
 
             saveDlg.OverwritePrompt = true;
             if (saveDlg.ShowDialog() == true)
             {
                 string pgnFileName = saveDlg.FileName;
-                AppStateManager.SaveWorkbookToNewFile(chfFileName, pgnFileName, typeConversion);
+                AppState.SaveWorkbookToNewFile(chfFileName, pgnFileName, typeConversion);
                 return true;
             }
             else
@@ -1183,7 +1183,7 @@ namespace ChessForge
             if (saveDlg.ShowDialog() == true)
             {
                 string chfFileName = saveDlg.FileName;
-                AppStateManager.SaveWorkbookToNewFile(pgnFileName, chfFileName, typeConversion);
+                AppState.SaveWorkbookToNewFile(pgnFileName, chfFileName, typeConversion);
                 return true;
             }
             else

@@ -121,9 +121,9 @@ namespace ChessForge
             if (e.Success)
             {
                 _treeId = e.TreeId;
-                if (AppStateManager.ActiveVariationTree != null)
+                if (AppState.ActiveVariationTree != null)
                 {
-                    _node = AppStateManager.ActiveVariationTree.GetNodeFromNodeId(e.NodeId);
+                    _node = AppState.ActiveVariationTree.GetNodeFromNodeId(e.NodeId);
                 }
                 _moveNumberString = BuildMoveNumberString(_node);
                 BuildFlowDocument(DataMode.OPENINGS);
@@ -144,9 +144,9 @@ namespace ChessForge
             if (e.Success)
             {
                 _treeId = e.TreeId;
-                if (AppStateManager.ActiveVariationTree != null)
+                if (AppState.ActiveVariationTree != null)
                 {
-                    _node = AppStateManager.ActiveVariationTree.GetNodeFromNodeId(e.NodeId);
+                    _node = AppState.ActiveVariationTree.GetNodeFromNodeId(e.NodeId);
                 }
                 BuildFlowDocument(DataMode.TABLEBASE);
             }
@@ -187,7 +187,7 @@ namespace ChessForge
             Document.PageWidth = 590;
 
             // makes no sense to show Opening Explorer in Exercise view
-            if (_node != null && (AppStateManager.ActiveTab != WorkbookManager.TabViewType.EXERCISE || mode == DataMode.TABLEBASE))
+            if (_node != null && (AppState.ActiveTab != WorkbookManager.TabViewType.EXERCISE || mode == DataMode.TABLEBASE))
             {
                 switch (mode)
                 {
@@ -522,14 +522,14 @@ namespace ChessForge
             try
             {
                 Run rMove = e.Source as Run;
-                WorkbookManager.TabViewType tab = AppStateManager.ActiveTab;
+                WorkbookManager.TabViewType tab = AppState.ActiveTab;
                 if (tab == WorkbookManager.TabViewType.STUDY
                     || tab == WorkbookManager.TabViewType.MODEL_GAME
                     || tab == WorkbookManager.TabViewType.EXERCISE)
                 {
                     string moveEngCode = GetMoveCodeFromCellName(rMove.Name);
                     UserMoveProcessor.ProcessMove(moveEngCode, out TreeNode node, out bool isCastle);
-                    AppStateManager.MainWin.DisplayPosition(node);
+                    AppState.MainWin.DisplayPosition(node);
                 }
             }
             catch (Exception ex)

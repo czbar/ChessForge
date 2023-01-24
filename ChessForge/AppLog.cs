@@ -221,10 +221,11 @@ namespace ChessForge
 
             sb.Append("Application States" + Environment.NewLine);
             sb.Append("==================" + Environment.NewLine);
-            sb.Append("Learning mode = " + AppStateManager.CurrentLearningMode.ToString() + Environment.NewLine);
+            sb.Append("Learning mode = " + AppState.CurrentLearningMode.ToString() + Environment.NewLine);
             sb.Append("IsTrainingInProgress = " + TrainingSession.IsTrainingInProgress.ToString() + Environment.NewLine);
+            sb.Append("IsTrainingContinuousEval = " + TrainingSession.IsContinuousEvaluation.ToString() + Environment.NewLine);
             sb.Append("TrainingMode = " + TrainingSession.CurrentState.ToString() + Environment.NewLine);
-            sb.Append("EvaluationMode = " + AppStateManager.CurrentEvaluationMode.ToString() + Environment.NewLine);
+            sb.Append("EvaluationMode = " + AppState.CurrentEvaluationMode.ToString() + Environment.NewLine);
             sb.Append("GameState = " + EngineGame.CurrentState.ToString() + Environment.NewLine);
 
             sb.Append(Environment.NewLine);
@@ -232,7 +233,7 @@ namespace ChessForge
             sb.Append("Timer States" + Environment.NewLine);
             sb.Append("============" + Environment.NewLine);
 
-            AppTimers timers = AppStateManager.MainWin.Timers;
+            AppTimers timers = AppState.MainWin.Timers;
 
             bool isMessagePollEnabled = EngineMessageProcessor.ChessEngineService.IsMessageRxLoopEnabled();
             sb.Append("ENGINE MESSAGE POLL" + ": IsEnabled = "
@@ -258,6 +259,9 @@ namespace ChessForge
                 + timers.IsEnabled(AppTimers.TimerId.FLASH_ANNOUNCEMENT).ToString() + Environment.NewLine);
             sb.Append(AppTimers.TimerId.APP_START.ToString() + ": IsEnabled = " 
                 + timers.IsEnabled(AppTimers.TimerId.APP_START).ToString() + Environment.NewLine);
+
+            sb.Append(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME.ToString() + ": IsRunning = "
+                + timers.IsRunning(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME).ToString() + Environment.NewLine);
 
             try
             {
