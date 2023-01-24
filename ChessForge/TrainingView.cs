@@ -419,7 +419,7 @@ namespace ChessForge
                             _engineGameRootNode = _userMove;
                             // call RequestEngineResponse() directly so it invokes PlayEngine
                             LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
-                            AppStateManager.SetupGuiForCurrentStates();
+                            AppState.SetupGuiForCurrentStates();
                             RequestEngineResponse();
                         }
                     }
@@ -442,7 +442,7 @@ namespace ChessForge
             TrainingSession.ChangeCurrentState(TrainingSession.State.USER_MOVE_COMPLETED);
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
-            AppStateManager.SetupGuiForCurrentStates();
+            AppState.SetupGuiForCurrentStates();
 
             _mainWin.BoardCommentBox.GameMoveMade(_lastClickedNode, true);
 
@@ -467,7 +467,7 @@ namespace ChessForge
             TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
-            AppStateManager.SetupGuiForCurrentStates();
+            AppState.SetupGuiForCurrentStates();
 
             _mainWin.BoardCommentBox.GameMoveMade(_lastClickedNode, false);
 
@@ -630,7 +630,7 @@ namespace ChessForge
                 // The move will be visualized in response to CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE timer's elapsed event
                 EngineGame.IsTrainingWorkbookMoveMade = true;
                 _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
-                AppStateManager.SwapCommentBoxForEngineLines(TrainingSession.IsContinuousEvaluation);
+                AppState.SwapCommentBoxForEngineLines(TrainingSession.IsContinuousEvaluation);
             }
             catch
             {
@@ -688,7 +688,6 @@ namespace ChessForge
             if (TrainingSession.IsContinuousEvaluation)
             {
                 ShowEvaluationResult(nd, false);
-                //AppStateManager.SwapCommentBoxForEngineLines(true);
             }
         }
 
@@ -845,7 +844,7 @@ namespace ChessForge
                 }
             });
 
-            AppStateManager.SetupGuiForCurrentStates();
+            AppState.SetupGuiForCurrentStates();
         }
 
         /// <summary>
@@ -1458,11 +1457,11 @@ namespace ChessForge
         {
             if (!EngineMessageProcessor.IsEngineAvailable)
             {
-                AppStateManager.MainWin.BoardCommentBox.ShowFlashAnnouncement("Engine not available");
+                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement("Engine not available");
                 return;
             }
 
-            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            AppState.MainWin.Dispatcher.Invoke(() =>
             {
                 EvaluationManager.ResetLineNodesToEvaluate();
 

@@ -57,7 +57,7 @@ namespace ChessForge
         /// <summary>
         /// Reference to the main application window.
         /// </summary>
-        private static MainWindow _mainWin { get => AppStateManager.MainWin; }
+        private static MainWindow _mainWin { get => AppState.MainWin; }
 
         /// <summary>
         /// Changes the current state of the game.
@@ -139,7 +139,7 @@ namespace ChessForge
             }
 
             nd = new TreeNode(curr, algMove, _mainWin.ActiveVariationTree.GetNewNodeId());
-            TreeNode sib = AppStateManager.MainWin.ActiveVariationTree.GetIdenticalSibling(nd, engMove);
+            TreeNode sib = AppState.MainWin.ActiveVariationTree.GetIdenticalSibling(nd, engMove);
             if (sib == null)
             {
                 nd.IsNewTrainingMove = curr.IsNewTrainingMove;

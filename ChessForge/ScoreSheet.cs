@@ -60,7 +60,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public void AddPlyAndMove(TreeNode nd)
         {
-            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            AppState.MainWin.Dispatcher.Invoke(() =>
             {
                 NodeList.Add(nd);
                 AddPly(nd);
@@ -332,7 +332,7 @@ namespace ChessForge
         /// </summary>
         public void RemoveLastPly()
         {
-            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            AppState.MainWin.Dispatcher.Invoke(() =>
             {
                 NodeList.RemoveAt(NodeList.Count - 1);
 

@@ -83,7 +83,7 @@ namespace ChessForge
             {
                 AddNewParagraphToDoc("normal", "Your move was:");
                 AddNewParagraphToDoc("bold_prompt", MoveUtils.BuildSingleMoveText(nd, true));
-                if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
                     AddNewParagraphToDoc("normal", "Wait for engine's response...");
                 }
@@ -94,7 +94,7 @@ namespace ChessForge
             }
             else // engine or "coach" moved
             {
-                if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
                     AddNewParagraphToDoc("normal", "The engine played:");
                 }
@@ -206,7 +206,7 @@ namespace ChessForge
                     AddNewParagraphToDoc("title", title);
                     AddNewParagraphToDoc("bold_prompt", "Some available actions are:");
                     string commentText = "";
-                    switch (AppStateManager.ActiveTab)
+                    switch (AppState.ActiveTab)
                     {
                         case WorkbookManager.TabViewType.CHAPTERS:
                             commentText = Strings.QUICK_INSTRUCTION_CHAPTERS;
@@ -218,7 +218,7 @@ namespace ChessForge
                             commentText = Strings.QUICK_INSTRUCTION_BOOKMARKS;
                             break;
                         case WorkbookManager.TabViewType.MODEL_GAME:
-                            if (AppStateManager.ActiveChapterGamesCount > 0)
+                            if (AppState.ActiveChapterGamesCount > 0)
                             {
                                 commentText = Strings.QUICK_INSTRUCTION_MODEL_GAMES;
                             }
@@ -228,13 +228,13 @@ namespace ChessForge
                             }
                             break;
                         case WorkbookManager.TabViewType.EXERCISE:
-                            if (AppStateManager.ActiveChapterExerciseCount == 0)
+                            if (AppState.ActiveChapterExerciseCount == 0)
                             {
                                 commentText = Strings.QUICK_INSTRUCTION_EXERCISES_EMPTY;
                             }
                             else
                             {
-                                switch (AppStateManager.CurrentSolvingMode)
+                                switch (AppState.CurrentSolvingMode)
                                 {
                                     case VariationTree.SolvingMode.ANALYSIS:
                                     case VariationTree.SolvingMode.GUESS_MOVE:
@@ -252,7 +252,7 @@ namespace ChessForge
                     }
                     AddNewParagraphToDoc("normal", commentText);
                 }
-                AppStateManager.SwapCommentBoxForEngineLines(false);
+                AppState.SwapCommentBoxForEngineLines(false);
             });
         }
 
@@ -308,7 +308,7 @@ namespace ChessForge
                 string txt;
                 if (userMade)
                 {
-                    if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                    if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                     {
                         txt = "You have checkmated the engine. Congratulations!";
                     }
@@ -378,7 +378,7 @@ namespace ChessForge
                 para.Foreground = brush;
             });
 
-            AppStateManager.DoEvents();
+            AppState.DoEvents();
         }
     }
 }

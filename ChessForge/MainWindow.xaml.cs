@@ -221,8 +221,8 @@ namespace ChessForge
             get
             {
                 if (SessionWorkbook == null
-                    || AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS
-                    || AppStateManager.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
+                    || AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS
+                    || AppState.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
                 {
                     return null;
                 }
@@ -257,7 +257,7 @@ namespace ChessForge
         /// </summary>
         public MainWindow()
         {
-            AppStateManager.MainWin = this;
+            AppState.MainWin = this;
             _ = WebAccess.SourceForgeCheck.GetVersion();
 
             EvaluationMgr = new EvaluationManager();
@@ -320,7 +320,7 @@ namespace ChessForge
 
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
             LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
-            AppStateManager.SetupGuiForCurrentStates();
+            AppState.SetupGuiForCurrentStates();
 
             if (Configuration.ShowExplorers)
             {
@@ -349,7 +349,7 @@ namespace ChessForge
                 }
                 else if (e.ContentType == GameData.ContentType.EXERCISE)
                 {
-                    AppStateManager.MainWin.SelectExercise(e.ArticleIndex, true);
+                    AppState.MainWin.SelectExercise(e.ArticleIndex, true);
                 }
             }
             catch { }
@@ -532,7 +532,7 @@ namespace ChessForge
                 {
                     if (!suppress || WebAccess.SourceForgeCheck.ChessForgeVersion.ToString() != Configuration.DoNotShowVersion)
                     {
-                        int verCompare = AppStateManager.GetAssemblyVersion().CompareTo(WebAccess.SourceForgeCheck.ChessForgeVersion);
+                        int verCompare = AppState.GetAssemblyVersion().CompareTo(WebAccess.SourceForgeCheck.ChessForgeVersion);
                         if (verCompare < 0)
                         {
                             UpdateAvailableDialog dlg = new UpdateAvailableDialog(WebAccess.SourceForgeCheck.ChessForgeVersion)
@@ -1089,8 +1089,8 @@ namespace ChessForge
                     return;
                 }
 
-                AppStateManager.RestartInIdleMode(false);
-                AppStateManager.WorkbookFilePath = fileName;
+                AppState.RestartInIdleMode(false);
+                AppState.WorkbookFilePath = fileName;
                 BoardCommentBox.ReadingFile();
 
                 string fileExtension = Path.GetExtension(fileName).ToLower();
@@ -1121,17 +1121,17 @@ namespace ChessForge
 
                 if (acceptFile)
                 {
-                    SetupGuiForNewSession(AppStateManager.WorkbookFilePath, isChessForgeFile);
+                    SetupGuiForNewSession(AppState.WorkbookFilePath, isChessForgeFile);
                 }
                 else
                 {
-                    AppStateManager.RestartInIdleMode(true);
+                    AppState.RestartInIdleMode(true);
                 }
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Error processing input file", MessageBoxButton.OK, MessageBoxImage.Error);
-                AppStateManager.RestartInIdleMode();
+                AppState.RestartInIdleMode();
             }
         }
 
@@ -1148,7 +1148,7 @@ namespace ChessForge
             // if this is a new session we will set ActiveChapter to the first chapter
             // and Active Tree to the Study Tree in that chapter.
             WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(0, GameData.ContentType.STUDY_TREE);
-            AppStateManager.UpdateAppTitleBar();
+            AppState.UpdateAppTitleBar();
             BoardCommentBox.ShowTabHints();
 
             if (SessionWorkbook.TrainingSideConfig == PieceColor.None)
@@ -1187,7 +1187,7 @@ namespace ChessForge
         {
             _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
 
-            VariationTree studyTree = AppStateManager.ActiveChapter.StudyTree.Tree;
+            VariationTree studyTree = AppState.ActiveChapter.StudyTree.Tree;
             if (studyTree.Nodes.Count == 0)
             {
                 studyTree.CreateNew();
@@ -1404,7 +1404,7 @@ namespace ChessForge
                 {
                     EvaluateActiveLineSelectedPosition(nd);
                 }
-                WebAccessManager.ExplorerRequest(AppStateManager.ActiveTreeId, ActiveVariationTree.SelectedNode);
+                WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
             }
         }
 
@@ -1467,7 +1467,7 @@ namespace ChessForge
                     if (displayPosition)
                     {
                         MainChessBoard.DisplayPosition(nd, true);
-                        WebAccessManager.ExplorerRequest(AppStateManager.ActiveTreeId, nd);
+                        WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, nd);
                     }
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
                     {
@@ -1576,7 +1576,7 @@ namespace ChessForge
         /// </summary>
         public void MoveEvaluationFinishedInTraining(TreeNode nd, bool delayed)
         {
-            AppStateManager.ShowMoveEvaluationControls(false, true);
+            AppState.ShowMoveEvaluationControls(false, true);
             UiTrainingView.ShowEvaluationResult(nd, delayed);
         }
 
@@ -1602,7 +1602,7 @@ namespace ChessForge
             LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
 
             // TODO: should make a call to SetupGUI for game, instead
-            AppStateManager.ShowMoveEvaluationControls(false, false);
+            AppState.ShowMoveEvaluationControls(false, false);
 
             EngineGame.InitializeGameObject(startNode, true, IsTraining);
             UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
@@ -1690,13 +1690,13 @@ namespace ChessForge
 
             Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
-            AppStateManager.MainWin.ActiveVariationTree.BuildLines();
+            AppState.MainWin.ActiveVariationTree.BuildLines();
             RebuildActiveTreeView();
 
-            AppStateManager.SetupGuiForCurrentStates();
+            AppState.SetupGuiForCurrentStates();
 
             ActiveLine.DisplayPositionForSelectedCell();
-            AppStateManager.SwapCommentBoxForEngineLines(false);
+            AppState.SwapCommentBoxForEngineLines(false);
             BoardCommentBox.RestoreTitleMessage();
         }
 
@@ -1712,7 +1712,7 @@ namespace ChessForge
                 UiPbEngineThinking.Visibility = Visibility.Hidden;
                 UiPbEngineThinking.Minimum = 0;
 
-                int moveTime = AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME ?
+                int moveTime = AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME ?
                     Configuration.EngineMoveTime : Configuration.EngineEvaluationTime;
                 UiPbEngineThinking.Maximum = moveTime;
                 UiPbEngineThinking.Value = 0;
@@ -1829,8 +1829,8 @@ namespace ChessForge
                 MainChessBoard.FlipBoard();
             }
 
-            AppStateManager.ShowMoveEvaluationControls(false, false);
-            AppStateManager.ShowExplorers(false, false);
+            AppState.ShowMoveEvaluationControls(false, false);
+            AppState.ShowExplorers(false, false);
             BoardCommentBox.TrainingSessionStart();
 
             // The Line display is the same as when playing a game against the computer 
@@ -1962,11 +1962,11 @@ namespace ChessForge
                 SessionWorkbook.GameBoardOrientationConfig = dlg.GameBoardOrientation;
                 SessionWorkbook.ExerciseBoardOrientationConfig = dlg.ExerciseBoardOrientation;
 
-                AppStateManager.IsDirty = true;
+                AppState.IsDirty = true;
 
                 if (save)
                 {
-                    AppStateManager.SaveWorkbookFile(null);
+                    AppState.SaveWorkbookFile(null);
                 }
 
                 switch (WorkbookManager.ActiveTab)
@@ -2046,7 +2046,7 @@ namespace ChessForge
                 // study tree also shows title so update it there
                 // TODO: update only the Header
                 _studyTreeView.BuildFlowDocumentForVariationTree();
-                AppStateManager.IsDirty = true;
+                AppState.IsDirty = true;
                 return true;
             }
             else
@@ -2069,13 +2069,13 @@ namespace ChessForge
                 EvaluationManager.Reset();
             }
 
-            AppStateManager.ResetEvaluationControls();
-            AppStateManager.ShowMoveEvaluationControls(false, true);
+            AppState.ResetEvaluationControls();
+            AppState.ShowMoveEvaluationControls(false, true);
 
             if (updateGui)
             {
                 // TODO: remove as EvaluationManager.Reset() already calls this
-                AppStateManager.SetupGuiForCurrentStates();
+                AppState.SetupGuiForCurrentStates();
             }
 
             if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
@@ -2101,7 +2101,7 @@ namespace ChessForge
             {
                 EditOperation op = null;
 
-                if (AppStateManager.ActiveVariationTree != null)
+                if (AppState.ActiveVariationTree != null)
                 {
                     op = new EditOperation(EditOperation.EditType.UPDATE_ANNOTATION, nd);
                 }
@@ -2122,11 +2122,11 @@ namespace ChessForge
                         nd.Comment = dlg.Comment;
                         nd.SetNags(dlg.Nags);
                         nd.QuizPoints = dlg.QuizPoints;
-                        AppStateManager.IsDirty = true;
+                        AppState.IsDirty = true;
 
                         if (op != null)
                         {
-                            AppStateManager.ActiveVariationTree.OpsManager.PushOperation(op);
+                            AppState.ActiveVariationTree.OpsManager.PushOperation(op);
                         }
                     }
                 }
@@ -2324,7 +2324,7 @@ namespace ChessForge
             bool visible = (bool)e.NewValue;
             if (visible == true)
             {
-                switch (AppStateManager.LastActiveManualReviewTab)
+                switch (AppState.LastActiveManualReviewTab)
                 {
                     case WorkbookManager.TabViewType.CHAPTERS:
                         UiTabChapters_GotFocus(null, null);
@@ -2347,7 +2347,7 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.LastActiveManualReviewTab = WorkbookManager.ActiveTab;
+                AppState.LastActiveManualReviewTab = WorkbookManager.ActiveTab;
             }
         }
     }

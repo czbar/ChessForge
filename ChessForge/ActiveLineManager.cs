@@ -108,7 +108,7 @@ namespace ChessForge
                     }
                 }
 
-                AppStateManager.IsDirty = true;
+                AppState.IsDirty = true;
             }
         }
 
@@ -431,7 +431,7 @@ namespace ChessForge
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
             }
 
-            AppStateManager.SwapCommentBoxForEngineLines(false);
+            AppState.SwapCommentBoxForEngineLines(false);
 
             // if there is replay happening now, stop it
             if (_mainWin.ActiveLineReplay.IsReplayActive)
@@ -587,7 +587,7 @@ namespace ChessForge
         /// <returns></returns>
         public bool HandleKeyDown(Key key)
         {
-            if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppStateManager.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppState.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
             {
                 if (key == Key.Up || key == Key.Down)
                 {
@@ -601,7 +601,7 @@ namespace ChessForge
             }
 
             // prevent "cheating" in exercises
-            if (_mainWin.ActiveVariationTree == null || !_mainWin.ActiveVariationTree.ShowTreeLines || AppStateManager.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
+            if (_mainWin.ActiveVariationTree == null || !_mainWin.ActiveVariationTree.ShowTreeLines || AppState.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
             {
                 return true;
             }
@@ -692,7 +692,7 @@ namespace ChessForge
 
         public bool HandleKeyUp(Key key)
         {
-            if (_mainWin.ActiveVariationTree == null || !_mainWin.ActiveVariationTree.ShowTreeLines || AppStateManager.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
+            if (_mainWin.ActiveVariationTree == null || !_mainWin.ActiveVariationTree.ShowTreeLines || AppState.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
             {
                 return true;
             }

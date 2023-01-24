@@ -387,7 +387,7 @@ namespace ChessForge
         /// </summary>
         public void RemoveMoveSquareColors()
         {
-            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            AppState.MainWin.Dispatcher.Invoke(() =>
             {
                 CanvasCtrl.Children.Remove(_moveFromOverlay);
                 CanvasCtrl.Children.Remove(_moveToOverlay);
@@ -755,7 +755,7 @@ namespace ChessForge
         /// <param name="square"></param>
         private void DisplayPiece(int xcoord, int ycoord, byte square)
         {
-            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            AppState.MainWin.Dispatcher.Invoke(() =>
             {
                 if (PositionUtils.GetPieceColor(square) == PieceColor.White)
                 {

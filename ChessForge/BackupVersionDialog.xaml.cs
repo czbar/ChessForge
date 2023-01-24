@@ -83,9 +83,9 @@ namespace ChessForge
             UiLblBackupNotification.Content = "The current version " + _workbook.Version.ToString() + " will be backed up in";
 
             // this will be ".pgn" but we call this method for future proofing
-            string ext = System.IO.Path.GetExtension(AppStateManager.WorkbookFilePath);
+            string ext = System.IO.Path.GetExtension(AppState.WorkbookFilePath);
 
-            string _workbookPathNoExt = AppStateManager.WorkbookFilePath.Substring(0, AppStateManager.WorkbookFilePath.Length - ext.Length);
+            string _workbookPathNoExt = AppState.WorkbookFilePath.Substring(0, AppState.WorkbookFilePath.Length - ext.Length);
 
             _backupPath = _workbookPathNoExt + " v" + _workbook.Version.ToString().Replace('.', '_') + ext;
             UiTbBackupFileName.Text = System.IO.Path.GetFileName(_backupPath);

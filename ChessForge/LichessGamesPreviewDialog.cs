@@ -109,10 +109,10 @@ namespace ChessForge
         /// <param name="e"></param>
         override protected void UiBtnImport_Click(object sender, RoutedEventArgs e)
         {
-            Chapter chapter = AppStateManager.ActiveChapter;
+            Chapter chapter = AppState.ActiveChapter;
             if (chapter != null)
             {
-                AppStateManager.MainWin.UiTabChapters.Focus();
+                AppState.MainWin.UiTabChapters.Focus();
                 chapter.AddModelGame(_tree);
                 string guid = _tree.Header.GetGuid(out _);
                 // if the current active tree is Study Tree, add reference
@@ -124,8 +124,8 @@ namespace ChessForge
                         nd.AddArticleReference(guid);
                     }
                 }
-                AppStateManager.MainWin.RefreshChaptersViewAfterImport(GameData.ContentType.MODEL_GAME, chapter, chapter.GetModelGameCount() - 1);
-                AppStateManager.IsDirty = true;
+                AppState.MainWin.RefreshChaptersViewAfterImport(GameData.ContentType.MODEL_GAME, chapter, chapter.GetModelGameCount() - 1);
+                AppState.IsDirty = true;
             }
         }
 
@@ -136,7 +136,7 @@ namespace ChessForge
         /// <param name="e"></param>
         override protected void UiLblViewOnLichess_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            AppStateManager.ViewGameOnLichess(_currentGameId);
+            AppState.ViewGameOnLichess(_currentGameId);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace ChessForge
         /// <param name="e"></param>
         override protected void UiImgLichess_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            AppStateManager.ViewGameOnLichess(_currentGameId);
+            AppState.ViewGameOnLichess(_currentGameId);
         }
 
         /// <summary>

@@ -29,8 +29,8 @@ namespace ChessForge
         /// <returns></returns>
         public static Point GetSquareTopLeftPoint(SquareCoords sq)
         {
-            double left = SquareSize * sq.Xcoord + AppStateManager.MainWin.UiImgMainChessboard.Margin.Left;
-            double top = SquareSize * (7 - sq.Ycoord) + AppStateManager.MainWin.UiImgMainChessboard.Margin.Top;
+            double left = SquareSize * sq.Xcoord + AppState.MainWin.UiImgMainChessboard.Margin.Left;
+            double top = SquareSize * (7 - sq.Ycoord) + AppState.MainWin.UiImgMainChessboard.Margin.Top;
 
             return new Point(left, top);
         }
@@ -62,7 +62,7 @@ namespace ChessForge
             }
             else
             {
-                return AppStateManager.MainWin.MainChessBoard.GetPieceImage(sq.Xcoord, sq.Ycoord, true);
+                return AppState.MainWin.MainChessBoard.GetPieceImage(sq.Xcoord, sq.Ycoord, true);
             }
         }
 
@@ -73,7 +73,7 @@ namespace ChessForge
         /// <returns></returns>
         public static SquareCoords ClickedSquare(Point p)
         {
-            double squareSide = AppStateManager.MainWin.UiImgMainChessboard.Width / 8.0;
+            double squareSide = AppState.MainWin.UiImgMainChessboard.Width / 8.0;
             double xPos = p.X / squareSide;
             double yPos = p.Y / squareSide;
 

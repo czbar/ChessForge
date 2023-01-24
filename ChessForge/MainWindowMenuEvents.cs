@@ -37,7 +37,7 @@ namespace ChessForge
         {
             bool proceed = true;
 
-            if (WorkbookManager.SessionWorkbook != null && AppStateManager.IsDirty)
+            if (WorkbookManager.SessionWorkbook != null && AppState.IsDirty)
             {
                 proceed = WorkbookManager.PromptAndSaveWorkbook(false);
             }
@@ -92,7 +92,7 @@ namespace ChessForge
         {
             bool proceed = true;
 
-            if (WorkbookManager.SessionWorkbook != null && AppStateManager.IsDirty)
+            if (WorkbookManager.SessionWorkbook != null && AppState.IsDirty)
             {
                 proceed = WorkbookManager.PromptAndSaveWorkbook(false);
             }
@@ -128,10 +128,10 @@ namespace ChessForge
         {
             SelectChaptersDialog dlg = new SelectChaptersDialog(WorkbookManager.SessionWorkbook, "Select Chapters to Merge")
             {
-                Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
-                Top = AppStateManager.MainWin.ChessForgeMain.Top + 100,
+                Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                Top = AppState.MainWin.ChessForgeMain.Top + 100,
                 Topmost = false,
-                Owner = AppStateManager.MainWin
+                Owner = AppState.MainWin
             };
 
             dlg.ShowDialog();
@@ -167,11 +167,11 @@ namespace ChessForge
                     DeleteChapters(dlg.ChapterList);
 
                     _chaptersView.BuildFlowDocumentForChaptersView();
-                    AppStateManager.DoEvents();
+                    AppState.DoEvents();
                     _chaptersView.BringChapterIntoView(WorkbookManager.GetLastChapterId(WorkbookManager.SessionWorkbook));
                 }
 
-                AppStateManager.IsDirty = mergedCount > 1;
+                AppState.IsDirty = mergedCount > 1;
             }
         }
 
@@ -241,21 +241,21 @@ namespace ChessForge
         private void UiMnUndo_Click(object sender, RoutedEventArgs e)
         {
             if (WorkbookManager.SessionWorkbook == null
-                || AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING
-                || AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                || AppState.CurrentLearningMode == LearningMode.Mode.TRAINING
+                || AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
             {
                 return;
             }
 
-            if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppStateManager.ActiveVariationTree == null)
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppState.ActiveVariationTree == null)
             {
                 UndoWorkbookOperation();
             }
-            else if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.STUDY
-                 || AppStateManager.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
-                 || AppStateManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
+            else if (AppState.ActiveTab == WorkbookManager.TabViewType.STUDY
+                 || AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
+                 || AppState.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
             {
-                if (WorkbookManager.SessionWorkbook.OpsManager.Timestamp > AppStateManager.ActiveVariationTree.OpsManager.Timestamp)
+                if (WorkbookManager.SessionWorkbook.OpsManager.Timestamp > AppState.ActiveVariationTree.OpsManager.Timestamp)
                 {
                     UndoWorkbookOperation();
                 }
@@ -270,7 +270,7 @@ namespace ChessForge
                 }
             }
 
-            AppStateManager.IsDirty = true;
+            AppState.IsDirty = true;
         }
 
         /// <summary>
@@ -278,38 +278,38 @@ namespace ChessForge
         /// </summary>
         private bool UndoTreeEditOperation()
         {
-            if (AppStateManager.ActiveVariationTree == null || AppStateManager.ActiveVariationTree.OpsManager.IsEmpty)
+            if (AppState.ActiveVariationTree == null || AppState.ActiveVariationTree.OpsManager.IsEmpty)
             {
                 return false;
             }
 
-            AppStateManager.ActiveVariationTree.OpsManager.Undo(out EditOperation.EditType opType, out string selectedLineId, out int selectedNodeId);
-            TreeNode selectedNode = AppStateManager.ActiveVariationTree.GetNodeFromNodeId(selectedNodeId);
-            AppStateManager.ActiveVariationTree.BuildLines();
+            AppState.ActiveVariationTree.OpsManager.Undo(out EditOperation.EditType opType, out string selectedLineId, out int selectedNodeId);
+            TreeNode selectedNode = AppState.ActiveVariationTree.GetNodeFromNodeId(selectedNodeId);
+            AppState.ActiveVariationTree.BuildLines();
             if (!string.IsNullOrEmpty(selectedLineId))
             {
-                AppStateManager.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
+                AppState.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
             }
             else if (selectedNodeId >= 0)
             {
                 if (selectedNode != null)
                 {
                     selectedLineId = selectedNode.LineId;
-                    AppStateManager.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
+                    AppState.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
                 }
             }
 
-            AppStateManager.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+            AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
             if (opType == EditOperation.EditType.UPDATE_ANNOTATION)
             {
-                AppStateManager.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(selectedNode);
+                AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(selectedNode);
             }
             if (!string.IsNullOrEmpty(selectedLineId))
             {
-                AppStateManager.MainWin.ActiveTreeView.SelectLineAndMove(selectedLineId, selectedNodeId);
+                AppState.MainWin.ActiveTreeView.SelectLineAndMove(selectedLineId, selectedNodeId);
             }
 
-            AppStateManager.IsDirty = true;
+            AppState.IsDirty = true;
 
             return true;
         }
@@ -323,32 +323,32 @@ namespace ChessForge
             switch (opType)
             {
                 case WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER:
-                    if (AppStateManager.MainWin.ActiveTreeView != null)
+                    if (AppState.MainWin.ActiveTreeView != null)
                     {
-                        AppStateManager.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                        AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
                     }
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     break;
                 case WorkbookOperation.WorkbookOperationType.DELETE_CHAPTER:
                     _chaptersView.BuildFlowDocumentForChaptersView();
-                    if (AppStateManager.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
+                    if (AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
                     {
                         UiTabChapters.Focus();
                     }
-                    AppStateManager.DoEvents();
+                    AppState.DoEvents();
                     _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
                     break;
                 case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAME:
                     _chaptersView.BuildFlowDocumentForChaptersView();
-                    SelectModelGame(selectedArticleIndex, AppStateManager.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
+                    SelectModelGame(selectedArticleIndex, AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
                     break;
                 case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISE:
                     _chaptersView.BuildFlowDocumentForChaptersView();
-                    SelectExercise(selectedArticleIndex, AppStateManager.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
+                    SelectExercise(selectedArticleIndex, AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
                     break;
             }
 
-            AppStateManager.IsDirty = true;
+            AppState.IsDirty = true;
         }
 
         /// <summary>
@@ -385,8 +385,8 @@ namespace ChessForge
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
             EngineMessageProcessor.ChessEngineService.StopEngine();
 
-            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE
-                && AppStateManager.IsDirty || (ActiveVariationTree != null && ActiveVariationTree.HasTrainingMoves()))
+            if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE
+                && AppState.IsDirty || (ActiveVariationTree != null && ActiveVariationTree.HasTrainingMoves()))
             {
                 WorkbookManager.PromptAndSaveWorkbook(false, true);
             }
@@ -422,7 +422,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnWorkbookSaveAs_Click(object sender, RoutedEventArgs e)
         {
-            WorkbookManager.SaveWorkbookToNewFile(AppStateManager.WorkbookFilePath, false);
+            WorkbookManager.SaveWorkbookToNewFile(AppState.WorkbookFilePath, false);
         }
 
         /// <summary>
@@ -441,9 +441,9 @@ namespace ChessForge
             };
             if (dlg.ShowDialog() == true)
             {
-                AppStateManager.SaveWorkbookFile(dlg.BackupPath);
+                AppState.SaveWorkbookFile(dlg.BackupPath);
                 WorkbookManager.SessionWorkbook.SetVersion(dlg.IncrementedVersion);
-                AppStateManager.IsDirty = true;
+                AppState.IsDirty = true;
             }
         }
 
@@ -460,7 +460,7 @@ namespace ChessForge
             }
 
             // prepare document
-            AppStateManager.RestartInIdleMode(false);
+            AppState.RestartInIdleMode(false);
             WorkbookManager.CreateNewWorkbook();
             _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
 
@@ -473,7 +473,7 @@ namespace ChessForge
 
             if (!WorkbookManager.SaveWorkbookToNewFile(null, false))
             {
-                AppStateManager.RestartInIdleMode(false);
+                AppState.RestartInIdleMode(false);
                 return;
             }
 
@@ -481,9 +481,9 @@ namespace ChessForge
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
 
-            SetupGuiForNewSession(AppStateManager.WorkbookFilePath, true);
+            SetupGuiForNewSession(AppState.WorkbookFilePath, true);
 
-            AppStateManager.SetupGuiForCurrentStates();
+            AppState.SetupGuiForCurrentStates();
             //StudyTree.CreateNew();
             _studyTreeView.BuildFlowDocumentForVariationTree();
             UiTabStudyTree.Focus();
@@ -696,7 +696,7 @@ namespace ChessForge
             {
                 WorkbookOperation op = new WorkbookOperation(WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER, chapter, prevTitle);
                 WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-                AppStateManager.IsDirty = true;
+                AppState.IsDirty = true;
             }
         }
 
@@ -712,10 +712,10 @@ namespace ChessForge
             if (ShowChapterTitleDialog(chapter))
             {
                 SelectChapterById(chapter.Id, false);
-                AppStateManager.IsDirty = true;
+                AppState.IsDirty = true;
                 if (_chaptersView != null)
                 {
-                    AppStateManager.DoEvents();
+                    AppState.DoEvents();
                     _chaptersView.BringChapterIntoView(chapter.Id);
                 }
             }
@@ -749,10 +749,10 @@ namespace ChessForge
                     WorkbookManager.CreateWorkbookFromGameList(ref workbook, ref games);
                     SelectChaptersDialog dlg = new SelectChaptersDialog(workbook)
                     {
-                        Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
-                        Top = AppStateManager.MainWin.ChessForgeMain.Top + 100,
+                        Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                        Top = AppState.MainWin.ChessForgeMain.Top + 100,
                         Topmost = false,
-                        Owner = AppStateManager.MainWin
+                        Owner = AppState.MainWin
                     };
 
                     dlg.ShowDialog();
@@ -767,10 +767,10 @@ namespace ChessForge
                                 if (_chaptersView != null)
                                 {
                                     _chaptersView.BuildFlowDocumentForChaptersView();
-                                    AppStateManager.DoEvents();
+                                    AppState.DoEvents();
                                     _chaptersView.BringChapterIntoView(WorkbookManager.GetLastChapterId(WorkbookManager.SessionWorkbook));
                                 }
-                                AppStateManager.IsDirty = true;
+                                AppState.IsDirty = true;
                             }
                         }
                     }
@@ -810,10 +810,10 @@ namespace ChessForge
 
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         SelectChapterById(chapter.Id, false);
-                        AppStateManager.DoEvents();
+                        AppState.DoEvents();
                         _chaptersView.BringChapterIntoView(chapter.Id);
                     }
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                 }
                 else
                 {
@@ -866,10 +866,10 @@ namespace ChessForge
         {
             SelectGamesDialog dlg = new SelectGamesDialog(ref games, mode)
             {
-                Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
-                Top = AppStateManager.MainWin.ChessForgeMain.Top + 100,
+                Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                Top = AppState.MainWin.ChessForgeMain.Top + 100,
                 Topmost = false,
-                Owner = AppStateManager.MainWin
+                Owner = AppState.MainWin
             };
 
             bool res = dlg.ShowDialog() == true;
@@ -903,7 +903,7 @@ namespace ChessForge
                         }
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         SetupGuiForActiveStudyTree(false);
-                        AppStateManager.IsDirty = true;
+                        AppState.IsDirty = true;
                     }
                 }
             }
@@ -927,7 +927,7 @@ namespace ChessForge
                 WorkbookManager.SessionWorkbook.Chapters[index - 1] = hold;
                 _chaptersView.BuildFlowDocumentForChaptersView();
                 SelectChapterByIndex(index - 1, false, false);
-                AppStateManager.IsDirty = true;
+                AppState.IsDirty = true;
             }
         }
 
@@ -946,7 +946,7 @@ namespace ChessForge
                 WorkbookManager.SessionWorkbook.Chapters[index + 1] = hold;
                 _chaptersView.BuildFlowDocumentForChaptersView();
                 SelectChapterByIndex(index + 1, false, false);
-                AppStateManager.IsDirty = true;
+                AppState.IsDirty = true;
             }
         }
 
@@ -972,7 +972,7 @@ namespace ChessForge
                     chapter.ActiveModelGameIndex = index - 1;
 
                     _chaptersView.BuildFlowDocumentForChaptersView();
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                 }
             }
             catch (Exception ex)
@@ -1003,7 +1003,7 @@ namespace ChessForge
                     chapter.ActiveExerciseIndex = index - 1;
 
                     _chaptersView.BuildFlowDocumentForChaptersView();
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                 }
             }
             catch (Exception ex)
@@ -1034,7 +1034,7 @@ namespace ChessForge
                     chapter.ActiveModelGameIndex = index + 1;
 
                     _chaptersView.BuildFlowDocumentForChaptersView();
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                 }
             }
             catch (Exception ex)
@@ -1065,7 +1065,7 @@ namespace ChessForge
                     chapter.ActiveExerciseIndex = index + 1;
 
                     _chaptersView.BuildFlowDocumentForChaptersView();
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                 }
             }
             catch (Exception ex)
@@ -1128,9 +1128,9 @@ namespace ChessForge
                         WorkbookManager.SessionWorkbook.ActiveChapter = targetChapter;
                         targetChapter.ActiveModelGameIndex = targetChapter.GetModelGameCount() - 1;
 
-                        AppStateManager.IsDirty = true;
+                        AppState.IsDirty = true;
                         _chaptersView.BuildFlowDocumentForChaptersView();
-                        AppStateManager.DoEvents();
+                        AppState.DoEvents();
                         _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
                     }
                 }
@@ -1168,9 +1168,9 @@ namespace ChessForge
                         WorkbookManager.SessionWorkbook.ActiveChapter = targetChapter;
                         targetChapter.ActiveExerciseIndex = targetChapter.GetExerciseCount() - 1;
 
-                        AppStateManager.IsDirty = true;
+                        AppState.IsDirty = true;
                         _chaptersView.BuildFlowDocumentForChaptersView();
-                        AppStateManager.DoEvents();
+                        AppState.DoEvents();
                         _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
                     }
                 }
@@ -1254,7 +1254,7 @@ namespace ChessForge
                                             {
                                                 firstImportedGameIndex = index;
                                             }
-                                            AppStateManager.IsDirty = true;
+                                            AppState.IsDirty = true;
                                         }
                                         catch (Exception ex)
                                         {
@@ -1346,7 +1346,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnTopGameImport_Click(object sender, RoutedEventArgs e)
         {
-            AppStateManager.DownloadModelGameToActiveChapter(_topGamesView.CurrentGameId);
+            AppState.DownloadModelGameToActiveChapter(_topGamesView.CurrentGameId);
         }
 
         /// <summary>
@@ -1356,7 +1356,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnTopGameLichessView_Click(object sender, RoutedEventArgs e)
         {
-            AppStateManager.ViewGameOnLichess(_topGamesView.CurrentGameId);
+            AppState.ViewGameOnLichess(_topGamesView.CurrentGameId);
         }
 
         //*****************************************************************************
@@ -1390,7 +1390,7 @@ namespace ChessForge
                     List<string> refGuids = dlg.GetSelectedReferenceStrings();
                     ActiveVariationTree.SetArticleRefs(nd, refGuids);
                     ActiveTreeView.InsertOrDeleteReferenceRun(nd);
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                 }
             }
             catch
@@ -1626,7 +1626,7 @@ namespace ChessForge
                         //chapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, index);
                         //_exerciseTreeView.BuildFlowDocumentForVariationTree();
                         SelectExercise(index, false);
-                        AppStateManager.IsDirty = true;
+                        AppState.IsDirty = true;
                     }
                 }
             }
@@ -1780,7 +1780,7 @@ namespace ChessForge
                 Left = ChessForgeMain.Left + 100,
                 Top = ChessForgeMain.Top + 100,
                 Topmost = false,
-                Owner = AppStateManager.MainWin
+                Owner = AppState.MainWin
             };
             return dlg.ShowDialog() == true;
         }
@@ -1987,7 +1987,7 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.IsDirty = true;
+                AppState.IsDirty = true;
                 UiTabBookmarks.Focus();
             }
         }
@@ -2010,7 +2010,7 @@ namespace ChessForge
             }
             else
             {
-                AppStateManager.IsDirty = true;
+                AppState.IsDirty = true;
                 UiTabBookmarks.Focus();
             }
         }
@@ -2040,7 +2040,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnStartTraining_Click(object sender, RoutedEventArgs e)
         {
-            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+            if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
             {
                 StopEngineGame();
             }
@@ -2052,7 +2052,7 @@ namespace ChessForge
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
-            AppStateManager.SwapCommentBoxForEngineLines(false);
+            AppState.SwapCommentBoxForEngineLines(false);
 
             UiTabBookmarks.Focus();
         }
@@ -2070,7 +2070,7 @@ namespace ChessForge
             }
 
             // do some housekeeping just in case
-            if (AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+            if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
             {
                 StopEngineGame();
             }
@@ -2115,10 +2115,10 @@ namespace ChessForge
                         {
                             _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
                         }
-                        AppStateManager.SetupGuiForCurrentStates();
+                        AppState.SetupGuiForCurrentStates();
 
                         ActiveLine.DisplayPositionForSelectedCell();
-                        AppStateManager.SwapCommentBoxForEngineLines(false);
+                        AppState.SwapCommentBoxForEngineLines(false);
                         BoardCommentBox.RestoreTitleMessage();
                     }
                 }
@@ -2207,12 +2207,10 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRtbTrainingProgress_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (AppStateManager.ActiveTab == WorkbookManager.TabViewType.TRAINING)
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.TRAINING)
             {
                 return;
             }
-
-            //            AppStateManager.SetupGuiForTrainingProgressMode();
         }
 
 
@@ -2448,11 +2446,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnWorkbookOptions_Click(object sender, RoutedEventArgs e)
         {
-            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE)
+            if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE)
             {
                 if (ShowWorkbookOptionsDialog(false))
                 {
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                 }
             }
         }
@@ -2465,7 +2463,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnApplicationOptions_Click(object sender, RoutedEventArgs e)
         {
-            if (AppStateManager.CurrentLearningMode != LearningMode.Mode.IDLE)
+            if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE)
             {
                 ShowApplicationOptionsDialog();
             }
@@ -2549,7 +2547,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void CustomCommand_MoveItemUp(object sender, RoutedEventArgs e)
         {
-            if (_chaptersView != null && AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            if (_chaptersView != null && AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
             {
                 switch (_chaptersView.LastClickedItemType)
                 {
@@ -2575,7 +2573,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void CustomCommand_MoveItemDown(object sender, RoutedEventArgs e)
         {
-            if (_chaptersView != null && AppStateManager.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            if (_chaptersView != null && AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
             {
                 switch (_chaptersView.LastClickedItemType)
                 {
@@ -2650,7 +2648,7 @@ namespace ChessForge
                         = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                 }
             }
             catch (Exception ex)
@@ -2694,7 +2692,7 @@ namespace ChessForge
                     if (dlgHeader.ExitOK)
                     {
                         CreateNewExerciseFromTree(tree);
-                        AppStateManager.IsDirty = true;
+                        AppState.IsDirty = true;
                     }
                 }
             }
@@ -2717,7 +2715,7 @@ namespace ChessForge
                     = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount() - 1;
                 _chaptersView.BuildFlowDocumentForChaptersView();
                 SelectExercise(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex, true);
-                AppStateManager.IsDirty = true;
+                AppState.IsDirty = true;
             }
             catch (Exception ex)
             {
@@ -2833,7 +2831,7 @@ namespace ChessForge
                         }
                     }
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                 }
             }
             catch
@@ -2867,7 +2865,7 @@ namespace ChessForge
                         }
                     }
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                 }
             }
             catch
@@ -2895,7 +2893,7 @@ namespace ChessForge
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
                     {
@@ -2929,7 +2927,7 @@ namespace ChessForge
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
                     {
@@ -3011,7 +3009,7 @@ namespace ChessForge
                 SetupMenuBarControls();
                 RebuildAllTreeViews();
             }
-            AppStateManager.ConfigureFontSizeMenus();
+            AppState.ConfigureFontSizeMenus();
         }
 
         /// <summary>
@@ -3029,7 +3027,7 @@ namespace ChessForge
                 RebuildAllTreeViews();
             }
 
-            AppStateManager.ConfigureFontSizeMenus();
+            AppState.ConfigureFontSizeMenus();
         }
 
         /// <summary>
@@ -3042,7 +3040,7 @@ namespace ChessForge
             Configuration.UseFixedFont = true;
             SetupMenuBarControls();
             RebuildAllTreeViews();
-            AppStateManager.ConfigureFontSizeMenus();
+            AppState.ConfigureFontSizeMenus();
         }
 
         /// <summary>
@@ -3055,7 +3053,7 @@ namespace ChessForge
             Configuration.UseFixedFont = false;
             SetupMenuBarControls();
             RebuildAllTreeViews();
-            AppStateManager.ConfigureFontSizeMenus();
+            AppState.ConfigureFontSizeMenus();
         }
 
         /// <summary>
@@ -3085,7 +3083,7 @@ namespace ChessForge
             Configuration.FontSizeDiff = 0;
             // note that the next call causes a rebuild of the views so do not call it explicitly 
             UiBtnFontSizeVariable_Click(sender, e);
-            AppStateManager.ConfigureFontSizeMenus();
+            AppState.ConfigureFontSizeMenus();
         }
 
         /// <summary>

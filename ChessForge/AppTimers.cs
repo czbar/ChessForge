@@ -256,7 +256,7 @@ namespace ChessForge
 
         private void InitAutoSaveTimer()
         {
-            _autoSaveTimer.Elapsed += new ElapsedEventHandler(AppStateManager.AutoSaveEvent);
+            _autoSaveTimer.Elapsed += new ElapsedEventHandler(AppState.AutoSaveEvent);
             // take the configured value with a sanity check
             _autoSaveTimer.Interval = Math.Max(Configuration.AutoSaveFrequency, 15) * 1000;
             _autoSaveTimer.Enabled = Configuration.AutoSave;

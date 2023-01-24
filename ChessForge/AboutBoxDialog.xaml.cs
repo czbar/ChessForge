@@ -74,7 +74,7 @@ namespace ChessForge
             para.TextAlignment = TextAlignment.Left;
             para.Foreground = Brushes.Black;
 
-            Version ver = AppStateManager.GetAssemblyVersion();
+            Version ver = AppState.GetAssemblyVersion();
 
             para.Inlines.Add(new Run("Free and Open Source Software (FOSS)\n"));
 
@@ -84,7 +84,7 @@ namespace ChessForge
             para.Inlines.Add(rVer);
 
             para.Inlines.Add(new Run("\nChess Engine: "));
-            Run rEng = new Run(AppStateManager.EngineName);
+            Run rEng = new Run(AppState.EngineName);
             rEng.FontWeight = FontWeights.Bold;
             para.Inlines.Add(rEng);
 

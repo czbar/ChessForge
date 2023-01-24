@@ -121,7 +121,7 @@ namespace ChessForge
             Document.PageWidth = 590;
 
             // do not show Top Games in Exercise view (since we don't have any opening)
-            if (AppStateManager.ActiveTab != WorkbookManager.TabViewType.EXERCISE)
+            if (AppState.ActiveTab != WorkbookManager.TabViewType.EXERCISE)
             {
                 Document.Blocks.Add(BuildHeaderLabel());
                 Document.Blocks.Add(BuildTopGamesTable());
@@ -210,24 +210,24 @@ namespace ChessForge
         public void OpenReplayDialog()
         {
             // we may change focus while in the dialog so note it here and restore
-            WorkbookManager.TabViewType activeTab = AppStateManager.ActiveTab;
+            WorkbookManager.TabViewType activeTab = AppState.ActiveTab;
 
             LichessGamesPreviewDialog dlg = new LichessGamesPreviewDialog(_clickedGameId, _gameIdList)
             {
-                Left = AppStateManager.MainWin.ChessForgeMain.Left + 100,
-                Top = AppStateManager.MainWin.Top + 100,
+                Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                Top = AppState.MainWin.Top + 100,
                 Topmost = false,
-                Owner = AppStateManager.MainWin
+                Owner = AppState.MainWin
             };
             dlg.ShowDialog();
 
             switch (activeTab)
             {
                 case WorkbookManager.TabViewType.STUDY:
-                    AppStateManager.MainWin.UiTabStudyTree.Focus();
+                    AppState.MainWin.UiTabStudyTree.Focus();
                     break;
                 case WorkbookManager.TabViewType.MODEL_GAME:
-                    AppStateManager.MainWin.UiTabModelGames.Focus();
+                    AppState.MainWin.UiTabModelGames.Focus();
                     break;
             }
         }
@@ -261,7 +261,7 @@ namespace ChessForge
                     {
                         if (!string.IsNullOrWhiteSpace(id))
                         {
-                            AppStateManager.MainWin.UiCmTopGames.IsOpen = true;
+                            AppState.MainWin.UiCmTopGames.IsOpen = true;
                             e.Handled = true;
                         }
                     }
@@ -448,7 +448,7 @@ namespace ChessForge
                 Padding = new Thickness(0, 0, 0, 0)
             };
 
-            Style style = AppStateManager.MainWin.FindResource("RoundedBorder") as Style;
+            Style style = AppState.MainWin.FindResource("RoundedBorder") as Style;
             lblResult.Style = style;
 
             switch (game.Winner)

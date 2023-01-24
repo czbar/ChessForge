@@ -66,7 +66,7 @@ namespace ChessForge
         {
             try
             {
-                if (AppStateManager.ShowEvaluationLines() && EngineMessageProcessor.LastMessageNode != null)
+                if (AppState.ShowEvaluationLines() && EngineMessageProcessor.LastMessageNode != null)
                 {
                     Lines.Clear();
                     lock (EngineMessageProcessor.MoveCandidatesLock)

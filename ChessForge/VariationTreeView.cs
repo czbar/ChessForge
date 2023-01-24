@@ -120,9 +120,9 @@ namespace ChessForge
                     case GameData.ContentType.STUDY_TREE:
                         return true;
                     case GameData.ContentType.MODEL_GAME:
-                        return AppStateManager.ActiveChapter != null && AppStateManager.ActiveChapter.HasAnyModelGame;
+                        return AppState.ActiveChapter != null && AppState.ActiveChapter.HasAnyModelGame;
                     case GameData.ContentType.EXERCISE:
-                        return AppStateManager.ActiveChapter != null && AppStateManager.ActiveChapter.HasAnyExercise;
+                        return AppState.ActiveChapter != null && AppState.ActiveChapter.HasAnyExercise;
                     default:
                         return false;
                 }
@@ -456,7 +456,7 @@ namespace ChessForge
                 _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
                 BuildFlowDocumentForVariationTree();
                 _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
-                AppStateManager.IsDirty = true;
+                AppState.IsDirty = true;
             }
             catch (Exception ex)
             {
@@ -503,7 +503,7 @@ namespace ChessForge
 
                     InsertOrUpdateCommentRun(prevThumbnail);
                     InsertOrUpdateCommentRun(nd);
-                    AppStateManager.IsDirty = true;
+                    AppState.IsDirty = true;
                 }
             }
             catch
@@ -558,7 +558,7 @@ namespace ChessForge
                                 BuildFlowDocumentForVariationTree();
                             }
 
-                            AppStateManager.IsDirty = true;
+                            AppState.IsDirty = true;
                         }
                         else
                         {
@@ -589,7 +589,7 @@ namespace ChessForge
                 _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
                 BuildFlowDocumentForVariationTree();
                 _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true));
-                AppStateManager.IsDirty = true;
+                AppState.IsDirty = true;
 
                 if (contentType == GameData.ContentType.STUDY_TREE)
                 {
@@ -632,7 +632,7 @@ namespace ChessForge
                 // Save info for undo in the new tree
                 WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree.OpsManager.PushOperation(op);
 
-                AppStateManager.IsDirty = true;
+                AppState.IsDirty = true;
             }
             catch (Exception ex)
             {
@@ -661,10 +661,10 @@ namespace ChessForge
             switch (WorkbookManager.ActiveTab)
             {
                 case WorkbookManager.TabViewType.STUDY:
-                    AppStateManager.EnableTabViewMenuItems(WorkbookManager.TabViewType.STUDY, LastClickedNodeId, isEnabled);
+                    AppState.EnableTabViewMenuItems(WorkbookManager.TabViewType.STUDY, LastClickedNodeId, isEnabled);
                     break;
                 case WorkbookManager.TabViewType.MODEL_GAME:
-                    AppStateManager.EnableTabViewMenuItems(WorkbookManager.TabViewType.MODEL_GAME, LastClickedNodeId, true);
+                    AppState.EnableTabViewMenuItems(WorkbookManager.TabViewType.MODEL_GAME, LastClickedNodeId, true);
                     if (!_contextMenuPrimed)
                     {
                         _mainWin.UiCmModelGames.IsOpen = true;
@@ -672,7 +672,7 @@ namespace ChessForge
                     }
                     break;
                 case WorkbookManager.TabViewType.EXERCISE:
-                    AppStateManager.EnableTabViewMenuItems(WorkbookManager.TabViewType.EXERCISE, LastClickedNodeId, true);
+                    AppState.EnableTabViewMenuItems(WorkbookManager.TabViewType.EXERCISE, LastClickedNodeId, true);
                     if (!_contextMenuPrimed)
                     {
                         _mainWin.UiCmExercises.IsOpen = true;
@@ -1882,7 +1882,7 @@ namespace ChessForge
                 if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                 {
                     _mainWin.StopEvaluation(true);
-                    AppStateManager.SwapCommentBoxForEngineLines(false);
+                    AppState.SwapCommentBoxForEngineLines(false);
                 }
 
                 if (_selectedRun != null)
@@ -2072,7 +2072,7 @@ namespace ChessForge
                             _mainWin.EditGameHeader();
                             break;
                         case GameData.ContentType.STUDY_TREE:
-                            _mainWin.RenameChapter(AppStateManager.ActiveChapter);
+                            _mainWin.RenameChapter(AppState.ActiveChapter);
                             break;
                     }
                 }

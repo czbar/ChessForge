@@ -122,7 +122,7 @@
       <DependentUpon>GenericPgnInfoDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="LearningMode.cs" />
-    <Compile Include="AppStateManager.cs" />
+    <Compile Include="AppState.cs" />
     <Compile Include="AppTimers.cs" />
     <Compile Include="BookmarkManager.cs" />
     <Compile Include="BookmarkView.cs" />

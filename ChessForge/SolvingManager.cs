@@ -70,7 +70,7 @@ namespace ChessForge
         {
             get
             {
-                if (AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE
+                if (AppState.MainWin.ActiveVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE
                     && IsGuessingFinished)
                 {
                     return true;
@@ -90,17 +90,17 @@ namespace ChessForge
         /// <returns></returns>
         public bool IsMovingAllowed()
         {
-            if (AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
+            if (AppState.MainWin.ActiveVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
             {
                 bool awaitingMoveinGuessMode = 
-                    AppStateManager.MainWin.ActiveLine.IsLastMoveSelected()
-                    && AppStateManager.MainWin.ActiveLine.GetStartingColor() == AppStateManager.MainWin.ActiveLine.GetLastNode().ColorToMove
+                    AppState.MainWin.ActiveLine.IsLastMoveSelected()
+                    && AppState.MainWin.ActiveLine.GetStartingColor() == AppState.MainWin.ActiveLine.GetLastNode().ColorToMove
                     && !_guessingFinished;
                 return awaitingMoveinGuessMode;
             }
             else 
             {
-                if (AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS
+                if (AppState.MainWin.ActiveVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS
                     && IsAnalysisSubmitted)
                 {
                     return false;
@@ -108,7 +108,7 @@ namespace ChessForge
                 else
                 {
                     // do not allow moves if tree is not shown unless we went into training
-                    return AppStateManager.MainWin.ActiveVariationTree.ShowTreeLines || AppStateManager.CurrentLearningMode == LearningMode.Mode.TRAINING;
+                    return AppState.MainWin.ActiveVariationTree.ShowTreeLines || AppState.CurrentLearningMode == LearningMode.Mode.TRAINING;
                 }
             }
         }
@@ -120,9 +120,9 @@ namespace ChessForge
         /// <returns></returns>
         public VariationTree.SolvingMode GetAppSolvingMode()
         {
-            if (AppStateManager.MainWin.ActiveVariationTree != null)
+            if (AppState.MainWin.ActiveVariationTree != null)
             {
-                return AppStateManager.MainWin.ActiveVariationTree.CurrentSolvingMode;
+                return AppState.MainWin.ActiveVariationTree.CurrentSolvingMode;
             }
 
             return VariationTree.SolvingMode.NONE;
@@ -136,7 +136,7 @@ namespace ChessForge
         {
             get
             {
-                return AppStateManager.MainWin.ActiveVariationTree.RootNode.ColorToMove;
+                return AppState.MainWin.ActiveVariationTree.RootNode.ColorToMove;
             }
         }
 
@@ -159,11 +159,11 @@ namespace ChessForge
         {
             SolvingStarted = true;
 
-            VariationTree secondaryTree = AppStateManager.MainWin.ActiveVariationTree;
+            VariationTree secondaryTree = AppState.MainWin.ActiveVariationTree;
             if (secondaryTree != null && secondaryTree.AssociatedPrimary != null)
             {
                 // get the last move from active line
-                TreeNode guess = AppStateManager.MainWin.ActiveLine.GetLastNode();
+                TreeNode guess = AppState.MainWin.ActiveLine.GetLastNode();
                 TreeNode inPrimaryTree = secondaryTree.AssociatedPrimary.FindIdenticalNode(guess, true);
                 // must be the first child
                 if (inPrimaryTree == null || inPrimaryTree.Parent.Children[0].NodeId != inPrimaryTree.NodeId)
@@ -196,9 +196,9 @@ namespace ChessForge
                 }
 
                 //TODO: optimize as we only need to update solution paragraph
-                AppStateManager.MainWin.Dispatcher.Invoke(() =>
+                AppState.MainWin.Dispatcher.Invoke(() =>
                 {
-                    AppStateManager.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                    AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
                 });
             }
         }
@@ -284,7 +284,7 @@ namespace ChessForge
             if (inPrimaryTree.Children.Count == 0)
             {
                 _guessingFinished = true;
-                AppStateManager.MainWin.ActiveVariationTree.SelectedNodeId = guess.NodeId;
+                AppState.MainWin.ActiveVariationTree.SelectedNodeId = guess.NodeId;
             }
             else
             {
@@ -293,14 +293,13 @@ namespace ChessForge
                 response.Parent = guess;
                 guess.Children.Add(response);
                 secondaryTree.AddNode(response);
-                AppStateManager.MainWin.ActiveLine.Line.AddPlyAndMove(response);
-                AppStateManager.MainWin.Dispatcher.Invoke(() =>
+                AppState.MainWin.ActiveLine.Line.AddPlyAndMove(response);
+                AppState.MainWin.Dispatcher.Invoke(() =>
                 {
-                    AppStateManager.MainWin.ActiveLine.SelectPly((int)response.Parent.MoveNumber, response.Parent.ColorToMove);
-                    AppStateManager.MainWin.DisplayPosition(response);
-                    // AppStateManager.MainWin.ActiveTreeView.SelectLineAndMove("", response.NodeId);
+                    AppState.MainWin.ActiveLine.SelectPly((int)response.Parent.MoveNumber, response.Parent.ColorToMove);
+                    AppState.MainWin.DisplayPosition(response);
                 });
-                AppStateManager.MainWin.ActiveVariationTree.SelectedNodeId = response.NodeId;
+                AppState.MainWin.ActiveVariationTree.SelectedNodeId = response.NodeId;
 
                 if (inPrimaryTree.Children[0].Children.Count == 0)
                 {
@@ -318,25 +317,25 @@ namespace ChessForge
         {
             // report incorrect move and (defensively) remove from the view it is there
             guess.Parent.Comment = Constants.CharCrossMark.ToString() + " " + MoveUtils.BuildSingleMoveText(guess, true) + " is not correct.";
-            AppStateManager.MainWin.ActiveVariationTree.SelectedNodeId = guess.Parent.NodeId;
-            AppStateManager.MainWin.ActiveLine.Line.RemoveLastPly();
+            AppState.MainWin.ActiveVariationTree.SelectedNodeId = guess.Parent.NodeId;
+            AppState.MainWin.ActiveLine.Line.RemoveLastPly();
 
-            AppStateManager.MainWin.Dispatcher.Invoke(() =>
+            AppState.MainWin.Dispatcher.Invoke(() =>
             {
                 secondaryTree.DeleteRemainingMoves(guess);
-                TreeNode lastNode = AppStateManager.MainWin.ActiveLine.GetLastNode();
+                TreeNode lastNode = AppState.MainWin.ActiveLine.GetLastNode();
                 if (lastNode.Parent != null)
                 {
-                    AppStateManager.MainWin.ActiveLine.SelectPly((int)lastNode.Parent.MoveNumber, lastNode.Parent.ColorToMove);
+                    AppState.MainWin.ActiveLine.SelectPly((int)lastNode.Parent.MoveNumber, lastNode.Parent.ColorToMove);
                 }
                 else
                 {
                     // select node 0
                     int moveNumber = lastNode.ColorToMove == PieceColor.White ? 0 : 1;
-                    AppStateManager.MainWin.ActiveLine.SelectPly(moveNumber, MoveUtils.ReverseColor(lastNode.ColorToMove));
+                    AppState.MainWin.ActiveLine.SelectPly(moveNumber, MoveUtils.ReverseColor(lastNode.ColorToMove));
                 }
 
-                AppStateManager.MainWin.DisplayPosition(guess.Parent);
+                AppState.MainWin.DisplayPosition(guess.Parent);
             });
             SoundPlayer.PlayWrongMoveSound();
         }

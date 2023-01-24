@@ -100,7 +100,7 @@ namespace ChessForge
         /// </summary>
         public static void ClearMoveCandidates(bool force)
         {
-            if (force || !(AppStateManager.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME))
+            if (force || !(AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME))
                 lock (MoveCandidatesLock)
                 {
                     MoveCandidates.Clear();
@@ -221,7 +221,7 @@ namespace ChessForge
         /// </summary>
         private static void MoveEvaluationFinishedInManualReview(TreeNode nd, int treeId, bool delayed)
         {
-            int index = AppStateManager.ActiveLine.GetIndexForNode(nd);
+            int index = AppState.ActiveLine.GetIndexForNode(nd);
             if (index >= 0)
             {
                 lock (LearningMode.EvalLock)
@@ -233,7 +233,7 @@ namespace ChessForge
                     bool isWhiteEval = (index - 1) % 2 == 0;
                     int moveIndex = (index - 1) / 2;
 
-                    AppStateManager.ActiveLine.SetEvaluation(nd, eval);
+                    AppState.ActiveLine.SetEvaluation(nd, eval);
 
                     if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
                     {
@@ -247,7 +247,7 @@ namespace ChessForge
                         {
                             AppLog.Message("Continue evaluation next move after index " + index.ToString());
                             ClearMoveCandidates(false);
-                            AppStateManager.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                            AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                             RequestMoveEvaluation(index + 1, EvaluationManager.GetNextLineNodeToEvaluate(), treeId);
 
                             _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
@@ -359,16 +359,16 @@ namespace ChessForge
 
                 _mainWin.DisplayPosition(nd);
 
-                if (AppStateManager.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+                if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                 {
                     _mainWin.ActiveLine.SelectPly((int)nd.Parent.Position.MoveNumber, nd.Parent.Position.ColorToMove);
                     _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, _mainWin.ActiveLine.GetLineId(), nodeIndex);
                 }
             });
 
-            AppStateManager.ShowMoveEvaluationControls(true);
+            AppState.ShowMoveEvaluationControls(true);
 
-            string fen = AppStateManager.PrepareMoveEvaluation(EvaluationManager.GetEvaluatedNode(out _).Position, true);
+            string fen = AppState.PrepareMoveEvaluation(EvaluationManager.GetEvaluatedNode(out _).Position, true);
             GoFenCommand.EvaluationMode mode = ConvertEvaluationManagertoFenEvaluationMode(EvaluationManager.CurrentMode);
             RequestEngineEvaluation(mode, nd, treeId, fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
         }
@@ -415,8 +415,8 @@ namespace ChessForge
                 EvaluationManager.SetSingleNodeToEvaluate(nd);
                 string fen = FenParser.GenerateFenFromPosition(nd.Position);
 
-                AppStateManager.ShowMoveEvaluationControls(true, false);
-                AppStateManager.PrepareMoveEvaluation(fen, true);
+                AppState.ShowMoveEvaluationControls(true, false);
+                AppState.PrepareMoveEvaluation(fen, true);
 
                 int moveTime;
                 switch (EvaluationManager.CurrentMode)
@@ -456,7 +456,7 @@ namespace ChessForge
 
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.ENGINE_GAME);
 
-            string fen = AppStateManager.PrepareMoveEvaluation(node.Position, false);
+            string fen = AppState.PrepareMoveEvaluation(node.Position, false);
             RequestEngineEvaluation(GoFenCommand.EvaluationMode.GAME, node, treeId, fen, Configuration.EngineMpv, Configuration.EngineMoveTime);
         }
 
@@ -500,7 +500,7 @@ namespace ChessForge
                 GoFenCommand.EvaluationMode mode = ConvertEvaluationManagertoFenEvaluationMode(EvaluationManager.CurrentMode);
                 RequestEngineEvaluation(mode, nd, treeId, fen, mpv, movetime);
 
-                AppStateManager.ShowMoveEvaluationControls(true);
+                AppState.ShowMoveEvaluationControls(true);
                 _mainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
             }
         }
@@ -535,7 +535,7 @@ namespace ChessForge
                     // Info and Best Move messages will begin with TreeId
                     message = ParseMessagePrefix(message, out int treeId, out int nodeId, out bool delayed, out GoFenCommand.EvaluationMode mode);
 
-                    TreeNode evalNode = AppStateManager.GetNodeByIds(treeId, nodeId);
+                    TreeNode evalNode = AppState.GetNodeByIds(treeId, nodeId);
                     _lastMessageNode = evalNode;
 
                     if ((LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME) || evalNode != null)
@@ -558,7 +558,7 @@ namespace ChessForge
                         if (message.StartsWith(UciCommands.ENG_ID_NAME))
                         {
                             string engineName = message.Substring(UciCommands.ENG_ID_NAME.Length).Trim();
-                            AppStateManager.EngineName = engineName;
+                            AppState.EngineName = engineName;
                         }
                     }
                 }
