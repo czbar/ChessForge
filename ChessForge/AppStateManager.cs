@@ -655,6 +655,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Determines whether the evaluation lines can be shown to the user.
+        /// We only want to hide them when:
+        /// - we are playing a game against the engine and we are not in Training
+        /// - we are training and IsContinuousEvaluation is false
+        /// </summary>
+        /// <returns></returns>
+        public static bool ShowEvaluationLines()
+        {
+            return CurrentEvaluationMode != EvaluationManager.Mode.ENGINE_GAME 
+                                         || (TrainingSession.IsTrainingInProgress && TrainingSession.IsContinuousEvaluation);
+        }
+
+        /// <summary>
         /// Sets visibility for the controls relevant to move evaluation modes.
         /// NOTE: this is not applicable to move evaluation during a game.
         /// Engine Lines TextBox replaces the Board Comment RichTextBox if
