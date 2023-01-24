@@ -2196,7 +2196,7 @@ namespace ChessForge
         {
             if (MessageBox.Show("Restart the training session?", "Chess Forge Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                SetAppInTrainingMode(TrainingSession.StartPosition);
+                SetAppInTrainingMode(TrainingSession.StartPosition, TrainingSession.IsContinuousEvaluation);
             }
         }
 

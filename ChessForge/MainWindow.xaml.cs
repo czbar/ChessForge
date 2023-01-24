@@ -1809,7 +1809,7 @@ namespace ChessForge
         /// Starts a training session from the specified Node.
         /// </summary>
         /// <param name="startNode"></param>
-        public void SetAppInTrainingMode(TreeNode startNode)
+        public void SetAppInTrainingMode(TreeNode startNode, bool isContinuousEvaluation = false)
         {
             if (ActiveVariationTree == null)
             {
@@ -1818,11 +1818,19 @@ namespace ChessForge
 
             // Set up the training mode
             StopEvaluation(true);
+
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             TrainingSession.IsTrainingInProgress = true;
-            TrainingSession.IsContinuousEvaluation = false;
             TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
-            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+
+            if (isContinuousEvaluation)
+            {
+                TrainingSession.IsContinuousEvaluation = true;
+            }
+            else
+            {
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+            }
 
             LearningMode.TrainingSideCurrent = startNode.ColorToMove;
             MainChessBoard.DisplayPosition(startNode, true);
@@ -1836,7 +1844,7 @@ namespace ChessForge
                 MainChessBoard.FlipBoard();
             }
 
-            AppState.ShowMoveEvaluationControls(false, false);
+            AppState.ShowMoveEvaluationControls(isContinuousEvaluation, isContinuousEvaluation);
             AppState.ShowExplorers(false, false);
             BoardCommentBox.TrainingSessionStart();
 
@@ -1844,6 +1852,13 @@ namespace ChessForge
             EngineGame.InitializeGameObject(startNode, false, false);
             UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+
+            if (isContinuousEvaluation)
+            {
+                UiTrainingView.RequestMoveEvaluation(ActiveVariationTree.TreeId, true);
+                AppState.SwapCommentBoxForEngineLines(true);
+            }
+
         }
 
         public void InvokeRequestWorkbookResponse(object source, ElapsedEventArgs e)
