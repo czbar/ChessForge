@@ -154,6 +154,7 @@
     <Compile Include="SelectSingleChapterDialog.xaml.cs">
       <DependentUpon>SelectSingleChapterDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TrainingViewMoveHandlers.cs" />
     <Compile Include="WorkbookOperation.cs" />
     <Compile Include="WorkbookOperationsManager.cs" />
     <Compile Include="PositionSetupDialog.xaml.cs">
