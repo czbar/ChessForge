@@ -293,7 +293,7 @@ namespace ChessForge
             // from the "wrong" thread)
             _mainWin.Dispatcher.Invoke(() =>
             {
-                pos = EngineGame.ProcessEngineMove(out nd);
+                pos = EngineGame.ProcessEngineMove(out nd, nd.EngineEvaluation);
                 SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
                 _mainWin.BoardCommentBox.GameMoveMade(nd, false);
             });
@@ -688,6 +688,7 @@ namespace ChessForge
 
                 if (nd != null)
                 {
+                    //TODO: check that we have the right node still
                     if (EngineLinesBox.EvalLinesToProcess.Lines.Count > 0)
                     {
                         nd.EngineEvaluation = EvaluationManager.BuildEvaluationText(EngineLinesBox.EvalLinesToProcess.Lines[0], nd.Position.ColorToMove);

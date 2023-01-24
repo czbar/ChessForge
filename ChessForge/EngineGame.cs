@@ -122,9 +122,10 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        public static BoardPosition ProcessEngineMove(out TreeNode nd)
+        public static BoardPosition ProcessEngineMove(out TreeNode nd, string evalStr)
         {
             string engMove = SelectMoveFromCandidates(false);
+            EngineMessageProcessor.ClearMoveCandidates(true);
 
             TreeNode curr = GetLastGameNode();
             BoardPosition pos = new BoardPosition(curr.Position);
@@ -139,6 +140,8 @@ namespace ChessForge
             }
 
             nd = new TreeNode(curr, algMove, _mainWin.ActiveVariationTree.GetNewNodeId());
+            nd.EngineEvaluation = evalStr;
+
             TreeNode sib = AppState.MainWin.ActiveVariationTree.GetIdenticalSibling(nd, engMove);
             if (sib == null)
             {
