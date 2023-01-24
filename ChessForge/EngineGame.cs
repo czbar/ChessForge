@@ -354,22 +354,23 @@ namespace ChessForge
         /// e.g. c4d6 / c7c8Q / O-O </returns>
         private static string SelectMoveFromCandidates(bool getBest)
         {
-            if (EngineMessageProcessor.MoveCandidates.Count == 0)
+            if (EngineMessageProcessor.EngineMoveCandidates.Lines.Count == 0)
             {
                 return "";
             }
 
-            if (getBest || EngineMessageProcessor.MoveCandidates[0].IsMateDetected)
+            if (getBest || EngineMessageProcessor.EngineMoveCandidates.Lines[0].IsMateDetected)
             {
-                return EngineMessageProcessor.MoveCandidates[0].GetCandidateMove();
+                return EngineMessageProcessor.EngineMoveCandidates.Lines[0].GetCandidateMove();
             }
             else
             {
                 int viableMoveCount = 1;
-                int highestEval = EngineMessageProcessor.MoveCandidates[0].ScoreCp;
-                for (int i = 1; i < EngineMessageProcessor.MoveCandidates.Count; i++)
+                int highestEval = EngineMessageProcessor.EngineMoveCandidates.Lines[0].ScoreCp;
+                for (int i = 1; i < EngineMessageProcessor.EngineMoveCandidates.Lines.Count; i++)
                 {
-                    if (EngineMessageProcessor.MoveCandidates[i].IsMateDetected || EngineMessageProcessor.MoveCandidates[i].ScoreCp < highestEval - Configuration.ViableMoveCpDiff)
+                    if (EngineMessageProcessor.EngineMoveCandidates.Lines[i].IsMateDetected 
+                        || EngineMessageProcessor.EngineMoveCandidates.Lines[i].ScoreCp < highestEval - Configuration.ViableMoveCpDiff)
                     {
                         break;
                     }
@@ -377,19 +378,19 @@ namespace ChessForge
                 }
                 if (viableMoveCount == 1)
                 {
-                    return EngineMessageProcessor.MoveCandidates[0].GetCandidateMove();
+                    return EngineMessageProcessor.EngineMoveCandidates.Lines[0].GetCandidateMove();
                 }
                 else
                 {
                     int sel = PositionUtils.GlobalRnd.Next(0, viableMoveCount);
                     // defensive check
-                    if (sel >= EngineMessageProcessor.MoveCandidates.Count)
+                    if (sel >= EngineMessageProcessor.EngineMoveCandidates.Lines.Count)
                     {
-                        return EngineMessageProcessor.MoveCandidates[0].GetCandidateMove();
+                        return EngineMessageProcessor.EngineMoveCandidates.Lines[0].GetCandidateMove();
                     }
                     else
                     {
-                        return EngineMessageProcessor.MoveCandidates[sel].GetCandidateMove();
+                        return EngineMessageProcessor.EngineMoveCandidates.Lines[sel].GetCandidateMove();
                     }
                 }
             }

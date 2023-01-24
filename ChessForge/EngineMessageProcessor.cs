@@ -27,7 +27,7 @@ namespace ChessForge
         /// <summary>
         /// The list of candidates returned by the engine.
         /// </summary>
-        public static List<MoveEvaluation> MoveCandidates = new List<MoveEvaluation>();
+        public static MoveCandidates EngineMoveCandidates = new MoveCandidates();
 
         /// <summary>
         /// Flags whether message processing is in progress.
@@ -48,17 +48,6 @@ namespace ChessForge
 
         // main application window
         private static MainWindow _mainWin;
-
-        // node for which the last engine message was received
-        private static TreeNode _lastMessageNode = null;
-
-        /// <summary>
-        /// The Node for whichthe last engine message was received.
-        /// </summary>
-        public static TreeNode LastMessageNode
-        {
-            get => _lastMessageNode;
-        }
 
         /// <summary>
         /// Creates an instance of the Engine service.
@@ -103,7 +92,7 @@ namespace ChessForge
             if (force || !(AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME))
                 lock (MoveCandidatesLock)
                 {
-                    MoveCandidates.Clear();
+                    EngineMoveCandidates.Clear();
                 }
         }
 
@@ -549,7 +538,6 @@ namespace ChessForge
                     message = ParseMessagePrefix(message, out int treeId, out int nodeId, out bool delayed, out GoFenCommand.EvaluationMode mode);
 
                     TreeNode evalNode = AppState.GetNodeByIds(treeId, nodeId);
-                    _lastMessageNode = evalNode;
 
                     if ((LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME) || evalNode != null)
                     {
@@ -559,7 +547,7 @@ namespace ChessForge
                         }
                         if (message.StartsWith(UciCommands.ENG_INFO))
                         {
-                            ProcessInfoMessage(message);
+                            ProcessInfoMessage(message, evalNode);
                         }
                         else if (message.StartsWith(UciCommands.ENG_BEST_MOVE))
                         {
@@ -700,9 +688,9 @@ namespace ChessForge
 
                 if (nd != null)
                 {
-                    if (EngineLinesBox.Lines.Count > 0)
+                    if (EngineLinesBox.EvalLinesToProcess.Lines.Count > 0)
                     {
-                        nd.EngineEvaluation = EvaluationManager.BuildEvaluationText(EngineLinesBox.Lines[0], nd.Position.ColorToMove);
+                        nd.EngineEvaluation = EvaluationManager.BuildEvaluationText(EngineLinesBox.EvalLinesToProcess.Lines[0], nd.Position.ColorToMove);
                     }
                 }
 
@@ -723,7 +711,7 @@ namespace ChessForge
         /// under the index corresponding to the value of multipv.
         /// </summary>
         /// <param name="message"></param>
-        private static void ProcessInfoMessage(string message)
+        private static void ProcessInfoMessage(string message, TreeNode evalNode)
         {
             lock (InfoMessageProcessLock)
             {
@@ -772,43 +760,45 @@ namespace ChessForge
             {
                 if (multipv != null && (score != null || movesToMate != null))
                 {
+                    EngineMoveCandidates.EvalNode = evalNode;
+
                     // we have updated evaluation
                     // make sure we have the object to set
-                    while (MoveCandidates.Count < multipv)
+                    while (EngineMoveCandidates.Lines.Count < multipv)
                     {
-                        MoveCandidates.Add(new MoveEvaluation());
+                        EngineMoveCandidates.AddEvaluation(new MoveEvaluation());
                     }
 
-                    MoveCandidates[multipv.Value - 1].Line = moves;
+                    EngineMoveCandidates.Lines[multipv.Value - 1].Line = moves;
                     if (score != null)
                     {
-                        MoveCandidates[multipv.Value - 1].ScoreCp = score.Value;
-                        MoveCandidates[multipv.Value - 1].IsMateDetected = false;
+                        EngineMoveCandidates.Lines[multipv.Value - 1].ScoreCp = score.Value;
+                        EngineMoveCandidates.Lines[multipv.Value - 1].IsMateDetected = false;
                     }
                     else
                     {
-                        MoveCandidates[multipv.Value - 1].IsMateDetected = true;
-                        MoveCandidates[multipv.Value - 1].MovesToMate = movesToMate.Value;
+                        EngineMoveCandidates.Lines[multipv.Value - 1].IsMateDetected = true;
+                        EngineMoveCandidates.Lines[multipv.Value - 1].MovesToMate = movesToMate.Value;
                     }
                 }
                 else if (multipv == null && movesToMate == 0) // special case where we have a check mate position
                 {
-                    if (MoveCandidates.Count == 0)
+                    if (EngineMoveCandidates.Lines.Count == 0)
                     {
-                        MoveCandidates.Add(new MoveEvaluation());
+                        EngineMoveCandidates.AddEvaluation(new MoveEvaluation());
                     }
-                    MoveCandidates[0].IsMateDetected = true;
-                    MoveCandidates[0].MovesToMate = 0;
+                    EngineMoveCandidates.Lines[0].IsMateDetected = true;
+                    EngineMoveCandidates.Lines[0].MovesToMate = 0;
                 }
                 else if (multipv == null && score == 0) // special case where we have a stalemate
                 {
-                    if (MoveCandidates.Count == 0)
+                    if (EngineMoveCandidates.Lines.Count == 0)
                     {
-                        MoveCandidates.Add(new MoveEvaluation());
+                        EngineMoveCandidates.AddEvaluation(new MoveEvaluation());
                     }
-                    MoveCandidates[0].ScoreCp = score.Value;
-                    MoveCandidates[0].IsMateDetected = false;
-                    MoveCandidates[0].MovesToMate = 0;
+                    EngineMoveCandidates.Lines[0].ScoreCp = score.Value;
+                    EngineMoveCandidates.Lines[0].IsMateDetected = false;
+                    EngineMoveCandidates.Lines[0].MovesToMate = 0;
                 }
             }
 
