@@ -184,7 +184,16 @@ namespace ChessForge
                 ProcessEngineGameMove(nd);
                 _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                 _mainWin.ResetEvaluationProgressBar();
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+
+                // if this is Training with Continuous mode, switch to Continuous
+                if (TrainingSession.IsTrainingInProgress && TrainingSession.IsContinuousEvaluation)
+                {
+                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
+                }
+                else
+                {
+                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                }
 
                 if (TrainingSession.IsTrainingInProgress)
                 {
@@ -205,7 +214,11 @@ namespace ChessForge
             // NOTE do not reset Evaluation.CurrentMode as this will be done 
             // later down the chain
             _mainWin.ResetEvaluationProgressBar();
-            _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+            {
+                _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+            }
 
             EvaluationManager.SetSingleNodeToEvaluate(null);
 

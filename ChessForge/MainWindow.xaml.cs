@@ -1602,7 +1602,14 @@ namespace ChessForge
             LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
 
             // TODO: should make a call to SetupGUI for game, instead
-            AppState.ShowMoveEvaluationControls(false, false);
+            if (TrainingSession.IsTrainingInProgress && TrainingSession.IsContinuousEvaluation)
+            {
+                AppState.ShowMoveEvaluationControls(true, true);
+            }
+            else
+            {
+                AppState.ShowMoveEvaluationControls(false, false);
+            }
 
             EngineGame.InitializeGameObject(startNode, true, IsTraining);
             UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
@@ -1896,7 +1903,7 @@ namespace ChessForge
         {
             this.Dispatcher.Invoke(() =>
             {
-                UiTrainingView.EngineMoveMade();
+                UiTrainingView.EngineGameMoveMade();
             });
         }
 
