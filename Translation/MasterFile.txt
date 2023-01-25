@@ -1,16 +1,50 @@
 # MASTER FILE for Translations
 
 #
-# COMMON MENU ITEMS
-# (occuring in multiple menus)
+# COMMON TERMS
 #
+
+#Workbook
+Workbook=Workbook
+
+#Chapter
+Chapter=Chapter
+
+#Chapters plural
+Chapters=Chapters
+
+# Study Tree
+Study=Study
+
+# Game
+Game=Game
+
+# Games plural
+Games=Games
+
+# Exercise 
+Exercise=Exercise
+
+# Exercises plural 
+Exercise=Exercises
+
+# Bookmark
+Bookmark=Bookmark
+
+# Games plural
+Bookmarks=Bookmarks
+
+# Move
+Move=Move
+
+# Moves plural
+Moves=Moves
 
 # Request to evaluate a position
 EvaluatePosition=Evaluate Position
 
 # Request to evaluate a line
 EvaluatePosition=Evaluate Line
-
 
 #
 # MAIN MENU
@@ -288,8 +322,14 @@ DeleteSelectedChapter=Delete Selected Chapter
 # Delete selected game
 DeleteSelectedGame=Delete Selected Game
 
+# Delete clicked game
+DeleteThisGame=Delete This Game
+
 # Delete selected exercise
 DeleteSelectedExercise=Delete Selected Exercise
+
+# Delete clicked exercise
+DeleteThisExercise=Delete This Exercise
 
 
 #
@@ -343,7 +383,7 @@ Chapter0of0=Chapter 0 of 0
 # The "Bookmark" term
 Bookmark=Bookmark
 
-# Start trainign from the selected bookmark
+# Start training from the selected bookmark
 StartTrainingFromThisBookmark=Start Training from This Bookmark
 
 # Generate bookmarks
@@ -429,10 +469,18 @@ ImportIntoChapter=Import into Active Chapter
 # Open the user's browser to view the game on lichess.org
 ViewOnLichess=View on Lichess.org
 
+
+
+##################################
 #
 # Button Labels
 #
 
+#OK
+Ok=OK
+
+#Cancel
+Cancel=Cancel
 
 # Exit training
 ExitTraining=Exit Training
@@ -442,4 +490,162 @@ ExitGame=Exit Game
 
 # Show explorers
 ShowExplorer=Show Explorer
+
+
+##################################
+#
+# Message Box Titles
+#
+
+# File error
+FileError=File Error
+
+# Error
+Error=Error
+
+# Information
+Information=Information
+
+# Confirmation
+Confirmation=Confirmation
+
+# Unexpected Error
+UnexpectedError=Unexpected Error
+
+# Update Check
+UpdateCheck=Updated Check
+
+#Position Setup
+PositionSetup=Position Setup
+
+# Invalid Position Setup
+InvalidPositionSetup=Invalid Position Setup
+
+# Import from a PGN file
+ImportPgn=Import PGN
+
+##################################
+#
+# Message Text
+#
+
+# Bookmarks already exist
+BookmarksAlreadyExist=Bookmarks already exist
+
+# Error saving file
+FailedToSaveFile=Failed to save file: $0 
+
+#Chess Engine not available
+ChessEngineNotAvailable=Chess Engine not available
+
+# Error importing a game
+CouldNotImportGame=Could not import game 
+
+# Confirmation to delete all Bookmarks	
+DeleteAllBookmarks=This will delete all Bookmarks. Proceed?
+
+# Confirmation to replace bookmarks
+GeneratedBookmarksReplace=Generated bookmarks will replace the ones in the Workbook. Proceed?
+
+# Error parsing engine's move
+ErrorParseMove=Failed to parse engine's move.
+
+# Engine not available
+EngineNotAvailable=Chess Engine not available.
+
+# Exercise has no solution
+ExerciseNoSolution=This exercise has no solution provided.
+
+# Error downloading game
+GameDownloadError=Game download error
+
+# Error loading engine
+LoadEngineError =Failed to load the engine. Move evaluation will not be available.
+
+# Confirmation to cancel game
+CancelGame=Cancel Game?
+
+# Information about a game in progress
+GameInProgress=Game with the Computer is in Progress
+
+# Unrecognized file format
+UnrecognizedFileFormat=Unrecognized file format 
+
+# Chess engine not available
+EngineNotAvailable=Chess Engine is not available.
+
+# Select move from which to start a game against the engine
+SelectEngineStartMove=Select the move from which to start.
+
+# Confirmation to delete chapter
+DeleteChapter=Deleting chapter: $0. Are you sure?
+
+# No exercise in file
+NoExerciseInFile=No Exercises found in $0. 
+ 
+# No games in file
+NoGamesInFile=No Games found in $0. 
+
+# Bookmark already exists
+BookmarkAlreadyExists=This bookmark already exists
+
+# Bookmarks already exists
+BookmarksAlreadyExist=Bookmarks already exist
+ 
+# Error adding bookmarks 
+ErrorAddBookmarks=Failed to add the bookmarks.
+
+# No move to start training from
+NoTrainingStartMove=No move selected to start training from.
+
+# Confirmation to exit training session
+ExitTraining=Exit the training session?
+
+# Restart the training session
+RestartTraining=Restart the training session?
+
+# No new version available
+NoNewVersion=No new version available.
+
+# Enable viewing/editing of the exercise
+ViewExercise=Enable View/Edit Mode?
+
+# Restart trainign from the selected move.
+RestartFromMove=Restart from $0?
+
+# Cannot enter training game due to engine not available
+NoEngineForTraining=Engine not available. Training cannot continue.\n You can roll moves back or restart.
+
+# Unexpected error processing user's move
+UnexpectedErrorInUserMove=Unexpected error while processing user\'s move
+
+# Close the Workbook
+CloseWorkbook=Close the current Workbook?
+
+# Last file not found
+#LastFileNotFound=Most recent file $0 could not be found.
+
+# File not found
+FileNotFound=File $0 could not be found.
+
+# Save the Workbook
+SaveWorkbook=Save the Workbook?
+
+# File already open
+FileAlreadyOpen=$0 is already open."
+
+# Confirmation to merge training moves into the Study Tree / Game or Exercise
+MergeTrainingIntoStudy=Merge and Save new moves from this session into the {0}?
+
+# (Move) no longer valid 
+NoLongerValid=is no longer valid
+
+# (Moves) no longer valid 
+NoLongerValidPlural=are no longer valid
+
+# Confirmation to delete move from exercise solution
+DeleteExerciseMove=and will be deleted. Proceed anyway?
+
+# Confirmation to delete moves from exercise solution
+DeleteExerciseMoves=and will be deleted. Proceed anyway?
 
