@@ -135,6 +135,7 @@ namespace ChessForge
         /// </summary>
         public static void MoveEvaluationFinished(TreeNode nd, int treeId, GoFenCommand.EvaluationMode mode, bool delayed)
         {
+            AppLog.Message("MoveEvaluationFinished():" + " TrainingMode=" + AppState.CurrentLearningMode + " GoFenMode=" + mode);
             ClearMoveCandidates(false);
             // it could be that we switched to a game mode while awaiting "normal" evaluation,
             // so double check to avoid complications
