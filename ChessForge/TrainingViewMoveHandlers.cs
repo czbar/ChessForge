@@ -65,7 +65,7 @@ namespace ChessForge
         /// (as opposed to the manual mode).
         /// This method requests the engine to make a move.
         /// </summary>
-        public void RequestEngineResponse()
+        public void StartTrainingEngineGame()
         {
             int nodeId = _userMove.NodeId;
             _mainWin.StartEngineGame(_userMove, true);
@@ -200,7 +200,7 @@ namespace ChessForge
                             // call RequestEngineResponse() directly so it invokes PlayEngine
                             LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
                             AppState.SetupGuiForCurrentStates();
-                            RequestEngineResponse();
+                            StartTrainingEngineGame();
                         }
                     }
                 }
