@@ -1408,12 +1408,6 @@ namespace ChessForge
             }
         }
 
-        private MessageBoxResult AskToGenerateBookmarks()
-        {
-            return MessageBox.Show("Would you like to auto-select positions for training?",
-                "No Bookmarks in this Workbook", MessageBoxButton.YesNo, MessageBoxImage.Question);
-        }
-
         public void SetActiveLine(string lineId, int selectedNodeId, bool displayPosition = true)
         {
             ObservableCollection<TreeNode> line = ActiveVariationTree.SelectLine(lineId);
