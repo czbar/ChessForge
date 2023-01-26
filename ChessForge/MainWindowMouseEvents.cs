@@ -646,18 +646,28 @@ namespace ChessForge
 
         /// <summary>
         /// Handles the Evaluation toggle being clicked while in the ON mode.
-        /// Any evaluation in progress will be stopped.
-        /// to CONTINUOUS.
+        /// Unless this is a game, any evaluation in progress will be stopped.
+        /// While in a game it will have an effect of forcing the engine's move.
+        /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void EngineToggleOn_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            UiImgEngineOff.Visibility = Visibility.Visible;
-            UiImgEngineOn.Visibility = Visibility.Collapsed;
 
-            StopEvaluation(false);
-            TrainingSession.IsContinuousEvaluation = false;
+            if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+            {
+                ForceEngineMove();
+                TrainingSession.IsContinuousEvaluation = false;
+            }
+            else
+            {
+                UiImgEngineOff.Visibility = Visibility.Visible;
+                UiImgEngineOn.Visibility = Visibility.Collapsed;
+
+                StopEvaluation(false);
+                TrainingSession.IsContinuousEvaluation = false;
+            }
 
             if (e != null)
             {
