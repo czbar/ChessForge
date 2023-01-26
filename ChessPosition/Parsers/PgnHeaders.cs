@@ -270,12 +270,12 @@ namespace GameTree
 
         public static string GetWorkbookWhiteText()
         {
-            return BuildHeaderLine(KEY_WHITE, "Chess Forge");
+            return BuildHeaderLine(KEY_WHITE, "CHESS FORGE");
         }
 
         public static string GetWorkbookBlackText()
         {
-            return BuildHeaderLine(KEY_BLACK, "Workbook File");
+            return BuildHeaderLine(KEY_BLACK, "WORKBOOK");
         }
 
         public static string GetLineResultHeader()

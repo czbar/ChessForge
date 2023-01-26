@@ -261,14 +261,10 @@ namespace ChessForge
             value = tree.Header.GetContentTypeString(out key, PgnHeaders.VALUE_STUDY_TREE);
             sb.AppendLine(PgnHeaders.BuildHeaderLine(key, value));
 
-            value = tree.Header.GetWhitePlayer(out key, "Chess Forge");
-            PgnHeaders.BuildHeaderLine(key, value);
+            value = tree.Header.GetWhitePlayer(out key, "CHAPTER");
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(key, value));
 
-            value = tree.Header.GetBlackPlayer(out key, "Study Tree");
-            PgnHeaders.BuildHeaderLine(key, value);
-
-            value = tree.Header.GetResult(out key);
-            PgnHeaders.BuildHeaderLine(key, value);
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK, chapter.GetTitle()));
 
             sb.AppendLine(BuildPreamble(tree));
 

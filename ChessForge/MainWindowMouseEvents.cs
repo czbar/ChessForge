@@ -45,10 +45,15 @@ namespace ChessForge
             if (e.ChangedButton == MouseButton.Right)
             {
                 _lastRightClickedPoint = clickedPoint;
-                // if no special key was pressed we consider this tentative
-                // since we need to resolve between shape building and context menu
-                bool isDrawTentative = !GuiUtilities.IsSpecialKeyPressed();
-                StartShapeDraw(sq, isDrawTentative);
+
+                // allow drawing shapes in MANUAL_REVIEW mode
+                if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+                {
+                    // if no special key was pressed we consider this tentative
+                    // since we need to resolve between shape building and context menu
+                    bool isDrawTentative = !GuiUtilities.IsSpecialKeyPressed();
+                    StartShapeDraw(sq, isDrawTentative);
+                }
             }
             else
             {
@@ -641,18 +646,28 @@ namespace ChessForge
 
         /// <summary>
         /// Handles the Evaluation toggle being clicked while in the ON mode.
-        /// Any evaluation in progress will be stopped.
-        /// to CONTINUOUS.
+        /// Unless this is a game, any evaluation in progress will be stopped.
+        /// While in a game it will have an effect of forcing the engine's move.
+        /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void EngineToggleOn_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            UiImgEngineOff.Visibility = Visibility.Visible;
-            UiImgEngineOn.Visibility = Visibility.Collapsed;
 
-            StopEvaluation(false);
-            TrainingSession.IsContinuousEvaluation = false;
+            if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+            {
+                ForceEngineMove();
+                TrainingSession.IsContinuousEvaluation = false;
+            }
+            else
+            {
+                UiImgEngineOff.Visibility = Visibility.Visible;
+                UiImgEngineOn.Visibility = Visibility.Collapsed;
+
+                StopEvaluation(false);
+                TrainingSession.IsContinuousEvaluation = false;
+            }
 
             if (e != null)
             {

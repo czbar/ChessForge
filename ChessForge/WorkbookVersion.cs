@@ -44,13 +44,21 @@ namespace ChessForge
         /// <param name="sVer"></param>
         public WorkbookVersion(string sVer)
         {
-            try
+            if (sVer != null)
             {
-                string[] tokens = sVer.Split('.');
-                _major = uint.Parse(tokens[0]);
-                _minor = uint.Parse(tokens[1]);
+                try
+                {
+                    string[] tokens = sVer.Split('.');
+                    _major = uint.Parse(tokens[0]);
+                    _minor = uint.Parse(tokens[1]);
+                }
+                catch
+                {
+                    _major = 1;
+                    _minor = 0;
+                }
             }
-            catch
+            else
             {
                 _major = 1;
                 _minor = 0;

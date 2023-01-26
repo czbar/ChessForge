@@ -118,9 +118,6 @@
       <DependentUpon>GameHeaderDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Article.cs" />
-    <Compile Include="GenericPgnInfoDialog.xaml.cs">
-      <DependentUpon>GenericPgnInfoDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="LearningMode.cs" />
     <Compile Include="AppState.cs" />
     <Compile Include="AppTimers.cs" />
@@ -235,10 +232,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GenericPgnInfoDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -307,7 +300,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />

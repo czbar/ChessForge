@@ -1945,6 +1945,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnAddBookmark_Click(object sender, RoutedEventArgs e)
         {
+            // TODO: remove this method and calling menu item
             UiTabStudyTree.Focus();
             MessageBox.Show("Right-click a move and select \"Add to Bookmarks\" from the popup-menu", "Chess Forge Training", MessageBoxButton.OK);
         }

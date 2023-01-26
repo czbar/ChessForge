@@ -221,7 +221,7 @@ namespace EngineService
                 WriteOut(UciCommands.ENG_SET_MULTIPV + " " + mpv.ToString());
                 WriteOut(UciCommands.ENG_POSITION_FEN + " " + gfc.Fen);
                 WriteOut(gfc.GoCommandString);
-                EngineLog.Message("NodeId=" + gfc.NodeId.ToString() + " TreeId=" + gfc.TreeId.ToString());
+                EngineLog.Message("NodeId=" + gfc.NodeId.ToString() + " TreeId=" + gfc.TreeId.ToString() + " Mode=" + gfc.EvalMode);
                 StartMessageRxLoopTimer();
 
                 _currentState = State.CALCULATING;

@@ -1,214 +1,291 @@
 # MASTER FILE for Translations
 
 #
-# COMMON MENU ITEMS
-# (occuring in multiple menus)
+# COMMON TERMS
 #
 
-# Request to evaluate a position
+#Workbook
+Workbook=Workbook
+
+#Title
+Title=Title
+
+#Workbook title
+WorkbookTitle=Workbook Title
+
+
+#Event
+Event=Event
+
+#Header
+Header=Header
+
+#Preamble
+Preamble=Preamble
+
+#Chapter
+Chapter=Chapter
+
+#Chapters plural
+Chapters=Chapters
+
+#Study Tree
+Study=Study
+
+#Game
+Game=Game
+
+#Games plural
+Games=Games
+
+#Exercise 
+Exercise=Exercise
+
+#Exercises plural 
+Exercises=Exercises
+
+#Round
+Round=Round
+
+#Date
+Date=Date
+
+#A line in a variation tree
+Line=Line
+
+#Bookmark
+Bookmark=Bookmark
+
+#Games plural
+Bookmarks=Bookmarks
+
+#Move
+Move=Move
+
+#Moves plural
+Moves=Moves
+
+#Position
+Position=Position
+
+#Comment
+Comment=Comment
+
+#Annotation
+Annotation=Annotation
+
+#Evaluation
+Evaluation=Evaluation
+
+#Version
+Version=Version
+
+#Chess engine
+ChessEngine=Chess Engine
+
+#Openings
+Openings=Openings
+
+#Tablebases
+Tablebases=Tablebases
+
+#Exit
+Exit=Exit
+
+#Close
+Close=Close
+
+#Item
+Item=Item
+
+#Request to evaluate a position
 EvaluatePosition=Evaluate Position
 
-# Request to evaluate a line
-EvaluatePosition=Evaluate Line
-
+#Request to evaluate a line
+EvaluateLine=Evaluate Line
 
 #
 # MAIN MENU
 #
 
 
-# TOP LEVEL MENU: File
-MenuFile=File
+#TOP LEVEL MENU: File
+File=File
 
-# Create a new Workbook
+#Create a new Workbook
 NewWorkbook=New Workbook
 
-# Open an existing Workbook
+#Open an existing Workbook
 OpenWorkbook=Open Workbook 
 
-# Close an existing Workbook
+#Close an existing Workbook
 CloseWorkbook=Close Workbook
 
-# Save the currently open Workbook
+#Save the currently open Workbook
 Save=Save
 
-# Save the currently open Workbook into a different file
+#Save the currently open Workbook into a different file
 SaveAs=Save As ...
 
-# Saves a copy of the current Workbook with the current version number, increments the version number
+#Saves a copy of the current Workbook with the current version number, increments the version number
 BackUpThisVersion=Back up this Version ...
 
 
 
-# TOP LEVEL MENU: Training
-MenuTraining=Training
+#TOP LEVEL MENU: Training
+Training=Training
 
-# Start a new training session
+#Start a new training session
 Start New Session=Start New Session
 
-# Restart the Training Session from the beginning
+#Restart the Training Session from the beginning
 RestartTrainingSession=Restart Training Session
 
-# Exit the Training Session
+#Exit the Training Session
 ExitTraining=Exit Training
 
 
 
-# TOP LEVEL MENU: Edit
-MenuEdit=Edit
+#TOP LEVEL MENU: Edit
+Edit=Edit
 
-# Opens the Annotations dialog
+#Opens the Annotations dialog
 Annotations=Annotations
 
-# Allows the user to merge multiple chapters into one
+#Allows the user to merge multiple chapters into one
 MergeChapters=Merge Chapters...
 
-# Undoes the previous operation
+#Undoes the previous operation
 Undo=Undo
 
 
 
-# TOP LEVEL MENU: View
-MenuView=View
+#TOP LEVEL MENU: View
+View=View
 
-# Flips the board's orientation
+#Views plural
+Views=Views
+
+#Flips the board's orientation
 FlipBoard=Flip Board
 
-# Opens the Application Options dialog
-ApplicationOptions=Application Options...
+#Opens the Application Options dialog
+ApplicationOptions=Application Options
 
-# Opens the Workbook Options dialog
-WorkbookOptions=Workbook Options...
+#Opens the Workbook Options dialog
+WorkbookOptions=Workbook Options
 
-# Opens a dialog allowing the user to select chess engine executable file
-AnalysisEngine=Analysis Engine...
+#Opens a dialog allowing the user to select chess engine executable file
+AnalysisEngine=Analysis Engine
 
-# Increase font size
+#Increase font size
 IncreaseFontSize=Increase Font Size
 
-# Decrease font size
+#Decrease font size
 DecreaseFontSize=Decrease Font Size
 
-# Switch to fixed font size
+#Switch to fixed font size
 UseFixedFont Size=Fixed Font Size
 
-# Use variable fonts size
+#Use variable fonts size
 UseVariableFontSize=Variable Font Size
 
-# Restore font size defaults
+#Restore font size defaults
 RestoreFontDefaults=Restore Font Defaults
 
 
 
-# TOP LEVEL MENU: Help
-MenuTraining=Help
+#TOP LEVEL MENU: Help
+Help=Help
 
-# Opens user's browser and navigates to Chess Forge's Wiki
+#Opens user's browser and navigates to Chess Forge's Wiki
 Wiki=Wiki
 
-# Check if there is a newer version of Chess Forge at Source Forge
+#Check if there is a newer version of Chess Forge at Source Forge
 CheckForUpdates=Check for Updates
 
-# Opens the About dialog
+#Opens the About dialog
 About=About
 
 
 # MENU BAR ICONS
 
-# Label for automatic (periodic) saving of the Workbook
+#Label for automatic (periodic) saving of the Workbook
 #! Keep short
 AutoSave=Auto Save
 
-# Explorers label
+#Explorers label
 #! Keep short
 Explorers=Explorers
 
-# Engine label
+#Engine label
 #! Keep short
 Engine=Engine
 
 
-# Tool tip for turning AutoSave off
+#Tool tip for turning AutoSave off
 TurnAutoSaveOff=Turn AutoSave Off
 
-# Tool tip for turning AutoSave on
+#Tool tip for turning AutoSave on
 TurnAutoSaveOn=Turn AutoSave On
 
 
-# Tool tip for turning Explorers off
+#Tool tip for turning Explorers off
 TurnExplorersOff=Disable Opening Explorer and Tablebases
 
-# Tool tip for turning Explorers on
+#Tool tip for turning Explorers on
 TurnExplorersOn=Use Opening Explorer and Tablebases
 
 
-# Tool tip for turning Engine off
+#Tool tip for turning Engine off
 TurnEngineOff=Turn the Engine Off
 
-# Tool tip for turning AutoSave on
+#Tool tip for turning AutoSave on
 TurnEngineOn=Turn the Engine On
 
+#Top Games box title
+TopGames=Top Games
 
 #
 # CONTEXT MENU for the Main Chessboard
 #
 
-# Start training from the current position
+#Start training from the current position
 StartTrainingFromHere=Start Training from Here
 
-# Start training from a bookmark
+#Start training from a bookmark
 StartTrainingFromBookmark=Start Training from a Bookmark
 
-# Create Exercise starting at the current position
+#Create Exercise starting at the current position
 CreateExerciseFromHere=Create Exercise from Here...
 
-# Copy FEN of the current position to Clipboard
+#Copy FEN of the current position to Clipboard
 CopyFENtoClipboard=Copy FEN to Clipboard
 
-# Bookmark the current position
+#Bookmark the current position
 BookmarkThisPosition=Bookmark This Position
 
-# Replay the selected line
+#Replay the selected line
 Replay=Replay
 
-# Start game against the engine
+#Start game against the engine
 PlayAgainstComputer=Play Against Engine
 
-# Exit game
+#Exit game
 ExitGame=Exit Game
 
-
-#
-# TAB VIEW TITLES
-#
-
-# Chapters
-Chapters=Chapters
-
-# Study Tree
+#Study Tree
 StudyTree=Study
-
-# Bookmarks
-Bookmarks=Bookmarks
-
-# Study Tree
-StudyTree=Study
-
-# Games
-Games=Games
-
-# Exercises
-Exercises=Exercises
 
 
 #
 # CONTEXT MENU in Training View
 #
 
-# User wants to restart the game against the engine after a certain move in the Training Session
+#User wants to restart the game against the engine after a certain move in the Training Session
 RestartGameAfter=Restart Game After
  
-# User wants to restart the training from a certain move in the Training Session
+#User wants to restart the training from a certain move in the Training Session
 RestartFrom=Restart from
 
 
@@ -216,79 +293,76 @@ RestartFrom=Restart from
 # CONTEXT MENU for Chapters Tab
 #
 
-# Create a new chapter
+#Create a new chapter
 CreateNewChapter=Create New Chapter
 
-# Import a new chapter
+#Import a new chapter
 ImportNewChapter=Import New Chapter
 
-# Cretae a new game
+#Cretae a new game
 CreateNewGame=Create New Game
 
-# Import a new game
+#Import a new game
 ImportGames=Import Games
 
-# Create a new exercise
+#Create a new exercise
 CreateNewExercise=Create New Exercise
 
-# Import Exercise
+#Import Exercise
 ImportExercises=Import Exercises
 
-# Open the selected chapter
+#Open the selected chapter
 OpenSelectedChapter=Open Selected Chapter
 
-# Rename the selected chapter
+#Rename the selected chapter
 RenameSelectedChapter=Rename Selected Chapter
 
-# Open the selected game
+#Open the selected game
 OpenSelectedGame=Open Selected Game
 
-# Edit game headers
+#Edit game headers
 EditGameHeaders=Edit Game Headers
 
-# Open selected exercise
+#Open selected exercise
 OpenThisExercise=Open Selected Exercise
 
-# Edit exercise headers
+#Edit exercise headers
 EditExerciseHeaders=Edit Exercise Headers
 
-# Move chapter one position up
+#Move chapter one position up
 MoveChapterUp=Move Chapter Up
 
-# Move chapter one position down
+#Move chapter one position down
 MoveChapterDown=Move Chapter Down
 
-# Move game one position up
+#Move game one position up
 MoveGameUp=Move Game Up
 
-# Move game one position up
+#Move game one position up
 MoveGameDown=Move Game Down
 
-# Move game to another chapter
+#Move game to another chapter
 MoveGameToChapter=Move Game To Chapter...
 
-# Move exercise one position up
+#Move exercise one position up
 MoveExerciseUp=Move Exercise Up
 
-# Move exercise one position up
+#Move exercise one position up
 MoveExerciseDown=Move Exercise Down
 
-# Move exercise to another chapter
+#Move exercise to another chapter
 MoveExerciseToChapter=Move Exercise To Chapter...
 
-# Import games
-ImportGames=Import Games
-
-# Import Exercises
-ImportExercises=Import Exercises
-
-# Deleted selected chapter
+#Deleted selected chapter
 DeleteSelectedChapter=Delete Selected Chapter
 
-# Delete selected game
+#Delete selected game
 DeleteSelectedGame=Delete Selected Game
 
-# Delete selected exercise
+#Delete clicked game
+DeleteThisGame=Delete This Game
+
+#Delete selected exercise
 DeleteSelectedExercise=Delete Selected Exercise
 
 
@@ -296,25 +370,22 @@ DeleteSelectedExercise=Delete Selected Exercise
 # CONTEXT MENU for Study Tree Tab
 #
 
-# Edit references
+#Edit references
 GameExerciseReferences=Game/Exercise References
 
-# Promote a line
+#Promote a line
 PromoteLine=Promote Line
 
-# Delete the line starting from the current position
+#Delete the line starting from the current position
 DeleteMovesFromHere=Delete Moves From Here
 
-# Create a new chpater from the selected line
+#Create a new chpater from the selected line
 CreateNewChapterFromLine=Create New Chapter From Line
 
-# Bookmark the current position
-BookmarkThisPosition=Bookmark This Position
-
-# Bookmark the current position and position for all alternative moves
+#Bookmark the current position and position for all alternative moves
 BookmarkAllOptionsHere=Bookmark All Options Here
 
-# Mark the current position as a thumbnail
+#Mark the current position as a thumbnail
 MarkAsThumbnail=Mark as Thumbnail
 
 
@@ -323,13 +394,13 @@ MarkAsThumbnail=Mark as Thumbnail
 # NEXT / PREVIOUS BAR
 #
 
-# The "Next" term
+#The "Next" term
 Next=Next
 
-# The "Previous" term
+#The "Previous" term
 Previous=Previous
 
-# Chapter counter
+#Chapter counter
 #! Keep $0 and $1 in the translated strong as placeholders 
 #! for the number of the current chapter and total number of chapters respectively.
 Chapter0of0=Chapter 0 of 0
@@ -340,23 +411,20 @@ Chapter0of0=Chapter 0 of 0
 # CONTEXT MENU for Bookmarks
 #
 
-# The "Bookmark" term
-Bookmark=Bookmark
-
-# Start trainign from the selected bookmark
+#Start training from the selected bookmark
 StartTrainingFromThisBookmark=Start Training from This Bookmark
 
-# Generate bookmarks
+#Generate bookmarks
 GenerateBookmarks=Generate Bookmarks
 
-# Switch to the Study Tree view to add a bookmark
+#Switch to the Study Tree view to add a bookmark
 #! Deprecate this?
 GoToStudyToAddBookmark=Go to Study to Add a Bookmark
 
-# Delete the selected bookmark
+#Delete the selected bookmark
 DeleteThisBookmark=Delete This Bookmark
 
-# Delete all bookmarks
+#Delete all bookmarks
 DeleteAllBookmarks=Delete All Bookmarks
 
 
@@ -366,16 +434,13 @@ DeleteAllBookmarks=Delete All Bookmarks
 #
 
 
-# Edit game header
+#Edit game header
 EditGameHeader=Edit Game Header
 
-# Merge selected line into the Study Tree of the Chapter
+#Merge selected line into the Study Tree of the Chapter
 MergeSelectionIntoStudy=Merge Selection Into Study
 
-# Delete the selected game
-DeleteThisGame=Delete This Game
-
-# Game counter
+#Game counter
 #! Keep 0's as placeholders for numbers
 Game0of0=Game 0 of 0
 
@@ -386,16 +451,16 @@ Game0of0=Game 0 of 0
 #
 
 
-# Edit exercise header
+#Edit exercise header
 EditExerciseHeader=Edit Exercise Header
 
-# Edit starting position
+#Edit starting position
 EditStartingPosition=Edit Starting Position
 
-# Delete this exercise
+#Delete this exercise
 DeleteThisExercise=Delete This Exercise
 
-# Exercise counter
+#Exercise counter
 #! Keep 0's as placeholders for numbers
 Exercise0of0=Exercise 0 of 0
 
@@ -404,15 +469,18 @@ Exercise0of0=Exercise 0 of 0
 # Scoresheet column headers
 #
 							
-# White
+#White
 White=White
 
-# Black
+#Black
 Black=Black
 
-# Evaluation							
+#Side to move
+SideToMove=Side to Move
+
+#Evaluation							
 #! Must be ultra short, max 3 chars							
-Evaluation=Ev
+EvaluationShort=Ev
 
 
 #
@@ -420,26 +488,365 @@ Evaluation=Ev
 #
 
 
-# Open the game preview dialog
+#Open the game preview dialog
 PreviewGame=Preview Game
 
-# Import game into the active chapter
-ImportIntoChapter=Import into Active Chapter
+#Import game into the active chapter
+ImportIntoThisChapter=Import into Active Chapter
 
-# Open the user's browser to view the game on lichess.org
-ViewOnLichess=View on Lichess.org
+#Open the user's browser to view the game on lichess.org
+ViewOnLichess=View on lichess
 
+
+
+##################################
 #
 # Button Labels
 #
 
+#OK
+Ok=OK
 
-# Exit training
-ExitTraining=Exit Training
+#Cancel
+Cancel=Cancel
 
-# Exit Game
-ExitGame=Exit Game
-
-# Show explorers
+#Show explorers
 ShowExplorer=Show Explorer
 
+#Clear
+Clear=Clear
+
+##################################
+#
+# Message Box Titles
+#
+
+#File error
+FileError=File Error
+
+#Error
+Error=Error
+
+#Information
+Information=Information
+
+#Confirmation
+Confirmation=Confirmation
+
+#Unexpected Error
+UnexpectedError=Unexpected Error
+
+#Update Check
+UpdateCheck=Updated Check
+
+#Position Setup
+PositionSetup=Position Setup
+
+#Invalid Position Setup
+InvalidPositionSetup=Invalid Position Setup
+
+#Import from a PGN file
+ImportPgn=Import from PGN
+
+
+##################################
+#
+# Message Text
+#
+
+#Bookmarks already exist
+BookmarksAlreadyExist=Bookmarks already exist
+
+#Error saving file
+FailedToSaveFile=Failed to save file: $0 
+
+#Chess Engine not available
+ChessEngineNotAvailable=Chess Engine not available
+
+#Error importing a game
+CouldNotImportGame=Could not import game 
+
+#Confirmation to delete all Bookmarks	
+ConformDeleteAllBookmarks=This will delete all Bookmarks. Proceed?
+
+#Confirmation to replace bookmarks
+GeneratedBookmarksReplace=Generated bookmarks will replace the ones in the Workbook. Proceed?
+
+#Error parsing engine's move
+ErrorParseMove=Failed to parse engine's move.
+
+#Engine not available
+EngineNotAvailable=Chess Engine not available.
+
+#Exercise has no solution
+ExerciseNoSolution=This exercise has no solution provided.
+
+#Error downloading game
+GameDownloadError=Game download error
+
+#Error loading engine
+LoadEngineError =Failed to load the engine. Move evaluation will not be available.
+
+#Confirmation to cancel game
+CancelGame=Cancel Game?
+
+#Information about a game in progress
+GameInProgress=Game with the Computer is in Progress
+
+#Unrecognized file format
+UnrecognizedFileFormat=Unrecognized file format 
+
+#Select move from which to start a game against the engine
+SelectEngineStartMove=Select the move from which to start.
+
+#Confirmation to delete chapter
+DeleteChapter=Deleting chapter: $0. Are you sure?
+
+#No exercise in file
+NoExerciseInFile=No Exercises found in $0. 
+ 
+#No games in file
+NoGamesInFile=No Games found in $0. 
+
+#Bookmark already exists
+BookmarkAlreadyExists=This bookmark already exists
+
+#Error adding bookmarks 
+ErrorAddBookmarks=Failed to add the bookmarks.
+
+#No move to start training from
+NoTrainingStartMove=No move selected to start training from.
+
+#Confirmation to exit training session
+ExitTrainingSession=Exit the training session?
+
+#Restart the training session
+RestartTraining=Restart the training session?
+
+#No new version available
+NoNewVersion=No new version available.
+
+#Enable viewing/editing of the exercise
+ViewExercise=Enable View/Edit Mode?
+
+#Restart trainign from the selected move.
+RestartFromMove=Restart from $0?
+
+#Cannot enter training game due to engine not available
+NoEngineForTraining=Engine not available. Training cannot continue.\n You can roll moves back or restart.
+
+#Unexpected error processing user's move
+UnexpectedErrorInUserMove=Unexpected error while processing user's move
+
+#Close the Workbook
+CloseThisWorkbook=Close the current Workbook?
+
+#Last file not found
+#LastFileNotFound=Most recent file $0 could not be found.
+
+#File not found
+FileNotFound=File $0 could not be found.
+
+#Save the Workbook
+SaveWorkbook=Save the Workbook?
+
+#File already open
+FileAlreadyOpen=$0 is already open."
+
+#Confirmation to merge training moves into the Study Tree / Game or Exercise
+MergeTrainingIntoStudy=Merge and Save new moves from this session into the {0}?
+
+#(Move) no longer valid 
+NoLongerValid=is no longer valid
+
+#(Moves) no longer valid 
+NoLongerValidPlural=are no longer valid
+
+#Confirmation to delete move from exercise solution
+DeleteExerciseMove=and will be deleted. Proceed anyway?
+
+#Confirmation to delete moves from exercise solution
+DeleteExerciseMoves=and will be deleted. Proceed anyway?
+
+
+
+
+##################################
+#
+# Dialogs
+#
+
+
+#Quiz points
+QuizPoints=Quiz points
+
+#Engine Executable
+EngineExecutable=Engine Executable
+
+#Engine Time per Move in seconds (group frame title)
+EngineTimePerMove=Engine Time per Move (s)
+
+#Time to think in the Game (inside a frame titled "Engine Time per Move")
+ThinkTimeInGame=In Game
+
+#Move Replay(group frame title)
+MoveReplay=Move Replay
+
+#Time per move in auto replay in seconds (inside a frame titled "Move Replay")
+AutoReplaySpeed=Auto Speed (s)
+
+#Allow manual replay with a mouse wheel 
+AllowMouseWheel=Allow Mouse Wheel
+
+#Whether to show inline table with move options at a fork
+ShowMovesAtFork=Show Moves at Fork
+
+#Whether sound for the moves is turned on
+SoundOn=Sound On
+
+#Current version
+CurrentVersion=The current version $0 will be backed up in $1
+
+#Updated version number
+UpdatedVersion=The updated version number will be $0
+
+#Check box to increment major version
+IncrementMajorVersion=Increment major version
+
+#Create a new chapter from a variation line
+NewChapterFromLine=Create New Chapter From Line
+
+#A new chapter will be created from the selected sub-tree.
+NewChapterToBeCreate=A new chapter will be created from the selected sub-tree.
+
+#Check box to delete sub-tree from the source chapter
+DeleteSubTreeFromSource=Delete the sub-tree from the original chapter.
+
+#Check box to go to the chapter
+GotoNewChapter=Go to the newly created chapter.
+
+#Chapter Title
+ChapterTitle=Chapter Title
+
+#Select a date
+#SelectDate=Select a date
+
+#Ignore Day and Month
+IgnoreDayMonth=Ignore Day and Month
+
+#Ignore Day
+IgnoreDay=Ignore Day
+
+#Game Preview
+GamePreview=Game Preview
+
+#Previous Game
+PreviousGame=Previous Game
+
+#Next Game
+NextGame=Next Game
+
+#Import into Chapter
+ImportIntoChapter=Import into Chapter
+
+#Downloading game from lichess
+DownloadGameFromLichess=Downloading Game From lichess.org.
+
+#Please wait
+PleaseWait=Please Wait
+
+#Replay speed
+ReplaySpeed=Replay Speed
+
+#Fast spped
+Fast=Fast
+
+#Medium speed
+Medium=Medium
+
+#Slow speed
+Slow=Slow
+
+#Empty game text
+EmptyGameText=Game text is empty.
+
+#Game not found
+GameNotFound=Game not found.
+
+#FEN
+FEN=FEN
+
+#White to play
+WhiteToPlay=White to Play
+
+#Black to play
+BlackToPlay=Black to Play
+
+#En passant
+EnPassant=En Passant
+
+#Title of the box with allowed castling directions
+Castling=Castling
+
+#Starting position
+StartingPosition=Starting position
+
+#Clear board
+ClearBoard=Clear Board
+
+#Select Games/Exercises
+SelectGameAndExercises=Select Games and/or Exercises
+
+#Select items
+SelectItems=Select Items
+
+#Show all chapters
+ShowAllChapters=Show All Chapters
+
+#Select chapter
+SelectChapter=Select Chapter
+
+#Select chapters to import
+SelectChaptersToImport=Select Chapters to Import
+
+#Merge games and copy
+MergeGamesAndCopy=Merge Games into the Study Tree and Copy them into the Games section.
+
+#Merge games, no copy
+MergeGamesNoCopy=Merge Games into the Study Tree only (do not copy games).
+
+#Copy games, no merge
+CopyGamesNoMerge=Copy Games into the Games section only (leave the study tree empty)
+
+#Create a separate chapter for each game
+CreateChapterPerGame=Create Chapter per Game
+
+#New version available from 
+NewVersionAvailable=New version $0 available from
+
+#Checkbox to not show update reminde
+NoShowForCurrentVersion=Do not show for this version.
+
+#Training side
+TrainingSide=Training Side
+
+#Initial board orientation
+InitBoardOrientation=Initial Board Orientation (side to place at the bottom):
+
+#Tooltip for side to move
+TooltipSideToMove=Determines some default settings
+
+#Tooltip for workbook version
+TooltipWorkbookVersion=To increment version select File->Backup Version
+
+#Errors encountered while parsing a PGN file
+PgnErrors=PGN parsing errors
+
+#One entity was valid
+OneEntityValid=1 entity was valid
+
+#Multiple entities were valid
+MultiEntitiesValid=$0  entities were valid
+
+#not imported due to wrong type
+BadTypeForImport=but not imported due to not being of the $0 type

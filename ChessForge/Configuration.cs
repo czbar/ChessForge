@@ -143,7 +143,7 @@ namespace ChessForge
         /// 2 - messages boxes may pop up when some errors or exceptions ar caught
         /// 3 - some heavy debug tools are enabled (e.g. an extra button in Position Setup to show the current setup in the main window)
         /// </summary>
-        public static int DebugLevel = 0;
+        public static int DebugLevel = 1;
 
 
         // max value by which a font size can be increased from the standard size

@@ -184,6 +184,7 @@ namespace ChessForge
                     nd.IsNewTrainingMove = true;
                     nd.NodeId = _mainWin.ActiveVariationTree.GetNewNodeId();
                     _mainWin.UiTrainingView.UserGameMoveMade();
+                    _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
                 }
                 if (endOfGame)
                 {

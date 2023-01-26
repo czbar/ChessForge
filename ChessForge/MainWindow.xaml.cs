@@ -1408,12 +1408,6 @@ namespace ChessForge
             }
         }
 
-        private MessageBoxResult AskToGenerateBookmarks()
-        {
-            return MessageBox.Show("Would you like to auto-select positions for training?",
-                "No Bookmarks in this Workbook", MessageBoxButton.YesNo, MessageBoxImage.Question);
-        }
-
         public void SetActiveLine(string lineId, int selectedNodeId, bool displayPosition = true)
         {
             ObservableCollection<TreeNode> line = ActiveVariationTree.SelectLine(lineId);
@@ -2036,8 +2030,7 @@ namespace ChessForge
 
             if (dlg.ExitOK)
             {
-                if (dlg.ChangedEnginePath)
-                    Configuration.WriteOutConfiguration();
+                Configuration.WriteOutConfiguration();
                 if (dlg.ChangedEnginePath)
                 {
                     ReloadEngine();
@@ -2077,6 +2070,14 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Sends the Stop command to the engine
+        /// thus forcing a move.
+        /// </summary>
+        public void ForceEngineMove()
+        {
+            EngineMessageProcessor.StopEngineEvaluation(false);
+        }
 
         /// <summary>
         /// Stops any evaluation that is currently happening.

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         Title="Chess Forge" Height="900" Width="1676" Loaded="Window_Loaded" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" Closing="ChessForgeMain_Closing" 
@@ -66,8 +67,8 @@
                 </Grid.ColumnDefinitions>
                 <Menu x:Name = "UiMainMenu" VerticalAlignment="Center" Margin="0,0,0,0" Background="LightGray" BorderBrush="#993C3C3C" Grid.ColumnSpan="3" Height="20">
                     <!-- Game menu -->
-                    <MenuItem x:Name ="MenuFile"  Header="File" Margin="0,0,0,0" >
-                        <MenuItem x:Name="UiMnNewWorkbook" Header="New Workbook" Click="UiMnNewWorkbook_Click" />
+                    <MenuItem x:Name ="MenuFile"  Header="{x:Static p:Resources.File}" Margin="0,0,0,0" >
+                        <MenuItem x:Name="UiMnNewWorkbook" Header="{x:Static p:Resources.NewWorkbook}" Click="UiMnNewWorkbook_Click" />
                         <MenuItem x:Name="UiMnOpenWorkbook" Header="Open Workbook" Click="UiMnOpenWorkbook_Click"/>
                         <MenuItem x:Name="UiMnCloseWorkbook" Header="Close Workbook" Click="UiMnCloseWorkbook_Click" />
                         <Separator />
