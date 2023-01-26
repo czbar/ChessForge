@@ -118,9 +118,6 @@
       <DependentUpon>GameHeaderDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Article.cs" />
-    <Compile Include="GenericPgnInfoDialog.xaml.cs">
-      <DependentUpon>GenericPgnInfoDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="LearningMode.cs" />
     <Compile Include="AppState.cs" />
     <Compile Include="AppTimers.cs" />
@@ -232,10 +229,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GameHeaderDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GenericPgnInfoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
