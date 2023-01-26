@@ -4,13 +4,29 @@
 # COMMON TERMS
 #
 
-#Workbook
+# Workbook
 Workbook=Workbook
 
-#Chapter
+#Title
+Title=Title
+
+# Workbook title
+WorkbookTitle=Workbook Title
+
+
+# Event
+Event=Event
+
+# Header
+Header=Header
+
+# Preamble
+Preamble=Preamble
+
+# Chapter
 Chapter=Chapter
 
-#Chapters plural
+# Chapters plural
 Chapters=Chapters
 
 # Study Tree
@@ -28,6 +44,15 @@ Exercise=Exercise
 # Exercises plural 
 Exercise=Exercises
 
+#Round
+Round=Round
+
+#Date
+Date=Date
+
+# A line in a variation tree
+Line=Line
+
 # Bookmark
 Bookmark=Bookmark
 
@@ -39,6 +64,42 @@ Move=Move
 
 # Moves plural
 Moves=Moves
+
+# Position
+Position=Position
+
+#Comment
+Comment=Comment
+
+#Annotation
+Annotation=Annotation
+
+#Annotations
+Annotations=Annotations
+
+#Evaluation
+Evaluation=Evaluation
+
+#Version
+Version=Version
+
+#Chess engine
+ChessEngine=Chess Engine
+
+#Openings
+Openings=Openings
+
+#Tablebases
+Tablebases=Tablebases
+
+#Exit
+Exit=Exit
+
+#Close
+Close=Close
+
+#Item
+Item=Item
 
 # Request to evaluate a position
 EvaluatePosition=Evaluate Position
@@ -52,7 +113,7 @@ EvaluatePosition=Evaluate Line
 
 
 # TOP LEVEL MENU: File
-MenuFile=File
+File=File
 
 # Create a new Workbook
 NewWorkbook=New Workbook
@@ -75,7 +136,7 @@ BackUpThisVersion=Back up this Version ...
 
 
 # TOP LEVEL MENU: Training
-MenuTraining=Training
+Training=Training
 
 # Start a new training session
 Start New Session=Start New Session
@@ -89,7 +150,7 @@ ExitTraining=Exit Training
 
 
 # TOP LEVEL MENU: Edit
-MenuEdit=Edit
+Edit=Edit
 
 # Opens the Annotations dialog
 Annotations=Annotations
@@ -103,19 +164,22 @@ Undo=Undo
 
 
 # TOP LEVEL MENU: View
-MenuView=View
+View=View
+
+# Views plural
+Views=Views
 
 # Flips the board's orientation
 FlipBoard=Flip Board
 
 # Opens the Application Options dialog
-ApplicationOptions=Application Options...
+ApplicationOptions=Application Options
 
 # Opens the Workbook Options dialog
-WorkbookOptions=Workbook Options...
+WorkbookOptions=Workbook Options
 
 # Opens a dialog allowing the user to select chess engine executable file
-AnalysisEngine=Analysis Engine...
+AnalysisEngine=Analysis Engine
 
 # Increase font size
 IncreaseFontSize=Increase Font Size
@@ -135,7 +199,7 @@ RestoreFontDefaults=Restore Font Defaults
 
 
 # TOP LEVEL MENU: Help
-MenuTraining=Help
+Help=Help
 
 # Opens user's browser and navigates to Chess Forge's Wiki
 Wiki=Wiki
@@ -450,6 +514,9 @@ White=White
 # Black
 Black=Black
 
+# Side to move
+SideToMove=Side to Move
+
 # Evaluation							
 #! Must be ultra short, max 3 chars							
 Evaluation=Ev
@@ -491,6 +558,8 @@ ExitGame=Exit Game
 # Show explorers
 ShowExplorer=Show Explorer
 
+#Clear
+Clear=Clear
 
 ##################################
 #
@@ -522,7 +591,8 @@ PositionSetup=Position Setup
 InvalidPositionSetup=Invalid Position Setup
 
 # Import from a PGN file
-ImportPgn=Import PGN
+ImportPgn=Import from PGN
+
 
 ##################################
 #
@@ -649,3 +719,194 @@ DeleteExerciseMove=and will be deleted. Proceed anyway?
 # Confirmation to delete moves from exercise solution
 DeleteExerciseMoves=and will be deleted. Proceed anyway?
 
+
+
+
+##################################
+#
+# Dialogs
+#
+
+
+# Quiz points
+QuizPoints=Quiz points
+
+# Source Forge Options dialog title
+ApplicationOptions=Application Options
+
+# Engine Executable
+EngineExecutable=Engine Executable
+
+# Engine Time per Move in seconds (group frame title)
+EngineTimePerMove=Engine Time per Move (s)
+
+# Time to think in the Game (inside a frame titled "Engine Time per Move")
+ThinkTimeInGame=In Game
+
+# Move Replay(group frame title)
+MoveReplay=Move Replay
+
+# Time per move in auto replay in seconds (inside a frame titled "Move Replay")
+AutoReplaySpeed=Auto Speed (s)
+
+# Allow manual replay with a mouse wheel 
+AllowMouseWheel=Allow Mouse Wheel
+
+# Whether to show inline table with move options at a fork
+ShowMovesAtFork=Show Moves at Fork
+
+# Whether sound for the moves is turned on
+SoundOn=Sound On
+
+#Current version
+CurrentVersion=The current version $0 will be backed up in $1
+
+# Updated version number
+UpdatedVersion=The updated version number will be $0
+
+#Check box to increment major version
+IncrementMajorVersion=Increment major version
+
+# Create a new chapter from a variation line
+NewChapterFromLine=Create New Chapter From Line
+
+# A new chapter will be created from the selected sub-tree.
+NewChapterToBeCreate=A new chapter will be created from the selected sub-tree.
+
+# Check box to delete sub-tree from the source chapter
+DeleteSubTreeFromSource=Delete the sub-tree from the original chapter.
+
+# Check box to go to the chapter
+GotoNewChapter=Go to the newly created chapter.
+
+# Chapter Title
+ChapterTitle=Chapter Title
+
+# Select a date
+#SelectDate=Select a date
+
+# Ignore Day and Month
+IgnoreDayMonth=Ignore Day and Month
+
+# Ignore Day
+IgnoreDay=Ignore Day
+
+# Game Preview
+GamePreview=Game Preview
+
+# Previous Game
+PreviousGame=Previous Game
+
+# Next Game
+NextGame=Next Game
+
+# View on lichess
+ViewOnLichess=View on lichess
+
+# Import into Chapter
+ImportIntoChapter=Import into Chapter
+
+# Downloading game from lichess
+DownloadGameFromLichess=Downloading Game From lichess.org.
+
+# Please wait
+PleaseWait=Please Wait
+
+# Replay speed
+ReplaySpeed=Replay Speed
+
+# Fast spped
+Fast=Fast
+
+# Medium speed
+Medium=Medium
+
+# Slow speed
+Slow=Slow
+
+# Empty game text
+EmptyGameText=Game text is empty.
+
+# Game not found
+GameNotFound=Game not found.
+
+# Game download error
+GameDownloadError=Game download error:
+
+# FEN
+FEN=FEN
+
+# White to play
+WhiteToPlay=White to Play
+
+# Black to play
+BlackToPlay=Black to Play
+
+# En passant
+EnPassant=En Passant
+
+# Title of the box with allowed castling directions
+Castling=Castling
+
+# Starting position
+StartingPosition=Starting position
+
+# Clear board
+ClearBoard=Clear Board
+
+# Select Games/Exercises
+SelectGameAndExercises=Select Games and/or Exercises
+
+# Select items
+SelectItems=Select Items
+
+# Show all chapters
+ShowAllChapters=Show All Chapters
+
+# Select chapter
+SelectChapter=Select Chapter
+
+# Select chapters to import
+SelectChaptersToImport=Select Chapters to Import
+
+# Merge games and copy
+MergeGamesAndCopy=Merge Games into the Study Tree and Copy them into the Games section.
+
+# Merge games, no copy
+MergeGamesNoCopy=Merge Games into the Study Tree only (do not copy games).
+
+# Copy games, no merge
+CopyGamesNoMerge=Copy Games into the Games section only (leave the study tree empty)
+
+# Create a separate chapter for each game
+CreateChapterPerGame=Create Chapter per Game
+
+# New version available from 
+NewVersionAvailable=New version $0 available from
+
+# Checkbox to not show update reminde
+NoShowForCurrentVersion=Do not show for this version.
+
+# Training side
+TrainingSide=Training Side
+
+# Initial board orientation
+InitBoardOrientation=Initial Board Orientation (side to place at the bottom):
+
+# Tooltip for side to move
+TooltipSideToMove=Determines some default settings
+
+# Tooltip for workbook version
+TooltipWorkbookVersion=To increment version select File->Backup Version
+
+# Errors encountered while parsing a PGN file
+PgnErrors=PGN parsing errors
+
+# 1 entity was valid
+OneEntityValid=1 entity was valid
+
+# Multiple entities were valid
+MultiEntitiesValid=$0  entities were valid
+
+# not imported due to wrong type
+BadTypeForImport=but not imported due to not being of the $0 type
