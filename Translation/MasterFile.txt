@@ -850,3 +850,18 @@ MultiEntitiesValid=$0  entities were valid
 
 #not imported due to wrong type
 BadTypeForImport=but not imported due to not being of the $0 type
+
+#Select Solving Mode
+SelectSolvingMode=Select Solving Mode
+
+#Guess the next move
+GuessNextMove=Guess the next move
+
+#Enter your analysis and submit
+EnterAnalysis=Enter your analysis and submit
+
+#Show/Edit solution
+ShowSolution=Show/Edit Solution
+
+#Hide solution
+HideSolution=Hide Solution
