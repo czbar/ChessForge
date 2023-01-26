@@ -2030,8 +2030,7 @@ namespace ChessForge
 
             if (dlg.ExitOK)
             {
-                if (dlg.ChangedEnginePath)
-                    Configuration.WriteOutConfiguration();
+                Configuration.WriteOutConfiguration();
                 if (dlg.ChangedEnginePath)
                 {
                     ReloadEngine();
@@ -2071,6 +2070,14 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Sends the Stop command to the engine
+        /// thus forcing a move.
+        /// </summary>
+        public void ForceEngineMove()
+        {
+            EngineMessageProcessor.StopEngineEvaluation(false);
+        }
 
         /// <summary>
         /// Stops any evaluation that is currently happening.
