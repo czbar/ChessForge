@@ -281,7 +281,7 @@ AutoSave=
 #description:  Explorers label
 #! Keep short
 #english: Explorers=Explorers
-Explorers=
+Explorers=Biblioteka
 
 #description:  Engine label
 #! Keep short
@@ -300,11 +300,11 @@ TurnAutoSaveOn=
 
 #description:  Tool tip for turning Explorers off
 #english: TurnExplorersOff=Disable Opening Explorer and Tablebases
-TurnExplorersOff=
+TurnExplorersOff=Schowaj Biblioteki
 
 #description:  Tool tip for turning Explorers on
 #english: TurnExplorersOn=Use Opening Explorer and Tablebases
-TurnExplorersOn=
+TurnExplorersOn=Pokaż biblioteki
 
 
 #description:  Tool tip for turning Engine off
@@ -701,7 +701,7 @@ ExitGame=
 
 #description:  Show explorers
 #english: ShowExplorer=Show Explorer
-ShowExplorer=
+ShowExplorer=Pokaż Bibliotekę
 
 #description: Clear
 #english: Clear=Clear
@@ -738,11 +738,11 @@ UpdateCheck=
 
 #description: Position Setup
 #english: PositionSetup=Position Setup
-PositionSetup=
+PositionSetup=Edytor Pozycji
 
 #description:  Invalid Position Setup
 #english: InvalidPositionSetup=Invalid Position Setup
-InvalidPositionSetup=
+InvalidPositionSetup=Niepoprawna Pozycja
 
 #description:  Import from a PGN file
 #english: ImportPgn=Import from PGN
@@ -1075,7 +1075,7 @@ EnPassant=
 
 #description:  Title of the box with allowed castling directions
 #english: Castling=Castling
-Castling=
+Castling=Roszada
 
 #description:  Starting position
 #english: StartingPosition=Starting position
