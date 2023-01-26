@@ -74,9 +74,6 @@ Comment=Comment
 #Annotation
 Annotation=Annotation
 
-#Annotations
-Annotations=Annotations
-
 #Evaluation
 Evaluation=Evaluation
 
@@ -105,7 +102,7 @@ Item=Item
 EvaluatePosition=Evaluate Position
 
 # Request to evaluate a line
-EvaluatePosition=Evaluate Line
+EvaluateLine=Evaluate Line
 
 #
 # MAIN MENU
