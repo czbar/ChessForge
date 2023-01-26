@@ -42,7 +42,7 @@ Games=Games
 Exercise=Exercise
 
 # Exercises plural 
-Exercise=Exercises
+Exercises=Exercises
 
 #Round
 Round=Round
@@ -272,28 +272,8 @@ PlayAgainstComputer=Play Against Engine
 # Exit game
 ExitGame=Exit Game
 
-
-#
-# TAB VIEW TITLES
-#
-
-# Chapters
-Chapters=Chapters
-
 # Study Tree
 StudyTree=Study
-
-# Bookmarks
-Bookmarks=Bookmarks
-
-# Study Tree
-StudyTree=Study
-
-# Games
-Games=Games
-
-# Exercises
-Exercises=Exercises
 
 
 #
@@ -371,12 +351,6 @@ MoveExerciseDown=Move Exercise Down
 # Move exercise to another chapter
 MoveExerciseToChapter=Move Exercise To Chapter...
 
-# Import games
-ImportGames=Import Games
-
-# Import Exercises
-ImportExercises=Import Exercises
-
 # Deleted selected chapter
 DeleteSelectedChapter=Delete Selected Chapter
 
@@ -388,9 +362,6 @@ DeleteThisGame=Delete This Game
 
 # Delete selected exercise
 DeleteSelectedExercise=Delete Selected Exercise
-
-# Delete clicked exercise
-DeleteThisExercise=Delete This Exercise
 
 
 #
@@ -408,9 +379,6 @@ DeleteMovesFromHere=Delete Moves From Here
 
 # Create a new chpater from the selected line
 CreateNewChapterFromLine=Create New Chapter From Line
-
-# Bookmark the current position
-BookmarkThisPosition=Bookmark This Position
 
 # Bookmark the current position and position for all alternative moves
 BookmarkAllOptionsHere=Bookmark All Options Here
@@ -441,9 +409,6 @@ Chapter0of0=Chapter 0 of 0
 # CONTEXT MENU for Bookmarks
 #
 
-# The "Bookmark" term
-Bookmark=Bookmark
-
 # Start training from the selected bookmark
 StartTrainingFromThisBookmark=Start Training from This Bookmark
 
@@ -472,9 +437,6 @@ EditGameHeader=Edit Game Header
 
 # Merge selected line into the Study Tree of the Chapter
 MergeSelectionIntoStudy=Merge Selection Into Study
-
-# Delete the selected game
-DeleteThisGame=Delete This Game
 
 # Game counter
 #! Keep 0's as placeholders for numbers
@@ -516,7 +478,7 @@ SideToMove=Side to Move
 
 # Evaluation							
 #! Must be ultra short, max 3 chars							
-Evaluation=Ev
+EvaluationShort=Ev
 
 
 #
@@ -528,10 +490,10 @@ Evaluation=Ev
 PreviewGame=Preview Game
 
 # Import game into the active chapter
-ImportIntoChapter=Import into Active Chapter
+ImportIntoThisChapter=Import into Active Chapter
 
 # Open the user's browser to view the game on lichess.org
-ViewOnLichess=View on Lichess.org
+ViewOnLichess=View on lichess
 
 
 
@@ -545,12 +507,6 @@ Ok=OK
 
 #Cancel
 Cancel=Cancel
-
-# Exit training
-ExitTraining=Exit Training
-
-# Exit Game
-ExitGame=Exit Game
 
 # Show explorers
 ShowExplorer=Show Explorer
@@ -609,7 +565,7 @@ ChessEngineNotAvailable=Chess Engine not available
 CouldNotImportGame=Could not import game 
 
 # Confirmation to delete all Bookmarks	
-DeleteAllBookmarks=This will delete all Bookmarks. Proceed?
+ConformDeleteAllBookmarks=This will delete all Bookmarks. Proceed?
 
 # Confirmation to replace bookmarks
 GeneratedBookmarksReplace=Generated bookmarks will replace the ones in the Workbook. Proceed?
@@ -638,9 +594,6 @@ GameInProgress=Game with the Computer is in Progress
 # Unrecognized file format
 UnrecognizedFileFormat=Unrecognized file format 
 
-# Chess engine not available
-EngineNotAvailable=Chess Engine is not available.
-
 # Select move from which to start a game against the engine
 SelectEngineStartMove=Select the move from which to start.
 
@@ -656,9 +609,6 @@ NoGamesInFile=No Games found in $0.
 # Bookmark already exists
 BookmarkAlreadyExists=This bookmark already exists
 
-# Bookmarks already exists
-BookmarksAlreadyExist=Bookmarks already exist
- 
 # Error adding bookmarks 
 ErrorAddBookmarks=Failed to add the bookmarks.
 
@@ -666,7 +616,7 @@ ErrorAddBookmarks=Failed to add the bookmarks.
 NoTrainingStartMove=No move selected to start training from.
 
 # Confirmation to exit training session
-ExitTraining=Exit the training session?
+ExitTrainingSession=Exit the training session?
 
 # Restart the training session
 RestartTraining=Restart the training session?
@@ -684,10 +634,10 @@ RestartFromMove=Restart from $0?
 NoEngineForTraining=Engine not available. Training cannot continue.\n You can roll moves back or restart.
 
 # Unexpected error processing user's move
-UnexpectedErrorInUserMove=Unexpected error while processing user\'s move
+UnexpectedErrorInUserMove=Unexpected error while processing user's move
 
 # Close the Workbook
-CloseWorkbook=Close the current Workbook?
+CloseThisWorkbook=Close the current Workbook?
 
 # Last file not found
 #LastFileNotFound=Most recent file $0 could not be found.
@@ -727,9 +677,6 @@ DeleteExerciseMoves=and will be deleted. Proceed anyway?
 
 # Quiz points
 QuizPoints=Quiz points
-
-# Source Forge Options dialog title
-ApplicationOptions=Application Options
 
 # Engine Executable
 EngineExecutable=Engine Executable
@@ -797,9 +744,6 @@ PreviousGame=Previous Game
 # Next Game
 NextGame=Next Game
 
-# View on lichess
-ViewOnLichess=View on lichess
-
 # Import into Chapter
 ImportIntoChapter=Import into Chapter
 
@@ -826,9 +770,6 @@ EmptyGameText=Game text is empty.
 
 # Game not found
 GameNotFound=Game not found.
-
-# Game download error
-GameDownloadError=Game download error:
 
 # FEN
 FEN=FEN
