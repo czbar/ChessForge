@@ -240,7 +240,7 @@
   <data name="Training" xml:space="preserve">
     <value>Training</value>
   </data>
-  <data name="Start New Session" xml:space="preserve">
+  <data name="StartNewSession" xml:space="preserve">
     <value>Start New Session</value>
   </data>
   <data name="RestartTrainingSession" xml:space="preserve">
@@ -271,13 +271,13 @@
     <value>Flip Board</value>
   </data>
   <data name="ApplicationOptions" xml:space="preserve">
-    <value>Application Options</value>
+    <value>Application Options...</value>
   </data>
   <data name="WorkbookOptions" xml:space="preserve">
-    <value>Workbook Options</value>
+    <value>Workbook Options...</value>
   </data>
   <data name="AnalysisEngine" xml:space="preserve">
-    <value>Analysis Engine</value>
+    <value>Analysis Engine...</value>
   </data>
   <data name="IncreaseFontSize" xml:space="preserve">
     <value>Increase Font Size</value>
@@ -333,6 +333,9 @@
   <data name="TurnEngineOn" xml:space="preserve">
     <value>Turn the Engine On</value>
   </data>
+  <data name="TopGames" xml:space="preserve">
+    <value>Top Games</value>
+  </data>
   <data name="StartTrainingFromHere" xml:space="preserve">
     <value>Start Training from Here</value>
   </data>
@@ -361,10 +364,10 @@
     <value>Study</value>
   </data>
   <data name="RestartGameAfter" xml:space="preserve">
-    <value>Restart Game After</value>
+    <value>Restart Game After </value>
   </data>
   <data name="RestartFrom" xml:space="preserve">
-    <value>Restart from</value>
+    <value>Restart from </value>
   </data>
   <data name="CreateNewChapter" xml:space="preserve">
     <value>Create New Chapter</value>
@@ -843,5 +846,20 @@
   </data>
   <data name="BadTypeForImport" xml:space="preserve">
     <value>but not imported due to not being of the $0 type</value>
+  </data>
+  <data name="SelectSolvingMode" xml:space="preserve">
+    <value>Select Solving Mode</value>
+  </data>
+  <data name="GuessNextMove" xml:space="preserve">
+    <value>Guess the next move</value>
+  </data>
+  <data name="EnterAnalysis" xml:space="preserve">
+    <value>Enter your analysis and submit</value>
+  </data>
+  <data name="ShowSolution" xml:space="preserve">
+    <value>Show/Edit Solution</value>
+  </data>
+  <data name="HideSolution" xml:space="preserve">
+    <value>Hide Solution</value>
   </data>
 </root>
