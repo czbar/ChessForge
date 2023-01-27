@@ -69,64 +69,64 @@
                     <!-- Game menu -->
                     <MenuItem x:Name ="MenuFile"  Header="{x:Static p:Resources.File}" Margin="0,0,0,0" >
                         <MenuItem x:Name="UiMnNewWorkbook" Header="{x:Static p:Resources.NewWorkbook}" Click="UiMnNewWorkbook_Click" />
-                        <MenuItem x:Name="UiMnOpenWorkbook" Header="Open Workbook" Click="UiMnOpenWorkbook_Click"/>
-                        <MenuItem x:Name="UiMnCloseWorkbook" Header="Close Workbook" Click="UiMnCloseWorkbook_Click" />
+                        <MenuItem x:Name="UiMnOpenWorkbook" Header="{x:Static p:Resources.OpenWorkbook}" Click="UiMnOpenWorkbook_Click"/>
+                        <MenuItem x:Name="UiMnCloseWorkbook" Header="{x:Static p:Resources.CloseWorkbook}" Click="UiMnCloseWorkbook_Click" />
                         <Separator />
-                        <MenuItem x:Name="UiMnWorkbookSave" Header="Save" Click="UiMnWorkbookSave_Click" InputGestureText="Ctrl+S" />
-                        <MenuItem x:Name="UiMnWorkbookSaveAs" Header="Save As ..." Click="UiMnWorkbookSaveAs_Click" />
-                        <MenuItem x:Name="UiMnBackupVersion" Header="Back up this Version ..." Click="UiMnBackupVersion_Click" />
+                        <MenuItem x:Name="UiMnWorkbookSave" Header="{x:Static p:Resources.Save}" Click="UiMnWorkbookSave_Click" InputGestureText="Ctrl+S" />
+                        <MenuItem x:Name="UiMnWorkbookSaveAs" Header="{x:Static p:Resources.SaveAs}" Click="UiMnWorkbookSaveAs_Click" />
+                        <MenuItem x:Name="UiMnBackupVersion" Header="{x:Static p:Resources.BackUpThisVersion}" Click="UiMnBackupVersion_Click" />
                         <Separator />
                     </MenuItem>
-                    <MenuItem Header="Training" Margin="0,0,0,0">
-                        <MenuItem x:Name="UiMnStartTraining"  Header="Start New Session"  Click="UiMnStartTrainingHere_Click"/>
-                        <MenuItem x:Name="UiMnRestartTraining"  Header="Restart Training" Click="UiMnTrainRestartTraining_Click"/>
-                        <MenuItem x:Name="UiMnExitTraining" Header="Exit Training" Click="UiMnStopTraining_Click"/>
+                    <MenuItem Header="{x:Static p:Resources.Training}" Margin="0,0,0,0">
+                        <MenuItem x:Name="UiMnStartTraining"  Header="{x:Static p:Resources.StartNewSession}"  Click="UiMnStartTrainingHere_Click"/>
+                        <MenuItem x:Name="UiMnRestartTraining"  Header="{x:Static p:Resources.RestartTraining}" Click="UiMnTrainRestartTraining_Click"/>
+                        <MenuItem x:Name="UiMnExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
                     </MenuItem>
-                    <MenuItem Header="Edit" Margin="0,0,0,0">
-                        <MenuItem x:Name="UiMnAnnotations" Header="Annotations" Click="UiMnAnnotationsDialog_Click" />
+                    <MenuItem Header="{x:Static p:Resources.Edit}" Margin="0,0,0,0">
+                        <MenuItem x:Name="UiMnAnnotations" Header="{x:Static p:Resources.Annotations}" Click="UiMnAnnotationsDialog_Click" />
                         <Separator />
-                        <MenuItem x:Name="UiMnMergeChapters" Header="Merge Chapters..." Click="UiMnMergeChapters_Click" />
+                        <MenuItem x:Name="UiMnMergeChapters" Header="{x:Static p:Resources.MergeChapters}" Click="UiMnMergeChapters_Click" />
                         <Separator />
-                        <MenuItem x:Name="UiMnUndo" Header="Undo" Click="UiMnUndo_Click" InputGestureText="Ctrl+Z" />
+                        <MenuItem x:Name="UiMnUndo" Header="{x:Static p:Resources.Undo}" Click="UiMnUndo_Click" InputGestureText="Ctrl+Z" />
                     </MenuItem>
-                    <MenuItem Header="View" Margin="0,0,0,0">
-                        <MenuItem Header="Flip Board" Click="UiMnFlipBoard_Click" InputGestureText="Ctrl+F" >
+                    <MenuItem Header="{x:Static p:Resources.View}" Margin="0,0,0,0">
+                        <MenuItem Header="{x:Static p:Resources.FlipBoard}" Click="UiMnFlipBoard_Click" InputGestureText="Ctrl+F" >
                             <MenuItem.Icon>
                                 <Image Source="Resources/Images/flip_board.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
                         <Separator />
-                        <MenuItem Header="Application Options..." Click="UiMnApplicationOptions_Click" />
-                        <MenuItem Header="Workbook Options..." Click="UiMnWorkbookOptions_Click" />
-                        <MenuItem Header="Analysis Engine..." Click="UiMnSelectEngine_Click" />
+                        <MenuItem Header="{x:Static p:Resources.ApplicationOptions}" Click="UiMnApplicationOptions_Click" />
+                        <MenuItem Header="{x:Static p:Resources.WorkbookOptions}" Click="UiMnWorkbookOptions_Click" />
+                        <MenuItem Header="{x:Static p:Resources.AnalysisEngine}" Click="UiMnSelectEngine_Click" />
                         <Separator />
-                        <MenuItem x:Name="UiMnIncreaseFontSize" Header="Increase Font Size" Click="UiBtnFontSizeUp_Click" >
+                        <MenuItem x:Name="UiMnIncreaseFontSize" Header="{x:Static p:Resources.IncreaseFontSize}" Click="UiBtnFontSizeUp_Click" >
                             <MenuItem.Icon>
                                 <Image Source="Resources/Images/FontSizeUp.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem x:Name="UiMnDecreaseFontSize" Header="Decrease Font Size" Click="UiBtnFontSizeDown_Click">
+                        <MenuItem x:Name="UiMnDecreaseFontSize" Header="{x:Static p:Resources.DecreaseFontSize}" Click="UiBtnFontSizeDown_Click">
                             <MenuItem.Icon>
                                 <Image Source="Resources/Images/FontSizeDown.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem x:Name="UiMnFixVariableFontSize" Header="Use Fix/Variable Font Size" Click="UiMnFixVariableFont_Click">
+                        <MenuItem x:Name="UiMnFixVariableFontSize" Header="PLACEHOLDER Use Fix/Variable Font Size" Click="UiMnFixVariableFont_Click">
                             <MenuItem.Icon>
                                 <Image Source="Resources/Images/FontSizeFixed.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem  x:Name="UiMnFontDefaults" Header="Restore Font Defaults" Click="UiMnFontDefaults_Click" />
+                        <MenuItem  x:Name="UiMnFontDefaults" Header="{x:Static p:Resources.RestoreFontDefaults}" Click="UiMnFontDefaults_Click" />
                     </MenuItem>
                     <MenuItem Header="Help" Margin="0,0,0,0">
-                        <MenuItem Header="Wiki" Click="UiMnHelpWiki_Click" />
-                        <MenuItem Header="Check for Updates" Click="UiMnCheckForUpdates_Click" />
+                        <MenuItem Header="{x:Static p:Resources.Wiki}" Click="UiMnHelpWiki_Click" />
+                        <MenuItem Header="{x:Static p:Resources.CheckForUpdates}" Click="UiMnCheckForUpdates_Click" />
                         <Separator />
-                        <MenuItem Header="About" Click="UiMnHelpAbout_Click" />
+                        <MenuItem Header="{x:Static p:Resources.About}" Click="UiMnHelpAbout_Click" />
                     </MenuItem>
                 </Menu>
-                <Label Grid.Column="1"  Content="AutoSave" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,2,0,0" Height="28" Width="60"  />
-                <Image x:Name="UiImgAutoSaveOn" ToolTip="Turn AutoSave Off" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOn.png" Visibility="Hidden" MouseDown="UiImgAutoSaveOn_MouseDown" />
-                <Image x:Name="UiImgAutoSaveOff" ToolTip="Turn AutoSave On" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOff.png" MouseDown="UiImgAutoSaveOff_MouseDown" />
+                <Label Grid.Column="1"  Content="{x:Static p:Resources.AutoSave}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,2,0,0" Height="28" Width="60"  />
+                <Image x:Name="UiImgAutoSaveOn" ToolTip="{x:Static p:Resources.TurnAutoSaveOff}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOn.png" Visibility="Hidden" MouseDown="UiImgAutoSaveOn_MouseDown" />
+                <Image x:Name="UiImgAutoSaveOff" ToolTip="{x:Static p:Resources.TurnAutoSaveOn}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOff.png" MouseDown="UiImgAutoSaveOff_MouseDown" />
                 <Button Name="UiBtnFontSizeUp" BorderThickness="0"  Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="145,0,0,0" ToolTip="Increase Font Size" Click="UiBtnFontSizeUp_Click">
                     <Image Source="Resources/Images/FontSizeUp.png" Width="18" Height="18"></Image>
                 </Button>
@@ -139,12 +139,12 @@
                 <Button Name="UiBtnFontSizeVariable" BorderThickness="0" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="215,0,0,0" ToolTip="Use Variable Font Size" Visibility="Hidden" Click="UiBtnFontSizeVariable_Click">
                     <Image Source="Resources/Images/FontSizeVariable.png" Width="18" Height="18"></Image>
                 </Button>
-                <Label Grid.Column="1"  Content="Explorers" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="290,2,0,0" Height="28" Width="60"  />
-                <Image x:Name="UiImgExplorersOn" ToolTip="Disable Opening Explorer and Tablebases" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="355,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOn.png" Visibility="Collapsed" PreviewMouseDown="ExplorersToggleOn_PreviewMouseDown" />
-                <Image x:Name="UiImgExplorersOff" ToolTip="Use Opening Explorer and Tablebases" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="355,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOff.png" Visibility="Visible" PreviewMouseDown="ExplorersToggleOff_PreviewMouseDown" />
-                <Label Grid.Column="1"  Content="Engine" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="425,2,0,0" Height="28" Width="60"  />
-                <Image x:Name="UiImgEngineOn" Cursor="Hand" ToolTip="Turn the Engine Off" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="475,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOn.png" Visibility="Collapsed" PreviewMouseLeftButtonDown="EngineToggleOn_OnPreviewMouseLeftButtonDown" />
-                <Image x:Name="UiImgEngineOff" Cursor="Hand" ToolTip="Turn the Engine On" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="475,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOff.png" Visibility="Visible"  PreviewMouseLeftButtonDown="EngineToggleOff_OnPreviewMouseLeftButtonDown" />
+                <Label Grid.Column="1"  Content="{x:Static p:Resources.Explorers}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="290,2,0,0" Height="28" Width="60"  />
+                <Image x:Name="UiImgExplorersOn" ToolTip="{x:Static p:Resources.TurnExplorersOff}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="355,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOn.png" Visibility="Collapsed" PreviewMouseDown="ExplorersToggleOn_PreviewMouseDown" />
+                <Image x:Name="UiImgExplorersOff" ToolTip="{x:Static p:Resources.TurnExplorersOn}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="355,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOff.png" Visibility="Visible" PreviewMouseDown="ExplorersToggleOff_PreviewMouseDown" />
+                <Label Grid.Column="1"  Content="{x:Static p:Resources.Engine}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="425,2,0,0" Height="28" Width="60"  />
+                <Image x:Name="UiImgEngineOn" Cursor="Hand" ToolTip="{x:Static p:Resources.TurnEngineOff}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="475,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOn.png" Visibility="Collapsed" PreviewMouseLeftButtonDown="EngineToggleOn_OnPreviewMouseLeftButtonDown" />
+                <Image x:Name="UiImgEngineOff" Cursor="Hand" ToolTip="{x:Static p:Resources.TurnEngineOn}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="475,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOff.png" Visibility="Visible"  PreviewMouseLeftButtonDown="EngineToggleOff_OnPreviewMouseLeftButtonDown" />
                 <ProgressBar x:Name="UiPbEngineThinking" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="5" Margin="530,0,0,0" VerticalAlignment="Center" Width="100"/>
             </Grid>
         </StackPanel>
@@ -167,23 +167,23 @@
                     <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680" ContextMenuOpening="MainCanvas_ContextMenuOpening">
                         <Canvas.ContextMenu>
                             <ContextMenu  x:Name="UiMnMainBoard">
-                                <MenuItem x:Name="UiMnciStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
-                                <MenuItem x:Name="UiMnciStartTraining"  Header="Start Training from a Bookmark" Click="UiMnStartTraining_Click"/>
-                                <MenuItem x:Name="UiMnciRestartTraining"  Header="Restart Training" Click="UiMnTrainRestartTraining_Click"/>
-                                <MenuItem x:Name="UiMnciExitTraining" Header="Exit Training" Click="UiMnStopTraining_Click"/>
+                                <MenuItem x:Name="UiMnciStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
+                                <MenuItem x:Name="UiMnciStartTraining"  Header="{x:Static p:Resources.StartTrainingFromBookmark}" Click="UiMnStartTraining_Click"/>
+                                <MenuItem x:Name="UiMnciRestartTraining"  Header="{x:Static p:Resources.RestartTraining}" Click="UiMnTrainRestartTraining_Click"/>
+                                <MenuItem x:Name="UiMnciExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
                                 <Separator x:Name="UiMncMainBoardSepar_1" />
-                                <MenuItem x:Name="UiMnMain_CreateExercise" Header="Create Exercise from Here..." Click="UiMnStudy_CreateExercise_Click"  />
-                                <MenuItem x:Name="UiMnciCopyFen" Header="Copy FEN to Clipboard" Click="UiMnciCopyFen_Click" />
+                                <MenuItem x:Name="UiMnMain_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnStudy_CreateExercise_Click"  />
+                                <MenuItem x:Name="UiMnciCopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnciCopyFen_Click" />
                                 <Separator x:Name="UiMncMainBoardSepar_1a" />
-                                <MenuItem x:Name="UiMnciEvalPos" Header="Evaluate Position" Click="UiMnEvaluatePosition_Click" />
-                                <MenuItem x:Name="UiMnciEvalLine" Header="Evaluate Line" Click="UiMnEvaluateLine_Click" />
+                                <MenuItem x:Name="UiMnciEvalPos" Header="{x:Static p:Resources.EvaluatePosition}" Click="UiMnEvaluatePosition_Click" />
+                                <MenuItem x:Name="UiMnciEvalLine" Header="{x:Static p:Resources.EvaluateLine}" Click="UiMnEvaluateLine_Click" />
                                 <Separator x:Name="UiMncMainBoardSepar_2" />
-                                <MenuItem x:Name="UiMnciBookmarkPosition" Header="Bookmark This Position" Click="UiMnBookmarkPosition_Click" />
+                                <MenuItem x:Name="UiMnciBookmarkPosition" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnBookmarkPosition_Click" />
                                 <Separator x:Name="UiMncMainBoardSepar_4" />
-                                <MenuItem x:Name="UiMnciReplay" Header="Replay"  Click="UiMnReplayLine_Clicked"/>
+                                <MenuItem x:Name="UiMnciReplay" Header="{x:Static p:Resources.Replay}"  Click="UiMnReplayLine_Clicked"/>
                                 <Separator x:Name="UiMncMainBoardSepar_3" />
-                                <MenuItem x:Name="UiMnciPlayEngine" Header="Play Against Computer " Click="UiMnPlayEngine_Click" />
-                                <MenuItem x:Name="UiMnciExitEngineGame" Header="Exit Game " Click="UiMnExitEngineGame_Click" />
+                                <MenuItem x:Name="UiMnciPlayEngine" Header="{x:Static p:Resources.PlayAgainstComputer}" Click="UiMnPlayEngine_Click" />
+                                <MenuItem x:Name="UiMnciExitEngineGame" Header="{x:Static p:Resources.ExitGame}" Click="UiMnExitEngineGame_Click" />
                             </ContextMenu>
                         </Canvas.ContextMenu>
                         <Canvas.Background>
@@ -206,24 +206,24 @@
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="#" Width="30" Binding="{Binding Number}" CellStyle="{StaticResource DisableSelection}" CanUserReorder="False" />
-                        <DataGridTextColumn Header="White" Width="60" Binding="{Binding WhitePly}" CanUserReorder="False" />
-                        <DataGridTextColumn Header="Black" Width="60" Binding="{Binding BlackPly}" CanUserReorder="False"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.White}" Width="60" Binding="{Binding WhitePly}" CanUserReorder="False" />
+                        <DataGridTextColumn Header="{x:Static p:Resources.Black}" Width="60" Binding="{Binding BlackPly}" CanUserReorder="False"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <TabControl x:Name="UiTabCtrlTraining" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" 
                     VerticalAlignment="Top" Grid.RowSpan="1" Visibility="Hidden">
-                    <TabItem x:Name="UiTabTrainingProgress"  Header="Training" IsVisibleChanged="UiTabTrainingProgress_IsVisibleChanged">
+                    <TabItem x:Name="UiTabTrainingProgress"  Header="{x:Static p:Resources.Training}" IsVisibleChanged="UiTabTrainingProgress_IsVisibleChanged">
                         <Grid Background="#FFE5E5E5">
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="_cmTrainingView">
-                                    <MenuItem x:Name="_mnTrainRestartTraining" Header="Restart Training Session" Click="UiMnTrainRestartTraining_Click" />
-                                    <MenuItem x:Name="_mnTrainExitTraining" Header="Exit Training"  Click="UiMnStopTraining_Click" />
+                                    <MenuItem x:Name="_mnTrainRestartTraining" Header="{x:Static p:Resources.RestartTrainingSession}" Click="UiMnTrainRestartTraining_Click" />
+                                    <MenuItem x:Name="_mnTrainExitTraining" Header="{x:Static p:Resources.ExitTraining}"  Click="UiMnStopTraining_Click" />
                                     <Separator x:Name="_mnTrainSepar_1" />
-                                    <MenuItem x:Name="_mnTrainRestartGame" Header="Restart Game After " Click="UiMnTrainRestartGame_Click" />
-                                    <MenuItem x:Name="_mnRollBackTraining" Header="Restart from " Click="UiMnRollBackTraining_Click" />
+                                    <MenuItem x:Name="_mnTrainRestartGame" Header="{x:Static p:Resources.RestartGameAfter}" Click="UiMnTrainRestartGame_Click" />
+                                    <MenuItem x:Name="_mnRollBackTraining" Header="{x:Static p:Resources.RestartFrom}" Click="UiMnRollBackTraining_Click" />
                                     <Separator x:Name="_mnTrainSepar_2" />
-                                    <MenuItem x:Name="_mnTrainEvalMove" Header="Evaluate Position" Click="UiMnTrainEvalMove_Click" />
-                                    <MenuItem x:Name="_mnTrainEvalLine" Header="Evaluate Line" Click="UiMnTrainEvalLine_Click" />
+                                    <MenuItem x:Name="_mnTrainEvalMove" Header="{x:Static p:Resources.EvaluatePosition}" Click="UiMnTrainEvalMove_Click" />
+                                    <MenuItem x:Name="_mnTrainEvalLine" Header="{x:Static p:Resources.EvaluateLine}" Click="UiMnTrainEvalLine_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <RichTextBox x:Name="UiRtbTrainingProgress" IsUndoEnabled="False" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
@@ -249,41 +249,41 @@
                     </TabItem>
                 </TabControl>
                 <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1" IsVisibleChanged="UiTabCtrlManualReview_IsVisibleChanged">
-                    <TabItem x:Name="UiTabChapters"  Header="Chapters" GotFocus="UiTabChapters_GotFocus" >
+                    <TabItem x:Name="UiTabChapters"  Header="{x:Static p:Resources.Chapters}" GotFocus="UiTabChapters_GotFocus" >
                         <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" ContextMenuOpening="SupressContextMenu" PreviewMouseUp="Chapters_PreviewMouseUp" >
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="_cmChapters">
-                                    <MenuItem x:Name="_mnAddChapter" Header="Create New Chapter" Click="UiMnCreateNewChapter_Click"  />
-                                    <MenuItem x:Name="_mnImportChapter" Header="Import New Chapter" Click="UiMnImportChapter_Click" />
-                                    <MenuItem x:Name="_mnAddGame" Header="Create New Game" Click="UiMnChpt_CreateModelGame_Click"  />
-                                    <MenuItem x:Name="_mnImportGame" Header="Import Games" Click="UiMnImportGame_Click" />
-                                    <MenuItem x:Name="_mnAddExercise" Header="Create New Exercise" Click="UiMnChpt_AddExercise_Click"  />
-                                    <MenuItem x:Name="_mnImportExercise" Header="Import Exercises" Click="UiMnImportExercises_Click" />
+                                    <MenuItem x:Name="_mnAddChapter" Header="{x:Static p:Resources.CreateNewChapter}" Click="UiMnCreateNewChapter_Click"  />
+                                    <MenuItem x:Name="_mnImportChapter" Header="{x:Static p:Resources.ImportNewChapter}" Click="UiMnImportChapter_Click" />
+                                    <MenuItem x:Name="_mnAddGame" Header="{x:Static p:Resources.CreateNewGame}" Click="UiMnChpt_CreateModelGame_Click"  />
+                                    <MenuItem x:Name="_mnImportGame" Header="{x:Static p:Resources.ImportGames}" Click="UiMnImportGame_Click" />
+                                    <MenuItem x:Name="_mnAddExercise" Header="{x:Static p:Resources.CreateNewExercise}" Click="UiMnChpt_AddExercise_Click"  />
+                                    <MenuItem x:Name="_mnImportExercise" Header="{x:Static p:Resources.ImportExercises}" Click="UiMnImportExercises_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnSelectChapter" Header="Open Selected Chapter" Click="UiMnSelectChapter_Click" />
-                                    <MenuItem x:Name="_mnRenameChapter" Header="Rename Selected Chapter" Click="UiMnRenameChapter_Click" />
-                                    <MenuItem x:Name="_mnSelectGame" Header="Open This Game" Click="UiMnOpenGame_Click"  />
-                                    <MenuItem x:Name="_mnRenameGame" Header="Edit Game Headers" Click="UiMnEditGameHeader_Click" />
-                                    <MenuItem x:Name="_mnSelectExercise" Header="Open This Exercise" Click="UiMnOpenExercise_Click"  />
-                                    <MenuItem x:Name="_mnRenameExercise" Header="Edit Exercise Headers" Click="UiMnEditExerciseHeader_Click" />
-                                    <MenuItem x:Name="_mnMergeChapters" Header="Merge Chapters..." Click="UiMnMergeChapters_Click" />
+                                    <MenuItem x:Name="_mnSelectChapter" Header="{x:Static p:Resources.OpenSelectedChapter}" Click="UiMnSelectChapter_Click" />
+                                    <MenuItem x:Name="_mnRenameChapter" Header="{x:Static p:Resources.RenameSelectedChapter}" Click="UiMnRenameChapter_Click" />
+                                    <MenuItem x:Name="_mnSelectGame" Header="{x:Static p:Resources.OpenSelectedGame}" Click="UiMnOpenGame_Click"  />
+                                    <MenuItem x:Name="_mnRenameGame" Header="{x:Static p:Resources.EditGameHeaders}" Click="UiMnEditGameHeader_Click" />
+                                    <MenuItem x:Name="_mnSelectExercise" Header="{x:Static p:Resources.OpenThisExercise}" Click="UiMnOpenExercise_Click"  />
+                                    <MenuItem x:Name="_mnRenameExercise" Header="{x:Static p:Resources.EditExerciseHeaders}" Click="UiMnEditExerciseHeader_Click" />
+                                    <MenuItem x:Name="_mnMergeChapters" Header="{x:Static p:Resources.MergeChapters}" Click="UiMnMergeChapters_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnChapterUp" Header="Move Chapter Up" Click="UiMnChapterUp_Click" InputGestureText="Ctrl+U"/>
-                                    <MenuItem x:Name="_mnChapterDown" Header="Move Chapter Down" Click="UiMnChapterDown_Click"  InputGestureText="Ctrl+D" />
-                                    <MenuItem x:Name="_mnGameUp" Header="Move Game Up" Click="UiMnGameUp_Click"  InputGestureText="Ctrl+U" />
-                                    <MenuItem x:Name="_mnGameDown" Header="Move Game Down" Click="UiMnGameDown_Click"  InputGestureText="Ctrl+D" />
-                                    <MenuItem x:Name="_mnGameToChapter" Header="Move Game To Chapter..." Click="UiMnMoveGameToChapter_Click" />
+                                    <MenuItem x:Name="_mnChapterUp" Header="{x:Static p:Resources.MoveChapterUp}" Click="UiMnChapterUp_Click" InputGestureText="Ctrl+U"/>
+                                    <MenuItem x:Name="_mnChapterDown" Header="{x:Static p:Resources.MoveChapterDown}" Click="UiMnChapterDown_Click"  InputGestureText="Ctrl+D" />
+                                    <MenuItem x:Name="_mnGameUp" Header="{x:Static p:Resources.MoveGameUp}" Click="UiMnGameUp_Click"  InputGestureText="Ctrl+U" />
+                                    <MenuItem x:Name="_mnGameDown" Header="{x:Static p:Resources.MoveGameDown}" Click="UiMnGameDown_Click"  InputGestureText="Ctrl+D" />
+                                    <MenuItem x:Name="_mnGameToChapter" Header="{x:Static p:Resources.MoveGameToChapter}" Click="UiMnMoveGameToChapter_Click" />
 
-                                    <MenuItem x:Name="_mnExerciseUp" Header="Move Exercise Up" Click="UiMnExerciseUp_Click"  InputGestureText="Ctrl+U"/>
-                                    <MenuItem x:Name="_mnExerciseDown" Header="Move Exercise Down" Click="UiMnExerciseDown_Click" InputGestureText="Ctrl+D" />
-                                    <MenuItem x:Name="_mnExerciseToChapter" Header="Move Exercise To Chapter..." Click="UiMnMoveExerciseToChapter_Click" />
+                                    <MenuItem x:Name="_mnExerciseUp" Header="{x:Static p:Resources.MoveExerciseUp}" Click="UiMnExerciseUp_Click"  InputGestureText="Ctrl+U"/>
+                                    <MenuItem x:Name="_mnExerciseDown" Header="{x:Static p:Resources.MoveExerciseDown}" Click="UiMnExerciseDown_Click" InputGestureText="Ctrl+D" />
+                                    <MenuItem x:Name="_mnExerciseToChapter" Header="{x:Static p:Resources.MoveExerciseToChapter}" Click="UiMnMoveExerciseToChapter_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnImportModelGames" Header="Import Games" Click="UiMnImportModelGames_Click" />
-                                    <MenuItem x:Name="_mnImportExercises" Header="Import Exercises" Click="UiMnImportExercises_Click" />
+                                    <MenuItem x:Name="_mnImportModelGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnImportModelGames_Click" />
+                                    <MenuItem x:Name="_mnImportExercises" Header="{x:Static p:Resources.ImportExercises}" Click="UiMnImportExercises_Click" />
                                     <Separator x:Name="_mnChapterSepar_2" />
-                                    <MenuItem x:Name="_mnDeleteChapter" Header="Delete Selected Chapter" Click="UiMnDeleteChapter_Click" />
-                                    <MenuItem x:Name="_mnDeleteGame" Header="Delete This Game" Click="UiMnChpt_DeleteGame_Click" />
-                                    <MenuItem x:Name="_mnDeleteExercise" Header="Delete This Exercise" Click="UiMnChpt_DeleteExercise_Click" />
+                                    <MenuItem x:Name="_mnDeleteChapter" Header="{x:Static p:Resources.DeleteSelectedChapter}" Click="UiMnDeleteChapter_Click" />
+                                    <MenuItem x:Name="_mnDeleteGame" Header="{x:Static p:Resources.DeleteThisGame}" Click="UiMnChpt_DeleteGame_Click" />
+                                    <MenuItem x:Name="_mnDeleteExercise" Header="{x:Static p:Resources.DeleteThisExercise}" Click="UiMnChpt_DeleteExercise_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <RichTextBox x:Name="UiRtbChaptersView" IsUndoEnabled="False" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
@@ -307,7 +307,7 @@
                             </Viewbox>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="UiTabStudyTree"  Header="Study" GotFocus="UiTabStudyTree_GotFocus" IsVisibleChanged="UiTabStudyTree_IsVisibleChanged" >
+                    <TabItem x:Name="UiTabStudyTree"  Header="{x:Static p:Resources.Study}" GotFocus="UiTabStudyTree_GotFocus" IsVisibleChanged="UiTabStudyTree_IsVisibleChanged" >
                         <Grid x:Name="UiGridStudyTree"  Background="#FFE5E5E5" PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0"/>
@@ -318,29 +318,29 @@
                             </Grid.ColumnDefinitions>
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiCmnWorkbookRightClick">
-                                    <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
-                                    <MenuItem x:Name="UiMnStudy_CreateExercise" Header="Create Exercise from Here..." Click="UiMnStudy_CreateExercise_Click"  />
-                                    <MenuItem x:Name="UiMnReferenceArticles" Header="Game/Exercise References" Click="UiMnReferenceArticles_Click"/>
-                                    <MenuItem x:Name="UiMnCopyFen" Header="Copy FEN to Clipboard" Click="UiMnCopyFen_Click" />
+                                    <MenuItem x:Name="UiMnciWbStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
+                                    <MenuItem x:Name="UiMnStudy_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnStudy_CreateExercise_Click"  />
+                                    <MenuItem x:Name="UiMnReferenceArticles" Header="{x:Static p:Resources.GameExerciseReferences}" Click="UiMnReferenceArticles_Click"/>
+                                    <MenuItem x:Name="UiMnCopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnCopyFen_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="UiMnPromoteLine" Header="Promote Line" Click="UiMnPromoteLine_Click" />
-                                    <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnDeleteMovesFromHere_Click" />
-                                    <MenuItem x:Name="UiMnCreateChapterFromLine" Header="Create New Chapter From Line" Click="UiMnCreateChapterFromLine_Click" />
+                                    <MenuItem x:Name="UiMnPromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnPromoteLine_Click" />
+                                    <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnDeleteMovesFromHere_Click" />
+                                    <MenuItem x:Name="UiMnCreateChapterFromLine" Header="{x:Static p:Resources.CreateNewChapterFromLine}" Click="UiMnCreateChapterFromLine_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="Bookmark This Position" Click="UiMnWorkbookSelectAsBookmark_Click" />
-                                    <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="Bookmark All Options Here" Click="UiMnWorkbookBookmarkAlternatives_Click" />
+                                    <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnWorkbookSelectAsBookmark_Click" />
+                                    <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="{x:Static p:Resources.BookmarkAllOptionsHere}" Click="UiMnWorkbookBookmarkAlternatives_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnWorkbookEvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
-                                    <MenuItem x:Name="_mnWorkbookEvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
+                                    <MenuItem x:Name="_mnWorkbookEvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
+                                    <MenuItem x:Name="_mnWorkbookEvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnStudyTree_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
+                                    <MenuItem x:Name="_mnStudyTree_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvStudyTreePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
                                 <Label x:Name="UiLblChapterCounter" Content="Chapter 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
                                 <Image x:Name="UiImgChapterLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="140,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown" />
-                                <Label x:Name="UiLblChapterPrevHint" Cursor="Hand" Content="Previous" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="165,-3,0,0" Width="60"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown" />
-                                <Label x:Name="UiLblChapterNextHint" Cursor="Hand" Content="Next" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="235,-3,0,0" Width="40"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiLblChapterPrevHint" Cursor="Hand" Content="{x:Static p:Resources.Previous}" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="165,-3,0,0" Width="60"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown" />
+                                <Label x:Name="UiLblChapterNextHint" Cursor="Hand" Content="{x:Static p:Resources.Next}" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="235,-3,0,0" Width="40"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
                                 <Image x:Name="UiImgChapterRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown" />
                             </Canvas>
                             <RichTextBox x:Name="UiRtbStudyTreeView" IsUndoEnabled="False"  Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
@@ -359,17 +359,17 @@
                             </RichTextBox>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="UiTabBookmarks" Header="Bookmarks" GotFocus="UiTabBookmarks_GotFocus" LostFocus="UiTabBookmarks_LostFocus">
+                    <TabItem x:Name="UiTabBookmarks" Header="{x:Static p:Resources.Bookmarks}" GotFocus="UiTabBookmarks_GotFocus" LostFocus="UiTabBookmarks_LostFocus">
                         <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown" ContextMenuOpening="SupressContextMenu">
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="_cmBookmarks">
-                                    <MenuItem x:Name="_mnTrainFromBookmark" Header="Start Training from This Bookmark" Click="UiMnTrainFromBookmark_Click" />
+                                    <MenuItem x:Name="_mnTrainFromBookmark" Header="{x:Static p:Resources.StartTrainingFromThisBookmark}" Click="UiMnTrainFromBookmark_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnGenerateBookmark" Header="Generate Bookmarks" Click="UiMnGenerateBookmark_Click" />
-                                    <MenuItem x:Name="_mnAddBookmark" Header="Go to Study to Add a Bookmark" Click="UiMnAddBookmark_Click" />
+                                    <MenuItem x:Name="_mnGenerateBookmark" Header="{x:Static p:Resources.GenerateBookmarks}" Click="UiMnGenerateBookmark_Click" />
+                                    <MenuItem x:Name="_mnAddBookmark" Header="{x:Static p:Resources.GoToStudyToAddBookmark}" Click="UiMnAddBookmark_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnDeleteBookmark" Header="Delete This Bookmark" Click="UiMnDeleteBookmark_Click" />
-                                    <MenuItem x:Name="_mnDeleteAllBookmarks" Header="Delete All Bookmarks" Click="UiMnDeleteAllBookmarks_Click" />
+                                    <MenuItem x:Name="_mnDeleteBookmark" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnDeleteBookmark_Click" />
+                                    <MenuItem x:Name="_mnDeleteAllBookmarks" Header="{x:Static p:Resources.DeleteAllBookmarks}" Click="UiMnDeleteAllBookmarks_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Grid x:Name="UiGridBookmarks" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0">
@@ -387,12 +387,12 @@
 
                                 <Canvas x:Name="UiCnvPaging" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Visibility="Collapsed" >
                                     <Image x:Name="UiImgLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="-80,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseDown="Bookmarks_PreviousPage_OnPreviewMouseDown"  />
-                                    <Label x:Name="UiLblBookmarkPage" Content="Filler Text" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-50,-5,0,0" Width="100"  FontWeight="Bold"/>
+                                    <Label x:Name="UiLblBookmarkPage" Content="PLACEHOLDER" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-50,-5,0,0" Width="100"  FontWeight="Bold"/>
                                     <Image x:Name="UiImgRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="0,0,-80,0" Source="Resources/Images/RightArrow.png" PreviewMouseDown="Bookmarks_NextPage_OnPreviewMouseDown"  />
                                 </Canvas>
 
                                 <Viewbox x:Name="_vbLblBookmark_1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                                    <Label x:Name="UiLblBookmark_1" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                    <Label x:Name="UiLblBookmark_1" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbBookmark_1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
                                     <Canvas x:Name="UiCnvBookmark_1" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
@@ -403,7 +403,7 @@
                                     </Canvas>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbLblBookmark_2" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                                    <Label x:Name="UiLblBookmark_2" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                    <Label x:Name="UiLblBookmark_2" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbBookmark_2" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
                                     <Canvas x:Name="UiCnvBookmark_2" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
@@ -414,7 +414,7 @@
                                     </Canvas>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbLblBookmark_3" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                                    <Label x:Name="UiLblBookmark_3" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                    <Label x:Name="UiLblBookmark_3" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbBookmark_3" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top">
                                     <Canvas x:Name="UiCnvBookmark_3" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
@@ -425,7 +425,7 @@
                                     </Canvas>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbLblBookmark_4" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                                    <Label x:Name="UiLblBookmark_4" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                    <Label x:Name="UiLblBookmark_4" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbBookmark_4" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top">
                                     <Canvas x:Name="UiCnvBookmark_4" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
@@ -436,7 +436,7 @@
                                     </Canvas>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbLblBookmark_5" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                                    <Label x:Name="UiLblBookmark_5" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                    <Label x:Name="UiLblBookmark_5" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbBookmark_5" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
                                     <Canvas x:Name="UiCnvBookmark_5" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
@@ -447,7 +447,7 @@
                                     </Canvas>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbLblBookmark_6" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                                    <Label x:Name="UiLblBookmark_6" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                    <Label x:Name="UiLblBookmark_6" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbBookmark_6" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
                                     <Canvas x:Name="UiCnvBookmark_6" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
@@ -459,7 +459,7 @@
                                 </Viewbox>
 
                                 <Viewbox x:Name="_vbLblBookmark_7" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                                    <Label x:Name="UiLblBookmark_7" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                    <Label x:Name="UiLblBookmark_7" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbBookmark_7" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center"  Margin="10,50,10,10" VerticalAlignment="Top" >
                                     <Canvas x:Name="UiCnvBookmark_7" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
@@ -470,7 +470,7 @@
                                     </Canvas>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbLblBookmark_8" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                                    <Label x:Name="UiLblBookmark_8" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                    <Label x:Name="UiLblBookmark_8" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbBookmark_8" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
                                     <Canvas x:Name="UiCnvBookmark_8" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
@@ -481,7 +481,7 @@
                                     </Canvas>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbLblBookmark_9" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="10,20,10,10" VerticalAlignment="Top" >
-                                    <Label x:Name="UiLblBookmark_9" Content="Bookmark" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                    <Label x:Name="UiLblBookmark_9" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbBookmark_9" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center"  Margin="10,50,10,10" VerticalAlignment="Top" >
                                     <Canvas x:Name="UiCnvBookmark_9" Grid.Column="0" HorizontalAlignment="Left" Height="682" Margin="0,0,0,0" VerticalAlignment="Top" Width="682" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
@@ -495,7 +495,7 @@
                             </Grid>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="UiTabModelGames"  Header="Games" GotFocus="UiTabModelGames_GotFocus" PreviewKeyDown="UiTabModelGames_PreviewKeyDown" LostFocus="UiTabModelGames_LostFocus" >
+                    <TabItem x:Name="UiTabModelGames"  Header="{x:Static p:Resources.Games}" GotFocus="UiTabModelGames_GotFocus" PreviewKeyDown="UiTabModelGames_PreviewKeyDown" LostFocus="UiTabModelGames_LostFocus" >
                         <Grid x:Name="UiGridModelGames"  Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0"/>
@@ -506,32 +506,32 @@
                             </Grid.ColumnDefinitions>
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiCmModelGames">
-                                    <MenuItem x:Name="_mnGame_EditHeader" Header="Edit Game Header" Click="UiMnGame_EditHeader_Click" />
-                                    <MenuItem x:Name="_mnGame_CreateModelGame" Header="Create New Game" Click="_UiMnGame_CreateModelGame_Click" />
-                                    <MenuItem x:Name="_mnGame_ImportGames" Header="Import Games" Click="UiMnGame_ImportGames_Click"  />
+                                    <MenuItem x:Name="_mnGame_EditHeader" Header="{x:Static p:Resources.EditGameHeader}" Click="UiMnGame_EditHeader_Click" />
+                                    <MenuItem x:Name="_mnGame_CreateModelGame" Header="{x:Static p:Resources.CreateNewGame}" Click="_UiMnGame_CreateModelGame_Click" />
+                                    <MenuItem x:Name="_mnGame_ImportGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnGame_ImportGames_Click"  />
                                     <Separator />
-                                    <MenuItem x:Name="_mnGame_MergeToStudy" Header="Merge Selection Into Study" Click="UiGame_MergeToStudy_Click"  />
+                                    <MenuItem x:Name="_mnGame_MergeToStudy" Header="{x:Static p:Resources.MergeSelectionIntoStudy}" Click="UiGame_MergeToStudy_Click"  />
                                     <Separator />
-                                    <MenuItem x:Name="_mnGame_StartTrainingFromHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
-                                    <MenuItem x:Name="_mnGame_CreateExercise" Header="Create Exercise from Here..." Click="UiMnGame_CreateExercise_Click" />
-                                    <MenuItem x:Name="_mnGame_CopyFen" Header="Copy FEN to Clipboard" Click="UiMnGame_CopyFen_Click" />
+                                    <MenuItem x:Name="_mnGame_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
+                                    <MenuItem x:Name="_mnGame_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnGame_CreateExercise_Click" />
+                                    <MenuItem x:Name="_mnGame_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnGame_CopyFen_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnGame_PromoteLine" Header="Promote Line" Click="UiMnGame_PromoteLine_Click" />
-                                    <MenuItem x:Name="_mnGame_DeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnGame_DeleteMovesFromHere_Click" />
+                                    <MenuItem x:Name="_mnGame_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnGame_PromoteLine_Click" />
+                                    <MenuItem x:Name="_mnGame_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnGame_DeleteMovesFromHere_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnGame_DeleteModelGame" Header="Delete This Game" Click="UiMnGame_DeleteModelGame_Click" />
+                                    <MenuItem x:Name="_mnGame_DeleteModelGame" Header="{x:Static p:Resources.DeleteThisGame}" Click="UiMnGame_DeleteModelGame_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnGame_EvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
-                                    <MenuItem x:Name="_mnGame_EvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
+                                    <MenuItem x:Name="_mnGame_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
+                                    <MenuItem x:Name="_mnGame_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnGame_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
+                                    <MenuItem x:Name="_mnGame_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvModelGamePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
-                                <Label x:Name="UiLblGameCounter" Content="Game 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
+                                <Label x:Name="UiLblGameCounter" Content="PLACEHOLDER: Game 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
                                 <Image x:Name="UiImgModelGameLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="140,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown"  />
-                                <Label x:Name="UiLblModelGamePrevHint" Cursor="Hand" Content="Previous" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="165,-3,0,0" Width="60"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown" />
-                                <Label x:Name="UiLblModelGameNextHint" Cursor="Hand" Content="Next" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="235,-3,0,0" Width="40"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiLblModelGamePrevHint" Cursor="Hand" Content="{x:Static p:Resources.Previous}" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="165,-3,0,0" Width="60"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown" />
+                                <Label x:Name="UiLblModelGameNextHint" Cursor="Hand" Content="{x:Static p:Resources.Next}" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="235,-3,0,0" Width="40"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"  />
                                 <Image x:Name="UiImgModelGameRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"   />
                             </Canvas>
                             <RichTextBox x:Name="UiRtbModelGamesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
@@ -547,7 +547,7 @@
                             </RichTextBox>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="UiTabExercises"  Header="Exercises" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
+                    <TabItem x:Name="UiTabExercises"  Header="{x:Static p:Resources.Exercises}" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
                         <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0"/>
@@ -558,30 +558,30 @@
                             </Grid.ColumnDefinitions>
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiCmExercises">
-                                    <MenuItem x:Name="_mnExerc_EditHeader" Header="Edit Exercise Header" Click="UiMnExerc_EditHeader_Click" />
-                                    <MenuItem x:Name="_mnExerc_EditPosition" Header="Edit Starting Position" Click="UiMnExerc_EditPosition_Click" />
+                                    <MenuItem x:Name="_mnExerc_EditHeader" Header="{x:Static p:Resources.EditExerciseHeader}" Click="UiMnExerc_EditHeader_Click" />
+                                    <MenuItem x:Name="_mnExerc_EditPosition" Header="{x:Static p:Resources.EditStartingPosition}" Click="UiMnExerc_EditPosition_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnExerc_StartTrainingFromHere"  Header="Start Training from Here" Click="UiMnStartTrainingHere_Click" />
-                                    <MenuItem x:Name="_mnExerc_CreateExercise" Header="Create New Exercise" Click="UiMnExerc_CreateExercise_Click" />
-                                    <MenuItem x:Name="_mnExerc_ImportExercises" Header="Import Exercises" Click="UiMnExerc_ImportExercises_Click"  />
-                                    <MenuItem x:Name="_mnExerc_CopyFen" Header="Copy FEN to Clipboard" Click="UiMnExerc_CopyFen_Click" />
+                                    <MenuItem x:Name="_mnExerc_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
+                                    <MenuItem x:Name="_mnExerc_CreateExercise" Header="{x:Static p:Resources.CreateNewExercise}" Click="UiMnExerc_CreateExercise_Click" />
+                                    <MenuItem x:Name="_mnExerc_ImportExercises" Header="{x:Static p:Resources.ImportExercises}" Click="UiMnExerc_ImportExercises_Click"  />
+                                    <MenuItem x:Name="_mnExerc_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnExerc_CopyFen_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnExerc_PromoteLine" Header="Promote Line" Click="UiMnExerc_PromoteLine_Click" />
-                                    <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="Delete Moves From Here" Click="UiMnExerc_DeleteMovesFromHere_Click" />
+                                    <MenuItem x:Name="_mnExerc_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnExerc_PromoteLine_Click" />
+                                    <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnExerc_DeleteMovesFromHere_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnExerc_DeleteThisExercise" Header="Delete This Exercise" Click="UiMnExerc_DeleteExercise_Click" />
+                                    <MenuItem x:Name="_mnExerc_DeleteThisExercise" Header="{x:Static p:Resources.DeleteThisExercise}" Click="UiMnExerc_DeleteExercise_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnExerc_EvalMove" Header="Evaluate Position"  Click="UiMnEvaluatePosition_Click" />
-                                    <MenuItem x:Name="_mnExerc_EvalLine" Header="Evaluate Line"  Click="UiMnEvaluateLine_Click" />
+                                    <MenuItem x:Name="_mnExerc_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
+                                    <MenuItem x:Name="_mnExerc_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="Mark as Thumbnail" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
+                                    <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Canvas x:Name="UiCnvExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
-                                <Label x:Name="UiLblExerciseCounter" Content="Exercise 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
+                                <Label x:Name="UiLblExerciseCounter" Content="PLACEHOLDER Exercise 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
                                 <Image x:Name="UiImgExerciseLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="140,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown"  />
-                                <Label x:Name="UiLblExercisePrevHint" Cursor="Hand" Content="Previous" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="165,-3,0,0" Width="60"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown" />
-                                <Label x:Name="UiLblExerciseNextHint" Cursor="Hand" Content="Next" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="235,-3,0,0" Width="40"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiLblExercisePrevHint" Cursor="Hand" Content="{x:Static p:Resources.Previous}" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="165,-3,0,0" Width="60"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown" />
+                                <Label x:Name="UiLblExerciseNextHint" Cursor="Hand" Content="{x:Static p:Resources.Next}" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="235,-3,0,0" Width="40"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
                                 <Image x:Name="UiImgExerciseRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
                             </Canvas>
                             <RichTextBox x:Name="UiRtbExercisesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
@@ -598,7 +598,7 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <Label x:Name="UiLblScoresheet" FontWeight="Bold" Content="Scoresheet"  Grid.Column="1" Grid.ColumnSpan="2"  HorizontalAlignment="Right" VerticalContentAlignment="Center" Height="24" Margin="0,0,68,0" Width="80" VerticalAlignment="Top" Visibility="Visible" Grid.Row="1" />
+                <Label x:Name="UiLblScoresheet" FontWeight="Bold" Content="{x:Static p:Resources.Scoresheet}"  Grid.Column="1" Grid.ColumnSpan="2"  HorizontalAlignment="Right" VerticalContentAlignment="Center" Height="24" Margin="0,0,68,0" Width="80" VerticalAlignment="Top" Visibility="Visible" Grid.Row="1" />
                 <DataGrid x:Name="UiDgActiveLine" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Height="648" Margin="0,27,10,0" VerticalAlignment="Top" Width="260"  
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" 
                   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
@@ -625,10 +625,10 @@
                     </DataGrid.Background>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="#" Width="30" Binding="{Binding Number}" CellStyle="{StaticResource DisableSelection}" CanUserReorder="False" />
-                        <DataGridTextColumn Header="White" Width="60" Binding="{Binding WhitePly}" CanUserReorder="False" />
-                        <DataGridTextColumn Header="Ev" Width="50" Binding="{Binding WhiteEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
-                        <DataGridTextColumn Header="Black" Width="60" Binding="{Binding BlackPly}" CanUserReorder="False"/>
-                        <DataGridTextColumn Header="Ev" Width="50" Binding="{Binding BlackEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.White}" Width="60" Binding="{Binding WhitePly}" CanUserReorder="False" />
+                        <DataGridTextColumn Header="{x:Static p:Resources.EvaluationShort}" Width="50" Binding="{Binding WhiteEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.Black}" Width="60" Binding="{Binding BlackPly}" CanUserReorder="False"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.EvaluationShort}" Width="50" Binding="{Binding BlackEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <RichTextBox x:Name="UiRtbBoardComment" IsUndoEnabled="False" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
@@ -666,16 +666,16 @@
                     </RichTextBox.Resources>
                     <RichTextBox.ContextMenu>
                         <ContextMenu x:Name="UiCmTopGames">
-                            <MenuItem x:Name="UiMnTopGamePreview" Header="Preview Game" Click="UiMnTopGamePreview_Click" />
-                            <MenuItem x:Name="UiMnTopGameImport" Header="Import into Active Chapter" Click="UiMnTopGameImport_Click" />
-                            <MenuItem x:Name="UiMnTopGameLichessView" Header="View on Lichess.org" Click="UiMnTopGameLichessView_Click" />
+                            <MenuItem x:Name="UiMnTopGamePreview" Header="{x:Static p:Resources.PreviewGame}" Click="UiMnTopGamePreview_Click" />
+                            <MenuItem x:Name="UiMnTopGameImport" Header="{x:Static p:Resources.ImportIntoThisChapter}" Click="UiMnTopGameImport_Click" />
+                            <MenuItem x:Name="UiMnTopGameLichessView" Header="{x:Static p:Resources.ViewOnLichess}" Click="UiMnTopGameLichessView_Click" />
                         </ContextMenu>
                     </RichTextBox.ContextMenu>
                 </RichTextBox>
                 <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" Height="150" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
-                <Button x:Name="UiBtnExitTraining" Panel.ZIndex="1" Grid.Column="1" Content="Exit Training" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,0,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitTraining_Click"/>
-                <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="1" Content="Exit Game" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,20,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitGame_Click"/>
-                <Button x:Name="UiBtnShowExplorer" Panel.ZIndex="0" Grid.Column="1" Grid.ColumnSpan="2" Content="Show Explorer" FontWeight="Bold" FontSize="12" HorizontalAlignment="Left" Margin="235,50,20,0" Width="100" Height="24" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnShowExplorer_Click" />
+                <Button x:Name="UiBtnExitTraining" Panel.ZIndex="1" Grid.Column="1" Content="{x:Static p:Resources.ExitTraining}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,0,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitTraining_Click"/>
+                <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="1" Content="{x:Static p:Resources.ExitGame}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,20,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitGame_Click"/>
+                <Button x:Name="UiBtnShowExplorer" Panel.ZIndex="0" Grid.Column="1" Grid.ColumnSpan="2" Content="{x:Static p:Resources.ShowExplorer}" FontWeight="Bold" FontSize="12" HorizontalAlignment="Left" Margin="235,50,20,0" Width="100" Height="24" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnShowExplorer_Click" />
 
             </Grid>
         </Viewbox>
