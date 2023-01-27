@@ -3,16 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="Workbook Backup" Height="220" Width="400">
+        Title="{x:Static p:Resources.WorkbookBackup}" Height="220" Width="400">
     <Grid>
-        <CheckBox x:Name="UiCbMajorVersion" Content="Increment Major Version" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,99,0,0" Unchecked="UiCbMajorVersion_Unchecked" Checked="UiCbMajorVersion_Checked"/>
-        <Label x:Name="UiLblBackupNotification" Content="The current version of this Workbook (1.0) will be saved in" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="UiCbMajorVersion" Content="{x:Static p:Resources.IncrementMajorVersion}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,99,0,0" Unchecked="UiCbMajorVersion_Unchecked" Checked="UiCbMajorVersion_Checked"/>
+        <Label x:Name="UiLblBackupNotification" Content="{x:Static p:Resources.CurrentVersion}" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbBackupFileName" FontWeight="Bold" BorderThickness="0" IsEnabled="False" Text="FileName_1_0.pgn" HorizontalAlignment="Center" Margin="0,35,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="UiLblWorkbookNewVersion" Content="The Workbook's version will be incremented to 1.1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,56,0,0"/>
-        <Button x:Name="UiBtnOk" IsDefault="True" Content="Ok" HorizontalAlignment="Center" Margin="-95,138,0,0" VerticalAlignment="Top" Width="80" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="Cancel" HorizontalAlignment="Center" Margin="95,138,0,0" VerticalAlignment="Top" Width="80" Click="UiBtnCancel_Click"/>
+        <Label x:Name="UiLblWorkbookNewVersion" Content="{x:Static p:Resources.UpdatedVersion}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,56,0,0"/>
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-95,138,0,0" VerticalAlignment="Top" Width="80" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="95,138,0,0" VerticalAlignment="Top" Width="80" Click="UiBtnCancel_Click"/>
 
     </Grid>
 </Window>

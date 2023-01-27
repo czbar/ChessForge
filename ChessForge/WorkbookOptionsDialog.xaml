@@ -3,33 +3,34 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
          AllowsTransparency="False"
          Background="Transparent"
-        Title="Workbook Options" Height="345" Width="400" HorizontalAlignment="Left">
+        Title="{x:Static p:Resources.WorkbookOptions}" Height="345" Width="400" HorizontalAlignment="Left">
 
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBox x:Name="UiTbTitle" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="134,23,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="26" Width="231" Visibility="Visible"/>
-        
-        <Label x:Name="UiLblTrainingSide" Content="Training Side:" HorizontalAlignment="Left" Margin="29,59,0,0" VerticalAlignment="Top" Width="100"/>
-        <Label x:Name="UiLblVersion" Content="Version: " HorizontalAlignment="Left" Margin="286,59,0,0" VerticalAlignment="Top" Width="90"/>
-        <Label x:Name="UiLblTitle" Content="Workbook Title: " HorizontalAlignment="Left" Margin="28,21,0,0" VerticalAlignment="Top"/>
+
+        <Label x:Name="UiLblTrainingSide" Content="{x:Static p:Resources.TrainingSide}" HorizontalAlignment="Left" Margin="29,59,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="UiLblVersion" Content="{x:Static p:Resources.Version}" HorizontalAlignment="Left" Margin="286,59,0,0" VerticalAlignment="Top" Width="90"/>
+        <Label x:Name="UiLblTitle" Content="{x:Static p:Resources.WorkbookTitle}" HorizontalAlignment="Left" Margin="28,21,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblSideToMove" Content="WHITE" BorderThickness="1" BorderBrush="Black" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="134,59,0,0" VerticalAlignment="Top" VerticalContentAlignment="Top" Width="77" Height="26" MouseDown="UiImgSwapColor_PreviewMouseDown"/>
-        
-        <Button x:Name="UiBtnOK" Content="Save" HorizontalAlignment="Left" Margin="52,255,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" PreviewMouseDown="UiBtnOK_PreviewMouseDown"/>
-        <Button x:Name="UiBtnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="150,255,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" PreviewMouseDown="UiBtnCancel_PreviewMouseDown" />
-        <Button x:Name="UiBtnHelp" Content="Help" HorizontalAlignment="Left" Margin="273,255,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnHelp_Click" />
+
+        <Button x:Name="UiBtnOK" Content="{x:Static p:Resources.Save}" HorizontalAlignment="Left" Margin="52,255,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" PreviewMouseDown="UiBtnOK_PreviewMouseDown"/>
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="150,255,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" PreviewMouseDown="UiBtnCancel_PreviewMouseDown" />
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Left" Margin="273,255,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnHelp_Click" />
 
         <Image x:Name="UiImgSwapColor" HorizontalAlignment="Left" Height="28" Margin="218,58,0,0" VerticalAlignment="Top" Width="28" Source="Resources/Images/swap_vert.png" PreviewMouseDown="UiImgSwapColor_PreviewMouseDown"/>
-        
-        <Label x:Name="UiLblBoardOrientation" Content="Initial Board Orientation (side to place at the bottom):" HorizontalAlignment="Left" Margin="29,108,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="UiLblBoardStudy" Content="Study" HorizontalAlignment="Left" Margin="70,140,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="UiLblBoardGames" Content="Games" HorizontalAlignment="Left" Margin="70,170,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="UiLblBoardExercises" Content="Exercise" HorizontalAlignment="Left" Margin="70,200,0,0" VerticalAlignment="Top"/>
+
+        <Label x:Name="UiLblBoardOrientation" Content="{x:Static p:Resources.InitBoardOrientation}" HorizontalAlignment="Left" Margin="29,108,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblBoardStudy" Content="{x:Static p:Resources.Study}" HorizontalAlignment="Left" Margin="70,140,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblBoardGames" Content="{x:Static p:Resources.Games}" HorizontalAlignment="Left" Margin="70,170,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblBoardExercises" Content="{x:Static p:Resources.Exercise}" HorizontalAlignment="Left" Margin="70,200,0,0" VerticalAlignment="Top"/>
 
         <Label x:Name="UiLblBoardStudyOrient" Content="" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="134,140,0,0" Width="120" Height="26" VerticalAlignment="Top" PreviewMouseDown="UiLblBoardStudyOrient_PreviewMouseDown"/>
         <Label x:Name="UiLblBoardGamesOrient" Content="" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="134,170,0,0" Width="120" Height="26" VerticalAlignment="Top" PreviewMouseDown="UiLblBoardGamesOrient_PreviewMouseDown"/>

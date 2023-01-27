@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         Title="" Height="400" Width="600">
     <Grid>
         <TextBox x:Name="UiTextBox" IsReadOnly="True" BorderThickness="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Center" Margin="0,23,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="484" Height="246"/>
-        <Button x:Name="UiBtnOk" Content="OK" HorizontalAlignment="Center" Margin="0,298,0,0" VerticalAlignment="Top" Width="80" Height="30" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="0,298,0,0" VerticalAlignment="Top" Width="80" Height="30" Click="UiBtnOk_Click"/>
 
     </Grid>
 </Window>

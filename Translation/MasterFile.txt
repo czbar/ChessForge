@@ -136,7 +136,7 @@ BackUpThisVersion=Back up this Version ...
 Training=Training
 
 #Start a new training session
-Start New Session=Start New Session
+StartNewSession=Start New Session
 
 #Restart the Training Session from the beginning
 RestartTrainingSession=Restart Training Session
@@ -170,13 +170,13 @@ Views=Views
 FlipBoard=Flip Board
 
 #Opens the Application Options dialog
-ApplicationOptions=Application Options
+ApplicationOptions=Application Options...
 
 #Opens the Workbook Options dialog
-WorkbookOptions=Workbook Options
+WorkbookOptions=Workbook Options...
 
 #Opens a dialog allowing the user to select chess engine executable file
-AnalysisEngine=Analysis Engine
+AnalysisEngine=Analysis Engine...
 
 #Increase font size
 IncreaseFontSize=Increase Font Size
@@ -283,10 +283,10 @@ StudyTree=Study
 #
 
 #User wants to restart the game against the engine after a certain move in the Training Session
-RestartGameAfter=Restart Game After
+RestartGameAfter=Restart Game After 
  
 #User wants to restart the training from a certain move in the Training Session
-RestartFrom=Restart from
+RestartFrom=Restart from 
 
 
 #
@@ -466,9 +466,12 @@ Exercise0of0=Exercise 0 of 0
 
 
 #
-# Scoresheet column headers
+# Scoresheet
 #
-							
+			
+#Scoresheet			
+Scoresheet=Scoresheet
+
 #White
 White=White
 
@@ -850,3 +853,21 @@ MultiEntitiesValid=$0  entities were valid
 
 #not imported due to wrong type
 BadTypeForImport=but not imported due to not being of the $0 type
+
+#Select Solving Mode
+SelectSolvingMode=Select Solving Mode
+
+#Guess the next move
+GuessNextMove=Guess the next move
+
+#Enter your analysis and submit
+EnterAnalysis=Enter your analysis and submit
+
+#Show/Edit solution
+ShowSolution=Show/Edit Solution
+
+#Hide solution
+HideSolution=Hide Solution
+
+#Workbook Backup
+WorkbookBackup=Workbook Backup

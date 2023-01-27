@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         Title="Chess Forge" Height="300" Width="400" MouseDown="Window_MouseDown">
@@ -11,7 +12,7 @@
             <FlowDocument>
             </FlowDocument>
         </RichTextBox>
-        <Button x:Name="_btnOK" Content="OK" HorizontalAlignment="Center" Margin="0,242,0,20" VerticalAlignment="Top" Width="74" Click="_btnOK_Click" Height="20"/>
+        <Button x:Name="_btnOK" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="0,242,0,20" VerticalAlignment="Top" Width="74" Click="_btnOK_Click" Height="20"/>
 
     </Grid>
 </Window>

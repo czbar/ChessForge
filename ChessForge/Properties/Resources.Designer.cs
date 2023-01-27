@@ -79,7 +79,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Analysis Engine.
+        ///   Looks up a localized string similar to Analysis Engine....
         /// </summary>
         public static string AnalysisEngine {
             get {
@@ -106,7 +106,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Application Options.
+        ///   Looks up a localized string similar to Application Options....
         /// </summary>
         public static string ApplicationOptions {
             get {
@@ -718,6 +718,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter your analysis and submit.
+        /// </summary>
+        public static string EnterAnalysis {
+            get {
+                return ResourceManager.GetString("EnterAnalysis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
@@ -1051,6 +1060,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Guess the next move.
+        /// </summary>
+        public static string GuessNextMove {
+            get {
+                return ResourceManager.GetString("GuessNextMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Header.
         /// </summary>
         public static string Header {
@@ -1065,6 +1083,15 @@ namespace ChessForge.Properties {
         public static string Help {
             get {
                 return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide Solution.
+        /// </summary>
+        public static string HideSolution {
+            get {
+                return ResourceManager.GetString("HideSolution", resourceCulture);
             }
         }
         
@@ -1700,7 +1727,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restart from.
+        ///   Looks up a localized string similar to Restart from .
         /// </summary>
         public static string RestartFrom {
             get {
@@ -1718,7 +1745,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restart Game After.
+        ///   Looks up a localized string similar to Restart Game After .
         /// </summary>
         public static string RestartGameAfter {
             get {
@@ -1790,6 +1817,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scoresheet.
+        /// </summary>
+        public static string Scoresheet {
+            get {
+                return ResourceManager.GetString("Scoresheet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Chapter.
         /// </summary>
         public static string SelectChapter {
@@ -1835,6 +1871,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Solving Mode.
+        /// </summary>
+        public static string SelectSolvingMode {
+            get {
+                return ResourceManager.GetString("SelectSolvingMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show All Chapters.
         /// </summary>
         public static string ShowAllChapters {
@@ -1858,6 +1903,15 @@ namespace ChessForge.Properties {
         public static string ShowMovesAtFork {
             get {
                 return ResourceManager.GetString("ShowMovesAtFork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show/Edit Solution.
+        /// </summary>
+        public static string ShowSolution {
+            get {
+                return ResourceManager.GetString("ShowSolution", resourceCulture);
             }
         }
         
@@ -1889,20 +1943,20 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start New Session.
-        /// </summary>
-        public static string Start_New_Session {
-            get {
-                return ResourceManager.GetString("Start New Session", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Starting position.
         /// </summary>
         public static string StartingPosition {
             get {
                 return ResourceManager.GetString("StartingPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start New Session.
+        /// </summary>
+        public static string StartNewSession {
+            get {
+                return ResourceManager.GetString("StartNewSession", resourceCulture);
             }
         }
         
@@ -1993,6 +2047,15 @@ namespace ChessForge.Properties {
         public static string TooltipWorkbookVersion {
             get {
                 return ResourceManager.GetString("TooltipWorkbookVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top Games.
+        /// </summary>
+        public static string TopGames {
+            get {
+                return ResourceManager.GetString("TopGames", resourceCulture);
             }
         }
         
@@ -2222,7 +2285,16 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workbook Options.
+        ///   Looks up a localized string similar to Workbook Backup.
+        /// </summary>
+        public static string WorkbookBackup {
+            get {
+                return ResourceManager.GetString("WorkbookBackup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workbook Options....
         /// </summary>
         public static string WorkbookOptions {
             get {

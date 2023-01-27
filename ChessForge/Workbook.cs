@@ -107,6 +107,9 @@ namespace ChessForge
         // Version object for this Workbook
         private WorkbookVersion _version;
 
+        // Guid of the Workbook
+        private string _guid;
+
         /// <summary>
         /// An object managing identities of the trees.
         /// </summary>
@@ -135,7 +138,7 @@ namespace ChessForge
         {
             ObservableCollection<ArticleListItem> articleList = new ObservableCollection<ArticleListItem>();
 
-            foreach (Chapter chapter in Chapters) 
+            foreach (Chapter chapter in Chapters)
             {
                 // an item for the Chapter itself
                 ArticleListItem chaptItem = new ArticleListItem(chapter);
@@ -452,6 +455,25 @@ namespace ChessForge
         public WorkbookVersion Version
         {
             get => _version;
+        }
+
+        /// <summary>
+        /// The Guid of the Workbook
+        /// </summary>
+        public string Guid
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_guid))
+                {
+                    _guid = System.Guid.NewGuid().ToString();
+                }
+               return _guid;
+            }
+            set
+            {
+                _guid = value;
+            }
         }
 
         /// <summary>

@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="Workbook Chapters" Height="520" Width="800">
+        Title="{x:Static p:Resources.Chapters}" Height="520" Width="800">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -34,9 +35,9 @@
             </ListView.View>
         </ListView>
         <CheckBox x:Name="UiCbSelectAll" IsChecked="True" Grid.Row="1" Content="" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Checked="UiCbSelectAll_Checked" Unchecked="UiCbSelectAll_Unchecked"/>
-        <Button x:Name="UiBtnOk" Content="OK" HorizontalAlignment="Left" Margin="320,10,0,0" Grid.Row="2" Width="60" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" Content="Cancel" HorizontalAlignment="Right" Margin="400,10,320,0" Grid.Row="2" Width="60" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
-        <Label x:Name="UiLblInstruct" Content="Select Chapters to Import" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Left" Margin="320,10,0,0" Grid.Row="2" Width="60" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Right" Margin="400,10,320,0" Grid.Row="2" Width="60" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Label x:Name="UiLblInstruct" Content="{x:Static p:Resources.SelectChaptersToImport}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
 
     </Grid>
 </Window>

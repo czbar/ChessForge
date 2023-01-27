@@ -3,19 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="Create New Chapter From Line" Height="232" Width="390">
+        Title="{x:Static p:Resources.CreateNewChapterFromLine}" Height="232" Width="390">
     <Grid>
-        <Button x:Name="UiBtnOk" Content="Ok" HorizontalAlignment="Center" Margin="-100,146,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" Content="Cancel" HorizontalAlignment="Center" Margin="100,146,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
-        <Label x:Name="UiLblNewChapterCreated" Content="A new chapter will be created from the selected sub-tree." HorizontalAlignment="Center" Margin="0,11,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-100,146,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="100,146,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Label x:Name="UiLblNewChapterCreated" Content="{x:Static p:Resources.NewChapterToBeCreate}" HorizontalAlignment="Center" Margin="0,11,0,0" VerticalAlignment="Top"/>
 
-        <Label x:Name="UiLblTitle" Content="Title" HorizontalAlignment="Left" Margin="30,43,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblTitle" Content="{x:Static p:Resources.Title}" HorizontalAlignment="Left" Margin="30,43,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbChapterTitle" Text="" HorizontalAlignment="Center" Margin="40,47,0,0" VerticalAlignment="Top" Width="270" BorderBrush="Black" BorderThickness="1" />
 
-        <CheckBox x:Name="UiCbDeleteOrig" Content="Delete the sub-tree from the original chapter" HorizontalAlignment="Left" Margin="70,83,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="UiCbGoToNew" Content="Go to the newly created chapter" HorizontalAlignment="Left" Margin="70,110,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="UiCbDeleteOrig" Content="{x:Static p:Resources.DeleteSubTreeFromSource}" HorizontalAlignment="Left" Margin="70,83,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="UiCbGoToNew" Content="{x:Static p:Resources.GotoNewChapter}" HorizontalAlignment="Left" Margin="70,110,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
