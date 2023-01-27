@@ -2285,6 +2285,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Workbook Backup.
+        /// </summary>
+        public static string WorkbookBackup {
+            get {
+                return ResourceManager.GetString("WorkbookBackup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Workbook Options....
         /// </summary>
         public static string WorkbookOptions {

@@ -865,4 +865,7 @@
   <data name="HideSolution" xml:space="preserve">
     <value>Hide Solution</value>
   </data>
+  <data name="WorkbookBackup" xml:space="preserve">
+    <value>Workbook Backup</value>
+  </data>
 </root>
