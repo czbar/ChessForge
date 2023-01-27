@@ -868,3 +868,6 @@ ShowSolution=Show/Edit Solution
 
 #Hide solution
 HideSolution=Hide Solution
+
+#Workbook Backup
+WorkbookBackup=Workbook Backup
