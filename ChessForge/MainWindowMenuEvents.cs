@@ -797,7 +797,7 @@ namespace ChessForge
 
                 if (gamesCount > 0)
                 {
-                    if (SelectArticlesFromPgnFile(ref games, SelectGamesDialog.Mode.IMPORT_INTO_NEW_CHAPTER, out bool copyGames, out bool createStudy, out _))
+                    if (SelectArticlesFromPgnFile(ref games, SelectGamesDialog.Mode.IMPORT_INTO_NEW_CHAPTER, out bool createStudy, out bool copyGames, out _))
                     {
                         if (createStudy)
                         {
