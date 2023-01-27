@@ -17,7 +17,7 @@
                 <RadioButton x:Name="UiRbDubious" GroupName="glyph" Content="?!" HorizontalAlignment="Left" Margin="10,5"/>
                 <RadioButton x:Name="UiRbMistake" GroupName="glyph" Content="?" HorizontalAlignment="Left" Margin="10,5"/>
                 <RadioButton x:Name="UiRbBlunder" GroupName="glyph" Content="??" HorizontalAlignment="Left" Margin="10,5"/>
-                <Button x:Name="UiBtnClearGlyph" Margin="0,57" Content="Clear" Click="UiBtnClearMove_Click"/>
+                    <Button x:Name="UiBtnClearGlyph" Margin="0,57" Content="{x:Static p:Resources.Clear}" Click="UiBtnClearMove_Click"/>
             </StackPanel>
         </GroupBox>
         <GroupBox x:Name="UiGbPosition" Header="Position" Margin="108,15" Width="65" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -30,7 +30,7 @@
                 <RadioButton x:Name="UiRbBlackEdge" GroupName="eval" Content="-" HorizontalAlignment="Left" Margin="10,5"/>
                 <RadioButton x:Name="UiRbBlackBetter" GroupName="eval" Content="-" HorizontalAlignment="Left" Margin="10,5"/>
                 <RadioButton x:Name="UiRbBlackWin" GroupName="eval" Content="-" HorizontalAlignment="Left" Margin="10,5"/>
-                <Button x:Name="UiBtnClearEval" Margin="0,7" Content="Clear" Click="UiBtnClearPosition_Click"/>
+                    <Button x:Name="UiBtnClearEval" Margin="0,7" Content="{x:Static p:Resources.Clear}" Click="UiBtnClearPosition_Click"/>
             </StackPanel>
         </GroupBox>
         <GroupBox x:Name="UiGbComment" Header="Comment" Margin="201,15,0,0" Width="370" Height="198" HorizontalAlignment="Left" VerticalAlignment="Top">

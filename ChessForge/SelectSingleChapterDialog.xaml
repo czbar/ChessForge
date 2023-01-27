@@ -6,13 +6,13 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="Select Chapter" Height="320" Width="360">
+        Title="{x:Static p:Resources.SelectChapter}" Height="320" Width="360">
     <Grid>
         <ListBox x:Name="UiLbChapters" ItemsSource="{Binding}" SelectionMode="Single" 
                  HorizontalAlignment="Left" VerticalAlignment="Top" DisplayMemberPath="Title"
                  Width="300" Height="200" Margin="23,20,0,0" MouseDoubleClick="UiLbChapters_MouseDoubleClick"/>
-        <Button x:Name="UiBtnOk" Content="OK" IsDefault="True" HorizontalAlignment="Center" Margin="-100,240,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" Content="Cancel" IsCancel="True" HorizontalAlignment="Center" Margin="100,240,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-100,240,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="100,240,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
 
     </Grid>
 </Window>
