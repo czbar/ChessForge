@@ -642,6 +642,7 @@ namespace ChessForge
 
                 workbook.Title = GameList[0].GetWorkbookTitle();
                 workbook.SetVersion(GameList[0].GetWorkbookVersion());
+                workbook.Guid = GameList[0].GetGuid();
                 workbook.TrainingSideConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetTrainingSide(out _));
                 workbook.TrainingSideCurrent = workbook.TrainingSideConfig;
 

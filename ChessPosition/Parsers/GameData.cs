@@ -165,6 +165,15 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the Guid
+        /// </summary>
+        /// <returns></returns>
+        public string GetGuid()
+        {
+            return Header.GetGuid(out _);
+        }
+
+        /// <summary>
         /// Returns the number of the chapter or 0 if not found or invalid.
         /// </summary>
         /// <returns></returns>

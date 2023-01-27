@@ -156,6 +156,16 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Builds header line for the Workbook's guid
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        public static string GetWorkbookGuidText(string guid)
+        {
+            return BuildHeaderLine(KEY_GUID, guid);
+        }
+
+        /// <summary>
         /// Checks if the passed string looks like a header line and if so
         /// returns the name and value of the header.
         /// </summary>
