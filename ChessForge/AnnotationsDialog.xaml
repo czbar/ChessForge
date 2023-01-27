@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="Annotations" Height="320" Width="600">
+        Title="{x:Static p:Resources.Annotations}" Height="320" Width="600">
     <Canvas x:Name="UiCnvButtons" Margin="0,0">
         <Grid Margin="0,0,0,0">
         <GroupBox x:Name="UiGbMove" Header="Move" Margin="28,15" Width="65" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top">
