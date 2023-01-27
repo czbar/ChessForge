@@ -466,9 +466,12 @@ Exercise0of0=Exercise 0 of 0
 
 
 #
-# Scoresheet column headers
+# Scoresheet
 #
-							
+			
+#Scoresheet			
+Scoresheet=Scoresheet
+
 #White
 White=White
 

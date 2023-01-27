@@ -1817,6 +1817,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scoresheet.
+        /// </summary>
+        public static string Scoresheet {
+            get {
+                return ResourceManager.GetString("Scoresheet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Chapter.
         /// </summary>
         public static string SelectChapter {
