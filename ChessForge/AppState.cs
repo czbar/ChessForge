@@ -369,6 +369,7 @@ namespace ChessForge
                 return;
             }
 
+            AppLog.Message("Saving Workbook to File - START");
             lock (_lockFileSave)
             {
                 try
@@ -386,6 +387,7 @@ namespace ChessForge
                     MessageBox.Show("Failed to save file: " + ex.Message, "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+            AppLog.Message("Saving Workbook to File - END");
         }
 
         /// <summary>
