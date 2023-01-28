@@ -32,6 +32,7 @@ namespace ChessForge
         {
             if (_processingMouseUp)
             {
+                AppLog.Message("OnMOuseDown rejected: processing MouseUp");
                 return;
             }
 
@@ -119,6 +120,7 @@ namespace ChessForge
                         }
                         else
                         {
+                            AppLog.Message("OnMOuseDown rejected: CanMovePiece returned false");
                             // if we can't move because we're in exercise hiding mode, try to help the user
                             if (ActiveArticle != null && ActiveArticle.Solver != null && !ActiveArticle.Solver.IsMovingAllowed())
                             {
