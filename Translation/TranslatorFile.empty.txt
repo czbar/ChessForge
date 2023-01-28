@@ -4,7 +4,7 @@
 # COMMON TERMS
 #
 
-#description:  Workbook
+#description: Workbook
 #english: Workbook=Workbook
 Workbook=
 
@@ -12,50 +12,50 @@ Workbook=
 #english: Title=Title
 Title=
 
-#description:  Workbook title
+#description: Workbook title
 #english: WorkbookTitle=Workbook Title
 WorkbookTitle=
 
 
-#description:  Event
+#description: Event
 #english: Event=Event
 Event=
 
-#description:  Header
+#description: Header
 #english: Header=Header
 Header=
 
-#description:  Preamble
+#description: Preamble
 #english: Preamble=Preamble
 Preamble=
 
-#description:  Chapter
+#description: Chapter
 #english: Chapter=Chapter
 Chapter=
 
-#description:  Chapters plural
+#description: Chapters plural
 #english: Chapters=Chapters
 Chapters=
 
-#description:  Study Tree
+#description: Study Tree
 #english: Study=Study
 Study=
 
-#description:  Game
+#description: Game
 #english: Game=Game
 Game=
 
-#description:  Games plural
+#description: Games plural
 #english: Games=Games
 Games=
 
-#description:  Exercise 
+#description: Exercise 
 #english: Exercise=Exercise
 Exercise=
 
-#description:  Exercises plural 
-#english: Exercise=Exercises
-Exercise=
+#description: Exercises plural 
+#english: Exercises=Exercises
+Exercises=
 
 #description: Round
 #english: Round=Round
@@ -65,27 +65,27 @@ Round=
 #english: Date=Date
 Date=
 
-#description:  A line in a variation tree
+#description: A line in a variation tree
 #english: Line=Line
 Line=
 
-#description:  Bookmark
+#description: Bookmark
 #english: Bookmark=Bookmark
 Bookmark=
 
-#description:  Games plural
+#description: Games plural
 #english: Bookmarks=Bookmarks
 Bookmarks=
 
-#description:  Move
+#description: Move
 #english: Move=Move
 Move=
 
-#description:  Moves plural
+#description: Moves plural
 #english: Moves=Moves
 Moves=
 
-#description:  Position
+#description: Position
 #english: Position=Position
 Position=
 
@@ -129,11 +129,11 @@ Close=
 #english: Item=Item
 Item=
 
-#description:  Request to evaluate a position
+#description: Request to evaluate a position
 #english: EvaluatePosition=Evaluate Position
 EvaluatePosition=
 
-#description:  Request to evaluate a line
+#description: Request to evaluate a line
 #english: EvaluateLine=Evaluate Line
 EvaluateLine=
 
@@ -142,399 +142,361 @@ EvaluateLine=
 #
 
 
-#description:  TOP LEVEL MENU: File
+#description: TOP LEVEL MENU: File
 #english: File=File
 File=
 
-#description:  Create a new Workbook
+#description: Create a new Workbook
 #english: NewWorkbook=New Workbook
 NewWorkbook=
 
-#description:  Open an existing Workbook
+#description: Open an existing Workbook
 #english: OpenWorkbook=Open Workbook 
 OpenWorkbook=
 
-#description:  Close an existing Workbook
+#description: Close an existing Workbook
 #english: CloseWorkbook=Close Workbook
 CloseWorkbook=
 
-#description:  Save the currently open Workbook
+#description: Save the currently open Workbook
 #english: Save=Save
 Save=
 
-#description:  Save the currently open Workbook into a different file
+#description: Save the currently open Workbook into a different file
 #english: SaveAs=Save As ...
 SaveAs=
 
-#description:  Saves a copy of the current Workbook with the current version number, increments the version number
+#description: Saves a copy of the current Workbook with the current version number, increments the version number
 #english: BackUpThisVersion=Back up this Version ...
 BackUpThisVersion=
 
 
 
-#description:  TOP LEVEL MENU: Training
+#description: TOP LEVEL MENU: Training
 #english: Training=Training
 Training=
 
-#description:  Start a new training session
-#english: Start New Session=Start New Session
-Start New Session=
+#description: Start a new training session
+#english: StartNewSession=Start New Session
+StartNewSession=
 
-#description:  Restart the Training Session from the beginning
+#description: Restart the Training Session from the beginning
 #english: RestartTrainingSession=Restart Training Session
 RestartTrainingSession=
 
-#description:  Exit the Training Session
+#description: Exit the Training Session
 #english: ExitTraining=Exit Training
 ExitTraining=
 
 
 
-#description:  TOP LEVEL MENU: Edit
+#description: TOP LEVEL MENU: Edit
 #english: Edit=Edit
 Edit=
 
-#description:  Opens the Annotations dialog
+#description: Opens the Annotations dialog
 #english: Annotations=Annotations
 Annotations=
 
-#description:  Allows the user to merge multiple chapters into one
+#description: Allows the user to merge multiple chapters into one
 #english: MergeChapters=Merge Chapters...
 MergeChapters=
 
-#description:  Undoes the previous operation
+#description: Undoes the previous operation
 #english: Undo=Undo
 Undo=
 
 
 
-#description:  TOP LEVEL MENU: View
+#description: TOP LEVEL MENU: View
 #english: View=View
 View=
 
-#description:  Views plural
+#description: Views plural
 #english: Views=Views
 Views=
 
-#description:  Flips the board's orientation
+#description: Flips the board's orientation
 #english: FlipBoard=Flip Board
 FlipBoard=
 
-#description:  Opens the Application Options dialog
-#english: ApplicationOptions=Application Options
+#description: Opens the Application Options dialog
+#english: ApplicationOptions=Application Options...
 ApplicationOptions=
 
-#description:  Opens the Workbook Options dialog
-#english: WorkbookOptions=Workbook Options
+#description: Opens the Workbook Options dialog
+#english: WorkbookOptions=Workbook Options...
 WorkbookOptions=
 
-#description:  Opens a dialog allowing the user to select chess engine executable file
-#english: AnalysisEngine=Analysis Engine
+#description: Opens a dialog allowing the user to select chess engine executable file
+#english: AnalysisEngine=Analysis Engine...
 AnalysisEngine=
 
-#description:  Increase font size
+#description: Increase font size
 #english: IncreaseFontSize=Increase Font Size
 IncreaseFontSize=
 
-#description:  Decrease font size
+#description: Decrease font size
 #english: DecreaseFontSize=Decrease Font Size
 DecreaseFontSize=
 
-#description:  Switch to fixed font size
+#description: Switch to fixed font size
 #english: UseFixedFont Size=Fixed Font Size
 UseFixedFont Size=
 
-#description:  Use variable fonts size
+#description: Use variable fonts size
 #english: UseVariableFontSize=Variable Font Size
 UseVariableFontSize=
 
-#description:  Restore font size defaults
+#description: Restore font size defaults
 #english: RestoreFontDefaults=Restore Font Defaults
 RestoreFontDefaults=
 
 
 
-#description:  TOP LEVEL MENU: Help
+#description: TOP LEVEL MENU: Help
 #english: Help=Help
 Help=
 
-#description:  Opens user's browser and navigates to Chess Forge's Wiki
+#description: Opens user's browser and navigates to Chess Forge's Wiki
 #english: Wiki=Wiki
 Wiki=
 
-#description:  Check if there is a newer version of Chess Forge at Source Forge
+#description: Check if there is a newer version of Chess Forge at Source Forge
 #english: CheckForUpdates=Check for Updates
 CheckForUpdates=
 
-#description:  Opens the About dialog
+#description: Opens the About dialog
 #english: About=About
 About=
 
 
 # MENU BAR ICONS
 
-#description:  Label for automatic (periodic) saving of the Workbook
+#description: Label for automatic (periodic) saving of the Workbook
 #! Keep short
 #english: AutoSave=Auto Save
 AutoSave=
 
-#description:  Explorers label
+#description: Explorers label
 #! Keep short
 #english: Explorers=Explorers
 Explorers=
 
-#description:  Engine label
+#description: Engine label
 #! Keep short
 #english: Engine=Engine
 Engine=
 
 
-#description:  Tool tip for turning AutoSave off
+#description: Tool tip for turning AutoSave off
 #english: TurnAutoSaveOff=Turn AutoSave Off
 TurnAutoSaveOff=
 
-#description:  Tool tip for turning AutoSave on
+#description: Tool tip for turning AutoSave on
 #english: TurnAutoSaveOn=Turn AutoSave On
 TurnAutoSaveOn=
 
 
-#description:  Tool tip for turning Explorers off
+#description: Tool tip for turning Explorers off
 #english: TurnExplorersOff=Disable Opening Explorer and Tablebases
 TurnExplorersOff=
 
-#description:  Tool tip for turning Explorers on
+#description: Tool tip for turning Explorers on
 #english: TurnExplorersOn=Use Opening Explorer and Tablebases
 TurnExplorersOn=
 
 
-#description:  Tool tip for turning Engine off
+#description: Tool tip for turning Engine off
 #english: TurnEngineOff=Turn the Engine Off
 TurnEngineOff=
 
-#description:  Tool tip for turning AutoSave on
+#description: Tool tip for turning AutoSave on
 #english: TurnEngineOn=Turn the Engine On
 TurnEngineOn=
 
+#description: Top Games box title
+#english: TopGames=Top Games
+TopGames=
 
 #
 # CONTEXT MENU for the Main Chessboard
 #
 
-#description:  Start training from the current position
+#description: Start training from the current position
 #english: StartTrainingFromHere=Start Training from Here
 StartTrainingFromHere=
 
-#description:  Start training from a bookmark
+#description: Start training from a bookmark
 #english: StartTrainingFromBookmark=Start Training from a Bookmark
 StartTrainingFromBookmark=
 
-#description:  Create Exercise starting at the current position
+#description: Create Exercise starting at the current position
 #english: CreateExerciseFromHere=Create Exercise from Here...
 CreateExerciseFromHere=
 
-#description:  Copy FEN of the current position to Clipboard
+#description: Copy FEN of the current position to Clipboard
 #english: CopyFENtoClipboard=Copy FEN to Clipboard
 CopyFENtoClipboard=
 
-#description:  Bookmark the current position
+#description: Bookmark the current position
 #english: BookmarkThisPosition=Bookmark This Position
 BookmarkThisPosition=
 
-#description:  Replay the selected line
+#description: Replay the selected line
 #english: Replay=Replay
 Replay=
 
-#description:  Start game against the engine
+#description: Start game against the engine
 #english: PlayAgainstComputer=Play Against Engine
 PlayAgainstComputer=
 
-#description:  Exit game
+#description: Exit game
 #english: ExitGame=Exit Game
 ExitGame=
 
-
-#
-# TAB VIEW TITLES
-#
-
-#description:  Chapters
-#english: Chapters=Chapters
-Chapters=
-
-#description:  Study Tree
+#description: Study Tree
 #english: StudyTree=Study
 StudyTree=
-
-#description:  Bookmarks
-#english: Bookmarks=Bookmarks
-Bookmarks=
-
-#description:  Study Tree
-#english: StudyTree=Study
-StudyTree=
-
-#description:  Games
-#english: Games=Games
-Games=
-
-#description:  Exercises
-#english: Exercises=Exercises
-Exercises=
 
 
 #
 # CONTEXT MENU in Training View
 #
 
-# User wants to restart the game against the engine after a certain move in the Training Session
-RestartGameAfter=Restart Game After
+#User wants to restart the game against the engine after a certain move in the Training Session
+RestartGameAfter=Restart Game After 
  
-# User wants to restart the training from a certain move in the Training Session
-RestartFrom=Restart from
+#User wants to restart the training from a certain move in the Training Session
+RestartFrom=Restart from 
 
 
 #
 # CONTEXT MENU for Chapters Tab
 #
 
-#description:  Create a new chapter
+#description: Create a new chapter
 #english: CreateNewChapter=Create New Chapter
 CreateNewChapter=
 
-#description:  Import a new chapter
+#description: Import a new chapter
 #english: ImportNewChapter=Import New Chapter
 ImportNewChapter=
 
-#description:  Cretae a new game
+#description: Cretae a new game
 #english: CreateNewGame=Create New Game
 CreateNewGame=
 
-#description:  Import a new game
+#description: Import a new game
 #english: ImportGames=Import Games
 ImportGames=
 
-#description:  Create a new exercise
+#description: Create a new exercise
 #english: CreateNewExercise=Create New Exercise
 CreateNewExercise=
 
-#description:  Import Exercise
+#description: Import Exercise
 #english: ImportExercises=Import Exercises
 ImportExercises=
 
-#description:  Open the selected chapter
+#description: Open the selected chapter
 #english: OpenSelectedChapter=Open Selected Chapter
 OpenSelectedChapter=
 
-#description:  Rename the selected chapter
+#description: Rename the selected chapter
 #english: RenameSelectedChapter=Rename Selected Chapter
 RenameSelectedChapter=
 
-#description:  Open the selected game
+#description: Open the selected game
 #english: OpenSelectedGame=Open Selected Game
 OpenSelectedGame=
 
-#description:  Edit game headers
+#description: Edit game headers
 #english: EditGameHeaders=Edit Game Headers
 EditGameHeaders=
 
-#description:  Open selected exercise
+#description: Open selected exercise
 #english: OpenThisExercise=Open Selected Exercise
 OpenThisExercise=
 
-#description:  Edit exercise headers
+#description: Edit exercise headers
 #english: EditExerciseHeaders=Edit Exercise Headers
 EditExerciseHeaders=
 
-#description:  Move chapter one position up
+#description: Move chapter one position up
 #english: MoveChapterUp=Move Chapter Up
 MoveChapterUp=
 
-#description:  Move chapter one position down
+#description: Move chapter one position down
 #english: MoveChapterDown=Move Chapter Down
 MoveChapterDown=
 
-#description:  Move game one position up
+#description: Move game one position up
 #english: MoveGameUp=Move Game Up
 MoveGameUp=
 
-#description:  Move game one position up
+#description: Move game one position up
 #english: MoveGameDown=Move Game Down
 MoveGameDown=
 
-#description:  Move game to another chapter
+#description: Move game to another chapter
 #english: MoveGameToChapter=Move Game To Chapter...
 MoveGameToChapter=
 
-#description:  Move exercise one position up
+#description: Move exercise one position up
 #english: MoveExerciseUp=Move Exercise Up
 MoveExerciseUp=
 
-#description:  Move exercise one position up
+#description: Move exercise one position up
 #english: MoveExerciseDown=Move Exercise Down
 MoveExerciseDown=
 
-#description:  Move exercise to another chapter
+#description: Move exercise to another chapter
 #english: MoveExerciseToChapter=Move Exercise To Chapter...
 MoveExerciseToChapter=
 
-#description:  Import games
-#english: ImportGames=Import Games
-ImportGames=
-
-#description:  Import Exercises
-#english: ImportExercises=Import Exercises
-ImportExercises=
-
-#description:  Deleted selected chapter
+#description: Deleted selected chapter
 #english: DeleteSelectedChapter=Delete Selected Chapter
 DeleteSelectedChapter=
 
-#description:  Delete selected game
+#description: Delete selected game
 #english: DeleteSelectedGame=Delete Selected Game
 DeleteSelectedGame=
 
-#description:  Delete clicked game
+#description: Delete clicked game
 #english: DeleteThisGame=Delete This Game
 DeleteThisGame=
 
-#description:  Delete selected exercise
+#description: Delete selected exercise
 #english: DeleteSelectedExercise=Delete Selected Exercise
 DeleteSelectedExercise=
-
-#description:  Delete clicked exercise
-#english: DeleteThisExercise=Delete This Exercise
-DeleteThisExercise=
 
 
 #
 # CONTEXT MENU for Study Tree Tab
 #
 
-#description:  Edit references
+#description: Edit references
 #english: GameExerciseReferences=Game/Exercise References
 GameExerciseReferences=
 
-#description:  Promote a line
+#description: Promote a line
 #english: PromoteLine=Promote Line
 PromoteLine=
 
-#description:  Delete the line starting from the current position
+#description: Delete the line starting from the current position
 #english: DeleteMovesFromHere=Delete Moves From Here
 DeleteMovesFromHere=
 
-#description:  Create a new chpater from the selected line
+#description: Create a new chpater from the selected line
 #english: CreateNewChapterFromLine=Create New Chapter From Line
 CreateNewChapterFromLine=
 
-#description:  Bookmark the current position
-#english: BookmarkThisPosition=Bookmark This Position
-BookmarkThisPosition=
-
-#description:  Bookmark the current position and position for all alternative moves
+#description: Bookmark the current position and position for all alternative moves
 #english: BookmarkAllOptionsHere=Bookmark All Options Here
 BookmarkAllOptionsHere=
 
-#description:  Mark the current position as a thumbnail
+#description: Mark the current position as a thumbnail
 #english: MarkAsThumbnail=Mark as Thumbnail
 MarkAsThumbnail=
 
@@ -544,15 +506,15 @@ MarkAsThumbnail=
 # NEXT / PREVIOUS BAR
 #
 
-#description:  The "Next" term
+#description: The "Next" term
 #english: Next=Next
 Next=
 
-#description:  The "Previous" term
+#description: The "Previous" term
 #english: Previous=Previous
 Previous=
 
-#description:  Chapter counter
+#description: Chapter counter
 #! Keep $0 and $1 in the translated strong as placeholders 
 #! for the number of the current chapter and total number of chapters respectively.
 #english: Chapter0of0=Chapter 0 of 0
@@ -564,28 +526,24 @@ Chapter0of0=
 # CONTEXT MENU for Bookmarks
 #
 
-#description:  The "Bookmark" term
-#english: Bookmark=Bookmark
-Bookmark=
-
-#description:  Start training from the selected bookmark
+#description: Start training from the selected bookmark
 #english: StartTrainingFromThisBookmark=Start Training from This Bookmark
 StartTrainingFromThisBookmark=
 
-#description:  Generate bookmarks
+#description: Generate bookmarks
 #english: GenerateBookmarks=Generate Bookmarks
 GenerateBookmarks=
 
-#description:  Switch to the Study Tree view to add a bookmark
+#description: Switch to the Study Tree view to add a bookmark
 #! Deprecate this?
 #english: GoToStudyToAddBookmark=Go to Study to Add a Bookmark
 GoToStudyToAddBookmark=
 
-#description:  Delete the selected bookmark
+#description: Delete the selected bookmark
 #english: DeleteThisBookmark=Delete This Bookmark
 DeleteThisBookmark=
 
-#description:  Delete all bookmarks
+#description: Delete all bookmarks
 #english: DeleteAllBookmarks=Delete All Bookmarks
 DeleteAllBookmarks=
 
@@ -596,19 +554,15 @@ DeleteAllBookmarks=
 #
 
 
-#description:  Edit game header
+#description: Edit game header
 #english: EditGameHeader=Edit Game Header
 EditGameHeader=
 
-#description:  Merge selected line into the Study Tree of the Chapter
+#description: Merge selected line into the Study Tree of the Chapter
 #english: MergeSelectionIntoStudy=Merge Selection Into Study
 MergeSelectionIntoStudy=
 
-#description:  Delete the selected game
-#english: DeleteThisGame=Delete This Game
-DeleteThisGame=
-
-#description:  Game counter
+#description: Game counter
 #! Keep 0's as placeholders for numbers
 #english: Game0of0=Game 0 of 0
 Game0of0=
@@ -620,43 +574,47 @@ Game0of0=
 #
 
 
-#description:  Edit exercise header
+#description: Edit exercise header
 #english: EditExerciseHeader=Edit Exercise Header
 EditExerciseHeader=
 
-#description:  Edit starting position
+#description: Edit starting position
 #english: EditStartingPosition=Edit Starting Position
 EditStartingPosition=
 
-#description:  Delete this exercise
+#description: Delete this exercise
 #english: DeleteThisExercise=Delete This Exercise
 DeleteThisExercise=
 
-#description:  Exercise counter
+#description: Exercise counter
 #! Keep 0's as placeholders for numbers
 #english: Exercise0of0=Exercise 0 of 0
 Exercise0of0=
 
 
 #
-# Scoresheet column headers
+# Scoresheet
 #
-							
-# White
-White=White
+			
+#Scoresheet			
+Scoresheet=Scoresheet
 
-#description:  Black
+#description: White
+#english: White=White
+White=
+
+#description: Black
 #english: Black=Black
 Black=
 
-#description:  Side to move
+#description: Side to move
 #english: SideToMove=Side to Move
 SideToMove=
 
-#description:  Evaluation							
+#description: Evaluation							
 #! Must be ultra short, max 3 chars							
-#english: Evaluation=Ev
-Evaluation=
+#english: EvaluationShort=Ev
+EvaluationShort=
 
 
 #
@@ -664,16 +622,16 @@ Evaluation=
 #
 
 
-#description:  Open the game preview dialog
+#description: Open the game preview dialog
 #english: PreviewGame=Preview Game
 PreviewGame=
 
-#description:  Import game into the active chapter
-#english: ImportIntoChapter=Import into Active Chapter
-ImportIntoChapter=
+#description: Import game into the active chapter
+#english: ImportIntoThisChapter=Import into Active Chapter
+ImportIntoThisChapter=
 
-#description:  Open the user's browser to view the game on lichess.org
-#english: ViewOnLichess=View on Lichess.org
+#description: Open the user's browser to view the game on lichess.org
+#english: ViewOnLichess=View on lichess
 ViewOnLichess=
 
 
@@ -691,15 +649,7 @@ Ok=
 #english: Cancel=Cancel
 Cancel=
 
-#description:  Exit training
-#english: ExitTraining=Exit Training
-ExitTraining=
-
-#description:  Exit Game
-#english: ExitGame=Exit Game
-ExitGame=
-
-#description:  Show explorers
+#description: Show explorers
 #english: ShowExplorer=Show Explorer
 ShowExplorer=
 
@@ -712,27 +662,27 @@ Clear=
 # Message Box Titles
 #
 
-#description:  File error
+#description: File error
 #english: FileError=File Error
 FileError=
 
-#description:  Error
+#description: Error
 #english: Error=Error
 Error=
 
-#description:  Information
+#description: Information
 #english: Information=Information
 Information=
 
-#description:  Confirmation
+#description: Confirmation
 #english: Confirmation=Confirmation
 Confirmation=
 
-#description:  Unexpected Error
+#description: Unexpected Error
 #english: UnexpectedError=Unexpected Error
 UnexpectedError=
 
-#description:  Update Check
+#description: Update Check
 #english: UpdateCheck=Updated Check
 UpdateCheck=
 
@@ -740,11 +690,11 @@ UpdateCheck=
 #english: PositionSetup=Position Setup
 PositionSetup=
 
-#description:  Invalid Position Setup
+#description: Invalid Position Setup
 #english: InvalidPositionSetup=Invalid Position Setup
 InvalidPositionSetup=
 
-#description:  Import from a PGN file
+#description: Import from a PGN file
 #english: ImportPgn=Import from PGN
 ImportPgn=
 
@@ -754,11 +704,11 @@ ImportPgn=
 # Message Text
 #
 
-#description:  Bookmarks already exist
+#description: Bookmarks already exist
 #english: BookmarksAlreadyExist=Bookmarks already exist
 BookmarksAlreadyExist=
 
-#description:  Error saving file
+#description: Error saving file
 #english: FailedToSaveFile=Failed to save file: $0 
 FailedToSaveFile=
 
@@ -766,146 +716,140 @@ FailedToSaveFile=
 #english: ChessEngineNotAvailable=Chess Engine not available
 ChessEngineNotAvailable=
 
-#description:  Error importing a game
+#description: Error importing a game
 #english: CouldNotImportGame=Could not import game 
 CouldNotImportGame=
 
-#description:  Confirmation to delete all Bookmarks	
-#english: DeleteAllBookmarks=This will delete all Bookmarks. Proceed?
-DeleteAllBookmarks=
+#description: Confirmation to delete all Bookmarks	
+#english: ConformDeleteAllBookmarks=This will delete all Bookmarks. Proceed?
+ConformDeleteAllBookmarks=
 
-#description:  Confirmation to replace bookmarks
+#description: Confirmation to replace bookmarks
 #english: GeneratedBookmarksReplace=Generated bookmarks will replace the ones in the Workbook. Proceed?
 GeneratedBookmarksReplace=
 
-#description:  Error parsing engine's move
+#description: Error parsing engine's move
 #english: ErrorParseMove=Failed to parse engine's move.
 ErrorParseMove=
 
-#description:  Engine not available
+#description: Engine not available
 #english: EngineNotAvailable=Chess Engine not available.
 EngineNotAvailable=
 
-#description:  Exercise has no solution
+#description: Exercise has no solution
 #english: ExerciseNoSolution=This exercise has no solution provided.
 ExerciseNoSolution=
 
-#description:  Error downloading game
+#description: Error downloading game
 #english: GameDownloadError=Game download error
 GameDownloadError=
 
-#description:  Error loading engine
+#description: Error loading engine
 #english: LoadEngineError =Failed to load the engine. Move evaluation will not be available.
 LoadEngineError =
 
-#description:  Confirmation to cancel game
+#description: Confirmation to cancel game
 #english: CancelGame=Cancel Game?
 CancelGame=
 
-#description:  Information about a game in progress
+#description: Information about a game in progress
 #english: GameInProgress=Game with the Computer is in Progress
 GameInProgress=
 
-#description:  Unrecognized file format
+#description: Unrecognized file format
 #english: UnrecognizedFileFormat=Unrecognized file format 
 UnrecognizedFileFormat=
 
-#description:  Chess engine not available
-#english: EngineNotAvailable=Chess Engine is not available.
-EngineNotAvailable=
-
-#description:  Select move from which to start a game against the engine
+#description: Select move from which to start a game against the engine
 #english: SelectEngineStartMove=Select the move from which to start.
 SelectEngineStartMove=
 
-#description:  Confirmation to delete chapter
+#description: Confirmation to delete chapter
 #english: DeleteChapter=Deleting chapter: $0. Are you sure?
 DeleteChapter=
 
-# No exercise in file
+#No exercise in file
 NoExerciseInFile=No Exercises found in $0. 
  
-# No games in file
+#No games in file
 NoGamesInFile=No Games found in $0. 
 
-#description:  Bookmark already exists
+#description: Bookmark already exists
 #english: BookmarkAlreadyExists=This bookmark already exists
 BookmarkAlreadyExists=
 
-# Bookmarks already exists
-BookmarksAlreadyExist=Bookmarks already exist
- 
-# Error adding bookmarks 
-ErrorAddBookmarks=Failed to add the bookmarks.
+#description: Error adding bookmarks 
+#english: ErrorAddBookmarks=Failed to add the bookmarks.
+ErrorAddBookmarks=
 
-#description:  No move to start training from
+#description: No move to start training from
 #english: NoTrainingStartMove=No move selected to start training from.
 NoTrainingStartMove=
 
-#description:  Confirmation to exit training session
-#english: ExitTraining=Exit the training session?
-ExitTraining=
+#description: Confirmation to exit training session
+#english: ExitTrainingSession=Exit the training session?
+ExitTrainingSession=
 
-#description:  Restart the training session
+#description: Restart the training session
 #english: RestartTraining=Restart the training session?
 RestartTraining=
 
-#description:  No new version available
+#description: No new version available
 #english: NoNewVersion=No new version available.
 NoNewVersion=
 
-#description:  Enable viewing/editing of the exercise
+#description: Enable viewing/editing of the exercise
 #english: ViewExercise=Enable View/Edit Mode?
 ViewExercise=
 
-#description:  Restart trainign from the selected move.
+#description: Restart trainign from the selected move.
 #english: RestartFromMove=Restart from $0?
 RestartFromMove=
 
-#description:  Cannot enter training game due to engine not available
+#description: Cannot enter training game due to engine not available
 #english: NoEngineForTraining=Engine not available. Training cannot continue.\n You can roll moves back or restart.
 NoEngineForTraining=
 
-#description:  Unexpected error processing user's move
-#english: UnexpectedErrorInUserMove=Unexpected error while processing user\'s move
+#description: Unexpected error processing user's move
+#english: UnexpectedErrorInUserMove=Unexpected error while processing user's move
 UnexpectedErrorInUserMove=
 
-#description:  Close the Workbook
-#english: CloseWorkbook=Close the current Workbook?
-CloseWorkbook=
+#description: Close the Workbook
+#english: CloseThisWorkbook=Close the current Workbook?
+CloseThisWorkbook=
 
-# Last file not found
+#Last file not found
 #LastFileNotFound=Most recent file $0 could not be found.
 
-#description:  File not found
+#description: File not found
 #english: FileNotFound=File $0 could not be found.
 FileNotFound=
 
-#description:  Save the Workbook
+#description: Save the Workbook
 #english: SaveWorkbook=Save the Workbook?
 SaveWorkbook=
 
-#description:  File already open
+#description: File already open
 #english: FileAlreadyOpen=$0 is already open."
 FileAlreadyOpen=
 
-#description:  Confirmation to merge training moves into the Study Tree / Game or Exercise
+#description: Confirmation to merge training moves into the Study Tree / Game or Exercise
 #english: MergeTrainingIntoStudy=Merge and Save new moves from this session into the {0}?
 MergeTrainingIntoStudy=
 
-#description:  (Move) no longer valid 
+#description: (Move) no longer valid 
 #english: NoLongerValid=is no longer valid
 NoLongerValid=
 
-#description:  (Moves) no longer valid 
+#description: (Moves) no longer valid 
 #english: NoLongerValidPlural=are no longer valid
 NoLongerValidPlural=
 
-#description:  Confirmation to delete move from exercise solution
+#description: Confirmation to delete move from exercise solution
 #english: DeleteExerciseMove=and will be deleted. Proceed anyway?
 DeleteExerciseMove=
 
-#description:  Confirmation to delete moves from exercise solution
+#description: Confirmation to delete moves from exercise solution
 #english: DeleteExerciseMoves=and will be deleted. Proceed anyway?
 DeleteExerciseMoves=
 
@@ -918,43 +862,39 @@ DeleteExerciseMoves=
 #
 
 
-#description:  Quiz points
+#description: Quiz points
 #english: QuizPoints=Quiz points
 QuizPoints=
 
-#description:  Source Forge Options dialog title
-#english: ApplicationOptions=Application Options
-ApplicationOptions=
-
-#description:  Engine Executable
+#description: Engine Executable
 #english: EngineExecutable=Engine Executable
 EngineExecutable=
 
-#description:  Engine Time per Move in seconds (group frame title)
+#description: Engine Time per Move in seconds (group frame title)
 #english: EngineTimePerMove=Engine Time per Move (s)
 EngineTimePerMove=
 
-#description:  Time to think in the Game (inside a frame titled "Engine Time per Move")
+#description: Time to think in the Game (inside a frame titled "Engine Time per Move")
 #english: ThinkTimeInGame=In Game
 ThinkTimeInGame=
 
-#description:  Move Replay(group frame title)
+#description: Move Replay(group frame title)
 #english: MoveReplay=Move Replay
 MoveReplay=
 
-#description:  Time per move in auto replay in seconds (inside a frame titled "Move Replay")
+#description: Time per move in auto replay in seconds (inside a frame titled "Move Replay")
 #english: AutoReplaySpeed=Auto Speed (s)
 AutoReplaySpeed=
 
-#description:  Allow manual replay with a mouse wheel 
+#description: Allow manual replay with a mouse wheel 
 #english: AllowMouseWheel=Allow Mouse Wheel
 AllowMouseWheel=
 
-#description:  Whether to show inline table with move options at a fork
+#description: Whether to show inline table with move options at a fork
 #english: ShowMovesAtFork=Show Moves at Fork
 ShowMovesAtFork=
 
-#description:  Whether sound for the moves is turned on
+#description: Whether sound for the moves is turned on
 #english: SoundOn=Sound On
 SoundOn=
 
@@ -962,7 +902,7 @@ SoundOn=
 #english: CurrentVersion=The current version $0 will be backed up in $1
 CurrentVersion=
 
-#description:  Updated version number
+#description: Updated version number
 #english: UpdatedVersion=The updated version number will be $0
 UpdatedVersion=
 
@@ -970,190 +910,206 @@ UpdatedVersion=
 #english: IncrementMajorVersion=Increment major version
 IncrementMajorVersion=
 
-#description:  Create a new chapter from a variation line
+#description: Create a new chapter from a variation line
 #english: NewChapterFromLine=Create New Chapter From Line
 NewChapterFromLine=
 
-#description:  A new chapter will be created from the selected sub-tree.
+#description: A new chapter will be created from the selected sub-tree.
 #english: NewChapterToBeCreate=A new chapter will be created from the selected sub-tree.
 NewChapterToBeCreate=
 
-#description:  Check box to delete sub-tree from the source chapter
+#description: Check box to delete sub-tree from the source chapter
 #english: DeleteSubTreeFromSource=Delete the sub-tree from the original chapter.
 DeleteSubTreeFromSource=
 
-#description:  Check box to go to the chapter
+#description: Check box to go to the chapter
 #english: GotoNewChapter=Go to the newly created chapter.
 GotoNewChapter=
 
-#description:  Chapter Title
+#description: Chapter Title
 #english: ChapterTitle=Chapter Title
 ChapterTitle=
 
-# Select a date
+#Select a date
 #SelectDate=Select a date
 
-#description:  Ignore Day and Month
+#description: Ignore Day and Month
 #english: IgnoreDayMonth=Ignore Day and Month
 IgnoreDayMonth=
 
-#description:  Ignore Day
+#description: Ignore Day
 #english: IgnoreDay=Ignore Day
 IgnoreDay=
 
-#description:  Game Preview
+#description: Game Preview
 #english: GamePreview=Game Preview
 GamePreview=
 
-#description:  Previous Game
+#description: Previous Game
 #english: PreviousGame=Previous Game
 PreviousGame=
 
-#description:  Next Game
+#description: Next Game
 #english: NextGame=Next Game
 NextGame=
 
-#description:  View on lichess
-#english: ViewOnLichess=View on lichess
-ViewOnLichess=
-
-#description:  Import into Chapter
+#description: Import into Chapter
 #english: ImportIntoChapter=Import into Chapter
 ImportIntoChapter=
 
-#description:  Downloading game from lichess
+#description: Downloading game from lichess
 #english: DownloadGameFromLichess=Downloading Game From lichess.org.
 DownloadGameFromLichess=
 
-#description:  Please wait
+#description: Please wait
 #english: PleaseWait=Please Wait
 PleaseWait=
 
-#description:  Replay speed
+#description: Replay speed
 #english: ReplaySpeed=Replay Speed
 ReplaySpeed=
 
-#description:  Fast spped
+#description: Fast spped
 #english: Fast=Fast
 Fast=
 
-#description:  Medium speed
+#description: Medium speed
 #english: Medium=Medium
 Medium=
 
-#description:  Slow speed
+#description: Slow speed
 #english: Slow=Slow
 Slow=
 
-#description:  Empty game text
+#description: Empty game text
 #english: EmptyGameText=Game text is empty.
 EmptyGameText=
 
-#description:  Game not found
+#description: Game not found
 #english: GameNotFound=Game not found.
 GameNotFound=
 
-#description:  Game download error
-#english: GameDownloadError=Game download error:
-GameDownloadError=
-
-#description:  FEN
+#description: FEN
 #english: FEN=FEN
 FEN=
 
-#description:  White to play
+#description: White to play
 #english: WhiteToPlay=White to Play
 WhiteToPlay=
 
-#description:  Black to play
+#description: Black to play
 #english: BlackToPlay=Black to Play
 BlackToPlay=
 
-#description:  En passant
+#description: En passant
 #english: EnPassant=En Passant
 EnPassant=
 
-#description:  Title of the box with allowed castling directions
+#description: Title of the box with allowed castling directions
 #english: Castling=Castling
 Castling=
 
-#description:  Starting position
+#description: Starting position
 #english: StartingPosition=Starting position
 StartingPosition=
 
-#description:  Clear board
+#description: Clear board
 #english: ClearBoard=Clear Board
 ClearBoard=
 
-#description:  Select Games/Exercises
+#description: Select Games/Exercises
 #english: SelectGameAndExercises=Select Games and/or Exercises
 SelectGameAndExercises=
 
-#description:  Select items
+#description: Select items
 #english: SelectItems=Select Items
 SelectItems=
 
-#description:  Show all chapters
+#description: Show all chapters
 #english: ShowAllChapters=Show All Chapters
 ShowAllChapters=
 
-#description:  Select chapter
+#description: Select chapter
 #english: SelectChapter=Select Chapter
 SelectChapter=
 
-#description:  Select chapters to import
+#description: Select chapters to import
 #english: SelectChaptersToImport=Select Chapters to Import
 SelectChaptersToImport=
 
-#description:  Merge games and copy
+#description: Merge games and copy
 #english: MergeGamesAndCopy=Merge Games into the Study Tree and Copy them into the Games section.
 MergeGamesAndCopy=
 
-#description:  Merge games, no copy
+#description: Merge games, no copy
 #english: MergeGamesNoCopy=Merge Games into the Study Tree only (do not copy games).
 MergeGamesNoCopy=
 
-#description:  Copy games, no merge
+#description: Copy games, no merge
 #english: CopyGamesNoMerge=Copy Games into the Games section only (leave the study tree empty)
 CopyGamesNoMerge=
 
-#description:  Create a separate chapter for each game
+#description: Create a separate chapter for each game
 #english: CreateChapterPerGame=Create Chapter per Game
 CreateChapterPerGame=
 
-#description:  New version available from 
+#description: New version available from 
 #english: NewVersionAvailable=New version $0 available from
 NewVersionAvailable=
 
-#description:  Checkbox to not show update reminde
+#description: Checkbox to not show update reminde
 #english: NoShowForCurrentVersion=Do not show for this version.
 NoShowForCurrentVersion=
 
-#description:  Training side
+#description: Training side
 #english: TrainingSide=Training Side
 TrainingSide=
 
-#description:  Initial board orientation
+#description: Initial board orientation
 #english: InitBoardOrientation=Initial Board Orientation (side to place at the bottom):
 InitBoardOrientation=
 
-#description:  Tooltip for side to move
+#description: Tooltip for side to move
 #english: TooltipSideToMove=Determines some default settings
 TooltipSideToMove=
 
-#description:  Tooltip for workbook version
+#description: Tooltip for workbook version
 #english: TooltipWorkbookVersion=To increment version select File->Backup Version
 TooltipWorkbookVersion=
 
-#description:  Errors encountered while parsing a PGN file
+#description: Errors encountered while parsing a PGN file
 #english: PgnErrors=PGN parsing errors
 PgnErrors=
 
-#description:  1 entity was valid
+#description: One entity was valid
 #english: OneEntityValid=1 entity was valid
 OneEntityValid=
 
-#description:  Multiple entities were valid
+#description: Multiple entities were valid
 #english: MultiEntitiesValid=$0  entities were valid
 MultiEntitiesValid=
+
+#description: not imported due to wrong type
+#english: BadTypeForImport=but not imported due to not being of the $0 type
+BadTypeForImport=
+
+#description: Select Solving Mode
+#english: SelectSolvingMode=Select Solving Mode
+SelectSolvingMode=
+
+#description: Guess the next move
+#english: GuessNextMove=Guess the next move
+GuessNextMove=
+
+#description: Enter your analysis and submit
+#english: EnterAnalysis=Enter your analysis and submit
+EnterAnalysis=
+
+#description: Show/Edit solution
+#english: ShowSolution=Show/Edit Solution
+ShowSolution=
+
+#description: Hide solution
+#english: HideSolution=Hide Solution
+HideSolution=
 
