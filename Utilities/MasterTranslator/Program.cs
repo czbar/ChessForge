@@ -9,9 +9,10 @@ using System.Security.Cryptography;
 namespace MasterTranslator
 {
     /// <summary>
-    /// Program to 
-    /// - generate empty translator templates
-    /// - compare content of 2 translation files
+    /// This program generates translation templates from 
+    /// the master file and existing translation files if exist
+    /// for a given culture.
+    /// It also compares the Master file against a localized file. 
     /// </summary>
     internal class Program
     {
@@ -24,148 +25,185 @@ namespace MasterTranslator
             COMPARE,
         }
 
-        // output lines created by the Translator file generator
-        private static List<string> generatedLines = new List<string>();
+        // first part of the template file names
+        private static readonly string TEMPLATE_NAME = "Template";
 
-        // name of the master file when generating a translator file
-        private static string masterFile;
+        // first part of the localized file names
+        private static readonly string LOCALIZED_NAME = "Localized";
+
+        // culture code
+        private static string _cultureInfo = "";
+
+        // output lines created by the Translator file generator
+        private static List<string> _generatedLines = new List<string>();
+
+        // folder with data files
+        private static string _workingfolder;
 
         // name of the generated translator file
-        private static string translatorFile;
+        private static string _outputTemplateFile;
+
+        // input localized file
+        private static string _inputLocalizedFile;
+
+        // name of the master file when generating a translator file
+        private static string _inputMasterFile = "Master.txt";
 
         // default name for the comparison results file
-        private static string compareResults = "Comparison.txt";
-
-        // name of the first file in the comparison action
-        private static string firstTranslatorFile;
-
-        // name of the second file in the comparison action
-        private static string secondTranslatorFile;
+        private static string _compareResultsFile = "Comparison.txt";
 
         // action being performed
-        private static Action action;
+        private static Action _action;
 
         /// <summary>
         /// Checks the command line arguments and invokes appropriate actions.
-        /// 
-        /// For running from here use the following command line parameters
-        ///       masterFile = "../../../../Translation/MasterFile.txt";
-        ///       translatorFile = "../../../../Translation/TranslatorFile.empty.txt";
-        ///       
+        /// If the action is GENERATE a new template file will be generated.
+        /// If there is a Localized file used as an input, the program will compare
+        /// it against the Master file.
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            // set default values that may be overwritten by the command line arguments
-            masterFile = "MasterFile.txt";
-            translatorFile = "TranslatorFile.empty.txt";
-
             if (!ProcessCommandLine(args))
             {
                 return;
             }
 
-            switch (action)
+            if (_workingfolder != null)
+            {
+                _inputMasterFile = Path.Combine(_workingfolder, _inputMasterFile);
+            }
+
+            if (!File.Exists(_inputMasterFile))
+            {
+                Console.WriteLine("ERROR: file " + _inputMasterFile + " not found");
+                return;
+            }
+
+            // prepare file names that may be needed
+            if (string.IsNullOrEmpty(_cultureInfo))
+            {
+                _inputLocalizedFile = LOCALIZED_NAME + ".txt";
+                _outputTemplateFile = TEMPLATE_NAME + ".txt";
+            }
+            else
+            {
+                _inputLocalizedFile = string.Format(LOCALIZED_NAME + ".{0}.txt", _cultureInfo);
+                _outputTemplateFile = string.Format(TEMPLATE_NAME + ".{0}.txt", _cultureInfo);
+            }
+
+            if (_workingfolder != null)
+            {
+                _inputLocalizedFile = Path.Combine(_workingfolder, _inputLocalizedFile);
+                _outputTemplateFile = Path.Combine(_workingfolder, _outputTemplateFile);
+                _compareResultsFile = Path.Combine(_workingfolder, _compareResultsFile);
+            }
+
+            // take the requested action
+            switch (_action)
             {
                 case Action.GENERATE:
-                    GenerateTranslatorFile();
+                    CompareMasterAndLocalizedFiles();
+                    GenerateTemplateFile();
                     break;
                 case Action.COMPARE:
-                    CompareTranslatorFiles();
+                    CompareMasterAndLocalizedFiles();
                     break;
             }
         }
 
         /// <summary>
-        /// If the command line is empty, we will grab 
-        /// the default MasterFile from ../../../../Translation/MasterFile.txt
-        /// and produce TranslatorFile.empty.txt for the translator to fill out.
-        /// 
-        /// (The ".empty." part in the file will then be replaced by location e.g. ".pl-PL."
-        /// The TranslatorFile.xx-XX.txt will then be given to resgen to compile into 
-        /// resources file.)
-        /// 
-        /// If a file name is the argument then it will be read in instead of the MasterFile.
-        /// If there is a second argument, it will be considered the name of the output file.
-        /// 
-        /// If the first argument is given with a '/' or '-' in front of it, the program 
-        /// will perform some other function.
+        /// The first command line argument will determine the action, the optional
+        /// second will be the culture code, then file names may follow.
         /// </summary>
         /// <param name="args"></param>
         static bool ProcessCommandLine(string[] args)
         {
             if (args.Length == 0)
             {
-                return true;
+                return false;
             }
 
-            if (args[0][0] == '-' || args[0][0] == '/')
+            string firstArg = args[0];
+            if (firstArg[0] != '-' && firstArg[0] != '/')
             {
-                int n = 0;
-                while (n < args.Length)
-                {
-                    string arg = args[n].Substring(1);
-                    switch (arg.ToLower())
-                    {
-                        case "help":
-                        case "?":
-                            // we only honor the request to show help if this is the first argument.
-                            if (n == 0)
-                            {
-                                PrintHelp();
-                                return false;
-                            }
-                            break;
-                        case "c":
-                        case "comp":
-                        case "compare":
-                            n++;
-                            // there must be 2 file names following this one to compare the content.
-                            if (args.Length < 3)
-                            {
-                                return false;
-                            }
-
-                            firstTranslatorFile = args[n];
-                            n++;
-                            secondTranslatorFile = args[n];
-                            action = Action.COMPARE;
-                            break;
-                    }
-                    n++;
-                }
-
+                return false;
             }
-            else
+
+            switch (firstArg.ToLower())
             {
-                masterFile = args[0];
-                if (args.Length > 1)
+                case "h":
+                case "?":
+                    PrintHelp();
+                    return false;
+                case "c":
+                    _action = Action.COMPARE;
+                    break;
+                case "g":
+                    _action = Action.GENERATE;
+                    break;
+            }
+
+            // now we have processed the first argument let's go over
+            // the remaining ones 
+            // do we have culture info?
+            if (args.Length > 1)
+            {
+                _cultureInfo = args[1];
+            }
+
+            int n = 1;
+            while (n < args.Length)
+            {
+                switch (args[n].ToLower())
                 {
-                    translatorFile = args[1];
+                    case "/f":
+                    case "-f":
+                        n++;
+                        _workingfolder = args[n];
+                        break;
+                    default:
+                        _cultureInfo = args[n];
+                        break;
                 }
-                action = Action.GENERATE;
+                n++;
             }
 
             return true;
         }
 
         /// <summary>
-        /// Generates a Translator text and writes it out.
+        /// Generates a Localized file text and writes it out.
         /// </summary>
-        private static void GenerateTranslatorFile()
+        private static void GenerateTemplateFile()
         {
-            string[] lines = File.ReadAllLines(masterFile);
+            Dictionary<string, string> dictLocalized = new Dictionary<string, string>();
+            string[] lines = File.ReadAllLines(_inputMasterFile);
+            if (!string.IsNullOrWhiteSpace(_cultureInfo))
+            {
+                if (!File.Exists(LOCALIZED_NAME))
+                {
+                    Console.WriteLine("ERROR: file " + _inputLocalizedFile + " not found");
+                    return;
+                }
+                string[] localizedLines = File.ReadAllLines(_inputLocalizedFile);
+                foreach (string line in localizedLines)
+                {
+                    UpdateLocalizedDictionary(line, ref dictLocalized);
+                }
+            }
+
             List<string> block = new List<string>();
             foreach (string line in lines)
             {
                 if (string.IsNullOrEmpty(line))
                 {
                     // process current block
-                    ProcessBlock(block);
+                    ProcessBlock(block, ref dictLocalized);
                     // clear the block lines list
                     block.Clear();
 
-                    generatedLines.Add("");
+                    _generatedLines.Add("");
                 }
                 else
                 {
@@ -173,7 +211,24 @@ namespace MasterTranslator
                 }
             }
 
-            File.WriteAllLines(translatorFile, generatedLines.ToArray());
+            File.WriteAllLines(_outputTemplateFile, _generatedLines.ToArray());
+        }
+
+        /// <summary>
+        /// Adds a key/value to the dictionary, if the line contains a trnaslation.
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="dictLocalized"></param>
+        private static void UpdateLocalizedDictionary(string line, ref Dictionary<string, string> dictLocalized)
+        {
+            if (line.Length > 0 && line[0] != '#' && line.IndexOf('=') > 0)
+            {
+                string[] tokens = line.Split('=');
+                if (tokens.Length > 1)
+                {
+                    dictLocalized[tokens[0]] = tokens[1];
+                }
+            }
         }
 
         /// <summary>
@@ -181,12 +236,17 @@ namespace MasterTranslator
         /// We are only interested in not commented lines with an '=' sign in them.
         /// We look for keys missing on both sides and for duplicates.
         /// 
-        /// Outputs the comaparison file.
+        /// Outputs the comparison file.
         /// </summary>
-        private static void CompareTranslatorFiles()
+        private static void CompareMasterAndLocalizedFiles()
         {
-            List<string> first= GetKeyStrings(firstTranslatorFile, out List<string> firstDupes, out List<string> firstMissingValues);
-            List<string> second = GetKeyStrings(secondTranslatorFile, out List<string> secondDupes, out List<string> secondMissingValues);
+            if (string.IsNullOrEmpty(_inputLocalizedFile))
+            {
+                return;
+            }
+
+            List<string> first = GetKeyStrings(_inputMasterFile, out List<string> firstDupes, out List<string> firstMissingValues);
+            List<string> second = GetKeyStrings(_inputLocalizedFile, out List<string> secondDupes, out List<string> secondMissingValues);
 
             IEnumerable<string> inFirstOnly = first.Except(second);
             IEnumerable<string> inSecondOnly = second.Except(first);
@@ -230,7 +290,7 @@ namespace MasterTranslator
 
             if (inFirstOnly.Count() == 0)
             {
-                sb.AppendLine("Nothing missing in the second file");
+                sb.AppendLine("No keys missing in the second file");
             }
             else
             {
@@ -262,11 +322,15 @@ namespace MasterTranslator
                 sb.AppendLine();
             }
 
-            File.WriteAllText(compareResults, sb.ToString());
+            File.WriteAllText(_compareResultsFile, sb.ToString());
+
+            Console.WriteLine(sb.ToString());
+            Console.WriteLine();
+            Console.WriteLine("See Comparison.txt file");
         }
 
         /// <summary>
-        /// Retrieves Key strings from a file.
+        /// Retrieves key strings from a file.
         /// Key strings are the first strings in a line 
         /// that is not commented out and contains a '=' character.
         /// </summary>
@@ -323,7 +387,7 @@ namespace MasterTranslator
         /// and there will be no empty lines in between.
         /// </summary>
         /// <param name="block"></param>
-        static void ProcessBlock(List<string> block)
+        static void ProcessBlock(List<string> block, ref Dictionary<string, string> dictLocalized)
         {
             if (block.Count == 0)
             {
@@ -343,25 +407,36 @@ namespace MasterTranslator
                     if (i == 0)
                     {
                         string line = block[0].Insert(1, "description: ");
-                        generatedLines.Add(line);
+                        _generatedLines.Add(line);
                     }
                     else if (i == lineCount - 1)
                     {
                         string line = block[i].Insert(0, "#english: ");
-                        generatedLines.Add(line);
+                        _generatedLines.Add(line);
                     }
                     else
                     {
-                        generatedLines.Add(block[i]);
+                        _generatedLines.Add(block[i]);
                     }
                 }
-                generatedLines.Add(lineToTranslate);
+
+                string val;
+                bool res = dictLocalized.TryGetValue(lineToTranslate, out val);
+                if (res)
+                {
+                    lineToTranslate = lineToTranslate + "=" + val;
+                }
+                else
+                {
+                    lineToTranslate = lineToTranslate + "=";
+                }
+                _generatedLines.Add(lineToTranslate + "=");
             }
             else
             {
                 foreach (string s in block)
                 {
-                    generatedLines.Add(s);
+                    _generatedLines.Add(s);
                 }
             }
         }
@@ -374,7 +449,7 @@ namespace MasterTranslator
         static string ExtractPartToTranslate(string line)
         {
             string[] parts = line.Split('=');
-            return parts[0] + "=";
+            return parts[0];
         }
 
         /// <summary>
