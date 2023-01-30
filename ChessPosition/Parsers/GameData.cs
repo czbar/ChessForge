@@ -1,5 +1,6 @@
 ﻿using ChessPosition;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -115,7 +116,7 @@ namespace GameTree
                 {
                     prefix = "Exercise: ";
                 }
-                return prefix + Header.BuildGameHeaderLine(true);
+                return prefix + Header.BuildGameHeaderLine(typ != ContentType.EXERCISE);
             }
         }
 
