@@ -570,7 +570,7 @@ ChessEngineNotAvailable=Chess Engine not available
 CouldNotImportGame=Could not import game 
 
 #Confirmation to delete all Bookmarks	
-ConformDeleteAllBookmarks=This will delete all Bookmarks. Proceed?
+ConfirmDeleteAllBookmarks=This will delete all Bookmarks. Proceed?
 
 #Confirmation to replace bookmarks
 GeneratedBookmarksReplace=Generated bookmarks will replace the ones in the Workbook. Proceed?
@@ -871,3 +871,14 @@ HideSolution=Hide Solution
 
 #Workbook Backup
 WorkbookBackup=Workbook Backup
+
+##################################
+#
+# Languages
+#
+
+#Language English
+LangEnglish=English
+
+#Language Polish
+LangPolish=Polish
