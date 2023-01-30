@@ -105,7 +105,7 @@ namespace MasterTranslator
                 while (n < args.Length)
                 {
                     string arg = args[n].Substring(1);
-                    switch (args[n].ToLower())
+                    switch (arg.ToLower())
                     {
                         case "help":
                         case "?":
@@ -185,8 +185,8 @@ namespace MasterTranslator
         /// </summary>
         private static void CompareTranslatorFiles()
         {
-            List<string> first= GetKeyStrings(firstTranslatorFile, out List<string> firstDupes);
-            List<string> second = GetKeyStrings(secondTranslatorFile, out List<string> secondDupes);
+            List<string> first= GetKeyStrings(firstTranslatorFile, out List<string> firstDupes, out List<string> firstMissingValues);
+            List<string> second = GetKeyStrings(secondTranslatorFile, out List<string> secondDupes, out List<string> secondMissingValues);
 
             IEnumerable<string> inFirstOnly = first.Except(second);
             IEnumerable<string> inSecondOnly = second.Except(first);
@@ -194,11 +194,11 @@ namespace MasterTranslator
             StringBuilder sb = new StringBuilder();
             if (inSecondOnly.Count() == 0)
             {
-                sb.AppendLine("Nothing missing in the first file");
+                sb.AppendLine("No keys missing in the first file");
             }
             else
             {
-                sb.AppendLine("Missing in the first file");
+                sb.AppendLine("Keys missing in the first file");
                 foreach (string s in inSecondOnly)
                 {
                     sb.AppendLine("    " + s);
@@ -209,12 +209,24 @@ namespace MasterTranslator
             if (firstDupes.Count > 0)
             {
                 sb.AppendLine("Duplicates in the first file");
-                foreach (string s in inFirstOnly)
+                foreach (string s in firstDupes)
                 {
                     sb.AppendLine("    " + s);
                 }
                 sb.AppendLine();
             }
+
+            if (firstMissingValues.Count > 0)
+            {
+                sb.AppendLine("Keys with missing values in the first file");
+                foreach (string s in firstMissingValues)
+                {
+                    sb.AppendLine("    " + s);
+                }
+                sb.AppendLine();
+            }
+
+            // the second file
 
             if (inFirstOnly.Count() == 0)
             {
@@ -222,7 +234,7 @@ namespace MasterTranslator
             }
             else
             {
-                sb.AppendLine("Missing in the second file");
+                sb.AppendLine("Keys missing in the second file");
                 foreach (string s in inFirstOnly)
                 {
                     sb.AppendLine("    " + s);
@@ -233,7 +245,17 @@ namespace MasterTranslator
             if (secondDupes.Count > 0)
             {
                 sb.AppendLine("Duplicates in the second file");
-                foreach (string s in inSecondOnly)
+                foreach (string s in secondDupes)
+                {
+                    sb.AppendLine("    " + s);
+                }
+                sb.AppendLine();
+            }
+
+            if (secondMissingValues.Count > 0)
+            {
+                sb.AppendLine("Keys with missing values in the second file");
+                foreach (string s in secondMissingValues)
                 {
                     sb.AppendLine("    " + s);
                 }
@@ -251,9 +273,10 @@ namespace MasterTranslator
         /// <param name="fileName"></param>
         /// <param name="dupes"></param>
         /// <returns></returns>
-        private static List<string> GetKeyStrings(string fileName, out List<string> dupes)
+        private static List<string> GetKeyStrings(string fileName, out List<string> dupes, out List<string> missingValues)
         {
             dupes = new List<string>();
+            missingValues = new List<string>();
             List<string> keys = new List<string>();
             string[] lines = File.ReadAllLines(fileName);
             foreach (string line in lines)
@@ -269,6 +292,11 @@ namespace MasterTranslator
                             dupes.Add(key);
                         }
                         keys.Add(key);
+
+                        if (index == line.Length - 1 || string.IsNullOrWhiteSpace(line.Substring(index)))
+                        {
+                            missingValues.Add(key);
+                        }
                     }
                 }
             }
