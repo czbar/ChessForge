@@ -193,7 +193,7 @@ namespace MasterTranslator
             List<string> block = new List<string>();
             foreach (string line in lines)
             {
-                if (string.IsNullOrEmpty(line))
+                if (string.IsNullOrWhiteSpace(line))
                 {
                     // process current block
                     ProcessBlock(block, ref dictLocalized);
@@ -465,7 +465,7 @@ namespace MasterTranslator
 
             for (int i = 0; i < block.Count - 1; i++)
             {
-                if (block[i].Length == 0 || block[i][0] != '#')
+                if (string.IsNullOrWhiteSpace(block[i]) || block[i][0] != '#')
                 {
                     valid = false;
                     break;
@@ -474,7 +474,7 @@ namespace MasterTranslator
 
             if (valid)
             {
-                if (block[block.Count - 1].Length == 0
+                if (string.IsNullOrWhiteSpace(block[block.Count - 1])
                     || block[block.Count - 1][0] == '#'
                     || block[block.Count - 1].IndexOf('=') <= 0)
                 {
