@@ -991,7 +991,7 @@ namespace ChessForge
             {
                 _mainWin.UiGridExercisePrevNext.Visibility = Visibility.Collapsed;
                 _mainWin.UiGridExercises.RowDefinitions[0].Height = new GridLength(0);
-                _mainWin.UiRtbModelGamesView.Height = 640;
+                _mainWin.UiRtbExercisesView.Height = 640;
             }
         }
 
