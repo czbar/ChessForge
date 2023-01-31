@@ -68,6 +68,9 @@ Moves=Moves
 #Position
 Position=Position
 
+#Result
+Result=Result
+
 #Comment
 Comment=Comment
 
@@ -97,6 +100,12 @@ Close=Close
 
 #Item
 Item=Item
+
+#Game Header
+GameHeader=Game Header
+
+#Exercise Header
+ExerciseHeader=Exercise Header
 
 #Request to evaluate a position
 EvaluatePosition=Evaluate Position
@@ -887,41 +896,68 @@ ExplorersAbout=Openings/Tablebases
 # Comment Box
 #
 
+#Some available actions
 cbActions=Some available actions are:
 
-cbClickStudyHeader=Click Study header or double click chapter\'s title to open the Study Tree
-cbClickForContextMenu="Right click to open context menu"
+#Clich to open Study
+cbClickStudyHeader=Click Study header or double click chapter's title to open the Study Tree
 
+#Right click for context menu
+cbClickForContextMenu=Right click to open context menu
+
+#Click thru the moves
 cbClickThruMoves=Click through the moves
+
+#Double click to annotate
 cbDoubleClickToAnnotate=Double click to annotate move
 
+#Right click for context menu
 cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise
+
+#Double click to auto replay
 cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay
 
+#Click bookmark to start training
 cbClickBookmarkToTrain=Click a bookmark to start training
+
+#Right click to open bookmarks menu
 cbRightClickBookmarkManager=Right click to open menu for Bookmark management options
 
+#Right click to open menu
 cbRightClickCreateGame=Right click to open menu to create or import a Game
  
-#Click through the moves
-#Double click to annotate move
- 
-#Right click to open menu for creating, importing or editing games";
+#DUPE: Click through the moves
+#DUPE: Double click to annotate move
+#DUPE: Right click to open menu for creating, importing or editing games
 
-cbRightClickCreateExercise=Right click to open menu to create or import an Exercise;
+#Right click to create exercise
+cbRightClickCreateExercise=Right click to open menu to create or import an Exercise
 
+#Make moves on main board
 cbMoveToEnterSolution= Make moves on the main board to enter solution
-cbDoubleClickToAssignPoints=Double click a move to assign quiz points\n" 
+
+#Double click to assign quiz points
+cbDoubleClickToAssignPoints=Double click a move to assign quiz points
+
+#Select Solving Mode
 cbSelectSolvingMove=Select Solving Mode
+
+#Right click to create or edit Excercise
 cbRightClickEditExercise=Right click to open menu to edit or create exercises
 
+#Show the solution
 cbShowSolution=Show the solution to view or edit
-#Select Solving Mode
-#Right click to open menu to edit or create exercises";
+
+#DUPE: Select Solving Mode
+#DUPE: Right click to open menu to edit or create exercises";
+
+#Make move on main board
 cbMakeMovesOnMainBoard=Make your moves on the main board
 
+#This was the solution
 cbThisWasSolution=This was the solution!
 
+#Response not covered
 cbResponseNotCovered=This response is not covered in the solution
 
 
@@ -937,3 +973,15 @@ LangEnglish=English
 
 #Language Polish
 LangPolish=Polish
+
+
+##################################
+#
+# Announcements
+#
+
+#Loading Engine
+ChessEngineLoading=Chess engine loading...
+
+#Reading workbook
+ReadingWorkbookFile=Reading workbook file...

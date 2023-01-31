@@ -89,6 +89,10 @@ Moves=
 #english: Position=Position
 Position=
 
+#description: Result
+#english: Result=Result
+Result=
+
 #description: Comment
 #english: Comment=Comment
 Comment=
@@ -128,6 +132,14 @@ Close=
 #description: Item
 #english: Item=Item
 Item=
+
+#description: Game Header
+#english: GameHeader=Game Header
+GameHeader=
+
+#description: Exercise Header
+#english: ExerciseHeader=Exercise Header
+ExerciseHeader=
 
 #description: Request to evaluate a position
 #english: EvaluatePosition=Evaluate Position
@@ -364,11 +376,13 @@ StudyTree=
 # CONTEXT MENU in Training View
 #
 
-#User wants to restart the game against the engine after a certain move in the Training Session
-RestartGameAfter=Restart Game After 
- 
-#User wants to restart the training from a certain move in the Training Session
-RestartFrom=Restart from 
+#description: User wants to restart the game against the engine after a certain move in the Training Session
+#english: RestartGameAfter=Restart Game After 
+RestartGameAfter=
+
+#description: User wants to restart the training from a certain move in the Training Session
+#english: RestartFrom=Restart from 
+RestartFrom=
 
 
 #
@@ -595,9 +609,10 @@ Exercise0of0=
 #
 # Scoresheet
 #
-			
-#Scoresheet			
-Scoresheet=Scoresheet
+
+#description: Scoresheet			
+#english: Scoresheet=Scoresheet
+Scoresheet=
 
 #description: White
 #english: White=White
@@ -768,11 +783,13 @@ SelectEngineStartMove=
 #english: DeleteChapter=Deleting chapter: $0. Are you sure?
 DeleteChapter=
 
-#No exercise in file
-NoExerciseInFile=No Exercises found in $0. 
- 
-#No games in file
-NoGamesInFile=No Games found in $0. 
+#description: No exercise in file
+#english: NoExerciseInFile=No Exercises found in $0. 
+NoExerciseInFile=
+
+#description: No games in file
+#english: NoGamesInFile=No Games found in $0. 
+NoGamesInFile=
 
 #description: Bookmark already exists
 #english: BookmarkAlreadyExists=This bookmark already exists
@@ -1132,6 +1149,97 @@ ExplorersAbout=
 
 ##################################
 #
+# Comment Box
+#
+
+#description: Some available actions
+#english: cbActions=Some available actions are:
+cbActions=
+
+#description: Clich to open Study
+#english: cbClickStudyHeader=Click Study header or double click chapter's title to open the Study Tree
+cbClickStudyHeader=
+
+#description: Right click for context menu
+#english: cbClickForContextMenu=Right click to open context menu
+cbClickForContextMenu=
+
+#description: Click thru the moves
+#english: cbClickThruMoves=Click through the moves
+cbClickThruMoves=
+
+#description: Double click to annotate
+#english: cbDoubleClickToAnnotate=Double click to annotate move
+cbDoubleClickToAnnotate=
+
+#description: Right click for context menu
+#english: cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise
+cbAdvancedEditig=
+
+#description: Double click to auto replay
+#english: cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay
+cbDoubleClickAutoReplay=
+
+#description: Click bookmark to start training
+#english: cbClickBookmarkToTrain=Click a bookmark to start training
+cbClickBookmarkToTrain=
+
+#description: Right click to open bookmarks menu
+#english: cbRightClickBookmarkManager=Right click to open menu for Bookmark management options
+cbRightClickBookmarkManager=
+
+#description: Right click to open menu
+#english: cbRightClickCreateGame=Right click to open menu to create or import a Game
+cbRightClickCreateGame=
+
+#DUPE: Click through the moves
+#DUPE: Double click to annotate move
+#DUPE: Right click to open menu for creating, importing or editing games
+
+#description: Right click to create exercise
+#english: cbRightClickCreateExercise=Right click to open menu to create or import an Exercise
+cbRightClickCreateExercise=
+
+#description: Make moves on main board
+#english: cbMoveToEnterSolution= Make moves on the main board to enter solution
+cbMoveToEnterSolution=
+
+#description: Double click to assign quiz points
+#english: cbDoubleClickToAssignPoints=Double click a move to assign quiz points
+cbDoubleClickToAssignPoints=
+
+#description: Select Solving Mode
+#english: cbSelectSolvingMove=Select Solving Mode
+cbSelectSolvingMove=
+
+#description: Right click to create or edit Excercise
+#english: cbRightClickEditExercise=Right click to open menu to edit or create exercises
+cbRightClickEditExercise=
+
+#description: Show the solution
+#english: cbShowSolution=Show the solution to view or edit
+cbShowSolution=
+
+#DUPE: Select Solving Mode
+#DUPE: Right click to open menu to edit or create exercises";
+
+#description: Make move on main board
+#english: cbMakeMovesOnMainBoard=Make your moves on the main board
+cbMakeMovesOnMainBoard=
+
+#description: This was the solution
+#english: cbThisWasSolution=This was the solution!
+cbThisWasSolution=
+
+#description: Response not covered
+#english: cbResponseNotCovered=This response is not covered in the solution
+cbResponseNotCovered=
+
+
+
+
+##################################
+#
 # Languages
 #
 
@@ -1142,3 +1250,17 @@ LangEnglish=
 #description: Language Polish
 #english: LangPolish=Polish
 LangPolish=
+
+
+##################################
+#
+# Announcements
+#
+
+#description: Loading Engine
+#english: ChessEngineLoading=Chess engine loading...
+ChessEngineLoading=
+
+#description: Reading workbook
+#english: ReadingWorkbookFile=Reading workbook file...
+ReadingWorkbookFile=

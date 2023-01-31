@@ -180,6 +180,9 @@
   <data name="Position" xml:space="preserve">
     <value>Position</value>
   </data>
+  <data name="Result" xml:space="preserve">
+    <value>Result</value>
+  </data>
   <data name="Comment" xml:space="preserve">
     <value>Comment</value>
   </data>
@@ -209,6 +212,12 @@
   </data>
   <data name="Item" xml:space="preserve">
     <value>Item</value>
+  </data>
+  <data name="GameHeader" xml:space="preserve">
+    <value>Game Header</value>
+  </data>
+  <data name="ExerciseHeader" xml:space="preserve">
+    <value>Exercise Header</value>
   </data>
   <data name="EvaluatePosition" xml:space="preserve">
     <value>Evaluate Position</value>
@@ -877,10 +886,73 @@
   <data name="ExplorersAbout" xml:space="preserve">
     <value>Openings/Tablebases</value>
   </data>
+  <data name="cbActions" xml:space="preserve">
+    <value>Some available actions are:</value>
+  </data>
+  <data name="cbClickStudyHeader" xml:space="preserve">
+    <value>Click Study header or double click chapter's title to open the Study Tree</value>
+  </data>
+  <data name="cbClickForContextMenu" xml:space="preserve">
+    <value>Right click to open context menu</value>
+  </data>
+  <data name="cbClickThruMoves" xml:space="preserve">
+    <value>Click through the moves</value>
+  </data>
+  <data name="cbDoubleClickToAnnotate" xml:space="preserve">
+    <value>Double click to annotate move</value>
+  </data>
+  <data name="cbAdvancedEditig" xml:space="preserve">
+    <value>Right click to open menu for advanced editing, FEN, creating exercise</value>
+  </data>
+  <data name="cbDoubleClickAutoReplay" xml:space="preserve">
+    <value>Double click in the Scoresheet for auto-replay</value>
+  </data>
+  <data name="cbClickBookmarkToTrain" xml:space="preserve">
+    <value>Click a bookmark to start training</value>
+  </data>
+  <data name="cbRightClickBookmarkManager" xml:space="preserve">
+    <value>Right click to open menu for Bookmark management options</value>
+  </data>
+  <data name="cbRightClickCreateGame" xml:space="preserve">
+    <value>Right click to open menu to create or import a Game</value>
+  </data>
+  <data name="cbRightClickCreateExercise" xml:space="preserve">
+    <value>Right click to open menu to create or import an Exercise</value>
+  </data>
+  <data name="cbMoveToEnterSolution" xml:space="preserve">
+    <value>Make moves on the main board to enter solution</value>
+  </data>
+  <data name="cbDoubleClickToAssignPoints" xml:space="preserve">
+    <value>Double click a move to assign quiz points</value>
+  </data>
+  <data name="cbSelectSolvingMove" xml:space="preserve">
+    <value>Select Solving Mode</value>
+  </data>
+  <data name="cbRightClickEditExercise" xml:space="preserve">
+    <value>Right click to open menu to edit or create exercises</value>
+  </data>
+  <data name="cbShowSolution" xml:space="preserve">
+    <value>Show the solution to view or edit</value>
+  </data>
+  <data name="cbMakeMovesOnMainBoard" xml:space="preserve">
+    <value>Make your moves on the main board</value>
+  </data>
+  <data name="cbThisWasSolution" xml:space="preserve">
+    <value>This was the solution!</value>
+  </data>
+  <data name="cbResponseNotCovered" xml:space="preserve">
+    <value>This response is not covered in the solution</value>
+  </data>
   <data name="LangEnglish" xml:space="preserve">
     <value>English</value>
   </data>
   <data name="LangPolish" xml:space="preserve">
     <value>Polish</value>
+  </data>
+  <data name="ChessEngineLoading" xml:space="preserve">
+    <value>Chess engine loading...</value>
+  </data>
+  <data name="ReadingWorkbookFile" xml:space="preserve">
+    <value>Reading workbook file...</value>
   </data>
 </root>

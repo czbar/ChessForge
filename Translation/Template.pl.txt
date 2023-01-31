@@ -89,6 +89,10 @@ Moves=Posunięcia
 #english: Position=Position
 Position=Pozycja
 
+#description: Result
+#english: Result=Result
+Result=Wynik
+
 #description: Comment
 #english: Comment=Comment
 Comment=Komentarz
@@ -128,6 +132,14 @@ Close=Zamknij
 #description: Item
 #english: Item=Item
 Item=Element
+
+#description: Game Header
+#english: GameHeader=Game Header
+GameHeader=Nagłówek Partii
+
+#description: Exercise Header
+#english: ExerciseHeader=Exercise Header
+ExerciseHeader=Nagłówek Ćwiczenia
 
 #description: Request to evaluate a position
 #english: EvaluatePosition=Evaluate Position
@@ -364,10 +376,12 @@ StudyTree=Studium
 # CONTEXT MENU in Training View
 #
 
-#User wants to restart the game against the engine after a certain move in the Training Session
+#description: User wants to restart the game against the engine after a certain move in the Training Session
+#english: RestartGameAfter=Restart Game After 
 RestartGameAfter=Restart Game After 
- 
-#User wants to restart the training from a certain move in the Training Session
+
+#description: User wants to restart the training from a certain move in the Training Session
+#english: RestartFrom=Restart from 
 RestartFrom=Restart from 
 
 
@@ -595,13 +609,14 @@ Exercise0of0=Ćwiczenie $0 z $1
 #
 # Scoresheet
 #
-			
-#Scoresheet			
-Scoresheet=Scoresheet
+
+#description: Scoresheet			
+#english: Scoresheet=Scoresheet
+Scoresheet=Zapis
 
 #description: White
 #english: White=White
-White=White
+White=Białe
 
 #description: Black
 #english: Black=Black
@@ -768,10 +783,12 @@ SelectEngineStartMove=Wybierz początkowe posunięcie do gry z silnikiem
 #english: DeleteChapter=Deleting chapter: $0. Are you sure?
 DeleteChapter=Usuń rozdział
 
-#No exercise in file
+#description: No exercise in file
+#english: NoExerciseInFile=No Exercises found in $0. 
 NoExerciseInFile=No Exercises found in $0. 
- 
-#No games in file
+
+#description: No games in file
+#english: NoGamesInFile=No Games found in $0. 
 NoGamesInFile=No Games found in $0. 
 
 #description: Bookmark already exists
@@ -792,7 +809,7 @@ ExitTrainingSession=Wyjście z sesji treningowej
 
 #description: Restart the training session
 #english: RestartTraining=Restart the training session?
-RestartTraining=Restart sesji treningowej
+RestartTraining=Zacznij trening od początku
 
 #description: No new version available
 #english: NoNewVersion=No new version available.
@@ -1132,6 +1149,97 @@ ExplorersAbout=Otwarcia/Tablice
 
 ##################################
 #
+# Comment Box
+#
+
+#description: Some available actions
+#english: cbActions=Some available actions are:
+cbActions=Niektóre dostępne czynności:
+
+#description: Clich to open Study
+#english: cbClickStudyHeader=Click Study header or double click chapter's title to open the Study Tree
+cbClickStudyHeader=Kliknij na Studium, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Studium 
+
+#description: Right click for context menu
+#english: cbClickForContextMenu=Right click to open context menu
+cbClickForContextMenu=Naciśnij prawy przycisk by wywołać menu
+
+#description: Click thru the moves
+#english: cbClickThruMoves=Click through the moves
+cbClickThruMoves=Kliknij na dowolne posunięcie
+
+#description: Double click to annotate
+#english: cbDoubleClickToAnnotate=Double click to annotate move
+cbDoubleClickToAnnotate=Dwukrotnie kliknij by wprowadzić anotacje
+
+#description: Right click for context menu
+#english: cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise
+cbAdvancedEditig=Naciśnij prawy przycisk by wywołać menu do edycji, kopiowania FEN i inne
+
+#description: Double click to auto replay
+#english: cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay
+cbDoubleClickAutoReplay=Dwukrotnie kliknij by rozpocząć auto-odtwarzanie
+
+#description: Click bookmark to start training
+#english: cbClickBookmarkToTrain=Click a bookmark to start training
+cbClickBookmarkToTrain=Kliknij zakładkę by zacząć trening
+
+#description: Right click to open bookmarks menu
+#english: cbRightClickBookmarkManager=Right click to open menu for Bookmark management options
+cbRightClickBookmarkManager=Naciśnij prawy przycisk by otworzyć menu zakładek
+
+#description: Right click to open menu
+#english: cbRightClickCreateGame=Right click to open menu to create or import a Game
+cbRightClickCreateGame=Naciśnij prawy przycisk by otworzyć menu partii
+
+#DUPE: Click through the moves
+#DUPE: Double click to annotate move
+#DUPE: Right click to open menu for creating, importing or editing games
+
+#description: Right click to create exercise
+#english: cbRightClickCreateExercise=Right click to open menu to create or import an Exercise
+cbRightClickCreateExercise=Naciśnij prawy przycisk by otworzyć menu ćwiczeń
+
+#description: Make moves on main board
+#english: cbMoveToEnterSolution= Make moves on the main board to enter solution
+cbMoveToEnterSolution=Użyj głównej szachownicy by wprowadzić rozwiązanie
+
+#description: Double click to assign quiz points
+#english: cbDoubleClickToAssignPoints=Double click a move to assign quiz points
+cbDoubleClickToAssignPoints=Dwukrotnie kliknij by nadać punkty do quizu
+
+#description: Select Solving Mode
+#english: cbSelectSolvingMove=Select Solving Mode
+cbSelectSolvingMove=Wybierz tryb rozwiązania
+
+#description: Right click to create or edit Excercise
+#english: cbRightClickEditExercise=Right click to open menu to edit or create exercises
+cbRightClickEditExercise=Naciśnij prawy przycisk by otworzyć menu ćwiczeń
+
+#description: Show the solution
+#english: cbShowSolution=Show the solution to view or edit
+cbShowSolution=Pokaż rozwiazanie
+
+#DUPE: Select Solving Mode
+#DUPE: Right click to open menu to edit or create exercises";
+
+#description: Make move on main board
+#english: cbMakeMovesOnMainBoard=Make your moves on the main board
+cbMakeMovesOnMainBoard=Wykonuj posunięcia na głównej szachownicy
+
+#description: This was the solution
+#english: cbThisWasSolution=This was the solution!
+cbThisWasSolution=To było rozwiązanie!
+
+#description: Response not covered
+#english: cbResponseNotCovered=This response is not covered in the solution
+cbResponseNotCovered=Tej odpowiedzi nie było w rozwiązaniu
+
+
+
+
+##################################
+#
 # Languages
 #
 
@@ -1142,3 +1250,17 @@ LangEnglish=Angielski
 #description: Language Polish
 #english: LangPolish=Polish
 LangPolish=Polski
+
+
+##################################
+#
+# Announcements
+#
+
+#description: Loading Engine
+#english: ChessEngineLoading=Chess engine loading...
+ChessEngineLoading=Trwa ładowanie silnika...
+
+#description: Reading workbook
+#english: ReadingWorkbookFile=Reading workbook file...
+ReadingWorkbookFile=Wczytywanie podręcznika...
