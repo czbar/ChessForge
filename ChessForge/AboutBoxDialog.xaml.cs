@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using ChessForge.Properties;
 
 namespace ChessForge
 {
@@ -76,19 +68,27 @@ namespace ChessForge
 
             Version ver = AppState.GetAssemblyVersion();
 
-            para.Inlines.Add(new Run("Free and Open Source Software (FOSS)\n"));
+            string resFoss = Properties.Resources.ResourceManager.GetString("FreeAndOpenSource");
+            if (string.IsNullOrEmpty(resFoss))
+            {
+                resFoss = "Free and Open Source Software (FOSS)";
+            }
+            para.Inlines.Add(new Run(resFoss + "\n"));
 
-            para.Inlines.Add(new Run("\nVersion: "));
+            string resVersion = Properties.Resources.ResourceManager.GetString("Version");
+            para.Inlines.Add(new Run("\n" + resVersion + ": "));
             Run rVer = new Run(ver.ToString());
             rVer.FontWeight = FontWeights.Bold;
             para.Inlines.Add(rVer);
 
-            para.Inlines.Add(new Run("\nChess Engine: "));
+            string resEngine = Properties.Resources.ResourceManager.GetString("ChessEngine");
+            para.Inlines.Add(new Run("\n" + resEngine + ": "));
             Run rEng = new Run(AppState.EngineName);
             rEng.FontWeight = FontWeights.Bold;
             para.Inlines.Add(rEng);
 
-            para.Inlines.Add(new Run("\nOpenings/Tablebases: "));
+            string resExplorers = Properties.Resources.ResourceManager.GetString("ExplorersAbout");
+            para.Inlines.Add(new Run("\n" + resExplorers + ": "));
             Run rLichess = new Run("lichess.org");
             rLichess.FontWeight = FontWeights.Bold;
             para.Inlines.Add(rLichess);
