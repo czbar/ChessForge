@@ -12,6 +12,7 @@ using ChessForge;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using WebAccess;
+using ChessForge.Properties;
 
 namespace ChessForge
 {
@@ -665,7 +666,7 @@ namespace ChessForge
         /// <returns></returns>
         public static bool ShowEvaluationLines()
         {
-            return CurrentEvaluationMode != EvaluationManager.Mode.ENGINE_GAME 
+            return CurrentEvaluationMode != EvaluationManager.Mode.ENGINE_GAME
                                          || (TrainingSession.IsTrainingInProgress && TrainingSession.IsContinuousEvaluation);
         }
 
@@ -731,30 +732,32 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
+                string filePath = WorkbookFilePath ?? "";
+                string fileName = Path.GetFileName(filePath);
 
-                if (!string.IsNullOrEmpty(WorkbookFilePath) && IsDirty)
+                _mainWin.UiMnWorkbookSave.Header = Resources.ResourceManager.GetString("Save") + " " + fileName;
+
+                string resSaveAs = Resources.ResourceManager.GetString("SaveAs") ?? "";
+                resSaveAs = resSaveAs.Replace("$0", fileName);
+                _mainWin.UiMnWorkbookSaveAs.Header = resSaveAs;
+
+                if (!string.IsNullOrEmpty(filePath) && IsDirty)
                 {
                     _mainWin.UiMnWorkbookSave.IsEnabled = true;
-                    _mainWin.UiMnWorkbookSave.Header = "Save " + Path.GetFileName(WorkbookFilePath);
                 }
                 else
                 {
                     _mainWin.UiMnWorkbookSave.IsEnabled = false;
-                    _mainWin.UiMnWorkbookSave.Header = "Save " + Path.GetFileName(WorkbookFilePath);
                 }
 
-                if (!string.IsNullOrEmpty(WorkbookFilePath))
+                if (!string.IsNullOrEmpty(filePath))
                 {
                     _mainWin.UiMnWorkbookSaveAs.IsEnabled = true;
-                    _mainWin.UiMnWorkbookSaveAs.Header = "Save " + Path.GetFileName(WorkbookFilePath) + " As...";
-
                     _mainWin.UiMnBackupVersion.IsEnabled = true;
                 }
                 else
                 {
                     _mainWin.UiMnWorkbookSaveAs.IsEnabled = false;
-                    _mainWin.UiMnWorkbookSaveAs.Header = "Save As...";
-
                     _mainWin.UiMnBackupVersion.IsEnabled = false;
                 }
             });
@@ -771,12 +774,12 @@ namespace ChessForge
                 _mainWin.UiMnDecreaseFontSize.IsEnabled = !Configuration.IsFontSizeAtMin;
                 if (Configuration.UseFixedFont)
                 {
-                    _mainWin.UiMnFixVariableFontSize.Header = "Use Variable Size Font";
+                    _mainWin.UiMnFixVariableFontSize.Header = Resources.ResourceManager.GetString("UseVariableFontSize");
                     (_mainWin.UiMnFixVariableFontSize.Icon as Image).Source = ImageSources.FontSizeVariable;
                 }
                 else
                 {
-                    _mainWin.UiMnFixVariableFontSize.Header = "Use Fixed Size Font";
+                    _mainWin.UiMnFixVariableFontSize.Header = Resources.ResourceManager.GetString("UseFixedFontSize");
                     (_mainWin.UiMnFixVariableFontSize.Icon as Image).Source = ImageSources.FontSizeFixed;
                 }
             });

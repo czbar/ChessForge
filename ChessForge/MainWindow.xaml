@@ -117,7 +117,7 @@
                         </MenuItem>
                         <MenuItem  x:Name="UiMnFontDefaults" Header="{x:Static p:Resources.RestoreFontDefaults}" Click="UiMnFontDefaults_Click" />
                     </MenuItem>
-                    <MenuItem Header="Help" Margin="0,0,0,0">
+                    <MenuItem Header="{x:Static p:Resources.Help}" Margin="0,0,0,0">
                         <MenuItem Header="{x:Static p:Resources.Wiki}" Click="UiMnHelpWiki_Click" />
                         <MenuItem Header="{x:Static p:Resources.CheckForUpdates}" Click="UiMnCheckForUpdates_Click" />
                         <Separator />
@@ -564,8 +564,8 @@
                     <TabItem x:Name="UiTabExercises"  Header="{x:Static p:Resources.Exercises}" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
                         <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu" >
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="0"/>
+                                <RowDefinition />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
