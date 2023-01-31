@@ -517,7 +517,7 @@ Previous=Poprzedni
 #description: Chapter counter
 #! Keep $0 and $1 in the translated strong as placeholders 
 #! for the number of the current chapter and total number of chapters respectively.
-#english: Chapter0of0=Chapter 0 of 0
+#english: Chapter0of0=Chapter $0 of $1
 Chapter0of0=Rozdział $0 z $1
 
 
@@ -563,8 +563,8 @@ EditGameHeader=Edytuj nagłówek partii
 MergeSelectionIntoStudy=Włącz Wybrany Wariant do Widoku Wariantów
 
 #description: Game counter
-#! Keep 0's as placeholders for numbers
-#english: Game0of0=Game 0 of 0
+#! Keep $N as placeholders for numbers
+#english: Game0of0=Game $0 of $1
 Game0of0=Partia $0 z $1
 
 
@@ -587,8 +587,8 @@ EditStartingPosition=Edytuj Początkową Pozycję
 DeleteThisExercise=Usuń Ćwiczenie
 
 #description: Exercise counter
-#! Keep 0's as placeholders for numbers
-#english: Exercise0of0=Exercise 0 of 0
+#! Keep $N's as placeholders for numbers
+#english: Exercise0of0=Exercise $0 of $1
 Exercise0of0=Ćwiczenie $0 z $1
 
 

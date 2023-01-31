@@ -466,7 +466,7 @@
     <value>Previous</value>
   </data>
   <data name="Chapter0of0" xml:space="preserve">
-    <value>Chapter 0 of 0</value>
+    <value>Chapter $0 of $1</value>
   </data>
   <data name="StartTrainingFromThisBookmark" xml:space="preserve">
     <value>Start Training from This Bookmark</value>
@@ -490,7 +490,7 @@
     <value>Merge Selection Into Study</value>
   </data>
   <data name="Game0of0" xml:space="preserve">
-    <value>Game 0 of 0</value>
+    <value>Game $0 of $1</value>
   </data>
   <data name="EditExerciseHeader" xml:space="preserve">
     <value>Edit Exercise Header</value>
@@ -502,7 +502,7 @@
     <value>Delete This Exercise</value>
   </data>
   <data name="Exercise0of0" xml:space="preserve">
-    <value>Exercise 0 of 0</value>
+    <value>Exercise $0 of $1</value>
   </data>
   <data name="Scoresheet" xml:space="preserve">
     <value>Scoresheet</value>
