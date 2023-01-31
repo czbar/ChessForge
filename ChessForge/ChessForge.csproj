@@ -145,6 +145,11 @@
     <Compile Include="MoveCandidates.cs" />
     <Compile Include="MoveEvaluation.cs" />
     <Compile Include="OpeningStatsView.cs" />
+    <Compile Include="Properties\Resources.pl.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.pl.resx</DependentUpon>
+    </Compile>
     <Compile Include="ReferenceGamePreviewDialog.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
       <DependentUpon>SelectArticlesDialog.xaml</DependentUpon>
@@ -299,6 +304,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.pl.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.pl.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
