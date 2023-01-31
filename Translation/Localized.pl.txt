@@ -500,7 +500,7 @@ CreateNewChapterFromLine=Utwórz Nowy Rozdział z Wariantu
 
 #description:  Bookmark the current position and position for all alternative moves
 #english: BookmarkAllOptionsHere=Bookmark All Options Here
-BookmarkAllOptionsHere=Utwórz Zakładkę dla Wszystkich Opcji
+BookmarkAllOptionsHere=Utwórz Zakładki dla Wszystkich Opcji
 
 #description:  Mark the current position as a thumbnail
 #english: MarkAsThumbnail=Mark as Thumbnail
