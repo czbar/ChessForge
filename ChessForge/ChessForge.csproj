@@ -151,6 +151,7 @@
       <DependentUpon>Resources.pl.resx</DependentUpon>
     </Compile>
     <Compile Include="ReferenceGamePreviewDialog.cs" />
+    <Compile Include="ResourceUtils.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
       <DependentUpon>SelectArticlesDialog.xaml</DependentUpon>
     </Compile>
