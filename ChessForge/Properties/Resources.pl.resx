@@ -186,9 +186,6 @@
   <data name="Annotation" xml:space="preserve">
     <value>Anotacja</value>
   </data>
-  <data name="Annotations" xml:space="preserve">
-    <value>Anotacje</value>
-  </data>
   <data name="Evaluation" xml:space="preserve">
     <value>Ocena</value>
   </data>
@@ -254,6 +251,9 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edytuj</value>
+  </data>
+  <data name="Annotations" xml:space="preserve">
+    <value>Anotacje</value>
   </data>
   <data name="MergeChapters" xml:space="preserve">
     <value>Połącz Rozdziały</value>
@@ -333,6 +333,9 @@
   <data name="TurnEngineOn" xml:space="preserve">
     <value>Włącz silnik</value>
   </data>
+  <data name="TopGames" xml:space="preserve">
+    <value>Partie Mistrzowskie</value>
+  </data>
   <data name="StartTrainingFromHere" xml:space="preserve">
     <value>Tu Rozpocznij Trening</value>
   </data>
@@ -361,10 +364,10 @@
     <value>Studium</value>
   </data>
   <data name="RestartGameAfter" xml:space="preserve">
-    <value>Wróć do ruchu</value>
+    <value>Restart Game After </value>
   </data>
   <data name="RestartFrom" xml:space="preserve">
-    <value>Wróć do</value>
+    <value>Restart from </value>
   </data>
   <data name="CreateNewChapter" xml:space="preserve">
     <value>Utwórz Nowy Rozdział</value>
@@ -438,9 +441,6 @@
   <data name="DeleteSelectedExercise" xml:space="preserve">
     <value>Usuń Wybrane ćwiczenie</value>
   </data>
-  <data name="DeleteThisExercise" xml:space="preserve">
-    <value>Usuń Ćwiczenie</value>
-  </data>
   <data name="GameExerciseReferences" xml:space="preserve">
     <value>Edytuj Odnośniki...</value>
   </data>
@@ -498,8 +498,14 @@
   <data name="EditStartingPosition" xml:space="preserve">
     <value>Edytuj Początkową Pozycję</value>
   </data>
+  <data name="DeleteThisExercise" xml:space="preserve">
+    <value>Usuń Ćwiczenie</value>
+  </data>
   <data name="Exercise0of0" xml:space="preserve">
     <value>Ćwiczenie $0 z $1</value>
+  </data>
+  <data name="Scoresheet" xml:space="preserve">
+    <value>Scoresheet</value>
   </data>
   <data name="White" xml:space="preserve">
     <value>White</value>
@@ -516,8 +522,11 @@
   <data name="PreviewGame" xml:space="preserve">
     <value>Przejrzyj Partię</value>
   </data>
-  <data name="ImportIntoChapter" xml:space="preserve">
-    <value>Importuj Partię do Rozdziału</value>
+  <data name="ImportIntoThisChapter" xml:space="preserve">
+    <value>Importuj do Rozdiału</value>
+  </data>
+  <data name="ViewOnLichess" xml:space="preserve">
+    <value>Zobacz na lichess</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
@@ -607,10 +616,10 @@
     <value>Usuń rozdział</value>
   </data>
   <data name="NoExerciseInFile" xml:space="preserve">
-    <value>No Exercises found in $0.</value>
+    <value>No Exercises found in $0. </value>
   </data>
   <data name="NoGamesInFile" xml:space="preserve">
-    <value>No Games found in $0.</value>
+    <value>No Games found in $0. </value>
   </data>
   <data name="BookmarkAlreadyExists" xml:space="preserve">
     <value>Zakładka już istnieje</value>
@@ -641,6 +650,9 @@
   </data>
   <data name="UnexpectedErrorInUserMove" xml:space="preserve">
     <value>Nieoczekiwany błąd w przetwarzaniu posunięcia  </value>
+  </data>
+  <data name="CloseThisWorkbook" xml:space="preserve">
+    <value>Zamknij Podręcznik</value>
   </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>Plik nie znaleziony</value>
@@ -732,8 +744,8 @@
   <data name="NextGame" xml:space="preserve">
     <value>Następna Partia</value>
   </data>
-  <data name="ViewOnLichess" xml:space="preserve">
-    <value>Zobacz na lichess</value>
+  <data name="ImportIntoChapter" xml:space="preserve">
+    <value>Importuj Partię do Rozdziału</value>
   </data>
   <data name="DownloadGameFromLichess" xml:space="preserve">
     <value>Ściągnij Partię z lichess</value>
@@ -834,20 +846,8 @@
   <data name="MultiEntitiesValid" xml:space="preserve">
     <value>Liczba elementów złym formacie $0 </value>
   </data>
-  <data name="TopGames" xml:space="preserve">
-    <value>Partie Mistrzowskie</value>
-  </data>
-  <data name="Scoresheet" xml:space="preserve">
-    <value>Zapis</value>
-  </data>
-  <data name="ImportIntoThisChapter" xml:space="preserve">
-    <value>Importuj do Rozdiału</value>
-  </data>
-  <data name="CloseThisWorkbook" xml:space="preserve">
-    <value>Zamknij Podręcznik</value>
-  </data>
   <data name="BadTypeForImport" xml:space="preserve">
-    <value>BadTypeForImport=ale niewłaściwego typu</value>
+    <value>BadTypeForImport</value>
   </data>
   <data name="SelectSolvingMode" xml:space="preserve">
     <value>Wybierz Tryb Rozwiązywania</value>
@@ -867,10 +867,10 @@
   <data name="WorkbookBackup" xml:space="preserve">
     <value>Kopia Zapasowa</value>
   </data>
-  <data name="LangPolish" xml:space="preserve">
-    <value>Polski</value>
-  </data>
   <data name="LangEnglish" xml:space="preserve">
     <value>Angielski</value>
+  </data>
+  <data name="LangPolish" xml:space="preserve">
+    <value>Polski</value>
   </data>
 </root>
