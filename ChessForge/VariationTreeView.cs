@@ -9,7 +9,9 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using ChessForge.Properties;
 using ChessPosition.GameTree;
+using System.Resources;
 
 namespace ChessForge
 {
@@ -872,7 +874,7 @@ namespace ChessForge
                 _mainWin.UiGridStudyTree.RowDefinitions[0].Height = new GridLength(20);
                 _mainWin.UiRtbStudyTreeView.Height = 620;
 
-                _mainWin.UiLblChapterCounter.Content = "Chapter " + (chapterIndex + 1).ToString() + " of " + chapterCount.ToString();
+                _mainWin.UiLblChapterCounter.Content = Resources.ResourceManager.GetString("Chapter") + " " + (chapterIndex + 1).ToString() + " of " + chapterCount.ToString();
                 if (chapterIndex == 0)
                 {
                     _mainWin.UiImgChapterRightArrow.Visibility = Visibility.Visible;
@@ -931,7 +933,7 @@ namespace ChessForge
                 _mainWin.UiGridModelGames.RowDefinitions[0].Height = new GridLength(20);
                 _mainWin.UiRtbModelGamesView.Height = 620;
 
-                _mainWin.UiLblGameCounter.Content = "Game " + (gameIndex + 1).ToString() + " of " + gameCount.ToString();
+                _mainWin.UiLblGameCounter.Content = Resources.ResourceManager.GetString("Game") + " " + (gameIndex + 1).ToString() + " of " + gameCount.ToString();
                 if (gameIndex == 0)
                 {
                     _mainWin.UiImgModelGameRightArrow.Visibility = Visibility.Visible;
@@ -988,7 +990,7 @@ namespace ChessForge
                 _mainWin.UiGridExercises.RowDefinitions[0].Height = new GridLength(20);
                 _mainWin.UiRtbExercisesView.Height = 620;
 
-                _mainWin.UiLblExerciseCounter.Content = "Exercise " + (exerciseIndex + 1).ToString() + " of " + exerciseCount.ToString();
+                _mainWin.UiLblExerciseCounter.Content = Resources.ResourceManager.GetString("Exercise") + " " +  (exerciseIndex + 1).ToString() + " of " + exerciseCount.ToString();
                 if (exerciseIndex == 0)
                 {
                     _mainWin.UiImgExerciseRightArrow.Visibility = Visibility.Visible;
