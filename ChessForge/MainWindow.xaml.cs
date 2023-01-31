@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -260,6 +262,9 @@ namespace ChessForge
             AppState.MainWin = this;
             _ = WebAccess.SourceForgeCheck.GetVersion();
 
+            ReadConfiguration();
+            SetCultureInfo(Configuration.CultureName);
+
             EvaluationMgr = new EvaluationManager();
 
             InitializeComponent();
@@ -272,7 +277,7 @@ namespace ChessForge
 
             InitializeConfiguration();
 
-            // Note: must be called AFTER configuration was initialized.
+            // Note: must be called only AFTER configuration has been initialized.
             Timers = new AppTimers(this);
 
             // main chess board
@@ -334,6 +339,22 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the langauge for the current session.
+        /// </summary>
+        /// <param name="culture"></param>
+        private void SetCultureInfo(string culture)
+        {
+            if (!string.IsNullOrWhiteSpace(culture))
+            {
+                CultureInfo ci = CultureInfo.GetCultureInfo(culture);
+                CultureInfo.DefaultThreadCurrentCulture = ci;
+                CultureInfo.DefaultThreadCurrentUICulture = ci;
+                CultureInfo.CurrentUICulture= ci;
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+            }
+        }
+
+        /// <summary>
         /// Subscribes to events requiring selections of an Article.
         /// </summary>
         /// <param name="sender"></param>
@@ -356,13 +377,21 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Read configuration data.
+        /// Some of it will be acted on later but
+        /// CultureInfo is needed now.
+        /// </summary>
+        private void ReadConfiguration()
+        {
+            Configuration.StartDirectory = App.AppPath;
+            Configuration.ReadConfigurationFile();
+        }
+
+        /// <summary>
         /// Reads in configuration and initializes appropriate entities.
         /// </summary>
         private void InitializeConfiguration()
         {
-            Configuration.Initialize(this);
-            Configuration.StartDirectory = App.AppPath;
-            Configuration.ReadConfigurationFile();
             if (Configuration.IsMainWinPosValid())
             {
                 this.Left = Configuration.MainWinPos.Left;

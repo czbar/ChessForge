@@ -129,7 +129,7 @@ namespace ChessForge
                 bv.Deactivate();
                 bv.SetOpacity(0.5);
             }
-            _mainWin.UiGridBookmarks.RowDefinitions[0].Height = new GridLength(0);
+            _mainWin.UiGridBookmarks.RowDefinitions[0].Height = GridLength.Auto;
             _mainWin.UiCnvPaging.Visibility = Visibility.Collapsed;
         }
 

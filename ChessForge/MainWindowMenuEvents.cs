@@ -11,7 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using static ChessForge.WorkbookOperation;
 using ChessPosition.GameTree;
-using System.Security.Cryptography;
+using ChessForge;
 
 namespace ChessForge
 {
@@ -2634,7 +2634,7 @@ namespace ChessForge
             try
             {
                 VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
-                GameHeaderDialog dlg = new GameHeaderDialog(tree, "Game Header")
+                GameHeaderDialog dlg = new GameHeaderDialog(tree, Properties.Resources.ResourceManager.GetString("GameHeader"))
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -2681,7 +2681,7 @@ namespace ChessForge
                     VariationTree tree = new VariationTree(GameData.ContentType.EXERCISE);
                     tree.CreateNew(pos);
 
-                    GameHeaderDialog dlgHeader = new GameHeaderDialog(tree, "Exercise Header")
+                    GameHeaderDialog dlgHeader = new GameHeaderDialog(tree, Properties.Resources.ResourceManager.GetString("ExerciseHeader"))
                     {
                         Left = ChessForgeMain.Left + 100,
                         Top = ChessForgeMain.Top + 100,
@@ -2884,7 +2884,7 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
                 VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames[chapter.ActiveModelGameIndex].Tree;
-                var dlg = new GameHeaderDialog(game, "Game Header")
+                var dlg = new GameHeaderDialog(game, Properties.Resources.ResourceManager.GetString("GameHeader"))
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -2918,7 +2918,7 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
                 VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.Exercises[chapter.ActiveExerciseIndex].Tree;
-                var dlg = new GameHeaderDialog(game, "Exercise Header")
+                var dlg = new GameHeaderDialog(game, Properties.Resources.ResourceManager.GetString("ExerciseHeader"))
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,

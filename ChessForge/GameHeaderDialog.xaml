@@ -6,11 +6,11 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="PLACEHOLDER" Height="430" Width="670">
+        Title="PLACEHOLDER" Height="430" Width="690">
     <Grid>
         <Label x:Name="UiLblWhite" Content="{x:Static p:Resources.White}" HorizontalAlignment="Left" Margin="20,31,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbWhite" HorizontalAlignment="Left" Margin="68,34,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="260"/>
-        <Label x:Name="UiLblBlack" Content="{x:Static p:Resources.Black}" HorizontalAlignment="Left" Margin="345,31,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblBlack" Content="{x:Static p:Resources.Black}" HorizontalAlignment="Left" Margin="340,31,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbBlack" HorizontalAlignment="Left" Margin="385,34,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="260"/>
         <Label x:Name="UiLblEvent" Content="{x:Static p:Resources.Event}" HorizontalAlignment="Left" Margin="20,66,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbEvent" HorizontalAlignment="Left" Margin="68,69,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="400"/>
@@ -19,7 +19,7 @@
         <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Left" Margin="180,344,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
         <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="280,344,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
         <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Left" Margin="410,344,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnHelp_Click"/>
-        <GroupBox x:Name="UiGbResult" HorizontalAlignment="Left" Height="46" Header="Result" Margin="369,111,0,0" VerticalAlignment="Top" Width="265"/>
+        <GroupBox x:Name="UiGbResult" HorizontalAlignment="Left" Height="46" Header="{x:Static p:Resources.Result}" Margin="369,111,0,0" VerticalAlignment="Top" Width="265"/>
         <RadioButton x:Name="UiRbWhiteWin" Content="1-0" HorizontalAlignment="Left" Margin="420,133,0,0" VerticalAlignment="Top" Width="50"/>
         <RadioButton x:Name="UiRbBlackWin" Content="0-1" HorizontalAlignment="Left" Margin="470,133,0,0" VerticalAlignment="Top" Width="50"/>
         <RadioButton x:Name="UiRbDraw" Content="1/2" HorizontalAlignment="Left" Margin="520,133,0,0" VerticalAlignment="Top" Width="50"/>
@@ -29,7 +29,7 @@
         <CheckBox x:Name="UiCbIgnoreMonthDay" Content="{x:Static p:Resources.IgnoreDayMonth}" HorizontalAlignment="Left" Margin="405,262,0,0" VerticalAlignment="Top" Checked="UiCbIgnoreMonthDay_Checked" Unchecked="UiCbIgnoreMonthDay_Unchecked"/>
         <CheckBox x:Name="UiCbIgnoreDay" Content="{x:Static p:Resources.IgnoreDay}" HorizontalAlignment="Left" Margin="405,285,0,0" VerticalAlignment="Top" Unchecked="UiCbIgnoreDay_Unchecked" Checked="UiCbIgnoreDay_Checked"/>
         <TextBox x:Name="UiTbPgnDate" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalAlignment="Top" TextWrapping="Wrap" Text="????.??.??" Width="80" LostFocus="UiTbPgnDate_LostFocus" Margin="449,221,0,0" />
-        <Button x:Name="UiBtnClearDate" Content="{x:Static p:Resources.Clear}" HorizontalAlignment="Left" Width="40" Margin="565,188,0,0" VerticalAlignment="Top" Click="UiBtnClearDate_Click"/>
+        <Button x:Name="UiBtnClearDate" Content="{x:Static p:Resources.Clear}" HorizontalAlignment="Left" Margin="558,188,0,0" VerticalAlignment="Top" Width="64" Click="UiBtnClearDate_Click"/>
         <GroupBox x:Name="UiGbDate" HorizontalAlignment="Left" Height="165" Header="Date" Margin="369,160,0,0" VerticalAlignment="Top" Width="265">
         </GroupBox>
         <TextBox x:Name="UiTbPreamble" AcceptsReturn="True" HorizontalAlignment="Left" Margin="24,132,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" Height="182"/>

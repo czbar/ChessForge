@@ -3,13 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChessForge.Properties;
 
 namespace ChessForge
 {
     public class Strings
     {
-        public static string QUICK_INSTRUCTION_CHAPTERS = "Click Study header or double click chapter\'s title to open the Study Tree \n "
-            + "Right click to open context menu";
+        public static string QUICK_INSTRUCTION_CHAPTERS
+        {
+            get
+            {
+                try
+                {
+                    return
+                        Resources.ResourceManager.GetString("cbClickStudyHeader") + "\n"
+                        + Resources.ResourceManager.GetString("cbClickForContextMenu");
+                }
+                catch
+                {
+                    return "APPLICATION ERROR: Text not found";
+                }
+            }
+        }
+
         public static string QUICK_INSTRUCTION_STUDY = "Click through the moves \n Double click to annotate move \n "
             + "Right click to open menu for advanced editing, FEN, creating exercise \n " + "Double click in the Scoresheet for auto-replay";
 

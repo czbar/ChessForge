@@ -15,12 +15,6 @@ namespace ChessForge
         // CONFIGURATION ITEMS
         //*********************************
         /// <summary>
-        /// The time in milliseconds that it takes
-        /// to animate a move on the board
-        /// </summary>
-        public static int MoveSpeed = 200;
-
-        /// <summary>
         /// Last directory from which a Workbook PGN file was read.
         /// </summary>
         public static string LastOpenDirectory = "";
@@ -44,6 +38,17 @@ namespace ChessForge
         /// Version for which not show the update alert
         /// </summary>
         public static string DoNotShowVersion = "";
+
+        /// <summary>
+        /// Culture name, if not using System's
+        /// </summary>
+        public static string CultureName = "";
+
+        /// <summary>
+        /// The time in milliseconds that it takes
+        /// to animate a move on the board
+        /// </summary>
+        public static int MoveSpeed = 200;
 
         /// <summary>
         /// By how many pixels to adjust font size
@@ -165,6 +170,7 @@ namespace ChessForge
         private const string CFG_MAIN_WINDOW_POS = "MainWindowPosition";
         private const string CFG_ENGINE_EXE = "EngineExe";
         private const string CFG_DO_NOT_SHOW_VERSION = "DoNotShowVersion";
+        private const string CFG_CULTURE_NAME = "CultureName";
 
         /// <summary>
         /// Time the engine has to make a move in a training game
@@ -211,9 +217,6 @@ namespace ChessForge
         public static List<string> RecentFiles = new List<string>();
 
         private static int MAX_RECENT_FILES = 12;
-
-        // application's main window
-        private static MainWindow MainWin;
 
         /// <summary>
         /// Returns true if the font size is set to its max allowed value
@@ -277,20 +280,6 @@ namespace ChessForge
         private static Dictionary<object, string> ItemToName = new Dictionary<object, string>();
 
         /// <summary>
-        /// Initializes variables.
-        /// </summary>
-        /// <param name="mainWin"></param>
-        public static void Initialize(MainWindow mainWin)
-        {
-            MainWin = mainWin;
-
-            MoveSpeed = 200;
-            LastOpenDirectory = "";
-            LastImportDirectory = "";
-            LastWorkbookFile = "";
-        }
-
-        /// <summary>
         /// Reads configuration key/value pairs from the configuration file
         /// </summary>
         public static void ReadConfigurationFile()
@@ -334,6 +323,7 @@ namespace ChessForge
 
                 sb.Append(CFG_ENGINE_EXE + "=" + EngineExePath + Environment.NewLine);
                 sb.Append(CFG_DO_NOT_SHOW_VERSION + "=" + DoNotShowVersion + Environment.NewLine);
+                sb.Append(CFG_CULTURE_NAME + "=" + CultureName + Environment.NewLine);
 
                 sb.Append(CFG_ENGINE_MOVE_TIME + "=" + EngineMoveTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_EVALUATION_TIME + "=" + EngineEvaluationTime.ToString() + Environment.NewLine);
@@ -467,11 +457,11 @@ namespace ChessForge
         /// <returns></returns>
         public static string GetRecentFile(string menuItemName)
         {
-            if (menuItemName.StartsWith(MainWin.MENUITEM_RECENT_FILES_PREFIX))
+            if (menuItemName.StartsWith(AppState.MainWin.MENUITEM_RECENT_FILES_PREFIX))
             {
                 try
                 {
-                    int index = int.Parse(menuItemName.Substring(MainWin.MENUITEM_RECENT_FILES_PREFIX.Length));
+                    int index = int.Parse(menuItemName.Substring(AppState.MainWin.MENUITEM_RECENT_FILES_PREFIX.Length));
                     return RecentFiles[index];
                 }
                 catch
@@ -612,6 +602,9 @@ namespace ChessForge
                             break;
                         case CFG_DO_NOT_SHOW_VERSION:
                             DoNotShowVersion = value;
+                            break;
+                        case CFG_CULTURE_NAME:
+                            CultureName = value;
                             break;
                         case CFG_FONT_SIZE_DIFF:
                             int.TryParse(value, out FontSizeDiff);

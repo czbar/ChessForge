@@ -10,7 +10,7 @@ using System.Windows.Media;
 using ChessForge;
 using ChessPosition;
 using GameTree;
-using static System.Net.Mime.MediaTypeNames;
+using ChessForge.Properties;
 
 namespace ChessForge
 {
@@ -113,7 +113,7 @@ namespace ChessForge
         /// </summary>
         public void StartingEngine()
         {
-            UserWaitAnnouncement("Chess engine loading...", null);
+            UserWaitAnnouncement(Resources.ResourceManager.GetString("ChessEngineLoading"), null);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace ChessForge
         /// </summary>
         public void ReadingFile()
         {
-            UserWaitAnnouncement("Reading workbook file...", Brushes.Blue);
+            UserWaitAnnouncement(Resources.ResourceManager.GetString("ReadingWorkbookFile"), Brushes.Blue);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace ChessForge
                         title = "Untitled Workbook";
                     }
                     AddNewParagraphToDoc("title", title);
-                    AddNewParagraphToDoc("bold_prompt", "Some available actions are:");
+                    AddNewParagraphToDoc("bold_prompt", Resources.ResourceManager.GetString("cbActions"));
                     string commentText = "";
                     switch (AppState.ActiveTab)
                     {

@@ -118,259 +118,259 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Workbook" xml:space="preserve">
-    <value>Workbook</value>
+    <value>Podręcznik</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Title</value>
+    <value>Tytuł</value>
   </data>
   <data name="WorkbookTitle" xml:space="preserve">
-    <value>Workbook Title</value>
+    <value>Tytuł Podręcznika</value>
   </data>
   <data name="Event" xml:space="preserve">
-    <value>Event</value>
+    <value>Miejsce</value>
   </data>
   <data name="Header" xml:space="preserve">
-    <value>Header</value>
+    <value>Nagłówek</value>
   </data>
   <data name="Preamble" xml:space="preserve">
-    <value>Preamble</value>
+    <value>Opis</value>
   </data>
   <data name="Chapter" xml:space="preserve">
-    <value>Chapter</value>
+    <value>Rozdział</value>
   </data>
   <data name="Chapters" xml:space="preserve">
-    <value>Chapters</value>
+    <value>Rozdziały</value>
   </data>
   <data name="Study" xml:space="preserve">
-    <value>Study</value>
+    <value>Studium</value>
   </data>
   <data name="Game" xml:space="preserve">
-    <value>Game</value>
+    <value>Partia</value>
   </data>
   <data name="Games" xml:space="preserve">
-    <value>Games</value>
+    <value>Partie</value>
   </data>
   <data name="Exercise" xml:space="preserve">
-    <value>Exercise</value>
+    <value>Ćwiczenie</value>
   </data>
   <data name="Exercises" xml:space="preserve">
-    <value>Exercises</value>
+    <value>Ćwiczenia</value>
   </data>
   <data name="Round" xml:space="preserve">
-    <value>Round</value>
+    <value>Runda</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>Date</value>
+    <value>Data</value>
   </data>
   <data name="Line" xml:space="preserve">
-    <value>Line</value>
+    <value>Wariant</value>
   </data>
   <data name="Bookmark" xml:space="preserve">
-    <value>Bookmark</value>
+    <value>Zakładka</value>
   </data>
   <data name="Bookmarks" xml:space="preserve">
-    <value>Bookmarks</value>
+    <value>Zakładki</value>
   </data>
   <data name="Move" xml:space="preserve">
-    <value>Move</value>
+    <value>Posunięcie</value>
   </data>
   <data name="Moves" xml:space="preserve">
-    <value>Moves</value>
+    <value>Posunięcia</value>
   </data>
   <data name="Position" xml:space="preserve">
-    <value>Position</value>
+    <value>Pozycja</value>
   </data>
   <data name="Result" xml:space="preserve">
-    <value>Result</value>
+    <value>Wynik</value>
   </data>
   <data name="Comment" xml:space="preserve">
-    <value>Comment</value>
+    <value>Komentarz</value>
   </data>
   <data name="Annotation" xml:space="preserve">
-    <value>Annotation</value>
+    <value>Anotacja</value>
   </data>
   <data name="Evaluation" xml:space="preserve">
-    <value>Evaluation</value>
+    <value>Ocena</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>Version</value>
+    <value>Wersja</value>
   </data>
   <data name="ChessEngine" xml:space="preserve">
-    <value>Chess Engine</value>
+    <value>Silnik</value>
   </data>
   <data name="Openings" xml:space="preserve">
-    <value>Openings</value>
+    <value>Debiuty</value>
   </data>
   <data name="Tablebases" xml:space="preserve">
-    <value>Tablebases</value>
+    <value>Tablice</value>
   </data>
   <data name="Exit" xml:space="preserve">
-    <value>Exit</value>
+    <value>Wyjście</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Close</value>
+    <value>Zamknij</value>
   </data>
   <data name="Item" xml:space="preserve">
-    <value>Item</value>
+    <value>Element</value>
   </data>
   <data name="GameHeader" xml:space="preserve">
-    <value>Game Header</value>
+    <value>Nagłówek Partii</value>
   </data>
   <data name="ExerciseHeader" xml:space="preserve">
-    <value>Exercise Header</value>
+    <value>Nagłówek Ćwiczenia</value>
   </data>
   <data name="EvaluatePosition" xml:space="preserve">
-    <value>Evaluate Position</value>
+    <value>Oceń Pozycję</value>
   </data>
   <data name="EvaluateLine" xml:space="preserve">
-    <value>Evaluate Line</value>
+    <value>Oceń Wariant</value>
   </data>
   <data name="File" xml:space="preserve">
-    <value>File</value>
+    <value>Plik</value>
   </data>
   <data name="NewWorkbook" xml:space="preserve">
-    <value>New Workbook</value>
+    <value>Nowy Podręcznik</value>
   </data>
   <data name="OpenWorkbook" xml:space="preserve">
-    <value>Open Workbook </value>
+    <value>Otwórz Podręcznik</value>
   </data>
   <data name="CloseWorkbook" xml:space="preserve">
-    <value>Close Workbook</value>
+    <value>Zamknij Podręcznik</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Zapisz</value>
   </data>
   <data name="SaveAs" xml:space="preserve">
-    <value>Save $0 As ...</value>
+    <value>Zapisz $0 jako ...</value>
   </data>
   <data name="BackUpThisVersion" xml:space="preserve">
-    <value>Back up this Version ...</value>
+    <value>Zrób Kopię tej Wersji...</value>
   </data>
   <data name="Training" xml:space="preserve">
-    <value>Training</value>
+    <value>Trening</value>
   </data>
   <data name="StartNewSession" xml:space="preserve">
-    <value>Start New Session</value>
+    <value>Zacznij Nową Sesję</value>
   </data>
   <data name="RestartTrainingSession" xml:space="preserve">
-    <value>Restart Training Session</value>
+    <value>Zacznij Trening od Początku</value>
   </data>
   <data name="ExitTraining" xml:space="preserve">
-    <value>Exit Training</value>
+    <value>Zakończ Trening</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Edytuj</value>
   </data>
   <data name="Annotations" xml:space="preserve">
-    <value>Annotations</value>
+    <value>Anotacje</value>
   </data>
   <data name="MergeChapters" xml:space="preserve">
-    <value>Merge Chapters...</value>
+    <value>Połącz Rozdziały</value>
   </data>
   <data name="Undo" xml:space="preserve">
-    <value>Undo</value>
+    <value>Cofnij operację</value>
   </data>
   <data name="View" xml:space="preserve">
-    <value>View</value>
+    <value>Widok</value>
   </data>
   <data name="Views" xml:space="preserve">
-    <value>Views</value>
+    <value>Widoki</value>
   </data>
   <data name="FlipBoard" xml:space="preserve">
-    <value>Flip Board</value>
+    <value>Odwróć Szachownicę</value>
   </data>
   <data name="ApplicationOptions" xml:space="preserve">
-    <value>Application Options...</value>
+    <value>Opcje Aplikacji</value>
   </data>
   <data name="WorkbookOptions" xml:space="preserve">
-    <value>Workbook Options...</value>
+    <value>Opcje Podręcznika</value>
   </data>
   <data name="AnalysisEngine" xml:space="preserve">
-    <value>Analysis Engine...</value>
+    <value>Wybór Silnika</value>
   </data>
   <data name="IncreaseFontSize" xml:space="preserve">
-    <value>Increase Font Size</value>
+    <value>Powiększ Czcionkę</value>
   </data>
   <data name="DecreaseFontSize" xml:space="preserve">
-    <value>Decrease Font Size</value>
+    <value>Zmniejsz Czcionkę</value>
   </data>
   <data name="UseFixedFontSize" xml:space="preserve">
-    <value>Fixed Font Size</value>
+    <value>Użyj Stałą Czcionkę</value>
   </data>
   <data name="UseVariableFontSize" xml:space="preserve">
-    <value>Variable Font Size</value>
+    <value>Użyj Zmienną Czcionkę</value>
   </data>
   <data name="RestoreFontDefaults" xml:space="preserve">
-    <value>Restore Font Defaults</value>
+    <value>Przywróć Domyślne Wartości</value>
   </data>
   <data name="Help" xml:space="preserve">
-    <value>Help</value>
+    <value>Pomoc</value>
   </data>
   <data name="Wiki" xml:space="preserve">
-    <value>Wiki</value>
+    <value>Idź do Wiki</value>
   </data>
   <data name="CheckForUpdates" xml:space="preserve">
-    <value>Check for Updates</value>
+    <value>Sprawdź nową wersję Chess Forge</value>
   </data>
   <data name="About" xml:space="preserve">
-    <value>About</value>
+    <value>Na Temat</value>
   </data>
   <data name="AutoSave" xml:space="preserve">
-    <value>Auto Save</value>
+    <value>Auto-Zapis)</value>
   </data>
   <data name="Explorers" xml:space="preserve">
-    <value>Explorers</value>
+    <value>Biblioteka</value>
   </data>
   <data name="Engine" xml:space="preserve">
-    <value>Engine</value>
+    <value>Silnik</value>
   </data>
   <data name="TurnAutoSaveOff" xml:space="preserve">
-    <value>Turn AutoSave Off</value>
+    <value>Wyłącz Auto-Zapis</value>
   </data>
   <data name="TurnAutoSaveOn" xml:space="preserve">
-    <value>Turn AutoSave On</value>
+    <value>Włącz Auto-Zapis</value>
   </data>
   <data name="TurnExplorersOff" xml:space="preserve">
-    <value>Disable Opening Explorer and Tablebases</value>
+    <value>Ukryj Biblioteki</value>
   </data>
   <data name="TurnExplorersOn" xml:space="preserve">
-    <value>Use Opening Explorer and Tablebases</value>
+    <value>Pokaż biblioteki</value>
   </data>
   <data name="TurnEngineOff" xml:space="preserve">
-    <value>Turn the Engine Off</value>
+    <value>Wyłącz silnik</value>
   </data>
   <data name="TurnEngineOn" xml:space="preserve">
-    <value>Turn the Engine On</value>
+    <value>Włącz silnik</value>
   </data>
   <data name="TopGames" xml:space="preserve">
-    <value>Top Games</value>
+    <value>Partie Mistrzowskie</value>
   </data>
   <data name="StartTrainingFromHere" xml:space="preserve">
-    <value>Start Training from Here</value>
+    <value>Tu Rozpocznij Trening</value>
   </data>
   <data name="StartTrainingFromBookmark" xml:space="preserve">
-    <value>Start Training from a Bookmark</value>
+    <value>Trening od Zakładki</value>
   </data>
   <data name="CreateExerciseFromHere" xml:space="preserve">
-    <value>Create Exercise from Here...</value>
+    <value>Utwórz tu Ćwiczenie</value>
   </data>
   <data name="CopyFENtoClipboard" xml:space="preserve">
-    <value>Copy FEN to Clipboard</value>
+    <value>Wpisz Kod FEN do Schowka</value>
   </data>
   <data name="BookmarkThisPosition" xml:space="preserve">
-    <value>Bookmark This Position</value>
+    <value>Utwórz tu Zakładkę</value>
   </data>
   <data name="Replay" xml:space="preserve">
-    <value>Replay</value>
+    <value>Powtórz Wariant</value>
   </data>
   <data name="PlayAgainstComputer" xml:space="preserve">
-    <value>Play Against Engine</value>
+    <value>Gra z Programem</value>
   </data>
   <data name="ExitGame" xml:space="preserve">
-    <value>Exit Game</value>
+    <value>Zakończ Partię</value>
   </data>
   <data name="StudyTree" xml:space="preserve">
-    <value>Study</value>
+    <value>Studium</value>
   </data>
   <data name="RestartGameAfter" xml:space="preserve">
     <value>Restart Game After </value>
@@ -379,250 +379,250 @@
     <value>Restart from </value>
   </data>
   <data name="CreateNewChapter" xml:space="preserve">
-    <value>Create New Chapter</value>
+    <value>Utwórz Nowy Rozdział</value>
   </data>
   <data name="ImportNewChapter" xml:space="preserve">
-    <value>Import New Chapter</value>
+    <value>Importuj Nowy Rozdział</value>
   </data>
   <data name="CreateNewGame" xml:space="preserve">
-    <value>Create New Game</value>
+    <value>Utwórz Nową Partię</value>
   </data>
   <data name="ImportGames" xml:space="preserve">
-    <value>Import Games</value>
+    <value>Importuj Partie</value>
   </data>
   <data name="CreateNewExercise" xml:space="preserve">
-    <value>Create New Exercise</value>
+    <value>Utwórz Nowe Ćwiczenie (lub pozycję lub zadanie)</value>
   </data>
   <data name="ImportExercises" xml:space="preserve">
-    <value>Import Exercises</value>
+    <value>Importuj Ćwiczenie</value>
   </data>
   <data name="OpenSelectedChapter" xml:space="preserve">
-    <value>Open Selected Chapter</value>
+    <value>Otwórz Wybrany Rozdział</value>
   </data>
   <data name="RenameSelectedChapter" xml:space="preserve">
-    <value>Rename Selected Chapter</value>
+    <value>Zmień Nazwę Rozdziału</value>
   </data>
   <data name="OpenSelectedGame" xml:space="preserve">
-    <value>Open Selected Game</value>
+    <value>Otwórz Wybraną Partię</value>
   </data>
   <data name="EditGameHeaders" xml:space="preserve">
-    <value>Edit Game Headers</value>
+    <value>Edytuj Nagłówek Partii</value>
   </data>
   <data name="OpenThisExercise" xml:space="preserve">
-    <value>Open Selected Exercise</value>
+    <value>Otwórz Wybrane Ćwiczenie</value>
   </data>
   <data name="EditExerciseHeaders" xml:space="preserve">
-    <value>Edit Exercise Headers</value>
+    <value>Edytuj Nagłówki Ćwiczeń</value>
   </data>
   <data name="MoveChapterUp" xml:space="preserve">
-    <value>Move Chapter Up</value>
+    <value>Przesuń Rozdział do Góry</value>
   </data>
   <data name="MoveChapterDown" xml:space="preserve">
-    <value>Move Chapter Down</value>
+    <value>Przesuń Rozdział na Dół</value>
   </data>
   <data name="MoveGameUp" xml:space="preserve">
-    <value>Move Game Up</value>
+    <value>Przesuń Partię do Góry</value>
   </data>
   <data name="MoveGameDown" xml:space="preserve">
-    <value>Move Game Down</value>
+    <value>Przesuń Rozdział na Dół</value>
   </data>
   <data name="MoveGameToChapter" xml:space="preserve">
-    <value>Move Game To Chapter...</value>
+    <value>Przenieś Partię do Rozdziału...</value>
   </data>
   <data name="MoveExerciseUp" xml:space="preserve">
-    <value>Move Exercise Up</value>
+    <value>Przesuń Ćwiczenie do Góry</value>
   </data>
   <data name="MoveExerciseDown" xml:space="preserve">
-    <value>Move Exercise Down</value>
+    <value>Przesuń Ćwiczenie na Dół</value>
   </data>
   <data name="MoveExerciseToChapter" xml:space="preserve">
-    <value>Move Exercise To Chapter...</value>
+    <value>Przenieś Ćwiczenie do Rozdziału</value>
   </data>
   <data name="DeleteSelectedChapter" xml:space="preserve">
-    <value>Delete Selected Chapter</value>
+    <value>Usuń Wybrany Rozdział</value>
   </data>
   <data name="DeleteSelectedGame" xml:space="preserve">
-    <value>Delete Selected Game</value>
+    <value>Usuń Wybraną Partię</value>
   </data>
   <data name="DeleteThisGame" xml:space="preserve">
-    <value>Delete This Game</value>
+    <value>Usuń Partię </value>
   </data>
   <data name="DeleteSelectedExercise" xml:space="preserve">
-    <value>Delete Selected Exercise</value>
+    <value>Usuń Wybrane ćwiczenie</value>
   </data>
   <data name="GameExerciseReferences" xml:space="preserve">
-    <value>Game/Exercise References</value>
+    <value>Edytuj Odnośniki...</value>
   </data>
   <data name="PromoteLine" xml:space="preserve">
-    <value>Promote Line</value>
+    <value>Promuj Wariant</value>
   </data>
   <data name="DeleteMovesFromHere" xml:space="preserve">
-    <value>Delete Moves From Here</value>
+    <value>Usuń Resztę Wariantu </value>
   </data>
   <data name="CreateNewChapterFromLine" xml:space="preserve">
-    <value>Create New Chapter From Line</value>
+    <value>Utwórz Nowy Rozdział z Wariantu</value>
   </data>
   <data name="BookmarkAllOptionsHere" xml:space="preserve">
-    <value>Bookmark All Options Here</value>
+    <value>Utwórz Zakładki dla Wszystkich Opcji</value>
   </data>
   <data name="MarkAsThumbnail" xml:space="preserve">
-    <value>Mark as Thumbnail</value>
+    <value>tego nie omawialiśmy</value>
   </data>
   <data name="Next" xml:space="preserve">
-    <value>Next</value>
+    <value>Następny</value>
   </data>
   <data name="Previous" xml:space="preserve">
-    <value>Previous</value>
+    <value>Poprzedni</value>
   </data>
   <data name="Chapter0of0" xml:space="preserve">
-    <value>Chapter $0 of $1</value>
+    <value>Rozdział $0 z $1</value>
   </data>
   <data name="StartTrainingFromThisBookmark" xml:space="preserve">
-    <value>Start Training from This Bookmark</value>
+    <value>Rozpocznij Trening od tej Zakładki</value>
   </data>
   <data name="GenerateBookmarks" xml:space="preserve">
-    <value>Generate Bookmarks</value>
+    <value>Generuj Zakładki</value>
   </data>
   <data name="GoToStudyToAddBookmark" xml:space="preserve">
-    <value>Go to Study to Add a Bookmark</value>
+    <value>Idź do Widoku Wariantów, by Dodać Zakładkę</value>
   </data>
   <data name="DeleteThisBookmark" xml:space="preserve">
-    <value>Delete This Bookmark</value>
+    <value>Usuń Zakładkę</value>
   </data>
   <data name="DeleteAllBookmarks" xml:space="preserve">
-    <value>Delete All Bookmarks</value>
+    <value>Usuń Wszystkie Zakładki</value>
   </data>
   <data name="EditGameHeader" xml:space="preserve">
-    <value>Edit Game Header</value>
+    <value>Edytuj nagłówek partii</value>
   </data>
   <data name="MergeSelectionIntoStudy" xml:space="preserve">
-    <value>Merge Selection Into Study</value>
+    <value>Włącz Wybrany Wariant do Widoku Wariantów</value>
   </data>
   <data name="Game0of0" xml:space="preserve">
-    <value>Game $0 of $1</value>
+    <value>Partia $0 z $1</value>
   </data>
   <data name="EditExerciseHeader" xml:space="preserve">
-    <value>Edit Exercise Header</value>
+    <value>Edytuj Nagłówek Ćwiczenia</value>
   </data>
   <data name="EditStartingPosition" xml:space="preserve">
-    <value>Edit Starting Position</value>
+    <value>Edytuj Początkową Pozycję</value>
   </data>
   <data name="DeleteThisExercise" xml:space="preserve">
-    <value>Delete This Exercise</value>
+    <value>Usuń Ćwiczenie</value>
   </data>
   <data name="Exercise0of0" xml:space="preserve">
-    <value>Exercise $0 of $1</value>
+    <value>Ćwiczenie $0 z $1</value>
   </data>
   <data name="Scoresheet" xml:space="preserve">
-    <value>Scoresheet</value>
+    <value>Zapis</value>
   </data>
   <data name="White" xml:space="preserve">
-    <value>White</value>
+    <value>Białe</value>
   </data>
   <data name="Black" xml:space="preserve">
-    <value>Black</value>
+    <value>Czarne</value>
   </data>
   <data name="SideToMove" xml:space="preserve">
-    <value>Side to Move</value>
+    <value>Strona na Posunięciu</value>
   </data>
   <data name="EvaluationShort" xml:space="preserve">
-    <value>Ev</value>
+    <value>Ocena</value>
   </data>
   <data name="PreviewGame" xml:space="preserve">
-    <value>Preview Game</value>
+    <value>Przejrzyj Partię</value>
   </data>
   <data name="ImportIntoThisChapter" xml:space="preserve">
-    <value>Import into Active Chapter</value>
+    <value>Importuj do Rozdiału</value>
   </data>
   <data name="ViewOnLichess" xml:space="preserve">
-    <value>View on lichess</value>
+    <value>Zobacz na lichess</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Kasuj</value>
   </data>
   <data name="ShowExplorer" xml:space="preserve">
-    <value>Show Explorer</value>
+    <value>Pokaż Bibliotekę</value>
   </data>
   <data name="Clear" xml:space="preserve">
-    <value>Clear</value>
+    <value>Wyczyść</value>
   </data>
   <data name="FileError" xml:space="preserve">
-    <value>File Error</value>
+    <value>Błąd w Pliku</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>Błąd</value>
   </data>
   <data name="Information" xml:space="preserve">
-    <value>Information</value>
+    <value>Informacja</value>
   </data>
   <data name="Confirmation" xml:space="preserve">
-    <value>Confirmation</value>
+    <value>Potwierdzenie</value>
   </data>
   <data name="UnexpectedError" xml:space="preserve">
-    <value>Unexpected Error</value>
+    <value>Nieoczekiwany Błąd</value>
   </data>
   <data name="UpdateCheck" xml:space="preserve">
-    <value>Updated Check</value>
+    <value>Sprawdzenie Nowej Wersji</value>
   </data>
   <data name="PositionSetup" xml:space="preserve">
-    <value>Position Setup</value>
+    <value>Ustaw Pozycję</value>
   </data>
   <data name="InvalidPositionSetup" xml:space="preserve">
-    <value>Invalid Position Setup</value>
+    <value>Niepoprawna Pozycja</value>
   </data>
   <data name="ImportPgn" xml:space="preserve">
-    <value>Import from PGN</value>
+    <value>Import z Pliku PGN</value>
   </data>
   <data name="BookmarksAlreadyExist" xml:space="preserve">
-    <value>Bookmarks already exist</value>
+    <value>Zakładki już Istnieją</value>
   </data>
   <data name="FailedToSaveFile" xml:space="preserve">
-    <value>Failed to save file: $0 </value>
+    <value>Błąd przy zapisie Pliku</value>
   </data>
   <data name="ChessEngineNotAvailable" xml:space="preserve">
-    <value>Chess Engine not available</value>
+    <value>Silnik Niedostępny</value>
   </data>
   <data name="CouldNotImportGame" xml:space="preserve">
-    <value>Could not import game </value>
+    <value>Błąd importu partii</value>
   </data>
   <data name="ConfirmDeleteAllBookmarks" xml:space="preserve">
-    <value>This will delete all Bookmarks. Proceed?</value>
+    <value>Usunąć Wszystkie Zakładki?</value>
   </data>
   <data name="GeneratedBookmarksReplace" xml:space="preserve">
-    <value>Generated bookmarks will replace the ones in the Workbook. Proceed?</value>
+    <value>Zastąpić istniejące zakładki?</value>
   </data>
   <data name="ErrorParseMove" xml:space="preserve">
-    <value>Failed to parse engine's move.</value>
+    <value>Nierozpoznany ruch silnika</value>
   </data>
   <data name="EngineNotAvailable" xml:space="preserve">
-    <value>Chess Engine not available.</value>
+    <value>Silnik niedostępny</value>
   </data>
   <data name="ExerciseNoSolution" xml:space="preserve">
-    <value>This exercise has no solution provided.</value>
+    <value>Ćwiczenie bez rozwiązania</value>
   </data>
   <data name="GameDownloadError" xml:space="preserve">
-    <value>Game download error</value>
+    <value>Błąd ściągania partii</value>
   </data>
   <data name="LoadEngineError" xml:space="preserve">
-    <value>Failed to load the engine. Move evaluation will not be available.</value>
+    <value>Błąd ściągania silnika</value>
   </data>
   <data name="CancelGame" xml:space="preserve">
-    <value>Cancel Game?</value>
+    <value>Kasuj partię</value>
   </data>
   <data name="GameInProgress" xml:space="preserve">
-    <value>Game with the Computer is in Progress</value>
+    <value>Partia w toku</value>
   </data>
   <data name="UnrecognizedFileFormat" xml:space="preserve">
-    <value>Unrecognized file format </value>
+    <value>Nieznany format pliku</value>
   </data>
   <data name="SelectEngineStartMove" xml:space="preserve">
-    <value>Select the move from which to start.</value>
+    <value>Wybierz początkowe posunięcie do gry z silnikiem</value>
   </data>
   <data name="DeleteChapter" xml:space="preserve">
-    <value>Deleting chapter: $0. Are you sure?</value>
+    <value>Usuń rozdział</value>
   </data>
   <data name="NoExerciseInFile" xml:space="preserve">
     <value>No Exercises found in $0. </value>
@@ -631,328 +631,327 @@
     <value>No Games found in $0. </value>
   </data>
   <data name="BookmarkAlreadyExists" xml:space="preserve">
-    <value>This bookmark already exists</value>
+    <value>Zakładka już istnieje</value>
   </data>
   <data name="ErrorAddBookmarks" xml:space="preserve">
     <value>Failed to add the bookmarks.</value>
   </data>
   <data name="NoTrainingStartMove" xml:space="preserve">
-    <value>No move selected to start training from.</value>
+    <value>Takie posunięcie nie istnieje</value>
   </data>
   <data name="ExitTrainingSession" xml:space="preserve">
-    <value>Exit the training session?</value>
+    <value>Wyjście z sesji treningowej</value>
   </data>
   <data name="RestartTraining" xml:space="preserve">
-    <value>Restart the training session?</value>
+    <value>Zacznij trening od początku</value>
   </data>
   <data name="NoNewVersion" xml:space="preserve">
-    <value>No new version available.</value>
+    <value>Brak nowej wersji</value>
   </data>
   <data name="ViewExercise" xml:space="preserve">
-    <value>Enable View/Edit Mode?</value>
+    <value>Pokaż/edytuj ćwiczenie</value>
   </data>
   <data name="RestartFromMove" xml:space="preserve">
-    <value>Restart from $0?</value>
+    <value>Wznów sesję od posunięcia</value>
   </data>
   <data name="NoEngineForTraining" xml:space="preserve">
-    <value>Engine not available. Training cannot continue.
- You can roll moves back or restart.</value>
+    <value>Brak silnika do treningu</value>
   </data>
   <data name="UnexpectedErrorInUserMove" xml:space="preserve">
-    <value>Unexpected error while processing user's move</value>
+    <value>Nieoczekiwany błąd w przetwarzaniu posunięcia  </value>
   </data>
   <data name="CloseThisWorkbook" xml:space="preserve">
-    <value>Close the current Workbook?</value>
+    <value>Zamknij Podręcznik</value>
   </data>
   <data name="FileNotFound" xml:space="preserve">
-    <value>File $0 could not be found.</value>
+    <value>Plik nie znaleziony</value>
   </data>
   <data name="SaveWorkbook" xml:space="preserve">
-    <value>Save the Workbook?</value>
+    <value>Zapis Podręcznika</value>
   </data>
   <data name="FileAlreadyOpen" xml:space="preserve">
-    <value>$0 is already open."</value>
+    <value>Plik już otwarty</value>
   </data>
   <data name="MergeTrainingIntoStudy" xml:space="preserve">
-    <value>Merge and Save new moves from this session into the {0}?</value>
+    <value>Dodaj ruchy z tej sesji do {0}.</value>
   </data>
   <data name="NoLongerValid" xml:space="preserve">
-    <value>is no longer valid</value>
+    <value>będzie teraz nielegalny</value>
   </data>
   <data name="NoLongerValidPlural" xml:space="preserve">
-    <value>are no longer valid</value>
+    <value>będą teraz nielegalne</value>
   </data>
   <data name="DeleteExerciseMove" xml:space="preserve">
-    <value>and will be deleted. Proceed anyway?</value>
+    <value>Potwierdź usunięcie posunięcie z ćwiczenia</value>
   </data>
   <data name="DeleteExerciseMoves" xml:space="preserve">
-    <value>and will be deleted. Proceed anyway?</value>
+    <value>Potwierdź usunięcie posunięć z ćwiczenia</value>
   </data>
   <data name="QuizPoints" xml:space="preserve">
-    <value>Quiz points</value>
+    <value>Punktacja do Quizu</value>
   </data>
   <data name="EngineExecutable" xml:space="preserve">
-    <value>Engine Executable</value>
+    <value>Silnik</value>
   </data>
   <data name="EngineTimePerMove" xml:space="preserve">
-    <value>Engine Time per Move (s)</value>
+    <value>Czas Silnika na Posunięcie</value>
   </data>
   <data name="ThinkTimeInGame" xml:space="preserve">
-    <value>In Game</value>
+    <value>Czas do Namysłu w Partii</value>
   </data>
   <data name="MoveReplay" xml:space="preserve">
-    <value>Move Replay</value>
+    <value>Auto-Odtwarzanie</value>
   </data>
   <data name="AutoReplaySpeed" xml:space="preserve">
-    <value>Auto Speed (s)</value>
+    <value>Prędkość Auto-Odtwarzania</value>
   </data>
   <data name="AllowMouseWheel" xml:space="preserve">
-    <value>Allow Mouse Wheel</value>
+    <value>Uaktywnij Kółko Myszy</value>
   </data>
   <data name="ShowMovesAtFork" xml:space="preserve">
-    <value>Show Moves at Fork</value>
+    <value>Tabelka przy Rozgałęzieniu  </value>
   </data>
   <data name="SoundOn" xml:space="preserve">
-    <value>Sound On</value>
+    <value>Włącz Dźwięk</value>
   </data>
   <data name="CurrentVersion" xml:space="preserve">
-    <value>The current version $0 will be backed up in $1</value>
+    <value>Aktualna wersja</value>
   </data>
   <data name="UpdatedVersion" xml:space="preserve">
-    <value>The updated version number will be $0</value>
+    <value>Uaktualniony numer wersji będzie $0</value>
   </data>
   <data name="IncrementMajorVersion" xml:space="preserve">
-    <value>Increment major version</value>
+    <value>Podwyższ główny number wersji</value>
   </data>
   <data name="NewChapterFromLine" xml:space="preserve">
-    <value>Create New Chapter From Line</value>
+    <value>Utwórz Rozdział z Wariantu</value>
   </data>
   <data name="NewChapterToBeCreate" xml:space="preserve">
-    <value>A new chapter will be created from the selected sub-tree.</value>
+    <value>Utwórz Rozdział z Wariantu</value>
   </data>
   <data name="DeleteSubTreeFromSource" xml:space="preserve">
-    <value>Delete the sub-tree from the original chapter.</value>
+    <value>Usuń Wariant z Oryginalnego Rozdziału</value>
   </data>
   <data name="GotoNewChapter" xml:space="preserve">
-    <value>Go to the newly created chapter.</value>
+    <value>Idź do Nowego Rozdziału</value>
   </data>
   <data name="ChapterTitle" xml:space="preserve">
-    <value>Chapter Title</value>
+    <value>Tytuł Rozdziału</value>
   </data>
   <data name="IgnoreDayMonth" xml:space="preserve">
-    <value>Ignore Day and Month</value>
+    <value>Ignoruj Miesiąc/Dzień</value>
   </data>
   <data name="IgnoreDay" xml:space="preserve">
-    <value>Ignore Day</value>
+    <value>Ignoruj Dzień</value>
   </data>
   <data name="GamePreview" xml:space="preserve">
-    <value>Game Preview</value>
+    <value>Podgląd Partii</value>
   </data>
   <data name="PreviousGame" xml:space="preserve">
-    <value>Previous Game</value>
+    <value>Poprzednia Partia</value>
   </data>
   <data name="NextGame" xml:space="preserve">
-    <value>Next Game</value>
+    <value>Następna Partia</value>
   </data>
   <data name="ImportIntoChapter" xml:space="preserve">
-    <value>Import into Chapter</value>
+    <value>Importuj Partię do Rozdziału</value>
   </data>
   <data name="DownloadGameFromLichess" xml:space="preserve">
-    <value>Downloading Game From lichess.org.</value>
+    <value>Ściągnij Partię z lichess</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
-    <value>Please Wait</value>
+    <value>Proszę czekać!</value>
   </data>
   <data name="ReplaySpeed" xml:space="preserve">
-    <value>Replay Speed</value>
+    <value>Prędkość Auto-Odtwarzania</value>
   </data>
   <data name="Fast" xml:space="preserve">
-    <value>Fast</value>
+    <value>Prędko</value>
   </data>
   <data name="Medium" xml:space="preserve">
-    <value>Medium</value>
+    <value>Umiarkowanie</value>
   </data>
   <data name="Slow" xml:space="preserve">
-    <value>Slow</value>
+    <value>Powoli</value>
   </data>
   <data name="EmptyGameText" xml:space="preserve">
-    <value>Game text is empty.</value>
+    <value>Zapis partii jest pusty</value>
   </data>
   <data name="GameNotFound" xml:space="preserve">
-    <value>Game not found.</value>
+    <value>Partia nie znaleziona</value>
   </data>
   <data name="FEN" xml:space="preserve">
-    <value>FEN</value>
+    <value>Kod FEN</value>
   </data>
   <data name="WhiteToPlay" xml:space="preserve">
-    <value>White to Play</value>
+    <value>Białe zaczynają</value>
   </data>
   <data name="BlackToPlay" xml:space="preserve">
-    <value>Black to Play</value>
+    <value>Czarne zaczynają</value>
   </data>
   <data name="EnPassant" xml:space="preserve">
-    <value>En Passant</value>
+    <value>Bicie w przelocie</value>
   </data>
   <data name="Castling" xml:space="preserve">
-    <value>Castling</value>
+    <value>Roszada</value>
   </data>
   <data name="StartingPosition" xml:space="preserve">
-    <value>Starting position</value>
+    <value>Pozycja początkowa</value>
   </data>
   <data name="ClearBoard" xml:space="preserve">
-    <value>Clear Board</value>
+    <value>Wyczyść szachownicę</value>
   </data>
   <data name="SelectGameAndExercises" xml:space="preserve">
-    <value>Select Games and/or Exercises</value>
+    <value>Wybierz Partie i Ćwiczenia</value>
   </data>
   <data name="SelectItems" xml:space="preserve">
-    <value>Select Items</value>
+    <value>Wybierz Element</value>
   </data>
   <data name="ShowAllChapters" xml:space="preserve">
-    <value>Show All Chapters</value>
+    <value>Pokaż Wszystkie Rozdziały</value>
   </data>
   <data name="SelectChapter" xml:space="preserve">
-    <value>Select Chapter</value>
+    <value>Wybierz Rozdział</value>
   </data>
   <data name="SelectChaptersToImport" xml:space="preserve">
-    <value>Select Chapters to Import</value>
+    <value>Wybierz Rozdziały do Importu</value>
   </data>
   <data name="MergeGamesAndCopy" xml:space="preserve">
-    <value>Merge Games into the Study Tree and Copy them into the Games section.</value>
+    <value>Połącz Partie w Drzewo Wariantów i skopiuj je do sekcji Partii</value>
   </data>
   <data name="MergeGamesNoCopy" xml:space="preserve">
-    <value>Merge Games into the Study Tree only (do not copy games).</value>
+    <value>Połącz Partie w Studium ale nie kopiuj ich do sekcji Partii</value>
   </data>
   <data name="CopyGamesNoMerge" xml:space="preserve">
-    <value>Copy Games into the Games section only (leave the study tree empty)</value>
+    <value>Skopiuj Partie do Sekcji Partii i zostaw Studium puste</value>
   </data>
   <data name="CreateChapterPerGame" xml:space="preserve">
-    <value>Create Chapter per Game</value>
+    <value>Utwórz Rozdział do Każdej Partii</value>
   </data>
   <data name="NewVersionAvailable" xml:space="preserve">
-    <value>New version $0 available from</value>
+    <value>Dostępna nowa wersja $0</value>
   </data>
   <data name="NoShowForCurrentVersion" xml:space="preserve">
-    <value>Do not show for this version.</value>
+    <value>Nie pokazuj już dla tej wersji</value>
   </data>
   <data name="TrainingSide" xml:space="preserve">
-    <value>Training Side</value>
+    <value>Strona Trenująca</value>
   </data>
   <data name="InitBoardOrientation" xml:space="preserve">
-    <value>Initial Board Orientation (side to place at the bottom):</value>
+    <value>Początkowe Ustawienie Szachownicy</value>
   </data>
   <data name="TooltipSideToMove" xml:space="preserve">
-    <value>Determines some default settings</value>
+    <value>Decyduje o pewnych domyślnych ustawieniach</value>
   </data>
   <data name="TooltipWorkbookVersion" xml:space="preserve">
-    <value>To increment version select File-&gt;Backup Version</value>
+    <value>Wybierz Plik-&gt;Zrób Kopię tej Wersji by podnieść numer wersji</value>
   </data>
   <data name="PgnErrors" xml:space="preserve">
-    <value>PGN parsing errors</value>
+    <value>Błąd w pliku PGN</value>
   </data>
   <data name="OneEntityValid" xml:space="preserve">
-    <value>1 entity was valid</value>
+    <value>1 element w złym formacie</value>
   </data>
   <data name="MultiEntitiesValid" xml:space="preserve">
-    <value>$0  entities were valid</value>
+    <value>Liczba elementów złym formacie $0 </value>
   </data>
   <data name="BadTypeForImport" xml:space="preserve">
-    <value>but not imported due to not being of the $0 type</value>
+    <value>BadTypeForImport</value>
   </data>
   <data name="SelectSolvingMode" xml:space="preserve">
-    <value>Select Solving Mode</value>
+    <value>Wybierz Tryb Rozwiązywania</value>
   </data>
   <data name="GuessNextMove" xml:space="preserve">
-    <value>Guess the next move</value>
+    <value>Zgadnij ruch</value>
   </data>
   <data name="EnterAnalysis" xml:space="preserve">
-    <value>Enter your analysis and submit</value>
+    <value>Podaj analizę</value>
   </data>
   <data name="ShowSolution" xml:space="preserve">
-    <value>Show/Edit Solution</value>
+    <value>Ukryj/Pokaż Rozwiązanie</value>
   </data>
   <data name="HideSolution" xml:space="preserve">
-    <value>Hide Solution</value>
+    <value>Ukryj Rozwiązanie</value>
   </data>
   <data name="WorkbookBackup" xml:space="preserve">
-    <value>Workbook Backup</value>
+    <value>Kopia Zapasowa</value>
   </data>
   <data name="FreeAndOpenSource" xml:space="preserve">
-    <value>Free and Open Source Software (FOSS)</value>
+    <value>Wolne i Otwarte Oprogramowanie (FOSS)</value>
   </data>
   <data name="Library" xml:space="preserve">
-    <value>Library</value>
+    <value>Biblioteka</value>
   </data>
   <data name="ExplorersAbout" xml:space="preserve">
-    <value>Openings/Tablebases</value>
+    <value>Otwarcia/Tablice</value>
   </data>
   <data name="cbActions" xml:space="preserve">
-    <value>Some available actions are:</value>
+    <value>Niektóre dostępne czynności:</value>
   </data>
   <data name="cbClickStudyHeader" xml:space="preserve">
-    <value>Click Study header or double click chapter's title to open the Study Tree</value>
+    <value>Kliknij na Studium, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Studium </value>
   </data>
   <data name="cbClickForContextMenu" xml:space="preserve">
-    <value>Right click to open context menu</value>
+    <value>Naciśnij prawy przycisk by wywołać menu</value>
   </data>
   <data name="cbClickThruMoves" xml:space="preserve">
-    <value>Click through the moves</value>
+    <value>Kliknij na dowolne posunięcie</value>
   </data>
   <data name="cbDoubleClickToAnnotate" xml:space="preserve">
-    <value>Double click to annotate move</value>
+    <value>Dwukrotnie kliknij by wprowadzić anotacje</value>
   </data>
   <data name="cbAdvancedEditig" xml:space="preserve">
-    <value>Right click to open menu for advanced editing, FEN, creating exercise</value>
+    <value>Naciśnij prawy przycisk by wywołać menu do edycji, kopiowania FEN i inne</value>
   </data>
   <data name="cbDoubleClickAutoReplay" xml:space="preserve">
-    <value>Double click in the Scoresheet for auto-replay</value>
+    <value>Dwukrotnie kliknij by rozpocząć auto-odtwarzanie</value>
   </data>
   <data name="cbClickBookmarkToTrain" xml:space="preserve">
-    <value>Click a bookmark to start training</value>
+    <value>Kliknij zakładkę by zacząć trening</value>
   </data>
   <data name="cbRightClickBookmarkManager" xml:space="preserve">
-    <value>Right click to open menu for Bookmark management options</value>
+    <value>Naciśnij prawy przycisk by otworzyć menu zakładek</value>
   </data>
   <data name="cbRightClickCreateGame" xml:space="preserve">
-    <value>Right click to open menu to create or import a Game</value>
+    <value>Naciśnij prawy przycisk by otworzyć menu partii</value>
   </data>
   <data name="cbRightClickCreateExercise" xml:space="preserve">
-    <value>Right click to open menu to create or import an Exercise</value>
+    <value>Naciśnij prawy przycisk by otworzyć menu ćwiczeń</value>
   </data>
   <data name="cbMoveToEnterSolution" xml:space="preserve">
-    <value>Make moves on the main board to enter solution</value>
+    <value>Użyj głównej szachownicy by wprowadzić rozwiązanie</value>
   </data>
   <data name="cbDoubleClickToAssignPoints" xml:space="preserve">
-    <value>Double click a move to assign quiz points</value>
+    <value>Dwukrotnie kliknij by nadać punkty do quizu</value>
   </data>
   <data name="cbSelectSolvingMove" xml:space="preserve">
-    <value>Select Solving Mode</value>
+    <value>Wybierz tryb rozwiązania</value>
   </data>
   <data name="cbRightClickEditExercise" xml:space="preserve">
-    <value>Right click to open menu to edit or create exercises</value>
+    <value>Naciśnij prawy przycisk by otworzyć menu ćwiczeń</value>
   </data>
   <data name="cbShowSolution" xml:space="preserve">
-    <value>Show the solution to view or edit</value>
+    <value>Pokaż rozwiazanie</value>
   </data>
   <data name="cbMakeMovesOnMainBoard" xml:space="preserve">
-    <value>Make your moves on the main board</value>
+    <value>Wykonuj posunięcia na głównej szachownicy</value>
   </data>
   <data name="cbThisWasSolution" xml:space="preserve">
-    <value>This was the solution!</value>
+    <value>To było rozwiązanie!</value>
   </data>
   <data name="cbResponseNotCovered" xml:space="preserve">
-    <value>This response is not covered in the solution</value>
+    <value>Tej odpowiedzi nie było w rozwiązaniu</value>
   </data>
   <data name="LangEnglish" xml:space="preserve">
-    <value>English</value>
+    <value>Angielski</value>
   </data>
   <data name="LangPolish" xml:space="preserve">
-    <value>Polish</value>
+    <value>Polski</value>
   </data>
   <data name="ChessEngineLoading" xml:space="preserve">
-    <value>Chess engine loading...</value>
+    <value>Trwa ładowanie silnika...</value>
   </data>
   <data name="ReadingWorkbookFile" xml:space="preserve">
-    <value>Reading workbook file...</value>
+    <value>Wczytywanie podręcznika...</value>
   </data>
 </root>

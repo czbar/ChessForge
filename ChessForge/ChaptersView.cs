@@ -10,7 +10,7 @@ using System.Windows.Documents;
 using ChessPosition;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using ChessPosition.GameTree;
+using ChessForge.Properties;
 
 namespace ChessForge
 {
@@ -385,7 +385,8 @@ namespace ChessForge
         private Run InsertStudyRun(Paragraph para, Chapter chapter)
         {
             para.Inlines.Add(new Run("\n"));
-            Run r = CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT + "Study Tree", true);
+            string res = Resources.ResourceManager.GetString("Study") ?? "Study";
+            Run r = CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT + res, true);
             r.Name = _run_study_tree_ + chapter.Id.ToString();
             if (LastClickedItemType == WorkbookManager.ItemType.STUDY)
             {
@@ -409,7 +410,8 @@ namespace ChessForge
             para.Inlines.Add(new Run("\n"));
             para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT, true));
             InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.Id, GameData.ContentType.MODEL_GAME, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
-            Run r = CreateRun(STYLE_SUBHEADER, "Games", true);
+            string res = Resources.ResourceManager.GetString("Games") ?? "Games";
+            Run r = CreateRun(STYLE_SUBHEADER, res, true);
             r.Name = _run_model_games_header_ + chapter.Id.ToString();
             r.MouseDown += EventModelGamesHeaderClicked;
             para.Inlines.Add(r);
@@ -446,7 +448,8 @@ namespace ChessForge
             para.Inlines.Add(new Run("\n"));
             para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT, true));
             InsertExpandCollapseSymbolRun(para, _run_exercises_expand_char_, chapter.Id, GameData.ContentType.EXERCISE, chapter.IsExercisesListExpanded, chapter.HasAnyExercise);
-            Run r = CreateRun(STYLE_SUBHEADER, "Exercises", true);
+            string res = Resources.ResourceManager.GetString("Exercises") ?? "Exercises";
+            Run r = CreateRun(STYLE_SUBHEADER, res, true);
             r.Name = _run_exercises_header_ + chapter.Id.ToString();
             r.MouseDown += EventExercisesHeaderClicked;
             para.Inlines.Add(r);

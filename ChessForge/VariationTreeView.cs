@@ -9,7 +9,9 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using ChessForge.Properties;
 using ChessPosition.GameTree;
+using System.Resources;
 
 namespace ChessForge
 {
@@ -868,42 +870,31 @@ namespace ChessForge
 
             if (chapterCount > 1)
             {
-                _mainWin.UiCnvStudyTreePrevNext.Visibility = Visibility.Visible;
-                _mainWin.UiGridStudyTree.RowDefinitions[0].Height = new GridLength(20);
+                _mainWin.UiGridStudyTreePrevNext.Visibility = Visibility.Visible;
+                _mainWin.UiGridStudyTree.RowDefinitions[0].Height = GridLength.Auto;
                 _mainWin.UiRtbStudyTreeView.Height = 620;
 
-                _mainWin.UiLblChapterCounter.Content = "Chapter " + (chapterIndex + 1).ToString() + " of " + chapterCount.ToString();
+                string counter = ResourceUtils.GetCounterBarText("Chapter", chapterIndex, chapterCount);
+                _mainWin.UiLblChapterCounter.Content = counter;
                 if (chapterIndex == 0)
                 {
                     _mainWin.UiImgChapterRightArrow.Visibility = Visibility.Visible;
                     _mainWin.UiImgChapterLeftArrow.Visibility = Visibility.Hidden;
-
-                    _mainWin.UiLblChapterPrevHint.Visibility = Visibility.Collapsed;
-                    _mainWin.UiLblChapterNextHint.Visibility = Visibility.Visible;
                 }
                 else if (chapterIndex == chapterCount - 1)
                 {
                     _mainWin.UiImgChapterRightArrow.Visibility = Visibility.Hidden;
                     _mainWin.UiImgChapterLeftArrow.Visibility = Visibility.Visible;
-
-                    _mainWin.UiLblChapterPrevHint.Visibility = Visibility.Visible;
-                    _mainWin.UiLblChapterNextHint.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
                     _mainWin.UiImgChapterRightArrow.Visibility = Visibility.Visible;
                     _mainWin.UiImgChapterLeftArrow.Visibility = Visibility.Visible;
-
-                    _mainWin.UiLblChapterPrevHint.Visibility = Visibility.Visible;
-                    _mainWin.UiLblChapterNextHint.Visibility = Visibility.Visible;
                 }
             }
             else
             {
-                _mainWin.UiLblChapterPrevHint.Visibility = Visibility.Collapsed;
-                _mainWin.UiLblChapterNextHint.Visibility = Visibility.Collapsed;
-
-                _mainWin.UiCnvStudyTreePrevNext.Visibility = Visibility.Collapsed;
+                _mainWin.UiGridStudyTreePrevNext.Visibility = Visibility.Collapsed;
                 _mainWin.UiGridStudyTree.RowDefinitions[0].Height = new GridLength(0);
                 _mainWin.UiRtbStudyTreeView.Height = 640;
             }
@@ -927,42 +918,32 @@ namespace ChessForge
 
             if (gameCount > 1)
             {
-                _mainWin.UiCnvModelGamePrevNext.Visibility = Visibility.Visible;
-                _mainWin.UiGridModelGames.RowDefinitions[0].Height = new GridLength(20);
+                _mainWin.UiGridModelGamePrevNext.Visibility = Visibility.Visible;
+                _mainWin.UiGridModelGames.RowDefinitions[0].Height = GridLength.Auto;
                 _mainWin.UiRtbModelGamesView.Height = 620;
 
-                _mainWin.UiLblGameCounter.Content = "Game " + (gameIndex + 1).ToString() + " of " + gameCount.ToString();
+                string counter = ResourceUtils.GetCounterBarText("Game", gameIndex, gameCount);
+                _mainWin.UiLblGameCounter.Content = counter;
+
                 if (gameIndex == 0)
                 {
                     _mainWin.UiImgModelGameRightArrow.Visibility = Visibility.Visible;
                     _mainWin.UiImgModelGameLeftArrow.Visibility = Visibility.Hidden;
-
-                    _mainWin.UiLblModelGameNextHint.Visibility = Visibility.Visible;
-                    _mainWin.UiLblModelGamePrevHint.Visibility = Visibility.Collapsed;
                 }
                 else if (gameIndex == gameCount - 1)
                 {
                     _mainWin.UiImgModelGameRightArrow.Visibility = Visibility.Hidden;
                     _mainWin.UiImgModelGameLeftArrow.Visibility = Visibility.Visible;
-
-                    _mainWin.UiLblModelGameNextHint.Visibility = Visibility.Collapsed;
-                    _mainWin.UiLblModelGamePrevHint.Visibility = Visibility.Visible;
                 }
                 else
                 {
                     _mainWin.UiImgModelGameRightArrow.Visibility = Visibility.Visible;
                     _mainWin.UiImgModelGameLeftArrow.Visibility = Visibility.Visible;
-
-                    _mainWin.UiLblModelGameNextHint.Visibility = Visibility.Visible;
-                    _mainWin.UiLblModelGamePrevHint.Visibility = Visibility.Visible;
                 }
             }
             else
             {
-                _mainWin.UiLblModelGameNextHint.Visibility = Visibility.Collapsed;
-                _mainWin.UiLblModelGamePrevHint.Visibility = Visibility.Collapsed;
-
-                _mainWin.UiCnvModelGamePrevNext.Visibility = Visibility.Collapsed;
+                _mainWin.UiGridModelGamePrevNext.Visibility = Visibility.Collapsed;
                 _mainWin.UiGridModelGames.RowDefinitions[0].Height = new GridLength(0);
                 _mainWin.UiRtbModelGamesView.Height = 640;
             }
@@ -984,44 +965,33 @@ namespace ChessForge
 
             if (exerciseCount > 1)
             {
-                _mainWin.UiCnvExercisePrevNext.Visibility = Visibility.Visible;
-                _mainWin.UiGridExercises.RowDefinitions[0].Height = new GridLength(20);
+                _mainWin.UiGridExercisePrevNext.Visibility = Visibility.Visible;
+                _mainWin.UiGridExercises.RowDefinitions[0].Height = GridLength.Auto;
                 _mainWin.UiRtbExercisesView.Height = 620;
 
-                _mainWin.UiLblExerciseCounter.Content = "Exercise " + (exerciseIndex + 1).ToString() + " of " + exerciseCount.ToString();
+                string counter = ResourceUtils.GetCounterBarText("Exercise", exerciseIndex, exerciseCount);
+                _mainWin.UiLblExerciseCounter.Content = counter;
                 if (exerciseIndex == 0)
                 {
                     _mainWin.UiImgExerciseRightArrow.Visibility = Visibility.Visible;
                     _mainWin.UiImgExerciseLeftArrow.Visibility = Visibility.Hidden;
-
-                    _mainWin.UiLblExerciseNextHint.Visibility = Visibility.Visible;
-                    _mainWin.UiLblExercisePrevHint.Visibility = Visibility.Collapsed;
                 }
                 else if (exerciseIndex == exerciseCount - 1)
                 {
                     _mainWin.UiImgExerciseRightArrow.Visibility = Visibility.Hidden;
                     _mainWin.UiImgExerciseLeftArrow.Visibility = Visibility.Visible;
-
-                    _mainWin.UiLblExerciseNextHint.Visibility = Visibility.Collapsed;
-                    _mainWin.UiLblExercisePrevHint.Visibility = Visibility.Visible;
                 }
                 else
                 {
                     _mainWin.UiImgExerciseRightArrow.Visibility = Visibility.Visible;
                     _mainWin.UiImgExerciseLeftArrow.Visibility = Visibility.Visible;
-
-                    _mainWin.UiLblExerciseNextHint.Visibility = Visibility.Visible;
-                    _mainWin.UiLblExercisePrevHint.Visibility = Visibility.Visible;
                 }
             }
             else
             {
-                _mainWin.UiLblExerciseNextHint.Visibility = Visibility.Collapsed;
-                _mainWin.UiLblExercisePrevHint.Visibility = Visibility.Collapsed;
-
-                _mainWin.UiCnvExercisePrevNext.Visibility = Visibility.Collapsed;
+                _mainWin.UiGridExercisePrevNext.Visibility = Visibility.Collapsed;
                 _mainWin.UiGridExercises.RowDefinitions[0].Height = new GridLength(0);
-                _mainWin.UiRtbModelGamesView.Height = 640;
+                _mainWin.UiRtbExercisesView.Height = 640;
             }
         }
 
