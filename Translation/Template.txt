@@ -163,7 +163,7 @@ CloseWorkbook=
 Save=
 
 #description: Save the currently open Workbook into a different file
-#english: SaveAs=Save As ...
+#english: SaveAs=Save $0 As ...
 SaveAs=
 
 #description: Saves a copy of the current Workbook with the current version number, increments the version number
@@ -241,8 +241,8 @@ IncreaseFontSize=
 DecreaseFontSize=
 
 #description: Switch to fixed font size
-#english: UseFixedFont Size=Fixed Font Size
-UseFixedFont Size=
+#english: UseFixedFontSize=Fixed Font Size
+UseFixedFontSize=
 
 #description: Use variable fonts size
 #english: UseVariableFontSize=Variable Font Size
@@ -1116,6 +1116,19 @@ HideSolution=
 #description: Workbook Backup
 #english: WorkbookBackup=Workbook Backup
 WorkbookBackup=
+
+#description: Free and Open Source
+#english: FreeAndOpenSource=Free and Open Source Software (FOSS)
+FreeAndOpenSource=
+
+#description: Library
+#english: Library=Library
+Library=
+
+#description: Explorers for the About Box
+#english: ExplorersAbout=Openings/Tablebases
+ExplorersAbout=
+
 
 ##################################
 #

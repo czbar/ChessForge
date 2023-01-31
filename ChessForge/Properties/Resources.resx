@@ -232,7 +232,7 @@
     <value>Save</value>
   </data>
   <data name="SaveAs" xml:space="preserve">
-    <value>Save As ...</value>
+    <value>Save $0 As ...</value>
   </data>
   <data name="BackUpThisVersion" xml:space="preserve">
     <value>Back up this Version ...</value>
@@ -285,7 +285,7 @@
   <data name="DecreaseFontSize" xml:space="preserve">
     <value>Decrease Font Size</value>
   </data>
-  <data name="UseFixedFont Size" xml:space="preserve">
+  <data name="UseFixedFontSize" xml:space="preserve">
     <value>Fixed Font Size</value>
   </data>
   <data name="UseVariableFontSize" xml:space="preserve">
@@ -867,6 +867,15 @@
   </data>
   <data name="WorkbookBackup" xml:space="preserve">
     <value>Workbook Backup</value>
+  </data>
+  <data name="FreeAndOpenSource" xml:space="preserve">
+    <value>Free and Open Source Software (FOSS)</value>
+  </data>
+  <data name="Library" xml:space="preserve">
+    <value>Library</value>
+  </data>
+  <data name="ExplorersAbout" xml:space="preserve">
+    <value>Openings/Tablebases</value>
   </data>
   <data name="LangEnglish" xml:space="preserve">
     <value>English</value>

@@ -39,7 +39,7 @@ Chapters=Rozdziały
 
 #description: Study Tree
 #english: Study=Study
-Study=Warianty
+Study=Studium
 
 #description: Game
 #english: Game=Game
@@ -163,8 +163,8 @@ CloseWorkbook=Zamknij Podręcznik
 Save=Zapisz
 
 #description: Save the currently open Workbook into a different file
-#english: SaveAs=Save As ...
-SaveAs=Zapisz Jako ...
+#english: SaveAs=Save $0 As ...
+SaveAs=Zapisz $0 jako ...
 
 #description: Saves a copy of the current Workbook with the current version number, increments the version number
 #english: BackUpThisVersion=Back up this Version ...
@@ -241,8 +241,8 @@ IncreaseFontSize=Powiększ Czcionkę
 DecreaseFontSize=Zmniejsz Czcionkę
 
 #description: Switch to fixed font size
-#english: UseFixedFont Size=Fixed Font Size
-UseFixedFont Size=Użyj Stałą Czcionkę
+#english: UseFixedFontSize=Fixed Font Size
+UseFixedFontSize=Użyj Stałą Czcionkę
 
 #description: Use variable fonts size
 #english: UseVariableFontSize=Variable Font Size
@@ -494,7 +494,7 @@ CreateNewChapterFromLine=Utwórz Nowy Rozdział z Wariantu
 
 #description: Bookmark the current position and position for all alternative moves
 #english: BookmarkAllOptionsHere=Bookmark All Options Here
-BookmarkAllOptionsHere=Utwórz Zakładkę dla Wszystkich Opcji
+BookmarkAllOptionsHere=Utwórz Zakładki dla Wszystkich Opcji
 
 #description: Mark the current position as a thumbnail
 #english: MarkAsThumbnail=Mark as Thumbnail
@@ -1116,6 +1116,19 @@ HideSolution=Ukryj Rozwiązanie
 #description: Workbook Backup
 #english: WorkbookBackup=Workbook Backup
 WorkbookBackup=Kopia Zapasowa
+
+#description: Free and Open Source
+#english: FreeAndOpenSource=Free and Open Source Software (FOSS)
+FreeAndOpenSource=Wolne i Otwarte Oprogramowanie (FOSS)
+
+#description: Library
+#english: Library=Library
+Library=Biblioteka
+
+#description: Explorers for the About Box
+#english: ExplorersAbout=Openings/Tablebases
+ExplorersAbout=Otwarcia/Tablice
+
 
 ##################################
 #

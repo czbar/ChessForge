@@ -39,7 +39,7 @@ Chapters=Rozdziały
 
 #description:  Study Tree
 #english: Study=Study
-Study=Warianty
+Study=Studium
 
 #description:  Game
 #english: Game=Game
@@ -169,7 +169,7 @@ Save=Zapisz
 
 #description:  Save the currently open Workbook into a different file
 #english: SaveAs=Save As ...
-SaveAs=Zapisz Jako ...
+SaveAs=Zapisz $0 jako ...
 
 #description:  Saves a copy of the current Workbook with the current version number, increments the version number
 #english: BackUpThisVersion=Back up this Version ...
@@ -241,7 +241,7 @@ DecreaseFontSize=Zmniejsz Czcionkę
 
 #description:  Switch to fixed font size
 #english: UseFixedFont Size=Fixed Font Size
-UseFixedFont Size=Użyj Stałą Czcionkę
+UseFixedFontSize=Użyj Stałą Czcionkę
 
 #description:  Use variable fonts size
 #english: UseVariableFontSize=Variable Font Size
@@ -1119,6 +1119,16 @@ HideSolution=Ukryj Rozwiązanie
 #description: Workbook Backup
 #english: WorkbookBackup=Workbook Backup
 WorkbookBackup=Kopia Zapasowa
+
+#description: Free and Open Source
+#english: FreeAndOpenSource=Free and Open Source Software
+FreeAndOpenSource=Wolne i Otwarte Oprogramowanie (FOSS)
+
+#Library
+Library=Biblioteka
+
+#Explorers for the About Box
+ExplorersAbout=Otwarcia/Tablice
 
 ##################################
 #

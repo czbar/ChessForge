@@ -259,7 +259,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chapter 0 of 0.
+        ///   Looks up a localized string similar to Chapter $0 of $1.
         /// </summary>
         public static string Chapter0of0 {
             get {
@@ -378,9 +378,9 @@ namespace ChessForge.Properties {
         /// <summary>
         ///   Looks up a localized string similar to This will delete all Bookmarks. Proceed?.
         /// </summary>
-        public static string ConformDeleteAllBookmarks {
+        public static string ConfirmDeleteAllBookmarks {
             get {
-                return ResourceManager.GetString("ConformDeleteAllBookmarks", resourceCulture);
+                return ResourceManager.GetString("ConfirmDeleteAllBookmarks", resourceCulture);
             }
         }
         
@@ -808,7 +808,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exercise 0 of 0.
+        ///   Looks up a localized string similar to Exercise $0 of $1.
         /// </summary>
         public static string Exercise0of0 {
             get {
@@ -961,7 +961,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game 0 of 0.
+        ///   Looks up a localized string similar to Game $0 of $1.
         /// </summary>
         public static string Game0of0 {
             get {
@@ -1218,6 +1218,24 @@ namespace ChessForge.Properties {
         public static string Item {
             get {
                 return ResourceManager.GetString("Item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string LangEnglish {
+            get {
+                return ResourceManager.GetString("LangEnglish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Polish.
+        /// </summary>
+        public static string LangPolish {
+            get {
+                return ResourceManager.GetString("LangPolish", resourceCulture);
             }
         }
         
@@ -2188,9 +2206,9 @@ namespace ChessForge.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Fixed Font Size.
         /// </summary>
-        public static string UseFixedFont_Size {
+        public static string UseFixedFontSize {
             get {
-                return ResourceManager.GetString("UseFixedFont Size", resourceCulture);
+                return ResourceManager.GetString("UseFixedFontSize", resourceCulture);
             }
         }
         

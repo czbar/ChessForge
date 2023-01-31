@@ -125,7 +125,7 @@ CloseWorkbook=Close Workbook
 Save=Save
 
 #Save the currently open Workbook into a different file
-SaveAs=Save As ...
+SaveAs=Save $0 As ...
 
 #Saves a copy of the current Workbook with the current version number, increments the version number
 BackUpThisVersion=Back up this Version ...
@@ -185,7 +185,7 @@ IncreaseFontSize=Increase Font Size
 DecreaseFontSize=Decrease Font Size
 
 #Switch to fixed font size
-UseFixedFont Size=Fixed Font Size
+UseFixedFontSize=Fixed Font Size
 
 #Use variable fonts size
 UseVariableFontSize=Variable Font Size
@@ -871,6 +871,61 @@ HideSolution=Hide Solution
 
 #Workbook Backup
 WorkbookBackup=Workbook Backup
+
+#Free and Open Source
+FreeAndOpenSource=Free and Open Source Software (FOSS)
+
+#Library
+Library=Library
+
+#Explorers for the About Box
+ExplorersAbout=Openings/Tablebases
+
+
+##################################
+#
+# Comment Box
+#
+
+cbActions=Some available actions are:
+
+cbClickStudyHeader=Click Study header or double click chapter\'s title to open the Study Tree
+cbClickForContextMenu="Right click to open context menu"
+
+cbClickThruMoves=Click through the moves
+cbDoubleClickToAnnotate=Double click to annotate move
+
+cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise
+cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay
+
+cbClickBookmarkToTrain=Click a bookmark to start training
+cbRightClickBookmarkManager=Right click to open menu for Bookmark management options
+
+cbRightClickCreateGame=Right click to open menu to create or import a Game
+ 
+#Click through the moves
+#Double click to annotate move
+ 
+#Right click to open menu for creating, importing or editing games";
+
+cbRightClickCreateExercise=Right click to open menu to create or import an Exercise;
+
+cbMoveToEnterSolution= Make moves on the main board to enter solution
+cbDoubleClickToAssignPoints=Double click a move to assign quiz points\n" 
+cbSelectSolvingMove=Select Solving Mode
+cbRightClickEditExercise=Right click to open menu to edit or create exercises
+
+cbShowSolution=Show the solution to view or edit
+#Select Solving Mode
+#Right click to open menu to edit or create exercises";
+cbMakeMovesOnMainBoard=Make your moves on the main board
+
+cbThisWasSolution=This was the solution!
+
+cbResponseNotCovered=This response is not covered in the solution
+
+
+
 
 ##################################
 #

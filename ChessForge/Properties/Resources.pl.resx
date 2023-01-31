@@ -142,7 +142,7 @@
     <value>Rozdziały</value>
   </data>
   <data name="Study" xml:space="preserve">
-    <value>Warianty</value>
+    <value>Studium</value>
   </data>
   <data name="Game" xml:space="preserve">
     <value>Partia</value>
@@ -232,7 +232,7 @@
     <value>Zapisz</value>
   </data>
   <data name="SaveAs" xml:space="preserve">
-    <value>Zapisz Jako ...</value>
+    <value>Zapisz $0 jako ...</value>
   </data>
   <data name="BackUpThisVersion" xml:space="preserve">
     <value>Zrób Kopię tej Wersji...</value>
@@ -285,7 +285,7 @@
   <data name="DecreaseFontSize" xml:space="preserve">
     <value>Zmniejsz Czcionkę</value>
   </data>
-  <data name="UseFixedFont Size" xml:space="preserve">
+  <data name="UseFixedFontSize" xml:space="preserve">
     <value>Użyj Stałą Czcionkę</value>
   </data>
   <data name="UseVariableFontSize" xml:space="preserve">
@@ -454,7 +454,7 @@
     <value>Utwórz Nowy Rozdział z Wariantu</value>
   </data>
   <data name="BookmarkAllOptionsHere" xml:space="preserve">
-    <value>Utwórz Zakładkę dla Wszystkich Opcji</value>
+    <value>Utwórz Zakładki dla Wszystkich Opcji</value>
   </data>
   <data name="MarkAsThumbnail" xml:space="preserve">
     <value>tego nie omawialiśmy</value>
@@ -866,6 +866,15 @@
   </data>
   <data name="WorkbookBackup" xml:space="preserve">
     <value>Kopia Zapasowa</value>
+  </data>
+  <data name="FreeAndOpenSource" xml:space="preserve">
+    <value>Wolne i Otwarte Oprogramowanie (FOSS)</value>
+  </data>
+  <data name="Library" xml:space="preserve">
+    <value>Biblioteka</value>
+  </data>
+  <data name="ExplorersAbout" xml:space="preserve">
+    <value>Otwarcia/Tablice</value>
   </data>
   <data name="LangEnglish" xml:space="preserve">
     <value>Angielski</value>
