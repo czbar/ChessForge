@@ -31,6 +31,9 @@ namespace MasterTranslator
         // first part of the localized file names
         private static readonly string LOCALIZED_NAME = "Localized";
 
+        // first part of the comparison file names
+        private static readonly string COMPARISON_NAME = "Comparison";
+
         // culture code
         private static string _cultureInfo = "";
 
@@ -50,7 +53,7 @@ namespace MasterTranslator
         private static string _inputMasterFile = "Master.txt";
 
         // default name for the comparison results file
-        private static string _compareResultsFile = "Comparison.txt";
+        private static string _compareResultsFile;
 
         // action being performed
         private static Action _action;
@@ -85,11 +88,13 @@ namespace MasterTranslator
             {
                 _inputLocalizedFile = LOCALIZED_NAME + ".txt";
                 _outputTemplateFile = TEMPLATE_NAME + ".txt";
+                _compareResultsFile = COMPARISON_NAME + ".txt";
             }
             else
             {
                 _inputLocalizedFile = string.Format(LOCALIZED_NAME + ".{0}.txt", _cultureInfo);
                 _outputTemplateFile = string.Format(TEMPLATE_NAME + ".{0}.txt", _cultureInfo);
+                _compareResultsFile = string.Format(COMPARISON_NAME + ".{0}.txt", _cultureInfo);
             }
 
             if (_workingfolder != null)
@@ -144,14 +149,6 @@ namespace MasterTranslator
                     break;
             }
 
-            // now we have processed the first argument let's go over
-            // the remaining ones 
-            // do we have culture info?
-            if (args.Length > 1)
-            {
-                _cultureInfo = args[1];
-            }
-
             int n = 1;
             while (n < args.Length)
             {
@@ -181,7 +178,7 @@ namespace MasterTranslator
             string[] lines = File.ReadAllLines(_inputMasterFile);
             if (!string.IsNullOrWhiteSpace(_cultureInfo))
             {
-                if (!File.Exists(LOCALIZED_NAME))
+                if (!File.Exists(_inputLocalizedFile))
                 {
                     Console.WriteLine("ERROR: file " + _inputLocalizedFile + " not found");
                     return;
@@ -210,6 +207,9 @@ namespace MasterTranslator
                     block.Add(line);
                 }
             }
+
+            // we may be missing the last block
+            ProcessBlock(block, ref dictLocalized);
 
             File.WriteAllLines(_outputTemplateFile, _generatedLines.ToArray());
         }
@@ -240,7 +240,7 @@ namespace MasterTranslator
         /// </summary>
         private static void CompareMasterAndLocalizedFiles()
         {
-            if (string.IsNullOrEmpty(_inputLocalizedFile))
+            if (string.IsNullOrEmpty(_inputLocalizedFile) || !File.Exists(_inputLocalizedFile))
             {
                 return;
             }
@@ -342,6 +342,7 @@ namespace MasterTranslator
             dupes = new List<string>();
             missingValues = new List<string>();
             List<string> keys = new List<string>();
+
             string[] lines = File.ReadAllLines(fileName);
             foreach (string line in lines)
             {
@@ -430,7 +431,7 @@ namespace MasterTranslator
                 {
                     lineToTranslate = lineToTranslate + "=";
                 }
-                _generatedLines.Add(lineToTranslate + "=");
+                _generatedLines.Add(lineToTranslate);
             }
             else
             {

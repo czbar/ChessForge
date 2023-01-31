@@ -1,0 +1,877 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Workbook" xml:space="preserve">
+    <value>Workbook</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="WorkbookTitle" xml:space="preserve">
+    <value>Workbook Title</value>
+  </data>
+  <data name="Event" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="Header" xml:space="preserve">
+    <value>Header</value>
+  </data>
+  <data name="Preamble" xml:space="preserve">
+    <value>Preamble</value>
+  </data>
+  <data name="Chapter" xml:space="preserve">
+    <value>Chapter</value>
+  </data>
+  <data name="Chapters" xml:space="preserve">
+    <value>Chapters</value>
+  </data>
+  <data name="Study" xml:space="preserve">
+    <value>Study</value>
+  </data>
+  <data name="Game" xml:space="preserve">
+    <value>Game</value>
+  </data>
+  <data name="Games" xml:space="preserve">
+    <value>Games</value>
+  </data>
+  <data name="Exercise" xml:space="preserve">
+    <value>Exercise</value>
+  </data>
+  <data name="Exercises" xml:space="preserve">
+    <value>Exercises</value>
+  </data>
+  <data name="Round" xml:space="preserve">
+    <value>Round</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Line" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="Bookmark" xml:space="preserve">
+    <value>Bookmark</value>
+  </data>
+  <data name="Bookmarks" xml:space="preserve">
+    <value>Bookmarks</value>
+  </data>
+  <data name="Move" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="Moves" xml:space="preserve">
+    <value>Moves</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="Annotation" xml:space="preserve">
+    <value>Annotation</value>
+  </data>
+  <data name="Evaluation" xml:space="preserve">
+    <value>Evaluation</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="ChessEngine" xml:space="preserve">
+    <value>Chess Engine</value>
+  </data>
+  <data name="Openings" xml:space="preserve">
+    <value>Openings</value>
+  </data>
+  <data name="Tablebases" xml:space="preserve">
+    <value>Tablebases</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="EvaluatePosition" xml:space="preserve">
+    <value>Evaluate Position</value>
+  </data>
+  <data name="EvaluateLine" xml:space="preserve">
+    <value>Evaluate Line</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="NewWorkbook" xml:space="preserve">
+    <value>New Workbook</value>
+  </data>
+  <data name="OpenWorkbook" xml:space="preserve">
+    <value>Open Workbook </value>
+  </data>
+  <data name="CloseWorkbook" xml:space="preserve">
+    <value>Close Workbook</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>Save As ...</value>
+  </data>
+  <data name="BackUpThisVersion" xml:space="preserve">
+    <value>Back up this Version ...</value>
+  </data>
+  <data name="Training" xml:space="preserve">
+    <value>Training</value>
+  </data>
+  <data name="StartNewSession" xml:space="preserve">
+    <value>Start New Session</value>
+  </data>
+  <data name="RestartTrainingSession" xml:space="preserve">
+    <value>Restart Training Session</value>
+  </data>
+  <data name="ExitTraining" xml:space="preserve">
+    <value>Exit Training</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Annotations" xml:space="preserve">
+    <value>Annotations</value>
+  </data>
+  <data name="MergeChapters" xml:space="preserve">
+    <value>Merge Chapters...</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Views" xml:space="preserve">
+    <value>Views</value>
+  </data>
+  <data name="FlipBoard" xml:space="preserve">
+    <value>Flip Board</value>
+  </data>
+  <data name="ApplicationOptions" xml:space="preserve">
+    <value>Application Options...</value>
+  </data>
+  <data name="WorkbookOptions" xml:space="preserve">
+    <value>Workbook Options...</value>
+  </data>
+  <data name="AnalysisEngine" xml:space="preserve">
+    <value>Analysis Engine...</value>
+  </data>
+  <data name="IncreaseFontSize" xml:space="preserve">
+    <value>Increase Font Size</value>
+  </data>
+  <data name="DecreaseFontSize" xml:space="preserve">
+    <value>Decrease Font Size</value>
+  </data>
+  <data name="UseFixedFont Size" xml:space="preserve">
+    <value>Fixed Font Size</value>
+  </data>
+  <data name="UseVariableFontSize" xml:space="preserve">
+    <value>Variable Font Size</value>
+  </data>
+  <data name="RestoreFontDefaults" xml:space="preserve">
+    <value>Restore Font Defaults</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="Wiki" xml:space="preserve">
+    <value>Wiki</value>
+  </data>
+  <data name="CheckForUpdates" xml:space="preserve">
+    <value>Check for Updates</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="AutoSave" xml:space="preserve">
+    <value>Auto Save</value>
+  </data>
+  <data name="Explorers" xml:space="preserve">
+    <value>Explorers</value>
+  </data>
+  <data name="Engine" xml:space="preserve">
+    <value>Engine</value>
+  </data>
+  <data name="TurnAutoSaveOff" xml:space="preserve">
+    <value>Turn AutoSave Off</value>
+  </data>
+  <data name="TurnAutoSaveOn" xml:space="preserve">
+    <value>Turn AutoSave On</value>
+  </data>
+  <data name="TurnExplorersOff" xml:space="preserve">
+    <value>Disable Opening Explorer and Tablebases</value>
+  </data>
+  <data name="TurnExplorersOn" xml:space="preserve">
+    <value>Use Opening Explorer and Tablebases</value>
+  </data>
+  <data name="TurnEngineOff" xml:space="preserve">
+    <value>Turn the Engine Off</value>
+  </data>
+  <data name="TurnEngineOn" xml:space="preserve">
+    <value>Turn the Engine On</value>
+  </data>
+  <data name="TopGames" xml:space="preserve">
+    <value>Top Games</value>
+  </data>
+  <data name="StartTrainingFromHere" xml:space="preserve">
+    <value>Start Training from Here</value>
+  </data>
+  <data name="StartTrainingFromBookmark" xml:space="preserve">
+    <value>Start Training from a Bookmark</value>
+  </data>
+  <data name="CreateExerciseFromHere" xml:space="preserve">
+    <value>Create Exercise from Here...</value>
+  </data>
+  <data name="CopyFENtoClipboard" xml:space="preserve">
+    <value>Copy FEN to Clipboard</value>
+  </data>
+  <data name="BookmarkThisPosition" xml:space="preserve">
+    <value>Bookmark This Position</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>Replay</value>
+  </data>
+  <data name="PlayAgainstComputer" xml:space="preserve">
+    <value>Play Against Engine</value>
+  </data>
+  <data name="ExitGame" xml:space="preserve">
+    <value>Exit Game</value>
+  </data>
+  <data name="StudyTree" xml:space="preserve">
+    <value>Study</value>
+  </data>
+  <data name="RestartGameAfter" xml:space="preserve">
+    <value>Restart Game After </value>
+  </data>
+  <data name="RestartFrom" xml:space="preserve">
+    <value>Restart from </value>
+  </data>
+  <data name="CreateNewChapter" xml:space="preserve">
+    <value>Create New Chapter</value>
+  </data>
+  <data name="ImportNewChapter" xml:space="preserve">
+    <value>Import New Chapter</value>
+  </data>
+  <data name="CreateNewGame" xml:space="preserve">
+    <value>Create New Game</value>
+  </data>
+  <data name="ImportGames" xml:space="preserve">
+    <value>Import Games</value>
+  </data>
+  <data name="CreateNewExercise" xml:space="preserve">
+    <value>Create New Exercise</value>
+  </data>
+  <data name="ImportExercises" xml:space="preserve">
+    <value>Import Exercises</value>
+  </data>
+  <data name="OpenSelectedChapter" xml:space="preserve">
+    <value>Open Selected Chapter</value>
+  </data>
+  <data name="RenameSelectedChapter" xml:space="preserve">
+    <value>Rename Selected Chapter</value>
+  </data>
+  <data name="OpenSelectedGame" xml:space="preserve">
+    <value>Open Selected Game</value>
+  </data>
+  <data name="EditGameHeaders" xml:space="preserve">
+    <value>Edit Game Headers</value>
+  </data>
+  <data name="OpenThisExercise" xml:space="preserve">
+    <value>Open Selected Exercise</value>
+  </data>
+  <data name="EditExerciseHeaders" xml:space="preserve">
+    <value>Edit Exercise Headers</value>
+  </data>
+  <data name="MoveChapterUp" xml:space="preserve">
+    <value>Move Chapter Up</value>
+  </data>
+  <data name="MoveChapterDown" xml:space="preserve">
+    <value>Move Chapter Down</value>
+  </data>
+  <data name="MoveGameUp" xml:space="preserve">
+    <value>Move Game Up</value>
+  </data>
+  <data name="MoveGameDown" xml:space="preserve">
+    <value>Move Game Down</value>
+  </data>
+  <data name="MoveGameToChapter" xml:space="preserve">
+    <value>Move Game To Chapter...</value>
+  </data>
+  <data name="MoveExerciseUp" xml:space="preserve">
+    <value>Move Exercise Up</value>
+  </data>
+  <data name="MoveExerciseDown" xml:space="preserve">
+    <value>Move Exercise Down</value>
+  </data>
+  <data name="MoveExerciseToChapter" xml:space="preserve">
+    <value>Move Exercise To Chapter...</value>
+  </data>
+  <data name="DeleteSelectedChapter" xml:space="preserve">
+    <value>Delete Selected Chapter</value>
+  </data>
+  <data name="DeleteSelectedGame" xml:space="preserve">
+    <value>Delete Selected Game</value>
+  </data>
+  <data name="DeleteThisGame" xml:space="preserve">
+    <value>Delete This Game</value>
+  </data>
+  <data name="DeleteSelectedExercise" xml:space="preserve">
+    <value>Delete Selected Exercise</value>
+  </data>
+  <data name="GameExerciseReferences" xml:space="preserve">
+    <value>Game/Exercise References</value>
+  </data>
+  <data name="PromoteLine" xml:space="preserve">
+    <value>Promote Line</value>
+  </data>
+  <data name="DeleteMovesFromHere" xml:space="preserve">
+    <value>Delete Moves From Here</value>
+  </data>
+  <data name="CreateNewChapterFromLine" xml:space="preserve">
+    <value>Create New Chapter From Line</value>
+  </data>
+  <data name="BookmarkAllOptionsHere" xml:space="preserve">
+    <value>Bookmark All Options Here</value>
+  </data>
+  <data name="MarkAsThumbnail" xml:space="preserve">
+    <value>Mark as Thumbnail</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="Chapter0of0" xml:space="preserve">
+    <value>Chapter 0 of 0</value>
+  </data>
+  <data name="StartTrainingFromThisBookmark" xml:space="preserve">
+    <value>Start Training from This Bookmark</value>
+  </data>
+  <data name="GenerateBookmarks" xml:space="preserve">
+    <value>Generate Bookmarks</value>
+  </data>
+  <data name="GoToStudyToAddBookmark" xml:space="preserve">
+    <value>Go to Study to Add a Bookmark</value>
+  </data>
+  <data name="DeleteThisBookmark" xml:space="preserve">
+    <value>Delete This Bookmark</value>
+  </data>
+  <data name="DeleteAllBookmarks" xml:space="preserve">
+    <value>Delete All Bookmarks</value>
+  </data>
+  <data name="EditGameHeader" xml:space="preserve">
+    <value>Edit Game Header</value>
+  </data>
+  <data name="MergeSelectionIntoStudy" xml:space="preserve">
+    <value>Merge Selection Into Study</value>
+  </data>
+  <data name="Game0of0" xml:space="preserve">
+    <value>Game 0 of 0</value>
+  </data>
+  <data name="EditExerciseHeader" xml:space="preserve">
+    <value>Edit Exercise Header</value>
+  </data>
+  <data name="EditStartingPosition" xml:space="preserve">
+    <value>Edit Starting Position</value>
+  </data>
+  <data name="DeleteThisExercise" xml:space="preserve">
+    <value>Delete This Exercise</value>
+  </data>
+  <data name="Exercise0of0" xml:space="preserve">
+    <value>Exercise 0 of 0</value>
+  </data>
+  <data name="Scoresheet" xml:space="preserve">
+    <value>Scoresheet</value>
+  </data>
+  <data name="White" xml:space="preserve">
+    <value>White</value>
+  </data>
+  <data name="Black" xml:space="preserve">
+    <value>Black</value>
+  </data>
+  <data name="SideToMove" xml:space="preserve">
+    <value>Side to Move</value>
+  </data>
+  <data name="EvaluationShort" xml:space="preserve">
+    <value>Ev</value>
+  </data>
+  <data name="PreviewGame" xml:space="preserve">
+    <value>Preview Game</value>
+  </data>
+  <data name="ImportIntoThisChapter" xml:space="preserve">
+    <value>Import into Active Chapter</value>
+  </data>
+  <data name="ViewOnLichess" xml:space="preserve">
+    <value>View on lichess</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ShowExplorer" xml:space="preserve">
+    <value>Show Explorer</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="FileError" xml:space="preserve">
+    <value>File Error</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="Confirmation" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="UnexpectedError" xml:space="preserve">
+    <value>Unexpected Error</value>
+  </data>
+  <data name="UpdateCheck" xml:space="preserve">
+    <value>Updated Check</value>
+  </data>
+  <data name="PositionSetup" xml:space="preserve">
+    <value>Position Setup</value>
+  </data>
+  <data name="InvalidPositionSetup" xml:space="preserve">
+    <value>Invalid Position Setup</value>
+  </data>
+  <data name="ImportPgn" xml:space="preserve">
+    <value>Import from PGN</value>
+  </data>
+  <data name="BookmarksAlreadyExist" xml:space="preserve">
+    <value>Bookmarks already exist</value>
+  </data>
+  <data name="FailedToSaveFile" xml:space="preserve">
+    <value>Failed to save file: $0 </value>
+  </data>
+  <data name="ChessEngineNotAvailable" xml:space="preserve">
+    <value>Chess Engine not available</value>
+  </data>
+  <data name="CouldNotImportGame" xml:space="preserve">
+    <value>Could not import game </value>
+  </data>
+  <data name="ConfirmDeleteAllBookmarks" xml:space="preserve">
+    <value>This will delete all Bookmarks. Proceed?</value>
+  </data>
+  <data name="GeneratedBookmarksReplace" xml:space="preserve">
+    <value>Generated bookmarks will replace the ones in the Workbook. Proceed?</value>
+  </data>
+  <data name="ErrorParseMove" xml:space="preserve">
+    <value>Failed to parse engine's move.</value>
+  </data>
+  <data name="EngineNotAvailable" xml:space="preserve">
+    <value>Chess Engine not available.</value>
+  </data>
+  <data name="ExerciseNoSolution" xml:space="preserve">
+    <value>This exercise has no solution provided.</value>
+  </data>
+  <data name="GameDownloadError" xml:space="preserve">
+    <value>Game download error</value>
+  </data>
+  <data name="LoadEngineError" xml:space="preserve">
+    <value>Failed to load the engine. Move evaluation will not be available.</value>
+  </data>
+  <data name="CancelGame" xml:space="preserve">
+    <value>Cancel Game?</value>
+  </data>
+  <data name="GameInProgress" xml:space="preserve">
+    <value>Game with the Computer is in Progress</value>
+  </data>
+  <data name="UnrecognizedFileFormat" xml:space="preserve">
+    <value>Unrecognized file format </value>
+  </data>
+  <data name="SelectEngineStartMove" xml:space="preserve">
+    <value>Select the move from which to start.</value>
+  </data>
+  <data name="DeleteChapter" xml:space="preserve">
+    <value>Deleting chapter: $0. Are you sure?</value>
+  </data>
+  <data name="NoExerciseInFile" xml:space="preserve">
+    <value>No Exercises found in $0. </value>
+  </data>
+  <data name="NoGamesInFile" xml:space="preserve">
+    <value>No Games found in $0. </value>
+  </data>
+  <data name="BookmarkAlreadyExists" xml:space="preserve">
+    <value>This bookmark already exists</value>
+  </data>
+  <data name="ErrorAddBookmarks" xml:space="preserve">
+    <value>Failed to add the bookmarks.</value>
+  </data>
+  <data name="NoTrainingStartMove" xml:space="preserve">
+    <value>No move selected to start training from.</value>
+  </data>
+  <data name="ExitTrainingSession" xml:space="preserve">
+    <value>Exit the training session?</value>
+  </data>
+  <data name="RestartTraining" xml:space="preserve">
+    <value>Restart the training session?</value>
+  </data>
+  <data name="NoNewVersion" xml:space="preserve">
+    <value>No new version available.</value>
+  </data>
+  <data name="ViewExercise" xml:space="preserve">
+    <value>Enable View/Edit Mode?</value>
+  </data>
+  <data name="RestartFromMove" xml:space="preserve">
+    <value>Restart from $0?</value>
+  </data>
+  <data name="NoEngineForTraining" xml:space="preserve">
+    <value>Engine not available. Training cannot continue.
+ You can roll moves back or restart.</value>
+  </data>
+  <data name="UnexpectedErrorInUserMove" xml:space="preserve">
+    <value>Unexpected error while processing user's move</value>
+  </data>
+  <data name="CloseThisWorkbook" xml:space="preserve">
+    <value>Close the current Workbook?</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>File $0 could not be found.</value>
+  </data>
+  <data name="SaveWorkbook" xml:space="preserve">
+    <value>Save the Workbook?</value>
+  </data>
+  <data name="FileAlreadyOpen" xml:space="preserve">
+    <value>$0 is already open."</value>
+  </data>
+  <data name="MergeTrainingIntoStudy" xml:space="preserve">
+    <value>Merge and Save new moves from this session into the {0}?</value>
+  </data>
+  <data name="NoLongerValid" xml:space="preserve">
+    <value>is no longer valid</value>
+  </data>
+  <data name="NoLongerValidPlural" xml:space="preserve">
+    <value>are no longer valid</value>
+  </data>
+  <data name="DeleteExerciseMove" xml:space="preserve">
+    <value>and will be deleted. Proceed anyway?</value>
+  </data>
+  <data name="DeleteExerciseMoves" xml:space="preserve">
+    <value>and will be deleted. Proceed anyway?</value>
+  </data>
+  <data name="QuizPoints" xml:space="preserve">
+    <value>Quiz points</value>
+  </data>
+  <data name="EngineExecutable" xml:space="preserve">
+    <value>Engine Executable</value>
+  </data>
+  <data name="EngineTimePerMove" xml:space="preserve">
+    <value>Engine Time per Move (s)</value>
+  </data>
+  <data name="ThinkTimeInGame" xml:space="preserve">
+    <value>In Game</value>
+  </data>
+  <data name="MoveReplay" xml:space="preserve">
+    <value>Move Replay</value>
+  </data>
+  <data name="AutoReplaySpeed" xml:space="preserve">
+    <value>Auto Speed (s)</value>
+  </data>
+  <data name="AllowMouseWheel" xml:space="preserve">
+    <value>Allow Mouse Wheel</value>
+  </data>
+  <data name="ShowMovesAtFork" xml:space="preserve">
+    <value>Show Moves at Fork</value>
+  </data>
+  <data name="SoundOn" xml:space="preserve">
+    <value>Sound On</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>The current version $0 will be backed up in $1</value>
+  </data>
+  <data name="UpdatedVersion" xml:space="preserve">
+    <value>The updated version number will be $0</value>
+  </data>
+  <data name="IncrementMajorVersion" xml:space="preserve">
+    <value>Increment major version</value>
+  </data>
+  <data name="NewChapterFromLine" xml:space="preserve">
+    <value>Create New Chapter From Line</value>
+  </data>
+  <data name="NewChapterToBeCreate" xml:space="preserve">
+    <value>A new chapter will be created from the selected sub-tree.</value>
+  </data>
+  <data name="DeleteSubTreeFromSource" xml:space="preserve">
+    <value>Delete the sub-tree from the original chapter.</value>
+  </data>
+  <data name="GotoNewChapter" xml:space="preserve">
+    <value>Go to the newly created chapter.</value>
+  </data>
+  <data name="ChapterTitle" xml:space="preserve">
+    <value>Chapter Title</value>
+  </data>
+  <data name="IgnoreDayMonth" xml:space="preserve">
+    <value>Ignore Day and Month</value>
+  </data>
+  <data name="IgnoreDay" xml:space="preserve">
+    <value>Ignore Day</value>
+  </data>
+  <data name="GamePreview" xml:space="preserve">
+    <value>Game Preview</value>
+  </data>
+  <data name="PreviousGame" xml:space="preserve">
+    <value>Previous Game</value>
+  </data>
+  <data name="NextGame" xml:space="preserve">
+    <value>Next Game</value>
+  </data>
+  <data name="ImportIntoChapter" xml:space="preserve">
+    <value>Import into Chapter</value>
+  </data>
+  <data name="DownloadGameFromLichess" xml:space="preserve">
+    <value>Downloading Game From lichess.org.</value>
+  </data>
+  <data name="PleaseWait" xml:space="preserve">
+    <value>Please Wait</value>
+  </data>
+  <data name="ReplaySpeed" xml:space="preserve">
+    <value>Replay Speed</value>
+  </data>
+  <data name="Fast" xml:space="preserve">
+    <value>Fast</value>
+  </data>
+  <data name="Medium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="Slow" xml:space="preserve">
+    <value>Slow</value>
+  </data>
+  <data name="EmptyGameText" xml:space="preserve">
+    <value>Game text is empty.</value>
+  </data>
+  <data name="GameNotFound" xml:space="preserve">
+    <value>Game not found.</value>
+  </data>
+  <data name="FEN" xml:space="preserve">
+    <value>FEN</value>
+  </data>
+  <data name="WhiteToPlay" xml:space="preserve">
+    <value>White to Play</value>
+  </data>
+  <data name="BlackToPlay" xml:space="preserve">
+    <value>Black to Play</value>
+  </data>
+  <data name="EnPassant" xml:space="preserve">
+    <value>En Passant</value>
+  </data>
+  <data name="Castling" xml:space="preserve">
+    <value>Castling</value>
+  </data>
+  <data name="StartingPosition" xml:space="preserve">
+    <value>Starting position</value>
+  </data>
+  <data name="ClearBoard" xml:space="preserve">
+    <value>Clear Board</value>
+  </data>
+  <data name="SelectGameAndExercises" xml:space="preserve">
+    <value>Select Games and/or Exercises</value>
+  </data>
+  <data name="SelectItems" xml:space="preserve">
+    <value>Select Items</value>
+  </data>
+  <data name="ShowAllChapters" xml:space="preserve">
+    <value>Show All Chapters</value>
+  </data>
+  <data name="SelectChapter" xml:space="preserve">
+    <value>Select Chapter</value>
+  </data>
+  <data name="SelectChaptersToImport" xml:space="preserve">
+    <value>Select Chapters to Import</value>
+  </data>
+  <data name="MergeGamesAndCopy" xml:space="preserve">
+    <value>Merge Games into the Study Tree and Copy them into the Games section.</value>
+  </data>
+  <data name="MergeGamesNoCopy" xml:space="preserve">
+    <value>Merge Games into the Study Tree only (do not copy games).</value>
+  </data>
+  <data name="CopyGamesNoMerge" xml:space="preserve">
+    <value>Copy Games into the Games section only (leave the study tree empty)</value>
+  </data>
+  <data name="CreateChapterPerGame" xml:space="preserve">
+    <value>Create Chapter per Game</value>
+  </data>
+  <data name="NewVersionAvailable" xml:space="preserve">
+    <value>New version $0 available from</value>
+  </data>
+  <data name="NoShowForCurrentVersion" xml:space="preserve">
+    <value>Do not show for this version.</value>
+  </data>
+  <data name="TrainingSide" xml:space="preserve">
+    <value>Training Side</value>
+  </data>
+  <data name="InitBoardOrientation" xml:space="preserve">
+    <value>Initial Board Orientation (side to place at the bottom):</value>
+  </data>
+  <data name="TooltipSideToMove" xml:space="preserve">
+    <value>Determines some default settings</value>
+  </data>
+  <data name="TooltipWorkbookVersion" xml:space="preserve">
+    <value>To increment version select File-&gt;Backup Version</value>
+  </data>
+  <data name="PgnErrors" xml:space="preserve">
+    <value>PGN parsing errors</value>
+  </data>
+  <data name="OneEntityValid" xml:space="preserve">
+    <value>1 entity was valid</value>
+  </data>
+  <data name="MultiEntitiesValid" xml:space="preserve">
+    <value>$0  entities were valid</value>
+  </data>
+  <data name="BadTypeForImport" xml:space="preserve">
+    <value>but not imported due to not being of the $0 type</value>
+  </data>
+  <data name="SelectSolvingMode" xml:space="preserve">
+    <value>Select Solving Mode</value>
+  </data>
+  <data name="GuessNextMove" xml:space="preserve">
+    <value>Guess the next move</value>
+  </data>
+  <data name="EnterAnalysis" xml:space="preserve">
+    <value>Enter your analysis and submit</value>
+  </data>
+  <data name="ShowSolution" xml:space="preserve">
+    <value>Show/Edit Solution</value>
+  </data>
+  <data name="HideSolution" xml:space="preserve">
+    <value>Hide Solution</value>
+  </data>
+  <data name="WorkbookBackup" xml:space="preserve">
+    <value>Workbook Backup</value>
+  </data>
+  <data name="LangEnglish" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LangPolish" xml:space="preserve">
+    <value>Polish</value>
+  </data>
+</root>
