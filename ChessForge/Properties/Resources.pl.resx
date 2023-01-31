@@ -180,6 +180,9 @@
   <data name="Position" xml:space="preserve">
     <value>Pozycja</value>
   </data>
+  <data name="Result" xml:space="preserve">
+    <value>Wynik</value>
+  </data>
   <data name="Comment" xml:space="preserve">
     <value>Komentarz</value>
   </data>
@@ -209,6 +212,12 @@
   </data>
   <data name="Item" xml:space="preserve">
     <value>Element</value>
+  </data>
+  <data name="GameHeader" xml:space="preserve">
+    <value>Nagłówek Partii</value>
+  </data>
+  <data name="ExerciseHeader" xml:space="preserve">
+    <value>Nagłówek Ćwiczenia</value>
   </data>
   <data name="EvaluatePosition" xml:space="preserve">
     <value>Oceń Pozycję</value>
@@ -505,10 +514,10 @@
     <value>Ćwiczenie $0 z $1</value>
   </data>
   <data name="Scoresheet" xml:space="preserve">
-    <value>Scoresheet</value>
+    <value>Zapis</value>
   </data>
   <data name="White" xml:space="preserve">
-    <value>White</value>
+    <value>Białe</value>
   </data>
   <data name="Black" xml:space="preserve">
     <value>Czarne</value>
@@ -634,7 +643,7 @@
     <value>Wyjście z sesji treningowej</value>
   </data>
   <data name="RestartTraining" xml:space="preserve">
-    <value>Restart sesji treningowej</value>
+    <value>Zacznij trening od początku</value>
   </data>
   <data name="NoNewVersion" xml:space="preserve">
     <value>Brak nowej wersji</value>
@@ -876,10 +885,73 @@
   <data name="ExplorersAbout" xml:space="preserve">
     <value>Otwarcia/Tablice</value>
   </data>
+  <data name="cbActions" xml:space="preserve">
+    <value>Niektóre dostępne czynności:</value>
+  </data>
+  <data name="cbClickStudyHeader" xml:space="preserve">
+    <value>Kliknij na Studium, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Studium </value>
+  </data>
+  <data name="cbClickForContextMenu" xml:space="preserve">
+    <value>Naciśnij prawy przycisk by wywołać menu</value>
+  </data>
+  <data name="cbClickThruMoves" xml:space="preserve">
+    <value>Kliknij na dowolne posunięcie</value>
+  </data>
+  <data name="cbDoubleClickToAnnotate" xml:space="preserve">
+    <value>Dwukrotnie kliknij by wprowadzić anotacje</value>
+  </data>
+  <data name="cbAdvancedEditig" xml:space="preserve">
+    <value>Naciśnij prawy przycisk by wywołać menu do edycji, kopiowania FEN i inne</value>
+  </data>
+  <data name="cbDoubleClickAutoReplay" xml:space="preserve">
+    <value>Dwukrotnie kliknij by rozpocząć auto-odtwarzanie</value>
+  </data>
+  <data name="cbClickBookmarkToTrain" xml:space="preserve">
+    <value>Kliknij zakładkę by zacząć trening</value>
+  </data>
+  <data name="cbRightClickBookmarkManager" xml:space="preserve">
+    <value>Naciśnij prawy przycisk by otworzyć menu zakładek</value>
+  </data>
+  <data name="cbRightClickCreateGame" xml:space="preserve">
+    <value>Naciśnij prawy przycisk by otworzyć menu partii</value>
+  </data>
+  <data name="cbRightClickCreateExercise" xml:space="preserve">
+    <value>Naciśnij prawy przycisk by otworzyć menu ćwiczeń</value>
+  </data>
+  <data name="cbMoveToEnterSolution" xml:space="preserve">
+    <value>Użyj głównej szachownicy by wprowadzić rozwiązanie</value>
+  </data>
+  <data name="cbDoubleClickToAssignPoints" xml:space="preserve">
+    <value>Dwukrotnie kliknij by nadać punkty do quizu</value>
+  </data>
+  <data name="cbSelectSolvingMove" xml:space="preserve">
+    <value>Wybierz tryb rozwiązania</value>
+  </data>
+  <data name="cbRightClickEditExercise" xml:space="preserve">
+    <value>Naciśnij prawy przycisk by otworzyć menu ćwiczeń</value>
+  </data>
+  <data name="cbShowSolution" xml:space="preserve">
+    <value>Pokaż rozwiazanie</value>
+  </data>
+  <data name="cbMakeMovesOnMainBoard" xml:space="preserve">
+    <value>Wykonuj posunięcia na głównej szachownicy</value>
+  </data>
+  <data name="cbThisWasSolution" xml:space="preserve">
+    <value>To było rozwiązanie!</value>
+  </data>
+  <data name="cbResponseNotCovered" xml:space="preserve">
+    <value>Tej odpowiedzi nie było w rozwiązaniu</value>
+  </data>
   <data name="LangEnglish" xml:space="preserve">
     <value>Angielski</value>
   </data>
   <data name="LangPolish" xml:space="preserve">
     <value>Polski</value>
+  </data>
+  <data name="ChessEngineLoading" xml:space="preserve">
+    <value>Trwa ładowanie silnika...</value>
+  </data>
+  <data name="ReadingWorkbookFile" xml:space="preserve">
+    <value>Wczytywanie podręcznika...</value>
   </data>
 </root>

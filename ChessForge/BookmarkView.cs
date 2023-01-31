@@ -1,4 +1,5 @@
-﻿using ChessPosition;
+﻿using ChessForge.Properties;
+using ChessPosition;
 using GameTree;
 
 namespace ChessForge
@@ -55,7 +56,7 @@ namespace ChessForge
         public void Deactivate()
         {
             _guiBoard.ClearBoard();
-            _guiBoard.SetLabelText("Bookmark");
+            _guiBoard.SetLabelText(Resources.ResourceManager.GetString("Bookmark"));
             SetOpacity(0.5);
         }
     }

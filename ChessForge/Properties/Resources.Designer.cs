@@ -250,6 +250,177 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Some available actions are:.
+        /// </summary>
+        public static string cbActions {
+            get {
+                return ResourceManager.GetString("cbActions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right click to open menu for advanced editing, FEN, creating exercise.
+        /// </summary>
+        public static string cbAdvancedEditig {
+            get {
+                return ResourceManager.GetString("cbAdvancedEditig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click a bookmark to start training.
+        /// </summary>
+        public static string cbClickBookmarkToTrain {
+            get {
+                return ResourceManager.GetString("cbClickBookmarkToTrain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right click to open context menu.
+        /// </summary>
+        public static string cbClickForContextMenu {
+            get {
+                return ResourceManager.GetString("cbClickForContextMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click Study header or double click chapter&apos;s title to open the Study Tree.
+        /// </summary>
+        public static string cbClickStudyHeader {
+            get {
+                return ResourceManager.GetString("cbClickStudyHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click through the moves.
+        /// </summary>
+        public static string cbClickThruMoves {
+            get {
+                return ResourceManager.GetString("cbClickThruMoves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Double click in the Scoresheet for auto-replay.
+        /// </summary>
+        public static string cbDoubleClickAutoReplay {
+            get {
+                return ResourceManager.GetString("cbDoubleClickAutoReplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Double click to annotate move.
+        /// </summary>
+        public static string cbDoubleClickToAnnotate {
+            get {
+                return ResourceManager.GetString("cbDoubleClickToAnnotate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Double click a move to assign quiz points.
+        /// </summary>
+        public static string cbDoubleClickToAssignPoints {
+            get {
+                return ResourceManager.GetString("cbDoubleClickToAssignPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make your moves on the main board.
+        /// </summary>
+        public static string cbMakeMovesOnMainBoard {
+            get {
+                return ResourceManager.GetString("cbMakeMovesOnMainBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make moves on the main board to enter solution.
+        /// </summary>
+        public static string cbMoveToEnterSolution {
+            get {
+                return ResourceManager.GetString("cbMoveToEnterSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This response is not covered in the solution.
+        /// </summary>
+        public static string cbResponseNotCovered {
+            get {
+                return ResourceManager.GetString("cbResponseNotCovered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right click to open menu for Bookmark management options.
+        /// </summary>
+        public static string cbRightClickBookmarkManager {
+            get {
+                return ResourceManager.GetString("cbRightClickBookmarkManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right click to open menu to create or import an Exercise.
+        /// </summary>
+        public static string cbRightClickCreateExercise {
+            get {
+                return ResourceManager.GetString("cbRightClickCreateExercise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right click to open menu to create or import a Game.
+        /// </summary>
+        public static string cbRightClickCreateGame {
+            get {
+                return ResourceManager.GetString("cbRightClickCreateGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right click to open menu to edit or create exercises.
+        /// </summary>
+        public static string cbRightClickEditExercise {
+            get {
+                return ResourceManager.GetString("cbRightClickEditExercise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Solving Mode.
+        /// </summary>
+        public static string cbSelectSolvingMove {
+            get {
+                return ResourceManager.GetString("cbSelectSolvingMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show the solution to view or edit.
+        /// </summary>
+        public static string cbShowSolution {
+            get {
+                return ResourceManager.GetString("cbShowSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This was the solution!.
+        /// </summary>
+        public static string cbThisWasSolution {
+            get {
+                return ResourceManager.GetString("cbThisWasSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chapter.
         /// </summary>
         public static string Chapter {
@@ -880,6 +1051,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Openings/Tablebases.
+        /// </summary>
+        public static string ExplorersAbout {
+            get {
+                return ResourceManager.GetString("ExplorersAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to save file: $0 .
         /// </summary>
         public static string FailedToSaveFile {
@@ -948,6 +1128,15 @@ namespace ChessForge.Properties {
         public static string FlipBoard {
             get {
                 return ResourceManager.GetString("FlipBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Free and Open Source Software (FOSS).
+        /// </summary>
+        public static string FreeAndOpenSource {
+            get {
+                return ResourceManager.GetString("FreeAndOpenSource", resourceCulture);
             }
         }
         
@@ -1236,6 +1425,15 @@ namespace ChessForge.Properties {
         public static string LangPolish {
             get {
                 return ResourceManager.GetString("LangPolish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Library.
+        /// </summary>
+        public static string Library {
+            get {
+                return ResourceManager.GetString("Library", resourceCulture);
             }
         }
         
@@ -1799,6 +1997,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Result.
+        /// </summary>
+        public static string Result {
+            get {
+                return ResourceManager.GetString("Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Round.
         /// </summary>
         public static string Round {
@@ -1817,7 +2024,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save As ....
+        ///   Looks up a localized string similar to Save $0 As ....
         /// </summary>
         public static string SaveAs {
             get {
