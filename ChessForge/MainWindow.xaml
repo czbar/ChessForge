@@ -336,13 +336,20 @@
                                     <MenuItem x:Name="_mnStudyTree_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            <Canvas x:Name="UiCnvStudyTreePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
-                                <Label x:Name="UiLblChapterCounter" Content="Chapter 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
-                                <Image x:Name="UiImgChapterLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="140,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown" />
-                                <Label x:Name="UiLblChapterPrevHint" Cursor="Hand" Content="{x:Static p:Resources.Previous}" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="165,-3,0,0" Width="60"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown" />
-                                <Label x:Name="UiLblChapterNextHint" Cursor="Hand" Content="{x:Static p:Resources.Next}" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="235,-3,0,0" Width="40"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
-                                <Image x:Name="UiImgChapterRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown" />
-                            </Canvas>
+                            <Grid x:Name="UiGridStudyTreePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto "/>
+                                    <ColumnDefinition Width="Auto "/>
+                                    <ColumnDefinition Width="Auto "/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto "/>
+                                </Grid.RowDefinitions>
+                                <Image x:Name="UiImgChapterLeftArrow" Grid.Column="0" Cursor="Hand"  HorizontalAlignment="Left"  Margin="10,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiLblChapterCounter" Grid.Column="1" Content="PLACEHOLDER Chapter 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" FontWeight="Bold"/>
+                                <Image x:Name="UiImgChapterRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
+                            </Grid>
                             <RichTextBox x:Name="UiRtbStudyTreeView" IsUndoEnabled="False"  Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbStudyTree_PreviewKeyDown">
@@ -527,13 +534,20 @@
                                     <MenuItem x:Name="_mnGame_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            <Canvas x:Name="UiCnvModelGamePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
-                                <Label x:Name="UiLblGameCounter" Content="PLACEHOLDER: Game 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
-                                <Image x:Name="UiImgModelGameLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="140,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown"  />
-                                <Label x:Name="UiLblModelGamePrevHint" Cursor="Hand" Content="{x:Static p:Resources.Previous}" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="165,-3,0,0" Width="60"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown" />
-                                <Label x:Name="UiLblModelGameNextHint" Cursor="Hand" Content="{x:Static p:Resources.Next}" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="235,-3,0,0" Width="40"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"  />
-                                <Image x:Name="UiImgModelGameRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"   />
-                            </Canvas>
+                            <Grid x:Name="UiGridModelGamePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto "/>
+                                    <ColumnDefinition Width="Auto "/>
+                                    <ColumnDefinition Width="Auto "/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto "/>
+                                </Grid.RowDefinitions>
+                                <Image x:Name="UiImgModelGameLeftArrow" Grid.Column="0" Cursor="Hand"  HorizontalAlignment="Left"  Margin="10,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiLblGameCounter" Grid.Column="1" Content="PLACEHOLDER Game 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" FontWeight="Bold"/>
+                                <Image x:Name="UiImgModelGameRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"  />
+                            </Grid>
                             <RichTextBox x:Name="UiRtbModelGamesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True" >
@@ -550,8 +564,8 @@
                     <TabItem x:Name="UiTabExercises"  Header="{x:Static p:Resources.Exercises}" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
                         <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu" >
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="0"/>
-                                <RowDefinition />
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
@@ -577,13 +591,20 @@
                                     <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            <Canvas x:Name="UiCnvExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" >
-                                <Label x:Name="UiLblExerciseCounter" Content="PLACEHOLDER Exercise 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" Width="120"  FontWeight="Bold"/>
-                                <Image x:Name="UiImgExerciseLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="140,1,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown"  />
-                                <Label x:Name="UiLblExercisePrevHint" Cursor="Hand" Content="{x:Static p:Resources.Previous}" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="165,-3,0,0" Width="60"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown" />
-                                <Label x:Name="UiLblExerciseNextHint" Cursor="Hand" Content="{x:Static p:Resources.Next}" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="235,-3,0,0" Width="40"  FontWeight="Bold" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
-                                <Image x:Name="UiImgExerciseRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="275,1,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
-                            </Canvas>
+                            <Grid x:Name="UiGridExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto "/>
+                                    <ColumnDefinition Width="Auto "/>
+                                    <ColumnDefinition Width="Auto "/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto "/>
+                                </Grid.RowDefinitions>
+                                <Image x:Name="UiImgExerciseLeftArrow" Grid.Column="0" Cursor="Hand"  HorizontalAlignment="Left"  Margin="10,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiLblExerciseCounter" Grid.Column="1" Content="PLACEHOLDER Exercise 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" FontWeight="Bold"/>
+                                <Image x:Name="UiImgExerciseRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
+                            </Grid>
                             <RichTextBox x:Name="UiRtbExercisesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True"  BorderThickness="0">
