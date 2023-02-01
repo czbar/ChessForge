@@ -8,6 +8,10 @@
 #english: Workbook=Workbook
 Workbook=
 
+#description: Workbooks plural
+#english: Workbooks=Workbooks
+Workbooks=
+
 #description: Title
 #english: Title=Title
 Title=
@@ -48,6 +52,11 @@ Game=
 #description: Games plural
 #english: Games=Games
 Games=
+
+#description: Engine Game
+#english: EngineGame=Engine Game
+EngineGame=
+
 
 #description: Exercise 
 #english: Exercise=Exercise
@@ -148,6 +157,14 @@ EvaluatePosition=
 #description: Request to evaluate a line
 #english: EvaluateLine=Evaluate Line
 EvaluateLine=
+
+#description: Done
+#english: Done=Done
+Done=
+
+#description: Unknown
+#english: Unknown=Unknown
+Unknown=
 
 #
 # MAIN MENU
@@ -561,7 +578,9 @@ DeleteThisBookmark=
 #english: DeleteAllBookmarks=Delete All Bookmarks
 DeleteAllBookmarks=
 
-
+#description: Page counter
+#english: Page0of0=Page $0 of $1
+Page0of0=
 
 #
 # CONTEXT MENU for Games
@@ -724,7 +743,7 @@ ImportPgn=
 BookmarksAlreadyExist=
 
 #description: Error saving file
-#english: FailedToSaveFile=Failed to save file: $0 
+#english: FailedToSaveFile=Failed to save file
 FailedToSaveFile=
 
 #description: Chess Engine not available
@@ -759,9 +778,13 @@ ExerciseNoSolution=
 #english: GameDownloadError=Game download error
 GameDownloadError=
 
+#description: Evaluation Error
+#english: EvaluationError=Evaluation Error
+EvaluationError=
+
 #description: Error loading engine
-#english: LoadEngineError =Failed to load the engine. Move evaluation will not be available.
-LoadEngineError =
+#english: LoadEngineError=Failed to load the engine. Move evaluation will not be available.
+LoadEngineError=
 
 #description: Confirmation to cancel game
 #english: CancelGame=Cancel Game?
@@ -779,9 +802,13 @@ UnrecognizedFileFormat=
 #english: SelectEngineStartMove=Select the move from which to start.
 SelectEngineStartMove=
 
-#description: Confirmation to delete chapter
-#english: DeleteChapter=Deleting chapter: $0. Are you sure?
+#description: Delete chapter
+#english: DeleteChapter=Delete Chapter
 DeleteChapter=
+
+#description: Confirmation to delete chapter
+#english: DeleteChapterConfirm=Deleting chapter: $0. Are you sure?
+DeleteChapterConfirm=
 
 #description: No exercise in file
 #english: NoExerciseInFile=No Exercises found in $0. 
@@ -883,6 +910,10 @@ DeleteExerciseMoves=
 #english: QuizPoints=Quiz points
 QuizPoints=
 
+#description: Lost quiz points
+#english: LostQuizPoints=Lost quiz points
+LostQuizPoints=
+
 #description: Engine Executable
 #english: EngineExecutable=Engine Executable
 EngineExecutable=
@@ -920,7 +951,7 @@ SoundOn=
 CurrentVersion=
 
 #description: Updated version number
-#english: UpdatedVersion=The updated version number will be $0
+#english: UpdatedVersion=The updated version number will be
 UpdatedVersion=
 
 #description: Check box to increment major version
@@ -1018,6 +1049,14 @@ WhiteToPlay=
 #english: BlackToPlay=Black to Play
 BlackToPlay=
 
+#description: White to move
+#english: WhiteToMove=White to Move
+WhiteToMove=
+
+#description: Black to move
+#english: BlackToMove=Black to Move
+BlackToMove=
+
 #description: En passant
 #english: EnPassant=En Passant
 EnPassant=
@@ -1053,6 +1092,10 @@ SelectChapter=
 #description: Select chapters to import
 #english: SelectChaptersToImport=Select Chapters to Import
 SelectChaptersToImport=
+
+#description: Select chapters to merge
+#english: SelectChaptersToMerge=Select Chapters to Merge
+SelectChaptersToMerge=
 
 #description: Merge games and copy
 #english: MergeGamesAndCopy=Merge Games into the Study Tree and Copy them into the Games section.
@@ -1114,6 +1157,14 @@ BadTypeForImport=
 #english: SelectSolvingMode=Select Solving Mode
 SelectSolvingMode=
 
+#description: Solving completed
+#english: SolvingCompleted=Solving Completed
+SolvingCompleted=
+
+#description: Solving in progress
+#english: SolvingInProgress=Solving in Progress...
+SolvingInProgress=
+
 #description: Guess the next move
 #english: GuessNextMove=Guess the next move
 GuessNextMove=
@@ -1122,6 +1173,10 @@ GuessNextMove=
 #english: EnterAnalysis=Enter your analysis and submit
 EnterAnalysis=
 
+#description: Submit your analysis
+#english: SubmitAnalysis=Submit Your Analysis
+SubmitAnalysis=
+
 #description: Show/Edit solution
 #english: ShowSolution=Show/Edit Solution
 ShowSolution=
@@ -1129,6 +1184,26 @@ ShowSolution=
 #description: Hide solution
 #english: HideSolution=Hide Solution
 HideSolution=
+
+#description: Analyze by making moves
+#english: AnalysisByMoves=Enter your analysis by making moves on the main chessboard.
+AnalysisByMoves=
+
+#description: Guess by making moves
+#english: GuessMoves=Start guessing moves.  Make them on the main chessboard.
+GuessMoves=
+
+#description: Quiz points available
+#english: QuizPointsAvailable=Quiz points available in this exercise
+QuizPointsAvailable=
+
+#description: Quiz points in sidelines
+#english: QuizPointsSidelines=Including points in the sidelines
+QuizPointsSidelines=
+
+#description: QuizScore
+#english: QuizScore=Points scored
+QuizScore=
 
 #description: Workbook Backup
 #english: WorkbookBackup=Workbook Backup
@@ -1149,8 +1224,45 @@ ExplorersAbout=
 
 ##################################
 #
+# Training
+#
+
+#description:  User's move was
+#english: YourMoveWas=Your move was
+YourMoveWas=
+
+#description:  Wait for engine's response
+#english: WaitForEngineResponse=Wait for engine's response...
+WaitForEngineResponse=
+
+#description:  Wait for response
+#english: WaitForResponse=Wait for a response...
+WaitForResponse=
+
+#description:  Engine Played
+#english: EnginePlayed=The engine played
+EnginePlayed=
+
+#description:  Coach Played
+#english: CoachPlayed=The coach played
+CoachPlayed=
+
+#description:  Your turn now
+#english: YourTurn=It is your turn now
+YourTurn=
+
+##################################
+#
 # Comment Box
 #
+
+#description: Info for the user on how to open a Workbook
+#english: cbUseMenuToOpenWorkbook=Use File menu to open or create a new Workbook
+cbUseMenuToOpenWorkbook=
+
+#description: Info for the user to make moves on the main board
+#english: cbJustPicture=This is just a picture! Make your moves on the big board.
+cbJustPicture=
 
 #description: Some available actions
 #english: cbActions=Some available actions are:
@@ -1192,10 +1304,6 @@ cbRightClickBookmarkManager=
 #english: cbRightClickCreateGame=Right click to open menu to create or import a Game
 cbRightClickCreateGame=
 
-#DUPE: Click through the moves
-#DUPE: Double click to annotate move
-#DUPE: Right click to open menu for creating, importing or editing games
-
 #description: Right click to create exercise
 #english: cbRightClickCreateExercise=Right click to open menu to create or import an Exercise
 cbRightClickCreateExercise=
@@ -1235,8 +1343,42 @@ cbThisWasSolution=
 #english: cbResponseNotCovered=This response is not covered in the solution
 cbResponseNotCovered=
 
+#description: Auto-replay is in progress
+#english: cbAutoReplayInProgress=Auto-replay in progress...
+cbAutoReplayInProgress=
+
+#description: Click to stop
+#english: cbClickToStop=Click any move to stop.
+cbClickToStop=
 
 
+#description: The training session has started.
+#english: cbTrainingStarted=The training session has started.
+cbTrainingStarted=
+
+#description: Make your move and watch the comments in the Workbook view to the right of this chessboard.
+#english: cbMakeMoveAndWatch=Make your move and watch the comments in the Workbook view to the right of this chessboard.
+cbMakeMoveAndWatch=
+
+#description: You have checkmated the engine
+#english: cbYouCheckmatedEngine=You have checkmated the engine. Congratulations!
+cbYouCheckmatedEngine=
+
+#description: You have checkmated the coach.
+#english: cbYouCheckmatedCoach=You have checkmated the coach. Congratulations!
+cbYouCheckmatedCoach=
+
+#description: Checkmate
+#english: cbCheckMateEnd=Check and Mate!
+cbCheckMateEnd=
+
+#description: You have been checkmated by the engine. Better luck next time!
+#english: cbEngineCheckmatedYou=You have been checkmated by the engine. Better luck next time!
+cbEngineCheckmatedYou=
+
+#description: This is a stalemate.
+#english: cbStalemateAndDraw=This is a stalemate! You have drawn the game.
+cbStalemateAndDraw=
 
 ##################################
 #

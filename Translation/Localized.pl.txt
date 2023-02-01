@@ -8,6 +8,10 @@
 #english: Workbook=Workbook
 Workbook=Podręcznik
 
+#description: Workbooks plural
+#english: Workbooks=Workbooks
+Workbooks=Podręczniki
+
 #description: Title
 #english: Title=Title
 Title=Tytuł
@@ -49,6 +53,11 @@ Game=Partia
 #english: Games=Games
 Games=Partie
 
+#description: Engine Game
+#english: EngineGame=Engine Game
+EngineGame=Partia z Silnikiem
+
+
 #description: Exercise 
 #english: Exercise=Exercise
 Exercise=Ćwiczenie
@@ -89,15 +98,9 @@ Moves=Posunięcia
 #english: Position=Position
 Position=Pozycja
 
-#Result
+#description: Result
+#english: Result=Result
 Result=Wynik
-
-#Game Header
-GameHeader=Nagłówek Partii
-
-#Exercise Header
-ExerciseHeader=Nagłówek Ćwiczenia
-
 
 #description: Comment
 #english: Comment=Comment
@@ -139,6 +142,14 @@ Close=Zamknij
 #english: Item=Item
 Item=Element
 
+#description: Game Header
+#english: GameHeader=Game Header
+GameHeader=Nagłówek Partii
+
+#description: Exercise Header
+#english: ExerciseHeader=Exercise Header
+ExerciseHeader=Nagłówek Ćwiczenia
+
 #description: Request to evaluate a position
 #english: EvaluatePosition=Evaluate Position
 EvaluatePosition=Oceń Pozycję
@@ -146,6 +157,14 @@ EvaluatePosition=Oceń Pozycję
 #description: Request to evaluate a line
 #english: EvaluateLine=Evaluate Line
 EvaluateLine=Oceń Wariant
+
+#description: Done
+#english: Done=Done
+Done=Gotowe
+
+#description: Unknown
+#english: Unknown=Unknown
+Unknown=Nieznany
 
 #
 # MAIN MENU
@@ -374,10 +393,12 @@ StudyTree=Studium
 # CONTEXT MENU in Training View
 #
 
-#User wants to restart the game against the engine after a certain move in the Training Session
+#description: User wants to restart the game against the engine after a certain move in the Training Session
+#english: RestartGameAfter=Restart Game After 
 RestartGameAfter=Restart Game After 
- 
-#User wants to restart the training from a certain move in the Training Session
+
+#description: User wants to restart the training from a certain move in the Training Session
+#english: RestartFrom=Restart from 
 RestartFrom=Restart from 
 
 
@@ -557,7 +578,9 @@ DeleteThisBookmark=Usuń Zakładkę
 #english: DeleteAllBookmarks=Delete All Bookmarks
 DeleteAllBookmarks=Usuń Wszystkie Zakładki
 
-
+#description: Page counter
+#english: Page0of0=Page $0 of $1
+Page0of0=Strona $0 z $1
 
 #
 # CONTEXT MENU for Games
@@ -605,8 +628,9 @@ Exercise0of0=Ćwiczenie $0 z $1
 #
 # Scoresheet
 #
-			
-#Scoresheet			
+
+#description: Scoresheet			
+#english: Scoresheet=Scoresheet
 Scoresheet=Zapis
 
 #description: White
@@ -719,8 +743,8 @@ ImportPgn=Import z Pliku PGN
 BookmarksAlreadyExist=Zakładki już Istnieją
 
 #description: Error saving file
-#english: FailedToSaveFile=Failed to save file: $0 
-FailedToSaveFile=Błąd przy zapisie Pliku
+#english: FailedToSaveFile=Failed to save file
+FailedToSaveFile=Błąd przy zapisie pliku
 
 #description: Chess Engine not available
 #english: ChessEngineNotAvailable=Chess Engine not available
@@ -754,9 +778,13 @@ ExerciseNoSolution=Ćwiczenie bez rozwiązania
 #english: GameDownloadError=Game download error
 GameDownloadError=Błąd ściągania partii
 
+#description: Evaluation Error
+#english: EvaluationError=Evaluation Error
+EvaluationError=Ocena niedostępna
+
 #description: Error loading engine
-#english: LoadEngineError =Failed to load the engine. Move evaluation will not be available.
-LoadEngineError =Błąd ściągania silnika
+#english: LoadEngineError=Failed to load the engine. Move evaluation will not be available.
+LoadEngineError=Błąd ściągania silnika
 
 #description: Confirmation to cancel game
 #english: CancelGame=Cancel Game?
@@ -774,14 +802,20 @@ UnrecognizedFileFormat=Nieznany format pliku
 #english: SelectEngineStartMove=Select the move from which to start.
 SelectEngineStartMove=Wybierz początkowe posunięcie do gry z silnikiem
 
-#description: Confirmation to delete chapter
-#english: DeleteChapter=Deleting chapter: $0. Are you sure?
-DeleteChapter=Usuń rozdział
+#description: Delete chapter
+#english: DeleteChapter=Delete Chapter
+DeleteChapter=Usuń Rozdział
 
-#No exercise in file
+#description: Confirmation to delete chapter
+#english: DeleteChapterConfirm=Deleting chapter: $0. Are you sure?
+DeleteChapterConfirm=Potwierdź usunięcie rozdziału: $0
+
+#description: No exercise in file
+#english: NoExerciseInFile=No Exercises found in $0. 
 NoExerciseInFile=No Exercises found in $0. 
- 
-#No games in file
+
+#description: No games in file
+#english: NoGamesInFile=No Games found in $0. 
 NoGamesInFile=No Games found in $0. 
 
 #description: Bookmark already exists
@@ -810,7 +844,7 @@ NoNewVersion=Brak nowej wersji
 
 #description: Enable viewing/editing of the exercise
 #english: ViewExercise=Enable View/Edit Mode?
-ViewExercise=Pokaż/edytuj ćwiczenie
+ViewExercise=Pokaż/edytuj ćwiczenie?
 
 #description: Restart trainign from the selected move.
 #english: RestartFromMove=Restart from $0?
@@ -876,6 +910,10 @@ DeleteExerciseMoves=Potwierdź usunięcie posunięć z ćwiczenia
 #english: QuizPoints=Quiz points
 QuizPoints=Punktacja do Quizu
 
+#description: Lost quiz points
+#english: LostQuizPoints=Lost quiz points
+LostQuizPoints=Punkty stracone
+
 #description: Engine Executable
 #english: EngineExecutable=Engine Executable
 EngineExecutable=Silnik
@@ -913,8 +951,8 @@ SoundOn=Włącz Dźwięk
 CurrentVersion=Aktualna wersja
 
 #description: Updated version number
-#english: UpdatedVersion=The updated version number will be $0
-UpdatedVersion=Uaktualniony numer wersji będzie $0
+#english: UpdatedVersion=The updated version number will be
+UpdatedVersion=Uaktualniony numer wersji będzie
 
 #description: Check box to increment major version
 #english: IncrementMajorVersion=Increment major version
@@ -1011,6 +1049,14 @@ WhiteToPlay=Białe zaczynają
 #english: BlackToPlay=Black to Play
 BlackToPlay=Czarne zaczynają
 
+#description: White to move
+#english: WhiteToMove=White to Move
+WhiteToMove=Białe na posunięciu
+
+#description: Black to move
+#english: BlackToMove=Black to Move
+BlackToMove=Czarne na posunięciu
+
 #description: En passant
 #english: EnPassant=En Passant
 EnPassant=Bicie w przelocie
@@ -1046,6 +1092,10 @@ SelectChapter=Wybierz Rozdział
 #description: Select chapters to import
 #english: SelectChaptersToImport=Select Chapters to Import
 SelectChaptersToImport=Wybierz Rozdziały do Importu
+
+#description: Select chapters to merge
+#english: SelectChaptersToMerge=Select Chapters to Merge
+SelectChaptersToMerge=Wybierz Rozdziały do Połączenia.
 
 #description: Merge games and copy
 #english: MergeGamesAndCopy=Merge Games into the Study Tree and Copy them into the Games section.
@@ -1107,21 +1157,53 @@ BadTypeForImport=BadTypeForImport
 #english: SelectSolvingMode=Select Solving Mode
 SelectSolvingMode=Wybierz Tryb Rozwiązywania
 
+#description: Solving completed
+#english: SolvingCompleted=Solving Completed
+SolvingCompleted=Rozwiązywanie zakończone
+
+#description: Solving in progress
+#english: SolvingInProgress=Solving in Progress...
+SolvingInProgress=Trwa rozwiązywanie...
+
 #description: Guess the next move
 #english: GuessNextMove=Guess the next move
-GuessNextMove=Zgadnij ruch
+GuessNextMove=Zgaduj ruchy
 
 #description: Enter your analysis and submit
 #english: EnterAnalysis=Enter your analysis and submit
-EnterAnalysis=Podaj analizę
+EnterAnalysis=Przeanalizuj i daj do oceny
+
+#description: Submit your analysis
+#english: SubmitAnalysis=Submit Your Analysis
+SubmitAnalysis=Daj analizę do oceny
 
 #description: Show/Edit solution
 #english: ShowSolution=Show/Edit Solution
-ShowSolution=Ukryj/Pokaż Rozwiązanie
+ShowSolution=Pokaż/Edytuj Rozwiązanie
 
 #description: Hide solution
 #english: HideSolution=Hide Solution
 HideSolution=Ukryj Rozwiązanie
+
+#description: Analyze by making moves
+#english: AnalysisByMoves=Enter your analysis by making moves on the main chessboard.
+AnalysisByMoves=Analizuj robiąc ruchy na głównej szachownicy.
+
+#description: Guess by making moves
+#english: GuessMoves=Start guessing moves.  Make them on the main chessboard.
+GuessMoves=Zgadnij ruch i wykonaj go na głównej szachownicy.
+
+#description: Quiz points available
+#english: QuizPointsAvailable=Quiz points available in this exercise
+QuizPointsAvailable=Punkty do zdobycia
+
+#description: Quiz points in sidelines
+#english: QuizPointsSidelines=Including points in the sidelines
+QuizPointsSidelines=Włączając punkty w bocznych wariantach
+
+#description: QuizScore
+#english: QuizScore=Points scored
+QuizScore=Zdobyte punkty
 
 #description: Workbook Backup
 #english: WorkbookBackup=Workbook Backup
@@ -1142,15 +1224,52 @@ ExplorersAbout=Otwarcia/Tablice
 
 ##################################
 #
+# Training
+#
+
+#description:  User's move was
+#english: YourMoveWas=Your move was
+YourMoveWas=Zagrałeś
+
+#description:  Wait for engine's response
+#english: WaitForEngineResponse=Wait for engine's response...
+WaitForEngineResponse=Czekaj na odpowiedź silnika...
+
+#description:  Wait for response
+#english: WaitForResponse=Wait for a response...
+WaitForResponse=Czekaj na odpowiedź...
+
+#description:  Engine Played
+#english: EnginePlayed=The engine played
+EnginePlayed=Silnik zagrał
+
+#description:  Coach Played
+#english: CoachPlayed=The coach played
+CoachPlayed=Trener zagrał
+
+#description:  Your turn now
+#english: YourTurn=It is your turn now
+YourTurn=Kolej na Twoje posunięcie
+
+##################################
+#
 # Comment Box
 #
+
+#description: Info for the user on how to open a Workbook
+#english: cbUseMenuToOpenWorkbook=Use File menu to open or create a new Workbook
+cbUseMenuToOpenWorkbook=Użyj opcji Plik w menu by otworzyć podręcznik.
+
+#description: Info for the user to make moves on the main board
+#english: cbJustPicture=This is just a picture! Make your moves on the big board.
+cbJustPicture=To tylko ilustracja! Rób ruchy na głównej szachownicy.
 
 #description: Some available actions
 #english: cbActions=Some available actions are:
 cbActions=Niektóre dostępne czynności:
 
 #description: Clich to open Study
-#english: cbClickStudyHeader=Click Study header or double click chapter\'s title to open the Study Tree
+#english: cbClickStudyHeader=Click Study header or double click chapter's title to open the Study Tree
 cbClickStudyHeader=Kliknij na Studium, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Studium 
 
 #description: Right click for context menu
@@ -1181,13 +1300,9 @@ cbClickBookmarkToTrain=Kliknij zakładkę by zacząć trening
 #english: cbRightClickBookmarkManager=Right click to open menu for Bookmark management options
 cbRightClickBookmarkManager=Naciśnij prawy przycisk by otworzyć menu zakładek
 
-#Right click to open mnu
-#cbRightClickCreateGame=Right click to open menu to create or import a Game
+#description: Right click to open menu
+#english: cbRightClickCreateGame=Right click to open menu to create or import a Game
 cbRightClickCreateGame=Naciśnij prawy przycisk by otworzyć menu partii
- 
-#DUPE: Click through the moves
-#DUPE: Double click to annotate move
-#DUPE: Right click to open menu for creating, importing or editing games
 
 #description: Right click to create exercise
 #english: cbRightClickCreateExercise=Right click to open menu to create or import an Exercise
@@ -1228,8 +1343,42 @@ cbThisWasSolution=To było rozwiązanie!
 #english: cbResponseNotCovered=This response is not covered in the solution
 cbResponseNotCovered=Tej odpowiedzi nie było w rozwiązaniu
 
+#description: Auto-replay is in progress
+#english: cbAutoReplayInProgress=Auto-replay in progress...
+cbAutoReplayInProgress=Trwa auto-odtwarzanie...
+
+#description: Click to stop
+#english: cbClickToStop=Click any move to stop.
+cbClickToStop=Kliknij dowolny ruch by zatrzymać.
 
 
+#description: The training session has started.
+#english: cbTrainingStarted=The training session has started.
+cbTrainingStarted=Trening się rozpoczął.
+
+#description: Make your move and watch the comments in the Workbook view to the right of this chessboard.
+#english: cbMakeMoveAndWatch=Make your move and watch the comments in the Workbook view to the right of this chessboard.
+cbMakeMoveAndWatch=Wykonaj posunięcie i czekaj na odpowiedź w okienku obok.
+
+#description: You have checkmated the engine
+#english: cbYouCheckmatedEngine=You have checkmated the engine. Congratulations!
+cbYouCheckmatedEngine=Zamatowałeś silnik. Gratulacje!
+
+#description: You have checkmated the coach.
+#english: cbYouCheckmatedCoach=You have checkmated the coach. Congratulations!
+cbYouCheckmatedCoach=Zamatowałeś trenera. Gratulacje!
+
+#description: Checkmate
+#english: cbCheckMateEnd=Check and Mate!
+cbCheckMateEnd=Szach i Mat!
+
+#description: You have been checkmated by the engine. Better luck next time!
+#english: cbEngineCheckmatedYou=You have been checkmated by the engine. Better luck next time!
+cbEngineCheckmatedYou=Zostałeś zamatowany przez silnik. Powodzenia następnym razem!
+
+#description: This is a stalemate.
+#english: cbStalemateAndDraw=This is a stalemate! You have drawn the game.
+cbStalemateAndDraw=Pat! Partia zakończyła się remisem.
 
 ##################################
 #
@@ -1245,8 +1394,15 @@ LangEnglish=Angielski
 LangPolish=Polski
 
 
-#Loading Engine
+##################################
+#
+# Announcements
+#
+
+#description: Loading Engine
+#english: ChessEngineLoading=Chess engine loading...
 ChessEngineLoading=Trwa ładowanie silnika...
 
-#Reading workbook
+#description: Reading workbook
+#english: ReadingWorkbookFile=Reading workbook file...
 ReadingWorkbookFile=Wczytywanie podręcznika...
