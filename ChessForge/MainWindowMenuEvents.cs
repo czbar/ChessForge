@@ -1483,7 +1483,7 @@ namespace ChessForge
                     CopyHeaderFromGame(tree, chapter.StudyTree.Tree.Header, false);
                     if (string.IsNullOrEmpty(tree.Header.GetEventName(out _)))
                     {
-                        tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, "Study Tree after " + MoveUtils.BuildSingleMoveText(nd, true, true));
+                        tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, Properties.Resources.StudyTreeAfter + MoveUtils.BuildSingleMoveText(nd, true, true));
                     }
                     CreateNewExerciseFromTree(tree);
                 }
@@ -1778,13 +1778,13 @@ namespace ChessForge
             string sError;
             if (contentType == GameData.ContentType.EXERCISE)
             {
-                sError = "No Exercises found in ";
+                sError = Properties.Resources.NoExerciseInFile + " ";
             }
             else
             {
-                sError = "No Games found in ";
+                sError = Properties.Resources.NoGamesInFile + " ";
             }
-            MessageBox.Show(sError + fileName, "Import PGN", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(sError + fileName, Properties.Resources.ImportPgn, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
 
@@ -1838,7 +1838,7 @@ namespace ChessForge
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 Multiselect = false,
-                Filter = "Game files (*.pgn)|*.pgn;*.pgn|All files (*.*)|*.*"
+                Filter = Properties.Resources.PgnFile + " (*.pgn)|*.pgn;*.pgn|" + Properties.Resources.AllFiles + " (*.*)|*.*"
             };
 
             string initDir;
@@ -1930,7 +1930,7 @@ namespace ChessForge
         {
             // TODO: remove this method and calling menu item
             UiTabStudyTree.Focus();
-            MessageBox.Show("Right-click a move and select \"Add to Bookmarks\" from the popup-menu", "Chess Forge Training", MessageBoxButton.OK);
+//            MessageBox.Show("Right-click a move and select \"Add to Bookmarks\" from the popup-menu", "Chess Forge Training", MessageBoxButton.OK);
         }
 
         /// <summary>
@@ -1963,11 +1963,11 @@ namespace ChessForge
             int ret = BookmarkManager.AddAllSiblingsToBookmarks(_studyTreeView.LastClickedNodeId);
             if (ret == 1)
             {
-                MessageBox.Show("Bookmarks already exist.", "Training Bookmarks", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show(Properties.Resources.BookmarksAlreadyExist, Properties.Resources.Bookmarks, MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             else if (ret == -1)
             {
-                MessageBox.Show("Failed to add the bookmarks.", "Training Bookmarks", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show(Properties.Resources.ErrorAddBookmarks, Properties.Resources.Bookmarks, MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             else
             {
@@ -1986,11 +1986,11 @@ namespace ChessForge
             int ret = BookmarkManager.AddBookmark(_studyTreeView.LastClickedNodeId);
             if (ret == 1)
             {
-                MessageBox.Show("This bookmark already exists.", "Training Bookmarks", MessageBoxButton.OK);
+                MessageBox.Show(Properties.Resources.BookmarkAlreadyExists, Properties.Resources.Bookmarks, MessageBoxButton.OK);
             }
             else if (ret == -1)
             {
-                MessageBox.Show("Failed to add the bookmark.", "Training Bookmarks", MessageBoxButton.OK);
+                MessageBox.Show(Properties.Resources.ErrorAddBookmark, Properties.Resources.Bookmarks, MessageBoxButton.OK);
             }
             else
             {
@@ -2070,7 +2070,7 @@ namespace ChessForge
             }
             else
             {
-                MessageBox.Show("No move selected to start training from.", "Training", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(Properties.Resources.NoTrainingStartMove, Properties.Resources.Training, MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -2081,7 +2081,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnStopTraining_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Exit the training session?", "Chess Forge Training", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show(Properties.Resources.ExitTrainingSession, Properties.Resources.Training, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 try
                 {
@@ -2178,7 +2178,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnTrainRestartTraining_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Restart the training session?", "Chess Forge Training", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show(Properties.Resources.RestartTraining, Properties.Resources.Training, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 SetAppInTrainingMode(TrainingSession.StartPosition, TrainingSession.IsContinuousEvaluation);
             }
@@ -2604,7 +2604,7 @@ namespace ChessForge
         {
             if (!ReportNewVersionAvailable(false))
             {
-                MessageBox.Show("No new version available.", "Update Check", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(Properties.Resources.NoNewVersion, Properties.Resources.UpdateCheck, MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
         }
@@ -2718,7 +2718,7 @@ namespace ChessForge
                 if (chapter.ActiveModelGameIndex >= 0)
                 {
                     string gameTitle = chapter.ModelGames[chapter.ActiveModelGameIndex].Tree.Header.BuildGameHeaderLine(true);
-                    if (MessageBox.Show("Delete this Game?\n\n  " + gameTitle, "Delete Model Game", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    if (MessageBox.Show(Properties.Resources.ConfirmDeleteGame + "?\n\n  " + gameTitle, Properties.Resources.DeleteGame, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         DeleteModelGame(chapter.ActiveModelGameIndex);
 
@@ -2759,7 +2759,7 @@ namespace ChessForge
                 if (chapter.ActiveExerciseIndex >= 0)
                 {
                     string exerciseTitle = chapter.Exercises[chapter.ActiveExerciseIndex].Tree.Header.BuildGameHeaderLine(true);
-                    if (MessageBox.Show("Delete this Exercise?\n\n  " + exerciseTitle, "Delete Exercise", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    if (MessageBox.Show(Properties.Resources.ConfirmDeleteExercise + "?\n\n  " + exerciseTitle, Properties.Resources.DeleteExercise, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         DeleteExercise(chapter.ActiveExerciseIndex);
 

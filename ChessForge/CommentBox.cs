@@ -201,10 +201,10 @@ namespace ChessForge
                     string title = _mainWin.SessionWorkbook.Title;
                     if (string.IsNullOrEmpty(_mainWin.SessionWorkbook.Title))
                     {
-                        title = "Untitled Workbook";
+                        title = Properties.Resources.UntitledWorkbook;
                     }
                     AddNewParagraphToDoc("title", title);
-                    AddNewParagraphToDoc("bold_prompt", Resources.ResourceManager.GetString("cbActions"));
+                    AddNewParagraphToDoc("bold_prompt", Properties.Resources.cbActions);
                     string commentText = "";
                     switch (AppState.ActiveTab)
                     {

@@ -19,7 +19,7 @@ namespace ChessForge
     public class OpeningStatsView : RichTextBuilder
     {
         // string to use when query returned no opening name for the position
-        private const string POSITION_NOT_NAMED = "[not named]";
+        private string POSITION_NOT_NAMED = Properties.Resources.NotNamed;
 
         // scale factor for table cell sizes
         private double scaleFactor = 3.5;
@@ -300,7 +300,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         private void SetAllNotNamedChildrenPositions(TreeNode nd)
         {
-            // sfatey check that the node indeed has a "real" opening name
+            // safety check that the node indeed has a "real" opening name
             if (string.IsNullOrEmpty(nd.OpeningName) || nd.OpeningName == POSITION_NOT_NAMED)
             {
                 return;
@@ -904,19 +904,19 @@ namespace ChessForge
             string txt = "";
             if (move.Checkmate)
             {
-                txt = "checkmate";
+                txt = Properties.Resources.OebCheckmate;
             }
             else if (move.Stalemate)
             {
-                txt = "stalemate";
+                txt = Properties.Resources.OebStalemate;
             }
             else if (move.Insufficient_material)
             {
-                txt = "insufficient material";
+                txt = Properties.Resources.OebInsufficientMaterial;
             }
             else if (category == "draw")
             {
-                txt = "draw";
+                txt = Properties.Resources.OebDraw;
             }
             else if (move.dtm != null && category != "unknown")
             {
@@ -967,16 +967,16 @@ namespace ChessForge
             switch (category)
             {
                 case "win":
-                    title = "Losing";
+                    title = Properties.Resources.OebLosing;
                     break;
                 case "unknown":
-                    title = "Unknown";
+                    title = Properties.Resources.OebUnknown;
                     break;
                 case "draw":
-                    title = "Drawing";
+                    title = Properties.Resources.OebDrawing;
                     break;
                 case "loss":
-                    title = "Winning";
+                    title = Properties.Resources.OebWinning;
                     break;
                 default:
                     title = "-";

@@ -123,6 +123,9 @@
   <data name="Workbooks" xml:space="preserve">
     <value>Podręczniki</value>
   </data>
+  <data name="UntitledWorkbook" xml:space="preserve">
+    <value>Podręcznik bez Tytułu</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Tytuł</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="Date" xml:space="preserve">
     <value>Data</value>
+  </data>
+  <data name="Count" xml:space="preserve">
+    <value>Ilość</value>
   </data>
   <data name="Line" xml:space="preserve">
     <value>Wariant</value>
@@ -384,6 +390,12 @@
   <data name="StudyTree" xml:space="preserve">
     <value>Studium</value>
   </data>
+  <data name="StudyTreeAfter" xml:space="preserve">
+    <value>Pozycja ze Studium po</value>
+  </data>
+  <data name="NotNamed" xml:space="preserve">
+    <value>brak nazwy</value>
+  </data>
   <data name="RestartGameAfter" xml:space="preserve">
     <value>Restart Game After </value>
   </data>
@@ -453,14 +465,26 @@
   <data name="DeleteSelectedChapter" xml:space="preserve">
     <value>Usuń Wybrany Rozdział</value>
   </data>
+  <data name="DeleteGame" xml:space="preserve">
+    <value>Usuń Partię</value>
+  </data>
   <data name="DeleteSelectedGame" xml:space="preserve">
     <value>Usuń Wybraną Partię</value>
   </data>
   <data name="DeleteThisGame" xml:space="preserve">
     <value>Usuń Partię </value>
   </data>
+  <data name="ConfirmDeleteGame" xml:space="preserve">
+    <value>Usuń Partię</value>
+  </data>
+  <data name="DeleteExercise" xml:space="preserve">
+    <value>Usuń Ćwiczenie</value>
+  </data>
   <data name="DeleteSelectedExercise" xml:space="preserve">
     <value>Usuń Wybrane ćwiczenie</value>
+  </data>
+  <data name="ConfirmDeleteExercise" xml:space="preserve">
+    <value>Usunąć ćwiczenie</value>
   </data>
   <data name="GameExerciseReferences" xml:space="preserve">
     <value>Edytuj Odnośniki...</value>
@@ -591,6 +615,12 @@
   <data name="ImportPgn" xml:space="preserve">
     <value>Import z Pliku PGN</value>
   </data>
+  <data name="PgnFile" xml:space="preserve">
+    <value>Pliki PGN</value>
+  </data>
+  <data name="AllFiles" xml:space="preserve">
+    <value>Wszystkie pliki</value>
+  </data>
   <data name="BookmarksAlreadyExist" xml:space="preserve">
     <value>Zakładki już Istnieją</value>
   </data>
@@ -646,16 +676,19 @@
     <value>Potwierdź usunięcie rozdziału: $0</value>
   </data>
   <data name="NoExerciseInFile" xml:space="preserve">
-    <value>No Exercises found in $0. </value>
+    <value>Ćwiczenia nie znalezione w </value>
   </data>
   <data name="NoGamesInFile" xml:space="preserve">
-    <value>No Games found in $0. </value>
+    <value>Partie nie znalezione w </value>
   </data>
   <data name="BookmarkAlreadyExists" xml:space="preserve">
     <value>Zakładka już istnieje</value>
   </data>
+  <data name="ErrorAddBookmark" xml:space="preserve">
+    <value>ErrorAddBookmarks</value>
+  </data>
   <data name="ErrorAddBookmarks" xml:space="preserve">
-    <value>Failed to add the bookmarks.</value>
+    <value>Błąd przy dodawaniu zakładek.</value>
   </data>
   <data name="NoTrainingStartMove" xml:space="preserve">
     <value>Takie posunięcie nie istnieje</value>
@@ -707,6 +740,12 @@
   </data>
   <data name="DeleteExerciseMoves" xml:space="preserve">
     <value>Potwierdź usunięcie posunięć z ćwiczenia</value>
+  </data>
+  <data name="WrongTypeEntitiesNotImported" xml:space="preserve">
+    <value>Elementy niewłaściwego typu nie zostały zaimportowane</value>
+  </data>
+  <data name="ConfirmExerciseMoveDeletion" xml:space="preserve">
+    <value>Niektore ruchy w rozwiazaniu są teraz neprawidłowe $0. Usunąć je?</value>
   </data>
   <data name="QuizPoints" xml:space="preserve">
     <value>Punktacja do Quizu</value>
@@ -1061,5 +1100,47 @@
   </data>
   <data name="ReadingWorkbookFile" xml:space="preserve">
     <value>Wczytywanie podręcznika...</value>
+  </data>
+  <data name="OebCheckmate" xml:space="preserve">
+    <value>mat</value>
+  </data>
+  <data name="OebStalemate" xml:space="preserve">
+    <value>pat</value>
+  </data>
+  <data name="OebInsufficientMaterial" xml:space="preserve">
+    <value>nie wystarczający materiał</value>
+  </data>
+  <data name="OebDraw" xml:space="preserve">
+    <value>remis</value>
+  </data>
+  <data name="OebLosing" xml:space="preserve">
+    <value>Przegrywa</value>
+  </data>
+  <data name="OebUnknown" xml:space="preserve">
+    <value>Rezultat niewiadomy </value>
+  </data>
+  <data name="OebDrawing" xml:space="preserve">
+    <value>Remisuje</value>
+  </data>
+  <data name="OebWinning" xml:space="preserve">
+    <value>Wygrywa</value>
+  </data>
+  <data name="PosValTooManyWhiteKings" xml:space="preserve">
+    <value>Za dużo białych króli</value>
+  </data>
+  <data name="PosValWhiteKingMissing" xml:space="preserve">
+    <value>Brak białego króla</value>
+  </data>
+  <data name="PosValWhiteKingInCheck" xml:space="preserve">
+    <value>Biały król nie może być w szachu przy ruchu czarnych</value>
+  </data>
+  <data name="PosValTooManyBlackKings" xml:space="preserve">
+    <value>Za dużo czarnych króli</value>
+  </data>
+  <data name="PosValBlackKingMissing" xml:space="preserve">
+    <value>Brak czarnego króla</value>
+  </data>
+  <data name="PosValBlackKingInCheck" xml:space="preserve">
+    <value>Czarny król nie może być w szachu przy ruchu białych</value>
   </data>
 </root>
