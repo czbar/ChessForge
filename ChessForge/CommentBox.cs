@@ -81,29 +81,29 @@ namespace ChessForge
 
             if (userMove)
             {
-                AddNewParagraphToDoc("normal", "Your move was:");
+                AddNewParagraphToDoc("normal", Strings.GetResource("YourMoveWas") + ":");
                 AddNewParagraphToDoc("bold_prompt", MoveUtils.BuildSingleMoveText(nd, true));
                 if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
-                    AddNewParagraphToDoc("normal", "Wait for engine's response...");
+                    AddNewParagraphToDoc("normal", Strings.GetResource("WaitForEngineResponse"));
                 }
                 else if (TrainingSession.IsTrainingInProgress)
                 {
-                    AddNewParagraphToDoc("normal", "Wait for a response...");
+                    AddNewParagraphToDoc("normal", Strings.GetResource("WaitForResponse"));
                 }
             }
             else // engine or "coach" moved
             {
                 if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
-                    AddNewParagraphToDoc("normal", "The engine played:");
+                    AddNewParagraphToDoc("normal", Strings.GetResource("EnginePlayed") + ":");
                 }
                 else
                 {
-                    AddNewParagraphToDoc("normal", "The coach played:");
+                    AddNewParagraphToDoc("normal", Strings.GetResource("CoachPlayed") + ":");
                 }
                 AddNewParagraphToDoc("bold_16", MoveUtils.BuildSingleMoveText(nd, true));
-                AddNewParagraphToDoc("normal", "It is your turn now.");
+                AddNewParagraphToDoc("normal", Strings.GetResource("YourTurn"));
             }
         }
 
@@ -130,7 +130,7 @@ namespace ChessForge
         /// </summary>
         public void OpenFile()
         {
-            UserWaitAnnouncement("Use File menu to open or create a new Workbook", Brushes.Blue);
+            UserWaitAnnouncement(Strings.GetResource("cbUseMenuToOpenWorkbook"), Brushes.Blue);
         }
 
         /// <summary>
@@ -201,36 +201,36 @@ namespace ChessForge
                     string title = _mainWin.SessionWorkbook.Title;
                     if (string.IsNullOrEmpty(_mainWin.SessionWorkbook.Title))
                     {
-                        title = "Untitled Workbook";
+                        title = Properties.Resources.UntitledWorkbook;
                     }
                     AddNewParagraphToDoc("title", title);
-                    AddNewParagraphToDoc("bold_prompt", Resources.ResourceManager.GetString("cbActions"));
+                    AddNewParagraphToDoc("bold_prompt", Properties.Resources.cbActions);
                     string commentText = "";
                     switch (AppState.ActiveTab)
                     {
                         case WorkbookManager.TabViewType.CHAPTERS:
-                            commentText = Strings.QUICK_INSTRUCTION_CHAPTERS;
+                            commentText = Strings.QuickInstructionForChapters;
                             break;
                         case WorkbookManager.TabViewType.STUDY:
-                            commentText = Strings.QUICK_INSTRUCTION_STUDY;
+                            commentText = Strings.QuickInstructionForStudy;
                             break;
                         case WorkbookManager.TabViewType.BOOKMARKS:
-                            commentText = Strings.QUICK_INSTRUCTION_BOOKMARKS;
+                            commentText = Strings.QuickInstructionForBookmarks;
                             break;
                         case WorkbookManager.TabViewType.MODEL_GAME:
                             if (AppState.ActiveChapterGamesCount > 0)
                             {
-                                commentText = Strings.QUICK_INSTRUCTION_MODEL_GAMES;
+                                commentText = Strings.QuickInstructionForGames;
                             }
                             else
                             {
-                                commentText = Strings.QUICK_INSTRUCTION_MODEL_GAMES_EMPTY;
+                                commentText = Strings.QuickInstructionForGamesEmpty;
                             }
                             break;
                         case WorkbookManager.TabViewType.EXERCISE:
                             if (AppState.ActiveChapterExerciseCount == 0)
                             {
-                                commentText = Strings.QUICK_INSTRUCTION_EXERCISES_EMPTY;
+                                commentText = Strings.QuickInstructionForExercisesEmpty;
                             }
                             else
                             {
@@ -238,13 +238,13 @@ namespace ChessForge
                                 {
                                     case VariationTree.SolvingMode.ANALYSIS:
                                     case VariationTree.SolvingMode.GUESS_MOVE:
-                                        commentText = Strings.QUICK_INSTRUCTION_EXERCISES_SOLVING;
+                                        commentText = Strings.QuickInstructionForExerciseSolving;
                                         break;
                                     case VariationTree.SolvingMode.EDITING:
-                                        commentText = Strings.QUICK_INSTRUCTION_EXERCISES;
+                                        commentText = Strings.QuickInstructionForExercises;
                                         break;
                                     default:
-                                        commentText = Strings.QUICK_INSTRUCTION_EXERCISES_HIDDEN;
+                                        commentText = Strings.QuickInstructionForExercisesHiddenSolution;
                                         break;
                                 }
                             }
@@ -277,8 +277,8 @@ namespace ChessForge
             Document.Blocks.Clear();
 
             AddNewParagraphToDoc("dummy", "");
-            AddNewParagraphToDoc("bold_18", "Auto-replay in progress ...");
-            AddNewParagraphToDoc("normal", "Click any move to stop.");
+            AddNewParagraphToDoc("bold_18", Resources.cbAutoReplayInProgress);
+            AddNewParagraphToDoc("normal", Resources.cbClickToStop);
         }
 
         /// <summary>
@@ -288,8 +288,8 @@ namespace ChessForge
         {
             Document.Blocks.Clear();
             AddNewParagraphToDoc("dummy", "");
-            AddNewParagraphToDoc("bold_16", "The training session has started.");
-            AddNewParagraphToDoc("normal_14", "Make your move and watch the comments in the Workbook view to the right of this chessboard.");
+            AddNewParagraphToDoc("bold_16", Resources.cbTrainingStarted);
+            AddNewParagraphToDoc("normal_14", Resources.cbMakeMoveAndWatch);
         }
 
         /// <summary>
@@ -310,20 +310,20 @@ namespace ChessForge
                 {
                     if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                     {
-                        txt = "You have checkmated the engine. Congratulations!";
+                        txt = Resources.cbYouCheckmatedEngine;
                     }
                     else if (TrainingSession.IsTrainingInProgress)
                     {
-                        txt = "You have checkmated the coach. Congratulations!";
+                        txt = Resources.cbYouCheckmatedCoach;
                     }
                     else
                     {
-                        txt = "Check and Mate!";
+                        txt = Resources.cbCheckMateEnd;
                     }
                 }
                 else
                 {
-                    txt = "You have been checkmated by the engine. Better luck next time!";
+                    txt = Resources.cbEngineCheckmatedYou;
                 }
 
                 Paragraph para = CreateParagraphWithText("end_of_game", txt, false);
@@ -344,7 +344,7 @@ namespace ChessForge
                 Paragraph dummy = CreateParagraphWithText("dummy", "", false);
                 Document.Blocks.Add(dummy);
 
-                string txt = "This is a stalemate! You have drawn the game.";
+                string txt = Resources.cbStalemateAndDraw;
 
                 Paragraph para = CreateParagraphWithText("end_of_game", txt, false);
                 Document.Blocks.Add(para);

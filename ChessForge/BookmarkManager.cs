@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 using GameTree;
+using ChessForge.Properties;
 
 namespace ChessForge
 {
@@ -244,8 +245,8 @@ namespace ChessForge
         {
             if (askUser && _mainWin.ActiveVariationTree.Bookmarks.Count > 0)
             {
-                if (MessageBox.Show("This will delete all Bookmarks. Proceed?"
-                    , "Training Bookmarks", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                if (MessageBox.Show(Strings.GetResource("ConfirmDeleteAllBookmarks")
+                    , Strings.GetResource("Bookmarks"), MessageBoxButton.YesNo) != MessageBoxResult.Yes)
                 {
                     return;
                 }
@@ -332,8 +333,8 @@ namespace ChessForge
         {
             if (_mainWin.ActiveVariationTree.Bookmarks.Count > 0)
             {
-                if (MessageBox.Show("Generated bookmarks will replace the ones in the Workbook. Proceed?"
-                    , "Training Bookmarks", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                if (MessageBox.Show(Strings.GetResource("GeneratedBookmarksReplace")
+                    , Strings.GetResource("Bookmarks"), MessageBoxButton.YesNo) != MessageBoxResult.Yes)
                 {
                     return;
                 }
@@ -444,7 +445,7 @@ namespace ChessForge
                 _mainWin.UiCnvPaging.Visibility = Visibility.Visible;
                 _mainWin.UiGridBookmarks.RowDefinitions[0].Height = new GridLength(20);
                 _mainWin.UiLblBookmarkPage.Visibility = Visibility.Visible;
-                _mainWin.UiLblBookmarkPage.Content = "Page " + _currentPage.ToString() +" of " + _maxPage.ToString();
+                _mainWin.UiLblBookmarkPage.Content = ResourceUtils.GetCounterBarText("Page", _currentPage-1, _maxPage);
                 if (_currentPage == 1)
                 {
                     _mainWin.UiImgRightArrow.Visibility = Visibility.Visible;

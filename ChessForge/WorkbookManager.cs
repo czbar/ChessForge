@@ -944,7 +944,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    if (AppState.IsDirty)
+                    if (AppState.IsDirty && (isAppClosing || !TrainingSession.IsTrainingInProgress))
                     {
                         // this was prompted by an action other than File->Save 
                         // Ask, or proceed without asking of AutoSave is enabled

@@ -80,7 +80,9 @@ namespace ChessForge
         /// </summary>
         private void SetLabelsText()
         {
-            UiLblBackupNotification.Content = "The current version " + _workbook.Version.ToString() + " will be backed up in";
+            string txt = Strings.GetResource("CurrentVersion");
+            txt = txt.Replace("$0", _workbook.Version.ToString());
+            UiLblBackupNotification.Content = txt;
 
             // this will be ".pgn" but we call this method for future proofing
             string ext = System.IO.Path.GetExtension(AppState.WorkbookFilePath);
@@ -98,7 +100,7 @@ namespace ChessForge
         /// </summary>
         private void SetNewVersionLabel()
         {
-            UiLblWorkbookNewVersion.Content = "The updated version number will be " + IncrementVersionNumber();
+            UiLblWorkbookNewVersion.Content = Strings.GetResource("UpdatedVersion") + " " + IncrementVersionNumber();
         }
 
         /// <summary>

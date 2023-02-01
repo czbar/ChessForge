@@ -1,4 +1,5 @@
-﻿using ChessPosition;
+﻿using ChessForge.Properties;
+using ChessPosition;
 using GameTree;
 using System;
 using System.Collections.Generic;
@@ -254,7 +255,7 @@ namespace ChessForge
             }
             else
             {
-                return "Chapter " + Id.ToString();
+                return Properties.Resources.Chapter + " " + Id.ToString();
             }
         }
 

@@ -10,6 +10,7 @@ using EngineService;
 using System.Windows.Ink;
 using System.Windows;
 using static System.Net.Mime.MediaTypeNames;
+using ChessForge.Properties;
 
 namespace ChessForge
 {
@@ -453,7 +454,7 @@ namespace ChessForge
         {
             if (!IsEngineAvailable)
             {
-                MessageBox.Show("Chess Engine not available", "Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Resources.EngineNotAvailable, Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 

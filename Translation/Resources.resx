@@ -120,6 +120,12 @@
   <data name="Workbook" xml:space="preserve">
     <value>Workbook</value>
   </data>
+  <data name="Workbooks" xml:space="preserve">
+    <value>Workbooks</value>
+  </data>
+  <data name="UntitledWorkbook" xml:space="preserve">
+    <value>Untitled Workbook</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
   </data>
@@ -150,6 +156,9 @@
   <data name="Games" xml:space="preserve">
     <value>Games</value>
   </data>
+  <data name="EngineGame" xml:space="preserve">
+    <value>Engine Game</value>
+  </data>
   <data name="Exercise" xml:space="preserve">
     <value>Exercise</value>
   </data>
@@ -161,6 +170,9 @@
   </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
+  </data>
+  <data name="Count" xml:space="preserve">
+    <value>Count</value>
   </data>
   <data name="Line" xml:space="preserve">
     <value>Line</value>
@@ -224,6 +236,12 @@
   </data>
   <data name="EvaluateLine" xml:space="preserve">
     <value>Evaluate Line</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>File</value>
@@ -372,6 +390,12 @@
   <data name="StudyTree" xml:space="preserve">
     <value>Study</value>
   </data>
+  <data name="StudyTreeAfter" xml:space="preserve">
+    <value>Study position after</value>
+  </data>
+  <data name="NotNamed" xml:space="preserve">
+    <value>[not named]</value>
+  </data>
   <data name="RestartGameAfter" xml:space="preserve">
     <value>Restart Game After </value>
   </data>
@@ -441,14 +465,26 @@
   <data name="DeleteSelectedChapter" xml:space="preserve">
     <value>Delete Selected Chapter</value>
   </data>
+  <data name="DeleteGame" xml:space="preserve">
+    <value>Delete Game</value>
+  </data>
   <data name="DeleteSelectedGame" xml:space="preserve">
     <value>Delete Selected Game</value>
   </data>
   <data name="DeleteThisGame" xml:space="preserve">
     <value>Delete This Game</value>
   </data>
+  <data name="ConfirmDeleteGame" xml:space="preserve">
+    <value>Delete Game</value>
+  </data>
+  <data name="DeleteExercise" xml:space="preserve">
+    <value>Delete Exercise</value>
+  </data>
   <data name="DeleteSelectedExercise" xml:space="preserve">
     <value>Delete Selected Exercise</value>
+  </data>
+  <data name="ConfirmDeleteExercise" xml:space="preserve">
+    <value>Delete Exercise</value>
   </data>
   <data name="GameExerciseReferences" xml:space="preserve">
     <value>Game/Exercise References</value>
@@ -491,6 +527,9 @@
   </data>
   <data name="DeleteAllBookmarks" xml:space="preserve">
     <value>Delete All Bookmarks</value>
+  </data>
+  <data name="Page0of0" xml:space="preserve">
+    <value>Page $0 of $1</value>
   </data>
   <data name="EditGameHeader" xml:space="preserve">
     <value>Edit Game Header</value>
@@ -576,11 +615,17 @@
   <data name="ImportPgn" xml:space="preserve">
     <value>Import from PGN</value>
   </data>
+  <data name="PgnFile" xml:space="preserve">
+    <value>PGN files</value>
+  </data>
+  <data name="AllFiles" xml:space="preserve">
+    <value>All files</value>
+  </data>
   <data name="BookmarksAlreadyExist" xml:space="preserve">
     <value>Bookmarks already exist</value>
   </data>
   <data name="FailedToSaveFile" xml:space="preserve">
-    <value>Failed to save file: $0 </value>
+    <value>Failed to save file</value>
   </data>
   <data name="ChessEngineNotAvailable" xml:space="preserve">
     <value>Chess Engine not available</value>
@@ -606,6 +651,9 @@
   <data name="GameDownloadError" xml:space="preserve">
     <value>Game download error</value>
   </data>
+  <data name="EvaluationError" xml:space="preserve">
+    <value>Evaluation Error</value>
+  </data>
   <data name="LoadEngineError" xml:space="preserve">
     <value>Failed to load the engine. Move evaluation will not be available.</value>
   </data>
@@ -622,16 +670,22 @@
     <value>Select the move from which to start.</value>
   </data>
   <data name="DeleteChapter" xml:space="preserve">
+    <value>Delete Chapter</value>
+  </data>
+  <data name="DeleteChapterConfirm" xml:space="preserve">
     <value>Deleting chapter: $0. Are you sure?</value>
   </data>
   <data name="NoExerciseInFile" xml:space="preserve">
-    <value>No Exercises found in $0. </value>
+    <value>No Exercises found in</value>
   </data>
   <data name="NoGamesInFile" xml:space="preserve">
-    <value>No Games found in $0. </value>
+    <value>No Games found in </value>
   </data>
   <data name="BookmarkAlreadyExists" xml:space="preserve">
     <value>This bookmark already exists</value>
+  </data>
+  <data name="ErrorAddBookmark" xml:space="preserve">
+    <value>Failed to add the bookmark.</value>
   </data>
   <data name="ErrorAddBookmarks" xml:space="preserve">
     <value>Failed to add the bookmarks.</value>
@@ -688,8 +742,17 @@
   <data name="DeleteExerciseMoves" xml:space="preserve">
     <value>and will be deleted. Proceed anyway?</value>
   </data>
+  <data name="WrongTypeEntitiesNotImported" xml:space="preserve">
+    <value>Valid entities of the wrong type were not imported</value>
+  </data>
+  <data name="ConfirmExerciseMoveDeletion" xml:space="preserve">
+    <value>Some move in the solution are no longer legal $0. Delete them?</value>
+  </data>
   <data name="QuizPoints" xml:space="preserve">
     <value>Quiz points</value>
+  </data>
+  <data name="LostQuizPoints" xml:space="preserve">
+    <value>Lost quiz points</value>
   </data>
   <data name="EngineExecutable" xml:space="preserve">
     <value>Engine Executable</value>
@@ -719,7 +782,7 @@
     <value>The current version $0 will be backed up in $1</value>
   </data>
   <data name="UpdatedVersion" xml:space="preserve">
-    <value>The updated version number will be $0</value>
+    <value>The updated version number will be</value>
   </data>
   <data name="IncrementMajorVersion" xml:space="preserve">
     <value>Increment major version</value>
@@ -790,6 +853,12 @@
   <data name="BlackToPlay" xml:space="preserve">
     <value>Black to Play</value>
   </data>
+  <data name="WhiteToMove" xml:space="preserve">
+    <value>White to Move</value>
+  </data>
+  <data name="BlackToMove" xml:space="preserve">
+    <value>Black to Move</value>
+  </data>
   <data name="EnPassant" xml:space="preserve">
     <value>En Passant</value>
   </data>
@@ -816,6 +885,9 @@
   </data>
   <data name="SelectChaptersToImport" xml:space="preserve">
     <value>Select Chapters to Import</value>
+  </data>
+  <data name="SelectChaptersToMerge" xml:space="preserve">
+    <value>Select Chapters to Merge</value>
   </data>
   <data name="MergeGamesAndCopy" xml:space="preserve">
     <value>Merge Games into the Study Tree and Copy them into the Games section.</value>
@@ -862,17 +934,41 @@
   <data name="SelectSolvingMode" xml:space="preserve">
     <value>Select Solving Mode</value>
   </data>
+  <data name="SolvingCompleted" xml:space="preserve">
+    <value>Solving Completed</value>
+  </data>
+  <data name="SolvingInProgress" xml:space="preserve">
+    <value>Solving in Progress...</value>
+  </data>
   <data name="GuessNextMove" xml:space="preserve">
     <value>Guess the next move</value>
   </data>
   <data name="EnterAnalysis" xml:space="preserve">
     <value>Enter your analysis and submit</value>
   </data>
+  <data name="SubmitAnalysis" xml:space="preserve">
+    <value>Submit Your Analysis</value>
+  </data>
   <data name="ShowSolution" xml:space="preserve">
     <value>Show/Edit Solution</value>
   </data>
   <data name="HideSolution" xml:space="preserve">
     <value>Hide Solution</value>
+  </data>
+  <data name="AnalysisByMoves" xml:space="preserve">
+    <value>Enter your analysis by making moves on the main chessboard.</value>
+  </data>
+  <data name="GuessMoves" xml:space="preserve">
+    <value>Start guessing moves.  Make them on the main chessboard.</value>
+  </data>
+  <data name="QuizPointsAvailable" xml:space="preserve">
+    <value>Quiz points available in this exercise</value>
+  </data>
+  <data name="QuizPointsSidelines" xml:space="preserve">
+    <value>Including points in the sidelines</value>
+  </data>
+  <data name="QuizScore" xml:space="preserve">
+    <value>Points scored</value>
   </data>
   <data name="WorkbookBackup" xml:space="preserve">
     <value>Workbook Backup</value>
@@ -885,6 +981,30 @@
   </data>
   <data name="ExplorersAbout" xml:space="preserve">
     <value>Openings/Tablebases</value>
+  </data>
+  <data name="YourMoveWas" xml:space="preserve">
+    <value>Your move was</value>
+  </data>
+  <data name="WaitForEngineResponse" xml:space="preserve">
+    <value>Wait for engine's response...</value>
+  </data>
+  <data name="WaitForResponse" xml:space="preserve">
+    <value>Wait for a response...</value>
+  </data>
+  <data name="EnginePlayed" xml:space="preserve">
+    <value>The engine played</value>
+  </data>
+  <data name="CoachPlayed" xml:space="preserve">
+    <value>The coach played</value>
+  </data>
+  <data name="YourTurn" xml:space="preserve">
+    <value>It is your turn now</value>
+  </data>
+  <data name="cbUseMenuToOpenWorkbook" xml:space="preserve">
+    <value>Use File menu to open or create a new Workbook</value>
+  </data>
+  <data name="cbJustPicture" xml:space="preserve">
+    <value>This is just a picture! Make your moves on the big board.</value>
   </data>
   <data name="cbActions" xml:space="preserve">
     <value>Some available actions are:</value>
@@ -943,6 +1063,33 @@
   <data name="cbResponseNotCovered" xml:space="preserve">
     <value>This response is not covered in the solution</value>
   </data>
+  <data name="cbAutoReplayInProgress" xml:space="preserve">
+    <value>Auto-replay in progress...</value>
+  </data>
+  <data name="cbClickToStop" xml:space="preserve">
+    <value>Click any move to stop.</value>
+  </data>
+  <data name="cbTrainingStarted" xml:space="preserve">
+    <value>The training session has started.</value>
+  </data>
+  <data name="cbMakeMoveAndWatch" xml:space="preserve">
+    <value>Make your move and watch the comments in the Workbook view to the right of this chessboard.</value>
+  </data>
+  <data name="cbYouCheckmatedEngine" xml:space="preserve">
+    <value>You have checkmated the engine. Congratulations!</value>
+  </data>
+  <data name="cbYouCheckmatedCoach" xml:space="preserve">
+    <value>You have checkmated the coach. Congratulations!</value>
+  </data>
+  <data name="cbCheckMateEnd" xml:space="preserve">
+    <value>Check and Mate!</value>
+  </data>
+  <data name="cbEngineCheckmatedYou" xml:space="preserve">
+    <value>You have been checkmated by the engine. Better luck next time!</value>
+  </data>
+  <data name="cbStalemateAndDraw" xml:space="preserve">
+    <value>This is a stalemate! You have drawn the game.</value>
+  </data>
   <data name="LangEnglish" xml:space="preserve">
     <value>English</value>
   </data>
@@ -954,5 +1101,47 @@
   </data>
   <data name="ReadingWorkbookFile" xml:space="preserve">
     <value>Reading workbook file...</value>
+  </data>
+  <data name="OebCheckmate" xml:space="preserve">
+    <value>checkmate</value>
+  </data>
+  <data name="OebStalemate" xml:space="preserve">
+    <value>stalemate</value>
+  </data>
+  <data name="OebInsufficientMaterial" xml:space="preserve">
+    <value>insufficient material</value>
+  </data>
+  <data name="OebDraw" xml:space="preserve">
+    <value>draw</value>
+  </data>
+  <data name="OebLosing" xml:space="preserve">
+    <value>Losing</value>
+  </data>
+  <data name="OebUnknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="OebDrawing" xml:space="preserve">
+    <value>Drawing</value>
+  </data>
+  <data name="OebWinning" xml:space="preserve">
+    <value>Winning</value>
+  </data>
+  <data name="PosValTooManyWhiteKings" xml:space="preserve">
+    <value>Too many White Kings</value>
+  </data>
+  <data name="PosValWhiteKingMissing" xml:space="preserve">
+    <value>The White King is missing</value>
+  </data>
+  <data name="PosValWhiteKingInCheck" xml:space="preserve">
+    <value>White King cannot be in check on Black's move</value>
+  </data>
+  <data name="PosValTooManyBlackKings" xml:space="preserve">
+    <value>Too many Black Kings</value>
+  </data>
+  <data name="PosValBlackKingMissing" xml:space="preserve">
+    <value>The Black King is missing</value>
+  </data>
+  <data name="PosValBlackKingInCheck" xml:space="preserve">
+    <value>Black King cannot be in check on Black's move</value>
   </data>
 </root>

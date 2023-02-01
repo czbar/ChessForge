@@ -385,7 +385,7 @@ namespace ChessForge
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Failed to save file: " + ex.Message, "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(Strings.GetResource("FailedToSaveFile") + ": " + ex.Message, Strings.GetResource("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             AppLog.Message("Saving Workbook to File - END");
@@ -457,7 +457,7 @@ namespace ChessForge
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Could not import game: " + ex.Message, "Chess Forge Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Strings.GetResource("CouldNotImportGame") + ": " + ex.Message, Strings.GetResource("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -735,9 +735,9 @@ namespace ChessForge
                 string filePath = WorkbookFilePath ?? "";
                 string fileName = Path.GetFileName(filePath);
 
-                _mainWin.UiMnWorkbookSave.Header = Resources.ResourceManager.GetString("Save") + " " + fileName;
+                _mainWin.UiMnWorkbookSave.Header = Strings.GetResource("Save") + " " + fileName;
 
-                string resSaveAs = Resources.ResourceManager.GetString("SaveAs") ?? "";
+                string resSaveAs = Strings.GetResource("SaveAs") ?? "";
                 resSaveAs = resSaveAs.Replace("$0", fileName);
                 _mainWin.UiMnWorkbookSaveAs.Header = resSaveAs;
 

@@ -439,7 +439,7 @@ namespace ChessForge
             {
                 if (string.IsNullOrEmpty(_title))
                 {
-                    return "Untitled Workbook";
+                    return Properties.Resources.UntitledWorkbook;
                 }
                 else
                 {

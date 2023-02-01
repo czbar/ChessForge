@@ -7,6 +7,13 @@
 #Workbook
 Workbook=Workbook
 
+#Workbooks plural
+Workbooks=Workbooks
+
+#Untitled Workbook
+UntitledWorkbook=Untitled Workbook
+
+
 #Title
 Title=Title
 
@@ -38,6 +45,10 @@ Game=Game
 #Games plural
 Games=Games
 
+#Engine Game
+EngineGame=Engine Game
+
+
 #Exercise 
 Exercise=Exercise
 
@@ -49,6 +60,9 @@ Round=Round
 
 #Date
 Date=Date
+
+#Count
+Count=Count
 
 #A line in a variation tree
 Line=Line
@@ -112,6 +126,12 @@ EvaluatePosition=Evaluate Position
 
 #Request to evaluate a line
 EvaluateLine=Evaluate Line
+
+#Done
+Done=Done
+
+#Unknown
+Unknown=Unknown
 
 #
 # MAIN MENU
@@ -286,6 +306,11 @@ ExitGame=Exit Game
 #Study Tree
 StudyTree=Study
 
+#Prefix for the of an exercise created from a Study
+StudyTreeAfter=Study position after
+
+#Not Named (opening position from lichess)
+NotNamed=[not named]
 
 #
 # CONTEXT MENU in Training View
@@ -365,15 +390,27 @@ MoveExerciseToChapter=Move Exercise To Chapter...
 #Deleted selected chapter
 DeleteSelectedChapter=Delete Selected Chapter
 
+#Delete game
+DeleteGame=Delete Game
+
 #Delete selected game
 DeleteSelectedGame=Delete Selected Game
 
-#Delete clicked game
+#Delete this game
 DeleteThisGame=Delete This Game
+
+#Confirm delete this game. The program will append game title
+ConfirmDeleteGame=Delete Game
+
+
+#Delete exercise
+DeleteExercise=Delete Exercise
 
 #Delete selected exercise
 DeleteSelectedExercise=Delete Selected Exercise
 
+#Confirm delete this exercise. The program will append exercise title
+ConfirmDeleteExercise=Delete Exercise
 
 #
 # CONTEXT MENU for Study Tree Tab
@@ -436,7 +473,8 @@ DeleteThisBookmark=Delete This Bookmark
 #Delete all bookmarks
 DeleteAllBookmarks=Delete All Bookmarks
 
-
+#Page counter
+Page0of0=Page $0 of $1
 
 #
 # CONTEXT MENU for Games
@@ -560,6 +598,12 @@ InvalidPositionSetup=Invalid Position Setup
 #Import from a PGN file
 ImportPgn=Import from PGN
 
+#PGN files (in Open File dialog)
+PgnFile=PGN files
+
+#All files (in Open File dialog)
+AllFiles=All files
+
 
 ##################################
 #
@@ -570,7 +614,7 @@ ImportPgn=Import from PGN
 BookmarksAlreadyExist=Bookmarks already exist
 
 #Error saving file
-FailedToSaveFile=Failed to save file: $0 
+FailedToSaveFile=Failed to save file
 
 #Chess Engine not available
 ChessEngineNotAvailable=Chess Engine not available
@@ -596,8 +640,11 @@ ExerciseNoSolution=This exercise has no solution provided.
 #Error downloading game
 GameDownloadError=Game download error
 
+#Evaluation Error
+EvaluationError=Evaluation Error
+
 #Error loading engine
-LoadEngineError =Failed to load the engine. Move evaluation will not be available.
+LoadEngineError=Failed to load the engine. Move evaluation will not be available.
 
 #Confirmation to cancel game
 CancelGame=Cancel Game?
@@ -611,17 +658,24 @@ UnrecognizedFileFormat=Unrecognized file format
 #Select move from which to start a game against the engine
 SelectEngineStartMove=Select the move from which to start.
 
+#Delete chapter
+DeleteChapter=Delete Chapter
+
 #Confirmation to delete chapter
-DeleteChapter=Deleting chapter: $0. Are you sure?
+DeleteChapterConfirm=Deleting chapter: $0. Are you sure?
 
 #No exercise in file
-NoExerciseInFile=No Exercises found in $0. 
+NoExerciseInFile=No Exercises found in
  
 #No games in file
-NoGamesInFile=No Games found in $0. 
+NoGamesInFile=No Games found in 
 
 #Bookmark already exists
 BookmarkAlreadyExists=This bookmark already exists
+
+
+#Error adding bookmark
+ErrorAddBookmark=Failed to add the bookmark.
 
 #Error adding bookmarks 
 ErrorAddBookmarks=Failed to add the bookmarks.
@@ -681,7 +735,11 @@ DeleteExerciseMove=and will be deleted. Proceed anyway?
 DeleteExerciseMoves=and will be deleted. Proceed anyway?
 
 
+#Entities of wrong type were not imported
+WrongTypeEntitiesNotImported=Valid entities of the wrong type were not imported
 
+#Confirm deleting illegal moves from the solution after position was edited
+ConfirmExerciseMoveDeletion=Some move in the solution are no longer legal $0. Delete them?
 
 ##################################
 #
@@ -691,6 +749,9 @@ DeleteExerciseMoves=and will be deleted. Proceed anyway?
 
 #Quiz points
 QuizPoints=Quiz points
+
+#Lost quiz points
+LostQuizPoints=Lost quiz points
 
 #Engine Executable
 EngineExecutable=Engine Executable
@@ -720,7 +781,7 @@ SoundOn=Sound On
 CurrentVersion=The current version $0 will be backed up in $1
 
 #Updated version number
-UpdatedVersion=The updated version number will be $0
+UpdatedVersion=The updated version number will be
 
 #Check box to increment major version
 IncrementMajorVersion=Increment major version
@@ -794,6 +855,12 @@ WhiteToPlay=White to Play
 #Black to play
 BlackToPlay=Black to Play
 
+#White to move
+WhiteToMove=White to Move
+
+#Black to move
+BlackToMove=Black to Move
+
 #En passant
 EnPassant=En Passant
 
@@ -820,6 +887,9 @@ SelectChapter=Select Chapter
 
 #Select chapters to import
 SelectChaptersToImport=Select Chapters to Import
+
+#Select chapters to merge
+SelectChaptersToMerge=Select Chapters to Merge
 
 #Merge games and copy
 MergeGamesAndCopy=Merge Games into the Study Tree and Copy them into the Games section.
@@ -866,17 +936,41 @@ BadTypeForImport=but not imported due to not being of the $0 type
 #Select Solving Mode
 SelectSolvingMode=Select Solving Mode
 
+#Solving completed
+SolvingCompleted=Solving Completed
+
+#Solving in progress
+SolvingInProgress=Solving in Progress...
+
 #Guess the next move
 GuessNextMove=Guess the next move
 
 #Enter your analysis and submit
 EnterAnalysis=Enter your analysis and submit
 
+#Submit your analysis
+SubmitAnalysis=Submit Your Analysis
+
 #Show/Edit solution
 ShowSolution=Show/Edit Solution
 
 #Hide solution
 HideSolution=Hide Solution
+
+#Analyze by making moves
+AnalysisByMoves=Enter your analysis by making moves on the main chessboard.
+
+#Guess by making moves
+GuessMoves=Start guessing moves.  Make them on the main chessboard.
+
+#Quiz points available
+QuizPointsAvailable=Quiz points available in this exercise
+
+#Quiz points in sidelines
+QuizPointsSidelines=Including points in the sidelines
+
+#QuizScore
+QuizScore=Points scored
 
 #Workbook Backup
 WorkbookBackup=Workbook Backup
@@ -893,8 +987,37 @@ ExplorersAbout=Openings/Tablebases
 
 ##################################
 #
+# Training
+#
+
+# User's move was
+YourMoveWas=Your move was
+
+# Wait for engine's response
+WaitForEngineResponse=Wait for engine's response...
+
+# Wait for response
+WaitForResponse=Wait for a response...
+
+# Engine Played
+EnginePlayed=The engine played
+
+# Coach Played
+CoachPlayed=The coach played
+
+# Your turn now
+YourTurn=It is your turn now
+
+##################################
+#
 # Comment Box
 #
+
+#Info for the user on how to open a Workbook
+cbUseMenuToOpenWorkbook=Use File menu to open or create a new Workbook
+
+#Info for the user to make moves on the main board
+cbJustPicture=This is just a picture! Make your moves on the big board.
 
 #Some available actions
 cbActions=Some available actions are:
@@ -926,10 +1049,6 @@ cbRightClickBookmarkManager=Right click to open menu for Bookmark management opt
 #Right click to open menu
 cbRightClickCreateGame=Right click to open menu to create or import a Game
  
-#DUPE: Click through the moves
-#DUPE: Double click to annotate move
-#DUPE: Right click to open menu for creating, importing or editing games
-
 #Right click to create exercise
 cbRightClickCreateExercise=Right click to open menu to create or import an Exercise
 
@@ -960,8 +1079,33 @@ cbThisWasSolution=This was the solution!
 #Response not covered
 cbResponseNotCovered=This response is not covered in the solution
 
+#Auto-replay is in progress
+cbAutoReplayInProgress=Auto-replay in progress...
+
+#Click to stop
+cbClickToStop=Click any move to stop.
 
 
+#The training session has started.
+cbTrainingStarted=The training session has started.
+
+#Make your move and watch the comments in the Workbook view to the right of this chessboard.
+cbMakeMoveAndWatch=Make your move and watch the comments in the Workbook view to the right of this chessboard.
+
+#You have checkmated the engine
+cbYouCheckmatedEngine=You have checkmated the engine. Congratulations!
+
+#You have checkmated the coach.
+cbYouCheckmatedCoach=You have checkmated the coach. Congratulations!
+
+#Checkmate
+cbCheckMateEnd=Check and Mate!
+
+#You have been checkmated by the engine. Better luck next time!
+cbEngineCheckmatedYou=You have been checkmated by the engine. Better luck next time!
+
+#This is a stalemate.
+cbStalemateAndDraw=This is a stalemate! You have drawn the game.
 
 ##################################
 #
@@ -985,3 +1129,57 @@ ChessEngineLoading=Chess engine loading...
 
 #Reading workbook
 ReadingWorkbookFile=Reading workbook file...
+
+##################################
+#
+# Openings Explore / Tablebase
+#
+
+#checkmate
+OebCheckmate=checkmate
+
+#stalemate
+OebStalemate=stalemate
+
+#insufficient material
+OebInsufficientMaterial=insufficient material
+
+#draw
+OebDraw=draw
+
+#Losing
+OebLosing=Losing
+
+#Unknown
+OebUnknown=Unknown
+
+#Drawing
+OebDrawing=Drawing
+
+#Winning
+OebWinning=Winning
+
+
+##################################
+#
+# Position Validation
+#
+
+#Too many White Kings
+PosValTooManyWhiteKings=Too many White Kings
+
+#The White King is missing
+PosValWhiteKingMissing=The White King is missing
+
+#White King cannot be in check on Black's move
+PosValWhiteKingInCheck=White King cannot be in check on Black's move
+
+#Too many Black Kings
+PosValTooManyBlackKings=Too many Black Kings
+
+#The Black King is missing
+PosValBlackKingMissing=The Black King is missing
+
+#Black King cannot be in check on Black's move
+PosValBlackKingInCheck=Black King cannot be in check on Black's move
+

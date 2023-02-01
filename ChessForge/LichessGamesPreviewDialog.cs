@@ -87,7 +87,7 @@ namespace ChessForge
             catch (Exception ex)
             {
                 ShowControls(false, true);
-                MessageBox.Show("Game download error: " + ex.Message, "Chess Forge Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.GameDownloadError + ": " + ex.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

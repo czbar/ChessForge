@@ -493,7 +493,8 @@ namespace ChessForge
                         bool engineStarted = EngineMessageProcessor.StartEngineService();
                         if (!engineStarted)
                         {
-                            MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(Properties.Resources.LoadEngineError, Properties.Resources.Error, 
+                                MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                         // if we have LastWorkbookFile or a name on the command line
                         // we will try to open
@@ -1058,7 +1059,7 @@ namespace ChessForge
                 switch (LearningMode.CurrentMode)
                 {
                     case LearningMode.Mode.ENGINE_GAME:
-                        if (MessageBox.Show("Cancel Game?", "Game with the Computer is in Progress", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                        if (MessageBox.Show(Properties.Resources.CancelGame, Properties.Resources.GameInProgress, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                             result = true;
                         break;
                     default:
@@ -1143,7 +1144,7 @@ namespace ChessForge
                         }
                         break;
                     default:
-                        MessageBox.Show("Unrecognized file format: " + fileName, "Input File", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        MessageBox.Show(Properties.Resources.UnrecognizedFileFormat + " " + fileName, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         acceptFile = false;
                         break;
                 }
@@ -1159,7 +1160,7 @@ namespace ChessForge
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "Error processing input file", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(e.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 AppState.RestartInIdleMode();
             }
         }
@@ -1616,7 +1617,7 @@ namespace ChessForge
         {
             if (!EngineMessageProcessor.IsEngineAvailable)
             {
-                MessageBox.Show("Chess Engine not available", "Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.EngineNotAvailable, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -1973,7 +1974,7 @@ namespace ChessForge
             bool engineStarted = EngineMessageProcessor.StartEngineService();
             if (!engineStarted)
             {
-                MessageBox.Show("Failed to load the engine. Move evaluation will not be available.", "Chess Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.LoadEngineError, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             else

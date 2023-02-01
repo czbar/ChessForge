@@ -204,8 +204,6 @@
     <Compile Include="TrainingSession.cs" />
     <Compile Include="UserMoveProcessor.cs" />
     <Compile Include="VariationTreeView.cs" />
-    <Compile Include="TreeTableCell.cs" />
-    <Compile Include="TreeTableRow.cs" />
     <Compile Include="WorkbookFileTextBuilder.cs" />
     <Compile Include="ScoreSheet.cs" />
     <Compile Include="WorkbookTableState.cs" />

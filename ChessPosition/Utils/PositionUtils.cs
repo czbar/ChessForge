@@ -21,66 +21,6 @@ namespace ChessPosition
         public static Random GlobalRnd = new Random();
 
         /// <summary>
-        /// Checks validity of a position.
-        /// </summary>
-        /// <param name="pos"></param>
-        /// <param name="errorText"></param>
-        /// <returns></returns>
-        public static bool ValidatePosition(ref BoardPosition pos, out string errorText)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            bool result = true;
-
-            KingCount(out int whiteKings, out int blackKings, pos);
-            if (whiteKings != 1 || blackKings != 1)
-            {
-                result = false;
-                if (whiteKings > 1)
-                {
-                    sb.AppendLine("Too many White Kings");
-                }
-                else if (whiteKings == 0)
-                {
-                    sb.AppendLine("The White King is missing.");
-                }
-
-                if (blackKings > 1)
-                {
-                    sb.AppendLine("Too many Black Kings");
-                }
-                else if (blackKings == 0)
-                {
-                    sb.AppendLine("The Black King is missing.");
-                }
-            }
-
-            // only check if we know we have 1 king each side (otherwise we may get an exception)
-            if (result == true)
-            {
-                if (pos.ColorToMove == PieceColor.White && IsKingInCheck(pos, PieceColor.Black))
-                {
-                    result = false;
-                    sb.AppendLine("Black King cannot be in check on White\'s move");
-                }
-                if (pos.ColorToMove == PieceColor.Black && IsKingInCheck(pos, PieceColor.White))
-                {
-                    result = false;
-                    sb.AppendLine("White King cannot be in check on Black\'s move");
-                }
-            }
-
-            // remove any incorrect castling rights if we are good so far
-            if (result)
-            {
-                CorrectCastlingRights(ref pos);
-            }
-
-            errorText = sb.ToString();
-            return result;
-        }
-
-        /// <summary>
         /// Counts the number of pieces on the board.
         /// </summary>
         public static int GetPieceCount(BoardPosition position)
@@ -105,7 +45,7 @@ namespace ChessPosition
         /// Removes castling rights, if they conflict with the king or rook positions. 
         /// </summary>
         /// <param name="pos"></param>
-        private static void CorrectCastlingRights(ref BoardPosition pos)
+        public static void CorrectCastlingRights(ref BoardPosition pos)
         {
             // Remove rights based on Kings' positions
             if (GetPieceType(pos.Board[4, 0]) != PieceType.King || GetPieceColor(pos.Board[4, 0]) != PieceColor.White)
@@ -144,7 +84,7 @@ namespace ChessPosition
         /// <param name="whiteKings"></param>
         /// <param name="blackKings"></param>
         /// <param name="pos"></param>
-        private static void KingCount(out int whiteKings, out int blackKings, BoardPosition pos)
+        public static void KingCount(out int whiteKings, out int blackKings, BoardPosition pos)
         {
             whiteKings = 0;
             blackKings = 0;

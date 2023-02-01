@@ -70,10 +70,10 @@ namespace ChessForge
         private Image[,] _pieceImagesOnBoard = new Image[8, 8];
 
         // string to show in the GUI indicating that White is on move
-        private const string WHITE_TO_MOVE = "White to move";
+        private string WHITE_TO_MOVE = Properties.Resources.WhiteToMove;
 
         // string to show in the GUI indicating that Black is on move
-        private const string BLACK_TO_MOVE = "Black to move";
+        private string BLACK_TO_MOVE = Properties.Resources.BlackToMove;
 
         // color of the side to move
         private PieceColor _sideToMove = PieceColor.White;
@@ -929,7 +929,7 @@ namespace ChessForge
                 FixedTree = TreeUtils.ValidateTree(fixedTree, ref nodesToRemove);
                 if (nodesToRemove.Count > 0)
                 {
-                    var res = MessageBox.Show(BuildBadMovesWarning(nodesToRemove), "Position Setup",
+                    var res = MessageBox.Show(BuildBadMovesWarning(nodesToRemove), Properties.Resources.PositionSetup,
                                               MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
                     if (res == MessageBoxResult.Yes)
                     {
@@ -939,8 +939,6 @@ namespace ChessForge
                     else
                     {
                         result = false;
-                        //// restore root
-                        //_tree.RootNode.Position = new BoardPosition(originalPos);
                     }
                 }
                 else
@@ -965,22 +963,19 @@ namespace ChessForge
             {
                 if (i > 0)
                 {
+                    sb.Append("(");
+                }
+                else
+                {
                     sb.Append(", ");
                 }
                 sb.Append(MoveUtils.BuildSingleMoveText(nodesToRemove[i], true));
             }
-            if (nodesToRemove.Count > 1)
-            {
-                sb.Insert(0, "Moves ");
-                sb.Append(" are no longer valid");
-            }
-            else
-            {
-                sb.Insert(0, "Move ");
-                sb.Append(" is no longer valid");
-            }
-            sb.Append(" and will be deleted. Proceed anyway?");
-            return sb.ToString();
+            sb.Append(')');
+
+            string retString = Properties.Resources.ConfirmExerciseMoveDeletion;
+            retString = retString.Replace("$0", sb.ToString());
+            return retString;
         }
 
         //************************************************************
@@ -1014,7 +1009,7 @@ namespace ChessForge
                 PositionSetup.MoveNumber = 0;
             }
 
-            if (PositionUtils.ValidatePosition(ref PositionSetup, out string errorText))
+            if (GuiUtilities.ValidatePosition(ref PositionSetup, out string errorText))
             {
                 if (ValidateTree())
                 {
@@ -1024,7 +1019,7 @@ namespace ChessForge
             }
             else
             {
-                MessageBox.Show(errorText, "Invalid Position Setup", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(errorText, Properties.Resources.InvalidPositionSetup, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

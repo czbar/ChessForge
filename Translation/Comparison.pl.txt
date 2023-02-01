@@ -1,2 +1,2 @@
-No keys missing in the first file
-No keys missing in the second file
+No keys missing in Master.txt
+No keys missing in Localized.pl.txt
