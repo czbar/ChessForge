@@ -1285,30 +1285,11 @@ namespace ChessForge
                     {
                         if (skippedDueToType > 0)
                         {
-                            if (skippedDueToType == 1)
-                            {
-                                sbErrors.Append("1 entity was valid ");
-                            }
-                            else
-                            {
-                                sbErrors.Append(skippedDueToType.ToString() + " entities were valid ");
-                            }
-                            sbErrors.Append("but not imported due to not being of the ");
-                            if (targetcontentType == GameData.ContentType.MODEL_GAME)
-                            {
-                                sbErrors.Append(Properties.Resources.Game.ToUpper() + " ");
-                            }
-                            else if (targetcontentType == GameData.ContentType.EXERCISE)
-                            {
-                                sbErrors.Append(Properties.Resources.Exercise.ToUpper() + " ");
-                            }
-                            else
-                            {
-                                sbErrors.Append("required ");
-                            }
-                            sbErrors.AppendLine("type.");
+                            string invalidEntities = Properties.Resources.WrongTypeEntitiesNotImported + ", ";
+                            invalidEntities += (Properties.Resources.Count + " " + skippedDueToType.ToString() + ".");
+                            sbErrors.AppendLine(invalidEntities);
                         }
-                        TextBoxDialog tbDlg = new TextBoxDialog("PGN Parsing Errors", sbErrors.ToString())
+                        TextBoxDialog tbDlg = new TextBoxDialog(Properties.Resources.PgnErrors, sbErrors.ToString())
                         {
                             Left = ChessForgeMain.Left + 100,
                             Top = ChessForgeMain.Top + 100,
