@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using ChessForge.Properties;
@@ -9,47 +10,141 @@ namespace ChessForge
 {
     public class Strings
     {
-        public static string QUICK_INSTRUCTION_CHAPTERS
+        /// <summary>
+        /// Returns a string from the App's resources.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string GetResource(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                return string.Empty;
+            }
+
+            string res = Resources.ResourceManager.GetString(key);
+            return res ?? "[-]";
+        }
+
+        /// <summary>
+        /// Notes for the Comments Box in the Chapters view.
+        /// </summary>
+        public static string QuickInstructionForChapters
         {
             get
             {
-                try
-                {
-                    return
-                        Resources.ResourceManager.GetString("cbClickStudyHeader") + "\n"
-                        + Resources.ResourceManager.GetString("cbClickForContextMenu");
-                }
-                catch
-                {
-                    return "APPLICATION ERROR: Text not found";
-                }
+                return
+                      GetResource("cbClickStudyHeader") + "\n"
+                    + GetResource("cbClickForContextMenu");
             }
         }
 
-        public static string QUICK_INSTRUCTION_STUDY = "Click through the moves \n Double click to annotate move \n "
-            + "Right click to open menu for advanced editing, FEN, creating exercise \n " + "Double click in the Scoresheet for auto-replay";
+        /// <summary>
+        /// Notes for the Comments Box in the Study view.
+        /// </summary>
+        public static string QuickInstructionForStudy
+        {
+            get
+            {
+                return
+                      GetResource("cbClickThruMoves") + "\n"
+                    + GetResource("cbDoubleClickToAnnotate") + "\n"
+                    + GetResource("cbAdvancedEditig") + "\n "
+                    + GetResource("cbDoubleClickAutoReplay");
+            }
+        }
 
-        public static string QUICK_INSTRUCTION_BOOKMARKS = "Click a bookmark to start training\n" +
-            "Right click to open menu for Bookmark management options";
+        /// <summary>
+        /// Notes for the Comments Box in the Bookmarks view.
+        /// </summary>
+        public static string QuickInstructionForBookmarks
+        {
+            get
+            {
+                return
+                      GetResource("cbClickBookmarkToTrain") + "\n"
+                    + GetResource("cbRightClickBookmarkManager");
+            }
+        }
 
-        public static string QUICK_INSTRUCTION_MODEL_GAMES_EMPTY = "Right click to open menu to create or import a Game.";
-        public static string QUICK_INSTRUCTION_MODEL_GAMES = "Click through the moves \n Double click to annotate move \n "
-            + "Right click to open menu for creating, importing or editing games";
+        /// <summary>
+        /// Notes for the Comments Box in the Games view
+        /// when there are no games..
+        /// </summary>
+        public static string QuickInstructionForGamesEmpty
+        {
+            get
+            {
+                return GetResource("cbRightClickCreateGame");
+            }
+        }
 
-        public static string QUICK_INSTRUCTION_EXERCISES_EMPTY = "Right click to open menu to create or import an Exercise.";        
-        public static string QUICK_INSTRUCTION_EXERCISES = "Make moves on the main board to enter solution \n"
-            + "Double click a move to assign quiz points\n" 
-            + "Select Solving Mode\n"
-            + "Right click to open menu to edit or create exercises";
-        public static string QUICK_INSTRUCTION_EXERCISES_HIDDEN = "Show the solution to view or edit\n"
-            + "Select Solving Mode\n"
-            + "Right click to open menu to edit or create exercises";
-        public static string QUICK_INSTRUCTION_EXERCISES_SOLVING = "Make your moves on the main board";
+        /// <summary>
+        /// Notes for the Comments Box in the Games view.
+        /// </summary>
+        public static string QuickInstructionForGames
+        {
+            get
+            {
+                return
+                      GetResource("cbClickThruMoves") + "\n"
+                    + GetResource("cbDoubleClickToAnnotate") + "\n"
+                    + GetResource("cbRightClickCreateGame");
+            }
+        }
 
-        public static string ROW_COLOR_WHITE = "white";
-        public static string ROW_COLOR_BLACK = "black";
+        /// <summary>
+        /// Notes for the Comments Box in the Exercise view
+        /// when there are no exercises..
+        /// </summary>
+        public static string QuickInstructionForExercisesEmpty
+        {
+            get
+            {
+                return GetResource("cbRightClickCreateExercise");
+            }
+        }
 
-        public static string EXERCISE_THIS_IS_SOLUTION = "This was the solution!";
-        public static string EXERCISE_RESPONSE_NOT_IN_SOLUTION = "This response is not covered in the solution.";
+        /// <summary>
+        /// Notes for the Comments Box in the Exercises view.
+        /// </summary>
+        public static string QuickInstructionForExercises
+        {
+            get
+            {
+                return
+                    GetResource("cbMoveToEnterSolution") + "\n"
+                  + GetResource("cbDoubleClickToAssignPoints") + "\n"
+                  + GetResource("cbSelectSolvingMove") + "\n"
+                  + GetResource("cbRightClickEditExercise");
+            }
+        }
+
+        /// <summary>
+        /// Notes for the Comments Box in the Exercises view
+        /// when the solution is hidden.
+        /// </summary>
+        public static string QuickInstructionForExercisesHiddenSolution
+        {
+            get
+            {
+                return
+                    GetResource("cbShowSolution") + "\n"
+                  + GetResource("cbSelectSolvingMove") + "\n"
+                  + GetResource("cbRightClickEditExercise");
+            }
+        }
+
+        /// <summary>
+        /// Notes for the Comments Box in the Exercises view
+        /// while solving.
+        /// </summary>
+        public static string QuickInstructionForExerciseSolving
+        {
+            get
+            {
+                return GetResource("cbMakeMovesOnMainBoard");
+            }
+        }
     }
 }

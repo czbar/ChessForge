@@ -47,7 +47,7 @@ namespace ChessForge
                 OpenFileDialog openFileDialog = new OpenFileDialog
                 {
                     Multiselect = false,
-                    Filter = "Workbooks (*.pgn)|*.pgn;*.pgn"
+                    Filter = Properties.Resources.Workbooks + " (*.pgn)|*.pgn;*.pgn"
                 };
 
                 string initDir;
@@ -126,7 +126,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnMergeChapters_Click(object sender, RoutedEventArgs e)
         {
-            SelectChaptersDialog dlg = new SelectChaptersDialog(WorkbookManager.SessionWorkbook, "Select Chapters to Merge")
+            SelectChaptersDialog dlg = new SelectChaptersDialog(WorkbookManager.SessionWorkbook, Properties.Resources.SelectChaptersToMerge)
             {
                 Left = AppState.MainWin.ChessForgeMain.Left + 100,
                 Top = AppState.MainWin.ChessForgeMain.Top + 100,
@@ -515,7 +515,7 @@ namespace ChessForge
             }
             else
             {
-                MessageBox.Show("Chess Engine is not available.", "Move Evaluation Failure", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Properties.Resources.EngineNotAvailable, Properties.Resources.EvaluationError, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -553,7 +553,7 @@ namespace ChessForge
             }
             else
             {
-                MessageBox.Show("Chess Engine is not available.", "Move Evaluation Failure", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Properties.Resources.EngineNotAvailable, Properties.Resources.EvaluationError, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -573,7 +573,7 @@ namespace ChessForge
         {
             if (!EngineMessageProcessor.IsEngineAvailable)
             {
-                MessageBox.Show("Chess Engine not available", "Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.EngineNotAvailable, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -590,7 +590,7 @@ namespace ChessForge
             }
             else
             {
-                MessageBox.Show("Select the move from which to start.", "Computer Game", MessageBoxButton.OK);
+                MessageBox.Show(Properties.Resources.SelectEngineStartMove, Properties.Resources.EngineGame, MessageBoxButton.OK);
             }
         }
 
@@ -893,7 +893,9 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
                 if (chapter != null)
                 {
-                    var res = MessageBox.Show("Deleting chapter \"" + chapter.GetTitle() + ". Are you sure?", "Delete Chapter", MessageBoxButton.YesNoCancel);
+                    string txt = Properties.Resources.DeleteChapterConfirm;
+                    txt = txt.Replace("$0", chapter.GetTitle());
+                    var res = MessageBox.Show(txt, Properties.Resources.DeleteChapter, MessageBoxButton.YesNoCancel);
                     if (res == MessageBoxResult.Yes)
                     {
                         WorkbookManager.SessionWorkbook.DeleteChapter(chapter); // .Remove(chapter);
@@ -1294,11 +1296,11 @@ namespace ChessForge
                             sbErrors.Append("but not imported due to not being of the ");
                             if (targetcontentType == GameData.ContentType.MODEL_GAME)
                             {
-                                sbErrors.Append("GAME ");
+                                sbErrors.Append(Properties.Resources.Game.ToUpper() + " ");
                             }
                             else if (targetcontentType == GameData.ContentType.EXERCISE)
                             {
-                                sbErrors.Append("EXERCISE ");
+                                sbErrors.Append(Properties.Resources.Exercise.ToUpper() + " ");
                             }
                             else
                             {

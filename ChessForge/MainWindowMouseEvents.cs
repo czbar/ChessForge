@@ -120,13 +120,13 @@ namespace ChessForge
                         }
                         else
                         {
-                            AppLog.Message("OnMOuseDown rejected: CanMovePiece returned false");
+                            AppLog.Message("OnMouseDown rejected: CanMovePiece returned false");
                             // if we can't move because we're in exercise hiding mode, try to help the user
                             if (ActiveArticle != null && ActiveArticle.Solver != null && !ActiveArticle.Solver.IsMovingAllowed())
                             {
                                 if (_exerciseTreeView != null)
                                 {
-                                    if (MessageBox.Show("Enable View/Edit Mode?", "Exercise Mode", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                                    if (MessageBox.Show(Strings.GetResource("ViewExercise"), Strings.GetResource("Exercise"), MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                                     {
                                         _exerciseTreeView.EventShowHideButtonClicked(null, null);
                                     }

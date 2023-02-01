@@ -102,17 +102,17 @@ namespace ChessForge
                 }
                 else if (_chapter != null)
                 {
-                    header = "CHAPTER: " + _chapter.Title;
+                    header = Strings.GetResource("Chapter").ToUpper() +  ": " + _chapter.Title;
                 }
 
                 string prefix = string.Empty;
                 if (_contentType == GameData.ContentType.MODEL_GAME)
                 {
-                    prefix = "    Game: ";
+                    prefix = "    " + Strings.GetResource("Game") + ": ";
                 }
                 else if (_contentType == GameData.ContentType.EXERCISE)
                 {
-                    prefix = "    Exercise: ";
+                    prefix = "    " + Strings.GetResource("Exercise") + ": ";
                 }
 
                 return prefix + header;

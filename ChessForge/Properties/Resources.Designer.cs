@@ -79,6 +79,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter your analysis by making moves on the main chessboard..
+        /// </summary>
+        public static string AnalysisByMoves {
+            get {
+                return ResourceManager.GetString("AnalysisByMoves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Analysis Engine....
         /// </summary>
         public static string AnalysisEngine {
@@ -156,6 +165,15 @@ namespace ChessForge.Properties {
         public static string Black {
             get {
                 return ResourceManager.GetString("Black", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Black to Move.
+        /// </summary>
+        public static string BlackToMove {
+            get {
+                return ResourceManager.GetString("BlackToMove", resourceCulture);
             }
         }
         
@@ -268,6 +286,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto-replay in progress....
+        /// </summary>
+        public static string cbAutoReplayInProgress {
+            get {
+                return ResourceManager.GetString("cbAutoReplayInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check and Mate!.
+        /// </summary>
+        public static string cbCheckMateEnd {
+            get {
+                return ResourceManager.GetString("cbCheckMateEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Click a bookmark to start training.
         /// </summary>
         public static string cbClickBookmarkToTrain {
@@ -304,6 +340,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click any move to stop..
+        /// </summary>
+        public static string cbClickToStop {
+            get {
+                return ResourceManager.GetString("cbClickToStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Double click in the Scoresheet for auto-replay.
         /// </summary>
         public static string cbDoubleClickAutoReplay {
@@ -327,6 +372,33 @@ namespace ChessForge.Properties {
         public static string cbDoubleClickToAssignPoints {
             get {
                 return ResourceManager.GetString("cbDoubleClickToAssignPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have been checkmated by the engine. Better luck next time!.
+        /// </summary>
+        public static string cbEngineCheckmatedYou {
+            get {
+                return ResourceManager.GetString("cbEngineCheckmatedYou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is just a picture! Make your moves on the big board..
+        /// </summary>
+        public static string cbJustPicture {
+            get {
+                return ResourceManager.GetString("cbJustPicture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make your move and watch the comments in the Workbook view to the right of this chessboard..
+        /// </summary>
+        public static string cbMakeMoveAndWatch {
+            get {
+                return ResourceManager.GetString("cbMakeMoveAndWatch", resourceCulture);
             }
         }
         
@@ -412,11 +484,56 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This is a stalemate! You have drawn the game..
+        /// </summary>
+        public static string cbStalemateAndDraw {
+            get {
+                return ResourceManager.GetString("cbStalemateAndDraw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This was the solution!.
         /// </summary>
         public static string cbThisWasSolution {
             get {
                 return ResourceManager.GetString("cbThisWasSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The training session has started..
+        /// </summary>
+        public static string cbTrainingStarted {
+            get {
+                return ResourceManager.GetString("cbTrainingStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use File menu to open or create a new Workbook.
+        /// </summary>
+        public static string cbUseMenuToOpenWorkbook {
+            get {
+                return ResourceManager.GetString("cbUseMenuToOpenWorkbook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have checkmated the coach. Congratulations!.
+        /// </summary>
+        public static string cbYouCheckmatedCoach {
+            get {
+                return ResourceManager.GetString("cbYouCheckmatedCoach", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have checkmated the engine. Congratulations!.
+        /// </summary>
+        public static string cbYouCheckmatedEngine {
+            get {
+                return ResourceManager.GetString("cbYouCheckmatedEngine", resourceCulture);
             }
         }
         
@@ -475,6 +592,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chess engine loading....
+        /// </summary>
+        public static string ChessEngineLoading {
+            get {
+                return ResourceManager.GetString("ChessEngineLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chess Engine not available.
         /// </summary>
         public static string ChessEngineNotAvailable {
@@ -525,6 +651,15 @@ namespace ChessForge.Properties {
         public static string CloseWorkbook {
             get {
                 return ResourceManager.GetString("CloseWorkbook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The coach played.
+        /// </summary>
+        public static string CoachPlayed {
+            get {
+                return ResourceManager.GetString("CoachPlayed", resourceCulture);
             }
         }
         
@@ -673,11 +808,20 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deleting chapter: $0. Are you sure?.
+        ///   Looks up a localized string similar to Delete Chapter.
         /// </summary>
         public static string DeleteChapter {
             get {
                 return ResourceManager.GetString("DeleteChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleting chapter: $0. Are you sure?.
+        /// </summary>
+        public static string DeleteChapterConfirm {
+            get {
+                return ResourceManager.GetString("DeleteChapterConfirm", resourceCulture);
             }
         }
         
@@ -772,6 +916,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Done.
+        /// </summary>
+        public static string Done {
+            get {
+                return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Downloading Game From lichess.org..
         /// </summary>
         public static string DownloadGameFromLichess {
@@ -862,11 +1015,29 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Engine Game.
+        /// </summary>
+        public static string EngineGame {
+            get {
+                return ResourceManager.GetString("EngineGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chess Engine not available..
         /// </summary>
         public static string EngineNotAvailable {
             get {
                 return ResourceManager.GetString("EngineNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The engine played.
+        /// </summary>
+        public static string EnginePlayed {
+            get {
+                return ResourceManager.GetString("EnginePlayed", resourceCulture);
             }
         }
         
@@ -952,6 +1123,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Evaluation Error.
+        /// </summary>
+        public static string EvaluationError {
+            get {
+                return ResourceManager.GetString("EvaluationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ev.
         /// </summary>
         public static string EvaluationShort {
@@ -984,6 +1164,15 @@ namespace ChessForge.Properties {
         public static string Exercise0of0 {
             get {
                 return ResourceManager.GetString("Exercise0of0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exercise Header.
+        /// </summary>
+        public static string ExerciseHeader {
+            get {
+                return ResourceManager.GetString("ExerciseHeader", resourceCulture);
             }
         }
         
@@ -1060,7 +1249,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to save file: $0 .
+        ///   Looks up a localized string similar to Failed to save file.
         /// </summary>
         public static string FailedToSaveFile {
             get {
@@ -1177,6 +1366,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Game Header.
+        /// </summary>
+        public static string GameHeader {
+            get {
+                return ResourceManager.GetString("GameHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game with the Computer is in Progress.
         /// </summary>
         public static string GameInProgress {
@@ -1245,6 +1443,15 @@ namespace ChessForge.Properties {
         public static string GoToStudyToAddBookmark {
             get {
                 return ResourceManager.GetString("GoToStudyToAddBookmark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start guessing moves.  Make them on the main chessboard..
+        /// </summary>
+        public static string GuessMoves {
+            get {
+                return ResourceManager.GetString("GuessMoves", resourceCulture);
             }
         }
         
@@ -1452,6 +1659,15 @@ namespace ChessForge.Properties {
         public static string LoadEngineError {
             get {
                 return ResourceManager.GetString("LoadEngineError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lost quiz points.
+        /// </summary>
+        public static string LostQuizPoints {
+            get {
+                return ResourceManager.GetString("LostQuizPoints", resourceCulture);
             }
         }
         
@@ -1817,6 +2033,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page $0 of $1.
+        /// </summary>
+        public static string Page0of0 {
+            get {
+                return ResourceManager.GetString("Page0of0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PGN parsing errors.
         /// </summary>
         public static string PgnErrors {
@@ -1912,6 +2137,42 @@ namespace ChessForge.Properties {
         public static string QuizPoints {
             get {
                 return ResourceManager.GetString("QuizPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quiz points available in this exercise.
+        /// </summary>
+        public static string QuizPointsAvailable {
+            get {
+                return ResourceManager.GetString("QuizPointsAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Including points in the sidelines.
+        /// </summary>
+        public static string QuizPointsSidelines {
+            get {
+                return ResourceManager.GetString("QuizPointsSidelines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points scored.
+        /// </summary>
+        public static string QuizScore {
+            get {
+                return ResourceManager.GetString("QuizScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reading workbook file....
+        /// </summary>
+        public static string ReadingWorkbookFile {
+            get {
+                return ResourceManager.GetString("ReadingWorkbookFile", resourceCulture);
             }
         }
         
@@ -2069,6 +2330,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Chapters to Merge.
+        /// </summary>
+        public static string SelectChaptersToMerge {
+            get {
+                return ResourceManager.GetString("SelectChaptersToMerge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select the move from which to start..
         /// </summary>
         public static string SelectEngineStartMove {
@@ -2159,6 +2429,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Solving Completed.
+        /// </summary>
+        public static string SolvingCompleted {
+            get {
+                return ResourceManager.GetString("SolvingCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solving in Progress....
+        /// </summary>
+        public static string SolvingInProgress {
+            get {
+                return ResourceManager.GetString("SolvingInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sound On.
         /// </summary>
         public static string SoundOn {
@@ -2227,6 +2515,15 @@ namespace ChessForge.Properties {
         public static string StudyTree {
             get {
                 return ResourceManager.GetString("StudyTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit Your Analysis.
+        /// </summary>
+        public static string SubmitAnalysis {
+            get {
+                return ResourceManager.GetString("SubmitAnalysis", resourceCulture);
             }
         }
         
@@ -2384,6 +2681,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        public static string Unknown {
+            get {
+                return ResourceManager.GetString("Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unrecognized file format .
         /// </summary>
         public static string UnrecognizedFileFormat {
@@ -2402,7 +2708,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The updated version number will be $0.
+        ///   Looks up a localized string similar to The updated version number will be.
         /// </summary>
         public static string UpdatedVersion {
             get {
@@ -2474,11 +2780,38 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wait for engine&apos;s response....
+        /// </summary>
+        public static string WaitForEngineResponse {
+            get {
+                return ResourceManager.GetString("WaitForEngineResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait for a response....
+        /// </summary>
+        public static string WaitForResponse {
+            get {
+                return ResourceManager.GetString("WaitForResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to White.
         /// </summary>
         public static string White {
             get {
                 return ResourceManager.GetString("White", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to White to Move.
+        /// </summary>
+        public static string WhiteToMove {
+            get {
+                return ResourceManager.GetString("WhiteToMove", resourceCulture);
             }
         }
         
@@ -2528,11 +2861,38 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Workbooks.
+        /// </summary>
+        public static string Workbooks {
+            get {
+                return ResourceManager.GetString("Workbooks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Workbook Title.
         /// </summary>
         public static string WorkbookTitle {
             get {
                 return ResourceManager.GetString("WorkbookTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your move was.
+        /// </summary>
+        public static string YourMoveWas {
+            get {
+                return ResourceManager.GetString("YourMoveWas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It is your turn now.
+        /// </summary>
+        public static string YourTurn {
+            get {
+                return ResourceManager.GetString("YourTurn", resourceCulture);
             }
         }
     }

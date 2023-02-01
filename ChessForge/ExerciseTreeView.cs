@@ -79,11 +79,11 @@ namespace ChessForge
                 r.Foreground = Brushes.DarkGreen;
                 if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS)
                 {
-                    r.Text = "Enter your analysis by making moves on the main chessboard.";
+                    r.Text = Strings.GetResource("AnalysisByMoves");
                 }
                 else
                 {
-                    r.Text = "Start guessing moves.  Make them on the main chessboard.";
+                    r.Text = Strings.GetResource("GuessMoves");
                 }
                 r.FontStyle = FontStyles.Italic;
 
@@ -117,25 +117,11 @@ namespace ChessForge
 
                 Run r = new Run();
                 r.Foreground = Brushes.Black;
-                if (mainQuizPoints + sideLineQuizPoints != 1)
-                {
-                    r.Text = "There are " + (mainQuizPoints + sideLineQuizPoints).ToString() + " quiz points available in this exercise. ";
-                }
-                else
-                {
-                    r.Text = "There is 1 quiz point available in this exercise. ";
-                }
+                r.Text = Strings.GetResource("QuizPointsAvailable") + ": " + (mainQuizPoints + sideLineQuizPoints).ToString() + ". ";
 
                 if (sideLineQuizPoints != 0)
                 {
-                    if (sideLineQuizPoints != 1)
-                    {
-                        r.Text += "That includes " + sideLineQuizPoints.ToString() + " quiz points in a sideline.";
-                    }
-                    else
-                    {
-                        r.Text += "That includes 1 quiz point in a sideline.";
-                    }
+                    r.Text += Strings.GetResource("QuizPointsSidelines") + ": " + sideLineQuizPoints.ToString();
                 }
                 r.TextDecorations = TextDecorations.Underline;
                 para.Inlines.Add(r);
@@ -143,15 +129,7 @@ namespace ChessForge
                 if (_mainWin.ActiveArticle.Solver.IsAnalysisSubmitted)
                 {
                     Run rScore = new Run();
-                    rScore.Text = "\nYou have scored " + _mainWin.ActiveArticle.Solver.PointsScored.ToString();
-                    if (_mainWin.ActiveArticle.Solver.PointsScored == 1)
-                    {
-                        rScore.Text += " point.";
-                    }
-                    else
-                    {
-                        rScore.Text += " points.";
-                    }
+                    rScore.Text = "\n" + Strings.GetResource("QuizScore") + ": " + _mainWin.ActiveArticle.Solver.PointsScored.ToString();
                     rScore.FontWeight = FontWeights.Bold;
                     para.Inlines.Add(rScore);
                 }
@@ -180,11 +158,11 @@ namespace ChessForge
                     ||
                     mode == VariationTree.SolvingMode.ANALYSIS && _mainWin.ActiveArticle.Solver.IsAnalysisSubmitted)
                 {
-                    _gbSolvingPanel.Header = "Solving Completed";
+                    _gbSolvingPanel.Header = Strings.GetResource("SolvingCompleted");
                 }
                 else
                 {
-                    _gbSolvingPanel.Header = "Solving in Progress ...";
+                    _gbSolvingPanel.Header = Strings.GetResource("SolvingInProgress");
                 }
 
                 _btnGuessMove.Visibility = Visibility.Collapsed;
@@ -209,7 +187,7 @@ namespace ChessForge
             }
             else
             {
-                _gbSolvingPanel.Header = "Select Solving Mode";
+                _gbSolvingPanel.Header = Strings.GetResource("SelectSolvingMode");
                 _btnGuessMove.Visibility = Visibility.Visible;
                 _btnAnalysis.Visibility = Visibility.Visible;
                 _lblGuessMove.Visibility = Visibility.Visible;
@@ -237,11 +215,11 @@ namespace ChessForge
             {
                 if (_mainVariationTree.ShowTreeLines)
                 {
-                    _runShowEdit.Text = "    " + Constants.CharCollapse.ToString() + " " + "Hide Solution";
+                    _runShowEdit.Text = "    " + Constants.CharCollapse.ToString() + " " + Strings.GetResource("HideSolution");
                 }
                 else
                 {
-                    _runShowEdit.Text = Constants.CharExpand.ToString() + " " + "Show/Edit Solution";
+                    _runShowEdit.Text = Constants.CharExpand.ToString() + " " + Strings.GetResource("ShowSolution");
                 }
             }
         }
@@ -477,11 +455,11 @@ namespace ChessForge
             Run rSideToMove = new Run();
             if (color == PieceColor.Black)
             {
-                rSideToMove.Text = "   Black to move\n";
+                rSideToMove.Text = "   " + Strings.GetResource("BlackToMove") + "\n";
             }
             else
             {
-                rSideToMove.Text = "   White to move\n";
+                rSideToMove.Text = "   " + Strings.GetResource("WhiteToMove") + "\n";
             }
             rSideToMove.FontWeight = FontWeights.Bold;
 
@@ -673,11 +651,11 @@ namespace ChessForge
             switch (mode)
             {
                 case VariationTree.SolvingMode.GUESS_MOVE:
-                    lbl.Content = "Guess the next move";
+                    lbl.Content = Strings.GetResource("GuessNextMove");
                     _lblGuessMove = lbl;
                     break;
                 case VariationTree.SolvingMode.ANALYSIS:
-                    lbl.Content = "Enter your analysis and submit";
+                    lbl.Content = Strings.GetResource("EnterAnalysis");
                     _lblAnalysis = lbl;
                     break;
                 default:
@@ -699,7 +677,7 @@ namespace ChessForge
         {
             Label lbl = new Label();
             lbl.FontSize = 12; // not configurable!
-            lbl.Content = "Exit";
+            lbl.Content = Strings.GetResource("Exit");
 
             _lblExit = lbl;
 
@@ -720,11 +698,11 @@ namespace ChessForge
             lbl.FontSize = 12; // not configurable!
             if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS)
             {
-                lbl.Content = "Submit Your Analysis";
+                lbl.Content = Strings.GetResource("SubmitAnalysis");
             }
             else
             {
-                lbl.Content = "Done";
+                lbl.Content = Strings.GetResource("Done");
             }
 
             _lblSubmitAnalysis = lbl;
@@ -785,7 +763,7 @@ namespace ChessForge
         {
             if (IsMainVariationTreeEmpty)
             {
-                MessageBox.Show("This exercise has no solution provided.", "Chess Forge Exercise", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show(Strings.GetResource("ExerciseNoSolution"), Strings.GetResource("Exercise"), MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             else
             {
@@ -971,7 +949,7 @@ namespace ChessForge
                     TreeNode pred = node;
                     while (pred.Parent != null)
                     {
-                        if (pred.Comment != null && pred.Comment.Contains(Strings.EXERCISE_RESPONSE_NOT_IN_SOLUTION))
+                        if (pred.Comment != null && pred.Comment.Contains(Strings.GetResource("cbResponseNotCovered")))
                         {
                             alreadyMarked = true;
                             break;
@@ -980,7 +958,7 @@ namespace ChessForge
                     }
                     if (!alreadyMarked)
                     {
-                        node.Comment = Strings.EXERCISE_RESPONSE_NOT_IN_SOLUTION;
+                        node.Comment = Strings.GetResource("cbResponseNotCovered");
                     }
                 }
             }
@@ -1016,13 +994,13 @@ namespace ChessForge
                     else
                     {
                         if (found.Parent != null && found.Parent.Parent != null && found.Parent.Parent.Comment != null
-                            && found.Parent.Parent.Comment.Contains(Strings.EXERCISE_THIS_IS_SOLUTION))
+                            && found.Parent.Parent.Comment.Contains(Strings.GetResource("cbThisWasSolution")))
                         {
                             found.Comment = "";
                         }
                         else
                         {
-                            found.Comment = Strings.EXERCISE_THIS_IS_SOLUTION;
+                            found.Comment = Strings.GetResource("cbThisWasSolution");
                         }
                     }
                 }
@@ -1035,17 +1013,13 @@ namespace ChessForge
                     }
                     if (!isFirstChild)
                     {
-                        found.Comment += "(missed out on ";
-                    }
-                    found.Comment += quizPoints.ToString();
-                    if (quizPoints == 1)
-                    {
-                        found.Comment += " point";
+                        found.Comment += "(" + Strings.GetResource("LostQuizPoints") + ": ";
                     }
                     else
                     {
-                        found.Comment += " points";
+                        found.Comment += Strings.GetResource("QuizPoints") + ": ";
                     }
+                    found.Comment += quizPoints.ToString();
                     if (!isFirstChild)
                     {
                         found.Comment += ")";
@@ -1127,7 +1101,7 @@ namespace ChessForge
         {
             if (_dummyBoardInDrag)
             {
-                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement("This is just a picture! Make your moves on the big board.");
+                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Strings.GetResource("cbJustPicture"));
                 _dummyBoardInDrag = false;
             }
             _dummyBoardLeftClicked = false;
