@@ -10,6 +10,10 @@ Workbook=Workbook
 #Workbooks plural
 Workbooks=Workbooks
 
+#Untitled Workbook
+UntitledWorkbook=Untitled Workbook
+
+
 #Title
 Title=Title
 
@@ -56,6 +60,9 @@ Round=Round
 
 #Date
 Date=Date
+
+#Count
+Count=Count
 
 #A line in a variation tree
 Line=Line
@@ -299,6 +306,11 @@ ExitGame=Exit Game
 #Study Tree
 StudyTree=Study
 
+#Prefix for the of an exercise created from a Study
+StudyTreeAfter=Study position after
+
+#Not Named (opening position from lichess)
+NotNamed=[not named]
 
 #
 # CONTEXT MENU in Training View
@@ -378,15 +390,27 @@ MoveExerciseToChapter=Move Exercise To Chapter...
 #Deleted selected chapter
 DeleteSelectedChapter=Delete Selected Chapter
 
+#Delete game
+DeleteGame=Delete Game
+
 #Delete selected game
 DeleteSelectedGame=Delete Selected Game
 
-#Delete clicked game
+#Delete this game
 DeleteThisGame=Delete This Game
+
+#Confirm delete this game. The program will append game title
+ConfirmDeleteGame=Delete Game
+
+
+#Delete exercise
+DeleteExercise=Delete Exercise
 
 #Delete selected exercise
 DeleteSelectedExercise=Delete Selected Exercise
 
+#Confirm delete this exercise. The program will append exercise title
+ConfirmDeleteExercise=Delete Exercise
 
 #
 # CONTEXT MENU for Study Tree Tab
@@ -574,6 +598,12 @@ InvalidPositionSetup=Invalid Position Setup
 #Import from a PGN file
 ImportPgn=Import from PGN
 
+#PGN files (in Open File dialog)
+PgnFile=PGN files
+
+#All files (in Open File dialog)
+AllFiles=All files
+
 
 ##################################
 #
@@ -635,13 +665,17 @@ DeleteChapter=Delete Chapter
 DeleteChapterConfirm=Deleting chapter: $0. Are you sure?
 
 #No exercise in file
-NoExerciseInFile=No Exercises found in $0. 
+NoExerciseInFile=No Exercises found in
  
 #No games in file
-NoGamesInFile=No Games found in $0. 
+NoGamesInFile=No Games found in 
 
 #Bookmark already exists
 BookmarkAlreadyExists=This bookmark already exists
+
+
+#Error adding bookmark
+ErrorAddBookmark=Failed to add the bookmark.
 
 #Error adding bookmarks 
 ErrorAddBookmarks=Failed to add the bookmarks.
@@ -701,7 +735,11 @@ DeleteExerciseMove=and will be deleted. Proceed anyway?
 DeleteExerciseMoves=and will be deleted. Proceed anyway?
 
 
+#Entities of wrong type were not imported
+WrongTypeEntitiesNotImported=Valid entities of the wrong type were not imported
 
+#Confirm deleting illegal moves from the solution after position was edited
+ConfirmExerciseMoveDeletion=Some move in the solution are no longer legal $0. Delete them?
 
 ##################################
 #
@@ -1091,3 +1129,57 @@ ChessEngineLoading=Chess engine loading...
 
 #Reading workbook
 ReadingWorkbookFile=Reading workbook file...
+
+##################################
+#
+# Openings Explore / Tablebase
+#
+
+#checkmate
+OebCheckmate=checkmate
+
+#stalemate
+OebStalemate=stalemate
+
+#insufficient material
+OebInsufficientMaterial=insufficient material
+
+#draw
+OebDraw=draw
+
+#Losing
+OebLosing=Losing
+
+#Unknown
+OebUnknown=Unknown
+
+#Drawing
+OebDrawing=Drawing
+
+#Winning
+OebWinning=Winning
+
+
+##################################
+#
+# Position Validation
+#
+
+#Too many White Kings
+PosValTooManyWhiteKings=Too many White Kings
+
+#The White King is missing
+PosValWhiteKingMissing=The White King is missing
+
+#White King cannot be in check on Black's move
+PosValWhiteKingInCheck=White King cannot be in check on Black's move
+
+#Too many Black Kings
+PosValTooManyBlackKings=Too many Black Kings
+
+#The Black King is missing
+PosValBlackKingMissing=The Black King is missing
+
+#Black King cannot be in check on Black's move
+PosValBlackKingInCheck=Black King cannot be in check on Black's move
+

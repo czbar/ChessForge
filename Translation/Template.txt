@@ -12,6 +12,11 @@ Workbook=
 #english: Workbooks=Workbooks
 Workbooks=
 
+#description: Untitled Workbook
+#english: UntitledWorkbook=Untitled Workbook
+UntitledWorkbook=
+
+
 #description: Title
 #english: Title=Title
 Title=
@@ -73,6 +78,10 @@ Round=
 #description: Date
 #english: Date=Date
 Date=
+
+#description: Count
+#english: Count=Count
+Count=
 
 #description: A line in a variation tree
 #english: Line=Line
@@ -388,6 +397,13 @@ ExitGame=
 #english: StudyTree=Study
 StudyTree=
 
+#description: Prefix for the of an exercise created from a Study
+#english: StudyTreeAfter=Study position after
+StudyTreeAfter=
+
+#description: Not Named (opening position from lichess)
+#english: NotNamed=[not named]
+NotNamed=
 
 #
 # CONTEXT MENU in Training View
@@ -490,18 +506,34 @@ MoveExerciseToChapter=
 #english: DeleteSelectedChapter=Delete Selected Chapter
 DeleteSelectedChapter=
 
+#description: Delete game
+#english: DeleteGame=Delete Game
+DeleteGame=
+
 #description: Delete selected game
 #english: DeleteSelectedGame=Delete Selected Game
 DeleteSelectedGame=
 
-#description: Delete clicked game
+#description: Delete this game
 #english: DeleteThisGame=Delete This Game
 DeleteThisGame=
+
+#description: Confirm delete this game. The program will append game title
+#english: ConfirmDeleteGame=Delete Game
+ConfirmDeleteGame=
+
+
+#description: Delete exercise
+#english: DeleteExercise=Delete Exercise
+DeleteExercise=
 
 #description: Delete selected exercise
 #english: DeleteSelectedExercise=Delete Selected Exercise
 DeleteSelectedExercise=
 
+#description: Confirm delete this exercise. The program will append exercise title
+#english: ConfirmDeleteExercise=Delete Exercise
+ConfirmDeleteExercise=
 
 #
 # CONTEXT MENU for Study Tree Tab
@@ -732,6 +764,14 @@ InvalidPositionSetup=
 #english: ImportPgn=Import from PGN
 ImportPgn=
 
+#description: PGN files (in Open File dialog)
+#english: PgnFile=PGN files
+PgnFile=
+
+#description: All files (in Open File dialog)
+#english: AllFiles=All files
+AllFiles=
+
 
 ##################################
 #
@@ -811,16 +851,21 @@ DeleteChapter=
 DeleteChapterConfirm=
 
 #description: No exercise in file
-#english: NoExerciseInFile=No Exercises found in $0. 
+#english: NoExerciseInFile=No Exercises found in
 NoExerciseInFile=
 
 #description: No games in file
-#english: NoGamesInFile=No Games found in $0. 
+#english: NoGamesInFile=No Games found in 
 NoGamesInFile=
 
 #description: Bookmark already exists
 #english: BookmarkAlreadyExists=This bookmark already exists
 BookmarkAlreadyExists=
+
+
+#description: Error adding bookmark
+#english: ErrorAddBookmark=Failed to add the bookmark.
+ErrorAddBookmark=
 
 #description: Error adding bookmarks 
 #english: ErrorAddBookmarks=Failed to add the bookmarks.
@@ -898,7 +943,13 @@ DeleteExerciseMove=
 DeleteExerciseMoves=
 
 
+#description: Entities of wrong type were not imported
+#english: WrongTypeEntitiesNotImported=Valid entities of the wrong type were not imported
+WrongTypeEntitiesNotImported=
 
+#description: Confirm deleting illegal moves from the solution after position was edited
+#english: ConfirmExerciseMoveDeletion=Some move in the solution are no longer legal $0. Delete them?
+ConfirmExerciseMoveDeletion=
 
 ##################################
 #
@@ -1406,3 +1457,71 @@ ChessEngineLoading=
 #description: Reading workbook
 #english: ReadingWorkbookFile=Reading workbook file...
 ReadingWorkbookFile=
+
+##################################
+#
+# Openings Explore / Tablebase
+#
+
+#description: checkmate
+#english: OebCheckmate=checkmate
+OebCheckmate=
+
+#description: stalemate
+#english: OebStalemate=stalemate
+OebStalemate=
+
+#description: insufficient material
+#english: OebInsufficientMaterial=insufficient material
+OebInsufficientMaterial=
+
+#description: draw
+#english: OebDraw=draw
+OebDraw=
+
+#description: Losing
+#english: OebLosing=Losing
+OebLosing=
+
+#description: Unknown
+#english: OebUnknown=Unknown
+OebUnknown=
+
+#description: Drawing
+#english: OebDrawing=Drawing
+OebDrawing=
+
+#description: Winning
+#english: OebWinning=Winning
+OebWinning=
+
+
+##################################
+#
+# Position Validation
+#
+
+#description: Too many White Kings
+#english: PosValTooManyWhiteKings=Too many White Kings
+PosValTooManyWhiteKings=
+
+#description: The White King is missing
+#english: PosValWhiteKingMissing=The White King is missing
+PosValWhiteKingMissing=
+
+#description: White King cannot be in check on Black's move
+#english: PosValWhiteKingInCheck=White King cannot be in check on Black's move
+PosValWhiteKingInCheck=
+
+#description: Too many Black Kings
+#english: PosValTooManyBlackKings=Too many Black Kings
+PosValTooManyBlackKings=
+
+#description: The Black King is missing
+#english: PosValBlackKingMissing=The Black King is missing
+PosValBlackKingMissing=
+
+#description: Black King cannot be in check on Black's move
+#english: PosValBlackKingInCheck=Black King cannot be in check on Black's move
+PosValBlackKingInCheck=
+

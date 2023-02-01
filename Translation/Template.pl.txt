@@ -12,6 +12,11 @@ Workbook=Podręcznik
 #english: Workbooks=Workbooks
 Workbooks=Podręczniki
 
+#description: Untitled Workbook
+#english: UntitledWorkbook=Untitled Workbook
+UntitledWorkbook=Podręcznik bez Tytułu
+
+
 #description: Title
 #english: Title=Title
 Title=Tytuł
@@ -73,6 +78,10 @@ Round=Runda
 #description: Date
 #english: Date=Date
 Date=Data
+
+#description: Count
+#english: Count=Count
+Count=Ilość
 
 #description: A line in a variation tree
 #english: Line=Line
@@ -388,6 +397,13 @@ ExitGame=Zakończ Partię
 #english: StudyTree=Study
 StudyTree=Studium
 
+#description: Prefix for the of an exercise created from a Study
+#english: StudyTreeAfter=Study position after
+StudyTreeAfter=Pozycja ze Studium po
+
+#description: Not Named (opening position from lichess)
+#english: NotNamed=[not named]
+NotNamed=brak nazwy
 
 #
 # CONTEXT MENU in Training View
@@ -490,18 +506,34 @@ MoveExerciseToChapter=Przenieś Ćwiczenie do Rozdziału
 #english: DeleteSelectedChapter=Delete Selected Chapter
 DeleteSelectedChapter=Usuń Wybrany Rozdział
 
+#description: Delete game
+#english: DeleteGame=Delete Game
+DeleteGame=Usuń Partię
+
 #description: Delete selected game
 #english: DeleteSelectedGame=Delete Selected Game
 DeleteSelectedGame=Usuń Wybraną Partię
 
-#description: Delete clicked game
+#description: Delete this game
 #english: DeleteThisGame=Delete This Game
 DeleteThisGame=Usuń Partię 
+
+#description: Confirm delete this game. The program will append game title
+#english: ConfirmDeleteGame=Delete Game
+ConfirmDeleteGame=Usuń Partię
+
+
+#description: Delete exercise
+#english: DeleteExercise=Delete Exercise
+DeleteExercise=Usuń Ćwiczenie
 
 #description: Delete selected exercise
 #english: DeleteSelectedExercise=Delete Selected Exercise
 DeleteSelectedExercise=Usuń Wybrane ćwiczenie
 
+#description: Confirm delete this exercise. The program will append exercise title
+#english: ConfirmDeleteExercise=Delete Exercise
+ConfirmDeleteExercise=Usunąć ćwiczenie
 
 #
 # CONTEXT MENU for Study Tree Tab
@@ -732,6 +764,14 @@ InvalidPositionSetup=Niepoprawna Pozycja
 #english: ImportPgn=Import from PGN
 ImportPgn=Import z Pliku PGN
 
+#description: PGN files (in Open File dialog)
+#english: PgnFile=PGN files
+PgnFile=Pliki PGN
+
+#description: All files (in Open File dialog)
+#english: AllFiles=All files
+AllFiles=Wszystkie pliki
+
 
 ##################################
 #
@@ -811,20 +851,25 @@ DeleteChapter=Usuń Rozdział
 DeleteChapterConfirm=Potwierdź usunięcie rozdziału: $0
 
 #description: No exercise in file
-#english: NoExerciseInFile=No Exercises found in $0. 
-NoExerciseInFile=No Exercises found in $0. 
+#english: NoExerciseInFile=No Exercises found in
+NoExerciseInFile=Ćwiczenia nie znalezione w 
 
 #description: No games in file
-#english: NoGamesInFile=No Games found in $0. 
-NoGamesInFile=No Games found in $0. 
+#english: NoGamesInFile=No Games found in 
+NoGamesInFile=Partie nie znalezione w 
 
 #description: Bookmark already exists
 #english: BookmarkAlreadyExists=This bookmark already exists
 BookmarkAlreadyExists=Zakładka już istnieje
 
+
+#description: Error adding bookmark
+#english: ErrorAddBookmark=Failed to add the bookmark.
+ErrorAddBookmark=ErrorAddBookmarks
+
 #description: Error adding bookmarks 
 #english: ErrorAddBookmarks=Failed to add the bookmarks.
-ErrorAddBookmarks=Failed to add the bookmarks.
+ErrorAddBookmarks=Błąd przy dodawaniu zakładek.
 
 #description: No move to start training from
 #english: NoTrainingStartMove=No move selected to start training from.
@@ -898,7 +943,13 @@ DeleteExerciseMove=Potwierdź usunięcie posunięcie z ćwiczenia
 DeleteExerciseMoves=Potwierdź usunięcie posunięć z ćwiczenia
 
 
+#description: Entities of wrong type were not imported
+#english: WrongTypeEntitiesNotImported=Valid entities of the wrong type were not imported
+WrongTypeEntitiesNotImported=Elementy niewłaściwego typu nie zostały zaimportowane
 
+#description: Confirm deleting illegal moves from the solution after position was edited
+#english: ConfirmExerciseMoveDeletion=Some move in the solution are no longer legal $0. Delete them?
+ConfirmExerciseMoveDeletion=Niektore ruchy w rozwiazaniu są teraz neprawidłowe $0. Usunąć je?
 
 ##################################
 #
@@ -1406,3 +1457,71 @@ ChessEngineLoading=Trwa ładowanie silnika...
 #description: Reading workbook
 #english: ReadingWorkbookFile=Reading workbook file...
 ReadingWorkbookFile=Wczytywanie podręcznika...
+
+##################################
+#
+# Openings Explore / Tablebase
+#
+
+#description: checkmate
+#english: OebCheckmate=checkmate
+OebCheckmate=mat
+
+#description: stalemate
+#english: OebStalemate=stalemate
+OebStalemate=pat
+
+#description: insufficient material
+#english: OebInsufficientMaterial=insufficient material
+OebInsufficientMaterial=nie wystarczający materiał
+
+#description: draw
+#english: OebDraw=draw
+OebDraw=remis
+
+#description: Losing
+#english: OebLosing=Losing
+OebLosing=Przegrywa
+
+#description: Unknown
+#english: OebUnknown=Unknown
+OebUnknown=Rezultat niewiadomy 
+
+#description: Drawing
+#english: OebDrawing=Drawing
+OebDrawing=Remisuje
+
+#description: Winning
+#english: OebWinning=Winning
+OebWinning=Wygrywa
+
+
+##################################
+#
+# Position Validation
+#
+
+#description: Too many White Kings
+#english: PosValTooManyWhiteKings=Too many White Kings
+PosValTooManyWhiteKings=Za dużo białych króli
+
+#description: The White King is missing
+#english: PosValWhiteKingMissing=The White King is missing
+PosValWhiteKingMissing=Brak białego króla
+
+#description: White King cannot be in check on Black's move
+#english: PosValWhiteKingInCheck=White King cannot be in check on Black's move
+PosValWhiteKingInCheck=Biały król nie może być w szachu przy ruchu czarnych
+
+#description: Too many Black Kings
+#english: PosValTooManyBlackKings=Too many Black Kings
+PosValTooManyBlackKings=Za dużo czarnych króli
+
+#description: The Black King is missing
+#english: PosValBlackKingMissing=The Black King is missing
+PosValBlackKingMissing=Brak czarnego króla
+
+#description: Black King cannot be in check on Black's move
+#english: PosValBlackKingInCheck=Black King cannot be in check on Black's move
+PosValBlackKingInCheck=Czarny król nie może być w szachu przy ruchu białych
+
