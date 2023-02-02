@@ -1,4 +1,5 @@
 ﻿using ChessPosition;
+using ChessPosition.Utils;
 using EngineService;
 using GameTree;
 using System;
@@ -264,6 +265,7 @@ namespace ChessForge
 
             ReadConfiguration();
             SetCultureInfo(Configuration.CultureName);
+            InitializedLocalizedDictionary();
 
             EvaluationMgr = new EvaluationManager();
 
@@ -349,9 +351,30 @@ namespace ChessForge
                 CultureInfo ci = CultureInfo.GetCultureInfo(culture);
                 CultureInfo.DefaultThreadCurrentCulture = ci;
                 CultureInfo.DefaultThreadCurrentUICulture = ci;
-                CultureInfo.CurrentUICulture= ci;
+                CultureInfo.CurrentUICulture = ci;
                 Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
             }
+        }
+
+        private void InitializedLocalizedDictionary()
+        {
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.Move, Properties.Resources.Move);
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.Game, Properties.Resources.Game);
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.Exercise, Properties.Resources.Exercise);
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.PGN, Properties.Resources.PGN);
+
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.PgnMissingMoveAfter, Properties.Resources.PgnMissingMoveAfter);
+
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.FenTooFewFields, Properties.Resources.FenTooFewFields);
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.FenInvalidEnpassant, Properties.Resources.FenInvalidEnpassant);
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.FenColorNotSpecified, Properties.Resources.FenColorNotSpecified);
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.FenTooFewRows, Properties.Resources.FenTooFewRows);
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.FenRowIncomplete, Properties.Resources.FenRowIncomplete);
+
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.InvalidEngineMoveReceived, Properties.Resources.InvalidEngineMoveReceived);
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.CannotIdentifyPiece, Properties.Resources.CannotIdentifyPiece);
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.IllegalCastling, Properties.Resources.IllegalCastling);
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.AmbiguousMove, Properties.Resources.AmbiguousMove);
         }
 
         /// <summary>
@@ -493,7 +516,7 @@ namespace ChessForge
                         bool engineStarted = EngineMessageProcessor.StartEngineService();
                         if (!engineStarted)
                         {
-                            MessageBox.Show(Properties.Resources.LoadEngineError, Properties.Resources.Error, 
+                            MessageBox.Show(Properties.Resources.LoadEngineError, Properties.Resources.Error,
                                 MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                         // if we have LastWorkbookFile or a name on the command line

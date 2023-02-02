@@ -1,4 +1,5 @@
 ﻿using ChessPosition;
+using ChessPosition.Utils;
 using System;
 using System.IO;
 using System.Linq;
@@ -85,7 +86,8 @@ namespace GameTree
             }
             catch (Exception ex)
             {
-                throw new Exception("Exception in PgnGameParser: " + ex.Message);
+                LocalizedStrings.Values.TryGetValue(LocalizedStrings.StringId.PGN, out string msg);
+                throw new Exception(msg + " " + ex.Message);
             }
         }
 
@@ -542,8 +544,9 @@ namespace GameTree
         /// <returns></returns>
         private string BuildMissingMoveErrorText(TreeNode ndParent)
         {
+            LocalizedStrings.Values.TryGetValue(LocalizedStrings.StringId.PgnMissingMoveAfter, out string msg);
             StringBuilder sb = new StringBuilder();
-            sb.Append("Missing move after " + MoveUtils.BuildSingleMoveText(ndParent, true));
+            sb.Append(msg + " " + MoveUtils.BuildSingleMoveText(ndParent, true));
             return sb.ToString();
         }
 

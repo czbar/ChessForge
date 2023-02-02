@@ -1055,7 +1055,7 @@ namespace ChessForge
                         string dateForDisplay = TextUtils.BuildDateFromDisplayFromPgnString(_mainVariationTree.Header.GetDate(out _));
                         if (!string.IsNullOrEmpty(dateForDisplay))
                         {
-                            Run rDate = CreateRun("1", "      Date: " + dateForDisplay + "\n", true);
+                            Run rDate = CreateRun("1", "      " + Properties.Resources.Date + ": " + dateForDisplay + "\n", true);
                             para.Inlines.Add(rDate);
                         }
 

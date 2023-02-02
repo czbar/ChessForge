@@ -1261,7 +1261,7 @@ namespace ChessForge
                                         catch (Exception ex)
                                         {
                                             errorCount++;
-                                            sbErrors.Append(TextUtils.BuildGameProcessingErrorText(games[i], i + 1, ex.Message));
+                                            sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(games[i], i + 1, ex.Message));
                                         }
                                     }
                                 }

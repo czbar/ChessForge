@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using ChessPosition;
+using GameTree;
 
 namespace ChessForge
 {
@@ -13,6 +14,28 @@ namespace ChessForge
     /// </summary>
     public class GuiUtilities
     {
+        /// <summary>
+        /// Builds a line of text for display in the processing errors list.
+        /// </summary>
+        /// <param name="gm"></param>
+        /// <param name="gameNo"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static string BuildGameProcessingErrorText(GameData gm, int gameNo, string message)
+        {
+            StringBuilder sbErrors = new StringBuilder();
+
+            if (gm != null)
+            {
+                sbErrors.Append(Properties.Resources.Game + " #" + gameNo.ToString() + " : " + gm.Header.BuildGameHeaderLine(false));
+                sbErrors.Append(Environment.NewLine);
+                sbErrors.Append("     " + message);
+                sbErrors.Append(Environment.NewLine);
+            }
+
+            return sbErrors.ToString();
+        }
+
         /// <summary>
         /// Checks validity of a position.
         /// </summary>

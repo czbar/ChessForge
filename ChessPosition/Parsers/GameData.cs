@@ -1,4 +1,5 @@
 ﻿using ChessPosition;
+using ChessPosition.Utils;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -110,11 +111,13 @@ namespace GameTree
                 string prefix = string.Empty;
                 if (typ == ContentType.GENERIC || typ == ContentType.MODEL_GAME)
                 {
-                    prefix = "Game: ";
+                    LocalizedStrings.Values.TryGetValue(LocalizedStrings.StringId.Game, out string msg);
+                    prefix = msg + ": ";
                 }
                 else if (typ == ContentType.EXERCISE)
                 {
-                    prefix = "Exercise: ";
+                    LocalizedStrings.Values.TryGetValue(LocalizedStrings.StringId.Exercise, out string msg);
+                    prefix = msg + ": ";
                 }
                 return prefix + Header.BuildGameHeaderLine(typ != ContentType.EXERCISE);
             }

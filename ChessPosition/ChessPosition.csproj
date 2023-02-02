@@ -72,6 +72,7 @@
     <Compile Include="BoardPosition\MoveData.cs" />
     <Compile Include="BoardPosition\PiecesTargetingSquare.cs" />
     <Compile Include="BoardPosition\BoardPosition.cs" />
+    <Compile Include="Utils\LocalizedStrings.cs" />
     <Compile Include="Utils\MoveOrigDest.cs" />
     <Compile Include="Utils\MoveUtils.cs" />
     <Compile Include="Utils\PieceMoves.cs" />

@@ -769,7 +769,7 @@ namespace ChessForge
             // NOTE without nd.Parent != null we'd be getting "starting position" text in front
             while (nd != null && nd.Parent != null)
             {
-                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0) + " ", _run_stem_move_ + nd.NodeId.ToString(), Brushes.Black);
+                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0) + " ", _run_stem_move_ + nd.NodeId.ToString(), Brushes.Black, true);
                 nd = nd.Parent;
 
                 if (prevRun == null)
@@ -1099,7 +1099,7 @@ namespace ChessForge
         /// <param name="runName"></param>
         /// <param name="style"></param>
         /// <returns></returns>
-        private Run CreateButtonRun(string text, string runName, Brush color)
+        private Run CreateButtonRun(string text, string runName, Brush color, bool isStem = false)
         {
             Run r = new Run(text);
             r.Name = runName;
@@ -1107,9 +1107,13 @@ namespace ChessForge
             r.Foreground = color;
 
             r.FontWeight = FontWeights.Bold;
-            r.MouseDown += EventRunClicked;
             r.MouseMove += EventRunMoveOver;
-            r.Cursor = Cursors.Hand;
+
+            if (!isStem)
+            {
+                r.MouseDown += EventRunClicked;
+                r.Cursor = Cursors.Hand;
+            }
 
             return r;
         }

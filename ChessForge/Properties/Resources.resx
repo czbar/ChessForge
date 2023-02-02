@@ -225,6 +225,9 @@
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
   <data name="Item" xml:space="preserve">
     <value>Item</value>
   </data>
@@ -600,6 +603,9 @@
   <data name="ViewOnLichess" xml:space="preserve">
     <value>View on lichess</value>
   </data>
+  <data name="FullView" xml:space="preserve">
+    <value>Full View</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
   </data>
@@ -644,6 +650,9 @@
   </data>
   <data name="AllFiles" xml:space="preserve">
     <value>All files</value>
+  </data>
+  <data name="WorkbookNotSaved" xml:space="preserve">
+    <value>Workbook not Saved</value>
   </data>
   <data name="RefGamesNotFound" xml:space="preserve">
     <value>Referenced games not found.</value>
@@ -751,6 +760,9 @@
   <data name="CloseThisWorkbook" xml:space="preserve">
     <value>Close the current Workbook?</value>
   </data>
+  <data name="LastFileNotFound" xml:space="preserve">
+    <value>Most recent file $0 could not be found.</value>
+  </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>File $0 could not be found.</value>
   </data>
@@ -761,7 +773,7 @@
     <value>$0 is already open."</value>
   </data>
   <data name="MergeTrainingIntoStudy" xml:space="preserve">
-    <value>Merge and Save new moves from this session into the</value>
+    <value>Merge and Save new moves from this session into the source</value>
   </data>
   <data name="NoLongerValid" xml:space="preserve">
     <value>is no longer valid</value>
@@ -871,8 +883,8 @@
   <data name="ImportIntoChapter" xml:space="preserve">
     <value>Import into Chapter</value>
   </data>
-  <data name="DownloadGameFromLichess" xml:space="preserve">
-    <value>Downloading Game From lichess.org.</value>
+  <data name="DownloadingGameFromLichess" xml:space="preserve">
+    <value>Downloading Game From lichess.org. Please wait...</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
     <value>Please Wait</value>
@@ -897,6 +909,9 @@
   </data>
   <data name="FEN" xml:space="preserve">
     <value>FEN</value>
+  </data>
+  <data name="PGN" xml:space="preserve">
+    <value>PGN</value>
   </data>
   <data name="WhiteToPlay" xml:space="preserve">
     <value>White to Play</value>
@@ -1290,5 +1305,35 @@
   </data>
   <data name="PosValBlackKingInCheck" xml:space="preserve">
     <value>Black King cannot be in check on Black's move</value>
+  </data>
+  <data name="PgnMissingMoveAfter" xml:space="preserve">
+    <value>Missing move after</value>
+  </data>
+  <data name="FenTooFewFields" xml:space="preserve">
+    <value>Error: FEN string has fewer than 6 fields</value>
+  </data>
+  <data name="FenInvalidEnpassant" xml:space="preserve">
+    <value>Error: invalid enpassant field</value>
+  </data>
+  <data name="FenColorNotSpecified" xml:space="preserve">
+    <value>Error: color to move not specified</value>
+  </data>
+  <data name="FenTooFewRows" xml:space="preserve">
+    <value>Error: FEN string has $0 rows</value>
+  </data>
+  <data name="FenRowIncomplete" xml:space="preserve">
+    <value>Error: row $0 does not define 8 squares</value>
+  </data>
+  <data name="InvalidEngineMoveReceived" xml:space="preserve">
+    <value>Invalid engine move received</value>
+  </data>
+  <data name="CannotIdentifyPiece" xml:space="preserve">
+    <value>Could not identify the moving piece</value>
+  </data>
+  <data name="AmbiguousMove" xml:space="preserve">
+    <value>Ambiguous move notation</value>
+  </data>
+  <data name="IllegalCastling" xml:space="preserve">
+    <value>Illegal castling attempted</value>
   </data>
 </root>

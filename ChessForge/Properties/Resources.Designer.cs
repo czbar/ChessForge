@@ -88,6 +88,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ambiguous move notation.
+        /// </summary>
+        public static string AmbiguousMove {
+            get {
+                return ResourceManager.GetString("AmbiguousMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter your analysis by making moves on the main chessboard..
         /// </summary>
         public static string AnalysisByMoves {
@@ -264,6 +273,15 @@ namespace ChessForge.Properties {
         public static string CancelGame {
             get {
                 return ResourceManager.GetString("CancelGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not identify the moving piece.
+        /// </summary>
+        public static string CannotIdentifyPiece {
+            get {
+                return ResourceManager.GetString("CannotIdentifyPiece", resourceCulture);
             }
         }
         
@@ -700,6 +718,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirmation.
         /// </summary>
         public static string Confirmation {
@@ -1006,11 +1033,11 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downloading Game From lichess.org..
+        ///   Looks up a localized string similar to Downloading Game From lichess.org. Please wait....
         /// </summary>
-        public static string DownloadGameFromLichess {
+        public static string DownloadingGameFromLichess {
             get {
-                return ResourceManager.GetString("DownloadGameFromLichess", resourceCulture);
+                return ResourceManager.GetString("DownloadingGameFromLichess", resourceCulture);
             }
         }
         
@@ -1393,6 +1420,51 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error: color to move not specified.
+        /// </summary>
+        public static string FenColorNotSpecified {
+            get {
+                return ResourceManager.GetString("FenColorNotSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: invalid enpassant field.
+        /// </summary>
+        public static string FenInvalidEnpassant {
+            get {
+                return ResourceManager.GetString("FenInvalidEnpassant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: row $0 does not define 8 squares.
+        /// </summary>
+        public static string FenRowIncomplete {
+            get {
+                return ResourceManager.GetString("FenRowIncomplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: FEN string has fewer than 6 fields.
+        /// </summary>
+        public static string FenTooFewFields {
+            get {
+                return ResourceManager.GetString("FenTooFewFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: FEN string has $0 rows.
+        /// </summary>
+        public static string FenTooFewRows {
+            get {
+                return ResourceManager.GetString("FenTooFewRows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         public static string File {
@@ -1443,6 +1515,15 @@ namespace ChessForge.Properties {
         public static string FreeAndOpenSource {
             get {
                 return ResourceManager.GetString("FreeAndOpenSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full View.
+        /// </summary>
+        public static string FullView {
+            get {
+                return ResourceManager.GetString("FullView", resourceCulture);
             }
         }
         
@@ -1627,6 +1708,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Illegal castling attempted.
+        /// </summary>
+        public static string IllegalCastling {
+            get {
+                return ResourceManager.GetString("IllegalCastling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import Exercises.
         /// </summary>
         public static string ImportExercises {
@@ -1717,6 +1807,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid engine move received.
+        /// </summary>
+        public static string InvalidEngineMoveReceived {
+            get {
+                return ResourceManager.GetString("InvalidEngineMoveReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Position Setup.
         /// </summary>
         public static string InvalidPositionSetup {
@@ -1749,6 +1848,15 @@ namespace ChessForge.Properties {
         public static string LangPolish {
             get {
                 return ResourceManager.GetString("LangPolish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Most recent file $0 could not be found..
+        /// </summary>
+        public static string LastFileNotFound {
+            get {
+                return ResourceManager.GetString("LastFileNotFound", resourceCulture);
             }
         }
         
@@ -1843,7 +1951,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Merge and Save new moves from this session into the.
+        ///   Looks up a localized string similar to Merge and Save new moves from this session into the source.
         /// </summary>
         public static string MergeTrainingIntoStudy {
             get {
@@ -2240,6 +2348,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PGN.
+        /// </summary>
+        public static string PGN {
+            get {
+                return ResourceManager.GetString("PGN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PGN parsing errors.
         /// </summary>
         public static string PgnErrors {
@@ -2254,6 +2371,15 @@ namespace ChessForge.Properties {
         public static string PgnFile {
             get {
                 return ResourceManager.GetString("PgnFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing move after.
+        /// </summary>
+        public static string PgnMissingMoveAfter {
+            get {
+                return ResourceManager.GetString("PgnMissingMoveAfter", resourceCulture);
             }
         }
         
@@ -3523,6 +3649,15 @@ namespace ChessForge.Properties {
         public static string WorkbookFiles {
             get {
                 return ResourceManager.GetString("WorkbookFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workbook not Saved.
+        /// </summary>
+        public static string WorkbookNotSaved {
+            get {
+                return ResourceManager.GetString("WorkbookNotSaved", resourceCulture);
             }
         }
         

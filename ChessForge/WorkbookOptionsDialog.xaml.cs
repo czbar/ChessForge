@@ -49,13 +49,13 @@ namespace ChessForge
         public bool ExitOK = false;
 
         // string for White to display in the UI 
-        private readonly static string _strWhite = "WHITE";
+        private static string _strWhite = Properties.Resources.White.ToUpper();
 
         // string for Black to display in the UI 
-        private readonly static string _strBlack = "BLACK";
+        private static string _strBlack = Properties.Resources.Black.ToUpper();
 
         // string for side_to_move 
-        private readonly static string _strSideToMove = "SIDE TO MOVE";
+        private readonly static string _strSideToMove = Properties.Resources.SideToMove.ToUpper();
 
         /// <summary>
         /// Creates the dialog, initializes controls
@@ -69,7 +69,7 @@ namespace ChessForge
             UiTbTitle.Text = _workbook.Title;
             UiLblSideToMove.Content = _workbook.TrainingSideConfig == PieceColor.Black ? _strBlack : _strWhite;
 
-            UiLblSideToMove.ToolTip = "Determines some default settings";
+            UiLblSideToMove.ToolTip = Properties.Resources.TooltipSideToMove;
 
             StudyBoardOrientation = GetBoardOrientation(_workbook.StudyBoardOrientationConfig);
             UiLblBoardStudyOrient.Content = _workbook.StudyBoardOrientationConfig == PieceColor.Black ? _strBlack : _strWhite;
@@ -88,8 +88,8 @@ namespace ChessForge
                 UiLblBoardExercisesOrient.Content = _workbook.ExerciseBoardOrientationConfig == PieceColor.Black ? _strBlack : _strWhite;
             }
 
-            UiLblVersion.Content = "Version: " + _workbook.Version;
-            UiLblVersion.ToolTip = "To increment version select File->Backup Version";
+            UiLblVersion.Content = Properties.Resources.Version +  ": " + _workbook.Version;
+            UiLblVersion.ToolTip = Properties.Resources.TooltipWorkbookVersion;
             
         }
 

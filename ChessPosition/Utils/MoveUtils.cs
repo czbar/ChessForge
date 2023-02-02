@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using ChessPosition.Utils;
 using GameTree;
 
 namespace ChessPosition
@@ -193,11 +195,13 @@ namespace ChessPosition
                 // if more than one, the move is ambiguous
                 if (goodOrigins.Count == 0)
                 {
-                    throw new Exception("Could not identify the moving piece");
+                    LocalizedStrings.Values.TryGetValue(LocalizedStrings.StringId.CannotIdentifyPiece, out string msg);
+                    throw new Exception(msg);
                 }
                 else if (goodOrigins.Count > 1)
                 {
-                    throw new Exception("Ambiguous move notation");
+                    LocalizedStrings.Values.TryGetValue(LocalizedStrings.StringId.AmbiguousMove, out string msg);
+                    throw new Exception(msg);
                 }
                 else
                 {
@@ -254,7 +258,8 @@ namespace ChessPosition
             bool legal = PositionUtils.IsCastlingLegal(move.CastlingType, move.Color, position);
             if (!legal)
             {
-                throw new Exception("Illegal castling attempted");
+                LocalizedStrings.Values.TryGetValue(LocalizedStrings.StringId.IllegalCastling, out string msg);
+                throw new Exception(msg);
             }
             if (move.Color == PieceColor.White)
             {
@@ -330,7 +335,8 @@ namespace ChessPosition
 
             if (engMove.Length < 4 || engMove.Length > 5)
             {
-                throw new Exception("Invalid engine move received: " + engMove);
+                LocalizedStrings.Values.TryGetValue(LocalizedStrings.StringId.InvalidEngineMoveReceived, out string msg);
+                throw new Exception(msg + ": " + engMove);
             }
 
             string engOrig = engMove.Substring(0, 2);
@@ -463,7 +469,8 @@ namespace ChessPosition
         {
             if (engMove.Length < 4 || engMove.Length > 5)
             {
-                throw new Exception("Invalid engine move received: " + engMove);
+                LocalizedStrings.Values.TryGetValue(LocalizedStrings.StringId.InvalidEngineMoveReceived, out string msg);
+                throw new Exception(msg + ": " + engMove);
             }
 
             char engOriginFile = engMove[0];

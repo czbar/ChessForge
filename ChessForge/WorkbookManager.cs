@@ -188,7 +188,9 @@ namespace ChessForge
             // check for idle just in case (should never be the case if WorkbookFilePath is not empty
             if (fileName == AppState.WorkbookFilePath && AppState.CurrentLearningMode != LearningMode.Mode.IDLE)
             {
-                MessageBox.Show(Path.GetFileName(fileName) + " is already open.", "Chess Forge File", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                string s = Properties.Resources.FileAlreadyOpen;
+                s = s.Replace("$0", Path.GetFileName(fileName));
+                MessageBox.Show(s, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return false;
             }
 
@@ -202,11 +204,15 @@ namespace ChessForge
 
                 if (isLastOpen)
                 {
-                    MessageBox.Show("Most recent file " + fileName + " could not be found.", "File Not Found", MessageBoxButton.OK);
+                    string s = Properties.Resources.LastFileNotFound;
+                    s = s.Replace("$0", fileName);
+                    MessageBox.Show(s, Properties.Resources.Information, MessageBoxButton.OK);
                 }
                 else
                 {
-                    MessageBox.Show("File " + fileName + " could not be found.", "File Not Found", MessageBoxButton.OK);
+                    string s = Properties.Resources.FileNotFound;
+                    s = s.Replace("$0", fileName);
+                    MessageBox.Show(s, Properties.Resources.Information, MessageBoxButton.OK);
                 }
 
                 Configuration.RemoveFromRecentFiles(fileName);
@@ -694,7 +700,7 @@ namespace ChessForge
 
                     if (AppState.MainWin.ShowWorkbookOptionsDialog(false))
                     {
-                        if (SaveWorkbookToNewFileV2("", false))
+                        if (SaveWorkbookToNewFileV2(""))
                         {
                             success = true;
                         }
@@ -879,11 +885,11 @@ namespace ChessForge
 
             if (chapter != null)
             {
-                sb.Append("Chapter " + chapter.Id.ToString() + ": " + game.GetContentType().ToString() + ": " + game.Header.BuildGameHeaderLine(false));
+                sb.Append(Properties.Resources.Chapter + " " + chapter.Id.ToString() + ": " + game.GetContentType().ToString() + ": " + game.Header.BuildGameHeaderLine(false));
             }
             else
             {
-                sb.Append("PGN Item #" + gameNo.ToString() + " : " + game.Header.BuildGameHeaderLine(false));
+                sb.Append("PGN " + Properties.Resources.Item + " #" + gameNo.ToString() + " : " + game.Header.BuildGameHeaderLine(false));
             }
 
             sb.Append(Environment.NewLine);
@@ -951,7 +957,7 @@ namespace ChessForge
                         if (!Configuration.AutoSave)
                         {
                             MessageBoxButton mbb = isAppClosing ? MessageBoxButton.YesNo : MessageBoxButton.YesNoCancel;
-                            res = MessageBox.Show("Save the Workbook?", "Workbook not saved", mbb, MessageBoxImage.Question);
+                            res = MessageBox.Show(Properties.Resources.SaveWorkbook, Properties.Resources.WorkbookNotSaved, mbb, MessageBoxImage.Question);
                         }
                         if (Configuration.AutoSave || res == MessageBoxResult.Yes)
                         {
@@ -1011,7 +1017,7 @@ namespace ChessForge
                     break;
             }
 
-            string message = Properties.Resources.MergeTrainingIntoStudy + " " + origin + "?";
+            string message = Properties.Resources.MergeTrainingIntoStudy + "?";
 
             res = MessageBox.Show(message, Properties.Resources.SaveWorkbook,
                 buttons, MessageBoxImage.Question);
@@ -1047,7 +1053,7 @@ namespace ChessForge
             // if a workbook is open ask whether to close it first
             if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE)
             {
-                if (MessageBox.Show("Close the current Workbook?", "Workbook", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                if (MessageBox.Show(Properties.Resources.CloseThisWorkbook, Properties.Resources.Confirm, MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
                 {
                     return false;
                 }
@@ -1094,34 +1100,30 @@ namespace ChessForge
             Configuration.LastWorkbookFile = fileName;
         }
 
-        public static bool SaveWorkbookToNewFileV2(string chfFileName, bool typeConversion)
+        public static bool SaveWorkbookToNewFileV2(string chfFileName)
         {
             SaveFileDialog saveDlg = new SaveFileDialog
             {
                 Filter = Properties.Resources.WorkbookFiles + " (*.pgn)|*.pgn"
             };
 
-            if (typeConversion)
+
+            if (!string.IsNullOrEmpty(chfFileName))
             {
-                saveDlg.Title = " Save Workbook converted from " + Path.GetFileName(chfFileName);
+                string s = " " + Properties.Resources.SaveWorkbookAs;
+                s = s.Replace("$0", Path.GetFileName(chfFileName));
+                saveDlg.Title = s;
             }
             else
             {
-                if (!string.IsNullOrEmpty(chfFileName))
-                {
-                    saveDlg.Title = " Save Workbook " + Path.GetFileName(chfFileName) + " As...";
-                }
-                else
-                {
-                    saveDlg.Title = " Save New Workbook As...";
-                }
+                saveDlg.Title = " " + Properties.Resources.SaveNewWorkbookAs;
             }
 
             if (!string.IsNullOrEmpty(chfFileName))
             {
                 saveDlg.FileName = Path.GetFileNameWithoutExtension(chfFileName) + ".pgn";
             }
-            else if (!typeConversion && !string.IsNullOrWhiteSpace(AppState.MainWin.SessionWorkbook.Title))
+            else if (!string.IsNullOrWhiteSpace(AppState.MainWin.SessionWorkbook.Title))
             {
                 saveDlg.FileName = AppState.MainWin.SessionWorkbook.Title + ".pgn";
             }

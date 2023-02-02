@@ -225,6 +225,9 @@
   <data name="Close" xml:space="preserve">
     <value>Zamknij</value>
   </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Potwierdź</value>
+  </data>
   <data name="Item" xml:space="preserve">
     <value>Element</value>
   </data>
@@ -586,7 +589,7 @@
     <value>Czarne</value>
   </data>
   <data name="SideToMove" xml:space="preserve">
-    <value>Strona na Posunięciu</value>
+    <value>Strona na Ruchu</value>
   </data>
   <data name="EvaluationShort" xml:space="preserve">
     <value>Ocena</value>
@@ -599,6 +602,9 @@
   </data>
   <data name="ViewOnLichess" xml:space="preserve">
     <value>Zobacz na lichess</value>
+  </data>
+  <data name="FullView" xml:space="preserve">
+    <value>Pełny Widok</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
@@ -645,6 +651,9 @@
   <data name="AllFiles" xml:space="preserve">
     <value>Wszystkie pliki</value>
   </data>
+  <data name="WorkbookNotSaved" xml:space="preserve">
+    <value>Podręcznik nie Zapisany</value>
+  </data>
   <data name="RefGamesNotFound" xml:space="preserve">
     <value>Partii nie znaleziono.</value>
   </data>
@@ -682,7 +691,7 @@
     <value>Ćwiczenie bez rozwiązania</value>
   </data>
   <data name="GameDownloadError" xml:space="preserve">
-    <value>Błąd ściągania partii</value>
+    <value>Błąd przy ściąganiu partii</value>
   </data>
   <data name="EvaluationError" xml:space="preserve">
     <value>Ocena niedostępna</value>
@@ -750,6 +759,9 @@
   <data name="CloseThisWorkbook" xml:space="preserve">
     <value>Zamknij Podręcznik</value>
   </data>
+  <data name="LastFileNotFound" xml:space="preserve">
+    <value>Ostatni plik $0 nie znaleziony.</value>
+  </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>Plik nie znaleziony</value>
   </data>
@@ -760,7 +772,7 @@
     <value>Plik już otwarty</value>
   </data>
   <data name="MergeTrainingIntoStudy" xml:space="preserve">
-    <value>Dodaj ruchy z tej sesji do</value>
+    <value>Dodaj ruchy z tej sesji do źródła</value>
   </data>
   <data name="NoLongerValid" xml:space="preserve">
     <value>będzie teraz nielegalny</value>
@@ -870,8 +882,8 @@
   <data name="ImportIntoChapter" xml:space="preserve">
     <value>Importuj Partię do Rozdziału</value>
   </data>
-  <data name="DownloadGameFromLichess" xml:space="preserve">
-    <value>Ściągnij Partię z lichess</value>
+  <data name="DownloadingGameFromLichess" xml:space="preserve">
+    <value>Trwa ściągnanie partii z lichess. Proszę czekać...</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
     <value>Proszę czekać!</value>
@@ -896,6 +908,9 @@
   </data>
   <data name="FEN" xml:space="preserve">
     <value>Kod FEN</value>
+  </data>
+  <data name="PGN" xml:space="preserve">
+    <value>PGN</value>
   </data>
   <data name="WhiteToPlay" xml:space="preserve">
     <value>Białe zaczynają</value>
@@ -967,7 +982,7 @@
     <value>Decyduje o pewnych domyślnych ustawieniach</value>
   </data>
   <data name="TooltipWorkbookVersion" xml:space="preserve">
-    <value>Wybierz Plik-&gt;Zrób Kopię tej Wersji by podnieść numer wersji</value>
+    <value>Wybierz Plik-&gt;Zrób Kopię tej Wersji by zwiększyć numer wersji</value>
   </data>
   <data name="PgnErrors" xml:space="preserve">
     <value>Błąd w pliku PGN</value>
@@ -1042,7 +1057,7 @@
     <value>Czekaj na odpowiedź...</value>
   </data>
   <data name="TrnGameStarted" xml:space="preserve">
-    <value>Partia treningowas z silnikiem rozpoczęta. Czekaj na ruch silnika...</value>
+    <value>Partia treningowa z silnikiem rozpoczęta. Czekaj na ruch silnika...</value>
   </data>
   <data name="EnginePlayed" xml:space="preserve">
     <value>Silnik zagrał</value>
@@ -1198,7 +1213,7 @@
     <value>Naciśnij prawy przycisk by otworzyć menu ćwiczeń</value>
   </data>
   <data name="cbShowSolution" xml:space="preserve">
-    <value>Pokaż rozwiazanie</value>
+    <value>Pokaż rozwiązanie</value>
   </data>
   <data name="cbMakeMovesOnMainBoard" xml:space="preserve">
     <value>Wykonuj posunięcia na głównej szachownicy</value>
@@ -1255,7 +1270,7 @@
     <value>pat</value>
   </data>
   <data name="OebInsufficientMaterial" xml:space="preserve">
-    <value>nie wystarczający materiał</value>
+    <value>niewystarczający materiał</value>
   </data>
   <data name="OebDraw" xml:space="preserve">
     <value>remis</value>
@@ -1289,5 +1304,35 @@
   </data>
   <data name="PosValBlackKingInCheck" xml:space="preserve">
     <value>Czarny król nie może być w szachu przy ruchu białych</value>
+  </data>
+  <data name="PgnMissingMoveAfter" xml:space="preserve">
+    <value>Brakuje ruchu po</value>
+  </data>
+  <data name="FenTooFewFields" xml:space="preserve">
+    <value>Błąd: FEN nie może mieć niż 6 pól</value>
+  </data>
+  <data name="FenInvalidEnpassant" xml:space="preserve">
+    <value>Błąd: niewazne pole en passant </value>
+  </data>
+  <data name="FenColorNotSpecified" xml:space="preserve">
+    <value>Błąd: nie podano czyj ruch</value>
+  </data>
+  <data name="FenTooFewRows" xml:space="preserve">
+    <value>Błąd: FEN pokrywa $0 rzędów</value>
+  </data>
+  <data name="FenRowIncomplete" xml:space="preserve">
+    <value>Błąd: rząd $0 nie definiuje 8 pól</value>
+  </data>
+  <data name="InvalidEngineMoveReceived" xml:space="preserve">
+    <value>Nieważny ruch otrzymany od silnika</value>
+  </data>
+  <data name="CannotIdentifyPiece" xml:space="preserve">
+    <value>Nie można zidentyfikować bierki</value>
+  </data>
+  <data name="AmbiguousMove" xml:space="preserve">
+    <value>Dwuznaczna notacja ruchu</value>
+  </data>
+  <data name="IllegalCastling" xml:space="preserve">
+    <value>Niedozwolona roszada.</value>
   </data>
 </root>
