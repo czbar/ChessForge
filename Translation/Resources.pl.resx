@@ -126,6 +126,9 @@
   <data name="UntitledWorkbook" xml:space="preserve">
     <value>Podręcznik bez Tytułu</value>
   </data>
+  <data name="WorkbookFiles" xml:space="preserve">
+    <value>Podręczniki</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Tytuł</value>
   </data>
@@ -148,7 +151,7 @@
     <value>Rozdziały</value>
   </data>
   <data name="Study" xml:space="preserve">
-    <value>Studium</value>
+    <value>Teoria</value>
   </data>
   <data name="Game" xml:space="preserve">
     <value>Partia</value>
@@ -234,6 +237,9 @@
   <data name="EvaluatePosition" xml:space="preserve">
     <value>Oceń Pozycję</value>
   </data>
+  <data name="EvaluateMove" xml:space="preserve">
+    <value>Oceń Posunięcie</value>
+  </data>
   <data name="EvaluateLine" xml:space="preserve">
     <value>Oceń Wariant</value>
   </data>
@@ -242,6 +248,21 @@
   </data>
   <data name="Unknown" xml:space="preserve">
     <value>Nieznany</value>
+  </data>
+  <data name="UnknownEngine" xml:space="preserve">
+    <value>Nieznana</value>
+  </data>
+  <data name="UnknownError" xml:space="preserve">
+    <value>Nieznany</value>
+  </data>
+  <data name="Check" xml:space="preserve">
+    <value>szach</value>
+  </data>
+  <data name="Checkmate" xml:space="preserve">
+    <value>mat</value>
+  </data>
+  <data name="Stalemate" xml:space="preserve">
+    <value>pat</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>Plik</value>
@@ -388,19 +409,22 @@
     <value>Zakończ Partię</value>
   </data>
   <data name="StudyTree" xml:space="preserve">
-    <value>Studium</value>
+    <value>Teoria</value>
   </data>
   <data name="StudyTreeAfter" xml:space="preserve">
-    <value>Pozycja ze Studium po</value>
+    <value>Pozycja z Teorii po</value>
   </data>
   <data name="NotNamed" xml:space="preserve">
     <value>brak nazwy</value>
   </data>
   <data name="RestartGameAfter" xml:space="preserve">
-    <value>Restart Game After </value>
+    <value>Cofnij Partię do </value>
   </data>
   <data name="RestartFrom" xml:space="preserve">
-    <value>Restart from </value>
+    <value>Cofnij do </value>
+  </data>
+  <data name="RestartGameFrom" xml:space="preserve">
+    <value>Cofnij Partię do </value>
   </data>
   <data name="CreateNewChapter" xml:space="preserve">
     <value>Utwórz Nowy Rozdział</value>
@@ -621,11 +645,20 @@
   <data name="AllFiles" xml:space="preserve">
     <value>Wszystkie pliki</value>
   </data>
+  <data name="RefGamesNotFound" xml:space="preserve">
+    <value>Partii nie znaleziono.</value>
+  </data>
+  <data name="ErrorLichess" xml:space="preserve">
+    <value>Błąd w dostępie do lichess.org</value>
+  </data>
   <data name="BookmarksAlreadyExist" xml:space="preserve">
     <value>Zakładki już Istnieją</value>
   </data>
   <data name="FailedToSaveFile" xml:space="preserve">
     <value>Błąd przy zapisie pliku</value>
+  </data>
+  <data name="FailedProcessEngineMove" xml:space="preserve">
+    <value>Błąd w przetwarzaniu ruchu silnika.</value>
   </data>
   <data name="ChessEngineNotAvailable" xml:space="preserve">
     <value>Silnik Niedostępny</value>
@@ -727,7 +760,7 @@
     <value>Plik już otwarty</value>
   </data>
   <data name="MergeTrainingIntoStudy" xml:space="preserve">
-    <value>Dodaj ruchy z tej sesji do {0}.</value>
+    <value>Dodaj ruchy z tej sesji do</value>
   </data>
   <data name="NoLongerValid" xml:space="preserve">
     <value>będzie teraz nielegalny</value>
@@ -746,6 +779,24 @@
   </data>
   <data name="ConfirmExerciseMoveDeletion" xml:space="preserve">
     <value>Niektore ruchy w rozwiazaniu są teraz neprawidłowe $0. Usunąć je?</value>
+  </data>
+  <data name="SaveWorkbookAs" xml:space="preserve">
+    <value>Zapisz podręcznik $0 jako ...</value>
+  </data>
+  <data name="SaveNewWorkbookAs" xml:space="preserve">
+    <value>Zapisz nowy podręcznik jako ...</value>
+  </data>
+  <data name="SelectItemsforWorkbook" xml:space="preserve">
+    <value>Wybierz elementy do utworzenia nowego Podręcznika:</value>
+  </data>
+  <data name="SelectGamesToImport" xml:space="preserve">
+    <value>Wybierz Partie do Importu:</value>
+  </data>
+  <data name="SelectExercisesToImport" xml:space="preserve">
+    <value>Wybierz Ćwiczenia do Importu:</value>
+  </data>
+  <data name="SelectItemsForChapter" xml:space="preserve">
+    <value>Wybierz elementy do utworzenia nowego Rozdziału:</value>
   </data>
   <data name="QuizPoints" xml:space="preserve">
     <value>Punktacja do Quizu</value>
@@ -892,10 +943,10 @@
     <value>Połącz Partie w Drzewo Wariantów i skopiuj je do sekcji Partii</value>
   </data>
   <data name="MergeGamesNoCopy" xml:space="preserve">
-    <value>Połącz Partie w Studium ale nie kopiuj ich do sekcji Partii</value>
+    <value>Połącz Partie w Teorii ale nie kopiuj ich do sekcji Partii</value>
   </data>
   <data name="CopyGamesNoMerge" xml:space="preserve">
-    <value>Skopiuj Partie do Sekcji Partii i zostaw Studium puste</value>
+    <value>Skopiuj Partie do Sekcji Partii i zostaw Teorię pustą</value>
   </data>
   <data name="CreateChapterPerGame" xml:space="preserve">
     <value>Utwórz Rozdział do Każdej Partii</value>
@@ -990,6 +1041,9 @@
   <data name="WaitForResponse" xml:space="preserve">
     <value>Czekaj na odpowiedź...</value>
   </data>
+  <data name="TrnGameStarted" xml:space="preserve">
+    <value>Partia treningowas z silnikiem rozpoczęta. Czekaj na ruch silnika...</value>
+  </data>
   <data name="EnginePlayed" xml:space="preserve">
     <value>Silnik zagrał</value>
   </data>
@@ -998,6 +1052,99 @@
   </data>
   <data name="YourTurn" xml:space="preserve">
     <value>Kolej na Twoje posunięcie</value>
+  </data>
+  <data name="TrnAlternativeIs" xml:space="preserve">
+    <value>Alternatywną opcją jest</value>
+  </data>
+  <data name="TrnAlternativesAre" xml:space="preserve">
+    <value>Alternatywne opcje to</value>
+  </data>
+  <data name="TrnAlternative" xml:space="preserve">
+    <value>Alternatywa</value>
+  </data>
+  <data name="TrnAlternatives" xml:space="preserve">
+    <value>Alternatywy</value>
+  </data>
+  <data name="TrnPrefixYour" xml:space="preserve">
+    <value>Twoim</value>
+  </data>
+  <data name="TrnPrefixEngine" xml:space="preserve">
+    <value>Silnika</value>
+  </data>
+  <data name="TrnLineEnded" xml:space="preserve">
+    <value>Koniec wariantu treningowego</value>
+  </data>
+  <data name="TrnGameInProgress" xml:space="preserve">
+    <value>Trwa partia treningowa z silnikiem...</value>
+  </data>
+  <data name="TrnPlayMoveInstead" xml:space="preserve">
+    <value>Graj $0 zamiast Twojego ruchu</value>
+  </data>
+  <data name="TrnStudyResponse" xml:space="preserve">
+    <value>Odpowiedź z Podręcznika</value>
+  </data>
+  <data name="TrnStudyMoveNotInSource" xml:space="preserve">
+    <value>Tego ruchu nie ma w Podręczniku.</value>
+  </data>
+  <data name="TrnStudyOnlyMove" xml:space="preserve">
+    <value>Jedyny ruch w Podręczniku to</value>
+  </data>
+  <data name="TrnStudySourceMoves" xml:space="preserve">
+    <value>Ruchy z Podręcznika to</value>
+  </data>
+  <data name="TrnGameResponse" xml:space="preserve">
+    <value>Opowiedź z Partii</value>
+  </data>
+  <data name="TrnGameMoveNotInSource" xml:space="preserve">
+    <value>Tego ruchu nie ma w Partii</value>
+  </data>
+  <data name="TrnGameOnlyMove" xml:space="preserve">
+    <value>Jedyny ruch w Partii to</value>
+  </data>
+  <data name="TrnGameSourceMoves" xml:space="preserve">
+    <value>Ruchy w Partii to</value>
+  </data>
+  <data name="TrnExerciseResponse" xml:space="preserve">
+    <value>Opowiedź z Ćwiczenia</value>
+  </data>
+  <data name="TrnExerciseMoveNotInSource" xml:space="preserve">
+    <value>Tego ruchu nie ma w Ćwiczeniu</value>
+  </data>
+  <data name="TrnExerciseOnlyMove" xml:space="preserve">
+    <value>Jedyny ruch a Ćwiczeniu to</value>
+  </data>
+  <data name="TrnExerciseSourceMoves" xml:space="preserve">
+    <value>Ruchy w Ćwiczeniu to</value>
+  </data>
+  <data name="TrnUserCheckmatedEngine" xml:space="preserve">
+    <value>Partia zakończona.Silnik został zamatowany.</value>
+  </data>
+  <data name="TrnEngineCheckmatedUser" xml:space="preserve">
+    <value>Partia zakończona. Silnik zamatował Cię.</value>
+  </data>
+  <data name="TrnGameStalemate" xml:space="preserve">
+    <value>Partia zakończyła się patem. Remis.</value>
+  </data>
+  <data name="TrnSessionStartsAfter" xml:space="preserve">
+    <value>Ta sesja treningowa zaczyna się po ruchach:</value>
+  </data>
+  <data name="TrnSessionStart" xml:space="preserve">
+    <value>Zaczynamy sesję treningową.</value>
+  </data>
+  <data name="TrnMakeFirstMove" xml:space="preserve">
+    <value>Rozpocznij trening wykonując swój pierwszy ruch na szachownicy.</value>
+  </data>
+  <data name="TrnUserPlaysWhite" xml:space="preserve">
+    <value>Grasz białymi, a wirtualny trener gra czarnymi.</value>
+  </data>
+  <data name="TrnUserPlaysBlack" xml:space="preserve">
+    <value>Grasz czarnymi, a wirtualny trener gra białymi.</value>
+  </data>
+  <data name="TrnClickMoveBelow" xml:space="preserve">
+    <value>Kliknij na dowolny ruch poniżej aby cofnąć trening do niego.  </value>
+  </data>
+  <data name="TrnRightClickMove" xml:space="preserve">
+    <value>Prawy przycisk myszki wywoła menu.  </value>
   </data>
   <data name="cbUseMenuToOpenWorkbook" xml:space="preserve">
     <value>Użyj opcji Plik w menu by otworzyć podręcznik.</value>
@@ -1009,7 +1156,7 @@
     <value>Niektóre dostępne czynności:</value>
   </data>
   <data name="cbClickStudyHeader" xml:space="preserve">
-    <value>Kliknij na Studium, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Studium </value>
+    <value>Kliknij nagówek Teoria, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Teorię </value>
   </data>
   <data name="cbClickForContextMenu" xml:space="preserve">
     <value>Naciśnij prawy przycisk by wywołać menu</value>

@@ -16,6 +16,9 @@ Workbooks=
 #english: UntitledWorkbook=Untitled Workbook
 UntitledWorkbook=
 
+#description: Workbook files
+#english: WorkbookFiles=Workbook files
+WorkbookFiles=
 
 #description: Title
 #english: Title=Title
@@ -163,6 +166,10 @@ ExerciseHeader=
 #english: EvaluatePosition=Evaluate Position
 EvaluatePosition=
 
+#description: Evaluate a move
+#english: EvaluateMove=Evaluate Move
+EvaluateMove=
+
 #description: Request to evaluate a line
 #english: EvaluateLine=Evaluate Line
 EvaluateLine=
@@ -174,6 +181,27 @@ Done=
 #description: Unknown
 #english: Unknown=Unknown
 Unknown=
+
+#description: Unknown (for engine name)
+#english: UnknownEngine=Unknown
+UnknownEngine=
+
+#description: Unknown (for error)
+#english: UnknownError=Unknown
+UnknownError=
+
+#description: Check
+#english: Check=check
+Check=
+
+#description: Checkmate
+#english: Checkmate=checkmate
+Checkmate=
+
+#description: Stalemate
+#english: Stalemate=stalemate
+Stalemate=
+
 
 #
 # MAIN MENU
@@ -200,7 +228,7 @@ CloseWorkbook=
 #english: Save=Save
 Save=
 
-#description: Save the currently open Workbook into a different file
+#description: Menu to save the currently open Workbook into a different file
 #english: SaveAs=Save $0 As ...
 SaveAs=
 
@@ -416,6 +444,10 @@ RestartGameAfter=
 #description: User wants to restart the training from a certain move in the Training Session
 #english: RestartFrom=Restart from 
 RestartFrom=
+
+#description: Restart game from a selected move (context menu item)
+#english: RestartGameFrom=Restart Game from 
+RestartGameFrom=
 
 
 #
@@ -778,6 +810,14 @@ AllFiles=
 # Message Text
 #
 
+#description: Referenced Games not Found
+#english: RefGamesNotFound=Referenced games not found.
+RefGamesNotFound=
+
+#description: Error communcating with liches
+#english: ErrorLichess=Error accessing lichess.org
+ErrorLichess=
+
 #description: Bookmarks already exist
 #english: BookmarksAlreadyExist=Bookmarks already exist
 BookmarksAlreadyExist=
@@ -785,6 +825,10 @@ BookmarksAlreadyExist=
 #description: Error saving file
 #english: FailedToSaveFile=Failed to save file
 FailedToSaveFile=
+
+#description: Error processing engine's move
+#english: FailedProcessEngineMove=Failed to parse engine's move.
+FailedProcessEngineMove=
 
 #description: Chess Engine not available
 #english: ChessEngineNotAvailable=Chess Engine not available
@@ -923,7 +967,7 @@ SaveWorkbook=
 FileAlreadyOpen=
 
 #description: Confirmation to merge training moves into the Study Tree / Game or Exercise
-#english: MergeTrainingIntoStudy=Merge and Save new moves from this session into the {0}?
+#english: MergeTrainingIntoStudy=Merge and Save new moves from this session into the
 MergeTrainingIntoStudy=
 
 #description: (Move) no longer valid 
@@ -951,11 +995,35 @@ WrongTypeEntitiesNotImported=
 #english: ConfirmExerciseMoveDeletion=Some move in the solution are no longer legal $0. Delete them?
 ConfirmExerciseMoveDeletion=
 
+
 ##################################
 #
 # Dialogs
 #
 
+#description: Save the currently open Workbook into a different file
+#english: SaveWorkbookAs=Save Workbook $0 As ...
+SaveWorkbookAs=
+
+#description: Save newly crated Workbook into a different file
+#english: SaveNewWorkbookAs=Save New Workbook As ...
+SaveNewWorkbookAs=
+
+#description: Select Items to create a new Workbook
+#english: SelectItemsforWorkbook=Select Items to create a new Workbook from:
+SelectItemsforWorkbook=
+
+#description: Select Games to Import
+#english: SelectGamesToImport=Select Games to Import:
+SelectGamesToImport=
+
+#description: Select Exercises to Import
+#english: SelectExercisesToImport=Select Exercises to Import:
+SelectExercisesToImport=
+
+#description: Select Items to create a new Chapter from
+#english: SelectItemsForChapter=Select Items to create a new Chapter from:
+SelectItemsForChapter=
 
 #description: Quiz points
 #english: QuizPoints=Quiz points
@@ -1290,6 +1358,10 @@ WaitForEngineResponse=
 #english: WaitForResponse=Wait for a response...
 WaitForResponse=
 
+#description:  Game started, wait for the engine
+#english: TrnGameStarted=A training game against the engine has started. Wait for the engine's move...
+TrnGameStarted=
+
 #description:  Engine Played
 #english: EnginePlayed=The engine played
 EnginePlayed=
@@ -1301,6 +1373,140 @@ CoachPlayed=
 #description:  Your turn now
 #english: YourTurn=It is your turn now
 YourTurn=
+
+#description: Alternative is
+#english: TrnAlternativeIs=The alternative is
+TrnAlternativeIs=
+
+#description: Alternatives are
+#english: TrnAlternativesAre=The alternatives are
+TrnAlternativesAre=
+
+#description: Alternative
+#english: TrnAlternative=Alternative
+TrnAlternative=
+
+#description: Alternatives
+#english: TrnAlternatives=Alternatives
+TrnAlternatives=
+
+#description: Prefix Your (for "after your move")
+#english: TrnPrefixYour=your
+TrnPrefixYour=
+
+#description: Perefix Engine (for "after engine's move")
+#english: TrnPrefixEngine=engine's
+TrnPrefixEngine=
+
+#description: End of line
+#english: TrnLineEnded=The training line has ended
+TrnLineEnded=
+
+#description: Training Game in progress
+#english: TrnGameInProgress=A training game against the engine is in progress...
+TrnGameInProgress=
+
+#description: Play this move instead
+#english: TrnPlayMoveInstead=Play $0 instead of Your Move
+TrnPlayMoveInstead=
+
+### Training from Study
+
+#description: Response 
+#english: TrnStudyResponse=Workbook response
+TrnStudyResponse=
+
+#description: Not in the source 
+#english: TrnStudyMoveNotInSource=This is not in the Workbook
+TrnStudyMoveNotInSource=
+
+#description: The only move 
+#english: TrnStudyOnlyMove=The only move in the Workbook is
+TrnStudyOnlyMove=
+
+#description: The only moves
+#english: TrnStudySourceMoves=The Workbook moves are
+TrnStudySourceMoves=
+
+
+### Training from Game
+
+#description: Response 
+#english: TrnGameResponse=Response from the Game
+TrnGameResponse=
+
+#description: Not in the source 
+#english: TrnGameMoveNotInSource=This is not in the Game
+TrnGameMoveNotInSource=
+
+#description: The only move 
+#english: TrnGameOnlyMove=The only move in the Game is
+TrnGameOnlyMove=
+
+#description: The only moves
+#english: TrnGameSourceMoves=The moves in the Game are
+TrnGameSourceMoves=
+
+
+### Training from Exercise
+
+#description: Response 
+#english: TrnExerciseResponse=Response from the Exercise
+TrnExerciseResponse=
+
+#description: Not in the source 
+#english: TrnExerciseMoveNotInSource=This is not in the Exercise
+TrnExerciseMoveNotInSource=
+
+#description: The only move 
+#english: TrnExerciseOnlyMove=The only move in the Exercise is
+TrnExerciseOnlyMove=
+
+#description: The only moves
+#english: TrnExerciseSourceMoves=The moves in the Exercise are
+TrnExerciseSourceMoves=
+
+
+#description: Game ended, user checkmated engine
+#english: TrnUserCheckmatedEngine=The training game has ended. You have delivered a checkmate!
+TrnUserCheckmatedEngine=
+
+#description: Game ended, engine checkmated user
+#english: TrnEngineCheckmatedUser=The training game has ended. You have been checkmated by the engine.
+TrnEngineCheckmatedUser=
+
+#description: Game ended in a stalemate
+#english: TrnGameStalemate=This is a stalemate. The game has been drawn.
+TrnGameStalemate=
+
+#description: Training session start header
+#english: TrnSessionStartsAfter=This training session begins after:
+TrnSessionStartsAfter=
+
+#description: Training session start note
+#english: TrnSessionStart=Starting a training session.
+TrnSessionStart=
+
+#description: Prompt for the user the first move
+#english: TrnMakeFirstMove=To begin, make your first move on the chessboard.
+TrnMakeFirstMove=
+
+#description: User is White
+#english: TrnUserPlaysWhite=You play White and the virtual coach plays Black
+TrnUserPlaysWhite=
+
+#description: User is Black
+#english: TrnUserPlaysBlack=You play Black and the virtual coach plays White
+TrnUserPlaysBlack=
+
+#description: Click move instruction
+#english: TrnClickMoveBelow=Click any move below to restart training from it.  
+TrnClickMoveBelow=
+
+#description: Right click move instruction
+#english: TrnRightClickMove=Right click to open the context menu.  
+TrnRightClickMove=
+
 
 ##################################
 #
@@ -1430,6 +1636,7 @@ cbEngineCheckmatedYou=
 #description: This is a stalemate.
 #english: cbStalemateAndDraw=This is a stalemate! You have drawn the game.
 cbStalemateAndDraw=
+
 
 ##################################
 #
