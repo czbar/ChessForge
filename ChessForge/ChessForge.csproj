@@ -383,6 +383,8 @@
     <Resource Include="Resources\Images\lichess_logo.png" />
     <Resource Include="Resources\Images\chevron-down.png" />
     <Resource Include="Resources\Images\chevron-up.png" />
+    <Resource Include="Resources\Images\ToggleOff.png" />
+    <Resource Include="Resources\Images\ToggleOn.png" />
     <Content Include="Resources\Sounds\InvalidMove.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
