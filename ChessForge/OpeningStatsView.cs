@@ -165,11 +165,11 @@ namespace ChessForge
         {
             Paragraph para = new Paragraph();
 
-            Run rIntro = new Run("Error while communicating with lichess.org:");
+            Run rIntro = new Run(Properties.Resources.ErrorLichess + ": ");
             rIntro.FontSize = 14 + Configuration.FontSizeDiff;
             para.Inlines.Add(rIntro);
 
-            Run rError = new Run("    " + errorMessage ?? "[unknown]");
+            Run rError = new Run("    " + errorMessage ?? ("[" + Properties.Resources.UnknownError + "]"));
             rError.FontSize = 12 + Configuration.FontSizeDiff;
             para.Inlines.Add(rError);
 

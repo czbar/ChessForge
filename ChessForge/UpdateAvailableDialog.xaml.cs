@@ -25,7 +25,9 @@ namespace ChessForge
         {
             _ver = ver;
             InitializeComponent();
-            UiLblPreamble.Content = "New version " + ver.ToString() + " available from:";
+            string s = Properties.Resources.NewVersionAvailable;
+            s = s.Replace("$0", ver.ToString());
+            UiLblPreamble.Content = s;
         }
 
         /// <summary>

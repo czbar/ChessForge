@@ -570,7 +570,7 @@ namespace ChessForge
                 FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff,
                 VerticalContentAlignment = VerticalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Left,
-                Content = "  Top Games",
+                Content = "  " + Properties.Resources.TopGames,
 
                 BorderThickness = new Thickness(0, 0, 0, 0),
                 Padding = new Thickness(0, 0, 0, 0)

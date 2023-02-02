@@ -21,7 +21,7 @@ namespace ChessForge
     /// - The initial prompt paragraph is shown before user's first move and is then deleted.
     /// - The paragraphs that follow show user moves and "coach's" responses with comment
     ///   paragraphs, optionally, in between.
-    ///   The comment paragraph will in particular include wrokbook moves other than the move
+    ///   The comment paragraph will in particular include workbook moves other than the move
     ///   made by the user.
     /// - If the user starts a game with the engine, an engine game paragraph will be created.
     ///   It will be removed when the game ends or is abandoned.
@@ -223,11 +223,8 @@ namespace ChessForge
         /// </summary>
         private PieceColor _trainingSide;
 
-        /// <summary>
-        /// The word to use in messaging the user; Workbook or Game, depending on
-        /// when the training started from.
-        /// </summary>
-        private static string TRAINING_SOURCE = "Workbook";
+        // type of the training source
+        private static GameData.ContentType _sourceType = GameData.ContentType.NONE;
 
         /// <summary>
         /// Layout definitions for paragraphs at different levels.
@@ -271,15 +268,7 @@ namespace ChessForge
         /// <param name="node"></param>
         public void Initialize(TreeNode node, GameData.ContentType contentType)
         {
-            if (contentType == GameData.ContentType.MODEL_GAME)
-            {
-                TRAINING_SOURCE = "Game";
-            }
-            else
-            {
-                TRAINING_SOURCE = "Workbook";
-            }
-
+            _sourceType = contentType;
             _currentEngineGameMoveCount = 0;
             _trainingSide = node.ColorToMove;
 
@@ -498,7 +487,7 @@ namespace ChessForge
             if (_currentEngineGameMoveCount == 0)
             {
                 _paraCurrentEngineGame.Inlines.Clear();
-                _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine is in progress...\n"));
+                _paraCurrentEngineGame.Inlines.Add(new Run("\n" + Properties.Resources.TrnGameInProgress + "\n"));
                 text = "          " + MoveUtils.BuildSingleMoveText(nd, true) + " ";
             }
             else
@@ -538,7 +527,7 @@ namespace ChessForge
 
             string text = "";
             _paraCurrentEngineGame.Inlines.Clear();
-            _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine is in progress...\n"));
+            _paraCurrentEngineGame.Inlines.Add(new Run("\n" + Properties.Resources.TrnGameInProgress + "\n"));
             text = "          " + MoveUtils.BuildSingleMoveText(nd, true) + " ";
             Run r_root = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
             _paraCurrentEngineGame.Inlines.Add(r_root);
@@ -661,13 +650,23 @@ namespace ChessForge
                 Run r_prefix = new Run();
                 if (userMove)
                 {
-                    //r_prefix.Text = Constants.CharRightArrow + " ";
                     r_prefix.FontWeight = FontWeights.Normal;
                     para.Inlines.Add(r_prefix);
                 }
                 else
                 {
-                    r_prefix.Text = TRAINING_SOURCE + " response" + ": ";
+                    switch (_sourceType)
+                    {
+                        case GameData.ContentType.STUDY_TREE:
+                            r_prefix.Text = Properties.Resources.TrnStudyResponse + ": ";
+                            break;
+                        case GameData.ContentType.MODEL_GAME:
+                            r_prefix.Text = Properties.Resources.TrnGameResponse + ": ";
+                            break;
+                        case GameData.ContentType.EXERCISE:
+                            r_prefix.Text = Properties.Resources.TrnExerciseResponse + ": ";
+                            break;
+                    }
                     r_prefix.FontWeight = FontWeights.Normal;
                     para.Inlines.Add(r_prefix);
                 }
@@ -699,11 +698,11 @@ namespace ChessForge
             Run r_prefix = new Run();
             if (userMove)
             {
-                r_prefix.Text = "\nThe training game has ended. You have delivered a checkmate!";
+                r_prefix.Text = "\n" + Properties.Resources.TrnUserCheckmatedEngine;
             }
             else
             {
-                r_prefix.Text = "\nThe training game has ended. You have been checkmated by the engine.";
+                r_prefix.Text = "\n" + Properties.Resources.TrnEngineCheckmatedUser;
             }
 
             para.Inlines.Add(r_prefix);
@@ -722,7 +721,7 @@ namespace ChessForge
             para.Name = paraName;
 
             Run r_prefix = new Run();
-            r_prefix.Text = "\nThis is a stalemate. The game has been drawn.";
+            r_prefix.Text = "\n" + Properties.Resources.TrnGameStalemate;
 
             para.Inlines.Add(r_prefix);
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
@@ -740,11 +739,11 @@ namespace ChessForge
             string sPrefix;
             if (node.NodeId != 0)
             {
-                sPrefix = "\nThis training session with your virtual Coach begins in the starting position: \n";
+                sPrefix = "\n" + Properties.Resources.TrnSessionStartsAfter + " \n";
             }
             else
             {
-                sPrefix = "\nStarting a training session with your virtual Coach. \n";
+                sPrefix = "\n" + Properties.Resources.TrnSessionStart + " \n";
             }
             Run r_prefix = new Run(sPrefix);
 
@@ -792,19 +791,24 @@ namespace ChessForge
         private void BuildInstructionsText()
         {
             StringBuilder sbInstruction = new StringBuilder();
-            sbInstruction.Append("You will be making moves for");
-            sbInstruction.Append(TrainingSession.StartPosition.ColorToMove == PieceColor.White ? " White " : " Black ");
-            sbInstruction.Append("and the program will respond for");
-            sbInstruction.Append(TrainingSession.StartPosition.ColorToMove == PieceColor.White ? " Black." : " White.");
-            sbInstruction.AppendLine();
-            //            sbInstruction.Append("The Coach will comment on your every move based on the content of the " + TRAINING_SOURCE + ".\n");
-            sbInstruction.Append("\nRemember that you can:\n");
-            sbInstruction.Append("- double click on an alternative move highlighted in the comment to play it instead of your original choice,\n");
-            sbInstruction.Append("- right click on any move to invoke a context menu where, among other options, you can request engine evaluation of the move.\n");
+            if (TrainingSession.StartPosition.ColorToMove == PieceColor.White)
+            {
+                sbInstruction.Append(Properties.Resources.TrnUserPlaysWhite);
+            }
+            else
+            {
+                sbInstruction.Append(Properties.Resources.TrnUserPlaysBlack);
+            }
+
+            sbInstruction.AppendLine("");
+            sbInstruction.AppendLine("");
+
+            sbInstruction.AppendLine(Properties.Resources.TrnClickMoveBelow);
+            sbInstruction.AppendLine(Properties.Resources.TrnRightClickMove);
 
             _dictParas[ParaType.INSTRUCTIONS] = AddNewParagraphToDoc(STYLE_INTRO, sbInstruction.ToString());
 
-            _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_FIRST_PROMPT, "To begin, make your first move on the chessboard.");
+            _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_FIRST_PROMPT, Properties.Resources.TrnMakeFirstMove);
         }
 
         /// <summary>
@@ -840,7 +844,7 @@ namespace ChessForge
                 BuildMoveParagraph(nd, false);
 
                 Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
-                _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   Your turn...");
+                _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn  + "...");
 
                 _mainWin.BoardCommentBox.GameMoveMade(nd, false);
             }
@@ -879,7 +883,7 @@ namespace ChessForge
                     {
                         if (!isWorkbookMove)
                         {
-                            sbAlignmentNote.Append("The Workbook line has ended. ");
+                            sbAlignmentNote.Append(Properties.Resources.TrnLineEnded + ". ");
                         }
                         wbAlignmentNoteRun.Text = sbAlignmentNote.ToString();
                         para.Inlines.Add(wbAlignmentNoteRun);
@@ -888,31 +892,51 @@ namespace ChessForge
                     {
                         if (!isWorkbookMove)
                         {
-                            sbAlignmentNote.Append("This is not in the " + TRAINING_SOURCE + ". ");
+                            string note = "";
+                            switch (_sourceType)
+                            {
+                                case GameData.ContentType.STUDY_TREE:
+                                    note = Properties.Resources.TrnStudyMoveNotInSource + ": ";
+                                    break;
+                                case GameData.ContentType.MODEL_GAME:
+                                    note = Properties.Resources.TrnGameMoveNotInSource + ": ";
+                                    break;
+                                case GameData.ContentType.EXERCISE:
+                                    note = Properties.Resources.TrnExerciseMoveNotInSource + ": ";
+                                    break;
+                            }
+                            sbAlignmentNote.Append(note + ". ");
                         }
 
                         Run rAlternativeNote = null;
                         if (!isWorkbookMove)
                         {
-                            if (_otherMovesInWorkbook.Count == 1)
+                            string note = "";
+                            bool single = _otherMovesInWorkbook.Count == 1;
+                            switch (_sourceType)
                             {
-                                sbAlignmentNote.Append("The only " + TRAINING_SOURCE + " move is ");
+                                case GameData.ContentType.STUDY_TREE:
+                                    note = single ? Properties.Resources.TrnStudyOnlyMove : Properties.Resources.TrnStudySourceMoves;
+                                    break;
+                                case GameData.ContentType.MODEL_GAME:
+                                    note = single ? Properties.Resources.TrnStudyOnlyMove : Properties.Resources.TrnGameSourceMoves;
+                                    break;
+                                case GameData.ContentType.EXERCISE:
+                                    note = single ? Properties.Resources.TrnStudyOnlyMove : Properties.Resources.TrnExerciseSourceMoves;
+                                    break;
                             }
-                            else
-                            {
-                                sbAlignmentNote.Append("The " + TRAINING_SOURCE + " moves are ");
-                            }
+                            sbAlignmentNote.Append(note + " ");
                         }
                         else
                         {
                             rAlternativeNote = new Run();
                             if (_otherMovesInWorkbook.Count == 1)
                             {
-                                rAlternativeNote.Text = "  Alternative is ";
+                                rAlternativeNote.Text = "  " + Properties.Resources.TrnAlternativeIs + " ";
                             }
                             else
                             {
-                                rAlternativeNote.Text = "  Alternatives are ";
+                                rAlternativeNote.Text = "  " + Properties.Resources.TrnAlternativesAre + " ";
                             }
                             rAlternativeNote.FontSize = para.FontSize - 1;
                             rAlternativeNote.Foreground = _userBrush;
@@ -972,11 +996,11 @@ namespace ChessForge
             {
                 if (lstAlternatives.Count == 1)
                 {
-                    sbWbAlternatives.Append("  Alternative: ");
+                    sbWbAlternatives.Append("  " + Properties.Resources.TrnAlternative + ": ");
                 }
                 else
                 {
-                    sbWbAlternatives.Append("  Alternatives: ");
+                    sbWbAlternatives.Append("  " + Properties.Resources.TrnAlternatives + ": ");
                 }
 
                 wbAlternativesRun.Text += sbWbAlternatives;
@@ -1095,21 +1119,8 @@ namespace ChessForge
         /// </summary>
         /// <param name="midTxt"></param>
         /// <returns></returns>
-        private string BuildMoveTextForMenu(TreeNode nd, out string midTxt)
+        private string BuildMoveTextForMenu(TreeNode nd)
         {
-            midTxt = " ";
-            if (_moveContext == MoveContext.GAME || _moveContext == MoveContext.LINE)
-            {
-                if (nd.ColorToMove != _trainingSide)
-                {
-                    midTxt = " Your ";
-                }
-                else
-                {
-                    midTxt = " Engine\'s ";
-                }
-            }
-
             return MoveUtils.BuildSingleMoveText(nd, true);
         }
 
@@ -1128,8 +1139,7 @@ namespace ChessForge
 
             _mainWin.Dispatcher.Invoke(() =>
             {
-                string midTxt;
-                string moveTxt = BuildMoveTextForMenu(_lastClickedNode, out midTxt);
+                string moveTxt = BuildMoveTextForMenu(_lastClickedNode);
 
                 ContextMenu cm = _mainWin._cmTrainingView;
                 foreach (object o in cm.Items)
@@ -1140,23 +1150,25 @@ namespace ChessForge
                         switch (mi.Name)
                         {
                             case "_mnTrainEvalMove":
-                                mi.Header = "Evaluate" + midTxt + "Move " + moveTxt;
+                                mi.Header = Properties.Resources.EvaluateMove + " " + moveTxt;
                                 mi.Visibility = Visibility.Visible;
                                 break;
                             case "_mnTrainEvalLine":
-                                mi.Header = "Evaluate Line";
+                                mi.Header = Properties.Resources.EvaluateLine;
                                 mi.Visibility = _moveContext == MoveContext.WORKBOOK_COMMENT ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnTrainRestartGame":
-                                mi.Header = "Restart game from " + midTxt + "Move " + moveTxt;
+                                mi.Header = "Restart game from " + moveTxt;
                                 mi.Visibility = _moveContext == MoveContext.GAME ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "_mnRollBackTraining":
-                                mi.Header = "Restart Training from " + moveTxt;
+                                mi.Header = Properties.Resources.RestartGameFrom + " " + moveTxt;
                                 mi.Visibility = (_moveContext == MoveContext.LINE || _moveContext == MoveContext.WORKBOOK_COMMENT) ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "_mnTrainSwitchToWorkbook":
-                                mi.Header = "Play " + moveTxt + " instead of Your Move";
+                                string altMove = Properties.Resources.TrnPlayMoveInstead;
+                                altMove = altMove.Replace("$0", moveTxt);
+                                mi.Header =  altMove;
                                 mi.Visibility = _moveContext == MoveContext.WORKBOOK_COMMENT ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "_mnTrainRestartTraining":
@@ -1344,8 +1356,8 @@ namespace ChessForge
                             // if not the last move, ask if to restart
                             if (EngineGame.GetLastGameNode() != _lastClickedNode)
                             {
-                                string moveTxt = BuildMoveTextForMenu(_lastClickedNode, out _);
-                                if (MessageBox.Show("Restart from " + moveTxt + "?", "Chess Forge Training", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                                string moveTxt = BuildMoveTextForMenu(_lastClickedNode);
+                                if (MessageBox.Show(Properties.Resources.RestartFrom + " " + moveTxt + "?", Properties.Resources.Training, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                                 {
                                     RestartFromClickedMove(_moveContext);
                                 }

@@ -674,8 +674,8 @@ namespace ChessForge
                 SessionWorkbook = new Workbook();
                 Chapter chapter = SessionWorkbook.CreateDefaultChapter();
 
-                if (AppState.MainWin.SelectArticlesFromPgnFile(ref games, 
-                                                                      SelectGamesDialog.Mode.CREATE_WORKBOOK, 
+                if (AppState.MainWin.SelectArticlesFromPgnFile(ref games,
+                                                                      SelectGamesDialog.Mode.CREATE_WORKBOOK,
                                                                       out bool createStudy, out bool copyGames, out bool multiChapter))
                 {
                     if (createStudy && !multiChapter)
@@ -696,7 +696,7 @@ namespace ChessForge
                     {
                         if (SaveWorkbookToNewFileV2("", false))
                         {
-                            success= true;
+                            success = true;
                         }
                     }
                 }
@@ -998,22 +998,22 @@ namespace ChessForge
             switch (AppState.ActiveVariationTree.ContentType)
             {
                 case GameData.ContentType.STUDY_TREE:
-                    origin = "Study";
+                    origin = Properties.Resources.Study;
                     break;
                 case GameData.ContentType.MODEL_GAME:
-                    origin = "Game";
+                    origin = Properties.Resources.Game;
                     break;
                 case GameData.ContentType.EXERCISE:
-                    origin = "Exercise";
+                    origin = Properties.Resources.Exercise;
                     break;
                 default:
-                    origin = "Workbook";
+                    origin = Properties.Resources.Workbook;
                     break;
             }
 
-            string message = string.Format("Merge and Save new moves from this session into the {0}?", origin);
+            string message = Properties.Resources.MergeTrainingIntoStudy + " " + origin + "?";
 
-            res = MessageBox.Show(message, "Chess Forge Save Workbook",
+            res = MessageBox.Show(message, Properties.Resources.SaveWorkbook,
                 buttons, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
@@ -1098,7 +1098,7 @@ namespace ChessForge
         {
             SaveFileDialog saveDlg = new SaveFileDialog
             {
-                Filter = "pgn Workbook files (*.pgn)|*.pgn"
+                Filter = Properties.Resources.WorkbookFiles + " (*.pgn)|*.pgn"
             };
 
             if (typeConversion)
@@ -1130,7 +1130,7 @@ namespace ChessForge
             if (saveDlg.ShowDialog() == true)
             {
                 string pgnFileName = saveDlg.FileName;
-                AppState.SaveWorkbookToNewFile(chfFileName, pgnFileName, typeConversion);
+                AppState.SaveWorkbookToNewFile(chfFileName, pgnFileName);
                 return true;
             }
             else
@@ -1147,14 +1147,14 @@ namespace ChessForge
         /// first time since creation).
         /// </summary>
         /// <param name="pgnFileName"></param>
-        public static bool SaveWorkbookToNewFile(string pgnFileName, bool typeConversion)
+        public static bool SaveWorkbookToNewFile(string pgnFileName)
         {
             SaveFileDialog saveDlg = new SaveFileDialog
             {
-                Filter = "Workbook files (*.pgn)|*.pgn"
+                Filter = Properties.Resources.WorkbookFiles + " (*.pgn)|*.pgn"
             };
 
-            // if this is a new Workbook suggest file name based on title.
+            // if this is a new Workbook, suggest file name based on title.
             if (pgnFileName == null && WorkbookManager.SessionWorkbook != null && !string.IsNullOrWhiteSpace(WorkbookManager.SessionWorkbook.Title))
             {
                 string title = TextUtils.RemoveInvalidCharsFromFileName(WorkbookManager.SessionWorkbook.Title);
@@ -1164,27 +1164,22 @@ namespace ChessForge
                 }
             }
 
-            if (typeConversion)
+            if (!string.IsNullOrEmpty(pgnFileName))
             {
-                saveDlg.Title = " Save Workbook converted from " + Path.GetFileName(pgnFileName);
+                string s = " " + Properties.Resources.SaveWorkbookAs;
+                s = s.Replace("$0", Path.GetFileName(pgnFileName));
+                saveDlg.Title = s;
             }
             else
             {
-                if (!string.IsNullOrEmpty(pgnFileName))
-                {
-                    saveDlg.Title = " Save Workbook " + Path.GetFileName(pgnFileName) + " As...";
-                }
-                else
-                {
-                    saveDlg.Title = " Save New Workbook As...";
-                }
+                saveDlg.Title = " " + Properties.Resources.SaveNewWorkbookAs;
             }
 
             saveDlg.OverwritePrompt = true;
             if (saveDlg.ShowDialog() == true)
             {
                 string chfFileName = saveDlg.FileName;
-                AppState.SaveWorkbookToNewFile(pgnFileName, chfFileName, typeConversion);
+                AppState.SaveWorkbookToNewFile(pgnFileName, chfFileName);
                 return true;
             }
             else
