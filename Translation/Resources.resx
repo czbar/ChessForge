@@ -821,7 +821,7 @@
     <value>Engine Executable</value>
   </data>
   <data name="EngineTimePerMove" xml:space="preserve">
-    <value>Engine Time per Move (s)</value>
+    <value>Engine Think Time (s)</value>
   </data>
   <data name="ThinkTimeInGame" xml:space="preserve">
     <value>In Game</value>

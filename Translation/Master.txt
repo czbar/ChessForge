@@ -816,7 +816,7 @@ LostQuizPoints=Lost quiz points
 EngineExecutable=Engine Executable
 
 #Engine Time per Move in seconds (group frame title)
-EngineTimePerMove=Engine Time per Move (s)
+EngineTimePerMove=Engine Think Time (s)
 
 #Time to think in the Game (inside a frame titled "Engine Time per Move")
 ThinkTimeInGame=In Game

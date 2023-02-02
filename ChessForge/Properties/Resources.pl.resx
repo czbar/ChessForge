@@ -358,7 +358,7 @@
     <value>Na Temat</value>
   </data>
   <data name="AutoSave" xml:space="preserve">
-    <value>Auto-Zapis)</value>
+    <value>Auto-Zapis</value>
   </data>
   <data name="Explorers" xml:space="preserve">
     <value>Biblioteka</value>
@@ -766,7 +766,7 @@
     <value>Plik nie znaleziony</value>
   </data>
   <data name="SaveWorkbook" xml:space="preserve">
-    <value>Zapis Podręcznika</value>
+    <value>Zapisać Podręcznik?</value>
   </data>
   <data name="FileAlreadyOpen" xml:space="preserve">
     <value>Plik już otwarty</value>
@@ -820,16 +820,16 @@
     <value>Silnik</value>
   </data>
   <data name="EngineTimePerMove" xml:space="preserve">
-    <value>Czas Silnika na Posunięcie</value>
+    <value>Czas Namysłu Silnika (s)</value>
   </data>
   <data name="ThinkTimeInGame" xml:space="preserve">
-    <value>Czas do Namysłu w Partii</value>
+    <value>W Partii</value>
   </data>
   <data name="MoveReplay" xml:space="preserve">
-    <value>Auto-Odtwarzanie</value>
+    <value>Auto-Odtwarzanie Ruchów</value>
   </data>
   <data name="AutoReplaySpeed" xml:space="preserve">
-    <value>Prędkość Auto-Odtwarzania</value>
+    <value>Auto (s)</value>
   </data>
   <data name="AllowMouseWheel" xml:space="preserve">
     <value>Uaktywnij Kółko Myszy</value>

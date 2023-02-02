@@ -1150,7 +1150,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Engine Time per Move (s).
+        ///   Looks up a localized string similar to Engine Think Time (s).
         /// </summary>
         public static string EngineTimePerMove {
             get {

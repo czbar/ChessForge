@@ -346,7 +346,7 @@ About=Na Temat
 #description: Label for automatic (periodic) saving of the Workbook
 #! Keep short
 #english: AutoSave=Auto Save
-AutoSave=Auto-Zapis)
+AutoSave=Auto-Zapis
 
 #description: Explorers label
 #! Keep short
@@ -972,7 +972,7 @@ FileNotFound=Plik nie znaleziony
 
 #description: Save the Workbook
 #english: SaveWorkbook=Save the Workbook?
-SaveWorkbook=Zapis Podręcznika
+SaveWorkbook=Zapisać Podręcznik?
 
 #description: File already open
 #english: FileAlreadyOpen=$0 is already open."
@@ -1050,20 +1050,20 @@ LostQuizPoints=Punkty stracone
 EngineExecutable=Silnik
 
 #description: Engine Time per Move in seconds (group frame title)
-#english: EngineTimePerMove=Engine Time per Move (s)
-EngineTimePerMove=Czas Silnika na Posunięcie
+#english: EngineTimePerMove=Engine Think Time (s)
+EngineTimePerMove=Czas Namysłu Silnika (s)
 
 #description: Time to think in the Game (inside a frame titled "Engine Time per Move")
 #english: ThinkTimeInGame=In Game
-ThinkTimeInGame=Czas do Namysłu w Partii
+ThinkTimeInGame=W Partii
 
 #description: Move Replay(group frame title)
 #english: MoveReplay=Move Replay
-MoveReplay=Auto-Odtwarzanie
+MoveReplay=Auto-Odtwarzanie Ruchów
 
 #description: Time per move in auto replay in seconds (inside a frame titled "Move Replay")
 #english: AutoReplaySpeed=Auto Speed (s)
-AutoReplaySpeed=Prędkość Auto-Odtwarzania
+AutoReplaySpeed=Auto (s)
 
 #description: Allow manual replay with a mouse wheel 
 #english: AllowMouseWheel=Allow Mouse Wheel

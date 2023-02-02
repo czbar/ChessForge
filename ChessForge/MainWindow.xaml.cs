@@ -375,6 +375,8 @@ namespace ChessForge
             LocalizedStrings.Values.Add(LocalizedStrings.StringId.CannotIdentifyPiece, Properties.Resources.CannotIdentifyPiece);
             LocalizedStrings.Values.Add(LocalizedStrings.StringId.IllegalCastling, Properties.Resources.IllegalCastling);
             LocalizedStrings.Values.Add(LocalizedStrings.StringId.AmbiguousMove, Properties.Resources.AmbiguousMove);
+
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.StartingPosition, Properties.Resources.StartingPosition);
         }
 
         /// <summary>

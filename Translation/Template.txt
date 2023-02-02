@@ -1050,7 +1050,7 @@ LostQuizPoints=
 EngineExecutable=
 
 #description: Engine Time per Move in seconds (group frame title)
-#english: EngineTimePerMove=Engine Time per Move (s)
+#english: EngineTimePerMove=Engine Think Time (s)
 EngineTimePerMove=
 
 #description: Time to think in the Game (inside a frame titled "Engine Time per Move")

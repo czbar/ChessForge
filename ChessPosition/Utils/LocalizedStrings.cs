@@ -36,6 +36,8 @@ namespace ChessPosition.Utils
             CannotIdentifyPiece,
             IllegalCastling,
             AmbiguousMove,
+
+            StartingPosition,
         }
 
         /// <summary>
