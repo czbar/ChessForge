@@ -114,6 +114,9 @@ Exit=Exit
 #Close
 Close=Close
 
+#Confirm
+Confirm=Confirm
+
 #Item
 Item=Item
 
@@ -571,7 +574,8 @@ ImportIntoThisChapter=Import into Active Chapter
 #Open the user's browser to view the game on lichess.org
 ViewOnLichess=View on lichess
 
-
+#Full view of the game
+FullView=Full View
 
 ##################################
 #
@@ -627,6 +631,10 @@ PgnFile=PGN files
 
 #All files (in Open File dialog)
 AllFiles=All files
+
+#Workbook not saved
+WorkbookNotSaved=Workbook not Saved
+
 
 
 ##################################
@@ -741,7 +749,7 @@ UnexpectedErrorInUserMove=Unexpected error while processing user's move
 CloseThisWorkbook=Close the current Workbook?
 
 #Last file not found
-#LastFileNotFound=Most recent file $0 could not be found.
+LastFileNotFound=Most recent file $0 could not be found.
 
 #File not found
 FileNotFound=File $0 could not be found.
@@ -753,7 +761,7 @@ SaveWorkbook=Save the Workbook?
 FileAlreadyOpen=$0 is already open."
 
 #Confirmation to merge training moves into the Study Tree / Game or Exercise
-MergeTrainingIntoStudy=Merge and Save new moves from this session into the
+MergeTrainingIntoStudy=Merge and Save new moves from this session into the source
 
 #(Move) no longer valid 
 NoLongerValid=is no longer valid
@@ -874,7 +882,7 @@ NextGame=Next Game
 ImportIntoChapter=Import into Chapter
 
 #Downloading game from lichess
-DownloadGameFromLichess=Downloading Game From lichess.org.
+DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
 
 #Please wait
 PleaseWait=Please Wait
@@ -899,6 +907,9 @@ GameNotFound=Game not found.
 
 #FEN
 FEN=FEN
+
+#PGN
+PGN=PGN
 
 #White to play
 WhiteToPlay=White to Play
@@ -1340,4 +1351,44 @@ PosValBlackKingMissing=The Black King is missing
 
 #Black King cannot be in check on Black's move
 PosValBlackKingInCheck=Black King cannot be in check on Black's move
+
+
+##################################
+#
+# Libary exceptions
+#
+
+#Missing move while parsing PGN
+PgnMissingMoveAfter=Missing move after
+
+
+
+#Too few fields
+FenTooFewFields=Error: FEN string has fewer than 6 fields
+
+#Invalid Enpassant
+FenInvalidEnpassant=Error: invalid enpassant field
+
+#Color not specifies
+FenColorNotSpecified=Error: color to move not specified
+
+#Too few rows
+FenTooFewRows=Error: FEN string has $0 rows
+
+#Row incomplete
+FenRowIncomplete=Error: row $0 does not define 8 squares
+
+
+
+#Invalid Engine Move Received
+InvalidEngineMoveReceived=Invalid engine move received
+
+#Unable to identify the moving piece
+CannotIdentifyPiece=Could not identify the moving piece
+
+#Ambiguous move notation
+AmbiguousMove=Ambiguous move notation
+
+#Illegal Castling
+IllegalCastling=Illegal castling attempted
 

@@ -16,6 +16,9 @@ Workbooks=Podręczniki
 #english: UntitledWorkbook=Untitled Workbook
 UntitledWorkbook=Podręcznik bez Tytułu
 
+#description: Workbook files
+#english: WorkbookFiles=Workbook files
+WorkbookFiles=Podręczniki
 
 #description: Title
 #english: Title=Title
@@ -147,6 +150,10 @@ Exit=Wyjście
 #english: Close=Close
 Close=Zamknij
 
+#description: Confirm
+#english: Confirm=Confirm
+Confirm=Potwierdź
+
 #description: Item
 #english: Item=Item
 Item=Element
@@ -225,7 +232,7 @@ CloseWorkbook=Zamknij Podręcznik
 #english: Save=Save
 Save=Zapisz
 
-#description: Save the currently open Workbook into a different file
+#description: Menu to save the currently open Workbook into a different file
 #english: SaveAs=Save $0 As ...
 SaveAs=Zapisz $0 jako ...
 
@@ -704,7 +711,7 @@ Black=Czarne
 
 #description: Side to move
 #english: SideToMove=Side to Move
-SideToMove=Strona na Posunięciu
+SideToMove=Strona na Ruchu
 
 #description: Evaluation							
 #! Must be ultra short, max 3 chars							
@@ -729,7 +736,9 @@ ImportIntoThisChapter=Importuj do Rozdiału
 #english: ViewOnLichess=View on lichess
 ViewOnLichess=Zobacz na lichess
 
-
+#description: Full view of the game
+#english: FullView=Full View
+FullView=Pełny Widok
 
 ##################################
 #
@@ -801,11 +810,20 @@ PgnFile=Pliki PGN
 #english: AllFiles=All files
 AllFiles=Wszystkie pliki
 
+#description: Workbook not saved
+#english: WorkbookNotSaved=Workbook not Saved
+WorkbookNotSaved=Podręcznik nie Zapisany
+
+
 
 ##################################
 #
 # Message Text
 #
+
+#description: Referenced Games not Found
+#english: RefGamesNotFound=Referenced games not found.
+RefGamesNotFound=Partii nie znaleziono.
 
 #description: Error communcating with liches
 #english: ErrorLichess=Error accessing lichess.org
@@ -853,7 +871,7 @@ ExerciseNoSolution=Ćwiczenie bez rozwiązania
 
 #description: Error downloading game
 #english: GameDownloadError=Game download error
-GameDownloadError=Błąd ściągania partii
+GameDownloadError=Błąd przy ściąganiu partii
 
 #description: Evaluation Error
 #english: EvaluationError=Evaluation Error
@@ -944,8 +962,9 @@ UnexpectedErrorInUserMove=Nieoczekiwany błąd w przetwarzaniu posunięcia
 #english: CloseThisWorkbook=Close the current Workbook?
 CloseThisWorkbook=Zamknij Podręcznik
 
-#Last file not found
-#LastFileNotFound=Most recent file $0 could not be found.
+#description: Last file not found
+#english: LastFileNotFound=Most recent file $0 could not be found.
+LastFileNotFound=Ostatni plik $0 nie znaleziony.
 
 #description: File not found
 #english: FileNotFound=File $0 could not be found.
@@ -960,8 +979,8 @@ SaveWorkbook=Zapis Podręcznika
 FileAlreadyOpen=Plik już otwarty
 
 #description: Confirmation to merge training moves into the Study Tree / Game or Exercise
-#english: MergeTrainingIntoStudy=Merge and Save new moves from this session into the {0}?
-MergeTrainingIntoStudy=Dodaj ruchy z tej sesji do
+#english: MergeTrainingIntoStudy=Merge and Save new moves from this session into the source
+MergeTrainingIntoStudy=Dodaj ruchy z tej sesji do źródła
 
 #description: (Move) no longer valid 
 #english: NoLongerValid=is no longer valid
@@ -994,6 +1013,13 @@ ConfirmExerciseMoveDeletion=Niektore ruchy w rozwiazaniu są teraz neprawidłowe
 # Dialogs
 #
 
+#description: Save the currently open Workbook into a different file
+#english: SaveWorkbookAs=Save Workbook $0 As ...
+SaveWorkbookAs=Zapisz podręcznik $0 jako ...
+
+#description: Save newly crated Workbook into a different file
+#english: SaveNewWorkbookAs=Save New Workbook As ...
+SaveNewWorkbookAs=Zapisz nowy podręcznik jako ...
 
 #description: Select Items to create a new Workbook
 #english: SelectItemsforWorkbook=Select Items to create a new Workbook from:
@@ -1111,8 +1137,8 @@ NextGame=Następna Partia
 ImportIntoChapter=Importuj Partię do Rozdziału
 
 #description: Downloading game from lichess
-#english: DownloadGameFromLichess=Downloading Game From lichess.org.
-DownloadGameFromLichess=Ściągnij Partię z lichess
+#english: DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
+DownloadingGameFromLichess=Trwa ściągnanie partii z lichess. Proszę czekać...
 
 #description: Please wait
 #english: PleaseWait=Please Wait
@@ -1145,6 +1171,10 @@ GameNotFound=Partia nie znaleziona
 #description: FEN
 #english: FEN=FEN
 FEN=Kod FEN
+
+#description: PGN
+#english: PGN=PGN
+PGN=PGN
 
 #description: White to play
 #english: WhiteToPlay=White to Play
@@ -1240,7 +1270,7 @@ TooltipSideToMove=Decyduje o pewnych domyślnych ustawieniach
 
 #description: Tooltip for workbook version
 #english: TooltipWorkbookVersion=To increment version select File->Backup Version
-TooltipWorkbookVersion=Wybierz Plik->Zrób Kopię tej Wersji by podnieść numer wersji
+TooltipWorkbookVersion=Wybierz Plik->Zrób Kopię tej Wersji by zwiększyć numer wersji
 
 #description: Errors encountered while parsing a PGN file
 #english: PgnErrors=PGN parsing errors
@@ -1343,6 +1373,10 @@ WaitForEngineResponse=Czekaj na odpowiedź silnika...
 #description:  Wait for response
 #english: WaitForResponse=Wait for a response...
 WaitForResponse=Czekaj na odpowiedź...
+
+#description:  Game started, wait for the engine
+#english: TrnGameStarted=A training game against the engine has started. Wait for the engine's move...
+TrnGameStarted=Partia treningowa z silnikiem rozpoczęta. Czekaj na ruch silnika...
 
 #description:  Engine Played
 #english: EnginePlayed=The engine played
@@ -1565,7 +1599,7 @@ cbRightClickEditExercise=Naciśnij prawy przycisk by otworzyć menu ćwiczeń
 
 #description: Show the solution
 #english: cbShowSolution=Show the solution to view or edit
-cbShowSolution=Pokaż rozwiazanie
+cbShowSolution=Pokaż rozwiązanie
 
 #DUPE: Select Solving Mode
 #DUPE: Right click to open menu to edit or create exercises";
@@ -1662,7 +1696,7 @@ OebStalemate=pat
 
 #description: insufficient material
 #english: OebInsufficientMaterial=insufficient material
-OebInsufficientMaterial=nie wystarczający materiał
+OebInsufficientMaterial=niewystarczający materiał
 
 #description: draw
 #english: OebDraw=draw
@@ -1714,13 +1748,53 @@ PosValBlackKingMissing=Brak czarnego króla
 #english: PosValBlackKingInCheck=Black King cannot be in check on Black's move
 PosValBlackKingInCheck=Czarny król nie może być w szachu przy ruchu białych
 
-TrnGameStarted=Partia treningowas z silnikiem rozpoczęta. Czekaj na ruch silnika...
 
-RefGamesNotFound=Partii nie znaleziono.
+##################################
+#
+# Libary exceptions
+#
 
-WorkbookFiles=Podręczniki
+#description: Missing move while parsing PGN
+#english: PgnMissingMoveAfter=Missing move after
+PgnMissingMoveAfter=Brakuje ruchu po
 
-SaveWorkbookAs=Zapisz podręcznik $0 jako ...
 
-SaveNewWorkbookAs=Zapisz nowy podręcznik jako ...
+
+#description: Too few fields
+#english: FenTooFewFields=Error: FEN string has fewer than 6 fields
+FenTooFewFields=Błąd: FEN nie może mieć niż 6 pól
+
+#description: Invalid Enpassant
+#english: FenInvalidEnpassant=Error: invalid enpassant field
+FenInvalidEnpassant=Błąd: niewazne pole en passant 
+
+#description: Color not specifies
+#english: FenColorNotSpecified=Error: color to move not specified
+FenColorNotSpecified=Błąd: nie podano czyj ruch
+
+#description: Too few rows
+#english: FenTooFewRows=Error: FEN string has $0 rows
+FenTooFewRows=Błąd: FEN pokrywa $0 rzędów
+
+#description: Row incomplete
+#english: FenRowIncomplete=Error: row $0 does not define 8 squares
+FenRowIncomplete=Błąd: rząd $0 nie definiuje 8 pól
+
+
+
+#description: Invalid Engine Move Received
+#english: InvalidEngineMoveReceived=Invalid engine move received
+InvalidEngineMoveReceived=Nieważny ruch otrzymany od silnika
+
+#description: Unable to identify the moving piece
+#english: CannotIdentifyPiece=Could not identify the moving piece
+CannotIdentifyPiece=Nie można zidentyfikować bierki
+
+#description: Ambiguous move notation
+#english: AmbiguousMove=Ambiguous move notation
+AmbiguousMove=Dwuznaczna notacja ruchu
+
+#description: Illegal Castling
+#english: IllegalCastling=Illegal castling attempted
+IllegalCastling=Niedozwolona roszada.
 

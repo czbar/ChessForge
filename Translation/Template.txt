@@ -150,6 +150,10 @@ Exit=
 #english: Close=Close
 Close=
 
+#description: Confirm
+#english: Confirm=Confirm
+Confirm=
+
 #description: Item
 #english: Item=Item
 Item=
@@ -732,7 +736,9 @@ ImportIntoThisChapter=
 #english: ViewOnLichess=View on lichess
 ViewOnLichess=
 
-
+#description: Full view of the game
+#english: FullView=Full View
+FullView=
 
 ##################################
 #
@@ -803,6 +809,11 @@ PgnFile=
 #description: All files (in Open File dialog)
 #english: AllFiles=All files
 AllFiles=
+
+#description: Workbook not saved
+#english: WorkbookNotSaved=Workbook not Saved
+WorkbookNotSaved=
+
 
 
 ##################################
@@ -951,8 +962,9 @@ UnexpectedErrorInUserMove=
 #english: CloseThisWorkbook=Close the current Workbook?
 CloseThisWorkbook=
 
-#Last file not found
-#LastFileNotFound=Most recent file $0 could not be found.
+#description: Last file not found
+#english: LastFileNotFound=Most recent file $0 could not be found.
+LastFileNotFound=
 
 #description: File not found
 #english: FileNotFound=File $0 could not be found.
@@ -967,7 +979,7 @@ SaveWorkbook=
 FileAlreadyOpen=
 
 #description: Confirmation to merge training moves into the Study Tree / Game or Exercise
-#english: MergeTrainingIntoStudy=Merge and Save new moves from this session into the
+#english: MergeTrainingIntoStudy=Merge and Save new moves from this session into the source
 MergeTrainingIntoStudy=
 
 #description: (Move) no longer valid 
@@ -1125,8 +1137,8 @@ NextGame=
 ImportIntoChapter=
 
 #description: Downloading game from lichess
-#english: DownloadGameFromLichess=Downloading Game From lichess.org.
-DownloadGameFromLichess=
+#english: DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
+DownloadingGameFromLichess=
 
 #description: Please wait
 #english: PleaseWait=Please Wait
@@ -1159,6 +1171,10 @@ GameNotFound=
 #description: FEN
 #english: FEN=FEN
 FEN=
+
+#description: PGN
+#english: PGN=PGN
+PGN=
 
 #description: White to play
 #english: WhiteToPlay=White to Play
@@ -1731,4 +1747,54 @@ PosValBlackKingMissing=
 #description: Black King cannot be in check on Black's move
 #english: PosValBlackKingInCheck=Black King cannot be in check on Black's move
 PosValBlackKingInCheck=
+
+
+##################################
+#
+# Libary exceptions
+#
+
+#description: Missing move while parsing PGN
+#english: PgnMissingMoveAfter=Missing move after
+PgnMissingMoveAfter=
+
+
+
+#description: Too few fields
+#english: FenTooFewFields=Error: FEN string has fewer than 6 fields
+FenTooFewFields=
+
+#description: Invalid Enpassant
+#english: FenInvalidEnpassant=Error: invalid enpassant field
+FenInvalidEnpassant=
+
+#description: Color not specifies
+#english: FenColorNotSpecified=Error: color to move not specified
+FenColorNotSpecified=
+
+#description: Too few rows
+#english: FenTooFewRows=Error: FEN string has $0 rows
+FenTooFewRows=
+
+#description: Row incomplete
+#english: FenRowIncomplete=Error: row $0 does not define 8 squares
+FenRowIncomplete=
+
+
+
+#description: Invalid Engine Move Received
+#english: InvalidEngineMoveReceived=Invalid engine move received
+InvalidEngineMoveReceived=
+
+#description: Unable to identify the moving piece
+#english: CannotIdentifyPiece=Could not identify the moving piece
+CannotIdentifyPiece=
+
+#description: Ambiguous move notation
+#english: AmbiguousMove=Ambiguous move notation
+AmbiguousMove=
+
+#description: Illegal Castling
+#english: IllegalCastling=Illegal castling attempted
+IllegalCastling=
 

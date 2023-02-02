@@ -1,2 +1,2 @@
-No keys missing in Master.txt
-No keys missing in Localized.pl.txt
+GOOD: No keys missing in Master.txt
+GOOD: No keys missing in Localized.pl.txt
