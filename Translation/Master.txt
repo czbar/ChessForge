@@ -13,6 +13,8 @@ Workbooks=Workbooks
 #Untitled Workbook
 UntitledWorkbook=Untitled Workbook
 
+#Workbook files
+WorkbookFiles=Workbook files
 
 #Title
 Title=Title
@@ -112,6 +114,9 @@ Exit=Exit
 #Close
 Close=Close
 
+#Confirm
+Confirm=Confirm
+
 #Item
 Item=Item
 
@@ -124,6 +129,9 @@ ExerciseHeader=Exercise Header
 #Request to evaluate a position
 EvaluatePosition=Evaluate Position
 
+#Evaluate a move
+EvaluateMove=Evaluate Move
+
 #Request to evaluate a line
 EvaluateLine=Evaluate Line
 
@@ -132,6 +140,22 @@ Done=Done
 
 #Unknown
 Unknown=Unknown
+
+#Unknown (for engine name)
+UnknownEngine=Unknown
+
+#Unknown (for error)
+UnknownError=Unknown
+
+#Check
+Check=check
+
+#Checkmate
+Checkmate=checkmate
+
+#Stalemate
+Stalemate=stalemate
+
 
 #
 # MAIN MENU
@@ -153,7 +177,7 @@ CloseWorkbook=Close Workbook
 #Save the currently open Workbook
 Save=Save
 
-#Save the currently open Workbook into a different file
+#Menu to save the currently open Workbook into a different file
 SaveAs=Save $0 As ...
 
 #Saves a copy of the current Workbook with the current version number, increments the version number
@@ -321,6 +345,9 @@ RestartGameAfter=Restart Game After
  
 #User wants to restart the training from a certain move in the Training Session
 RestartFrom=Restart from 
+
+#Restart game from a selected move (context menu item)
+RestartGameFrom=Restart Game from 
 
 
 #
@@ -547,7 +574,8 @@ ImportIntoThisChapter=Import into Active Chapter
 #Open the user's browser to view the game on lichess.org
 ViewOnLichess=View on lichess
 
-
+#Full view of the game
+FullView=Full View
 
 ##################################
 #
@@ -604,17 +632,30 @@ PgnFile=PGN files
 #All files (in Open File dialog)
 AllFiles=All files
 
+#Workbook not saved
+WorkbookNotSaved=Workbook not Saved
+
+
 
 ##################################
 #
 # Message Text
 #
 
+#Referenced Games not Found
+RefGamesNotFound=Referenced games not found.
+
+#Error communcating with liches
+ErrorLichess=Error accessing lichess.org
+
 #Bookmarks already exist
 BookmarksAlreadyExist=Bookmarks already exist
 
 #Error saving file
 FailedToSaveFile=Failed to save file
+
+#Error processing engine's move
+FailedProcessEngineMove=Failed to parse engine's move.
 
 #Chess Engine not available
 ChessEngineNotAvailable=Chess Engine not available
@@ -708,7 +749,7 @@ UnexpectedErrorInUserMove=Unexpected error while processing user's move
 CloseThisWorkbook=Close the current Workbook?
 
 #Last file not found
-#LastFileNotFound=Most recent file $0 could not be found.
+LastFileNotFound=Most recent file $0 could not be found.
 
 #File not found
 FileNotFound=File $0 could not be found.
@@ -720,7 +761,7 @@ SaveWorkbook=Save the Workbook?
 FileAlreadyOpen=$0 is already open."
 
 #Confirmation to merge training moves into the Study Tree / Game or Exercise
-MergeTrainingIntoStudy=Merge and Save new moves from this session into the {0}?
+MergeTrainingIntoStudy=Merge and Save new moves from this session into the source
 
 #(Move) no longer valid 
 NoLongerValid=is no longer valid
@@ -741,11 +782,29 @@ WrongTypeEntitiesNotImported=Valid entities of the wrong type were not imported
 #Confirm deleting illegal moves from the solution after position was edited
 ConfirmExerciseMoveDeletion=Some move in the solution are no longer legal $0. Delete them?
 
+
 ##################################
 #
 # Dialogs
 #
 
+#Save the currently open Workbook into a different file
+SaveWorkbookAs=Save Workbook $0 As ...
+
+#Save newly crated Workbook into a different file
+SaveNewWorkbookAs=Save New Workbook As ...
+
+#Select Items to create a new Workbook
+SelectItemsforWorkbook=Select Items to create a new Workbook from:
+
+#Select Games to Import
+SelectGamesToImport=Select Games to Import:
+
+#Select Exercises to Import
+SelectExercisesToImport=Select Exercises to Import:
+
+#Select Items to create a new Chapter from
+SelectItemsForChapter=Select Items to create a new Chapter from:
 
 #Quiz points
 QuizPoints=Quiz points
@@ -823,7 +882,7 @@ NextGame=Next Game
 ImportIntoChapter=Import into Chapter
 
 #Downloading game from lichess
-DownloadGameFromLichess=Downloading Game From lichess.org.
+DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
 
 #Please wait
 PleaseWait=Please Wait
@@ -848,6 +907,9 @@ GameNotFound=Game not found.
 
 #FEN
 FEN=FEN
+
+#PGN
+PGN=PGN
 
 #White to play
 WhiteToPlay=White to Play
@@ -999,6 +1061,9 @@ WaitForEngineResponse=Wait for engine's response...
 # Wait for response
 WaitForResponse=Wait for a response...
 
+# Game started, wait for the engine
+TrnGameStarted=A training game against the engine has started. Wait for the engine's move...
+
 # Engine Played
 EnginePlayed=The engine played
 
@@ -1007,6 +1072,109 @@ CoachPlayed=The coach played
 
 # Your turn now
 YourTurn=It is your turn now
+
+#Alternative is
+TrnAlternativeIs=The alternative is
+
+#Alternatives are
+TrnAlternativesAre=The alternatives are
+
+#Alternative
+TrnAlternative=Alternative
+
+#Alternatives
+TrnAlternatives=Alternatives
+
+#Prefix Your (for "after your move")
+TrnPrefixYour=your
+
+#Perefix Engine (for "after engine's move")
+TrnPrefixEngine=engine's
+
+#End of line
+TrnLineEnded=The training line has ended
+
+#Training Game in progress
+TrnGameInProgress=A training game against the engine is in progress...
+
+#Play this move instead
+TrnPlayMoveInstead=Play $0 instead of Your Move
+
+### Training from Study
+
+#Response 
+TrnStudyResponse=Workbook response
+
+#Not in the source 
+TrnStudyMoveNotInSource=This is not in the Workbook
+
+#The only move 
+TrnStudyOnlyMove=The only move in the Workbook is
+
+#The only moves
+TrnStudySourceMoves=The Workbook moves are
+
+
+### Training from Game
+
+#Response 
+TrnGameResponse=Response from the Game
+
+#Not in the source 
+TrnGameMoveNotInSource=This is not in the Game
+
+#The only move 
+TrnGameOnlyMove=The only move in the Game is
+
+#The only moves
+TrnGameSourceMoves=The moves in the Game are
+
+
+### Training from Exercise
+
+#Response 
+TrnExerciseResponse=Response from the Exercise
+
+#Not in the source 
+TrnExerciseMoveNotInSource=This is not in the Exercise
+
+#The only move 
+TrnExerciseOnlyMove=The only move in the Exercise is
+
+#The only moves
+TrnExerciseSourceMoves=The moves in the Exercise are
+
+
+#Game ended, user checkmated engine
+TrnUserCheckmatedEngine=The training game has ended. You have delivered a checkmate!
+
+#Game ended, engine checkmated user
+TrnEngineCheckmatedUser=The training game has ended. You have been checkmated by the engine.
+
+#Game ended in a stalemate
+TrnGameStalemate=This is a stalemate. The game has been drawn.
+
+#Training session start header
+TrnSessionStartsAfter=This training session begins after:
+
+#Training session start note
+TrnSessionStart=Starting a training session.
+
+#Prompt for the user the first move
+TrnMakeFirstMove=To begin, make your first move on the chessboard.
+
+#User is White
+TrnUserPlaysWhite=You play White and the virtual coach plays Black
+
+#User is Black
+TrnUserPlaysBlack=You play Black and the virtual coach plays White
+
+#Click move instruction
+TrnClickMoveBelow=Click any move below to restart training from it.  
+
+#Right click move instruction
+TrnRightClickMove=Right click to open the context menu.  
+
 
 ##################################
 #
@@ -1107,6 +1275,7 @@ cbEngineCheckmatedYou=You have been checkmated by the engine. Better luck next t
 #This is a stalemate.
 cbStalemateAndDraw=This is a stalemate! You have drawn the game.
 
+
 ##################################
 #
 # Languages
@@ -1182,4 +1351,44 @@ PosValBlackKingMissing=The Black King is missing
 
 #Black King cannot be in check on Black's move
 PosValBlackKingInCheck=Black King cannot be in check on Black's move
+
+
+##################################
+#
+# Libary exceptions
+#
+
+#Missing move while parsing PGN
+PgnMissingMoveAfter=Missing move after
+
+
+
+#Too few fields
+FenTooFewFields=Error: FEN string has fewer than 6 fields
+
+#Invalid Enpassant
+FenInvalidEnpassant=Error: invalid enpassant field
+
+#Color not specifies
+FenColorNotSpecified=Error: color to move not specified
+
+#Too few rows
+FenTooFewRows=Error: FEN string has $0 rows
+
+#Row incomplete
+FenRowIncomplete=Error: row $0 does not define 8 squares
+
+
+
+#Invalid Engine Move Received
+InvalidEngineMoveReceived=Invalid engine move received
+
+#Unable to identify the moving piece
+CannotIdentifyPiece=Could not identify the moving piece
+
+#Ambiguous move notation
+AmbiguousMove=Ambiguous move notation
+
+#Illegal Castling
+IllegalCastling=Illegal castling attempted
 

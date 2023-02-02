@@ -26,7 +26,7 @@ namespace ChessForge
             }
             else
             {
-                counter = "Game " + (index + 1).ToString() + " of " + count.ToString();
+                counter = Resources.Game + " " + (index + 1).ToString() + " / " + count.ToString();
             }
 
             return counter;

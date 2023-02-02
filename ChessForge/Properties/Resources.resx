@@ -126,6 +126,9 @@
   <data name="UntitledWorkbook" xml:space="preserve">
     <value>Untitled Workbook</value>
   </data>
+  <data name="WorkbookFiles" xml:space="preserve">
+    <value>Workbook files</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
   </data>
@@ -222,6 +225,9 @@
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
   <data name="Item" xml:space="preserve">
     <value>Item</value>
   </data>
@@ -234,6 +240,9 @@
   <data name="EvaluatePosition" xml:space="preserve">
     <value>Evaluate Position</value>
   </data>
+  <data name="EvaluateMove" xml:space="preserve">
+    <value>Evaluate Move</value>
+  </data>
   <data name="EvaluateLine" xml:space="preserve">
     <value>Evaluate Line</value>
   </data>
@@ -242,6 +251,21 @@
   </data>
   <data name="Unknown" xml:space="preserve">
     <value>Unknown</value>
+  </data>
+  <data name="UnknownEngine" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="UnknownError" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="Check" xml:space="preserve">
+    <value>check</value>
+  </data>
+  <data name="Checkmate" xml:space="preserve">
+    <value>checkmate</value>
+  </data>
+  <data name="Stalemate" xml:space="preserve">
+    <value>stalemate</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>File</value>
@@ -401,6 +425,9 @@
   </data>
   <data name="RestartFrom" xml:space="preserve">
     <value>Restart from </value>
+  </data>
+  <data name="RestartGameFrom" xml:space="preserve">
+    <value>Restart Game from </value>
   </data>
   <data name="CreateNewChapter" xml:space="preserve">
     <value>Create New Chapter</value>
@@ -576,6 +603,9 @@
   <data name="ViewOnLichess" xml:space="preserve">
     <value>View on lichess</value>
   </data>
+  <data name="FullView" xml:space="preserve">
+    <value>Full View</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
   </data>
@@ -621,11 +651,23 @@
   <data name="AllFiles" xml:space="preserve">
     <value>All files</value>
   </data>
+  <data name="WorkbookNotSaved" xml:space="preserve">
+    <value>Workbook not Saved</value>
+  </data>
+  <data name="RefGamesNotFound" xml:space="preserve">
+    <value>Referenced games not found.</value>
+  </data>
+  <data name="ErrorLichess" xml:space="preserve">
+    <value>Error accessing lichess.org</value>
+  </data>
   <data name="BookmarksAlreadyExist" xml:space="preserve">
     <value>Bookmarks already exist</value>
   </data>
   <data name="FailedToSaveFile" xml:space="preserve">
     <value>Failed to save file</value>
+  </data>
+  <data name="FailedProcessEngineMove" xml:space="preserve">
+    <value>Failed to parse engine's move.</value>
   </data>
   <data name="ChessEngineNotAvailable" xml:space="preserve">
     <value>Chess Engine not available</value>
@@ -718,6 +760,9 @@
   <data name="CloseThisWorkbook" xml:space="preserve">
     <value>Close the current Workbook?</value>
   </data>
+  <data name="LastFileNotFound" xml:space="preserve">
+    <value>Most recent file $0 could not be found.</value>
+  </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>File $0 could not be found.</value>
   </data>
@@ -728,7 +773,7 @@
     <value>$0 is already open."</value>
   </data>
   <data name="MergeTrainingIntoStudy" xml:space="preserve">
-    <value>Merge and Save new moves from this session into the {0}?</value>
+    <value>Merge and Save new moves from this session into the source</value>
   </data>
   <data name="NoLongerValid" xml:space="preserve">
     <value>is no longer valid</value>
@@ -747,6 +792,24 @@
   </data>
   <data name="ConfirmExerciseMoveDeletion" xml:space="preserve">
     <value>Some move in the solution are no longer legal $0. Delete them?</value>
+  </data>
+  <data name="SaveWorkbookAs" xml:space="preserve">
+    <value>Save Workbook $0 As ...</value>
+  </data>
+  <data name="SaveNewWorkbookAs" xml:space="preserve">
+    <value>Save New Workbook As ...</value>
+  </data>
+  <data name="SelectItemsforWorkbook" xml:space="preserve">
+    <value>Select Items to create a new Workbook from:</value>
+  </data>
+  <data name="SelectGamesToImport" xml:space="preserve">
+    <value>Select Games to Import:</value>
+  </data>
+  <data name="SelectExercisesToImport" xml:space="preserve">
+    <value>Select Exercises to Import:</value>
+  </data>
+  <data name="SelectItemsForChapter" xml:space="preserve">
+    <value>Select Items to create a new Chapter from:</value>
   </data>
   <data name="QuizPoints" xml:space="preserve">
     <value>Quiz points</value>
@@ -820,8 +883,8 @@
   <data name="ImportIntoChapter" xml:space="preserve">
     <value>Import into Chapter</value>
   </data>
-  <data name="DownloadGameFromLichess" xml:space="preserve">
-    <value>Downloading Game From lichess.org.</value>
+  <data name="DownloadingGameFromLichess" xml:space="preserve">
+    <value>Downloading Game From lichess.org. Please wait...</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
     <value>Please Wait</value>
@@ -846,6 +909,9 @@
   </data>
   <data name="FEN" xml:space="preserve">
     <value>FEN</value>
+  </data>
+  <data name="PGN" xml:space="preserve">
+    <value>PGN</value>
   </data>
   <data name="WhiteToPlay" xml:space="preserve">
     <value>White to Play</value>
@@ -991,6 +1057,9 @@
   <data name="WaitForResponse" xml:space="preserve">
     <value>Wait for a response...</value>
   </data>
+  <data name="TrnGameStarted" xml:space="preserve">
+    <value>A training game against the engine has started. Wait for the engine's move...</value>
+  </data>
   <data name="EnginePlayed" xml:space="preserve">
     <value>The engine played</value>
   </data>
@@ -999,6 +1068,99 @@
   </data>
   <data name="YourTurn" xml:space="preserve">
     <value>It is your turn now</value>
+  </data>
+  <data name="TrnAlternativeIs" xml:space="preserve">
+    <value>The alternative is</value>
+  </data>
+  <data name="TrnAlternativesAre" xml:space="preserve">
+    <value>The alternatives are</value>
+  </data>
+  <data name="TrnAlternative" xml:space="preserve">
+    <value>Alternative</value>
+  </data>
+  <data name="TrnAlternatives" xml:space="preserve">
+    <value>Alternatives</value>
+  </data>
+  <data name="TrnPrefixYour" xml:space="preserve">
+    <value>your</value>
+  </data>
+  <data name="TrnPrefixEngine" xml:space="preserve">
+    <value>engine's</value>
+  </data>
+  <data name="TrnLineEnded" xml:space="preserve">
+    <value>The training line has ended</value>
+  </data>
+  <data name="TrnGameInProgress" xml:space="preserve">
+    <value>A training game against the engine is in progress...</value>
+  </data>
+  <data name="TrnPlayMoveInstead" xml:space="preserve">
+    <value>Play $0 instead of Your Move</value>
+  </data>
+  <data name="TrnStudyResponse" xml:space="preserve">
+    <value>Workbook response</value>
+  </data>
+  <data name="TrnStudyMoveNotInSource" xml:space="preserve">
+    <value>This is not in the Workbook</value>
+  </data>
+  <data name="TrnStudyOnlyMove" xml:space="preserve">
+    <value>The only move in the Workbook is</value>
+  </data>
+  <data name="TrnStudySourceMoves" xml:space="preserve">
+    <value>The Workbook moves are</value>
+  </data>
+  <data name="TrnGameResponse" xml:space="preserve">
+    <value>Response from the Game</value>
+  </data>
+  <data name="TrnGameMoveNotInSource" xml:space="preserve">
+    <value>This is not in the Game</value>
+  </data>
+  <data name="TrnGameOnlyMove" xml:space="preserve">
+    <value>The only move in the Game is</value>
+  </data>
+  <data name="TrnGameSourceMoves" xml:space="preserve">
+    <value>The moves in the Game are</value>
+  </data>
+  <data name="TrnExerciseResponse" xml:space="preserve">
+    <value>Response from the Exercise</value>
+  </data>
+  <data name="TrnExerciseMoveNotInSource" xml:space="preserve">
+    <value>This is not in the Exercise</value>
+  </data>
+  <data name="TrnExerciseOnlyMove" xml:space="preserve">
+    <value>The only move in the Exercise is</value>
+  </data>
+  <data name="TrnExerciseSourceMoves" xml:space="preserve">
+    <value>The moves in the Exercise are</value>
+  </data>
+  <data name="TrnUserCheckmatedEngine" xml:space="preserve">
+    <value>The training game has ended. You have delivered a checkmate!</value>
+  </data>
+  <data name="TrnEngineCheckmatedUser" xml:space="preserve">
+    <value>The training game has ended. You have been checkmated by the engine.</value>
+  </data>
+  <data name="TrnGameStalemate" xml:space="preserve">
+    <value>This is a stalemate. The game has been drawn.</value>
+  </data>
+  <data name="TrnSessionStartsAfter" xml:space="preserve">
+    <value>This training session begins after:</value>
+  </data>
+  <data name="TrnSessionStart" xml:space="preserve">
+    <value>Starting a training session.</value>
+  </data>
+  <data name="TrnMakeFirstMove" xml:space="preserve">
+    <value>To begin, make your first move on the chessboard.</value>
+  </data>
+  <data name="TrnUserPlaysWhite" xml:space="preserve">
+    <value>You play White and the virtual coach plays Black</value>
+  </data>
+  <data name="TrnUserPlaysBlack" xml:space="preserve">
+    <value>You play Black and the virtual coach plays White</value>
+  </data>
+  <data name="TrnClickMoveBelow" xml:space="preserve">
+    <value>Click any move below to restart training from it.  </value>
+  </data>
+  <data name="TrnRightClickMove" xml:space="preserve">
+    <value>Right click to open the context menu.  </value>
   </data>
   <data name="cbUseMenuToOpenWorkbook" xml:space="preserve">
     <value>Use File menu to open or create a new Workbook</value>
@@ -1143,5 +1305,35 @@
   </data>
   <data name="PosValBlackKingInCheck" xml:space="preserve">
     <value>Black King cannot be in check on Black's move</value>
+  </data>
+  <data name="PgnMissingMoveAfter" xml:space="preserve">
+    <value>Missing move after</value>
+  </data>
+  <data name="FenTooFewFields" xml:space="preserve">
+    <value>Error: FEN string has fewer than 6 fields</value>
+  </data>
+  <data name="FenInvalidEnpassant" xml:space="preserve">
+    <value>Error: invalid enpassant field</value>
+  </data>
+  <data name="FenColorNotSpecified" xml:space="preserve">
+    <value>Error: color to move not specified</value>
+  </data>
+  <data name="FenTooFewRows" xml:space="preserve">
+    <value>Error: FEN string has $0 rows</value>
+  </data>
+  <data name="FenRowIncomplete" xml:space="preserve">
+    <value>Error: row $0 does not define 8 squares</value>
+  </data>
+  <data name="InvalidEngineMoveReceived" xml:space="preserve">
+    <value>Invalid engine move received</value>
+  </data>
+  <data name="CannotIdentifyPiece" xml:space="preserve">
+    <value>Could not identify the moving piece</value>
+  </data>
+  <data name="AmbiguousMove" xml:space="preserve">
+    <value>Ambiguous move notation</value>
+  </data>
+  <data name="IllegalCastling" xml:space="preserve">
+    <value>Illegal castling attempted</value>
   </data>
 </root>

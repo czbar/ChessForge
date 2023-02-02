@@ -1,0 +1,2 @@
+throw new Exception("Exception in PgnGameParser: " + ex.Message);	C:\Users\rober\Documents\ChessForge\ChessPosition\Parsers\PgnGameParser.cs	88	65
+sb.Append("Missing move after " + MoveUtils.BuildSingleMoveText(ndParent, true));	C:\Users\rober\Documents\ChessForge\ChessPosition\Parsers\PgnGameParser.cs	546	42

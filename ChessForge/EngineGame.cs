@@ -136,7 +136,7 @@ namespace ChessForge
 
             if (string.IsNullOrEmpty(algMove) || algMove.StartsWith("?"))
             {
-                MessageBox.Show("Failed to parse engine's move.", "Unexpected error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.FailedProcessEngineMove, Properties.Resources.UnexpectedError, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             nd = new TreeNode(curr, algMove, _mainWin.ActiveVariationTree.GetNewNodeId());

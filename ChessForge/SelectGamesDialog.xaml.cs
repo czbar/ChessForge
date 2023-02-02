@@ -126,16 +126,16 @@ namespace ChessForge
             switch (_mode)
             {
                 case Mode.CREATE_WORKBOOK:
-                    UiLblInstruct.Content = "Select Items to create a new Workbook from:";
+                    UiLblInstruct.Content = Properties.Resources.SelectItemsforWorkbook;
                     break;
                 case Mode.IMPORT_GAMES:
-                    UiLblInstruct.Content = "Select Games to Import:";
+                    UiLblInstruct.Content = Properties.Resources.SelectGamesToImport;
                     break;
                 case Mode.IMPORT_EXERCISES:
-                    UiLblInstruct.Content = "Select Exercises to Import:";
+                    UiLblInstruct.Content = Properties.Resources.SelectExercisesToImport;
                     break;
                 case Mode.IMPORT_INTO_NEW_CHAPTER:
-                    UiLblInstruct.Content = "Select Items to create a new Chapter from:";
+                    UiLblInstruct.Content = Properties.Resources.SelectItemsForChapter;
                     break;
             }
         }

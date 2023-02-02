@@ -245,7 +245,7 @@ namespace ChessForge
         /// <summary>
         /// Name of the engine currently loaded.
         /// </summary>
-        public static string EngineName = "unknown";
+        public static string EngineName = Properties.Resources.UnknownEngine;
 
         /// <summary>
         /// Indicates whether there are any unsaved changes in the Workbook
@@ -331,15 +331,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="pgnFileName"></param>
         /// <param name="chfFileName"></param>
-        public static void SaveWorkbookToNewFile(string pgnFileName, string chfFileName, bool typeConversion)
+        public static void SaveWorkbookToNewFile(string pgnFileName, string chfFileName)
         {
             WorkbookFilePath = chfFileName;
             SaveWorkbookFile(null);
             UpdateAppTitleBar();
-            if (typeConversion)
-            {
-                Configuration.RemoveFromRecentFiles(pgnFileName);
-            }
             Configuration.AddRecentFile(chfFileName);
             _mainWin.RecreateRecentFilesMenuItems();
             Configuration.LastWorkbookFile = chfFileName;

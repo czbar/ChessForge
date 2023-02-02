@@ -174,14 +174,14 @@ namespace GameTree
                 }
                 else
                 {
-                    sb.Append(" at " + eventName + "");
+                    sb.Append(", " + eventName + "");
                 }
             }
 
             string round = GetRound(out _);
             if (!string.IsNullOrEmpty(round) && round != "?")
             {
-                sb.Append(" Rd." + round + " ");
+                sb.Append(" (" + round + ") ");
             }
             return sb.ToString();
         }

@@ -530,7 +530,7 @@ namespace ChessForge
                     {
                         VariationTree newTree = TreeUtils.CreateNewTreeFromNode(lstNodes[0], GameData.ContentType.STUDY_TREE);
                         Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter(newTree, false);
-                        chapter.SetTitle("Chapter " + chapter.Id.ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
+                        chapter.SetTitle(Properties.Resources.Chapter +  " " + chapter.Id.ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
 
                         ChapterFromLineDialog dlg = new ChapterFromLineDialog(chapter)
                         {
@@ -1055,7 +1055,7 @@ namespace ChessForge
                         string dateForDisplay = TextUtils.BuildDateFromDisplayFromPgnString(_mainVariationTree.Header.GetDate(out _));
                         if (!string.IsNullOrEmpty(dateForDisplay))
                         {
-                            Run rDate = CreateRun("1", "      Date: " + dateForDisplay + "\n", true);
+                            Run rDate = CreateRun("1", "      " + Properties.Resources.Date + ": " + dateForDisplay + "\n", true);
                             para.Inlines.Add(rDate);
                         }
 
@@ -2013,7 +2013,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    MessageBox.Show("Referenced games not found.", "Games", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(Properties.Resources.RefGamesNotFound, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch
@@ -2241,15 +2241,7 @@ namespace ChessForge
                 {
                     sb.Append(" /");
                 }
-                sb.Append(" " + nd.QuizPoints.ToString() + " quiz ");
-                if (nd.QuizPoints == 1)
-                {
-                    sb.Append("point ");
-                }
-                else
-                {
-                    sb.Append("points ");
-                }
+                sb.Append(" " + Properties.Resources.QuizPoints + ": " + nd.QuizPoints.ToString());
             }
 
             sb.Append("]");

@@ -30,7 +30,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn CellTemplate="{StaticResource SelectionCell}"  Width="30"/>
-                    <GridViewColumn Header="Chapters" DisplayMemberBinding="{Binding Path=ChapterTitle}" Width="640"/>
+                    <GridViewColumn Header="{x:Static p:Resources.Chapters}" DisplayMemberBinding="{Binding Path=ChapterTitle}" Width="640"/>
                 </GridView>
             </ListView.View>
         </ListView>

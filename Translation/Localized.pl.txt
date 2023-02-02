@@ -16,6 +16,9 @@ Workbooks=Podręczniki
 #english: UntitledWorkbook=Untitled Workbook
 UntitledWorkbook=Podręcznik bez Tytułu
 
+#description: Workbook files
+#english: WorkbookFiles=Workbook files
+WorkbookFiles=Podręczniki
 
 #description: Title
 #english: Title=Title
@@ -48,7 +51,7 @@ Chapters=Rozdziały
 
 #description: Study Tree
 #english: Study=Study
-Study=Studium
+Study=Teoria
 
 #description: Game
 #english: Game=Game
@@ -147,6 +150,10 @@ Exit=Wyjście
 #english: Close=Close
 Close=Zamknij
 
+#description: Confirm
+#english: Confirm=Confirm
+Confirm=Potwierdź
+
 #description: Item
 #english: Item=Item
 Item=Element
@@ -163,6 +170,10 @@ ExerciseHeader=Nagłówek Ćwiczenia
 #english: EvaluatePosition=Evaluate Position
 EvaluatePosition=Oceń Pozycję
 
+#description: Evaluate a move
+#english: EvaluateMove=Evaluate Move
+EvaluateMove=Oceń Posunięcie
+
 #description: Request to evaluate a line
 #english: EvaluateLine=Evaluate Line
 EvaluateLine=Oceń Wariant
@@ -174,6 +185,27 @@ Done=Gotowe
 #description: Unknown
 #english: Unknown=Unknown
 Unknown=Nieznany
+
+#description: Unknown (for engine name)
+#english: UnknownEngine=Unknown
+UnknownEngine=Nieznana
+
+#description: Unknown (for error)
+#english: UnknownError=Unknown
+UnknownError=Nieznany
+
+#description: Check
+#english: Check=check
+Check=szach
+
+#description: Checkmate
+#english: Checkmate=checkmate
+Checkmate=mat
+
+#description: Stalemate
+#english: Stalemate=stalemate
+Stalemate=pat
+
 
 #
 # MAIN MENU
@@ -200,7 +232,7 @@ CloseWorkbook=Zamknij Podręcznik
 #english: Save=Save
 Save=Zapisz
 
-#description: Save the currently open Workbook into a different file
+#description: Menu to save the currently open Workbook into a different file
 #english: SaveAs=Save $0 As ...
 SaveAs=Zapisz $0 jako ...
 
@@ -395,11 +427,11 @@ ExitGame=Zakończ Partię
 
 #description: Study Tree
 #english: StudyTree=Study
-StudyTree=Studium
+StudyTree=Teoria
 
 #description: Prefix for the of an exercise created from a Study
 #english: StudyTreeAfter=Study position after
-StudyTreeAfter=Pozycja ze Studium po
+StudyTreeAfter=Pozycja z Teorii po
 
 #description: Not Named (opening position from lichess)
 #english: NotNamed=[not named]
@@ -411,11 +443,15 @@ NotNamed=brak nazwy
 
 #description: User wants to restart the game against the engine after a certain move in the Training Session
 #english: RestartGameAfter=Restart Game After 
-RestartGameAfter=Restart Game After 
+RestartGameAfter=Cofnij Partię do 
 
 #description: User wants to restart the training from a certain move in the Training Session
 #english: RestartFrom=Restart from 
-RestartFrom=Restart from 
+RestartFrom=Cofnij do 
+
+#description: Restart game from a selected move (context menu item)
+#english: RestartGameFrom=Restart Game from 
+RestartGameFrom=Cofnij Partię do 
 
 
 #
@@ -675,7 +711,7 @@ Black=Czarne
 
 #description: Side to move
 #english: SideToMove=Side to Move
-SideToMove=Strona na Posunięciu
+SideToMove=Strona na Ruchu
 
 #description: Evaluation							
 #! Must be ultra short, max 3 chars							
@@ -700,7 +736,9 @@ ImportIntoThisChapter=Importuj do Rozdiału
 #english: ViewOnLichess=View on lichess
 ViewOnLichess=Zobacz na lichess
 
-
+#description: Full view of the game
+#english: FullView=Full View
+FullView=Pełny Widok
 
 ##################################
 #
@@ -772,11 +810,24 @@ PgnFile=Pliki PGN
 #english: AllFiles=All files
 AllFiles=Wszystkie pliki
 
+#description: Workbook not saved
+#english: WorkbookNotSaved=Workbook not Saved
+WorkbookNotSaved=Podręcznik nie Zapisany
+
+
 
 ##################################
 #
 # Message Text
 #
+
+#description: Referenced Games not Found
+#english: RefGamesNotFound=Referenced games not found.
+RefGamesNotFound=Partii nie znaleziono.
+
+#description: Error communcating with liches
+#english: ErrorLichess=Error accessing lichess.org
+ErrorLichess=Błąd w dostępie do lichess.org
 
 #description: Bookmarks already exist
 #english: BookmarksAlreadyExist=Bookmarks already exist
@@ -785,6 +836,10 @@ BookmarksAlreadyExist=Zakładki już Istnieją
 #description: Error saving file
 #english: FailedToSaveFile=Failed to save file
 FailedToSaveFile=Błąd przy zapisie pliku
+
+#description: Error processing engine's move
+#english: FailedProcessEngineMove=Failed to parse engine's move.
+FailedProcessEngineMove=Błąd w przetwarzaniu ruchu silnika.
 
 #description: Chess Engine not available
 #english: ChessEngineNotAvailable=Chess Engine not available
@@ -816,7 +871,7 @@ ExerciseNoSolution=Ćwiczenie bez rozwiązania
 
 #description: Error downloading game
 #english: GameDownloadError=Game download error
-GameDownloadError=Błąd ściągania partii
+GameDownloadError=Błąd przy ściąganiu partii
 
 #description: Evaluation Error
 #english: EvaluationError=Evaluation Error
@@ -907,8 +962,9 @@ UnexpectedErrorInUserMove=Nieoczekiwany błąd w przetwarzaniu posunięcia
 #english: CloseThisWorkbook=Close the current Workbook?
 CloseThisWorkbook=Zamknij Podręcznik
 
-#Last file not found
-#LastFileNotFound=Most recent file $0 could not be found.
+#description: Last file not found
+#english: LastFileNotFound=Most recent file $0 could not be found.
+LastFileNotFound=Ostatni plik $0 nie znaleziony.
 
 #description: File not found
 #english: FileNotFound=File $0 could not be found.
@@ -923,8 +979,8 @@ SaveWorkbook=Zapis Podręcznika
 FileAlreadyOpen=Plik już otwarty
 
 #description: Confirmation to merge training moves into the Study Tree / Game or Exercise
-#english: MergeTrainingIntoStudy=Merge and Save new moves from this session into the {0}?
-MergeTrainingIntoStudy=Dodaj ruchy z tej sesji do {0}.
+#english: MergeTrainingIntoStudy=Merge and Save new moves from this session into the source
+MergeTrainingIntoStudy=Dodaj ruchy z tej sesji do źródła
 
 #description: (Move) no longer valid 
 #english: NoLongerValid=is no longer valid
@@ -951,11 +1007,35 @@ WrongTypeEntitiesNotImported=Elementy niewłaściwego typu nie zostały zaimport
 #english: ConfirmExerciseMoveDeletion=Some move in the solution are no longer legal $0. Delete them?
 ConfirmExerciseMoveDeletion=Niektore ruchy w rozwiazaniu są teraz neprawidłowe $0. Usunąć je?
 
+
 ##################################
 #
 # Dialogs
 #
 
+#description: Save the currently open Workbook into a different file
+#english: SaveWorkbookAs=Save Workbook $0 As ...
+SaveWorkbookAs=Zapisz podręcznik $0 jako ...
+
+#description: Save newly crated Workbook into a different file
+#english: SaveNewWorkbookAs=Save New Workbook As ...
+SaveNewWorkbookAs=Zapisz nowy podręcznik jako ...
+
+#description: Select Items to create a new Workbook
+#english: SelectItemsforWorkbook=Select Items to create a new Workbook from:
+SelectItemsforWorkbook=Wybierz elementy do utworzenia nowego Podręcznika:
+
+#description: Select Games to Import
+#english: SelectGamesToImport=Select Games to Import:
+SelectGamesToImport=Wybierz Partie do Importu:
+
+#description: Select Exercises to Import
+#english: SelectExercisesToImport=Select Exercises to Import:
+SelectExercisesToImport=Wybierz Ćwiczenia do Importu:
+
+#description: Select Items to create a new Chapter from
+#english: SelectItemsForChapter=Select Items to create a new Chapter from:
+SelectItemsForChapter=Wybierz elementy do utworzenia nowego Rozdziału:
 
 #description: Quiz points
 #english: QuizPoints=Quiz points
@@ -1057,8 +1137,8 @@ NextGame=Następna Partia
 ImportIntoChapter=Importuj Partię do Rozdziału
 
 #description: Downloading game from lichess
-#english: DownloadGameFromLichess=Downloading Game From lichess.org.
-DownloadGameFromLichess=Ściągnij Partię z lichess
+#english: DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
+DownloadingGameFromLichess=Trwa ściągnanie partii z lichess. Proszę czekać...
 
 #description: Please wait
 #english: PleaseWait=Please Wait
@@ -1091,6 +1171,10 @@ GameNotFound=Partia nie znaleziona
 #description: FEN
 #english: FEN=FEN
 FEN=Kod FEN
+
+#description: PGN
+#english: PGN=PGN
+PGN=PGN
 
 #description: White to play
 #english: WhiteToPlay=White to Play
@@ -1154,11 +1238,11 @@ MergeGamesAndCopy=Połącz Partie w Drzewo Wariantów i skopiuj je do sekcji Par
 
 #description: Merge games, no copy
 #english: MergeGamesNoCopy=Merge Games into the Study Tree only (do not copy games).
-MergeGamesNoCopy=Połącz Partie w Studium ale nie kopiuj ich do sekcji Partii
+MergeGamesNoCopy=Połącz Partie w Teorii ale nie kopiuj ich do sekcji Partii
 
 #description: Copy games, no merge
 #english: CopyGamesNoMerge=Copy Games into the Games section only (leave the study tree empty)
-CopyGamesNoMerge=Skopiuj Partie do Sekcji Partii i zostaw Studium puste
+CopyGamesNoMerge=Skopiuj Partie do Sekcji Partii i zostaw Teorię pustą
 
 #description: Create a separate chapter for each game
 #english: CreateChapterPerGame=Create Chapter per Game
@@ -1186,7 +1270,7 @@ TooltipSideToMove=Decyduje o pewnych domyślnych ustawieniach
 
 #description: Tooltip for workbook version
 #english: TooltipWorkbookVersion=To increment version select File->Backup Version
-TooltipWorkbookVersion=Wybierz Plik->Zrób Kopię tej Wersji by podnieść numer wersji
+TooltipWorkbookVersion=Wybierz Plik->Zrób Kopię tej Wersji by zwiększyć numer wersji
 
 #description: Errors encountered while parsing a PGN file
 #english: PgnErrors=PGN parsing errors
@@ -1290,6 +1374,10 @@ WaitForEngineResponse=Czekaj na odpowiedź silnika...
 #english: WaitForResponse=Wait for a response...
 WaitForResponse=Czekaj na odpowiedź...
 
+#description:  Game started, wait for the engine
+#english: TrnGameStarted=A training game against the engine has started. Wait for the engine's move...
+TrnGameStarted=Partia treningowa z silnikiem rozpoczęta. Czekaj na ruch silnika...
+
 #description:  Engine Played
 #english: EnginePlayed=The engine played
 EnginePlayed=Silnik zagrał
@@ -1301,6 +1389,140 @@ CoachPlayed=Trener zagrał
 #description:  Your turn now
 #english: YourTurn=It is your turn now
 YourTurn=Kolej na Twoje posunięcie
+
+#description: Alternative is
+#english: TrnAlternativeIs=The alternative is
+TrnAlternativeIs=Alternatywną opcją jest
+
+#description: Alternatives are
+#english: TrnAlternativesAre=The alternatives are
+TrnAlternativesAre=Alternatywne opcje to
+
+#description: Alternative
+#english: TrnAlternative=Alternative
+TrnAlternative=Alternatywa
+
+#description: Alternatives
+#english: TrnAlternatives=Alternatives
+TrnAlternatives=Alternatywy
+
+#description: Prefix Your (for "after your move")
+#english: TrnPrefixYour=your
+TrnPrefixYour=Twoim
+
+#description: Perefix Engine (for "after engine's move")
+#english: TrnPrefixEngine=engine's
+TrnPrefixEngine=Silnika
+
+#description: End of line
+#english: TrnLineEnded=The training line has ended
+TrnLineEnded=Koniec wariantu treningowego
+
+#description: Training Game in progress
+#english: TrnGameInProgress=A training game against the engine is in progress...
+TrnGameInProgress=Trwa partia treningowa z silnikiem...
+
+#description: Play this move instead
+#english: TrnPlayMoveInstead=Play $0 instead of Your Move
+TrnPlayMoveInstead=Graj $0 zamiast Twojego ruchu
+
+### Training from Study
+
+#description: Response 
+#english: TrnStudyResponse=Workbook response
+TrnStudyResponse=Odpowiedź z Podręcznika
+
+#description: Not in the source 
+#english: TrnStudyMoveNotInSource=This is not in the Workbook
+TrnStudyMoveNotInSource=Tego ruchu nie ma w Podręczniku.
+
+#description: The only move 
+#english: TrnStudyOnlyMove=The only move in the Workbook is
+TrnStudyOnlyMove=Jedyny ruch w Podręczniku to
+
+#description: The only moves
+#english: TrnStudySourceMoves=The Workbook moves are
+TrnStudySourceMoves=Ruchy z Podręcznika to
+
+
+### Training from Game
+
+#description: Response 
+#english: TrnGameResponse=Response from the Game
+TrnGameResponse=Opowiedź z Partii
+
+#description: Not in the source 
+#english: TrnGameMoveNotInSource=This is not in the Game
+TrnGameMoveNotInSource=Tego ruchu nie ma w Partii
+
+#description: The only move 
+#english: TrnGameOnlyMove=The only move in the Game is
+TrnGameOnlyMove=Jedyny ruch w Partii to
+
+#description: The only moves
+#english: TrnGameSourceMoves=The moves in the Game are
+TrnGameSourceMoves=Ruchy w Partii to
+
+
+### Training from Exercise
+
+#description: Response 
+#english: TrnExerciseResponse=Response from the Exercise
+TrnExerciseResponse=Opowiedź z Ćwiczenia
+
+#description: Not in the source 
+#english: TrnExerciseMoveNotInSource=This is not in the Exercise
+TrnExerciseMoveNotInSource=Tego ruchu nie ma w Ćwiczeniu
+
+#description: The only move 
+#english: TrnExerciseOnlyMove=The only move in the Exercise is
+TrnExerciseOnlyMove=Jedyny ruch a Ćwiczeniu to
+
+#description: The only moves
+#english: TrnExerciseSourceMoves=The moves in the Exercise are
+TrnExerciseSourceMoves=Ruchy w Ćwiczeniu to
+
+
+#description: Game ended, user checkmated engine
+#english: TrnUserCheckmatedEngine=The training game has ended. You have delivered a checkmate!
+TrnUserCheckmatedEngine=Partia zakończona.Silnik został zamatowany.
+
+#description: Game ended, engine checkmated user
+#english: TrnEngineCheckmatedUser=The training game has ended. You have been checkmated by the engine.
+TrnEngineCheckmatedUser=Partia zakończona. Silnik zamatował Cię.
+
+#description: Game ended in a stalemate
+#english: TrnGameStalemate=This is a stalemate. The game has been drawn.
+TrnGameStalemate=Partia zakończyła się patem. Remis.
+
+#description: Training session start header
+#english: TrnSessionStartsAfter=This training session begins after:
+TrnSessionStartsAfter=Ta sesja treningowa zaczyna się po ruchach:
+
+#description: Training session start note
+#english: TrnSessionStart=Starting a training session.
+TrnSessionStart=Zaczynamy sesję treningową.
+
+#description: Prompt for the user the first move
+#english: TrnMakeFirstMove=To begin, make your first move on the chessboard.
+TrnMakeFirstMove=Rozpocznij trening wykonując swój pierwszy ruch na szachownicy.
+
+#description: User is White
+#english: TrnUserPlaysWhite=You play White and the virtual coach plays Black
+TrnUserPlaysWhite=Grasz białymi, a wirtualny trener gra czarnymi.
+
+#description: User is Black
+#english: TrnUserPlaysBlack=You play Black and the virtual coach plays White
+TrnUserPlaysBlack=Grasz czarnymi, a wirtualny trener gra białymi.
+
+#description: Click move instruction
+#english: TrnClickMoveBelow=Click any move below to restart training from it.  
+TrnClickMoveBelow=Kliknij na dowolny ruch poniżej aby cofnąć trening do niego.  
+
+#description: Right click move instruction
+#english: TrnRightClickMove=Right click to open the context menu.  
+TrnRightClickMove=Prawy przycisk myszki wywoła menu.  
+
 
 ##################################
 #
@@ -1321,7 +1543,7 @@ cbActions=Niektóre dostępne czynności:
 
 #description: Clich to open Study
 #english: cbClickStudyHeader=Click Study header or double click chapter's title to open the Study Tree
-cbClickStudyHeader=Kliknij na Studium, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Studium 
+cbClickStudyHeader=Kliknij nagówek Teoria, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Teorię 
 
 #description: Right click for context menu
 #english: cbClickForContextMenu=Right click to open context menu
@@ -1377,7 +1599,7 @@ cbRightClickEditExercise=Naciśnij prawy przycisk by otworzyć menu ćwiczeń
 
 #description: Show the solution
 #english: cbShowSolution=Show the solution to view or edit
-cbShowSolution=Pokaż rozwiazanie
+cbShowSolution=Pokaż rozwiązanie
 
 #DUPE: Select Solving Mode
 #DUPE: Right click to open menu to edit or create exercises";
@@ -1431,6 +1653,7 @@ cbEngineCheckmatedYou=Zostałeś zamatowany przez silnik. Powodzenia następnym 
 #english: cbStalemateAndDraw=This is a stalemate! You have drawn the game.
 cbStalemateAndDraw=Pat! Partia zakończyła się remisem.
 
+
 ##################################
 #
 # Languages
@@ -1473,7 +1696,7 @@ OebStalemate=pat
 
 #description: insufficient material
 #english: OebInsufficientMaterial=insufficient material
-OebInsufficientMaterial=nie wystarczający materiał
+OebInsufficientMaterial=niewystarczający materiał
 
 #description: draw
 #english: OebDraw=draw
@@ -1524,4 +1747,54 @@ PosValBlackKingMissing=Brak czarnego króla
 #description: Black King cannot be in check on Black's move
 #english: PosValBlackKingInCheck=Black King cannot be in check on Black's move
 PosValBlackKingInCheck=Czarny król nie może być w szachu przy ruchu białych
+
+
+##################################
+#
+# Libary exceptions
+#
+
+#description: Missing move while parsing PGN
+#english: PgnMissingMoveAfter=Missing move after
+PgnMissingMoveAfter=Brakuje ruchu po
+
+
+
+#description: Too few fields
+#english: FenTooFewFields=Error: FEN string has fewer than 6 fields
+FenTooFewFields=Błąd: FEN nie może mieć niż 6 pól
+
+#description: Invalid Enpassant
+#english: FenInvalidEnpassant=Error: invalid enpassant field
+FenInvalidEnpassant=Błąd: niewazne pole en passant 
+
+#description: Color not specifies
+#english: FenColorNotSpecified=Error: color to move not specified
+FenColorNotSpecified=Błąd: nie podano czyj ruch
+
+#description: Too few rows
+#english: FenTooFewRows=Error: FEN string has $0 rows
+FenTooFewRows=Błąd: FEN pokrywa $0 rzędów
+
+#description: Row incomplete
+#english: FenRowIncomplete=Error: row $0 does not define 8 squares
+FenRowIncomplete=Błąd: rząd $0 nie definiuje 8 pól
+
+
+
+#description: Invalid Engine Move Received
+#english: InvalidEngineMoveReceived=Invalid engine move received
+InvalidEngineMoveReceived=Nieważny ruch otrzymany od silnika
+
+#description: Unable to identify the moving piece
+#english: CannotIdentifyPiece=Could not identify the moving piece
+CannotIdentifyPiece=Nie można zidentyfikować bierki
+
+#description: Ambiguous move notation
+#english: AmbiguousMove=Ambiguous move notation
+AmbiguousMove=Dwuznaczna notacja ruchu
+
+#description: Illegal Castling
+#english: IllegalCastling=Illegal castling attempted
+IllegalCastling=Niedozwolona roszada.
 

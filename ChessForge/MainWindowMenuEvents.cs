@@ -422,7 +422,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnWorkbookSaveAs_Click(object sender, RoutedEventArgs e)
         {
-            WorkbookManager.SaveWorkbookToNewFile(AppState.WorkbookFilePath, false);
+            WorkbookManager.SaveWorkbookToNewFile(AppState.WorkbookFilePath);
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace ChessForge
                 return;
             }
 
-            if (!WorkbookManager.SaveWorkbookToNewFile(null, false))
+            if (!WorkbookManager.SaveWorkbookToNewFile(null))
             {
                 AppState.RestartInIdleMode(false);
                 return;
@@ -1261,7 +1261,7 @@ namespace ChessForge
                                         catch (Exception ex)
                                         {
                                             errorCount++;
-                                            sbErrors.Append(TextUtils.BuildGameProcessingErrorText(games[i], i + 1, ex.Message));
+                                            sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(games[i], i + 1, ex.Message));
                                         }
                                     }
                                 }

@@ -184,17 +184,17 @@ namespace ChessForge
                         _paraCurrentEngineGame.Name = _par_game_moves_;
                         if (foundMove != null)
                         {
-                            _paraCurrentEngineGame.Inlines.Add(new Run("\nThe Worbook line has ended."));
+                            _paraCurrentEngineGame.Inlines.Add(new Run("\n" + Properties.Resources.TrnLineEnded + "."));
                         }
 
                         if (!EngineMessageProcessor.IsEngineAvailable)
                         {
-                            MessageBox.Show("Engine not available. Training cannot continue.\n You can roll moves back or restart.", "Engine Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(Properties.Resources.NoEngineForTraining, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                             return;
                         }
                         else
                         {
-                            _paraCurrentEngineGame.Inlines.Add(new Run("\nA training game against the engine has started. Wait for the engine\'s move...\n"));
+                            _paraCurrentEngineGame.Inlines.Add(new Run("\n" + Properties.Resources.TrnGameStarted + "\n"));
                             _engineGameRootNode = _userMove;
 
                             // call RequestEngineResponse() directly so it invokes PlayEngine
@@ -242,7 +242,7 @@ namespace ChessForge
             }
             catch
             {
-                MessageBox.Show("Unexpected error while processing user\'s move", "Chess Forge Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.UnexpectedErrorInUserMove, Properties.Resources.UnexpectedError, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -263,7 +263,7 @@ namespace ChessForge
         {
             if (!EngineMessageProcessor.IsEngineAvailable)
             {
-                _mainWin.BoardCommentBox.ShowFlashAnnouncement("Engine not available");
+                _mainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineNotAvailable);
                 return;
             }
 
@@ -309,7 +309,7 @@ namespace ChessForge
         {
             if (!EngineMessageProcessor.IsEngineAvailable)
             {
-                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement("Engine not available");
+                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineNotAvailable);
                 return;
             }
 

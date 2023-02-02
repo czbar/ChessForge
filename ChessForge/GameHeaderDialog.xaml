@@ -25,7 +25,7 @@
         <RadioButton x:Name="UiRbDraw" Content="1/2" HorizontalAlignment="Left" Margin="520,133,0,0" VerticalAlignment="Top" Width="50"/>
         <RadioButton x:Name="UiRbNoResult" Content="*" HorizontalAlignment="Left" Margin="570,133,0,0" VerticalAlignment="Top" Width="50"/>
         <DatePicker x:Name="UiDatePicker" HorizontalAlignment="Left" Margin="405,186,0,0" VerticalAlignment="Top" IsTodayHighlighted="False" Width="144" LostFocus="UiDatePicker_LostFocus"/>
-        <Label x:Name="UiLblPgnDate" Content="PGN" HorizontalAlignment="Left" Margin="400,217,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblPgnDate" Content="{x:Static p:Resources.PGN}" HorizontalAlignment="Left" Margin="400,217,0,0" VerticalAlignment="Top"/>
         <CheckBox x:Name="UiCbIgnoreMonthDay" Content="{x:Static p:Resources.IgnoreDayMonth}" HorizontalAlignment="Left" Margin="405,262,0,0" VerticalAlignment="Top" Checked="UiCbIgnoreMonthDay_Checked" Unchecked="UiCbIgnoreMonthDay_Unchecked"/>
         <CheckBox x:Name="UiCbIgnoreDay" Content="{x:Static p:Resources.IgnoreDay}" HorizontalAlignment="Left" Margin="405,285,0,0" VerticalAlignment="Top" Unchecked="UiCbIgnoreDay_Unchecked" Checked="UiCbIgnoreDay_Checked"/>
         <TextBox x:Name="UiTbPgnDate" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalAlignment="Top" TextWrapping="Wrap" Text="????.??.??" Width="80" LostFocus="UiTbPgnDate_LostFocus" Margin="449,221,0,0" />

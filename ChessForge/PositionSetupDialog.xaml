@@ -29,7 +29,7 @@
 
         <Label x:Name="UiLblSideToMove" Content="{x:Static p:Resources.WhiteToPlay}" BorderThickness="1" BorderBrush="Black" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="501,153,0,0" VerticalAlignment="Top" Width="136" MouseDown="UiLblSideToMove_MouseDown"/>
         <Image x:Name="UiImgSwapSides" HorizontalAlignment="Left" Height="25" Margin="648,157,0,0" VerticalAlignment="Top" Width="25" Source="/Resources/Images/swap_vert.png" RenderTransformOrigin="0.082,0.705" MouseDown="UiImgSwapSides_MouseDown"/>
-        <GroupBox x:Name="UiGbCastling" HorizontalAlignment="Left" Height="93" Header="Castling" Margin="473,196,0,0" VerticalAlignment="Top" Width="253">
+        <GroupBox x:Name="UiGbCastling" HorizontalAlignment="Left" Height="93" Header="{x:Static p:Resources.EnPassant}" Margin="473,196,0,0" VerticalAlignment="Top" Width="253">
         </GroupBox>
         <Label x:Name="UiLblWhite" Content="{x:Static p:Resources.White}" HorizontalAlignment="Left" Margin="500,220,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblBlack" Content="{x:Static p:Resources.Black}" HorizontalAlignment="Left" Margin="500,245,0,0" VerticalAlignment="Top"/>
@@ -49,7 +49,7 @@
         <Button x:Name="UiDebug" Content="Debug Position" Visibility="Collapsed" HorizontalAlignment="Left" Margin="501,23,0,0" Width="160" VerticalAlignment="Top" Click="UiDebug_Click"/>
         <TextBox x:Name="UiTbFen" Text="" HorizontalAlignment="Left"  HorizontalContentAlignment="Center" BorderThickness="1" BorderBrush="Black"  Margin="394,51,0,0" Width="380" Height="24" VerticalAlignment="Top" VerticalContentAlignment="Center" TextChanged="UiTbFen_TextChanged"/>
         <Label x:Name="UiLblFenLabel" Content="{x:Static p:Resources.FEN}" HorizontalAlignment="Left" Margin="354,52,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.356,-0.268"/>
-        <GroupBox x:Name="UiGbEnpasssant" HorizontalAlignment="Left" Height="93" Header="En Passant" Margin="360,196,0,0" VerticalAlignment="Top" Width="80">
+        <GroupBox x:Name="UiGbEnpasssant" HorizontalAlignment="Left" Height="93" Header="{x:Static p:Resources.EnPassant}" Margin="360,196,0,0" VerticalAlignment="Top" Width="80">
             <ListBox x:Name="UiLbEnPassant" Margin="10,2,10,2" SelectionChanged="UiLbEnPassant_SelectionChanged" >
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">

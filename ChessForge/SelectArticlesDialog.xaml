@@ -35,8 +35,8 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn CellTemplate="{StaticResource SelectionCell}"  Width="30"/>
-                    <GridViewColumn Header="Item" DisplayMemberBinding="{Binding Path=GameTitleForList}" Width="640"/>
-                    <GridViewColumn Header="Date"  DisplayMemberBinding="{Binding Path=Date}" Width="90"/>
+                    <GridViewColumn Header="{x:Static p:Resources.Item}" DisplayMemberBinding="{Binding Path=GameTitleForList}" Width="640"/>
+                    <GridViewColumn Header="{x:Static p:Resources.Date}"  DisplayMemberBinding="{Binding Path=Date}" Width="90"/>
                 </GridView>
             </ListView.View>
         </ListView>

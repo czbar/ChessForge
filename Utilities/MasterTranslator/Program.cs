@@ -72,6 +72,8 @@ namespace MasterTranslator
                 return;
             }
 
+            Console.WriteLine("");
+
             if (_workingfolder != null)
             {
                 _inputMasterFile = Path.Combine(_workingfolder, _inputMasterFile);
@@ -254,11 +256,11 @@ namespace MasterTranslator
             StringBuilder sb = new StringBuilder();
             if (inSecondOnly.Count() == 0)
             {
-                sb.AppendLine("No keys missing in " + _inputMasterFile);
+                sb.AppendLine("GOOD: No keys missing in " + _inputMasterFile);
             }
             else
             {
-                sb.AppendLine("Keys missing in " + _inputMasterFile);
+                sb.AppendLine("*!* Keys missing in " + _inputMasterFile);
                 foreach (string s in inSecondOnly)
                 {
                     sb.AppendLine("    " + s);
@@ -268,7 +270,7 @@ namespace MasterTranslator
 
             if (firstDupes.Count > 0)
             {
-                sb.AppendLine("Duplicates in " + _inputMasterFile);
+                sb.AppendLine("*!* Duplicates in " + _inputMasterFile);
                 foreach (string s in firstDupes)
                 {
                     sb.AppendLine("    " + s);
@@ -278,7 +280,7 @@ namespace MasterTranslator
 
             if (firstMissingValues.Count > 0)
             {
-                sb.AppendLine("Keys with missing values in " + _inputMasterFile);
+                sb.AppendLine("*!* Keys with missing values in " + _inputMasterFile);
                 foreach (string s in firstMissingValues)
                 {
                     sb.AppendLine("    " + s);
@@ -290,11 +292,11 @@ namespace MasterTranslator
 
             if (inFirstOnly.Count() == 0)
             {
-                sb.AppendLine("No keys missing in " + _inputLocalizedFile);
+                sb.AppendLine("GOOD: No keys missing in " + _inputLocalizedFile);
             }
             else
             {
-                sb.AppendLine("Keys missing in " + _inputLocalizedFile);
+                sb.AppendLine("*!* Keys missing in " + _inputLocalizedFile);
                 foreach (string s in inFirstOnly)
                 {
                     sb.AppendLine("    " + s);
@@ -304,7 +306,7 @@ namespace MasterTranslator
 
             if (secondDupes.Count > 0)
             {
-                sb.AppendLine("Duplicates in " + _inputLocalizedFile);
+                sb.AppendLine("*!* Duplicates in " + _inputLocalizedFile);
                 foreach (string s in secondDupes)
                 {
                     sb.AppendLine("    " + s);
@@ -314,7 +316,7 @@ namespace MasterTranslator
 
             if (secondMissingValues.Count > 0)
             {
-                sb.AppendLine("Keys with missing values in " + _inputLocalizedFile);
+                sb.AppendLine("*!* Keys with missing values in " + _inputLocalizedFile);
                 foreach (string s in secondMissingValues)
                 {
                     sb.AppendLine("    " + s);
@@ -325,7 +327,6 @@ namespace MasterTranslator
             File.WriteAllText(_compareResultsFile, sb.ToString());
 
             Console.WriteLine(sb.ToString());
-            Console.WriteLine("See " + _compareResultsFile);
             Console.WriteLine("");
         }
 

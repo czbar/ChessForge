@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using ChessPosition.GameTree;
+using ChessPosition.Utils;
 using GameTree;
 
 namespace ChessPosition
@@ -162,8 +163,10 @@ namespace ChessPosition
         /// <returns></returns>
         public static string BuildErrortext(TreeNode nd, string algMove)
         {
+            LocalizedStrings.Values.TryGetValue(LocalizedStrings.StringId.Move, out string msg);
+
             StringBuilder sb = new StringBuilder();
-            sb.Append("Move " + nd.MoveNumber.ToString());
+            sb.Append(msg + " " + nd.MoveNumber.ToString());
             if (nd.ColorToMove == PieceColor.White)
             {
                 sb.Append("...");
@@ -449,28 +452,6 @@ namespace ChessPosition
             {
                 return PieceColor.None;
             }
-        }
-
-        /// <summary>
-        /// Builds a line of text for display in the processing errors list.
-        /// </summary>
-        /// <param name="gm"></param>
-        /// <param name="gameNo"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public static string BuildGameProcessingErrorText(GameData gm, int gameNo, string message)
-        {
-            StringBuilder sbErrors = new StringBuilder();
-
-            if (gm != null)
-            {
-                sbErrors.Append("Game #" + gameNo.ToString() + " : " + gm.Header.BuildGameHeaderLine(false));
-                sbErrors.Append(Environment.NewLine);
-                sbErrors.Append("     " + message);
-                sbErrors.Append(Environment.NewLine);
-            }
-
-            return sbErrors.ToString();
         }
 
         /// <summary>

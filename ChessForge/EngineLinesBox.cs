@@ -140,7 +140,7 @@ namespace ChessForge
 
                 if (eval == "#")
                 {
-                    return "# checkmate";
+                    return "# " + Properties.Resources.Checkmate;
                 }
                 else
                 {
