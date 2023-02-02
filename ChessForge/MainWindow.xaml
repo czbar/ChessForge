@@ -124,28 +124,40 @@
                         <MenuItem Header="{x:Static p:Resources.About}" Click="UiMnHelpAbout_Click" />
                     </MenuItem>
                 </Menu>
-                <Label Grid.Column="1"  Content="{x:Static p:Resources.AutoSave}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,2,0,0" Height="28" Width="60"  />
-                <Image x:Name="UiImgAutoSaveOn" ToolTip="{x:Static p:Resources.TurnAutoSaveOff}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOn.png" Visibility="Hidden" MouseDown="UiImgAutoSaveOn_MouseDown" />
-                <Image x:Name="UiImgAutoSaveOff" ToolTip="{x:Static p:Resources.TurnAutoSaveOn}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOff.png" MouseDown="UiImgAutoSaveOff_MouseDown" />
-                <Button Name="UiBtnFontSizeUp" BorderThickness="0"  Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="145,0,0,0" ToolTip="Increase Font Size" Click="UiBtnFontSizeUp_Click">
-                    <Image Source="Resources/Images/FontSizeUp.png" Width="18" Height="18"></Image>
-                </Button>
-                <Button Name="UiBtnFontSizeDown" BorderThickness="0" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="180,0,0,0" ToolTip="Decrease Font Size" Click="UiBtnFontSizeDown_Click">
-                    <Image Source="Resources/Images/FontSizeDown.png" Width="18" Height="18"></Image>
-                </Button>
-                <Button Name="UiBtnFontSizeFixed" BorderThickness="0" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="215,0,0,0" ToolTip="Use Fixed Font Sizes" Click="UiBtnFontSizeFixed_Click" >
-                    <Image Source="Resources/Images/FontSizeFixed.png" Width="18" Height="18"></Image>
-                </Button>
-                <Button Name="UiBtnFontSizeVariable" BorderThickness="0" Grid.Column="1" Width="30" Height="22"  HorizontalAlignment="Left" Margin="215,0,0,0" ToolTip="Use Variable Font Size" Visibility="Hidden" Click="UiBtnFontSizeVariable_Click">
-                    <Image Source="Resources/Images/FontSizeVariable.png" Width="18" Height="18"></Image>
-                </Button>
-                <Label Grid.Column="1"  Content="{x:Static p:Resources.Explorers}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="290,2,0,0" Height="28" Width="60"  />
-                <Image x:Name="UiImgExplorersOn" ToolTip="{x:Static p:Resources.TurnExplorersOff}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="355,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOn.png" Visibility="Collapsed" PreviewMouseDown="ExplorersToggleOn_PreviewMouseDown" />
-                <Image x:Name="UiImgExplorersOff" ToolTip="{x:Static p:Resources.TurnExplorersOn}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="355,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOff.png" Visibility="Visible" PreviewMouseDown="ExplorersToggleOff_PreviewMouseDown" />
-                <Label Grid.Column="1"  Content="{x:Static p:Resources.Engine}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="425,2,0,0" Height="28" Width="60"  />
-                <Image x:Name="UiImgEngineOn" Cursor="Hand" ToolTip="{x:Static p:Resources.TurnEngineOff}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="475,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOn.png" Visibility="Collapsed" PreviewMouseLeftButtonDown="EngineToggleOn_OnPreviewMouseLeftButtonDown" />
-                <Image x:Name="UiImgEngineOff" Cursor="Hand" ToolTip="{x:Static p:Resources.TurnEngineOn}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="475,0,0,0"  Height="40" Width="40" Source="Resources/Images/AutoSaveOff.png" Visibility="Visible"  PreviewMouseLeftButtonDown="EngineToggleOff_OnPreviewMouseLeftButtonDown" />
-                <ProgressBar x:Name="UiPbEngineThinking" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Left" Height="5" Margin="530,0,0,0" VerticalAlignment="Center" Width="100"/>
+                <Grid x:Name="UiGridToggles" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto "/>
+                        <ColumnDefinition Width="Auto "/>
+                        <ColumnDefinition Width="Auto "/>
+                        <ColumnDefinition Width="Auto "/>
+                        <ColumnDefinition Width="Auto "/>
+                        <ColumnDefinition Width="Auto "/>
+                        <ColumnDefinition Width="Auto "/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"  Content="{x:Static p:Resources.AutoSave}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,2,0,0" Height="28"   />
+                    <Image x:Name="UiImgAutoSaveOn"  Grid.Column="1" ToolTip="{x:Static p:Resources.TurnAutoSaveOff}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="40" Width="40" Source="Resources/Images/ToggleOn.png" Visibility="Hidden" MouseDown="UiImgAutoSaveOn_MouseDown" />
+                    <Image x:Name="UiImgAutoSaveOff" Grid.Column="1" ToolTip="{x:Static p:Resources.TurnAutoSaveOn}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="40" Width="40" Source="Resources/Images/ToggleOff.png" MouseDown="UiImgAutoSaveOff_MouseDown" />
+                    <Button Name="UiBtnFontSizeUp" BorderThickness="0"  Grid.Column="2" Width="30" Height="22"  HorizontalAlignment="Left" Margin="35,0,0,0" ToolTip="Increase Font Size" Click="UiBtnFontSizeUp_Click">
+                        <Image Source="Resources/Images/FontSizeUp.png" Width="18" Height="18"></Image>
+                    </Button>
+                    <Button Name="UiBtnFontSizeDown" BorderThickness="0" Grid.Column="2" Width="30" Height="22"  HorizontalAlignment="Left" Margin="70,0,0,0" ToolTip="Decrease Font Size" Click="UiBtnFontSizeDown_Click">
+                        <Image Source="Resources/Images/FontSizeDown.png" Width="18" Height="18"></Image>
+                    </Button>
+                    <Button Name="UiBtnFontSizeFixed" BorderThickness="0" Grid.Column="2" Width="30" Height="22"  HorizontalAlignment="Left" Margin="105,0,0,0" ToolTip="Use Fixed Font Sizes" Click="UiBtnFontSizeFixed_Click" >
+                        <Image Source="Resources/Images/FontSizeFixed.png" Width="18" Height="18"></Image>
+                    </Button>
+                    <Button Name="UiBtnFontSizeVariable" BorderThickness="0" Grid.Column="2" Width="30" Height="22"  HorizontalAlignment="Left" Margin="105,0,0,0" ToolTip="Use Variable Font Size" Visibility="Hidden" Click="UiBtnFontSizeVariable_Click">
+                        <Image Source="Resources/Images/FontSizeVariable.png" Width="18" Height="18"></Image>
+                    </Button>
+                    <Label Grid.Column="3"  Content="{x:Static p:Resources.Explorers}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,2,0,0" Height="28"  />
+                    <Image x:Name="UiImgExplorersOn" Grid.Column="4" ToolTip="{x:Static p:Resources.TurnExplorersOff}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="40" Width="40" Source="Resources/Images/ToggleOn.png" Visibility="Collapsed" PreviewMouseDown="ExplorersToggleOn_PreviewMouseDown" />
+                    <Image x:Name="UiImgExplorersOff" Grid.Column="4" ToolTip="{x:Static p:Resources.TurnExplorersOn}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="40" Width="40" Source="Resources/Images/ToggleOff.png" Visibility="Visible" PreviewMouseDown="ExplorersToggleOff_PreviewMouseDown" />
+                    <Label Grid.Column="5"  Content="{x:Static p:Resources.Engine}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,2,0,0" Height="28"   />
+                    <Image x:Name="UiImgEngineOn" Cursor="Hand" ToolTip="{x:Static p:Resources.TurnEngineOff}" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="22" Width="40" Source="Resources/Images/ToggleOn.png" Visibility="Collapsed" PreviewMouseLeftButtonDown="EngineToggleOn_OnPreviewMouseLeftButtonDown" />
+                    <Image x:Name="UiImgEngineOff" Cursor="Hand" ToolTip="{x:Static p:Resources.TurnEngineOn}" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="22" Width="40" Source="Resources/Images/ToggleOff.png" Visibility="Visible"  PreviewMouseLeftButtonDown="EngineToggleOff_OnPreviewMouseLeftButtonDown" />
+                    <ProgressBar x:Name="UiPbEngineThinking" Visibility="Visible" Grid.Column="7" HorizontalAlignment="Left" Height="5" Margin="20,0,0,0" VerticalAlignment="Center" Width="100"/>
+                </Grid>
             </Grid>
         </StackPanel>
 
