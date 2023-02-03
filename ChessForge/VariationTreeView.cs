@@ -1448,6 +1448,11 @@ namespace ChessForge
                 rParent = _dictNodeToCommentRun[parent.NodeId];
                 para = _dictCommentRunToParagraph[rParent];
             }
+            else if (_dictNodeToReferenceRun.ContainsKey(parent.NodeId))
+            {
+                rParent = _dictNodeToReferenceRun[parent.NodeId];
+                para = _dictReferenceRunToParagraph[rParent];
+            }
             else
             {
                 rParent = _dictNodeToRun[parent.NodeId];
