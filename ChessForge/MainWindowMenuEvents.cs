@@ -1355,7 +1355,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnReferenceArticles_Click(object sender, RoutedEventArgs e)
+        public void UiMnReferenceArticles_Click(object sender, RoutedEventArgs e)
         {
             try
             {
