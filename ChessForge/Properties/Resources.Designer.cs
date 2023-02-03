@@ -1555,7 +1555,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game/Exercise References.
+        ///   Looks up a localized string similar to Game/Exercise References....
         /// </summary>
         public static string GameExerciseReferences {
             get {

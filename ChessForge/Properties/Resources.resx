@@ -529,7 +529,7 @@
     <value>Delete Exercise</value>
   </data>
   <data name="GameExerciseReferences" xml:space="preserve">
-    <value>Game/Exercise References</value>
+    <value>Game/Exercise References...</value>
   </data>
   <data name="PromoteLine" xml:space="preserve">
     <value>Promote Line</value>

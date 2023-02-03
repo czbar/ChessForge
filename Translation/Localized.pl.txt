@@ -381,7 +381,7 @@ About=Na Temat
 #description: Label for automatic (periodic) saving of the Workbook
 #! Keep short
 #english: AutoSave=Auto Save
-AutoSave=Auto-Zapis
+AutoSave=Autozapis
 
 #description: Explorers label
 #! Keep short

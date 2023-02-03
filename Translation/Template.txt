@@ -611,7 +611,7 @@ ConfirmDeleteExercise=
 #
 
 #description: Edit references
-#english: GameExerciseReferences=Game/Exercise References
+#english: GameExerciseReferences=Game/Exercise References...
 GameExerciseReferences=
 
 #description: Promote a line

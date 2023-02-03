@@ -474,7 +474,7 @@ ConfirmDeleteExercise=Delete Exercise
 #
 
 #Edit references
-GameExerciseReferences=Game/Exercise References
+GameExerciseReferences=Game/Exercise References...
 
 #Promote a line
 PromoteLine=Promote Line
