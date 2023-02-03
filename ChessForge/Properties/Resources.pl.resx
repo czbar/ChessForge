@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Language" xml:space="preserve">
+    <value>Język</value>
+  </data>
+  <data name="LangSystem" xml:space="preserve">
+    <value>Systemowy</value>
+  </data>
+  <data name="LangEnglish" xml:space="preserve">
+    <value>Angielski</value>
+  </data>
+  <data name="LangPolish" xml:space="preserve">
+    <value>Polski</value>
+  </data>
+  <data name="PieceSymbolMap" xml:space="preserve">
+    <value>KHWGS</value>
+  </data>
   <data name="Workbook" xml:space="preserve">
     <value>Podręcznik</value>
   </data>
@@ -826,7 +841,7 @@
     <value>W Partii</value>
   </data>
   <data name="MoveReplay" xml:space="preserve">
-    <value>Auto-Odtwarzanie Ruchów</value>
+    <value>Odtwarzanie Ruchów</value>
   </data>
   <data name="AutoReplaySpeed" xml:space="preserve">
     <value>Auto (s)</value>
@@ -1250,12 +1265,6 @@
   </data>
   <data name="cbStalemateAndDraw" xml:space="preserve">
     <value>Pat! Partia zakończyła się remisem.</value>
-  </data>
-  <data name="LangEnglish" xml:space="preserve">
-    <value>Angielski</value>
-  </data>
-  <data name="LangPolish" xml:space="preserve">
-    <value>Polski</value>
   </data>
   <data name="ChessEngineLoading" xml:space="preserve">
     <value>Trwa ładowanie silnika...</value>

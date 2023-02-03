@@ -1,5 +1,40 @@
+##################################
+#
 # MASTER FILE for Translations
+#
+##################################
 
+
+
+##################################
+#
+# Languages
+#
+
+#description: Language
+#english: Language=Language
+Language=Język
+
+#description: Language System
+#english: LangSystem=System
+LangSystem=Systemowy
+
+#description: Language English
+#english: LangEnglish=English
+LangEnglish=Angielski
+
+#description: Language Polish
+#english: LangPolish=Polish
+LangPolish=Polski
+
+
+#description: Mapping of chess symbols from default KQRBN
+#english: PieceSymbolMap=KQRBN
+PieceSymbolMap=KHWGS
+
+
+
+##################################
 #
 # COMMON TERMS
 #
@@ -1059,7 +1094,7 @@ ThinkTimeInGame=W Partii
 
 #description: Move Replay(group frame title)
 #english: MoveReplay=Move Replay
-MoveReplay=Auto-Odtwarzanie Ruchów
+MoveReplay=Odtwarzanie Ruchów
 
 #description: Time per move in auto replay in seconds (inside a frame titled "Move Replay")
 #english: AutoReplaySpeed=Auto Speed (s)
@@ -1652,20 +1687,6 @@ cbEngineCheckmatedYou=Zostałeś zamatowany przez silnik. Powodzenia następnym 
 #description: This is a stalemate.
 #english: cbStalemateAndDraw=This is a stalemate! You have drawn the game.
 cbStalemateAndDraw=Pat! Partia zakończyła się remisem.
-
-
-##################################
-#
-# Languages
-#
-
-#description: Language English
-#english: LangEnglish=English
-LangEnglish=Angielski
-
-#description: Language Polish
-#english: LangPolish=Polish
-LangPolish=Polski
 
 
 ##################################

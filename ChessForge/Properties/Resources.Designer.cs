@@ -1852,6 +1852,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to System.
+        /// </summary>
+        public static string LangSystem {
+            get {
+                return ResourceManager.GetString("LangSystem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Most recent file $0 could not be found..
         /// </summary>
         public static string LastFileNotFound {
@@ -2380,6 +2398,15 @@ namespace ChessForge.Properties {
         public static string PgnMissingMoveAfter {
             get {
                 return ResourceManager.GetString("PgnMissingMoveAfter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KQRBN.
+        /// </summary>
+        public static string PieceSymbolMap {
+            get {
+                return ResourceManager.GetString("PieceSymbolMap", resourceCulture);
             }
         }
         

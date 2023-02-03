@@ -1,5 +1,40 @@
+##################################
+#
 # MASTER FILE for Translations
+#
+##################################
 
+
+
+##################################
+#
+# Languages
+#
+
+#description: Language
+#english: Language=Language
+Language=
+
+#description: Language System
+#english: LangSystem=System
+LangSystem=
+
+#description: Language English
+#english: LangEnglish=English
+LangEnglish=
+
+#description: Language Polish
+#english: LangPolish=Polish
+LangPolish=
+
+
+#description: Mapping of chess symbols from default KQRBN
+#english: PieceSymbolMap=KQRBN
+PieceSymbolMap=
+
+
+
+##################################
 #
 # COMMON TERMS
 #
@@ -1652,20 +1687,6 @@ cbEngineCheckmatedYou=
 #description: This is a stalemate.
 #english: cbStalemateAndDraw=This is a stalemate! You have drawn the game.
 cbStalemateAndDraw=
-
-
-##################################
-#
-# Languages
-#
-
-#description: Language English
-#english: LangEnglish=English
-LangEnglish=
-
-#description: Language Polish
-#english: LangPolish=Polish
-LangPolish=
 
 
 ##################################
