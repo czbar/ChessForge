@@ -160,7 +160,13 @@ namespace ChessForge
         {
             if (idx < 0 || idx >= NodeList.Count)
             {
-                DebugUtils.ShowDebugMessage("ScoreSheet:GetNodeAtIndex bad index = " + idx.ToString());
+                string msg = "ScoreSheet:GetNodeAtIndex bad index = " + idx.ToString();
+                DebugUtils.ShowDebugMessage(msg);
+                AppLog.Message(msg);
+                AppLog.Message("    Context: Active Content Type = " + AppState.ActiveContentType.ToString());
+                AppLog.Message("             Active Chapter Id   = " + AppState.ActiveChapter.Id.ToString());
+                AppLog.Message("             Active Game Idx     = " + WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex.ToString());
+                AppLog.Message("             Active Exercise Idx = " + WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex.ToString());
                 return null;
             }
             return idx >= 0 ? NodeList[idx] : null;
