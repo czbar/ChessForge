@@ -15,23 +15,6 @@ namespace ChessPosition
     public class TextUtils
     {
         /// <summary>
-        /// Method to replace upper case letter with mapped letters (courtesy ChatGPT :)).
-        /// To use when changing language for move notation.
-        /// </summary>
-        /// <param name="inputString"></param>
-        /// <param name="mapping"></param>
-        /// <returns></returns>
-
-        public static string ReplaceUppercase(string inputString, Dictionary<char, char> mapping)
-        {
-            return Regex.Replace(inputString, "[A-Z]", m =>
-            {
-                char c = m.Value[0];
-                return mapping.ContainsKey(c) ? mapping[c].ToString() : c.ToString();
-            });
-        }
-
-        /// <summary>
         /// Parses the supplied string into tokens split by '.'.
         /// Somewhere in the string there must be a sequence of 3 numbers in the form of 1.1.1 
         /// or the version string will be considered invalid and will return false.
