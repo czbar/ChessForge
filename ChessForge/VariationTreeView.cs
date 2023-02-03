@@ -1986,6 +1986,7 @@ namespace ChessForge
             try
             {
                 TreeNode nd = GetClickedNode(e);
+                SelectRun(_dictNodeToRun[nd.NodeId], e.ClickCount, e.ChangedButton);
                 List<string> guids = new List<string>(nd.ArticleRefs.Split('|'));
                 List<Article> games = new List<Article>();
                 foreach (string guid in guids)
@@ -1999,22 +2000,7 @@ namespace ChessForge
 
                 if (games.Count > 0)
                 {
-                    ReferenceGamePreviewDialog dlg = new ReferenceGamePreviewDialog(guids, games)
-                    {
-                        Left = _mainWin.ChessForgeMain.Left + 100,
-                        Top = _mainWin.ChessForgeMain.Top + 100,
-                        Topmost = false,
-                        Owner = _mainWin
-                    };
-                    if (dlg.ShowDialog() == true)
-                    {
-                        ChessForgeEventArgs args = new ChessForgeEventArgs();
-                        args.ChapterIndex = dlg.SelectedChapterIndex;
-                        args.ArticleIndex = dlg.SelectedArticleIndex;
-                        args.ContentType = dlg.SelectedContentType;
-
-                        ArticleSelected?.Invoke(this, args);
-                    }
+                    _mainWin.UiMnReferenceArticles_Click(null, null);
                 }
                 else
                 {
