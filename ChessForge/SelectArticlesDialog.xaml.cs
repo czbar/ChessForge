@@ -60,9 +60,13 @@ namespace ChessForge
 
             foreach (ArticleListItem item in _articleList)
             {
-                if (item.Article != null)
+                if (item.Article != null && item.IsSelected)
                 {
-                    refs.Add(item.Article.Tree.Header.GetGuid(out _));
+                    GameData.ContentType ctype = item.Article.Tree.Header.GetContentType(out _);
+                    if (ctype == GameData.ContentType.MODEL_GAME || ctype == GameData.ContentType.EXERCISE)
+                    {
+                        refs.Add(item.Article.Tree.Header.GetGuid(out _));
+                    }
                 }
             }
 
@@ -122,7 +126,7 @@ namespace ChessForge
         {
             foreach (var item in _articleList)
             {
-                if (item.IsShown)
+                if (item.IsShown && item.Article != null)
                 {
                     item.IsSelected = true;
                 }
@@ -186,6 +190,71 @@ namespace ChessForge
         {
             _showActiveChapterOnly = true;
             SetItemVisibility();
+        }
+
+        /// <summary>
+        /// Identifies a List View item from the click coordinates. 
+        /// </summary>
+        /// <param name="listView"></param>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        private ListViewItem GetListViewItemFromPoint(ListView listView, Point point)
+        {
+            HitTestResult result = VisualTreeHelper.HitTest(listView, point);
+            if (result == null)
+            {
+                return null;
+            }
+
+            DependencyObject hitObject = result.VisualHit;
+            while (hitObject != null && !(hitObject is ListViewItem))
+            {
+                hitObject = VisualTreeHelper.GetParent(hitObject);
+            }
+
+            return hitObject as ListViewItem;
+        }
+
+        /// <summary>
+        /// Handles a double-click event on an Article.
+        /// Opens the Game Preview dialog for the clicked game.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLvGames_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ListViewItem item = GetListViewItemFromPoint(UiLvGames, e.GetPosition(UiLvGames));
+            if (item != null && item.Content is ArticleListItem)
+            {
+                Article art = (item.Content as ArticleListItem).Article;
+                List<string> gameIdList = new List<string>();
+                List<Article> games = new List<Article> { art };
+                gameIdList.Add(art.Tree.Header.GetGuid(out _));
+
+                ReferenceGamePreviewDialog dlg = new ReferenceGamePreviewDialog(gameIdList, games)
+                {
+                    Left = this.Left + 20,
+                    Top = this.Top + 20,
+                    Topmost = false,
+                    Owner = this
+                };
+                dlg.ShowDialog();
+            }
+        }
+
+        /// <summary>
+        /// Handles a right-click even on an Article.
+        /// TODO: Show buttons with the options to preview the game
+        /// or go to the Game/Exercise tab.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLvGames_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ListViewItem item = GetListViewItemFromPoint(UiLvGames, e.GetPosition(UiLvGames));
+            if (item != null && item.Content is ArticleListItem)
+            {
+            }
         }
     }
 }
