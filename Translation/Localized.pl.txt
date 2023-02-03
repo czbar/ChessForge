@@ -191,7 +191,7 @@ Confirm=Potwierdź
 
 #description: Item
 #english: Item=Item
-Item=Pozycja
+Item=Element
 
 #description: Game Header
 #english: GameHeader=Game Header
@@ -611,8 +611,8 @@ ConfirmDeleteExercise=Usunąć ćwiczenie
 #
 
 #description: Edit references
-#english: GameExerciseReferences=Game/Exercise References
-GameExerciseReferences=Edytuj Odnośniki do Partii i Ćwiczeń...
+#english: GameExerciseReferences=Game/Exercise References...
+GameExerciseReferences=Edytuj Odnośniki...
 
 #description: Promote a line
 #english: PromoteLine=Promote Line
@@ -774,6 +774,27 @@ ViewOnLichess=Zobacz na lichess
 #description: Full view of the game
 #english: FullView=Full View
 FullView=Pełny Widok
+
+
+#
+# Context menu for SelectArticles dialog
+#
+# PreviewGame already defined elsewhere
+#
+
+#description: Open the exercise preview dialog
+#english: PreviewExercise=Preview Exercise
+PreviewExercise=Przejrzyj Ćwiczenie
+
+#description: Got to Games tab
+#english: GoToGames=Open Games View
+GoToGames=Otwórz Widok Partii
+
+#description: Got to Exercise tab
+#english: GoToExercises=Open Exercise View
+GoToExercises=Otwórz Widok Ćwiczeń
+
+
 
 ##################################
 #
@@ -1169,7 +1190,7 @@ NextGame=Następna Partia
 
 #description: Import into Chapter
 #english: ImportIntoChapter=Import into Chapter
-ImportIntoChapter=Importuj do Rozdziału
+ImportIntoChapter=Importuj Partię do Rozdziału
 
 #description: Downloading game from lichess
 #english: DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
@@ -1249,7 +1270,7 @@ SelectGameAndExercises=Wybierz Partie i Ćwiczenia
 
 #description: Select items
 #english: SelectItems=Select Items
-SelectItems=Zaznacz Wybór
+SelectItems=Wybierz Element
 
 #description: Show all chapters
 #english: ShowAllChapters=Show All Chapters
@@ -1818,13 +1839,4 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #description: Illegal Castling
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
-
-
-PreviewExercise=Przejrzyj Ćwiczenie
-
-#Got to Games tab
-GoToGames=Otwórz Widok Partii
-
-#Got to Exercise tab
-GoToExercises=Otwórz Widok Ćwiczeń
 
