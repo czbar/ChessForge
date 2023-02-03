@@ -10,33 +10,43 @@ namespace ChessForge
     /// <summary>
     /// Handles selection and replay of Referenced games.
     /// </summary>
-    public class ReferenceGamePreviewDialog : GamePreviewDialog
+    public class SingleGamePreviewDialog : GamePreviewDialog
     {
+        /// <summary>
+        /// Chapter index of the replayed item.
+        /// </summary>
         public int SelectedChapterIndex = -1;
+
+        /// <summary>
+        /// Article Index of the replayed item.
+        /// </summary>
         public int SelectedArticleIndex = -1;
+
+        /// <summary>
+        /// Type of the replayed item (Game or Exercise)
+        /// </summary>
         public GameData.ContentType SelectedContentType = GameData.ContentType.NONE;
 
-        // games to show
+        // a list of one article
         private List<Article> _games;
 
         /// <summary>
         /// Creates the dialog.
-        /// Populates the ListBox.
+        /// Serves only a single article but uses lists for "compatibility" with the base class.
         /// </summary>
         /// <param name="gameIdList"></param>
         /// <param name="games"></param>
-        public ReferenceGamePreviewDialog(List<string> gameIdList, List<Article> games)
+        public SingleGamePreviewDialog(List<string> gameIdList, List<Article> games)
             : base(null, gameIdList)
         {
-            this.Width = 695;
-            UiBtnExit.Margin = new Thickness(UiBtnExit.Margin.Left, UiGReplaySpeed.Margin.Top - 35, 0, 0);
+            Thickness currExitBtnRThick = UiBtnExit.Margin;
+            currExitBtnRThick.Right = 25;
+            UiBtnExit.Margin = currExitBtnRThick;
 
+            this.Width = 520;
+            //this.SizeToContent= SizeToContent.Width;
+            UiBtnExit.Margin = new Thickness(UiBtnExit.Margin.Left, UiGReplaySpeed.Margin.Top - 35, 0, 0);
             _games = games;
-            foreach (var game in games)
-            {
-                UiLbGames.Items.Add(game.Tree.Header.BuildGameHeaderLine(game.Tree.Header.GetContentType(out _) == GameData.ContentType.MODEL_GAME));
-            }
-            UiLbGames.SelectedIndex = 0;
             PlaySelectedGame();
         }
 
@@ -44,20 +54,17 @@ namespace ChessForge
         /// Updates GUI for the selected game and starts replay.
         /// </summary>
         /// <param name="index"></param>
-        private void SelectGame(int index)
+        private void SelectGame()
         {
-            if (index >= 0)
-            {
-                _tree = _games[index].Tree;
-                PopulateHeaderLine(_tree);
-                _chessBoard.DisplayStartingPosition();
-                _mainLine = _tree.SelectLine("1");
+            _tree = _games[0].Tree;
+            PopulateHeaderLine(_tree);
+            _chessBoard.DisplayStartingPosition();
+            _mainLine = _tree.SelectLine("1");
 
-                _currentNodeMoveIndex = 1;
-                RequestMoveAnimation(_currentNodeMoveIndex);
+            _currentNodeMoveIndex = 1;
+            RequestMoveAnimation(_currentNodeMoveIndex);
 
-                ShowControls(true, false);
-            }
+            ShowControls(true, false);
         }
 
         /// <summary>
@@ -72,19 +79,17 @@ namespace ChessForge
             }
             else
             {
-                SelectGame(UiLbGames.SelectedIndex);
+                SelectGame();
             }
         }
 
         /// <summary>
-        /// The user changed selecttion in the Games ListBox
+        /// Not handled in this sub-class as there is no ability to select.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         override protected void UiLbGames_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SelectGame(UiLbGames.SelectedIndex);
-        }
+        {}
 
         /// <summary>
         /// Shows/Hides game operations related controls. 
@@ -107,8 +112,8 @@ namespace ChessForge
 
             UiRtbGames.Visibility = Visibility.Collapsed;
 
-            UiLbGames.Visibility = Visibility.Visible;
-            UiBtnViewGame.Visibility = Visibility.Visible;
+            UiLbGames.Visibility = Visibility.Collapsed;
+            UiBtnViewGame.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>

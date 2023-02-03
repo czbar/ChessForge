@@ -233,7 +233,8 @@ namespace ChessPosition
             if (nd.NodeId == 0)
             {
                 // special case that may occur in evaluation
-                return "starting position";
+                LocalizedStrings.Values.TryGetValue(LocalizedStrings.StringId.StartingPosition, out string msg);
+                return msg;
             }
 
             StringBuilder sb = new StringBuilder();
@@ -246,7 +247,7 @@ namespace ChessPosition
                 sb.Append(nd.MoveNumber.ToString() + "...");
             }
 
-            sb.Append(nd.GetPlyText(withNAGs));
+            sb.Append(nd.GetGuiPlyText(withNAGs));
             return sb.ToString();
         }
 

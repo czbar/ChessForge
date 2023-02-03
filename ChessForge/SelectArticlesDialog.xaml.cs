@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,6 +22,14 @@ namespace ChessForge
     /// </summary>
     public partial class SelectArticlesDialog : Window
     {
+        /// <summary>
+        /// Set to the article to be acted upon exit.
+        /// </summary>
+        public Article SelectedArticle;
+
+        // last clicked article
+        private Article _lastClickedArticle;
+
         /// <summary>
         /// Whether to show articles fromthe current chapter only
         /// </summary>
@@ -60,9 +69,13 @@ namespace ChessForge
 
             foreach (ArticleListItem item in _articleList)
             {
-                if (item.Article != null)
+                if (item.Article != null && item.IsSelected)
                 {
-                    refs.Add(item.Article.Tree.Header.GetGuid(out _));
+                    GameData.ContentType ctype = item.Article.Tree.Header.GetContentType(out _);
+                    if (ctype == GameData.ContentType.MODEL_GAME || ctype == GameData.ContentType.EXERCISE)
+                    {
+                        refs.Add(item.Article.Tree.Header.GetGuid(out _));
+                    }
                 }
             }
 
@@ -122,7 +135,7 @@ namespace ChessForge
         {
             foreach (var item in _articleList)
             {
-                if (item.IsShown)
+                if (item.IsShown && item.Article != null)
                 {
                     item.IsSelected = true;
                 }
@@ -187,5 +200,111 @@ namespace ChessForge
             _showActiveChapterOnly = true;
             SetItemVisibility();
         }
-    }
+
+        /// <summary>
+        /// Identifies a List View item from the click coordinates. 
+        /// </summary>
+        /// <param name="listView"></param>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        private ListViewItem GetListViewItemFromPoint(ListView listView, Point point)
+        {
+            HitTestResult result = VisualTreeHelper.HitTest(listView, point);
+            if (result == null)
+            {
+                return null;
+            }
+
+            DependencyObject hitObject = result.VisualHit;
+            while (hitObject != null && !(hitObject is ListViewItem))
+            {
+                hitObject = VisualTreeHelper.GetParent(hitObject);
+            }
+
+            return hitObject as ListViewItem;
+        }
+
+        /// <summary>
+        /// Handles a double-click event on an Article.
+        /// Opens the Game Preview dialog for the clicked game.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLvGames_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ListViewItem item = GetListViewItemFromPoint(UiLvGames, e.GetPosition(UiLvGames));
+            if (item != null && item.Content is ArticleListItem)
+            {
+                Article art = (item.Content as ArticleListItem).Article;
+                _lastClickedArticle = art;
+                InvokeGamePreviewDialog(art);
+            }
+        }
+
+        private void InvokeGamePreviewDialog(Article art)
+        {
+            List<string> gameIdList = new List<string>();
+            List<Article> games = new List<Article> { art };
+            gameIdList.Add(art.Tree.Header.GetGuid(out _));
+
+            SingleGamePreviewDialog dlg = new SingleGamePreviewDialog(gameIdList, games)
+            {
+                Left = this.Left + 20,
+                Top = this.Top + 20,
+                Topmost = false,
+                Owner = this
+            };
+            dlg.ShowDialog();
+        }
+
+        /// <summary>
+        /// Handles a right-click even on an Article.
+        /// TODO: Show buttons with the options to preview the game
+        /// or go to the Game/Exercise tab.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLvGames_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ListViewItem item = GetListViewItemFromPoint(UiLvGames, e.GetPosition(UiLvGames));
+            if (item != null && item.Content is ArticleListItem)
+            {
+                Article art = (item.Content as ArticleListItem).Article;
+                _lastClickedArticle = art;
+                if (art != null)
+                {
+                    if (art.Tree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
+                    {
+                        UiMnPreviewGame.Header = Properties.Resources.PreviewExercise;
+                        UiMnOpenGame.Header = Properties.Resources.GoToExercises;
+                    }
+                    else
+                    {
+                        UiMnPreviewGame.Header = Properties.Resources.PreviewGame;
+                        UiMnOpenGame.Header = Properties.Resources.GoToGames;
+                    }
+                    UiCmGame.IsOpen = true;
+                }
+            }
+        }
+
+        private void UiLvGames_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            e.Handled= true;
+        }
+
+        private void UiMnPreviewGame_Click(object sender, RoutedEventArgs e)
+        {
+            if (_lastClickedArticle != null)
+            {
+                InvokeGamePreviewDialog(_lastClickedArticle);
+            }
+        }
+
+        private void UiMnOpenGame_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedArticle = _lastClickedArticle;
+            UiBtnOk_Click(null, null);
+        }
+    }   
 }

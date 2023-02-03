@@ -1,5 +1,35 @@
+##################################
+#
 # MASTER FILE for Translations
+#
+##################################
 
+
+
+##################################
+#
+# Languages
+#
+
+#Language
+Language=Language
+
+#Language System
+LangSystem=System
+
+#Language English
+LangEnglish=English
+
+#Language Polish
+LangPolish=Polish
+
+
+#Mapping of chess symbols from default KQRBN
+PieceSymbolMap=KQRBN
+
+
+
+##################################
 #
 # COMMON TERMS
 #
@@ -444,7 +474,7 @@ ConfirmDeleteExercise=Delete Exercise
 #
 
 #Edit references
-GameExerciseReferences=Game/Exercise References
+GameExerciseReferences=Game/Exercise References...
 
 #Promote a line
 PromoteLine=Promote Line
@@ -576,6 +606,24 @@ ViewOnLichess=View on lichess
 
 #Full view of the game
 FullView=Full View
+
+
+#
+# Context menu for SelectArticles dialog
+#
+# PreviewGame already defined elsewhere
+#
+
+#Open the exercise preview dialog
+PreviewExercise=Preview Exercise
+
+#Got to Games tab
+GoToGames=Open Games View
+
+#Got to Exercise tab
+GoToExercises=Open Exercise View
+
+
 
 ##################################
 #
@@ -816,7 +864,7 @@ LostQuizPoints=Lost quiz points
 EngineExecutable=Engine Executable
 
 #Engine Time per Move in seconds (group frame title)
-EngineTimePerMove=Engine Time per Move (s)
+EngineTimePerMove=Engine Think Time (s)
 
 #Time to think in the Game (inside a frame titled "Engine Time per Move")
 ThinkTimeInGame=In Game
@@ -1274,18 +1322,6 @@ cbEngineCheckmatedYou=You have been checkmated by the engine. Better luck next t
 
 #This is a stalemate.
 cbStalemateAndDraw=This is a stalemate! You have drawn the game.
-
-
-##################################
-#
-# Languages
-#
-
-#Language English
-LangEnglish=English
-
-#Language Polish
-LangPolish=Polish
 
 
 ##################################

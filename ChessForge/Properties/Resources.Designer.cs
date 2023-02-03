@@ -1150,7 +1150,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Engine Time per Move (s).
+        ///   Looks up a localized string similar to Engine Think Time (s).
         /// </summary>
         public static string EngineTimePerMove {
             get {
@@ -1555,7 +1555,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game/Exercise References.
+        ///   Looks up a localized string similar to Game/Exercise References....
         /// </summary>
         public static string GameExerciseReferences {
             get {
@@ -1623,6 +1623,24 @@ namespace ChessForge.Properties {
         public static string GeneratedBookmarksReplace {
             get {
                 return ResourceManager.GetString("GeneratedBookmarksReplace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Exercise View.
+        /// </summary>
+        public static string GoToExercises {
+            get {
+                return ResourceManager.GetString("GoToExercises", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Games View.
+        /// </summary>
+        public static string GoToGames {
+            get {
+                return ResourceManager.GetString("GoToGames", resourceCulture);
             }
         }
         
@@ -1848,6 +1866,24 @@ namespace ChessForge.Properties {
         public static string LangPolish {
             get {
                 return ResourceManager.GetString("LangPolish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System.
+        /// </summary>
+        public static string LangSystem {
+            get {
+                return ResourceManager.GetString("LangSystem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
             }
         }
         
@@ -2384,6 +2420,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to KQRBN.
+        /// </summary>
+        public static string PieceSymbolMap {
+            get {
+                return ResourceManager.GetString("PieceSymbolMap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Play Against Engine.
         /// </summary>
         public static string PlayAgainstComputer {
@@ -2479,6 +2524,15 @@ namespace ChessForge.Properties {
         public static string Preamble {
             get {
                 return ResourceManager.GetString("Preamble", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview Exercise.
+        /// </summary>
+        public static string PreviewExercise {
+            get {
+                return ResourceManager.GetString("PreviewExercise", resourceCulture);
             }
         }
         

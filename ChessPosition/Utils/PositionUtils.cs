@@ -879,7 +879,7 @@ namespace ChessPosition
         {
             if (node != null)
             {
-                move.WhitePly = node.GetPlyText(true);
+                move.WhitePly = node.GetGuiPlyText(true);
                 move.WhiteEval = node.EngineEvaluation;
                 move.WhiteNodeId = node.NodeId;
             }
@@ -900,7 +900,7 @@ namespace ChessPosition
         {
             if (node != null)
             {
-                move.BlackPly = node.GetPlyText(true);
+                move.BlackPly = node.GetGuiPlyText(true);
                 move.BlackEval = node.EngineEvaluation;
                 move.BlackNodeId = node.NodeId;
             }

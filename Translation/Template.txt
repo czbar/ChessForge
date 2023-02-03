@@ -1,5 +1,40 @@
+##################################
+#
 # MASTER FILE for Translations
+#
+##################################
 
+
+
+##################################
+#
+# Languages
+#
+
+#description: Language
+#english: Language=Language
+Language=
+
+#description: Language System
+#english: LangSystem=System
+LangSystem=
+
+#description: Language English
+#english: LangEnglish=English
+LangEnglish=
+
+#description: Language Polish
+#english: LangPolish=Polish
+LangPolish=
+
+
+#description: Mapping of chess symbols from default KQRBN
+#english: PieceSymbolMap=KQRBN
+PieceSymbolMap=
+
+
+
+##################################
 #
 # COMMON TERMS
 #
@@ -576,7 +611,7 @@ ConfirmDeleteExercise=
 #
 
 #description: Edit references
-#english: GameExerciseReferences=Game/Exercise References
+#english: GameExerciseReferences=Game/Exercise References...
 GameExerciseReferences=
 
 #description: Promote a line
@@ -739,6 +774,27 @@ ViewOnLichess=
 #description: Full view of the game
 #english: FullView=Full View
 FullView=
+
+
+#
+# Context menu for SelectArticles dialog
+#
+# PreviewGame already defined elsewhere
+#
+
+#description: Open the exercise preview dialog
+#english: PreviewExercise=Preview Exercise
+PreviewExercise=
+
+#description: Got to Games tab
+#english: GoToGames=Open Games View
+GoToGames=
+
+#description: Got to Exercise tab
+#english: GoToExercises=Open Exercise View
+GoToExercises=
+
+
 
 ##################################
 #
@@ -1050,7 +1106,7 @@ LostQuizPoints=
 EngineExecutable=
 
 #description: Engine Time per Move in seconds (group frame title)
-#english: EngineTimePerMove=Engine Time per Move (s)
+#english: EngineTimePerMove=Engine Think Time (s)
 EngineTimePerMove=
 
 #description: Time to think in the Game (inside a frame titled "Engine Time per Move")
@@ -1652,20 +1708,6 @@ cbEngineCheckmatedYou=
 #description: This is a stalemate.
 #english: cbStalemateAndDraw=This is a stalemate! You have drawn the game.
 cbStalemateAndDraw=
-
-
-##################################
-#
-# Languages
-#
-
-#description: Language English
-#english: LangEnglish=English
-LangEnglish=
-
-#description: Language Polish
-#english: LangPolish=Polish
-LangPolish=
 
 
 ##################################

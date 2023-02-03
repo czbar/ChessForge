@@ -1,5 +1,40 @@
+##################################
+#
 # MASTER FILE for Translations
+#
+##################################
 
+
+
+##################################
+#
+# Languages
+#
+
+#description: Language
+#english: Language=Language
+Language=Język
+
+#description: Language System
+#english: LangSystem=System
+LangSystem=Systemowy
+
+#description: Language English
+#english: LangEnglish=English
+LangEnglish=Angielski
+
+#description: Language Polish
+#english: LangPolish=Polish
+LangPolish=Polski
+
+
+#description: Mapping of chess symbols from default KQRBN
+#english: PieceSymbolMap=KQRBN
+PieceSymbolMap=KHWGS
+
+
+
+##################################
 #
 # COMMON TERMS
 #
@@ -346,7 +381,7 @@ About=Na Temat
 #description: Label for automatic (periodic) saving of the Workbook
 #! Keep short
 #english: AutoSave=Auto Save
-AutoSave=Auto-Zapis)
+AutoSave=Autozapis
 
 #description: Explorers label
 #! Keep short
@@ -576,7 +611,7 @@ ConfirmDeleteExercise=Usunąć ćwiczenie
 #
 
 #description: Edit references
-#english: GameExerciseReferences=Game/Exercise References
+#english: GameExerciseReferences=Game/Exercise References...
 GameExerciseReferences=Edytuj Odnośniki...
 
 #description: Promote a line
@@ -739,6 +774,27 @@ ViewOnLichess=Zobacz na lichess
 #description: Full view of the game
 #english: FullView=Full View
 FullView=Pełny Widok
+
+
+#
+# Context menu for SelectArticles dialog
+#
+# PreviewGame already defined elsewhere
+#
+
+#description: Open the exercise preview dialog
+#english: PreviewExercise=Preview Exercise
+PreviewExercise=Przejrzyj Ćwiczenie
+
+#description: Got to Games tab
+#english: GoToGames=Open Games View
+GoToGames=Otwórz Widok Partii
+
+#description: Got to Exercise tab
+#english: GoToExercises=Open Exercise View
+GoToExercises=Otwórz Widok Ćwiczeń
+
+
 
 ##################################
 #
@@ -972,7 +1028,7 @@ FileNotFound=Plik nie znaleziony
 
 #description: Save the Workbook
 #english: SaveWorkbook=Save the Workbook?
-SaveWorkbook=Zapis Podręcznika
+SaveWorkbook=Zapisać Podręcznik?
 
 #description: File already open
 #english: FileAlreadyOpen=$0 is already open."
@@ -1050,20 +1106,20 @@ LostQuizPoints=Punkty stracone
 EngineExecutable=Silnik
 
 #description: Engine Time per Move in seconds (group frame title)
-#english: EngineTimePerMove=Engine Time per Move (s)
-EngineTimePerMove=Czas Silnika na Posunięcie
+#english: EngineTimePerMove=Engine Think Time (s)
+EngineTimePerMove=Czas Namysłu Silnika (s)
 
 #description: Time to think in the Game (inside a frame titled "Engine Time per Move")
 #english: ThinkTimeInGame=In Game
-ThinkTimeInGame=Czas do Namysłu w Partii
+ThinkTimeInGame=W Partii
 
 #description: Move Replay(group frame title)
 #english: MoveReplay=Move Replay
-MoveReplay=Auto-Odtwarzanie
+MoveReplay=Odtwarzanie Ruchów
 
 #description: Time per move in auto replay in seconds (inside a frame titled "Move Replay")
 #english: AutoReplaySpeed=Auto Speed (s)
-AutoReplaySpeed=Prędkość Auto-Odtwarzania
+AutoReplaySpeed=Auto (s)
 
 #description: Allow manual replay with a mouse wheel 
 #english: AllowMouseWheel=Allow Mouse Wheel
@@ -1543,7 +1599,7 @@ cbActions=Niektóre dostępne czynności:
 
 #description: Clich to open Study
 #english: cbClickStudyHeader=Click Study header or double click chapter's title to open the Study Tree
-cbClickStudyHeader=Kliknij nagówek Teoria, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Teorię 
+cbClickStudyHeader=Kliknij nagłówek Teoria, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Teorię 
 
 #description: Right click for context menu
 #english: cbClickForContextMenu=Right click to open context menu
@@ -1563,7 +1619,7 @@ cbAdvancedEditig=Naciśnij prawy przycisk by wywołać menu do edycji, kopiowani
 
 #description: Double click to auto replay
 #english: cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay
-cbDoubleClickAutoReplay=Dwukrotnie kliknij by rozpocząć auto-odtwarzanie
+cbDoubleClickAutoReplay=Dwukrotnie kliknij w Zapisie by rozpocząć auto-odtwarzanie
 
 #description: Click bookmark to start training
 #english: cbClickBookmarkToTrain=Click a bookmark to start training
@@ -1652,20 +1708,6 @@ cbEngineCheckmatedYou=Zostałeś zamatowany przez silnik. Powodzenia następnym 
 #description: This is a stalemate.
 #english: cbStalemateAndDraw=This is a stalemate! You have drawn the game.
 cbStalemateAndDraw=Pat! Partia zakończyła się remisem.
-
-
-##################################
-#
-# Languages
-#
-
-#description: Language English
-#english: LangEnglish=English
-LangEnglish=Angielski
-
-#description: Language Polish
-#english: LangPolish=Polish
-LangPolish=Polski
 
 
 ##################################

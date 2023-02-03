@@ -158,6 +158,7 @@
     <Compile Include="SelectSingleChapterDialog.xaml.cs">
       <DependentUpon>SelectSingleChapterDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SingleGamePreviewDialog.cs" />
     <Compile Include="TrainingViewMoveHandlers.cs" />
     <Compile Include="WorkbookOperation.cs" />
     <Compile Include="WorkbookOperationsManager.cs" />
@@ -383,6 +384,8 @@
     <Resource Include="Resources\Images\lichess_logo.png" />
     <Resource Include="Resources\Images\chevron-down.png" />
     <Resource Include="Resources\Images\chevron-up.png" />
+    <Resource Include="Resources\Images\ToggleOff.png" />
+    <Resource Include="Resources\Images\ToggleOn.png" />
     <Content Include="Resources\Sounds\InvalidMove.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

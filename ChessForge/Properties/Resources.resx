@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LangSystem" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="LangEnglish" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LangPolish" xml:space="preserve">
+    <value>Polish</value>
+  </data>
+  <data name="PieceSymbolMap" xml:space="preserve">
+    <value>KQRBN</value>
+  </data>
   <data name="Workbook" xml:space="preserve">
     <value>Workbook</value>
   </data>
@@ -514,7 +529,7 @@
     <value>Delete Exercise</value>
   </data>
   <data name="GameExerciseReferences" xml:space="preserve">
-    <value>Game/Exercise References</value>
+    <value>Game/Exercise References...</value>
   </data>
   <data name="PromoteLine" xml:space="preserve">
     <value>Promote Line</value>
@@ -605,6 +620,15 @@
   </data>
   <data name="FullView" xml:space="preserve">
     <value>Full View</value>
+  </data>
+  <data name="PreviewExercise" xml:space="preserve">
+    <value>Preview Exercise</value>
+  </data>
+  <data name="GoToGames" xml:space="preserve">
+    <value>Open Games View</value>
+  </data>
+  <data name="GoToExercises" xml:space="preserve">
+    <value>Open Exercise View</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
@@ -821,7 +845,7 @@
     <value>Engine Executable</value>
   </data>
   <data name="EngineTimePerMove" xml:space="preserve">
-    <value>Engine Time per Move (s)</value>
+    <value>Engine Think Time (s)</value>
   </data>
   <data name="ThinkTimeInGame" xml:space="preserve">
     <value>In Game</value>
@@ -1251,12 +1275,6 @@
   </data>
   <data name="cbStalemateAndDraw" xml:space="preserve">
     <value>This is a stalemate! You have drawn the game.</value>
-  </data>
-  <data name="LangEnglish" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="LangPolish" xml:space="preserve">
-    <value>Polish</value>
   </data>
   <data name="ChessEngineLoading" xml:space="preserve">
     <value>Chess engine loading...</value>

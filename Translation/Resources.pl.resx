@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Language" xml:space="preserve">
+    <value>Język</value>
+  </data>
+  <data name="LangSystem" xml:space="preserve">
+    <value>Systemowy</value>
+  </data>
+  <data name="LangEnglish" xml:space="preserve">
+    <value>Angielski</value>
+  </data>
+  <data name="LangPolish" xml:space="preserve">
+    <value>Polski</value>
+  </data>
+  <data name="PieceSymbolMap" xml:space="preserve">
+    <value>KHWGS</value>
+  </data>
   <data name="Workbook" xml:space="preserve">
     <value>Podręcznik</value>
   </data>
@@ -358,7 +373,7 @@
     <value>Na Temat</value>
   </data>
   <data name="AutoSave" xml:space="preserve">
-    <value>Auto-Zapis)</value>
+    <value>Autozapis</value>
   </data>
   <data name="Explorers" xml:space="preserve">
     <value>Biblioteka</value>
@@ -606,6 +621,15 @@
   <data name="FullView" xml:space="preserve">
     <value>Pełny Widok</value>
   </data>
+  <data name="PreviewExercise" xml:space="preserve">
+    <value>Przejrzyj Ćwiczenie</value>
+  </data>
+  <data name="GoToGames" xml:space="preserve">
+    <value>Otwórz Widok Partii</value>
+  </data>
+  <data name="GoToExercises" xml:space="preserve">
+    <value>Otwórz Widok Ćwiczeń</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
   </data>
@@ -766,7 +790,7 @@
     <value>Plik nie znaleziony</value>
   </data>
   <data name="SaveWorkbook" xml:space="preserve">
-    <value>Zapis Podręcznika</value>
+    <value>Zapisać Podręcznik?</value>
   </data>
   <data name="FileAlreadyOpen" xml:space="preserve">
     <value>Plik już otwarty</value>
@@ -820,16 +844,16 @@
     <value>Silnik</value>
   </data>
   <data name="EngineTimePerMove" xml:space="preserve">
-    <value>Czas Silnika na Posunięcie</value>
+    <value>Czas Namysłu Silnika (s)</value>
   </data>
   <data name="ThinkTimeInGame" xml:space="preserve">
-    <value>Czas do Namysłu w Partii</value>
+    <value>W Partii</value>
   </data>
   <data name="MoveReplay" xml:space="preserve">
-    <value>Auto-Odtwarzanie</value>
+    <value>Odtwarzanie Ruchów</value>
   </data>
   <data name="AutoReplaySpeed" xml:space="preserve">
-    <value>Prędkość Auto-Odtwarzania</value>
+    <value>Auto (s)</value>
   </data>
   <data name="AllowMouseWheel" xml:space="preserve">
     <value>Uaktywnij Kółko Myszy</value>
@@ -1171,7 +1195,7 @@
     <value>Niektóre dostępne czynności:</value>
   </data>
   <data name="cbClickStudyHeader" xml:space="preserve">
-    <value>Kliknij nagówek Teoria, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Teorię </value>
+    <value>Kliknij nagłówek Teoria, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Teorię </value>
   </data>
   <data name="cbClickForContextMenu" xml:space="preserve">
     <value>Naciśnij prawy przycisk by wywołać menu</value>
@@ -1186,7 +1210,7 @@
     <value>Naciśnij prawy przycisk by wywołać menu do edycji, kopiowania FEN i inne</value>
   </data>
   <data name="cbDoubleClickAutoReplay" xml:space="preserve">
-    <value>Dwukrotnie kliknij by rozpocząć auto-odtwarzanie</value>
+    <value>Dwukrotnie kliknij w Zapisie by rozpocząć auto-odtwarzanie</value>
   </data>
   <data name="cbClickBookmarkToTrain" xml:space="preserve">
     <value>Kliknij zakładkę by zacząć trening</value>
@@ -1250,12 +1274,6 @@
   </data>
   <data name="cbStalemateAndDraw" xml:space="preserve">
     <value>Pat! Partia zakończyła się remisem.</value>
-  </data>
-  <data name="LangEnglish" xml:space="preserve">
-    <value>Angielski</value>
-  </data>
-  <data name="LangPolish" xml:space="preserve">
-    <value>Polski</value>
   </data>
   <data name="ChessEngineLoading" xml:space="preserve">
     <value>Trwa ładowanie silnika...</value>

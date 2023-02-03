@@ -160,7 +160,13 @@ namespace ChessForge
         {
             if (idx < 0 || idx >= NodeList.Count)
             {
-                DebugUtils.ShowDebugMessage("ScoreSheet:GetNodeAtIndex bad index = " + idx.ToString());
+                string msg = "ScoreSheet:GetNodeAtIndex bad index = " + idx.ToString();
+                DebugUtils.ShowDebugMessage(msg);
+                AppLog.Message(msg);
+                AppLog.Message("    Context: Active Content Type = " + AppState.ActiveContentType.ToString());
+                AppLog.Message("             Active Chapter Id   = " + AppState.ActiveChapter.Id.ToString());
+                AppLog.Message("             Active Game Idx     = " + WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex.ToString());
+                AppLog.Message("             Active Exercise Idx = " + WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex.ToString());
                 return null;
             }
             return idx >= 0 ? NodeList[idx] : null;
@@ -311,14 +317,14 @@ namespace ChessForge
                 {
                     move = MoveList[MoveList.Count - 1];
                 }
-                move.BlackPly = nd.GetPlyText(true);
+                move.BlackPly = nd.GetGuiPlyText(true);
                 move.BlackEval = nd.EngineEvaluation;
                 move.BlackNodeId = nd.NodeId;
             }
             else
             {
                 MoveWithEval move = new MoveWithEval();
-                move.WhitePly = nd.GetPlyText(true);
+                move.WhitePly = nd.GetGuiPlyText(true);
                 move.WhiteEval = nd.EngineEvaluation;
                 move.WhiteNodeId = nd.NodeId;
                 move.Number = (MoveList.Count + 1).ToString() + ".";
@@ -357,11 +363,11 @@ namespace ChessForge
             if (nd.Position.ColorToMove == PieceColor.White)
             {
                 // we are replacing Black's move
-                move.BlackPly = nd.GetPlyText(true);
+                move.BlackPly = nd.GetGuiPlyText(true);
             }
             else
             {
-                move.WhitePly = nd.GetPlyText(true);
+                move.WhitePly = nd.GetGuiPlyText(true);
             }
         }
     }

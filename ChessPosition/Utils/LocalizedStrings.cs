@@ -19,6 +19,8 @@ namespace ChessPosition.Utils
         {
             None = 0,
 
+            PieceSymbolMap,
+
             Move,
             Game,
             Exercise,
@@ -36,6 +38,8 @@ namespace ChessPosition.Utils
             CannotIdentifyPiece,
             IllegalCastling,
             AmbiguousMove,
+
+            StartingPosition,
         }
 
         /// <summary>
