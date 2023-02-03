@@ -247,7 +247,7 @@ namespace ChessPosition
                 sb.Append(nd.MoveNumber.ToString() + "...");
             }
 
-            sb.Append(nd.GetPlyText(withNAGs));
+            sb.Append(nd.GetGuiPlyText(withNAGs));
             return sb.ToString();
         }
 

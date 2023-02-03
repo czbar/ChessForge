@@ -1662,7 +1662,7 @@ namespace ChessForge
                 sb.Append(" ");
             }
 
-            sb.Append(nd.GetPlyText(true));
+            sb.Append(nd.GetGuiPlyText(true));
             return sb.ToString();
         }
 

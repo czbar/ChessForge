@@ -520,7 +520,7 @@ namespace GameTree
         /// with check / mate symbol and optionally with NAGs
         /// </summary>
         /// <returns></returns>
-        public string GetPlyText(bool withNags)
+        public string GetGuiPlyText(bool withNags)
         {
             string res;
 
