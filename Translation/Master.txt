@@ -607,6 +607,24 @@ ViewOnLichess=View on lichess
 #Full view of the game
 FullView=Full View
 
+
+#
+# Context menu for SelectArticles dialog
+#
+# PreviewGame already defined elsewhere
+#
+
+#Open the exercise preview dialog
+PreviewExercise=Preview Exercise
+
+#Got to Games tab
+GoToGames=Open Games View
+
+#Got to Exercise tab
+GoToExercises=Open Exercise View
+
+
+
 ##################################
 #
 # Button Labels

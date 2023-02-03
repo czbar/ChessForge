@@ -1627,6 +1627,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open Exercise View.
+        /// </summary>
+        public static string GoToExercises {
+            get {
+                return ResourceManager.GetString("GoToExercises", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Games View.
+        /// </summary>
+        public static string GoToGames {
+            get {
+                return ResourceManager.GetString("GoToGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Go to the newly created chapter..
         /// </summary>
         public static string GotoNewChapter {
@@ -2506,6 +2524,15 @@ namespace ChessForge.Properties {
         public static string Preamble {
             get {
                 return ResourceManager.GetString("Preamble", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview Exercise.
+        /// </summary>
+        public static string PreviewExercise {
+            get {
+                return ResourceManager.GetString("PreviewExercise", resourceCulture);
             }
         }
         

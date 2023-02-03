@@ -621,6 +621,15 @@
   <data name="FullView" xml:space="preserve">
     <value>Pełny Widok</value>
   </data>
+  <data name="PreviewExercise" xml:space="preserve">
+    <value>Przejrzyj Ćwiczenie</value>
+  </data>
+  <data name="GoToGames" xml:space="preserve">
+    <value>Otwórz Widok Partii</value>
+  </data>
+  <data name="GoToExercises" xml:space="preserve">
+    <value>Otwórz Widok Ćwiczeń</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
   </data>
@@ -1186,7 +1195,7 @@
     <value>Niektóre dostępne czynności:</value>
   </data>
   <data name="cbClickStudyHeader" xml:space="preserve">
-    <value>Kliknij nagówek Teoria, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Teorię </value>
+    <value>Kliknij nagłówek Teoria, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Teorię </value>
   </data>
   <data name="cbClickForContextMenu" xml:space="preserve">
     <value>Naciśnij prawy przycisk by wywołać menu</value>
@@ -1201,7 +1210,7 @@
     <value>Naciśnij prawy przycisk by wywołać menu do edycji, kopiowania FEN i inne</value>
   </data>
   <data name="cbDoubleClickAutoReplay" xml:space="preserve">
-    <value>Dwukrotnie kliknij by rozpocząć auto-odtwarzanie</value>
+    <value>Dwukrotnie kliknij w Zapisie by rozpocząć auto-odtwarzanie</value>
   </data>
   <data name="cbClickBookmarkToTrain" xml:space="preserve">
     <value>Kliknij zakładkę by zacząć trening</value>

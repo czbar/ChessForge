@@ -621,6 +621,15 @@
   <data name="FullView" xml:space="preserve">
     <value>Full View</value>
   </data>
+  <data name="PreviewExercise" xml:space="preserve">
+    <value>Preview Exercise</value>
+  </data>
+  <data name="GoToGames" xml:space="preserve">
+    <value>Open Games View</value>
+  </data>
+  <data name="GoToExercises" xml:space="preserve">
+    <value>Open Exercise View</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
   </data>

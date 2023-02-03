@@ -191,7 +191,7 @@ Confirm=Potwierdź
 
 #description: Item
 #english: Item=Item
-Item=Element
+Item=Pozycja
 
 #description: Game Header
 #english: GameHeader=Game Header
@@ -612,7 +612,7 @@ ConfirmDeleteExercise=Usunąć ćwiczenie
 
 #description: Edit references
 #english: GameExerciseReferences=Game/Exercise References
-GameExerciseReferences=Edytuj Odnośniki...
+GameExerciseReferences=Edytuj Odnośniki do Partii i Ćwiczeń...
 
 #description: Promote a line
 #english: PromoteLine=Promote Line
@@ -1169,7 +1169,7 @@ NextGame=Następna Partia
 
 #description: Import into Chapter
 #english: ImportIntoChapter=Import into Chapter
-ImportIntoChapter=Importuj Partię do Rozdziału
+ImportIntoChapter=Importuj do Rozdziału
 
 #description: Downloading game from lichess
 #english: DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
@@ -1249,7 +1249,7 @@ SelectGameAndExercises=Wybierz Partie i Ćwiczenia
 
 #description: Select items
 #english: SelectItems=Select Items
-SelectItems=Wybierz Element
+SelectItems=Zaznacz Wybór
 
 #description: Show all chapters
 #english: ShowAllChapters=Show All Chapters
@@ -1578,7 +1578,7 @@ cbActions=Niektóre dostępne czynności:
 
 #description: Clich to open Study
 #english: cbClickStudyHeader=Click Study header or double click chapter's title to open the Study Tree
-cbClickStudyHeader=Kliknij nagówek Teoria, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Teorię 
+cbClickStudyHeader=Kliknij nagłówek Teoria, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Teorię 
 
 #description: Right click for context menu
 #english: cbClickForContextMenu=Right click to open context menu
@@ -1598,7 +1598,7 @@ cbAdvancedEditig=Naciśnij prawy przycisk by wywołać menu do edycji, kopiowani
 
 #description: Double click to auto replay
 #english: cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay
-cbDoubleClickAutoReplay=Dwukrotnie kliknij by rozpocząć auto-odtwarzanie
+cbDoubleClickAutoReplay=Dwukrotnie kliknij w Zapisie by rozpocząć auto-odtwarzanie
 
 #description: Click bookmark to start training
 #english: cbClickBookmarkToTrain=Click a bookmark to start training
@@ -1818,4 +1818,13 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #description: Illegal Castling
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
+
+
+PreviewExercise=Przejrzyj Ćwiczenie
+
+#Got to Games tab
+GoToGames=Otwórz Widok Partii
+
+#Got to Exercise tab
+GoToExercises=Otwórz Widok Ćwiczeń
 

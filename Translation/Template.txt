@@ -775,6 +775,27 @@ ViewOnLichess=
 #english: FullView=Full View
 FullView=
 
+
+#
+# Context menu for SelectArticles dialog
+#
+# PreviewGame already defined elsewhere
+#
+
+#description: Open the exercise preview dialog
+#english: PreviewExercise=Preview Exercise
+PreviewExercise=
+
+#description: Got to Games tab
+#english: GoToGames=Open Games View
+GoToGames=
+
+#description: Got to Exercise tab
+#english: GoToExercises=Open Exercise View
+GoToExercises=
+
+
+
 ##################################
 #
 # Button Labels

@@ -775,6 +775,27 @@ ViewOnLichess=Zobacz na lichess
 #english: FullView=Full View
 FullView=Pełny Widok
 
+
+#
+# Context menu for SelectArticles dialog
+#
+# PreviewGame already defined elsewhere
+#
+
+#description: Open the exercise preview dialog
+#english: PreviewExercise=Preview Exercise
+PreviewExercise=Przejrzyj Ćwiczenie
+
+#description: Got to Games tab
+#english: GoToGames=Open Games View
+GoToGames=Otwórz Widok Partii
+
+#description: Got to Exercise tab
+#english: GoToExercises=Open Exercise View
+GoToExercises=Otwórz Widok Ćwiczeń
+
+
+
 ##################################
 #
 # Button Labels
@@ -1578,7 +1599,7 @@ cbActions=Niektóre dostępne czynności:
 
 #description: Clich to open Study
 #english: cbClickStudyHeader=Click Study header or double click chapter's title to open the Study Tree
-cbClickStudyHeader=Kliknij nagówek Teoria, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Teorię 
+cbClickStudyHeader=Kliknij nagłówek Teoria, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Teorię 
 
 #description: Right click for context menu
 #english: cbClickForContextMenu=Right click to open context menu
@@ -1598,7 +1619,7 @@ cbAdvancedEditig=Naciśnij prawy przycisk by wywołać menu do edycji, kopiowani
 
 #description: Double click to auto replay
 #english: cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay
-cbDoubleClickAutoReplay=Dwukrotnie kliknij by rozpocząć auto-odtwarzanie
+cbDoubleClickAutoReplay=Dwukrotnie kliknij w Zapisie by rozpocząć auto-odtwarzanie
 
 #description: Click bookmark to start training
 #english: cbClickBookmarkToTrain=Click a bookmark to start training
