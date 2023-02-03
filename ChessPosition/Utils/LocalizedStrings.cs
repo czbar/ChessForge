@@ -19,6 +19,8 @@ namespace ChessPosition.Utils
         {
             None = 0,
 
+            PieceSymbolMap,
+
             Move,
             Game,
             Exercise,

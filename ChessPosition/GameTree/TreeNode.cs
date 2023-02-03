@@ -125,7 +125,7 @@ namespace GameTree
             int count = 0;
             if (inclTrainingMoves)
             {
-                count = Children.Count; 
+                count = Children.Count;
             }
             else
             {
@@ -368,7 +368,7 @@ namespace GameTree
             {
                 ArticleRefs = ArticleRefs.Remove(pos, artref.Length);
                 // there may be double separation signs after the removal
-                ArticleRefs= ArticleRefs.Replace("||", "|");
+                ArticleRefs = ArticleRefs.Replace("||", "|");
                 return true;
             }
             else
@@ -516,25 +516,33 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Text for the ply to show without the move number
+        /// Localized text for the ply to show without the move number
         /// with check / mate symbol and optionally with NAGs
         /// </summary>
         /// <returns></returns>
         public string GetPlyText(bool withNags)
         {
+            string res;
+
             if (!Position.IsCheckmate && !Position.IsCheck)
             {
-                return withNags ? LastMoveAlgebraicNotationWithNag : LastMoveAlgebraicNotation;
-            }
-
-            if (withNags)
-            {
-                return LastMoveAlgebraicNotation + GetCheckOrMateSign() + GetNagSubstring();
+                res = withNags ? LastMoveAlgebraicNotationWithNag : LastMoveAlgebraicNotation;
             }
             else
             {
-                return LastMoveAlgebraicNotation + GetCheckOrMateSign();
+                if (withNags)
+                {
+                    res = LastMoveAlgebraicNotation + GetCheckOrMateSign() + GetNagSubstring();
+                }
+                else
+                {
+                    res = LastMoveAlgebraicNotation + GetCheckOrMateSign();
+                }
             }
+
+            res = Languages.MapPieceSymbols(res);
+
+            return res;
         }
 
         /// <summary>

@@ -263,9 +263,11 @@ namespace ChessForge
             AppState.MainWin = this;
             _ = WebAccess.SourceForgeCheck.GetVersion();
 
+            // the next lines pertain to localization, must be invoked here (before InitializeComponent) and in this order
             ReadConfiguration();
             SetCultureInfo(Configuration.CultureName);
             InitializedLocalizedDictionary();
+            InitializeLanguages();
 
             EvaluationMgr = new EvaluationManager();
 
@@ -356,6 +358,10 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Sends selected localized strings down to the ChessPosition library.
+        /// The library itself cannot access Resources.resx
+        /// </summary>
         private void InitializedLocalizedDictionary()
         {
             LocalizedStrings.Values.Add(LocalizedStrings.StringId.Move, Properties.Resources.Move);
@@ -377,6 +383,20 @@ namespace ChessForge
             LocalizedStrings.Values.Add(LocalizedStrings.StringId.AmbiguousMove, Properties.Resources.AmbiguousMove);
 
             LocalizedStrings.Values.Add(LocalizedStrings.StringId.StartingPosition, Properties.Resources.StartingPosition);
+
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.PieceSymbolMap, Properties.Resources.PieceSymbolMap);            
+        }
+
+        /// <summary>
+        /// Initializes the list of languages and the symbol map.
+        /// </summary>
+        private void InitializeLanguages()
+        {
+            Languages.AddLanguage("", Properties.Resources.LangSystem);
+            Languages.AddLanguage("en", Properties.Resources.LangEnglish);
+            Languages.AddLanguage("pl", Properties.Resources.LangPolish);
+
+            Languages.InitializeChessSymbolMapping(Properties.Resources.PieceSymbolMap);
         }
 
         /// <summary>
