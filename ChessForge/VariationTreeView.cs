@@ -65,12 +65,6 @@ namespace ChessForge
             get => _entityIndex;
         }
 
-        /// <summary>
-        /// Event handler for Article selection.
-        /// MainWindow subscribes to it with EventSelectArticle().
-        /// </summary>
-        public static event EventHandler<ChessForgeEventArgs> ArticleSelected;
-
         // flags freshness of the view
         private bool _isFresh = false;
 
