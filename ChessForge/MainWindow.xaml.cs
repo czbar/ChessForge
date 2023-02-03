@@ -321,6 +321,7 @@ namespace ChessForge
 
             _openingStatsView = new OpeningStatsView(UiRtbOpenings.Document);
             _topGamesView = new TopGamesView(UiRtbTopGames.Document, true);
+            UiRtbStudyTreeView.IsDocumentEnabled = true;
             UiRtbTopGames.IsDocumentEnabled = true;
             UiRtbOpenings.IsDocumentEnabled = true;
 
