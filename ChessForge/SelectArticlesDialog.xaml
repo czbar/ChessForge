@@ -14,7 +14,13 @@
             <RowDefinition Height="300"/>
             <RowDefinition Height="140"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="UiLvGames" Grid.Row="1" ItemsSource="{Binding}" MouseDoubleClick="UiLvGames_MouseDoubleClick" MouseRightButtonUp="UiLvGames_MouseRightButtonUp" >
+        <ListView x:Name="UiLvGames" Grid.Row="1" ItemsSource="{Binding}" MouseDoubleClick="UiLvGames_MouseDoubleClick" MouseRightButtonUp="UiLvGames_MouseRightButtonUp" ContextMenuOpening="UiLvGames_ContextMenuOpening" >
+            <ListView.ContextMenu>
+                <ContextMenu x:Name="UiCmGame">
+                    <MenuItem x:Name="UiMnPreviewGame" Header="Preview Element" Click="UiMnPreviewGame_Click" />
+                    <MenuItem x:Name="UiMnOpenGame" Header="Open Element View" Click="UiMnOpenGame_Click" />
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="Focusable" Value="False"/>

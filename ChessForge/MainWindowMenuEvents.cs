@@ -12,6 +12,7 @@ using System.Windows.Input;
 using static ChessForge.WorkbookOperation;
 using ChessPosition.GameTree;
 using ChessForge;
+using System.Reflection;
 
 namespace ChessForge
 {
@@ -1348,6 +1349,12 @@ namespace ChessForge
         //
         //*****************************************************************************
 
+        /// <summary>
+        /// Event handler for Article selection.
+        /// MainWindow subscribes to it with EventSelectArticle().
+        /// </summary>
+        public static event EventHandler<ChessForgeEventArgs> ArticleSelected;
+
 
         /// <summary>
         /// Invokes the Select Articles dialog to allow the user
@@ -1374,7 +1381,20 @@ namespace ChessForge
                     ActiveVariationTree.SetArticleRefs(nd, refGuids);
                     ActiveTreeView.InsertOrDeleteReferenceRun(nd);
                     AppState.IsDirty = true;
+
+                    if (dlg.SelectedArticle != null)
+                    {
+                        WorkbookManager.SessionWorkbook.GetArticleByGuid(dlg.SelectedArticle.Tree.Header.GetGuid(out _), out int chapterIndex, out int articleIndex);
+
+                        ChessForgeEventArgs args = new ChessForgeEventArgs();
+                        args.ChapterIndex = chapterIndex;
+                        args.ArticleIndex = articleIndex;
+                        args.ContentType = dlg.SelectedArticle.Tree.Header.GetContentType(out _);
+
+                        ArticleSelected?.Invoke(this, args);
+                    }
                 }
+
             }
             catch
             {

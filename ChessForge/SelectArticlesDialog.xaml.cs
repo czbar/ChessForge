@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,6 +22,14 @@ namespace ChessForge
     /// </summary>
     public partial class SelectArticlesDialog : Window
     {
+        /// <summary>
+        /// Set to the article to be acted upon exit.
+        /// </summary>
+        public Article SelectedArticle;
+
+        // last clicked article
+        private Article _lastClickedArticle;
+
         /// <summary>
         /// Whether to show articles fromthe current chapter only
         /// </summary>
@@ -227,19 +236,25 @@ namespace ChessForge
             if (item != null && item.Content is ArticleListItem)
             {
                 Article art = (item.Content as ArticleListItem).Article;
-                List<string> gameIdList = new List<string>();
-                List<Article> games = new List<Article> { art };
-                gameIdList.Add(art.Tree.Header.GetGuid(out _));
-
-                ReferenceGamePreviewDialog dlg = new ReferenceGamePreviewDialog(gameIdList, games)
-                {
-                    Left = this.Left + 20,
-                    Top = this.Top + 20,
-                    Topmost = false,
-                    Owner = this
-                };
-                dlg.ShowDialog();
+                _lastClickedArticle = art;
+                InvokeGamePreviewDialog(art);
             }
+        }
+
+        private void InvokeGamePreviewDialog(Article art)
+        {
+            List<string> gameIdList = new List<string>();
+            List<Article> games = new List<Article> { art };
+            gameIdList.Add(art.Tree.Header.GetGuid(out _));
+
+            SingleGamePreviewDialog dlg = new SingleGamePreviewDialog(gameIdList, games)
+            {
+                Left = this.Left + 20,
+                Top = this.Top + 20,
+                Topmost = false,
+                Owner = this
+            };
+            dlg.ShowDialog();
         }
 
         /// <summary>
@@ -254,7 +269,42 @@ namespace ChessForge
             ListViewItem item = GetListViewItemFromPoint(UiLvGames, e.GetPosition(UiLvGames));
             if (item != null && item.Content is ArticleListItem)
             {
+                Article art = (item.Content as ArticleListItem).Article;
+                _lastClickedArticle = art;
+                if (art != null)
+                {
+                    if (art.Tree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
+                    {
+                        UiMnPreviewGame.Header = Properties.Resources.PreviewExercise;
+                        UiMnOpenGame.Header = Properties.Resources.GoToExercises;
+                    }
+                    else
+                    {
+                        UiMnPreviewGame.Header = Properties.Resources.PreviewGame;
+                        UiMnOpenGame.Header = Properties.Resources.GoToGames;
+                    }
+                    UiCmGame.IsOpen = true;
+                }
             }
         }
-    }
+
+        private void UiLvGames_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            e.Handled= true;
+        }
+
+        private void UiMnPreviewGame_Click(object sender, RoutedEventArgs e)
+        {
+            if (_lastClickedArticle != null)
+            {
+                InvokeGamePreviewDialog(_lastClickedArticle);
+            }
+        }
+
+        private void UiMnOpenGame_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedArticle = _lastClickedArticle;
+            UiBtnOk_Click(null, null);
+        }
+    }   
 }
