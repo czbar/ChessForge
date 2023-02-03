@@ -34,7 +34,7 @@ namespace ChessForge
             _games = games;
             foreach (var game in games)
             {
-                UiLbGames.Items.Add(game.Tree.Header.BuildGameHeaderLine(true));
+                UiLbGames.Items.Add(game.Tree.Header.BuildGameHeaderLine(game.Tree.Header.GetContentType(out _) == GameData.ContentType.MODEL_GAME));
             }
             UiLbGames.SelectedIndex = 0;
             PlaySelectedGame();
