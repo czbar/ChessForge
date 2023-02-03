@@ -338,9 +338,9 @@ namespace ChessForge
             }
             Timers.Start(AppTimers.TimerId.APP_START);
 
-            AppLog.LogAvailableThreadsCounts();
+            ArticleSelected += EventSelectArticle;
 
-            VariationTreeView.ArticleSelected += EventSelectArticle;
+            AppLog.LogAvailableThreadsCounts();
         }
 
         /// <summary>
