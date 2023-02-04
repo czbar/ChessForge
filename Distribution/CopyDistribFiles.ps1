@@ -4,6 +4,7 @@ Remove-Item -Recurse -Force .\Release 2>$null
 
 # Create required directory structure
 New-Item -Type dir .\Temp\Resources\Sounds
+New-Item -Type dir .\Temp\pl
 New-Item -Type dir .\Release
 
 # Copy all release items from the list fo files
@@ -18,6 +19,9 @@ foreach($line in Get-Content ".\List of Files.txt")
 
 # Copy all distribution Workbooks
 Copy-Item ..\Workbooks\Distribution\* -Destination .\Temp
+
+# Copy localized resources
+Copy-Item ..\ChessForge\bin\Release\pl\* -Destination .\Temp\pl
 
 # Copy readme's
 Copy-Item ..\LICENSE.MD -Destination .\Temp
