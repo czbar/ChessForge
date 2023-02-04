@@ -1504,7 +1504,7 @@ namespace ChessForge
                     CopyHeaderFromGame(tree, chapter.StudyTree.Tree.Header, false);
                     if (string.IsNullOrEmpty(tree.Header.GetEventName(out _)))
                     {
-                        tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, Properties.Resources.StudyTreeAfter + MoveUtils.BuildSingleMoveText(nd, true, true));
+                        tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, Properties.Resources.StudyTreeAfter + " " + MoveUtils.BuildSingleMoveText(nd, true, true));
                     }
                     CreateNewExerciseFromTree(tree);
                 }
