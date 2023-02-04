@@ -1974,6 +1974,12 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Event handler for Article selection.
+        /// MainWindow subscribes to it with EventSelectArticle().
+        /// </summary>
+        public event EventHandler<ChessForgeEventArgs> ArticleSelected;
+
+        /// <summary>
         /// A "reference" run was clicked.
         /// Open the Game Preview dialog.
         /// </summary>
@@ -1990,24 +1996,27 @@ namespace ChessForge
             {
                 TreeNode nd = GetClickedNode(e);
                 SelectRun(_dictNodeToRun[nd.NodeId], e.ClickCount, e.ChangedButton);
-                List<string> guids = new List<string>(nd.ArticleRefs.Split('|'));
-                List<Article> games = new List<Article>();
-                foreach (string guid in guids)
-                {
-                    Article art = WorkbookManager.SessionWorkbook.GetArticleByGuid(guid, out _, out _);
-                    if (art != null)
-                    {
-                        games.Add(art);
-                    }
-                }
 
-                if (games.Count > 0)
+                ArticleReferencesDialog dlg = new ArticleReferencesDialog(nd)
                 {
-                    _mainWin.UiMnReferenceArticles_Click(null, null);
-                }
-                else
+                    Left = AppState.MainWin.Left + 100,
+                    Top = AppState.MainWin.Top + 100,
+                    Topmost = false,
+                    Owner = AppState.MainWin
+                };
+
+                dlg.ShowDialog();
+
+                if (dlg.SelectedArticle != null)
                 {
-                    MessageBox.Show(Properties.Resources.RefGamesNotFound, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                    WorkbookManager.SessionWorkbook.GetArticleByGuid(dlg.SelectedArticle.Tree.Header.GetGuid(out _), out int chapterIndex, out int articleIndex);
+
+                    ChessForgeEventArgs args = new ChessForgeEventArgs();
+                    args.ChapterIndex = chapterIndex;
+                    args.ArticleIndex = articleIndex;
+                    args.ContentType = dlg.SelectedArticle.Tree.Header.GetContentType(out _);
+
+                    ArticleSelected?.Invoke(this, args);
                 }
             }
             catch
