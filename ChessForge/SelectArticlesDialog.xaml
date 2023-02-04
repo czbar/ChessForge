@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.SelectGameAndExercises}" Height="460" Width="800">
+        Title="{x:Static p:Resources.SelectReferences}" Height="460" Width="800">
 
     <Grid>
         <Grid.RowDefinitions>
