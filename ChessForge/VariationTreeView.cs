@@ -2009,6 +2009,7 @@ namespace ChessForge
 
                 if (dlg.SelectedArticle != null)
                 {
+                    // we exited after user selected Open Full View from the context menu of an item
                     WorkbookManager.SessionWorkbook.GetArticleByGuid(dlg.SelectedArticle.Tree.Header.GetGuid(out _), out int chapterIndex, out int articleIndex);
 
                     ChessForgeEventArgs args = new ChessForgeEventArgs();
@@ -2017,6 +2018,14 @@ namespace ChessForge
                     args.ContentType = dlg.SelectedArticle.Tree.Header.GetContentType(out _);
 
                     ArticleSelected?.Invoke(this, args);
+                }
+                else
+                {
+                    if (dlg.DialogResult == true)
+                    {
+                        // user requested the dialog for editing references
+                        AppState.MainWin.UiMnReferenceArticles_Click(null, null);
+                    }
                 }
             }
             catch
