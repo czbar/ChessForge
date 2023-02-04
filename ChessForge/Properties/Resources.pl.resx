@@ -325,7 +325,7 @@
     <value>Połącz Rozdziały</value>
   </data>
   <data name="Undo" xml:space="preserve">
-    <value>Cofnij operację</value>
+    <value>Cofnij Operację</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>Widok</value>
@@ -457,7 +457,7 @@
     <value>Importuj Partie</value>
   </data>
   <data name="CreateNewExercise" xml:space="preserve">
-    <value>Utwórz Nowe Ćwiczenie (lub pozycję lub zadanie)</value>
+    <value>Utwórz Nowe Ćwiczenie</value>
   </data>
   <data name="ImportExercises" xml:space="preserve">
     <value>Importuj Ćwiczenie</value>
@@ -529,7 +529,7 @@
     <value>Usunąć ćwiczenie</value>
   </data>
   <data name="GameExerciseReferences" xml:space="preserve">
-    <value>Edytuj Odnośniki...</value>
+    <value>Edytuj Odsyłacz do Partii i Ćwiczeń...</value>
   </data>
   <data name="PromoteLine" xml:space="preserve">
     <value>Promuj Wariant</value>
@@ -544,7 +544,10 @@
     <value>Utwórz Zakładki dla Wszystkich Opcji</value>
   </data>
   <data name="MarkAsThumbnail" xml:space="preserve">
-    <value>tego nie omawialiśmy</value>
+    <value>Zaznacz jako Wizytówkę Rozdziału</value>
+  </data>
+  <data name="ChapterThumbnail" xml:space="preserve">
+    <value>Wizytówka Rozdziału</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Następny</value>
@@ -816,6 +819,9 @@
   <data name="ConfirmExerciseMoveDeletion" xml:space="preserve">
     <value>Niektore ruchy w rozwiazaniu są teraz neprawidłowe $0. Usunąć je?</value>
   </data>
+  <data name="OpenReferencesDialog" xml:space="preserve">
+    <value>Kliknij aby edytować odsyłacz do Partii i Ćwiczeń</value>
+  </data>
   <data name="SaveWorkbookAs" xml:space="preserve">
     <value>Zapisz podręcznik $0 jako ...</value>
   </data>
@@ -897,6 +903,9 @@
   <data name="GamePreview" xml:space="preserve">
     <value>Podgląd Partii</value>
   </data>
+  <data name="ExercisePreview" xml:space="preserve">
+    <value>Podgląd Ćwiczenia</value>
+  </data>
   <data name="PreviousGame" xml:space="preserve">
     <value>Poprzednia Partia</value>
   </data>
@@ -904,7 +913,7 @@
     <value>Następna Partia</value>
   </data>
   <data name="ImportIntoChapter" xml:space="preserve">
-    <value>Importuj Partię do Rozdziału</value>
+    <value>Importuj Partię</value>
   </data>
   <data name="DownloadingGameFromLichess" xml:space="preserve">
     <value>Trwa ściągnanie partii z lichess. Proszę czekać...</value>
@@ -963,8 +972,11 @@
   <data name="SelectGameAndExercises" xml:space="preserve">
     <value>Wybierz Partie i Ćwiczenia</value>
   </data>
+  <data name="SelectReferences" xml:space="preserve">
+    <value>Wybierz Partie i Ćwiczenia do Odsyłacza</value>
+  </data>
   <data name="SelectItems" xml:space="preserve">
-    <value>Wybierz Element</value>
+    <value>Zaznacz swój wybór</value>
   </data>
   <data name="ShowAllChapters" xml:space="preserve">
     <value>Pokaż Wszystkie Rozdziały</value>
@@ -1150,7 +1162,7 @@
     <value>Tego ruchu nie ma w Ćwiczeniu</value>
   </data>
   <data name="TrnExerciseOnlyMove" xml:space="preserve">
-    <value>Jedyny ruch a Ćwiczeniu to</value>
+    <value>Jedyny ruch w Ćwiczeniu to</value>
   </data>
   <data name="TrnExerciseSourceMoves" xml:space="preserve">
     <value>Ruchy w Ćwiczeniu to</value>

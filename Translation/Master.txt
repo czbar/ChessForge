@@ -491,6 +491,8 @@ BookmarkAllOptionsHere=Bookmark All Options Here
 #Mark the current position as a thumbnail
 MarkAsThumbnail=Mark as Thumbnail
 
+#ChapterThumbnail
+ChapterThumbnail=Thumbnail for Chapters View
 
 
 #
@@ -836,6 +838,9 @@ ConfirmExerciseMoveDeletion=Some move in the solution are no longer legal $0. De
 # Dialogs
 #
 
+#Tooltip for the References symbole
+OpenReferencesDialog=Click to edit Game and Exercise references
+
 #Save the currently open Workbook into a different file
 SaveWorkbookAs=Save Workbook $0 As ...
 
@@ -920,6 +925,9 @@ IgnoreDay=Ignore Day
 #Game Preview
 GamePreview=Game Preview
 
+#Exercise Preview
+ExercisePreview=Exercise Preview
+
 #Previous Game
 PreviousGame=Previous Game
 
@@ -985,6 +993,10 @@ ClearBoard=Clear Board
 
 #Select Games/Exercises
 SelectGameAndExercises=Select Games and/or Exercises
+
+#Select Reference Games/Exercises (dialog title)
+SelectReferences=Select Reference Games and/or Exercises
+
 
 #Select items
 SelectItems=Select Items

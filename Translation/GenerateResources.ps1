@@ -9,6 +9,7 @@
 
 # Generate default Resources.resx
 resgen Master.txt Resources.resx
+Copy-Item Resources.resx -Destination ../ChessForge/Properties
 
 
 # Generate default (empty) Template
@@ -24,6 +25,7 @@ ForEach ($ci in $file_data)
 	$template_file = "Template." + $ci + ".txt"
 	$resources_file = "Resources." + $ci + ".resx"
     resgen $template_file $resources_file
+	Copy-Item $resources_file -Destination ../ChessForge/Properties
 }
 
 

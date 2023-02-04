@@ -592,6 +592,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thumbnail for Chapters View.
+        /// </summary>
+        public static string ChapterThumbnail {
+            get {
+                return ResourceManager.GetString("ChapterThumbnail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chapter Title.
         /// </summary>
         public static string ChapterTitle {
@@ -1317,6 +1326,15 @@ namespace ChessForge.Properties {
         public static string ExerciseNoSolution {
             get {
                 return ResourceManager.GetString("ExerciseNoSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exercise Preview.
+        /// </summary>
+        public static string ExercisePreview {
+            get {
+                return ResourceManager.GetString("ExercisePreview", resourceCulture);
             }
         }
         
@@ -2339,6 +2357,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click to edit Game and Exercise references.
+        /// </summary>
+        public static string OpenReferencesDialog {
+            get {
+                return ResourceManager.GetString("OpenReferencesDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open Selected Chapter.
         /// </summary>
         public static string OpenSelectedChapter {
@@ -2875,6 +2902,15 @@ namespace ChessForge.Properties {
         public static string SelectItemsforWorkbook {
             get {
                 return ResourceManager.GetString("SelectItemsforWorkbook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Reference Games and/or Exercises.
+        /// </summary>
+        public static string SelectReferences {
+            get {
+                return ResourceManager.GetString("SelectReferences", resourceCulture);
             }
         }
         

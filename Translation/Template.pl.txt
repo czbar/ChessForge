@@ -309,7 +309,7 @@ MergeChapters=Połącz Rozdziały
 
 #description: Undoes the previous operation
 #english: Undo=Undo
-Undo=Cofnij operację
+Undo=Cofnij Operację
 
 
 
@@ -511,7 +511,7 @@ ImportGames=Importuj Partie
 
 #description: Create a new exercise
 #english: CreateNewExercise=Create New Exercise
-CreateNewExercise=Utwórz Nowe Ćwiczenie (lub pozycję lub zadanie)
+CreateNewExercise=Utwórz Nowe Ćwiczenie
 
 #description: Import Exercise
 #english: ImportExercises=Import Exercises
@@ -612,7 +612,7 @@ ConfirmDeleteExercise=Usunąć ćwiczenie
 
 #description: Edit references
 #english: GameExerciseReferences=Game/Exercise References...
-GameExerciseReferences=Edytuj Odnośniki...
+GameExerciseReferences=Edytuj Odsyłacz do Partii i Ćwiczeń...
 
 #description: Promote a line
 #english: PromoteLine=Promote Line
@@ -632,8 +632,11 @@ BookmarkAllOptionsHere=Utwórz Zakładki dla Wszystkich Opcji
 
 #description: Mark the current position as a thumbnail
 #english: MarkAsThumbnail=Mark as Thumbnail
-MarkAsThumbnail= tego nie omawialiśmy
+MarkAsThumbnail= Zaznacz jako Wizytówkę Rozdziału
 
+#description: ChapterThumbnail
+#english: ChapterThumbnail=Thumbnail for Chapters View
+ChapterThumbnail=Wizytówka Rozdziału
 
 
 #
@@ -1069,6 +1072,10 @@ ConfirmExerciseMoveDeletion=Niektore ruchy w rozwiazaniu są teraz neprawidłowe
 # Dialogs
 #
 
+#description: Tooltip for the References symbole
+#english: OpenReferencesDialog=Click to edit Game and Exercise references
+OpenReferencesDialog=Kliknij aby edytować odsyłacz do Partii i Ćwiczeń
+
 #description: Save the currently open Workbook into a different file
 #english: SaveWorkbookAs=Save Workbook $0 As ...
 SaveWorkbookAs=Zapisz podręcznik $0 jako ...
@@ -1180,6 +1187,10 @@ IgnoreDay=Ignoruj Dzień
 #english: GamePreview=Game Preview
 GamePreview=Podgląd Partii
 
+#description: Exercise Preview
+#english: ExercisePreview=Exercise Preview
+ExercisePreview=Podgląd Ćwiczenia
+
 #description: Previous Game
 #english: PreviousGame=Previous Game
 PreviousGame=Poprzednia Partia
@@ -1190,7 +1201,7 @@ NextGame=Następna Partia
 
 #description: Import into Chapter
 #english: ImportIntoChapter=Import into Chapter
-ImportIntoChapter=Importuj Partię do Rozdziału
+ImportIntoChapter=Importuj Partię
 
 #description: Downloading game from lichess
 #english: DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
@@ -1268,9 +1279,14 @@ ClearBoard=Wyczyść szachownicę
 #english: SelectGameAndExercises=Select Games and/or Exercises
 SelectGameAndExercises=Wybierz Partie i Ćwiczenia
 
+#description: Select Reference Games/Exercises (dialog title)
+#english: SelectReferences=Select Reference Games and/or Exercises
+SelectReferences=Wybierz Partie i Ćwiczenia do Odsyłacza
+
+
 #description: Select items
 #english: SelectItems=Select Items
-SelectItems=Wybierz Element
+SelectItems=Zaznacz swój wybór
 
 #description: Show all chapters
 #english: ShowAllChapters=Show All Chapters
@@ -1532,7 +1548,7 @@ TrnExerciseMoveNotInSource=Tego ruchu nie ma w Ćwiczeniu
 
 #description: The only move 
 #english: TrnExerciseOnlyMove=The only move in the Exercise is
-TrnExerciseOnlyMove=Jedyny ruch a Ćwiczeniu to
+TrnExerciseOnlyMove=Jedyny ruch w Ćwiczeniu to
 
 #description: The only moves
 #english: TrnExerciseSourceMoves=The moves in the Exercise are
