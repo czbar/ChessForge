@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -51,11 +52,16 @@ namespace ChessForge
         {
             _node = nd;
             _articleList = articleList;
-            _showActiveChapterOnly = true;
 
+            // if there is any selection outside the active chapter show all chapters (issue #465)
             InitializeComponent();
-            SetItemVisibility();
             SelectNodeReferences();
+
+            bool allChapters = IsAnySelectionOutsideActiveChapter();
+            _showActiveChapterOnly = !allChapters;
+            UiCbAllChapters.IsChecked = allChapters;
+
+            SetItemVisibility();
             UiLvGames.ItemsSource = _articleList;
         }
 
@@ -105,6 +111,26 @@ namespace ChessForge
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Checks if any selected item is not in the active chapter. 
+        /// </summary>
+        /// <returns></returns>
+        private bool IsAnySelectionOutsideActiveChapter()
+        {
+            bool res = false;
+
+            foreach (ArticleListItem item in _articleList)
+            {
+                if (item.IsSelected && item.Chapter != WorkbookManager.SessionWorkbook.ActiveChapter)
+                {
+                    res = true;
+                    break;
+                }
+            }
+
+            return res;
         }
 
         /// <summary>
@@ -290,7 +316,7 @@ namespace ChessForge
 
         private void UiLvGames_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            e.Handled= true;
+            e.Handled = true;
         }
 
         private void UiMnPreviewGame_Click(object sender, RoutedEventArgs e)
@@ -306,5 +332,5 @@ namespace ChessForge
             SelectedArticle = _lastClickedArticle;
             UiBtnOk_Click(null, null);
         }
-    }   
+    }
 }
