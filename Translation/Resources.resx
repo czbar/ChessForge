@@ -282,6 +282,9 @@
   <data name="Stalemate" xml:space="preserve">
     <value>stalemate</value>
   </data>
+  <data name="GameExerciseReferences" xml:space="preserve">
+    <value>Game and Exercise References</value>
+  </data>
   <data name="File" xml:space="preserve">
     <value>File</value>
   </data>
@@ -528,7 +531,7 @@
   <data name="ConfirmDeleteExercise" xml:space="preserve">
     <value>Delete Exercise</value>
   </data>
-  <data name="GameExerciseReferences" xml:space="preserve">
+  <data name="MnGameExerciseReferences" xml:space="preserve">
     <value>Game/Exercise References...</value>
   </data>
   <data name="PromoteLine" xml:space="preserve">
@@ -819,6 +822,9 @@
   </data>
   <data name="ConfirmExerciseMoveDeletion" xml:space="preserve">
     <value>Some move in the solution are no longer legal $0. Delete them?</value>
+  </data>
+  <data name="InfoGameExerciseReferences" xml:space="preserve">
+    <value>Double click to preview, right click for options</value>
   </data>
   <data name="OpenReferencesDialog" xml:space="preserve">
     <value>Click to edit Game and Exercise references</value>

@@ -282,6 +282,9 @@
   <data name="Stalemate" xml:space="preserve">
     <value>pat</value>
   </data>
+  <data name="GameExerciseReferences" xml:space="preserve">
+    <value>Odsyłacze do Partii i Ćwiczeń</value>
+  </data>
   <data name="File" xml:space="preserve">
     <value>Plik</value>
   </data>
@@ -528,7 +531,7 @@
   <data name="ConfirmDeleteExercise" xml:space="preserve">
     <value>Usunąć ćwiczenie</value>
   </data>
-  <data name="GameExerciseReferences" xml:space="preserve">
+  <data name="MnGameExerciseReferences" xml:space="preserve">
     <value>Edytuj Odsyłacz do Partii i Ćwiczeń...</value>
   </data>
   <data name="PromoteLine" xml:space="preserve">
@@ -818,6 +821,9 @@
   </data>
   <data name="ConfirmExerciseMoveDeletion" xml:space="preserve">
     <value>Niektore ruchy w rozwiazaniu są teraz neprawidłowe $0. Usunąć je?</value>
+  </data>
+  <data name="InfoGameExerciseReferences" xml:space="preserve">
+    <value>Kliknij podwójnie po przegląd partii/ćwiczenia, prawy przycisk po opcje</value>
   </data>
   <data name="OpenReferencesDialog" xml:space="preserve">
     <value>Kliknij aby edytować odsyłacz do Partii i Ćwiczeń</value>

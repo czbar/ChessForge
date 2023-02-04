@@ -186,6 +186,9 @@ Checkmate=checkmate
 #Stalemate
 Stalemate=stalemate
 
+#Game and Exercise References
+GameExerciseReferences=Game and Exercise References
+
 
 #
 # MAIN MENU
@@ -474,7 +477,7 @@ ConfirmDeleteExercise=Delete Exercise
 #
 
 #Edit references
-GameExerciseReferences=Game/Exercise References...
+MnGameExerciseReferences=Game/Exercise References...
 
 #Promote a line
 PromoteLine=Promote Line
@@ -837,6 +840,9 @@ ConfirmExerciseMoveDeletion=Some move in the solution are no longer legal $0. De
 #
 # Dialogs
 #
+
+#Info in the View References Dialog
+InfoGameExerciseReferences=Double click to preview, right click for options
 
 #Tooltip for the References symbole
 OpenReferencesDialog=Click to edit Game and Exercise references

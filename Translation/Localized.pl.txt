@@ -241,6 +241,10 @@ Checkmate=mat
 #english: Stalemate=stalemate
 Stalemate=pat
 
+#description: Game and Exercise References
+#english: GameExerciseReferences=Game and Exercise References
+GameExerciseReferences=Odsyłacze do Partii i Ćwiczeń
+
 
 #
 # MAIN MENU
@@ -611,8 +615,8 @@ ConfirmDeleteExercise=Usunąć ćwiczenie
 #
 
 #description: Edit references
-#english: GameExerciseReferences=Game/Exercise References...
-GameExerciseReferences=Edytuj Odsyłacz do Partii i Ćwiczeń...
+#english: MnGameExerciseReferences=Game/Exercise References...
+MnGameExerciseReferences=Edytuj Odsyłacz do Partii i Ćwiczeń...
 
 #description: Promote a line
 #english: PromoteLine=Promote Line
@@ -1071,6 +1075,10 @@ ConfirmExerciseMoveDeletion=Niektore ruchy w rozwiazaniu są teraz neprawidłowe
 #
 # Dialogs
 #
+
+#description: Info in the View References Dialog
+#english: InfoGameExerciseReferences=Double click to preview, right click for options
+InfoGameExerciseReferences=Kliknij podwójnie po przegląd partii/ćwiczenia, prawy przycisk po opcje
 
 #description: Tooltip for the References symbole
 #english: OpenReferencesDialog=Click to edit Game and Exercise references
