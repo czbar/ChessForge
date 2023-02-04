@@ -102,23 +102,44 @@ namespace ChessForge
         /// </summary>
         protected void PopulateHeaderLine(VariationTree tree)
         {
-            UiLblWhiteSquare.Content = Constants.CharWhiteSquare;
-
             string white = tree.Header.GetWhitePlayer(out _) ?? "";
-            UiLblWhite.Content = white;
-            UiLblWhite.FontWeight = FontWeights.Bold;
-            UiLblWhite.ToolTip = white;
-
-            UiLblBlackSquare.Content = Constants.CharBlackSquare;
-
             string black = tree.Header.GetBlackPlayer(out _) ?? "";
-            UiLblBlack.Content = black;
-            UiLblBlack.FontWeight = FontWeights.Bold;
-            UiLblBlack.ToolTip = black;
 
-            string result = (tree.Header.GetResult(out _) ?? "");
-            UiLblResult.Content = result;
-            UiLblResult.FontWeight = FontWeights.Bold;
+            if (!string.IsNullOrWhiteSpace(white) || !string.IsNullOrEmpty(black))
+            {
+                UiLblEvent.Visibility= Visibility.Collapsed;
+
+                UiLblWhiteSquare.Visibility = Visibility.Visible;
+                UiLblWhite.Visibility = Visibility.Visible;
+                UiLblBlackSquare.Visibility = Visibility.Visible;
+                UiLblBlack.Visibility = Visibility.Visible;
+                UiLblResult.Visibility = Visibility.Visible;
+
+                UiLblWhiteSquare.Content = Constants.CharWhiteSquare;
+                UiLblWhite.Content = white;
+                UiLblWhite.FontWeight = FontWeights.Bold;
+                UiLblWhite.ToolTip = white;
+
+                UiLblBlackSquare.Content = Constants.CharBlackSquare;
+                UiLblBlack.Content = black;
+                UiLblBlack.FontWeight = FontWeights.Bold;
+                UiLblBlack.ToolTip = black;
+
+                string result = (tree.Header.GetResult(out _) ?? "");
+                UiLblResult.Content = result;
+                UiLblResult.FontWeight = FontWeights.Bold;
+            }
+            else
+            {
+                UiLblEvent.Visibility = Visibility.Visible;
+                UiLblEvent.Content = tree.Header.GetEventName(out _);
+
+                UiLblWhiteSquare.Visibility = Visibility.Collapsed;
+                UiLblWhite.Visibility = Visibility.Collapsed;
+                UiLblBlackSquare.Visibility = Visibility.Collapsed;
+                UiLblBlack.Visibility = Visibility.Collapsed;
+                UiLblResult.Visibility = Visibility.Collapsed;
+            }
         }
 
         //********************************************************
