@@ -17,8 +17,8 @@
         <ListView x:Name="UiLvGames" Grid.Row="1" ItemsSource="{Binding}" MouseDoubleClick="UiLvGames_MouseDoubleClick" MouseRightButtonUp="UiLvGames_MouseRightButtonUp" ContextMenuOpening="UiLvGames_ContextMenuOpening" >
             <ListView.ContextMenu>
                 <ContextMenu x:Name="UiCmGame">
-                    <MenuItem x:Name="UiMnPreviewGame" Header="Preview Element" Click="UiMnPreviewGame_Click" />
-                    <MenuItem x:Name="UiMnOpenGame" Header="Open Element View" Click="UiMnOpenGame_Click" />
+                    <MenuItem x:Name="UiMnPreviewGame" Header="PLACEHOLDER Preview Element" Click="UiMnPreviewGame_Click" />
+                    <MenuItem x:Name="UiMnOpenGame" Header="PLACEHOLDER Open Element View" Click="UiMnOpenGame_Click" />
                 </ContextMenu>
             </ListView.ContextMenu>
             <ListView.ItemContainerStyle>
