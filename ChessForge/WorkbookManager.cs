@@ -355,7 +355,7 @@ namespace ChessForge
         /// was on a chapter rather than elsewhere in the view.
         /// Some items are enabled according to the value of isEnable
         /// while some have a different logic (e.g. Delete Chapter
-        /// is only enabled if there is more than one chapter in the workbook.
+        /// is only enabled if there is more than one chapter in the workbook.)
         /// </summary>
         /// <param name="cmn"></param>
         /// <param name="isEnabled"></param>
@@ -404,6 +404,10 @@ namespace ChessForge
                     {
                         switch (menuItem.Name)
                         {
+                            case "_mnImportChapter":
+                                menuItem.IsEnabled = true;
+                                menuItem.Visibility = Visibility.Visible;
+                                break;
                             case "_mnAddChapter":
                                 menuItem.IsEnabled = true;
                                 menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
@@ -415,6 +419,10 @@ namespace ChessForge
                             case "_mnRenameChapter":
                                 menuItem.IsEnabled = isEnabled;
                                 menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "_mnMergeChapters":
+                                menuItem.IsEnabled = isEnabled;
+                                menuItem.Visibility = Visibility.Visible;
                                 break;
                             case "_mnChapterUp":
                                 menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.Chapters.Count > 0 && index > 0;
@@ -445,8 +453,10 @@ namespace ChessForge
                     {
                         (item as Separator).Visibility = Visibility.Collapsed;
                     }
-                    else
+                    else 
                     {
+                        (item as Separator).Visibility = Visibility.Visible;
+
                         if ((item as Separator).Name == "_mnChapterSepar_2")
                         {
                             (item as Separator).Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
