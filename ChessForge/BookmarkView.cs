@@ -33,9 +33,9 @@ namespace ChessForge
         /// <summary>
         /// The chessboard object for the bookmark.
         /// </summary>
-        private ChessBoard _guiBoard;
+        private ChessBoardSmall _guiBoard;
 
-        public BookmarkView(ChessBoard board)
+        public BookmarkView(ChessBoardSmall board)
         {
             _guiBoard = board;
         }
