@@ -285,8 +285,6 @@ namespace ChessForge
 
         /// <summary>
         /// Handles a right-click even on an Article.
-        /// TODO: Show buttons with the options to preview the game
-        /// or go to the Game/Exercise tab.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
