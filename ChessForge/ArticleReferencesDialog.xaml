@@ -6,13 +6,13 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.GameExerciseReferences}" Height="460" Width="800">
+        Title="{x:Static p:Resources.GameExerciseReferences}" Height="290" Width="600">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="140"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ListView x:Name="UiLvGames" Grid.Row="1" ItemsSource="{Binding}" MouseDoubleClick="UiLvGames_MouseDoubleClick" MouseRightButtonUp="UiLvGames_MouseRightButtonUp" ContextMenuOpening="UiLvGames_ContextMenuOpening" >
             <ListView.ContextMenu>
@@ -25,13 +25,13 @@
             </ListView.Resources>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="{x:Static p:Resources.Item}" DisplayMemberBinding="{Binding Path=GameTitleForList}" Width="640"/>
+                    <GridViewColumn Header="{x:Static p:Resources.Item}" DisplayMemberBinding="{Binding Path=GameTitleForList}" Width="440"/>
                     <GridViewColumn Header="{x:Static p:Resources.Date}"  DisplayMemberBinding="{Binding Path=Date}" Width="90"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-120,30,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="False" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="120,30,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Edit}" HorizontalAlignment="Center" Margin="-110,20,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="False" Content="{x:Static p:Resources.Exit}" HorizontalAlignment="Center" Margin="110,20,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
         <Label x:Name="UiLblInstruct" Content="{x:Static p:Resources.InfoGameExerciseReferences}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" />
     </Grid>
 </Window>
