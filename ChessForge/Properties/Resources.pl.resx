@@ -1135,7 +1135,7 @@
     <value>Odpowiedź z Podręcznika</value>
   </data>
   <data name="TrnStudyMoveNotInSource" xml:space="preserve">
-    <value>Tego ruchu nie ma w Podręczniku.</value>
+    <value>Tego ruchu nie ma w Podręczniku</value>
   </data>
   <data name="TrnStudyOnlyMove" xml:space="preserve">
     <value>Jedyny ruch w Podręczniku to</value>

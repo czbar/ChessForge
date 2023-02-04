@@ -1506,7 +1506,7 @@ TrnStudyResponse=Odpowiedź z Podręcznika
 
 #description: Not in the source 
 #english: TrnStudyMoveNotInSource=This is not in the Workbook
-TrnStudyMoveNotInSource=Tego ruchu nie ma w Podręczniku.
+TrnStudyMoveNotInSource=Tego ruchu nie ma w Podręczniku
 
 #description: The only move 
 #english: TrnStudyOnlyMove=The only move in the Workbook is
