@@ -92,6 +92,9 @@
       <DependentUpon>AnnotationsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ArticleListItem.cs" />
+    <Compile Include="ArticleReferencesDialog.xaml.cs">
+      <DependentUpon>ArticleReferencesDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BackupVersionDialog.xaml.cs">
       <DependentUpon>BackupVersionDialog.xaml</DependentUpon>
     </Compile>
@@ -218,6 +221,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AnnotationsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ArticleReferencesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
