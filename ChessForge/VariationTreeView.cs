@@ -499,6 +499,7 @@ namespace ChessForge
 
                     InsertOrUpdateCommentRun(prevThumbnail);
                     InsertOrUpdateCommentRun(nd);
+
                     AppState.IsDirty = true;
                 }
             }
@@ -524,7 +525,7 @@ namespace ChessForge
                     {
                         VariationTree newTree = TreeUtils.CreateNewTreeFromNode(lstNodes[0], GameData.ContentType.STUDY_TREE);
                         Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter(newTree, false);
-                        chapter.SetTitle(Properties.Resources.Chapter +  " " + chapter.Id.ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
+                        chapter.SetTitle(Properties.Resources.Chapter + " " + chapter.Id.ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
 
                         ChapterFromLineDialog dlg = new ChapterFromLineDialog(chapter)
                         {
@@ -1735,23 +1736,27 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="para"></param>
-        private void AddCommentRunToParagraph(TreeNode nd, Paragraph para)
+        private Run AddCommentRunToParagraph(TreeNode nd, Paragraph para)
         {
+            Run rComment = null;
+
             try
             {
                 if (!IsCommentRunToShow(nd))
                 {
-                    return;
+                    return null;
                 }
 
-                Run r = new Run(BuildCommentRunText(nd));
-                r.Name = _run_comment_ + nd.NodeId.ToString();
-                r.PreviewMouseDown += EventCommentRunClicked;
+                rComment = new Run(BuildCommentRunText(nd));
+                rComment.ToolTip = nd.IsThumbnail ? Properties.Resources.ChapterThumbnail : null;
 
-                r.FontStyle = FontStyles.Normal;
+                rComment.Name = _run_comment_ + nd.NodeId.ToString();
+                rComment.PreviewMouseDown += EventCommentRunClicked;
 
-                r.Foreground = Brushes.Black;
-                r.FontWeight = FontWeights.Normal;
+                rComment.FontStyle = FontStyles.Normal;
+
+                rComment.Foreground = Brushes.Black;
+                rComment.FontWeight = FontWeights.Normal;
 
                 // insert after the reference run or immediately after the move run if no reference run
                 Run rNode;
@@ -1763,15 +1768,17 @@ namespace ChessForge
                 {
                     rNode = _dictNodeToRun[nd.NodeId];
                 }
-                para.Inlines.InsertAfter(rNode, r);
+                para.Inlines.InsertAfter(rNode, rComment);
 
-                _dictNodeToCommentRun.Add(nd.NodeId, r);
-                _dictCommentRunToParagraph.Add(r, para);
+                _dictNodeToCommentRun.Add(nd.NodeId, rComment);
+                _dictCommentRunToParagraph.Add(rComment, para);
             }
             catch (Exception ex)
             {
                 AppLog.Message("AddCommentRunToParagraph()", ex);
             }
+
+            return rComment;
         }
 
         /// <summary>
@@ -2067,11 +2074,13 @@ namespace ChessForge
         /// before this method was called.
         /// </summary>
         /// <param name="nd"></param>
-        public void InsertOrUpdateCommentRun(TreeNode nd)
+        public Run InsertOrUpdateCommentRun(TreeNode nd)
         {
+            Run r_comment;
+
             if (nd == null)
             {
-                return;
+                return null;
             }
 
             try
@@ -2083,7 +2092,7 @@ namespace ChessForge
                 {
                     // something seriously wrong
                     AppLog.Message("ERROR: InsertOrUpdateCommentRun()- Run " + nd.NodeId.ToString() + " not found in _dictNodeToRun");
-                    return;
+                    return null;
                 }
 
                 // we are refreshing the move's text in case we have a change in NAG,
@@ -2092,7 +2101,6 @@ namespace ChessForge
                 r.Text = BuildNodeText(nd, IsMoveTextWithNumber(r.Text));
                 r.Text = spaces + r.Text.TrimStart();
 
-                Run r_comment;
                 _dictNodeToCommentRun.TryGetValue(nd.NodeId, out r_comment);
 
                 if (!IsCommentRunToShow(nd))
@@ -2121,7 +2129,10 @@ namespace ChessForge
             }
             catch
             {
+                r_comment = null;
             }
+
+            return r_comment;
         }
 
         /// <summary>
