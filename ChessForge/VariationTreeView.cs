@@ -499,6 +499,7 @@ namespace ChessForge
 
                     InsertOrUpdateCommentRun(prevThumbnail);
                     InsertOrUpdateCommentRun(nd);
+
                     AppState.IsDirty = true;
                 }
             }
@@ -524,7 +525,7 @@ namespace ChessForge
                     {
                         VariationTree newTree = TreeUtils.CreateNewTreeFromNode(lstNodes[0], GameData.ContentType.STUDY_TREE);
                         Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter(newTree, false);
-                        chapter.SetTitle(Properties.Resources.Chapter +  " " + chapter.Id.ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
+                        chapter.SetTitle(Properties.Resources.Chapter + " " + chapter.Id.ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
 
                         ChapterFromLineDialog dlg = new ChapterFromLineDialog(chapter)
                         {
@@ -1735,23 +1736,27 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="para"></param>
-        private void AddCommentRunToParagraph(TreeNode nd, Paragraph para)
+        private Run AddCommentRunToParagraph(TreeNode nd, Paragraph para)
         {
+            Run rComment = null;
+
             try
             {
                 if (!IsCommentRunToShow(nd))
                 {
-                    return;
+                    return null;
                 }
 
-                Run r = new Run(BuildCommentRunText(nd));
-                r.Name = _run_comment_ + nd.NodeId.ToString();
-                r.PreviewMouseDown += EventCommentRunClicked;
+                rComment = new Run(BuildCommentRunText(nd));
+                rComment.ToolTip = nd.IsThumbnail ? Properties.Resources.ChapterThumbnail : null;
 
-                r.FontStyle = FontStyles.Normal;
+                rComment.Name = _run_comment_ + nd.NodeId.ToString();
+                rComment.PreviewMouseDown += EventCommentRunClicked;
 
-                r.Foreground = Brushes.Black;
-                r.FontWeight = FontWeights.Normal;
+                rComment.FontStyle = FontStyles.Normal;
+
+                rComment.Foreground = Brushes.Black;
+                rComment.FontWeight = FontWeights.Normal;
 
                 // insert after the reference run or immediately after the move run if no reference run
                 Run rNode;
@@ -1763,15 +1768,17 @@ namespace ChessForge
                 {
                     rNode = _dictNodeToRun[nd.NodeId];
                 }
-                para.Inlines.InsertAfter(rNode, r);
+                para.Inlines.InsertAfter(rNode, rComment);
 
-                _dictNodeToCommentRun.Add(nd.NodeId, r);
-                _dictCommentRunToParagraph.Add(r, para);
+                _dictNodeToCommentRun.Add(nd.NodeId, rComment);
+                _dictCommentRunToParagraph.Add(rComment, para);
             }
             catch (Exception ex)
             {
                 AppLog.Message("AddCommentRunToParagraph()", ex);
             }
+
+            return rComment;
         }
 
         /// <summary>
@@ -1793,6 +1800,8 @@ namespace ChessForge
                 Run r = new Run(BuildReferenceRunText(nd));
 
                 r.Name = _run_reference_ + nd.NodeId.ToString();
+                r.ToolTip = Properties.Resources.OpenReferencesDialog;
+
                 r.PreviewMouseDown += EventReferenceRunClicked;
 
                 r.FontStyle = FontStyles.Normal;
@@ -1965,6 +1974,12 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Event handler for Article selection.
+        /// MainWindow subscribes to it with EventSelectArticle().
+        /// </summary>
+        public event EventHandler<ChessForgeEventArgs> ArticleSelected;
+
+        /// <summary>
         /// A "reference" run was clicked.
         /// Open the Game Preview dialog.
         /// </summary>
@@ -1981,24 +1996,36 @@ namespace ChessForge
             {
                 TreeNode nd = GetClickedNode(e);
                 SelectRun(_dictNodeToRun[nd.NodeId], e.ClickCount, e.ChangedButton);
-                List<string> guids = new List<string>(nd.ArticleRefs.Split('|'));
-                List<Article> games = new List<Article>();
-                foreach (string guid in guids)
-                {
-                    Article art = WorkbookManager.SessionWorkbook.GetArticleByGuid(guid, out _, out _);
-                    if (art != null)
-                    {
-                        games.Add(art);
-                    }
-                }
 
-                if (games.Count > 0)
+                ArticleReferencesDialog dlg = new ArticleReferencesDialog(nd)
                 {
-                    _mainWin.UiMnReferenceArticles_Click(null, null);
+                    Left = AppState.MainWin.Left + 100,
+                    Top = AppState.MainWin.Top + 100,
+                    Topmost = false,
+                    Owner = AppState.MainWin
+                };
+
+                dlg.ShowDialog();
+
+                if (dlg.SelectedArticle != null)
+                {
+                    // we exited after user selected Open Full View from the context menu of an item
+                    WorkbookManager.SessionWorkbook.GetArticleByGuid(dlg.SelectedArticle.Tree.Header.GetGuid(out _), out int chapterIndex, out int articleIndex);
+
+                    ChessForgeEventArgs args = new ChessForgeEventArgs();
+                    args.ChapterIndex = chapterIndex;
+                    args.ArticleIndex = articleIndex;
+                    args.ContentType = dlg.SelectedArticle.Tree.Header.GetContentType(out _);
+
+                    ArticleSelected?.Invoke(this, args);
                 }
                 else
                 {
-                    MessageBox.Show(Properties.Resources.RefGamesNotFound, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                    if (dlg.DialogResult == true)
+                    {
+                        // user requested the dialog for editing references
+                        AppState.MainWin.UiMnReferenceArticles_Click(null, null);
+                    }
                 }
             }
             catch
@@ -2067,11 +2094,13 @@ namespace ChessForge
         /// before this method was called.
         /// </summary>
         /// <param name="nd"></param>
-        public void InsertOrUpdateCommentRun(TreeNode nd)
+        public Run InsertOrUpdateCommentRun(TreeNode nd)
         {
+            Run r_comment;
+
             if (nd == null)
             {
-                return;
+                return null;
             }
 
             try
@@ -2083,7 +2112,7 @@ namespace ChessForge
                 {
                     // something seriously wrong
                     AppLog.Message("ERROR: InsertOrUpdateCommentRun()- Run " + nd.NodeId.ToString() + " not found in _dictNodeToRun");
-                    return;
+                    return null;
                 }
 
                 // we are refreshing the move's text in case we have a change in NAG,
@@ -2092,7 +2121,6 @@ namespace ChessForge
                 r.Text = BuildNodeText(nd, IsMoveTextWithNumber(r.Text));
                 r.Text = spaces + r.Text.TrimStart();
 
-                Run r_comment;
                 _dictNodeToCommentRun.TryGetValue(nd.NodeId, out r_comment);
 
                 if (!IsCommentRunToShow(nd))
@@ -2121,7 +2149,10 @@ namespace ChessForge
             }
             catch
             {
+                r_comment = null;
             }
+
+            return r_comment;
         }
 
         /// <summary>

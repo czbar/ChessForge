@@ -241,6 +241,10 @@ Checkmate=
 #english: Stalemate=stalemate
 Stalemate=
 
+#description: Game and Exercise References
+#english: GameExerciseReferences=Game and Exercise References
+GameExerciseReferences=
+
 
 #
 # MAIN MENU
@@ -611,8 +615,8 @@ ConfirmDeleteExercise=
 #
 
 #description: Edit references
-#english: GameExerciseReferences=Game/Exercise References...
-GameExerciseReferences=
+#english: MnGameExerciseReferences=Game/Exercise References...
+MnGameExerciseReferences=
 
 #description: Promote a line
 #english: PromoteLine=Promote Line
@@ -634,6 +638,9 @@ BookmarkAllOptionsHere=
 #english: MarkAsThumbnail=Mark as Thumbnail
 MarkAsThumbnail=
 
+#description: ChapterThumbnail
+#english: ChapterThumbnail=Thumbnail for Chapters View
+ChapterThumbnail=
 
 
 #
@@ -1069,6 +1076,14 @@ ConfirmExerciseMoveDeletion=
 # Dialogs
 #
 
+#description: Info in the View References Dialog
+#english: InfoGameExerciseReferences=Double click to preview, right click for options
+InfoGameExerciseReferences=
+
+#description: Tooltip for the References symbole
+#english: OpenReferencesDialog=Click to edit Game and Exercise references
+OpenReferencesDialog=
+
 #description: Save the currently open Workbook into a different file
 #english: SaveWorkbookAs=Save Workbook $0 As ...
 SaveWorkbookAs=
@@ -1180,6 +1195,10 @@ IgnoreDay=
 #english: GamePreview=Game Preview
 GamePreview=
 
+#description: Exercise Preview
+#english: ExercisePreview=Exercise Preview
+ExercisePreview=
+
 #description: Previous Game
 #english: PreviousGame=Previous Game
 PreviousGame=
@@ -1267,6 +1286,11 @@ ClearBoard=
 #description: Select Games/Exercises
 #english: SelectGameAndExercises=Select Games and/or Exercises
 SelectGameAndExercises=
+
+#description: Select Reference Games/Exercises (dialog title)
+#english: SelectReferences=Select Reference Games and/or Exercises
+SelectReferences=
+
 
 #description: Select items
 #english: SelectItems=Select Items

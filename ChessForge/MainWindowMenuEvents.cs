@@ -13,6 +13,7 @@ using static ChessForge.WorkbookOperation;
 using ChessPosition.GameTree;
 using ChessForge;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 
 namespace ChessForge
 {
@@ -1503,7 +1504,7 @@ namespace ChessForge
                     CopyHeaderFromGame(tree, chapter.StudyTree.Tree.Header, false);
                     if (string.IsNullOrEmpty(tree.Header.GetEventName(out _)))
                     {
-                        tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, Properties.Resources.StudyTreeAfter + MoveUtils.BuildSingleMoveText(nd, true, true));
+                        tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, Properties.Resources.StudyTreeAfter + " " + MoveUtils.BuildSingleMoveText(nd, true, true));
                     }
                     CreateNewExerciseFromTree(tree);
                 }
@@ -2652,6 +2653,7 @@ namespace ChessForge
                         = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
+                    RefreshGamesView();
                     AppState.IsDirty = true;
                 }
             }
@@ -2696,6 +2698,7 @@ namespace ChessForge
                     if (dlgHeader.ExitOK)
                     {
                         CreateNewExerciseFromTree(tree);
+                        RefreshExercisesView();
                         AppState.IsDirty = true;
                     }
                 }

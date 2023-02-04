@@ -339,7 +339,7 @@ namespace ChessForge
             Timers.Start(AppTimers.TimerId.APP_START);
 
             ArticleSelected += EventSelectArticle;
-
+            
             AppLog.LogAvailableThreadsCounts();
         }
 
@@ -1262,6 +1262,7 @@ namespace ChessForge
         public void SetupGuiForActiveStudyTree(bool focusOnStudyTree)
         {
             _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
+            _studyTreeView.ArticleSelected += ArticleSelected;
 
             VariationTree studyTree = AppState.ActiveChapter.StudyTree.Tree;
             if (studyTree.Nodes.Count == 0)

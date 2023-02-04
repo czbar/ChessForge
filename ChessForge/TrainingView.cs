@@ -896,13 +896,13 @@ namespace ChessForge
                             switch (_sourceType)
                             {
                                 case GameData.ContentType.STUDY_TREE:
-                                    note = Properties.Resources.TrnStudyMoveNotInSource + ": ";
+                                    note = Properties.Resources.TrnStudyMoveNotInSource;
                                     break;
                                 case GameData.ContentType.MODEL_GAME:
-                                    note = Properties.Resources.TrnGameMoveNotInSource + ": ";
+                                    note = Properties.Resources.TrnGameMoveNotInSource;
                                     break;
                                 case GameData.ContentType.EXERCISE:
-                                    note = Properties.Resources.TrnExerciseMoveNotInSource + ": ";
+                                    note = Properties.Resources.TrnExerciseMoveNotInSource;
                                     break;
                             }
                             sbAlignmentNote.Append(note + ". ");
@@ -919,10 +919,10 @@ namespace ChessForge
                                     note = single ? Properties.Resources.TrnStudyOnlyMove : Properties.Resources.TrnStudySourceMoves;
                                     break;
                                 case GameData.ContentType.MODEL_GAME:
-                                    note = single ? Properties.Resources.TrnStudyOnlyMove : Properties.Resources.TrnGameSourceMoves;
+                                    note = single ? Properties.Resources.TrnGameOnlyMove : Properties.Resources.TrnGameSourceMoves;
                                     break;
                                 case GameData.ContentType.EXERCISE:
-                                    note = single ? Properties.Resources.TrnStudyOnlyMove : Properties.Resources.TrnExerciseSourceMoves;
+                                    note = single ? Properties.Resources.TrnExerciseOnlyMove : Properties.Resources.TrnExerciseSourceMoves;
                                     break;
                             }
                             sbAlignmentNote.Append(note + " ");

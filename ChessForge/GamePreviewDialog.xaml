@@ -48,6 +48,8 @@
         <GroupBox x:Name="UiGReplaySpeed" Header="{x:Static p:Resources.AutoReplaySpeed}" Margin="340,217,0,0" Width="124" Height="100" HorizontalAlignment="Left" VerticalAlignment="Top" />
         <Label x:Name="UiLblWhiteSquare" Content="" HorizontalAlignment="Left" Margin="45,5,0,0" Width="22" VerticalAlignment="Top"/>
         <Label x:Name="UiLblWhite" Content="" HorizontalAlignment="Left" Margin="65,5,0,0" Width="170" VerticalAlignment="Top"/>
+
+        <Label x:Name="UiLblEvent" Visibility="Collapsed" Content="" HorizontalAlignment="Left" Margin="65,17,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblBlackSquare" Content="" HorizontalAlignment="Left" Margin="45,27,0,0" Width="22" VerticalAlignment="Top"/>
         <Label x:Name="UiLblBlack" Content="" HorizontalAlignment="Left" Margin="65,27,0,0" Width="170" VerticalAlignment="Top"/>
         <RichTextBox x:Name="UiRtbGames" Margin="500,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="260" Height="368"

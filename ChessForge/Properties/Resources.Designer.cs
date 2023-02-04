@@ -592,6 +592,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thumbnail for Chapters View.
+        /// </summary>
+        public static string ChapterThumbnail {
+            get {
+                return ResourceManager.GetString("ChapterThumbnail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chapter Title.
         /// </summary>
         public static string ChapterTitle {
@@ -1321,6 +1330,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exercise Preview.
+        /// </summary>
+        public static string ExercisePreview {
+            get {
+                return ResourceManager.GetString("ExercisePreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exercises.
         /// </summary>
         public static string Exercises {
@@ -1555,7 +1573,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game/Exercise References....
+        ///   Looks up a localized string similar to Game and Exercise References.
         /// </summary>
         public static string GameExerciseReferences {
             get {
@@ -1807,6 +1825,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Double click to preview, right click for options.
+        /// </summary>
+        public static string InfoGameExerciseReferences {
+            get {
+                return ResourceManager.GetString("InfoGameExerciseReferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Information.
         /// </summary>
         public static string Information {
@@ -1992,6 +2019,15 @@ namespace ChessForge.Properties {
         public static string MergeTrainingIntoStudy {
             get {
                 return ResourceManager.GetString("MergeTrainingIntoStudy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game/Exercise References....
+        /// </summary>
+        public static string MnGameExerciseReferences {
+            get {
+                return ResourceManager.GetString("MnGameExerciseReferences", resourceCulture);
             }
         }
         
@@ -2335,6 +2371,15 @@ namespace ChessForge.Properties {
         public static string Openings {
             get {
                 return ResourceManager.GetString("Openings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click to edit Game and Exercise references.
+        /// </summary>
+        public static string OpenReferencesDialog {
+            get {
+                return ResourceManager.GetString("OpenReferencesDialog", resourceCulture);
             }
         }
         
@@ -2875,6 +2920,15 @@ namespace ChessForge.Properties {
         public static string SelectItemsforWorkbook {
             get {
                 return ResourceManager.GetString("SelectItemsforWorkbook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Reference Games and/or Exercises.
+        /// </summary>
+        public static string SelectReferences {
+            get {
+                return ResourceManager.GetString("SelectReferences", resourceCulture);
             }
         }
         

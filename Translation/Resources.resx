@@ -282,6 +282,9 @@
   <data name="Stalemate" xml:space="preserve">
     <value>stalemate</value>
   </data>
+  <data name="GameExerciseReferences" xml:space="preserve">
+    <value>Game and Exercise References</value>
+  </data>
   <data name="File" xml:space="preserve">
     <value>File</value>
   </data>
@@ -528,7 +531,7 @@
   <data name="ConfirmDeleteExercise" xml:space="preserve">
     <value>Delete Exercise</value>
   </data>
-  <data name="GameExerciseReferences" xml:space="preserve">
+  <data name="MnGameExerciseReferences" xml:space="preserve">
     <value>Game/Exercise References...</value>
   </data>
   <data name="PromoteLine" xml:space="preserve">
@@ -545,6 +548,9 @@
   </data>
   <data name="MarkAsThumbnail" xml:space="preserve">
     <value>Mark as Thumbnail</value>
+  </data>
+  <data name="ChapterThumbnail" xml:space="preserve">
+    <value>Thumbnail for Chapters View</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>
@@ -817,6 +823,12 @@
   <data name="ConfirmExerciseMoveDeletion" xml:space="preserve">
     <value>Some move in the solution are no longer legal $0. Delete them?</value>
   </data>
+  <data name="InfoGameExerciseReferences" xml:space="preserve">
+    <value>Double click to preview, right click for options</value>
+  </data>
+  <data name="OpenReferencesDialog" xml:space="preserve">
+    <value>Click to edit Game and Exercise references</value>
+  </data>
   <data name="SaveWorkbookAs" xml:space="preserve">
     <value>Save Workbook $0 As ...</value>
   </data>
@@ -898,6 +910,9 @@
   <data name="GamePreview" xml:space="preserve">
     <value>Game Preview</value>
   </data>
+  <data name="ExercisePreview" xml:space="preserve">
+    <value>Exercise Preview</value>
+  </data>
   <data name="PreviousGame" xml:space="preserve">
     <value>Previous Game</value>
   </data>
@@ -963,6 +978,9 @@
   </data>
   <data name="SelectGameAndExercises" xml:space="preserve">
     <value>Select Games and/or Exercises</value>
+  </data>
+  <data name="SelectReferences" xml:space="preserve">
+    <value>Select Reference Games and/or Exercises</value>
   </data>
   <data name="SelectItems" xml:space="preserve">
     <value>Select Items</value>

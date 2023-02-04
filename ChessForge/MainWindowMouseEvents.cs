@@ -1046,6 +1046,15 @@ namespace ChessForge
                 return;
             }
 
+            RefreshGamesView();
+
+        }
+
+        /// <summary>
+        /// Rebuilds the Game view
+        /// </summary>
+        private void RefreshGamesView()
+        {
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
 
@@ -1132,6 +1141,14 @@ namespace ChessForge
                 return;
             }
 
+            RefreshExercisesView();
+        }
+
+        /// <summary>
+        /// Rebuilds the Exercise view
+        /// </summary>
+        private void RefreshExercisesView()
+        {
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
 

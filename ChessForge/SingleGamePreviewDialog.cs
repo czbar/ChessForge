@@ -39,6 +39,19 @@ namespace ChessForge
         public SingleGamePreviewDialog(List<string> gameIdList, List<Article> games)
             : base(null, gameIdList)
         {
+            if (games.Count > 0)
+            {
+                GameData.ContentType ctype = games[0].Tree.Header.GetContentType(out _);
+                if (ctype == GameData.ContentType.EXERCISE)
+                {
+                    this.Title = Properties.Resources.ExercisePreview;
+                }
+                else
+                {
+                    this.Title = Properties.Resources.GamePreview;
+                }
+            }
+
             Thickness currExitBtnRThick = UiBtnExit.Margin;
             currExitBtnRThick.Right = 25;
             UiBtnExit.Margin = currExitBtnRThick;
@@ -89,7 +102,7 @@ namespace ChessForge
         /// <param name="sender"></param>
         /// <param name="e"></param>
         override protected void UiLbGames_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {}
+        { }
 
         /// <summary>
         /// Shows/Hides game operations related controls. 
