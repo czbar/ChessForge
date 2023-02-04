@@ -1800,6 +1800,8 @@ namespace ChessForge
                 Run r = new Run(BuildReferenceRunText(nd));
 
                 r.Name = _run_reference_ + nd.NodeId.ToString();
+                r.ToolTip = Properties.Resources.OpenReferencesDialog;
+
                 r.PreviewMouseDown += EventReferenceRunClicked;
 
                 r.FontStyle = FontStyles.Normal;
