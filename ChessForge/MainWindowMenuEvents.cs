@@ -1922,7 +1922,7 @@ namespace ChessForge
                 {
                     int posIndex = moveIndex;
                     TreeNode nd = ActiveLine.GetNodeAtIndex(posIndex);
-                    BookmarkManager.AddBookmark(nd);
+                    BookmarkManager.AddBookmark(ActiveVariationTree, nd);
                     UiTabBookmarks.Focus();
                 }
             }
@@ -1975,59 +1975,22 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Adds the last click node, and all its siblings to bookmarks
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnWorkbookBookmarkAlternatives_Click(object sender, RoutedEventArgs e)
-        {
-            int ret = BookmarkManager.AddAllSiblingsToBookmarks(_studyTreeView.LastClickedNodeId);
-            if (ret == 1)
-            {
-                MessageBox.Show(Properties.Resources.BookmarksAlreadyExist, Properties.Resources.Bookmarks, MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }
-            else if (ret == -1)
-            {
-                MessageBox.Show(Properties.Resources.ErrorAddBookmarks, Properties.Resources.Bookmarks, MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }
-            else
-            {
-                AppState.IsDirty = true;
-                UiTabBookmarks.Focus();
-            }
-        }
-
-        /// <summary>
         /// Adds the last clicked node to bookmarks.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiMnWorkbookSelectAsBookmark_Click(object sender, RoutedEventArgs e)
         {
-            int ret = BookmarkManager.AddBookmark(_studyTreeView.LastClickedNodeId);
-            if (ret == 1)
+            Bookmark bm = BookmarkManager.AddBookmark(AppState.ActiveChapter.StudyTree.Tree, _studyTreeView.LastClickedNodeId);
+            if (bm == null)
             {
                 MessageBox.Show(Properties.Resources.BookmarkAlreadyExists, Properties.Resources.Bookmarks, MessageBoxButton.OK);
-            }
-            else if (ret == -1)
-            {
-                MessageBox.Show(Properties.Resources.ErrorAddBookmark, Properties.Resources.Bookmarks, MessageBoxButton.OK);
             }
             else
             {
                 AppState.IsDirty = true;
                 UiTabBookmarks.Focus();
             }
-        }
-
-        /// <summary>
-        /// A request to auto-generate bookmarks.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnGenerateBookmark_Click(object sender, RoutedEventArgs e)
-        {
-            BookmarkManager.GenerateBookmarks();
         }
 
 

@@ -340,7 +340,6 @@
                                     <MenuItem x:Name="UiMnCreateChapterFromLine" Header="{x:Static p:Resources.CreateNewChapterFromLine}" Click="UiMnCreateChapterFromLine_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnWorkbookSelectAsBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnWorkbookSelectAsBookmark_Click" />
-                                    <MenuItem x:Name="_mnWorkbookBookmarkAlternatives" Header="{x:Static p:Resources.BookmarkAllOptionsHere}" Click="UiMnWorkbookBookmarkAlternatives_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnWorkbookEvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnWorkbookEvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
@@ -384,7 +383,6 @@
                                 <ContextMenu x:Name="_cmBookmarks">
                                     <MenuItem x:Name="_mnTrainFromBookmark" Header="{x:Static p:Resources.StartTrainingFromThisBookmark}" Click="UiMnTrainFromBookmark_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnGenerateBookmark" Header="{x:Static p:Resources.GenerateBookmarks}" Click="UiMnGenerateBookmark_Click" />
                                     <MenuItem x:Name="_mnAddBookmark" Header="{x:Static p:Resources.GoToStudyToAddBookmark}" Click="UiMnAddBookmark_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnDeleteBookmark" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnDeleteBookmark_Click" />

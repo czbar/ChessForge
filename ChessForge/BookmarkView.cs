@@ -1,6 +1,7 @@
 ﻿using ChessForge.Properties;
 using ChessPosition;
 using GameTree;
+using System;
 
 namespace ChessForge
 {
@@ -8,13 +9,8 @@ namespace ChessForge
     /// Combines the Bookmark's content
     /// and its GUI visualization.
     /// </summary>
-    public class BookmarkView
+    public class BookmarkView : IComparable<BookmarkView>
     {
-
-        public BookmarkView(ChessBoard board)
-        {
-            _guiBoard = board;
-        }
 
         /// <summary>
         /// The Bookmark object shown in this view.
@@ -22,9 +18,82 @@ namespace ChessForge
         public Bookmark BookmarkData;
 
         /// <summary>
+        /// Variation Tree in which the bookmark belongs.
+        /// </summary>
+        public VariationTree Tree;
+
+        /// <summary>
+        /// Type of Tree this bookmark is in.
+        /// </summary>
+        public GameData.ContentType ContentType
+        {
+            get => Tree.Header.GetContentType(out _);
+        } 
+
+        /// <summary>
         /// The chessboard object for the bookmark.
         /// </summary>
         private ChessBoard _guiBoard;
+
+        public BookmarkView(ChessBoard board)
+        {
+            _guiBoard = board;
+        }
+
+        public BookmarkView(VariationTree tree, Bookmark bm)
+        {
+            _guiBoard = null;
+            BookmarkData = bm;
+            Tree = tree;
+        }
+
+        /// <summary>
+        /// Comparator to use when sorting by move number and color.
+        /// </summary>
+        /// <param name="bm"></param>
+        /// <returns></returns>
+        public int CompareTo(BookmarkView bm)
+        {
+            if (bm == null)
+                return -1;
+
+            if (this.ContentType == GameData.ContentType.STUDY_TREE && bm.ContentType != GameData.ContentType.STUDY_TREE)
+            {
+                return -1;
+            }
+            else if (this.ContentType == GameData.ContentType.MODEL_GAME)
+            {
+                if (bm.ContentType == GameData.ContentType.STUDY_TREE)
+                {
+                    return 1;
+                }
+                else if (bm.ContentType == GameData.ContentType.EXERCISE)
+                {
+                    return -1;
+                }
+            }
+            else if (this.ContentType == GameData.ContentType.EXERCISE && bm.ContentType != GameData.ContentType.EXERCISE)
+            {
+                return 1;
+            }
+
+            int moveNoDiff = (int)this.BookmarkData.Node.MoveNumber - (int)bm.BookmarkData.Node.MoveNumber;
+            if (moveNoDiff != 0)
+            {
+                return moveNoDiff;
+            }
+            else
+            {
+                if (this.BookmarkData.Node.ColorToMove == PieceColor.Black)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+        }
 
         /// <summary>
         /// Sets opacity (in order to "gray out" 
@@ -43,7 +112,6 @@ namespace ChessForge
         public void Activate()
         {
             _guiBoard.DisplayPosition(null, BookmarkData.Node.Position);
-//            _guiBoard.SetLabelText(BookmarkData.Node.GetPlyText(true));
             _guiBoard.SetLabelText(MoveUtils.BuildSingleMoveText(BookmarkData.Node, true, true));
             SetOpacity(1);
         }

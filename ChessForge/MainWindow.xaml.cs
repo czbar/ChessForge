@@ -1300,7 +1300,8 @@ namespace ChessForge
 
             SetActiveLine(startLineId, startNodeId);
 
-            BookmarkManager.ShowBookmarks();
+            BookmarkManager.IsDirty = true;
+            //BookmarkManager.ShowBookmarks();
 
             int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
             SelectLineAndMoveInWorkbookViews(_studyTreeView, startLineId, nodeIndex);
