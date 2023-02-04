@@ -89,8 +89,8 @@ namespace ChessForge
             _chessBoard = new ChessBoardSmall(UiCnvBoard, UiImgChessBoard, null, false, false);
             _animator = new MoveAnimator(_chessBoard);
 
-            _animationSpeed = _fastAnimation;
-            UiRbFastReplay.IsChecked = true;
+            _animationSpeed = _slowAnimation;
+            UiRbSlowReplay.IsChecked = true;
             _animator.SetAnimationSpeed(_animationSpeed);
 
             _animator.AnimationCompleted += AnimationFinished;
