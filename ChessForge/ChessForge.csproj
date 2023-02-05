@@ -101,6 +101,7 @@
     <Compile Include="BoardArrow.cs" />
     <Compile Include="BoardShapesManager.cs" />
     <Compile Include="BoardCircle.cs" />
+    <Compile Include="BookmarkWrapper.cs" />
     <Compile Include="Chapter.cs" />
     <Compile Include="ChapterFromLineDialog.xaml.cs">
       <DependentUpon>ChapterFromLineDialog.xaml</DependentUpon>
@@ -393,6 +394,12 @@
     <Resource Include="Resources\Images\chevron-up.png" />
     <Resource Include="Resources\Images\ToggleOff.png" />
     <Resource Include="Resources\Images\ToggleOn.png" />
+    <Resource Include="Resources\Images\ChessBoardPaleBlue.png" />
+    <Resource Include="Resources\Images\ChessBoardPaleBlueSmall.png" />
+    <Resource Include="Resources\Images\ChessBoardBrownShades.png" />
+    <Resource Include="Resources\Images\ChessBoardBrownShadesSmall.png" />
+    <Resource Include="Resources\Images\ChessBoardOrangeShades.png" />
+    <Resource Include="Resources\Images\ChessBoardOrangeShadesSmall.png" />
     <Content Include="Resources\Sounds\InvalidMove.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

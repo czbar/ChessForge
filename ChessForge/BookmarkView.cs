@@ -2,49 +2,65 @@
 using ChessPosition;
 using GameTree;
 using System;
+using System.Text;
 
 namespace ChessForge
 {
     /// <summary>
-    /// Combines the Bookmark's content
-    /// and its GUI visualization.
+    /// Manages the ChessBoard holding the Bookmark's position
+    /// Uses the BookmarkWrapper reference to access Bookmark's data.
     /// </summary>
     public class BookmarkView : IComparable<BookmarkView>
     {
-
-        /// <summary>
-        /// The Bookmark object shown in this view.
-        /// </summary>
-        public Bookmark BookmarkData;
-
-        /// <summary>
-        /// Variation Tree in which the bookmark belongs.
-        /// </summary>
-        public VariationTree Tree;
-
-        /// <summary>
-        /// Type of Tree this bookmark is in.
-        /// </summary>
-        public GameData.ContentType ContentType
-        {
-            get => Tree.Header.GetContentType(out _);
-        } 
-
         /// <summary>
         /// The chessboard object for the bookmark.
         /// </summary>
-        private ChessBoardSmall _guiBoard;
+        public ChessBoardSmall ChessBoard;
 
-        public BookmarkView(ChessBoardSmall board)
+        /// <summary>
+        /// Holds the Bookmark and additional info about its parentage.
+        /// </summary>
+        public BookmarkWrapper BookmarkWrapper;
+
+        /// <summary>
+        /// Access to the ContentType property of the BookmarkWrapper
+        /// </summary>
+        public GameData.ContentType ContentType
         {
-            _guiBoard = board;
+            get => BookmarkWrapper.ContentType;
         }
 
-        public BookmarkView(VariationTree tree, Bookmark bm)
+        /// <summary>
+        /// Access to the ChapterIndex property of the BookmarkWrapper
+        /// </summary>
+        public int ChapterIndex
         {
-            _guiBoard = null;
-            BookmarkData = bm;
-            Tree = tree;
+            get => BookmarkWrapper.ChapterIndex;
+        }
+
+        /// <summary>
+        /// Access to the Tree property of the BookmarkWrapper
+        /// </summary>
+        public VariationTree Tree
+        {
+            get => BookmarkWrapper.Tree;
+        }
+
+        /// <summary>
+        /// Access to the ArticleIndex property of the BookmarkWrapper
+        /// </summary>
+        public int ArticleIndex
+        {
+            get => BookmarkWrapper.ArticleIndex;
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="board"></param>
+        public BookmarkView(ChessBoardSmall board)
+        {
+            ChessBoard = board;
         }
 
         /// <summary>
@@ -77,14 +93,24 @@ namespace ChessForge
                 return 1;
             }
 
-            int moveNoDiff = (int)this.BookmarkData.Node.MoveNumber - (int)bm.BookmarkData.Node.MoveNumber;
+            if (this.ContentType == bm.ContentType && this.ArticleIndex != bm.ArticleIndex)
+            {
+                return this.ArticleIndex - bm.ArticleIndex;
+            }
+
+            if (this.ChapterIndex != bm.ChapterIndex)
+            {
+                return bm.ChapterIndex - bm.ChapterIndex;
+            }
+
+            int moveNoDiff = (int)this.BookmarkWrapper.Node.MoveNumber - (int)bm.BookmarkWrapper.Node.MoveNumber;
             if (moveNoDiff != 0)
             {
                 return moveNoDiff;
             }
             else
             {
-                if (this.BookmarkData.Node.ColorToMove == PieceColor.Black)
+                if (this.BookmarkWrapper.Node.ColorToMove == PieceColor.Black)
                 {
                     return -1;
                 }
@@ -102,17 +128,53 @@ namespace ChessForge
         /// <param name="opacity"></param>
         public void SetOpacity(double opacity)
         {
-            _guiBoard.SetBoardOpacity(opacity);
+            ChessBoard.SetBoardOpacity(opacity);
+        }
+
+        /// <summary>
+        /// Builds a string to display as the label above the Bookmark.
+        /// It includes the Article's type, index and move notation. 
+        /// </summary>
+        /// <returns></returns>
+        private string BuildLabelText()
+        {
+            StringBuilder sb = new StringBuilder();
+            GameData.ContentType contetType = ContentType;
+
+            switch (contetType)
+            {
+                case GameData.ContentType.STUDY_TREE:
+                    sb.Append(Properties.Resources.Study);
+                    break;
+                case GameData.ContentType.MODEL_GAME:
+                    sb.Append(Properties.Resources.Game);
+                    break;
+                case GameData.ContentType.EXERCISE:
+                    sb.Append(Properties.Resources.Exercise);
+                    break;
+                default:
+                    break;
+            }
+
+            if (ArticleIndex >= 0)
+            {
+                sb.Append(" #" + (ArticleIndex + 1).ToString());
+            }
+
+            sb.Append(" (" + MoveUtils.BuildSingleMoveText(BookmarkWrapper.Node, true, true) + ")");
+
+            return sb.ToString();
         }
 
         /// <summary>
         /// Activates the bookmark board by setting up the position,
-        /// the title (lable) and full opacity.
+        /// the title (label) and full opacity.
         /// </summary>
         public void Activate()
         {
-            _guiBoard.DisplayPosition(null, BookmarkData.Node.Position);
-            _guiBoard.SetLabelText(MoveUtils.BuildSingleMoveText(BookmarkData.Node, true, true));
+            ChessBoard.DisplayPosition(null, BookmarkWrapper.Node.Position);
+            string lblText = BuildLabelText();
+            ChessBoard.SetLabelText(lblText);
             SetOpacity(1);
         }
 
@@ -123,8 +185,8 @@ namespace ChessForge
         /// </summary>
         public void Deactivate()
         {
-            _guiBoard.ClearBoard();
-            _guiBoard.SetLabelText(Resources.ResourceManager.GetString("Bookmark"));
+            ChessBoard.ClearBoard();
+            ChessBoard.SetLabelText(Resources.ResourceManager.GetString("Bookmark"));
             SetOpacity(0.5);
         }
     }

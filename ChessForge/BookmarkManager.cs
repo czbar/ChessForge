@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using GameTree;
 using ChessForge.Properties;
+using System.Windows.Media.Imaging;
 
 namespace ChessForge
 {
@@ -40,7 +41,7 @@ namespace ChessForge
         /// <summary>
         /// List of all bookmarks in the chapter
         /// </summary>
-        public static List<BookmarkView> BookmarkList = new List<BookmarkView>();
+        public static List<BookmarkWrapper> BookmarkList = new List<BookmarkWrapper>();
 
         /// <summary>
         /// Max number of bookmarks that can be shown in the GUI.
@@ -58,36 +59,58 @@ namespace ChessForge
         // main application window
         private static MainWindow _mainWin;
 
+        // Chapter for which this view was built, if null, the bookmarks are from all chapters
+        private static Chapter _parentChapter;
+
+        /// <summary>
+        /// Resets the bookmark list and all Bookmark chessboards in the Bookmark view.
+        /// </summary>
+        public static void ClearBookmarksGui()
+        {
+            BookmarkList.Clear();
+
+            foreach (BookmarkView bv in BookmarkGuiList)
+            {
+                bv.Deactivate();
+                bv.SetOpacity(0.5);
+            }
+            _mainWin.UiGridBookmarks.RowDefinitions[0].Height = GridLength.Auto;
+            _mainWin.UiCnvPaging.Visibility = Visibility.Collapsed;
+        }
 
         /// <summary>
         /// Rebuilds the list of bookmarks for the current chapter
         /// </summary>
-        public static void BuildBookmarkList()
+        public static void BuildBookmarkList(Chapter chapter)
         {
+            _parentChapter = chapter;
+
             BookmarkList.Clear();
-            Chapter chapter = AppState.ActiveChapter;
+            int chapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(chapter);
             if (chapter != null)
             {
                 foreach (Bookmark bkm in chapter.StudyTree.Tree.Bookmarks)
                 {
-                    BookmarkView bkv = new BookmarkView(chapter.StudyTree.Tree, bkm);
+                    BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, chapter.StudyTree.Tree, bkm, -1);
                     BookmarkList.Add(bkv);
                 }
 
-                foreach (Article game in chapter.ModelGames)
+                for (int i = 0; i < chapter.GetModelGameCount(); i++)
                 {
-                    foreach (Bookmark bkm in game.Tree.Bookmarks)
+                    Article art = chapter.ModelGames[i];
+                    foreach (Bookmark bkm in art.Tree.Bookmarks)
                     {
-                        BookmarkView bkv = new BookmarkView(game.Tree, bkm);
+                        BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, art.Tree, bkm, i);
                         BookmarkList.Add(bkv);
                     }
                 }
 
-                foreach (Article exercise in chapter.Exercises)
+                for (int i = 0; i < chapter.GetExerciseCount(); i++)
                 {
-                    foreach (Bookmark bkm in exercise.Tree.Bookmarks)
+                    Article art = chapter.Exercises[i];
+                    foreach (Bookmark bkm in art.Tree.Bookmarks)
                     {
-                        BookmarkView bkv = new BookmarkView(exercise.Tree, bkm);
+                        BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, art.Tree, bkm, i);
                         BookmarkList.Add(bkv);
                     }
                 }
@@ -146,25 +169,11 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Resets all Bookmark chessboards in the Bookmark view.
-        /// </summary>
-        public static void ClearBookmarksGui()
-        {
-            foreach (BookmarkView bv in BookmarkGuiList)
-            {
-                bv.Deactivate();
-                bv.SetOpacity(0.5);
-            }
-            _mainWin.UiGridBookmarks.RowDefinitions[0].Height = GridLength.Auto;
-            _mainWin.UiCnvPaging.Visibility = Visibility.Collapsed;
-        }
-
-        /// <summary>
         /// Adds a bookmark to the list of bookmarks.
         /// Sorts the bookmarks and updates the GUI.
         /// </summary>
         /// <returns>newly created bookmark on success or null if operation failed</returns>
-        public static Bookmark AddBookmark(VariationTree tree, TreeNode nd)
+        public static Bookmark AddBookmark(VariationTree tree, TreeNode nd, int articleIndex)
         {
             Bookmark bm = null;
 
@@ -174,7 +183,7 @@ namespace ChessForge
                 bm = tree.AddBookmark(nd, true);
                 if (bm != null)
                 {
-                    BookmarkView bmv = new BookmarkView(tree, bm);
+                    BookmarkWrapper bmv = new BookmarkWrapper(WorkbookManager.SessionWorkbook.ActiveChapterIndex, tree, bm, articleIndex);
                     BookmarkList.Add(bmv);
                     SortBookmarks();
                     ResyncBookmarks(_currentPage);
@@ -189,12 +198,12 @@ namespace ChessForge
         /// Adds a bookmark to the list of bookmarks.
         /// </summary>
         /// <returns>newly created bookmark or null if the operation failed</returns>
-        public static Bookmark AddBookmark(VariationTree tree, int nodeId)
+        public static Bookmark AddBookmark(VariationTree tree, int nodeId, int index)
         {
             TreeNode nd = tree.GetNodeFromNodeId(nodeId);
             if (nd != null)
             {
-                return AddBookmark(tree, nd);
+                return AddBookmark(tree, nd, index);
             }
             else
             {
@@ -212,8 +221,8 @@ namespace ChessForge
                 return;
             }
 
-            BookmarkView bmv = BookmarkGuiList[ClickedIndex];
-            TreeNode nd = bmv.BookmarkData.Node;
+            BookmarkWrapper bmv = BookmarkGuiList[ClickedIndex].BookmarkWrapper;
+            TreeNode nd = bmv.Bookmark.Node;
             VariationTree tree = bmv.Tree;
             if (nd != null)
             {
@@ -242,13 +251,13 @@ namespace ChessForge
                 }
             }
 
-            foreach (BookmarkView bm in BookmarkList)
+            foreach (BookmarkWrapper bm in BookmarkList)
             {
-                if (bm.BookmarkData != null && bm.BookmarkData.Node != null)
+                if (bm.Bookmark != null && bm.Bookmark.Node != null)
                 {
-                    bm.Tree.DeleteBookmark(bm.BookmarkData.Node);
-                    bm.BookmarkData.Node.IsBookmark = false;
-                    bm.BookmarkData = null;
+                    bm.Tree.DeleteBookmark(bm.Bookmark.Node);
+                    bm.Bookmark.Node.IsBookmark = false;
+                    bm.Bookmark = null;
                 }
             }
 
@@ -380,12 +389,35 @@ namespace ChessForge
             {
                 if (i < count)
                 {
-                    BookmarkGuiList[i - start].BookmarkData = BookmarkList[i].BookmarkData;
+                    GameData.ContentType contetType = BookmarkList[i].ContentType;
+
+                    BookmarkGuiList[i - start].BookmarkWrapper = BookmarkList[i];
+
                     BookmarkGuiList[i - start].Activate();
+
+                    BitmapImage imgBoard;
+
+                    switch (contetType)
+                    {
+                        case GameData.ContentType.STUDY_TREE:
+                            imgBoard = ChessBoards.ChessBoardBlueSmall;
+                            break;
+                        case GameData.ContentType.MODEL_GAME:
+                            imgBoard = ChessBoards.ChessBoardBrownShadesSmall;
+                            break;
+                        case GameData.ContentType.EXERCISE:
+                            imgBoard = ChessBoards.ChessBoardPaleBlue;
+                            break;
+                        default:
+                            imgBoard = ChessBoards.ChessBoardGreySmall;
+                            break;
+                    }
+
+                    BookmarkGuiList[i - start].ChessBoard.BoardImgCtrl.Source = imgBoard;
                 }
                 else
                 {
-                    BookmarkGuiList[i - start].BookmarkData = null;
+                    BookmarkGuiList[i - start].BookmarkWrapper = null;
                     BookmarkGuiList[i - start].Deactivate();
                 }
             }
