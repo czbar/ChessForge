@@ -1922,7 +1922,7 @@ namespace ChessForge
                 {
                     int posIndex = moveIndex;
                     TreeNode nd = ActiveLine.GetNodeAtIndex(posIndex);
-                    BookmarkManager.AddBookmark(ActiveVariationTree, nd);
+                    BookmarkManager.AddBookmark(ActiveVariationTree, nd, AppState.ActiveArticleIndex);
                     UiTabBookmarks.Focus();
                 }
             }
@@ -1979,17 +1979,23 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnWorkbookSelectAsBookmark_Click(object sender, RoutedEventArgs e)
+        private void UiMnMarkBookmark_Click(object sender, RoutedEventArgs e)
         {
-            Bookmark bm = BookmarkManager.AddBookmark(AppState.ActiveChapter.StudyTree.Tree, _studyTreeView.LastClickedNodeId);
-            if (bm == null)
+            try
             {
-                MessageBox.Show(Properties.Resources.BookmarkAlreadyExists, Properties.Resources.Bookmarks, MessageBoxButton.OK);
+                Bookmark bm = BookmarkManager.AddBookmark(AppState.ActiveVariationTree, AppState.ActiveVariationTree.SelectedNodeId, AppState.ActiveArticleIndex);
+                if (bm == null)
+                {
+                    MessageBox.Show(Properties.Resources.BookmarkAlreadyExists, Properties.Resources.Bookmarks, MessageBoxButton.OK);
+                }
+                else
+                {
+                    AppState.IsDirty = true;
+                    UiTabBookmarks.Focus();
+                }
             }
-            else
+            catch
             {
-                AppState.IsDirty = true;
-                UiTabBookmarks.Focus();
             }
         }
 
