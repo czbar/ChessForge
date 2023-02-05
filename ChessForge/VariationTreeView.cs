@@ -588,10 +588,7 @@ namespace ChessForge
                 _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true));
                 AppState.IsDirty = true;
 
-                if (contentType == GameData.ContentType.STUDY_TREE)
-                {
-                    BookmarkManager.ResyncBookmarks(1);
-                }
+                BookmarkManager.ResyncBookmarks(1);
             }
             catch (Exception ex)
             {
