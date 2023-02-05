@@ -122,6 +122,10 @@ namespace ChessForge
                     if (nd != null)
                     {
                         nd.AddArticleReference(guid);
+                        if (AppState.MainWin.ActiveTreeView != null)
+                        {
+                            AppState.MainWin.ActiveTreeView.InsertOrDeleteReferenceRun(nd);
+                        }
                     }
                 }
                 AppState.MainWin.RefreshChaptersViewAfterImport(GameData.ContentType.MODEL_GAME, chapter, chapter.GetModelGameCount() - 1);
