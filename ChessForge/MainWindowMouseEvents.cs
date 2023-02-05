@@ -688,7 +688,7 @@ namespace ChessForge
         {
             if (!EngineMessageProcessor.IsEngineAvailable)
             {
-                BoardCommentBox.ShowFlashAnnouncement("Engine not available");
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineNotAvailable);
                 return;
             }
 
