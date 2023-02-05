@@ -587,7 +587,7 @@ namespace ChessForge
         /// <returns></returns>
         public bool HandleKeyDown(Key key)
         {
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppState.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS) // || AppState.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
             {
                 if (key == Key.Up || key == Key.Down)
                 {
