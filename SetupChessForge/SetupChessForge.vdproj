@@ -51,12 +51,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_27F3118549F34698AE221E1E90820595"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_285CAB6BDDA418CA7D3102167BDE9809"
         "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
         "MsmSig" = "8:_UNDEFINED"
@@ -129,6 +123,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_BA45925C432A439DB1687AED9366776E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_BA96D1D7C4814CAD8F8959D565F68020"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -161,12 +161,6 @@
         {
         "MsmKey" = "8:_E292FEB9A899401586382088CB66EF51"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_141BD59E5BD35C4DA1EEFA2B8334EEBE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -209,6 +203,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_38B54FF529574FC487FA98804E607F6D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_141BD59E5BD35C4DA1EEFA2B8334EEBE"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -261,6 +261,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -350,26 +358,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_27F3118549F34698AE221E1E90820595"
-            {
-            "SourcePath" = "8:..\\EngineService\\stockfish_15_x64_avx2.exe"
-            "TargetName" = "8:stockfish_15_x64_avx2.exe"
-            "Tag" = "8:"
-            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_285CAB6BDDA418CA7D3102167BDE9809"
@@ -647,6 +635,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BA45925C432A439DB1687AED9366776E"
+            {
+            "SourcePath" = "8:..\\ChessForge\\bin\\Debug\\stockfish_15_x86_64.exe"
+            "TargetName" = "8:stockfish_15_x86_64.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BA96D1D7C4814CAD8F8959D565F68020"
             {
             "SourcePath" = "8:..\\Workbooks\\Distribution\\Stafford Gambit.pgn"
@@ -846,12 +854,12 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Chess Forge"
         "ProductCode" = "8:{9F941D6A-5FC5-405F-8408-36BA894CBEEB}"
-        "PackageCode" = "8:{C6243799-08C2-46EC-9D75-933F340AAA07}"
+        "PackageCode" = "8:{13F7CD4D-7BC7-42C1-B552-924D6C9FAE21}"
         "UpgradeCode" = "8:{8FBE368E-7FA2-4112-9D18-7A5CD1CE504C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
-        "DetectNewerInstalledVersion" = "11:TRUE"
+        "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:0.9.5"
         "Manufacturer" = "8:Mindrose Pty Ltd"
