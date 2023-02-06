@@ -1478,7 +1478,7 @@ namespace ChessForge
             {
                 WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nd.NodeId);
                 view.SelectLineAndMove(lineId, nd.NodeId);
-                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS && AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
                 {
                     EvaluateActiveLineSelectedPosition(nd);
                 }
@@ -1541,7 +1541,7 @@ namespace ChessForge
                         MainChessBoard.DisplayPosition(nd, true);
                         WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, nd);
                     }
-                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS && AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
                     {
                         EvaluateActiveLineSelectedPosition(nd);
                     }
@@ -1615,7 +1615,7 @@ namespace ChessForge
         /// </summary>
         private void EvaluateActiveLineSelectedPosition()
         {
-            if (ActiveVariationTree == null)
+            if (ActiveVariationTree == null || AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
             {
                 return;
             }
