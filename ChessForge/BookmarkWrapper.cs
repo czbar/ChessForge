@@ -1,4 +1,5 @@
-﻿using GameTree;
+﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace ChessForge
     /// the bookmark's parent tree as well as tree's parent Chapter and
     /// position index.
     /// </summary>
-    public class BookmarkWrapper
+    public class BookmarkWrapper : IComparable<BookmarkWrapper>
     {
         /// <summary>
         /// The Bookmark object shown in this view.
@@ -30,8 +31,8 @@ namespace ChessForge
         public VariationTree Tree;
 
         /// <summary>
-        /// Indedx of the article in which this bookmarl belongs.
-        /// It is only need for GUI display and orgerening
+        /// Index of the article in which this bookmark belongs.
+        /// It is only needed for GUI display and orgerening
         /// </summary>
         public int ArticleIndex;
 
@@ -65,5 +66,62 @@ namespace ChessForge
             ArticleIndex = articleIndex;
         }
 
+        /// <summary>
+        /// Comparator to use when sorting by move number and color.
+        /// </summary>
+        /// <param name="bm"></param>
+        /// <returns></returns>
+        public int CompareTo(BookmarkWrapper bm)
+        {
+            if (bm == null)
+                return -1;
+
+            if (this.ContentType == GameData.ContentType.STUDY_TREE && bm.ContentType != GameData.ContentType.STUDY_TREE)
+            {
+                return -1;
+            }
+            else if (this.ContentType == GameData.ContentType.MODEL_GAME)
+            {
+                if (bm.ContentType == GameData.ContentType.STUDY_TREE)
+                {
+                    return 1;
+                }
+                else if (bm.ContentType == GameData.ContentType.EXERCISE)
+                {
+                    return -1;
+                }
+            }
+            else if (this.ContentType == GameData.ContentType.EXERCISE && bm.ContentType != GameData.ContentType.EXERCISE)
+            {
+                return 1;
+            }
+
+            if (this.ContentType == bm.ContentType && this.ArticleIndex != bm.ArticleIndex)
+            {
+                return this.ArticleIndex - bm.ArticleIndex;
+            }
+
+            if (this.ChapterIndex != bm.ChapterIndex)
+            {
+                return bm.ChapterIndex - bm.ChapterIndex;
+            }
+
+            int moveNoDiff = (int)this.Node.MoveNumber - (int)bm.Node.MoveNumber;
+            if (moveNoDiff != 0)
+            {
+                return moveNoDiff;
+            }
+            else
+            {
+                if (this.Node.ColorToMove == PieceColor.Black)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+        }
     }
 }

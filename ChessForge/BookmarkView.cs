@@ -10,7 +10,7 @@ namespace ChessForge
     /// Manages the ChessBoard holding the Bookmark's position
     /// Uses the BookmarkWrapper reference to access Bookmark's data.
     /// </summary>
-    public class BookmarkView : IComparable<BookmarkView>
+    public class BookmarkView
     {
         /// <summary>
         /// The chessboard object for the bookmark.
@@ -61,64 +61,6 @@ namespace ChessForge
         public BookmarkView(ChessBoardSmall board)
         {
             ChessBoard = board;
-        }
-
-        /// <summary>
-        /// Comparator to use when sorting by move number and color.
-        /// </summary>
-        /// <param name="bm"></param>
-        /// <returns></returns>
-        public int CompareTo(BookmarkView bm)
-        {
-            if (bm == null)
-                return -1;
-
-            if (this.ContentType == GameData.ContentType.STUDY_TREE && bm.ContentType != GameData.ContentType.STUDY_TREE)
-            {
-                return -1;
-            }
-            else if (this.ContentType == GameData.ContentType.MODEL_GAME)
-            {
-                if (bm.ContentType == GameData.ContentType.STUDY_TREE)
-                {
-                    return 1;
-                }
-                else if (bm.ContentType == GameData.ContentType.EXERCISE)
-                {
-                    return -1;
-                }
-            }
-            else if (this.ContentType == GameData.ContentType.EXERCISE && bm.ContentType != GameData.ContentType.EXERCISE)
-            {
-                return 1;
-            }
-
-            if (this.ContentType == bm.ContentType && this.ArticleIndex != bm.ArticleIndex)
-            {
-                return this.ArticleIndex - bm.ArticleIndex;
-            }
-
-            if (this.ChapterIndex != bm.ChapterIndex)
-            {
-                return bm.ChapterIndex - bm.ChapterIndex;
-            }
-
-            int moveNoDiff = (int)this.BookmarkWrapper.Node.MoveNumber - (int)bm.BookmarkWrapper.Node.MoveNumber;
-            if (moveNoDiff != 0)
-            {
-                return moveNoDiff;
-            }
-            else
-            {
-                if (this.BookmarkWrapper.Node.ColorToMove == PieceColor.Black)
-                {
-                    return -1;
-                }
-                else
-                {
-                    return 1;
-                }
-            }
         }
 
         /// <summary>

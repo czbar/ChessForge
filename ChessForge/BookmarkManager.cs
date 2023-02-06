@@ -75,7 +75,11 @@ namespace ChessForge
                 bv.SetOpacity(0.5);
             }
             _mainWin.UiGridBookmarks.RowDefinitions[0].Height = GridLength.Auto;
-            _mainWin.UiCnvPaging.Visibility = Visibility.Collapsed;
+            
+//            _mainWin.UiCnvPaging.Visibility = Visibility.Collapsed;
+            _mainWin.UiLblBookmarkPage.Visibility = Visibility.Collapsed;
+            _mainWin.UiImgLeftArrow.Visibility = Visibility.Collapsed;
+            _mainWin.UiImgRightArrow.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -115,6 +119,8 @@ namespace ChessForge
                     }
                 }
             }
+
+            SortBookmarks();
         }
 
         /// <summary>
@@ -124,7 +130,7 @@ namespace ChessForge
         {
             get
             {
-                int bm_count = BookmarkGuiList.Count;
+                int bm_count = BookmarkList.Count;
                 if (bm_count <= BOOKMARKS_PER_PAGE)
                 {
                     return 1;
@@ -432,16 +438,20 @@ namespace ChessForge
         /// </summary>
         private static void ShowPageControls()
         {
-            int bm_count = _mainWin.ActiveVariationTree.Bookmarks.Count;
+            int bm_count = BookmarkList.Count;
             if (bm_count <= BOOKMARKS_PER_PAGE)
             {
-                _mainWin.UiGridBookmarks.RowDefinitions[0].Height = new GridLength(0);
-                _mainWin.UiCnvPaging.Visibility = Visibility.Collapsed;
+                //_mainWin.UiGridBookmarks.RowDefinitions[0].Height = new GridLength(0);
+
+                //_mainWin.UiCnvPaging.Visibility = Visibility.Collapsed;
+                _mainWin.UiLblBookmarkPage.Visibility = Visibility.Collapsed;
+                _mainWin.UiImgLeftArrow.Visibility = Visibility.Collapsed;
+                _mainWin.UiImgRightArrow.Visibility = Visibility.Collapsed;
             }
             else
             {
-                _mainWin.UiCnvPaging.Visibility = Visibility.Visible;
-                _mainWin.UiGridBookmarks.RowDefinitions[0].Height = new GridLength(20);
+                //_mainWin.UiCnvPaging.Visibility = Visibility.Visible;
+                //_mainWin.UiGridBookmarks.RowDefinitions[0].Height = new GridLength(20);
                 _mainWin.UiLblBookmarkPage.Visibility = Visibility.Visible;
                 _mainWin.UiLblBookmarkPage.Content = ResourceUtils.GetCounterBarText("Page", _currentPage - 1, _maxPage);
                 if (_currentPage == 1)
