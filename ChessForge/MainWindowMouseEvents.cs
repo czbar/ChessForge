@@ -692,7 +692,7 @@ namespace ChessForge
                 return;
             }
 
-            if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && ActiveVariationTree != null)
+            if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW) // && ActiveVariationTree != null)
             {
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
                 UiImgEngineOff.Visibility = Visibility.Collapsed;
@@ -852,8 +852,9 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabChapters_GotFocus(object sender, RoutedEventArgs e)
         {
-            UiImgEngineOn.IsEnabled = false;
-            UiImgEngineOff.IsEnabled = false;
+            //UiImgEngineOn.IsEnabled = false;
+            //UiImgEngineOff.IsEnabled = false;
+            EngineMessageProcessor.StopEngineEvaluation();
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.CHAPTERS;
@@ -941,6 +942,7 @@ namespace ChessForge
                     return;
                 }
                 SetStudyStateOnFocus();
+                BookmarkManager.BuildBookmarkList(WorkbookManager.SessionWorkbook.ActiveChapter);
             }
             catch
             {
