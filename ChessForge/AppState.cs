@@ -533,7 +533,6 @@ namespace ChessForge
                 _mainWin.ResetEvaluationProgressBae();
 
                 EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
                 _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
                 _mainWin.MainChessBoard.FlipBoard(PieceColor.White);
@@ -1338,14 +1337,7 @@ namespace ChessForge
                  else
                  {
                      _mainWin.UiImgEngineOn.Visibility = Visibility.Collapsed;
-                     if (LearningMode.CurrentMode == LearningMode.Mode.IDLE)
-                     {
-                         _mainWin.UiImgEngineOff.Visibility = Visibility.Collapsed;
-                     }
-                     else
-                     {
-                         _mainWin.UiImgEngineOff.Visibility = Visibility.Visible;
-                     }
+                     _mainWin.UiImgEngineOff.Visibility = Visibility.Visible;
 
                      _mainWin.UiMnciEvalLine.IsEnabled = true;
                      _mainWin.UiMnciEvalPos.IsEnabled = true;
