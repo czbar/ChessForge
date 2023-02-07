@@ -409,7 +409,7 @@ namespace ChessForge
             imgChessBoard.Margin = new Thickness(5, 5, 5, 5);
             imgChessBoard.Source = ChessBoards.ChessBoardGreySmall;
 
-            _exercisePassiveChessBoard = new ChessBoardSmall(canvas, imgChessBoard, null, false, false);
+            _exercisePassiveChessBoard = new ChessBoardSmall(canvas, imgChessBoard, null, null, false, false);
             _exercisePassiveChessBoard.DisplayPosition(_mainVariationTree.Nodes[0], false);
             AlignExerciseAndMainBoards();
 
