@@ -455,13 +455,13 @@ O-O {[%eval 0.39]}  b4 {[%eval 0.86]}  15. axb4 {[%eval 0.0]}  axb4 {[%eval
 0.39]}  Qb6 {[%eval 0.45]}  20. Rab1 {[%eval -0.04]}  Rfc8 {[%eval 0.31]}  21. 
 Qe1 {[%eval 0.11]}  Qd8 {[%eval 0.43]}  22. Ra1 {[%eval 0.24]}  Bb5 {[%eval 
 0.37]}  23. Ba4 {[%eval 0.0]}  Bxa4 {[%eval 0.0]}  24. Rxa4 {[%eval 0.0]}  bxc3 
-{[%eval 0.0]}  25. bxc3 {[%eval 0.0]}  Nb3 {[%eval 0.0]}  26. Rxa8 {[%eval 0.0]} 
- Rxa8 {[%eval -0.17]}  27. Rb1 {[%eval -0.16]}  Nxd2 {[%eval -0.1]}  28. Qxd2 
-{[%eval 0.0]}  Qa5 {[%eval 0.0]}  29. Qe1 {[%eval 0.0]}  Qa2 {[%eval 0.0]}  30. 
-Be5 {[%eval 0.0]}  f5 {[%eval 0.24]}  31. Nc5 {[%eval 0.0]}  Nxc3 {[%eval 0.0]}  
-32. Rb7 {[%eval 0.0]}  Qa1 {[%eval 0.0]}  33. Qxa1 {[%eval 0.0]}  Rxa1+ {[%eval 
-0.0]}  34. Kh2 {[%eval 0.0]}  Nd5 {[%eval 0.0]}  35. Nxe6 {[%eval 0.0]}  c3 
-{[%eval 0.0]}  36. Nc7 {[%eval -1.0]}  Nb4 {[%eval -1.12]}  37. Nb5 {[%eval 
+{[%eval 0.0]}  25. bxc3 {[%eval 0.0]}  Nb3 {[%eval 0.0]}  26. Rxa8 {[%bkm][%eval 
+0.0]}  Rxa8 {[%eval -0.17]}  27. Rb1 {[%eval -0.16]}  Nxd2 {[%eval -0.1]}  28. 
+Qxd2 {[%eval 0.0]}  Qa5 {[%eval 0.0]}  29. Qe1 {[%eval 0.0]}  Qa2 {[%eval 0.0]}  
+30. Be5 {[%eval 0.0]}  f5 {[%eval 0.24]}  31. Nc5 {[%eval 0.0]}  Nxc3 {[%eval 
+0.0]}  32. Rb7 {[%eval 0.0]}  Qa1 {[%eval 0.0]}  33. Qxa1 {[%eval 0.0]}  Rxa1+ 
+{[%eval 0.0]}  34. Kh2 {[%eval 0.0]}  Nd5 {[%eval 0.0]}  35. Nxe6 {[%eval 0.0]}  
+c3 {[%eval 0.0]}  36. Nc7 {[%eval -1.0]}  Nb4 {[%eval -1.12]}  37. Nb5 {[%eval 
 -1.1]}  c2 {[%eval -1.13]}  38. Rxe7 {[%eval -1.13]}  Kf8 {[%eval -1.45]}  39. 
 Bd6 {[%eval -1.64]}  c1=Q {[%eval -1.84]}  40. Rc7+ {[%eval -2.02]}  Kg8 {[%eval 
 -1.89]}  0-1
@@ -478,8 +478,8 @@ Bd6 {[%eval -1.64]}  c1=Q {[%eval -1.84]}  40. Rc7+ {[%eval -2.02]}  Kg8 {[%eval
 [Result "*"]
 
 
- {[%eval +2.87]} 1. Bxh7+ {[%eval +2.76]}  Kxh7 {[%eval +2.85]}  2. Qh5+ {[%eval 
-+2.90]}  Kg8 {[%eval +2.81]}  3. Ne4 $1 $18 {[%eval +2.79]}  *
+ {[%eval +2.87]} 1. Bxh7+ {[%eval +2.76]}  Kxh7 {[%eval +2.85]}  2. Qh5+ 
+{[%bkm][%eval +2.90]}  Kg8 {[%eval +2.81]}  3. Ne4 $1 $18 {[%eval +2.79]}  *
 
 
 
@@ -500,7 +500,7 @@ Na6 {[%eval +0.07]}  5. e3 {[%eval 0.00]}  c6 $11 {[%eval +0.07]} ) 4... Bd6
 {[%eval +0.54]}  (4... Bb4 {[%eval -0.13]}  5. Bd3 {[%eval -0.41]}  (5. Ne2 
 {[%eval -0.23]}  O-O {[%eval -0.29]}  6. a3 {[%eval -0.24]}  Bd6 {[%eval +0.14]} 
 ) 5... c5 {[%eval -0.28]}  6. dxc5 {[%eval -0.38]}  Nbd7 $11 {[%eval -0.37]} ) 
-5. Bd3 {[%eval 0.00]}  O-O {[%eval 0.00]}  6. Nf3 {[%eval +0.07]}  c5 $11 
+5. Bd3 {[%eval 0.00]}  O-O {[%eval 0.00]}  6. Nf3 {[%bkm][%eval +0.07]}  c5 $11 
 {[%eval +0.11]}  *
 
 
