@@ -139,26 +139,34 @@ namespace EngineService
                 _engineProcess.StartInfo.RedirectStandardError = true;
                 _engineProcess.StartInfo.CreateNoWindow = true;
 
-                _engineProcess.Start();
+                bool result = true;
+                bool started = _engineProcess.Start();
 
-                _isEngineRunning = true;
+                EngineLog.Message("StartEngine returned: " + started.ToString() + "; HasExited=" + _engineProcess.HasExited.ToString());
+                if (!started && !_engineProcess.HasExited)
+                {
+                    result = false;
+                }
+                else
+                {
+                    _isEngineRunning = true;
 
-                CreateMessageRxLoopTimer();
-                StartMessageRxLoopTimer();
+                    CreateMessageRxLoopTimer();
+                    StartMessageRxLoopTimer();
 
-                _strmWriter = _engineProcess.StandardInput;
-                _strmReader = _engineProcess.StandardOutput;
+                    _strmWriter = _engineProcess.StandardInput;
+                    _strmReader = _engineProcess.StandardOutput;
 
-                WriteOut(UciCommands.ENG_UCI);
-                WriteOut(UciCommands.ENG_ISREADY);
-                WriteOut(UciCommands.ENG_UCI_NEW_GAME);
+                    WriteOut(UciCommands.ENG_UCI);
+                    WriteOut(UciCommands.ENG_ISREADY);
+                    WriteOut(UciCommands.ENG_UCI_NEW_GAME);
 
-                _currentState = State.NOT_READY;
+                    _currentState = State.NOT_READY;
 
-                EngineLog.Message("Engine running.");
+                    EngineLog.Message("Engine running.");
+                }
 
-
-                return true;
+                return result;
             }
             catch (Exception ex)
             {

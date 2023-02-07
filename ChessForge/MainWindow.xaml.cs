@@ -287,8 +287,8 @@ namespace ChessForge
             // main chess board
             MainChessBoard = new ChessBoard(true, MainCanvas, UiImgMainChessboard, null, true, true);
 
-            TrainingFloatingBoard = new ChessBoardSmall(_cnvTrainingFloat, _imgTrainingFloatingBoard, null, true, false);
-            ChaptersFloatingBoard = new ChessBoardSmall(_cnvChaptersFloat, _imgChaptersFloatingBoard, null, true, false);
+            TrainingFloatingBoard = new ChessBoardSmall(_cnvTrainingFloat, _imgTrainingFloatingBoard, null, null, true, false);
+            ChaptersFloatingBoard = new ChessBoardSmall(_cnvChaptersFloat, _imgChaptersFloatingBoard, null, null, true, false);
 
 
             BookmarkManager.InitBookmarksGui(this);
@@ -1300,7 +1300,8 @@ namespace ChessForge
 
             SetActiveLine(startLineId, startNodeId);
 
-            BookmarkManager.ShowBookmarks();
+            BookmarkManager.IsDirty = true;
+            //BookmarkManager.ShowBookmarks();
 
             int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
             SelectLineAndMoveInWorkbookViews(_studyTreeView, startLineId, nodeIndex);
@@ -1477,7 +1478,7 @@ namespace ChessForge
             {
                 WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nd.NodeId);
                 view.SelectLineAndMove(lineId, nd.NodeId);
-                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS && AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
                 {
                     EvaluateActiveLineSelectedPosition(nd);
                 }
@@ -1540,7 +1541,7 @@ namespace ChessForge
                         MainChessBoard.DisplayPosition(nd, true);
                         WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, nd);
                     }
-                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS && AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
                     {
                         EvaluateActiveLineSelectedPosition(nd);
                     }
@@ -1614,7 +1615,7 @@ namespace ChessForge
         /// </summary>
         private void EvaluateActiveLineSelectedPosition()
         {
-            if (ActiveVariationTree == null)
+            if (ActiveVariationTree == null || AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
             {
                 return;
             }
@@ -2449,6 +2450,26 @@ namespace ChessForge
             {
                 AppState.LastActiveManualReviewTab = WorkbookManager.ActiveTab;
             }
+        }
+
+        /// <summary>
+        /// The All Chapters checkbox in the Bookamrks view was checked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbAllChaptersBookmarks_Checked(object sender, RoutedEventArgs e)
+        {
+            BookmarkManager.BuildBookmarkList(null);
+        }
+
+        /// <summary>
+        /// The All Chapters checkbox in the Bookamrks view was unchecked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbAllChaptersBookmarks_Unchecked(object sender, RoutedEventArgs e)
+        {
+            BookmarkManager.BuildBookmarkList(WorkbookManager.SessionWorkbook.ActiveChapter);
         }
     }
 }

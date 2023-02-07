@@ -1647,7 +1647,7 @@ cbDoubleClickAutoReplay=Dwukrotnie kliknij w Zapisie by rozpocząć auto-odtwarz
 
 #description: Click bookmark to start training
 #english: cbClickBookmarkToTrain=Click a bookmark to start training
-cbClickBookmarkToTrain=Kliknij zakładkę by zacząć trening
+cbClickBookmarkToTrain=Kliknij zakładkę aby przejść do zapamiętanej pozycji 
 
 #description: Right click to open bookmarks menu
 #english: cbRightClickBookmarkManager=Right click to open menu for Bookmark management options
@@ -1864,3 +1864,4 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
+AllChapters=Wszystkie Rozdziały

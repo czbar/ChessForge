@@ -1007,6 +1007,9 @@ SelectReferences=Select Reference Games and/or Exercises
 #Select items
 SelectItems=Select Items
 
+#All chapters
+AllChapters=All Chapters
+
 #Show all chapters
 ShowAllChapters=Show All Chapters
 
@@ -1275,7 +1278,7 @@ cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating ex
 cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay
 
 #Click bookmark to start training
-cbClickBookmarkToTrain=Click a bookmark to start training
+cbClickBookmarkToTrain=Click a bookmark to navigate to the bookmarked psoition
 
 #Right click to open bookmarks menu
 cbRightClickBookmarkManager=Right click to open menu for Bookmark management options

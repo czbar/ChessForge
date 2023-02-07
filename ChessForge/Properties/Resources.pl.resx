@@ -984,6 +984,9 @@
   <data name="SelectItems" xml:space="preserve">
     <value>Zaznacz swój wybór</value>
   </data>
+  <data name="AllChapters" xml:space="preserve">
+    <value>Wszystkie Rozdziały</value>
+  </data>
   <data name="ShowAllChapters" xml:space="preserve">
     <value>Pokaż Wszystkie Rozdziały</value>
   </data>
@@ -1231,7 +1234,7 @@
     <value>Dwukrotnie kliknij w Zapisie by rozpocząć auto-odtwarzanie</value>
   </data>
   <data name="cbClickBookmarkToTrain" xml:space="preserve">
-    <value>Kliknij zakładkę by zacząć trening</value>
+    <value>Kliknij zakładkę aby przejść do zapamiętanej pozycji </value>
   </data>
   <data name="cbRightClickBookmarkManager" xml:space="preserve">
     <value>Naciśnij prawy przycisk by otworzyć menu zakładek</value>

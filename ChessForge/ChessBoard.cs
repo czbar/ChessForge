@@ -87,7 +87,7 @@ namespace ChessForge
         /// <summary>
         /// Image control for the board.
         /// </summary>
-        protected Image BoardImgCtrl;
+        public Image BoardImgCtrl;
 
         /// <summary>
         /// Overlay image (yellow square) for the 

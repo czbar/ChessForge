@@ -15,6 +15,12 @@ namespace ChessForge
         private const int _squareSize = 30;
 
         /// <summary>
+        /// Label showing above the "regular" lable.
+        /// It is shown in Bookmarks view to display the Chapter index.
+        /// </summary>
+        private Label _topLabel;
+
+        /// <summary>
         /// Size of an individual square in pixels
         /// </summary>
         override protected int SquareSize
@@ -74,9 +80,34 @@ namespace ChessForge
         /// <param name="labelCtrl"></param>
         /// <param name="startPos"></param>
         /// <param name="includeCoords"></param>
-        public ChessBoardSmall(Canvas cnv, Image BoardCtrl, Label labelCtrl, bool startPos, bool includeCoords)
-            : base (false, cnv, BoardCtrl, labelCtrl, startPos, includeCoords)
+        public ChessBoardSmall(Canvas cnv, Image BoardCtrl, Label labelCtrl, Label topLabel, bool startPos, bool includeCoords)
+            : base(false, cnv, BoardCtrl, labelCtrl, startPos, includeCoords)
         {
+            _topLabel = topLabel;
+        }
+
+        /// <summary>
+        /// Shows or Hides the top label
+        /// </summary>
+        /// <param name="Show"></param>
+        public void ShowTopLabel(bool show)
+        {
+            if (_topLabel != null)
+            {
+                _topLabel.Visibility = show ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            }
+        }
+
+        /// <summary>
+        /// Sets the text of the top label.
+        /// </summary>
+        /// <param name="txt"></param>
+        public void SetTopLabelText(string txt)
+        {
+            if (_topLabel != null)
+            {
+                _topLabel.Content = txt;
+            }
         }
 
         /// <summary>

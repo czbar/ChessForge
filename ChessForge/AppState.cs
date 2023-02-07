@@ -124,6 +124,34 @@ namespace ChessForge
         }
 
         /// <summary>
+        ///  Returns the index of the active article in the chapter's list 
+        ///  of articles for the type of ActiveVariationTree
+        /// </summary>
+        public static int ActiveArticleIndex
+        {
+            get
+            {
+                if (ActiveVariationTree == null || ActiveChapter == null)
+                {
+                    return -1;
+                }
+
+                GameData.ContentType contentType = ActiveVariationTree.ContentType;
+                switch (contentType)
+                {
+                    case GameData.ContentType.STUDY_TREE:
+                        return -1;
+                    case GameData.ContentType.MODEL_GAME:
+                        return ActiveChapter.ActiveModelGameIndex;
+                    case GameData.ContentType.EXERCISE:
+                        return ActiveChapter.ActiveExerciseIndex;
+                    default:
+                        return -1;
+                }
+            }
+        }
+
+        /// <summary>
         /// Session Id of the Active Tree
         /// </summary>
         public static int ActiveTreeId
@@ -505,7 +533,6 @@ namespace ChessForge
                 _mainWin.ResetEvaluationProgressBae();
 
                 EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
 
                 _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
                 _mainWin.MainChessBoard.FlipBoard(PieceColor.White);
@@ -828,20 +855,8 @@ namespace ChessForge
                         MenuItem menuItem = item as MenuItem;
                         switch (menuItem.Name)
                         {
-                            case "_mnWorkbookSelectAsBookmark":
+                            case "UiMnMarkBookmark":
                                 menuItem.IsEnabled = isEnabled;
-                                break;
-                            case "_mnWorkbookBookmarkAlternatives":
-                                if (tree != null && tree.NodeHasSiblings(lastClickedNodeId))
-                                {
-                                    menuItem.Visibility = Visibility.Visible;
-                                    menuItem.IsEnabled = isEnabled;
-                                }
-                                else
-                                {
-                                    menuItem.Visibility = Visibility.Collapsed;
-                                    menuItem.IsEnabled = false;
-                                }
                                 break;
                             case "_mnWorkbookEvalMove":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
@@ -1200,7 +1215,6 @@ namespace ChessForge
                 {
                     case LearningMode.Mode.MANUAL_REVIEW:
                         ConfigureMenusForManualReview();
-                        _mainWin.UiMnciStartTraining.Visibility = Visibility.Visible;
                         _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Visible;
                         _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
@@ -1220,7 +1234,6 @@ namespace ChessForge
                         _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Collapsed;
                         break;
                     case LearningMode.Mode.TRAINING:
-                        _mainWin.UiMnciStartTraining.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciRestartTraining.Visibility = Visibility.Visible;
                         _mainWin.UiMnciExitTraining.Visibility = Visibility.Visible;
@@ -1242,7 +1255,6 @@ namespace ChessForge
                     case LearningMode.Mode.ENGINE_GAME:
                         if (TrainingSession.IsTrainingInProgress)
                         {
-                            _mainWin.UiMnciStartTraining.Visibility = Visibility.Collapsed;
                             _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
                             _mainWin.UiMnciRestartTraining.Visibility = Visibility.Visible;
                             _mainWin.UiMnciExitTraining.Visibility = Visibility.Visible;
@@ -1253,7 +1265,6 @@ namespace ChessForge
                         }
                         else
                         {
-                            _mainWin.UiMnciStartTraining.Visibility = Visibility.Visible;
                             _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
                             _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
                             _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
@@ -1282,8 +1293,6 @@ namespace ChessForge
                     (wb.ActiveContentType == GameData.ContentType.MODEL_GAME
                     || wb.ActiveContentType == GameData.ContentType.EXERCISE))
                 {
-                    _mainWin.UiMnciStartTraining.Visibility = Visibility.Collapsed;
-                    _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
                     _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
                     _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
                     _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Collapsed;
@@ -1328,14 +1337,7 @@ namespace ChessForge
                  else
                  {
                      _mainWin.UiImgEngineOn.Visibility = Visibility.Collapsed;
-                     if (LearningMode.CurrentMode == LearningMode.Mode.IDLE)
-                     {
-                         _mainWin.UiImgEngineOff.Visibility = Visibility.Collapsed;
-                     }
-                     else
-                     {
-                         _mainWin.UiImgEngineOff.Visibility = Visibility.Visible;
-                     }
+                     _mainWin.UiImgEngineOff.Visibility = Visibility.Visible;
 
                      _mainWin.UiMnciEvalLine.IsEnabled = true;
                      _mainWin.UiMnciEvalPos.IsEnabled = true;

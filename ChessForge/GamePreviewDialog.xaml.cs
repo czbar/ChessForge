@@ -86,7 +86,7 @@ namespace ChessForge
             _currentGameId = gameId;
 
             ShowControls(false, false);
-            _chessBoard = new ChessBoardSmall(UiCnvBoard, UiImgChessBoard, null, false, false);
+            _chessBoard = new ChessBoardSmall(UiCnvBoard, UiImgChessBoard, null, null, false, false);
             _animator = new MoveAnimator(_chessBoard);
 
             _animationSpeed = _slowAnimation;

@@ -8,38 +8,34 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using GameTree;
 using ChessForge.Properties;
+using System.Windows.Media.Imaging;
 
 namespace ChessForge
 {
     /// <summary>
-    /// Manages training bookmarks.
-    /// The WorkbookTree keeps the Bookmark data objects.
-    /// This class mainatins a list of BOOKMARKS_PER_PAGE (9) BookmarkView objects 
-    /// that contain
-    /// references to the relevant GUI controls
+    /// Manages bookmarks from the Study, Games and Exercises.
+    /// Each VariationTree holds its the Bookmark objects in its Bookmarks list property.
+    /// 
+    /// This class maintains a list of BOOKMARKS_PER_PAGE (9) BookmarkView objects 
+    /// that contain references to the relevant GUI controls
     /// and can show position from the Bookmark objects.
     /// </summary>
     public class BookmarkManager
     {
         /// <summary>
-        /// The page currently shown in the GUI.
-        /// The first page has number 1 (not 0).
+        /// Indicates whether Bookmarks need to be rebuilt
         /// </summary>
-        private static int _currentPage = 1;
+        public static bool IsDirty = true;
 
         /// <summary>
-        /// The number of Bookmark pages.
+        /// The list of bookmarks shown in the GUI.
         /// </summary>
-        private static int _maxPage
-        {
-            get {
-                int bm_count = _mainWin.ActiveVariationTree.Bookmarks.Count;
-                if (bm_count <= BOOKMARKS_PER_PAGE)
-                    return 1;
-                else
-                    return (bm_count - 1) / BOOKMARKS_PER_PAGE + 1;
-                }
-        }
+        public static List<BookmarkView> BookmarkGuiList = new List<BookmarkView>();
+
+        /// <summary>
+        /// List of all bookmarks in the chapter
+        /// </summary>
+        public static List<BookmarkWrapper> BookmarkList = new List<BookmarkWrapper>();
 
         /// <summary>
         /// Max number of bookmarks that can be shown in the GUI.
@@ -55,19 +51,172 @@ namespace ChessForge
         public static int ClickedIndex = -1;
 
         /// <summary>
-        /// The list of bookmarks.
+        /// The page currently shown in the GUI.
+        /// The first page has number 1 (not 0).
         /// </summary>
-        public static List<BookmarkView> Bookmarks = new List<BookmarkView>();
+        private static int _currentPage = 1;
 
-        /// <summary>
-        /// Index in the list of bookmarks of the bookmark currently being
-        /// active in a training session.
-        /// Precisely one bookmark can be active during a session. 
-        /// </summary>
-        public static int ActiveBookmarkInTraining = -1;
+        // last added bookmark
+        private static Bookmark _lastAddedBookmark;
 
         // main application window
         private static MainWindow _mainWin;
+
+        // Chapter for which this view was built, if null, the bookmarks are from all chapters
+        private static Chapter _parentChapter;
+
+        /// <summary>
+        /// Resets the bookmark list and all Bookmark chessboards in the Bookmark view.
+        /// </summary>
+        public static void ClearBookmarksGui()
+        {
+            BookmarkList.Clear();
+
+            foreach (BookmarkView bv in BookmarkGuiList)
+            {
+                bv.Deactivate();
+                bv.SetOpacity(0.5);
+            }
+            //_mainWin.UiGridBookmarks.RowDefinitions[0].Height = GridLength.Auto;
+
+            //            _mainWin.UiCnvPaging.Visibility = Visibility.Collapsed;
+            _mainWin.UiLblBookmarkPage.Visibility = Visibility.Collapsed;
+            _mainWin.UiImgLeftArrow.Visibility = Visibility.Collapsed;
+            _mainWin.UiImgRightArrow.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Rebuilds the list of bookmarks for the current chapter
+        /// </summary>
+        public static void BuildBookmarkList(Chapter chapter)
+        {
+            if (_mainWin.UiCbAllChaptersBookmarks.IsChecked == true)
+            {
+                _parentChapter = null;
+            }
+            else
+            {
+                _parentChapter = chapter;
+            }
+            _currentPage = 1;
+
+            BookmarkList.Clear();
+            if (_parentChapter != null)
+            {
+                BuildBookmarkListForChapter(_parentChapter);
+            }
+            else
+            {
+                foreach (Chapter ch in WorkbookManager.SessionWorkbook.Chapters)
+                {
+                    BuildBookmarkListForChapter(ch);
+                }
+            }
+
+            SortBookmarks();
+
+            _lastAddedBookmark = null;
+        }
+
+        /// <summary>
+        /// Sets the Last Added Bookmark object.
+        /// It will be used to select the Bookmarks page to open.
+        /// </summary>
+        /// <param name="bm"></param>
+        public static void SetLastAddedBookmark(Bookmark bm)
+        {
+            _lastAddedBookmark = bm;
+        }
+
+        /// <summary>
+        /// Finds the page with the _lastAddedBookmark
+        /// </summary>
+        /// <returns></returns>
+        private static int PageForLastAddedBookmark()
+        {
+            int pageNo = 0;
+
+            if (_lastAddedBookmark == null)
+            {
+                return 0;
+            }
+            else
+            {
+                for (int i = 0; i < BookmarkList.Count; i++)
+                {
+                    if (BookmarkList[i].Bookmark == _lastAddedBookmark)
+                    {
+                        pageNo = GetPageNoFromIndex(i);
+                    }
+                }
+            }
+
+            return pageNo;
+        }
+
+        /// <summary>
+        /// Builds a list of bookmarks for a single chapter.
+        /// </summary>
+        /// <param name="chapter"></param>
+        private static void BuildBookmarkListForChapter(Chapter chapter)
+        {
+            int chapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(chapter);
+
+            foreach (Bookmark bkm in chapter.StudyTree.Tree.Bookmarks)
+            {
+                BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, chapter.StudyTree.Tree, bkm, -1);
+                BookmarkList.Add(bkv);
+            }
+
+            for (int i = 0; i < chapter.GetModelGameCount(); i++)
+            {
+                Article art = chapter.ModelGames[i];
+                foreach (Bookmark bkm in art.Tree.Bookmarks)
+                {
+                    BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, art.Tree, bkm, i);
+                    BookmarkList.Add(bkv);
+                }
+            }
+
+            for (int i = 0; i < chapter.GetExerciseCount(); i++)
+            {
+                Article art = chapter.Exercises[i];
+                foreach (Bookmark bkm in art.Tree.Bookmarks)
+                {
+                    BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, art.Tree, bkm, i);
+                    BookmarkList.Add(bkv);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The number of Bookmark pages.
+        /// </summary>
+        private static int _maxPage
+        {
+            get
+            {
+                int bm_count = BookmarkList.Count;
+                if (bm_count <= BOOKMARKS_PER_PAGE)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return (bm_count - 1) / BOOKMARKS_PER_PAGE + 1;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets page number for a given index in the Bookmark List.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private static int GetPageNoFromIndex(int index)
+        {
+            return (index / BOOKMARKS_PER_PAGE) + 1;
+        }
 
         /// <summary>
         /// Resets or recreates all the bookmarks.
@@ -77,142 +226,78 @@ namespace ChessForge
         {
             _mainWin = mainWin;
 
-            Bookmarks.Clear();
+            BookmarkGuiList.Clear();
 
-            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_1, _mainWin.UiImgBookmark_1, _mainWin.UiLblBookmark_1, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_2, _mainWin.UiImgBookmark_2, _mainWin.UiLblBookmark_2, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_3, _mainWin.UiImgBookmark_3, _mainWin.UiLblBookmark_3, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_4, _mainWin.UiImgBookmark_4, _mainWin.UiLblBookmark_4, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_5, _mainWin.UiImgBookmark_5, _mainWin.UiLblBookmark_5, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_6, _mainWin.UiImgBookmark_6, _mainWin.UiLblBookmark_6, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_7, _mainWin.UiImgBookmark_7, _mainWin.UiLblBookmark_7, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_8, _mainWin.UiImgBookmark_8, _mainWin.UiLblBookmark_8, false, false)));
-            Bookmarks.Add(new BookmarkView(new ChessBoard(false, _mainWin.UiCnvBookmark_9, _mainWin.UiImgBookmark_9, _mainWin.UiLblBookmark_9, false, false)));
+            BookmarkGuiList.Add(new BookmarkView(new ChessBoardSmall(_mainWin.UiCnvBookmark_1, _mainWin.UiImgBookmark_1, _mainWin.UiLblBookmark_1, _mainWin.UiLblChapter_1, false, false)));
+            BookmarkGuiList.Add(new BookmarkView(new ChessBoardSmall(_mainWin.UiCnvBookmark_2, _mainWin.UiImgBookmark_2, _mainWin.UiLblBookmark_2, _mainWin.UiLblChapter_2, false, false)));
+            BookmarkGuiList.Add(new BookmarkView(new ChessBoardSmall(_mainWin.UiCnvBookmark_3, _mainWin.UiImgBookmark_3, _mainWin.UiLblBookmark_3, _mainWin.UiLblChapter_3, false, false)));
+            BookmarkGuiList.Add(new BookmarkView(new ChessBoardSmall(_mainWin.UiCnvBookmark_4, _mainWin.UiImgBookmark_4, _mainWin.UiLblBookmark_4, _mainWin.UiLblChapter_4, false, false)));
+            BookmarkGuiList.Add(new BookmarkView(new ChessBoardSmall(_mainWin.UiCnvBookmark_5, _mainWin.UiImgBookmark_5, _mainWin.UiLblBookmark_5, _mainWin.UiLblChapter_5, false, false)));
+            BookmarkGuiList.Add(new BookmarkView(new ChessBoardSmall(_mainWin.UiCnvBookmark_6, _mainWin.UiImgBookmark_6, _mainWin.UiLblBookmark_6, _mainWin.UiLblChapter_6, false, false)));
+            BookmarkGuiList.Add(new BookmarkView(new ChessBoardSmall(_mainWin.UiCnvBookmark_7, _mainWin.UiImgBookmark_7, _mainWin.UiLblBookmark_7, _mainWin.UiLblChapter_7, false, false)));
+            BookmarkGuiList.Add(new BookmarkView(new ChessBoardSmall(_mainWin.UiCnvBookmark_8, _mainWin.UiImgBookmark_8, _mainWin.UiLblBookmark_8, _mainWin.UiLblChapter_8, false, false)));
+            BookmarkGuiList.Add(new BookmarkView(new ChessBoardSmall(_mainWin.UiCnvBookmark_9, _mainWin.UiImgBookmark_9, _mainWin.UiLblBookmark_9, _mainWin.UiLblChapter_9, false, false)));
         }
 
         /// <summary>
-        /// Initializes the GUI for the bookmarks.
-        /// Only BOOKMARKS_PER_PAGE bookmarks can be shown at most.
-        /// </summary>
-        public static void ShowBookmarks()
-        {
-            SortBookmarks();
-
-            for (int i = 0; i < _mainWin.ActiveVariationTree.Bookmarks.Count; i++)
-            {
-                if (i >= Bookmarks.Count)
-                    break;
-
-                Bookmarks[i].BookmarkData = _mainWin.ActiveVariationTree.Bookmarks[i];
-                Bookmarks[i].Activate();
-            }
-        }
-
-        /// <summary>
-        /// Sorts bookmarks by round numbers and then
-        /// color-to-move.
+        /// Sorts bookmarks by move number and then color-to-move.
         /// This method should be called after initialization
         /// and any subsequents addition.
         /// </summary>
         public static void SortBookmarks()
         {
-            _mainWin.ActiveVariationTree.Bookmarks.Sort();
+            BookmarkList.Sort();
+
+            int lastBmPage = PageForLastAddedBookmark();
+            if (lastBmPage > 0)
+            {
+                _currentPage = lastBmPage;
+            }
+
             ResyncBookmarks(_currentPage);
         }
 
         /// <summary>
-        /// resets all bookmark chessboards in the Bookmark view.
-        /// </summary>
-        public static void ClearBookmarksGui()
-        {
-            foreach (BookmarkView bv in Bookmarks)
-            {
-                bv.Deactivate();
-                bv.SetOpacity(0.5);
-            }
-            _mainWin.UiGridBookmarks.RowDefinitions[0].Height = GridLength.Auto;
-            _mainWin.UiCnvPaging.Visibility = Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// Checks if the passed nodeId has already
-        /// been bookmarked.
-        /// </summary>
-        /// <param name="nodeId">Id of the node to check.</param>
-        /// <returns></returns>
-        public static bool IsBookmarked(int nodeId)
-        {
-            return (_mainWin.ActiveVariationTree.IsBookmarked(nodeId));
-        }
-
-        /// <summary>
         /// Adds a bookmark to the list of bookmarks.
         /// Sorts the bookmarks and updates the GUI.
         /// </summary>
-        /// <returns>0 on success, 1 if already exists, -1 on failure</returns>
-        public static int AddBookmark(TreeNode nd)
+        /// <returns>newly created bookmark on success or null if operation failed</returns>
+        public static Bookmark AddBookmark(VariationTree tree, TreeNode nd, int articleIndex)
         {
-            if (nd != null)
+            Bookmark bm = null;
+
+            if (tree != null && nd != null)
             {
                 //add to the list in the Workbook
-                if (_mainWin.ActiveVariationTree.AddBookmark(nd, true) == 0)
+                bm = tree.AddBookmark(nd, true);
+                if (bm != null)
                 {
+                    BookmarkWrapper bmv = new BookmarkWrapper(WorkbookManager.SessionWorkbook.ActiveChapterIndex, tree, bm, articleIndex);
+                    BookmarkList.Add(bmv);
                     SortBookmarks();
                     ResyncBookmarks(_currentPage);
                     AppState.IsDirty = true;
-                    return 0;
-                }
-                else
-                {
-                    return 1;
                 }
             }
-            else
-            {
-                return -1;
-            }
+
+            return bm;
         }
 
         /// <summary>
         /// Adds a bookmark to the list of bookmarks.
-        /// Sorts the bookmarks and updates the GUI.
         /// </summary>
-        /// <returns>0 on success, 1 if already exists, -1 on failure</returns>
-        public static int AddBookmark(int nodeId)
+        /// <returns>newly created bookmark or null if the operation failed</returns>
+        public static Bookmark AddBookmark(VariationTree tree, int nodeId, int index)
         {
-            TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
-            return AddBookmark(nd);
-        }
-
-        /// <summary>
-        /// Adds the node and all its siblings to the list of bookmarks.
-        /// </summary>
-        /// <param name="nodeId"></param>
-        /// <returns>0 on success, 1 if ALL bookmarks already exists, -1 on failure</returns>
-        public static int AddAllSiblingsToBookmarks(int nodeId)
-        {
-            int res = 1;
-
-            TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
-
-            TreeNode parent = nd.Parent;
-            if (parent != null)
+            TreeNode nd = tree.GetNodeFromNodeId(nodeId);
+            if (nd != null)
             {
-                foreach (TreeNode sib in parent.Children)
-                {
-                    int ret = AddBookmark(sib.NodeId);
-                    if (ret == 0)
-                    {
-                        res = 0;
-                    }
-                    else if (ret == -1 && res != 0)
-                    {
-                        res = -1;
-                    }
-                }
+                return AddBookmark(tree, nd, index);
             }
-
-            return res;
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -220,15 +305,18 @@ namespace ChessForge
         /// </summary>
         public static void DeleteBookmark()
         {
-            if (ClickedIndex < 0 || ClickedIndex >= Bookmarks.Count)
+            if (ClickedIndex < 0 || ClickedIndex >= BookmarkGuiList.Count)
             {
                 return;
             }
 
-            TreeNode nd = Bookmarks[ClickedIndex].BookmarkData.Node;
+            BookmarkWrapper bmv = BookmarkGuiList[ClickedIndex].BookmarkWrapper;
+            TreeNode nd = bmv.Bookmark.Node;
+            VariationTree tree = bmv.Tree;
             if (nd != null)
             {
-                _mainWin.ActiveVariationTree.DeleteBookmark(nd);
+                tree.DeleteBookmark(nd);
+                BookmarkList.Remove(bmv);
                 if (_currentPage > _maxPage)
                 {
                     _currentPage = _maxPage;
@@ -243,7 +331,7 @@ namespace ChessForge
         /// </summary>
         public static void DeleteAllBookmarks(bool askUser = true)
         {
-            if (askUser && _mainWin.ActiveVariationTree.Bookmarks.Count > 0)
+            if (askUser && BookmarkList.Count > 0)
             {
                 if (MessageBox.Show(Strings.GetResource("ConfirmDeleteAllBookmarks")
                     , Strings.GetResource("Bookmarks"), MessageBoxButton.YesNo) != MessageBoxResult.Yes)
@@ -252,15 +340,17 @@ namespace ChessForge
                 }
             }
 
-            foreach (BookmarkView bm in Bookmarks)
+            foreach (BookmarkWrapper bm in BookmarkList)
             {
-                if (bm.BookmarkData != null && bm.BookmarkData.Node != null)
+                if (bm.Bookmark != null && bm.Bookmark.Node != null)
                 {
-                    _mainWin.ActiveVariationTree.DeleteBookmark(bm.BookmarkData.Node);
-                    bm.BookmarkData.Node.IsBookmark = false;
-                    bm.BookmarkData = null;
+                    bm.Tree.DeleteBookmark(bm.Bookmark.Node);
+                    bm.Bookmark.Node.IsBookmark = false;
+                    bm.Bookmark = null;
                 }
             }
+
+            BookmarkList.Clear();
 
             ClearBookmarksGui();
             AppState.IsDirty = true;
@@ -324,32 +414,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Generate bookmarks automatically.
-        /// This option should only be available from the menus if there are currently no
-        /// bookmarks.
-        /// But we will handle the situtation if this condition somehow is not met.
-        /// </summary>
-        public static void GenerateBookmarks()
-        {
-            if (_mainWin.ActiveVariationTree.Bookmarks.Count > 0)
-            {
-                if (MessageBox.Show(Strings.GetResource("GeneratedBookmarksReplace")
-                    , Strings.GetResource("Bookmarks"), MessageBoxButton.YesNo) != MessageBoxResult.Yes)
-                {
-                    return;
-                }
-            }
-
-            DeleteAllBookmarks(false);
-            if (WorkbookManager.SessionWorkbook != null)
-            {
-                _mainWin.ActiveVariationTree.GenerateBookmarks(WorkbookManager.SessionWorkbook.TrainingSideConfig);
-            }
-            _mainWin.UiTabBookmarks.Focus();
-            ShowBookmarks();
-        }
-
-        /// <summary>
         /// Manages state of the Bookmark context menu.
         /// The isEnabled argument is true if the user's last click
         /// was on a bookmark rather than elsewhere in the view.
@@ -389,10 +453,10 @@ namespace ChessForge
                             menuItem.IsEnabled = isEnabled;
                             break;
                         case "_mnDeleteAllBookmarks":
-                            menuItem.IsEnabled = _mainWin.ActiveVariationTree.Bookmarks.Count > 0;
+                            menuItem.IsEnabled = BookmarkList.Count > 0;
                             break;
                         case "_mnGenerateBookmark":
-                            menuItem.Visibility = _mainWin.ActiveVariationTree.Bookmarks.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+                            menuItem.Visibility = BookmarkList.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
                             break;
                     }
                 }
@@ -405,7 +469,7 @@ namespace ChessForge
         /// </summary>
         public static void ResyncBookmarks(int pageNo)
         {
-            int count = _mainWin.ActiveVariationTree.Bookmarks.Count;
+            int count = BookmarkList.Count;
 
             int start = (pageNo - 1) * BOOKMARKS_PER_PAGE;
             int end = pageNo * BOOKMARKS_PER_PAGE - 1;
@@ -414,13 +478,36 @@ namespace ChessForge
             {
                 if (i < count)
                 {
-                    Bookmarks[i - start].BookmarkData = _mainWin.ActiveVariationTree.Bookmarks[i];
-                    Bookmarks[i - start].Activate();
+                    GameData.ContentType contetType = BookmarkList[i].ContentType;
+
+                    BookmarkGuiList[i - start].BookmarkWrapper = BookmarkList[i];
+
+                    BookmarkGuiList[i - start].Activate();
+
+                    BitmapImage imgBoard;
+
+                    switch (contetType)
+                    {
+                        case GameData.ContentType.STUDY_TREE:
+                            imgBoard = ChessBoards.ChessBoardBlueSmall;
+                            break;
+                        case GameData.ContentType.MODEL_GAME:
+                            imgBoard = ChessBoards.ChessBoardBrownShadesSmall;
+                            break;
+                        case GameData.ContentType.EXERCISE:
+                            imgBoard = ChessBoards.ChessBoardPaleBlue;
+                            break;
+                        default:
+                            imgBoard = ChessBoards.ChessBoardGreySmall;
+                            break;
+                    }
+
+                    BookmarkGuiList[i - start].ChessBoard.BoardImgCtrl.Source = imgBoard;
                 }
                 else
                 {
-                    Bookmarks[i - start].BookmarkData = null;
-                    Bookmarks[i - start].Deactivate();
+                    BookmarkGuiList[i - start].BookmarkWrapper = null;
+                    BookmarkGuiList[i - start].Deactivate();
                 }
             }
 
@@ -434,18 +521,21 @@ namespace ChessForge
         /// </summary>
         private static void ShowPageControls()
         {
-            int bm_count = _mainWin.ActiveVariationTree.Bookmarks.Count;
+            string barText = ResourceUtils.GetCounterBarText("Page", _currentPage - 1, _maxPage);
+            _mainWin.UiLblBookmarkPage.Content = barText;
+
+            int bm_count = BookmarkList.Count;
             if (bm_count <= BOOKMARKS_PER_PAGE)
             {
-                _mainWin.UiGridBookmarks.RowDefinitions[0].Height = new GridLength(0);
-                _mainWin.UiCnvPaging.Visibility = Visibility.Collapsed;
+                _mainWin.UiLblBookmarkPage.Visibility = bm_count > 0 ? Visibility.Visible : Visibility.Collapsed;
+                _mainWin.UiImgLeftArrow.Visibility = Visibility.Collapsed;
+                _mainWin.UiImgRightArrow.Visibility = Visibility.Collapsed;
             }
             else
             {
-                _mainWin.UiCnvPaging.Visibility = Visibility.Visible;
-                _mainWin.UiGridBookmarks.RowDefinitions[0].Height = new GridLength(20);
+                //_mainWin.UiCnvPaging.Visibility = Visibility.Visible;
+                //_mainWin.UiGridBookmarks.RowDefinitions[0].Height = new GridLength(20);
                 _mainWin.UiLblBookmarkPage.Visibility = Visibility.Visible;
-                _mainWin.UiLblBookmarkPage.Content = ResourceUtils.GetCounterBarText("Page", _currentPage-1, _maxPage);
                 if (_currentPage == 1)
                 {
                     _mainWin.UiImgRightArrow.Visibility = Visibility.Visible;

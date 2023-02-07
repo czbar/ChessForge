@@ -1,0 +1,1111 @@
+[ChessForgeWorkbook "Anti-London"]
+[WorkbookVersion "1.0"]
+[Guid "99fd214e-e421-4d4d-a4a9-63b1948b6fab"]
+[TrainingSide "Black"]
+[StudyBoardOrientation "Black"]
+[GameBoardOrientation "Black"]
+[ExerciseBoardOrientation "None"]
+[White "CHESS FORGE"]
+[Black "WORKBOOK"]
+[Result "*"]
+
+*
+
+[ChapterId "1"]
+[ChapterTitle "Introduction"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Introduction"]
+
+
+ {[%eval +0.35]} 1. d4 {The London System is defined by the move 1.d4 followed 
+by bishop to f4. It may occur on on White’s second move or on the third, after 
+2.Nf3.  Black needs to be aware of nuances in the move order so that he does not 
+end up in the unfamiliar type of position.. }  d5 (1... Nf6 2. Nf3 {[%eval 
++0.25]}  (2. Bf4 c5 $5 {Leads to an interesting play and is discussed in a later 
+chapter.} ) 2... c5 {Here, c7-c5 is not recommended for Black as White does not 
+to have a pawn on c4 which is favorable for White in Benoni like structures.} ) 
+2. Bf4 *
+
+
+
+[ChapterId "2"]
+[ChapterTitle "Fianchetto with Nc3: 1.d4 Nf6 2.Bf4 g6 3.Nc3"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Fianchetto with Nc3: 1.d4 Nf6 2.Bf4 g6 3.Nc3"]
+
+
+ {[%eval +0.36]} 1. d4 {[%eval +0.25]}  Nf6 {[%eval +0.37]}  2. Bf4 {[%eval 
++0.13]}  g6 {[%bkm][%eval +0.39]}  3. Nc3 {[%eval 0.00]White delays Nf3 or 
+leaves it out altogether.  Black’s best response appears to be d7-d5 preventing 
+e2-e4.}  d5 {[%thmb][%eval +0.08]}  (3... Bg7 {[%eval +0.75]}  4. e4 {[%eval 
++0.60]}  d6 {[%eval +0.70]}  5. Qd2 {[%eval +0.73]}  c6 {[%eval +0.77]}  (5... 
+O-O 6. O-O-O c6 7. Bh6 b5 {[%eval +0.82]}  8. f3 $14 {[%eval +1.02]} ) 6. Bh6 
+{[%eval +0.81]}  Bxh6 {[%eval +0.75]}  7. Qxh6 {[%eval +0.71]}  Qa5 {[%eval 
++1.04]}  8. Bd3 {[%eval +0.95]}  c5 {[%eval +1.34]}  9. d5 {[%eval +1.17]}  Nbd7 
+{[%eval +0.87]}  10. Nf3 $14 {[%eval +0.44]Black's best idea here is to play 
+10…c4 followed by Qc5, aiming for Qxf2 and Ng4.}  c4 {[%eval +0.75]Followed by 
+Qc5, keeping an eye on f2 and threatening Ng4.} ) 4. Qd2 {[%eval +0.01]}  (4. 
+Nf3 {[%eval +0.04]Leads to a quiet play with equal chances.}  Bg7 {[%eval 
++0.11]}  5. e3 {[%eval 0.00]}  O-O {[%eval +0.13]}  6. Be2 {[%eval +0.03]}  c5 
+{[%eval +0.01]}  7. Ne5 {[%eval -0.10]}  (7. dxc5 {[%eval -0.30]}  Nbd7 {[%eval 
++0.06]}  (7... Qa5 $11 {[%eval +0.05]} ) 8. O-O {[%eval -0.43]}  (8. Nxd5 
+{[%eval +0.03]}  Nxd5 {[%eval +0.12]}  9. Qxd5 {[%eval +0.12]}  Bxb2 {[%eval 
+0.00]}  10. O-O {[%eval +0.08]}  (10. Rb1 {[%bkm][%eval -1.03]}  Qa5+ $15 
+{[%bkm][%eval -1.04]} ) 10... Bxa1 {[%bkm][%eval 0.00]}  11. Rxa1 $11 
+{[%bkm][%eval 0.00]} ) 8... Nxc5 $11 {[%eval -0.19]} )  (7. O-O {[%eval 0.00]}  
+cxd4 {[%eval 0.00]}  8. exd4 {[%eval 0.00]}  Nc6 {[%eval 0.00]}  9. Ne5 {[%eval 
+0.00]Transposes to the main line.} ) 7... Nc6 {[%eval +0.06]}  8. O-O {[%eval 
++0.01]}  cxd4 {[%bkm][%eval +0.10]}  9. exd4 {[%eval -0.14]}  Qb6 {[%eval 
++0.50]}  (9... Bf5 $5 {[%eval +0.09]}  10. Nxc6 {[%eval -0.18]}  bxc6 {[%eval 
+-0.03]}  11. Na4 {[%eval -0.10]}  Nd7 {[%eval -0.12]}  12. c3 {[%eval -0.26]}  
+e5 $11 {[%eval 0.00]} ) 10. Nxc6 {[%eval +0.32]}  Qxc6 $1 {[%eval +0.32]}  11. 
+Bb5 {[%eval +0.29]}  Qb6 $11 {[%eval +0.40]} ) 4... Bg7 {[%eval +0.01]}  (4... 
+c6 {[%eval +0.33]Delaying the fianchetto and waiting for White to commit.}  5. 
+f3 {[%eval +0.29]}  b5 {[%eval +0.37]}  6. a3 $11 {[%eval +0.27]} ) 5. Bh6 
+{[%eval +0.03]}  O-O {[%eval 0.00]}  (5... Bxh6 {[%eval +0.02]This is good too.} 
+ 6. Qxh6 {[%eval 0.00]}  Bf5 {[%eval +0.15]}  7. O-O-O {[%eval 0.00]}  Ng4 
+{[%eval +0.07]}  8. Qf4 {[%eval -0.21]}  (8. Qg7 {[%eval 0.00]}  Rf8 {[%eval 
+0.00]}  9. Nh3 {[%eval -0.23]}  e6 $11 {[%eval -0.17]} ) 8... Qd6 {[%eval 
+-0.04]}  9. Qf3 {[%eval -0.25]}  Nf6 {[%eval 0.00]}  10. h3 {[%eval -0.23]}  Nc6 
+{[%eval -0.15]}  11. e3 $11 {[%eval -0.32]} ) 6. Bxg7 {[%eval -0.02]}  (6. h4 $6 
+{[%eval -0.30]}  c5 {[%eval -0.30]} ) 6... Kxg7 {[%eval 0.00]}  7. O-O-O {[%eval 
++0.05]}  c5 {[%eval 0.00]}  8. e3 {[%eval -0.47]}  c4 {[%eval -0.40]The 
+strongest according to Stockfish.}  (8... Nc6 {[%eval +0.27]The most popular}  
+9. dxc5 {[%eval +0.29]}  Qa5 {[%eval +0.30]}  10. Bb5 $11 {[%eval 0.00]} ) 9. f3 
+{[%eval -0.44]}  b5 {[%eval -0.42]}  10. Nxb5 {[%eval -0.46]}  Nc6 $15 {[%eval 
+-0.54]}  *
+
+[ChapterId "2"]
+[ChapterTitle "Fianchetto with Nc3: 1.d4 Nf6 2.Bf4 g6 3.Nc3"]
+[ContentType "Model Game"]
+[Event "PRO League Pacific 2017"]
+[Guid "8eaa5f70-3d60-4f33-8e2d-8ab0569995e3"]
+[Date "2017.01.18"]
+[White "Naroditsky, D."]
+[Black "Shankland, S."]
+[Result "1/2-1/2"]
+
+
+1. d4 {[%eval 0.0]}  Nf6 {[%bkm][%eval 0.19]}  2. Bf4 {[%bkm][%eval 0.0]}  g6 
+{[%eval 0.12]}  3. Nc3 {[%bkm][%eval 0.0]}  d5 {[%bkm][%eval 0.0]}  4. Qd2 
+{[%bkm][%eval 0.0]}  Bg7 {[%eval 0.0]}  5. Bh6 {[%eval -0.09]}  O-O {[%eval 
+0.09]}  6. h4 {[%eval -0.52]}  c5 {[%eval -0.71]}  7. Bxg7 {[%eval -0.34]}  Kxg7 
+{[%eval -0.48]}  8. e3 {[%eval -0.32]}  cxd4 {[%eval -0.31]}  9. exd4 {[%eval 
+-0.28]}  h5 {[%eval -0.41]}  10. Bd3 {[%eval -0.34]}  Nc6 {[%eval -0.25]}  11. 
+Nge2 {[%eval -0.31]}  Nb4 {[%eval -0.27]}  12. Nf4 {[%eval -0.28]}  Qb6 {[%eval 
+-0.42]}  13. Nce2 {[%eval -0.4]}  Nxd3+ {[%eval -0.3]}  14. cxd3 {[%eval -0.3]}  
+Bf5 {[%eval -0.28]}  15. Ng3 {[%eval -0.51]}  e6 {[%eval -0.25]}  16. Nfe2 
+{[%eval -0.48]}  Rac8 {[%eval -0.04]}  17. O-O {[%eval 0.0]}  Rc6 {[%eval 0.0]}  
+18. Rac1 {[%eval 0.0]}  Rfc8 {[%eval 0.0]}  19. Rxc6 {[%eval 0.0]}  Rxc6 {[%eval 
+-0.2]}  20. b3 {[%eval -0.16]}  Qc7 {[%eval -0.09]}  21. Nxf5+ {[%eval -0.69]}  
+exf5 {[%eval -0.91]}  22. Rc1 {[%eval -0.78]}  Ng8 {[%eval 0.04]}  23. Rxc6 
+{[%eval 0.0]}  Qxc6 {[%eval 0.11]}  24. Nf4 {[%eval 0.0]}  Qf6 {[%eval 0.0]}  
+25. Qe3 {[%eval 0.0]}  Ne7 {[%eval 0.0]}  26. g3 {[%eval 0.0]}  Nc6 {[%eval 
+0.0]}  27. Nxd5 {[%eval 0.0]}  Qd6 {[%eval 0.0]}  28. Nf4 {[%eval 0.0]}  Nxd4 
+{[%eval 0.0]}  29. Ne2 {[%eval -0.19]}  Nxe2+ {[%eval -0.16]}  30. Qxe2 {[%eval 
+-0.09]}  f4 {[%eval -0.14]}  31. Qf3 {[%eval -0.59]}  fxg3 {[%eval -0.38]}  32. 
+fxg3 {[%eval -0.21]}  Qd4+ {[%eval -0.28]}  33. Kg2 {[%eval -0.3]}  b6 {[%eval 
+-0.07]}  34. Qe2 {[%eval -0.21]}  b5 {[%eval -0.03]}  35. Kf3 {[%eval -0.12]}  
+Qg4+ {[%eval -0.06]}  36. Kf2 {[%eval 0.0]}  Qd4+ {[%eval 0.0]}  37. Qe3 {[%eval 
+0.0]}  Qb2+ {[%eval 0.0]}  38. Qe2 {[%eval 0.0]}  Qc3 {[%eval 0.0]}  39. Kf3 
+{[%eval -0.17]}  a5 {[%eval 0.0]}  40. Qe3 {[%eval 0.0]}  Qb2 {[%eval 0.0]}  41. 
+d4 {[%eval 0.0]}  Qxa2 {[%eval 0.0]}  42. Qe5+ {[%eval 0.0]}  Kh7 {[%eval 0.0]}  
+43. Qxb5 {[%eval 0.0]}  Qc2 {[%eval 0.0]}  44. d5 {[%eval 0.0]}  Qf5+ {[%eval 
+0.0]}  45. Kg2 {[%eval 0.0]}  Qe4+ {[%eval 0.0]}  46. Kf2 {[%eval 0.0]}  Qf5+ 
+{[%eval 0.0]}  47. Kg2 {[%eval 0.0]}  Qe4+ {[%eval 0.0]}  48. Kf2 {[%eval 0.0]}  1/2-1/2
+
+[ChapterId "2"]
+[ChapterTitle "Fianchetto with Nc3: 1.d4 Nf6 2.Bf4 g6 3.Nc3"]
+[ContentType "Model Game"]
+[Event "World Blitz 2016"]
+[Guid "2c0e4d9c-ce8c-438f-9f6b-ebd42b4d2ae0"]
+[Date "2016.12.30"]
+[White "Bosiocic, Mari"]
+[Black "Korobov, A."]
+[Result "0-1"]
+
+
+1. d4 {[%eval 0.25]}  Nf6 {[%eval 0.22]}  2. Bf4 {[%eval 0.0]}  g6 {[%eval 0.0]} 
+ 3. Nc3 {[%eval 0.0]}  d5 {[%eval 0.0]}  4. Qd2 {[%eval 0.17]}  Bg7 {[%eval 
+0.0]}  5. Bh6 {[%eval 0.0]}  O-O {[%eval 0.0]}  6. h4 {[%eval -0.27]}  c5 
+{[%eval -0.22]}  7. Bxg7 {[%eval -0.31]}  Kxg7 {[%eval -0.17]}  8. e3 {[%eval 
+-0.86]}  Nc6 {[%eval 0.37]}  9. Nf3 {[%eval -0.83]}  Bg4 {[%eval -0.55]}  10. 
+Ne5 {[%eval -0.75]}  h5 {[%eval 0.2]}  11. f3 {[%eval -0.04]}  Be6 {[%eval 
+0.46]}  12. Be2 {[%eval -0.59]}  Nxe5 {[%eval 0.65]}  13. dxe5 {[%eval 0.53]}  
+Nd7 {[%eval 0.92]}  14. f4 {[%eval -0.24]}  Nb6 {[%eval 0.0]}  15. O-O-O {[%eval 
+0.0]}  Qd7 {[%eval -0.1]}  16. g4 {[%eval 0.0]}  Bxg4 {[%eval -0.23]}  17. Bxg4 
+{[%eval -0.63]}  Qxg4 {[%eval -0.48]}  18. Rhg1 {[%eval -1.0]}  Qh3 {[%eval 
+1.09]}  19. b3 {[%eval -0.92]}  Rad8 {[%eval -1.26]}  20. Nb5 {[%eval -2.12]}  
+a6 {[%eval -2.29]}  21. Nc3 {[%eval -3.22]}  d4 {[%eval -3.22]}  22. Ne4 {[%eval 
+-4.12]}  dxe3 {[%eval -3.91]}  23. Qe2 {[%eval -4.03]}  Rd4 {[%eval -3.52]}  24. 
+Ng5 {[%eval -5.58]}  Qxh4 {[%eval -5.2]}  25. Rxd4 {[%eval -6.04]}  cxd4 {[%eval 
+-5.93]}  26. Qd3 {[%eval -5.79]}  e2 {[%eval -5.23]}  27. Qe4 {[%eval -7.99]}  
+Qf2 {[%eval -7.98]}  28. Qh1 {[%eval -27.01]}  d3 {[%eval -25.43]}  29. cxd3 
+{[%eval #-10]}  Rc8+ {[%eval #-9]}  30. Kb1 {[%eval #-9]}  Nd5 {[%eval #-8]}  
+31. Ne4 {[%eval #-8]}  Nc3+ {[%eval -64.07]}  32. Nxc3 {[%eval -28.71]}  Rxc3 
+{[%eval -17.79]}  33. Re1 {[%eval -65.56]}  Rxd3 {[%eval -65.28]}  0-1
+
+[ChapterId "2"]
+[ChapterTitle "Fianchetto with Nc3: 1.d4 Nf6 2.Bf4 g6 3.Nc3"]
+[ContentType "Model Game"]
+[Event "TCh-RUS Blitz 2018"]
+[Guid "a40c8567-a3ec-45e9-a297-64f3eea61091"]
+[Date "2018.10.10"]
+[White "Lugovskoy, M."]
+[Black "Maletin, P."]
+[Result "0-1"]
+
+
+1. d4 {[%eval 0.0]}  d5 {[%eval 0.23]}  2. Nc3 {[%eval -0.12]}  Nf6 {[%eval 
+-0.17]}  3. Bf4 {[%eval -0.13]}  g6 {[%eval 0.0]}  4. Qd2 {[%eval 0.0]}  Bg7 
+{[%eval 0.0]}  5. Bh6 {[%eval -0.09]}  O-O {[%eval 0.09]}  6. h4 {[%eval -0.52]} 
+ c5 {[%eval -0.71]}  7. Bxg7 {[%eval -0.34]}  Kxg7 {[%eval -0.48]}  8. h5 
+{[%eval -1.61]}  cxd4 {[%eval -1.79]}  9. Qxd4 {[%eval -1.81]}  Nc6 {[%eval 
+-1.82]}  10. Qh4 {[%eval -1.87]}  Bf5 {[%eval -0.99]}  11. hxg6 {[%eval -1.19]}  
+Bxg6 {[%eval -0.23]}  12. Nf3 {[%eval -0.82]}  d4 {[%eval 1.62]}  13. Nb1 
+{[%eval -5.42]}  Nb4 {[%eval -5.64]}  14. Na3 {[%eval -5.86]}  Qa5 {[%eval 
+-5.83]}  15. Nd2 {[%eval -5.35]}  Rac8 {[%eval -5.42]}  16. Rc1 {[%eval -5.32]}  
+Nxa2 {[%eval -5.18]}  17. Rd1 {[%eval -5.54]}  Nb4 {[%eval -5.69]}  18. g4 
+{[%eval -7.22]}  Qxa3 {[%eval -7.47]}  19. Bg2 {[%eval -7.15]}  Nxc2+ {[%eval 
+-7.08]}  20. Kf1 {[%eval -7.27]}  Qa4 {[%eval -7.1]}  21. b3 {[%eval -7.5]}  Qa5 
+{[%eval -6.75]}  22. Qh6+ {[%eval -7.15]}  Kg8 {[%eval -7.51]}  23. g5 {[%eval 
+-8.65]}  Ng4 {[%eval -8.38]}  24. Qh4 {[%eval -8.74]}  Nce3+ {[%eval -8.69]}  
+25. Kg1 {[%eval -18.82]}  Nxd1 {[%eval -14.38]}  26. Be4 {[%eval -17.05]}  Qxd2 
+{[%eval -17.94]}  27. Qxg4 {[%eval -18.5]}  Qe1+ {[%eval -18.9]}  28. Kh2 
+{[%eval -19.02]}  Qxf2+ {[%eval -18.81]}  29. Bg2 {[%eval -19.09]}  Ne3 {[%eval 
+-19.44]}  0-1
+
+[ChapterId "2"]
+[ChapterTitle "Fianchetto with Nc3: 1.d4 Nf6 2.Bf4 g6 3.Nc3"]
+[ContentType "Model Game"]
+[Event "European ACP w Blitz 2018"]
+[Guid "76ab7f4c-6107-4d06-a254-50ea6e7f5ab3"]
+[Date "2018.04.01"]
+[White "Stefanova, A."]
+[Black "Socko, M."]
+[Result "0-1"]
+
+
+ {[%eval +0.38]} 1. d4 Nf6 2. Bf4 g6 3. Nc3 Bg7 4. Qd2 d5 5. Bh6 O-O 6. h4 c5 7. 
+Bxg7 Kxg7 8. e3 Nc6 9. Nf3 c4 10. Ne5 Qc7 11. f4 Rb8 12. h5 Nxh5 13. Nxd5 Qd6 
+14. Bxc4 Ng3 15. Rh2 b5 16. Bb3 Be6 17. Nc3 Bxb3 18. axb3 b4 19. Nd1 f6 20. Nxc6 
+Qxc6 21. Rxa7 Rf7 22. Ra5 h5 23. Rc5 Qd6 24. Qd3 Ra8 25. Rh3 Nf5 26. Kf2 Qd7 27. 
+Rh1 Nd6 28. Rh4 Ra1 29. Ke2 Qb7 30. Rh2 Qd7 31. Nf2 Qb7 32. e4 Qa7 33. e5 Nf5 
+34. Ne4 Qa2 35. Nd2 Qxb2 36. Kf2 Qc1 37. Nf3 Qxf4 38. Rh3 Qc1 39. exf6+ exf6 40. 
+Rc6 Re7 41. d5 Ra2 42. d6 Rd7 43. Qe2 Qf4 44. Qe6 Raa7 45. Rh1 Nd4 46. Qd5 Nxc6 
+47. Qxc6 Rxd6 48. Qc5 Rdd7 49. Re1 Qc7 0-1
+
+
+
+[ChapterId "3"]
+[ChapterTitle "Fianchetto with Nf3:  1.d4 Nf6 2.Bf4 g6 3.Nf3"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Fianchetto with Nf3:  1.d4 Nf6 2.Bf4 g6 3.Nf3"]
+
+
+ {[%eval +0.54]} 1. d4 {[%eval +0.34]}  Nf6 {[%eval +0.37]}  2. Bf4 {[%eval 
++0.08]}  g6 {[%eval +0.31]}  3. Nf3 {[%eval 0.00]}  Bg7 {[%thmb][%eval 
++0.37]Typically, White is aiming at placing his c- and e-pawns on the 3rd rank 
+and then developing its light-squared bishop. However, there are subtle 
+differences between 4.e3 and 4.c3. The former is more than 10 times more 
+popular, but the latter maintains a possibility of pushing the e-pawn to e4 in 
+one move.}  4. e3 {[%eval +0.17]For now, White keeps the c3 square available for 
+the knight, which may be useful if Black chooses plans with d7-d5. Also, in some 
+lines, White may choose to move its c-pawn c2-c4.}  (4. c3 {[%eval +0.08]Black 
+we will attempt to follow the ideas from the 4.e3 line but there are some 
+additional options for White due to the fact that he has not played e2-e4 yet.}  
+O-O {[%eval +0.06]}  5. Nbd2 {[%eval 0.00]Black can now ignore the threat of 
+e2-e4 and continue 5…d6 or play 5…d5 to stop it.  Objectively, 5…d5 is a 
+perfectly good continuation but could be considered a psychological concession 
+if Black’s preference was to play with the King’s Indian pawn structure.}  d5 
+{[%eval +0.39]}  (5... d6 {[%eval +0.31]}  6. e4 {[%eval +0.19]}  (6. h3 {[%eval 
++0.09]}  c5 {[%eval +0.73]Black wants to transpose to the line analysed under 
+4.e3. However, White has an additional option of playing 7.dxc5 instead of 7.e3 
+which would indeed transpose.}  7. dxc5 {[%eval +0.58]}  dxc5 {[%eval +0.62]}  
+8. e4 {[%eval +0.57]}  Nc6 {[%eval +0.63]}  9. Qc2 {[%eval +0.44]}  (9. Be2 
+{[%eval +0.27]}  Nh5 {[%eval +0.22]}  (9... b6 $5 {[%eval +0.75]} ) 10. Bh2 
+{[%eval +0.26]}  e5 {[%eval +0.35]} ) 9... Nh5 {[%eval +0.47]}  10. Bh2 {[%eval 
++0.46]}  e5 {[%eval +0.53]}  11. Nc4 {[%eval +0.09]}  Qe7 $11 {[%eval +0.34]} ) 
+6... Nbd7 {[%eval +0.35]}  7. Bc4 {[%eval -0.10]}  e5 {[%eval -0.03]}  8. dxe5 
+{[%eval -0.02]}  dxe5 {[%eval 0.00]}  9. Bg5 {[%eval -0.29]}  h6 {[%eval -0.25]} 
+ 10. Bh4 {[%eval -0.25]}  Qe7 $11 {[%eval -0.12]} ) 6. h3 {[%eval +0.14]}  c5 
+{[%eval +0.28]}  7. e3 {[%eval +0.14]}  Qb6 {[%eval +0.62]}  8. Qb3 {[%eval 
++0.50]}  Nc6 {[%eval +0.60]}  9. Be2 c4 10. Qxb6 axb6 11. O-O b5 12. a3 Bf5 
+{[%eval +0.47]}  13. Ne5 {[%eval +0.39]}  (13. g4 {[%eval +0.41]}  Be6 {[%eval 
++0.61]}  14. Ne5 {[%eval +0.28]}  h5 $11 {[%eval +0.19]} )  (13. Rfe1 {[%eval 
++0.28]}  h6 {[%eval +0.56]}  14. Bh2 {[%eval +0.16]}  Rfd8 $11 {[%eval +0.48]} ) 
+13... Nxe5 {[%eval +0.52]}  14. Bxe5 {[%eval +0.42]}  Ne4 $11 {[%eval +0.71]} ) 
+4... O-O {[%eval +0.17]}  (4... d6 {[%eval +0.21]Likely transposes to the main 
+line.}  5. h3 {[%eval +0.16]}  c5 {[%eval +0.34]}  6. c3 {[%eval -0.04]}  (6. 
+dxc5 {[%eval -0.61]}  Qa5+ {[%eval -0.10]} ) 6... cxd4 {[%eval +0.12]}  7. exd4 
+{[%eval 0.00]}  (7. cxd4 {[%eval 0.00]}  Qb6 {[%eval 0.00]}  8. Nbd2 {[%eval 
+-0.11]}  Be6 $11 {[%eval +0.12]} ) ) 5. h3 {[%eval +0.14]}  (5. Nbd2 {[%eval 
+-0.06]}  Nh5 {[%eval +0.03]}  6. Bg5 {[%eval -0.25]}  c5 {[%eval +0.23]}  (6... 
+h6 $6 {[%eval +0.72]}  7. Bh4 $6 {[%eval -0.08]}  (7. Bxh6 {[%eval +0.31]}  Bxh6 
+{[%eval +0.31]}  8. g4 $14 {[%eval +0.36]} ) 7... g5 $2 {[%eval +1.21]}  8. Bg3 
+{[%eval 0.00]}  (8. Nxg5 $16 {[%eval +0.94]} ) 8... Nxg3 {[%eval +0.19]} ) 7. c3 
+{[%eval -0.09]}  cxd4 {[%eval 0.00]}  8. exd4 {[%eval -0.21]}  h6 {[%eval 0.00]} 
+ 9. Bh4 {[%eval -0.21]}  d5 $11 {[%eval -0.25]} )  (5. Be2 {[%eval +0.03]Black 
+can continue as in the mainline with d6 and c5. For White, the advantage of not 
+having played c2-c3 yet would show in lines where Black plays early b7-b6 }  d6 
+{[%eval +0.17]}  (5... b6 {[%eval +0.62]}  6. O-O {[%eval +0.33]}  Bb7 {[%eval 
++0.28]}  7. Nc3 {[%eval -0.04]} ) 6. h3 {[%eval +0.15]}  Nbd7 {[%eval +0.37]}  
+7. O-O {[%eval +0.05]}  b6 {[%eval +0.29]}  8. c4 {[%eval +0.01]} ) 5... c5 
+{[%eval +0.20]}  6. c3 {[%eval -0.05]}  (6. dxc5 {[%eval -0.40]}  Ne4 {[%eval 
+0.00]} ) 6... cxd4 {[%eval +0.02]}  7. exd4 {[%eval -0.02]}  (7. cxd4 {[%eval 
+-0.30]}  Qb6 {[%eval -0.25]}  8. Qc1 {[%eval -0.20]}  (8. Nbd2 {[%eval -0.65]}  
+Qxb2 $15 {[%eval -0.43]} ) 8... d6 {[%eval -0.15]}  9. Nc3 {[%eval -0.22]}  Nc6 
+$11 {[%eval -0.14]} ) 7... d6 {[%eval +0.04]}  8. Be2 {[%eval -0.09]}  Be6 
+{[%eval +0.40]}  9. O-O {[%eval +0.31]}  Qb6 {[%eval +0.47]}  10. Qc1 {[%eval 
++0.22]}  Nc6 {[%eval +0.38]}  11. Na3 {[%eval +0.20]}  (11. Nbd2 {[%eval +0.05]} 
+ Rac8 {[%eval +0.25]}  12. Re1 {[%eval +0.06]}  Rfe8 {[%eval +0.19]}  13. Bh2 
+$11 {[%eval -0.03]} ) 11... Rac8 {[%eval +0.28]}  12. Re1 {[%eval -0.16]}  Bd5 
+{[%eval +0.10]}  13. Nc2 {[%eval -0.03]}  Be4 {[%eval +0.15]}  14. Bd1 
+{[%bkm][%eval 0.00]}  (14. Ng5 $2 {[%eval -2.01]}  Bxc2 {[%eval -1.96]}  15. 
+Qxc2 {[%eval -1.96]}  Nxd4 {[%eval -1.80]} ) 14... Rfe8 {[%eval 0.00]}  15. Ng5 
+{[%eval -0.39]}  Bd5 {[%eval -0.09]}  16. Bf3 {[%eval -1.46]}  e5 $15 {[%eval 
+-1.29]}  *
+
+[ChapterId "3"]
+[ChapterTitle "Fianchetto with Nf3:  1.d4 Nf6 2.Bf4 g6 3.Nf3"]
+[ContentType "Model Game"]
+[Event "USA-ch m"]
+[Guid "ba0e1c09-869c-4b4f-9ef0-aa3ee751e283"]
+[Date "1991.??.??"]
+[White "Kamsky, Gata"]
+[Black "Benjamin, Joel"]
+[Result "0-1"]
+
+
+ {[%eval +0.41]} 1. d4 {[%eval 0.08]}  Nf6 {[%eval 0.1]}  2. Nf3 {[%eval 0.17]}  
+g6 {[%eval 0.21]}  3. Bf4 {[%eval 0.04]}  Bg7 {[%eval 0.1]}  4. e3 {[%eval 
+-0.04]}  d6 {[%eval -0.07]}  5. h3 {[%eval 0.14]}  c5 {[%eval 0.07]}  6. c3 
+{[%eval 0.09]}  cxd4 {[%eval 0.11]}  7. exd4 {[%eval 0.0]}  O-O {[%eval 0.17]}  
+8. Be2 {[%eval 0.03]}  Be6 {[%eval 0.27]}  9. O-O {[%eval 0.16]}  Qb6 {[%eval 
+0.26]}  10. Qc1 {[%eval 0.15]}  Nc6 {[%eval 0.19]}  11. Na3 {[%eval 0.11]}  Rac8 
+{[%eval 0.15]}  12. Re1 {[%eval 0.07]}  Bd5 {[%eval 0.0]}  13. Nc2 {[%eval 
+0.05]}  Be4 {[%eval 0.11]}  14. Bd1 {[%eval 0.02]}  Rfe8 {[%eval 0.07]}  15. Ng5 
+{[%eval -0.21]}  Bd5 {[%eval 0.13]}  16. Bf3 $6 {[%eval -1.19]This allows 
+16...e5, therefore 16.Nf3 or 16.Be3 was preferable. }  e5 {[%eval -0.78]}  17. 
+dxe5 {[%eval -1.08]}  dxe5 {[%eval -0.79]}  18. Be3 {[%eval -1.0]}  Qc7 {[%eval 
+-0.78]}  19. Bxd5 {[%eval -1.03]}  Nxd5 {[%eval -0.9]}  20. Rd1 {[%eval -1.16]}  
+Rcd8 {[%eval -1.1]}  21. Nf3 {[%eval -1.08]}  e4 {[%eval -1.03]}  22. Nfe1 
+{[%eval -1.07]}  Ne5 {[%eval -1.39]}  23. Bh6 {[%eval -3.42]A losing mistake in 
+an inferior position. }  Nxc3 {[%eval -1.9]}  24. Rxd8 {[%eval -2.96]}  Ne2+ 
+{[%eval -2.97]}  25. Kh1 {[%eval -2.9]}  Rxd8 {[%eval -2.87]}  26. Qe3 {[%eval 
+-2.92]}  Bxh6 {[%eval -2.87]}  27. Qxh6 {[%eval -2.89]}  Qb6 {[%eval -2.79]}  
+28. Ne3 {[%eval -4.91]}  Qxb2 {[%eval -4.69]}  29. N1c2 {[%eval -4.44]}  Nd3 
+{[%eval -4.12]}  30. Qh4 {[%eval -4.29]}  Rd6 {[%eval -4.21]}  31. Rf1 {[%eval 
+-4.2]}  Qf6 {[%eval -3.96]}  32. Qxf6 {[%eval -3.92]}  Rxf6 {[%eval -3.9]}  33. 
+Ng4 {[%eval -5.28]}  Rc6 {[%eval -5.25]}  34. Nge3 {[%eval -5.19]}  f5 {[%eval 
+-4.89]}  35. g3 {[%eval -5.14]}  g5 {[%eval -5.02]}  36. Na3 {[%eval -6.54]}  f4 
+{[%eval -6.3]}  37. gxf4 {[%eval -7.36]}  gxf4 {[%eval -7.03]}  38. Nd5 {[%eval 
+-7.32]}  Kf7 {[%eval -6.98]}  39. Nb5 {[%eval -8.15]}  a6 {[%eval -7.8]}  40. 
+Na7 {[%eval -9.2]}  Rh6 {[%eval -8.38]}  41. Kh2 {[%eval -8.43]}  Rh5 {[%eval 
+-8.09]}  42. Nb6 {[%eval #-15]}  f3 {[%eval -59.16]}  43. Nc4 {[%eval #-3]}  
+Ndf4 {[%eval #-2]}  0-1
+
+
+
+[ChapterId "4"]
+[ChapterTitle "1.d4 d5 2.Bf4 Nf6: d5+e6 setup with 3.e3"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "1.d4 d5 2.Bf4 Nf6: d5+e6 setup with 3.e3"]
+
+
+ {[%eval +0.31]} 1. d4 d5 2. Bf4 Nf6 {Overwhelmingly, the most popular White’s 
+3rd move is  3.e3 followed by the flexible 3.Nf3 which we will not discuss as it 
+transposes to other variations.  However, we will discuss 3.Nc3 which is not 
+very common but comes with original ideas and has been played by Magnus Carlsen 
+himself.  }  3. e3 {[%eval +0.12]White only rarely plays 3.c3 here as it is 
+advantageous for him to retain the option of c2-c4.  For example, Black’s 3…Bf5 
+which is strong after 3.c3 would be met with 4.c4. }  e6 4. Nf3 c5 5. c3 Nc6 6. 
+Nbd2 {[%thmb][%eval -0.36]This is the key position of Black’s chosen setup.  
+Black has developed its pieces as in the Tarrasch defence and now has a choice 
+to put its dark-squared bishop on d6 or e7.}  Bd6 {[%eval +0.18]}  (6... Be7 
+{[%eval +0.26]Threatens Nf6-h5.}  7. h3 {[%eval +0.14]}  (7. Bd3 {[%eval +0.07]} 
+ Nh5 {[%eval +0.23]}  (7... a6 $6 {[%eval +0.60]Too slow}  8. Ne5 {[%eval 
++0.47]}  O-O {[%eval +0.76]}  9. h4 $5 {[%eval +0.50]}  Nxe5 {[%eval +2.17]}  
+10. dxe5 {[%eval +2.61]}  Nd7 $2 {[%eval +4.31]}  (10... Ne8 {[%eval +4.32]}  
+11. Bxh7+ {[%eval +4.04]}  Kxh7 {[%eval +2.93]}  12. Qh5+ {[%eval +4.45]}  Kg8 
+{[%eval +4.81]}  13. Nf3 {[%eval +4.07]}  f6 {[%eval +4.48]}  14. Ng5 {[%eval 
++4.80]}  fxg5 {[%eval +4.92]}  15. hxg5 {[%eval +5.02]}  Rf5 {[%eval +4.82]}  
+16. Qh7+ {[%eval +5.30]}  Kf8 {[%eval +5.60]}  17. Qg6 $18 {[%eval +5.23]}  (17. 
+Qh8+ {[%eval +4.63]}  Kf7 {[%eval +4.31]}  18. g6+ {[%eval +4.38]}  Kxg6 {[%eval 
++4.14]}  19. g4 {[%eval +4.15]}  Rxe5 {[%eval +4.50]}  20. Bxe5 {[%eval +3.91]}  
+Kf7 $18 {[%eval +4.44]} ) 17... Bxg5 {[%eval +6.50]}  18. Rh8+ {[%eval +6.54]}  
+Ke7 {[%eval +6.48]}  19. Bxg5+ {[%eval +6.34]}  Rxg5 {[%eval +6.56]}  20. Qxg5+ 
+{[%eval +6.41]}  Kd7 {[%eval +6.67]}  21. Qg6 $18 {[%eval +6.14]} ) 11. Bxh7+ 
+{[%eval +4.26]}  Kxh7 {[%eval +4.23]}  12. Qh5+ {[%eval +4.46]}  Kg8 {[%eval 
++4.10]}  13. Nf3 {[%eval +4.46]}  f6 {[%eval +4.27]}  14. Ng5 {[%eval +4.31]}  
+fxg5 {[%eval +4.26]}  15. hxg5 {[%eval +4.81]}  Rf5 {[%eval +5.19]}  16. Qh7+ 
+{[%eval +5.60]}  Kf7 {[%eval +5.60]}  17. g6+ $18 {[%eval +6.09]} ) ) 7... O-O 
+8. Bd3 {[%eval +0.15]}  c4 {[%eval +0.48]}  9. Bc2 {[%eval +0.43]}  b5 {[%eval 
++0.56]}  10. O-O {[%eval +0.27]}  Bb7 11. e4 {[%eval +0.41]}  dxe4 {[%eval 
++0.39]}  12. Nxe4 {[%eval +0.47]}  Nxe4 {[%eval +0.41]}  13. Bxe4 {[%eval 
++0.43]}  f5 {[%eval +0.38]}  14. Bc2 {[%eval +0.40]}  Bd6 {[%eval +0.58]}  15. 
+Qd2 $14 {[%eval +0.49]} ) 7. Bg3 {[%eval +0.18]}  (7. Ne5 {[%eval -0.16]This is 
+not dangerous for Black. He has a few good responses.}  Qc7 {[%eval -0.14]}  8. 
+Ndf3 {[%eval -0.33]}  Nd7 {[%eval +0.05]}  9. Nxc6 {[%eval 0.00]}  Bxf4 $11 
+{[%eval +0.31]} ) 7... O-O {[%eval +0.14]}  8. Bd3 {[%eval +0.22]}  (8. Bb5 
+{[%eval -0.02]}  a6 {[%eval +0.24]}  (8... Be7 $5 {[%eval 0.00]with the idea Qb6 
+or Nh5} ) 9. Bxc6 {[%eval +0.27]}  bxc6 {[%eval +0.46]}  10. Qa4 {[%eval 
++0.28]Black must defend carefully}  Rb8 {[%eval +0.51]}  (10... Qc7 $2 {[%eval 
++1.26]}  11. dxc5 {[%eval +0.80]} )  (10... Bb7 $2 {[%eval +1.10]}  11. Bxd6 
+{[%eval +0.90]}  Qxd6 {[%eval +0.85]}  12. Qa3 {[%eval +0.74]} ) 11. Qa3 {[%eval 
++0.49]}  Bxg3 {[%eval +0.62]}  12. hxg3 {[%eval +0.61]}  cxd4 {[%eval +0.85]}  
+13. cxd4 {[%eval +0.50]} ) 8... b6 {[%eval +0.22]}  (8... Qe7 {[%eval +0.36]}  
+9. Ne5 {[%eval +0.07]}  Nd7 {[%eval +0.33]}  10. Nxd7 {[%eval +0.37]}  Bxd7 
+{[%eval +0.94]}  11. Bxd6 {[%eval +0.87]}  Qxd6 {[%eval +0.80]}  12. dxc5 
+{[%eval +0.65]}  Qxc5 $2 {[%eval +2.98]}  13. Bxh7+ {[%eval +2.76]}  Kxh7 
+{[%eval +2.85]}  14. Qh5+ {[%eval +2.90]}  Kg8 {[%eval +2.81]}  15. Ne4 $1 $18 
+{[%eval +2.79]} ) 9. Ne5 {[%eval +0.11]}  (9. e4 {[%eval 0.00]}  Be7 $1 {[%eval 
++0.05]}  (9... dxe4 $6 {[%eval +0.89]}  10. Nxe4 {[%eval +0.91]}  Nxe4 {[%eval 
++1.12]}  11. Bxe4 {[%eval +1.01]}  Bb7 {[%eval +1.23]}  12. dxc5 {[%eval +0.63]} 
+ Bxc5 {[%eval +0.97]}  13. Qa4 {[%eval +1.00]}  Rc8 {[%eval +1.22]}  14. Rd1 
+{[%eval +0.83]}  Qe7 $16 {[%eval +0.92]}  (14... Qe8 $4 {[%eval +15.21]}  15. 
+Bxh7+ $18 {[%eval +20.39]} ) ) 10. e5 {[%eval -0.02]Closing the centre frees 
+Black to play on the queenside c4, b5, a5 or a5 and Ba6. Black intends to 
+counter a kingside attack with f7-f5.}  (10. dxc5 {[%eval -0.02]}  bxc5 {[%eval 
++0.06]}  11. O-O {[%eval -0.03]}  Qb6 {[%eval +0.14]}  12. Qc2 {[%eval -0.25]}  
+(12. Qb3 {[%eval -0.04]}  c4 {[%eval -0.01]}  13. Qxb6 {[%eval -0.14]}  axb6 
+{[%eval -0.08]}  14. Bc2 {[%eval -0.37]}  Nh5 $11 {[%eval +0.04]} ) 12... c4 
+{[%eval -0.25]}  13. Be2 {[%eval -0.35]}  Nh5 $11 {[%eval 0.00]} ) 10... Nh5 
+{[%eval +0.37]}  11. Ng5 {[%eval +0.10]}  (11. a3 {[%eval 0.00]}  a5 {[%eval 
++0.07]}  12. Qe2 {[%eval -0.08]}  Bd7 {[%eval +0.17]}  (12... g6 {[%eval +0.35]} 
+ 13. Nf1 $2 {[%eval -1.09]}  Bd7 {[%eval -0.09]}  14. h4 {[%eval -1.13]}  f5 
+{[%eval -1.07]}  15. exf6 {[%eval -1.23]}  Bxf6 {[%eval -1.02]}  16. Bd6 {[%eval 
+-2.20]}  cxd4 {[%eval -1.71]}  17. g4 {[%eval -2.46]}  Bc8 {[%eval -2.51]}  18. 
+Bxf8 {[%eval -2.74]}  Nf4 {[%eval -2.57]}  19. Qd2 {[%eval -3.25]}  Nxd3+ 
+{[%eval -3.37]}  20. Qxd3 {[%eval -3.39]}  Ba6 $19 {[%eval -2.85]} ) 13. O-O 
+{[%eval -0.07]}  Nxg3 {[%eval +0.33]}  14. hxg3 {[%eval +0.30]}  c4 $11 {[%eval 
++0.32]} )  (11. Qe2 {[%eval 0.00]}  Bb7 {[%eval +0.46]}  12. a3 {[%eval +0.30]}  
+a5 $11 {[%eval +0.24]} ) 11... Bxg5 {[%eval +0.37]}  (11... g6 $2 {[%eval 
++1.18]}  12. Nxh7 $16 {[%eval +1.38]} ) 12. Qxh5 {[%eval +0.37]}  g6 {[%eval 
++0.37]}  13. Qe2 {[%eval +0.23]}  cxd4 {[%eval +0.50]}  (13... f5 $5 {[%eval 
++1.08]}  14. f4 {[%eval +0.42]}  (14. exf6 {[%eval +0.99]}  Bxf6 {[%eval +1.11]} 
+) 14... Be7 {[%eval +0.33]}  15. Nf3 {[%eval +0.21]}  c4 {[%eval +0.69]}  (15... 
+cxd4 {[%eval +0.60]}  16. Nxd4 {[%eval +0.22]}  Nxd4 {[%eval +0.19]}  17. cxd4 
+{[%eval +0.09]}  b5 {[%eval +0.15]}  18. O-O {[%eval +0.10]}  Qb6 {[%eval 
++0.29]}  19. Bf2 {[%eval +0.29]}  b4 {[%eval +0.37]}  20. Rfc1 {[%eval +0.11]}  
+a5 {[%eval +0.07]}  21. Qc2 {[%eval -0.13]}  Ba6 {[%eval +0.18]}  22. Bxa6 
+{[%eval 0.00]}  Qxa6 {[%eval 0.00]}  23. Qc6 {[%eval 0.00]}  Rfc8 {[%eval 
++0.32]}  24. Qxa6 {[%eval +0.38]}  Rxc1+ {[%eval +0.34]}  25. Rxc1 {[%eval 
++0.32]}  Rxa6 $11 {[%eval 0.00]} ) 16. Bc2 {[%eval +0.27]}  b5 {[%eval +0.46]}  
+17. a3 {[%eval +0.14]}  Bd7 {[%eval +0.25]}  18. O-O {[%eval 0.00]}  a5 {[%eval 
++0.06]}  19. Bf2 {[%eval -0.55]}  b4 $11 {[%eval 0.00]} ) 14. h4 {[%eval +0.33]} 
+ Bh6 {[%eval +0.52]}  15. h5 {[%eval +0.39]}  dxc3 {[%eval +0.48]}  16. bxc3 
+{[%eval +0.31]}  Bg7 {[%eval +0.33]}  17. Nf3 {[%eval +0.32]}  Qe7 {[%eval 
++0.44]}  18. Rc1 {[%eval +0.33]}  Bb7 {[%eval +0.39]}  19. hxg6 {[%eval -0.39]}  
+fxg6 $11 {[%eval -0.46]} )  (9. Qe2 {[%eval +0.05]}  Bb7 {[%eval +0.17]}  10. 
+Rd1 {[%eval -0.01]}  Re8 {[%eval +0.72]}  11. e4 {[%eval +0.34]}  Be7 {[%eval 
++0.79]}  12. e5 {[%eval +0.70]}  Nh5 {[%eval +0.74]}  13. a3 {[%eval +0.65]}  g6 
+{[%eval +0.62]}  14. Nf1 {[%eval 0.00]}  f5 {[%eval -0.03]}  15. exf6 {[%eval 
++0.12]}  Bxf6 {[%eval +0.29]}  16. Ne3 {[%eval 0.00]}  e5 {[%eval +0.05]}  17. 
+dxe5 {[%eval +0.10]}  Nxe5 {[%eval +0.21]}  18. Nxe5 {[%eval +0.10]}  Nxg3 
+{[%eval +0.18]}  19. hxg3 {[%eval +0.06]}  Rxe5 $11 {[%eval +0.20]} ) 9... Bb7 
+{[%eval 0.00]}  10. f4 {[%eval -0.12]}  (10. O-O {[%eval -0.10]}  Qc7 {[%eval 
++0.16]}  11. f4 {[%eval -0.09]}  (11. Ndf3 {[%eval -0.31]}  Ne4 {[%eval -0.28]}  
+12. Nxc6 {[%eval -0.29]}  Nxg3 {[%eval -0.21]}  13. hxg3 {[%eval -0.21]}  Bxc6 
+$11 {[%eval -0.23]} ) 11... Ne7 {[%eval 0.00]}  12. Qf3 {[%eval -0.16]}  Nf5 
+{[%eval -0.07]}  13. Be2 $15 {[%eval -1.52]Now that Black has castled kingside 
+Black can play 13…h6 or follow the main line with 13…Be7.}  Ne4 $5 {[%eval 
+-1.34]} ) 10... Ne7 {[%eval -0.07]White can try several other options, none of 
+which offers him an advantage.}  11. Qf3 {[%eval -0.18]}  (11. Qc2 {[%eval 
+-0.94]}  c4 {[%eval -0.85]}  12. Be2 {[%eval -0.82]}  Nf5 {[%eval -0.49]}  13. 
+Bf2 {[%eval -0.68]}  Be7 {[%eval -0.29]}  14. O-O {[%eval -0.77]}  Nd6 $11 
+{[%eval -0.64]} )  (11. Qb1 {[%eval -0.30]}  g6 {[%eval -0.29]}  12. Bf2 {[%eval 
+-0.50]}  cxd4 {[%eval -0.20]}  13. exd4 {[%eval -0.13]}  Nf5 $11 {[%eval 0.00]} 
+)  (11. O-O {[%eval -0.60]}  Ne4 {[%eval -0.48]}  12. Bh4 {[%eval -0.92]}  f6 
+{[%eval -0.81]}  13. Nef3 {[%eval -1.04]}  Nf5 $15 {[%eval -0.67]} )  (11. Bh4 
+{[%eval -0.86]}  Ne4 $1 {[%eval -0.78]}  12. Nxe4 {[%eval -1.40]}  dxe4 {[%eval 
+-1.06]}  13. Be2 {[%eval -1.64]}  cxd4 {[%eval -1.91]}  14. cxd4 {[%eval -2.21]} 
+ Bb4+ {[%eval -1.79]}  15. Kf2 {[%eval -1.81]}  f6 {[%eval -1.93]}  16. Nc4 
+{[%eval -2.16]}  Nf5 $17 {[%eval -2.46]} ) 11... Nf5 {[%eval -0.08]}  12. Bf2 
+{[%eval -0.22]}  Be7 {[%eval -0.09]}  13. g4 {[%eval -0.27]}  Nd6 {[%eval 
+-0.02]}  14. g5 {[%eval -0.10]}  Nfe4 {[%eval -0.25]}  15. O-O-O {[%eval -0.95]} 
+ c4 {[%eval -0.97]}  16. Bc2 {[%eval -1.06]}  b5 {[%eval -1.05]}  17. Qh3 
+{[%eval -1.84]}  b4 $15 {[%eval -1.75]}  *
+
+[ChapterId "4"]
+[ChapterTitle "1.d4 d5 2.Bf4 Nf6: d5+e6 setup with 3.e3"]
+[ContentType "Model Game"]
+[Event "ch-CHN Rapid 2016"]
+[Guid "5a7e971f-3baa-4963-a934-1e3c5c7b2a3d"]
+[Date "2016.08.25"]
+[White "Xu, Yinglun"]
+[Black "Yu Yangyi"]
+[Result "0-1"]
+
+
+1. d4 {[%eval 0.25]}  Nf6 {[%eval 0.22]}  2. Nf3 {[%eval 0.11]}  e6 {[%eval 
+0.2]}  3. Bf4 {[%eval 0.0]}  d5 {[%eval 0.18]}  4. e3 {[%eval 0.0]}  c5 {[%eval 
+0.12]}  5. c3 {[%eval 0.0]}  Nc6 {[%eval 0.0]}  6. Nbd2 {[%eval 0.0]}  Be7 
+{[%eval 0.13]}  7. h3 {[%eval 0.39]}  O-O {[%eval 0.17]}  8. Bd3 {[%eval 0.18]}  
+c4 {[%eval 0.32]}  9. Bc2 {[%eval 0.37]}  b5 {[%eval 0.32]}  10. a3 {[%eval 
+0.15]}  Bb7 {[%eval 0.35]}  11. e4 {[%eval 0.0]}  dxe4 {[%eval 0.0]}  12. Nxe4 
+{[%eval 0.0]}  Nd5 {[%eval 0.14]}  13. Bh2 {[%eval 0.25]}  a5 {[%eval 0.3]}  14. 
+O-O {[%eval 0.39]}  b4 {[%eval 0.86]}  15. axb4 {[%eval 0.0]}  axb4 {[%eval 
+0.08]}  16. Qe2 {[%eval 0.27]}  Ba6 {[%eval 1.18]}  17. Rfc1 {[%eval 0.14]}  g6 
+{[%eval 0.97]}  18. Nfd2 {[%eval 0.4]}  Na5 {[%eval 0.41]}  19. Bd1 {[%eval 
+0.39]}  Qb6 {[%eval 0.45]}  20. Rab1 {[%eval -0.04]}  Rfc8 {[%eval 0.31]}  21. 
+Qe1 {[%eval 0.11]}  Qd8 {[%eval 0.43]}  22. Ra1 {[%eval 0.24]}  Bb5 {[%eval 
+0.37]}  23. Ba4 {[%eval 0.0]}  Bxa4 {[%eval 0.0]}  24. Rxa4 {[%eval 0.0]}  bxc3 
+{[%eval 0.0]}  25. bxc3 {[%eval 0.0]}  Nb3 {[%eval 0.0]}  26. Rxa8 {[%bkm][%eval 
+0.0]}  Rxa8 {[%eval -0.17]}  27. Rb1 {[%eval -0.16]}  Nxd2 {[%eval -0.1]}  28. 
+Qxd2 {[%eval 0.0]}  Qa5 {[%eval 0.0]}  29. Qe1 {[%eval 0.0]}  Qa2 {[%eval 0.0]}  
+30. Be5 {[%eval 0.0]}  f5 {[%eval 0.24]}  31. Nc5 {[%eval 0.0]}  Nxc3 {[%eval 
+0.0]}  32. Rb7 {[%eval 0.0]}  Qa1 {[%eval 0.0]}  33. Qxa1 {[%eval 0.0]}  Rxa1+ 
+{[%eval 0.0]}  34. Kh2 {[%eval 0.0]}  Nd5 {[%eval 0.0]}  35. Nxe6 {[%eval 0.0]}  
+c3 {[%eval 0.0]}  36. Nc7 {[%eval -1.0]}  Nb4 {[%eval -1.12]}  37. Nb5 {[%eval 
+-1.1]}  c2 {[%eval -1.13]}  38. Rxe7 {[%eval -1.13]}  Kf8 {[%eval -1.45]}  39. 
+Bd6 {[%eval -1.64]}  c1=Q {[%eval -1.84]}  40. Rc7+ {[%eval -2.02]}  Kg8 {[%eval 
+-1.89]}  0-1
+
+[ChapterId "4"]
+[ChapterTitle "1.d4 d5 2.Bf4 Nf6: d5+e6 setup with 3.e3"]
+[ContentType "Exercise"]
+[FEN "r4rk1/pp1b1ppp/2n1p3/2qp4/8/2PBP3/PP1N1PPP/R2QK2R w KQ - 0 1"]
+[Event "Study Tree after 12...Qxc5?"]
+[Guid "67afeec3-f6cf-4430-9d18-717697f44821"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "*"]
+
+
+ {[%eval +2.87]} 1. Bxh7+ {[%eval +2.76]}  Kxh7 {[%eval +2.85]}  2. Qh5+ 
+{[%bkm][%eval +2.90]}  Kg8 {[%eval +2.81]}  3. Ne4 $1 $18 {[%eval +2.79]}  *
+
+
+
+[ChapterId "5"]
+[ChapterTitle "1.d4 d5 2.Bf4 Nf6: d5+e6 setup with 3.Nc3 (Jobava)"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "1.d4 d5 2.Bf4 Nf6: d5+e6 setup with 3.Nc3 (Jobava)"]
+
+
+ {[%eval +0.81]} 1. d4 {[%eval +0.31]}  d5 {[%eval +0.46]}  2. Bf4 {[%eval 
+-0.02]}  Nf6 {[%eval +0.33]}  3. Nc3 {[%thmb][%eval 0.00]The Jobava variation 
+where the queen’s knight assumes a more active position than the d2 square as is 
+typical in other London variations. The main thing for Black to watch out for is 
+the Nc3-b5 attack on the c7 square.}  e6 {[%eval 0.00]Black has a few good other 
+moves too: 3…c6, 3…Bf5, 3…a6. }  4. e3 {[%eval -0.37]}  (4. Nb5 {[%eval 0.00]}  
+Na6 {[%eval +0.07]}  5. e3 {[%eval 0.00]}  c6 $11 {[%eval +0.07]} ) 4... Bd6 
+{[%eval +0.54]}  (4... Bb4 {[%eval -0.13]}  5. Bd3 {[%eval -0.41]}  (5. Ne2 
+{[%eval -0.23]}  O-O {[%eval -0.29]}  6. a3 {[%eval -0.24]}  Bd6 {[%eval +0.14]} 
+) 5... c5 {[%eval -0.28]}  6. dxc5 {[%eval -0.38]}  Nbd7 $11 {[%eval -0.37]} ) 
+5. Bd3 {[%eval 0.00]}  O-O {[%eval 0.00]}  6. Nf3 {[%bkm][%eval +0.07]}  c5 $11 
+{[%eval +0.11]}  *
+
+
+
+[ChapterId "6"]
+[ChapterTitle "1.d4 d5 2.Bf4 Nf6 3.Nf3 g6"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "1.d4 d5 2.Bf4 Nf6 3.Nf3 g6"]
+
+
+1. d4 d5 2. Bf4 Nf6 3. Nf3 g6 {[%eval +0.36]The alternative move order 1.d4 Nf6 
+2.Nf3 d5 3.Bf4 g6}  4. e3 {[%eval +0.15]}  (4. Nbd2 {[%eval +0.21]}  Bg7 {[%eval 
++0.30]}  (4... Nh5 $6 {[%eval +0.53]}  5. Be5 {[%eval +0.38]}  f6 {[%eval 
++0.44]}  6. Bg3 {[%eval +0.46]}  Nxg3 {[%eval +0.48]}  7. hxg3 {[%eval +0.41]}  
+c6 {[%eval +0.43]}  8. e4 $14 {[%eval +0.44]} ) 5. Ne5 $6 {[%eval -0.91]}  (5. 
+c4 $6 {[%eval -0.37]}  c5 {[%eval -0.33]}  6. dxc5 {[%eval -0.60]}  O-O {[%eval 
+-0.51]}  7. e3 {[%eval -0.65]}  Nbd7 $15 {[%eval -0.47]} ) 5... Nh5 {[%eval 
+-0.60]}  6. Bg3 {[%eval -1.40]}  c5 {[%eval -1.32]}  7. c3 {[%eval -1.42]}  Qb6 
+$15 {[%eval -1.02]} ) 4... Bg7 {[%eval +0.38]}  (4... c5 $5 {[%eval +0.53]}  5. 
+c3 {[%eval +0.16]}  Nc6 $11 {[%eval +0.28]} ) 5. h3 {[%eval +0.12]}  (5. Nbd2 
+{[%eval +0.15]}  O-O {[%eval +0.35]}  (5... Nh5 {[%eval +0.32]}  6. Be5 {[%eval 
++0.33]}  f6 {[%eval +0.36]}  7. Bg3 {[%eval +0.31]}  Nxg3 {[%eval +0.42]}  8. 
+hxg3 $14 {[%eval +0.30]Followed by c4} ) 6. c3 {[%eval +0.19]}  b6 {[%eval 
++0.51]}  7. Be2 {[%eval +0.24]}  Nh5 $5 {[%eval +0.36]}  (7... Ba6 $6 {[%eval 
++0.40]}  8. Bxa6 {[%eval +0.32]}  Nxa6 {[%eval +0.40]}  9. Qa4 {[%eval +0.08]}  
+Qc8 {[%eval +0.13]}  10. b4 $14 {[%eval +0.23]} ) 8. Bg5 {[%eval +0.07]}  (8. 
+Be5 {[%eval +0.20]}  f6 {[%eval +0.08]}  9. Bg3 {[%eval +0.21]}  Nxg3 {[%eval 
++0.29]}  10. hxg3 {[%eval +0.33]}  e6 {[%eval +0.65]}  11. c4 {[%eval +0.44]}  
+a5 {[%eval +0.78]}  12. Rc1 {[%eval +0.64]}  Bb7 {[%eval +0.80]}  13. O-O 
+{[%eval +0.74]}  c6 {[%eval +0.78]}  14. Re1 {[%eval +0.87]}  (14. cxd5 {[%eval 
++0.63]}  exd5 {[%eval +0.69]}  15. e4 {[%eval +0.67]}  Bh6 {[%eval +0.79]}  16. 
+Re1 {[%eval +0.61]}  Na6 {[%eval +0.78]}  17. Bf1 {[%eval +0.41]}  dxe4 {[%eval 
++0.59]}  18. Rxe4 {[%eval +0.57]}  Nb4 $11 {[%eval +0.64]} ) 14... f5 $11 
+{[%eval +0.79]} ) 8... c5 {[%eval +0.13]}  9. O-O {[%eval +0.07]}  Bb7 {[%eval 
++0.23]} ) 5... O-O {[%eval +0.26]}  6. Nbd2 {[%eval +0.11]}  c5 {[%eval +0.29]}  
+7. c3 {[%eval +0.25]}  b6 {[%eval +0.28]}  8. a4 {[%eval +0.09]}  (8. Bd3 
+{[%eval +0.19]}  Nc6 {[%eval +0.16]}  9. O-O {[%eval +0.09]}  Bb7 {[%ref 
+2d5414d3-8867-484a-8e21-74f586e3a65b][%eval +0.21]}  10. Qe2 {[%eval +0.16]}  
+Nd7 {[%eval +0.08]}  11. Rad1 {[%eval +0.16]}  Re8 {[%eval +0.35]}  12. Rfe1 
+{[%eval +0.01]}  e5 $11 {[%eval +0.04]} ) 8... Nc6 {[%eval +0.35]}  9. Bd3 
+{[%eval -0.02]}  Nd7 {[%eval +0.13]}  10. O-O {[%eval -0.03]}  Bb7 {[%eval 
++0.05]}  11. Bg5 {[%eval -0.12]}  Qc7 {[%eval -0.04]}  12. Be2 {[%eval -0.16]}  
+e5 {[%eval -0.06]}  13. dxe5 {[%eval -0.25]}  Ndxe5 $11 {[%eval -0.01]}  *
+
+[ChapterId "6"]
+[ChapterTitle "1.d4 d5 2.Bf4 Nf6 3.Nf3 g6"]
+[ContentType "Model Game"]
+[Event "28th Roquetas de Mar Open"]
+[Guid "2d5414d3-8867-484a-8e21-74f586e3a65b"]
+[Date "2017.01.05"]
+[White "Vazquez Igarza, R."]
+[Black "Stany, G."]
+[Result "1/2-1/2"]
+
+
+ {[%eval +0.55]} 1. d4 Nf6 2. Nf3 g6 3. Bf4 d5 4. e3 Bg7 5. h3 O-O 6. c3 c5 7. 
+Nbd2 b6 8. Bd3 Bb7 9. O-O Nc6 10. Bh2 Nd7 11. Bb5 a6 12. Be2 e5 13. dxe5 Ndxe5 
+14. Nxe5 Nxe5 15. Nf3 Nc6 16. Ne1 Ne5 17. Nf3 Nc6 18. Ne1 Ne5 19. Nf3 Nc6 1/2-1/2
+
+
+
+[ChapterId "7"]
+[ChapterTitle "1.d4 d5 2.Bf4 c5"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "1.d4 d5 2.Bf4 c5"]
+
+
+ {[%eval +0.46]} 1. d4 {[%eval +0.25]}  d5 {[%eval +0.34]}  2. Bf4 {[%eval 
++0.04]Intending to play without the early e7-e6 move, Black must be prepared for 
+2.Nf3. In particular, after 1.d4 d5 2.Nf3 c5 White may play 3.c4.  Black will 
+have a choice of 3…e6 steering towards the Tarrasch defence, 3…dxc4 towards the 
+Accepted Queen’s gambit as well as 3…cxd4 or 3…Nf6. Alternatively, Black can 
+play the non-committal 2…Nf6 thus giving up on the defensive lines where the 
+knight stays on g8 for a few more moves (see the next chapter).}  c5 
+{[%thmb][%eval +0.13]In this chapter, we will focus on the lines where Black 
+starts active play on the queenside, postponing development of his king’s 
+knight.}  3. dxc5 {[%eval -0.12]}  (3. e3 {[%eval -0.04]}  cxd4 {[%eval +0.18]}  
+(3... Nc6 {[%eval +0.13]}  4. c3 {[%eval -0.08]}  (4. Nf3 cxd4 5. exd4 Bf5 
+{[%cal Gb7b5,Gb5b4]The typical plan is a minotiy attack b7-b5-b4}  6. c3 e6 7. 
+Nbd2 {[%eval -0.17]}  h5 {[%eval +0.19]Planning to follow up with f6 and g5.}  
+8. Bb5 {[%eval -0.02]}  f6 {[%eval +0.09]}  9. h4 {[%eval +0.09]}  Bd6 {[%eval 
++0.18]}  10. Bxd6 {[%eval -0.02]}  Qxd6 {[%eval +0.17]Following up with Nge7 and 
+placing the king on f7.} ) 4... Qb6 {[%eval +0.21]}  5. Qb3 {[%eval +0.14]}  Nf6 
+{[%eval +0.10]}  6. Nd2 {[%eval +0.16]Transposes to a line examined under the 
+2…Nf6 move order in the next chapter.} )  (3... Nf6 {[%eval +0.25]}  4. Nf3 
+{[%eval 0.00]}  (4. c3 {[%eval -0.12]}  Nc6 {[%eval +0.14]}  5. Bd3 {[%eval 
+-0.54]}  (5. Nd2 {[%eval 0.00]}  Bf5 {[%eval +0.01]}  6. Ngf3 {[%eval -0.15]}  
+e6 {[%eval +0.12]}  7. Qb3 {[%eval -0.12]}  (7. Nh4 {[%eval -0.07]}  Be4 {[%eval 
+-0.03]}  8. f3 {[%eval -0.41]}  Bg6 {[%eval -0.07]}  9. Qb3 {[%eval -0.16]}  Qd7 
+{[%eval -0.08]}  10. g4 {[%eval -0.16]}  c4 {[%eval -0.11]}  11. Qd1 {[%eval 
+-0.32]}  b5 {[%eval -0.16]}  12. Be2 {[%eval -0.30]}  b4 $11 {[%eval -0.28]Black 
+intends to create a weakness on c3 and a3 and attack it later in the endgame. 
+White has to capture on g6 anyway and plans to advance e3-e4.} ) 7... Qc8 
+{[%eval +0.13]}  8. Be2 {[%eval -0.05]}  c4 {[%eval 0.00]}  9. Qd1 {[%eval 
+-0.13]}  h6 {[%eval +0.05]}  10. a4 {[%eval +0.02]}  Be7 {[%eval 0.00]}  11. Ne5 
+{[%eval -0.18]}  O-O {[%eval -0.26]}  12. O-O {[%eval -0.42]}  Na5 {[%eval 
+-0.46]}  13. Bf3 {[%eval -0.38]}  Bh7 $11 {[%eval -0.11]The main idea for Black 
+is to put the queen on b6 to attack the pawn on b2.} ) 5... Qb6 {[%eval -0.28]}  
+6. Qc1 {[%eval -1.00]}  (6. b3 {[%eval -0.27]}  Bg4 {[%eval -0.09]}  7. Nf3 
+{[%eval -0.41]}  Nh5 {[%eval -0.22]}  8. Be5 {[%eval -0.38]}  cxd4 {[%eval 
+-0.41]}  9. Bxd4 {[%eval -0.85]}  Nxd4 {[%eval -0.54]}  10. cxd4 {[%eval -0.58]} 
+ (10. exd4 $6 {[%eval -1.12]}  Nf4 $15 {[%eval -0.86]} ) 10... e5 $15 {[%eval 
+-0.59]} ) 6... cxd4 {[%eval -0.54]}  7. exd4 {[%eval -1.24]}  e5 $1 {[%eval 
+-1.13]There is no knight on f3 and Black takes advantage of it immediately.}  8. 
+dxe5 {[%eval -1.17]}  Ng4 {[%eval -1.12]}  9. Bg3 {[%eval -1.32]}  Bc5 {[%eval 
+-1.35]}  10. Qc2 {[%eval -1.50]}  Ngxe5 {[%eval -1.17]}  11. b4 {[%eval -1.48]}  
+Bd4 $1 {[%eval -1.22]}  12. Bxe5 {[%eval -1.33]}  (12. cxd4 {[%eval -3.72]}  
+Nxd4 {[%eval -3.37]}  13. Qd2 {[%eval -5.90]}  Nxd3+ {[%eval -5.68]}  14. Qxd3 
+{[%eval -6.04]}  Bf5 {[%eval -6.32]}  15. Qe3+ {[%eval -6.34]}  Kd7 $19 {[%eval 
+-6.20]} ) 12... Bxe5 $17 {[%eval -1.22]} ) 4... Nc6 {[%eval +0.22]}  5. c3 
+{[%eval -0.16]}  (5. Nbd2 {[%eval +0.04]One of the most tricky options. White 
+saves a tempo and doesn't play c3 but sacrifices the b2-pawn and tries to take 
+the advantage of their lead in development.}  Qb6 {[%eval +0.31]And White loses 
+one of these pawns. For example,6.b3 is met by 6...c4 and Black still is able to 
+win the b2-pawn.}  6. dxc5 {[%eval +0.15]}  Qxb2 {[%eval 0.00]}  (6... Qxc5 
+{[%eval +0.58]}  7. a3 $14 {[%eval +0.48]} ) 7. Rb1 {[%eval +0.09]}  (7. c4 
+{[%eval 0.00]}  e6 {[%eval 0.00]}  8. cxd5 {[%eval -0.17]}  Nxd5 {[%eval 0.00]}  
+9. Rb1 {[%eval -0.19]}  Qxa2 {[%eval -0.03]}  10. Be5 {[%eval -0.28]}  Qa5 
+{[%eval +0.07]}  11. Bb5 {[%eval +0.05]}  Bd7 {[%eval +0.30]}  12. Bxc6 {[%eval 
++0.12]}  Bxc6 {[%eval +0.31]}  13. O-O {[%eval -0.19]}  Be7 {[%eval +0.25]}  14. 
+Nd4 {[%eval +0.11]}  (14. Bxg7 $6 {[%eval -0.64]}  Rg8 {[%eval -0.46]}  15. Bd4 
+{[%eval -0.79]}  Nc3 {[%eval -0.61]}  16. Ra1 {[%eval -0.56]}  Qb4 {[%eval 
+-0.48]}  17. Bxc3 {[%eval -0.59]}  Qxc3 {[%eval -0.69]With a very promising 
+position for Black. They have the pair of bishops and plan to promote a pawn on 
+the queenside. If needed, Black can switch to the kingside and initiate a 
+kingside attack. They intend to play ...Rd8, ...Rg4, ...Qd3, ...a5, ...a4 & 
+...Bf6.} ) 14... O-O $11 {[%eval +0.29]} ) 7... Qc3 {[%eval +0.34]Not ...Qa2 - 
+the black queen can get trapped there. And not ...Qa3 (which is actually 
+possible). Here on c3 the queen is more helpful. At least it pins the knight.}  
+8. Bb5 {[%eval +0.24]}  (8. Rb3 $6 {[%eval -0.54]}  Qxc5 $15 {[%eval -0.40]}  9. 
+Qb1 {[%eval -0.49]}  Ne4 {[%eval -0.40]}  10. Rb5 {[%eval -0.58]}  Qa3 {[%eval 
+-0.74]}  11. Rxb7 {[%eval -0.82]}  Nc3 {[%eval -0.71]}  12. Qb2 {[%eval -0.62]}  
+Qxb2 {[%eval -0.63]}  13. Rxb2 {[%eval -0.46]}  f6 {[%eval -0.33]White was able 
+to gain the pawn back, but Black dominates in the center and has a better pawn 
+structure. After ...e5 (which locks the enemy dark-squared bishop on the 
+kingside) and ...Bd7 Black gets a slightly better endgame.} ) 8... e6 {[%eval 
++0.11]}  9. O-O {[%eval 0.00]}  Be7 $11 {[%eval +0.42]} ) 5... Qb6 {[%eval 
+0.00]}  6. Qc1 {[%eval -0.31]}  (6. Qc2 {[%eval +0.15]}  g6 {[%eval +0.15]}  
+(6... Bf5 $2 {[%eval +0.71]}  7. dxc5 $14 {[%eval +0.36]} ) 7. h3 {[%eval 0.00]} 
+ (7. Nbd2 {[%eval 0.00]}  Bg7 {[%eval +0.17]}  8. O-O-O $6 {[%eval -1.38]}  O-O 
+$17 {[%eval -1.08]The black attack on the queenside is much faster. Moreover, 
+it's always difficult to attack the king on the kingside with a fianchetto 
+structure.}  9. h3 {[%eval -1.29]}  c4 {[%eval -1.24]}  10. g4 {[%eval -1.11]}  
+a5 {[%eval -0.63]}  11. Ne5 {[%eval -1.31]}  Nd7 {[%eval -0.65]The knight on e5 
+is very strong, which is why we want to remove it from the board and then 
+continue our queenside attack.} ) 7... Bg7 {[%eval +0.21]}  (7... Bf5 $5 {[%eval 
+0.00]}  8. dxc5 {[%eval 0.00]}  Qxc5 {[%eval 0.00]}  9. Qb3 {[%eval 0.00]}  Na5 
+$11 {[%eval +0.05]} ) 8. Nbd2 {[%eval +0.15]}  O-O {[%eval +0.18]}  9. Be2 
+{[%eval +0.22]}  cxd4 $1 {[%eval +0.17]A very important move when our queen is 
+on b6. White had a chance to take dxc5 and then go b4 and a4 to obtain the 
+initiative in the game.}  10. exd4 {[%eval +0.12]}  Nh5 {[%eval +0.12]}  11. Bh2 
+{[%eval +0.07]A representative game in that position is between Demakov,V - 
+Datler, W , 2017, 1/2.}  Bh6 {[%eval +0.01]}  12. O-O {[%eval +0.07]}  Nf4 
+{[%eval +0.13]With the idea of ...Bf5, ...a5, ...a4 & ...Rd8 to consolidate and 
+obtain space advantage.} )  (6. Qb3 {[%eval -0.39]}  c4 {[%eval -0.36]}  7. Qxb6 
+{[%eval -0.47]}  (7. Qc2 {[%eval -0.40]}  Bf5 {[%eval -0.36]}  8. Qc1 {[%eval 
+-0.51]}  e6 {[%eval -0.30]}  9. Nh4 {[%eval -0.44]}  (9. h3 {[%eval -0.48]}  Be7 
+{[%eval -0.42]}  10. Nbd2 {[%eval -0.37]}  O-O $1 {[%eval -0.04]The plan for 
+Black is to play: ...Rfc8, ...Qd8, ...b5 & ...b4 and to start an attack on the 
+queenside.}  11. Be2 {[%eval -0.43]}  Rfc8 {[%eval -0.26]}  12. O-O {[%eval 
+-0.25]}  Qd8 {[%eval -0.13]}  13. Re1 {[%eval -0.61]}  b5 {[%eval -0.36]}  14. 
+Nh4 {[%eval -0.42]}  Be4 {[%eval -0.35]A typical idea for Black: ...Be4 and then 
+...Bg6.}  15. Nhf3 {[%eval -0.42]}  Bg6 {[%eval -0.31]}  16. Nh4 {[%eval 
+-0.35]It's the same position, but Black saved a tempo. Black doesn't want to 
+take the knight on f5, but is ok to take it with ...hxg6.}  b4 {[%eval -0.24]}  
+17. Nxg6 {[%eval -0.37]}  hxg6 $11 {[%eval -0.27]Black continues playing on the 
+queenside and intends to create a weakness on c3 or b2 and then attack it. For 
+these purposes, Black should exchange the bishops and activate one of the rooks 
+to the b-file. White’s only logical plan is to open the position in the center 
+with e3-e4. If this happens, Black should exchange on c4, continue their 
+activity on the queenside and even take the game into an endgame.} ) 9... Be4 
+{[%eval -0.22]}  10. Nd2 {[%eval -0.31]}  Be7 {[%eval -0.15]}  11. Be2 {[%eval 
+-0.30]}  (11. Nxe4 $2 {[%eval -2.62]}  Nxe4 {[%eval -2.70]}  12. Nf3 {[%eval 
+-2.98]}  g5 {[%eval -2.75]}  13. Bg3 {[%eval -2.70]}  h5 {[%eval -2.67]}  14. h3 
+{[%eval -2.63]}  Nxg3 {[%eval -2.82]}  15. fxg3 {[%eval -2.89]}  Qc7 $17 {[%eval 
+-2.69]} ) 11... O-O {[%eval -0.18]}  12. Nhf3 {[%eval -0.28]}  Bg6 $11 {[%eval 
+-0.03]} ) 7... axb6 {[%eval -0.52]Doubling the pawns on the b-file only improves 
+the black position. They get a clear plan and an open file. The endgame is 
+preferable for Black and they have two strong plans: The first one is to put the 
+bishop on f5 and to play ...h6 and the second one is to play ...e6 and ...Bd7.}  
+8. Na3 {[%eval -0.80]}  Bf5 {[%eval -0.70]}  9. Nb5 {[%eval -0.84]}  Ra5 $17 
+{[%eval -0.72]10.Nc7+ only traps this knight. The plan for Black is to play: 
+...e6, ...Be7, ...Kd7 and to start an attack on the queenside.}  10. a4 {[%eval 
+-0.94]}  e6 {[%eval -0.71]}  (10... Bc2 $6 {[%eval -0.17]An inaccuracy which 
+allows White to continue their development and obtain some initiative as 
+compensation for the a4-pawn}  11. Be2 {[%eval -0.43]}  Rxa4 {[%eval +0.24]}  
+(11... Bxa4 {[%eval -0.05]}  12. Nc7+ {[%eval 0.00]}  Kd7 {[%eval +0.30]}  13. 
+Ng5 $11 {[%eval +0.01]} ) 12. Kd2 $11 {[%eval 0.00]} ) 11. Be2 {[%eval -0.98]}  
+Be7 {[%eval -0.83]The b2- and a4-pawns are the objects of the attack. The game 
+Pakleza,Z - Kollars, D 0-1 2021 illustrates how Black converts their advantage 
+in this position.}  12. Bc7 {[%eval -1.32]}  Ra6 {[%eval -0.43]}  13. O-O 
+{[%eval -1.19]}  Kd7 $17 {[%eval -1.00]}  14. Ne5+ {[%eval -1.22]}  Nxe5 {[%eval 
+-1.41]}  15. Bxe5 {[%eval -1.36]}  Bc2 {[%eval -1.36]}  16. Bd1 {[%eval -1.33]}  
+Bxd1 {[%eval -0.45]}  17. Rfxd1 {[%eval -0.69]}  h5 {[%eval -0.41]The plan for 
+Black is to play: ...h4, ...Ne8, ...f6, ...Nd6 to exchange knights and secure 
+the c7-square & pressure the a4-pawn with ...Rha8.} ) 6... cxd4 {[%eval 
+-0.15]Prevents the plan with dxc5 followed by b4/a4.}  7. cxd4 {[%eval -0.22]}  
+(7. exd4 {[%eval -0.29]}  Bf5 {[%eval -0.22]A typical Carlsbad pawn structure 
+with reversed colors. Here it's better to develop the bishop outside of the pawn 
+chain. There is one thing a club player should learn about the bishop on f5 
+compared to bishop on c8 in London System. The bishop is almost always better on 
+f5, but in case there is a weakness on b7 or a pin of the knight on c6 that 
+requires additional support, the black light-squared bishop should stay on c8.}  
+8. Be2 {[%eval -0.36]}  Rc8 {[%eval -0.28]Right now the d4-pawn is not hanging, 
+but after this move, Black keeps in mind the idea of playing ...Nc6-b4-d3.}  9. 
+O-O {[%eval -0.33]}  h6 {[%eval -0.13]Securing the bishop on f5. After that we 
+have to finish our development: ...e6, ...Be7 & ...O-O .}  10. Nbd2 {[%eval 
+-0.23]}  e6 {[%eval -0.20]}  11. h3 {[%eval -0.37]}  Be7 {[%eval -0.05]}  12. 
+Re1 {[%eval -0.53]}  Nb4 $15 {[%eval -0.41]}  13. Rd1 {[%eval -0.66]}  Nd3 
+{[%eval -0.46]}  14. Bxd3 {[%eval -0.52]}  Bxd3 {[%eval -0.53]}  15. Ne5 {[%eval 
+-0.58]}  Bh7 {[%eval -0.47]The plan for Black is to play: ...O-O, ...Ne4, ...f6, 
+...e5 to open the position or maybe ...g5!?} ) 7... Nh5 {[%eval -0.12]}  8. Bg3 
+{[%eval -0.19]}  Bf5 {[%eval -0.08]}  9. Nc3 {[%eval -0.11]}  e6 {[%eval -0.10]} 
+ 10. Nh4 {[%eval -0.37]}  Bg6 {[%eval -0.12]}  11. Qd2 {[%eval -0.38]}  Bb4 
+{[%eval -0.23]}  12. Be2 {[%eval -0.37]}  Rc8 {[%eval -0.43]}  13. Rc1 {[%eval 
+-0.38]}  Na5 $11 {[%eval -0.02]The knight on a5 prevents white from playing a3 
+and also intends to occupy the c4-square. The plan for Black is to play: ...O-O, 
+...Nc4, double the rooks on the c-file and ...a6 to secure the b5-square.} ) 4. 
+exd4 {[%eval +0.12]}  Nc6 {[%eval +0.20]}  5. c3 {[%eval +0.03]}  (5. Nf3 
+{[%eval +0.15]}  Bg4 {[%eval +0.27]}  6. c3 {[%eval +0.23]}  e6 {[%eval +0.17]}  
+7. Nbd2 {[%eval +0.04]}  Bd6 {[%eval +0.11]}  8. Bg3 {[%eval -0.03]}  Nge7 
+{[%eval 0.00]}  9. Bd3 {[%eval -0.07]}  Bf5 {[%eval +0.08]}  10. Be2 {[%eval 
+0.00]}  Ng6 {[%eval +0.02]}  11. Qb3 {[%eval -0.21]}  Rb8 {[%eval -0.15]}  12. 
+a4 {[%eval -0.52]}  h5 $1 {[%eval 0.00]Targeting the f4 square.}  13. Bxd6 
+{[%eval -0.21]}  Qxd6 {[%eval -0.08]}  14. O-O {[%eval -0.30]}  Nf4 {[%eval 
+-0.13]}  15. Rfe1 {[%eval -0.37]}  h4 {[%eval -0.21]}  16. Bf1 {[%eval -0.25]}  
+f6 {[%eval -0.15]}  17. c4 {[%eval -0.62]}  Kf7 {[%eval -0.31]}  18. g3 {[%eval 
+-0.86]}  hxg3 {[%eval -0.89]}  19. fxg3 {[%eval -0.98]}  Nh3+ {[%eval -0.73]}  
+20. Kg2 {[%eval -0.77]}  g5 $15 {[%eval -0.82]Black will defend the e-line with 
+Ra8-e8 and Ne7-c8.} ) 5... f6 $5 {[%eval +0.54]}  6. Nf3 {[%eval +0.26]}  (6. 
+Bb5 {[%eval -0.07]}  e6 {[%eval +0.13]}  7. Nd2 {[%eval +0.07]}  Ne7 {[%eval 
++0.34]}  8. Ne2 {[%eval +0.25]}  g6 {[%eval +0.50]}  9. h4 {[%eval +0.36]}  a6 
+{[%eval +0.66]}  10. Ba4 {[%eval +0.40]}  Bg7 {[%eval +0.32]}  11. h5 $1 {[%eval 
++0.10]}  g5 {[%eval +0.32]}  12. h6 {[%eval +0.21]}  Bf8 {[%eval +0.28]}  13. 
+Bh2 $1 {[%eval +0.48]}  Ng6 {[%eval +0.47]}  14. Bc2 {[%eval +0.28]}  e5 {[%eval 
++0.89]}  15. Ng3 {[%eval +0.64]}  Be6 {[%eval +0.85]}  16. dxe5 {[%eval +0.47]}  
+fxe5 {[%eval +0.86]}  17. Qh5 {[%eval +0.37]}  Be7 {[%eval +1.01]}  18. Nf5 
+{[%eval +0.30]}  O-O {[%eval +0.45]}  19. Nxe7+ {[%eval +0.36]}  Qxe7 {[%eval 
++0.30]}  20. Bxg6 {[%eval +0.32]}  hxg6 {[%eval +0.72]}  21. Qxg6+ {[%eval 
++0.37]}  Kh8 $14 {[%eval +0.84]} ) 6... g5 {[%eval +0.43]}  7. Be3 {[%eval 
++0.30]}  Bf5 {[%eval +0.47]}  8. c4 {[%eval +0.44]}  (8. Nbd2 {[%eval -0.30]}  
+Qd7 {[%eval +0.11]}  9. Nb3 {[%eval -0.19]}  e6 {[%eval -0.19]}  10. Bd3 {[%eval 
+-0.29]}  Bxd3 {[%eval -0.28]}  11. Qxd3 {[%eval -0.30]}  Bd6 {[%eval -0.24]}  
+12. a3 {[%eval -0.19]}  Nge7 $11 {[%eval -0.14]} ) 8... e6 {[%eval +0.47]}  9. 
+cxd5 {[%eval +0.39]}  Bb4+ {[%eval +0.37]}  10. Nc3 {[%eval +0.38]}  Qxd5 
+{[%eval +0.63]}  11. Be2 {[%eval +0.32]}  Nge7 {[%eval +0.57]}  12. O-O {[%eval 
++0.40]}  Qd7 $11 {[%eval +0.54]} )  (3. c3 {[%eval -0.01]}  Qb6 {[%eval +0.09]}  
+(3... Nf6 {[%eval 0.00]}  4. e3 {[%eval -0.01]Transposes to the lines analyzed 
+in the next chapter.} )  (3... Nc6 {[%eval 0.00]}  4. Nf3 {[%eval -0.04]}  Nf6 
+{[%eval -0.04]}  5. dxc5 {[%eval -0.41]}  e6 {[%eval -0.38]}  6. b4 {[%eval 
+-0.32]}  a5 {[%eval -0.36]}  7. b5 {[%eval -0.47]}  Ne7 {[%eval -0.29]}  8. Nbd2 
+{[%eval -0.72]}  Ng6 {[%eval -0.62]}  9. Bg3 {[%eval -0.69]}  Bxc5 $15 {[%eval 
+-0.54]} ) 4. Nf3 {[%eval +0.01]}  (4. Qb3 {[%eval -0.24]}  Qxb3 {[%eval -0.21]}  
+5. axb3 {[%eval -0.13]}  cxd4 {[%eval -0.03]}  6. Nf3 $5 {[%eval -0.06]}  Nc6 
+{[%eval +0.01]}  7. Nxd4 {[%eval +0.01]}  Nxd4 {[%eval 0.00]}  8. cxd4 {[%eval 
+-0.04]}  e6 {[%eval -0.02]}  9. Nc3 {[%eval -0.08]}  Bd7 $11 {[%eval -0.02]} ) 
+4... Nc6 {[%eval -0.01]}  (4... Qxb2 $5 {[%eval +0.73]}  5. Nbd2 {[%eval +0.38]} 
+ Nf6 {[%eval +1.18]}  6. Rc1 {[%eval -0.81]}  Qxa2 {[%eval +1.01]} ) 5. Qb3 
+{[%eval -0.04]}  (5. Qc2 {[%eval -0.12]}  cxd4 {[%eval +0.01]}  6. cxd4 {[%eval 
+-0.45]}  Bg4 {[%eval +0.10]}  (6... Nxd4 $2 {[%eval +1.29]}  7. Nxd4 {[%eval 
++1.01]}  Qxd4 {[%eval +1.00]}  8. e3 {[%eval +1.38]}  Qb4+ {[%eval +1.45]}  9. 
+Nc3 {[%eval +1.45]}  a6 {[%eval +1.33]}  10. a3 {[%eval +1.12]}  Qa5 {[%eval 
++1.44]}  11. Qa4+ $16 {[%eval +1.09]} ) )  (5. Nbd2 {[%eval -0.07]}  cxd4 
+{[%eval 0.00]}  6. cxd4 {[%eval -0.10]}  Nf6 {[%eval -0.12]}  7. e3 {[%eval 
+-0.18]}  (7. Nb3 $2 {[%eval -1.71]}  e5 {[%eval -1.55]}  8. dxe5 {[%eval -1.70]} 
+ Ne4 {[%eval -1.77]}  9. e3 {[%eval -3.95]}  Bb4+ {[%eval -4.53]}  10. Nbd2 
+{[%eval -4.65]}  Bg4 $19 {[%eval -3.13]} )  (7. Qb3 {[%eval -0.68]}  Qxb3 
+{[%eval -0.63]}  8. axb3 {[%eval -0.68]}  e6 $15 {[%eval -0.53]} ) ) 5... Qxb3 
+{[%eval -0.02]}  6. axb3 {[%eval 0.00]}  cxd4 {[%eval 0.00]}  7. Nxd4 {[%eval 
+0.00]}  (7. cxd4 {[%eval -0.20]}  Bf5 {[%eval 0.00]}  8. e3 {[%eval -0.29]}  e6 
+{[%eval -0.12]}  9. Bb5 {[%eval -0.18]}  Ne7 {[%eval -0.13]}  10. Nc3 {[%eval 
+-0.15]}  a6 {[%eval -0.10]}  11. Bd6 {[%eval -0.15]}  Rc8 {[%eval -0.08]}  12. 
+Be2 {[%eval -0.12]}  Ng6 {[%eval -0.04]}  13. Bxf8 {[%eval -0.06]}  Nxf8 {[%eval 
+0.00]}  14. O-O {[%eval -0.13]}  Nd7 {[%eval -0.17]} ) 7... Nxd4 {[%eval +0.01]} 
+ 8. cxd4 {[%eval +0.01]}  Bd7 {[%eval 0.00]}  9. Nc3 {[%eval 0.00]}  e6 {[%eval 
+0.00]}  10. Bd2 {[%eval -0.39]}  (10. e3 {[%eval -0.11]}  Ne7 {[%eval -0.01]}  
+11. Be2 {[%eval -0.08]}  Nc6 {[%eval -0.17]}  12. O-O {[%eval -0.15]}  Bb4 
+{[%eval 0.00]}  13. Rfd1 {[%eval -0.15]}  O-O $11 {[%eval 0.00]} ) 10... Ne7 
+{[%eval -0.26]}  11. e3 {[%eval -0.30]}  Nc6 {[%eval -0.08]}  12. Be2 $11 
+{[%eval -0.47]}  (12. Bd3 $6 {[%eval -0.53]}  Nb4 {[%eval -0.22]}  13. Bb1 
+{[%eval -0.40]}  b6 {[%eval -0.30]}  14. f3 {[%eval -0.57]}  h5 {[%eval -0.50]}  
+15. Kf2 {[%eval -0.53]}  a5 {[%eval -0.38]}  16. Na2 {[%eval -0.56]}  Nc6 
+{[%eval -0.33]}  17. Bd3 {[%eval -0.52]}  h4 $11 {[%eval -0.37]} ) )  (3. e4 
+{[%eval -0.41]}  dxe4 4. d5 Nf6 5. Nc3 {[%eval -0.31]}  g6 {[%eval -0.20]}  6. 
+Nge2 {[%eval -0.30]}  Bg7 {[%eval -0.23]}  7. Qd2 {[%eval -0.43]}  O-O {[%eval 
+-0.25]}  8. O-O-O {[%eval -0.29]}  Qb6 {[%eval -0.17]}  9. a3 {[%eval -0.71]}  
+Rd8 {[%eval -0.90]}  10. Na4 {[%eval -0.91]}  Qb5 {[%eval -0.90]}  11. Nec3 
+{[%eval -0.92]}  Qa5 $15 {[%eval -0.91]Black has an extra pawn and the potential 
+to attack the enemy king on the queenside. Their plan is to finish their 
+queenside development: ...b6, ...Na6, ...Bd7 and sacrifice the knight on b4.} )  
+(3. Nc3 {[%eval -0.16]}  Nc6 {[%eval 0.00]}  (3... Nf6 {[%eval +0.07]}  4. e3 
+{[%eval 0.00]}  (4. e4 {[%eval +0.05]}  Nxe4 {[%eval 0.00]}  5. Nxe4 {[%eval 
++0.15]}  dxe4 {[%eval +0.04]}  6. dxc5 {[%eval 0.00]}  Qa5+ {[%eval +0.09]}  7. 
+c3 {[%eval 0.00]}  Qxc5 {[%eval +0.02]}  8. Qa4+ {[%eval 0.00]}  Nc6 {[%eval 
++0.01]}  9. Qxe4 {[%eval -0.10]}  g6 {[%eval +0.08]}  10. Nf3 {[%eval 0.00]}  
+Bg7 $11 {[%eval +0.06]}  11. Be2 $4 {[%eval -4.37]}  Bxc3+ $19 {[%eval -4.37]} ) 
+4... cxd4 {[%eval +0.05]}  5. exd4 {[%eval -0.04]}  a6 {[%eval 0.00]}  6. Nf3 
+{[%eval +0.08]}  Nc6 {[%eval +0.10]}  7. Ne5 {[%eval +0.08]}  Bd7 {[%eval 
++0.08]}  8. Be2 {[%eval -0.06]}  e6 {[%eval -0.02]}  9. O-O {[%eval -0.10]}  Qb6 
+{[%eval -0.10]}  10. Be3 {[%eval -0.25]}  Bd6 $11 {[%eval -0.01]} ) 4. e4 
+{[%eval -0.13]}  cxd4 {[%eval +0.04]}  (4... dxe4 {[%eval +1.86]}  5. d5 $16 
+{[%eval +1.90]} ) 5. exd5 {[%eval -0.12]}  (5. Nxd5 {[%eval -0.62]}  e5 {[%eval 
+-0.51]}  6. Bd2 {[%eval -0.61]}  Be6 {[%eval -0.50]}  7. c4 {[%eval -0.57]}  Nf6 
+{[%eval -0.44]}  8. Bd3 {[%eval -0.48]}  (8. Bg5 $2 {[%eval -1.80]}  Nxd5 
+{[%eval -1.34]}  9. Bxd8 {[%eval -1.72]}  Bb4+ {[%eval -0.80]}  10. Ke2 {[%eval 
+-0.94]}  Nf4+ {[%eval -0.86]}  11. Kf3 {[%eval -1.07]}  Rxd8 {[%eval -0.79]Black 
+will gain more material after h7-h5 and Be6-g4.}  12. h3 $6 {[%eval -2.31]}  f5 
+$17 {[%eval -2.24]} ) 8... Nd7 $15 {[%eval -0.35]} ) 5... dxc3 {[%eval +0.02]}  
+6. dxc6 {[%eval 0.00]}  Qxd1+ {[%eval 0.00]}  7. Rxd1 {[%eval 0.00]}  bxc6 $11 
+{[%eval +0.04]} ) 3... Nc6 {[%eval +0.02]}  (3... e6 {[%eval +0.16]}  4. Nf3 
+{[%eval -0.24]}  Bxc5 {[%eval -0.15]Qb6 is now a potential threat}  5. e3 
+{[%eval -0.08]}  Nf6 {[%eval +0.04]}  6. Be2 {[%eval -0.24]}  (6. Nbd2 {[%eval 
+-0.11]}  O-O {[%eval -0.16]}  7. Bd3 {[%eval -0.33]}  Nc6 {[%eval -0.19]}  8. 
+O-O {[%eval -0.39]}  Re8 {[%eval -0.21]}  9. Ne5 {[%eval -0.23]}  Bd6 {[%eval 
+-0.12]}  10. Nxc6 {[%eval -0.12]}  (10. Ndf3 {[%eval -0.25]}  Qc7 {[%eval 
+-0.15]} ) 10... bxc6 {[%eval -0.04]}  11. Bxd6 {[%eval -0.12]}  Qxd6 {[%eval 
+-0.03]}  12. c4 {[%eval -0.23]}  e5 {[%eval -0.04]The plan for Black is to play 
+e4, d4, h6, Bd7 (Bf5) and Rab8} ) 6... Qb6 {[%eval -0.16]}  7. Qc1 {[%eval 
+-0.41]}  Nc6 {[%eval -0.31]}  8. a3 {[%eval -0.57]}  Nh5 {[%eval -0.27]}  9. Bg3 
+{[%eval -0.36]}  (9. Bg5 $6 {[%eval -1.08]}  h6 {[%eval -1.08]}  10. Bh4 {[%eval 
+-1.05]}  g5 {[%eval -1.02]}  11. Bg3 {[%eval -1.03]}  Nxg3 {[%eval -0.96]}  12. 
+hxg3 {[%eval -1.01]}  Bf8 $17 {[%eval -0.93]}  13. Nxg5 $4 {[%eval -3.86]}  Bg7 
+$19 {[%eval -4.04]} ) 9... Nxg3 {[%eval -0.35]}  10. hxg3 {[%eval -0.33]}  Be7 
+$11 {[%eval -0.27]} ) 4. e4 {[%eval -0.11]}  (4. Nf3 {[%eval -0.16]}  e6 {[%eval 
+0.00]}  5. c4 {[%eval -0.12]}  Bxc5 {[%eval 0.00]}  6. e3 {[%eval 0.00]}  Nf6 
+{[%eval 0.00]}  7. Nc3 {[%eval -0.19]}  (7. cxd5 {[%eval -0.08]}  Nxd5 $11 
+{[%eval 0.00]} ) 7... Bb4 {[%eval +0.06]}  8. Qc2 {[%eval -0.06]}  Qa5 {[%eval 
+-0.09]}  9. Bd3 {[%eval -0.20]}  Bxc3+ {[%eval -0.12]}  10. Qxc3 {[%eval -0.50]} 
+ (10. bxc3 {[%eval -0.29]}  e5 {[%eval -0.28]}  11. cxd5 {[%eval -0.25]}  exf4 
+{[%eval -0.23]}  12. dxc6 {[%eval 0.00]}  fxe3 {[%eval 0.00]}  13. fxe3 {[%eval 
+-0.51]}  bxc6 $11 {[%eval -0.22]} ) 10... dxc4 $11 {[%eval -0.43]} ) 4... Nf6 
+{[%eval +0.13]}  5. e5 {[%eval -0.04]}  (5. exd5 {[%eval -0.62]}  Nxd5 {[%eval 
+-0.56]}  6. Bg3 {[%eval -0.64]}  Bf5 {[%eval -0.37]}  7. c3 {[%eval -0.43]}  e6 
+{[%eval -0.47]}  8. Nd2 {[%eval -0.63]}  Bxc5 {[%eval -0.62]}  9. Ngf3 {[%eval 
+-0.77]}  h5 $15 {[%eval -0.62]}  10. Nb3 Bb6 11. h3 h4 12. Bh2 Bc7 $17 {in view 
+of the weakness of the f4-square} ) 5... Ne4 {[%eval +0.09]}  6. Nd2 {[%eval 
++0.10]}  Nxc5 {[%eval +0.14]}  7. Nb3 {[%eval +0.04]}  Ne6 {[%eval +0.13]}  8. 
+Bg3 {[%eval -0.03]}  g6 $11 {[%eval +0.28]}  9. Nf3 Bh6 10. Bd3 O-O 11. O-O Nf4 
+12. Bb5 Nh5 13. Bxc6 bxc6 14. Qd4 Nxg3 15. hxg3 Bg7 $14 {[%eval +0.66]}  *
+
+
+
+[ChapterId "8"]
+[ChapterTitle "1.d4 d5 2.Bf4 Nf6 without early e6"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "1.d4 d5 2.Bf4 Nf6 without early e6"]
+
+
+ {[%eval +0.38]} 1. d4 d5 2. Bf4 Nf6 {[%eval +0.15]}  3. e3 (3. c3 {[%eval 
+-0.10]Black has a few good moves to choose from, including 3…c5, 3…Bf5 and 
+3…Nc6.  The most popular option is 3.e6 that leads to the lines discussed 
+earlier.   Let’s look briefly at 3…Bf5.}  Bf5 {[%eval +0.12]}  4. Qb3 {[%eval 
++0.01]}  Nbd7 {[%eval +0.37]}  5. Qxb7 {[%eval -0.94]}  Rb8 {[%eval -0.46]}  6. 
+Qxa7 {[%eval -0.95]}  Rxb2 {[%eval -0.45]}  (6... e5 $5 {[%eval -0.93]}  7. Bxe5 
+{[%eval -1.35]}  (7. dxe5 {[%eval -3.84]}  Bc5 {[%eval -4.50]}  8. Qa6 {[%eval 
+-4.88]}  Ne4 $19 {[%eval -4.80]} ) 7... Nxe5 {[%eval -0.93]}  8. dxe5 {[%eval 
+-1.37]}  Nd7 {[%eval -0.77]}  9. Qa4 {[%eval -0.88]}  Rxb2 $15 {[%eval -0.14]} ) 
+7. Nd2 {[%eval -0.35]}  e5 {[%eval -0.28]}  8. Bxe5 {[%eval -0.55]}  Nxe5 
+{[%eval -0.27]}  9. dxe5 {[%eval -0.63]}  Nd7 $11 {[%eval -0.09]} ) 3... c5 
+{[%thmb]}  4. c3 Nc6 {[%eval +0.12]}  5. Nf3 (5. Nd2 {[%eval -0.12]With the 
+knight on d2, White is better prepared for Black’s 5…Qb6.}  Bf5 {[%eval +0.04]}  
+(5... Qb6 $5 {[%eval +0.30]}  6. Qb3 {[%eval +0.30]}  c4 {[%eval +0.52]}  7. Qc2 
+{[%eval +0.46]There is no Gf5 here!}  g6 {[%eval +0.63]}  8. e4 {[%eval +0.45]}  
+dxe4 {[%eval +0.88]}  9. Nxc4 {[%eval +1.11]}  (9. Nxe4 $2 {[%eval -1.86]}  Nxe4 
+{[%eval -1.92]}  10. Qxe4 {[%eval -2.22]}  Qxb2 $17 {[%eval -1.83]} ) 9... Qd8 
+$14 {[%eval +0.97]} ) 6. Qb3 {[%eval -0.15]}  Qc8 {[%eval -0.05]}  (6... Qb6 $5 
+{[%eval +0.93]}  7. dxc5 {[%eval +0.74]}  (7. Qxb6 {[%eval 0.00]}  axb6 {[%eval 
++0.12]}  8. Bb5 {[%eval +0.01]}  Nd7 {[%eval +0.16]}  9. Ngf3 {[%eval +0.01]}  
+f6 $11 {[%eval +0.22]} ) 7... Qxb3 {[%eval +0.92]}  8. axb3 {[%eval +0.82]}  e5 
+$14 {[%eval +0.76]} ) 7. Ngf3 {[%eval -0.25]}  e6 {[%eval +0.07]}  8. Nh4 
+{[%eval +0.04]}  Be4 {[%eval +0.20]}  9. f3 {[%eval +0.23]}  c4 {[%eval +0.11]}  
+10. Qa4 {[%eval -0.26]}  b5 $11 {[%eval -0.32]} ) 5... Qb6 6. Qb3 {As is typical 
+in the London system, this position can be arrived at via different move orders 
+e.g., 1.d4 d5 2.Nf3 c5 3.c3 Nf6 4.Bf4 Qb6 5.Qb3 Nc6 6.e3. Again, it is important 
+to understand at which move what options are available so that you are not taken 
+out of your repertoire. }  c4 {[%eval -0.39]}  7. Qc2 {[%eval -0.41]}  (7. Qxb6 
+$5 {[%eval -0.71]}  axb6 {[%eval -0.40]}  8. Na3 {[%eval -0.68]}  (8. Nbd2 $6 
+{[%eval -0.59]}  b5 {[%eval -0.44]}  9. Be2 {[%eval -0.70]}  e6 {[%eval -0.60]}  
+10. O-O {[%eval -0.64]}  b4 {[%eval -0.55]}  11. Bg5 {[%eval -1.36]}  b5 $15 
+{[%eval -1.19]} ) 8... Na7 $1 {[%eval -0.35]}  9. Nc2 {[%eval -0.87]}  (9. Bc7 
+{[%eval -0.99]}  Bf5 {[%eval -0.57]}  10. Bxb6 {[%eval -0.66]}  e6 {[%eval 
+-0.83]}  11. Bc5 {[%eval -0.90]}  Bxc5 {[%eval -0.74]}  12. dxc5 {[%eval -0.66]} 
+ Ne4 $15 {[%eval -0.57]} ) 9... Bf5 {[%eval -0.92]}  10. Nb4 {[%eval -0.93]}  e6 
+{[%eval -0.86]}  11. a3 {[%eval -0.89]}  h5 $15 {[%eval -0.81]} ) 7... Bf5 $1 
+{[%eval -0.40]}  8. Qc1 {[%eval -0.42]}  Nh5 {[%eval -0.27]}  (8... e6 $5 
+{[%eval -0.19]}  9. Nbd2 {[%eval -0.30]}  Be7 {[%eval -0.12]}  10. Be2 {[%eval 
+-0.34]}  O-O {[%eval -0.17]}  11. h3 {[%eval -0.38]}  Rfc8 {[%eval -0.38]}  12. 
+O-O {[%eval -0.52]}  h6 {[%eval -0.30]}  13. Bd1 {[%eval -0.54]}  Qd8 {[%eval 
+-0.39]}  14. Bc2 {[%eval -0.52]}  b5 {[%eval -0.40]}  15. Re1 {[%eval -0.78]}  
+b4 $15 {[%eval -0.64]} ) 9. Bg3 {[%eval -0.44]}  Nxg3 {[%eval -0.28]}  10. hxg3 
+{[%eval -0.41]}  g6 {[%eval -0.32]}  11. Nbd2 {[%eval -0.35]}  Bg7 {[%eval 
+-0.25]}  12. e4 {[%eval -0.46]}  dxe4 {[%eval -0.31]}  13. Ng5 {[%eval -0.47]}  
+(13. Nxc4 {[%eval -0.77]}  Qc7 {[%eval -0.71]}  14. Nfd2 {[%eval -1.20]}  h5 
+{[%eval -0.96]}  15. Qd1 {[%eval -1.55]}  Bh6 {[%eval -1.54]}  16. Qe2 {[%eval 
+-1.36]}  O-O-O $15 {[%eval -1.16]} ) 13... h5 {[%eval +0.12]}  14. Nxc4 {[%eval 
+0.00]}  Qc7 {[%eval -0.01]}  15. Ne3 {[%eval -1.21]}  e6 $15 {[%eval -0.77]}  *
+
+[ChapterId "8"]
+[ChapterTitle "1.d4 d5 2.Bf4 Nf6 without early e6"]
+[ContentType "Exercise"]
+[FEN "r1b1kb1r/pp2pppp/1qn2n2/3p4/2pP1B2/2P1PN2/PPQ2PPP/RN2KB1R b KQkq - 1 1"]
+[Event "Study Tree after 7.Qc2"]
+[Guid "7f4503d2-3acd-46f5-887b-9acfcada873c"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "*"]
+
+
+ {[%eval -0.32]}  Bf5 $1 {[%eval 0.00]}  *
+
+
+
+[ChapterId "9"]
+[ChapterTitle "1.d4 Nf6 2.Bf4 c5!? 3.e3"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "1.d4 Nf6 2.Bf4 c5!? 3.e3"]
+
+
+ {[%eval +3.47]} 1. d4 {[%eval +0.30]}  Nf6 {[%eval +0.34]}  2. Bf4 {[%eval 
+-0.04]}  c5 {[%eval +0.29]}  3. e3 {[%thmb][%eval 0.00]}  Qb6 {[%eval +0.12]}  
+4. Nc3 {[%eval 0.00]}  (4. Na3 {[%eval 0.00]}  Qxb2 {[%eval 0.00]}  (4... a6 $2 
+{[%eval +1.83]}  5. Nc4 $1 $16 {[%eval +1.55]} ) 5. Nb5 {[%eval 
+0.00]Transposes.} ) 4... Qxb2 {[%eval +0.17]}  (4... a6 {[%eval +0.03]}  5. Rb1 
+{[%eval -0.12]}  (5. dxc5 {[%eval -0.43]}  Qxb2 {[%eval 0.00]}  6. Na4 {[%eval 
+-0.08]}  Qa3 {[%eval -0.28]}  7. c3 {[%eval 0.00]}  (7. Nb6 $2 {[%eval -1.08]}  
+Qc3+ {[%eval -1.37]}  8. Ke2 {[%eval -1.17]}  e5 {[%eval -1.15]}  9. Bg3 {[%eval 
+-1.61]}  Bxc5 {[%eval -1.69]}  10. Nxa8 {[%eval -1.24]}  (10. Nxc8 {[%eval 
+-4.92]}  Nc6 $19 {[%eval -4.63]} ) 10... d6 {[%eval -0.70]}  11. Nc7+ {[%eval 
+-3.36]}  Kd8 $19 {[%eval -2.89]} ) 7... d6 {[%eval -0.30]}  8. e4 {[%eval 0.00]} 
+ (8. cxd6 $4 {[%eval -5.45]}  Bd7 {[%eval -5.76]}  9. dxe7 {[%eval -7.10]}  Bxe7 
+$19 {[%eval -6.82]} ) 8... b5 $5 {[%eval 0.00]}  (8... Bd7 {[%eval 0.00]}  9. 
+Nb6 {[%eval 0.00]}  Qxc3+ {[%eval 0.00]}  10. Bd2 {[%eval 0.00]}  Qxc5 {[%eval 
+0.00]}  11. Be3 {[%eval 0.00]}  Qc3+ {[%eval 0.00]}  12. Bd2 $11 {[%eval 0.00]} 
+) 9. cxb6 {[%eval -0.17]}  Bd7 {[%eval -0.43]}  10. b7 {[%eval -0.61]}  Ra7 
+{[%eval -0.10]}  11. Rb1 {[%eval 0.00]}  (11. Nb6 $2 {[%eval -1.11]}  Rxb7 
+{[%eval -1.12]}  12. Nxd7 {[%eval -1.34]}  Nbxd7 $17 {[%eval -1.27]} ) 11... 
+Bxa4 {[%eval 0.00]}  12. Qd4 {[%eval 0.00]}  Qxa2 {[%eval 0.00]}  13. Bd3 
+{[%eval 0.00]}  Bc2 {[%eval 0.00]}  14. Bxc2 {[%eval 0.00]}  Qxc2 {[%eval 0.00]} 
+ 15. Rb4 {[%eval 0.00]}  e5 {[%eval 0.00]}  16. Qxa7 {[%eval 0.00]}  Nfd7 
+{[%eval 0.00]}  17. Rc4 {[%eval 0.00]}  (17. Bd2 $2 {[%eval -2.88]}  d5 {[%eval 
+-3.06]}  18. exd5 {[%eval -3.09]}  Bc5 {[%eval -3.40]}  19. Qa8 {[%eval -3.40]}  
+Bxb4 {[%eval -2.93]}  20. cxb4 {[%eval -3.08]}  Qb1+ {[%eval -3.61]}  21. Ke2 
+{[%eval -3.85]}  Qe4+ $19 {[%eval -3.97]} ) 17... Qb1+ {[%eval 0.00]}  18. Kd2 
+{[%eval 0.00]}  Qa2+ {[%eval 0.00]}  19. Kd3 {[%eval -0.09]}  Qb1+ {[%eval 
+0.00]}  20. Kd2 {[%eval 0.00]}  Qa2+ {[%eval 0.00]}  21. Kd3 {[%eval 0.00]}  
+Qb1+ $11 {[%eval 0.00]} )  (5. a3 {[%eval +0.03]}  cxd4 {[%eval +0.17]}  6. exd4 
+{[%eval +0.10]}  d5 {[%eval +0.19]}  7. Na4 {[%eval +0.11]}  Qa7 {[%eval +0.19]} 
+ 8. Nf3 {[%eval 0.00]}  Bg4 {[%eval +0.45]}  9. Be2 {[%eval -0.10]}  Nc6 {[%eval 
++0.23]}  10. Nc5 {[%eval -0.14]}  (10. c3 {[%eval +0.04]}  e6 {[%eval +0.16]} ) 
+10... e6 {[%eval +0.01]}  11. Nb3 {[%eval -0.02]}  Be7 {[%eval +0.08]}  12. O-O 
+{[%eval 0.00]}  O-O {[%eval 0.00]}  13. c3 {[%eval 0.00]}  Ne4 {[%eval +0.23]}  
+14. Nfd2 {[%eval +0.07]}  Bxe2 {[%eval +0.20]}  15. Qxe2 {[%eval +0.07]}  Qb6 
+{[%eval +0.16]}  16. Nxe4 {[%eval 0.00]}  (16. Rab1 {[%eval +0.03]}  Rfe8 
+{[%eval +0.33]}  17. Nxe4 {[%eval +0.11]}  Qxb3 $11 {[%eval +0.28]} ) 16... Qxb3 
+$11 {[%eval +0.48]} ) 5... cxd4 {[%eval 0.00]}  6. exd4 {[%eval -0.04]}  d5 
+{[%eval +0.02]}  7. Nf3 {[%eval -0.20]}  Bf5 {[%eval -0.17]}  8. Bd3 {[%eval 
+-0.19]}  Bxd3 {[%eval -0.14]}  9. Qxd3 {[%eval -0.16]}  e6 {[%eval -0.15]}  10. 
+O-O {[%eval -0.31]}  Be7 {[%eval -0.16]}  11. Rfe1 {[%eval -0.38]}  O-O {[%eval 
+-0.28]}  12. Ne5 {[%eval -0.38]}  Nc6 {[%eval -0.31]}  13. Ne2 {[%eval -0.36]}  
+Qb5 {[%eval -0.08]}  14. Qxb5 {[%eval -0.16]}  axb5 $11 {[%eval -0.11]} ) 5. Nb5 
+{[%eval 0.00]}  Nd5 {[%eval 0.00]}  (5... Na6 $4 {[%eval +2.90]}  6. a3 $1 
+{[%eval +2.85]}  d6 {[%eval +4.19]}  7. Bc4 {[%eval +3.53]with Ra2 or Rb1 to 
+follow} ) 6. a3 {[%eval -0.40]}  a6 {[%eval +0.01]Black allows his queen to be 
+trapped but here he gets adequate compensation for it.}  7. Rb1 {[%eval 0.00]}  
+Qa2 {[%eval +0.07]}  8. Qc1 {[%eval +0.17]}  axb5 {[%eval +0.13]}  9. Ra1 
+{[%eval +0.16]}  Qxa1 {[%eval +0.28]}  10. Qxa1 {[%eval -0.26]}  e5 $3 {[%eval 
+-0.08]}  11. Bxe5 {[%eval -0.18]}  (11. dxe5 {[%eval +0.03]}  Nxf4 {[%eval 
+-0.25]}  12. exf4 {[%eval -0.22]}  c4 {[%eval +0.09]}  13. Be2 {[%eval 0.00]}  
+Rxa3 {[%eval +0.14]}  14. Qb2 {[%eval -0.14]}  Nc6 {[%eval -0.16]}  15. Nf3 
+{[%eval -1.13]}  Bb4+ {[%eval -1.10]}  16. Kf1 {[%eval -1.24]}  O-O {[%eval 
+0.00]}  17. g3 {[%eval -0.44]}  d5 {[%eval -0.94]}  18. Kg2 {[%eval -0.75]}  
+(18. exd6 {[%eval -22.86]}  Bh3+ {[%eval -24.52]}  19. Kg1 {[%eval -23.74]}  
+Rfa8 {[%eval -29.54]} ) 18... d4 {[%eval -0.69]}  19. Nxd4 {[%eval -1.55]}  c3 
+{[%eval -1.48]}  20. Qb1 {[%eval -1.27]}  Nxd4 {[%eval -1.11]}  21. Qxb4 {[%eval 
+-1.86]}  Ra4 {[%eval -1.33]}  22. Qb1 {[%eval -2.20]}  Nxe2 {[%eval -0.95]}  23. 
+Qxb5 {[%eval -1.12]}  Re4 $15 {[%eval -1.07]}  24. Qd3 $2 {[%eval -3.99]}  Bf5 
+$19 {[%eval -4.09]} ) 11... c4 $1 {[%eval -0.08]}  12. Bxb8 {[%eval -0.51]}  
+Bb4+ {[%eval -0.57]}  13. Ke2 {[%eval -0.35]}  Rxa3 {[%eval -0.30]}  14. Qc1 
+{[%eval -1.24]}  (14. Qb2 {[%eval -0.60]}  Ra2 {[%eval -0.13]}  15. Qc1 {[%eval 
+-0.42]}  b6 {[%eval -0.08]}  16. f3 {[%eval -0.87]}  Ba3 {[%eval -0.78]}  17. 
+Qd2 {[%eval -0.88]}  Nb4 {[%eval -0.62]}  18. Bd6 {[%eval -0.44]}  (18. Kd1 
+{[%eval -1.27]}  Ra1+ {[%eval -0.53]}  19. Ke2 {[%eval -1.95]}  Na2 $19 {[%eval 
+-3.07]threatening Bc1} ) 18... Rxc2 {[%eval -0.80]}  19. Bxb4 {[%eval -0.99]}  
+Rxd2+ {[%eval -0.83]}  20. Bxd2 {[%eval -0.84]}  b4 $15 {[%eval -0.63]} ) 14... 
+b6 {[%eval -0.35]}  15. Nh3 {[%eval -1.76]}  (15. Nf3 $4 {[%eval -7.09]}  Nc3+ 
+{[%eval -6.98]}  16. Kd2 {[%eval -7.38]}  Na2+ $19 {[%eval -8.74]} ) 15... Nc3+ 
+{[%eval -1.48]}  16. Kf3 {[%eval -1.40]}  Bb7+ {[%eval -1.44]}  17. Kg3 {[%eval 
+-1.86]}  O-O {[%eval -1.75]}  18. Bf4 {[%eval -3.38]}  Ne4+ {[%eval -3.46]}  19. 
+Kf3 {[%eval -3.52]}  (19. Kg4 {[%eval -5.52]}  f5+ {[%eval -6.65]}  20. Kh5 
+{[%eval -6.65]}  g6+ {[%eval -13.59]}  21. Kh6 {[%eval -#4]}  Rf7 $19 {[%eval 
+-#3]forcing checkmate} ) 19... Ra2 $19 {[%eval -4.37]threatening 20...Bd2}  *
+
+[ChapterId "9"]
+[ChapterTitle "1.d4 Nf6 2.Bf4 c5!? 3.e3"]
+[ContentType "Exercise"]
+[FEN "r1b1kb1r/pp1ppppp/n4n2/1Np5/3P1B2/4P3/PqP2PPP/R2QKBNR w K - 1 1"]
+[Event "Study Tree after 5...Na6??"]
+[Guid "e7a562b5-063a-48fc-8a6b-0de5746ddc76"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "*"]
+[Preamble "White traps the black queen."]
+
+
+ {[%eval +3.24]} 1. a3 $1 {[%eval +2.85]}  d6 {[%eval +4.19]}  2. Bc4 {[%eval 
++4.04]with Ra2 or Rb1 to follow}  *
+
+
+
+[ChapterId "10"]
+[ChapterTitle "1.d4 Nf6 2.Bf4 c5!? 3.non-e3"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "1.d4 Nf6 2.Bf4 c5!? 3.non-e3"]
+
+
+ {[%eval +0.41]} 1. d4 {[%eval +0.25]}  Nf6 {[%eval +0.38]}  2. Bf4 {[%eval 
+0.00]}  c5 {[%thmb][%eval +0.32]As already mentioned, 2…c5 does not work very 
+well after 2.Nf3 so we will only examine the lines occurring in the 2.Bf4 move 
+order.}  3. d5 {[%eval +0.16]Compared with the 2.Nf3 move order, bishop on f4 
+allows Black to play e7-e5 with a tempo thus improving the Benoni-like lines.}  
+(3. dxc5 {[%eval 0.00]}  Na6 {[%eval +0.31]}  4. Qd4 {[%eval -0.02]}  (4. f3 
+{[%eval 0.00]}  e6 {[%eval +0.13]}  5. e4 {[%eval +0.21]}  Bxc5 {[%eval +0.18]}  
+6. Nc3 {[%eval +0.13]}  Qb6 {[%eval +0.79]}  7. Na4 {[%eval +0.16]}  Qa5+ 
+{[%eval +0.32]}  8. c3 {[%eval +0.13]}  Bxg1 {[%eval +0.40]}  9. Bxa6 {[%eval 
+0.00]}  (9. Rxg1 {[%eval -0.50]}  b5 $15 {[%eval -0.52]} ) 9... e5 $11 {[%eval 
+0.00]} ) 4... Qa5+ {[%eval -0.07]}  5. Nc3 {[%eval -0.25]}  (5. c3 {[%eval 
++0.05]}  Qxc5 {[%eval +0.04]}  6. e3 {[%eval -0.03]}  Qc6 {[%eval -0.06]}  7. 
+Nf3 {[%eval -0.61]}  d6 {[%eval -0.44]}  8. Bg3 {[%eval -0.62]}  e5 {[%eval 
+-0.53]}  9. Qd1 {[%eval -0.57]}  Be7 $11 {[%eval -0.29]} ) 5... Nxc5 {[%eval 
+-0.09]}  6. Bd2 {[%eval -0.18]}  Qc7 $11 {[%eval -0.14]} )  (3. c3 {[%eval 
+-0.22]}  Qb6 {[%eval -0.04]}  4. Qc2 {[%eval -0.74]}  (4. Qb3 {[%eval -0.35]}  
+Qxb3 {[%eval -0.35]}  5. axb3 {[%eval -0.38]}  cxd4 {[%eval -0.32]}  6. cxd4 
+{[%eval -0.32]}  Nc6 $11 {[%eval -0.34]} ) 4... cxd4 {[%eval -0.33]}  5. cxd4 
+{[%eval -0.35]}  Nc6 {[%eval -0.37]}  6. e3 {[%eval -0.29]}  d5 $11 {[%eval 
++0.88]} ) 3... d6 {[%eval +0.35]}  4. Nc3 {[%eval +0.39]}  (4. c4 {[%eval 0.00]} 
+ e5 {[%eval -0.01]}  5. dxe6 {[%eval -0.62]}  Bxe6 $11 {[%eval -0.08]Black is 
+already equal intending to continue with Nc6, Be7, 0-0 and d5.} ) 4... e5 $1 
+{[%eval +0.65]Taking advantage of the early Bf4.  Otherwise, the play may drift 
+into the variations that are favourable for White.}  (4... g6 $6 {[%eval +0.79]} 
+ 5. e4 {[%eval +0.57]}  Bg7 {[%eval +0.61]}  6. Nf3 {[%eval +0.67]}  O-O {[%eval 
++0.72]}  7. a4 $14 {[%eval +0.50]} ) 5. Bg5 {[%eval +0.45]}  (5. Bd2 {[%eval 
+-0.41]}  e4 $1 {[%eval -0.16]}  6. Bg5 {[%eval -0.50]}  Be7 {[%eval -0.25]}  7. 
+e3 {[%eval -0.17]}  O-O {[%eval +0.02]}  8. Nge2 {[%eval +0.04]}  Nh5 {[%eval 
+-0.03]}  9. Bxe7 {[%eval -0.18]}  Qxe7 $11 {[%eval 0.00]} )  (5. dxe6 {[%eval 
++0.15]}  Bxe6 {[%eval +0.24]}  6. e4 {[%eval +0.20]}  Nc6 {[%eval +0.14]}  7. 
+Nf3 {[%eval +0.12]}  Be7 {[%eval +0.32]}  8. Be2 {[%eval 0.00]}  O-O {[%eval 
++0.11]}  9. O-O {[%eval +0.05]}  Qd7 $11 {[%eval +0.06]Black intends Rad8 and 
+d5.} ) 5... h6 {[%eval +0.57]}  6. Bxf6 {[%eval +0.50]}  (6. Bh4 {[%eval -0.14]} 
+ g5 {[%eval +0.17]}  7. Bg3 {[%eval -0.47]}  h5 {[%eval -0.32]}  8. h4 {[%eval 
+-0.32]}  g4 {[%eval -0.27]}  9. e4 {[%eval -0.45]}  Bh6 $11 {[%eval -0.16]} ) 
+6... Qxf6 $11 {[%eval +0.57]}  *
+
+[ChapterId "10"]
+[ChapterTitle "1.d4 Nf6 2.Bf4 c5!? 3.non-e3"]
+[ContentType "Model Game"]
+[Event "GCT Blitz YourNextMove"]
+[Guid "2fbaedf7-896e-4583-a023-50dd9ac15419"]
+[Date "2017.07.01"]
+[White "Carlsen, M."]
+[Black "Aronian, L."]
+[Result "1-0"]
+
+
+1. d4 {[%eval 0.08]}  Nf6 {[%eval 0.13]}  2. Bf4 {[%eval -0.08]}  c5 {[%eval 
+0.12]}  3. d5 {[%eval 0.0]}  d6 {[%eval 0.2]}  4. Nc3 {[%eval 0.0]}  e5 {[%eval 
+0.03]}  5. Bd2 {[%eval -0.29]}  Be7 {[%eval 0.44]}  6. e4 {[%eval 0.52]}  O-O 
+{[%eval 0.45]}  7. Be2 {[%eval 0.26]}  Nbd7 {[%eval 0.97]}  8. Nf3 {[%eval 
+0.58]}  Ne8 {[%eval 0.56]}  9. a4 {[%eval 0.6]}  g6 {[%eval 1.01]}  10. Bh6 
+{[%eval 1.02]}  Ng7 {[%eval 0.96]}  11. Nd2 {[%eval 0.57]}  Kh8 {[%eval 1.12]}  
+12. h4 {[%eval 1.02]}  Nf6 {[%eval 1.18]}  13. h5 {[%eval 0.92]}  Nfxh5 {[%eval 
+1.0]}  14. Bxh5 {[%eval 0.83]}  Nxh5 {[%eval 0.89]}  15. Bxf8 {[%eval 1.1]}  
+Qxf8 {[%eval 1.05]}  16. g3 {[%eval 1.03]}  Nf6 {[%eval 1.02]}  17. Qe2 {[%eval 
+1.02]}  Kg7 {[%eval 1.02]}  18. Nc4 {[%eval 1.01]}  b6 {[%eval 1.19]}  19. a5 
+{[%eval 0.35]}  Ba6 {[%eval 0.68]}  20. axb6 {[%eval 0.49]}  axb6 {[%eval 0.77]} 
+ 21. O-O {[%eval 0.4]}  h5 {[%eval 0.89]}  22. Rxa6 {[%eval 0.92]}  Rxa6 {[%eval 
+1.0]}  23. Nxd6 {[%eval 0.9]}  Ra8 {[%eval 1.02]}  24. Nc4 {[%eval 1.15]}  Qb8 
+{[%eval 0.95]}  25. Rd1 {[%eval 0.35]}  b5 {[%eval 0.19]}  26. d6 {[%eval 0.06]} 
+ bxc4 {[%eval 0.47]}  27. dxe7 {[%eval 0.32]}  Qc7 {[%eval 0.3]}  28. Qxc4 
+{[%eval -0.08]}  Qxe7 {[%eval -0.08]}  29. Nd5 {[%eval -0.02]}  Nxd5 {[%eval 
+0.36]}  30. Rxd5 {[%eval 0.0]}  Qf6 {[%eval 0.63]}  31. Qc3 {[%eval 0.63]}  h4 
+{[%eval 0.63]}  32. Qxe5 {[%eval 0.63]}  hxg3 {[%eval 0.66]}  33. fxg3 {[%eval 
+0.0]}  Ra2 {[%eval 0.13]}  34. Qxf6+ {[%eval 0.08]}  Kxf6 {[%eval 0.08]}  35. 
+Rxc5 {[%eval 0.08]}  Rxb2 {[%eval 0.08]}  36. Kf2 {[%eval 0.08]}  Ke6 {[%eval 
+0.08]}  37. Ke3 {[%eval 0.00]}  f5 {[%eval +5.03]}  38. Kd4 {[%eval +0.91]}  
+fxe4 {[%eval +3.16]}  39. Kxe4 {[%eval +3.28]}  Rb4+ {[%eval +7.20]}  40. c4 
+{[%eval +6.65]}  Rb3 {[%eval +7.60]}  41. g4 {[%eval +7.68]}  Rg3 {[%eval 
++7.49]}  42. Rc6+ {[%eval +7.45]}  Kf7 {[%eval +7.45]}  43. Kf4 {[%eval +7.44]}  
+Ra3 {[%eval +7.89]}  44. Kg5 {[%eval +8.17]}  Ra5+ {[%eval +8.77]}  45. c5 
+{[%eval +8.24]}  Ra4 {[%eval +9.80]}  46. Rf6+ {[%eval +9.82]}  Ke7 {[%eval 
++9.61]}  47. Rxg6 {[%eval +7.81]}  Rc4 {[%eval +9.92]}  48. Rc6 {[%eval +9.92]}  
+Kd7 {[%eval +10.12]}  49. Rd6+ {[%eval +10.13]}  Ke7 {[%eval +10.29]}  50. Rd5 
+{[%eval +10.27]}  Ke6 {[%eval +10.30]}  51. Rf5 {[%eval +10.28]}  Ke7 {[%eval 
++10.26]}  52. Kh4 {[%eval +8.41]}  Ke6 {[%eval 10.15]}  53. Kh5 {[%eval 6.8]}  
+Rd4 {[%eval 16.72]}  54. Rf1 {[%eval 10.45]}  Rd5+ {[%eval 46.44]}  55. g5 
+{[%eval 11.97]}  Rxc5 {[%eval 47.8]}  56. Kh6 {[%eval 47.8]}  Rc2 {[%eval 47.8]} 
+ 57. g6 {[%eval 47.8]}  Rh2+ {[%eval 47.71]}  58. Kg7 {[%eval 47.71]}  Rg2 
+{[%eval 47.71]}  59. Kh7 {[%eval 47.67]}  Rh2+ {[%eval 47.46]}  60. Kg8 {[%eval 
+11.35]}  1-0
+
+
+

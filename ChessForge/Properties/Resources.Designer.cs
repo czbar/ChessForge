@@ -70,6 +70,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Chapters.
+        /// </summary>
+        public static string AllChapters {
+            get {
+                return ResourceManager.GetString("AllChapters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All files.
         /// </summary>
         public static string AllFiles {
@@ -331,7 +340,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click a bookmark to start training.
+        ///   Looks up a localized string similar to Click a bookmark to navigate to the bookmarked psoition.
         /// </summary>
         public static string cbClickBookmarkToTrain {
             get {

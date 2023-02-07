@@ -9,7 +9,7 @@ ChessForge.exe.config
 Newtonsoft.Json.xml
 System.Net.Http.Formatting.xml
 
-stockfish_15_x64_avx2.exe
+stockfish_15_x86_64.exe
 
 Resources/Sounds/Capture.mp3
 Resources/Sounds/InvalidMove.mp3

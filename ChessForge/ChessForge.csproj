@@ -101,6 +101,7 @@
     <Compile Include="BoardArrow.cs" />
     <Compile Include="BoardShapesManager.cs" />
     <Compile Include="BoardCircle.cs" />
+    <Compile Include="BookmarkWrapper.cs" />
     <Compile Include="Chapter.cs" />
     <Compile Include="ChapterFromLineDialog.xaml.cs">
       <DependentUpon>ChapterFromLineDialog.xaml</DependentUpon>
@@ -393,6 +394,24 @@
     <Resource Include="Resources\Images\chevron-up.png" />
     <Resource Include="Resources\Images\ToggleOff.png" />
     <Resource Include="Resources\Images\ToggleOn.png" />
+    <Resource Include="Resources\Images\ChessBoardPaleBlue.png" />
+    <Resource Include="Resources\Images\ChessBoardPaleBlueSmall.png" />
+    <Resource Include="Resources\Images\ChessBoardBrownShades.png" />
+    <Resource Include="Resources\Images\ChessBoardBrownShadesSmall.png" />
+    <Resource Include="Resources\Images\ChessBoardOrangeShades.png" />
+    <Resource Include="Resources\Images\ChessBoardOrangeShadesSmall.png" />
+    <Resource Include="Resources\Images\lichess\bB.png" />
+    <Resource Include="Resources\Images\lichess\bK.png" />
+    <Resource Include="Resources\Images\lichess\bN.png" />
+    <Resource Include="Resources\Images\lichess\bP.png" />
+    <Resource Include="Resources\Images\lichess\bQ.png" />
+    <Resource Include="Resources\Images\lichess\bR.png" />
+    <Resource Include="Resources\Images\lichess\wB.png" />
+    <Resource Include="Resources\Images\lichess\wK.png" />
+    <Resource Include="Resources\Images\lichess\wN.png" />
+    <Resource Include="Resources\Images\lichess\wP.png" />
+    <Resource Include="Resources\Images\lichess\wQ.png" />
+    <Resource Include="Resources\Images\lichess\wR.png" />
     <Content Include="Resources\Sounds\InvalidMove.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

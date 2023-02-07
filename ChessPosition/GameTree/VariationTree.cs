@@ -590,25 +590,23 @@ namespace GameTree
         /// bookmark's TreeNode.
         /// </summary>
         /// <param name="nd"></param>
-        public int AddBookmark(TreeNode nd, bool inFront = false)
+        public Bookmark AddBookmark(TreeNode nd, bool inFront = false)
         {
+            Bookmark bm = null;
             if (FindBookmarkIndex(nd) == -1)
             {
+                bm = new Bookmark(nd);
                 if (inFront)
                 {
-                    Bookmarks.Insert(0, new Bookmark(nd));
+                    Bookmarks.Insert(0, bm);
                 }
                 else
                 {
-                    Bookmarks.Add(new Bookmark(nd));
+                    Bookmarks.Add(bm);
                 }
                 nd.IsBookmark = true;
-                return 0;
             }
-            else
-            {
-                return -1;
-            }
+            return bm;
         }
 
         /// <summary>
