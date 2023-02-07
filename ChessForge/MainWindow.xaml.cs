@@ -287,8 +287,8 @@ namespace ChessForge
             // main chess board
             MainChessBoard = new ChessBoard(true, MainCanvas, UiImgMainChessboard, null, true, true);
 
-            TrainingFloatingBoard = new ChessBoardSmall(_cnvTrainingFloat, _imgTrainingFloatingBoard, null, true, false);
-            ChaptersFloatingBoard = new ChessBoardSmall(_cnvChaptersFloat, _imgChaptersFloatingBoard, null, true, false);
+            TrainingFloatingBoard = new ChessBoardSmall(_cnvTrainingFloat, _imgTrainingFloatingBoard, null, null, true, false);
+            ChaptersFloatingBoard = new ChessBoardSmall(_cnvChaptersFloat, _imgChaptersFloatingBoard, null, null, true, false);
 
 
             BookmarkManager.InitBookmarksGui(this);
@@ -2450,6 +2450,26 @@ namespace ChessForge
             {
                 AppState.LastActiveManualReviewTab = WorkbookManager.ActiveTab;
             }
+        }
+
+        /// <summary>
+        /// The All Chapters checkbox in the Bookamrks view was checked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbAllChaptersBookmarks_Checked(object sender, RoutedEventArgs e)
+        {
+            BookmarkManager.BuildBookmarkList(null);
+        }
+
+        /// <summary>
+        /// The All Chapters checkbox in the Bookamrks view was unchecked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbAllChaptersBookmarks_Unchecked(object sender, RoutedEventArgs e)
+        {
+            BookmarkManager.BuildBookmarkList(WorkbookManager.SessionWorkbook.ActiveChapter);
         }
     }
 }
