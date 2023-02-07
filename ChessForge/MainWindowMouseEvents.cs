@@ -931,6 +931,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabBookmarks_GotFocus(object sender, RoutedEventArgs e)
         {
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
+            {
+                return;
+            }
+
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.BOOKMARKS;
             AppState.ShowExplorers(false, false);
 
