@@ -412,6 +412,8 @@
     <Resource Include="Resources\Images\lichess\wP.png" />
     <Resource Include="Resources\Images\lichess\wQ.png" />
     <Resource Include="Resources\Images\lichess\wR.png" />
+    <Resource Include="Resources\Images\ChessBoardLightBlueSmall.png" />
+    <Resource Include="Resources\Images\ChessBoardLightGreenSmall.png" />
     <Content Include="Resources\Sounds\InvalidMove.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
