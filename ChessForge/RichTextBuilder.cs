@@ -63,6 +63,23 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Moves content of one document to another. 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public void MoveDocument(ref FlowDocument source, ref FlowDocument target)
+        {
+            target.Blocks.Clear();
+            var blockList = source.Blocks.ToList();
+
+            foreach (Block blk in blockList)
+            {
+                source.Blocks.Remove(blk);
+                target.Blocks.Add(blk);
+            }
+        }
+
+        /// <summary>
         /// Adjusts the configured font size per configuration parameters.
         /// </summary>
         /// <param name="origSize"></param>
