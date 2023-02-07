@@ -1984,6 +1984,8 @@ namespace ChessForge
             try
             {
                 Bookmark bm = BookmarkManager.AddBookmark(AppState.ActiveVariationTree, AppState.ActiveVariationTree.SelectedNodeId, AppState.ActiveArticleIndex);
+                BookmarkManager.SetLastAddedBookmark(bm);
+
                 if (bm == null)
                 {
                     MessageBox.Show(Properties.Resources.BookmarkAlreadyExists, Properties.Resources.Bookmarks, MessageBoxButton.OK);
