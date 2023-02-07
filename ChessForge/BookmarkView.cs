@@ -74,16 +74,33 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds a string to display the chapter index 
+        /// above the Article's label. 
+        /// </summary>
+        /// <returns></returns>
+        private string BuildChapterLabelText()
+        {
+            if (Tree == null)
+            {
+                return "";
+            }
+            else
+            {
+                return Properties.Resources.Chapter + " " + (ChapterIndex + 1).ToString();
+            }
+        }
+
+        /// <summary>
         /// Builds a string to display as the label above the Bookmark.
         /// It includes the Article's type, index and move notation. 
         /// </summary>
         /// <returns></returns>
-        private string BuildLabelText()
+        private string BuildArticleLabelText()
         {
             StringBuilder sb = new StringBuilder();
-            GameData.ContentType contetType = ContentType;
+            GameData.ContentType contentType = ContentType;
 
-            switch (contetType)
+            switch (contentType)
             {
                 case GameData.ContentType.STUDY_TREE:
                     sb.Append(Properties.Resources.Study);
@@ -100,10 +117,10 @@ namespace ChessForge
 
             if (ArticleIndex >= 0)
             {
-                sb.Append(" #" + (ArticleIndex + 1).ToString());
+                sb.Append(" " + (ArticleIndex + 1).ToString());
             }
 
-            sb.Append(" (" + MoveUtils.BuildSingleMoveText(BookmarkWrapper.Node, true, true) + ")");
+            sb.Append(" (" + MoveUtils.BuildSingleMoveText(BookmarkWrapper.Node, true, false) + ")");
 
             return sb.ToString();
         }
@@ -115,7 +132,9 @@ namespace ChessForge
         public void Activate()
         {
             ChessBoard.DisplayPosition(null, BookmarkWrapper.Node.Position);
-            string lblText = BuildLabelText();
+            ChessBoard.SetTopLabelText(BuildChapterLabelText());
+            
+            string lblText = BuildArticleLabelText();
             ChessBoard.SetLabelText(lblText);
             SetOpacity(1);
         }
@@ -128,7 +147,9 @@ namespace ChessForge
         public void Deactivate()
         {
             ChessBoard.ClearBoard();
+            ChessBoard.SetTopLabelText("");
             ChessBoard.SetLabelText(Resources.ResourceManager.GetString("Bookmark"));
+            ChessBoard.BoardImgCtrl.Source = ChessBoards.ChessBoardGreySmall;
             SetOpacity(0.5);
         }
     }
