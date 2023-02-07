@@ -1007,6 +1007,9 @@ SelectReferences=Select Reference Games and/or Exercises
 #Select items
 SelectItems=Select Items
 
+#All chapters
+AllChapters=All Chapters
+
 #Show all chapters
 ShowAllChapters=Show All Chapters
 

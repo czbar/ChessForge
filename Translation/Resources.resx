@@ -985,6 +985,9 @@
   <data name="SelectItems" xml:space="preserve">
     <value>Select Items</value>
   </data>
+  <data name="AllChapters" xml:space="preserve">
+    <value>All Chapters</value>
+  </data>
   <data name="ShowAllChapters" xml:space="preserve">
     <value>Show All Chapters</value>
   </data>
@@ -1232,7 +1235,7 @@
     <value>Double click in the Scoresheet for auto-replay</value>
   </data>
   <data name="cbClickBookmarkToTrain" xml:space="preserve">
-    <value>Click a bookmark to start training</value>
+    <value>Click a bookmark to navigate to the bookmarked psoition</value>
   </data>
   <data name="cbRightClickBookmarkManager" xml:space="preserve">
     <value>Right click to open menu for Bookmark management options</value>
