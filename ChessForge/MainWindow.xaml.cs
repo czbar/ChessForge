@@ -2181,7 +2181,7 @@ namespace ChessForge
 
             if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
             {
-                Timers.StopAll();
+                Timers.StopAllEvalTimers();
             }
         }
 
