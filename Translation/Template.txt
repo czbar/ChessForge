@@ -280,6 +280,10 @@ SaveAs=
 BackUpThisVersion=
 
 
+#description: Print
+#english: Print=Print
+Print=
+
 
 #description: TOP LEVEL MENU: Training
 #english: Training=Training
@@ -671,14 +675,13 @@ Chapter0of0=
 #english: StartTrainingFromThisBookmark=Start Training from This Bookmark
 StartTrainingFromThisBookmark=
 
+#description: Go to bookmarked position
+#english: GoToPosition= Go To Position
+GoToPosition=
+
 #description: Generate bookmarks
 #english: GenerateBookmarks=Generate Bookmarks
 GenerateBookmarks=
-
-#description: Switch to the Study Tree view to add a bookmark
-#! Deprecate this?
-#english: GoToStudyToAddBookmark=Go to Study to Add a Bookmark
-GoToStudyToAddBookmark=
 
 #description: Delete the selected bookmark
 #english: DeleteThisBookmark=Delete This Bookmark

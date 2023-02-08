@@ -280,6 +280,10 @@ SaveAs=Zapisz $0 jako ...
 BackUpThisVersion=Zrób Kopię tej Wersji...
 
 
+#description: Print
+#english: Print=Print
+Print=Drukuj
+
 
 #description: TOP LEVEL MENU: Training
 #english: Training=Training
@@ -671,14 +675,13 @@ Chapter0of0=Rozdział $0 z $1
 #english: StartTrainingFromThisBookmark=Start Training from This Bookmark
 StartTrainingFromThisBookmark=Rozpocznij Trening od tej Zakładki
 
+#description: Go to bookmarked position
+#english: GoToPosition= Go To Position
+GoToPosition= Idź do Pozycji
+
 #description: Generate bookmarks
 #english: GenerateBookmarks=Generate Bookmarks
 GenerateBookmarks=Generuj Zakładki
-
-#description: Switch to the Study Tree view to add a bookmark
-#! Deprecate this?
-#english: GoToStudyToAddBookmark=Go to Study to Add a Bookmark
-GoToStudyToAddBookmark=Idź do Widoku Wariantów, by Dodać Zakładkę
 
 #description: Delete the selected bookmark
 #english: DeleteThisBookmark=Delete This Bookmark

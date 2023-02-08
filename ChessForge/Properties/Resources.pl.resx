@@ -306,6 +306,9 @@
   <data name="BackUpThisVersion" xml:space="preserve">
     <value>Zrób Kopię tej Wersji...</value>
   </data>
+  <data name="Print" xml:space="preserve">
+    <value>Drukuj</value>
+  </data>
   <data name="Training" xml:space="preserve">
     <value>Trening</value>
   </data>
@@ -564,11 +567,11 @@
   <data name="StartTrainingFromThisBookmark" xml:space="preserve">
     <value>Rozpocznij Trening od tej Zakładki</value>
   </data>
+  <data name="GoToPosition" xml:space="preserve">
+    <value>Idź do Pozycji</value>
+  </data>
   <data name="GenerateBookmarks" xml:space="preserve">
     <value>Generuj Zakładki</value>
-  </data>
-  <data name="GoToStudyToAddBookmark" xml:space="preserve">
-    <value>Idź do Widoku Wariantów, by Dodać Zakładkę</value>
   </data>
   <data name="DeleteThisBookmark" xml:space="preserve">
     <value>Usuń Zakładkę</value>

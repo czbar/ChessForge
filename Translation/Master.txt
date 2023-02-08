@@ -217,6 +217,9 @@ SaveAs=Save $0 As ...
 BackUpThisVersion=Back up this Version ...
 
 
+#Print
+Print=Print
+
 
 #TOP LEVEL MENU: Training
 Training=Training
@@ -522,12 +525,11 @@ Chapter0of0=Chapter $0 of $1
 #Start training from the selected bookmark
 StartTrainingFromThisBookmark=Start Training from This Bookmark
 
+#Go to bookmarked position
+GoToPosition= Go To Position
+
 #Generate bookmarks
 GenerateBookmarks=Generate Bookmarks
-
-#Switch to the Study Tree view to add a bookmark
-#! Deprecate this?
-GoToStudyToAddBookmark=Go to Study to Add a Bookmark
 
 #Delete the selected bookmark
 DeleteThisBookmark=Delete This Bookmark
