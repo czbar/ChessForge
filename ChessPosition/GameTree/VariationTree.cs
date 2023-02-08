@@ -443,63 +443,6 @@ namespace GameTree
             }
         }
 
-
-        /// <summary>
-        /// If there are no bookmarks, we will generate some
-        /// for the user.
-        /// In the bookmarked position, the training side
-        /// should be on move.
-        /// 
-        /// Hence, we look for forks on the moves by the side
-        /// opposite to the side doing the training.
-        /// If the fork is for the training side, the parent
-        /// may be a good candidate for bookmarking.
-        /// </summary>
-        public void GenerateBookmarks(PieceColor _trainingSide)
-        {
-            if (Nodes.Count == 0)
-                return;
-
-            int MAX_BOOKMARKS = 9;
-
-            // find the first, highest level, fork
-            TreeNode fork = FindNextFork(Nodes[0]);
-            if (fork != null)
-            {
-                // bookmark children of the first fork
-                if (fork.ColorToMove != _trainingSide)
-                {
-                    BookmarkChildren(fork, MAX_BOOKMARKS);
-                }
-                else if (fork.Parent != null && fork.Parent.NodeId != 0)
-                {
-                    BookmarkChildren(fork.Parent, MAX_BOOKMARKS);
-                }
-
-                // look for the next fork in each child
-                foreach (TreeNode nd in fork.Children)
-                {
-                    TreeNode nextFork = FindNextFork(nd);
-                    if (nextFork != null)
-                    {
-                        if (nextFork.ColorToMove != _trainingSide)
-                        {
-                            BookmarkChildren(nextFork, MAX_BOOKMARKS);
-                        }
-                        else
-                        {
-                            BookmarkChildren(nextFork.Parent, MAX_BOOKMARKS);
-                        }
-                    }
-                }
-            }
-
-            if (Bookmarks.Count == 0)
-            {
-                BookmarkAnything(_trainingSide);
-            }
-        }
-
         /// <summary>
         /// Returns the list of Nodes from the starting position to the
         /// last node before the passed node or to the last position before the first fork  
@@ -1516,26 +1459,6 @@ namespace GameTree
                     AddBookmark(Nodes[i]);
                     break;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Adds children of a node to the list of Bookmarks.
-        /// </summary>
-        /// <param name="fork">Node whose children to bookmark.</param>
-        /// <param name="maxCount">Max allowed number of bookmarked positions.</param>
-        private void BookmarkChildren(TreeNode fork, int maxCount)
-        {
-            if (fork == null)
-                return;
-
-            foreach (TreeNode nd in fork.Children)
-            {
-                if (Bookmarks.Count >= maxCount)
-                {
-                    break;
-                }
-                AddBookmark(nd);
             }
         }
 
