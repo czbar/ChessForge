@@ -409,7 +409,7 @@
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="180"/>
-                                            <ColumnDefinition Width="180"/>
+                                            <ColumnDefinition Width="155"/>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="320*"/>
                                         </Grid.ColumnDefinitions>
