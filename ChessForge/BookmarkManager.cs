@@ -446,17 +446,11 @@ namespace ChessForge
                         case "_mnTrainFromBookmark":
                             menuItem.IsEnabled = isEnabled;
                             break;
-                        case "_mnAddBookmark":
-                            menuItem.IsEnabled = true;
-                            break;
                         case "_mnDeleteBookmark":
                             menuItem.IsEnabled = isEnabled;
                             break;
                         case "_mnDeleteAllBookmarks":
                             menuItem.IsEnabled = BookmarkList.Count > 0;
-                            break;
-                        case "_mnGenerateBookmark":
-                            menuItem.Visibility = BookmarkList.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
                             break;
                     }
                 }
@@ -489,13 +483,13 @@ namespace ChessForge
                     switch (contetType)
                     {
                         case GameData.ContentType.STUDY_TREE:
-                            imgBoard = ChessBoards.ChessBoardBlueSmall;
+                            imgBoard = Configuration.StudyBoardSet.SmallBoard;
                             break;
                         case GameData.ContentType.MODEL_GAME:
-                            imgBoard = ChessBoards.ChessBoardBrownShadesSmall;
+                            imgBoard = Configuration.GameBoardSet.SmallBoard;
                             break;
                         case GameData.ContentType.EXERCISE:
-                            imgBoard = ChessBoards.ChessBoardPaleBlue;
+                            imgBoard = Configuration.ExerciseBoardSet.SmallBoard;
                             break;
                         default:
                             imgBoard = ChessBoards.ChessBoardGreySmall;

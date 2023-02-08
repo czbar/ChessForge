@@ -534,7 +534,7 @@ namespace ChessForge
 
                 EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
 
-                _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                _mainWin.UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
                 _mainWin.MainChessBoard.FlipBoard(PieceColor.White);
                 _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
                 _mainWin.RemoveMoveSquareColors();
@@ -817,23 +817,23 @@ namespace ChessForge
             switch (tabType)
             {
                 case WorkbookManager.TabViewType.CHAPTERS:
-                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                    MainWin.UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
                     break;
                 case WorkbookManager.TabViewType.STUDY:
-                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                    MainWin.UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
                     break;
                 case WorkbookManager.TabViewType.MODEL_GAME:
                     //bool res = UiTabModelGames.Focus();
-                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardLightBlue;
+                    MainWin.UiImgMainChessboard.Source = Configuration.GameBoardSet.MainBoard;
                     break;
                 case WorkbookManager.TabViewType.EXERCISE:
-                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardLightGreen;
+                    MainWin.UiImgMainChessboard.Source = Configuration.ExerciseBoardSet.MainBoard;
                     break;
                 case WorkbookManager.TabViewType.BOOKMARKS:
-                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                    MainWin.UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
                     break;
                 default:
-                    MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                    MainWin.UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
                     break;
             }
         }

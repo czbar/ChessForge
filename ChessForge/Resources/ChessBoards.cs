@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using static ChessForge.ChessBoards;
 
 namespace ChessForge
 {
@@ -12,6 +14,16 @@ namespace ChessForge
     /// </summary>
     public class ChessBoards
     {
+        /// <summary>
+        /// Identifiers of board sets
+        /// </summary>
+        public enum ColorSet
+        {
+            BLUE,
+            LIGHT_BLUE,
+            LIGH_GREEN,
+        }
+
         public static BitmapImage ChessBoardBlue = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardBlue.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage ChessBoardBlueSmall = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardBlueSmall.png", UriKind.RelativeOrAbsolute));
 
@@ -23,18 +35,43 @@ namespace ChessForge
 
         public static BitmapImage ChessBoardGreySmall = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardGreySmall.png", UriKind.RelativeOrAbsolute));
 
-        public static BitmapImage ChessBoardBrown = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardBrown.png", UriKind.RelativeOrAbsolute));
-        
         public static BitmapImage ChessBoardGreen = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardGreen.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ChessBoardGreenSmall = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardGreenSmall.png", UriKind.RelativeOrAbsolute));
 
         public static BitmapImage ChessBoardPaleBlue = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardPaleBlue.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage ChessBoardPaleBlueSmall = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardPaleBlueSmall.png", UriKind.RelativeOrAbsolute));
 
-        public static BitmapImage ChessBoardBrownShades = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardBrownShades.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage ChessBoardBrownShadesSmall = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardBrownShadesSmall.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ChessBoardBrown = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardBrown.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ChessBoardBrownSmall = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardBrownSmall.png", UriKind.RelativeOrAbsolute));
 
         public static BitmapImage ChessBoardOrangeShades = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardOrangeShades.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage ChessBoardOrangeShadesSmall = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardOrangeShadesSmall.png", UriKind.RelativeOrAbsolute));
+
+        /// <summary>
+        /// Preconfigured board color sets.
+        /// </summary>
+        public static Dictionary<ColorSet, BoardSet> BoardSets = new Dictionary<ColorSet, BoardSet>()
+        {
+            {ColorSet.BLUE,       new BoardSet(ChessBoardBlue, ChessBoardBlueSmall) },
+            {ColorSet.LIGHT_BLUE, new BoardSet(ChessBoardLightBlue, ChessBoardLightBlueSmall) },
+            {ColorSet.LIGH_GREEN, new BoardSet(ChessBoardLightGreen, ChessBoardLightGreenSmall) },
+        };
+
+    }
+
+    /// <summary>
+    /// Board set configuration.
+    /// </summary>
+    public class BoardSet
+    {
+        public BitmapImage MainBoard;
+        public BitmapImage SmallBoard;
+
+        public BoardSet(BitmapImage main, BitmapImage small)
+        {
+            MainBoard = main;
+            SmallBoard = small;
+        }
     }
 
     /// <summary>
