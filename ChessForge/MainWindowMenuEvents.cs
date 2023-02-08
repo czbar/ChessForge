@@ -1943,19 +1943,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Allows the user to add a bookmark by re-directing them to the Workbook view 
-        /// and advising on the procedure. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnAddBookmark_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO: remove this method and calling menu item
-            UiTabStudyTree.Focus();
-//            MessageBox.Show("Right-click a move and select \"Add to Bookmarks\" from the popup-menu", "Chess Forge Training", MessageBoxButton.OK);
-        }
-
-        /// <summary>
         /// A request to delete the clicked bookmark.
         /// </summary>
         /// <param name="sender"></param>

@@ -384,8 +384,6 @@
                                 <ContextMenu x:Name="_cmBookmarks">
                                     <MenuItem x:Name="_mnTrainFromBookmark" Header="{x:Static p:Resources.StartTrainingFromThisBookmark}" Click="UiMnTrainFromBookmark_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnAddBookmark" Header="{x:Static p:Resources.GoToStudyToAddBookmark}" Click="UiMnAddBookmark_Click" />
-                                    <Separator />
                                     <MenuItem x:Name="_mnDeleteBookmark" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnDeleteBookmark_Click" />
                                     <MenuItem x:Name="_mnDeleteAllBookmarks" Header="{x:Static p:Resources.DeleteAllBookmarks}" Click="UiMnDeleteAllBookmarks_Click" />
                                 </ContextMenu>
