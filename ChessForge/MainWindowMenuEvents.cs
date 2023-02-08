@@ -2101,11 +2101,21 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnTrainFromBookmark_Click(object sender, RoutedEventArgs e)
         {
-            if (BookmarkManager.ClickedIndex >= 0)
-            {
-                SetAppInTrainingMode(BookmarkManager.ClickedIndex);
-            }
+            BookmarkManager.SetActiveEntities(false);
+            SetAppInTrainingMode(BookmarkManager.SelectedBookmarkNode);
         }
+
+        /// <summary>
+        /// Handles a request from the Bookmarks page to navigate to 
+        /// the bookmarked position.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnBmGotoPosition_Click(object sender, RoutedEventArgs e)
+        {
+            BookmarkManager.SetActiveEntities(true);
+        }
+
 
         /// <summary>
         /// The user requested to restart the training game after the most recently 
