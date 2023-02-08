@@ -946,7 +946,8 @@ namespace ChessForge
                 {
                     return;
                 }
-                SetStudyStateOnFocus();
+                UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
+                ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
                 BookmarkManager.BuildBookmarkList(WorkbookManager.SessionWorkbook.ActiveChapter);
             }
             catch
