@@ -45,7 +45,7 @@ namespace ChessForge
                 }
 
                 // do not process if this was a canceled promotion
-                if ((!isPromotion || promoteTo != PieceType.None)) 
+                if ((!isPromotion || promoteTo != PieceType.None))
                 {
                     moveEngCode.Append((char)(origSquareNorm.Xcoord + (int)'a'));
                     moveEngCode.Append((char)(origSquareNorm.Ycoord + (int)'1'));
@@ -245,6 +245,11 @@ namespace ChessForge
                     if (nd.IsNewUserMove && !preExist)
                     {
                         AppState.MainWin.AppendNodeToActiveLine(nd, false);
+
+                        AppState.MainWin.RebuildActiveTreeView();
+#if false
+                    //TODO: optimizations below did not quite work. Need a performance refactor
+
                         // in exercise this can be the first move (nd.Parent.NodeId == 0) in which case we want to call a Rebuild so we get the move number
                         if (nd.Parent == null || nd.Parent.NodeId == 0 || AppState.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
                         {
@@ -254,6 +259,7 @@ namespace ChessForge
                         {
                             AppState.MainWin.AddNewNodeToVariationTreeView(nd);
                         }
+#endif
                         AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
                     }
                     else
@@ -280,7 +286,7 @@ namespace ChessForge
                         AppState.MainWin.Timers.Start(AppTimers.TimerId.SOLVING_GUESS_MOVE_MADE);
                     }
                 }
-                catch 
+                catch
                 {
                     return false;
                 }
