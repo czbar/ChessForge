@@ -379,9 +379,10 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabBookmarks" Header="{x:Static p:Resources.Bookmarks}" GotFocus="UiTabBookmarks_GotFocus" LostFocus="UiTabBookmarks_LostFocus">
-                        <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown" ContextMenuOpening="SupressContextMenu">
+                        <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown" ContextMenuOpening="UiBookmarkMenuOpening">
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="_cmBookmarks">
+                                    <MenuItem x:Name="UiMnBmGotoPosition" Header="{x:Static p:Resources.GoToPosition}" Click="UiMnBmGotoPosition_Click" />
                                     <MenuItem x:Name="_mnTrainFromBookmark" Header="{x:Static p:Resources.StartTrainingFromThisBookmark}" Click="UiMnTrainFromBookmark_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnDeleteBookmark" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnDeleteBookmark_Click" />
