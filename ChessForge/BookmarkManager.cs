@@ -42,7 +42,7 @@ namespace ChessForge
         /// There is no limit on how many bookmarks there can be
         /// altogether.
         /// </summary>
-        public static readonly int BOOKMARKS_PER_PAGE = 9;
+        public static readonly int BOOKMARKS_PER_PAGE = 12;
 
         /// <summary>
         /// A Bookmark context menu uses this value
@@ -237,6 +237,9 @@ namespace ChessForge
             BookmarkGuiList.Add(new BookmarkView(new ChessBoardSmall(_mainWin.UiCnvBookmark_7, _mainWin.UiImgBookmark_7, _mainWin.UiLblBookmark_7, _mainWin.UiLblChapter_7, false, false)));
             BookmarkGuiList.Add(new BookmarkView(new ChessBoardSmall(_mainWin.UiCnvBookmark_8, _mainWin.UiImgBookmark_8, _mainWin.UiLblBookmark_8, _mainWin.UiLblChapter_8, false, false)));
             BookmarkGuiList.Add(new BookmarkView(new ChessBoardSmall(_mainWin.UiCnvBookmark_9, _mainWin.UiImgBookmark_9, _mainWin.UiLblBookmark_9, _mainWin.UiLblChapter_9, false, false)));
+            BookmarkGuiList.Add(new BookmarkView(new ChessBoardSmall(_mainWin.UiCnvBookmark_10, _mainWin.UiImgBookmark_10, _mainWin.UiLblBookmark_10, _mainWin.UiLblChapter_10, false, false)));
+            BookmarkGuiList.Add(new BookmarkView(new ChessBoardSmall(_mainWin.UiCnvBookmark_11, _mainWin.UiImgBookmark_11, _mainWin.UiLblBookmark_11, _mainWin.UiLblChapter_11, false, false)));
+            BookmarkGuiList.Add(new BookmarkView(new ChessBoardSmall(_mainWin.UiCnvBookmark_12, _mainWin.UiImgBookmark_12, _mainWin.UiLblBookmark_12, _mainWin.UiLblChapter_12, false, false)));
         }
 
         /// <summary>

@@ -399,19 +399,31 @@
                                     <ColumnDefinition Width="220*"/>
                                     <ColumnDefinition Width="220*"/>
                                     <ColumnDefinition Width="220*"/>
+                                    <ColumnDefinition Width="220*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Canvas x:Name="UiCnvPaging" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Visibility="Visible" >
-                                    <CheckBox x:Name="UiCbAllChaptersBookmarks" Margin="-285,5,0,0" Padding="5,1,0,0" FontSize="10" Checked="UiCbAllChaptersBookmarks_Checked" Unchecked="UiCbAllChaptersBookmarks_Unchecked" Content="{x:Static p:Resources.AllChapters}"></CheckBox>
-                                    <Image x:Name="UiImgLeftArrow" Cursor="Hand" HorizontalAlignment="Left"  Margin="-80,5,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseDown="Bookmarks_PreviousPage_OnPreviewMouseDown"  />
-                                    <Label x:Name="UiLblBookmarkPage" Content="PLACEHOLDER" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-50,0,0,0" Width="100"  FontWeight="Bold"/>
-                                    <Image x:Name="UiImgRightArrow" Cursor="Hand" HorizontalAlignment="Right" Margin="0,5,-80,0" Source="Resources/Images/RightArrow.png" PreviewMouseDown="Bookmarks_NextPage_OnPreviewMouseDown"  />
+                                <Canvas x:Name="UiCnvPaging" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Left" Visibility="Visible" >
+                                    <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="25"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="180"/>
+                                            <ColumnDefinition Width="180"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="320*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox x:Name="UiCbAllChaptersBookmarks" Grid.Column="0" Margin="20,9,0,0" Padding="5,1,0,0" FontSize="10" Checked="UiCbAllChaptersBookmarks_Checked" Unchecked="UiCbAllChaptersBookmarks_Unchecked" Content="{x:Static p:Resources.AllChapters}"></CheckBox>
+                                        <Image x:Name="UiImgLeftArrow" Cursor="Hand" Grid.Column="1" HorizontalAlignment="Right"  Margin="0,9,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseDown="Bookmarks_PreviousPage_OnPreviewMouseDown"  />
+                                        <Label x:Name="UiLblBookmarkPage" Content="PLACEHOLDER" Padding="15,9,15,0" Grid.Column="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,0,0,0" FontWeight="Bold" />
+                                        <Image x:Name="UiImgRightArrow" Cursor="Hand" Grid.Column="3" HorizontalAlignment="Left" Margin="0,9,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseDown="Bookmarks_NextPage_OnPreviewMouseDown"  />
+                                    </Grid>
                                 </Canvas>
 
-                                <Viewbox x:Name="_vbLblChapter_1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Height="30" Margin="0,15,0,0" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblChapter_1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Height="25" Margin="0,15,0,0" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblChapter_1" FontSize="10" Content="{x:Static p:Resources.Chapter}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
-                                <Viewbox x:Name="_vbLblBookmark_1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Height="30" Margin="0,28,0,10" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblBookmark_1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Height="25" Margin="0,28,0,10" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblBookmark_1" FontSize="10"  Content="Partia 3 (4...Ng6)" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbBookmark_1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
@@ -423,10 +435,10 @@
                                     </Canvas>
                                 </Viewbox>
 
-                                <Viewbox x:Name="_vbLblChapter_2" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Height="30" Margin="0,15,0,0" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblChapter_2" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Height="25" Margin="0,15,0,0" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblChapter_2" FontSize="10" Content="{x:Static p:Resources.Chapter}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
-                                <Viewbox x:Name="_vbLblBookmark_2" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="0,28,0,10" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblBookmark_2" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Height="25" Margin="0,28,0,10" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblBookmark_2" FontSize="10" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbBookmark_2" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
@@ -438,10 +450,10 @@
                                     </Canvas>
                                 </Viewbox>
 
-                                <Viewbox x:Name="_vbLblChapter_3" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Height="30" Margin="0,15,0,0" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblChapter_3" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Height="25" Margin="0,15,0,0" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblChapter_3" FontSize="10" Content="{x:Static p:Resources.Chapter}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
-                                <Viewbox x:Name="_vbLblBookmark_3" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="0,28,0,10" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblBookmark_3" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Height="25" Margin="0,28,0,10" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblBookmark_3" FontSize="10" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
                                 <Viewbox x:Name="_vbBookmark_3" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top">
@@ -452,14 +464,14 @@
                                         <Image x:Name="UiImgBookmark_3" Margin="2,2,2,2" Source="Resources/Images/ChessBoardGreySmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" Grid.Column="0" />
                                     </Canvas>
                                 </Viewbox>
-                                
-                                <Viewbox x:Name="_vbLblChapter_4" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Height="30" Margin="0,15,0,0" VerticalAlignment="Top" >
+
+                                <Viewbox x:Name="_vbLblChapter_4" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Height="25" Margin="0,15,0,0" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblChapter_4" FontSize="10" Content="{x:Static p:Resources.Chapter}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
-                                <Viewbox x:Name="_vbLblBookmark_4" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Height="30" Margin="0,28,0,10" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblBookmark_4" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Height="25" Margin="0,28,0,10" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblBookmark_4" FontSize="10" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
-                                <Viewbox x:Name="_vbBookmark_4" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top">
+                                <Viewbox x:Name="_vbBookmark_4" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top">
                                     <Canvas x:Name="UiCnvBookmark_4" Grid.Column="0" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
                                         <Canvas.Background>
                                             <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
@@ -468,13 +480,13 @@
                                     </Canvas>
                                 </Viewbox>
 
-                                <Viewbox x:Name="_vbLblChapter_5" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Height="30" Margin="0,15,0,0" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblChapter_5" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Height="25" Margin="0,15,0,0" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblChapter_5" FontSize="10" Content="{x:Static p:Resources.Chapter}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
-                                <Viewbox x:Name="_vbLblBookmark_5" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="0,28,0,10" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblBookmark_5" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Height="25" Margin="0,28,0,10" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblBookmark_5" FontSize="10" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
-                                <Viewbox x:Name="_vbBookmark_5" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbBookmark_5" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top">
                                     <Canvas x:Name="UiCnvBookmark_5" Grid.Column="0" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
                                         <Canvas.Background>
                                             <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
@@ -483,13 +495,13 @@
                                     </Canvas>
                                 </Viewbox>
 
-                                <Viewbox x:Name="_vbLblChapter_6" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Height="30" Margin="0,15,0,0" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblChapter_6" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Height="25" Margin="0,15,0,0" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblChapter_6" FontSize="10" Content="{x:Static p:Resources.Chapter}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
-                                <Viewbox x:Name="_vbLblBookmark_6" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="0,28,0,10" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblBookmark_6" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Height="25" Margin="0,28,0,10" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblBookmark_6" FontSize="10" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
-                                <Viewbox x:Name="_vbBookmark_6" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbBookmark_6" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
                                     <Canvas x:Name="UiCnvBookmark_6" Grid.Column="0" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
                                         <Canvas.Background>
                                             <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
@@ -498,13 +510,13 @@
                                     </Canvas>
                                 </Viewbox>
 
-                                <Viewbox x:Name="_vbLblChapter_7" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Height="30" Margin="0,15,0,0" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblChapter_7" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Height="25" Margin="0,15,0,0" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblChapter_7" FontSize="10" Content="{x:Static p:Resources.Chapter}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
-                                <Viewbox x:Name="_vbLblBookmark_7" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Height="30" Margin="0,28,0,10" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblBookmark_7" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Height="25" Margin="0,28,0,10" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblBookmark_7" FontSize="10" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
-                                <Viewbox x:Name="_vbBookmark_7" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center"  Margin="10,50,10,10" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbBookmark_7" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
                                     <Canvas x:Name="UiCnvBookmark_7" Grid.Column="0" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
                                         <Canvas.Background>
                                             <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
@@ -513,13 +525,13 @@
                                     </Canvas>
                                 </Viewbox>
 
-                                <Viewbox x:Name="_vbLblChapter_8" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Height="30" Margin="0,15,0,0" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblChapter_8" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" Height="25" Margin="0,15,0,0" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblChapter_8" FontSize="10" Content="{x:Static p:Resources.Chapter}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
-                                <Viewbox x:Name="_vbLblBookmark_8" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="0,28,0,10" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblBookmark_8" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" Height="25" Margin="0,28,0,10" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblBookmark_8" FontSize="10" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
-                                <Viewbox x:Name="_vbBookmark_8" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbBookmark_8" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
                                     <Canvas x:Name="UiCnvBookmark_8" Grid.Column="0" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
                                         <Canvas.Background>
                                             <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
@@ -528,18 +540,63 @@
                                     </Canvas>
                                 </Viewbox>
 
-                                <Viewbox x:Name="_vbLblChapter_9" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" Height="30" Margin="0,15,0,0" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblChapter_9" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Height="25" Margin="0,15,0,0" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblChapter_9" FontSize="10" Content="{x:Static p:Resources.Chapter}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
-                                <Viewbox x:Name="_vbLblBookmark_9" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="0,28,0,10" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbLblBookmark_9" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Height="25" Margin="0,28,0,10" VerticalAlignment="Top" >
                                     <Label x:Name="UiLblBookmark_9" FontSize="10" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
                                 </Viewbox>
-                                <Viewbox x:Name="_vbBookmark_9" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center"  Margin="10,50,10,10" VerticalAlignment="Top" >
+                                <Viewbox x:Name="_vbBookmark_9" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center"  Margin="10,50,10,10" VerticalAlignment="Top" >
                                     <Canvas x:Name="UiCnvBookmark_9" Grid.Column="0" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
                                         <Canvas.Background>
                                             <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                         </Canvas.Background>
                                         <Image x:Name="UiImgBookmark_9" Margin="2,2,2,2" Source="Resources/Images/ChessBoardGreySmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" Grid.Column="0" />
+                                    </Canvas>
+                                </Viewbox>
+
+                                <Viewbox x:Name="_vbLblChapter_10" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Height="25" Margin="0,15,0,0" VerticalAlignment="Top" >
+                                    <Label x:Name="UiLblChapter_10" FontSize="10" Content="{x:Static p:Resources.Chapter}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbLblBookmark_10" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Height="25" Margin="0,28,0,10" VerticalAlignment="Top" >
+                                    <Label x:Name="UiLblBookmark_10" FontSize="10" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbBookmark_10" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="10,50,10,10" VerticalAlignment="Top" >
+                                    <Canvas x:Name="UiCnvBookmark_10" Grid.Column="0" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
+                                        <Canvas.Background>
+                                            <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                        </Canvas.Background>
+                                        <Image x:Name="UiImgBookmark_10" Margin="2,2,2,2" Source="Resources/Images/ChessBoardGreySmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" Grid.Column="0" />
+                                    </Canvas>
+                                </Viewbox>
+
+                                <Viewbox x:Name="_vbLblChapter_11" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" Height="25" Margin="0,15,0,0" VerticalAlignment="Top" >
+                                    <Label x:Name="UiLblChapter_11" FontSize="10" Content="{x:Static p:Resources.Chapter}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbLblBookmark_11" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" Height="25" Margin="0,28,0,10" VerticalAlignment="Top" >
+                                    <Label x:Name="UiLblBookmark_11" FontSize="10" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbBookmark_11" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center"  Margin="10,50,10,10" VerticalAlignment="Top" >
+                                    <Canvas x:Name="UiCnvBookmark_11" Grid.Column="0" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
+                                        <Canvas.Background>
+                                            <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                        </Canvas.Background>
+                                        <Image x:Name="UiImgBookmark_11" Margin="2,2,2,2" Source="Resources/Images/ChessBoardGreySmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" Grid.Column="0" />
+                                    </Canvas>
+                                </Viewbox>
+
+                                <Viewbox x:Name="_vbLblChapter_12" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" Height="25" Margin="0,15,0,0" VerticalAlignment="Top" >
+                                    <Label x:Name="UiLblChapter_12" FontSize="10" Content="{x:Static p:Resources.Chapter}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbLblBookmark_12" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" Height="25" Margin="0,28,0,10" VerticalAlignment="Top" >
+                                    <Label x:Name="UiLblBookmark_12" FontSize="10" Content="{x:Static p:Resources.Bookmark}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                                </Viewbox>
+                                <Viewbox x:Name="_vbBookmark_12" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center"  Margin="10,50,10,10" VerticalAlignment="Top" >
+                                    <Canvas x:Name="UiCnvBookmark_12" Grid.Column="0" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244" PreviewMouseDown="Bookmarks_Chessboards_OnPreviewMouseDown">
+                                        <Canvas.Background>
+                                            <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                        </Canvas.Background>
+                                        <Image x:Name="UiImgBookmark_12" Margin="2,2,2,2" Source="Resources/Images/ChessBoardGreySmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" Grid.Column="0" />
                                     </Canvas>
                                 </Viewbox>
 
