@@ -306,6 +306,9 @@
   <data name="BackUpThisVersion" xml:space="preserve">
     <value>Back up this Version ...</value>
   </data>
+  <data name="Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
   <data name="Training" xml:space="preserve">
     <value>Training</value>
   </data>
@@ -564,11 +567,11 @@
   <data name="StartTrainingFromThisBookmark" xml:space="preserve">
     <value>Start Training from This Bookmark</value>
   </data>
+  <data name="GoToPosition" xml:space="preserve">
+    <value>Go To Position</value>
+  </data>
   <data name="GenerateBookmarks" xml:space="preserve">
     <value>Generate Bookmarks</value>
-  </data>
-  <data name="GoToStudyToAddBookmark" xml:space="preserve">
-    <value>Go to Study to Add a Bookmark</value>
   </data>
   <data name="DeleteThisBookmark" xml:space="preserve">
     <value>Delete This Bookmark</value>

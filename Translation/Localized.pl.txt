@@ -280,6 +280,10 @@ SaveAs=Zapisz $0 jako ...
 BackUpThisVersion=Zrób Kopię tej Wersji...
 
 
+#description: Print
+#english: Print=Print
+Print=Drukuj
+
 
 #description: TOP LEVEL MENU: Training
 #english: Training=Training
@@ -671,14 +675,13 @@ Chapter0of0=Rozdział $0 z $1
 #english: StartTrainingFromThisBookmark=Start Training from This Bookmark
 StartTrainingFromThisBookmark=Rozpocznij Trening od tej Zakładki
 
+#description: Go to bookmarked position
+#english: GoToPosition= Go To Position
+GoToPosition= Idź do Pozycji
+
 #description: Generate bookmarks
 #english: GenerateBookmarks=Generate Bookmarks
 GenerateBookmarks=Generuj Zakładki
-
-#description: Switch to the Study Tree view to add a bookmark
-#! Deprecate this?
-#english: GoToStudyToAddBookmark=Go to Study to Add a Bookmark
-GoToStudyToAddBookmark=Idź do Widoku Wariantów, by Dodać Zakładkę
 
 #description: Delete the selected bookmark
 #english: DeleteThisBookmark=Delete This Bookmark
@@ -1296,6 +1299,10 @@ SelectReferences=Wybierz Partie i Ćwiczenia do Odsyłacza
 #english: SelectItems=Select Items
 SelectItems=Zaznacz swój wybór
 
+#description: All chapters
+#english: AllChapters=All Chapters
+AllChapters=Wszystkie Rozdziały
+
 #description: Show all chapters
 #english: ShowAllChapters=Show All Chapters
 ShowAllChapters=Pokaż Wszystkie Rozdziały
@@ -1646,7 +1653,7 @@ cbAdvancedEditig=Naciśnij prawy przycisk by wywołać menu do edycji, kopiowani
 cbDoubleClickAutoReplay=Dwukrotnie kliknij w Zapisie by rozpocząć auto-odtwarzanie
 
 #description: Click bookmark to start training
-#english: cbClickBookmarkToTrain=Click a bookmark to start training
+#english: cbClickBookmarkToTrain=Click a bookmark to navigate to the bookmarked psoition
 cbClickBookmarkToTrain=Kliknij zakładkę aby przejść do zapamiętanej pozycji 
 
 #description: Right click to open bookmarks menu
@@ -1864,4 +1871,3 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
-AllChapters=Wszystkie Rozdziały

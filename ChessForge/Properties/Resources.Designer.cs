@@ -1681,11 +1681,11 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go to Study to Add a Bookmark.
+        ///   Looks up a localized string similar to Go To Position.
         /// </summary>
-        public static string GoToStudyToAddBookmark {
+        public static string GoToPosition {
             get {
-                return ResourceManager.GetString("GoToStudyToAddBookmark", resourceCulture);
+                return ResourceManager.GetString("GoToPosition", resourceCulture);
             }
         }
         
@@ -2614,6 +2614,15 @@ namespace ChessForge.Properties {
         public static string PreviousGame {
             get {
                 return ResourceManager.GetString("PreviousGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print.
+        /// </summary>
+        public static string Print {
+            get {
+                return ResourceManager.GetString("Print", resourceCulture);
             }
         }
         

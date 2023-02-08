@@ -370,9 +370,6 @@
     <Resource Include="Resources\Images\ChessBoardGreen.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\ChessBoardBrown.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\ChessForge.ico" />
     <Resource Include="Resources\Images\ChessForge2.ico" />
   </ItemGroup>
@@ -396,8 +393,8 @@
     <Resource Include="Resources\Images\ToggleOn.png" />
     <Resource Include="Resources\Images\ChessBoardPaleBlue.png" />
     <Resource Include="Resources\Images\ChessBoardPaleBlueSmall.png" />
-    <Resource Include="Resources\Images\ChessBoardBrownShades.png" />
-    <Resource Include="Resources\Images\ChessBoardBrownShadesSmall.png" />
+    <Resource Include="Resources\Images\ChessBoardBrown.png" />
+    <Resource Include="Resources\Images\ChessBoardBrownSmall.png" />
     <Resource Include="Resources\Images\ChessBoardOrangeShades.png" />
     <Resource Include="Resources\Images\ChessBoardOrangeShadesSmall.png" />
     <Resource Include="Resources\Images\lichess\bB.png" />
@@ -412,6 +409,9 @@
     <Resource Include="Resources\Images\lichess\wP.png" />
     <Resource Include="Resources\Images\lichess\wQ.png" />
     <Resource Include="Resources\Images\lichess\wR.png" />
+    <Resource Include="Resources\Images\ChessBoardLightBlueSmall.png" />
+    <Resource Include="Resources\Images\ChessBoardLightGreenSmall.png" />
+    <Resource Include="Resources\Images\ChessBoardGreenSmall.png" />
     <Content Include="Resources\Sounds\InvalidMove.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -229,6 +229,30 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Stops all timers related to evaluations
+        /// </summary>
+        public void StopAllEvalTimers()
+        {
+            foreach (var id in _dictTimers.Keys)
+            {
+                var timer = _dictTimers[id];
+                if (id == TimerId.EVALUATION_LINE_DISPLAY)
+                {
+                    timer.Stop();
+                }
+            }
+
+            foreach (var id in _dictStopwatches.Keys)
+            {
+                var stopwatch = _dictStopwatches[id];
+                if (id == StopwatchId.EVALUATION_ELAPSED_TIME)
+                {
+                    stopwatch.Stop();
+                }
+            }
+        }
+
+        /// <summary>
         /// Starts a Stopwatch
         /// </summary>
         /// <param name="sw"></param>

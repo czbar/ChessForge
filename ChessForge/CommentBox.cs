@@ -26,10 +26,10 @@ namespace ChessForge
         private MainWindow _mainWin;
 
         /// <summary>
-        /// The main document referenced here while a flash notification
+        /// Copy of the document to hold while a flash notification
         /// is displayed.
         /// </summary>
-        private FlowDocument _docOnHold;
+        private FlowDocument _docOnHold = new FlowDocument();
 
         // holds the original visibility status during the "flash announcement" 
         private bool _engineLinesVisible;
@@ -146,16 +146,14 @@ namespace ChessForge
                 {
                     _flashAnnouncementShown = true;
                     _engineLinesVisible = _mainWin.UiTbEngineLines.Visibility == Visibility.Visible;
-                    _docOnHold = _mainWin.UiRtbBoardComment.Document;
 
-                    FlowDocument note = new FlowDocument();
-                    _mainWin.UiRtbBoardComment.Document = note;
+                    MoveDocument(ref Document, ref _docOnHold);
 
                     Paragraph dummy = CreateParagraphWithText("dummy", "", false);
-                    note.Blocks.Add(dummy);
+                    Document.Blocks.Add(dummy);
 
                     Paragraph para = CreateParagraphWithText("big_red", txt, false);
-                    note.Blocks.Add(para);
+                    Document.Blocks.Add(para);
                     para.Foreground = Brushes.Red;
 
                     _mainWin.Timers.Start(AppTimers.TimerId.FLASH_ANNOUNCEMENT);
@@ -173,7 +171,7 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                _mainWin.UiRtbBoardComment.Document = _docOnHold;
+                MoveDocument(ref _docOnHold, ref Document);
                 _mainWin.Timers.Stop(AppTimers.TimerId.FLASH_ANNOUNCEMENT);
 
                 if (_engineLinesVisible)

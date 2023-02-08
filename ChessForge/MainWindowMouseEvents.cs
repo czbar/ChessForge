@@ -868,7 +868,7 @@ namespace ChessForge
                     return;
                 }
 
-                UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
                 if (WorkbookManager.SessionWorkbook != null)
                 {
                     SetupGuiForChapters();
@@ -946,7 +946,8 @@ namespace ChessForge
                 {
                     return;
                 }
-                SetStudyStateOnFocus();
+                UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
+                ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
                 BookmarkManager.BuildBookmarkList(WorkbookManager.SessionWorkbook.ActiveChapter);
             }
             catch
@@ -1000,7 +1001,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+                    UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
                     ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
                     if (WorkbookManager.SessionWorkbook != null)
                     {
@@ -1083,7 +1084,7 @@ namespace ChessForge
                     return;
                 }
 
-                UiImgMainChessboard.Source = ChessBoards.ChessBoardLightBlue;
+                UiImgMainChessboard.Source = Configuration.GameBoardSet.MainBoard;
 
                 if (WorkbookManager.SessionWorkbook != null)
                 {
@@ -1177,7 +1178,7 @@ namespace ChessForge
                     return;
                 }
 
-                UiImgMainChessboard.Source = ChessBoards.ChessBoardLightGreen;
+                UiImgMainChessboard.Source = Configuration.ExerciseBoardSet.MainBoard;
                 if (WorkbookManager.SessionWorkbook != null)
                 {
                     MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.EXERCISE));

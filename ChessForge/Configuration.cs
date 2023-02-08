@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
+using static ChessForge.ChessBoards;
 
 namespace ChessForge
 {
@@ -150,16 +151,29 @@ namespace ChessForge
         /// </summary>
         public static int DebugLevel = 1;
 
-
         // max value by which a font size can be increased from the standard size
         private const int MAX_UP_FONT_SIZE_DIFF = 4;
 
         // max value by which a font size can be decreased from the standard size
         private const int MAX_DOWN_FONT_SIZE_DIFF = -2;
 
+        /// <summary>
+        /// Board sets for the Study.
+        /// </summary>
+        public static BoardSet StudyBoardSet = ChessBoards.BoardSets[ColorSet.BLUE];
+
+        /// <summary>
+        /// Board sets for Games.
+        /// </summary>
+        public static BoardSet GameBoardSet = ChessBoards.BoardSets[ColorSet.LIGHT_BLUE];
+
+        /// <summary>
+        /// Board sets for Exercises.
+        /// </summary>
+        public static BoardSet ExerciseBoardSet = ChessBoards.BoardSets[ColorSet.LIGH_GREEN];
 
         //*********************************
-        // CONFIGUARTION ITEM NAMES
+        // CONFIGURATION ITEM NAMES
         //*********************************
 
         private const string CFG_MOVE_SPEED = "MoveSpeed";
@@ -284,6 +298,11 @@ namespace ChessForge
         /// </summary>
         public static void ReadConfigurationFile()
         {
+            // defaults for board colors
+            StudyBoardSet = ChessBoards.BoardSets[ColorSet.BLUE];
+            GameBoardSet = ChessBoards.BoardSets[ColorSet.LIGHT_BLUE];
+            ExerciseBoardSet = ChessBoards.BoardSets[ColorSet.LIGH_GREEN];
+
             try
             {
                 string fileName = Path.Combine(StartDirectory, ConfigurationFile);

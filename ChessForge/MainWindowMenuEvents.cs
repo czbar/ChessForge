@@ -14,6 +14,7 @@ using ChessPosition.GameTree;
 using ChessForge;
 using System.Reflection;
 using System.Runtime.Remoting.Messaging;
+using System.Windows.Documents;
 
 namespace ChessForge
 {
@@ -1942,19 +1943,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Allows the user to add a bookmark by re-directing them to the Workbook view 
-        /// and advising on the procedure. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnAddBookmark_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO: remove this method and calling menu item
-            UiTabStudyTree.Focus();
-//            MessageBox.Show("Right-click a move and select \"Add to Bookmarks\" from the popup-menu", "Chess Forge Training", MessageBoxButton.OK);
-        }
-
-        /// <summary>
         /// A request to delete the clicked bookmark.
         /// </summary>
         /// <param name="sender"></param>
@@ -2113,11 +2101,21 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnTrainFromBookmark_Click(object sender, RoutedEventArgs e)
         {
-            if (BookmarkManager.ClickedIndex >= 0)
-            {
-                SetAppInTrainingMode(BookmarkManager.ClickedIndex);
-            }
+            BookmarkManager.SetActiveEntities(false);
+            SetAppInTrainingMode(BookmarkManager.SelectedBookmarkNode);
         }
+
+        /// <summary>
+        /// Handles a request from the Bookmarks page to navigate to 
+        /// the bookmarked position.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnBmGotoPosition_Click(object sender, RoutedEventArgs e)
+        {
+            BookmarkManager.SetActiveEntities(true);
+        }
+
 
         /// <summary>
         /// The user requested to restart the training game after the most recently 
@@ -3078,5 +3076,41 @@ namespace ChessForge
             UiBtnFontSizeFixed.Visibility = Configuration.UseFixedFont ? Visibility.Hidden : Visibility.Visible;
             UiBtnFontSizeVariable.Visibility = Configuration.UseFixedFont ? Visibility.Visible : Visibility.Hidden;
         }
+
+        /// <summary>
+        /// Print request from the Main Menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            WorkbookManager.TabViewType vt = AppState.ActiveTab;
+            switch (vt)
+            {
+                case WorkbookManager.TabViewType.STUDY:
+                    PrintView(UiRtbStudyTreeView);
+                    break;
+                case WorkbookManager.TabViewType.MODEL_GAME:
+                    PrintView(UiRtbModelGamesView);
+                    break;
+                case WorkbookManager.TabViewType.EXERCISE:
+                    PrintView(UiRtbExercisesView);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Prints the content of the passed RichTextBox
+        /// </summary>
+        /// <param name="rtb"></param>
+        private void PrintView(RichTextBox rtb)
+        {
+            PrintDialog pd = new PrintDialog();
+            if ((pd.ShowDialog() == true))
+            {
+                pd.PrintDocument((((IDocumentPaginatorSource)rtb.Document).DocumentPaginator), "printing as paginator");
+            }
+        }
+
     }
 }

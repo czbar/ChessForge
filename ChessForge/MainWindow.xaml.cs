@@ -13,7 +13,9 @@ using System.Threading;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using WebAccess;
 
 namespace ChessForge
@@ -339,7 +341,7 @@ namespace ChessForge
             Timers.Start(AppTimers.TimerId.APP_START);
 
             ArticleSelected += EventSelectArticle;
-            
+
             AppLog.LogAvailableThreadsCounts();
         }
 
@@ -385,7 +387,7 @@ namespace ChessForge
 
             LocalizedStrings.Values.Add(LocalizedStrings.StringId.StartingPosition, Properties.Resources.StartingPosition);
 
-            LocalizedStrings.Values.Add(LocalizedStrings.StringId.PieceSymbolMap, Properties.Resources.PieceSymbolMap);            
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.PieceSymbolMap, Properties.Resources.PieceSymbolMap);
         }
 
         /// <summary>
@@ -457,10 +459,6 @@ namespace ChessForge
 
             UiDgEngineGame.HorizontalAlignment = HorizontalAlignment.Right;
             UiDgEngineGame.Margin = new Thickness(0, 27, 10, 0);
-
-            UiTabCtrlManualReview.HorizontalAlignment = HorizontalAlignment.Right;
-
-            UiTabCtrlTraining.HorizontalAlignment = HorizontalAlignment.Right;
 
             SetupMenuBarControls();
         }
@@ -1862,28 +1860,12 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Starts a training session from the specified bookmark position.
-        /// </summary>
-        /// <param name="bookmarkIndex"></param>
-        public void SetAppInTrainingMode(int bookmarkIndex)
-        {
-            if (bookmarkIndex >= ActiveVariationTree.Bookmarks.Count)
-            {
-                return;
-            }
-
-            TreeNode startNode = ActiveVariationTree.Bookmarks[bookmarkIndex].Node;
-            SetAppInTrainingMode(startNode);
-
-        }
-
-        /// <summary>
         /// Starts a training session from the specified Node.
         /// </summary>
         /// <param name="startNode"></param>
         public void SetAppInTrainingMode(TreeNode startNode, bool isContinuousEvaluation = false)
         {
-            if (ActiveVariationTree == null)
+            if (ActiveVariationTree == null || startNode == null)
             {
                 return;
             }
@@ -2181,7 +2163,7 @@ namespace ChessForge
 
             if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
             {
-                Timers.StopAll();
+                Timers.StopAllEvalTimers();
             }
         }
 
@@ -2470,6 +2452,19 @@ namespace ChessForge
         private void UiCbAllChaptersBookmarks_Unchecked(object sender, RoutedEventArgs e)
         {
             BookmarkManager.BuildBookmarkList(WorkbookManager.SessionWorkbook.ActiveChapter);
+        }
+
+        /// <summary>
+        /// Prevent Bookmarks context menu from opening when there are no Bookmarks.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBookmarkMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            if (WorkbookManager.SessionWorkbook == null || BookmarkManager.BookmarkCount == 0)
+            {
+                e.Handled = true;
+            }
         }
     }
 }
