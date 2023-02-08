@@ -128,6 +128,7 @@ namespace ChessForge
 
             SortBookmarks();
 
+            HighlightBookmark(_lastAddedBookmark);
             _lastAddedBookmark = null;
         }
 
@@ -478,6 +479,29 @@ namespace ChessForge
             }
 
             ShowPageControls();
+            HighlightBookmark(_lastAddedBookmark);
+        }
+
+        /// <summary>
+        /// Highlights the passed bookmark,
+        /// unhighlights the rest.
+        /// </summary>
+        /// <param name="bm"></param>
+        private static void HighlightBookmark(Bookmark bm)
+        {
+            foreach (BookmarkView bv in BookmarkGuiList)
+            {
+                BookmarkWrapper bw = bv.BookmarkWrapper;
+
+                if (bw != null && bw.Bookmark == bm)
+                {
+                    bv.Highlight(true);
+                }
+                else
+                {
+                    bv.Highlight(false);
+                }
+            }
         }
 
         /// <summary>

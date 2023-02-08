@@ -1923,7 +1923,9 @@ namespace ChessForge
                 {
                     int posIndex = moveIndex;
                     TreeNode nd = ActiveLine.GetNodeAtIndex(posIndex);
-                    BookmarkManager.AddBookmark(ActiveVariationTree, nd, AppState.ActiveArticleIndex);
+                    Bookmark bm = BookmarkManager.AddBookmark(ActiveVariationTree, nd, AppState.ActiveArticleIndex);
+                    BookmarkManager.SetLastAddedBookmark(bm);
+                    
                     UiTabBookmarks.Focus();
                 }
             }
