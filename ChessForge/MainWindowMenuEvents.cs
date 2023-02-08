@@ -14,6 +14,7 @@ using ChessPosition.GameTree;
 using ChessForge;
 using System.Reflection;
 using System.Runtime.Remoting.Messaging;
+using System.Windows.Documents;
 
 namespace ChessForge
 {
@@ -3078,5 +3079,41 @@ namespace ChessForge
             UiBtnFontSizeFixed.Visibility = Configuration.UseFixedFont ? Visibility.Hidden : Visibility.Visible;
             UiBtnFontSizeVariable.Visibility = Configuration.UseFixedFont ? Visibility.Visible : Visibility.Hidden;
         }
+
+        /// <summary>
+        /// Print request from the Main Menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            WorkbookManager.TabViewType vt = AppState.ActiveTab;
+            switch (vt)
+            {
+                case WorkbookManager.TabViewType.STUDY:
+                    PrintView(UiRtbStudyTreeView);
+                    break;
+                case WorkbookManager.TabViewType.MODEL_GAME:
+                    PrintView(UiRtbModelGamesView);
+                    break;
+                case WorkbookManager.TabViewType.EXERCISE:
+                    PrintView(UiRtbExercisesView);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Prints the content of the passed RichTextBox
+        /// </summary>
+        /// <param name="rtb"></param>
+        private void PrintView(RichTextBox rtb)
+        {
+            PrintDialog pd = new PrintDialog();
+            if ((pd.ShowDialog() == true))
+            {
+                pd.PrintDocument((((IDocumentPaginatorSource)rtb.Document).DocumentPaginator), "printing as paginator");
+            }
+        }
+
     }
 }

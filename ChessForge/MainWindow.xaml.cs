@@ -13,7 +13,9 @@ using System.Threading;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using WebAccess;
 
 namespace ChessForge
@@ -339,7 +341,7 @@ namespace ChessForge
             Timers.Start(AppTimers.TimerId.APP_START);
 
             ArticleSelected += EventSelectArticle;
-            
+
             AppLog.LogAvailableThreadsCounts();
         }
 
@@ -385,7 +387,7 @@ namespace ChessForge
 
             LocalizedStrings.Values.Add(LocalizedStrings.StringId.StartingPosition, Properties.Resources.StartingPosition);
 
-            LocalizedStrings.Values.Add(LocalizedStrings.StringId.PieceSymbolMap, Properties.Resources.PieceSymbolMap);            
+            LocalizedStrings.Values.Add(LocalizedStrings.StringId.PieceSymbolMap, Properties.Resources.PieceSymbolMap);
         }
 
         /// <summary>
