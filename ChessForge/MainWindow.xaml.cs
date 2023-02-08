@@ -460,10 +460,6 @@ namespace ChessForge
             UiDgEngineGame.HorizontalAlignment = HorizontalAlignment.Right;
             UiDgEngineGame.Margin = new Thickness(0, 27, 10, 0);
 
-            UiTabCtrlManualReview.HorizontalAlignment = HorizontalAlignment.Right;
-
-            UiTabCtrlTraining.HorizontalAlignment = HorizontalAlignment.Right;
-
             SetupMenuBarControls();
         }
 
