@@ -32,6 +32,9 @@ LangPolish=
 #english: PieceSymbolMap=KQRBN
 PieceSymbolMap=
 
+#description: Note: changing the language requires restart
+#english: ChangeLanguageNote=The requested change of language requires restarting the application.
+ChangeLanguageNote=
 
 
 ##################################
@@ -337,9 +340,17 @@ FlipBoard=
 #english: ApplicationOptions=Application Options...
 ApplicationOptions=
 
+#description: Application Options dialog title
+#english: DlgTitleApplicationOptions=Application Options
+DlgTitleApplicationOptions=
+
 #description: Opens the Workbook Options dialog
 #english: WorkbookOptions=Workbook Options...
 WorkbookOptions=
+
+#description: Workbook Options dialog title
+#english: DlgTitleWorkbookOptions=Workbook Options
+DlgTitleWorkbookOptions=
 
 #description: Opens a dialog allowing the user to select chess engine executable file
 #english: AnalysisEngine=Analysis Engine...
@@ -1821,6 +1832,22 @@ PosValBlackKingMissing=
 #english: PosValBlackKingInCheck=Black King cannot be in check on Black's move
 PosValBlackKingInCheck=
 
+##################################
+#
+# MESSAGES / WARNINGS / NOTIFICATIONS
+#
+
+#description: Info: line evaluation is in progress
+#english: InfoLineEvalInProgress=Line evaluation in progress!
+InfoLineEvalInProgress=
+
+#description: Info: the engine is thinking
+#english: InfoEngineThinking=The engine is thinking!
+InfoEngineThinking=
+
+#description: Info: exit game before switching tabs
+#english: InfoExitGameBeforeTabSwitch=Exit the game against the engine before switching tabs.
+InfoExitGameBeforeTabSwitch=
 
 ##################################
 #

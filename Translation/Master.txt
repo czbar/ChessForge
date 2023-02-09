@@ -27,6 +27,8 @@ LangPolish=Polish
 #Mapping of chess symbols from default KQRBN
 PieceSymbolMap=KQRBN
 
+#Note: changing the language requires restart
+ChangeLanguageNote=The requested change of language requires restarting the application.
 
 
 ##################################
@@ -261,8 +263,14 @@ FlipBoard=Flip Board
 #Opens the Application Options dialog
 ApplicationOptions=Application Options...
 
+#Application Options dialog title
+DlgTitleApplicationOptions=Application Options
+
 #Opens the Workbook Options dialog
 WorkbookOptions=Workbook Options...
+
+#Workbook Options dialog title
+DlgTitleWorkbookOptions=Workbook Options
 
 #Opens a dialog allowing the user to select chess engine executable file
 AnalysisEngine=Analysis Engine...
@@ -1411,6 +1419,19 @@ PosValBlackKingMissing=The Black King is missing
 #Black King cannot be in check on Black's move
 PosValBlackKingInCheck=Black King cannot be in check on Black's move
 
+##################################
+#
+# MESSAGES / WARNINGS / NOTIFICATIONS
+#
+
+#Info: line evaluation is in progress
+InfoLineEvalInProgress=Line evaluation in progress!
+
+#Info: the engine is thinking
+InfoEngineThinking=The engine is thinking!
+
+#Info: exit game before switching tabs
+InfoExitGameBeforeTabSwitch=Exit the game against the engine before switching tabs.
 
 ##################################
 #

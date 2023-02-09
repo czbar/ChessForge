@@ -1871,3 +1871,14 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
+DlgTitleApplicationOptions=Opcje Aplikacji
+
+#Workbook Options dialog title
+DlgTitleWorkbookOptions=Opcje Podręcznika
+
+ChangeLanguageNote=Uwaga: Zmiana języka wymaga zamknięcia i ponownego otwarcia programu.
+
+InfoLineEvalInProgress=Trwa ocenianie wariantu!
+InfoEngineThinking=Silnik się namyśla!
+
+InfoExitGameBeforeTabSwitch=Zakończ partię zanim zmienisz Widok.
