@@ -97,8 +97,14 @@ namespace ChessForge
                         {
                             for (int i = 0; i < moveCandidates.Lines.Count; i++)
                             {
-                                sb.Append(BuildLineText(moveCandidates.EvalNode, i, moveCandidates.Lines[i]));
+                                sb.Append(BuildLineText(moveCandidates.EvalNode, i, moveCandidates.Lines[i], out string eval));
                                 sb.Append(Environment.NewLine);
+
+                                if (i == 0)
+                                {
+                                    AppState.MainWin.ActiveLine.SetEvaluation(moveCandidates.EvalNode, eval);
+                                }
+
                             }
                             string txt = sb.ToString();
                             if (!string.IsNullOrWhiteSpace(txt))
@@ -129,8 +135,9 @@ namespace ChessForge
         /// <param name="lineNo"></param>
         /// <param name="line"></param>
         /// <returns></returns>
-        private static string BuildLineText(TreeNode evalNode, int lineNo, MoveEvaluation line)
+        private static string BuildLineText(TreeNode evalNode, int lineNo, MoveEvaluation line, out string eval)
         {
+            eval = "";
             try
             {
                 if (evalNode == null)
@@ -144,7 +151,7 @@ namespace ChessForge
                     return " ";
                 }
 
-                string eval = EvaluationManager.BuildEvaluationText(line, position.ColorToMove);
+                eval = EvaluationManager.BuildEvaluationText(line, position.ColorToMove);
 
                 if (eval == "#")
                 {
