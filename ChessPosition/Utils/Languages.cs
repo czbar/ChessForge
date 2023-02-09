@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ChessPosition
 {
@@ -16,7 +18,7 @@ namespace ChessPosition
         /// The list of supported languages and their culture codes
         /// It is initialized from MainWindows.xaml.cs when the program starts.
         /// </summary>
-        public static Dictionary<string, string> AvailableLanguages = new Dictionary<string, string>();
+        public static List<Language> AvailableLanguages = new List<Language>();
 
         /// <summary>
         /// Current mapping of the Chess Symbols set when setting the language.
@@ -33,18 +35,40 @@ namespace ChessPosition
         // Number of symbols expected in the mapping string
         private static readonly int SYMBOL_COUNT = 5;
 
+
+        /// <summary>
+        /// Saves the session language based in the passed string.
+        /// If it is empty, no language has been selected and the program uses
+        /// the default which is the system language if it is one of the supported
+        /// languages or English.
+        /// </summary>
+        /// <param name="code"></param>
+        public static void SetSessionLanguage(string code)
+        {
+            // code is a string from config so it should match one of the configured languages ... but it may not
+            // first check if we have a full match.
+            foreach (var language in Languages.AvailableLanguages)
+            {
+                language.IsSelected = language.Code == code;
+            }
+        }
+
         /// <summary>
         /// Adds a language to the list.
         /// This is called from MainWindows.xaml.cs when the program starts, for each
         /// supported language.
-        /// It is used to display the langauge names in the GUI
+        /// It is used to display the language names in the GUI
         /// for the user to choose from.
         /// </summary>
         /// <param name="code"></param>
         /// <param name="name"></param>
         public static void AddLanguage(string code, string name)
         {
-            AvailableLanguages.Add(code, name);
+            Language language = new Language();
+            language.Code = code;
+            language.Name = name;
+
+            AvailableLanguages.Add(language);
         }
 
         /// <summary>
