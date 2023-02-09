@@ -418,7 +418,7 @@
     <value>Partie Mistrzowskie</value>
   </data>
   <data name="StartTrainingFromHere" xml:space="preserve">
-    <value>Tu Rozpocznij Trening</value>
+    <value>Rozpocznij tu Trening</value>
   </data>
   <data name="StartTrainingFromBookmark" xml:space="preserve">
     <value>Trening od Zakładki</value>
@@ -574,7 +574,7 @@
     <value>Rozdział $0 z $1</value>
   </data>
   <data name="StartTrainingFromThisBookmark" xml:space="preserve">
-    <value>Rozpocznij Trening od tej Zakładki</value>
+    <value>Rozpocznij tu Trening</value>
   </data>
   <data name="GoToPosition" xml:space="preserve">
     <value>Idź do Pozycji</value>

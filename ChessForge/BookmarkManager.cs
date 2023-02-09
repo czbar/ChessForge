@@ -380,6 +380,7 @@ namespace ChessForge
                             AppState.MainWin.SelectExercise(bmw.ArticleIndex, true);
                             break;
                     }
+                    AppState.MainWin.SetActiveLine(SelectedBookmarkNode.LineId, SelectedBookmarkNode.NodeId);
                     AppState.MainWin.ActiveTreeView.SelectLineAndMove(SelectedBookmarkNode.LineId, SelectedBookmarkNode.NodeId);
                 }
             }

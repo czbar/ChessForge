@@ -438,7 +438,7 @@ TopGames=Partie Mistrzowskie
 
 #description: Start training from the current position
 #english: StartTrainingFromHere=Start Training from Here
-StartTrainingFromHere=Tu Rozpocznij Trening
+StartTrainingFromHere=Rozpocznij tu Trening
 
 #description: Start training from a bookmark
 #english: StartTrainingFromBookmark=Start Training from a Bookmark
@@ -673,7 +673,7 @@ Chapter0of0=Rozdział $0 z $1
 
 #description: Start training from the selected bookmark
 #english: StartTrainingFromThisBookmark=Start Training from This Bookmark
-StartTrainingFromThisBookmark=Rozpocznij Trening od tej Zakładki
+StartTrainingFromThisBookmark=Rozpocznij tu Trening
 
 #description: Go to bookmarked position
 #english: GoToPosition= Go To Position
