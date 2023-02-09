@@ -73,12 +73,12 @@ namespace ChessForge
                 {
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                     {
-                        BoardCommentBox.ShowFlashAnnouncement("Line evaluation in progress!");
+                        BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.InfoLineEvalInProgress);
                         return;
                     }
                     else if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
                     {
-                        BoardCommentBox.ShowFlashAnnouncement("The engine is thinking!");
+                        BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.InfoEngineThinking);
                         return;
                     }
                 }
@@ -126,7 +126,7 @@ namespace ChessForge
                             {
                                 if (_exerciseTreeView != null)
                                 {
-                                    if (MessageBox.Show(Strings.GetResource("ViewExercise"), Strings.GetResource("Exercise"), MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                                    if (MessageBox.Show(Properties.Resources.ViewExercise, Properties.Resources.Exercise, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                                     {
                                         _exerciseTreeView.EventShowHideButtonClicked(null, null);
                                     }
@@ -1226,14 +1226,14 @@ namespace ChessForge
         /// <summary>
         /// Invoked when user clicks a non-active tab while an engine game is in progress.
         /// Checks if there is a game in progress, displays a "flash announcement" and 
-        /// retruns focus to the view with the game.
+        /// returns focus to the view with the game.
         /// </summary>
         /// <returns></returns>
         private bool KeepFocusOnGame()
         {
             if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
             {
-                BoardCommentBox.ShowFlashAnnouncement("Exit the game against the engine before switching tabs.");
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.InfoExitGameBeforeTabSwitch);
                 if (TrainingSession.IsTrainingInProgress)
                 {
                     UiTabTrainingProgress.Focus();

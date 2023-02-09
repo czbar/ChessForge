@@ -574,6 +574,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The requested change of language requires restarting the application..
+        /// </summary>
+        public static string ChangeLanguageNote {
+            get {
+                return ResourceManager.GetString("ChangeLanguageNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chapter.
         /// </summary>
         public static string Chapter {
@@ -1038,6 +1047,24 @@ namespace ChessForge.Properties {
         public static string DeleteThisGame {
             get {
                 return ResourceManager.GetString("DeleteThisGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application Options.
+        /// </summary>
+        public static string DlgTitleApplicationOptions {
+            get {
+                return ResourceManager.GetString("DlgTitleApplicationOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workbook Options.
+        /// </summary>
+        public static string DlgTitleWorkbookOptions {
+            get {
+                return ResourceManager.GetString("DlgTitleWorkbookOptions", resourceCulture);
             }
         }
         
@@ -1834,11 +1861,38 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The engine is thinking!.
+        /// </summary>
+        public static string InfoEngineThinking {
+            get {
+                return ResourceManager.GetString("InfoEngineThinking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit the game against the engine before switching tabs..
+        /// </summary>
+        public static string InfoExitGameBeforeTabSwitch {
+            get {
+                return ResourceManager.GetString("InfoExitGameBeforeTabSwitch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Double click to preview, right click for options.
         /// </summary>
         public static string InfoGameExerciseReferences {
             get {
                 return ResourceManager.GetString("InfoGameExerciseReferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line evaluation in progress!.
+        /// </summary>
+        public static string InfoLineEvalInProgress {
+            get {
+                return ResourceManager.GetString("InfoLineEvalInProgress", resourceCulture);
             }
         }
         

@@ -96,14 +96,14 @@ namespace ChessForge
                 return 1;
             }
 
-            if (this.ContentType == bm.ContentType && this.ArticleIndex != bm.ArticleIndex)
-            {
-                return this.ArticleIndex - bm.ArticleIndex;
-            }
-
             if (this.ChapterIndex != bm.ChapterIndex)
             {
                 return bm.ChapterIndex - bm.ChapterIndex;
+            }
+
+            if (this.ContentType == bm.ContentType && this.ArticleIndex != bm.ArticleIndex)
+            {
+                return this.ArticleIndex - bm.ArticleIndex;
             }
 
             int moveNoDiff = (int)this.Node.MoveNumber - (int)bm.Node.MoveNumber;

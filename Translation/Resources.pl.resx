@@ -132,6 +132,9 @@
   <data name="PieceSymbolMap" xml:space="preserve">
     <value>KHWGS</value>
   </data>
+  <data name="ChangeLanguageNote" xml:space="preserve">
+    <value>Uwaga: Zmiana języka wymaga zamknięcia i ponownego otwarcia programu.</value>
+  </data>
   <data name="Workbook" xml:space="preserve">
     <value>Podręcznik</value>
   </data>
@@ -345,7 +348,13 @@
   <data name="ApplicationOptions" xml:space="preserve">
     <value>Opcje Aplikacji</value>
   </data>
+  <data name="DlgTitleApplicationOptions" xml:space="preserve">
+    <value>Opcje Aplikacji</value>
+  </data>
   <data name="WorkbookOptions" xml:space="preserve">
+    <value>Opcje Podręcznika</value>
+  </data>
+  <data name="DlgTitleWorkbookOptions" xml:space="preserve">
     <value>Opcje Podręcznika</value>
   </data>
   <data name="AnalysisEngine" xml:space="preserve">
@@ -409,7 +418,7 @@
     <value>Partie Mistrzowskie</value>
   </data>
   <data name="StartTrainingFromHere" xml:space="preserve">
-    <value>Tu Rozpocznij Trening</value>
+    <value>Rozpocznij tu Trening</value>
   </data>
   <data name="StartTrainingFromBookmark" xml:space="preserve">
     <value>Trening od Zakładki</value>
@@ -565,7 +574,7 @@
     <value>Rozdział $0 z $1</value>
   </data>
   <data name="StartTrainingFromThisBookmark" xml:space="preserve">
-    <value>Rozpocznij Trening od tej Zakładki</value>
+    <value>Rozpocznij tu Trening</value>
   </data>
   <data name="GoToPosition" xml:space="preserve">
     <value>Idź do Pozycji</value>
@@ -1346,6 +1355,15 @@
   </data>
   <data name="PosValBlackKingInCheck" xml:space="preserve">
     <value>Czarny król nie może być w szachu przy ruchu białych</value>
+  </data>
+  <data name="InfoLineEvalInProgress" xml:space="preserve">
+    <value>Trwa ocenianie wariantu!</value>
+  </data>
+  <data name="InfoEngineThinking" xml:space="preserve">
+    <value>Silnik się namyśla!</value>
+  </data>
+  <data name="InfoExitGameBeforeTabSwitch" xml:space="preserve">
+    <value>Zakończ partię zanim zmienisz Widok.</value>
   </data>
   <data name="PgnMissingMoveAfter" xml:space="preserve">
     <value>Brakuje ruchu po</value>

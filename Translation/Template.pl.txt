@@ -32,6 +32,9 @@ LangPolish=Polski
 #english: PieceSymbolMap=KQRBN
 PieceSymbolMap=KHWGS
 
+#description: Note: changing the language requires restart
+#english: ChangeLanguageNote=The requested change of language requires restarting the application.
+ChangeLanguageNote=Uwaga: Zmiana języka wymaga zamknięcia i ponownego otwarcia programu.
 
 
 ##################################
@@ -337,9 +340,17 @@ FlipBoard=Odwróć Szachownicę
 #english: ApplicationOptions=Application Options...
 ApplicationOptions=Opcje Aplikacji
 
+#description: Application Options dialog title
+#english: DlgTitleApplicationOptions=Application Options
+DlgTitleApplicationOptions=Opcje Aplikacji
+
 #description: Opens the Workbook Options dialog
 #english: WorkbookOptions=Workbook Options...
 WorkbookOptions=Opcje Podręcznika
+
+#description: Workbook Options dialog title
+#english: DlgTitleWorkbookOptions=Workbook Options
+DlgTitleWorkbookOptions=Opcje Podręcznika
 
 #description: Opens a dialog allowing the user to select chess engine executable file
 #english: AnalysisEngine=Analysis Engine...
@@ -438,7 +449,7 @@ TopGames=Partie Mistrzowskie
 
 #description: Start training from the current position
 #english: StartTrainingFromHere=Start Training from Here
-StartTrainingFromHere=Tu Rozpocznij Trening
+StartTrainingFromHere=Rozpocznij tu Trening
 
 #description: Start training from a bookmark
 #english: StartTrainingFromBookmark=Start Training from a Bookmark
@@ -673,7 +684,7 @@ Chapter0of0=Rozdział $0 z $1
 
 #description: Start training from the selected bookmark
 #english: StartTrainingFromThisBookmark=Start Training from This Bookmark
-StartTrainingFromThisBookmark=Rozpocznij Trening od tej Zakładki
+StartTrainingFromThisBookmark=Rozpocznij tu Trening
 
 #description: Go to bookmarked position
 #english: GoToPosition= Go To Position
@@ -1821,6 +1832,22 @@ PosValBlackKingMissing=Brak czarnego króla
 #english: PosValBlackKingInCheck=Black King cannot be in check on Black's move
 PosValBlackKingInCheck=Czarny król nie może być w szachu przy ruchu białych
 
+##################################
+#
+# MESSAGES / WARNINGS / NOTIFICATIONS
+#
+
+#description: Info: line evaluation is in progress
+#english: InfoLineEvalInProgress=Line evaluation in progress!
+InfoLineEvalInProgress=Trwa ocenianie wariantu!
+
+#description: Info: the engine is thinking
+#english: InfoEngineThinking=The engine is thinking!
+InfoEngineThinking=Silnik się namyśla!
+
+#description: Info: exit game before switching tabs
+#english: InfoExitGameBeforeTabSwitch=Exit the game against the engine before switching tabs.
+InfoExitGameBeforeTabSwitch=Zakończ partię zanim zmienisz Widok.
 
 ##################################
 #

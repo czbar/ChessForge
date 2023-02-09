@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ChessForge
@@ -108,6 +109,15 @@ namespace ChessForge
             {
                 _topLabel.Content = txt;
             }
+        }
+
+        /// <summary>
+        /// Sets the color of the label's text.
+        /// </summary>
+        /// <param name="br"></param>
+        public void SetTopLabelColor(SolidColorBrush br)
+        {
+            _topLabel.Foreground = br;
         }
 
         /// <summary>

@@ -412,6 +412,7 @@
     <Resource Include="Resources\Images\ChessBoardLightBlueSmall.png" />
     <Resource Include="Resources\Images\ChessBoardLightGreenSmall.png" />
     <Resource Include="Resources\Images\ChessBoardGreenSmall.png" />
+    <Resource Include="Resources\Images\eraser-rubber.png" />
     <Content Include="Resources\Sounds\InvalidMove.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

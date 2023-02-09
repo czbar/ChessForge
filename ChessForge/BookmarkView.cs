@@ -3,6 +3,7 @@ using ChessPosition;
 using GameTree;
 using System;
 using System.Text;
+using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -71,6 +72,18 @@ namespace ChessForge
         public void SetOpacity(double opacity)
         {
             ChessBoard.SetBoardOpacity(opacity);
+        }
+
+        /// <summary>
+        /// Highlights or unhighlights the bookmark
+        /// by changing the label colors.
+        /// </summary>
+        /// <param name="on"></param>
+        public void Highlight(bool on)
+        {
+            SolidColorBrush br = on ? Brushes.Red : Brushes.Black;
+            ChessBoard.SetTopLabelColor(br);
+            ChessBoard.SetMainLabelColor(br);
         }
 
         /// <summary>

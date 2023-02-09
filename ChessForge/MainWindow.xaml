@@ -140,16 +140,16 @@
                     <Label Grid.Column="0"  Content="{x:Static p:Resources.AutoSave}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,2,0,0" Height="28"   />
                     <Image x:Name="UiImgAutoSaveOn"  Grid.Column="1" ToolTip="{x:Static p:Resources.TurnAutoSaveOff}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="40" Width="40" Source="Resources/Images/ToggleOn.png" Visibility="Hidden" MouseDown="UiImgAutoSaveOn_MouseDown" />
                     <Image x:Name="UiImgAutoSaveOff" Grid.Column="1" ToolTip="{x:Static p:Resources.TurnAutoSaveOn}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="40" Width="40" Source="Resources/Images/ToggleOff.png" MouseDown="UiImgAutoSaveOff_MouseDown" />
-                    <Button Name="UiBtnFontSizeUp" BorderThickness="0"  Grid.Column="2" Width="30" Height="22"  HorizontalAlignment="Left" Margin="35,0,0,0" ToolTip="Increase Font Size" Click="UiBtnFontSizeUp_Click">
+                    <Button Name="UiBtnFontSizeUp" BorderThickness="0"  Grid.Column="2" Width="30" Height="22"  HorizontalAlignment="Left" Margin="35,0,0,0" ToolTip="{x:Static p:Resources.IncreaseFontSize}" Click="UiBtnFontSizeUp_Click">
                         <Image Source="Resources/Images/FontSizeUp.png" Width="18" Height="18"></Image>
                     </Button>
-                    <Button Name="UiBtnFontSizeDown" BorderThickness="0" Grid.Column="2" Width="30" Height="22"  HorizontalAlignment="Left" Margin="70,0,0,0" ToolTip="Decrease Font Size" Click="UiBtnFontSizeDown_Click">
+                    <Button Name="UiBtnFontSizeDown" BorderThickness="0" Grid.Column="2" Width="30" Height="22"  HorizontalAlignment="Left" Margin="70,0,0,0" ToolTip="{x:Static p:Resources.DecreaseFontSize}" Click="UiBtnFontSizeDown_Click">
                         <Image Source="Resources/Images/FontSizeDown.png" Width="18" Height="18"></Image>
                     </Button>
-                    <Button Name="UiBtnFontSizeFixed" BorderThickness="0" Grid.Column="2" Width="30" Height="22"  HorizontalAlignment="Left" Margin="105,0,0,0" ToolTip="Use Fixed Font Sizes" Click="UiBtnFontSizeFixed_Click" >
+                    <Button Name="UiBtnFontSizeFixed" BorderThickness="0" Grid.Column="2" Width="30" Height="22"  HorizontalAlignment="Left" Margin="105,0,0,0" ToolTip="{x:Static p:Resources.UseFixedFontSize}" Click="UiBtnFontSizeFixed_Click" >
                         <Image Source="Resources/Images/FontSizeFixed.png" Width="18" Height="18"></Image>
                     </Button>
-                    <Button Name="UiBtnFontSizeVariable" BorderThickness="0" Grid.Column="2" Width="30" Height="22"  HorizontalAlignment="Left" Margin="105,0,0,0" ToolTip="Use Variable Font Size" Visibility="Hidden" Click="UiBtnFontSizeVariable_Click">
+                    <Button Name="UiBtnFontSizeVariable" BorderThickness="0" Grid.Column="2" Width="30" Height="22"  HorizontalAlignment="Left" Margin="105,0,0,0" ToolTip="{x:Static p:Resources.UseVariableFontSize}" Visibility="Hidden" Click="UiBtnFontSizeVariable_Click">
                         <Image Source="Resources/Images/FontSizeVariable.png" Width="18" Height="18"></Image>
                     </Button>
                     <Label Grid.Column="3"  Content="{x:Static p:Resources.Explorers}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,2,0,0" Height="28"  />

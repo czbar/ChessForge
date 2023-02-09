@@ -690,11 +690,29 @@ namespace ChessForge
 
                 if (nd != null)
                 {
-                    //TODO: check that we have the right node still
-                    if (EngineLinesBox.EvalLinesToProcess.Lines.Count > 0)
+                    MoveCandidates moveCandidates = null;
+                    if (EngineLinesBox.EvalLinesToProcess.ContainsKey(nd))
                     {
-                        nd.EngineEvaluation = EvaluationManager.BuildEvaluationText(EngineLinesBox.EvalLinesToProcess.Lines[0], nd.Position.ColorToMove);
+                        moveCandidates = EngineLinesBox.EvalLinesToProcess[nd];
                     }
+                    else
+                    {
+                        AppLog.Message("ERROR: ProcessBestMoveMessage no entry in EngineLinesBox.EvalLinesToProcess for the node.");
+                    }
+
+                    if (moveCandidates != null && moveCandidates.Lines.Count > 0)
+                    {
+                        nd.EngineEvaluation = EvaluationManager.BuildEvaluationText(moveCandidates.Lines[0], nd.Position.ColorToMove);
+                        EngineLinesBox.EvalLinesToProcess.Remove(nd);
+                    }
+                    else
+                    {
+                        AppLog.Message("ERROR: ProcessBestMoveMessage no Move Candidates found.");
+                    }
+                }
+                else
+                {
+                    AppLog.Message("ERROR: ProcessBestMoveMessage received null TreeNode");
                 }
 
                 // tell the app that the evaluation has finished

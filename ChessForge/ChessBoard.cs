@@ -104,7 +104,7 @@ namespace ChessForge
         /// <summary>
         /// Label control to be optionally shown above the board.
         /// </summary>
-        private Label LabelCtrl;
+        private Label _mainLabel;
 
         /// <summary>
         /// Whether the board is displayed upside down.
@@ -159,7 +159,7 @@ namespace ChessForge
             }
             CanvasCtrl = cnv;
             BoardImgCtrl = BoardCtrl;
-            LabelCtrl = labelCtrl;
+            _mainLabel = labelCtrl;
             _includeCoords = includeCoords;
 
             InitializeCoordinateLabels();
@@ -208,6 +208,16 @@ namespace ChessForge
 
             return new Point(left, top);
         }
+
+        /// <summary>
+        /// Sets the color of the label's text.
+        /// </summary>
+        /// <param name="br"></param>
+        public void SetMainLabelColor(SolidColorBrush br)
+        {
+            _mainLabel.Foreground = br;
+        }
+
 
         /// <summary>
         /// Creates the coordinates labels.
@@ -324,7 +334,7 @@ namespace ChessForge
         public void SetBoardOpacity(double opacity)
         {
             BoardImgCtrl.Opacity = opacity;
-            LabelCtrl.Opacity = opacity;
+            _mainLabel.Opacity = opacity;
         }
 
         /// <summary>
@@ -471,7 +481,7 @@ namespace ChessForge
         /// <param name="text"></param>
         public void SetLabelText(string text)
         {
-            LabelCtrl.Content = text;
+            _mainLabel.Content = text;
         }
 
         /// <summary>

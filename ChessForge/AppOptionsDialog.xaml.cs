@@ -12,26 +12,61 @@ namespace ChessForge
     /// </summary>
     public partial class AppOptionsDialog : Window
     {
-        /// <summary>
-        /// True if dialog exited by clicking Save
-        /// </summary>
-        public bool ExitOK = false;
 
+        // the code of the language currently configured
+        private string _currentConfiguredLanguage = "";
+
+        /// <summary>
+        /// The language selected upon exit
+        /// </summary>
+        public string ExitLanguage = "";
+
+        /// <summary>
+        /// Set on Exit to indicate whether the selected language
+        /// differs from the one configured before the dialog was opened
+        /// </summary>
+        public bool LanguageChanged = false;
+
+        /// <summary>
+        /// Configured path to the engine's executable.
+        /// </summary>
         public string EnginePath;
 
+        /// <summary>
+        /// Configured Replay Speed
+        /// </summary>
         public double ReplaySpeed;
 
+        /// <summary>
+        /// Configured time for engine to think on move
+        /// while in a game.
+        /// </summary>
         public double EngineTimePerMoveInGame;
 
+        /// <summary>
+        /// Configured time for engine to think on move
+        /// while evaluating.
+        /// </summary>
         public double EngineTimePerMoveInEvaluation;
 
+        /// <summary>
+        /// Whether mouse wheel can be used to scroll through the notation..
+        /// </summary>
         public bool AllowMouseWheel;
 
+        /// <summary>
+        /// Whether "fork tables" are shown.
+        /// </summary>
         public bool ShowMovesAtFork;
 
+        /// <summary>
+        /// Whether the sound is turned on.
+        /// </summary>
         public bool SoundOn;
 
-        // indicates whether the engine path was changed by the user in this dialog.
+        /// <summary>
+        // Whether the engine path was changed by the user in this dialog.
+        /// </summary>
         public bool ChangedEnginePath = false;
 
         /// <summary>
@@ -56,6 +91,17 @@ namespace ChessForge
             UiCbAllowWheel.IsChecked = (AllowMouseWheel == true);
             UiCbShowForkMoves.IsChecked = (ShowMovesAtFork == true);
             UiCbSoundOn.IsChecked= (SoundOn == true);
+
+            Languages.AvailableLanguages.Sort();
+            foreach (Language lang in Languages.AvailableLanguages)
+            {
+                UiLbLanguages.Items.Add(lang);
+                if (lang.IsSelected)
+                {
+                    _currentConfiguredLanguage = lang.Code;
+                    UiLbLanguages.SelectedItem = lang;
+                }
+            }
         }
 
         /// <summary>
@@ -111,8 +157,17 @@ namespace ChessForge
             Configuration.ShowMovesAtFork = (UiCbShowForkMoves.IsChecked == true);
             Configuration.SoundOn = (UiCbSoundOn.IsChecked == true);
 
-            ExitOK = true;
-            this.Close();
+            if (UiLbLanguages.SelectedItem != null )
+            {
+                ExitLanguage = (UiLbLanguages.SelectedItem as Language).Code;
+            }
+
+            if (ExitLanguage != _currentConfiguredLanguage)
+            {
+                LanguageChanged = true;
+            }
+
+            DialogResult = true;
         }
 
         /// <summary>
@@ -122,8 +177,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            ExitOK = false;
-            Close();
+            DialogResult = false;
         }
     }
 }

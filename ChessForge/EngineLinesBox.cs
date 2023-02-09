@@ -26,7 +26,7 @@ namespace ChessForge
         /// <summary>
         /// Evaluation lines obtained from the engine.
         /// </summary>
-        public static MoveCandidates EvalLinesToProcess = new MoveCandidates();
+        public static Dictionary<TreeNode, MoveCandidates> EvalLinesToProcess = new Dictionary<TreeNode, MoveCandidates>();
 
         // Application's Main Window
         private static MainWindow _mainWin;
@@ -68,29 +68,43 @@ namespace ChessForge
             {
                 if (AppState.ShowEvaluationLines())
                 {
+                    MoveCandidates moveCandidates = null;
+
                     EvalLinesToProcess.Clear();
                     lock (EngineMessageProcessor.MoveCandidatesLock)
                     {
-                        if (EngineMessageProcessor.EngineMoveCandidates.EvalNode != null)
+                        TreeNode evalNode = EngineMessageProcessor.EngineMoveCandidates.EvalNode;
+                        if (evalNode != null)
                         {
-                            EvalLinesToProcess.EvalNode = EngineMessageProcessor.EngineMoveCandidates.EvalNode;
+                            if (!EvalLinesToProcess.ContainsKey(evalNode))
+                            {
+                                EvalLinesToProcess[evalNode] = new MoveCandidates();
+                            }
+                            moveCandidates = EvalLinesToProcess[evalNode];
+                            EvalLinesToProcess[evalNode].EvalNode = EngineMessageProcessor.EngineMoveCandidates.EvalNode;
                             // make a copy of Move candidates so we can release the lock asap
                             foreach (MoveEvaluation me in EngineMessageProcessor.EngineMoveCandidates.Lines)
                             {
-                                EvalLinesToProcess.AddEvaluation(new MoveEvaluation(me));
+                                EvalLinesToProcess[evalNode].AddEvaluation(new MoveEvaluation(me));
                             }
                         }
                     }
 
-                    if (EvalLinesToProcess.EvalNode != null)
+                    if (moveCandidates != null && moveCandidates.EvalNode != null)
                     {
                         StringBuilder sb = new StringBuilder();
                         _tbEvalLines.Dispatcher.Invoke(() =>
                         {
-                            for (int i = 0; i < EvalLinesToProcess.Lines.Count; i++)
+                            for (int i = 0; i < moveCandidates.Lines.Count; i++)
                             {
-                                sb.Append(BuildLineText(EvalLinesToProcess.EvalNode, i, EvalLinesToProcess.Lines[i]));
+                                sb.Append(BuildLineText(moveCandidates.EvalNode, i, moveCandidates.Lines[i], out string eval));
                                 sb.Append(Environment.NewLine);
+
+                                if (i == 0)
+                                {
+                                    AppState.MainWin.ActiveLine.SetEvaluation(moveCandidates.EvalNode, eval);
+                                }
+
                             }
                             string txt = sb.ToString();
                             if (!string.IsNullOrWhiteSpace(txt))
@@ -121,8 +135,9 @@ namespace ChessForge
         /// <param name="lineNo"></param>
         /// <param name="line"></param>
         /// <returns></returns>
-        private static string BuildLineText(TreeNode evalNode, int lineNo, MoveEvaluation line)
+        private static string BuildLineText(TreeNode evalNode, int lineNo, MoveEvaluation line, out string eval)
         {
+            eval = "";
             try
             {
                 if (evalNode == null)
@@ -136,7 +151,7 @@ namespace ChessForge
                     return " ";
                 }
 
-                string eval = EvaluationManager.BuildEvaluationText(line, position.ColorToMove);
+                eval = EvaluationManager.BuildEvaluationText(line, position.ColorToMove);
 
                 if (eval == "#")
                 {

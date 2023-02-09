@@ -132,6 +132,9 @@
   <data name="PieceSymbolMap" xml:space="preserve">
     <value>KQRBN</value>
   </data>
+  <data name="ChangeLanguageNote" xml:space="preserve">
+    <value>The requested change of language requires restarting the application.</value>
+  </data>
   <data name="Workbook" xml:space="preserve">
     <value>Workbook</value>
   </data>
@@ -345,8 +348,14 @@
   <data name="ApplicationOptions" xml:space="preserve">
     <value>Application Options...</value>
   </data>
+  <data name="DlgTitleApplicationOptions" xml:space="preserve">
+    <value>Application Options</value>
+  </data>
   <data name="WorkbookOptions" xml:space="preserve">
     <value>Workbook Options...</value>
+  </data>
+  <data name="DlgTitleWorkbookOptions" xml:space="preserve">
+    <value>Workbook Options</value>
   </data>
   <data name="AnalysisEngine" xml:space="preserve">
     <value>Analysis Engine...</value>
@@ -1347,6 +1356,15 @@
   </data>
   <data name="PosValBlackKingInCheck" xml:space="preserve">
     <value>Black King cannot be in check on Black's move</value>
+  </data>
+  <data name="InfoLineEvalInProgress" xml:space="preserve">
+    <value>Line evaluation in progress!</value>
+  </data>
+  <data name="InfoEngineThinking" xml:space="preserve">
+    <value>The engine is thinking!</value>
+  </data>
+  <data name="InfoExitGameBeforeTabSwitch" xml:space="preserve">
+    <value>Exit the game against the engine before switching tabs.</value>
   </data>
   <data name="PgnMissingMoveAfter" xml:space="preserve">
     <value>Missing move after</value>

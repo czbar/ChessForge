@@ -24,12 +24,14 @@
         <RadioButton x:Name="UiRbBlackWin" Content="0-1" HorizontalAlignment="Left" Margin="470,133,0,0" VerticalAlignment="Top" Width="50"/>
         <RadioButton x:Name="UiRbDraw" Content="1/2" HorizontalAlignment="Left" Margin="520,133,0,0" VerticalAlignment="Top" Width="50"/>
         <RadioButton x:Name="UiRbNoResult" Content="*" HorizontalAlignment="Left" Margin="570,133,0,0" VerticalAlignment="Top" Width="50"/>
-        <DatePicker x:Name="UiDatePicker" HorizontalAlignment="Left" Margin="405,186,0,0" VerticalAlignment="Top" IsTodayHighlighted="False" Width="144" LostFocus="UiDatePicker_LostFocus"/>
+        <DatePicker x:Name="UiDatePicker" HorizontalAlignment="Left" Margin="405,186,0,0" VerticalAlignment="Top" IsTodayHighlighted="False" Width="150" LostFocus="UiDatePicker_LostFocus"/>
         <Label x:Name="UiLblPgnDate" Content="{x:Static p:Resources.PGN}" HorizontalAlignment="Left" Margin="400,217,0,0" VerticalAlignment="Top"/>
         <CheckBox x:Name="UiCbIgnoreMonthDay" Content="{x:Static p:Resources.IgnoreDayMonth}" HorizontalAlignment="Left" Margin="405,262,0,0" VerticalAlignment="Top" Checked="UiCbIgnoreMonthDay_Checked" Unchecked="UiCbIgnoreMonthDay_Unchecked"/>
         <CheckBox x:Name="UiCbIgnoreDay" Content="{x:Static p:Resources.IgnoreDay}" HorizontalAlignment="Left" Margin="405,285,0,0" VerticalAlignment="Top" Unchecked="UiCbIgnoreDay_Unchecked" Checked="UiCbIgnoreDay_Checked"/>
         <TextBox x:Name="UiTbPgnDate" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalAlignment="Top" TextWrapping="Wrap" Text="????.??.??" Width="80" LostFocus="UiTbPgnDate_LostFocus" Margin="449,221,0,0" />
-        <Button x:Name="UiBtnClearDate" Content="{x:Static p:Resources.Clear}" HorizontalAlignment="Left" Margin="558,188,0,0" VerticalAlignment="Top" Width="64" Click="UiBtnClearDate_Click"/>
+        <Button Name="UiBtnClearDate" Width="32" Height="32"  HorizontalAlignment="Left" Margin="575,182,0,0" VerticalAlignment="Top" ToolTip="{x:Static p:Resources.Clear}" Click="UiBtnClearDate_Click" >
+            <Image Source="Resources/Images/eraser-rubber.png" Width="18" Height="18"></Image>
+        </Button>
         <GroupBox x:Name="UiGbDate" HorizontalAlignment="Left" Height="165" Header="Date" Margin="369,160,0,0" VerticalAlignment="Top" Width="265">
         </GroupBox>
         <TextBox x:Name="UiTbPreamble" AcceptsReturn="True" HorizontalAlignment="Left" Margin="24,132,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" Height="182"/>
