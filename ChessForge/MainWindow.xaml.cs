@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Timers;
 using System.Windows;
@@ -395,9 +396,10 @@ namespace ChessForge
         /// </summary>
         private void InitializeLanguages()
         {
-            Languages.AddLanguage("", Properties.Resources.LangSystem);
             Languages.AddLanguage("en", Properties.Resources.LangEnglish);
             Languages.AddLanguage("pl", Properties.Resources.LangPolish);
+
+            Languages.SetSessionLanguage(Configuration.CultureName);
 
             Languages.InitializeChessSymbolMapping(Properties.Resources.PieceSymbolMap);
         }
@@ -2088,9 +2090,17 @@ namespace ChessForge
             };
             dlg.ShowDialog();
 
-            if (dlg.ExitOK)
+            if (dlg.DialogResult == true)
             {
+                if (dlg.LanguageChanged)
+                {
+                    Configuration.CultureName = dlg.ExitLanguage;
+                    Languages.SetSessionLanguage(dlg.ExitLanguage);
+                    MessageBox.Show(Properties.Resources.ChangeLanguageNote, Properties.Resources.Language, MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
                 Configuration.WriteOutConfiguration();
+
                 if (dlg.ChangedEnginePath)
                 {
                     ReloadEngine();
