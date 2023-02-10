@@ -187,12 +187,9 @@ namespace EngineService
 
                 if (_engineProcess != null && _isEngineRunning)
                 {
-                    _strmReader.Close();
-                    _strmReader = null;
-                    _strmWriter.Close();
                     if (_engineProcess.ProcessName != null)
                     {
-                        _engineProcess.Close();
+                        _engineProcess.Kill();
                     }
                 }
 
@@ -306,6 +303,18 @@ namespace EngineService
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Sends a command without checking any pre-conditions.
+        /// Use for debugging only.
+        /// </summary>
+        /// <param name="command"></param>
+        [Conditional("DEBUG")]
+        public void DebugSendCommand(string command)
+        {
+            EngineLog.Message("DebugSendCommand():" + command);
+            WriteOut(command);
         }
 
         /// <summary>
@@ -477,10 +486,9 @@ namespace EngineService
         }
 
         /// <summary>
-        /// Receiving the "bestmove" message (or timing out waiting for it)
-        /// completes the evaluation process.
+        /// Receiving the "bestmove" message completes the evaluation process.
         /// We change state to IDLE and send the queued commands, if any.
-        /// If there was an command currently being evaluated, this method returns
+        /// If there was a command currently being evaluated, this method returns
         /// false so that the caller does not invoke the processing in the app.
         /// Otherwise it could lead to serious problems with managing timing 
         /// of commands and respones.
@@ -493,7 +501,10 @@ namespace EngineService
             _goFenCompleted = _goFenCurrent;
             _goFenCurrent = null;
 
-            EngineLog.Message("Best Move rx: NodeId=" + _goFenCompleted.NodeId.ToString() + " TreeId=" + _goFenCompleted.TreeId.ToString());
+            if (_goFenCompleted != null)
+            {
+                EngineLog.Message("Best Move rx: NodeId=" + _goFenCompleted.NodeId.ToString() + " TreeId=" + _goFenCompleted.TreeId.ToString());
+            }
 
             lock (_lockStateChange)
             {
