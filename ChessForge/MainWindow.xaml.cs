@@ -2000,10 +2000,16 @@ namespace ChessForge
         /// <returns></returns>
         public bool ReloadEngine()
         {
+            BoardCommentBox.StartingEngine();
+
+            StopEvaluation(true);
+
             EngineMessageProcessor.StopEngineService();
             EngineMessageProcessor.CreateEngineService(this, _isDebugMode);
 
             bool engineStarted = EngineMessageProcessor.StartEngineService();
+
+            BoardCommentBox.RestoreTitleMessage();
             if (!engineStarted)
             {
                 MessageBox.Show(Properties.Resources.LoadEngineError, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -2011,6 +2017,7 @@ namespace ChessForge
             }
             else
             {
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineReplaced);
                 return true;
             }
         }

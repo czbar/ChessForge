@@ -69,6 +69,9 @@ namespace ChessForge
         /// </summary>
         public bool ChangedEnginePath = false;
 
+        // path to the engine as this dialog is invoked,
+        private string _originalEnginePath;
+
         /// <summary>
         /// Creates the dialog and initializes the controls with
         /// formatted configuration values.
@@ -77,6 +80,8 @@ namespace ChessForge
         {
             InitializeComponent();
             EnginePath = Configuration.EngineExePath;
+            _originalEnginePath = EnginePath;
+
             ReplaySpeed = (double)Configuration.MoveSpeed / 1000.0;
             EngineTimePerMoveInGame = (double)Configuration.EngineMoveTime / 1000.0;
             EngineTimePerMoveInEvaluation = (double)Configuration.EngineEvaluationTime / 1000.0;
@@ -90,7 +95,7 @@ namespace ChessForge
             UiTbEngEvalTime.Text = EngineTimePerMoveInEvaluation.ToString("F1");
             UiCbAllowWheel.IsChecked = (AllowMouseWheel == true);
             UiCbShowForkMoves.IsChecked = (ShowMovesAtFork == true);
-            UiCbSoundOn.IsChecked= (SoundOn == true);
+            UiCbSoundOn.IsChecked = (SoundOn == true);
 
             Languages.AvailableLanguages.Sort();
             foreach (Language lang in Languages.AvailableLanguages)
@@ -126,7 +131,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (Configuration.EngineExePath == EnginePath)
+            if (_originalEnginePath == EnginePath)
             {
                 ChangedEnginePath = false;
             }
@@ -153,11 +158,11 @@ namespace ChessForge
                 Configuration.EngineEvaluationTime = (int)(dval * 1000);
             }
 
-            Configuration.AllowMouseWheelForMoves = (UiCbAllowWheel.IsChecked == true); 
+            Configuration.AllowMouseWheelForMoves = (UiCbAllowWheel.IsChecked == true);
             Configuration.ShowMovesAtFork = (UiCbShowForkMoves.IsChecked == true);
             Configuration.SoundOn = (UiCbSoundOn.IsChecked == true);
 
-            if (UiLbLanguages.SelectedItem != null )
+            if (UiLbLanguages.SelectedItem != null)
             {
                 ExitLanguage = (UiLbLanguages.SelectedItem as Language).Code;
             }
