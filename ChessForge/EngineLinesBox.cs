@@ -31,6 +31,9 @@ namespace ChessForge
         // Application's Main Window
         private static MainWindow _mainWin;
 
+        // A flag indicating whether ShowEngineLines() is currently running
+        private static bool _isShowEngineLinesRunning = false;
+
         /// <summary>
         /// Initializes the object with GUI references.
         /// </summary>
@@ -64,6 +67,14 @@ namespace ChessForge
         /// <param name="e"></param>
         public static void ShowEngineLines(object source, ElapsedEventArgs e)
         {
+            // prevent choking
+            if (_isShowEngineLinesRunning)
+            {
+                return;
+            }
+
+            _isShowEngineLinesRunning = true;
+
             try
             {
                 if (AppState.ShowEvaluationLines())
@@ -73,6 +84,7 @@ namespace ChessForge
                     EvalLinesToProcess.Clear();
                     lock (EngineMessageProcessor.MoveCandidatesLock)
                     {
+                        //TODO: find a good way to establish that this is the correct move to prevent expensive exceptions
                         TreeNode evalNode = EngineMessageProcessor.EngineMoveCandidates.EvalNode;
                         if (evalNode != null)
                         {
@@ -123,10 +135,18 @@ namespace ChessForge
                 }
             }
 
-            _pbEngineEval.Dispatcher.Invoke(() =>
+            try
             {
-                _pbEngineEval.Value = _mainWin.Timers.GetElapsedTime(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-            });
+                _pbEngineEval.Dispatcher.Invoke(() =>
+                {
+                    _pbEngineEval.Value = _mainWin.Timers.GetElapsedTime(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                });
+            }
+            catch
+            {
+            }
+
+            _isShowEngineLinesRunning = false;
         }
 
         /// <summary>
