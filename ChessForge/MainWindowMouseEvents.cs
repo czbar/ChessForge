@@ -657,16 +657,20 @@ namespace ChessForge
         public void EngineToggleOn_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
+            UiImgEngineOff.Visibility = Visibility.Visible;
+            UiImgEngineOn.Visibility = Visibility.Collapsed;
+
             if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
             {
                 ForceEngineMove();
                 TrainingSession.IsContinuousEvaluation = false;
+                if (EvaluationManager.CurrentMode != EvaluationManager.Mode.ENGINE_GAME)
+                {
+                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                }
             }
             else
             {
-                UiImgEngineOff.Visibility = Visibility.Visible;
-                UiImgEngineOn.Visibility = Visibility.Collapsed;
-
                 StopEvaluation(false);
                 TrainingSession.IsContinuousEvaluation = false;
             }
