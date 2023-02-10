@@ -2293,6 +2293,18 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Shows the evaluation for the passed node in the Training View.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void ShowEvaluationRunInTraining(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                UiTrainingView.ShowEvaluationRun(nd);
+            }
+        }
+
+        /// <summary>
         /// Resets the board orientation to Workbook default
         /// by clearing the custom setting.
         /// </summary>
