@@ -952,7 +952,7 @@ namespace ChessForge
                 }
                 UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
                 ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
-                BookmarkManager.BuildBookmarkList(WorkbookManager.SessionWorkbook.ActiveChapter);
+                BookmarkManager.BuildBookmarkList(true);
             }
             catch
             {
