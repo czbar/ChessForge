@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="ChessBoardSmall.cs" />
     <Compile Include="ChessForgeEventArgs.cs" />
+    <Compile Include="ContentTypeListItem.cs" />
     <Compile Include="CustomCommands.cs" />
     <Compile Include="EvaluationActiveLine.cs" />
     <Compile Include="EvaluationLine.cs" />

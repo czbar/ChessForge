@@ -89,6 +89,9 @@ Exercise=Exercise
 #Exercises plural 
 Exercises=Exercises
 
+#Content
+Content=Content
+
 #Round
 Round=Round
 
@@ -1432,6 +1435,9 @@ InfoEngineThinking=The engine is thinking!
 
 #Info: exit game before switching tabs
 InfoExitGameBeforeTabSwitch=Exit the game against the engine before switching tabs.
+
+#Info: the selected engine was loaded
+EngineReplaced=Selected engine loaded
 
 ##################################
 #

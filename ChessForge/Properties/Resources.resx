@@ -186,6 +186,9 @@
   <data name="Exercises" xml:space="preserve">
     <value>Exercises</value>
   </data>
+  <data name="Content" xml:space="preserve">
+    <value>Content</value>
+  </data>
   <data name="Round" xml:space="preserve">
     <value>Round</value>
   </data>
@@ -1365,6 +1368,9 @@
   </data>
   <data name="InfoExitGameBeforeTabSwitch" xml:space="preserve">
     <value>Exit the game against the engine before switching tabs.</value>
+  </data>
+  <data name="EngineReplaced" xml:space="preserve">
+    <value>Selected engine loaded</value>
   </data>
   <data name="PgnMissingMoveAfter" xml:space="preserve">
     <value>Missing move after</value>

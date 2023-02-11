@@ -32,6 +32,9 @@ LangPolish=Polski
 #english: PieceSymbolMap=KQRBN
 PieceSymbolMap=KHWGS
 
+#description: Note: changing the language requires restart
+#english: ChangeLanguageNote=The requested change of language requires restarting the application.
+ChangeLanguageNote=Uwaga: Zmiana języka wymaga zamknięcia i ponownego otwarcia programu.
 
 
 ##################################
@@ -108,6 +111,10 @@ Exercise=Ćwiczenie
 #description: Exercises plural 
 #english: Exercises=Exercises
 Exercises=Ćwiczenia
+
+#description: Content
+#english: Content=Content
+Content=Zawartość
 
 #description: Round
 #english: Round=Round
@@ -337,9 +344,17 @@ FlipBoard=Odwróć Szachownicę
 #english: ApplicationOptions=Application Options...
 ApplicationOptions=Opcje Aplikacji
 
+#description: Application Options dialog title
+#english: DlgTitleApplicationOptions=Application Options
+DlgTitleApplicationOptions=Opcje Aplikacji
+
 #description: Opens the Workbook Options dialog
 #english: WorkbookOptions=Workbook Options...
 WorkbookOptions=Opcje Podręcznika
+
+#description: Workbook Options dialog title
+#english: DlgTitleWorkbookOptions=Workbook Options
+DlgTitleWorkbookOptions=Opcje Podręcznika
 
 #description: Opens a dialog allowing the user to select chess engine executable file
 #english: AnalysisEngine=Analysis Engine...
@@ -381,7 +396,7 @@ CheckForUpdates=Sprawdź nową wersję Chess Forge
 
 #description: Opens the About dialog
 #english: About=About
-About=Na Temat
+About=Informacja
 
 
 # MENU BAR ICONS
@@ -1821,6 +1836,26 @@ PosValBlackKingMissing=Brak czarnego króla
 #english: PosValBlackKingInCheck=Black King cannot be in check on Black's move
 PosValBlackKingInCheck=Czarny król nie może być w szachu przy ruchu białych
 
+##################################
+#
+# MESSAGES / WARNINGS / NOTIFICATIONS
+#
+
+#description: Info: line evaluation is in progress
+#english: InfoLineEvalInProgress=Line evaluation in progress!
+InfoLineEvalInProgress=Trwa ocenianie wariantu!
+
+#description: Info: the engine is thinking
+#english: InfoEngineThinking=The engine is thinking!
+InfoEngineThinking=Silnik się namyśla!
+
+#description: Info: exit game before switching tabs
+#english: InfoExitGameBeforeTabSwitch=Exit the game against the engine before switching tabs.
+InfoExitGameBeforeTabSwitch=Zakończ partię zanim zmienisz Widok.
+
+#description: Info: the selected engine was loaded
+#english: EngineReplaced=Selected engine loaded
+EngineReplaced=Załadowano wybrany silnik
 
 ##################################
 #
@@ -1839,7 +1874,7 @@ FenTooFewFields=Błąd: FEN nie może mieć niż 6 pól
 
 #description: Invalid Enpassant
 #english: FenInvalidEnpassant=Error: invalid enpassant field
-FenInvalidEnpassant=Błąd: niewazne pole en passant 
+FenInvalidEnpassant=Błąd: nieważne pole en passant 
 
 #description: Color not specifies
 #english: FenColorNotSpecified=Error: color to move not specified
@@ -1871,14 +1906,3 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
-DlgTitleApplicationOptions=Opcje Aplikacji
-
-#Workbook Options dialog title
-DlgTitleWorkbookOptions=Opcje Podręcznika
-
-ChangeLanguageNote=Uwaga: Zmiana języka wymaga zamknięcia i ponownego otwarcia programu.
-
-InfoLineEvalInProgress=Trwa ocenianie wariantu!
-InfoEngineThinking=Silnik się namyśla!
-
-InfoExitGameBeforeTabSwitch=Zakończ partię zanim zmienisz Widok.

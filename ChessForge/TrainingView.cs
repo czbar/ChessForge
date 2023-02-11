@@ -561,60 +561,74 @@ namespace ChessForge
             AppLog.Message("TrainingView:ShowEvaluationResult() Evaluation Mode:" + EvaluationManager.CurrentMode.ToString()
                 + ", node=" + nd.LastMoveAlgebraicNotation);
 
-            if (!TrainingSession.IsContinuousEvaluation)
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME && !TrainingSession.IsContinuousEvaluation)
             {
                 return;
             }
 
+            ShowEvaluationRun(nd, true);
+
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+            {
+                if (!delayed)
+                {
+                    AppLog.Message("Request next node in LINE EVAL");
+                    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId);
+                }
+            }
+            else if (!TrainingSession.IsContinuousEvaluation && EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
+            {
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+            }
+
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+            {
+                if (_lastClickedNode == null)
+                {
+                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                }
+                else
+                {
+                    EvaluationManager.SetSingleNodeToEvaluate(_lastClickedNode);
+                }
+            }
+            AppState.SetupGuiForCurrentStates();
+        }
+
+        /// <summary>
+        /// Creates or updates the evaluation run.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="force"></param>
+        public void ShowEvaluationRun(TreeNode nd, bool force = false)
+        {
             _mainWin.Dispatcher.Invoke(() =>
             {
                 Run runEvaluated = GetRunForNodeId(nd.NodeId);
-                if (runEvaluated != null)
+                if (runEvaluated == null)
                 {
-                    Paragraph para = runEvaluated.Parent as Paragraph;
-                    if (para != null)
-                    {
-                        string runEvalName = _run_move_eval_ + nd.NodeId.ToString();
-
-                        // Remove previous evaluation if exists
-                        var r_prev = para.Inlines.FirstOrDefault(x => x.Name == runEvalName);
-                        para.Inlines.Remove(r_prev);
-
-                        if (!string.IsNullOrEmpty(nd.EngineEvaluation))
-                        {
-                            Run r_eval = CreateEvaluationRun(nd.EngineEvaluation, runEvalName, nd);
-                            para.Inlines.InsertAfter(runEvaluated, r_eval);
-                        }
-
-                        if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
-                        {
-                            if (!delayed)
-                            {
-                                AppLog.Message("Request next node in LINE EVAL");
-                                RequestMoveEvaluation(_mainWin.ActiveVariationTreeId);
-                            }
-                        }
-                        else if (!TrainingSession.IsContinuousEvaluation && EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
-                        {
-                            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-                        }
-
-                        if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
-                        {
-                            if (_lastClickedNode == null)
-                            {
-                                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-                            }
-                            else
-                            {
-                                EvaluationManager.SetSingleNodeToEvaluate(_lastClickedNode);
-                            }
-                        }
-                    }
+                    return;
                 }
-            });
 
-            AppState.SetupGuiForCurrentStates();
+                Paragraph para = runEvaluated.Parent as Paragraph;
+                if (para == null)
+                {
+                    return;
+                }
+
+                string runEvalName = _run_move_eval_ + nd.NodeId.ToString();
+
+                // Remove previous evaluation if exists
+                var r_prev = para.Inlines.FirstOrDefault(x => x.Name == runEvalName);
+                para.Inlines.Remove(r_prev);
+
+                if (!string.IsNullOrEmpty(nd.EngineEvaluation))
+                {
+                    Run r_eval = CreateEvaluationRun(nd.EngineEvaluation, runEvalName, nd);
+                    para.Inlines.InsertAfter(runEvaluated, r_eval);
+                }
+
+            });
         }
 
         /// <summary>
@@ -844,7 +858,7 @@ namespace ChessForge
                 BuildMoveParagraph(nd, false);
 
                 Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
-                _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn  + "...");
+                _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn + "...");
 
                 _mainWin.BoardCommentBox.GameMoveMade(nd, false);
             }
@@ -1172,7 +1186,7 @@ namespace ChessForge
                             case "_mnTrainSwitchToWorkbook":
                                 string altMove = Properties.Resources.TrnPlayMoveInstead;
                                 altMove = altMove.Replace("$0", moveTxt);
-                                mi.Header =  altMove;
+                                mi.Header = altMove;
                                 mi.Visibility = _moveContext == MoveContext.WORKBOOK_COMMENT ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "_mnTrainRestartTraining":

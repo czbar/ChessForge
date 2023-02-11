@@ -317,6 +317,8 @@ namespace ChessForge
                 this.WindowState = WindowState.Maximized;
             }
 
+            InitializeContentTypeSelectionComboBox();
+
             UiDgActiveLine.ContextMenu = UiMnMainBoard;
             UiBtnExitGame.Background = ChessForgeColors.ExitButtonLinearBrush;
             UiBtnExitTraining.Background = ChessForgeColors.ExitButtonLinearBrush;
@@ -344,6 +346,17 @@ namespace ChessForge
             ArticleSelected += EventSelectArticle;
 
             AppLog.LogAvailableThreadsCounts();
+        }
+
+        /// <summary>
+        /// Fills the Bookmark View's ComboBox for Content Type selection.
+        /// </summary>
+        private void InitializeContentTypeSelectionComboBox()
+        {
+            UiComboBoxBmContent.Items.Add(new ContentTypeListItem(GameData.ContentType.NONE, "*"));
+            UiComboBoxBmContent.Items.Add(new ContentTypeListItem(GameData.ContentType.STUDY_TREE, Properties.Resources.Study));
+            UiComboBoxBmContent.Items.Add(new ContentTypeListItem(GameData.ContentType.MODEL_GAME, Properties.Resources.Games));
+            UiComboBoxBmContent.Items.Add(new ContentTypeListItem(GameData.ContentType.EXERCISE, Properties.Resources.Exercises));
         }
 
         /// <summary>
@@ -2000,10 +2013,16 @@ namespace ChessForge
         /// <returns></returns>
         public bool ReloadEngine()
         {
+            BoardCommentBox.StartingEngine();
+
+            StopEvaluation(true);
+
             EngineMessageProcessor.StopEngineService();
             EngineMessageProcessor.CreateEngineService(this, _isDebugMode);
 
             bool engineStarted = EngineMessageProcessor.StartEngineService();
+
+            BoardCommentBox.RestoreTitleMessage();
             if (!engineStarted)
             {
                 MessageBox.Show(Properties.Resources.LoadEngineError, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -2011,6 +2030,7 @@ namespace ChessForge
             }
             else
             {
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineReplaced);
                 return true;
             }
         }
@@ -2293,6 +2313,18 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Shows the evaluation for the passed node in the Training View.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void ShowEvaluationRunInTraining(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                UiTrainingView.ShowEvaluationRun(nd);
+            }
+        }
+
+        /// <summary>
         /// Resets the board orientation to Workbook default
         /// by clearing the custom setting.
         /// </summary>
@@ -2445,26 +2477,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The All Chapters checkbox in the Bookamrks view was checked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiCbAllChaptersBookmarks_Checked(object sender, RoutedEventArgs e)
-        {
-            BookmarkManager.BuildBookmarkList(null);
-        }
-
-        /// <summary>
-        /// The All Chapters checkbox in the Bookamrks view was unchecked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiCbAllChaptersBookmarks_Unchecked(object sender, RoutedEventArgs e)
-        {
-            BookmarkManager.BuildBookmarkList(WorkbookManager.SessionWorkbook.ActiveChapter);
-        }
-
-        /// <summary>
         /// Prevent Bookmarks context menu from opening when there are no Bookmarks.
         /// </summary>
         /// <param name="sender"></param>
@@ -2475,6 +2487,26 @@ namespace ChessForge
             {
                 e.Handled = true;
             }
+        }
+
+        /// <summary>
+        /// Selection in the ComboBox with the chapter list has changed in the Bookmarks view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiComboBoxBmChapters_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BookmarkManager.ComboBoxChaptersSelectionChanged();
+        }
+
+        /// <summary>
+        /// Selection in the ComboBox with the content type list has changed in the Bookmarks view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiComboBoxBmContent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BookmarkManager.ComboBoxContentSelectionChanged();
         }
     }
 }

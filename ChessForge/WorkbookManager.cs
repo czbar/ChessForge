@@ -117,6 +117,7 @@ namespace ChessForge
             SessionWorkbook.ActiveChapter = chapter;
             SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
             AssignChaptersIds(ref SessionWorkbook);
+            BookmarkManager.ResetSelections();
         }
 
         /// <summary>
@@ -623,6 +624,7 @@ namespace ChessForge
                 isChessForgeFile = true;
                 SessionWorkbook = new Workbook();
                 res = CreateWorkbookFromGameList(ref SessionWorkbook, ref games);
+                BookmarkManager.ResetSelections();
             }
             else
             {
@@ -689,6 +691,7 @@ namespace ChessForge
             {
                 SessionWorkbook = new Workbook();
                 Chapter chapter = SessionWorkbook.CreateDefaultChapter();
+                BookmarkManager.ResetSelections();
 
                 if (AppState.MainWin.SelectArticlesFromPgnFile(ref games,
                                                                       SelectGamesDialog.Mode.CREATE_WORKBOOK,

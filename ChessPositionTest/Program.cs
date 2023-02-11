@@ -8,6 +8,8 @@ using ChessPosition.GameTree;
 using System.Threading.Tasks;
 using WebAccess;
 using System.Diagnostics;
+using System.Linq;
+using System.Net.Http;
 
 namespace ChessPositionTest
 {
@@ -36,25 +38,37 @@ namespace ChessPositionTest
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            TreeNode nd = new TreeNode(null, "", 0);
+            FenParser.ParseFenIntoBoard("rnbqkb1r/ppp1pp1p/5np1/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 0 4", ref nd.Position);
+
+            TreeNode nd2 = new TreeNode(null, "", 0);
+            FenParser.ParseFenIntoBoard("rnbqkb1r/ppp1pp1p/5np1/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 0 4", ref nd2.Position);
+            var data1 = nd.Position.Board;
+            var data2 = nd2.Position.Board;
+            //nd2.Position.Board[0, 0] = 7;
+
+            for (int i = 0; i < 100000; i++)
+            {
+                var equal = data1.Cast<byte>().SequenceEqual(data2.Cast<byte>());
+            }
+
             WebAccess.OpeningExplorer.DataReceived += OpeningStatsReceived;
             Console.WriteLine("Sending Request");
             watch.Start();
 
-            TreeNode nd = new TreeNode(null, "", 0);
-            FenParser.ParseFenIntoBoard("rnbqkb1r/ppp1pp1p/5np1/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 0 4", ref nd.Position);
             WebAccess.OpeningExplorer.OpeningStats(0, nd);
 
             //TestTreeMerge();
             //TestPgnGameParser();
             //TestFenParser();
-            Console.ReadLine();
+//            Console.ReadLine();
         }
 
         public static void OpeningStatsReceived(object sender, EventArgs e)
         {
             watch.Stop();
             Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
-            LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats; 
+            LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats;
             Console.WriteLine(stats.Opening.Name);
             foreach (WebAccess.LichessMoveStats move in stats.Moves)
             {

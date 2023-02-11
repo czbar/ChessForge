@@ -686,6 +686,8 @@ namespace ChessForge
             try
             {
                 // make sure the last lines are shown before we stop the timer.
+                //TODO: after recent fixes for "freezing" this may return without execution so EvalLinesToProcess won't
+                // be set per the latest. This needs some redesign.
                 EngineLinesBox.ShowEngineLines(null, null);
 
                 if (nd != null)

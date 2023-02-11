@@ -112,6 +112,10 @@ Exercise=
 #english: Exercises=Exercises
 Exercises=
 
+#description: Content
+#english: Content=Content
+Content=
+
 #description: Round
 #english: Round=Round
 Round=
@@ -1848,6 +1852,10 @@ InfoEngineThinking=
 #description: Info: exit game before switching tabs
 #english: InfoExitGameBeforeTabSwitch=Exit the game against the engine before switching tabs.
 InfoExitGameBeforeTabSwitch=
+
+#description: Info: the selected engine was loaded
+#english: EngineReplaced=Selected engine loaded
+EngineReplaced=
 
 ##################################
 #
