@@ -799,6 +799,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Content.
+        /// </summary>
+        public static string Content {
+            get {
+                return ResourceManager.GetString("Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy FEN to Clipboard.
         /// </summary>
         public static string CopyFENtoClipboard {
@@ -1191,6 +1200,15 @@ namespace ChessForge.Properties {
         public static string EnginePlayed {
             get {
                 return ResourceManager.GetString("EnginePlayed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected engine loaded.
+        /// </summary>
+        public static string EngineReplaced {
+            get {
+                return ResourceManager.GetString("EngineReplaced", resourceCulture);
             }
         }
         

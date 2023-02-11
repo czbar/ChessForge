@@ -186,6 +186,9 @@
   <data name="Exercises" xml:space="preserve">
     <value>Ćwiczenia</value>
   </data>
+  <data name="Content" xml:space="preserve">
+    <value>Zawartość</value>
+  </data>
   <data name="Round" xml:space="preserve">
     <value>Runda</value>
   </data>
@@ -385,7 +388,7 @@
     <value>Sprawdź nową wersję Chess Forge</value>
   </data>
   <data name="About" xml:space="preserve">
-    <value>Na Temat</value>
+    <value>Informacja</value>
   </data>
   <data name="AutoSave" xml:space="preserve">
     <value>Autozapis</value>
@@ -1365,6 +1368,9 @@
   <data name="InfoExitGameBeforeTabSwitch" xml:space="preserve">
     <value>Zakończ partię zanim zmienisz Widok.</value>
   </data>
+  <data name="EngineReplaced" xml:space="preserve">
+    <value>Załadowano wybrany silnik</value>
+  </data>
   <data name="PgnMissingMoveAfter" xml:space="preserve">
     <value>Brakuje ruchu po</value>
   </data>
@@ -1372,7 +1378,7 @@
     <value>Błąd: FEN nie może mieć niż 6 pól</value>
   </data>
   <data name="FenInvalidEnpassant" xml:space="preserve">
-    <value>Błąd: niewazne pole en passant </value>
+    <value>Błąd: nieważne pole en passant </value>
   </data>
   <data name="FenColorNotSpecified" xml:space="preserve">
     <value>Błąd: nie podano czyj ruch</value>

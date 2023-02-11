@@ -112,6 +112,10 @@ Exercise=Ćwiczenie
 #english: Exercises=Exercises
 Exercises=Ćwiczenia
 
+#description: Content
+#english: Content=Content
+Content=Zawartość
+
 #description: Round
 #english: Round=Round
 Round=Runda
@@ -392,7 +396,7 @@ CheckForUpdates=Sprawdź nową wersję Chess Forge
 
 #description: Opens the About dialog
 #english: About=About
-About=Na Temat
+About=Informacja
 
 
 # MENU BAR ICONS
@@ -1849,6 +1853,10 @@ InfoEngineThinking=Silnik się namyśla!
 #english: InfoExitGameBeforeTabSwitch=Exit the game against the engine before switching tabs.
 InfoExitGameBeforeTabSwitch=Zakończ partię zanim zmienisz Widok.
 
+#description: Info: the selected engine was loaded
+#english: EngineReplaced=Selected engine loaded
+EngineReplaced=Załadowano wybrany silnik
+
 ##################################
 #
 # Libary exceptions
@@ -1866,7 +1874,7 @@ FenTooFewFields=Błąd: FEN nie może mieć niż 6 pól
 
 #description: Invalid Enpassant
 #english: FenInvalidEnpassant=Error: invalid enpassant field
-FenInvalidEnpassant=Błąd: niewazne pole en passant 
+FenInvalidEnpassant=Błąd: nieważne pole en passant 
 
 #description: Color not specifies
 #english: FenColorNotSpecified=Error: color to move not specified
