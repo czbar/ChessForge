@@ -206,7 +206,7 @@
                     </Canvas>
                 </Viewbox>
 
-                <DataGrid x:Name="UiDgEngineGame" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="648" Margin="10,27,0,0" VerticalAlignment="Top" Width="180"  
+                <DataGrid x:Name="UiDgEngineGame" Grid.Column="1" HorizontalAlignment="Left" Height="648" Margin="10,27,0,0" VerticalAlignment="Top" Width="180"  
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" CanUserSortColumns="False"
                   GridLinesVisibility="None" Grid.Row="1" Background="White" PreviewMouseDown="EngineGame_OnPreviewMouseDown"  PreviewMouseUp="EngineGame_OnPreviewMouseUp"   >
                     <DataGrid.Resources>
@@ -409,12 +409,23 @@
                                             <RowDefinition Height="25"/>
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="180"/>
-                                            <ColumnDefinition Width="155"/>
+                                            <ColumnDefinition Width="250"/>
+                                            <ColumnDefinition Width="85"/>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="320*"/>
                                         </Grid.ColumnDefinitions>
-                                        <CheckBox x:Name="UiCbAllChaptersBookmarks" Grid.Column="0" Margin="20,9,0,0" Padding="5,1,0,0" FontSize="10" Checked="UiCbAllChaptersBookmarks_Checked" Unchecked="UiCbAllChaptersBookmarks_Unchecked" Content="{x:Static p:Resources.AllChapters}"></CheckBox>
+                                        <Grid Grid.Column="0" >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label x:Name="UiLblBmChapters" Grid.Column="0" Content="{x:Static p:Resources.Chapter}" Margin="20,2,0,0" FontSize="10"  />
+                                            <ComboBox x:Name="UiComboBoxBmChapters" Grid.Column="1" Margin="0,4,0,0"  Width="30" Height="18" FontSize="8" SelectionChanged="UiComboBoxBmChapters_SelectionChanged" />
+                                            <Label x:Name="UiLblBmCContent" Content="{x:Static p:Resources.Content}" Margin="25,2,0,0" Grid.Column="2" FontSize="10" />
+                                            <ComboBox x:Name="UiComboBoxBmContent" Grid.Column="3" Margin="0,4,0,0" Width="65" Height="18" FontSize="8" SelectionChanged="UiComboBoxBmContent_SelectionChanged" />
+                                        </Grid>
                                         <Image x:Name="UiImgLeftArrow" Cursor="Hand" Grid.Column="1" HorizontalAlignment="Right"  Margin="0,9,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseDown="Bookmarks_PreviousPage_OnPreviewMouseDown"  />
                                         <Label x:Name="UiLblBookmarkPage" Content="PLACEHOLDER" Padding="15,9,15,0" Grid.Column="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,0,0,0" FontWeight="Bold" />
                                         <Image x:Name="UiImgRightArrow" Cursor="Hand" Grid.Column="3" HorizontalAlignment="Left" Margin="0,9,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseDown="Bookmarks_NextPage_OnPreviewMouseDown"  />

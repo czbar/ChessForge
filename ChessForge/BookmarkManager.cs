@@ -64,6 +64,28 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Workbook for which the Bookmark view was last rebuilt.
+        /// </summary>
+        private static Workbook _currentWorkbook;
+
+        /// <summary>
+        /// Chapter that was last selected.
+        /// </summary>
+        private static Chapter _selectedChapter;
+
+        /// <summary>
+        /// Recently selected content type.
+        /// If null, index 0 will be assumed.
+        /// </summary>
+        private static ContentTypeListItem _selectedContentType;
+
+        /// <summary>
+        /// Recently selected chapter number.
+        /// If null, index 0 will be assumed.
+        /// </summary>
+        private static int _selectedChapterIndex;
+
+        /// <summary>
         /// The page currently shown in the GUI.
         /// The first page has number 1 (not 0).
         /// </summary>
@@ -75,11 +97,10 @@ namespace ChessForge
         // main application window
         private static MainWindow _mainWin;
 
-        // Chapter for which this view was built, if null, the bookmarks are from all chapters
-        private static Chapter _parentChapter;
-
         /// <summary>
         /// Resets the bookmark list and all Bookmark chessboards in the Bookmark view.
+        /// TODO: this is probably necessary now that we check and rebuild the Bookmark view every
+        /// time it gets focus.
         /// </summary>
         public static void ClearBookmarksGui()
         {
@@ -90,39 +111,89 @@ namespace ChessForge
                 bv.Deactivate();
                 bv.SetOpacity(0.5);
             }
-            //_mainWin.UiGridBookmarks.RowDefinitions[0].Height = GridLength.Auto;
-
-            //            _mainWin.UiCnvPaging.Visibility = Visibility.Collapsed;
             _mainWin.UiLblBookmarkPage.Visibility = Visibility.Collapsed;
             _mainWin.UiImgLeftArrow.Visibility = Visibility.Collapsed;
             _mainWin.UiImgRightArrow.Visibility = Visibility.Collapsed;
         }
 
+        private static bool _ignoreSelectionChange = false;
+
         /// <summary>
-        /// Rebuilds the list of bookmarks for the current chapter
+        /// Rebuilds the list of bookmarks for the current chapter.
         /// </summary>
-        public static void BuildBookmarkList(Chapter chapter)
+        /// <param name="rebuild" if false this method was called in response to a changed selection
+        /// in one of the CombpoBoxes so no rebuild is needed.</param>
+        public static void BuildBookmarkList(bool rebuild)
         {
-            if (_mainWin.UiCbAllChaptersBookmarks.IsChecked == true)
+            _ignoreSelectionChange = true;
+
+            bool sameWorkbook = WorkbookManager.SessionWorkbook == _currentWorkbook;
+            if (!sameWorkbook)
             {
-                _parentChapter = null;
+                rebuild = true;
+                _selectedChapter = null;
+                _selectedChapterIndex = -1;
+                _selectedContentType = null;
+                _currentWorkbook = WorkbookManager.SessionWorkbook;
+            }
+
+            if (rebuild)
+            {
+                AppState.MainWin.UiComboBoxBmChapters.Items.Clear();
+                AppState.MainWin.UiComboBoxBmChapters.Items.Add("*");
+                for (int i = 0; i < WorkbookManager.SessionWorkbook.GetChapterCount(); i++)
+                {
+                    AppState.MainWin.UiComboBoxBmChapters.Items.Add((i + 1).ToString());
+                }
+
+                // see if we can select the previously selected chapter
+                bool foundSelectedChapter = false;
+                if (_selectedChapter != null)
+                {
+                    for (int i = 0; i < WorkbookManager.SessionWorkbook.GetChapterCount(); i++)
+                    {
+                        if (WorkbookManager.SessionWorkbook.Chapters[i] == _selectedChapter)
+                        {
+                            _selectedChapterIndex = i;
+                            AppState.MainWin.UiComboBoxBmChapters.SelectedItem = (_selectedChapterIndex + 1).ToString();
+                            foundSelectedChapter = true;
+                            break;
+                        }
+                    }
+                }
+
+                // if we did not work out the selection above, set it to the first element (which is "*")
+                if (!foundSelectedChapter || _selectedChapterIndex < 0)
+                {
+                    _selectedChapterIndex = -1;
+                    AppState.MainWin.UiComboBoxBmChapters.SelectedIndex = 0;
+                }
+
+                _lastAddedBookmark = null;
+            }
+
+            if (_selectedContentType == null || _selectedContentType.ContentType == GameData.ContentType.NONE)
+            {
+                AppState.MainWin.UiComboBoxBmContent.SelectedIndex = 0;
             }
             else
             {
-                _parentChapter = chapter;
+                AppState.MainWin.UiComboBoxBmContent.SelectedItem = _selectedContentType;
             }
-            _currentPage = 1;
 
+            GameData.ContentType contentType = _selectedContentType == null ? GameData.ContentType.NONE : _selectedContentType.ContentType;
+
+            _currentPage = 1;
             BookmarkList.Clear();
-            if (_parentChapter != null)
+            if (_selectedChapterIndex >= 0)
             {
-                BuildBookmarkListForChapter(_parentChapter);
+                BuildBookmarkListForChapter(_selectedChapter, contentType);
             }
             else
             {
                 foreach (Chapter ch in WorkbookManager.SessionWorkbook.Chapters)
                 {
-                    BuildBookmarkListForChapter(ch);
+                    BuildBookmarkListForChapter(ch, contentType);
                 }
             }
 
@@ -130,6 +201,69 @@ namespace ChessForge
 
             HighlightBookmark(_lastAddedBookmark);
             _lastAddedBookmark = null;
+            _ignoreSelectionChange = false;
+        }
+
+        /// <summary>
+        /// Resets the chapter and content type selection.
+        /// Should be called when a new Workbook is open or created.
+        /// </summary>
+        public static void ResetSelections()
+        {
+            _selectedContentType = null;
+            _selectedChapterIndex = -1;
+
+            AppState.MainWin.UiComboBoxBmChapters.SelectedIndex = 0;
+            AppState.MainWin.UiComboBoxBmContent.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// The selection has changed so re-build the view.
+        /// </summary>
+        public static void ComboBoxChaptersSelectionChanged()
+        {
+            if (_ignoreSelectionChange)
+            {
+                return;
+            }
+
+            bool res = int.TryParse(AppState.MainWin.UiComboBoxBmChapters.SelectedItem as string, out int listBoxSelectedString);
+            if (!res)
+            {
+                _selectedChapterIndex = -1;
+                _selectedChapter = null;
+            }
+            else
+            {
+                // listBoxSelectedString is a string representing the 1-based chapter's position in Chapters list
+                // to get the actual index we subtract 1.
+                int chapterIndex = listBoxSelectedString - 1;
+                // make sure that this is not due to the programmatic change in BuildBookmarkList() so that we don't call it in a loop!
+                if (_selectedChapterIndex != chapterIndex)
+                {
+                    _selectedChapterIndex = chapterIndex;
+                    _selectedChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(_selectedChapterIndex);
+                    BuildBookmarkList(false);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The selection has changed so re-build the view.
+        /// </summary>
+        public static void ComboBoxContentSelectionChanged()
+        {
+            if (_ignoreSelectionChange)
+            {
+                return;
+            }
+
+            ContentTypeListItem li = AppState.MainWin.UiComboBoxBmContent.SelectedItem as ContentTypeListItem;
+            if (_selectedContentType != li)
+            {
+                _selectedContentType = li;
+                BuildBookmarkList(false);
+            }
         }
 
         /// <summary>
@@ -573,33 +707,42 @@ namespace ChessForge
         /// Builds a list of bookmarks for a single chapter.
         /// </summary>
         /// <param name="chapter"></param>
-        private static void BuildBookmarkListForChapter(Chapter chapter)
+        private static void BuildBookmarkListForChapter(Chapter chapter, GameData.ContentType contentType)
         {
             int chapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(chapter);
 
-            foreach (Bookmark bkm in chapter.StudyTree.Tree.Bookmarks)
+            if (contentType == GameData.ContentType.NONE || contentType == GameData.ContentType.STUDY_TREE)
             {
-                BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, chapter.StudyTree.Tree, bkm, -1);
-                BookmarkList.Add(bkv);
-            }
-
-            for (int i = 0; i < chapter.GetModelGameCount(); i++)
-            {
-                Article art = chapter.ModelGames[i];
-                foreach (Bookmark bkm in art.Tree.Bookmarks)
+                foreach (Bookmark bkm in chapter.StudyTree.Tree.Bookmarks)
                 {
-                    BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, art.Tree, bkm, i);
+                    BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, chapter.StudyTree.Tree, bkm, -1);
                     BookmarkList.Add(bkv);
                 }
             }
 
-            for (int i = 0; i < chapter.GetExerciseCount(); i++)
+            if (contentType == GameData.ContentType.NONE || contentType == GameData.ContentType.MODEL_GAME)
             {
-                Article art = chapter.Exercises[i];
-                foreach (Bookmark bkm in art.Tree.Bookmarks)
+                for (int i = 0; i < chapter.GetModelGameCount(); i++)
                 {
-                    BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, art.Tree, bkm, i);
-                    BookmarkList.Add(bkv);
+                    Article art = chapter.ModelGames[i];
+                    foreach (Bookmark bkm in art.Tree.Bookmarks)
+                    {
+                        BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, art.Tree, bkm, i);
+                        BookmarkList.Add(bkv);
+                    }
+                }
+            }
+
+            if (contentType == GameData.ContentType.NONE || contentType == GameData.ContentType.EXERCISE)
+            {
+                for (int i = 0; i < chapter.GetExerciseCount(); i++)
+                {
+                    Article art = chapter.Exercises[i];
+                    foreach (Bookmark bkm in art.Tree.Bookmarks)
+                    {
+                        BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, art.Tree, bkm, i);
+                        BookmarkList.Add(bkv);
+                    }
                 }
             }
         }
