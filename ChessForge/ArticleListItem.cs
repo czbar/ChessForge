@@ -26,30 +26,40 @@ namespace ChessForge
         // is selection checkbox visible
         private bool _isSelectCheckBoxVisible;
 
-        // representes Article (null if this object was created for a Chapter
+        // the Chapter object (may be null if not needed for the current purpose).
+        private Chapter _chapter;
+
+        // index of the Chapter
+        private int _chapterIndex = -1;
+
+        // the Article object (may be null if we are only representing a Chapter here)
         private Article _article;
 
-        // Chapter object. Null if this object was not created for a chapter.
-        private Chapter _chapter;
+        // index of the Article in its chapter
+        private int _articleIndex = -1;
 
         // type of content in the Article (NONE if this is for a Chapter)
         private GameData.ContentType _contentType;
 
-        // index of the Article in its chapter
-        private int _index = -1;
+        // node represented by this item, if any
+        private TreeNode _node;
 
         /// <summary>
         /// Creates the object and sets IsSelected to true.
         /// The games in ListView are selected by default.
         /// </summary>
-        public ArticleListItem(Chapter chapter, Article art, int index)
+        public ArticleListItem(Chapter chapter, int chapterIndex, Article art, int articleIndex, TreeNode node = null)
         {
             _isSelected = false;
             _isSelectCheckBoxVisible = true;
 
-            _article = art;
             _chapter = chapter;
-            _index = index;
+            _chapterIndex = chapterIndex;
+
+            _article = art;
+            _articleIndex = articleIndex;
+
+            _node = node;
 
             if (art != null)
             {
@@ -65,7 +75,7 @@ namespace ChessForge
         /// Simplified constructor for the Chapter item.
         /// </summary>
         /// <param name="chapter"></param>
-        public ArticleListItem(Chapter chapter) : this(chapter, null, -1)
+        public ArticleListItem(Chapter chapter) : this(chapter, -1, null, -1)
         {
             _isSelected = false;
             _isSelectCheckBoxVisible = false;
@@ -102,20 +112,75 @@ namespace ChessForge
                 }
                 else if (_chapter != null)
                 {
-                    header = Strings.GetResource("Chapter").ToUpper() +  ": " + _chapter.Title;
+                    header = Properties.Resources.Chapter.ToUpper() + ": " + _chapter.Title;
                 }
 
                 string prefix = string.Empty;
                 if (_contentType == GameData.ContentType.MODEL_GAME)
                 {
-                    prefix = "    " + Strings.GetResource("Game") + ": ";
+                    prefix = "    " + Properties.Resources.Game + ": ";
                 }
                 else if (_contentType == GameData.ContentType.EXERCISE)
                 {
-                    prefix = "    " + Strings.GetResource("Exercise") + ": ";
+                    prefix = "    " + Properties.Resources.Exercise + ": ";
                 }
 
                 return prefix + header;
+            }
+        }
+
+        /// <summary>
+        /// Text for the column with article type.
+        /// This is used in the Identical Positions dialog to put
+        /// the word "Chapter" in the column before entries from
+        /// a given chapter are shown.
+        /// </summary>
+        public string ArticleTypeForDisplay
+        {
+            get
+            {
+                return _chapter != null ? Properties.Resources.Chapter : string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Title to display for the Identical Positions dialog.
+        /// If this is a Chapter entry, then produce a Chapter title
+        /// including the index.
+        /// Otherwise produce an Article title including the index.
+        /// </summary>
+        public string ElementTitleForDisplay
+        {
+            get
+            {
+                if (_chapter != null)
+                {
+                    return _chapter.Title;
+                }
+                else
+                {
+                    string header;
+                    if (_contentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        header = Properties.Resources.Study;
+                    }
+                    else
+                    {
+                        header = _article.Tree.Header.BuildGameHeaderLine(true, _contentType == GameData.ContentType.MODEL_GAME);
+                    }
+
+                    string prefix = string.Empty;
+                    if (_contentType == GameData.ContentType.MODEL_GAME)
+                    {
+                        prefix = Properties.Resources.Game + " " + (_articleIndex + 1).ToString() + ": ";
+                    }
+                    else if (_contentType == GameData.ContentType.EXERCISE)
+                    {
+                        prefix = Properties.Resources.Exercise + " " + (_articleIndex + 1).ToString() + ": ";
+                    }
+
+                    return prefix + header;
+                }
             }
         }
 
