@@ -1069,6 +1069,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List of Identical Positions.
+        /// </summary>
+        public static string DlgTitleIdenticalPositions {
+            get {
+                return ResourceManager.GetString("DlgTitleIdenticalPositions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Workbook Options.
         /// </summary>
         public static string DlgTitleWorkbookOptions {
@@ -1569,6 +1578,15 @@ namespace ChessForge.Properties {
         public static string FileNotFound {
             get {
                 return ResourceManager.GetString("FileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Identical Positions.
+        /// </summary>
+        public static string FindIdenticalPosition {
+            get {
+                return ResourceManager.GetString("FindIdenticalPosition", resourceCulture);
             }
         }
         

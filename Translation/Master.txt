@@ -170,6 +170,9 @@ EvaluateMove=Evaluate Move
 #Request to evaluate a line
 EvaluateLine=Evaluate Line
 
+#Find identical positions
+FindIdenticalPosition=Find Identical Positions
+
 #Done
 Done=Done
 
@@ -268,6 +271,9 @@ ApplicationOptions=Application Options...
 
 #Application Options dialog title
 DlgTitleApplicationOptions=Application Options
+
+#Identical Positions dialog title
+DlgTitleIdenticalPositions=List of Identical Positions
 
 #Opens the Workbook Options dialog
 WorkbookOptions=Workbook Options...

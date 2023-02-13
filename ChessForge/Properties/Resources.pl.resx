@@ -267,6 +267,9 @@
   <data name="EvaluateLine" xml:space="preserve">
     <value>Oceń Wariant</value>
   </data>
+  <data name="FindIdenticalPosition" xml:space="preserve">
+    <value>Znajdź Identyczne Pozycje</value>
+  </data>
   <data name="Done" xml:space="preserve">
     <value>Gotowe</value>
   </data>
@@ -353,6 +356,9 @@
   </data>
   <data name="DlgTitleApplicationOptions" xml:space="preserve">
     <value>Opcje Aplikacji</value>
+  </data>
+  <data name="DlgTitleIdenticalPositions" xml:space="preserve">
+    <value>Lista Identycznych Pozycji</value>
   </data>
   <data name="WorkbookOptions" xml:space="preserve">
     <value>Opcje Podręcznika</value>
