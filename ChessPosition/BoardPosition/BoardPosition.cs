@@ -47,6 +47,14 @@ namespace ChessPosition
         public byte DynamicProperties;
 
         /// <summary>
+        /// The part of DynamicProperties representing castling rights.
+        /// </summary>
+        public byte CastlingRights
+        {
+            get => (byte)(DynamicProperties & 0x0F);
+        }
+
+        /// <summary>
         /// 4 MS bits represent the xPos (column/file)
         /// 4 LS bits represent the yPos (row/rank)
         ///   both "halves" can have values 0-7
