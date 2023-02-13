@@ -560,6 +560,65 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Finds the list of positions identical to the currently selected node.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnFindIdenticalPosition_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (ActiveVariationTree == null || AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            {
+                return;
+            }
+
+            List<ArticleListItem> lstIdenticalPositions = new List<ArticleListItem>();
+
+            TreeNode nd = ActiveLine.GetSelectedTreeNode();
+            for (int ch = 0; ch < WorkbookManager.SessionWorkbook.Chapters.Count; ch++)
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[ch];
+                List<TreeNode> lstStudyNodes = TreeUtils.FindIdenticalNodes(chapter.StudyTree.Tree, nd);
+
+                if (lstStudyNodes != null)
+                {
+                    foreach (TreeNode node in lstStudyNodes)
+                    {
+                        ArticleListItem ali = new ArticleListItem(chapter, ch, chapter.StudyTree, 0, node);
+                        lstIdenticalPositions.Add(ali);
+                    }
+                }
+
+                for (int art = 0; art < chapter.ModelGames.Count; art++)
+                {
+                    Article article = chapter.ModelGames[art];
+                    List<TreeNode> lstNodes = TreeUtils.FindIdenticalNodes(article.Tree, nd);
+                    if (lstStudyNodes != null)
+                    {
+                        foreach (TreeNode node in lstStudyNodes)
+                        {
+                            ArticleListItem ali = new ArticleListItem(chapter, ch, article, art, node);
+                            lstIdenticalPositions.Add(ali);
+                        }
+                    }
+                }
+
+                for (int art = 0; art < chapter.Exercises.Count; art++)
+                {
+                    Article article = chapter.Exercises[art];
+                    List<TreeNode> lstNodes = TreeUtils.FindIdenticalNodes(article.Tree, nd);
+                    if (lstStudyNodes != null)
+                    {
+                        foreach (TreeNode node in lstStudyNodes)
+                        {
+                            ArticleListItem ali = new ArticleListItem(chapter, ch, article, art, node);
+                            lstIdenticalPositions.Add(ali);
+                        }
+                    }
+                }
+            }
+        }
 
         //**********************
         //
