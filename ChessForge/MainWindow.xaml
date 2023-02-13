@@ -190,6 +190,7 @@
                                 <Separator x:Name="UiMncMainBoardSepar_1a" />
                                 <MenuItem x:Name="UiMnciEvalPos" Header="{x:Static p:Resources.EvaluatePosition}" Click="UiMnEvaluatePosition_Click" />
                                 <MenuItem x:Name="UiMnciEvalLine" Header="{x:Static p:Resources.EvaluateLine}" Click="UiMnEvaluateLine_Click" />
+                                <MenuItem x:Name="UiMnciFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" />
                                 <Separator x:Name="UiMncMainBoardSepar_2" />
                                 <MenuItem x:Name="UiMnciBookmarkPosition" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnBookmarkPosition_Click" />
                                 <Separator x:Name="UiMncMainBoardSepar_4" />
@@ -340,10 +341,11 @@
                                     <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnDeleteMovesFromHere_Click" />
                                     <MenuItem x:Name="UiMnCreateChapterFromLine" Header="{x:Static p:Resources.CreateNewChapterFromLine}" Click="UiMnCreateChapterFromLine_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="UiMnMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
-                                    <Separator />
                                     <MenuItem x:Name="_mnWorkbookEvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnWorkbookEvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
+                                    <MenuItem x:Name="UiMnStudyFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}"  Click="UiMnFindIdenticalPosition_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="UiMnMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnStudyTree_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
@@ -643,6 +645,7 @@
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnGame_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
+                                    <MenuItem x:Name="UiMnGameFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnGameMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                     <MenuItem x:Name="_mnGame_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
@@ -701,6 +704,7 @@
                                     <Separator />
                                     <MenuItem x:Name="_mnExerc_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnExerc_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
+                                    <MenuItem x:Name="UiMnExercFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnExercMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                     <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
