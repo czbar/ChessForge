@@ -12,12 +12,59 @@ namespace ChessPosition
     public class TreeUtils
     {
         /// <summary>
-        /// Sets check and mate status in psoitions as they may not have been
+        /// Finds nodes featuring the passed Position.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="refBoard"></param>
+        /// <param name="checkSideToMove"></param>
+        /// <param name="checkEnpassant"></param>
+        /// <param name="checkCastleRights"></param>
+        /// <returns></returns>
+        public static List<TreeNode> FindNodesWithPosition(VariationTree tree, BoardPosition refBoard, bool checkSideToMove, bool checkEnpassant, bool checkCastleRights)
+        {
+            List<TreeNode> nodeList = new List<TreeNode>();
+
+            foreach (TreeNode nd in tree.Nodes)
+            {
+                if (refBoard.Board.Cast<byte>().SequenceEqual(nd.Position.Board.Cast<byte>()))
+                {
+                    if ((!checkEnpassant || refBoard.InheritedEnPassantSquare == nd.Position.InheritedEnPassantSquare)
+                        && (!checkSideToMove || refBoard.ColorToMove == nd.Position.ColorToMove)
+                        && (!checkCastleRights || refBoard.CastlingRights == nd.Position.CastlingRights))
+                    {
+                        if (nodeList == null)
+                        {
+                            nodeList = new List<TreeNode>();
+                        }
+                        nodeList.Add(nd);
+                    }
+                }
+            }
+
+            return nodeList;
+        }
+
+        /// <summary>
+        /// Finds nodes featuring the same Position as the passed node.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="node"></param>
+        /// <param name="checkSideToMove"></param>
+        /// <param name="checkEnpassant"></param>
+        /// <param name="checkCastleRights"></param>
+        /// <returns></returns>
+        public static List<TreeNode> FindIdenticalNodes(VariationTree tree, TreeNode node, bool checkSideToMove = true, bool checkEnpassant = true, bool checkCastleRights = true)
+        {
+            return FindNodesWithPosition(tree, node.Position, checkSideToMove, checkEnpassant, checkCastleRights);
+        }
+
+        /// <summary>
+        /// Sets check and mate status in positions as they may not have been
         /// correctly marked in the PGN.
         /// </summary>
-        public static void SetCheckAndMates(ref VariationTree _tree)
+        public static void SetCheckAndMates(ref VariationTree tree)
         {
-            foreach (TreeNode nd in _tree.Nodes)
+            foreach (TreeNode nd in tree.Nodes)
             {
                 if (PositionUtils.IsKingInCheck(nd.Position, nd.ColorToMove))
                 {
