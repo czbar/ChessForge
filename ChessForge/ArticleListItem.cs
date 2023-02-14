@@ -44,6 +44,9 @@ namespace ChessForge
         // node represented by this item, if any
         private TreeNode _node;
 
+        // line from the start to this item's node
+        private string _stemLine = null;
+
         /// <summary>
         /// Creates the object and sets IsSelected to true.
         /// The games in ListView are selected by default.
@@ -87,6 +90,14 @@ namespace ChessForge
         public Chapter Chapter
         {
             get { return _chapter; }
+        }
+
+        /// <summary>
+        /// Returns the chapter this item belongs to.
+        /// </summary>
+        public string ChapterIndexColumnText
+        {
+            get { return _chapter == null ? string.Empty : Properties.Resources.Chapter + " " + (_chapterIndex + 1).ToString(); }
         }
 
         /// <summary>
@@ -185,6 +196,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Algebraic notation of the move to show.
+        /// </summary>
+        public string Move
+        {
+            get
+            {
+                return MoveUtils.BuildSingleMoveText(_node, true, false);
+            }
+        }
+
+        /// <summary>
         /// Date string for display
         /// </summary>
         public string Date
@@ -240,6 +262,59 @@ namespace ChessForge
         public string Visibility
         {
             get { return _isSelectCheckBoxVisible ? "Visible" : "Hidden"; }
+        }
+
+        /// <summary>
+        /// Text of the line from the first node of the Tree to this item's node
+        /// </summary>
+        public string StemLine
+        {
+            get => _stemLine;
+            set => _stemLine = value;
+        }
+
+        /// <summary>
+        /// Tool tip that shows the stem line if the item is an Article,
+        /// or the chapter index if the item is a Chapter.
+        /// </summary>
+        public string StemLineToolTip
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_stemLine))
+                {
+                    return _stemLine;
+                }
+                else
+                {
+                    if (_chapter != null)
+                    {
+                        return Properties.Resources.Chapter + " " + (_chapterIndex + 1).ToString();
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Index of the chapter on the Workbook's chapter list.
+        /// </summary>
+        public int ChapterIndex
+        {
+            get => _chapterIndex;
+            set => _chapterIndex = value;
+        }
+
+        /// <summary>
+        /// Index of the Article on Chapter's ModelGame or Exercise list.
+        /// </summary>
+        public int ArticleIndex
+        {
+            get => _articleIndex;
+            set => _articleIndex = value;
         }
 
         /// <summary>
