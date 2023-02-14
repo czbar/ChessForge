@@ -110,6 +110,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the TreeNode associated with this item.
+        /// </summary>
+        public TreeNode Node
+        {
+            get { return _node; }
+        }
+
+        /// <summary>
         /// The property that binds in the SelectGames ListView control.
         /// </summary>
         public string GameTitleForList
