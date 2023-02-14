@@ -599,6 +599,8 @@ namespace ChessForge
                         {
                             SetupGuiForActiveStudyTree(true);
                         }
+                        AppState.MainWin.SetActiveLine(item.Node.LineId, item.Node.NodeId);
+                        AppState.MainWin.ActiveTreeView.SelectLineAndMove(item.Node.LineId, item.Node.NodeId);
                     }
                 }
             }
