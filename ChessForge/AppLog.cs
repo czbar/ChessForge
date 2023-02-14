@@ -47,6 +47,25 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Logs a debug message if the min debug level is met.
+        /// </summary>
+        /// <param name="minDebugLevel"></param>
+        /// <param name="msg"></param>
+        public static void Message(int minDebugLevel, string msg)
+        {
+            if (Configuration.DebugLevel < minDebugLevel)
+            {
+                return;
+            }
+
+            lock (AppLogLock)
+            {
+                string timeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "  ";
+                Log.Add(timeStamp + msg);
+            }
+        }
+
+        /// <summary>
         /// Logs TreeNode details including the board position.
         /// </summary>
         /// <param name="nd"></param>
