@@ -4,7 +4,9 @@
 #
 ##################################
 
-
+#description: Name of the applicaton
+#english: ChessForge=Chess Forge
+ChessForge=Chess Forge
 
 ##################################
 #
@@ -355,6 +357,14 @@ DlgTitleApplicationOptions=Opcje Aplikacji
 #description: Identical Positions dialog title
 #english: DlgTitleIdenticalPositions=List of Identical Positions
 DlgTitleIdenticalPositions=Lista Identycznych Pozycji
+
+#description:  Label explaining clicks in the Identical Positions dialog.
+#english: DlgLabelIdenticalPositionHint=Double click an item to open its view.
+DlgLabelIdenticalPositionHint=Kliknij podwójnie element aby otworzyć jego widok.
+
+#description: Message about identical position not found
+#english: MsgNoIdenticalPositions=No identical positions found.
+MsgNoIdenticalPositions=No identical positions found.
 
 #description: Opens the Workbook Options dialog
 #english: WorkbookOptions=Workbook Options...
@@ -1884,7 +1894,7 @@ FenTooFewFields=Błąd: FEN nie może mieć niż 6 pól
 #english: FenInvalidEnpassant=Error: invalid enpassant field
 FenInvalidEnpassant=Błąd: nieważne pole en passant 
 
-#description: Color not specifies
+#description: Color not specified
 #english: FenColorNotSpecified=Error: color to move not specified
 FenColorNotSpecified=Błąd: nie podano czyj ruch
 
@@ -1914,9 +1924,3 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
-DlgLabelIdenticalPositionHint=Kliknij podwójnie element aby otworzyć jego widok.
-
-#Message about identical position not found
-MsgNoIdenticalPositions=No identical positions found.
-
-ChessForge=Chess Forge
