@@ -751,11 +751,13 @@ namespace ChessForge
         {
             try
             {
+                AppLog.Message(2, "UiImgChapterRightArrow_PreviewMouseLeftButtonDown() pressed");
                 if (WorkbookManager.SessionWorkbook.ActiveChapterIndex >= 0
                     && WorkbookManager.SessionWorkbook.ActiveChapterIndex < WorkbookManager.SessionWorkbook.Chapters.Count - 1)
                 {
                     SelectChapterByIndex(WorkbookManager.SessionWorkbook.ActiveChapterIndex + 1, true);
                 }
+                AppLog.Message(2, "UiImgChapterRightArrow_PreviewMouseLeftButtonDown() returning");
             }
             catch
             {
