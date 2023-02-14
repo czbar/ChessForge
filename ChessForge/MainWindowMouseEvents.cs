@@ -32,7 +32,7 @@ namespace ChessForge
         {
             if (_processingMouseUp)
             {
-                AppLog.Message("OnMOuseDown rejected: processing MouseUp");
+                AppLog.Message("OnMouseDown rejected: processing MouseUp");
                 return;
             }
 
@@ -729,10 +729,12 @@ namespace ChessForge
         {
             try
             {
+                AppLog.Message(2, "UiImgChapterLeftArrow_PreviewMouseLeftButtonDown() pressed");
                 if (WorkbookManager.SessionWorkbook.ActiveChapterIndex > 0)
                 {
                     SelectChapterByIndex(WorkbookManager.SessionWorkbook.ActiveChapterIndex - 1, true);
                 }
+                AppLog.Message(2, "UiImgChapterLeftArrow_PreviewMouseLeftButtonDown() returning");
             }
             catch
             {
