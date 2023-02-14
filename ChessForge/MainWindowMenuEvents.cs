@@ -573,50 +573,37 @@ namespace ChessForge
                 return;
             }
 
-            List<ArticleListItem> lstIdenticalPositions = new List<ArticleListItem>();
-
-            TreeNode nd = ActiveLine.GetSelectedTreeNode();
-            for (int ch = 0; ch < WorkbookManager.SessionWorkbook.Chapters.Count; ch++)
+            try
             {
-                Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[ch];
-                List<TreeNode> lstStudyNodes = TreeUtils.FindIdenticalNodes(chapter.StudyTree.Tree, nd);
-
-                if (lstStudyNodes != null)
+                TreeNode nd = ActiveLine.GetSelectedTreeNode();
+                ObservableCollection<ArticleListItem> lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(nd);
+                if (lstIdenticalPositions.Count == 0)
                 {
-                    foreach (TreeNode node in lstStudyNodes)
-                    {
-                        ArticleListItem ali = new ArticleListItem(chapter, ch, chapter.StudyTree, 0, node);
-                        lstIdenticalPositions.Add(ali);
-                    }
+                    MessageBox.Show(Properties.Resources.MsgNoIdenticalPositions, Properties.Resources.ChessForge, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-
-                for (int art = 0; art < chapter.ModelGames.Count; art++)
+                else
                 {
-                    Article article = chapter.ModelGames[art];
-                    List<TreeNode> lstNodes = TreeUtils.FindIdenticalNodes(article.Tree, nd);
-                    if (lstStudyNodes != null)
+                    IdenticalPositionsDialog dlg = new IdenticalPositionsDialog(nd, ref lstIdenticalPositions)
                     {
-                        foreach (TreeNode node in lstStudyNodes)
+                        Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                        Top = AppState.MainWin.ChessForgeMain.Top + 100,
+                        Topmost = false,
+                        Owner = this
+                    };
+
+                    if (dlg.ShowDialog() == true && dlg.SelectedArticleListItem != null)
+                    {
+                        ArticleListItem item = dlg.SelectedArticleListItem;
+                        SelectArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
+                        if (item.Article.Tree.ContentType == GameData.ContentType.STUDY_TREE)
                         {
-                            ArticleListItem ali = new ArticleListItem(chapter, ch, article, art, node);
-                            lstIdenticalPositions.Add(ali);
+                            SetupGuiForActiveStudyTree(true);
                         }
                     }
                 }
-
-                for (int art = 0; art < chapter.Exercises.Count; art++)
-                {
-                    Article article = chapter.Exercises[art];
-                    List<TreeNode> lstNodes = TreeUtils.FindIdenticalNodes(article.Tree, nd);
-                    if (lstStudyNodes != null)
-                    {
-                        foreach (TreeNode node in lstStudyNodes)
-                        {
-                            ArticleListItem ali = new ArticleListItem(chapter, ch, article, art, node);
-                            lstIdenticalPositions.Add(ali);
-                        }
-                    }
-                }
+            }
+            catch
+            {
             }
         }
 
