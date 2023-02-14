@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using ChessPosition.Utils;
 using GameTree;
 
@@ -251,6 +249,30 @@ namespace ChessPosition
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Builds text of the line leading to the passed node.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public static string BuildStemText(TreeNode nd)
+        {
+            StringBuilder sb = new StringBuilder();
+            while (nd != null && nd.Parent != null)
+            {
+                sb.Insert(0, BuildSingleMoveText(nd, nd.Parent.NodeId == 0) + " ");
+                nd = nd.Parent;
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Performs castling on the passed BoardPosition object.
+        /// Throws an exception if castling is illegal.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="move"></param>
+        /// <exception cref="Exception"></exception>
         public static void PerformCastling(BoardPosition position, MoveData move)
         {
             // the legality must be checked BEFORE making the move

@@ -682,6 +682,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chess Forge.
+        /// </summary>
+        public static string ChessForge {
+            get {
+                return ResourceManager.GetString("ChessForge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear.
         /// </summary>
         public static string Clear {
@@ -1060,11 +1069,29 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Double click an item to open its view..
+        /// </summary>
+        public static string DlgLabelIdenticalPositionHint {
+            get {
+                return ResourceManager.GetString("DlgLabelIdenticalPositionHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application Options.
         /// </summary>
         public static string DlgTitleApplicationOptions {
             get {
                 return ResourceManager.GetString("DlgTitleApplicationOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of Identical Positions.
+        /// </summary>
+        public static string DlgTitleIdenticalPositions {
+            get {
+                return ResourceManager.GetString("DlgTitleIdenticalPositions", resourceCulture);
             }
         }
         
@@ -1569,6 +1596,15 @@ namespace ChessForge.Properties {
         public static string FileNotFound {
             get {
                 return ResourceManager.GetString("FileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Identical Positions.
+        /// </summary>
+        public static string FindIdenticalPosition {
+            get {
+                return ResourceManager.GetString("FindIdenticalPosition", resourceCulture);
             }
         }
         
@@ -2208,6 +2244,15 @@ namespace ChessForge.Properties {
         public static string Moves {
             get {
                 return ResourceManager.GetString("Moves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No identical positions found..
+        /// </summary>
+        public static string MsgNoIdenticalPositions {
+            get {
+                return ResourceManager.GetString("MsgNoIdenticalPositions", resourceCulture);
             }
         }
         

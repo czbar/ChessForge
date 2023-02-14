@@ -91,6 +91,7 @@
     <Compile Include="AnnotationsDialog.xaml.cs">
       <DependentUpon>AnnotationsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ArticleListBuilder.cs" />
     <Compile Include="ArticleListItem.cs" />
     <Compile Include="ArticleReferencesDialog.xaml.cs">
       <DependentUpon>ArticleReferencesDialog.xaml</DependentUpon>
@@ -123,6 +124,9 @@
       <DependentUpon>GameHeaderDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Article.cs" />
+    <Compile Include="IdenticalPositionsDialog.xaml.cs">
+      <DependentUpon>IdenticalPositionsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LearningMode.cs" />
     <Compile Include="AppState.cs" />
     <Compile Include="AppTimers.cs" />
@@ -243,6 +247,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GameHeaderDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IdenticalPositionsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

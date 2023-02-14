@@ -424,16 +424,27 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventSelectArticle(object sender, ChessForgeEventArgs e)
         {
+            SelectArticle(e.ChapterIndex, e.ContentType, e.ArticleIndex);
+        }
+
+        /// <summary>
+        /// Selects the requested Chapter and Article
+        /// </summary>
+        /// <param name="chapterIndex"></param>
+        /// <param name="contentType"></param>
+        /// <param name="articleIndex"></param>
+        public void SelectArticle(int chapterIndex, GameData.ContentType contentType, int articleIndex)
+        {
             try
             {
-                WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(e.ChapterIndex, e.ContentType, e.ArticleIndex);
-                if (e.ContentType == GameData.ContentType.MODEL_GAME)
+                WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(chapterIndex, contentType, articleIndex);
+                if (contentType == GameData.ContentType.MODEL_GAME)
                 {
-                    SelectModelGame(e.ArticleIndex, true);
+                    SelectModelGame(articleIndex, true);
                 }
-                else if (e.ContentType == GameData.ContentType.EXERCISE)
+                else if (contentType == GameData.ContentType.EXERCISE)
                 {
-                    AppState.MainWin.SelectExercise(e.ArticleIndex, true);
+                    AppState.MainWin.SelectExercise(articleIndex, true);
                 }
             }
             catch { }

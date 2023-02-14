@@ -61,7 +61,7 @@ namespace ChessForge
                     Article art = WorkbookManager.SessionWorkbook.GetArticleByGuid(guid, out _, out _);
                     if (art != null)
                     {
-                        ArticleListItem item = new ArticleListItem(null, art, 0);
+                        ArticleListItem item = new ArticleListItem(null, -1, art, 0);
                         _articles.Add(item);
                     }
                 }

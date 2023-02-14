@@ -560,6 +560,54 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Finds the list of positions identical to the currently selected node.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnFindIdenticalPosition_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (ActiveVariationTree == null || AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            {
+                return;
+            }
+
+            try
+            {
+                TreeNode nd = ActiveLine.GetSelectedTreeNode();
+                ObservableCollection<ArticleListItem> lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(nd);
+                if (lstIdenticalPositions.Count == 0)
+                {
+                    MessageBox.Show(Properties.Resources.MsgNoIdenticalPositions, Properties.Resources.ChessForge, MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    IdenticalPositionsDialog dlg = new IdenticalPositionsDialog(nd, ref lstIdenticalPositions)
+                    {
+                        Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                        Top = AppState.MainWin.ChessForgeMain.Top + 100,
+                        Topmost = false,
+                        Owner = this
+                    };
+
+                    if (dlg.ShowDialog() == true && dlg.SelectedArticleListItem != null)
+                    {
+                        ArticleListItem item = dlg.SelectedArticleListItem;
+                        SelectArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
+                        if (item.Article.Tree.ContentType == GameData.ContentType.STUDY_TREE)
+                        {
+                            SetupGuiForActiveStudyTree(true);
+                        }
+                        AppState.MainWin.SetActiveLine(item.Node.LineId, item.Node.NodeId);
+                        AppState.MainWin.ActiveTreeView.SelectLineAndMove(item.Node.LineId, item.Node.NodeId);
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
 
         //**********************
         //

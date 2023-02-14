@@ -145,12 +145,12 @@ namespace ChessForge
                 articleList.Add(chaptItem);
                 for (int i = 0; i < chapter.ModelGames.Count; i++)
                 {
-                    ArticleListItem artItem = new ArticleListItem(chapter, chapter.ModelGames[i], i);
+                    ArticleListItem artItem = new ArticleListItem(chapter, -1, chapter.ModelGames[i], i);
                     articleList.Add(artItem);
                 }
                 for (int i = 0; i < chapter.Exercises.Count; i++)
                 {
-                    ArticleListItem artItem = new ArticleListItem(chapter, chapter.Exercises[i], i);
+                    ArticleListItem artItem = new ArticleListItem(chapter, -1, chapter.Exercises[i], i);
                     articleList.Add(artItem);
                 }
             }

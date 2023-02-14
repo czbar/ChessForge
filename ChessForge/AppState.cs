@@ -856,6 +856,7 @@ namespace ChessForge
                         switch (menuItem.Name)
                         {
                             case "UiMnMarkBookmark":
+                            case "UiMnStudyFindIdentical":
                                 menuItem.IsEnabled = isEnabled;
                                 break;
                             case "_mnWorkbookEvalMove":

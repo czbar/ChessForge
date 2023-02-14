@@ -26,30 +26,43 @@ namespace ChessForge
         // is selection checkbox visible
         private bool _isSelectCheckBoxVisible;
 
-        // representes Article (null if this object was created for a Chapter
+        // the Chapter object (may be null if not needed for the current purpose).
+        private Chapter _chapter;
+
+        // index of the Chapter
+        private int _chapterIndex = -1;
+
+        // the Article object (may be null if we are only representing a Chapter here)
         private Article _article;
 
-        // Chapter object. Null if this object was not created for a chapter.
-        private Chapter _chapter;
+        // index of the Article in its chapter
+        private int _articleIndex = -1;
 
         // type of content in the Article (NONE if this is for a Chapter)
         private GameData.ContentType _contentType;
 
-        // index of the Article in its chapter
-        private int _index = -1;
+        // node represented by this item, if any
+        private TreeNode _node;
+
+        // line from the start to this item's node
+        private string _stemLine = null;
 
         /// <summary>
         /// Creates the object and sets IsSelected to true.
         /// The games in ListView are selected by default.
         /// </summary>
-        public ArticleListItem(Chapter chapter, Article art, int index)
+        public ArticleListItem(Chapter chapter, int chapterIndex, Article art, int articleIndex, TreeNode node = null)
         {
             _isSelected = false;
             _isSelectCheckBoxVisible = true;
 
-            _article = art;
             _chapter = chapter;
-            _index = index;
+            _chapterIndex = chapterIndex;
+
+            _article = art;
+            _articleIndex = articleIndex;
+
+            _node = node;
 
             if (art != null)
             {
@@ -65,7 +78,7 @@ namespace ChessForge
         /// Simplified constructor for the Chapter item.
         /// </summary>
         /// <param name="chapter"></param>
-        public ArticleListItem(Chapter chapter) : this(chapter, null, -1)
+        public ArticleListItem(Chapter chapter) : this(chapter, -1, null, -1)
         {
             _isSelected = false;
             _isSelectCheckBoxVisible = false;
@@ -80,12 +93,28 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the chapter this item belongs to.
+        /// </summary>
+        public string ChapterIndexColumnText
+        {
+            get { return _chapter == null ? string.Empty : Properties.Resources.Chapter + " " + (_chapterIndex + 1).ToString(); }
+        }
+
+        /// <summary>
         /// Returns the article object of this item.
         /// It can be null.
         /// </summary>
         public Article Article
         {
             get { return _article; }
+        }
+
+        /// <summary>
+        /// Returns the TreeNode associated with this item.
+        /// </summary>
+        public TreeNode Node
+        {
+            get { return _node; }
         }
 
         /// <summary>
@@ -102,20 +131,86 @@ namespace ChessForge
                 }
                 else if (_chapter != null)
                 {
-                    header = Strings.GetResource("Chapter").ToUpper() +  ": " + _chapter.Title;
+                    header = Properties.Resources.Chapter.ToUpper() + ": " + _chapter.Title;
                 }
 
                 string prefix = string.Empty;
                 if (_contentType == GameData.ContentType.MODEL_GAME)
                 {
-                    prefix = "    " + Strings.GetResource("Game") + ": ";
+                    prefix = "    " + Properties.Resources.Game + ": ";
                 }
                 else if (_contentType == GameData.ContentType.EXERCISE)
                 {
-                    prefix = "    " + Strings.GetResource("Exercise") + ": ";
+                    prefix = "    " + Properties.Resources.Exercise + ": ";
                 }
 
                 return prefix + header;
+            }
+        }
+
+        /// <summary>
+        /// Text for the column with article type.
+        /// This is used in the Identical Positions dialog to put
+        /// the word "Chapter" in the column before entries from
+        /// a given chapter are shown.
+        /// </summary>
+        public string ArticleTypeForDisplay
+        {
+            get
+            {
+                return _chapter != null ? Properties.Resources.Chapter : string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Title to display for the Identical Positions dialog.
+        /// If this is a Chapter entry, then produce a Chapter title
+        /// including the index.
+        /// Otherwise produce an Article title including the index.
+        /// </summary>
+        public string ElementTitleForDisplay
+        {
+            get
+            {
+                if (_chapter != null)
+                {
+                    return _chapter.Title;
+                }
+                else
+                {
+                    string header;
+                    if (_contentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        header = Properties.Resources.Study;
+                    }
+                    else
+                    {
+                        header = _article.Tree.Header.BuildGameHeaderLine(true, _contentType == GameData.ContentType.MODEL_GAME);
+                    }
+
+                    string prefix = string.Empty;
+                    if (_contentType == GameData.ContentType.MODEL_GAME)
+                    {
+                        prefix = Properties.Resources.Game + " " + (_articleIndex + 1).ToString() + ": ";
+                    }
+                    else if (_contentType == GameData.ContentType.EXERCISE)
+                    {
+                        prefix = Properties.Resources.Exercise + " " + (_articleIndex + 1).ToString() + ": ";
+                    }
+
+                    return prefix + header;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Algebraic notation of the move to show.
+        /// </summary>
+        public string Move
+        {
+            get
+            {
+                return MoveUtils.BuildSingleMoveText(_node, true, false);
             }
         }
 
@@ -175,6 +270,59 @@ namespace ChessForge
         public string Visibility
         {
             get { return _isSelectCheckBoxVisible ? "Visible" : "Hidden"; }
+        }
+
+        /// <summary>
+        /// Text of the line from the first node of the Tree to this item's node
+        /// </summary>
+        public string StemLine
+        {
+            get => _stemLine;
+            set => _stemLine = value;
+        }
+
+        /// <summary>
+        /// Tool tip that shows the stem line if the item is an Article,
+        /// or the chapter index if the item is a Chapter.
+        /// </summary>
+        public string StemLineToolTip
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_stemLine))
+                {
+                    return _stemLine;
+                }
+                else
+                {
+                    if (_chapter != null)
+                    {
+                        return Properties.Resources.Chapter + " " + (_chapterIndex + 1).ToString();
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Index of the chapter on the Workbook's chapter list.
+        /// </summary>
+        public int ChapterIndex
+        {
+            get => _chapterIndex;
+            set => _chapterIndex = value;
+        }
+
+        /// <summary>
+        /// Index of the Article on Chapter's ModelGame or Exercise list.
+        /// </summary>
+        public int ArticleIndex
+        {
+            get => _articleIndex;
+            set => _articleIndex = value;
         }
 
         /// <summary>

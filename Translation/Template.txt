@@ -4,7 +4,9 @@
 #
 ##################################
 
-
+#description: Name of the applicaton
+#english: ChessForge=Chess Forge
+ChessForge=
 
 ##################################
 #
@@ -220,6 +222,10 @@ EvaluateMove=
 #english: EvaluateLine=Evaluate Line
 EvaluateLine=
 
+#description: Find identical positions
+#english: FindIdenticalPosition=Find Identical Positions
+FindIdenticalPosition=
+
 #description: Done
 #english: Done=Done
 Done=
@@ -347,6 +353,18 @@ ApplicationOptions=
 #description: Application Options dialog title
 #english: DlgTitleApplicationOptions=Application Options
 DlgTitleApplicationOptions=
+
+#description: Identical Positions dialog title
+#english: DlgTitleIdenticalPositions=List of Identical Positions
+DlgTitleIdenticalPositions=
+
+#description:  Label explaining clicks in the Identical Positions dialog.
+#english: DlgLabelIdenticalPositionHint=Double click an item to open its view.
+DlgLabelIdenticalPositionHint=
+
+#description: Message about identical position not found
+#english: MsgNoIdenticalPositions=No identical positions found.
+MsgNoIdenticalPositions=
 
 #description: Opens the Workbook Options dialog
 #english: WorkbookOptions=Workbook Options...

@@ -220,6 +220,10 @@ EvaluateMove=Oceń Posunięcie
 #english: EvaluateLine=Evaluate Line
 EvaluateLine=Oceń Wariant
 
+#description: Find identical positions
+#english: FindIdenticalPosition=Find Identical Positions
+FindIdenticalPosition=Znajdź Identyczne Pozycje
+
 #description: Done
 #english: Done=Done
 Done=Gotowe
@@ -347,6 +351,10 @@ ApplicationOptions=Opcje Aplikacji
 #description: Application Options dialog title
 #english: DlgTitleApplicationOptions=Application Options
 DlgTitleApplicationOptions=Opcje Aplikacji
+
+#description: Identical Positions dialog title
+#english: DlgTitleIdenticalPositions=List of Identical Positions
+DlgTitleIdenticalPositions=Lista Identycznych Pozycji
 
 #description: Opens the Workbook Options dialog
 #english: WorkbookOptions=Workbook Options...
@@ -1906,3 +1914,9 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
+DlgLabelIdenticalPositionHint=Kliknij podwójnie element aby otworzyć jego widok.
+
+#Message about identical position not found
+MsgNoIdenticalPositions=No identical positions found.
+
+ChessForge=Chess Forge
