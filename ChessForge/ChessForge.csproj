@@ -91,6 +91,7 @@
     <Compile Include="AnnotationsDialog.xaml.cs">
       <DependentUpon>AnnotationsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ArticleListBuilder.cs" />
     <Compile Include="ArticleListItem.cs" />
     <Compile Include="ArticleReferencesDialog.xaml.cs">
       <DependentUpon>ArticleReferencesDialog.xaml</DependentUpon>
