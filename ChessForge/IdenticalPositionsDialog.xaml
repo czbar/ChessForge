@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.DlgTitleIdenticalPositions}" Height="460" Width="800">
+        Title="{x:Static p:Resources.DlgTitleIdenticalPositions}" Height="460" Width="700">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -14,42 +14,37 @@
             <RowDefinition Height="300"/>
             <RowDefinition Height="140"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="UiLvGames" Grid.Row="1" ItemsSource="{Binding}" MouseDoubleClick="UiLvGames_MouseDoubleClick" MouseRightButtonUp="UiLvGames_MouseRightButtonUp" ContextMenuOpening="UiLvGames_ContextMenuOpening" >
-            <ListView.ContextMenu>
-                <ContextMenu x:Name="UiCmGame">
-                    <MenuItem x:Name="UiMnPreviewGame" Header="PLACEHOLDER Preview Element" Click="UiMnPreviewGame_Click" />
-                    <MenuItem x:Name="UiMnOpenGame" Header="PLACEHOLDER Open Element View" Click="UiMnOpenGame_Click" />
-                </ContextMenu>
-            </ListView.ContextMenu>
+        <ListView x:Name="UiLvGames" Grid.Row="1" ItemsSource="{Binding}" MouseDoubleClick="UiLvGames_MouseDoubleClick" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="Focusable" Value="False"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsShown}" Value="False">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                        </DataTrigger>
-                    </Style.Triggers>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="ToolTip">
+                        <Setter.Value>
+                            <UniformGrid Columns="1">
+                                <TextBlock Text="{Binding StemLineToolTip}"/>
+                            </UniformGrid>
+                        </Setter.Value>
+                    </Setter>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.Resources>
-                <DataTemplate x:Key="SelectionCell">
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{Binding Path=IsSelected}" Visibility="{Binding Path=Visibility}"  />
-                    </StackPanel>
+                <DataTemplate x:Key="ChapterColumn">
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding Path=ChapterIndexColumnText}" />
+                </DataTemplate>
+                <DataTemplate x:Key="Move">
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding Path=Move}" />
                 </DataTemplate>
             </ListView.Resources>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn CellTemplate="{StaticResource SelectionCell}"  Width="30"/>
-                    <GridViewColumn Header="{x:Static p:Resources.Item}" DisplayMemberBinding="{Binding Path=GameTitleForList}" Width="640"/>
-                    <GridViewColumn Header="{x:Static p:Resources.Date}"  DisplayMemberBinding="{Binding Path=Date}" Width="90"/>
+                    <GridViewColumn Header="" Width="90" CellTemplate="{StaticResource ChapterColumn}" />
+                    <GridViewColumn Header="{x:Static p:Resources.Item}" DisplayMemberBinding="{Binding Path=ElementTitleForDisplay}" Width="450"/>
+                    <GridViewColumn Header="{x:Static p:Resources.Move}"  CellTemplate="{StaticResource Move}" Width="90"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <CheckBox x:Name="UiCbSelectAll" IsChecked="False" Grid.Row="1" Content="" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Checked="UiCbSelectAll_Checked" Unchecked="UiCbSelectAll_Unchecked"/>
-        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-120,30,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="False" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="120,30,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
-        <Label x:Name="UiLblInstruct" Content="{x:Static p:Resources.SelectItems}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
-        <CheckBox x:Name="UiCbAllChapters" Content="{x:Static p:Resources.ShowAllChapters}" HorizontalAlignment="Left" Margin="59,33,0,0" Grid.Row="2" VerticalAlignment="Top" Checked="UiCbAllChapters_Checked" Unchecked="UiCbAllChapters_Unchecked"/>
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Exit}" HorizontalAlignment="Center" Margin="0,30,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Label x:Name="UiLblInstruct" Content="{x:Static p:Resources.DlgLabelIdenticalPositionHint}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
     </Grid>
 </Window>
