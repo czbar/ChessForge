@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChessForge" xml:space="preserve">
+    <value>Chess Forge</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
   </data>
@@ -359,6 +362,12 @@
   </data>
   <data name="DlgTitleIdenticalPositions" xml:space="preserve">
     <value>List of Identical Positions</value>
+  </data>
+  <data name="DlgLabelIdenticalPositionHint" xml:space="preserve">
+    <value>Double click an item to open its view.</value>
+  </data>
+  <data name="MsgNoIdenticalPositions" xml:space="preserve">
+    <value>No identical positions found.</value>
   </data>
   <data name="WorkbookOptions" xml:space="preserve">
     <value>Workbook Options...</value>

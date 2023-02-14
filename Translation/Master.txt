@@ -4,7 +4,8 @@
 #
 ##################################
 
-
+#Name of the applicaton
+ChessForge=Chess Forge
 
 ##################################
 #
@@ -274,6 +275,12 @@ DlgTitleApplicationOptions=Application Options
 
 #Identical Positions dialog title
 DlgTitleIdenticalPositions=List of Identical Positions
+
+# Label explaining clicks in the Identical Positions dialog.
+DlgLabelIdenticalPositionHint=Double click an item to open its view.
+
+#Message about identical position not found
+MsgNoIdenticalPositions=No identical positions found.
 
 #Opens the Workbook Options dialog
 WorkbookOptions=Workbook Options...

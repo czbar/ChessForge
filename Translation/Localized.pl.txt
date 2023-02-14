@@ -1914,3 +1914,9 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
+DlgLabelIdenticalPositionHint=Kliknij podwójnie element aby otworzyć jego widok.
+
+#Message about identical position not found
+MsgNoIdenticalPositions=No identical positions found.
+
+ChessForge=Chess Forge

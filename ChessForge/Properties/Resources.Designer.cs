@@ -682,6 +682,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chess Forge.
+        /// </summary>
+        public static string ChessForge {
+            get {
+                return ResourceManager.GetString("ChessForge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear.
         /// </summary>
         public static string Clear {
@@ -1056,6 +1065,15 @@ namespace ChessForge.Properties {
         public static string DeleteThisGame {
             get {
                 return ResourceManager.GetString("DeleteThisGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Double click an item to open its view..
+        /// </summary>
+        public static string DlgLabelIdenticalPositionHint {
+            get {
+                return ResourceManager.GetString("DlgLabelIdenticalPositionHint", resourceCulture);
             }
         }
         
@@ -2226,6 +2244,15 @@ namespace ChessForge.Properties {
         public static string Moves {
             get {
                 return ResourceManager.GetString("Moves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No identical positions found..
+        /// </summary>
+        public static string MsgNoIdenticalPositions {
+            get {
+                return ResourceManager.GetString("MsgNoIdenticalPositions", resourceCulture);
             }
         }
         
