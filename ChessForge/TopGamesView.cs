@@ -92,7 +92,9 @@ namespace ChessForge
         {
             if (e.Success)
             {
-                BuildFlowDocument();
+                LichessGamesPreviewDialog.SetOpeningsData(e.OpeningStats);
+
+                BuildFlowDocument(e.OpeningStats);
             }
             else
             {
@@ -111,11 +113,12 @@ namespace ChessForge
             ClearDocument();
         }
 
+
         /// <summary>
         /// Builds the Flow Document for this view.
-        /// main table.
+        /// The main table.
         /// </summary>
-        public void BuildFlowDocument()
+        public void BuildFlowDocument(LichessOpeningsStats openingStats)
         {
             Document.Blocks.Clear();
             Document.PageWidth = 590;
@@ -124,7 +127,7 @@ namespace ChessForge
             if (AppState.ActiveTab != WorkbookManager.TabViewType.EXERCISE)
             {
                 Document.Blocks.Add(BuildHeaderLabel());
-                Document.Blocks.Add(BuildTopGamesTable());
+                Document.Blocks.Add(BuildTopGamesTable(openingStats));
             }
         }
 
@@ -140,7 +143,7 @@ namespace ChessForge
         /// Builds the main Top Games table.
         /// </summary>
         /// <returns></returns>
-        private Table BuildTopGamesTable()
+        private Table BuildTopGamesTable(LichessOpeningsStats openingStats)
         {
             _gamesTable = new Table();
             _gamesTable.FontSize = _baseFontSize + Configuration.FontSizeDiff;
@@ -149,7 +152,7 @@ namespace ChessForge
             _gamesTable.RowGroups.Add(new TableRowGroup());
 
             CreateColumns(_gamesTable);
-            LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats;
+            LichessOpeningsStats stats = openingStats;
             int rowNo = 0;
             _gameIdList.Clear();
             foreach (LichessTopGame game in stats.TopGames)
