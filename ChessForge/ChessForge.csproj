@@ -84,7 +84,6 @@
       <DependentUpon>AboutBoxDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="AnimationState.cs" />
-    <Compile Include="AppLog.cs" />
     <Compile Include="AppOptionsDialog.xaml.cs">
       <DependentUpon>AppOptionsDialog.xaml</DependentUpon>
     </Compile>
@@ -116,6 +115,7 @@
     <Compile Include="ChessForgeEventArgs.cs" />
     <Compile Include="ContentTypeListItem.cs" />
     <Compile Include="CustomCommands.cs" />
+    <Compile Include="DebugDumps.cs" />
     <Compile Include="EvaluationActiveLine.cs" />
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
