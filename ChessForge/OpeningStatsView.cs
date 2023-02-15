@@ -126,11 +126,11 @@ namespace ChessForge
                     _node = AppState.ActiveVariationTree.GetNodeFromNodeId(e.NodeId);
                 }
                 _moveNumberString = BuildMoveNumberString(_node);
-                BuildFlowDocument(DataMode.OPENINGS);
+                BuildFlowDocument(DataMode.OPENINGS, e.OpeningStats);
             }
             else
             {
-                BuildFlowDocument(DataMode.NO_DATA, e.Message);
+                BuildFlowDocument(DataMode.NO_DATA, null, e.Message);
             }
         }
 
@@ -148,11 +148,11 @@ namespace ChessForge
                 {
                     _node = AppState.ActiveVariationTree.GetNodeFromNodeId(e.NodeId);
                 }
-                BuildFlowDocument(DataMode.TABLEBASE);
+                BuildFlowDocument(DataMode.TABLEBASE, null);
             }
             else
             {
-                BuildFlowDocument(DataMode.NO_DATA, e.Message);
+                BuildFlowDocument(DataMode.NO_DATA, null, e.Message);
             }
         }
 
@@ -181,7 +181,7 @@ namespace ChessForge
         /// Queries the Web Client for Openings Stats data to show in the 
         /// main table.
         /// </summary>
-        private void BuildFlowDocument(DataMode mode, string errorMessage = "")
+        private void BuildFlowDocument(DataMode mode, LichessOpeningsStats openingStats, string errorMessage = "")
         {
             Document.Blocks.Clear();
             Document.PageWidth = 590;
@@ -192,7 +192,7 @@ namespace ChessForge
                 switch (mode)
                 {
                     case DataMode.OPENINGS:
-                        BuildOpeningNameTable();
+                        BuildOpeningNameTable(openingStats);
                         if (string.IsNullOrEmpty(_node.OpeningName))
                         {
                             WebAccessManager.OpeningNamesRequest(_node);
@@ -202,7 +202,7 @@ namespace ChessForge
                         {
                             Document.Blocks.Add(_openingNameTable);
                         }
-                        BuildOpeningStatsTable();
+                        BuildOpeningStatsTable(openingStats);
                         Document.Blocks.Add(_openingStatsTable);
                         break;
                     case DataMode.TABLEBASE:
@@ -279,7 +279,7 @@ namespace ChessForge
                         if (NodeHasOpeningName(_node))
                         {
                             Document.Blocks.Remove(_openingNameTable);
-                            BuildOpeningNameTable();
+                            BuildOpeningNameTable(e.OpeningStats);
                             Document.Blocks.InsertBefore(_openingStatsTable, _openingNameTable);
                         }
                     }
@@ -382,10 +382,10 @@ namespace ChessForge
         /// <summary>
         /// Builds the header table for the main table
         /// </summary>
-        private void BuildOpeningNameTable()
+        private void BuildOpeningNameTable(LichessOpeningsStats openingStats)
         {
             // get the data
-            LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats;
+            LichessOpeningsStats stats = openingStats;
             if (string.IsNullOrEmpty(_node.OpeningName) && _node.MoveNumber <= Constants.OPENING_MAX_MOVE)
             {
                 if (stats.Opening == null)
@@ -450,7 +450,7 @@ namespace ChessForge
         /// <summary>
         /// Builds the main table with opening stats
         /// </summary>
-        private void BuildOpeningStatsTable()
+        private void BuildOpeningStatsTable(LichessOpeningsStats openingStats)
         {
             _openingStatsTable = CreateTable(0);
             _openingStatsTable.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
@@ -458,7 +458,7 @@ namespace ChessForge
             _openingStatsTable.RowGroups.Add(new TableRowGroup());
 
             // get the data
-            LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats;
+            LichessOpeningsStats stats = openingStats;
 
             CreateStatsTableColumns(scaleFactor);
 
