@@ -272,6 +272,8 @@ namespace ChessForge
             InitializedLocalizedDictionary();
             InitializeLanguages();
 
+            AppLog.Initialize(Configuration.DebugLevel);
+
             EvaluationMgr = new EvaluationManager();
 
             InitializeComponent();
@@ -1612,7 +1614,7 @@ namespace ChessForge
             {
                 distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
                 AppLog.DumpVariationTree(DebugUtils.BuildLogFileName(App.AppPath, "wktree", distinct), ActiveVariationTree);
-                AppLog.DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
+                DebugDumps.DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
             }
 
             try
@@ -1630,7 +1632,7 @@ namespace ChessForge
         public void DumpDebugStates()
         {
             string distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            AppLog.DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
+            DebugDumps.DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
         }
 
         /// <summary>
