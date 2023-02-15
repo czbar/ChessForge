@@ -27,11 +27,6 @@ namespace WebAccess
         public static event EventHandler<WebAccessEventArgs> OpeningNameReceived;
 
         /// <summary>
-        /// Statistics and data received from Lichess
-        /// </summary>
-        public static LichessOpeningsStats Stats;
-
-        /// <summary>
         /// Requests Opening Stats from lichess
         /// </summary>
         /// <returns></returns>
@@ -44,7 +39,7 @@ namespace WebAccess
             try
             {
                 var json = await RestApiRequest.Client.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
-                Stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
+                eventArgs.OpeningStats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
                 eventArgs.Success = true;
                 DataReceived?.Invoke(null, eventArgs);
             }
