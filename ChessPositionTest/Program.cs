@@ -64,11 +64,11 @@ namespace ChessPositionTest
 //            Console.ReadLine();
         }
 
-        public static void OpeningStatsReceived(object sender, EventArgs e)
+        public static void OpeningStatsReceived(object sender, WebAccessEventArgs e)
         {
             watch.Stop();
             Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
-            LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats;
+            LichessOpeningsStats stats = e.OpeningStats;
             Console.WriteLine(stats.Opening.Name);
             foreach (WebAccess.LichessMoveStats move in stats.Moves)
             {
