@@ -84,7 +84,7 @@ namespace ChessForge
         {
             _isMainWin = mainWin;
             // listen to Data Received events
-            OpeningExplorer.DataReceived += TopGamesReceived;
+            OpeningExplorer.OpeningStatsReceived += TopGamesReceived;
             TablebaseExplorer.DataReceived += TablebaseDataReceived;
 
             CreateTopGamesTable();

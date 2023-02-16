@@ -19,7 +19,7 @@ namespace WebAccess
         /// <summary>
         /// Handler for the DataReceived event
         /// </summary>
-        public static event EventHandler<WebAccessEventArgs> DataReceived;
+        public static event EventHandler<WebAccessEventArgs> OpeningStatsReceived;
 
         /// <summary>
         /// Handler for the OpeningNameReceived event
@@ -41,13 +41,13 @@ namespace WebAccess
                 var json = await RestApiRequest.Client.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
                 eventArgs.OpeningStats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
                 eventArgs.Success = true;
-                DataReceived?.Invoke(null, eventArgs);
+                OpeningStatsReceived?.Invoke(null, eventArgs);
             }
             catch(Exception ex) 
             {
                 eventArgs.Success = false;
                 eventArgs.Message = ex.Message;
-                DataReceived?.Invoke(null, eventArgs);
+                OpeningStatsReceived?.Invoke(null, eventArgs);
             }
         }
 

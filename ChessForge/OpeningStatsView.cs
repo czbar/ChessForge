@@ -62,7 +62,7 @@ namespace ChessForge
         public OpeningStatsView(FlowDocument doc) : base(doc)
         {
             // listen to Data Received events
-            OpeningExplorer.DataReceived += OpeningStatsReceived;
+            OpeningExplorer.OpeningStatsReceived += OpeningStatsReceived;
             TablebaseExplorer.DataReceived += TablebaseDataReceived;
             OpeningExplorer.OpeningNameReceived += OpeningNameRequestCompleted;
         }
