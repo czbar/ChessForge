@@ -72,16 +72,7 @@ namespace WebAccess
                 var json = await RestApiRequest.OpeningNameClient.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
                 LichessOpeningsStats stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
                 eventArgs.Success = true;
-                if (stats.Opening != null)
-                {
-                    eventArgs.Eco = stats.Opening.Eco;
-                    eventArgs.OpeningName = stats.Opening.Name;
-                }
-                else
-                {
-                    eventArgs.Eco = null;
-                    eventArgs.OpeningName = null;
-                }
+                eventArgs.OpeningStats = stats;
                 OpeningNameReceived?.Invoke(null, eventArgs);
                 AppLog.Message(2, "HttpClient received OpeningName response for FEN: " + fen);
             }
