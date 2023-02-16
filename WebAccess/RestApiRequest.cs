@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace WebAccess
 {
+    /// <summary>
+    /// Http Clients to use for making REST calls.
+    /// </summary>
     public class RestApiRequest
     {
-        /// <summary>
-        /// Http Client to use for making REST calls.
-        /// </summary>
-        static public HttpClient Client = new HttpClient();
+        static public HttpClient OpeningStatsClient = new HttpClient();
+        static public HttpClient TablebaseClient = new HttpClient();
+        static public HttpClient GameImportClient = new HttpClient();
     }
 }

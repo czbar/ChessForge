@@ -15,7 +15,7 @@ namespace WebAccess
         /// Whether event's result was success
         /// </summary>
         public bool Success { get; set; }
-        
+
         /// <summary>
         /// Id of the tree to which the handled Node belongs
         /// </summary>
@@ -32,14 +32,9 @@ namespace WebAccess
         public string GameId { get; set; }
 
         /// <summary>
-        /// Opening code
+        /// Opening stats received from Lichess
         /// </summary>
-        public string Eco { get; set; }
-
-        /// <summary>
-        /// Opening name
-        /// </summary>
-        public string OpeningName { get; set; }
+        public LichessOpeningsStats OpeningStats { get; set; }
 
         /// <summary>
         /// A message to pass back to the caller

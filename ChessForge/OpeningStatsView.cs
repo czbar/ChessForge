@@ -62,9 +62,8 @@ namespace ChessForge
         public OpeningStatsView(FlowDocument doc) : base(doc)
         {
             // listen to Data Received events
-            OpeningExplorer.DataReceived += OpeningStatsReceived;
-            TablebaseExplorer.DataReceived += TablebaseDataReceived;
-            OpeningExplorer.OpeningNameReceived += OpeningNameRequestCompleted;
+            OpeningExplorer.OpeningStatsReceived += OpeningStatsReceived;
+            TablebaseExplorer.TablebaseReceived += TablebaseDataReceived;
         }
 
         // column widths in the stats table
@@ -126,11 +125,12 @@ namespace ChessForge
                     _node = AppState.ActiveVariationTree.GetNodeFromNodeId(e.NodeId);
                 }
                 _moveNumberString = BuildMoveNumberString(_node);
-                BuildFlowDocument(DataMode.OPENINGS);
+                BuildFlowDocument(DataMode.OPENINGS, e.OpeningStats);
+                ProcessOpeningName(e.OpeningStats);
             }
             else
             {
-                BuildFlowDocument(DataMode.NO_DATA, e.Message);
+                BuildFlowDocument(DataMode.NO_DATA, null, e.Message);
             }
         }
 
@@ -148,11 +148,11 @@ namespace ChessForge
                 {
                     _node = AppState.ActiveVariationTree.GetNodeFromNodeId(e.NodeId);
                 }
-                BuildFlowDocument(DataMode.TABLEBASE);
+                BuildFlowDocument(DataMode.TABLEBASE, null);
             }
             else
             {
-                BuildFlowDocument(DataMode.NO_DATA, e.Message);
+                BuildFlowDocument(DataMode.NO_DATA, null, e.Message);
             }
         }
 
@@ -181,7 +181,7 @@ namespace ChessForge
         /// Queries the Web Client for Openings Stats data to show in the 
         /// main table.
         /// </summary>
-        private void BuildFlowDocument(DataMode mode, string errorMessage = "")
+        private void BuildFlowDocument(DataMode mode, LichessOpeningsStats openingStats, string errorMessage = "")
         {
             Document.Blocks.Clear();
             Document.PageWidth = 590;
@@ -193,16 +193,11 @@ namespace ChessForge
                 {
                     case DataMode.OPENINGS:
                         BuildOpeningNameTable();
-                        if (string.IsNullOrEmpty(_node.OpeningName))
-                        {
-                            WebAccessManager.OpeningNamesRequest(_node);
-                        }
-
                         if (_openingNameTable != null)
                         {
                             Document.Blocks.Add(_openingNameTable);
                         }
-                        BuildOpeningStatsTable();
+                        BuildOpeningStatsTable(openingStats);
                         Document.Blocks.Add(_openingStatsTable);
                         break;
                     case DataMode.TABLEBASE:
@@ -229,60 +224,40 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// If the received value is of the currect node or one of its predecessors
+        /// If the received value is of the correct node or one of its predecessors
         /// set the value in the correct Node and check if we now have 
         /// the name for the current node.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OpeningNameRequestCompleted(object sender, WebAccessEventArgs e)
+        private void ProcessOpeningName(LichessOpeningsStats stats)
         {
             try
             {
-                TreeNode nd = _node;
-                while (nd != null)
+                _node.Eco = "";
+                _node.OpeningName = POSITION_NOT_NAMED;
+                if (stats.Opening != null)
                 {
-                    if (e.NodeId == nd.NodeId)
-                    {
-                        if (string.IsNullOrEmpty(e.Eco))
-                        {
-                            nd.Eco = "";
-                        }
-                        else
-                        {
-                            nd.Eco = e.Eco;
-                        }
+                    _node.Eco = stats.Opening.Eco;
+                    _node.OpeningName = stats.Opening.Name;
 
-                        if (string.IsNullOrEmpty(e.OpeningName))
-                        {
-                            nd.OpeningName = POSITION_NOT_NAMED;
-                        }
-                        else
-                        {
-                            nd.OpeningName = e.OpeningName;
-                            SetAllNotNamedChildrenPositions(nd);
-                        }
-                        break;
+                    SetAllNotNamedChildrenPositions(_node);
+                }
+                else
+                {
+                    string openingName = FindOpeningNameFromPredecessors(_node, out string eco);
+                    if (!string.IsNullOrEmpty(openingName))
+                    {
+                        _node.Eco = eco;
+                        _node.OpeningName = openingName;
                     }
-                    nd = nd.Parent;
                 }
 
-                if (_node.Parent != null && !NodeHasOpeningName(_node))
+                if (NodeHasOpeningName(_node))
                 {
-                    string opName = FindOpeningNameFromPredecessors(_node, out string eco);
-
-                    if (opName != null)
-                    {
-                        _node.OpeningName = opName;
-                        _node.Eco = eco;
-
-                        if (NodeHasOpeningName(_node))
-                        {
-                            Document.Blocks.Remove(_openingNameTable);
-                            BuildOpeningNameTable();
-                            Document.Blocks.InsertBefore(_openingStatsTable, _openingNameTable);
-                        }
-                    }
+                    Document.Blocks.Remove(_openingNameTable);
+                    BuildOpeningNameTable();
+                    Document.Blocks.InsertBefore(_openingStatsTable, _openingNameTable);
                 }
             }
             catch
@@ -384,35 +359,6 @@ namespace ChessForge
         /// </summary>
         private void BuildOpeningNameTable()
         {
-            // get the data
-            LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats;
-            if (string.IsNullOrEmpty(_node.OpeningName) && _node.MoveNumber <= Constants.OPENING_MAX_MOVE)
-            {
-                if (stats.Opening == null)
-                {
-                    _node.Eco = "";
-                    _node.OpeningName = "";
-                }
-                else
-                {
-                    _node.Eco = stats.Opening.Eco;
-                    _node.OpeningName = stats.Opening.Name;
-                }
-            }
-            else
-            {
-                if (_node.OpeningName == POSITION_NOT_NAMED || _node.MoveNumber > Constants.OPENING_MAX_MOVE)
-                {
-                    string opName = FindOpeningNameFromPredecessors(_node, out string eco);
-                    if (opName != null)
-                    {
-                        _node.Eco = eco;
-                        _node.OpeningName = opName;
-                    }
-                }
-
-            }
-
             _openingNameTable = CreateTable(0);
             _openingNameTable.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
             _openingNameTable.CellSpacing = 0;
@@ -450,7 +396,7 @@ namespace ChessForge
         /// <summary>
         /// Builds the main table with opening stats
         /// </summary>
-        private void BuildOpeningStatsTable()
+        private void BuildOpeningStatsTable(LichessOpeningsStats openingStats)
         {
             _openingStatsTable = CreateTable(0);
             _openingStatsTable.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
@@ -458,7 +404,7 @@ namespace ChessForge
             _openingStatsTable.RowGroups.Add(new TableRowGroup());
 
             // get the data
-            LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats;
+            LichessOpeningsStats stats = openingStats;
 
             CreateStatsTableColumns(scaleFactor);
 
@@ -468,7 +414,6 @@ namespace ChessForge
                 _openingStatsTable.RowGroups[0].Rows.Add(row);
                 PopulateCellsInRow(row, move, scaleFactor);
             }
-
         }
 
         /// <summary>

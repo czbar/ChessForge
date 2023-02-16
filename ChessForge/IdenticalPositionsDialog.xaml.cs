@@ -99,9 +99,8 @@ namespace ChessForge
             {
 
                 SelectedArticleListItem = item.Content as ArticleListItem;
+                UiBtnOk_Click(null, null);
             }
-
-            UiBtnOk_Click(null, null);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using ChessPosition;
+﻿using ChessForge;
+using ChessPosition;
 using ChessPosition.Utils;
 using GameTree;
 using Newtonsoft.Json;
@@ -19,23 +20,13 @@ namespace WebAccess
         /// <summary>
         /// Handler for the DataReceived event
         /// </summary>
-        public static event EventHandler<WebAccessEventArgs> DataReceived;
-
-        /// <summary>
-        /// Handler for the OpeningNameReceived event
-        /// </summary>
-        public static event EventHandler<WebAccessEventArgs> OpeningNameReceived;
-
-        /// <summary>
-        /// Statistics and data received from Lichess
-        /// </summary>
-        public static LichessOpeningsStats Stats;
+        public static event EventHandler<WebAccessEventArgs> OpeningStatsReceived;
 
         /// <summary>
         /// Requests Opening Stats from lichess
         /// </summary>
         /// <returns></returns>
-        public static async void OpeningStats(int treeId, TreeNode nd)
+        public static async void RequestOpeningStats(int treeId, TreeNode nd)
         {
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
             WebAccessEventArgs eventArgs = new WebAccessEventArgs();
@@ -43,52 +34,19 @@ namespace WebAccess
             eventArgs.NodeId = nd.NodeId;
             try
             {
-                var json = await RestApiRequest.Client.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
-                Stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
+                AppLog.Message(2, "HttpClient sending OpeningStats request for FEN: " + fen);
+                var json = await RestApiRequest.OpeningStatsClient.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
+                eventArgs.OpeningStats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
                 eventArgs.Success = true;
-                DataReceived?.Invoke(null, eventArgs);
+                OpeningStatsReceived?.Invoke(null, eventArgs);
+                AppLog.Message(2, "HttpClient received OpeningStats response for FEN: " + fen);
             }
-            catch(Exception ex) 
+            catch (Exception ex) 
             {
                 eventArgs.Success = false;
                 eventArgs.Message = ex.Message;
-                DataReceived?.Invoke(null, eventArgs);
-            }
-        }
-
-        /// <summary>
-        /// Calls opening stats for the purpose of obtaining
-        /// the Opening Name.
-        /// </summary>
-        /// <param name="treeId"></param>
-        /// <param name="nd"></param>
-        public static async void RequestOpeningName(TreeNode nd)
-        {
-            string fen = FenParser.GenerateFenFromPosition(nd.Position);
-            WebAccessEventArgs eventArgs = new WebAccessEventArgs();
-            eventArgs.NodeId = nd.NodeId;
-            try
-            {
-                var json = await RestApiRequest.Client.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
-                LichessOpeningsStats stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
-                eventArgs.Success = true;
-                if (stats.Opening != null)
-                {
-                    eventArgs.Eco = stats.Opening.Eco;
-                    eventArgs.OpeningName = stats.Opening.Name;
-                }
-                else
-                {
-                    eventArgs.Eco = null;
-                    eventArgs.OpeningName = null;
-                }
-                OpeningNameReceived?.Invoke(null, eventArgs);
-            }
-            catch (Exception ex)
-            {
-                eventArgs.Success = false;
-                eventArgs.Message = ex.Message;
-                OpeningNameReceived?.Invoke(null, eventArgs);
+                OpeningStatsReceived?.Invoke(null, eventArgs);
+                AppLog.Message("RequestOpeningStats()", ex);
             }
         }
     }

@@ -32,7 +32,8 @@ namespace ChessForge
         {
             if (_processingMouseUp)
             {
-                AppLog.Message("OnMOuseDown rejected: processing MouseUp");
+                AppLog.Message("OnMouseDown rejected: processing MouseUp");
+                e.Handled = true;
                 return;
             }
 
@@ -63,7 +64,7 @@ namespace ChessForge
                 {
                     // if Drag is in progress there is something wrong
                     DebugUtils.ShowDebugMessage("Incomplete drag event. Dump all logs and report!");
-                    AppLog.LogDraggedPiece();
+                    DebugDumps.LogDraggedPiece();
                     // restore the dragged piece to its origin square
                     ReturnDraggedPiece(false);
                 }
@@ -136,6 +137,7 @@ namespace ChessForge
                     }
                 }
             }
+            e.Handled = true;
         }
 
         /// <summary>

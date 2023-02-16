@@ -232,6 +232,7 @@ namespace ChessForge
             {
                 _selectedChapterIndex = -1;
                 _selectedChapter = null;
+                BuildBookmarkList(false);
             }
             else
             {

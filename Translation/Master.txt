@@ -1468,7 +1468,7 @@ FenTooFewFields=Error: FEN string has fewer than 6 fields
 #Invalid Enpassant
 FenInvalidEnpassant=Error: invalid enpassant field
 
-#Color not specifies
+#Color not specified
 FenColorNotSpecified=Error: color to move not specified
 
 #Too few rows

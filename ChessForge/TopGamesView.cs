@@ -47,6 +47,12 @@ namespace ChessForge
         /// </summary>
         private Table _gamesTable;
 
+        // maximum allowed number of rows
+        private readonly int MAX_GAME_ROW_COUNT = 15;
+
+        // List of objects that encapsulate TableRows used in the _gamesTable.
+        private List<TopGamesViewRow> _lstRows = new List<TopGamesViewRow>();
+
         // Id of the last clicked game
         private string _clickedGameId;
 
@@ -78,8 +84,38 @@ namespace ChessForge
         {
             _isMainWin = mainWin;
             // listen to Data Received events
-            OpeningExplorer.DataReceived += TopGamesReceived;
-            TablebaseExplorer.DataReceived += TablebaseDataReceived;
+            OpeningExplorer.OpeningStatsReceived += TopGamesReceived;
+            TablebaseExplorer.TablebaseReceived += TablebaseDataReceived;
+
+            CreateTopGamesTable();
+        }
+
+        /// <summary>
+        /// Creates a Table object for Games.
+        /// The rows are precreated and their content is modified
+        /// per the received data.
+        /// </summary>
+        private void CreateTopGamesTable()
+        {
+            _gamesTable = new Table();
+            _lstRows.Clear();
+
+
+            _gamesTable = new Table();
+            _gamesTable.FontSize = _baseFontSize + Configuration.FontSizeDiff;
+            _gamesTable.CellSpacing = 0;
+            _gamesTable.Margin = new Thickness(0);
+            _gamesTable.RowGroups.Add(new TableRowGroup());
+
+            CreateColumns(_gamesTable);
+            CreateColumns(_gamesTable);
+
+            for (int i = 0; i < MAX_GAME_ROW_COUNT; i++)
+            {
+                TopGamesViewRow row = new TopGamesViewRow();
+                _lstRows.Add(row);
+                _gamesTable.RowGroups[0].Rows.Add(row.Row);
+            }
         }
 
         /// <summary>
@@ -92,7 +128,9 @@ namespace ChessForge
         {
             if (e.Success)
             {
-                BuildFlowDocument();
+                LichessGamesPreviewDialog.SetOpeningsData(e.OpeningStats);
+
+                BuildFlowDocument(e.OpeningStats);
             }
             else
             {
@@ -102,7 +140,7 @@ namespace ChessForge
 
         /// <summary>
         /// If Tablebase data was received there is nothing to show in this view
-        /// and we want to cleare if anything was shown.
+        /// and we want to clear it if anything was shown.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -113,9 +151,9 @@ namespace ChessForge
 
         /// <summary>
         /// Builds the Flow Document for this view.
-        /// main table.
+        /// The main table.
         /// </summary>
-        public void BuildFlowDocument()
+        public void BuildFlowDocument(LichessOpeningsStats openingStats)
         {
             Document.Blocks.Clear();
             Document.PageWidth = 590;
@@ -124,9 +162,44 @@ namespace ChessForge
             if (AppState.ActiveTab != WorkbookManager.TabViewType.EXERCISE)
             {
                 Document.Blocks.Add(BuildHeaderLabel());
-                Document.Blocks.Add(BuildTopGamesTable());
+                Document.Blocks.Add(BuildTopGamesTableEx(openingStats));
             }
         }
+
+        /// <summary>
+        /// Sets Rows and their content.
+        /// Note that Rows are not recreated.
+        /// </summary>
+        /// <param name="stats"></param>
+        /// <returns></returns>
+        private Table BuildTopGamesTableEx(LichessOpeningsStats stats)
+        {
+            int rowNo = 0;
+            _gameIdList.Clear();
+            AdjustGamesTableRowCount(stats.TopGames.Length);
+            foreach (LichessTopGame game in stats.TopGames)
+            {
+                if (rowNo >= MAX_GAME_ROW_COUNT)
+                {
+                    break;
+                }
+
+                TableRow row = _lstRows[rowNo].Row;
+                _lstRows[rowNo].SetLabels(game);
+
+                if (!string.IsNullOrWhiteSpace(game.Id))
+                {
+                    _gameIdList.Add(game.Id);
+                    row.Name = _rowNamePrefix + game.Id;
+                    row.PreviewMouseDown += Row_PreviewMouseDown;
+                    row.Cursor = Cursors.Arrow;
+                }
+                rowNo++;
+            }
+
+            return _gamesTable;
+        }
+
 
         /// <summary>
         /// Builds an empty document.
@@ -137,36 +210,30 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds the main Top Games table.
+        /// Adjusts the number of TableRows in the table.
+        /// We don't construct or reconstruct the objects here but rather
+        /// remove or add them to the Table.
+        /// They are always kept the _lstRows list.
         /// </summary>
-        /// <returns></returns>
-        private Table BuildTopGamesTable()
+        /// <param name="gameCount"></param>
+        private void AdjustGamesTableRowCount(int gameCount)
         {
-            _gamesTable = new Table();
-            _gamesTable.FontSize = _baseFontSize + Configuration.FontSizeDiff;
-            _gamesTable.CellSpacing = 0;
-            _gamesTable.Margin = new Thickness(0);
-            _gamesTable.RowGroups.Add(new TableRowGroup());
-
-            CreateColumns(_gamesTable);
-            LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats;
-            int rowNo = 0;
-            _gameIdList.Clear();
-            foreach (LichessTopGame game in stats.TopGames)
+            gameCount = Math.Min(MAX_GAME_ROW_COUNT, gameCount);
+            int currentRowCount = _gamesTable.RowGroups[0].Rows.Count;
+            if (currentRowCount < gameCount)
             {
-                TableRow row = BuildGameRow(_gamesTable, game, rowNo);
-                _gamesTable.RowGroups[0].Rows.Add(row);
-                if (!string.IsNullOrWhiteSpace(game.Id))
+                for (int i = currentRowCount; i < gameCount; i++)
                 {
-                    _gameIdList.Add(game.Id);
-                    row.Name = _rowNamePrefix + game.Id;
-                    row.PreviewMouseDown += Row_PreviewMouseDown;
-                    row.Cursor = Cursors.Arrow;
+                    _gamesTable.RowGroups[0].Rows.Add(_lstRows[i].Row);
                 }
-                rowNo++;
             }
-            
-            return _gamesTable;
+            else
+            {
+                for (int i = currentRowCount - 1; i >= gameCount; i--)
+                {
+                    _gamesTable.RowGroups[0].Rows.Remove(_lstRows[i].Row);
+                }
+            }
         }
 
         /// <summary>
@@ -200,7 +267,6 @@ namespace ChessForge
                 {
                     row.Background = ChessForgeColors.TABLE_ROW_LIGHT_GRAY;
                 }
-
             }
         }
 
@@ -273,6 +339,109 @@ namespace ChessForge
                     TopGameClicked?.Invoke(null, eventArgs);
                 }
             }
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Creates columns for the main Top Games table
+        /// </summary>
+        /// <param name="gamesTable"></param>
+        private void CreateColumns(Table gamesTable)
+        {
+            // ratings
+            gamesTable.Columns.Add(new TableColumn());
+            gamesTable.Columns[0].Width = new GridLength(_ratingColumnWidth);
+
+            // names
+            gamesTable.Columns.Add(new TableColumn());
+            gamesTable.Columns[1].Width = new GridLength(_namesColumnWidth);
+
+            // result
+            gamesTable.Columns.Add(new TableColumn());
+            gamesTable.Columns[2].Width = new GridLength(_resultColumnWidth);
+
+            // date
+            gamesTable.Columns.Add(new TableColumn());
+            gamesTable.Columns[3].Width = new GridLength(_dateColumnWidth);
+        }
+
+        /// <summary>
+        /// Builds the header Paragraph.
+        /// </summary>
+        /// <returns></returns>
+        private Paragraph BuildHeaderLabel()
+        {
+            Paragraph para = new Paragraph();
+            para.Margin = new Thickness(0, 0, 0, 0);
+
+            Canvas canvas = new Canvas
+            {
+                Width = 260,
+                Height = 22 + Configuration.FontSizeDiff,
+                Background = Brushes.White
+            };
+
+            Label lbl = new Label
+            {
+                Width = _tableWidth,
+                Height = 22 + Configuration.FontSizeDiff,
+                FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Left,
+                Content = "  " + Properties.Resources.TopGames,
+
+                BorderThickness = new Thickness(0, 0, 0, 0),
+                Padding = new Thickness(0, 0, 0, 0)
+            };
+
+            lbl.Background = ChessForgeColors.TABLE_HEADER_GREEN;
+
+            canvas.Children.Add(lbl);
+
+            Canvas.SetLeft(lbl, 0);
+
+            InlineUIContainer uIContainer = new InlineUIContainer
+            {
+                Child = canvas
+            };
+            para.Inlines.Add(uIContainer);
+
+            return para;
+        }
+    }
+
+#if false
+        /// <summary>
+        /// Builds the main Top Games table.
+        /// </summary>
+        /// <returns></returns>
+        private Table BuildTopGamesTable(LichessOpeningsStats openingStats)
+        {
+            _gamesTable = new Table();
+            _gamesTable.FontSize = _baseFontSize + Configuration.FontSizeDiff;
+            _gamesTable.CellSpacing = 0;
+            _gamesTable.Margin = new Thickness(0);
+            _gamesTable.RowGroups.Add(new TableRowGroup());
+
+            CreateColumns(_gamesTable);
+            LichessOpeningsStats stats = openingStats;
+            int rowNo = 0;
+            _gameIdList.Clear();
+            foreach (LichessTopGame game in stats.TopGames)
+            {
+                TableRow row = BuildGameRow(_gamesTable, game, rowNo);
+                _gamesTable.RowGroups[0].Rows.Add(row);
+                if (!string.IsNullOrWhiteSpace(game.Id))
+                {
+                    _gameIdList.Add(game.Id);
+                    row.Name = _rowNamePrefix + game.Id;
+                    row.PreviewMouseDown += Row_PreviewMouseDown;
+                    row.Cursor = Cursors.Arrow;
+                }
+                rowNo++;
+            }
+            
+            return _gamesTable;
         }
 
         /// <summary>
@@ -523,73 +692,6 @@ namespace ChessForge
 
             return para;
         }
-
-        /// <summary>
-        /// Creates columns for the main Top Games table
-        /// </summary>
-        /// <param name="gamesTable"></param>
-        private void CreateColumns(Table gamesTable)
-        {
-            // ratings
-            gamesTable.Columns.Add(new TableColumn());
-            gamesTable.Columns[0].Width = new GridLength(_ratingColumnWidth);
-
-            // names
-            gamesTable.Columns.Add(new TableColumn());
-            gamesTable.Columns[1].Width = new GridLength(_namesColumnWidth);
-
-            // result
-            gamesTable.Columns.Add(new TableColumn());
-            gamesTable.Columns[2].Width = new GridLength(_resultColumnWidth);
-
-            // date
-            gamesTable.Columns.Add(new TableColumn());
-            gamesTable.Columns[3].Width = new GridLength(_dateColumnWidth);
-        }
-
-        /// <summary>
-        /// Builds the header Paragraph.
-        /// </summary>
-        /// <returns></returns>
-        private Paragraph BuildHeaderLabel()
-        {
-            Paragraph para = new Paragraph();
-            para.Margin = new Thickness(0, 0, 0, 0);
-
-            Canvas canvas = new Canvas
-            {
-                Width = 260,
-                Height = 22 + Configuration.FontSizeDiff,
-                Background = Brushes.White
-            };
-
-            Label lbl = new Label
-            {
-                Width = _tableWidth,
-                Height = 22 + Configuration.FontSizeDiff,
-                FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff,
-                VerticalContentAlignment = VerticalAlignment.Center,
-                HorizontalContentAlignment = HorizontalAlignment.Left,
-                Content = "  " + Properties.Resources.TopGames,
-
-                BorderThickness = new Thickness(0, 0, 0, 0),
-                Padding = new Thickness(0, 0, 0, 0)
-            };
-
-            lbl.Background = ChessForgeColors.TABLE_HEADER_GREEN;
-
-            canvas.Children.Add(lbl);
-
-            Canvas.SetLeft(lbl, 0);
-
-            InlineUIContainer uIContainer = new InlineUIContainer
-            {
-                Child = canvas
-            };
-            para.Inlines.Add(uIContainer);
-
-            return para;
-        }
-    }
+#endif
 
 }

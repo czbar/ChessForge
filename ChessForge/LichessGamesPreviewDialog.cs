@@ -15,6 +15,24 @@ namespace ChessForge
     /// </summary>
     public class LichessGamesPreviewDialog : GamePreviewDialog
     {
+        // the latest Stats data received from Lichess.
+        private static LichessOpeningsStats _openingsData;
+
+        // lock object for accessing _openingsData as it theoretically (highly unlikely, though) may be written into while we processing 
+        private static object _lockOpeningData = new object();
+
+        /// <summary>
+        /// Sets the value of the _openingsData property. 
+        /// </summary>
+        /// <param name="openingsData"></param>
+        public static void SetOpeningsData(LichessOpeningsStats openingsData)
+        {
+            lock (_lockOpeningData)
+            {
+                _openingsData = openingsData;
+            }
+        }
+
         // hosted TopGamesView
         private TopGamesView _topGamesView;
 
@@ -98,7 +116,10 @@ namespace ChessForge
         {
             _topGamesView = new TopGamesView(UiRtbGames.Document, false);
             UiRtbGames.IsDocumentEnabled = true;
-            _topGamesView.BuildFlowDocument();
+            lock (_lockOpeningData)
+            {
+                _topGamesView.BuildFlowDocument(_openingsData);
+            }
             _topGamesView.TopGameClicked += EventSelectGame;
         }
 

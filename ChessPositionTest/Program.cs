@@ -52,11 +52,11 @@ namespace ChessPositionTest
                 var equal = data1.Cast<byte>().SequenceEqual(data2.Cast<byte>());
             }
 
-            WebAccess.OpeningExplorer.DataReceived += OpeningStatsReceived;
+            WebAccess.OpeningExplorer.OpeningStatsReceived += OpeningStatsReceived;
             Console.WriteLine("Sending Request");
             watch.Start();
 
-            WebAccess.OpeningExplorer.OpeningStats(0, nd);
+            WebAccess.OpeningExplorer.RequestOpeningStats(0, nd);
 
             //TestTreeMerge();
             //TestPgnGameParser();
@@ -64,11 +64,11 @@ namespace ChessPositionTest
 //            Console.ReadLine();
         }
 
-        public static void OpeningStatsReceived(object sender, EventArgs e)
+        public static void OpeningStatsReceived(object sender, WebAccessEventArgs e)
         {
             watch.Stop();
             Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
-            LichessOpeningsStats stats = WebAccess.OpeningExplorer.Stats;
+            LichessOpeningsStats stats = e.OpeningStats;
             Console.WriteLine(stats.Opening.Name);
             foreach (WebAccess.LichessMoveStats move in stats.Moves)
             {

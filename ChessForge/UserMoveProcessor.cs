@@ -327,8 +327,9 @@ namespace ChessForge
             {
                 algMove = MoveUtils.EngineNotationToAlgebraic(move, ref nd.Position, out isCastle);
             }
-            catch
+            catch (Exception ex) 
             {
+                AppLog.Message("CreateNewPlyNode()", ex);
                 algMove = "";
             }
 
