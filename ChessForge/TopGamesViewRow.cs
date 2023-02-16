@@ -45,14 +45,6 @@ namespace ChessForge
         private TableRow _row;
 
         /// <summary>
-        /// Constructs the TopGamesViewRow object. 
-        /// </summary>
-        public TopGamesViewRow()
-        {
-            BuildTableGameRow();
-        }
-
-        /// <summary>
         /// The TableRow to use in the calling Table.
         /// </summary>
         public TableRow Row
@@ -61,10 +53,30 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Constructs the TopGamesViewRow object. 
+        /// </summary>
+        public TopGamesViewRow()
+        {
+            BuildTableGameRow();
+        }
+
+        /// <summary>
+        /// Sets contents of the labels with the data.
+        /// </summary>
+        /// <param name="game"></param>
+        public void SetLabels(LichessTopGame game)
+        {
+            SetRatingLabels(game);
+            SetPlayerNameLabels(game);
+            SetResultLabel(game);
+            SetDateLabel(game);
+        }
+
+        /// <summary>
         /// Sets the Result labels per the content of the game argument.
         /// </summary>
         /// <param name="game"></param>
-        public void SetResultLabel(LichessTopGame game)
+        private void SetResultLabel(LichessTopGame game)
         {
             switch (game.Winner)
             {
@@ -90,7 +102,7 @@ namespace ChessForge
         /// Sets the Ratings labels per the content of the game argument.
         /// </summary>
         /// <param name="game"></param>
-        public void SetRatingLabels(LichessTopGame game)
+        private void SetRatingLabels(LichessTopGame game)
         {
             _lblWhiteRating.Content = game.White.Rating ?? "";
             _lblBlackRating.Content = game.Black.Rating ?? "";
@@ -100,17 +112,20 @@ namespace ChessForge
         /// Sets the Player Name labels per the content of the game argument.
         /// </summary>
         /// <param name="game"></param>
-        public void SetPlayerNameLabels(LichessTopGame game)
+        private void SetPlayerNameLabels(LichessTopGame game)
         {
             _lblWhitePlayer.Content = game.White.Name;
+            _lblWhitePlayer.ToolTip = game.White.Name;
+
             _lblBlackPlayer.Content = game.Black.Name;
+            _lblBlackPlayer.ToolTip = game.Black.Name;
         }
 
         /// <summary>
         /// Sets the Date label per the content of the game argument.
         /// </summary>
         /// <param name="game"></param>
-        public void SetDateLabel(LichessTopGame game)
+        private void SetDateLabel(LichessTopGame game)
         {
             _lblDate.Content = game.Year ?? "";
         }
