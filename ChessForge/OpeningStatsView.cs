@@ -64,7 +64,6 @@ namespace ChessForge
             // listen to Data Received events
             OpeningExplorer.OpeningStatsReceived += OpeningStatsReceived;
             TablebaseExplorer.TablebaseReceived += TablebaseDataReceived;
-            OpeningExplorer.OpeningNameReceived += OpeningNameRequestCompleted;
         }
 
         // column widths in the stats table
@@ -127,6 +126,7 @@ namespace ChessForge
                 }
                 _moveNumberString = BuildMoveNumberString(_node);
                 BuildFlowDocument(DataMode.OPENINGS, e.OpeningStats);
+                ProcessOpeningName(e.OpeningStats);
             }
             else
             {
@@ -192,12 +192,7 @@ namespace ChessForge
                 switch (mode)
                 {
                     case DataMode.OPENINGS:
-                        BuildOpeningNameTable(openingStats);
-                        if (string.IsNullOrEmpty(_node.OpeningName))
-                        {
-                            WebAccessManager.OpeningNamesRequest(_node);
-                        }
-
+                        BuildOpeningNameTable();
                         if (_openingNameTable != null)
                         {
                             Document.Blocks.Add(_openingNameTable);
@@ -229,60 +224,40 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// If the received value is of the currect node or one of its predecessors
+        /// If the received value is of the correct node or one of its predecessors
         /// set the value in the correct Node and check if we now have 
         /// the name for the current node.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OpeningNameRequestCompleted(object sender, WebAccessEventArgs e)
+        private void ProcessOpeningName(LichessOpeningsStats stats)
         {
             try
             {
-                TreeNode nd = _node;
-                while (nd != null)
+                _node.Eco = "";
+                _node.OpeningName = POSITION_NOT_NAMED;
+                if (stats.Opening != null)
                 {
-                    if (e.NodeId == nd.NodeId)
-                    {
-                        if (string.IsNullOrEmpty(e.Eco))
-                        {
-                            nd.Eco = "";
-                        }
-                        else
-                        {
-                            nd.Eco = e.Eco;
-                        }
+                    _node.Eco = stats.Opening.Eco;
+                    _node.OpeningName = stats.Opening.Name;
 
-                        if (string.IsNullOrEmpty(e.OpeningName))
-                        {
-                            nd.OpeningName = POSITION_NOT_NAMED;
-                        }
-                        else
-                        {
-                            nd.OpeningName = e.OpeningName;
-                            SetAllNotNamedChildrenPositions(nd);
-                        }
-                        break;
+                    SetAllNotNamedChildrenPositions(_node);
+                }
+                else
+                {
+                    string openingName = FindOpeningNameFromPredecessors(_node, out string eco);
+                    if (!string.IsNullOrEmpty(openingName))
+                    {
+                        _node.Eco = eco;
+                        _node.OpeningName = openingName;
                     }
-                    nd = nd.Parent;
                 }
 
-                if (_node.Parent != null && !NodeHasOpeningName(_node))
+                if (NodeHasOpeningName(_node))
                 {
-                    string opName = FindOpeningNameFromPredecessors(_node, out string eco);
-
-                    if (opName != null)
-                    {
-                        _node.OpeningName = opName;
-                        _node.Eco = eco;
-
-                        if (NodeHasOpeningName(_node))
-                        {
-                            Document.Blocks.Remove(_openingNameTable);
-                            BuildOpeningNameTable(e.OpeningStats);
-                            Document.Blocks.InsertBefore(_openingStatsTable, _openingNameTable);
-                        }
-                    }
+                    Document.Blocks.Remove(_openingNameTable);
+                    BuildOpeningNameTable();
+                    Document.Blocks.InsertBefore(_openingStatsTable, _openingNameTable);
                 }
             }
             catch
@@ -382,37 +357,8 @@ namespace ChessForge
         /// <summary>
         /// Builds the header table for the main table
         /// </summary>
-        private void BuildOpeningNameTable(LichessOpeningsStats openingStats)
+        private void BuildOpeningNameTable()
         {
-            // get the data
-            LichessOpeningsStats stats = openingStats;
-            if (string.IsNullOrEmpty(_node.OpeningName) && _node.MoveNumber <= Constants.OPENING_MAX_MOVE)
-            {
-                if (stats.Opening == null)
-                {
-                    _node.Eco = "";
-                    _node.OpeningName = "";
-                }
-                else
-                {
-                    _node.Eco = stats.Opening.Eco;
-                    _node.OpeningName = stats.Opening.Name;
-                }
-            }
-            else
-            {
-                if (_node.OpeningName == POSITION_NOT_NAMED || _node.MoveNumber > Constants.OPENING_MAX_MOVE)
-                {
-                    string opName = FindOpeningNameFromPredecessors(_node, out string eco);
-                    if (opName != null)
-                    {
-                        _node.Eco = eco;
-                        _node.OpeningName = opName;
-                    }
-                }
-
-            }
-
             _openingNameTable = CreateTable(0);
             _openingNameTable.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
             _openingNameTable.CellSpacing = 0;
@@ -468,7 +414,6 @@ namespace ChessForge
                 _openingStatsTable.RowGroups[0].Rows.Add(row);
                 PopulateCellsInRow(row, move, scaleFactor);
             }
-
         }
 
         /// <summary>
