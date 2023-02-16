@@ -56,7 +56,7 @@ namespace ChessPositionTest
             Console.WriteLine("Sending Request");
             watch.Start();
 
-            WebAccess.OpeningExplorer.OpeningStats(0, nd);
+            WebAccess.OpeningExplorer.RequestOpeningStats(0, nd);
 
             //TestTreeMerge();
             //TestPgnGameParser();
