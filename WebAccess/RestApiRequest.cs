@@ -13,7 +13,6 @@ namespace WebAccess
     public class RestApiRequest
     {
         static public HttpClient OpeningStatsClient = new HttpClient();
-        static public HttpClient OpeningNameClient = new HttpClient();
         static public HttpClient TablebaseClient = new HttpClient();
         static public HttpClient GameImportClient = new HttpClient();
     }
