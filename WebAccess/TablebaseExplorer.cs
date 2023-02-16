@@ -16,7 +16,7 @@ namespace WebAccess
         /// <summary>
         /// Handler for the DataReceived event
         /// </summary>
-        public static event EventHandler<WebAccessEventArgs> DataReceived;
+        public static event EventHandler<WebAccessEventArgs> TablebaseReceived;
 
         /// <summary>
         /// Statistics and data received from Lichess
@@ -38,13 +38,13 @@ namespace WebAccess
                 var json = await RestApiRequest.Client.GetStringAsync("http://tablebase.lichess.ovh/standard?" + "fen=" + fen);
                 Response = JsonConvert.DeserializeObject<LichessTablebaseResponse>(json);
                 eventArgs.Success = true;
-                DataReceived?.Invoke(null, eventArgs);
+                TablebaseReceived?.Invoke(null, eventArgs);
             }
             catch (Exception ex)
             {
                 eventArgs.Success = false;
                 eventArgs.Message = ex.Message;
-                DataReceived?.Invoke(null, eventArgs);
+                TablebaseReceived?.Invoke(null, eventArgs);
             }
         }
     }

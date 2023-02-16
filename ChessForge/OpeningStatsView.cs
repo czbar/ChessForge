@@ -63,7 +63,7 @@ namespace ChessForge
         {
             // listen to Data Received events
             OpeningExplorer.OpeningStatsReceived += OpeningStatsReceived;
-            TablebaseExplorer.DataReceived += TablebaseDataReceived;
+            TablebaseExplorer.TablebaseReceived += TablebaseDataReceived;
             OpeningExplorer.OpeningNameReceived += OpeningNameRequestCompleted;
         }
 

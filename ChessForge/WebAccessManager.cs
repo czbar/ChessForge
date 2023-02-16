@@ -83,7 +83,7 @@ namespace ChessForge
         private static void InitializeExplorerQueries()
         {
             OpeningExplorer.OpeningStatsReceived += ExplorerRequestCompleted;
-            TablebaseExplorer.DataReceived += ExplorerRequestCompleted;
+            TablebaseExplorer.TablebaseReceived += ExplorerRequestCompleted;
             WebAccessExplorersState.IsExplorerQueriesInitialized = true;
         }
 
