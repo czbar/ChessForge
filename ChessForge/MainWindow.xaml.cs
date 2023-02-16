@@ -1368,18 +1368,18 @@ namespace ChessForge
             ActiveVariationTree.SelectedLineId = startLineId;
             ActiveVariationTree.SelectedNodeId = startNodeId;
 
+            bool isModelGameTabAlready = AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME;
             if (focusOnModelGame)
             {
                 UiTabModelGames.Focus();
                 UiRtbModelGamesView.Focus();
             }
-            else
+
+            // if !focusOnModelGame and or we are already in the Model Game tab, the Focus methods above won't be called or won't refresh the view
+            if (!focusOnModelGame || isModelGameTabAlready)
             {
-                // in the above branch this will be executed by the Focus() methods.
                 SetActiveLine(startLineId, startNodeId);
             }
-
-            //BookmarkManager.ShowBookmarks();
 
             int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
             SelectLineAndMoveInWorkbookViews(_modelGameTreeView, startLineId, nodeIndex);
@@ -1433,14 +1433,16 @@ namespace ChessForge
             ActiveVariationTree.SelectedLineId = startLineId;
             ActiveVariationTree.SelectedNodeId = startNodeId;
 
+            bool isExerciseTabAlready = AppState.ActiveTab == WorkbookManager.TabViewType.EXERCISE;
             if (focusOnExercise)
             {
                 UiTabExercises.Focus();
                 UiRtbExercisesView.Focus();
             }
-            else
+
+            // if !focusOnExercise and or we are already in the Exercise tab, the Focus methods above won't be called or won't refresh the view
+            if (!focusOnExercise || isExerciseTabAlready)
             {
-                // in the above branch this will be executed by the Focus() methods.
                 SetActiveLine(startLineId, startNodeId);
             }
 
