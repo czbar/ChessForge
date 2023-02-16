@@ -35,7 +35,7 @@ namespace WebAccess
             eventArgs.NodeId = nd.NodeId;
             try
             {
-                var json = await RestApiRequest.Client.GetStringAsync("http://tablebase.lichess.ovh/standard?" + "fen=" + fen);
+                var json = await RestApiRequest.TablebaseClient.GetStringAsync("http://tablebase.lichess.ovh/standard?" + "fen=" + fen);
                 Response = JsonConvert.DeserializeObject<LichessTablebaseResponse>(json);
                 eventArgs.Success = true;
                 TablebaseReceived?.Invoke(null, eventArgs);

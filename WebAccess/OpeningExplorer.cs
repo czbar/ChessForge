@@ -38,7 +38,7 @@ namespace WebAccess
             eventArgs.NodeId = nd.NodeId;
             try
             {
-                var json = await RestApiRequest.Client.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
+                var json = await RestApiRequest.OpeningStatsClient.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
                 eventArgs.OpeningStats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
                 eventArgs.Success = true;
                 OpeningStatsReceived?.Invoke(null, eventArgs);
@@ -64,7 +64,7 @@ namespace WebAccess
             eventArgs.NodeId = nd.NodeId;
             try
             {
-                var json = await RestApiRequest.Client.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
+                var json = await RestApiRequest.OpeningNameClient.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
                 LichessOpeningsStats stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
                 eventArgs.Success = true;
                 if (stats.Opening != null)
