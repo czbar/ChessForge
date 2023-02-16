@@ -24,57 +24,59 @@ namespace ChessForge
             set => WebAccessExplorersState.IsEnabledExplorerQueries = value;
         }
 
-        /// <summary>
-        /// Calls WebAccess with an Explorer Query.
-        /// </summary>
-        /// <param name="treeId"></param>
-        /// <param name="nd"></param>
-        public static void ExplorerRequest(int treeId, TreeNode nd)
+#if false
+        //TODO: consider and test this
+        public static async void ExplorerRequest(int treeId, TreeNode nd)
         {
-            if (IsEnabledExplorerQueries)
-            {
-                if (!WebAccessExplorersState.IsExplorerQueriesInitialized)
-                {
-                    InitializeExplorerQueries();
-                }
+            await UseDelay();
+#endif
 
-                if (WebAccessExplorersState.IsExplorerRequestInProgress)
+            /// <summary>
+            /// Calls WebAccess with an Explorer Query.
+            /// </summary>
+            /// <param name="treeId"></param>
+            /// <param name="nd"></param>
+            public static void ExplorerRequest(int treeId, TreeNode nd)
+        {
+            if (nd != null)
+            {
+                if (IsEnabledExplorerQueries)
                 {
-                    WebAccessExplorersState.QueuedNode = nd;
-                    WebAccessExplorersState.QueuedNodeTreeId = treeId;
-                }
-                else
-                {
-                    WebAccessExplorersState.IsExplorerRequestInProgress = true;
-                    WebAccessExplorersState.QueuedNode = null;
-                    int pieceCount = PositionUtils.GetPieceCount(nd.Position);
-                    if (pieceCount > 7)
+                    if (!WebAccessExplorersState.IsExplorerQueriesInitialized)
                     {
-                        OpeningExplorer.RequestOpeningStats(treeId, nd);
+                        InitializeExplorerQueries();
+                    }
+
+                    if (WebAccessExplorersState.IsExplorerRequestInProgress)
+                    {
+                        WebAccessExplorersState.QueuedNode = nd;
+                        WebAccessExplorersState.QueuedNodeTreeId = treeId;
                     }
                     else
                     {
-                        TablebaseExplorer.RequestTablebaseData(treeId, nd);
+                        WebAccessExplorersState.IsExplorerRequestInProgress = true;
+                        WebAccessExplorersState.QueuedNode = null;
+                        int pieceCount = PositionUtils.GetPieceCount(nd.Position);
+                        if (pieceCount > 7)
+                        {
+                            OpeningExplorer.RequestOpeningStats(treeId, nd);
+                        }
+                        else
+                        {
+                            TablebaseExplorer.RequestTablebaseData(treeId, nd);
+                        }
                     }
                 }
             }
         }
 
         /// <summary>
-        /// Requests the opening name for the passed position
-        /// and all positions earlier in the line that have no Opening Name set.
+        /// Helper function to pause execution 
         /// </summary>
-        /// <param name="nd"></param>
-        public static void OpeningNamesRequest(TreeNode nd)
+        /// <returns></returns>
+        static async Task UseDelay(int millisec)
         {
-            while (nd != null)
-            {
-                if (string.IsNullOrEmpty(nd.OpeningName) && nd.MoveNumber <= Constants.OPENING_MAX_MOVE)
-                {
-                    OpeningExplorer.RequestOpeningName(nd);
-                }
-                nd = nd.Parent;
-            }
+            await Task.Delay(millisec);
         }
 
         /// <summary>
@@ -86,6 +88,17 @@ namespace ChessForge
             TablebaseExplorer.TablebaseReceived += ExplorerRequestCompleted;
             WebAccessExplorersState.IsExplorerQueriesInitialized = true;
         }
+
+#if false // TODO: consider and test this
+        private static async void ExplorerRequestCompleted(object sender, WebAccessEventArgs e)
+        {
+            WebAccessExplorersState.IsExplorerRequestInProgress = false;
+
+            // check if we have anything queued and if so run it
+            if (WebAccessExplorersState.QueuedNode != null)
+            {
+                await UseDelay();
+#endif
 
         /// <summary>
         /// Delegate listening to the Explorer request completed events.
