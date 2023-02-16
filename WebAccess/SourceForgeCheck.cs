@@ -23,15 +23,19 @@ namespace WebAccess
         /// <returns></returns>
         public static async Task<string> GetVersion()
         {
-            var json = await RestApiRequest.Client.GetStringAsync("https://sourceforge.net/projects/ChessForge/best_release.json");
+            // used only once so create a transient client
+            using (HttpClient client = new HttpClient())
+            {
+                var json = await client.GetStringAsync("https://sourceforge.net/projects/ChessForge/best_release.json");
 
-            dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
-            string sVer = obj.release.filename;
+                dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
+                string sVer = obj.release.filename;
 
-            bool result = TextUtils.GetVersionNumbers(sVer, out int major, out int minor, out int patch);
-            ChessForgeVersion = new Version(major, minor, patch); 
+                bool result = TextUtils.GetVersionNumbers(sVer, out int major, out int minor, out int patch);
+                ChessForgeVersion = new Version(major, minor, patch);
 
-            return json;
+                return json;
+            }
         }
     }
 }
