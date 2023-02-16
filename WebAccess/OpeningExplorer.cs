@@ -23,11 +23,6 @@ namespace WebAccess
         public static event EventHandler<WebAccessEventArgs> OpeningStatsReceived;
 
         /// <summary>
-        /// Handler for the OpeningNameReceived event
-        /// </summary>
-        public static event EventHandler<WebAccessEventArgs> OpeningNameReceived;
-
-        /// <summary>
         /// Requests Opening Stats from lichess
         /// </summary>
         /// <returns></returns>
@@ -52,36 +47,6 @@ namespace WebAccess
                 eventArgs.Message = ex.Message;
                 OpeningStatsReceived?.Invoke(null, eventArgs);
                 AppLog.Message("RequestOpeningStats()", ex);
-            }
-        }
-
-        /// <summary>
-        /// Calls opening stats for the purpose of obtaining
-        /// the Opening Name.
-        /// </summary>
-        /// <param name="treeId"></param>
-        /// <param name="nd"></param>
-        public static async void RequestOpeningName(TreeNode nd)
-        {
-            string fen = FenParser.GenerateFenFromPosition(nd.Position);
-            WebAccessEventArgs eventArgs = new WebAccessEventArgs();
-            eventArgs.NodeId = nd.NodeId;
-            try
-            {
-                AppLog.Message(2, "HttpClient sending OpeningName request for FEN: " + fen);
-                var json = await RestApiRequest.OpeningNameClient.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
-                LichessOpeningsStats stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
-                eventArgs.Success = true;
-                eventArgs.OpeningStats = stats;
-                OpeningNameReceived?.Invoke(null, eventArgs);
-                AppLog.Message(2, "HttpClient received OpeningName response for FEN: " + fen);
-            }
-            catch (Exception ex)
-            {
-                eventArgs.Success = false;
-                eventArgs.Message = ex.Message;
-                OpeningNameReceived?.Invoke(null, eventArgs);
-                AppLog.Message("RequestOpeningName()", ex);
             }
         }
     }
