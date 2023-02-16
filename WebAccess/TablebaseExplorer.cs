@@ -1,4 +1,5 @@
-﻿using GameTree;
+﻿using ChessForge;
+using GameTree;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace WebAccess
         /// Requests Opening Stats from lichess
         /// </summary>
         /// <returns></returns>
-        public static async void TablebaseRequest(int treeId, TreeNode nd)
+        public static async void RequestTablebaseData(int treeId, TreeNode nd)
         {
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
             WebAccessEventArgs eventArgs = new WebAccessEventArgs();
@@ -35,16 +36,19 @@ namespace WebAccess
             eventArgs.NodeId = nd.NodeId;
             try
             {
+                AppLog.Message(2, "HttpClient sending Tablebase request for FEN: " + fen);
                 var json = await RestApiRequest.TablebaseClient.GetStringAsync("http://tablebase.lichess.ovh/standard?" + "fen=" + fen);
                 Response = JsonConvert.DeserializeObject<LichessTablebaseResponse>(json);
                 eventArgs.Success = true;
                 TablebaseReceived?.Invoke(null, eventArgs);
+                AppLog.Message(2, "HttpClient received Tablebase response for FEN: " + fen);
             }
             catch (Exception ex)
             {
                 eventArgs.Success = false;
                 eventArgs.Message = ex.Message;
                 TablebaseReceived?.Invoke(null, eventArgs);
+                AppLog.Message("TablebaseRequest()", ex);
             }
         }
     }

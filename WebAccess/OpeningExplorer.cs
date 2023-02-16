@@ -1,4 +1,5 @@
-﻿using ChessPosition;
+﻿using ChessForge;
+using ChessPosition;
 using ChessPosition.Utils;
 using GameTree;
 using Newtonsoft.Json;
@@ -30,7 +31,7 @@ namespace WebAccess
         /// Requests Opening Stats from lichess
         /// </summary>
         /// <returns></returns>
-        public static async void OpeningStats(int treeId, TreeNode nd)
+        public static async void RequestOpeningStats(int treeId, TreeNode nd)
         {
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
             WebAccessEventArgs eventArgs = new WebAccessEventArgs();
@@ -38,16 +39,19 @@ namespace WebAccess
             eventArgs.NodeId = nd.NodeId;
             try
             {
+                AppLog.Message(2, "HttpClient sending OpeningStats request for FEN: " + fen);
                 var json = await RestApiRequest.OpeningStatsClient.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
                 eventArgs.OpeningStats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
                 eventArgs.Success = true;
                 OpeningStatsReceived?.Invoke(null, eventArgs);
+                AppLog.Message(2, "HttpClient received OpeningStats response for FEN: " + fen);
             }
-            catch(Exception ex) 
+            catch (Exception ex) 
             {
                 eventArgs.Success = false;
                 eventArgs.Message = ex.Message;
                 OpeningStatsReceived?.Invoke(null, eventArgs);
+                AppLog.Message("RequestOpeningStats()", ex);
             }
         }
 
@@ -64,6 +68,7 @@ namespace WebAccess
             eventArgs.NodeId = nd.NodeId;
             try
             {
+                AppLog.Message(2, "HttpClient sending OpeningName request for FEN: " + fen);
                 var json = await RestApiRequest.OpeningNameClient.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
                 LichessOpeningsStats stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
                 eventArgs.Success = true;
@@ -78,12 +83,14 @@ namespace WebAccess
                     eventArgs.OpeningName = null;
                 }
                 OpeningNameReceived?.Invoke(null, eventArgs);
+                AppLog.Message(2, "HttpClient received OpeningName response for FEN: " + fen);
             }
             catch (Exception ex)
             {
                 eventArgs.Success = false;
                 eventArgs.Message = ex.Message;
                 OpeningNameReceived?.Invoke(null, eventArgs);
+                AppLog.Message("RequestOpeningName()", ex);
             }
         }
     }

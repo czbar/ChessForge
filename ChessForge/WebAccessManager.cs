@@ -50,11 +50,11 @@ namespace ChessForge
                     int pieceCount = PositionUtils.GetPieceCount(nd.Position);
                     if (pieceCount > 7)
                     {
-                        OpeningExplorer.OpeningStats(treeId, nd);
+                        OpeningExplorer.RequestOpeningStats(treeId, nd);
                     }
                     else
                     {
-                        TablebaseExplorer.TablebaseRequest(treeId, nd);
+                        TablebaseExplorer.RequestTablebaseData(treeId, nd);
                     }
                 }
             }
