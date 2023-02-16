@@ -168,6 +168,7 @@
       <DependentUpon>SelectSingleChapterDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SingleGamePreviewDialog.cs" />
+    <Compile Include="TopGamesViewRow.cs" />
     <Compile Include="TrainingViewMoveHandlers.cs" />
     <Compile Include="WorkbookOperation.cs" />
     <Compile Include="WorkbookOperationsManager.cs" />
