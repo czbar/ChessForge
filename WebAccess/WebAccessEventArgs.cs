@@ -32,16 +32,6 @@ namespace WebAccess
         public string GameId { get; set; }
 
         /// <summary>
-        /// Opening code
-        /// </summary>
-        public string Eco { get; set; }
-
-        /// <summary>
-        /// Opening name received from Lichess
-        /// </summary>
-        public string OpeningName { get; set; }
-
-        /// <summary>
         /// Opening stats received from Lichess
         /// </summary>
         public LichessOpeningsStats OpeningStats { get; set; }
