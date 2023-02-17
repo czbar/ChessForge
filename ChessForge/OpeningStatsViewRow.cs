@@ -19,17 +19,16 @@ namespace ChessForge
         // base font size for the control
         private int _baseFontSize = 11;
 
-        /// <summary>
-        /// The move number string to prefix the moves in the table with
-        /// </summary>
+        // The move number string to prefix the moves in the table with
         private string _moveNumberString;
 
+        // prefix for the Run with the move
         private readonly string MOVE_PREFIX = "_move_";
 
         // column widths in the stats table
         private readonly double _totalGamesColumnWidth = 20;
 
-
+        // label for the total number of games
         private Label _lblTotalGames;
 
         private Border _pctBarBorder;
@@ -41,8 +40,10 @@ namespace ChessForge
         private TableCell _cellTotal;
         private TableCell _cellScoring;
 
+        // a Run representing this move
         private Run _runMove;
 
+        // View that is using objects of the class
         private OpeningStatsView _parentView;
 
         // the TableRow to use in the calling Table
