@@ -701,6 +701,11 @@ namespace ChessForge
             }
         }
 
+        // counter to prevent too many debug messages in debug mode
+        private static int _debugRegularBkgMsgCount = 0;
+
+        // counter to prevent too many debug messages in debug mode
+        private static int _debugSelectedBkgMsgCount = 0;
 
         /// <summary>
         /// Selects the move and the line in this view on a request from another view (as opposed
@@ -738,8 +743,14 @@ namespace ChessForge
                                 _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
                             }
                             else if (Configuration.DebugLevel != 0)
-                            {  //we should always have this key, so show debug message if not
-                                DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-brushRegularBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
+                            {  
+                                //we should always have this key, so show debug message if not
+                                if (_debugRegularBkgMsgCount < 2)
+                                {
+                                    DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-brushRegularBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
+                                    _debugRegularBkgMsgCount++;
+                                }
+                                AppLog.Message("WorkbookView:SelectLineAndMove()-brushRegularBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
                             }
                         }
                     }
@@ -759,8 +770,14 @@ namespace ChessForge
                                     _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
                                 }
                                 else if (Configuration.DebugLevel != 0)
-                                {  //we should always have this key, so show deubug message if not
-                                    DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-_brushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
+                                {
+                                    //we should always have this key, so show deubug message if not
+                                    if (_debugSelectedBkgMsgCount < 2)
+                                    {
+                                        DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-_brushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
+                                        _debugSelectedBkgMsgCount++;
+                                    }
+                                    AppLog.Message("WorkbookView:SelectLineAndMove()-_brushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
                                 }
                             }
                         }
