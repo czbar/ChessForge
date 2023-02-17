@@ -63,12 +63,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2D6A7DC710A1429C85661DF8DA27B7C5"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_38B54FF529574FC487FA98804E607F6D"
         "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
         "MsmSig" = "8:_UNDEFINED"
@@ -81,19 +75,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_3A9AB547519A484EA349DA966332FB03"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_3B386A17D515444898974880387A5AFF"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_48BC676C66894D76B61F7994048FF60E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -111,7 +93,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_5DC1DF6F6B734290A041D76A6C690614"
+        "MsmKey" = "8:_5B4900962ABA41A6998BF81AB07D27E0"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6A5A5117B0984F118D25D426332386D8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -123,13 +111,31 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_BA45925C432A439DB1687AED9366776E"
+        "MsmKey" = "8:_7269021437CF4398B5AD0BEF5D242C11"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_BA96D1D7C4814CAD8F8959D565F68020"
+        "MsmKey" = "8:_9A863914369745BD8E21369820BDA450"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AA34AAD8CA0841CB9BA022578E9F2C63"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_ABF23757970C4E7AB202399B303E0D70"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BA45925C432A439DB1687AED9366776E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -142,12 +148,6 @@
         "Entry"
         {
         "MsmKey" = "8:_CC7710676BE840B6B8E311CBE65B95A2"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CDC30C53710E4E36993DFE8791C38ACE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -268,6 +268,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -422,26 +430,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2D6A7DC710A1429C85661DF8DA27B7C5"
-            {
-            "SourcePath" = "8:..\\Workbooks\\Distribution\\Checkmate Patterns.pgn"
-            "TargetName" = "8:Checkmate Patterns.pgn"
-            "Tag" = "8:"
-            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_38B54FF529574FC487FA98804E607F6D"
             {
             "AssemblyRegister" = "3:1"
@@ -473,52 +461,12 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3A9AB547519A484EA349DA966332FB03"
-            {
-            "SourcePath" = "8:..\\Workbooks\\Distribution\\Ridiculous Sacrifices.pgn"
-            "TargetName" = "8:Ridiculous Sacrifices.pgn"
-            "Tag" = "8:"
-            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3B386A17D515444898974880387A5AFF"
             {
             "SourcePath" = "8:..\\ChessForge\\Resources\\Sounds\\InvalidMove.mp3"
             "TargetName" = "8:InvalidMove.mp3"
             "Tag" = "8:"
             "Folder" = "8:_95CA9216F4F648DCB6BFB59BD2DBB64E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_48BC676C66894D76B61F7994048FF60E"
-            {
-            "SourcePath" = "8:..\\Workbooks\\Distribution\\Classical Sicilian.pgn"
-            "TargetName" = "8:Classical Sicilian.pgn"
-            "Tag" = "8:"
-            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -584,12 +532,32 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5DC1DF6F6B734290A041D76A6C690614"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5B4900962ABA41A6998BF81AB07D27E0"
             {
-            "SourcePath" = "8:..\\Workbooks\\Distribution\\Endgame Selection.pgn"
-            "TargetName" = "8:Endgame Selection.pgn"
+            "SourcePath" = "8:..\\Workbooks\\Distribution\\Stafford Gambit.pgn"
+            "TargetName" = "8:Stafford Gambit.pgn"
             "Tag" = "8:"
-            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
+            "Folder" = "8:_74D858B67700458BAA3327CD4FAC70B1"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6A5A5117B0984F118D25D426332386D8"
+            {
+            "SourcePath" = "8:..\\Workbooks\\Distribution\\Endgames by NoseKnowsAll at lichess.pgn"
+            "TargetName" = "8:Endgames by NoseKnowsAll at lichess.pgn"
+            "Tag" = "8:"
+            "Folder" = "8:_74D858B67700458BAA3327CD4FAC70B1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -635,12 +603,12 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BA45925C432A439DB1687AED9366776E"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7269021437CF4398B5AD0BEF5D242C11"
             {
-            "SourcePath" = "8:..\\ChessForge\\bin\\Debug\\stockfish_15_x86_64.exe"
-            "TargetName" = "8:stockfish_15_x86_64.exe"
+            "SourcePath" = "8:..\\Workbooks\\Distribution\\Ridiculous Sacrifices.pgn"
+            "TargetName" = "8:Ridiculous Sacrifices.pgn"
             "Tag" = "8:"
-            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
+            "Folder" = "8:_74D858B67700458BAA3327CD4FAC70B1"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -655,10 +623,70 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BA96D1D7C4814CAD8F8959D565F68020"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9A863914369745BD8E21369820BDA450"
             {
-            "SourcePath" = "8:..\\Workbooks\\Distribution\\Stafford Gambit.pgn"
-            "TargetName" = "8:Stafford Gambit.pgn"
+            "SourcePath" = "8:..\\Workbooks\\Distribution\\Classical Sicilian.pgn"
+            "TargetName" = "8:Classical Sicilian.pgn"
+            "Tag" = "8:"
+            "Folder" = "8:_74D858B67700458BAA3327CD4FAC70B1"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AA34AAD8CA0841CB9BA022578E9F2C63"
+            {
+            "SourcePath" = "8:..\\Workbooks\\Distribution\\Endgame Selection.pgn"
+            "TargetName" = "8:Endgame Selection.pgn"
+            "Tag" = "8:"
+            "Folder" = "8:_74D858B67700458BAA3327CD4FAC70B1"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ABF23757970C4E7AB202399B303E0D70"
+            {
+            "SourcePath" = "8:..\\Workbooks\\Distribution\\Checkmate Patterns.pgn"
+            "TargetName" = "8:Checkmate Patterns.pgn"
+            "Tag" = "8:"
+            "Folder" = "8:_74D858B67700458BAA3327CD4FAC70B1"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BA45925C432A439DB1687AED9366776E"
+            {
+            "SourcePath" = "8:..\\ChessForge\\bin\\Debug\\stockfish_15_x86_64.exe"
+            "TargetName" = "8:stockfish_15_x86_64.exe"
             "Tag" = "8:"
             "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
             "Condition" = "8:"
@@ -701,26 +729,6 @@
             "TargetName" = "8:Move.mp3"
             "Tag" = "8:"
             "Folder" = "8:_95CA9216F4F648DCB6BFB59BD2DBB64E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CDC30C53710E4E36993DFE8791C38ACE"
-            {
-            "SourcePath" = "8:..\\Workbooks\\Distribution\\Endgames by NoseKnowsAll at lichess.pgn"
-            "TargetName" = "8:Endgames by NoseKnowsAll at lichess.pgn"
-            "Tag" = "8:"
-            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -781,6 +789,28 @@
         }
         "Folder"
         {
+            "{1525181F-901A-416C-8A58-119130FE478E}:_0CF3BF972DC14F58B21D4960514DF489"
+            {
+            "Name" = "8:#1915"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:AppDataFolder"
+                "Folders"
+                {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_74D858B67700458BAA3327CD4FAC70B1"
+                    {
+                    "Name" = "8:ChessForge"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_62B2B33E32874A7B865F3B411459D65F"
+                        "Folders"
+                        {
+                        }
+                    }
+                }
+            }
             "{1525181F-901A-416C-8A58-119130FE478E}:_509613163D524259849584DCCBD0BC53"
             {
             "Name" = "8:#1916"
@@ -854,7 +884,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Chess Forge"
         "ProductCode" = "8:{9F941D6A-5FC5-405F-8408-36BA894CBEEB}"
-        "PackageCode" = "8:{13F7CD4D-7BC7-42C1-B552-924D6C9FAE21}"
+        "PackageCode" = "8:{1B6A21B9-7880-483D-90B3-7F0700699FBF}"
         "UpgradeCode" = "8:{8FBE368E-7FA2-4112-9D18-7A5CD1CE504C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
