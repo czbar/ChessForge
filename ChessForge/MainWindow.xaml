@@ -380,6 +380,126 @@
                             </RichTextBox>
                         </Grid>
                     </TabItem>
+                    <TabItem x:Name="UiTabModelGames"  Header="{x:Static p:Resources.Games}" GotFocus="UiTabModelGames_GotFocus" PreviewKeyDown="UiTabModelGames_PreviewKeyDown" LostFocus="UiTabModelGames_LostFocus" >
+                        <Grid x:Name="UiGridModelGames"  Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.ContextMenu>
+                                <ContextMenu x:Name="UiCmModelGames">
+                                    <MenuItem x:Name="_mnGame_EditHeader" Header="{x:Static p:Resources.EditGameHeader}" Click="UiMnGame_EditHeader_Click" />
+                                    <MenuItem x:Name="_mnGame_CreateModelGame" Header="{x:Static p:Resources.CreateNewGame}" Click="_UiMnGame_CreateModelGame_Click" />
+                                    <MenuItem x:Name="_mnGame_ImportGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnGame_ImportGames_Click"  />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnGame_MergeToStudy" Header="{x:Static p:Resources.MergeSelectionIntoStudy}" Click="UiGame_MergeToStudy_Click"  />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnGame_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
+                                    <MenuItem x:Name="_mnGame_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnGame_CreateExercise_Click" />
+                                    <MenuItem x:Name="_mnGame_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnGame_CopyFen_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnGame_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnGame_PromoteLine_Click" />
+                                    <MenuItem x:Name="_mnGame_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnGame_DeleteMovesFromHere_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnGame_DeleteModelGame" Header="{x:Static p:Resources.DeleteThisGame}" Click="UiMnGame_DeleteModelGame_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnGame_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
+                                    <MenuItem x:Name="_mnGame_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
+                                    <MenuItem x:Name="UiMnGameFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="UiMnGameMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
+                                    <MenuItem x:Name="_mnGame_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
+                                </ContextMenu>
+                            </Grid.ContextMenu>
+                            <Grid x:Name="UiGridModelGamePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto "/>
+                                    <ColumnDefinition Width="Auto "/>
+                                    <ColumnDefinition Width="Auto "/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto "/>
+                                </Grid.RowDefinitions>
+                                <Image x:Name="UiImgModelGameLeftArrow" Grid.Column="0" Cursor="Hand"  HorizontalAlignment="Left"  Margin="10,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiLblGameCounter" Grid.Column="1" Content="PLACEHOLDER Game 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" FontWeight="Bold"/>
+                                <Image x:Name="UiImgModelGameRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"  />
+                            </Grid>
+                            <RichTextBox x:Name="UiRtbModelGamesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                   Height="640" MinHeight="500" IsReadOnly="True" >
+                                <RichTextBox.Resources>
+                                    <Style TargetType="{x:Type Paragraph}">
+                                        <Setter Property="Margin" Value="0" />
+                                    </Style>
+                                </RichTextBox.Resources>
+                                <FlowDocument>
+                                </FlowDocument>
+                            </RichTextBox>
+                        </Grid>
+                    </TabItem>
+                    <TabItem x:Name="UiTabExercises"  Header="{x:Static p:Resources.Exercises}" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
+                        <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.ContextMenu>
+                                <ContextMenu x:Name="UiCmExercises">
+                                    <MenuItem x:Name="_mnExerc_EditHeader" Header="{x:Static p:Resources.EditExerciseHeader}" Click="UiMnExerc_EditHeader_Click" />
+                                    <MenuItem x:Name="_mnExerc_EditPosition" Header="{x:Static p:Resources.EditStartingPosition}" Click="UiMnExerc_EditPosition_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnExerc_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
+                                    <MenuItem x:Name="_mnExerc_CreateExercise" Header="{x:Static p:Resources.CreateNewExercise}" Click="UiMnExerc_CreateExercise_Click" />
+                                    <MenuItem x:Name="_mnExerc_ImportExercises" Header="{x:Static p:Resources.ImportExercises}" Click="UiMnExerc_ImportExercises_Click"  />
+                                    <MenuItem x:Name="_mnExerc_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnExerc_CopyFen_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnExerc_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnExerc_PromoteLine_Click" />
+                                    <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnExerc_DeleteMovesFromHere_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnExerc_DeleteThisExercise" Header="{x:Static p:Resources.DeleteThisExercise}" Click="UiMnExerc_DeleteExercise_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="_mnExerc_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
+                                    <MenuItem x:Name="_mnExerc_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
+                                    <MenuItem x:Name="UiMnExercFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="UiMnExercMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
+                                    <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
+                                </ContextMenu>
+                            </Grid.ContextMenu>
+                            <Grid x:Name="UiGridExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto "/>
+                                    <ColumnDefinition Width="Auto "/>
+                                    <ColumnDefinition Width="Auto "/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto "/>
+                                </Grid.RowDefinitions>
+                                <Image x:Name="UiImgExerciseLeftArrow" Grid.Column="0" Cursor="Hand"  HorizontalAlignment="Left"  Margin="10,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiLblExerciseCounter" Grid.Column="1" Content="PLACEHOLDER Exercise 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" FontWeight="Bold"/>
+                                <Image x:Name="UiImgExerciseRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
+                            </Grid>
+                            <RichTextBox x:Name="UiRtbExercisesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                   Height="640" MinHeight="500" IsReadOnly="True"  BorderThickness="0">
+                                <RichTextBox.Resources>
+                                    <Style TargetType="{x:Type Paragraph}">
+                                        <Setter Property="Margin" Value="0" />
+                                    </Style>
+                                </RichTextBox.Resources>
+                                <FlowDocument>
+                                </FlowDocument>
+                            </RichTextBox>
+                        </Grid>
+                    </TabItem>
                     <TabItem x:Name="UiTabBookmarks" Header="{x:Static p:Resources.Bookmarks}" GotFocus="UiTabBookmarks_GotFocus" LostFocus="UiTabBookmarks_LostFocus">
                         <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown" ContextMenuOpening="UiBookmarkMenuOpening">
                             <Grid.ContextMenu>
@@ -615,126 +735,6 @@
                                 </Viewbox>
 
                             </Grid>
-                        </Grid>
-                    </TabItem>
-                    <TabItem x:Name="UiTabModelGames"  Header="{x:Static p:Resources.Games}" GotFocus="UiTabModelGames_GotFocus" PreviewKeyDown="UiTabModelGames_PreviewKeyDown" LostFocus="UiTabModelGames_LostFocus" >
-                        <Grid x:Name="UiGridModelGames"  Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="0"/>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.ContextMenu>
-                                <ContextMenu x:Name="UiCmModelGames">
-                                    <MenuItem x:Name="_mnGame_EditHeader" Header="{x:Static p:Resources.EditGameHeader}" Click="UiMnGame_EditHeader_Click" />
-                                    <MenuItem x:Name="_mnGame_CreateModelGame" Header="{x:Static p:Resources.CreateNewGame}" Click="_UiMnGame_CreateModelGame_Click" />
-                                    <MenuItem x:Name="_mnGame_ImportGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnGame_ImportGames_Click"  />
-                                    <Separator />
-                                    <MenuItem x:Name="_mnGame_MergeToStudy" Header="{x:Static p:Resources.MergeSelectionIntoStudy}" Click="UiGame_MergeToStudy_Click"  />
-                                    <Separator />
-                                    <MenuItem x:Name="_mnGame_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
-                                    <MenuItem x:Name="_mnGame_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnGame_CreateExercise_Click" />
-                                    <MenuItem x:Name="_mnGame_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnGame_CopyFen_Click" />
-                                    <Separator />
-                                    <MenuItem x:Name="_mnGame_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnGame_PromoteLine_Click" />
-                                    <MenuItem x:Name="_mnGame_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnGame_DeleteMovesFromHere_Click" />
-                                    <Separator />
-                                    <MenuItem x:Name="_mnGame_DeleteModelGame" Header="{x:Static p:Resources.DeleteThisGame}" Click="UiMnGame_DeleteModelGame_Click" />
-                                    <Separator />
-                                    <MenuItem x:Name="_mnGame_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
-                                    <MenuItem x:Name="_mnGame_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
-                                    <MenuItem x:Name="UiMnGameFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" />
-                                    <Separator />
-                                    <MenuItem x:Name="UiMnGameMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
-                                    <MenuItem x:Name="_mnGame_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
-                                </ContextMenu>
-                            </Grid.ContextMenu>
-                            <Grid x:Name="UiGridModelGamePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto "/>
-                                    <ColumnDefinition Width="Auto "/>
-                                    <ColumnDefinition Width="Auto "/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto "/>
-                                </Grid.RowDefinitions>
-                                <Image x:Name="UiImgModelGameLeftArrow" Grid.Column="0" Cursor="Hand"  HorizontalAlignment="Left"  Margin="10,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown"  />
-                                <Label x:Name="UiLblGameCounter" Grid.Column="1" Content="PLACEHOLDER Game 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" FontWeight="Bold"/>
-                                <Image x:Name="UiImgModelGameRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"  />
-                            </Grid>
-                            <RichTextBox x:Name="UiRtbModelGamesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="640" MinHeight="500" IsReadOnly="True" >
-                                <RichTextBox.Resources>
-                                    <Style TargetType="{x:Type Paragraph}">
-                                        <Setter Property="Margin" Value="0" />
-                                    </Style>
-                                </RichTextBox.Resources>
-                                <FlowDocument>
-                                </FlowDocument>
-                            </RichTextBox>
-                        </Grid>
-                    </TabItem>
-                    <TabItem x:Name="UiTabExercises"  Header="{x:Static p:Resources.Exercises}" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
-                        <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu" >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="0"/>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.ContextMenu>
-                                <ContextMenu x:Name="UiCmExercises">
-                                    <MenuItem x:Name="_mnExerc_EditHeader" Header="{x:Static p:Resources.EditExerciseHeader}" Click="UiMnExerc_EditHeader_Click" />
-                                    <MenuItem x:Name="_mnExerc_EditPosition" Header="{x:Static p:Resources.EditStartingPosition}" Click="UiMnExerc_EditPosition_Click" />
-                                    <Separator />
-                                    <MenuItem x:Name="_mnExerc_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
-                                    <MenuItem x:Name="_mnExerc_CreateExercise" Header="{x:Static p:Resources.CreateNewExercise}" Click="UiMnExerc_CreateExercise_Click" />
-                                    <MenuItem x:Name="_mnExerc_ImportExercises" Header="{x:Static p:Resources.ImportExercises}" Click="UiMnExerc_ImportExercises_Click"  />
-                                    <MenuItem x:Name="_mnExerc_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnExerc_CopyFen_Click" />
-                                    <Separator />
-                                    <MenuItem x:Name="_mnExerc_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnExerc_PromoteLine_Click" />
-                                    <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnExerc_DeleteMovesFromHere_Click" />
-                                    <Separator />
-                                    <MenuItem x:Name="_mnExerc_DeleteThisExercise" Header="{x:Static p:Resources.DeleteThisExercise}" Click="UiMnExerc_DeleteExercise_Click" />
-                                    <Separator />
-                                    <MenuItem x:Name="_mnExerc_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
-                                    <MenuItem x:Name="_mnExerc_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
-                                    <MenuItem x:Name="UiMnExercFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" />
-                                    <Separator />
-                                    <MenuItem x:Name="UiMnExercMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
-                                    <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
-                                </ContextMenu>
-                            </Grid.ContextMenu>
-                            <Grid x:Name="UiGridExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto "/>
-                                    <ColumnDefinition Width="Auto "/>
-                                    <ColumnDefinition Width="Auto "/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto "/>
-                                </Grid.RowDefinitions>
-                                <Image x:Name="UiImgExerciseLeftArrow" Grid.Column="0" Cursor="Hand"  HorizontalAlignment="Left"  Margin="10,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown"  />
-                                <Label x:Name="UiLblExerciseCounter" Grid.Column="1" Content="PLACEHOLDER Exercise 0 of 0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" FontWeight="Bold"/>
-                                <Image x:Name="UiImgExerciseRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
-                            </Grid>
-                            <RichTextBox x:Name="UiRtbExercisesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="640" MinHeight="500" IsReadOnly="True"  BorderThickness="0">
-                                <RichTextBox.Resources>
-                                    <Style TargetType="{x:Type Paragraph}">
-                                        <Setter Property="Margin" Value="0" />
-                                    </Style>
-                                </RichTextBox.Resources>
-                                <FlowDocument>
-                                </FlowDocument>
-                            </RichTextBox>
                         </Grid>
                     </TabItem>
                 </TabControl>
