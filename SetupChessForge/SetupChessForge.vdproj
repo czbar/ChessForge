@@ -884,7 +884,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Chess Forge"
         "ProductCode" = "8:{9F941D6A-5FC5-405F-8408-36BA894CBEEB}"
-        "PackageCode" = "8:{1B6A21B9-7880-483D-90B3-7F0700699FBF}"
+        "PackageCode" = "8:{4D5B96CE-FE5E-4AA8-BA5B-973B994A86E1}"
         "UpgradeCode" = "8:{8FBE368E-7FA2-4112-9D18-7A5CD1CE504C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
