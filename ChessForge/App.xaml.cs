@@ -33,7 +33,7 @@ namespace ChessForge
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             AppFileName = Environment.GetCommandLineArgs()[0];
-            AppPath = Path.GetDirectoryName(AppFileName);
+            AppPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ChessForge");
 
             if (e.Args.Length > 0)
             {
