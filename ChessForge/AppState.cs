@@ -474,9 +474,11 @@ namespace ChessForge
                     {
                         throw new Exception("no text received.");
                     }
+                    tree.ContentType = GameData.ContentType.MODEL_GAME;
                     chapter.AddModelGame(tree);
                     MainWin.RefreshChaptersViewAfterImport(GameData.ContentType.MODEL_GAME, chapter, chapter.GetModelGameCount() - 1);
                     IsDirty = true;
+                    MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGameImportSuccess, System.Windows.Media.Brushes.Green);
                 }
             }
             catch (Exception ex)
