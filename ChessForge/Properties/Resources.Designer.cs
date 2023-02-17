@@ -1618,6 +1618,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Game Imported Successfully..
+        /// </summary>
+        public static string FlMsgGameImportSuccess {
+            get {
+                return ResourceManager.GetString("FlMsgGameImportSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Free and Open Source Software (FOSS).
         /// </summary>
         public static string FreeAndOpenSource {
@@ -1870,7 +1879,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import into Active Chapter.
+        ///   Looks up a localized string similar to Import into Chapter.
         /// </summary>
         public static string ImportIntoThisChapter {
             get {

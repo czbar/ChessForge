@@ -806,8 +806,8 @@ EvaluationShort=
 #english: PreviewGame=Preview Game
 PreviewGame=
 
-#description: Import game into the active chapter
-#english: ImportIntoThisChapter=Import into Active Chapter
+#description: Import game into the open chapter
+#english: ImportIntoThisChapter=Import into Chapter
 ImportIntoThisChapter=
 
 #description: Open the user's browser to view the game on lichess.org
@@ -919,6 +919,10 @@ WorkbookNotSaved=
 #
 # Message Text
 #
+
+#description: Flash message: Game Imported Successfully.
+#english: FlMsgGameImportSuccess=Game Imported Successfully.
+FlMsgGameImportSuccess=
 
 #description: Referenced Games not Found
 #english: RefGamesNotFound=Referenced games not found.
@@ -1894,7 +1898,7 @@ FenTooFewFields=
 #english: FenInvalidEnpassant=Error: invalid enpassant field
 FenInvalidEnpassant=
 
-#description: Color not specifies
+#description: Color not specified
 #english: FenColorNotSpecified=Error: color to move not specified
 FenColorNotSpecified=
 

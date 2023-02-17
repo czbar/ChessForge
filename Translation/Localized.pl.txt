@@ -808,7 +808,7 @@ PreviewGame=Przejrzyj Partię
 
 #description: Import game into the active chapter
 #english: ImportIntoThisChapter=Import into Active Chapter
-ImportIntoThisChapter=Importuj do Rozdiału
+ImportIntoThisChapter=Importuj do Rozdziału
 
 #description: Open the user's browser to view the game on lichess.org
 #english: ViewOnLichess=View on lichess
@@ -1924,3 +1924,4 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
+FlMsgGameImportSuccess=Partia Została Zaimportowana.

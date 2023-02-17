@@ -138,7 +138,7 @@ namespace ChessForge
         /// to close it later on.
         /// </summary>
         /// <param name="txt"></param>
-        public void ShowFlashAnnouncement(string txt)
+        public void ShowFlashAnnouncement(string txt, Brush brush = null)
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
@@ -155,6 +155,10 @@ namespace ChessForge
                     Paragraph para = CreateParagraphWithText("big_red", txt, false);
                     Document.Blocks.Add(para);
                     para.Foreground = Brushes.Red;
+                    if (brush != null)
+                    {
+                        para.Foreground = brush;
+                    }
 
                     _mainWin.Timers.Start(AppTimers.TimerId.FLASH_ANNOUNCEMENT);
 

@@ -649,7 +649,7 @@
     <value>Preview Game</value>
   </data>
   <data name="ImportIntoThisChapter" xml:space="preserve">
-    <value>Import into Active Chapter</value>
+    <value>Import into Chapter</value>
   </data>
   <data name="ViewOnLichess" xml:space="preserve">
     <value>View on lichess</value>
@@ -713,6 +713,9 @@
   </data>
   <data name="WorkbookNotSaved" xml:space="preserve">
     <value>Workbook not Saved</value>
+  </data>
+  <data name="FlMsgGameImportSuccess" xml:space="preserve">
+    <value>Game Imported Successfully.</value>
   </data>
   <data name="RefGamesNotFound" xml:space="preserve">
     <value>Referenced games not found.</value>

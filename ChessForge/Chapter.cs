@@ -63,6 +63,9 @@ namespace ChessForge
         // associated OperationsManager
         private WorkbookOperationsManager _opsManager;
 
+        // lock object for ModelGames
+        private object _lockModelGames = new object();
+
         /// <summary>
         /// Creates the object. Initializes Operations Manager
         /// </summary>
@@ -369,8 +372,11 @@ namespace ChessForge
         /// <param name="game"></param>
         public void AddModelGame(VariationTree game)
         {
-            Article article = new Article(game);
-            ModelGames.Add(article);
+            lock (_lockModelGames)
+            {
+                Article article = new Article(game);
+                ModelGames.Add(article);
+            }
         }
 
         /// <summary>
