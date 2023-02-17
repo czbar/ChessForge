@@ -127,7 +127,14 @@ namespace ChessForge
                 ObservableCollection<TreeNode> lineToSelect = tree.SelectLine(lineId);
                 SetActiveLine(lineToSelect, nodeId);
 
-                DisplayPosition(tree.SelectedNode);
+                if (tree.SelectedNode == null)
+                {
+                    DisplayPosition(tree.RootNode);
+                }
+                else
+                {
+                    DisplayPosition(tree.SelectedNode);
+                }
             }
         }
 
