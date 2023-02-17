@@ -813,9 +813,9 @@
                     </RichTextBox.ContextMenu>
                 </RichTextBox>
                 <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" Height="150" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden"/>
-                <Button x:Name="UiBtnExitTraining" Panel.ZIndex="1" Grid.Column="1" Content="{x:Static p:Resources.ExitTraining}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,0,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitTraining_Click"/>
-                <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="1" Content="{x:Static p:Resources.ExitGame}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,20,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitGame_Click"/>
-                <Button x:Name="UiBtnShowExplorer" Panel.ZIndex="0" Grid.Column="1" Grid.ColumnSpan="2" Content="{x:Static p:Resources.ShowExplorer}" FontWeight="Bold" FontSize="12" HorizontalAlignment="Left" Margin="235,50,20,0" Width="100" Height="24" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnShowExplorer_Click" />
+                <Button x:Name="UiBtnExitTraining" Panel.ZIndex="1" Grid.Column="1" Content="{x:Static p:Resources.ExitTraining}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,0,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitTraining_Click" Visibility="Collapsed" />
+                <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="1" Content="{x:Static p:Resources.ExitGame}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,20,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitGame_Click" Visibility="Collapsed" />
+                <Button x:Name="UiBtnShowExplorer" Panel.ZIndex="0" Grid.Column="1" Grid.ColumnSpan="2" Content="{x:Static p:Resources.ShowExplorer}" FontWeight="Bold" FontSize="12" HorizontalAlignment="Left" Margin="235,50,20,0" Width="100" Height="24" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnShowExplorer_Click" Visibility="Collapsed" />
 
             </Grid>
         </Viewbox>
