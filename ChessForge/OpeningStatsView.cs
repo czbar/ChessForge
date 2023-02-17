@@ -1,7 +1,6 @@
 ﻿using ChessPosition;
 using GameTree;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +17,12 @@ namespace ChessForge
 {
     public class OpeningStatsView : RichTextBuilder
     {
+        // maximum allowed number of rows
+        private readonly int MAX_MOVE_ROW_COUNT = 15;
+
+        // List of objects that encapsulate TableRows used in the _gamesTable.
+        private List<OpeningStatsViewRow> _lstRows = new List<OpeningStatsViewRow>();
+
         // string to use when query returned no opening name for the position
         private string POSITION_NOT_NAMED = Properties.Resources.NotNamed;
 
@@ -64,6 +69,8 @@ namespace ChessForge
             // listen to Data Received events
             OpeningExplorer.OpeningStatsReceived += OpeningStatsReceived;
             TablebaseExplorer.TablebaseReceived += TablebaseDataReceived;
+
+            CreateOpeningStatsTable();
         }
 
         // column widths in the stats table
@@ -197,7 +204,8 @@ namespace ChessForge
                         {
                             Document.Blocks.Add(_openingNameTable);
                         }
-                        BuildOpeningStatsTable(openingStats);
+//                        BuildOpeningStatsTable(openingStats);
+                        BuildOpeningStatsTableEx(openingStats);
                         Document.Blocks.Add(_openingStatsTable);
                         break;
                     case DataMode.TABLEBASE:
@@ -394,6 +402,76 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Creates the Opening Stats table.
+        /// Only called once at the start of the program and then reused.
+        /// </summary>
+        private void CreateOpeningStatsTable()
+        {
+            _openingStatsTable = CreateTable(0);
+            _openingStatsTable.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
+            _openingStatsTable.CellSpacing = 0;
+            _openingStatsTable.RowGroups.Add(new TableRowGroup());
+
+            CreateStatsTableColumns(scaleFactor);
+
+            for (int i = 0; i < MAX_MOVE_ROW_COUNT; i++)
+            {
+                OpeningStatsViewRow row = new OpeningStatsViewRow(this);
+                _lstRows.Add(row);
+                _openingStatsTable.RowGroups[0].Rows.Add(row.Row);
+            }
+        }
+
+        /// <summary>
+        /// Adjusts the number of TableRows in the table.
+        /// We don't construct or reconstruct the objects here but rather
+        /// remove or add them to the Table.
+        /// They are always kept the _lstRows list.
+        /// </summary>
+        /// <param name="moveCount"></param>
+        private void AdjustGamesTableRowCount(int moveCount)
+        {
+            moveCount = Math.Min(MAX_MOVE_ROW_COUNT, moveCount);
+            int currentRowCount = _openingStatsTable.RowGroups[0].Rows.Count;
+            if (currentRowCount < moveCount)
+            {
+                for (int i = currentRowCount; i < moveCount; i++)
+                {
+                    _openingStatsTable.RowGroups[0].Rows.Add(_lstRows[i].Row);
+                }
+            }
+            else
+            {
+                for (int i = currentRowCount - 1; i >= moveCount; i--)
+                {
+                    _openingStatsTable.RowGroups[0].Rows.Remove(_lstRows[i].Row);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Builds the main table with opening stats
+        /// </summary>
+        private void BuildOpeningStatsTableEx(LichessOpeningsStats stats)
+        {
+            int rowNo = 0;
+
+            AdjustGamesTableRowCount(stats.TopGames.Length);
+            foreach (WebAccess.LichessMoveStats move in stats.Moves)
+            {
+                if (rowNo >= MAX_MOVE_ROW_COUNT)
+                {
+                    break;
+                }
+
+                TableRow row = _lstRows[rowNo].Row;
+                _lstRows[rowNo].SetLabels(move, _moveNumberString);
+                rowNo++;
+            }
+        }
+
+        /// <summary>
         /// Builds the main table with opening stats
         /// </summary>
         private void BuildOpeningStatsTable(LichessOpeningsStats openingStats)
@@ -462,7 +540,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventMoveClicked(object sender, MouseButtonEventArgs e)
+        public void EventMoveClicked(object sender, MouseButtonEventArgs e)
         {
             try
             {
