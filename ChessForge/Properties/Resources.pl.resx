@@ -649,7 +649,7 @@
     <value>Przejrzyj Partię</value>
   </data>
   <data name="ImportIntoThisChapter" xml:space="preserve">
-    <value>Importuj do Rozdiału</value>
+    <value>Importuj do Rozdziału</value>
   </data>
   <data name="ViewOnLichess" xml:space="preserve">
     <value>Zobacz na lichess</value>
@@ -713,6 +713,9 @@
   </data>
   <data name="WorkbookNotSaved" xml:space="preserve">
     <value>Podręcznik nie Zapisany</value>
+  </data>
+  <data name="FlMsgGameImportSuccess" xml:space="preserve">
+    <value>Partia Została Zaimportowana.</value>
   </data>
   <data name="RefGamesNotFound" xml:space="preserve">
     <value>Partii nie znaleziono.</value>

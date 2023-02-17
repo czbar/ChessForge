@@ -629,8 +629,8 @@ EvaluationShort=Ev
 #Open the game preview dialog
 PreviewGame=Preview Game
 
-#Import game into the active chapter
-ImportIntoThisChapter=Import into Active Chapter
+#Import game into the open chapter
+ImportIntoThisChapter=Import into Chapter
 
 #Open the user's browser to view the game on lichess.org
 ViewOnLichess=View on lichess
@@ -720,6 +720,9 @@ WorkbookNotSaved=Workbook not Saved
 #
 # Message Text
 #
+
+#Flash message: Game Imported Successfully.
+FlMsgGameImportSuccess=Game Imported Successfully.
 
 #Referenced Games not Found
 RefGamesNotFound=Referenced games not found.
