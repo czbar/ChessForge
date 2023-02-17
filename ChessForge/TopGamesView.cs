@@ -108,7 +108,6 @@ namespace ChessForge
             _gamesTable.RowGroups.Add(new TableRowGroup());
 
             CreateColumns(_gamesTable);
-            CreateColumns(_gamesTable);
 
             for (int i = 0; i < MAX_GAME_ROW_COUNT; i++)
             {
