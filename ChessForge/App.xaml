@@ -5,7 +5,6 @@
              xmlns:local="clr-namespace:ChessForge"
              StartupUri="MainWindow.xaml" Startup="Application_Startup">
     <Application.Resources>
-        <Image x:Key="BlackKing" Source="BlackKing.png" />
         <Color x:Key="MainBoardBackGround">#FF3E495F</Color>
         <Color x:Key="SideBoardBackGround">#FF032C01</Color>
         <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">5</sys:Double>
