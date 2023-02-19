@@ -124,7 +124,7 @@ namespace ChessForge
             {
                 if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
                 {
-                    AppLog.Message("_dgActiveLine.ItemsSource bound to Exercise, Line.MoveList.Count=" + Line.MoveList.Count.ToString());
+                    AppLog.Message(2, "_dgActiveLine.ItemsSource bound to Exercise, Line.MoveList.Count=" + Line.MoveList.Count.ToString());
                 }
             }
             _selectedRow = -1;
