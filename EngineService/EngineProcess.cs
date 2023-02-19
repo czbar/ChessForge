@@ -2,11 +2,6 @@
 using System.IO;
 using System.Diagnostics;
 using System.Timers;
-using System.Diagnostics.Tracing;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EngineService
 {
@@ -28,6 +23,16 @@ namespace EngineService
         /// After receiving a "stop" command, the engine enters the STOPPING state
         /// during which it will not accept any commands. It will await a 
         /// "best move" command to then go back to IDLE.
+        /// 
+        /// NOTE: ensure that sending commands, setting _goFen commands and setting State happens under _lockSendCommand
+        /// </summary>
+        /// 
+
+        // lock object to prevent commands sent simultaneously and thus corrupting STATE
+        private static object _lockSendCommand = new object();
+
+        /// <summary>
+        /// Possible Engine states.
         /// </summary>
         public enum State
         {
@@ -35,14 +40,7 @@ namespace EngineService
             IDLE,
             CALCULATING,
             STOPPING,
-            UNEXPECTED
         }
-
-        /// <summary>
-        /// The current state of the engine.
-        /// It is readonly.
-        /// </summary>
-        public State CurrentState { get => _currentState; }
 
         /// <summary>
         /// True if we have received "readyok" from the engine  
@@ -74,14 +72,8 @@ namespace EngineService
         /// </summary>
         public event Action<string> EngineMessage;
 
-        // Message polling interval in milliseconds
-        private static readonly int POLL_INTERVAL = 200;
-
         // A lock object to use when reading engine messages
         private static object _lockEngineMessage = new object();
-
-        // A lock object for changing _currentState
-        private static object _lockStateChange = new object();
 
         // reads engine process's STDOUT 
         private StreamReader _strmReader;
@@ -95,8 +87,18 @@ namespace EngineService
         // the current state of the engine
         private State _currentState;
 
+        // Message polling interval in milliseconds
+        private static readonly int RX_LOOP_POLL_INTERVAL = 200;
+
         // the timer starting / re-starting the message reading loop
         private Timer _messageRxLoopTimer = new Timer();
+
+        // maximum allowed time in the stopping state i.e. after
+        // the Stop command was sent but BestMessage was not received.
+        private static readonly int STOPPING_STATE_MAX_TIME = 500;
+
+        // the timer for getting the process out of the STOPPING mode if stuck
+        private Timer _stoppingStateTimer = new Timer();
 
         // number of lines to analyze
         private int _multipv = 5;
@@ -116,10 +118,16 @@ namespace EngineService
         /// <summary>
         /// Creates the Engine Service object.
         /// </summary>
-        /// <param name="debugMode"></param>
         public EngineProcess()
         {
         }
+
+
+        //**************************************************
+        //
+        // PUBLIC METHODS TO START/TOP THE ENGINE
+        //
+        //**************************************************
 
         /// <summary>
         /// Starts the engine process.
@@ -130,7 +138,7 @@ namespace EngineService
         {
             try
             {
-                EngineLog.Message("Starting engine: " + enginePath);
+                EngineLog.Message("Starting the Engine: " + enginePath);
                 _engineProcess = new Process();
                 _engineProcess.StartInfo.FileName = enginePath;
                 _engineProcess.StartInfo.UseShellExecute = false;
@@ -153,6 +161,8 @@ namespace EngineService
 
                     CreateMessageRxLoopTimer();
                     StartMessageRxLoopTimer();
+
+                    CreateStoppingStateTimer();
 
                     _strmWriter = _engineProcess.StandardInput;
                     _strmReader = _engineProcess.StandardOutput;
@@ -181,6 +191,7 @@ namespace EngineService
         /// </summary>
         public void StopEngine()
         {
+            EngineLog.Message("Stopping the Engine");
             try
             {
                 StopMessageRxLoopTimer();
@@ -197,135 +208,99 @@ namespace EngineService
                 _isEngineReady = false;
 
                 _currentState = State.NOT_READY;
+                EngineLog.Message("Engine stopped.");
             }
-            catch
+            catch (Exception ex)
             {
+                EngineLog.Message("EXCEPTION in StopEngine() " + ex.Message);
             }
         }
 
+
+        //**************************************************
+        //
+        // PUBLIC METHODS FOR SENDING COMMANDS TO THE engine.
+        // Only "Go Fen"  and stops commands are allowed.
+        //
+        //**************************************************
+
         /// <summary>
         /// Depending on the current state of the engine,
-        /// sends "go" and "position" commands or queues them.
+        /// sends the requested "go+position" command or queues it.
+        /// Do not send an existed queued command. Discard it as there
+        /// is nothing expeting it if we alreayd have a newer request.
         /// </summary>
         /// <param name="cmd"></param>
         public void SendFenGoCommand(GoFenCommand cmd)
         {
-            if (_currentState == State.IDLE)
+            lock (_lockSendCommand)
             {
-                GoFenCommand gfc = cmd;
-                // if there is a queued command send it first
-                if (_goFenQueued != null)
+                switch (_currentState)
                 {
-                    gfc = _goFenQueued;
-                    _goFenQueued = cmd;
+                    case State.IDLE:
+                        GoFenCommand gfc = cmd;
+                        _goFenCurrent = gfc;
+                        int mpv = gfc.Mpv <= 0 ? _multipv : gfc.Mpv;
+
+                        WriteOut(UciCommands.ENG_SET_MULTIPV + " " + mpv.ToString());
+                        WriteOut(UciCommands.ENG_POSITION_FEN + " " + gfc.Fen);
+                        WriteOut(gfc.GoCommandString);
+                        EngineLog.Message("NodeId=" + gfc.NodeId.ToString() + " TreeId=" + gfc.TreeId.ToString() + " Mode=" + gfc.EvalMode);
+                        StartMessageRxLoopTimer();
+
+                        _currentState = State.CALCULATING;
+                        break;
+                    case State.CALCULATING:
+                        // new request came in so queue it and stop the previous one
+                        _currentState = State.STOPPING;
+                        WriteOut(UciCommands.ENG_STOP);
+                        _goFenQueued = cmd;
+                        break;
+                    case State.STOPPING:
+                        _goFenQueued = cmd;
+                        break;
                 }
-
-                _goFenCurrent = gfc;
-                int mpv = gfc.Mpv <= 0 ? _multipv : gfc.Mpv;
-
-                WriteOut(UciCommands.ENG_SET_MULTIPV + " " + mpv.ToString());
-                WriteOut(UciCommands.ENG_POSITION_FEN + " " + gfc.Fen);
-                WriteOut(gfc.GoCommandString);
-                EngineLog.Message("NodeId=" + gfc.NodeId.ToString() + " TreeId=" + gfc.TreeId.ToString() + " Mode=" + gfc.EvalMode);
-                StartMessageRxLoopTimer();
-
-                _currentState = State.CALCULATING;
-            }
-            else if (_currentState == State.CALCULATING)
-            {
-                // new request came in so queue it and stop the previous one
-                _currentState = State.STOPPING;
-                WriteOut(UciCommands.ENG_STOP);
-                _goFenQueued = cmd;
-            }
-            else
-            {
-                _goFenQueued = cmd;
             }
         }
 
         /// <summary>
-        /// Sends the "stop" command to the engine.
+        /// For the STOP command it is unsafe to send it if BestMove message
+        /// is expected. We may then confuse for which GoFen command the BestMove
+        /// is when finally received.
+        /// However, we also want to prevent hanging due to never receiving BestMove
+        /// (although this should never happen) so need a safety exit.
         /// </summary>
         public void SendStopCommand(bool ignoreNextBestMove)
         {
-            _ignoreNextBestMove = ignoreNextBestMove;
-            SendCommand(UciCommands.ENG_STOP);
-        }
-
-        /// <summary>
-        /// Sends a command to the engine by writing to its standard input stream.
-        /// Checks the type of the command versus the current state to determine
-        /// whether it is ok to send the given command.
-        /// </summary>
-        /// <param name="command"></param>
-        public void SendCommand(string command)
-        {
-            if (!_isEngineRunning || !_isEngineReady)
+            EngineLog.Message("STOP command requested.");
+            lock (_lockSendCommand)
             {
-                return;
-            }
-
-            lock (_lockStateChange)
-            {
-                if (_strmWriter != null && command != UciCommands.ENG_UCI)
+                _ignoreNextBestMove = ignoreNextBestMove;
+                switch (_currentState)
                 {
-                    EngineLog.Message("Command requested: " + command + " : State=" + _currentState.ToString());
-                    bool accept = false;
-                    switch (_currentState)
-                    {
-                        case State.NOT_READY:
-                            break;
-                        case State.IDLE:
-                            accept = !command.StartsWith(UciCommands.ENG_STOP);
-                            break;
-                        case State.CALCULATING:
-                            if (command.StartsWith(UciCommands.ENG_STOP))
-                            {
-                                accept = true;
-                                _currentState = State.STOPPING;
-                            }
-                            break;
-                        case State.STOPPING:
-                            break;
-                    }
-
-                    if (accept)
-                    {
-                        // we are sending a command so enable message polling, if not enabled
-                        StartMessageRxLoopTimer();
-                        WriteOut(command);
-                    }
-                    else
-                    {
-                        _ignoreNextBestMove = false;
-                        EngineLog.Message("Command rejected: " + command + " : State=" + _currentState.ToString());
-                    }
+                    case State.IDLE:
+                        WriteOut(UciCommands.ENG_STOP);
+                        _currentState = State.IDLE;
+                        break;
+                    case State.CALCULATING:
+                        WriteOut(UciCommands.ENG_STOP);
+                        _currentState = State.STOPPING;
+                        break;
+                    case State.STOPPING:
+                        // start timer ensuring that we get out of the stopping state even if BestMove never comes
+                        EngineLog.Message("WARNING: received STOP request while in STOPPING state.");
+                        StartStoppingStateTimer();
+                        break;
                 }
             }
         }
 
-        /// <summary>
-        /// Sends a command without checking any pre-conditions.
-        /// Use for debugging only.
-        /// </summary>
-        /// <param name="command"></param>
-        [Conditional("DEBUG")]
-        public void DebugSendCommand(string command)
-        {
-            EngineLog.Message("DebugSendCommand():" + command);
-            WriteOut(command);
-        }
 
-        /// <summary>
-        /// Returns true if the Message Rx Loop timer
-        /// is currently enabled.
-        /// </summary>
-        /// <returns></returns>
-        public bool IsMessageRxLoopEnabled()
-        {
-            return _messageRxLoopTimer.Enabled;
-        }
+        //**************************************************
+        //
+        // PRIVATE METHODS
+        //
+        //**************************************************
 
         /// <summary>
         /// Writes directly to the engine.
@@ -336,13 +311,26 @@ namespace EngineService
             _strmWriter.WriteLine(command);
             EngineLog.Message("Command sent: " + command + " : State=" + _currentState.ToString());
         }
+
+
+        //******************************************************
+        //
+        //        INTERNAL ENGINE PROCESS TIMERS
+        //   for getting the process out of bad state.
+        //
+        //******************************************************
+
+        //*** Message Receiving Loop Timer ***//
+
         /// <summary>
         /// Creates a timer to poll for engine messages.
+        /// Used to monitor the health of the ReadEngineMessages()
+        /// a.k.a. Rx Message Rx loop.
         /// </summary>
         private void CreateMessageRxLoopTimer()
         {
             _messageRxLoopTimer.Enabled = false;
-            _messageRxLoopTimer.Interval = POLL_INTERVAL;
+            _messageRxLoopTimer.Interval = RX_LOOP_POLL_INTERVAL;
             _messageRxLoopTimer.Elapsed += new ElapsedEventHandler(CheckMessageRxLoop);
         }
 
@@ -372,9 +360,74 @@ namespace EngineService
         {
             if (_isEngineRunning && !_isMessageRxLoopRunning)
             {
+                EngineLog.Message("WARNING: ReadEngineMessages() was not running. Restarting...");
                 ReadEngineMessages();
             }
         }
+
+        //*** Message Receiving Loop Timer ***//
+
+        /// <summary>
+        /// Creates a timer to run in the stopping state
+        /// making sure that it does not last too long.
+        /// </summary>
+        private void CreateStoppingStateTimer()
+        {
+            _stoppingStateTimer.Enabled = false;
+            _stoppingStateTimer.Interval = STOPPING_STATE_MAX_TIME;
+            _stoppingStateTimer.Elapsed += new ElapsedEventHandler(ExitStoppingState);
+        }
+
+        /// <summary>
+        /// Starts the stopping state timer.
+        /// </summary>
+        private void StartStoppingStateTimer()
+        {
+            _stoppingStateTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// Stops the stopping state timer.
+        /// </summary>
+        private void StopStoppingStateTimer()
+        {
+            _stoppingStateTimer.Enabled = false;
+        }
+
+        /// <summary>
+        /// Invoked by the MessageRxLoopTimer event.
+        /// Starts or re-starts the message loop if not currently running.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private void ExitStoppingState(object source, ElapsedEventArgs e)
+        {
+            // take action if we are in the STOPPING state
+            bool sendCommand = false;
+
+            lock (_lockSendCommand)
+            {
+                if (_currentState == State.STOPPING)
+                {
+                    _currentState = State.IDLE;
+                    sendCommand = true;
+                }
+            }
+
+            if (sendCommand)
+            {
+                SendQueuedCommand();
+            }
+
+            StopStoppingStateTimer();
+        }
+
+        //******************************************************
+        //
+        //        MAIN MESSAGE LOOP
+        //
+        //******************************************************
+
 
         /// <summary>
         /// Called periodically in response to MessagePollTimer's elapse event
@@ -482,7 +535,10 @@ namespace EngineService
         private void HandleReadyOk()
         {
             _isEngineReady = true;
-            _currentState = State.IDLE;
+            lock (_lockSendCommand)
+            {
+                _currentState = State.IDLE;
+            }
         }
 
         /// <summary>
@@ -496,34 +552,82 @@ namespace EngineService
         /// <returns></returns>
         private bool HandleBestMove()
         {
-            bool result = true;
-
-            _goFenCompleted = _goFenCurrent;
-            _goFenCurrent = null;
-
-            if (_goFenCompleted != null)
+            lock (_lockSendCommand)
             {
-                EngineLog.Message("Best Move rx: NodeId=" + _goFenCompleted.NodeId.ToString() + " TreeId=" + _goFenCompleted.TreeId.ToString());
-            }
+                bool result = true;
 
-            lock (_lockStateChange)
-            {
+                _goFenCompleted = _goFenCurrent;
+                _goFenCurrent = null;
+
+                if (_goFenCompleted != null)
+                {
+                    EngineLog.Message("Best Move rx: NodeId=" + _goFenCompleted.NodeId.ToString() + " TreeId=" + _goFenCompleted.TreeId.ToString() + ", State = " + _currentState.ToString());
+                }
+
                 _currentState = State.IDLE;
 
                 if (_goFenQueued != null)
                 {
                     result = false;
-                    EngineLog.Message("Discarding bestmove for NodeId=" + _goFenCompleted.NodeId.ToString());
+                    SendQueuedCommand();
+                }
 
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Sends a queued command if there is one.
+        /// </summary>
+        private void SendQueuedCommand()
+        {
+            bool sendQueued = false;
+            lock (_lockSendCommand)
+            {
+                if (_goFenQueued != null)
+                {
                     _goFenCurrent = _goFenQueued;
                     _goFenQueued = null;
-                    EngineLog.Message("Sending queued command for NodeId=" + _goFenCurrent.NodeId.ToString() + ", State = " + _currentState.ToString());
-                    SendFenGoCommand(_goFenCurrent);
+                    sendQueued = true;
                 }
             }
 
-            return result;
+            if (sendQueued)
+            {
+                EngineLog.Message("Sending queued command for NodeId=" + _goFenCurrent.NodeId.ToString() + " TreeId=" + _goFenCurrent.TreeId.ToString() + ", State = " + _currentState.ToString());
+                SendFenGoCommand(_goFenCurrent);
+            }
         }
+
+
+        //******************************************************
+        //
+        // DEBUG HELPERS
+        //
+        //******************************************************
+
+        /// <summary>
+        /// Sends a command without checking any pre-conditions.
+        /// Use for debugging only.
+        /// </summary>
+        /// <param name="command"></param>
+        [Conditional("DEBUG")]
+        public void DebugSendCommand(string command)
+        {
+            EngineLog.Message("DebugSendCommand():" + command);
+            WriteOut(command);
+        }
+
+        /// <summary>
+        /// Returns true if the Message Rx Loop timer
+        /// is currently enabled.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsMessageRxLoopEnabled()
+        {
+            return _messageRxLoopTimer.Enabled;
+        }
+
     }
 }
 

@@ -513,6 +513,11 @@ namespace ChessForge
                             break;
                         case GameData.ContentType.EXERCISE:
                             AppState.MainWin.SelectExercise(bmw.ArticleIndex, true);
+                            if (SelectedBookmarkNode.NodeId != 0 && !AppState.MainWin.ActiveVariationTree.ShowTreeLines)
+                            {
+                                AppState.MainWin.ActiveVariationTree.ShowTreeLines = true;
+                                AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                            }
                             break;
                     }
                     AppState.MainWin.SetActiveLine(SelectedBookmarkNode.LineId, SelectedBookmarkNode.NodeId);

@@ -2,15 +2,8 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using ChessPosition;
-using System.Security.Policy;
 using System.IO;
-using GameTree;
-using System.Diagnostics.Tracing;
 
 namespace WebAccess
 {

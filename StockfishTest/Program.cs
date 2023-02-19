@@ -82,9 +82,9 @@ namespace StockfishTest
         /// <param name="fen"></param>
         private static void AnalyzePosition(string fen)
         {
-            engine.DebugSendCommand("stop");
-            engine.SendCommand("position fen " + fen);
-            engine.SendCommand("go");
+            //engine.DebugSendCommand("stop");
+            //engine.SendCommand("position fen " + fen);
+            //engine.SendCommand("go");
         }
 
         /// <summary>
@@ -105,11 +105,11 @@ namespace StockfishTest
 
             if (IsMultiPvMode)
             {
-                engine.SendCommand("setoption name multipv value 5");
+//                engine.SendCommand("setoption name multipv value 5");
             }
             else
             {
-                engine.SendCommand("setoption name multipv value 1");
+//                engine.SendCommand("setoption name multipv value 1");
             }
         }
 

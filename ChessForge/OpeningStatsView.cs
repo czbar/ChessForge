@@ -457,7 +457,7 @@ namespace ChessForge
         {
             int rowNo = 0;
 
-            AdjustGamesTableRowCount(stats.TopGames.Length);
+            AdjustGamesTableRowCount(stats.Moves.Length);
             foreach (WebAccess.LichessMoveStats move in stats.Moves)
             {
                 if (rowNo >= MAX_MOVE_ROW_COUNT)
