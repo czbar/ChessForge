@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using WebAccess;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 
 namespace ChessPositionTest
 {
