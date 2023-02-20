@@ -387,11 +387,14 @@ namespace ChessForge
         /// <summary>
         /// Saves the workbook to its PGN file.
         /// </summary>
-        public static void SaveWorkbookFile(string filePath, bool checkDirty = false)
+        /// <returns>true if successful, false on exception</returns>
+        public static bool SaveWorkbookFile(string filePath, bool checkDirty = false)
         {
+            bool result = true;
+
             if (checkDirty && !IsDirty)
             {
-                return;
+                return true;
             }
 
             AppLog.Message("Saving Workbook to File - START");
@@ -409,10 +412,14 @@ namespace ChessForge
                 }
                 catch (Exception ex)
                 {
+                    result = false;
+                    AppLog.Message("SaveWorkbookFile()", ex);
                     MessageBox.Show(Strings.GetResource("FailedToSaveFile") + ": " + ex.Message, Strings.GetResource("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             AppLog.Message("Saving Workbook to File - END");
+
+            return result;
         }
 
         /// <summary>
