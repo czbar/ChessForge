@@ -385,18 +385,30 @@ namespace ChessForge
         {
             AppLog.Message("Application Closing");
 
-            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-            EngineMessageProcessor.ChessEngineService.StopEngine();
-
             if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE
                 && AppState.IsDirty || (ActiveVariationTree != null && ActiveVariationTree.HasTrainingMoves()))
             {
-                WorkbookManager.PromptAndSaveWorkbook(false, true);
+                try
+                {
+                    WorkbookManager.PromptAndSaveWorkbook(false, true);
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("ChessForgeMain_Closing() abandoned", ex);
+                    e.Cancel = true;
+                }
             }
-            Timers.StopAll();
 
-            DumpDebugLogs(false);
-            Configuration.WriteOutConfiguration();
+            if (e.Cancel != true)
+            {
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                EngineMessageProcessor.ChessEngineService.StopEngine();
+
+                Timers.StopAll();
+
+                DumpDebugLogs(false);
+                Configuration.WriteOutConfiguration();
+            }
         }
 
         /// <summary>
