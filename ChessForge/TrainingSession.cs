@@ -55,11 +55,6 @@ namespace ChessForge
         public static State CurrentState { get => _currentState; }
 
         /// <summary>
-        /// Indicates if the user is using the Browsing view of the training lines. 
-        /// </summary>
-        public static bool IsBrowseActive { get => _isBrowseActive; set => _isBrowseActive = value; }
-
-        /// <summary>
         /// The current training line.
         /// </summary>
         public static List<TreeNode> TrainingLine = new List<TreeNode>();
@@ -97,9 +92,6 @@ namespace ChessForge
 
         // Flags if a Training Session is in progress
         private static bool _isTrainingInProgress;
-
-        // Flags if the Browse view is active.
-        private static bool _isBrowseActive;
 
         // The current state of the Training sessioin.
         private static State _currentState;

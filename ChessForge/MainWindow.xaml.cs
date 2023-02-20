@@ -1019,7 +1019,7 @@ namespace ChessForge
                         return false;
                 }
                 else if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
-                    || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE && !TrainingSession.IsBrowseActive)
+                    || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE)
                 {
                     if (EngineGame.GetPieceColor(sqNorm) == EngineGame.ColorToMove)
                         return true;

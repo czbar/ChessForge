@@ -164,7 +164,7 @@ Comment=Komentarz
 
 #description: Annotation
 #english: Annotation=Annotation
-Annotation=Anotacja
+Annotation=Komentarz
 
 #description: Evaluation
 #english: Evaluation=Evaluation
@@ -806,8 +806,8 @@ EvaluationShort=Ocena
 #english: PreviewGame=Preview Game
 PreviewGame=Przejrzyj Partię
 
-#description: Import game into the active chapter
-#english: ImportIntoThisChapter=Import into Active Chapter
+#description: Import game into the open chapter
+#english: ImportIntoThisChapter=Import into Chapter
 ImportIntoThisChapter=Importuj do Rozdziału
 
 #description: Open the user's browser to view the game on lichess.org
@@ -919,6 +919,10 @@ WorkbookNotSaved=Podręcznik nie Zapisany
 #
 # Message Text
 #
+
+#description: Flash message: Game Imported Successfully.
+#english: FlMsgGameImportSuccess=Game Imported Successfully.
+FlMsgGameImportSuccess=Partia Została Zaimportowana.
 
 #description: Referenced Games not Found
 #english: RefGamesNotFound=Referenced games not found.
@@ -1924,4 +1928,3 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
-FlMsgGameImportSuccess=Partia Została Zaimportowana.

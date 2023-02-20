@@ -164,7 +164,7 @@ Comment=Komentarz
 
 #description: Annotation
 #english: Annotation=Annotation
-Annotation=Anotacja
+Annotation=Komentarz
 
 #description: Evaluation
 #english: Evaluation=Evaluation

@@ -544,22 +544,22 @@ namespace ChessPosition
             switch (castlingType)
             {
                 case Constants.WhiteKingsideCastle:
-                    squaresToCheck.Add(new SquareCoords(5, 0));
-                    squaresToCheck.Add(new SquareCoords(6, 0));
+                    emptySquares.Add(new SquareCoords(5, 0));
+                    emptySquares.Add(new SquareCoords(6, 0));
                     break;
                 case Constants.WhiteQueensideCastle:
-                    squaresToCheck.Add(new SquareCoords(3, 0));
-                    squaresToCheck.Add(new SquareCoords(2, 0));
-                    squaresToCheck.Add(new SquareCoords(1, 0));
+                    emptySquares.Add(new SquareCoords(3, 0));
+                    emptySquares.Add(new SquareCoords(2, 0));
+                    emptySquares.Add(new SquareCoords(1, 0));
                     break;
                 case Constants.BlackKingsideCastle:
-                    squaresToCheck.Add(new SquareCoords(5, 7));
-                    squaresToCheck.Add(new SquareCoords(6, 7));
+                    emptySquares.Add(new SquareCoords(5, 7));
+                    emptySquares.Add(new SquareCoords(6, 7));
                     break;
                 case Constants.BlackQueensideCastle:
-                    squaresToCheck.Add(new SquareCoords(3, 7));
-                    squaresToCheck.Add(new SquareCoords(2, 7));
-                    squaresToCheck.Add(new SquareCoords(1, 7));
+                    emptySquares.Add(new SquareCoords(3, 7));
+                    emptySquares.Add(new SquareCoords(2, 7));
+                    emptySquares.Add(new SquareCoords(1, 7));
                     break;
             }
 

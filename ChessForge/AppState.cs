@@ -87,6 +87,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns true if the Active Tab's type is one that allows drawing
+        /// shapes on the board.
+        /// </summary>
+        public static bool IsTabAllowingBoardDraw
+        {
+            get =>
+                 ActiveTab == WorkbookManager.TabViewType.STUDY
+                || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
+                || ActiveTab == WorkbookManager.TabViewType.EXERCISE
+                || ActiveTab == WorkbookManager.TabViewType.INTRO;
+        }
+
+        /// <summary>
         /// The most recent active tab in the Manual Review tab control.
         /// This value does not include the Training tab which is in a different
         /// tab control.
@@ -387,11 +400,14 @@ namespace ChessForge
         /// <summary>
         /// Saves the workbook to its PGN file.
         /// </summary>
-        public static void SaveWorkbookFile(string filePath, bool checkDirty = false)
+        /// <returns>true if successful, false on exception</returns>
+        public static bool SaveWorkbookFile(string filePath, bool checkDirty = false)
         {
+            bool result = true;
+
             if (checkDirty && !IsDirty)
             {
-                return;
+                return true;
             }
 
             AppLog.Message("Saving Workbook to File - START");
@@ -409,10 +425,14 @@ namespace ChessForge
                 }
                 catch (Exception ex)
                 {
+                    result = false;
+                    AppLog.Message("SaveWorkbookFile()", ex);
                     MessageBox.Show(Strings.GetResource("FailedToSaveFile") + ": " + ex.Message, Strings.GetResource("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             AppLog.Message("Saving Workbook to File - END");
+
+            return result;
         }
 
         /// <summary>
@@ -724,29 +744,6 @@ namespace ChessForge
                 ShowEvaluationControlsForCurrentStates();
             });
 
-        }
-
-
-        /// <summary>
-        /// This will setup the GUI for the Training progress
-        /// unless we are in a game mode and the focus is here because
-        /// the user requested the context menu.
-        /// </summary>
-        public static void SetupGuiForTrainingProgressMode()
-        {
-            if (AppState.CurrentLearningMode == LearningMode.Mode.TRAINING)
-            {
-                _mainWin.Dispatcher.Invoke(() =>
-                {
-                    TrainingSession.IsBrowseActive = false;
-                    _mainWin.UiTabCtrlTraining.Margin = new Thickness(5, 5, 5, 5);
-                    _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
-                    _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
-                    _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
-
-                    _mainWin.DisplayPosition(EngineGame.GetLastGameNode());
-                });
-            }
         }
 
         /// <summary>
@@ -1078,9 +1075,9 @@ namespace ChessForge
 
                 //_mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
                 //_mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
-                //_mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
+
+                _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
                 MainWin.ResizeTabControl(MainWin.UiTabCtrlTraining, TabControlSizeMode.SHOW_ENGINE_GAME_LINE);
-                //                ShowGuiEngineGameLine(true);
 
                 _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
                 _mainWin.UiTabCtrlTraining.Visibility = Visibility.Visible;
@@ -1395,7 +1392,7 @@ namespace ChessForge
                     && CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
                     _mainWin.UiDgEngineGame.Visibility = show ? Visibility.Visible : Visibility.Hidden;
-                    _mainWin.UiDgEngineGame.Width = 160;
+                    //_mainWin.UiDgEngineGame.Width = 160;
 
                     // adjust tab controls position
                     if (TrainingSession.IsTrainingInProgress)
