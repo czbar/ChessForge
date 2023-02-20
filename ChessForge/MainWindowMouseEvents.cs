@@ -49,12 +49,15 @@ namespace ChessForge
                 _lastRightClickedPoint = clickedPoint;
 
                 // allow drawing shapes in MANUAL_REVIEW mode
-                if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+                if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && AppState.IsTabAllowingBoardDraw)
                 {
                     // if no special key was pressed we consider this tentative
                     // since we need to resolve between shape building and context menu
-                    bool isDrawTentative = !GuiUtilities.IsSpecialKeyPressed();
-                    StartShapeDraw(sq, isDrawTentative);
+                    if (ActiveVariationTree != null)
+                    {
+                        bool isDrawTentative = !GuiUtilities.IsSpecialKeyPressed();
+                        StartShapeDraw(sq, isDrawTentative);
+                    }
                 }
             }
             else
