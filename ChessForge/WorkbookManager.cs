@@ -974,7 +974,12 @@ namespace ChessForge
                         }
                         if (Configuration.AutoSave || res == MessageBoxResult.Yes)
                         {
-                            AppState.SaveWorkbookFile(null);
+                            bool saveResult = AppState.SaveWorkbookFile(null);
+                            if (!saveResult && isAppClosing)
+                            {
+                                // if app is closing and we failed to save, alert the user via exception
+                                throw new Exception("Failed to save on app exit.");
+                            }
                             res = MessageBoxResult.Yes;
                         }
                     }
