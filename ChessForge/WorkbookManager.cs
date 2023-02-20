@@ -28,6 +28,7 @@ namespace ChessForge
         public enum TabViewType
         {
             NONE,
+            INTRO,
             CHAPTERS,
             STUDY,
             BOOKMARKS,
