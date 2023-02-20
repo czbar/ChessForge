@@ -207,7 +207,7 @@
                     </Canvas>
                 </Viewbox>
 
-                <DataGrid x:Name="UiDgEngineGame" Grid.Column="1" HorizontalAlignment="Left" Height="648" Margin="10,27,0,0" VerticalAlignment="Top" Width="180"  
+                <DataGrid x:Name="UiDgEngineGame" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Height="648" Margin="10,27,0,0" VerticalAlignment="Top" Width="180"  
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" CanUserSortColumns="False"
                   GridLinesVisibility="None" Grid.Row="1" Background="White" PreviewMouseDown="EngineGame_OnPreviewMouseDown"  PreviewMouseUp="EngineGame_OnPreviewMouseUp"   >
                     <DataGrid.Resources>
