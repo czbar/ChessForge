@@ -721,6 +721,69 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Expand all chapter headers.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnChptExpandChapters_Click(object sender, RoutedEventArgs e)
+        {
+            ExpandCollapseChaptersView(true, false);
+        }
+
+        /// <summary>
+        /// Collapse all chapter headers.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnChptCollapseChapters_Click(object sender, RoutedEventArgs e)
+        {
+            ExpandCollapseChaptersView(false, false);
+        }
+
+        /// <summary>
+        /// Expand all chapters and article headers.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnChptExpandAll_Click(object sender, RoutedEventArgs e)
+        {
+            ExpandCollapseChaptersView(true, true);
+        }
+
+        /// <summary>
+        /// Collapse all chapters and article headers.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnChptCollapseAll_Click(object sender, RoutedEventArgs e)
+        {
+            ExpandCollapseChaptersView(false, true);
+        }
+
+        /// <summary>
+        /// Expands or Collapses chapters and/or articles.
+        /// </summary>
+        /// <param name="expand">true to expand / false to collapse</param>
+        /// <param name="all">true to expand everything / false to expand chapter headers only</param>
+        private void ExpandCollapseChaptersView(bool expand, bool all)
+        {
+            List<Chapter> chapters = WorkbookManager.SessionWorkbook.Chapters;
+            foreach (Chapter chapter in chapters)
+            {
+                chapter.IsViewExpanded = expand;
+                if (all)
+                {
+                    chapter.IsModelGamesListExpanded = expand;
+                    chapter.IsExercisesListExpanded = expand;
+                }
+            }
+
+            if (_chaptersView != null)
+            {
+                _chaptersView.BuildFlowDocumentForChaptersView();
+            }
+        }
 
         /// <summary>
         /// Selects the clicked Chapter
@@ -1992,7 +2055,7 @@ namespace ChessForge
                     TreeNode nd = ActiveLine.GetNodeAtIndex(posIndex);
                     Bookmark bm = BookmarkManager.AddBookmark(ActiveVariationTree, nd, AppState.ActiveArticleIndex);
                     BookmarkManager.SetLastAddedBookmark(bm);
-                    
+
                     UiTabBookmarks.Focus();
                 }
             }
