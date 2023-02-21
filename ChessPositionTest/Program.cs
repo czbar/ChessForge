@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using WebAccess;
 using System.Diagnostics;
 using System.Linq;
+using System.Collections;
 
 namespace ChessPositionTest
 {
@@ -37,14 +38,29 @@ namespace ChessPositionTest
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            TreeNode nd = new TreeNode(null, "", 0);
-            FenParser.ParseFenIntoBoard("rnbqkb1r/ppp1pp1p/5np1/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 0 4", ref nd.Position);
+
+
+            TreeNode nd1 = new TreeNode(null, "", 0);
+            FenParser.ParseFenIntoBoard("rnbqkb1r/ppp1pp1p/5np1/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 0 3", ref nd1.Position);
 
             TreeNode nd2 = new TreeNode(null, "", 0);
             FenParser.ParseFenIntoBoard("rnbqkb1r/ppp1pp1p/5np1/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 0 4", ref nd2.Position);
-            var data1 = nd.Position.Board;
+
+            string fen = "";
+            int hash1 = 0;
+            int hash2 = 0;  
+
+            for (int i = 0; i < 10000; i++)
+            {
+                fen = FenParser.GenerateFenFromPosition(nd1.Position);
+                hash1 = fen.GetHashCode();
+                fen = FenParser.GenerateFenFromPosition(nd2.Position);
+                hash2 = fen.GetHashCode();
+            }
+
+
+            var data1 = nd1.Position.Board;
             var data2 = nd2.Position.Board;
-            //nd2.Position.Board[0, 0] = 7;
 
             for (int i = 0; i < 100000; i++)
             {
@@ -55,7 +71,7 @@ namespace ChessPositionTest
             Console.WriteLine("Sending Request");
             watch.Start();
 
-            WebAccess.OpeningExplorer.RequestOpeningStats(0, nd);
+            WebAccess.OpeningExplorer.RequestOpeningStats(0, nd1);
 
             //TestTreeMerge();
             //TestPgnGameParser();
