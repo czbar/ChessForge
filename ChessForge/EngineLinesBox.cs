@@ -73,6 +73,15 @@ namespace ChessForge
                 return;
             }
 
+            if (source is string)
+            {
+                if ((source as string).Contains(EngineService.UciCommands.ENG_BESTMOVE_NONE))
+                {
+                    ShowEmptyLines("---");
+                    return;
+                }
+            }
+
             _isShowEngineLinesRunning = true;
 
             try
@@ -152,6 +161,19 @@ namespace ChessForge
             }
 
             _isShowEngineLinesRunning = false;
+        }
+
+        /// <summary>
+        /// Called when there are no lines to show and we 
+        /// want to show some arbitrary text.
+        /// </summary>
+        /// <param name="dummy"></param>
+        private static void ShowEmptyLines(string dummy)
+        {
+            _tbEvalLines.Dispatcher.Invoke(() =>
+            {
+                _tbEvalLines.Text = dummy;
+            });
         }
 
         /// <summary>
@@ -253,7 +275,7 @@ namespace ChessForge
                         bool isCastle;
                         sb.Append(MoveUtils.EngineNotationToAlgebraic(move, ref workingPosition, out isCastle));
                         workingPosition.InheritedEnPassantSquare = workingPosition.EnPassantSquare;
-                        
+
                         // invert colors
                         workingPosition.ColorToMove = workingPosition.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
                         sb.Append(" ");
