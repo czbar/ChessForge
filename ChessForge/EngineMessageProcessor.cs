@@ -688,7 +688,14 @@ namespace ChessForge
                 // make sure the last lines are shown before we stop the timer.
                 //TODO: after recent fixes for "freezing" this may return without execution so EvalLinesToProcess won't
                 // be set per the latest. This needs some redesign.
-                EngineLinesBox.ShowEngineLines(null, null);
+                if (message.Contains(UciCommands.ENG_BESTMOVE_NONE))
+                {
+                    EngineLinesBox.ShowEngineLines(UciCommands.ENG_BESTMOVE_NONE, null);
+                }
+                else
+                {
+                    EngineLinesBox.ShowEngineLines(null, null);
+                }
 
                 if (nd != null)
                 {
