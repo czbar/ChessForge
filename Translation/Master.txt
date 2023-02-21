@@ -225,9 +225,28 @@ SaveAs=Save $0 As ...
 #Saves a copy of the current Workbook with the current version number, increments the version number
 BackUpThisVersion=Back up this Version ...
 
-
 #Print
 Print=Print
+
+#Expand
+Expand=Expand
+
+#Collapse
+Collapse=Collapse
+
+#Expand all
+ExpandAll=Expand All
+
+#Collapse all
+CollapseAll=Collapse All
+
+#Expand chapters
+ExpandChapters=Expand Chapters
+
+#Collapse chapters
+CollapseChapters=Collapse Chapters
+
+
 
 
 #TOP LEVEL MENU: Training

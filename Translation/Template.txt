@@ -292,10 +292,35 @@ SaveAs=
 #english: BackUpThisVersion=Back up this Version ...
 BackUpThisVersion=
 
-
 #description: Print
 #english: Print=Print
 Print=
+
+#description: Expand
+#english: Expand=Expand
+Expand=
+
+#description: Collapse
+#english: Collapse=Collapse
+Collapse=
+
+#description: Expand all
+#english: ExpandAll=Expand All
+ExpandAll=
+
+#description: Collapse all
+#english: CollapseAll=Collapse All
+CollapseAll=
+
+#description: Expand chapters
+#english: ExpandChapters=Expand Chapters
+ExpandChapters=
+
+#description: Collapse chapters
+#english: CollapseChapters=Collapse Chapters
+CollapseChapters=
+
+
 
 
 #description: TOP LEVEL MENU: Training
