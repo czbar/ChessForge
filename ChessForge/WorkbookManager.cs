@@ -455,7 +455,7 @@ namespace ChessForge
                     {
                         (item as Separator).Visibility = Visibility.Collapsed;
                     }
-                    else 
+                    else
                     {
                         (item as Separator).Visibility = Visibility.Visible;
 
@@ -703,7 +703,7 @@ namespace ChessForge
                         MergeGames(ref chapter.StudyTree.Tree, ref games);
                         // the content type may have been reset to generic
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
-                        AppState.MainWin.CopySelectedItemsToChapter(chapter, copyGames, games);
+                        AppState.MainWin.CopySelectedItemsToChapter(chapter, copyGames, out string error, games);
                     }
                     else
                     {
@@ -735,7 +735,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Walks the list of games and exercise, creating a new chapter
+        /// Walks the list of games and exercises, creating a new chapter
         /// for every encountered game if multiChapter is true.
         /// If multiChapter is false we assume createStudy is false too (this method should
         /// not have been called if multiChapter was false createStudy was true).
@@ -760,19 +760,19 @@ namespace ChessForge
 
                         if (createStudy)
                         {
-                            chapter.AddArticle(gd, GameData.ContentType.STUDY_TREE, GameData.ContentType.STUDY_TREE);
+                            chapter.AddArticle(gd, GameData.ContentType.STUDY_TREE, out _, GameData.ContentType.STUDY_TREE);
                             chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
                         }
 
                         if (copyGames)
                         {
-                            chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, GameData.ContentType.MODEL_GAME);
+                            chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, out _, GameData.ContentType.MODEL_GAME);
                         }
                         firstChapter = false;
                     }
                     else if (gd.GetContentType() == GameData.ContentType.EXERCISE)
                     {
-                        chapter.AddArticle(gd, GameData.ContentType.EXERCISE, GameData.ContentType.EXERCISE);
+                        chapter.AddArticle(gd, GameData.ContentType.EXERCISE, out _, GameData.ContentType.EXERCISE);
                     }
                 }
             }
@@ -802,12 +802,17 @@ namespace ChessForge
                 {
                     // force creation of GUID if absent
                     gm.Header.GetGuid(out _);
-                    chapter.AddArticle(gm, GameData.ContentType.GENERIC);
+                    chapter.AddArticle(gm, GameData.ContentType.GENERIC, out string error);
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        errorCount++;
+                        sbErrors.AppendLine(BuildGameParseErrorText(chapter, i + 1, GameList[i], error));
+                    }
                 }
                 catch (Exception ex)
                 {
                     errorCount++;
-                    sbErrors.AppendLine(BuildGameParseErrorText(chapter, i + 1, GameList[i], ex));
+                    sbErrors.AppendLine(BuildGameParseErrorText(chapter, i + 1, GameList[i], ex.Message));
                 }
             }
 
@@ -847,7 +852,7 @@ namespace ChessForge
                             }
                             catch (Exception ex)
                             {
-                                sbErrors.AppendLine(BuildGameParseErrorText(null, i + 1, games[i], ex));
+                                sbErrors.AppendLine(BuildGameParseErrorText(null, i + 1, games[i], ex.Message));
                                 errorCount++;
                             }
                             mergedCount++;
@@ -861,7 +866,7 @@ namespace ChessForge
                             }
                             catch (Exception ex)
                             {
-                                sbErrors.AppendLine(BuildGameParseErrorText(null, i + 1, games[i], ex));
+                                sbErrors.AppendLine(BuildGameParseErrorText(null, i + 1, games[i], ex.Message));
                                 errorCount++;
                             }
                             tree = WorkbookTreeMerge.MergeWorkbooks(tree, workbook2);
@@ -893,7 +898,7 @@ namespace ChessForge
         /// <param name="game"></param>
         /// <param name="ex"></param>
         /// <returns></returns>
-        private static string BuildGameParseErrorText(Chapter chapter, int gameNo, GameData game, Exception ex)
+        private static string BuildGameParseErrorText(Chapter chapter, int gameNo, GameData game, string msg)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -907,7 +912,7 @@ namespace ChessForge
             }
 
             sb.Append(Environment.NewLine);
-            sb.Append("     " + ex.Message);
+            sb.Append("     " + msg);
             sb.Append(Environment.NewLine);
 
             return sb.ToString();

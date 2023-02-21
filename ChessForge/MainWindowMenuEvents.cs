@@ -869,7 +869,7 @@ namespace ChessForge
                         // content type may have been reset to GENERIC in MergeGames above
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
 
-                        CopySelectedItemsToChapter(chapter, copyGames, games);
+                        CopySelectedItemsToChapter(chapter, copyGames, out string error, games);
 
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         SelectChapterById(chapter.Id, false);
@@ -899,20 +899,22 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="games"></param>
-        public void CopySelectedItemsToChapter(Chapter chapter, bool copyGames, ObservableCollection<GameData> games)
+        public void CopySelectedItemsToChapter(Chapter chapter, bool copyGames, out string error, ObservableCollection<GameData> games)
         {
+            error = string.Empty;
+
             foreach (GameData gd in games)
             {
                 if (gd.IsSelected)
                 {
                     if (gd.GetContentType() == GameData.ContentType.EXERCISE)
                     {
-                        chapter.AddArticle(gd, GameData.ContentType.EXERCISE, GameData.ContentType.EXERCISE);
+                        chapter.AddArticle(gd, GameData.ContentType.EXERCISE, out error, GameData.ContentType.EXERCISE);
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
                     }
                     else if (copyGames && (gd.GetContentType() == GameData.ContentType.GENERIC || gd.GetContentType() == GameData.ContentType.MODEL_GAME))
                     {
-                        chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, GameData.ContentType.MODEL_GAME);
+                        chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, out error, GameData.ContentType.MODEL_GAME);
                     }
                 }
             }
@@ -1310,7 +1312,7 @@ namespace ChessForge
                                     {
                                         try
                                         {
-                                            int index = chapter.AddArticle(games[i], contentType, targetcontentType);
+                                            int index = chapter.AddArticle(games[i], contentType, out string error, targetcontentType);
                                             if (index < 0)
                                             {
                                                 skippedDueToType++;
@@ -1320,6 +1322,11 @@ namespace ChessForge
                                                 firstImportedGameIndex = index;
                                             }
                                             AppState.IsDirty = true;
+                                            if (!string.IsNullOrEmpty(error))
+                                            {
+                                                errorCount++;
+                                                sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(games[i], i + 1, error));
+                                            }
                                         }
                                         catch (Exception ex)
                                         {
