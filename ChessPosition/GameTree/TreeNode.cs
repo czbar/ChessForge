@@ -27,7 +27,7 @@ namespace GameTree
         public TreeNode Parent;
 
         /// <summary>
-        /// Id of the node which is unique across the tree (a.k.a. Workbook)
+        /// Id of the node which is unique across the tree
         /// </summary>
         public int NodeId;
 
@@ -155,7 +155,7 @@ namespace GameTree
         /// General purpose property to assist certain
         /// processing scenarios e.g. analysing a submitted
         /// solution.
-        /// Not persisted with the Workbook.
+        /// Not persisted with the tree.
         /// </summary>
         public bool IsProcessed = false;
 
@@ -200,16 +200,16 @@ namespace GameTree
         public List<string> UnprocessedChfCommands = new List<string>();
 
         /// <summary>
-        /// Marks a node that was not in the Workbook when the training started.
-        /// Depending on user choices, it may be later on removed from the Workbook
+        /// Marks a node that was not in the tree when the training started.
+        /// Depending on user choices, it may be later on removed from the tree
         /// or added permanently.
         /// </summary>
         public bool IsNewTrainingMove = false;
 
         /// <summary>
-        /// Marks a node that was not in the Workbook when it was open.
+        /// Marks a node that was not in the tree when it was open.
         /// This is an edit by the user.
-        /// Depending on user choices, it may be later on removed from the Workbook
+        /// Depending on user choices, it may be later on removed from the tree
         /// or added permanently.
         /// </summary>
         public bool IsNewUserMove = false;
