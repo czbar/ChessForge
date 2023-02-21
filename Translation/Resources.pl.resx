@@ -321,6 +321,24 @@
   <data name="Print" xml:space="preserve">
     <value>Drukuj</value>
   </data>
+  <data name="Expand" xml:space="preserve">
+    <value>Rozwiń</value>
+  </data>
+  <data name="Collapse" xml:space="preserve">
+    <value>Zwiń</value>
+  </data>
+  <data name="ExpandAll" xml:space="preserve">
+    <value>Rozwiń Wszystko</value>
+  </data>
+  <data name="CollapseAll" xml:space="preserve">
+    <value>Zwiń Wszystko</value>
+  </data>
+  <data name="ExpandChapters" xml:space="preserve">
+    <value>Rozwiń Rozdziały</value>
+  </data>
+  <data name="CollapseChapters" xml:space="preserve">
+    <value>Rozwiń Rozdziały</value>
+  </data>
   <data name="Training" xml:space="preserve">
     <value>Trening</value>
   </data>

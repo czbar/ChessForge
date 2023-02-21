@@ -292,10 +292,35 @@ SaveAs=Zapisz $0 jako ...
 #english: BackUpThisVersion=Back up this Version ...
 BackUpThisVersion=Zrób Kopię tej Wersji...
 
-
 #description: Print
 #english: Print=Print
 Print=Drukuj
+
+#description: Expand
+#english: Expand=Expand
+Expand=Rozwiń
+
+#description: Collapse
+#english: Collapse=Collapse
+Collapse=Zwiń
+
+#description: Expand all
+#english: ExpandAll=Expand All
+ExpandAll=Rozwiń Wszystko
+
+#description: Collapse all
+#english: CollapseAll=Collapse All
+CollapseAll=Zwiń Wszystko
+
+#description: Expand chapters
+#english: ExpandChapters=Expand Chapters
+ExpandChapters=Rozwiń Rozdziały
+
+#description: Collapse chapters
+#english: CollapseChapters=Collapse Chapters
+CollapseChapters=Rozwiń Rozdziały
+
+
 
 
 #description: TOP LEVEL MENU: Training

@@ -384,6 +384,9 @@ namespace ChessForge
             }
 
             RemoveEmptyParagraphs();
+
+            // add dummy para so that the last row can be comfortable viewed
+            Document.Blocks.Add(BuildDummyPararaph());
         }
 
         virtual public Paragraph BuildGuessingFinishedParagraph()

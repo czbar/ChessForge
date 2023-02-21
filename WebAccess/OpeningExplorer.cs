@@ -22,6 +22,18 @@ namespace WebAccess
         /// </summary>
         public static event EventHandler<WebAccessEventArgs> OpeningStatsReceived;
 
+        // max number of results to store in cache
+        private static int STATS_CACHE_SIZE = 1000;
+
+        // number of entires to remove when cache is full
+        private static int COUNT_TO_FREE_ON_FULL = STATS_CACHE_SIZE / 5;
+
+        /// Cached stats. The key is FEN.
+        private static Dictionary<string, LichessOpeningsStats> _dictCachedStats = new Dictionary<string, LichessOpeningsStats>();
+
+        /// Last tocuh times for the cached items. The key is FEN.
+        private static Dictionary<string, long> _dictLastTouch = new Dictionary<string, long>();
+
         /// <summary>
         /// Requests Opening Stats from lichess
         /// </summary>
@@ -29,27 +41,62 @@ namespace WebAccess
         public static async void RequestOpeningStats(int treeId, TreeNode nd)
         {
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
+
             WebAccessEventArgs eventArgs = new WebAccessEventArgs();
-            eventArgs.TreeId= treeId;
+            eventArgs.TreeId = treeId;
             eventArgs.NodeId = nd.NodeId;
-            try
+
+            if (_dictCachedStats.ContainsKey(fen))
             {
-                AppLog.Message(2, "HttpClient sending OpeningStats request for FEN: " + fen);
-                var json = await RestApiRequest.OpeningStatsClient.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
-                eventArgs.OpeningStats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
+                eventArgs.OpeningStats = _dictCachedStats[fen];
+                _dictLastTouch[fen] = DateTime.Now.Ticks;
                 eventArgs.Success = true;
                 OpeningStatsReceived?.Invoke(null, eventArgs);
-                AppLog.Message(2, "HttpClient received OpeningStats response for FEN: " + fen);
             }
-            catch (Exception ex) 
+            else
             {
-                eventArgs.Success = false;
-                eventArgs.Message = ex.Message;
-                OpeningStatsReceived?.Invoke(null, eventArgs);
-                AppLog.Message("RequestOpeningStats()", ex);
+                try
+                {
+                    AppLog.Message(2, "HttpClient sending OpeningStats request for FEN: " + fen);
+                    var json = await RestApiRequest.OpeningStatsClient.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
+                    eventArgs.OpeningStats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
+
+                    if (_dictCachedStats.Count >= STATS_CACHE_SIZE)
+                    {
+                        MakeRoomInCache();
+                    }
+
+                    _dictCachedStats[fen] = eventArgs.OpeningStats;
+                    _dictLastTouch[fen] = DateTime.Now.Ticks;
+
+                    eventArgs.Success = true;
+                    OpeningStatsReceived?.Invoke(null, eventArgs);
+                    AppLog.Message(2, "HttpClient received OpeningStats response for FEN: " + fen);
+                }
+                catch (Exception ex)
+                {
+                    eventArgs.Success = false;
+                    eventArgs.Message = ex.Message;
+                    OpeningStatsReceived?.Invoke(null, eventArgs);
+                    AppLog.Message("RequestOpeningStats()", ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Remove some elements from the cache to make room for new ones
+        /// </summary>
+        private static void MakeRoomInCache()
+        {
+            var keysToRemove = _dictLastTouch.OrderBy(x => x.Value).Select(x => x.Key).Take(COUNT_TO_FREE_ON_FULL);
+            foreach (string key in keysToRemove)
+            {
+                _dictLastTouch.Remove(key);
+                _dictCachedStats.Remove(key);
             }
         }
     }
+
 
     /// <summary>
     /// The class to deserialize the Lichess Opening Stats into.

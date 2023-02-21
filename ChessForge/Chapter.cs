@@ -414,12 +414,22 @@ namespace ChessForge
         /// The caller must handle exceptions.
         /// </summary>
         /// <param name="gm"></param>
-        public int AddArticle(GameData gm, GameData.ContentType typ, GameData.ContentType targetcontentType = GameData.ContentType.GENERIC)
+        public int AddArticle(GameData gm, GameData.ContentType typ, out string errorText, GameData.ContentType targetcontentType = GameData.ContentType.GENERIC)
         {
+            errorText = string.Empty;
             int index = -1;
 
             Article article = new Article(typ);
-            PgnGameParser pp = new PgnGameParser(gm.GameText, article.Tree, gm.Header.GetFenString());
+            try
+            {
+                PgnGameParser pp = new PgnGameParser(gm.GameText, article.Tree, gm.Header.GetFenString());
+            }
+            catch(Exception ex) 
+            {
+                errorText = ex.Message;
+                AppLog.Message("AddArticle()", ex);
+            }
+
             article.Tree.Header = gm.Header.CloneMe(true);
 
             if (typ == GameData.ContentType.GENERIC)
