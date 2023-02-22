@@ -15,6 +15,18 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_070F20AEE4156FF8A1EDCB6F32B33AB5"
+        "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_070F20AEE4156FF8A1EDCB6F32B33AB5"
+        "OwnerKey" = "8:_B31923E79F360E25A9908EEE60355755"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -28,7 +40,7 @@
         "Entry"
         {
         "MsmKey" = "8:_141BD59E5BD35C4DA1EEFA2B8334EEBE"
-        "OwnerKey" = "8:_6E6BB6421D92411DB785E1508210A5D1"
+        "OwnerKey" = "8:_B31923E79F360E25A9908EEE60355755"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -40,25 +52,13 @@
         "Entry"
         {
         "MsmKey" = "8:_1A25FFA80898053D472B1E2FEA13F6FD"
-        "OwnerKey" = "8:_6E6BB6421D92411DB785E1508210A5D1"
+        "OwnerKey" = "8:_B31923E79F360E25A9908EEE60355755"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_285CAB6BDDA418CA7D3102167BDE9809"
+        "MsmKey" = "8:_3A481BA820F80DDB75A02811800AC4B3"
         "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_38B54FF529574FC487FA98804E607F6D"
-        "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_38B54FF529574FC487FA98804E607F6D"
-        "OwnerKey" = "8:_6E6BB6421D92411DB785E1508210A5D1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -87,12 +87,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_6E6BB6421D92411DB785E1508210A5D1"
-        "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_7269021437CF4398B5AD0BEF5D242C11"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -113,6 +107,12 @@
         {
         "MsmKey" = "8:_ABF23757970C4E7AB202399B303E0D70"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B31923E79F360E25A9908EEE60355755"
+        "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -154,25 +154,25 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6E6BB6421D92411DB785E1508210A5D1"
+        "OwnerKey" = "8:_B31923E79F360E25A9908EEE60355755"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_3A481BA820F80DDB75A02811800AC4B3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_070F20AEE4156FF8A1EDCB6F32B33AB5"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_1A25FFA80898053D472B1E2FEA13F6FD"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_285CAB6BDDA418CA7D3102167BDE9809"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_38B54FF529574FC487FA98804E607F6D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -276,6 +276,37 @@
         }
         "File"
         {
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_070F20AEE4156FF8A1EDCB6F32B33AB5"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:ChessPosition, Version=0.9.5.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_070F20AEE4156FF8A1EDCB6F32B33AB5"
+                    {
+                    "Name" = "8:ChessPosition.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:ChessPosition.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_141BD59E5BD35C4DA1EEFA2B8334EEBE"
             {
             "AssemblyRegister" = "3:1"
@@ -338,51 +369,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_285CAB6BDDA418CA7D3102167BDE9809"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3A481BA820F80DDB75A02811800AC4B3"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:EngineService, Version=0.9.1.0, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:EngineService, Version=0.9.5.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_285CAB6BDDA418CA7D3102167BDE9809"
+                    "_3A481BA820F80DDB75A02811800AC4B3"
                     {
                     "Name" = "8:EngineService.dll"
                     "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:EngineService.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_38B54FF529574FC487FA98804E607F6D"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ChessPosition, Version=0.9.1.0, Culture=neutral, processorArchitecture=AMD64"
-                "ScatterAssemblies"
-                {
-                    "_38B54FF529574FC487FA98804E607F6D"
-                    {
-                    "Name" = "8:ChessPosition.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:ChessPosition.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
@@ -445,7 +445,7 @@
             "SourcePath" = "8:..\\Workbooks\\Distribution\\Stafford Gambit.pgn"
             "TargetName" = "8:Stafford Gambit.pgn"
             "Tag" = "8:"
-            "Folder" = "8:_E2C9249992214B8A9B08AA83FF1697F0"
+            "Folder" = "8:_F3BD7340DD264B25BFB08A3559857E96"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -465,7 +465,7 @@
             "SourcePath" = "8:..\\Workbooks\\Distribution\\Endgames by NoseKnowsAll at lichess.pgn"
             "TargetName" = "8:Endgames by NoseKnowsAll at lichess.pgn"
             "Tag" = "8:"
-            "Folder" = "8:_E2C9249992214B8A9B08AA83FF1697F0"
+            "Folder" = "8:_F3BD7340DD264B25BFB08A3559857E96"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -480,14 +480,94 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6E6BB6421D92411DB785E1508210A5D1"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7269021437CF4398B5AD0BEF5D242C11"
+            {
+            "SourcePath" = "8:..\\Workbooks\\Distribution\\Ridiculous Sacrifices.pgn"
+            "TargetName" = "8:Ridiculous Sacrifices.pgn"
+            "Tag" = "8:"
+            "Folder" = "8:_F3BD7340DD264B25BFB08A3559857E96"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9A863914369745BD8E21369820BDA450"
+            {
+            "SourcePath" = "8:..\\Workbooks\\Distribution\\Classical Sicilian.pgn"
+            "TargetName" = "8:Classical Sicilian.pgn"
+            "Tag" = "8:"
+            "Folder" = "8:_F3BD7340DD264B25BFB08A3559857E96"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AA34AAD8CA0841CB9BA022578E9F2C63"
+            {
+            "SourcePath" = "8:..\\Workbooks\\Distribution\\Endgame Selection.pgn"
+            "TargetName" = "8:Endgame Selection.pgn"
+            "Tag" = "8:"
+            "Folder" = "8:_F3BD7340DD264B25BFB08A3559857E96"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ABF23757970C4E7AB202399B303E0D70"
+            {
+            "SourcePath" = "8:..\\Workbooks\\Distribution\\Checkmate Patterns.pgn"
+            "TargetName" = "8:Checkmate Patterns.pgn"
+            "Tag" = "8:"
+            "Folder" = "8:_F3BD7340DD264B25BFB08A3559857E96"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B31923E79F360E25A9908EEE60355755"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebAccess, Version=0.9.1.0, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:WebAccess, Version=0.9.5.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_6E6BB6421D92411DB785E1508210A5D1"
+                    "_B31923E79F360E25A9908EEE60355755"
                     {
                     "Name" = "8:WebAccess.dll"
                     "Attributes" = "3:512"
@@ -509,86 +589,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7269021437CF4398B5AD0BEF5D242C11"
-            {
-            "SourcePath" = "8:..\\Workbooks\\Distribution\\Ridiculous Sacrifices.pgn"
-            "TargetName" = "8:Ridiculous Sacrifices.pgn"
-            "Tag" = "8:"
-            "Folder" = "8:_E2C9249992214B8A9B08AA83FF1697F0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9A863914369745BD8E21369820BDA450"
-            {
-            "SourcePath" = "8:..\\Workbooks\\Distribution\\Classical Sicilian.pgn"
-            "TargetName" = "8:Classical Sicilian.pgn"
-            "Tag" = "8:"
-            "Folder" = "8:_E2C9249992214B8A9B08AA83FF1697F0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AA34AAD8CA0841CB9BA022578E9F2C63"
-            {
-            "SourcePath" = "8:..\\Workbooks\\Distribution\\Endgame Selection.pgn"
-            "TargetName" = "8:Endgame Selection.pgn"
-            "Tag" = "8:"
-            "Folder" = "8:_E2C9249992214B8A9B08AA83FF1697F0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ABF23757970C4E7AB202399B303E0D70"
-            {
-            "SourcePath" = "8:..\\Workbooks\\Distribution\\Checkmate Patterns.pgn"
-            "TargetName" = "8:Checkmate Patterns.pgn"
-            "Tag" = "8:"
-            "Folder" = "8:_E2C9249992214B8A9B08AA83FF1697F0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BA45925C432A439DB1687AED9366776E"
@@ -697,45 +697,22 @@
         }
         "Folder"
         {
-            "{1525181F-901A-416C-8A58-119130FE478E}:_0CF3BF972DC14F58B21D4960514DF489"
+            "{1525181F-901A-416C-8A58-119130FE478E}:_26C748547017499CACE3CEC1B173F5BD"
             {
-            "Name" = "8:#1915"
+            "Name" = "8:#1918"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
-            "Property" = "8:AppDataFolder"
+            "Property" = "8:PersonalFolder"
                 "Folders"
                 {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_74D858B67700458BAA3327CD4FAC70B1"
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_F3BD7340DD264B25BFB08A3559857E96"
                     {
                     "Name" = "8:Chess Forge"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
-                    "Property" = "8:_62B2B33E32874A7B865F3B411459D65F"
-                        "Folders"
-                        {
-                        }
-                    }
-                }
-            }
-            "{994432C3-9487-495D-8656-3E829A8DBDDE}:_26CCC9A9B227459BA19745B2F7EB6BC2"
-            {
-            "DefaultLocation" = "8:[CommonAppDataFolder]"
-            "Name" = "8:Workbooks"
-            "AlwaysCreate" = "11:FALSE"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Property" = "8:WORKBOOKS"
-                "Folders"
-                {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_E2C9249992214B8A9B08AA83FF1697F0"
-                    {
-                    "Name" = "8:Chess Forge"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_F3C591BE19D64484BB68D2C8FCB2F6AD"
+                    "Property" = "8:_4ADFD3B0BC174E92BBD5B20FFE73144C"
                         "Folders"
                         {
                         }
@@ -815,13 +792,13 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Chess Forge"
         "ProductCode" = "8:{AE15A533-1BAD-4716-B4D0-30111F6604C7}"
-        "PackageCode" = "8:{EE7F85D8-F11E-4082-9257-82E3D15BDC62}"
+        "PackageCode" = "8:{71BBF872-B327-40A8-AED6-8ACDAEC73D09}"
         "UpgradeCode" = "8:{8FBE368E-7FA2-4112-9D18-7A5CD1CE504C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:FALSE"
-        "InstallAllUsers" = "11:TRUE"
+        "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:0.9.5"
         "Manufacturer" = "8:Mindrose Pty Ltd"
         "ARPHELPTELEPHONE" = "8:"
@@ -1364,7 +1341,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0B816B9828BC4414A662D7186EC23E8C"
             {
-            "SourcePath" = "8:..\\ChessForge\\obj\\Debug\\ChessForge.exe"
+            "SourcePath" = "8:..\\ChessForge\\obj\\Release\\ChessForge.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
