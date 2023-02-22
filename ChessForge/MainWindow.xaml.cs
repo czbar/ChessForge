@@ -1112,7 +1112,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Returns true if user accept the change. of mode.
+        /// Returns true if user accepted the change of mode.
         /// </summary>
         /// <param name="newMode"></param>
         /// <returns></returns>
@@ -1125,30 +1125,28 @@ namespace ChessForge
             }
 
             bool result = false;
-            // we may not be changing the mode, but changing
-            // the variation tree we are working with.
+            // we may not be changing the mode, but changing the variation tree we are working with.
             if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW && newMode == LearningMode.Mode.MANUAL_REVIEW)
             {
-                // TODO: ask what to do with the current tree
-                // abandon, save, put aside
                 result = true;
             }
             else if (LearningMode.CurrentMode != LearningMode.Mode.MANUAL_REVIEW && newMode == LearningMode.Mode.MANUAL_REVIEW)
             {
-                switch (LearningMode.CurrentMode)
+                if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && !TrainingSession.IsTrainingInProgress)
                 {
-                    case LearningMode.Mode.ENGINE_GAME:
-                        if (MessageBox.Show(Properties.Resources.CancelGame, Properties.Resources.GameInProgress, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                            result = true;
-                        break;
-                    default:
+                    if (MessageBox.Show(Properties.Resources.CancelGame, Properties.Resources.GameInProgress, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
                         result = true;
-                        break;
+                    }
+                }
+                else
+                {
+                    result = true;
                 }
             }
             else
             {
-                return true;
+                result = true;
             }
 
             return result;
