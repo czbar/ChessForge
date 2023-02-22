@@ -981,12 +981,22 @@ namespace ChessForge
                         if (Configuration.AutoSave || res == MessageBoxResult.Yes)
                         {
                             bool saveResult = AppState.SaveWorkbookFile(null);
-                            if (!saveResult && isAppClosing)
+                            if (saveResult)
                             {
-                                // if app is closing and we failed to save, alert the user via exception
-                                throw new Exception("Failed to save on app exit.");
+                                res = MessageBoxResult.Yes;
                             }
-                            res = MessageBoxResult.Yes;
+                            else
+                            {
+                                if (isAppClosing)
+                                {
+                                    // if app is closing and we failed to save, alert the user via exception
+                                    throw new Exception("Failed to save on app exit.");
+                                }
+                                else
+                                {
+                                    res = MessageBoxResult.Cancel;
+                                }
+                            }
                         }
                     }
                     else
