@@ -175,6 +175,43 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns type of the active article
+        /// </summary>
+        /// <returns></returns>
+        public GameData.ContentType GetActiveArticleType()
+        {
+            if (ActiveArticle == null)
+            {
+                return GameData.ContentType.NONE;
+            }
+            else
+            {
+                return ActiveArticle.Tree.ContentType;
+            }
+        }
+
+        /// <summary>
+        /// Returns the index of the active article in the list is in
+        /// </summary>
+        /// <returns></returns>
+        public int GetActiveArticleIndex()
+        {
+            GameData.ContentType type = GetActiveArticleType();
+            if (type == GameData.ContentType.MODEL_GAME)
+            {
+                return _activeModelGameIndex;
+            }
+            else if (type == GameData.ContentType.EXERCISE)
+            {
+                return _activeExerciseIndex;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
         /// Returns reference to the Active Game's header.
         /// </summary>
         /// <returns></returns>
@@ -386,7 +423,7 @@ namespace ChessForge
         /// <param name="index"></param>
         public void InsertModelGame(Article article, int index)
         {
-            ModelGames.Insert(index, article);   
+            ModelGames.Insert(index, article);
         }
 
         /// <summary>
@@ -424,7 +461,7 @@ namespace ChessForge
             {
                 PgnGameParser pp = new PgnGameParser(gm.GameText, article.Tree, gm.Header.GetFenString());
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 errorText = ex.Message;
                 AppLog.Message("AddArticle()", ex);
