@@ -14,14 +14,14 @@ namespace ChessForge
     public class ChapterViewState
     {
         // Key strings for key/value configuration items
-        private readonly string IS_EXPANDED = "IsExpanded";
-        private readonly string IS_GAME_LIST_EXPANDED = "IsGameListExpanded";
-        private readonly string IS_EXERCISE_LIST_EXPANDED = "IsExerciseListExpanded";
-        private readonly string CHAPTERS_VIEW_SELECTED_ARTICLE_INDEX = "ChaptersViewSelectedArticleIndex";
-        private readonly string CHAPTERS_VIEW_SELECTED_ARTICLE_TYPE = "ChaptersViewSelectedArticleType";
+        private const string IS_EXPANDED = "IsExpanded";
+        private const string IS_GAME_LIST_EXPANDED = "IsGameListExpanded";
+        private const string IS_EXERCISE_LIST_EXPANDED = "IsExerciseListExpanded";
+        private const string CHAPTERS_VIEW_SELECTED_ARTICLE_INDEX = "ChaptersViewSelectedArticleIndex";
+        private const string CHAPTERS_VIEW_SELECTED_ARTICLE_TYPE = "ChaptersViewSelectedArticleType";
 
-        private readonly string ACTIVE_GAME_INDEX = "ActiveGameIndex";
-        private readonly string ACTIVE_EXERCISE_INDEX = "ActiveExerciseIndex";
+        private const string ACTIVE_GAME_INDEX = "ActiveGameIndex";
+        private const string ACTIVE_EXERCISE_INDEX = "ActiveExerciseIndex";
 
         // Chapter object represented by this object
         private Chapter _chapter;
@@ -64,6 +64,99 @@ namespace ChessForge
         /// Active article index
         /// </summary>
         public int ArticleIndex { get; set; }
+
+        /// <summary>
+        /// Index of the selected article in its list.
+        /// </summary>
+        public int ChaptersViewSelectedArticleIndex
+        {
+            get => _chaptersViewSelectedArticleIndex;
+            set => _chaptersViewSelectedArticleIndex = value;
+        }
+
+        /// <summary>
+        /// Type of the selected article
+        /// </summary>
+        public WorkbookManager.ItemType ChaptersViewSelectedArticleType
+        {
+            get => _chaptersViewSelectedArticleType;
+            set => _chaptersViewSelectedArticleType = value;
+        }
+
+        /// <summary>
+        /// Index of the game active in the chapter
+        /// </summary>
+        public int ActiveGameIndex
+        {
+            get => _activeGameIndex;
+            set => _activeGameIndex = value;
+        }
+
+        /// <summary>
+        /// Index of the exercise active in the chapter
+        /// </summary>
+        public int ActiveExerciseIndex
+        {
+            get => _activeExerciseIndex;
+            set => _activeExerciseIndex = value;
+        }
+
+        // typ eof the selected article
+        private WorkbookManager.ItemType _chaptersViewSelectedArticleType;
+
+        // index of the active game
+        private int _activeGameIndex;
+
+        // index of the active exercise
+        private int _activeExerciseIndex;
+
+        // index of the selected article 
+        private int _chaptersViewSelectedArticleIndex;
+
+        /// <summary>
+        /// Process a chapter specific line in the config file
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public void ProcessConfigLine(string key, string value)
+        {
+            switch (key)
+            {
+                case IS_EXPANDED:
+                    IsExpanded = GetBool(value);
+                    break;
+                case IS_GAME_LIST_EXPANDED:
+                    IsGameListExpanded = GetBool(value);
+                    break;
+                case IS_EXERCISE_LIST_EXPANDED:
+                    IsExerciseListExpanded = GetBool(value);
+                    break;
+                case ACTIVE_GAME_INDEX:
+                    int.TryParse(value, out _activeGameIndex);
+                    break;
+                case ACTIVE_EXERCISE_INDEX:
+                    int.TryParse(value, out _activeExerciseIndex);
+                    break;
+                case CHAPTERS_VIEW_SELECTED_ARTICLE_INDEX:
+                    int.TryParse(value, out _chaptersViewSelectedArticleIndex);
+                    break;
+                case CHAPTERS_VIEW_SELECTED_ARTICLE_TYPE:
+                    Enum.TryParse(value, out _chaptersViewSelectedArticleType);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Translates string into a boolean value.
+        /// The string must equal "1" to be considered as representing "true".
+        /// Otherwise it is considered to represent false.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private bool GetBool(string value)
+        {
+            return value != "1";
+        }
 
         /// <summary>
         /// Builds the text to put into the view configuration file for the chapter.

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Newtonsoft.Json.Linq;
+using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -17,16 +19,24 @@ namespace ChessForge
         private Workbook _workbook;
 
         // Key strings for key/value configuration items
-        private readonly string ACTIVE_TAB = "ActiveTab";
-        private readonly string ACTIVE_CHAPTER_INDEX = "ActiveChapterIndex";
-        private readonly string CHAPTER_INDEX = "ChapterIndex";
+        private const string ACTIVE_TAB = "ActiveTab";
+        private const string ACTIVE_CHAPTER_INDEX = "ActiveChapterIndex";
+        private const string CHAPTER_INDEX = "ChapterIndex";
 
-        /// <summary>
+        // list of ChapterViewState objects
+        private List<ChapterViewState> _chapterViewStates = new List<ChapterViewState>();
+
+        // index of the active chapter
+        private int _activeChapterIndex = -1;
+
+        // type of UI Tab that is open
+        WorkbookManager.TabViewType _activeViewType;
+
         /// Constructor.
         /// </summary>
         /// <param name="workbook"></param>
-        public WorkbookViewState(Workbook workbook) 
-        { 
+        public WorkbookViewState(Workbook workbook)
+        {
             _workbook = workbook;
         }
 
@@ -55,6 +65,148 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("SaveState()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Reads view states from the config file.
+        /// </summary>
+        public void ReadState()
+        {
+            try
+            {
+                int chapterIndex = -1;
+                _chapterViewStates.Clear();
+                string filePath = BuildViewConfigFilePath();
+                if (File.Exists(filePath))
+                {
+                    string[] lines = File.ReadAllLines(filePath);
+
+                    string key = "";
+                    string value = "";
+                    foreach (string line in lines)
+                    {
+                        if (ParseLine(line, out key, out value))
+                        {
+                            if (key == CHAPTER_INDEX)
+                            {
+                                chapterIndex++;
+                                _chapterViewStates.Add(new ChapterViewState(_workbook.Chapters[chapterIndex], chapterIndex == _activeChapterIndex));
+                            }
+                            else
+                            {
+                                if (chapterIndex < 0)
+                                {
+                                    ProcessWorkbookLine(key, value);
+                                }
+                                else
+                                {
+                                    ProcessChapterLine(chapterIndex, key, value);
+                                }
+                            }
+                        }
+                    }
+                }
+                ApplyStates();
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("ReadState()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Apply view states to the Workbook and Chapter objects.
+        /// </summary>
+        private void ApplyStates()
+        {
+            for (int i = 0; i < _chapterViewStates.Count; i++)
+            {
+                ChapterViewState cvs = _chapterViewStates[i];
+                Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[i];
+
+                if (i == _activeChapterIndex)
+                {
+                    WorkbookManager.SessionWorkbook.ActiveChapter = chapter;
+                }
+
+                chapter.IsViewExpanded = cvs.IsExpanded;
+                chapter.IsModelGamesListExpanded = cvs.IsGameListExpanded;
+                chapter.IsExercisesListExpanded = cvs.IsExerciseListExpanded;
+                chapter.ActiveModelGameIndex = cvs.ActiveGameIndex;
+                chapter.ActiveExerciseIndex = cvs.ActiveExerciseIndex;
+            }
+
+            switch (_activeViewType)
+            {
+                case WorkbookManager.TabViewType.MODEL_GAME:
+                    AppState.MainWin.SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
+                    break;
+                case WorkbookManager.TabViewType.EXERCISE:
+                    AppState.MainWin.SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex, true);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Process a line applying the worbook 
+        /// rather than a specific chapter
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        private void ProcessWorkbookLine(string key, string value)
+        {
+            switch (key)
+            {
+                case ACTIVE_TAB:
+                    Enum.TryParse(value, out _activeViewType);
+                    break;
+                case ACTIVE_CHAPTER_INDEX:
+                    int.TryParse(value, out _activeChapterIndex);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Processes a line that applies to a specific chapter.
+        /// </summary>
+        /// <param name="chapterIndex"></param>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        private void ProcessChapterLine(int chapterIndex, string key, string value)
+        {
+            ChapterViewState cvs = _chapterViewStates[chapterIndex];
+            cvs.ProcessConfigLine(key, value);
+        }
+
+        /// <summary>
+        /// Parses an individual line from the cofig file.
+        /// The line must be in the "key=value" format.
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private bool ParseLine(string line, out string key, out string value)
+        {
+            key = "";
+            value = "";
+
+            if (string.IsNullOrEmpty(line))
+            {
+                return false;
+            }
+
+            string[] tokens = line.Split('=');
+            if (tokens.Length != 2)
+            {
+                return false;
+            }
+            else
+            {
+                key = tokens[0];
+                value = tokens[1];
+                return true;
             }
         }
 
