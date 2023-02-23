@@ -16,7 +16,7 @@ namespace ChessPosition
     {
         /// <summary>
         /// Parses the supplied string into tokens split by '.'.
-        /// Somewhere in the string there must be a sequence of 3 numbers in the form of 1.1.1 
+        /// Expects a sequence of 3 numbers in the form of 1.1.1 
         /// or the version string will be considered invalid and will return false.
         /// </summary>
         /// <param name="sVer"></param>
@@ -363,6 +363,39 @@ namespace ChessPosition
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Builds a configuration file  line in the form of key=value.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string BuildKeyValueLine(string key, string value)
+        {
+            return key + "=" + value;
+        }
+
+        /// <summary>
+        /// Builds a configuration file line for a boolean attribute.
+        /// The values of true/false will be coded as 1/0.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string BuildKeyValueLine(string key, bool value)
+        {
+            return BuildKeyValueLine(key, value ? "1" : "0");
+        }
+
+        /// <summary>
+        /// Builds a configuration file  line in the form of key=value.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string BuildKeyValueLine(string key, object value)
+        {
+            return BuildKeyValueLine(key, value == null ? "" : value.ToString());
+        }
 
         /// <summary>
         /// Parses the PGN string to extract year, month and day.

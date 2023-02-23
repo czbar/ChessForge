@@ -32,6 +32,11 @@ namespace ChessForge
         public readonly string APP_NAME = "Chess Forge";
 
         /// <summary>
+        /// Public reference to ChaptersView 
+        /// </summary>
+        public ChaptersView ChaptersView { get => _chaptersView; }
+
+        /// <summary>
         /// The RichTextBox based Chapters view
         /// </summary>
         private ChaptersView _chaptersView;
@@ -1228,6 +1233,16 @@ namespace ChessForge
 
                 if (acceptFile)
                 {
+                    try
+                    {
+                        WorkbookViewState wvs = new WorkbookViewState(WorkbookManager.SessionWorkbook);
+                        wvs.ReadState();
+                    }
+                    catch (Exception ex)
+                    {
+                        AppLog.Message("wvs.ReadState()", ex);
+                    }
+
                     SetupGuiForNewSession(AppState.WorkbookFilePath, isChessForgeFile);
                 }
                 else
@@ -1254,6 +1269,7 @@ namespace ChessForge
 
             // if this is a new session we will set ActiveChapter to the first chapter
             // and Active Tree to the Study Tree in that chapter.
+            // TODO: we have to set this up according to the last views config
             WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(0, GameData.ContentType.STUDY_TREE);
             AppState.UpdateAppTitleBar();
             BoardCommentBox.ShowTabHints();
@@ -1263,8 +1279,6 @@ namespace ChessForge
                 ShowWorkbookOptionsDialog(false);
             }
 
-            //PieceColor sideAtBoardBottom =
-            //    SessionWorkbook.StudyBoardOrientation != PieceColor.None ? SessionWorkbook.StudyBoardOrientation : SessionWorkbook.TrainingSide;
             MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientationConfig);
 
             if (isChessForgeFile)
@@ -1275,6 +1289,7 @@ namespace ChessForge
             BoardCommentBox.ShowTabHints();
             InitializeChaptersView();
 
+            // TODO: may have to set this up for Game or Exercise depending on last views config
             SetupGuiForActiveStudyTree(!isChessForgeFile);
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);

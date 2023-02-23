@@ -107,6 +107,7 @@
     <Compile Include="ChapterTitleDialog.xaml.cs">
       <DependentUpon>ChapterTitleDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ChapterViewState.cs" />
     <Compile Include="ChessBoardSmall.cs" />
     <Compile Include="ChessForgeEventArgs.cs" />
     <Compile Include="ContentTypeListItem.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="ScoreSheet.cs" />
     <Compile Include="WorkbookTableState.cs" />
     <Compile Include="WorkbookVersion.cs" />
+    <Compile Include="WorkbookViewState.cs" />
     <Page Include="AboutBoxDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
