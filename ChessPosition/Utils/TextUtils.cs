@@ -16,7 +16,7 @@ namespace ChessPosition
     {
         /// <summary>
         /// Parses the supplied string into tokens split by '.'.
-        /// Somewhere in the string there must be a sequence of 3 numbers in the form of 1.1.1 
+        /// Expects a sequence of 3 numbers in the form of 1.1.1 
         /// or the version string will be considered invalid and will return false.
         /// </summary>
         /// <param name="sVer"></param>
