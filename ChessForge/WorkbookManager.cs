@@ -1119,6 +1119,9 @@ namespace ChessForge
                 return false;
             }
 
+            WorkbookViewState wvs = new WorkbookViewState(SessionWorkbook);
+            wvs.SaveState();
+
             AppState.RestartInIdleMode();
             return true;
         }

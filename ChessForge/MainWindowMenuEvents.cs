@@ -385,6 +385,9 @@ namespace ChessForge
         {
             AppLog.Message("Application Closing");
 
+            WorkbookViewState wvs = new WorkbookViewState(SessionWorkbook);
+            wvs.SaveState();
+
             if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE
                 && AppState.IsDirty || (ActiveVariationTree != null && ActiveVariationTree.HasTrainingMoves()))
             {
