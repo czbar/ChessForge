@@ -32,6 +32,11 @@ namespace ChessForge
         public readonly string APP_NAME = "Chess Forge";
 
         /// <summary>
+        /// Public reference to ChaptersView 
+        /// </summary>
+        public ChaptersView ChaptersView { get => _chaptersView; }
+
+        /// <summary>
         /// The RichTextBox based Chapters view
         /// </summary>
         private ChaptersView _chaptersView;
