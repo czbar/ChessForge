@@ -15,6 +15,29 @@ namespace ChessForge
     public class GuiUtilities
     {
         /// <summary>
+        /// Produces text for user interface from the received ParserExcpetion.
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <returns></returns>
+        public static string TranslateParseException(ParserException ex)
+        {
+            StringBuilder sb = new StringBuilder();
+            switch (ex.ParseError)
+            {
+                case ParserException.ParseErrorType.PGN_GAME_EXPECTED_MOVE_NUMBER:
+                    sb.Append(Properties.Resources.ErrFound 
+                        + " "+ ex.CurrentToken 
+                        + " " + Properties.Resources.ErrInsteadOfMoveNumber 
+                        + ", " + Properties.Resources.ErrAfterMove + " " + ex.PreviousMove);
+                    break;
+                default:
+                    return ex.Message;
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
         /// Builds a line of text for display in the processing errors list.
         /// </summary>
         /// <param name="gm"></param>
