@@ -92,11 +92,11 @@ namespace ChessForge
                 {
                     UiRbDraw.IsChecked = true;
                 }
-                else if (result.StartsWith(Constants.PGN_WHITE_WIN_RESULT))
+                else if (result.StartsWith(Constants.PGN_WHITE_WIN_RESULT) || result.StartsWith(Constants.PGN_WHITE_WIN_RESULT_EX))
                 {
                     UiRbWhiteWin.IsChecked = true;
                 }
-                else if (result.StartsWith(Constants.PGN_BLACK_WIN_RESULT))
+                else if (result.StartsWith(Constants.PGN_BLACK_WIN_RESULT) || result.StartsWith(Constants.PGN_BLACK_WIN_RESULT_EX))
                 {
                     UiRbBlackWin.IsChecked = true;
                 }
