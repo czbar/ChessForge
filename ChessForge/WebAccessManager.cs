@@ -24,19 +24,12 @@ namespace ChessForge
             set => WebAccessExplorersState.IsEnabledExplorerQueries = value;
         }
 
-#if false
-        //TODO: consider and test this
-        public static async void ExplorerRequest(int treeId, TreeNode nd)
-        {
-            await UseDelay();
-#endif
-
-            /// <summary>
-            /// Calls WebAccess with an Explorer Query.
-            /// </summary>
-            /// <param name="treeId"></param>
-            /// <param name="nd"></param>
-            public static void ExplorerRequest(int treeId, TreeNode nd)
+        /// <summary>
+        /// Calls WebAccess with an Explorer Query.
+        /// </summary>
+        /// <param name="treeId"></param>
+        /// <param name="nd"></param>
+        public static void ExplorerRequest(int treeId, TreeNode nd)
         {
             if (nd != null)
             {
