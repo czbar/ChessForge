@@ -215,6 +215,10 @@ namespace ChessPosition
         public const string PGN_DRAW_SHORT_RESULT = "1/2";
         public const string PGN_NO_RESULT = "*";
 
+        // handle variants with long dashes too
+        public const string PGN_WHITE_WIN_RESULT_EX = "1–0";
+        public const string PGN_BLACK_WIN_RESULT_EX = "0–1";
+
         /// <summary>
         /// The bit to store the color in chessboard square's
         /// byte encoding
