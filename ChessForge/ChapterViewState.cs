@@ -148,14 +148,14 @@ namespace ChessForge
 
         /// <summary>
         /// Translates string into a boolean value.
-        /// The string must equal "1" to be considered as representing "true".
+        /// The string must begin with "1" to be considered as representing "true".
         /// Otherwise it is considered to represent false.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
         private bool GetBool(string value)
         {
-            return value != "1";
+            return value != null && value.StartsWith("1");
         }
 
         /// <summary>
