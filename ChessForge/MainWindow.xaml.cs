@@ -5,6 +5,7 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -1269,8 +1270,28 @@ namespace ChessForge
 
             // if this is a new session we will set ActiveChapter to the first chapter
             // and Active Tree to the Study Tree in that chapter.
-            // TODO: we have to set this up according to the last views config
-            WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(0, GameData.ContentType.STUDY_TREE);
+
+            switch (AppState.ActiveTab)
+            {
+                case WorkbookManager.TabViewType.MODEL_GAME:
+                    WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(
+                        Math.Max(0, WorkbookManager.SessionWorkbook.ActiveChapterIndex),
+                        GameData.ContentType.MODEL_GAME,
+                        WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex);
+                    break;
+                case WorkbookManager.TabViewType.EXERCISE:
+                    WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(
+                        Math.Max(0, WorkbookManager.SessionWorkbook.ActiveChapterIndex),
+                        GameData.ContentType.EXERCISE,
+                        WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex);
+                    break;
+                default:
+                    WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(
+                        Math.Max(0, WorkbookManager.SessionWorkbook.ActiveChapterIndex), 
+                        GameData.ContentType.STUDY_TREE);
+                    break;
+            }
+
             AppState.UpdateAppTitleBar();
             BoardCommentBox.ShowTabHints();
 
@@ -1289,14 +1310,17 @@ namespace ChessForge
             BoardCommentBox.ShowTabHints();
             InitializeChaptersView();
 
-            // TODO: may have to set this up for Game or Exercise depending on last views config
+            // build study tree but do not focus
             SetupGuiForActiveStudyTree(!isChessForgeFile);
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
             if (isChessForgeFile)
             {
-                UiTabChapters.Focus();
-                SetupGuiForChapters();
+                if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+                {
+                    UiTabChapters.Focus();
+                    SetupGuiForChapters();
+                }
             }
         }
 
