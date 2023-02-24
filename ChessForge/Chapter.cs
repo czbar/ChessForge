@@ -267,11 +267,20 @@ namespace ChessForge
 
         /// <summary>
         /// Number of this chapter.
+        /// TODO: DEPRECATE in favor of Index
         /// </summary>
         public int Id
         {
             get => _id;
             set => _id = value;
+        }
+
+        /// <summary>
+        /// Position of this chapter on the workbook's list of chapters.
+        /// </summary>
+        public int Index
+        {
+            get => WorkbookManager.SessionWorkbook.GetChapterIndex(this);
         }
 
         /// <summary>
@@ -295,7 +304,7 @@ namespace ChessForge
             }
             else
             {
-                return Properties.Resources.Chapter + " " + Id.ToString();
+                return Properties.Resources.Chapter + " " + (Index + 1).ToString();
             }
         }
 
