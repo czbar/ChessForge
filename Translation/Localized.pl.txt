@@ -269,7 +269,7 @@ GameExerciseReferences=Odsyłacze do Partii i Ćwiczeń
 ErrFound=Znaleziono
 
 #description: Instead of a move number
-#english: ErrInsteadOfMoveNumber=instead of a move number 
+#english: ErrInsteadOfMoveNumber=instead of a move number
 ErrInsteadOfMoveNumber=zamiast numeru posunięcia
 
 #description: After move
@@ -404,6 +404,15 @@ DlgTitleIdenticalPositions=Lista Identycznych Pozycji
 #description:  Label explaining clicks in the Identical Positions dialog.
 #english: DlgLabelIdenticalPositionHint=Double click an item to open its view.
 DlgLabelIdenticalPositionHint=Kliknij podwójnie element aby otworzyć jego widok.
+
+#description: Parsing Errors
+#english: DlgParseErrors=Parsing Errors
+DlgParseErrors=Błędy przetwarzania zapisu
+
+#description: Merge Errors
+#english: DlgMergeErrors=Merge Errors
+DlgMergeErrors=Błędy przetwarzania zapisu
+
 
 #description: Message about identical position not found
 #english: MsgNoIdenticalPositions=No identical positions found.

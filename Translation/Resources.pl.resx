@@ -393,6 +393,12 @@
   <data name="DlgLabelIdenticalPositionHint" xml:space="preserve">
     <value>Kliknij podwójnie element aby otworzyć jego widok.</value>
   </data>
+  <data name="DlgParseErrors" xml:space="preserve">
+    <value>Błędy przetwarzania zapisu</value>
+  </data>
+  <data name="DlgMergeErrors" xml:space="preserve">
+    <value>Błędy przetwarzania zapisu</value>
+  </data>
   <data name="MsgNoIdenticalPositions" xml:space="preserve">
     <value>No identical positions found.</value>
   </data>

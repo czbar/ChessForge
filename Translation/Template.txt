@@ -405,6 +405,15 @@ DlgTitleIdenticalPositions=
 #english: DlgLabelIdenticalPositionHint=Double click an item to open its view.
 DlgLabelIdenticalPositionHint=
 
+#description: Parsing Errors
+#english: DlgParseErrors=Parsing Errors
+DlgParseErrors=
+
+#description: Merge Errors
+#english: DlgMergeErrors=Merge Errors
+DlgMergeErrors=
+
+
 #description: Message about identical position not found
 #english: MsgNoIdenticalPositions=No identical positions found.
 MsgNoIdenticalPositions=

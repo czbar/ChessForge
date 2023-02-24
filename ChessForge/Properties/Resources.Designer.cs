@@ -1105,6 +1105,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Merge Errors.
+        /// </summary>
+        public static string DlgMergeErrors {
+            get {
+                return ResourceManager.GetString("DlgMergeErrors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parsing Errors.
+        /// </summary>
+        public static string DlgParseErrors {
+            get {
+                return ResourceManager.GetString("DlgParseErrors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application Options.
         /// </summary>
         public static string DlgTitleApplicationOptions {

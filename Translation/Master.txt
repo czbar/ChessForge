@@ -313,6 +313,13 @@ DlgTitleIdenticalPositions=List of Identical Positions
 # Label explaining clicks in the Identical Positions dialog.
 DlgLabelIdenticalPositionHint=Double click an item to open its view.
 
+#Parsing Errors
+DlgParseErrors=Parsing Errors
+
+#Merge Errors
+DlgMergeErrors=Merge Errors
+
+
 #Message about identical position not found
 MsgNoIdenticalPositions=No identical positions found.
 
