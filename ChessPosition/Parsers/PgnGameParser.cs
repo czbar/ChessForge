@@ -254,9 +254,11 @@ namespace GameTree
             if (string.IsNullOrEmpty(s))
                 return true;
 
-            if (s == Constants.PGN_NO_RESULT
-                || s == Constants.PGN_WHITE_WIN_RESULT
-                || s == Constants.PGN_BLACK_WIN_RESULT
+            if (s.StartsWith(Constants.PGN_NO_RESULT)
+                || s.StartsWith(Constants.PGN_WHITE_WIN_RESULT)
+                || s.StartsWith(Constants.PGN_WHITE_WIN_RESULT_EX)
+                || s.StartsWith(Constants.PGN_BLACK_WIN_RESULT)
+                || s.StartsWith(Constants.PGN_BLACK_WIN_RESULT_EX)
                 || s.StartsWith(Constants.PGN_DRAW_SHORT_RESULT))
                 return true;
 
@@ -448,6 +450,13 @@ namespace GameTree
         {
             // the token is in the format of integer followed by one or 3 dots
             int dotPos = token.IndexOf('.');
+            if (dotPos < 0)
+            {
+                ParserException ex = new ParserException(ParserException.ParseErrorType.PGN_GAME_EXPECTED_MOVE_NUMBER, token);
+                ex.PreviousMove = parent.LastMoveAlgebraicNotation;
+                throw ex;
+            }
+
             string num = token.Substring(0, dotPos);
             uint moveNo = uint.Parse(num);
             int dotCount = token.Length - dotPos;
