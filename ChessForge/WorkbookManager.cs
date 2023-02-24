@@ -785,7 +785,7 @@ namespace ChessForge
                             chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, out errorString, GameData.ContentType.MODEL_GAME);
                             if (!string.IsNullOrEmpty(errorString))
                             {
-                                sbErrors.AppendLine(BuildGameParseErrorText(chapter, itemIndex+1, gd, errorString));
+                                sbErrors.AppendLine(BuildGameParseErrorText(chapter, itemIndex + 1, gd, errorString));
                                 errorCount++;
                             }
                         }
@@ -848,7 +848,7 @@ namespace ChessForge
 
                     if (ex is ParserException)
                     {
-                         message = GuiUtilities.TranslateParseException(ex as ParserException);
+                        message = GuiUtilities.TranslateParseException(ex as ParserException);
                     }
                     else
                     {
@@ -955,7 +955,7 @@ namespace ChessForge
 
             if (chapter != null)
             {
-                sb.Append(Properties.Resources.Chapter + " " + chapter.Id.ToString() + ": " + game.GetContentType().ToString() + ": " + game.Header.BuildGameHeaderLine(false));
+                sb.Append(Properties.Resources.Chapter + " " + (chapter.Index + 1).ToString() + ": " + game.GetContentType().ToString() + ": " + game.Header.BuildGameHeaderLine(false));
             }
             else
             {
