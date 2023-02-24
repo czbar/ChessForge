@@ -297,6 +297,15 @@
   <data name="GameExerciseReferences" xml:space="preserve">
     <value>Odsyłacze do Partii i Ćwiczeń</value>
   </data>
+  <data name="ErrFound" xml:space="preserve">
+    <value>Znaleziono</value>
+  </data>
+  <data name="ErrInsteadOfMoveNumber" xml:space="preserve">
+    <value>zamiast numeru posunięcia</value>
+  </data>
+  <data name="ErrAfterMove" xml:space="preserve">
+    <value>po ruchu</value>
+  </data>
   <data name="File" xml:space="preserve">
     <value>Plik</value>
   </data>
@@ -355,7 +364,7 @@
     <value>Edytuj</value>
   </data>
   <data name="Annotations" xml:space="preserve">
-    <value>Anotacje</value>
+    <value>Komentarz</value>
   </data>
   <data name="MergeChapters" xml:space="preserve">
     <value>Połącz Rozdziały</value>
@@ -1078,7 +1087,7 @@
     <value>Decyduje o pewnych domyślnych ustawieniach</value>
   </data>
   <data name="TooltipWorkbookVersion" xml:space="preserve">
-    <value>Wybierz Plik-&gt;Zrób Kopię tej Wersji by zwiększyć numer wersji</value>
+    <value>Wybierz Plik-&gt;Zrób Kopię tej Wersji, by zwiększyć numer wersji</value>
   </data>
   <data name="PgnErrors" xml:space="preserve">
     <value>Błąd w pliku PGN</value>
@@ -1258,7 +1267,7 @@
     <value>Prawy przycisk myszki wywoła menu.  </value>
   </data>
   <data name="cbUseMenuToOpenWorkbook" xml:space="preserve">
-    <value>Użyj opcji Plik w menu by otworzyć podręcznik.</value>
+    <value>Użyj opcji Plik w menu, by otworzyć podręcznik.</value>
   </data>
   <data name="cbJustPicture" xml:space="preserve">
     <value>To tylko ilustracja! Rób ruchy na głównej szachownicy.</value>
@@ -1267,46 +1276,46 @@
     <value>Niektóre dostępne czynności:</value>
   </data>
   <data name="cbClickStudyHeader" xml:space="preserve">
-    <value>Kliknij nagłówek Teoria, albo dwukrotnie kliknij tytuł rozdziału by otworzyć Teorię </value>
+    <value>Kliknij nagłówek Teoria, albo dwukrotnie kliknij tytuł rozdziału, by otworzyć Teorię </value>
   </data>
   <data name="cbClickForContextMenu" xml:space="preserve">
-    <value>Naciśnij prawy przycisk by wywołać menu</value>
+    <value>Naciśnij prawy przycisk, by wywołać menu</value>
   </data>
   <data name="cbClickThruMoves" xml:space="preserve">
     <value>Kliknij na dowolne posunięcie</value>
   </data>
   <data name="cbDoubleClickToAnnotate" xml:space="preserve">
-    <value>Dwukrotnie kliknij by wprowadzić anotacje</value>
+    <value>Dwukrotnie kliknij, by wprowadzić komentarz</value>
   </data>
   <data name="cbAdvancedEditig" xml:space="preserve">
-    <value>Naciśnij prawy przycisk by wywołać menu do edycji, kopiowania FEN i inne</value>
+    <value>Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowania FEN i inne</value>
   </data>
   <data name="cbDoubleClickAutoReplay" xml:space="preserve">
-    <value>Dwukrotnie kliknij w Zapisie by rozpocząć auto-odtwarzanie</value>
+    <value>Dwukrotnie kliknij posunięcie w Zapisie, by rozpocząć auto-odtwarzanie</value>
   </data>
   <data name="cbClickBookmarkToTrain" xml:space="preserve">
-    <value>Kliknij zakładkę aby przejść do zapamiętanej pozycji </value>
+    <value>Kliknij zakładkę, aby przejść do zapamiętanej pozycji </value>
   </data>
   <data name="cbRightClickBookmarkManager" xml:space="preserve">
-    <value>Naciśnij prawy przycisk by otworzyć menu zakładek</value>
+    <value>Naciśnij prawy przycisk, by otworzyć menu zakładek</value>
   </data>
   <data name="cbRightClickCreateGame" xml:space="preserve">
-    <value>Naciśnij prawy przycisk by otworzyć menu partii</value>
+    <value>Naciśnij prawy przycisk, by otworzyć menu partii</value>
   </data>
   <data name="cbRightClickCreateExercise" xml:space="preserve">
-    <value>Naciśnij prawy przycisk by otworzyć menu ćwiczeń</value>
+    <value>Naciśnij prawy przycisk, by otworzyć menu ćwiczeń</value>
   </data>
   <data name="cbMoveToEnterSolution" xml:space="preserve">
-    <value>Użyj głównej szachownicy by wprowadzić rozwiązanie</value>
+    <value>Użyj głównej szachownicy, by wprowadzić rozwiązanie</value>
   </data>
   <data name="cbDoubleClickToAssignPoints" xml:space="preserve">
-    <value>Dwukrotnie kliknij by nadać punkty do quizu</value>
+    <value>Dwukrotnie kliknij, by nadać punkty do quizu</value>
   </data>
   <data name="cbSelectSolvingMove" xml:space="preserve">
     <value>Wybierz tryb rozwiązania</value>
   </data>
   <data name="cbRightClickEditExercise" xml:space="preserve">
-    <value>Naciśnij prawy przycisk by otworzyć menu ćwiczeń</value>
+    <value>Naciśnij prawy przycisk, by otworzyć menu ćwiczeń</value>
   </data>
   <data name="cbShowSolution" xml:space="preserve">
     <value>Pokaż rozwiązanie</value>
@@ -1324,7 +1333,7 @@
     <value>Trwa auto-odtwarzanie...</value>
   </data>
   <data name="cbClickToStop" xml:space="preserve">
-    <value>Kliknij dowolny ruch by zatrzymać.</value>
+    <value>Kliknij dowolny ruch, by zatrzymać.</value>
   </data>
   <data name="cbTrainingStarted" xml:space="preserve">
     <value>Trening się rozpoczął.</value>

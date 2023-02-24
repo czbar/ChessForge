@@ -259,6 +259,24 @@ Stalemate=
 GameExerciseReferences=
 
 
+##################################
+#
+# ERRORS
+#
+
+#description: Found
+#english: ErrFound=Found
+ErrFound=
+
+#description: Instead of a move number
+#english: ErrInsteadOfMoveNumber=instead of a move number
+ErrInsteadOfMoveNumber=
+
+#description: After move
+#english: ErrAfterMove=after move
+ErrAfterMove=
+
+
 #
 # MAIN MENU
 #

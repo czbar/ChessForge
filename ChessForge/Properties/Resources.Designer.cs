@@ -1294,6 +1294,33 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to after move.
+        /// </summary>
+        public static string ErrAfterMove {
+            get {
+                return ResourceManager.GetString("ErrAfterMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Found.
+        /// </summary>
+        public static string ErrFound {
+            get {
+                return ResourceManager.GetString("ErrFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to instead of a move number.
+        /// </summary>
+        public static string ErrInsteadOfMoveNumber {
+            get {
+                return ResourceManager.GetString("ErrInsteadOfMoveNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {

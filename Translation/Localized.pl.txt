@@ -259,6 +259,24 @@ Stalemate=pat
 GameExerciseReferences=Odsyłacze do Partii i Ćwiczeń
 
 
+##################################
+#
+# ERRORS
+#
+
+#description: Found
+#english: ErrFound=Found
+ErrFound=Znaleziono
+
+#description: Instead of a move number
+#english: ErrInsteadOfMoveNumber=instead of a move number 
+ErrInsteadOfMoveNumber=zamiast numeru posunięcia
+
+#description: After move
+#english: ErrAfterMove=after move
+ErrAfterMove=po ruchu
+
+
 #
 # MAIN MENU
 #
