@@ -1105,6 +1105,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Merge Errors.
+        /// </summary>
+        public static string DlgMergeErrors {
+            get {
+                return ResourceManager.GetString("DlgMergeErrors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parsing Errors.
+        /// </summary>
+        public static string DlgParseErrors {
+            get {
+                return ResourceManager.GetString("DlgParseErrors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application Options.
         /// </summary>
         public static string DlgTitleApplicationOptions {
@@ -1290,6 +1308,33 @@ namespace ChessForge.Properties {
         public static string EnterAnalysis {
             get {
                 return ResourceManager.GetString("EnterAnalysis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to after move.
+        /// </summary>
+        public static string ErrAfterMove {
+            get {
+                return ResourceManager.GetString("ErrAfterMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Found.
+        /// </summary>
+        public static string ErrFound {
+            get {
+                return ResourceManager.GetString("ErrFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to instead of a move number.
+        /// </summary>
+        public static string ErrInsteadOfMoveNumber {
+            get {
+                return ResourceManager.GetString("ErrInsteadOfMoveNumber", resourceCulture);
             }
         }
         

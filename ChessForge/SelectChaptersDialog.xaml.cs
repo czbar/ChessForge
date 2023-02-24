@@ -42,11 +42,13 @@ namespace ChessForge
         {
             _workbook = workbook;
 
+            int index = 0;
             foreach (Chapter ch in _workbook.Chapters)
             {
+                index++;
                 SelectedChapter sel = new SelectedChapter();
                 sel.Chapter = ch;
-                sel.ChapterTitle = ch.Id.ToString() + ". " + ch.GetTitle();
+                sel.ChapterTitle = index.ToString() + ". " + ch.GetTitle();
                 sel.IsSelected = true;
                 ChapterList.Add(sel);
             }

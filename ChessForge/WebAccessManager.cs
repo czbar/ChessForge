@@ -24,19 +24,12 @@ namespace ChessForge
             set => WebAccessExplorersState.IsEnabledExplorerQueries = value;
         }
 
-#if false
-        //TODO: consider and test this
-        public static async void ExplorerRequest(int treeId, TreeNode nd)
-        {
-            await UseDelay();
-#endif
-
-            /// <summary>
-            /// Calls WebAccess with an Explorer Query.
-            /// </summary>
-            /// <param name="treeId"></param>
-            /// <param name="nd"></param>
-            public static void ExplorerRequest(int treeId, TreeNode nd)
+        /// <summary>
+        /// Calls WebAccess with an Explorer Query.
+        /// </summary>
+        /// <param name="treeId"></param>
+        /// <param name="nd"></param>
+        public static void ExplorerRequest(int treeId, TreeNode nd)
         {
             if (nd != null)
             {
@@ -88,17 +81,6 @@ namespace ChessForge
             TablebaseExplorer.TablebaseReceived += ExplorerRequestCompleted;
             WebAccessExplorersState.IsExplorerQueriesInitialized = true;
         }
-
-#if false // TODO: consider and test this
-        private static async void ExplorerRequestCompleted(object sender, WebAccessEventArgs e)
-        {
-            WebAccessExplorersState.IsExplorerRequestInProgress = false;
-
-            // check if we have anything queued and if so run it
-            if (WebAccessExplorersState.QueuedNode != null)
-            {
-                await UseDelay();
-#endif
 
         /// <summary>
         /// Delegate listening to the Explorer request completed events.

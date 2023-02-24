@@ -259,6 +259,24 @@ Stalemate=
 GameExerciseReferences=
 
 
+##################################
+#
+# ERRORS
+#
+
+#description: Found
+#english: ErrFound=Found
+ErrFound=
+
+#description: Instead of a move number
+#english: ErrInsteadOfMoveNumber=instead of a move number
+ErrInsteadOfMoveNumber=
+
+#description: After move
+#english: ErrAfterMove=after move
+ErrAfterMove=
+
+
 #
 # MAIN MENU
 #
@@ -386,6 +404,15 @@ DlgTitleIdenticalPositions=
 #description:  Label explaining clicks in the Identical Positions dialog.
 #english: DlgLabelIdenticalPositionHint=Double click an item to open its view.
 DlgLabelIdenticalPositionHint=
+
+#description: Parsing Errors
+#english: DlgParseErrors=Parsing Errors
+DlgParseErrors=
+
+#description: Merge Errors
+#english: DlgMergeErrors=Merge Errors
+DlgMergeErrors=
+
 
 #description: Message about identical position not found
 #english: MsgNoIdenticalPositions=No identical positions found.

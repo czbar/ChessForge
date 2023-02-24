@@ -297,6 +297,15 @@
   <data name="GameExerciseReferences" xml:space="preserve">
     <value>Game and Exercise References</value>
   </data>
+  <data name="ErrFound" xml:space="preserve">
+    <value>Found</value>
+  </data>
+  <data name="ErrInsteadOfMoveNumber" xml:space="preserve">
+    <value>instead of a move number</value>
+  </data>
+  <data name="ErrAfterMove" xml:space="preserve">
+    <value>after move</value>
+  </data>
   <data name="File" xml:space="preserve">
     <value>File</value>
   </data>
@@ -383,6 +392,12 @@
   </data>
   <data name="DlgLabelIdenticalPositionHint" xml:space="preserve">
     <value>Double click an item to open its view.</value>
+  </data>
+  <data name="DlgParseErrors" xml:space="preserve">
+    <value>Parsing Errors</value>
+  </data>
+  <data name="DlgMergeErrors" xml:space="preserve">
+    <value>Merge Errors</value>
   </data>
   <data name="MsgNoIdenticalPositions" xml:space="preserve">
     <value>No identical positions found.</value>

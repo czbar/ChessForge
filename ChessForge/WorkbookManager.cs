@@ -745,7 +745,13 @@ namespace ChessForge
         /// <param name="games"></param>
         public static void CreateChaptersFromSelectedItems(Chapter chapter, bool multiChapter, bool createStudy, bool copyGames, ObservableCollection<GameData> games)
         {
+            StringBuilder sbErrors = new StringBuilder();
             bool firstChapter = true;
+
+            string errorString = "";
+            int errorCount = 0;
+            int chapterIndex = 0;
+            int itemIndex = 0;
 
             foreach (GameData gd in games)
             {
@@ -756,25 +762,51 @@ namespace ChessForge
                         if (!firstChapter && multiChapter)
                         {
                             chapter = SessionWorkbook.CreateNewChapter();
+                            chapterIndex++;
                         }
 
                         if (createStudy)
                         {
-                            chapter.AddArticle(gd, GameData.ContentType.STUDY_TREE, out _, GameData.ContentType.STUDY_TREE);
+                            chapter.AddArticle(gd, GameData.ContentType.STUDY_TREE, out errorString, GameData.ContentType.STUDY_TREE);
                             chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
+                            if (!string.IsNullOrEmpty(errorString))
+                            {
+                                if (multiChapter)
+                                {
+                                    sbErrors.AppendLine(Properties.Resources.Chapter + " " + (chapterIndex - 1).ToString() + ": ");
+                                }
+                                sbErrors.AppendLine(Properties.Resources.Study + ": " + errorString);
+                                errorCount++;
+                            }
                         }
 
                         if (copyGames)
                         {
-                            chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, out _, GameData.ContentType.MODEL_GAME);
+                            chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, out errorString, GameData.ContentType.MODEL_GAME);
+                            if (!string.IsNullOrEmpty(errorString))
+                            {
+                                sbErrors.AppendLine(BuildGameParseErrorText(chapter, itemIndex + 1, gd, errorString));
+                                errorCount++;
+                            }
                         }
                         firstChapter = false;
                     }
                     else if (gd.GetContentType() == GameData.ContentType.EXERCISE)
                     {
-                        chapter.AddArticle(gd, GameData.ContentType.EXERCISE, out _, GameData.ContentType.EXERCISE);
+                        chapter.AddArticle(gd, GameData.ContentType.EXERCISE, out errorString, GameData.ContentType.EXERCISE);
+                        if (!string.IsNullOrEmpty(errorString))
+                        {
+                            sbErrors.AppendLine(BuildGameParseErrorText(chapter, itemIndex + 1, gd, errorString));
+                            errorCount++;
+                        }
                     }
+                    itemIndex++;
                 }
+            }
+
+            if (errorCount > 0)
+            {
+                ShowPgnProcessingErrors(Properties.Resources.DlgParseErrors, ref sbErrors);
             }
         }
 
@@ -812,13 +844,23 @@ namespace ChessForge
                 catch (Exception ex)
                 {
                     errorCount++;
-                    sbErrors.AppendLine(BuildGameParseErrorText(chapter, i + 1, GameList[i], ex.Message));
+                    string message;
+
+                    if (ex is ParserException)
+                    {
+                        message = GuiUtilities.TranslateParseException(ex as ParserException);
+                    }
+                    else
+                    {
+                        message = ex.Message;
+                    }
+                    sbErrors.AppendLine(BuildGameParseErrorText(chapter, i + 1, GameList[i], message));
                 }
             }
 
             if (errorCount > 0)
             {
-                ShowPgnProcessingErrors("Workbook Parsing Errors", ref sbErrors);
+                ShowPgnProcessingErrors(Properties.Resources.DlgMergeErrors, ref sbErrors);
             }
         }
 
@@ -866,8 +908,17 @@ namespace ChessForge
                             }
                             catch (Exception ex)
                             {
-                                sbErrors.AppendLine(BuildGameParseErrorText(null, i + 1, games[i], ex.Message));
+                                string message;
                                 errorCount++;
+                                if (ex is ParserException)
+                                {
+                                    message = GuiUtilities.TranslateParseException(ex as ParserException);
+                                }
+                                else
+                                {
+                                    message = ex.Message;
+                                }
+                                sbErrors.AppendLine(BuildGameParseErrorText(null, i + 1, games[i], message));
                             }
                             tree = WorkbookTreeMerge.MergeWorkbooks(tree, workbook2);
                             mergedCount++;
@@ -876,7 +927,7 @@ namespace ChessForge
                 }
                 if (errorCount > 0)
                 {
-                    ShowPgnProcessingErrors("Merge Errors", ref sbErrors);
+                    ShowPgnProcessingErrors(Properties.Resources.DlgMergeErrors, ref sbErrors);
                 }
             }
             catch
@@ -904,7 +955,7 @@ namespace ChessForge
 
             if (chapter != null)
             {
-                sb.Append(Properties.Resources.Chapter + " " + chapter.Id.ToString() + ": " + game.GetContentType().ToString() + ": " + game.Header.BuildGameHeaderLine(false));
+                sb.Append(Properties.Resources.Chapter + " " + (chapter.Index + 1).ToString() + ": " + game.GetContentType().ToString() + ": " + game.Header.BuildGameHeaderLine(false));
             }
             else
             {
