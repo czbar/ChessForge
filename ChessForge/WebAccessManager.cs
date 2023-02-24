@@ -82,17 +82,6 @@ namespace ChessForge
             WebAccessExplorersState.IsExplorerQueriesInitialized = true;
         }
 
-#if false // TODO: consider and test this
-        private static async void ExplorerRequestCompleted(object sender, WebAccessEventArgs e)
-        {
-            WebAccessExplorersState.IsExplorerRequestInProgress = false;
-
-            // check if we have anything queued and if so run it
-            if (WebAccessExplorersState.QueuedNode != null)
-            {
-                await UseDelay();
-#endif
-
         /// <summary>
         /// Delegate listening to the Explorer request completed events.
         /// </summary>
