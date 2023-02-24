@@ -812,7 +812,17 @@ namespace ChessForge
                 catch (Exception ex)
                 {
                     errorCount++;
-                    sbErrors.AppendLine(BuildGameParseErrorText(chapter, i + 1, GameList[i], ex.Message));
+                    string message;
+
+                    if (ex is ParserException)
+                    {
+                         message = GuiUtilities.TranslateParseException(ex as ParserException);
+                    }
+                    else
+                    {
+                        message = ex.Message;
+                    }
+                    sbErrors.AppendLine(BuildGameParseErrorText(chapter, i + 1, GameList[i], message));
                 }
             }
 
@@ -866,8 +876,17 @@ namespace ChessForge
                             }
                             catch (Exception ex)
                             {
-                                sbErrors.AppendLine(BuildGameParseErrorText(null, i + 1, games[i], ex.Message));
+                                string message;
                                 errorCount++;
+                                if (ex is ParserException)
+                                {
+                                    message = GuiUtilities.TranslateParseException(ex as ParserException);
+                                }
+                                else
+                                {
+                                    message = ex.Message;
+                                }
+                                sbErrors.AppendLine(BuildGameParseErrorText(null, i + 1, games[i], message));
                             }
                             tree = WorkbookTreeMerge.MergeWorkbooks(tree, workbook2);
                             mergedCount++;
