@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace GameTree
 {
@@ -338,6 +340,28 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the existing GUID or generates one if not found.
+        /// </summary>
+        /// <param name="generated">whether guid existed or was generated</param>
+        /// <returns>guid string</returns>
+        public string GetOrGenerateGuid(out bool generated)
+        {
+            generated = false;
+
+            string headerKey = PgnHeaders.KEY_GUID;
+
+            string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            if (string.IsNullOrEmpty(value))
+            {
+                value = Guid.NewGuid().ToString();
+                SetHeaderValue(PgnHeaders.KEY_GUID, value);
+                generated = true;
+            }
+
+            return value;
+        }
+
+        /// <summary>
         /// Returns the training side value.
         /// </summary>
         /// <returns></returns>
@@ -360,7 +384,6 @@ namespace GameTree
             key = headerKey;
             return _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
         }
-
 
         /// <summary>
         /// Returns the default chessboard orientation for the Games view.

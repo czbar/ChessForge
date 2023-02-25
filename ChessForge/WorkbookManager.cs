@@ -806,6 +806,11 @@ namespace ChessForge
                 {
                     chapter = workbook.CreateNewChapter();
                     chapter.SetTitle(gm.Header.GetChapterTitle());
+                    chapter.Guid = gm.Header.GetOrGenerateGuid(out bool generated);
+                    if (generated)
+                    {
+                        AppState.IsDirty = true;
+                    }
                 }
 
                 try

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 
 namespace ChessForge
@@ -32,6 +33,29 @@ namespace ChessForge
         /// The list of Exercises Tress.
         /// </summary>
         public List<Article> Exercises = new List<Article>();
+
+        /// <summary>
+        /// The Guid of the Workbook.
+        /// Generates a guid if empty.
+        /// </summary>
+        public string Guid
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_guid))
+                {
+                    _guid = System.Guid.NewGuid().ToString();
+                }
+                return _guid;
+            }
+            set
+            {
+                _guid = value;
+            }
+        }
+
+        // guid of this chapter
+        private string _guid;
 
         // title of this chapter
         private string _title;
