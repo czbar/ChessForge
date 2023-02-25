@@ -341,15 +341,6 @@ namespace GameTree
         /// Returns the training side value.
         /// </summary>
         /// <returns></returns>
-        public string GetChapterId()
-        {
-            return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_CHAPTER_ID).FirstOrDefault().Value;
-        }
-
-        /// <summary>
-        /// Returns the training side value.
-        /// </summary>
-        /// <returns></returns>
         public string GetTrainingSide(out string key)
         {
             string headerKey = PgnHeaders.KEY_TRAINING_SIDE;
@@ -514,23 +505,6 @@ namespace GameTree
         public string GetFenString()
         {
             return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_FEN_STRING).FirstOrDefault().Value;
-        }
-
-        /// <summary>
-        /// Returns the number of the chapter or 0 if not found or invalid.
-        /// </summary>
-        /// <returns></returns>
-        public int GetChapterNumber()
-        {
-            string sChapterNo = _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_CHAPTER_ID).FirstOrDefault().Value;
-            if (int.TryParse(sChapterNo, out int chapterNumber))
-            {
-                return chapterNumber;
-            }
-            else
-            {
-                return 0;
-            }
         }
 
         /// <summary>

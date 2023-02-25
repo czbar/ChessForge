@@ -33,9 +33,6 @@ namespace ChessForge
         /// </summary>
         public List<Article> Exercises = new List<Article>();
 
-        // number of this chapter
-        private int _id;
-
         // title of this chapter
         private string _title;
 
@@ -263,16 +260,6 @@ namespace ChessForge
                     _activeArticle = null;
                     break;
             }
-        }
-
-        /// <summary>
-        /// Number of this chapter.
-        /// TODO: DEPRECATE in favor of Index
-        /// </summary>
-        public int Id
-        {
-            get => _id;
-            set => _id = value;
         }
 
         /// <summary>

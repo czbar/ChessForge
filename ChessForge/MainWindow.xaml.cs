@@ -668,21 +668,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Selects the chapter given its Id.
-        /// </summary>
-        /// <param name="chapterId"></param>
-        public void SelectChapterById(int chapterId, bool focusOnStudyTree)
-        {
-            if (chapterId >= 0)
-            {
-                WorkbookManager.SessionWorkbook.SetActiveChapterTreeById(chapterId, GameData.ContentType.STUDY_TREE);
-                ClearTabViews();
-                _chaptersView.HighlightActiveChapter();
-                SetupGuiForActiveStudyTree(focusOnStudyTree);
-            }
-        }
-
-        /// <summary>
         /// Selects the chapter given its index.
         /// </summary>
         /// <param name="chapterIndex"></param>
@@ -1216,15 +1201,7 @@ namespace ChessForge
                     case ".pgn":
                         WorkbookManager.ReadPgnFile(fileName, ref GameList, GameData.ContentType.GENERIC, GameData.ContentType.NONE);
                         bool res = WorkbookManager.PrepareWorkbook(ref GameList, out isChessForgeFile);
-                        if (res)
-                        {
-                            WorkbookManager.AssignChaptersIds(ref WorkbookManager.SessionWorkbook);
-                            acceptFile = true;
-                        }
-                        else
-                        {
-                            acceptFile = false;
-                        }
+                        acceptFile = res;
                         break;
                     default:
                         MessageBox.Show(Properties.Resources.UnrecognizedFileFormat + " " + fileName, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -1287,7 +1264,7 @@ namespace ChessForge
                     break;
                 default:
                     WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(
-                        Math.Max(0, WorkbookManager.SessionWorkbook.ActiveChapterIndex), 
+                        Math.Max(0, WorkbookManager.SessionWorkbook.ActiveChapterIndex),
                         GameData.ContentType.STUDY_TREE);
                     break;
             }

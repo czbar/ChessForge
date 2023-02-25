@@ -80,12 +80,6 @@ namespace GameTree
         /// The number of a chapter. The same number may appear in multiple
         /// Variation Trees thus organizing them into chapters.
         /// </summary>
-        public const string KEY_CHAPTER_ID = "ChapterId";
-
-        /// <summary>
-        /// The number of a chapter. The same number may appear in multiple
-        /// Variation Trees thus organizing them into chapters.
-        /// </summary>
         public const string KEY_CHAPTER_TITLE = "ChapterTitle";
 
         /// <summary>
