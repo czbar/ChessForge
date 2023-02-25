@@ -16,16 +16,16 @@ namespace ChessForge
         /// <summary>
         /// Chapter ID
         /// </summary>
-        public int ChapterId;
+        public int ChapterIndex;
 
         /// <summary>
         /// Content Type of the Run to bring into view
         /// </summary>
         public GameData.ContentType ContentType;
 
-        public ChaptersViewRunAttrs(int _chapterId, GameData.ContentType _contentType)
+        public ChaptersViewRunAttrs(int _chapterIndex, GameData.ContentType _contentType)
         {
-            ChapterId = _chapterId;
+            ChapterIndex = _chapterIndex;
             ContentType = _contentType;
         }
     }

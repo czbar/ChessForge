@@ -178,15 +178,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Returns the number of the chapter or 0 if not found or invalid.
-        /// </summary>
-        /// <returns></returns>
-        public int GetChapterNumber()
-        {
-            return Header.GetChapterNumber();
-        }
-
-        /// <summary>
         /// Index of the first line in the PGN file where this game starts
         /// (to be precise, the first empty line after the previous game)
         /// </summary>

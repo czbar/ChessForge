@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 
 namespace ChessForge
@@ -33,8 +34,28 @@ namespace ChessForge
         /// </summary>
         public List<Article> Exercises = new List<Article>();
 
-        // number of this chapter
-        private int _id;
+        /// <summary>
+        /// The Guid of the Workbook.
+        /// Generates a guid if empty.
+        /// </summary>
+        public string Guid
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_guid))
+                {
+                    _guid = System.Guid.NewGuid().ToString();
+                }
+                return _guid;
+            }
+            set
+            {
+                _guid = value;
+            }
+        }
+
+        // guid of this chapter
+        private string _guid;
 
         // title of this chapter
         private string _title;
@@ -263,16 +284,6 @@ namespace ChessForge
                     _activeArticle = null;
                     break;
             }
-        }
-
-        /// <summary>
-        /// Number of this chapter.
-        /// TODO: DEPRECATE in favor of Index
-        /// </summary>
-        public int Id
-        {
-            get => _id;
-            set => _id = value;
         }
 
         /// <summary>

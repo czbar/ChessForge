@@ -171,7 +171,7 @@ namespace ChessForge
 
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     AppState.DoEvents();
-                    _chaptersView.BringChapterIntoView(WorkbookManager.GetLastChapterId(WorkbookManager.SessionWorkbook));
+                    _chaptersView.BringChapterIntoView(WorkbookManager.SessionWorkbook.GetChapterCount() - 1);
                 }
 
                 AppState.IsDirty = mergedCount > 1;
@@ -701,13 +701,13 @@ namespace ChessForge
         {
             if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
             {
-                WorkbookManager.LastClickedChapterId = WorkbookManager.SessionWorkbook.ActiveChapter.Id;
+                WorkbookManager.LastClickedChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapter.Index;
             }
             else
             {
-                WorkbookManager.LastClickedChapterId = -1;
+                WorkbookManager.LastClickedChapterIndex = -1;
             }
-            WorkbookManager.EnableChaptersContextMenuItems(_cmChapters, WorkbookManager.LastClickedChapterId >= 0, GameData.ContentType.GENERIC);
+            WorkbookManager.EnableChaptersContextMenuItems(_cmChapters, WorkbookManager.LastClickedChapterIndex >= 0, GameData.ContentType.GENERIC);
         }
 
         /// <summary>
@@ -795,7 +795,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnSelectChapter_Click(object sender, RoutedEventArgs e)
         {
-            SelectChapterById(WorkbookManager.LastClickedChapterId, true);
+            SelectChapterByIndex(WorkbookManager.LastClickedChapterIndex, true);
         }
 
         /// <summary>
@@ -805,7 +805,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void UiMnRenameChapter_Click(object sender, RoutedEventArgs e)
         {
-            Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
+            Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[WorkbookManager.LastClickedChapterIndex];
             RenameChapter(chapter);
         }
 
@@ -840,12 +840,12 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
             if (ShowChapterTitleDialog(chapter))
             {
-                SelectChapterById(chapter.Id, false);
+                SelectChapterByIndex(chapter.Index, false);
                 AppState.IsDirty = true;
                 if (_chaptersView != null)
                 {
                     AppState.DoEvents();
-                    _chaptersView.BringChapterIntoView(chapter.Id);
+                    _chaptersView.BringChapterIntoView(chapter.Index);
                 }
             }
             else
@@ -892,12 +892,11 @@ namespace ChessForge
                             if (ch.IsSelected)
                             {
                                 WorkbookManager.SessionWorkbook.Chapters.Add(ch.Chapter);
-                                WorkbookManager.AssignChaptersIds(ref WorkbookManager.SessionWorkbook);
                                 if (_chaptersView != null)
                                 {
                                     _chaptersView.BuildFlowDocumentForChaptersView();
                                     AppState.DoEvents();
-                                    _chaptersView.BringChapterIntoView(WorkbookManager.GetLastChapterId(WorkbookManager.SessionWorkbook));
+                                    _chaptersView.BringChapterIntoView(WorkbookManager.SessionWorkbook.GetChapterCount() - 1);
                                 }
                                 AppState.IsDirty = true;
                             }
@@ -938,9 +937,9 @@ namespace ChessForge
                         CopySelectedItemsToChapter(chapter, copyGames, out string error, games);
 
                         _chaptersView.BuildFlowDocumentForChaptersView();
-                        SelectChapterById(chapter.Id, false);
+                        SelectChapterByIndex(chapter.Index, false);
                         AppState.DoEvents();
-                        _chaptersView.BringChapterIntoView(chapter.Id);
+                        _chaptersView.BringChapterIntoView(chapter.Index);
                     }
                     AppState.IsDirty = true;
                 }
@@ -1021,7 +1020,7 @@ namespace ChessForge
         {
             try
             {
-                Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(WorkbookManager.LastClickedChapterId);
+                Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[WorkbookManager.LastClickedChapterIndex];
                 if (chapter != null)
                 {
                     string txt = Properties.Resources.DeleteChapterConfirm;
@@ -1030,7 +1029,7 @@ namespace ChessForge
                     if (res == MessageBoxResult.Yes)
                     {
                         WorkbookManager.SessionWorkbook.DeleteChapter(chapter); // .Remove(chapter);
-                        if (chapter.Id == WorkbookManager.SessionWorkbook.ActiveChapter.Id)
+                        if (chapter.Index == WorkbookManager.SessionWorkbook.ActiveChapter.Index)
                         {
                             WorkbookManager.SessionWorkbook.SelectDefaultActiveChapter();
                         }
@@ -1896,7 +1895,7 @@ namespace ChessForge
             }
 
             _chaptersView.BuildFlowDocumentForChaptersView();
-            _chaptersView.BringArticleIntoView(chapter.Id, contentType, gameUinitIndex);
+            _chaptersView.BringArticleIntoView(chapter.Index, contentType, gameUinitIndex);
         }
 
         /// <summary>

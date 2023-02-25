@@ -252,10 +252,11 @@ namespace ChessForge
         {
             StringBuilder sb = new StringBuilder();
 
-            string key = "";
+            string key;
             string value;
 
-            sb.Append(BuildCommonGameHeaderText(chapter));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CHAPTER_TITLE, chapter.GetTitle()));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_GUID, chapter.Guid));
 
             VariationTree tree = chapter.StudyTree.Tree;
 
@@ -274,16 +275,6 @@ namespace ChessForge
             return sb.ToString();
         }
 
-
-        private static string BuildModelGameText(Chapter chapter, int chapterNo, GameData gm)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(BuildCommonGameHeaderText(chapter));
-
-            return sb.ToString();
-        }
-
         /// <summary>
         /// Builds the header for a Model Game.
         /// </summary>
@@ -294,7 +285,7 @@ namespace ChessForge
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(BuildCommonGameHeaderText(chapter));
+            //sb.Append(BuildCommonGameHeaderText(chapter));
 
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_MODEL_GAME));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_EVENT, tree.Header.GetEventName(out _)));
@@ -321,7 +312,7 @@ namespace ChessForge
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(BuildCommonGameHeaderText(chapter));
+            //sb.Append(BuildCommonGameHeaderText(chapter));
 
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_EXERCISE));
 
@@ -378,7 +369,6 @@ namespace ChessForge
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CHAPTER_ID, chapter.Id.ToString()));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CHAPTER_TITLE, chapter.GetTitle()));
 
             return sb.ToString();

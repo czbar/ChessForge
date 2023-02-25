@@ -1,16 +1,11 @@
-﻿using GameTree;
+﻿using ChessForge.Properties;
+using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
 using System.Windows;
 using System.Windows.Documents;
-using ChessPosition;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
-using ChessForge.Properties;
 
 namespace ChessForge
 {
@@ -117,7 +112,7 @@ namespace ChessForge
             {
                 Paragraph para = BuildChapterParagraph(chapter);
                 Document.Blocks.Add(para);
-                _dictChapterParas[chapter.Id] = para;
+                _dictChapterParas[chapter.Index] = para;
             }
 
             HighlightActiveChapter();
@@ -126,33 +121,32 @@ namespace ChessForge
         /// <summary>
         /// Brings the title line of the chapter into view.
         /// </summary>
-        /// <param name="chapterId"></param>
-        public void BringChapterIntoView(int chapterId)
+        /// <param name="chapterIndex"></param>
+        public void BringChapterIntoView(int chapterIndex)
         {
-            Run rChapter = FindChapterTitleRun(chapterId);
+            Run rChapter = FindChapterTitleRun(chapterIndex);
             rChapter?.BringIntoView();
         }
 
         /// <summary>
         /// Brings the title line of the chapter into view.
         /// </summary>
-        /// <param name="chapterId"></param>
+        /// <param name="chapterIndex"></param>
         public void BringChapterIntoViewByIndex(int chapterIndex)
         {
-            int chapterId = WorkbookManager.SessionWorkbook.Chapters[chapterIndex].Id;
-            Run rChapter = FindChapterTitleRun(chapterId);
+            Run rChapter = FindChapterTitleRun(chapterIndex);
             rChapter?.BringIntoView();
         }
 
         /// <summary>
         /// Brings the the title line of the model game or exercise into view.
         /// </summary>
-        /// <param name="chapterId"></param>
+        /// <param name="chapterIndex"></param>
         /// <param name="contentType"></param>
         /// <param name="index"></param>
-        public void BringArticleIntoView(int chapterId, GameData.ContentType contentType, int index)
+        public void BringArticleIntoView(int chapterIndex, GameData.ContentType contentType, int index)
         {
-            Paragraph paraChapter = FindChapterParagraph(chapterId);
+            Paragraph paraChapter = FindChapterParagraph(chapterIndex);
             if (paraChapter != null)
             {
                 AppState.DoEvents();
@@ -168,7 +162,7 @@ namespace ChessForge
         {
             try
             {
-                int activeChapterId = WorkbookManager.SessionWorkbook.ActiveChapter.Id;
+                int activeChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapter.Index;
                 // iterate over the runs with chapter name and set the font for the active one to bold
                 foreach (Block b in Document.Blocks)
                 {
@@ -176,10 +170,10 @@ namespace ChessForge
                     {
                         foreach (Inline r in ((Paragraph)b).Inlines)
                         {
-                            int chapterId = GetNodeIdFromRunName((r as Run).Name, _run_chapter_title_);
-                            if (chapterId >= 0)
+                            int chapterIndex = GetNodeIdFromRunName((r as Run).Name, _run_chapter_title_);
+                            if (chapterIndex >= 0)
                             {
-                                if (chapterId == activeChapterId)
+                                if (chapterIndex == activeChapterIndex)
                                 {
                                     (r as Run).FontWeight = FontWeights.Bold;
                                 }
@@ -212,7 +206,7 @@ namespace ChessForge
                 if (b is Paragraph)
                 {
                     int id = TextUtils.GetIdFromPrefixedString((b as Paragraph).Name);
-                    if (id == chapter.Id)
+                    if (id == chapter.Index)
                     {
                         para = b as Paragraph;
                         break;
@@ -241,28 +235,28 @@ namespace ChessForge
                 if (para == null)
                 {
                     para = AddNewParagraphToDoc(STYLE_CHAPTER_TITLE, "");
-                    _dictChapterParas[chapter.Id] = para;
+                    _dictChapterParas[chapter.Index] = para;
                 }
                 else
                 {
                     para.Inlines.Clear();
                 }
 
-                para.Name = _par_chapter_ + chapter.Id.ToString();
+                para.Name = _par_chapter_ + chapter.Index.ToString();
 
                 char expandCollapse = chapter.IsViewExpanded ? Constants.CharCollapse : Constants.CharExpand;
                 Run rExpandChar = CreateRun(STYLE_CHAPTER_TITLE, expandCollapse.ToString() + " ", true);
-                rExpandChar.Name = _run_chapter_expand_char_ + chapter.Id.ToString();
+                rExpandChar.Name = _run_chapter_expand_char_ + chapter.Index.ToString();
                 rExpandChar.MouseDown += EventChapterExpandSymbolClicked;
                 para.Inlines.Add(rExpandChar);
 
                 string chapterNo = (WorkbookManager.SessionWorkbook.GetChapterIndex(chapter) + 1).ToString();
                 Run rTitle = CreateRun(STYLE_CHAPTER_TITLE, chapterNo + ". " + chapter.GetTitle(), true);
-                if (chapter.Id == WorkbookManager.SessionWorkbook.ActiveChapter.Id)
+                if (chapter.Index == WorkbookManager.SessionWorkbook.ActiveChapter.Index)
                 {
                     rTitle.FontWeight = FontWeights.Bold;
                 }
-                rTitle.Name = _run_chapter_title_ + chapter.Id.ToString();
+                rTitle.Name = _run_chapter_title_ + chapter.Index.ToString();
                 rTitle.MouseDown += EventChapterHeaderClicked;
                 rTitle.MouseMove += EventChapterHeaderHovered;
                 rTitle.MouseLeave += EventChapterHeaderLeft;
@@ -291,12 +285,12 @@ namespace ChessForge
         /// <summary>
         /// Finds the Paragraph for a given chapter.
         /// </summary>
-        /// <param name="chapterId"></param>
+        /// <param name="chapterIndex"></param>
         /// <returns></returns>
-        private Paragraph FindChapterParagraph(int chapterId)
+        private Paragraph FindChapterParagraph(int chapterIndex)
         {
             Paragraph paraChapter = null;
-            string paraName = _par_chapter_ + chapterId.ToString();
+            string paraName = _par_chapter_ + chapterIndex.ToString();
             foreach (Block block in Document.Blocks)
             {
                 if (block is Paragraph)
@@ -348,12 +342,12 @@ namespace ChessForge
         /// <summary>
         /// Finds the Run with the title of a given chapter.
         /// </summary>
-        /// <param name="chapterId"></param>
+        /// <param name="chapterIndex"></param>
         /// <returns></returns>
-        private Run FindChapterTitleRun(int chapterId)
+        private Run FindChapterTitleRun(int chapterIndex)
         {
             Run rChapter = null;
-            string runName = _run_chapter_title_ + chapterId.ToString();
+            string runName = _run_chapter_title_ + chapterIndex.ToString();
             foreach (Block block in Document.Blocks)
             {
                 if (block is Paragraph)
@@ -387,7 +381,7 @@ namespace ChessForge
             para.Inlines.Add(new Run("\n"));
             string res = Resources.Study;
             Run r = CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT + res, true);
-            r.Name = _run_study_tree_ + chapter.Id.ToString();
+            r.Name = _run_study_tree_ + chapter.Index.ToString();
             if (LastClickedItemType == WorkbookManager.ItemType.STUDY)
             {
                 r.FontWeight = FontWeights.Bold;
@@ -409,10 +403,10 @@ namespace ChessForge
         {
             para.Inlines.Add(new Run("\n"));
             para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT, true));
-            InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.Id, GameData.ContentType.MODEL_GAME, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
+            InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.Index, GameData.ContentType.MODEL_GAME, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
             string res = Resources.Games;
             Run r = CreateRun(STYLE_SUBHEADER, res, true);
-            r.Name = _run_model_games_header_ + chapter.Id.ToString();
+            r.Name = _run_model_games_header_ + chapter.Index.ToString();
             r.MouseDown += EventModelGamesHeaderClicked;
             para.Inlines.Add(r);
 
@@ -447,10 +441,10 @@ namespace ChessForge
         {
             para.Inlines.Add(new Run("\n"));
             para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT, true));
-            InsertExpandCollapseSymbolRun(para, _run_exercises_expand_char_, chapter.Id, GameData.ContentType.EXERCISE, chapter.IsExercisesListExpanded, chapter.HasAnyExercise);
+            InsertExpandCollapseSymbolRun(para, _run_exercises_expand_char_, chapter.Index, GameData.ContentType.EXERCISE, chapter.IsExercisesListExpanded, chapter.HasAnyExercise);
             string res = Resources.Exercises;
             Run r = CreateRun(STYLE_SUBHEADER, res, true);
-            r.Name = _run_exercises_header_ + chapter.Id.ToString();
+            r.Name = _run_exercises_header_ + chapter.Index.ToString();
             r.MouseDown += EventExercisesHeaderClicked;
             para.Inlines.Add(r);
 
@@ -482,13 +476,13 @@ namespace ChessForge
         /// <param name="isExpanded"></param>
         /// <param name="hasContent"></param>
         /// <returns></returns>
-        private Run InsertExpandCollapseSymbolRun(Paragraph para, string prefix, int chapterId, GameData.ContentType contentType, bool isExpanded, bool hasContent)
+        private Run InsertExpandCollapseSymbolRun(Paragraph para, string prefix, int chapterIndex, GameData.ContentType contentType, bool isExpanded, bool hasContent)
         {
             if (hasContent)
             {
                 char expandCollapse = isExpanded ? Constants.CharCollapse : Constants.CharExpand;
                 Run rExpandChar = CreateRun(STYLE_SUBHEADER, expandCollapse.ToString() + " ", true);
-                rExpandChar.Name = prefix + chapterId;
+                rExpandChar.Name = prefix + chapterIndex;
                 switch (contentType)
                 {
                     case GameData.ContentType.MODEL_GAME:
@@ -534,7 +528,7 @@ namespace ChessForge
                 }
             }
 
-            BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
+            BuildChapterParagraph(chapter, _dictChapterParas[chapter.Index]);
         }
 
         /// <summary>
@@ -553,10 +547,10 @@ namespace ChessForge
             else if (isExpanded == false)
             {
                 chapter.IsModelGamesListExpanded = true;
-                _runToBringToView = new ChaptersViewRunAttrs(chapter.Id, GameData.ContentType.MODEL_GAME);
+                _runToBringToView = new ChaptersViewRunAttrs(chapter.Index, GameData.ContentType.MODEL_GAME);
             }
 
-            BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
+            BuildChapterParagraph(chapter, _dictChapterParas[chapter.Index]);
         }
 
         /// <summary>
@@ -575,10 +569,10 @@ namespace ChessForge
             else if (isExpanded == false)
             {
                 chapter.IsExercisesListExpanded = true;
-                _runToBringToView = new ChaptersViewRunAttrs(chapter.Id, GameData.ContentType.EXERCISE);
+                _runToBringToView = new ChaptersViewRunAttrs(chapter.Index, GameData.ContentType.EXERCISE);
             }
 
-            BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
+            BuildChapterParagraph(chapter, _dictChapterParas[chapter.Index]);
         }
 
         /// <summary>
@@ -629,7 +623,7 @@ namespace ChessForge
                         chapter.ActiveModelGameIndex = index;
                         RebuildChapterParagraph(chapter);
                         _mainWin.DisplayPosition(newSelGame.Tree.GetFinalPosition());
-                        BringArticleIntoView(chapter.Id, GameData.ContentType.MODEL_GAME, index);
+                        BringArticleIntoView(chapter.Index, GameData.ContentType.MODEL_GAME, index);
                     }
                     break;
                 case WorkbookManager.ItemType.EXERCISE:
@@ -639,7 +633,7 @@ namespace ChessForge
                         chapter.ActiveExerciseIndex = index;
                         RebuildChapterParagraph(chapter);
                         _mainWin.DisplayPosition(newSelExercise.Tree.RootNode);
-                        BringArticleIntoView(chapter.Id, GameData.ContentType.EXERCISE, index);
+                        BringArticleIntoView(chapter.Index, GameData.ContentType.EXERCISE, index);
                     }
                     break;
             }
@@ -832,7 +826,7 @@ namespace ChessForge
         /// the chapter the passed Run belongs in.
         /// </summary>
         /// <returns></returns>
-        private int GetChapterIdFromChildRun(Run r)
+        private int GetChapterIndexFromChildRun(Run r)
         {
             try
             {
@@ -887,7 +881,7 @@ namespace ChessForge
         {
             Run r = null;
 
-            Paragraph para = GetParagraph(attrs.ChapterId);
+            Paragraph para = GetParagraph(attrs.ChapterIndex);
             if (para != null)
             {
                 foreach (Inline inl in para.Inlines)
@@ -945,9 +939,9 @@ namespace ChessForge
         /// <summary>
         /// Gets Paragraph object from a chapter id.  
         /// </summary>
-        /// <param name="chapterId"></param>
+        /// <param name="chapterIndex"></param>
         /// <returns></returns>
-        private Paragraph GetParagraph(int chapterId)
+        private Paragraph GetParagraph(int chapterIndex)
         {
             Paragraph para = null;
             foreach (Block block in Document.Blocks)
@@ -955,7 +949,7 @@ namespace ChessForge
                 if (block is Paragraph)
                 {
                     int id = TextUtils.GetIdFromPrefixedString(block.Name);
-                    if (id == chapterId)
+                    if (id == chapterIndex)
                     {
                         para = block as Paragraph;
                         break;
@@ -971,16 +965,16 @@ namespace ChessForge
         /// If this is a new chapter, refreshes the view of the previously
         /// selected one (e.g. to remove bolding on selected games/exercises)
         /// </summary>
-        /// <param name="chapterId"></param>
+        /// <param name="chapterIndex"></param>
         /// <param name="focusOnStudyTree"></param>
-        private void SelectChapter(int chapterId, bool focusOnStudyTree)
+        private void SelectChapter(int chapterIndex, bool focusOnStudyTree)
         {
             Chapter prevActiveChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
-            if (focusOnStudyTree || prevActiveChapter.Id != chapterId)
+            if (focusOnStudyTree || prevActiveChapter.Index != chapterIndex)
             {
-                _mainWin.SelectChapterById(chapterId, focusOnStudyTree);
-                BuildChapterParagraph(prevActiveChapter, _dictChapterParas[prevActiveChapter.Id]);
+                _mainWin.SelectChapterByIndex(chapterIndex, focusOnStudyTree);
+                BuildChapterParagraph(prevActiveChapter, _dictChapterParas[prevActiveChapter.Index]);
             }
         }
 
@@ -997,8 +991,8 @@ namespace ChessForge
             Chapter chapter = null;
             try
             {
-                int chapterId = GetChapterIdFromChildRun(r);
-                chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                int chapterIndex = GetChapterIndexFromChildRun(r);
+                chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
                 index = TextUtils.GetIdFromPrefixedString(r.Name);
             }
             catch
@@ -1030,7 +1024,7 @@ namespace ChessForge
                 {
                     chapter.IsViewExpanded = true;
                 }
-                SelectChapter(chapter.Id, false);
+                SelectChapter(chapter.Index, false);
             }
         }
 
@@ -1109,17 +1103,17 @@ namespace ChessForge
                 LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
 
                 Run r = (Run)e.Source;
-                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
-                if (chapterId >= 0)
+                int chapterIndex = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapterIndex >= 0)
                 {
-                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
-                    WorkbookManager.LastClickedChapterId = chapterId;
+                    Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
+                    WorkbookManager.LastClickedChapterIndex = chapterIndex;
 
                     if (e.ChangedButton == MouseButton.Left)
                     {
                         if (e.ClickCount == 2)
                         {
-                            SelectChapter(chapterId, true);
+                            SelectChapter(chapterIndex, true);
                         }
                         else
                         {
@@ -1129,7 +1123,7 @@ namespace ChessForge
                     else if (e.ChangedButton == MouseButton.Right)
                     {
                         // TODO: this rebuilds the Study Tree. Performance!
-                        SelectChapter(chapterId, false);
+                        SelectChapter(chapterIndex, false);
                     }
                 }
             }
@@ -1149,10 +1143,10 @@ namespace ChessForge
             try
             {
                 Run r = (Run)e.Source;
-                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
-                if (chapterId >= 0)
+                int chapterIndex = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapterIndex >= 0)
                 {
-                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                    Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
                     TreeNode thumb = chapter.StudyTree.Tree.GetThumbnail();
                     if (thumb != null)
                     {
@@ -1198,10 +1192,10 @@ namespace ChessForge
             try
             {
                 Run r = (Run)e.Source;
-                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
-                if (chapterId >= 0)
+                int chapterIndex = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapterIndex >= 0)
                 {
-                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
+                    Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
                     ExpandChapterList(chapter, false);
                 }
             }
@@ -1224,19 +1218,19 @@ namespace ChessForge
                 LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
 
                 Run r = (Run)e.Source;
-                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
-                if (chapterId >= 0)
+                int chapterIndex = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapterIndex >= 0)
                 {
-                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
-                    WorkbookManager.LastClickedChapterId = chapterId;
+                    Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
+                    WorkbookManager.LastClickedChapterIndex = chapterIndex;
                     if (e.ChangedButton == MouseButton.Left)
                     {
-                        SelectChapter(chapterId, true);
+                        SelectChapter(chapterIndex, true);
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
                         WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.STUDY_TREE);
-                        SelectChapter(chapterId, false);
+                        SelectChapter(chapterIndex, false);
                     }
                 }
             }
@@ -1282,18 +1276,18 @@ namespace ChessForge
                 LastClickedItemType = WorkbookManager.ItemType.NONE;
 
                 Run r = (Run)e.Source;
-                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                int chapterIndex = TextUtils.GetIdFromPrefixedString(r.Name);
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
-                if (chapter.Id != chapterId)
+                if (chapter.Index != chapterIndex)
                 {
-                    SelectChapter(chapterId, false);
+                    SelectChapter(chapterIndex, false);
                     chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 }
 
                 if (chapter != null)
                 {
-                    WorkbookManager.LastClickedChapterId = chapterId;
+                    WorkbookManager.LastClickedChapterIndex = chapterIndex;
                     if (e.ChangedButton == MouseButton.Left)
                     {
                         if (chapter.GetModelGameCount() > 0)
@@ -1311,7 +1305,7 @@ namespace ChessForge
                     {
                         WorkbookManager.LastClickedModelGameIndex = -1;
                         WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.MODEL_GAME);
-                        SelectChapter(chapterId, false);
+                        SelectChapter(chapterIndex, false);
                     }
                 }
             }
@@ -1337,18 +1331,18 @@ namespace ChessForge
                 LastClickedItemType = WorkbookManager.ItemType.NONE;
 
                 Run r = (Run)e.Source;
-                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
+                int chapterIndex = TextUtils.GetIdFromPrefixedString(r.Name);
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
-                if (chapter.Id != chapterId)
+                if (chapter.Index != chapterIndex)
                 {
-                    SelectChapter(chapterId, false);
+                    SelectChapter(chapterIndex, false);
                     chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 }
 
                 if (chapter != null)
                 {
-                    WorkbookManager.LastClickedChapterId = chapterId;
+                    WorkbookManager.LastClickedChapterIndex = chapterIndex;
                     if (e.ChangedButton == MouseButton.Left)
                     {
                         if (chapter.GetExerciseCount() > 0)
@@ -1366,7 +1360,7 @@ namespace ChessForge
                     {
                         WorkbookManager.LastClickedExerciseIndex = -1;
                         WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.EXERCISE);
-                        SelectChapter(chapterId, false);
+                        SelectChapter(chapterIndex, false);
                     }
                 }
             }
@@ -1388,11 +1382,11 @@ namespace ChessForge
                 LastClickedItemType = WorkbookManager.ItemType.MODEL_GAME;
 
                 Run r = (Run)e.Source;
-                int chapterId = GetChapterIdFromChildRun(r);
+                int chapterIndex = GetChapterIndexFromChildRun(r);
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                if (chapter.Id != chapterId)
+                if (chapter.Index != chapterIndex)
                 {
-                    SelectChapter(chapterId, false);
+                    SelectChapter(chapterIndex, false);
                     chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 }
 
@@ -1477,11 +1471,11 @@ namespace ChessForge
                 LastClickedItemType = WorkbookManager.ItemType.EXERCISE;
 
                 Run r = (Run)e.Source;
-                int chapterId = GetChapterIdFromChildRun(r);
+                int chapterIndex = GetChapterIndexFromChildRun(r);
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                if (chapter.Id != chapterId)
+                if (chapter.Index != chapterIndex)
                 {
-                    SelectChapter(chapterId, false);
+                    SelectChapter(chapterIndex, false);
                     chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 }
 
@@ -1569,14 +1563,14 @@ namespace ChessForge
                 LastClickedItemType = WorkbookManager.ItemType.NONE;
 
                 Run r = (Run)e.Source;
-                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
-                Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
-                if (chapter.Id != WorkbookManager.SessionWorkbook.ActiveChapter.Id)
+                int chapterIndex = TextUtils.GetIdFromPrefixedString(r.Name);
+                Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
+                if (chapter.Index != WorkbookManager.SessionWorkbook.ActiveChapter.Index)
                 {
-                    SelectChapter(chapterId, false);
+                    SelectChapter(chapterIndex, false);
                 }
                 chapter.IsModelGamesListExpanded = !chapter.IsModelGamesListExpanded;
-                BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
+                BuildChapterParagraph(chapter, _dictChapterParas[chapter.Index]);
             }
             catch (Exception ex)
             {
@@ -1599,14 +1593,14 @@ namespace ChessForge
                 LastClickedItemType = WorkbookManager.ItemType.NONE;
 
                 Run r = (Run)e.Source;
-                int chapterId = TextUtils.GetIdFromPrefixedString(r.Name);
-                Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterById(chapterId);
-                if (chapter.Id != WorkbookManager.SessionWorkbook.ActiveChapter.Id)
+                int chapterIndex = TextUtils.GetIdFromPrefixedString(r.Name);
+                Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
+                if (chapter.Index != WorkbookManager.SessionWorkbook.ActiveChapter.Index)
                 {
-                    SelectChapter(chapterId, false);
+                    SelectChapter(chapterIndex, false);
                 }
                 chapter.IsExercisesListExpanded = !chapter.IsExercisesListExpanded;
-                BuildChapterParagraph(chapter, _dictChapterParas[chapter.Id]);
+                BuildChapterParagraph(chapter, _dictChapterParas[chapter.Index]);
             }
             catch (Exception ex)
             {

@@ -82,7 +82,7 @@ namespace ChessForge
         /// <summary>
         /// Id of the chapter which was last clicked in the Chapters view.
         /// </summary>
-        public static int LastClickedChapterId = -1;
+        public static int LastClickedChapterIndex = -1;
 
         /// <summary>
         /// Index  of the model game was last clicked in the Chapters view.
@@ -117,20 +117,7 @@ namespace ChessForge
             Chapter chapter = SessionWorkbook.CreateNewChapter();
             SessionWorkbook.ActiveChapter = chapter;
             SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
-            AssignChaptersIds(ref SessionWorkbook);
             BookmarkManager.ResetSelections();
-        }
-
-        /// <summary>
-        /// Assigns Chapter Ids per their position on the Chapters list.
-        /// The first chapter gets the id of 1.
-        /// </summary>
-        public static void AssignChaptersIds(ref Workbook workbook)
-        {
-            for (int i = 0; i < workbook.Chapters.Count; i++)
-            {
-                workbook.Chapters[i].Id = i + 1;
-            }
         }
 
         /// <summary>
@@ -149,15 +136,6 @@ namespace ChessForge
             {
                 return null;
             }
-        }
-
-        /// <summary>
-        /// Returns id of the last chapter
-        /// </summary>
-        /// <returns></returns>
-        public static int GetLastChapterId(Workbook workbook)
-        {
-            return workbook.Chapters[workbook.Chapters.Count - 1].Id;
         }
 
         /// <summary>
@@ -384,14 +362,14 @@ namespace ChessForge
         private static void SetupChapterMenuItems(ContextMenu cmn, bool isEnabled, GameData.ContentType contentType, bool isMini)
         {
             // ClickedIndex should be in sync with isEnabled but double check just in case
-            if (LastClickedChapterId < 0 || SessionWorkbook == null)
+            if (LastClickedChapterIndex < 0 || SessionWorkbook == null)
             {
                 isEnabled = false;
             }
 
             bool isChaptersMenu = contentType == GameData.ContentType.GENERIC || contentType == GameData.ContentType.STUDY_TREE;
 
-            int index = SessionWorkbook == null ? -1 : SessionWorkbook.GetChapterIndexFromId(LastClickedChapterId);
+            int index = SessionWorkbook == null ? -1 : LastClickedChapterIndex;
 
             foreach (var item in cmn.Items)
             {
@@ -828,6 +806,11 @@ namespace ChessForge
                 {
                     chapter = workbook.CreateNewChapter();
                     chapter.SetTitle(gm.Header.GetChapterTitle());
+                    chapter.Guid = gm.Header.GetOrGenerateGuid(out bool generated);
+                    if (generated)
+                    {
+                        AppState.IsDirty = true;
+                    }
                 }
 
                 try

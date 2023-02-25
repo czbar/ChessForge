@@ -315,26 +315,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Sets Active Chapter and Tree given the Id of the chapter.
-        /// </summary>
-        /// <param name="chapterId"></param>
-        /// <param name="gameType"></param>
-        /// <param name="gameIndex"></param>
-        public void SetActiveChapterTreeById(int chapterId, GameData.ContentType gameType, int gameIndex = 0)
-        {
-            foreach (Chapter chapter in Chapters)
-            {
-                if (chapter.Id == chapterId)
-                {
-                    _activeChapter = chapter;
-                    _activeChapter.SetActiveVariationTree(gameType, gameIndex);
-                    break;
-                }
-            }
-
-        }
-
-        /// <summary>
         /// Returns the Active Tree which
         /// is the Active Tree of the active chapter.
         /// </summary>
@@ -558,16 +538,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Returns the Chapter object with the passed id.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Chapter GetChapterById(int id)
-        {
-            return Chapters.FirstOrDefault(ch => ch.Id == id);
-        }
-
-        /// <summary>
         /// Return chapter from a given position in the Chapters list
         /// </summary>
         /// <param name="id"></param>
@@ -585,28 +555,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Returns position of a chapter with a given id
-        /// in the Chapters list.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public int GetChapterIndexFromId(int id)
-        {
-            int idx = -1;
-
-            for (int i = 0; i < Chapters.Count; i++)
-            {
-                if (Chapters[i].Id == id)
-                {
-                    idx = i;
-                    break;
-                }
-            }
-
-            return idx;
-        }
-
-        /// <summary>
         /// Creates a new chapter.
         /// </summary>
         /// <param name="tree"></param>
@@ -616,7 +564,6 @@ namespace ChessForge
             chapter.StudyTree = new Article(GameData.ContentType.STUDY_TREE);
             chapter.StudyTree.Tree.CreateNew();
             //TODO: we need to have a chapter specific version of SetupGuiForNewSession 
-            chapter.Id = GenerateChapterId();
 
             Chapters.Add(chapter);
             _activeChapter = chapter;
@@ -633,7 +580,6 @@ namespace ChessForge
         {
             Chapter chapter = new Chapter();
             chapter.StudyTree = new Article(tree);
-            chapter.Id = GenerateChapterId();
 
             Chapters.Add(chapter);
 
@@ -667,15 +613,15 @@ namespace ChessForge
         /// If true the chapter view is expanded, if false, the chapter view is collapsed,
         /// null if chapter not found.
         /// </summary>
-        /// <param name="chapterId"></param>
+        /// <param name="chapterIndex"></param>
         /// <returns></returns>
-        public bool? IsChapterViewExpanded(int chapterId)
+        public bool? IsChapterViewExpanded(int chapterIndex)
         {
             bool? ret = null;
 
             foreach (Chapter chapter in Chapters)
             {
-                if (chapter.Id == chapterId)
+                if (chapter.Index == chapterIndex)
                 {
                     ret = chapter.IsViewExpanded;
                     break;
@@ -685,24 +631,5 @@ namespace ChessForge
             return ret;
         }
 
-        /// <summary>
-        /// Finds the highest chapter id in the list
-        /// and increments it by one.
-        /// </summary>
-        /// <returns></returns>
-        private int GenerateChapterId()
-        {
-            int id = 1;
-
-            foreach (Chapter chapter in Chapters)
-            {
-                if (chapter.Id >= id)
-                {
-                    id = chapter.Id + 1;
-                }
-            }
-
-            return id;
-        }
     }
 }

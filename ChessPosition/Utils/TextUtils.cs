@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,16 +16,46 @@ namespace ChessPosition
     public class TextUtils
     {
         /// <summary>
-        /// Parses the supplied string into tokens split by '.'.
-        /// Expects a sequence of 3 numbers in the form of 1.1.1 
-        /// or the version string will be considered invalid and will return false.
+        /// Returns all urls found in the passed text.
         /// </summary>
-        /// <param name="sVer"></param>
-        /// <param name="major"></param>
-        /// <param name="minor"></param>
-        /// <param name="patch"></param>
+        /// <param name="text"></param>
         /// <returns></returns>
-        public static bool GetVersionNumbers(string sVer, out int major, out int minor, out int patch)
+        public static List<string> MatchUrls(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return null;
+            }
+
+            Regex urlRegex = new Regex(@"\b(https?://|www\.)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+            MatchCollection matches = urlRegex.Matches(text);
+            if (matches.Count > 0)
+            {
+                List<string> urls = new List<string>();
+                foreach (Match match in matches)
+                {
+                    urls.Add(match.Value);
+                }
+                return urls;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+    /// <summary>
+    /// Parses the supplied string into tokens split by '.'.
+    /// Expects a sequence of 3 numbers in the form of 1.1.1 
+    /// or the version string will be considered invalid and will return false.
+    /// </summary>
+    /// <param name="sVer"></param>
+    /// <param name="major"></param>
+    /// <param name="minor"></param>
+    /// <param name="patch"></param>
+    /// <returns></returns>
+    public static bool GetVersionNumbers(string sVer, out int major, out int minor, out int patch)
         {
             bool result = false;
             major = 0;

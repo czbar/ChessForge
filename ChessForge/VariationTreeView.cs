@@ -528,7 +528,7 @@ namespace ChessForge
                     {
                         VariationTree newTree = TreeUtils.CreateNewTreeFromNode(lstNodes[0], GameData.ContentType.STUDY_TREE);
                         Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter(newTree, false);
-                        chapter.SetTitle(Properties.Resources.Chapter + " " + chapter.Id.ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
+                        chapter.SetTitle(Properties.Resources.Chapter + " " + chapter.Index.ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
 
                         ChapterFromLineDialog dlg = new ChapterFromLineDialog(chapter)
                         {
@@ -550,7 +550,7 @@ namespace ChessForge
                             _mainWin.RebuildChaptersView();
                             if (dlg.GoToNewChapter)
                             {
-                                _mainWin.SelectChapterById(chapter.Id, true);
+                                _mainWin.SelectChapterByIndex(chapter.Index, true);
                                 viewRebuilt = true;
                             }
                             if (!viewRebuilt)
@@ -1259,6 +1259,8 @@ namespace ChessForge
                 para.BorderThickness = new Thickness(1, 1, 1, 1);
                 para.BorderBrush = Brushes.Black;
                 para.Padding = new Thickness(10, 10, 10, 10);
+                
+                para.MouseLeftButtonDown += EventPageHeaderClicked;
                 return para;
             }
             else

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace GameTree
 {
@@ -338,12 +340,25 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Returns the training side value.
+        /// Returns the existing GUID or generates one if not found.
         /// </summary>
-        /// <returns></returns>
-        public string GetChapterId()
+        /// <param name="generated">whether guid existed or was generated</param>
+        /// <returns>guid string</returns>
+        public string GetOrGenerateGuid(out bool generated)
         {
-            return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_CHAPTER_ID).FirstOrDefault().Value;
+            generated = false;
+
+            string headerKey = PgnHeaders.KEY_GUID;
+
+            string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            if (string.IsNullOrEmpty(value))
+            {
+                value = Guid.NewGuid().ToString();
+                SetHeaderValue(PgnHeaders.KEY_GUID, value);
+                generated = true;
+            }
+
+            return value;
         }
 
         /// <summary>
@@ -369,7 +384,6 @@ namespace GameTree
             key = headerKey;
             return _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
         }
-
 
         /// <summary>
         /// Returns the default chessboard orientation for the Games view.
@@ -514,23 +528,6 @@ namespace GameTree
         public string GetFenString()
         {
             return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_FEN_STRING).FirstOrDefault().Value;
-        }
-
-        /// <summary>
-        /// Returns the number of the chapter or 0 if not found or invalid.
-        /// </summary>
-        /// <returns></returns>
-        public int GetChapterNumber()
-        {
-            string sChapterNo = _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_CHAPTER_ID).FirstOrDefault().Value;
-            if (int.TryParse(sChapterNo, out int chapterNumber))
-            {
-                return chapterNumber;
-            }
-            else
-            {
-                return 0;
-            }
         }
 
         /// <summary>

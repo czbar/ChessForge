@@ -164,7 +164,7 @@ namespace ChessForge
                 DebugUtils.ShowDebugMessage(msg);
                 AppLog.Message(msg);
                 AppLog.Message("    Context: Active Content Type = " + AppState.ActiveContentType.ToString());
-                AppLog.Message("             Active Chapter Id   = " + AppState.ActiveChapter.Id.ToString());
+                AppLog.Message("             Active Chapter Idx  = " + AppState.ActiveChapter.Index.ToString());
                 AppLog.Message("             Active Game Idx     = " + WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex.ToString());
                 AppLog.Message("             Active Exercise Idx = " + WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex.ToString());
                 return null;
