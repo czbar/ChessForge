@@ -1259,6 +1259,8 @@ namespace ChessForge
                 para.BorderThickness = new Thickness(1, 1, 1, 1);
                 para.BorderBrush = Brushes.Black;
                 para.Padding = new Thickness(10, 10, 10, 10);
+                
+                para.MouseLeftButtonDown += EventPageHeaderClicked;
                 return para;
             }
             else
