@@ -45,17 +45,28 @@ namespace ChessPosition
             }
         }
 
-    /// <summary>
-    /// Parses the supplied string into tokens split by '.'.
-    /// Expects a sequence of 3 numbers in the form of 1.1.1 
-    /// or the version string will be considered invalid and will return false.
-    /// </summary>
-    /// <param name="sVer"></param>
-    /// <param name="major"></param>
-    /// <param name="minor"></param>
-    /// <param name="patch"></param>
-    /// <returns></returns>
-    public static bool GetVersionNumbers(string sVer, out int major, out int minor, out int patch)
+        /// <summary>
+        /// Replaces some special characters so that FEN strings in resource
+        /// files are not corrupted.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string AdjustResourceStringForXml(string s)
+        {
+            return s.Replace('/', '_').Replace(' ', '0').Replace('-', '_');
+        }
+
+        /// <summary>
+        /// Parses the supplied string into tokens split by '.'.
+        /// Expects a sequence of 3 numbers in the form of 1.1.1 
+        /// or the version string will be considered invalid and will return false.
+        /// </summary>
+        /// <param name="sVer"></param>
+        /// <param name="major"></param>
+        /// <param name="minor"></param>
+        /// <param name="patch"></param>
+        /// <returns></returns>
+        public static bool GetVersionNumbers(string sVer, out int major, out int minor, out int patch)
         {
             bool result = false;
             major = 0;
@@ -436,7 +447,7 @@ namespace ChessPosition
         public static void GetYearMonthDayFromPgnDate(string pgn, out int year, out int month, out int day)
         {
             year = -1;
-            month= -1;
+            month = -1;
             day = -1;
 
             if (!string.IsNullOrEmpty(pgn))
