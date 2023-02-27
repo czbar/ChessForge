@@ -63,7 +63,7 @@ namespace GenerateOpeningsDictionary
                 // while generating catch any duplicates (there should not be any)
                 string duplicateEntry = "";
 
-                string fen = GetLastPositionFen(tokens[2]);
+                string fen = TextUtils.AdjustResourceStringForXml(GetLastPositionFen(tokens[2]));
                 if (_dictFenToName.ContainsKey(fen))
                 {
                     duplicateEntry = _dictFenToName[fen];
