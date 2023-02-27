@@ -28,4 +28,8 @@ ForEach ($ci in $file_data)
 	Copy-Item $resources_file -Destination ../ChessForge/Properties
 }
 
+# separately, the file with opening names
+resgen OpeningNames.txt OpeningNames.resx
+Copy-Item OpeningNames.resx -Destination ../ChessForge/Properties
+
 
