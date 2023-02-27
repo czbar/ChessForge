@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAccess", "WebAccess\WebA
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupChessForge", "SetupChessForge\SetupChessForge.vdproj", "{89471DEB-C535-4E21-A3FF-6729AC13B94F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateOpeningsDictionary", "GenerateOpeningsDictionary\GenerateOpeningsDictionary.csproj", "{A08DBC38-C466-42ED-A2DD-1B98B7F62A0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{58B448D8-69CB-4C59-A515-30EF78F7873E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{89471DEB-C535-4E21-A3FF-6729AC13B94F}.Debug|Any CPU.ActiveCfg = Debug
 		{89471DEB-C535-4E21-A3FF-6729AC13B94F}.Release|Any CPU.ActiveCfg = Release
+		{A08DBC38-C466-42ED-A2DD-1B98B7F62A0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A08DBC38-C466-42ED-A2DD-1B98B7F62A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A08DBC38-C466-42ED-A2DD-1B98B7F62A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A08DBC38-C466-42ED-A2DD-1B98B7F62A0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
