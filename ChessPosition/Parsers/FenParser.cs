@@ -124,15 +124,23 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Generates a short version of fen to use when comparing positions
+        /// Generates a "short" version of fen to use when comparing positions
         /// for getting opening stats.
-        /// Counters, en passant and castling rights are ignored. 
+        /// This is the same as "regular" FEN excpet for move counters. 
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
         public static string GenerateShortFen(BoardPosition pos)
         {
-            return FenPieceLocations(pos) + (pos.ColorToMove == PieceColor.White ? " w" : " b");
+            StringBuilder sb = new StringBuilder();
+            sb.Append(FenPieceLocations(pos) + " ");
+
+            sb.Append(pos.ColorToMove == PieceColor.White ? "w " : "b ");
+
+            sb.Append(FenCastleRights(pos) + " ");
+            sb.Append(FenEnPassantSquare(pos));
+
+            return sb.ToString();
         }
 
         /// <summary>
