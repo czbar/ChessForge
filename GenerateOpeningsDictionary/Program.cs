@@ -32,6 +32,7 @@ namespace GenerateOpeningsDictionary
             }
             // ouput file to be added into ChessForge  as a resorce file 
             StringBuilder sb = new StringBuilder();
+
             foreach (string key in _dictFenToName.Keys)
             {
                 sb.Append(key);
@@ -39,7 +40,8 @@ namespace GenerateOpeningsDictionary
                 sb.AppendLine(_dictFenToName[key]);
             }
 
-            File.WriteAllText("../../../ChessForge/Properties/OpeningExplorer.txt", sb.ToString());
+            // save to the Translation folder so that resgen script will pick it up
+            File.WriteAllText("../../../Translation/OpeningNames.txt", sb.ToString());
         }
 
         /// <summary>
