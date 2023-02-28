@@ -1531,6 +1531,7 @@ namespace ChessForge
                 {
                     EvaluateActiveLineSelectedPosition(nd);
                 }
+                _openingStatsView.SetOpeningName();
                 WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
             }
         }
@@ -1588,6 +1589,7 @@ namespace ChessForge
                     if (displayPosition)
                     {
                         MainChessBoard.DisplayPosition(nd, true);
+                        _openingStatsView.SetOpeningName();
                         WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, nd);
                     }
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS && AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
