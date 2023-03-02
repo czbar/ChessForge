@@ -70,6 +70,8 @@
     <Compile Include="Parsers\PgnHeaders.cs" />
     <Compile Include="Parsers\PgnMoveParser.cs" />
     <Compile Include="Utils\AppLog.cs" />
+    <Compile Include="Utils\CommentPart.cs" />
+    <Compile Include="Utils\CommentProcessor.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\DebugUtils.cs" />
     <Compile Include="BoardPosition\MoveData.cs" />
