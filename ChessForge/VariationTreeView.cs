@@ -9,9 +9,9 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using ChessForge.Properties;
 using ChessPosition.GameTree;
-using System.Resources;
+using ChessPosition.Utils;
+using System.Diagnostics;
 
 namespace ChessForge
 {
@@ -203,7 +203,7 @@ namespace ChessForge
         /// <summary>
         /// Maps Node Ids to Comment Runs for quick access.
         /// </summary>
-        private Dictionary<int, Run> _dictNodeToCommentRun = new Dictionary<int, Run>();
+        private Dictionary<int, Inline> _dictNodeToCommentRun = new Dictionary<int, Inline>();
 
         /// <summary>
         /// Maps Node Ids to Reference Runs for quick access.
@@ -218,7 +218,7 @@ namespace ChessForge
         /// <summary>
         /// Maps Comment Runs to Paragraphs for quick access.
         /// </summary>
-        private Dictionary<Run, Paragraph> _dictCommentRunToParagraph = new Dictionary<Run, Paragraph>();
+        private Dictionary<Inline, Paragraph> _dictCommentRunToParagraph = new Dictionary<Inline, Paragraph>();
 
         /// <summary>
         /// Maps Reference Runs to Paragraphs for quick access.
@@ -746,7 +746,7 @@ namespace ChessForge
                                 _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
                             }
                             else if (Configuration.DebugLevel != 0)
-                            {  
+                            {
                                 //we should always have this key, so show debug message if not
                                 if (_debugRegularBkgMsgCount < 2)
                                 {
@@ -1259,7 +1259,7 @@ namespace ChessForge
                 para.BorderThickness = new Thickness(1, 1, 1, 1);
                 para.BorderBrush = Brushes.Black;
                 para.Padding = new Thickness(10, 10, 10, 10);
-                
+
                 para.MouseLeftButtonDown += EventPageHeaderClicked;
                 return para;
             }
@@ -1454,7 +1454,7 @@ namespace ChessForge
         {
             TreeNode parent = nd.Parent;
 
-            Run rParent;
+            Inline rParent;
             Paragraph para;
 
             if (_dictNodeToCommentRun.ContainsKey(parent.NodeId))
@@ -1465,12 +1465,12 @@ namespace ChessForge
             else if (_dictNodeToReferenceRun.ContainsKey(parent.NodeId))
             {
                 rParent = _dictNodeToReferenceRun[parent.NodeId];
-                para = _dictReferenceRunToParagraph[rParent];
+                para = _dictReferenceRunToParagraph[rParent as Run];
             }
             else
             {
                 rParent = _dictNodeToRun[parent.NodeId];
-                para = _dictRunToParagraph[rParent];
+                para = _dictRunToParagraph[rParent as Run];
             }
 
 
@@ -1644,7 +1644,7 @@ namespace ChessForge
 
             AddRunToParagraph(nd, para, nodeText, fontColor);
             AddReferenceRunToParagraph(nd, para);
-            AddCommentRunToParagraph(nd, para);
+            AddCommentRunsToParagraph(nd, para);
         }
 
         /// <summary>
@@ -1699,7 +1699,7 @@ namespace ChessForge
                 TreeNode nd = _mainWin.ActiveVariationTree.Nodes[0];
                 AddRunToParagraph(nd, para, "", Brushes.White);
                 AddReferenceRunToParagraph(nd, para);
-                AddCommentRunToParagraph(nd, para);
+                AddCommentRunsToParagraph(nd, para);
             }
         }
 
@@ -1750,54 +1750,105 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates a "Comment Run" if there is a comment with the move.
-        /// Adds the run to the paragraph.
+        /// Creates the comment Run or Runs if there is a comment with the move.
+        /// Adds the runs to the paragraph.
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="para"></param>
-        private Run AddCommentRunToParagraph(TreeNode nd, Paragraph para)
+        private void AddCommentRunsToParagraph(TreeNode nd, Paragraph para)
         {
-            Run rComment = null;
+            if (!IsCommentRunToShow(nd))
+            {
+                return;
+            }
 
             try
             {
-                if (!IsCommentRunToShow(nd))
+                List<CommentPart> parts = CommentProcessor.SplitCommentTextAtUrls(nd.Comment, out string noUrls);
+                if (nd.QuizPoints != 0)
                 {
-                    return null;
+                    if (parts == null)
+                    {
+                        parts = new List<CommentPart>();
+                    }
+
+                    parts.Add(new CommentPart(CommentPartType.QUIZ_POINTS, " *" + Properties.Resources.QuizPoints + ": " + nd.QuizPoints.ToString() + "* "));
                 }
 
-                rComment = new Run(BuildCommentRunText(nd));
-                rComment.ToolTip = nd.IsThumbnail ? Properties.Resources.ChapterThumbnail : null;
-
-                rComment.Name = _run_comment_ + nd.NodeId.ToString();
-                rComment.PreviewMouseDown += EventCommentRunClicked;
-
-                rComment.FontStyle = FontStyles.Normal;
-
-                rComment.Foreground = Brushes.Black;
-                rComment.FontWeight = FontWeights.Normal;
-
-                // insert after the reference run or immediately after the move run if no reference run
-                Run rNode;
-                if (_dictNodeToReferenceRun.ContainsKey(nd.NodeId))
+                // check only here as we may have quiz points
+                if (parts == null)
                 {
-                    rNode = _dictNodeToReferenceRun[nd.NodeId];
+                    return;
                 }
-                else
-                {
-                    rNode = _dictNodeToRun[nd.NodeId];
-                }
-                para.Inlines.InsertAfter(rNode, rComment);
 
-                _dictNodeToCommentRun.Add(nd.NodeId, rComment);
-                _dictCommentRunToParagraph.Add(rComment, para);
+                CommentPart startPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? "[" : " [");
+                parts.Insert(0, startPart);
+
+                CommentPart lastPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? "] " : "]");
+                parts.Add(lastPart);
+
+                Inline inlPrevious = null;
+                for (int i = 0; i < parts.Count; i++)
+                {
+                    CommentPart part = parts[i];
+                    Inline inl;
+
+                    switch (part.Type)
+                    {
+                        case CommentPartType.THUMBNAIL_SYMBOL:
+                            inl = new Run(Constants.CHAR_SQUARED_SQUARE.ToString());
+                            inl.ToolTip = nd.IsThumbnail ? Properties.Resources.ChapterThumbnail : null;
+                            inl.FontStyle = FontStyles.Normal;
+                            inl.Foreground = Brushes.Black;
+                            inl.FontWeight = FontWeights.Normal;
+                            inl.PreviewMouseDown += EventCommentRunClicked;
+                            break;
+                        case CommentPartType.URL:
+                            inl = new Hyperlink(new Run(part.Text));
+                            (inl as Hyperlink).NavigateUri = new Uri(part.Text);
+                            inl.FontWeight = FontWeights.Normal;
+                            inl.PreviewMouseDown += Hyperlink_MouseLeftButtonDown;
+                            break;
+                        default:
+                            inl = new Run(part.Text);
+                            inl.FontStyle = FontStyles.Normal;
+                            inl.Foreground = Brushes.Black;
+                            inl.FontWeight = FontWeights.Normal;
+                            inl.PreviewMouseDown += EventCommentRunClicked;
+                            break;
+                    }
+
+                    inl.Name = _run_comment_ + nd.NodeId.ToString();
+
+                    if (inlPrevious == null)
+                    {
+                        // insert after the reference run or immediately after the move run if no reference run
+                        Run rNode;
+                        if (_dictNodeToReferenceRun.ContainsKey(nd.NodeId))
+                        {
+                            rNode = _dictNodeToReferenceRun[nd.NodeId];
+                        }
+                        else
+                        {
+                            rNode = _dictNodeToRun[nd.NodeId];
+                        }
+                        para.Inlines.InsertAfter(rNode, inl);
+
+                        _dictNodeToCommentRun.Add(nd.NodeId, inl);
+                        _dictCommentRunToParagraph.Add(inl, para);
+                    }
+                    else
+                    {
+                        para.Inlines.InsertAfter(inlPrevious, inl);
+                    }
+
+                    inlPrevious = inl;
+                }
             }
             catch (Exception ex)
             {
-                AppLog.Message("AddCommentRunToParagraph()", ex);
+                AppLog.Message("AddCommentRunsToParagraph()", ex);
             }
-
-            return rComment;
         }
 
         /// <summary>
@@ -1967,6 +2018,20 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// A hyperlink part of the comment was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Hyperlink_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                var hyperlink = (Hyperlink)sender;
+                Process.Start(hyperlink.NavigateUri.ToString());
+            }
+        }
+
+        /// <summary>
         /// A "comment run" was clicked.
         /// Invoke the dialog and update the run as needed.
         /// </summary>
@@ -2113,9 +2178,9 @@ namespace ChessForge
         /// before this method was called.
         /// </summary>
         /// <param name="nd"></param>
-        public Run InsertOrUpdateCommentRun(TreeNode nd)
+        public Inline InsertOrUpdateCommentRun(TreeNode nd)
         {
-            Run r_comment;
+            Inline inlComment;
 
             if (nd == null)
             {
@@ -2140,38 +2205,33 @@ namespace ChessForge
                 r.Text = BuildNodeText(nd, IsMoveTextWithNumber(r.Text));
                 r.Text = spaces + r.Text.TrimStart();
 
-                _dictNodeToCommentRun.TryGetValue(nd.NodeId, out r_comment);
+                _dictNodeToCommentRun.TryGetValue(nd.NodeId, out inlComment);
 
                 if (!IsCommentRunToShow(nd))
                 {
                     // if the comment run existed, remove it
-                    if (r_comment != null)
+                    if (inlComment != null)
                     {
                         _dictNodeToCommentRun.Remove(nd.NodeId);
-                        RemoveRunFromHostingParagraph(r_comment);
+                        RemoveCommentRunsFromHostingParagraph(inlComment);
+                        //                        RemoveRunFromHostingParagraph(inlComment);
                     }
                 }
                 else
                 {
-                    // if the comment run existed update it
-                    if (r_comment != null)
-                    {
-                        r_comment.Text = BuildCommentRunText(nd);
-                    }
-                    // if did not exists, create it
-                    else
-                    {
-                        Paragraph para = r.Parent as Paragraph;
-                        AddCommentRunToParagraph(nd, para);
-                    }
+                    _dictNodeToCommentRun.Remove(nd.NodeId);
+                    RemoveCommentRunsFromHostingParagraph(inlComment);
+
+                    Paragraph para = r.Parent as Paragraph;
+                    AddCommentRunsToParagraph(nd, para);
                 }
             }
             catch
             {
-                r_comment = null;
+                inlComment = null;
             }
 
-            return r_comment;
+            return inlComment;
         }
 
         /// <summary>
@@ -2265,11 +2325,11 @@ namespace ChessForge
             {
                 sb.Append(Constants.CHAR_SQUARED_SQUARE);
             }
+
             if (!string.IsNullOrEmpty(nd.Comment))
             {
                 sb.Append(nd.Comment);
             }
-
             if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0)
             {
                 if (!string.IsNullOrEmpty(nd.Comment))
