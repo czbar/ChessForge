@@ -117,6 +117,9 @@ namespace ChessForge
             get => _moveColumnWidth + _totalGamesColumnWidth + _statsColumnWidth;
         }
 
+        // Used to ensure that _node object is not accessed simultaneously by OpeningStatsReceived and SetOpeningName
+        private object _lockNodeAccess = new object();
+
         /// <summary>
         /// Rebuilds the view when Openings data is received.
         /// </summary>
@@ -126,18 +129,85 @@ namespace ChessForge
         {
             if (e.Success)
             {
-                _treeId = e.TreeId;
-                if (AppState.ActiveVariationTree != null)
+                lock (_lockNodeAccess)
                 {
-                    _node = AppState.ActiveVariationTree.GetNodeFromNodeId(e.NodeId);
+                    _treeId = e.TreeId;
+                    if (AppState.ActiveVariationTree != null)
+                    {
+                        _node = AppState.ActiveVariationTree.GetNodeFromNodeId(e.NodeId);
+                    }
+                    _moveNumberString = BuildMoveNumberString(_node);
+                    BuildFlowDocument(DataMode.OPENINGS, e.OpeningStats);
                 }
-                _moveNumberString = BuildMoveNumberString(_node);
-                BuildFlowDocument(DataMode.OPENINGS, e.OpeningStats);
-                ProcessOpeningName(e.OpeningStats);
             }
             else
             {
                 BuildFlowDocument(DataMode.NO_DATA, null, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Sets opening code name on the node and refreshes UI table.
+        /// </summary>
+        public void SetOpeningName()
+        {
+            try
+            {
+                lock (_lockNodeAccess)
+                {
+                    _node = AppState.MainWin.ActiveVariationTree.SelectedNode;
+                    string eco;
+                    if (_node != null)
+                    {
+                        string opening = GetOpeningNameFromDictionary(_node, out eco);
+                        if (opening != null)
+                        {
+                            _node.Eco = eco;
+                            _node.OpeningName = opening;
+                        }
+                        else
+                        {
+                            string openingName = FindOpeningNameFromPredecessors(_node, out eco);
+                            if (!string.IsNullOrEmpty(openingName))
+                            {
+                                _node.Eco = eco;
+                                _node.OpeningName = openingName;
+                            }
+                        }
+
+                        if (NodeHasOpeningName(_node))
+                        {
+                            Document.Blocks.Remove(_openingNameTable);
+                            BuildOpeningNameTable();
+                            Document.Blocks.InsertBefore(_openingStatsTable, _openingNameTable);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Gets the opening name from the built-in dictionary, if available.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="eco"></param>
+        /// <returns></returns>
+        private string GetOpeningNameFromDictionary(TreeNode nd, out string eco)
+        {
+            string shFen = TextUtils.AdjustResourceStringForXml(FenParser.GenerateShortFen(nd.Position));
+            string opening = Properties.OpeningNames.ResourceManager.GetString(shFen);
+            if (opening != null && opening.Length > 4)
+            {
+                eco = opening.Substring(0, 3);
+                return opening.Substring(4);
+            }
+            else
+            {
+                eco = "";
+                return null;
             }
         }
 
@@ -204,7 +274,7 @@ namespace ChessForge
                         {
                             Document.Blocks.Add(_openingNameTable);
                         }
-//                        BuildOpeningStatsTable(openingStats);
+                        //                        BuildOpeningStatsTable(openingStats);
                         BuildOpeningStatsTableEx(openingStats);
                         Document.Blocks.Add(_openingStatsTable);
                         break;
@@ -227,77 +297,6 @@ namespace ChessForge
                     case DataMode.NO_DATA:
                         Document.Blocks.Add(BuildErrorMessagePara(errorMessage));
                         break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// If the received value is of the correct node or one of its predecessors
-        /// set the value in the correct Node and check if we now have 
-        /// the name for the current node.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ProcessOpeningName(LichessOpeningsStats stats)
-        {
-            try
-            {
-                _node.Eco = "";
-                _node.OpeningName = POSITION_NOT_NAMED;
-                if (stats.Opening != null)
-                {
-                    _node.Eco = stats.Opening.Eco;
-                    _node.OpeningName = stats.Opening.Name;
-
-                    SetAllNotNamedChildrenPositions(_node);
-                }
-                else
-                {
-                    string openingName = FindOpeningNameFromPredecessors(_node, out string eco);
-                    if (!string.IsNullOrEmpty(openingName))
-                    {
-                        _node.Eco = eco;
-                        _node.OpeningName = openingName;
-                    }
-                }
-
-                if (NodeHasOpeningName(_node))
-                {
-                    Document.Blocks.Remove(_openingNameTable);
-                    BuildOpeningNameTable();
-                    Document.Blocks.InsertBefore(_openingStatsTable, _openingNameTable);
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
-        /// Recursively sets the opening name for all children that currently have 
-        /// Opening Name == POSITION_NOT_NAMED which means they are "not named"
-        /// and should inherit the opening name from predecessors.
-        /// A "real" name or empty name (meaning position not queried yet)
-        /// stops the recurssion branch.
-        /// </summary>
-        /// <param name="nd"></param>
-        private void SetAllNotNamedChildrenPositions(TreeNode nd)
-        {
-            // safety check that the node indeed has a "real" opening name
-            if (string.IsNullOrEmpty(nd.OpeningName) || nd.OpeningName == POSITION_NOT_NAMED)
-            {
-                return;
-            }
-            else
-            {
-                foreach (TreeNode child in nd.Children)
-                {
-                    if (child.OpeningName == POSITION_NOT_NAMED)
-                    {
-                        child.Eco = nd.Eco;
-                        child.OpeningName = nd.OpeningName;
-                        SetAllNotNamedChildrenPositions(child);
-                    }
                 }
             }
         }
@@ -327,22 +326,28 @@ namespace ChessForge
 
             while (nd != null)
             {
-                if (string.IsNullOrEmpty(nd.OpeningName) && nd.MoveNumber <= Constants.OPENING_MAX_MOVE)
-                {
-                    // the chain is "broken" yet and we don't want incorrect name
-                    // unless the move number is higher than OPENING_MAX_MOVE.
-                    break;
-                }
+                //if (string.IsNullOrEmpty(nd.OpeningName) && nd.MoveNumber <= Constants.OPENING_MAX_MOVE)
+                //{
+                //    // the chain is "broken" yet and we don't want incorrect name
+                //    // unless the move number is higher than OPENING_MAX_MOVE.
+                //    break;
+                //}
 
                 name = nd.OpeningName;
                 eco = nd.Eco;
-                if (nd.OpeningName != POSITION_NOT_NAMED && nd.MoveNumber <= Constants.OPENING_MAX_MOVE)
+                if (nd.OpeningName != POSITION_NOT_NAMED && !string.IsNullOrEmpty(nd.OpeningName))
                 {
                     // we have a valid name
                     break;
                 }
                 else
                 {
+                    name = GetOpeningNameFromDictionary(nd, out eco);
+                    if (name != null)
+                    {
+                        // we have a valid name
+                        break;
+                    }
                     // keep looking 
                     nd = nd.Parent;
                 }

@@ -627,6 +627,7 @@ namespace ChessForge
 
             if (ActiveVariationTree != null && ActiveVariationTree.SelectedNode != null)
             {
+                _openingStatsView.SetOpeningName();
                 WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
             }
 
