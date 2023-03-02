@@ -15,7 +15,7 @@ namespace ChessForge
     public class GuiUtilities
     {
         /// <summary>
-        /// Produces text for user interface from the received ParserExcpetion.
+        /// Produces text for user interface from the received ParserException.
         /// </summary>
         /// <param name="ex"></param>
         /// <returns></returns>
