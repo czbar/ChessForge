@@ -288,11 +288,40 @@ namespace ChessForge
         /// <summary>
         /// Removes a Run from its hosting paragraph
         /// </summary>
-        /// <param name="r"></param>
-        public void RemoveRunFromHostingParagraph(Run r)
+        /// <param name="inl"></param>
+        public void RemoveRunFromHostingParagraph(Inline inl)
         {
-            Paragraph parent = r.Parent as Paragraph;
-            parent.Inlines.Remove(r);
+            Paragraph parent = inl.Parent as Paragraph;
+            parent.Inlines.Remove(inl);
+        }
+
+        /// <summary>
+        /// Removes all inlines with the same name as the passed inline.
+        /// This applies to parts of the comment for a given node.
+        /// </summary>
+        /// <param name="inlComment"></param>
+        public void RemoveCommentRunsFromHostingParagraph(Inline inlComment)
+        {
+            if (inlComment == null)
+            {
+                return;
+            }
+
+            Paragraph parent = inlComment.Parent as Paragraph;
+            
+            List<Inline> inlinesToRemove = new List<Inline>();
+            foreach (Inline inl in parent.Inlines)
+            {
+                if (inl.Name == inlComment.Name)
+                {
+                    inlinesToRemove.Add(inl);
+                }
+            }
+
+            foreach (Inline inlToRemove in inlinesToRemove)
+            {
+                parent.Inlines.Remove(inlToRemove);
+            }
         }
 
         /// <summary>
