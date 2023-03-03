@@ -263,6 +263,25 @@
                     </TabItem>
                 </TabControl>
                 <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1" IsVisibleChanged="UiTabCtrlManualReview_IsVisibleChanged">
+                    <TabItem x:Name="UiTabIntro"  Header="{x:Static p:Resources.Intro}" >
+                        <Grid Background="#FFE5E5E5" >
+                            <Grid.ContextMenu>
+                                <ContextMenu x:Name="UiCmIntro">
+                                </ContextMenu>
+                            </Grid.ContextMenu>
+                            <RichTextBox x:Name="UiRtbIntroView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
+                                   Height="640" MinHeight="500"  >
+                                <RichTextBox.Resources>
+                                    <Style TargetType="{x:Type Paragraph}">
+                                        <Setter Property="Margin" Value="0" />
+                                    </Style>
+                                </RichTextBox.Resources>
+                                <FlowDocument>
+                                </FlowDocument>
+                            </RichTextBox>
+                        </Grid>
+                    </TabItem>
                     <TabItem x:Name="UiTabChapters"  Header="{x:Static p:Resources.Chapters}" GotFocus="UiTabChapters_GotFocus" >
                         <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" ContextMenuOpening="SupressContextMenu" PreviewMouseUp="Chapters_PreviewMouseUp" >
                             <Grid.ContextMenu>
