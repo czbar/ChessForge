@@ -43,6 +43,11 @@ namespace ChessForge
         private ChaptersView _chaptersView;
 
         /// <summary>
+        /// The RichTextBox based Intro view
+        /// </summary>
+        private IntroView _introView;
+
+        /// <summary>
         /// The RichTextBox based Study Tree view
         /// </summary>
         private VariationTreeView _studyTreeView;
@@ -2478,6 +2483,8 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// TODO: DELETE THIS FUNCTION?
+        /// 
         /// Upon start up or when returning from Training the tab control will receive an IsVisibleChanged 
         /// notification.  We store the active tab when losing visibility and send focus to it when regaining it.
         /// </summary>
