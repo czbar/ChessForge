@@ -171,6 +171,9 @@
   <data name="Chapters" xml:space="preserve">
     <value>Chapters</value>
   </data>
+  <data name="Intro" xml:space="preserve">
+    <value>Intro</value>
+  </data>
   <data name="Study" xml:space="preserve">
     <value>Study</value>
   </data>

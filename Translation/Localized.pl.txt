@@ -1980,3 +1980,4 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
+Intro=Wstęp

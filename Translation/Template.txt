@@ -89,6 +89,10 @@ Chapter=
 #english: Chapters=Chapters
 Chapters=
 
+#description: Intro
+#english: Intro=Intro
+Intro=
+
 #description: Study Tree
 #english: Study=Study
 Study=

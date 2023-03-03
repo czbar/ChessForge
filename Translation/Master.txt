@@ -71,6 +71,9 @@ Chapter=Chapter
 #Chapters plural
 Chapters=Chapters
 
+#Intro
+Intro=Intro
+
 #Study Tree
 Study=Study
 
