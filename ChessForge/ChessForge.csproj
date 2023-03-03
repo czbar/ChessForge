@@ -124,6 +124,7 @@
     <Compile Include="IdenticalPositionsDialog.xaml.cs">
       <DependentUpon>IdenticalPositionsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IntroView.cs" />
     <Compile Include="LearningMode.cs" />
     <Compile Include="AppState.cs" />
     <Compile Include="AppTimers.cs" />
