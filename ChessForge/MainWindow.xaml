@@ -328,7 +328,7 @@
                             </Viewbox>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="UiTabIntro"  Header="{x:Static p:Resources.Intro}" >
+                    <TabItem x:Name="UiTabIntro"  Header="{x:Static p:Resources.Intro}" GotFocus="UiTabIntro_GotFocus"  >
                         <Grid Background="#FFE5E5E5" >
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiCmIntro">
@@ -347,7 +347,7 @@
                             </RichTextBox>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="UiTabStudyTree"  Header="{x:Static p:Resources.Study}" GotFocus="UiTabStudyTree_GotFocus" IsVisibleChanged="UiTabStudyTree_IsVisibleChanged" >
+                    <TabItem x:Name="UiTabStudyTree"  Header="{x:Static p:Resources.Study}" GotFocus="UiTabStudyTree_GotFocus" >
                         <Grid x:Name="UiGridStudyTree"  Background="#FFE5E5E5" PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu"
                               PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
                             <Grid.RowDefinitions>
