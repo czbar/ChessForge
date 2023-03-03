@@ -290,6 +290,7 @@ namespace ChessForge
             EvaluationMgr = new EvaluationManager();
 
             InitializeComponent();
+            UiTabIntro.Visibility = Configuration.ShowIntroTab ? Visibility.Visible : Visibility.Collapsed;
             SoundPlayer.Initialize();
 
             BoardCommentBox = new CommentBox(UiRtbBoardComment.Document, this);
