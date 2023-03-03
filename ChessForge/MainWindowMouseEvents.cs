@@ -890,6 +890,27 @@ namespace ChessForge
             }
         }
 
+
+        /// <summary>
+        /// The Intro view got focus.
+        /// Check if it is built for the current context,
+        /// and if not create/re-build it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabIntro_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+            {
+                return;
+            }
+
+            // TODO: check if needs rebuilding
+            // if so, load content
+            // _introView = new IntroView();
+            // _introView.LoadXAMLContent();
+        }
+
         /// <summary>
         /// The Study Tree view got focus.
         /// Select the last selected line and move and display position.
@@ -913,21 +934,6 @@ namespace ChessForge
             try
             {
                 SetStudyStateOnFocus();
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
-        /// Persists the board's flipped state when the Study Tree view loses visibility.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiTabStudyTree_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            try
-            {
             }
             catch
             {
