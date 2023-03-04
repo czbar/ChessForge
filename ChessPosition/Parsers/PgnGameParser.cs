@@ -135,7 +135,6 @@ namespace GameTree
 
                     if (!readingHeaders)
                     {
-                        //                        sb.Append(line + " ");
                         sb.AppendLine(line);
                     }
                 }
