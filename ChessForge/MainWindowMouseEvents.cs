@@ -899,6 +899,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabIntro_GotFocus(object sender, RoutedEventArgs e)
         {
+            if (WorkbookManager.SessionWorkbook == null && _introView != null)
+            {
+                _introView.Clear();
+            }
+
             if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
             {
                 return;
@@ -913,10 +918,6 @@ namespace ChessForge
                 if (_introView == null || _introView.ParentChapter != WorkbookManager.SessionWorkbook.ActiveChapter)
                 {
                     _introView = new IntroView(WorkbookManager.SessionWorkbook.ActiveChapter);
-                    if (!string.IsNullOrEmpty(_introView.Intro.CodedContent))
-                    {
-                        _introView.LoadXAMLContent();
-                    }
                 }
             }
             catch
@@ -925,14 +926,17 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// We need to save the content of the view on LosttFocus
+        /// We need to save the content of the view on LostFocus
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiTabIntro_LostFocus(object sender, RoutedEventArgs e)
         {
             //TODO: this will be called too often (e.g. when loading), find some performance optimization
-            _introView.SaveXAMLContent();
+            if (_introView != null)
+            {
+                _introView.SaveXAMLContent();
+            }
         }
 
         /// <summary>
