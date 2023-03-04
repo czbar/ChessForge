@@ -890,7 +890,6 @@ namespace ChessForge
             }
         }
 
-
         /// <summary>
         /// The Intro view got focus.
         /// Check if it is built for the current context,
@@ -905,10 +904,35 @@ namespace ChessForge
                 return;
             }
 
-            // TODO: check if needs rebuilding
-            // if so, load content
-            // _introView = new IntroView();
-            // _introView.LoadXAMLContent();
+            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.INTRO;
+            BoardCommentBox.ShowTabHints();
+            try
+            {
+                // if _introView is not null and ParentChapter is the same, leave things as they are,
+                // otherwise build the view.
+                if (_introView == null || _introView.ParentChapter != WorkbookManager.SessionWorkbook.ActiveChapter)
+                {
+                    _introView = new IntroView(WorkbookManager.SessionWorkbook.ActiveChapter);
+                    if (!string.IsNullOrEmpty(_introView.Intro.CodedContent))
+                    {
+                        _introView.LoadXAMLContent();
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// We need to save the content of the view on LosttFocus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabIntro_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //TODO: this will be called too often (e.g. when loading), find some performance optimization
+            _introView.SaveXAMLContent();
         }
 
         /// <summary>
@@ -1043,21 +1067,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Persists the board's flipped state.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiTabBookmarks_LostFocus(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
         /// The Model Games view got focus.
         /// Select the last selected line and move and display position.
         /// </summary>
@@ -1071,7 +1080,6 @@ namespace ChessForge
             }
 
             RefreshGamesView();
-
         }
 
         /// <summary>
