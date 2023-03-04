@@ -1332,8 +1332,14 @@ cbJustPicture=This is just a picture! Make your moves on the big board.
 #Some available actions
 cbActions=Some available actions are:
 
-#Clich to open Study
+#Click to open Study
 cbClickStudyHeader=Click Study header or double click chapter's title to open the Study Tree
+
+#Edit Rich Text  
+cbEditText=Edit text, select/copy/paste etc.
+
+#Edit text commands
+cbEditCommands=CTRL+B bold, CTRL+I italics
 
 #Right click for context menu
 cbClickForContextMenu=Right click to open context menu

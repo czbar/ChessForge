@@ -1288,6 +1288,12 @@
   <data name="cbClickStudyHeader" xml:space="preserve">
     <value>Click Study header or double click chapter's title to open the Study Tree</value>
   </data>
+  <data name="cbEditText" xml:space="preserve">
+    <value>Edit text, select/copy/paste etc.</value>
+  </data>
+  <data name="cbEditCommands" xml:space="preserve">
+    <value>CTRL+B bold, CTRL+I italics</value>
+  </data>
   <data name="cbClickForContextMenu" xml:space="preserve">
     <value>Right click to open context menu</value>
   </data>

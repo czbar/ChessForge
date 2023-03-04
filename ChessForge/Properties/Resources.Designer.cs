@@ -412,6 +412,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CTRL+B bold, CTRL+I italics.
+        /// </summary>
+        public static string cbEditCommands {
+            get {
+                return ResourceManager.GetString("cbEditCommands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit text, select/copy/paste etc..
+        /// </summary>
+        public static string cbEditText {
+            get {
+                return ResourceManager.GetString("cbEditText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You have been checkmated by the engine. Better luck next time!.
         /// </summary>
         public static string cbEngineCheckmatedYou {

@@ -27,10 +27,10 @@ namespace GameTree
         {
             NONE,
             GENERIC,
-            WORKBOOK_PREFACE,
             STUDY_TREE,
             MODEL_GAME,
-            EXERCISE
+            EXERCISE,
+            INTRO,
         }
 
         // whether this game is selected in the GUI

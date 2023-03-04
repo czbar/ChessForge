@@ -1287,6 +1287,12 @@
   <data name="cbClickStudyHeader" xml:space="preserve">
     <value>Kliknij nagłówek Teoria, albo dwukrotnie kliknij tytuł rozdziału, by otworzyć Teorię </value>
   </data>
+  <data name="cbEditText" xml:space="preserve">
+    <value>Edytuj tekst, wybierz/kopiuj/wklejaj itp.</value>
+  </data>
+  <data name="cbEditCommands" xml:space="preserve">
+    <value>CTRL+B pogrubione, CTRL+I kursywa</value>
+  </data>
   <data name="cbClickForContextMenu" xml:space="preserve">
     <value>Naciśnij prawy przycisk, by wywołać menu</value>
   </data>

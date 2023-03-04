@@ -42,6 +42,19 @@ namespace ChessForge
         /// <summary>
         /// Notes for the Comments Box in the Study view.
         /// </summary>
+        public static string QuickInstructionForIntro
+        {
+            get
+            {
+                return
+                      Properties.Resources.cbEditText + "\n"
+                    + Properties.Resources.cbEditCommands;
+            }
+        }
+
+        /// <summary>
+        /// Notes for the Comments Box in the Study view.
+        /// </summary>
         public static string QuickInstructionForStudy
         {
             get
