@@ -512,6 +512,9 @@ namespace GameTree
                     case PgnHeaders.VALUE_STUDY_TREE:
                         typ = GameData.ContentType.STUDY_TREE;
                         break;
+                    case PgnHeaders.VALUE_INTRO:
+                        typ = GameData.ContentType.INTRO;
+                        break;
                     case PgnHeaders.VALUE_EXERCISE:
                         typ = GameData.ContentType.EXERCISE;
                         break;

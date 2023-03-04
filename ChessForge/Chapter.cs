@@ -19,10 +19,14 @@ namespace ChessForge
     public class Chapter
     {
         /// <summary>
-        /// The Study Tree of the chapter. There is exactly one
-        /// Study Tree in a chapter.
+        /// The Study Tree of the chapter. There is exactly one Study Tree in a chapter.
         /// </summary>
         public Article StudyTree = new Article(GameData.ContentType.STUDY_TREE);
+
+        /// <summary>
+        /// The Intro article. There is exactly one Intro in a chapter.
+        /// </summary>
+        public Article Intro = new Article(GameData.ContentType.INTRO);
 
         /// <summary>
         /// The list of Model Games Trees
@@ -499,6 +503,9 @@ namespace ChessForge
             {
                 case GameData.ContentType.STUDY_TREE:
                     StudyTree = article;
+                    break;
+                case GameData.ContentType.INTRO:
+                    Intro = article;
                     break;
                 case GameData.ContentType.MODEL_GAME:
                     if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.MODEL_GAME)

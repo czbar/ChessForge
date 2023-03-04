@@ -125,6 +125,7 @@ namespace GameTree
         public const string VALUE_BLACK = "Black";
         public const string VALUE_NO_COLOR = "None";
 
+        public const string VALUE_INTRO = "Intro";
         public const string VALUE_STUDY_TREE = "Study Tree";
         public const string VALUE_MODEL_GAME = "Model Game";
         public const string VALUE_EXERCISE = "Exercise";
