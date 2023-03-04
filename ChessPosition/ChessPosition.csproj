@@ -77,6 +77,7 @@
     <Compile Include="BoardPosition\MoveData.cs" />
     <Compile Include="BoardPosition\PiecesTargetingSquare.cs" />
     <Compile Include="BoardPosition\BoardPosition.cs" />
+    <Compile Include="Utils\EncodingUtils.cs" />
     <Compile Include="Utils\Language.cs" />
     <Compile Include="Utils\Languages.cs" />
     <Compile Include="Utils\LocalizedStrings.cs" />

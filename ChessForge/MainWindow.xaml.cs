@@ -43,6 +43,11 @@ namespace ChessForge
         private ChaptersView _chaptersView;
 
         /// <summary>
+        /// The RichTextBox based Intro view
+        /// </summary>
+        private IntroView _introView;
+
+        /// <summary>
         /// The RichTextBox based Study Tree view
         /// </summary>
         private VariationTreeView _studyTreeView;
@@ -290,6 +295,7 @@ namespace ChessForge
             EvaluationMgr = new EvaluationManager();
 
             InitializeComponent();
+            UiTabIntro.Visibility = Configuration.ShowIntroTab ? Visibility.Visible : Visibility.Collapsed;
             SoundPlayer.Initialize();
 
             BoardCommentBox = new CommentBox(UiRtbBoardComment.Document, this);
@@ -902,6 +908,14 @@ namespace ChessForge
             }
 
             MainChessBoard.Shapes.StartShapeDraw(sq, color, isTentative);
+        }
+
+        /// <summary>
+        /// Accessor to Intro's SaveXAMLContent()
+        /// </summary>
+        public void SaveIntro()
+        {
+            _introView.SaveXAMLContent();
         }
 
         /// <summary>
@@ -2477,6 +2491,8 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// TODO: DELETE THIS FUNCTION?
+        /// 
         /// Upon start up or when returning from Training the tab control will receive an IsVisibleChanged 
         /// notification.  We store the active tab when losing visibility and send focus to it when regaining it.
         /// </summary>

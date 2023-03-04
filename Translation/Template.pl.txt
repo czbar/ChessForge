@@ -89,6 +89,10 @@ Chapter=Rozdział
 #english: Chapters=Chapters
 Chapters=Rozdziały
 
+#description: Intro
+#english: Intro=Intro
+Intro=Wstęp
+
 #description: Study Tree
 #english: Study=Study
 Study=Teoria
@@ -1717,9 +1721,17 @@ cbJustPicture=To tylko ilustracja! Rób ruchy na głównej szachownicy.
 #english: cbActions=Some available actions are:
 cbActions=Niektóre dostępne czynności:
 
-#description: Clich to open Study
+#description: Click to open Study
 #english: cbClickStudyHeader=Click Study header or double click chapter's title to open the Study Tree
 cbClickStudyHeader=Kliknij nagłówek Teoria, albo dwukrotnie kliknij tytuł rozdziału, by otworzyć Teorię 
+
+#description: Edit Rich Text  
+#english: cbEditText=Edit text, select/copy/paste etc.
+cbEditText=Edytuj tekst, wybierz/kopiuj/wklejaj itp.
+
+#description: Edit text commands
+#english: cbEditCommands=CTRL+B bold, CTRL+I italics
+cbEditCommands=CTRL+B pogrubione, CTRL+I kursywa
 
 #description: Right click for context menu
 #english: cbClickForContextMenu=Right click to open context menu

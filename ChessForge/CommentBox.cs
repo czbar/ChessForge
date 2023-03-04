@@ -200,59 +200,66 @@ namespace ChessForge
 
                 if (_mainWin.SessionWorkbook != null)
                 {
-                    string title = _mainWin.SessionWorkbook.Title;
-                    if (string.IsNullOrEmpty(_mainWin.SessionWorkbook.Title))
+                    try
                     {
-                        title = Properties.Resources.UntitledWorkbook;
-                    }
-                    AddNewParagraphToDoc("title", title);
-                    AddNewParagraphToDoc("bold_prompt", Properties.Resources.cbActions);
-                    string commentText = "";
-                    switch (AppState.ActiveTab)
-                    {
-                        case WorkbookManager.TabViewType.CHAPTERS:
-                            commentText = Strings.QuickInstructionForChapters;
-                            break;
-                        case WorkbookManager.TabViewType.STUDY:
-                            commentText = Strings.QuickInstructionForStudy;
-                            break;
-                        case WorkbookManager.TabViewType.BOOKMARKS:
-                            commentText = Strings.QuickInstructionForBookmarks;
-                            break;
-                        case WorkbookManager.TabViewType.MODEL_GAME:
-                            if (AppState.ActiveChapterGamesCount > 0)
-                            {
-                                commentText = Strings.QuickInstructionForGames;
-                            }
-                            else
-                            {
-                                commentText = Strings.QuickInstructionForGamesEmpty;
-                            }
-                            break;
-                        case WorkbookManager.TabViewType.EXERCISE:
-                            if (AppState.ActiveChapterExerciseCount == 0)
-                            {
-                                commentText = Strings.QuickInstructionForExercisesEmpty;
-                            }
-                            else
-                            {
-                                switch (AppState.CurrentSolvingMode)
+                        string title = _mainWin.SessionWorkbook.Title;
+                        if (string.IsNullOrEmpty(_mainWin.SessionWorkbook.Title))
+                        {
+                            title = Properties.Resources.UntitledWorkbook;
+                        }
+                        AddNewParagraphToDoc("title", title);
+                        AddNewParagraphToDoc("bold_prompt", Properties.Resources.cbActions);
+                        string commentText = "";
+                        switch (AppState.ActiveTab)
+                        {
+                            case WorkbookManager.TabViewType.CHAPTERS:
+                                commentText = Strings.QuickInstructionForChapters;
+                                break;
+                            case WorkbookManager.TabViewType.INTRO:
+                                commentText = Strings.QuickInstructionForIntro;
+                                break;
+                            case WorkbookManager.TabViewType.STUDY:
+                                commentText = Strings.QuickInstructionForStudy;
+                                break;
+                            case WorkbookManager.TabViewType.BOOKMARKS:
+                                commentText = Strings.QuickInstructionForBookmarks;
+                                break;
+                            case WorkbookManager.TabViewType.MODEL_GAME:
+                                if (AppState.ActiveChapterGamesCount > 0)
                                 {
-                                    case VariationTree.SolvingMode.ANALYSIS:
-                                    case VariationTree.SolvingMode.GUESS_MOVE:
-                                        commentText = Strings.QuickInstructionForExerciseSolving;
-                                        break;
-                                    case VariationTree.SolvingMode.EDITING:
-                                        commentText = Strings.QuickInstructionForExercises;
-                                        break;
-                                    default:
-                                        commentText = Strings.QuickInstructionForExercisesHiddenSolution;
-                                        break;
+                                    commentText = Strings.QuickInstructionForGames;
                                 }
-                            }
-                            break;
+                                else
+                                {
+                                    commentText = Strings.QuickInstructionForGamesEmpty;
+                                }
+                                break;
+                            case WorkbookManager.TabViewType.EXERCISE:
+                                if (AppState.ActiveChapterExerciseCount == 0)
+                                {
+                                    commentText = Strings.QuickInstructionForExercisesEmpty;
+                                }
+                                else
+                                {
+                                    switch (AppState.CurrentSolvingMode)
+                                    {
+                                        case VariationTree.SolvingMode.ANALYSIS:
+                                        case VariationTree.SolvingMode.GUESS_MOVE:
+                                            commentText = Strings.QuickInstructionForExerciseSolving;
+                                            break;
+                                        case VariationTree.SolvingMode.EDITING:
+                                            commentText = Strings.QuickInstructionForExercises;
+                                            break;
+                                        default:
+                                            commentText = Strings.QuickInstructionForExercisesHiddenSolution;
+                                            break;
+                                    }
+                                }
+                                break;
+                        }
+                        AddNewParagraphToDoc("normal", commentText);
                     }
-                    AddNewParagraphToDoc("normal", commentText);
+                    catch { }
                 }
                 AppState.SwapCommentBoxForEngineLines(false);
             });

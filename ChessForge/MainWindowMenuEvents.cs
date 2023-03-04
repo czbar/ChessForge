@@ -480,6 +480,8 @@ namespace ChessForge
             // prepare document
             AppState.RestartInIdleMode(false);
             WorkbookManager.CreateNewWorkbook();
+
+            // TODO: this call looks unnecessary as SetupGuiForNewSession() below creates this view again.
             _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
 
             // ask for the options

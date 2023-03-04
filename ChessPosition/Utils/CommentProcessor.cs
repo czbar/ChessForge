@@ -16,34 +16,35 @@ namespace ChessPosition.Utils
         /// </summary>
         /// <param name="comment"></param>
         /// <returns></returns>
-        public static List<CommentPart> SplitCommentTextAtUrls(string comment, out string noUrls)
+        public static List<CommentPart> SplitCommentTextAtUrls(string comment)
         {
-            noUrls = comment;
-
             try
             {
+                List<CommentPart> parts = new List<CommentPart>();
+
                 List<string> urls = TextUtils.MatchUrls(comment);
                 if (urls == null || urls.Count == 0)
                 {
-                    return null;
+                    parts.Add(new CommentPart(CommentPartType.TEXT, comment));
                 }
-
-                List<CommentPart> parts = new List<CommentPart>();
-                int firstUnprocessedChar = 0;
-                for (int i = 0; i < urls.Count; i++)
+                else
                 {
-                    int pos_start = comment.IndexOf(urls[i]);
-                    int pos_end = pos_start + urls[i].Length - 1;
-                    if (pos_start > firstUnprocessedChar)
+                    int firstUnprocessedChar = 0;
+                    for (int i = 0; i < urls.Count; i++)
                     {
-                        parts.Add(new CommentPart(CommentPartType.TEXT, comment.Substring(firstUnprocessedChar, pos_start)));
+                        int pos_start = comment.IndexOf(urls[i]);
+                        int pos_end = pos_start + urls[i].Length - 1;
+                        if (pos_start > firstUnprocessedChar)
+                        {
+                            parts.Add(new CommentPart(CommentPartType.TEXT, comment.Substring(firstUnprocessedChar, pos_start)));
+                        }
+                        parts.Add(new CommentPart(CommentPartType.URL, urls[i]));
+                        firstUnprocessedChar = pos_end + 1;
                     }
-                    parts.Add(new CommentPart(CommentPartType.URL, urls[i]));
-                    firstUnprocessedChar = pos_end + 1;
-                }
-                if (firstUnprocessedChar < comment.Length)
-                {
-                    parts.Add(new CommentPart(CommentPartType.TEXT, comment.Substring(firstUnprocessedChar)));
+                    if (firstUnprocessedChar < comment.Length)
+                    {
+                        parts.Add(new CommentPart(CommentPartType.TEXT, comment.Substring(firstUnprocessedChar)));
+                    }
                 }
 
                 return parts;

@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Chess Forge" Height="900" Width="1676" Loaded="Window_Loaded" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" Closing="ChessForgeMain_Closing" 
         PreviewMouseWheel="OnPreviewMouseWheel" 
-        PreviewKeyDown="ChessForgeMain_PreviewKeyDown" MouseEnter="ChessForgeMain_MouseEnter" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
+        MouseEnter="ChessForgeMain_MouseEnter" >
 
     <Window.Resources>
         <Style  x:Key="RoundedBorder" TargetType="Label">
@@ -263,7 +263,8 @@
                     </TabItem>
                 </TabControl>
                 <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1" IsVisibleChanged="UiTabCtrlManualReview_IsVisibleChanged">
-                    <TabItem x:Name="UiTabChapters"  Header="{x:Static p:Resources.Chapters}" GotFocus="UiTabChapters_GotFocus" >
+                    <TabItem x:Name="UiTabChapters"  Header="{x:Static p:Resources.Chapters}" GotFocus="UiTabChapters_GotFocus" 
+                             PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
                         <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" ContextMenuOpening="SupressContextMenu" PreviewMouseUp="Chapters_PreviewMouseUp" >
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="_cmChapters">
@@ -327,8 +328,28 @@
                             </Viewbox>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="UiTabStudyTree"  Header="{x:Static p:Resources.Study}" GotFocus="UiTabStudyTree_GotFocus" IsVisibleChanged="UiTabStudyTree_IsVisibleChanged" >
-                        <Grid x:Name="UiGridStudyTree"  Background="#FFE5E5E5" PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu">
+                    <TabItem x:Name="UiTabIntro" Header="{x:Static p:Resources.Intro}" GotFocus="UiTabIntro_GotFocus" LostFocus="UiTabIntro_LostFocus"  >
+                        <Grid Background="#FFE5E5E5" >
+                            <Grid.ContextMenu>
+                                <ContextMenu x:Name="UiCmIntro">
+                                </ContextMenu>
+                            </Grid.ContextMenu>
+                            <RichTextBox x:Name="UiRtbIntroView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
+                                   Height="640" MinHeight="500"  >
+                                <RichTextBox.Resources>
+                                    <Style TargetType="{x:Type Paragraph}">
+                                        <Setter Property="Margin" Value="0" />
+                                    </Style>
+                                </RichTextBox.Resources>
+                                <FlowDocument>
+                                </FlowDocument>
+                            </RichTextBox>
+                        </Grid>
+                    </TabItem>
+                    <TabItem x:Name="UiTabStudyTree"  Header="{x:Static p:Resources.Study}" GotFocus="UiTabStudyTree_GotFocus" >
+                        <Grid x:Name="UiGridStudyTree"  Background="#FFE5E5E5" PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu"
+                              PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0"/>
                                 <RowDefinition />
@@ -387,7 +408,8 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabModelGames"  Header="{x:Static p:Resources.Games}" GotFocus="UiTabModelGames_GotFocus" PreviewKeyDown="UiTabModelGames_PreviewKeyDown" LostFocus="UiTabModelGames_LostFocus" >
-                        <Grid x:Name="UiGridModelGames"  Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu">
+                        <Grid x:Name="UiGridModelGames"  Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu"
+                              PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0"/>
                                 <RowDefinition />
@@ -448,7 +470,8 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabExercises"  Header="{x:Static p:Resources.Exercises}" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
-                        <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu" >
+                        <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu"
+                              PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0"/>
                                 <RowDefinition />
@@ -506,7 +529,7 @@
                             </RichTextBox>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="UiTabBookmarks" Header="{x:Static p:Resources.Bookmarks}" GotFocus="UiTabBookmarks_GotFocus" LostFocus="UiTabBookmarks_LostFocus">
+                    <TabItem x:Name="UiTabBookmarks" Header="{x:Static p:Resources.Bookmarks}" GotFocus="UiTabBookmarks_GotFocus" >
                         <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown" ContextMenuOpening="UiBookmarkMenuOpening">
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="_cmBookmarks">

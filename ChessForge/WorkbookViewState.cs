@@ -143,7 +143,7 @@ namespace ChessForge
                     AppState.MainWin.SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
                     break;
                 case WorkbookManager.TabViewType.EXERCISE:
-                    AppState.MainWin.SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex, true);
+                    AppState.MainWin.SelectExercise(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex, true);
                     break;
             }
         }

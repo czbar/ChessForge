@@ -89,6 +89,10 @@ Chapter=
 #english: Chapters=Chapters
 Chapters=
 
+#description: Intro
+#english: Intro=Intro
+Intro=
+
 #description: Study Tree
 #english: Study=Study
 Study=
@@ -1717,9 +1721,17 @@ cbJustPicture=
 #english: cbActions=Some available actions are:
 cbActions=
 
-#description: Clich to open Study
+#description: Click to open Study
 #english: cbClickStudyHeader=Click Study header or double click chapter's title to open the Study Tree
 cbClickStudyHeader=
+
+#description: Edit Rich Text  
+#english: cbEditText=Edit text, select/copy/paste etc.
+cbEditText=
+
+#description: Edit text commands
+#english: cbEditCommands=CTRL+B bold, CTRL+I italics
+cbEditCommands=
 
 #description: Right click for context menu
 #english: cbClickForContextMenu=Right click to open context menu

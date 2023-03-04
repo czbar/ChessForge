@@ -25,6 +25,7 @@ namespace GameTree
             QUIZ_POINTS,
             THUMBNAIL,
             ARTICLE_REFS,
+            XAML,
 
             ARROWS,
             CIRCLES
@@ -42,6 +43,7 @@ namespace GameTree
             ["%quiz"] = Command.QUIZ_POINTS,
             ["%thmb"] = Command.THUMBNAIL,
             ["%ref"] = Command.ARTICLE_REFS,
+            ["%xaml"] = Command.XAML,
 
             ["%csl"] = Command.CIRCLES,
             ["%cal"] = Command.ARROWS

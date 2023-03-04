@@ -1764,7 +1764,7 @@ namespace ChessForge
 
             try
             {
-                List<CommentPart> parts = CommentProcessor.SplitCommentTextAtUrls(nd.Comment, out string noUrls);
+                List<CommentPart> parts = CommentProcessor.SplitCommentTextAtUrls(nd.Comment);
                 if (nd.QuizPoints != 0)
                 {
                     if (parts == null)

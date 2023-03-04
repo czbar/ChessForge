@@ -23,12 +23,28 @@ namespace ChessForge
         /// </summary>
         public SolvingManager Solver;
 
+        /// <summary>
+        /// Encoded content when applicable (Intro XAML)
+        /// </summary>
+        public string CodedContent
+        {
+            get => Tree.RootNode.Data;
+        }
+
+        /// <summary>
+        /// Constructs a new object with a Tree of the requested ContentType.
+        /// </summary>
+        /// <param name="contentType"></param>
         public Article(GameData.ContentType contentType)
         {
             Tree = new VariationTree(contentType);
             Solver = new SolvingManager();
         }
 
+        /// <summary>
+        /// Constructs a new object from the passed Tree.
+        /// </summary>
+        /// <param name="tree"></param>
         public Article(VariationTree tree)
         {
             Tree = tree;

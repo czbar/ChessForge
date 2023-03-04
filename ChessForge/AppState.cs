@@ -418,6 +418,7 @@ namespace ChessForge
                     string savePath = string.IsNullOrWhiteSpace(filePath) ? WorkbookFilePath : filePath;
                     if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
                     {
+                        MainWin.SaveIntro();
                         string chfText = WorkbookFileTextBuilder.BuildWorkbookText();
                         File.WriteAllText(savePath, chfText);
                         IsDirty = false;

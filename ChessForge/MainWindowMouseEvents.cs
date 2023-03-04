@@ -891,6 +891,55 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The Intro view got focus.
+        /// Check if it is built for the current context,
+        /// and if not create/re-build it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabIntro_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (WorkbookManager.SessionWorkbook == null && _introView != null)
+            {
+                _introView.Clear();
+            }
+
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+            {
+                return;
+            }
+
+            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.INTRO;
+            BoardCommentBox.ShowTabHints();
+            try
+            {
+                // if _introView is not null and ParentChapter is the same, leave things as they are,
+                // otherwise build the view.
+                if (_introView == null || _introView.ParentChapter != WorkbookManager.SessionWorkbook.ActiveChapter)
+                {
+                    _introView = new IntroView(WorkbookManager.SessionWorkbook.ActiveChapter);
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// We need to save the content of the view on LostFocus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabIntro_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //TODO: this will be called too often (e.g. when loading), find some performance optimization
+            if (_introView != null)
+            {
+                _introView.SaveXAMLContent();
+            }
+        }
+
+        /// <summary>
         /// The Study Tree view got focus.
         /// Select the last selected line and move and display position.
         /// </summary>
@@ -913,21 +962,6 @@ namespace ChessForge
             try
             {
                 SetStudyStateOnFocus();
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
-        /// Persists the board's flipped state when the Study Tree view loses visibility.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiTabStudyTree_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            try
-            {
             }
             catch
             {
@@ -1037,21 +1071,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Persists the board's flipped state.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiTabBookmarks_LostFocus(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
         /// The Model Games view got focus.
         /// Select the last selected line and move and display position.
         /// </summary>
@@ -1065,7 +1084,6 @@ namespace ChessForge
             }
 
             RefreshGamesView();
-
         }
 
         /// <summary>
