@@ -424,6 +424,12 @@ namespace GameTree
                             }
                         }
                         break;
+                    case ChfCommands.Command.XAML:
+                        if (tokens.Length > 1)
+                        {
+                            nd.Data = tokens[1];
+                        }
+                        break;
                     case ChfCommands.Command.ARROWS:
                         if (tokens.Length > 1)
                         {
