@@ -911,6 +911,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Accessor to Intro's SaveXAMLContent()
+        /// </summary>
+        public void SaveIntro()
+        {
+            _introView.SaveXAMLContent();
+        }
+
+        /// <summary>
         /// Saves the Arrow positions string to the Node currently
         /// hosted in the Main Chessboard.
         /// </summary>
