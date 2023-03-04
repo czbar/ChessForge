@@ -48,6 +48,11 @@ namespace GameTree
         public string OpeningName;
 
         /// <summary>
+        /// For special data e.g. encoded XAML string.
+        /// </summary>
+        public string Data;
+
+        /// <summary>
         /// Child nodes.
         /// </summary>
         public List<TreeNode> Children = new List<TreeNode>();
