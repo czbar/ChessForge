@@ -26,7 +26,10 @@ namespace ChessForge
         /// <summary>
         /// Encoded content when applicable (Intro XAML)
         /// </summary>
-        public string CodedContent = "";
+        public string CodedContent
+        {
+            get => Tree.RootNode.Data;
+        }
 
         /// <summary>
         /// Constructs a new object with a Tree of the requested ContentType.

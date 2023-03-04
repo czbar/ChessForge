@@ -31,7 +31,6 @@ namespace ChessForge
             AppState.MainWin.UiRtbIntroView.TextChanged += UiRtbIntroView_TextChanged;
             if (!string.IsNullOrEmpty(Intro.Tree.RootNode.Data))
             {
-                Intro.CodedContent = Intro.Tree.RootNode.Data;
                 _ignoreTextChange = true;
                 LoadXAMLContent();
             }
@@ -101,7 +100,7 @@ namespace ChessForge
             t.Save(ms, DataFormats.Xaml);
 
             string xamlText = XamlWriter.Save(AppState.MainWin.UiRtbIntroView.Document);
-            Intro.CodedContent = EncodingUtils.Base64Encode(xamlText);
+            Intro.Tree.RootNode.Data = EncodingUtils.Base64Encode(xamlText);
         }
 
         /// <summary>
