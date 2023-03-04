@@ -115,7 +115,8 @@ namespace ChessForge
         private static string BuildChapterText(Chapter chapter, int chapterIndex)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(BuildStudyTreeText(chapter, chapterIndex));
+            sb.Append(BuildStudyTreeText(chapter));
+            sb.Append(BuildIntroText(chapter));
             sb.Append(BuildModelGamesText(chapter));
             sb.Append(BuildExercisesText(chapter));
 
@@ -127,20 +128,22 @@ namespace ChessForge
 
         /// <summary>
         /// Builds text for the Study Tree in the chapter.
-        /// A study tree is optional in a chapter.
-        /// If it is not initialized or only contains Node 0,
-        /// it will not be included in the output at all.
+        /// It must be present in the output as it indicates the start
+        /// of a chapter.
         /// </summary>
         /// <param name="chapter"></param>
-        /// <param name="chapterIndex"></param>
         /// <returns></returns>
-        private static string BuildStudyTreeText(Chapter chapter, int chapterIndex)
+        private static string BuildStudyTreeText(Chapter chapter)
         {
             VariationTree tree = chapter.StudyTree.Tree;
+
+            string headerText = BuildStudyTreeHeaderText(chapter);
+
+            StringBuilder sbOutput = new StringBuilder();
+            sbOutput.Append(headerText);
+
             if (tree != null && tree.Nodes.Count >= 1)
             {
-                string headerText = BuildStudyTreeHeaderText(chapter);
-
                 TreeNode root = tree.Nodes[0];
 
                 // There may be a comment or command before the first move. Add if so.
@@ -149,8 +152,36 @@ namespace ChessForge
                 StringBuilder sb = new StringBuilder();
                 sb.Append(BuildTreeLineText(root));
 
+                sbOutput.Append(DivideLine(sb.ToString(), 80));
+            }
+
+            // add terminating character
+            sbOutput.Append(" *");
+            sbOutput.AppendLine();
+            sbOutput.AppendLine();
+
+            return sbOutput.ToString();
+        }
+
+        /// <summary>
+        /// Builds text for the Intro section.
+        /// Intro is optional so if there is no content, it wil lbe skipped.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        public static string BuildIntroText(Chapter chapter)
+        {
+            string xaml = chapter.Intro.CodedContent;
+
+            if (!string.IsNullOrEmpty(xaml))
+            {
+                string headerText = BuildIntroHeaderText(chapter);
+
+                string xamlContent = BuildCommentText(BuildXamlCommandText(chapter.Intro.CodedContent));
+
                 StringBuilder sbOutput = new StringBuilder();
-                sbOutput.Append(headerText + DivideLine(sb.ToString(), 80));
+                sbOutput.Append(headerText + DivideLineForced(xamlContent, 80));
+                sbOutput.AppendLine();
 
                 // add terminating character
                 sbOutput.Append(" *");
@@ -164,7 +195,6 @@ namespace ChessForge
                 return "";
             }
         }
-
 
         /// <summary>
         /// Build text for all Model Games in the chapter.
@@ -243,10 +273,28 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds header for the Intro.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        private static string BuildIntroHeaderText(Chapter chapter)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_GUID, chapter.Guid));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_INTRO));
+
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_WHITE, "Chapter"));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK, "Introduction"));
+            sb.AppendLine("");
+
+            return sb.ToString();
+        }
+
+        /// <summary>
         /// Builds the header for a Study Tree.
         /// </summary>
         /// <param name="chapter"></param>
-        /// <param name="chapterIndex"></param>
         /// <returns></returns>
         private static string BuildStudyTreeHeaderText(Chapter chapter)
         {
@@ -334,6 +382,11 @@ namespace ChessForge
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Builds header lines for the Preamble.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <returns></returns>
         private static string BuildPreamble(VariationTree tree)
         {
             StringBuilder sb = new StringBuilder();
@@ -342,6 +395,21 @@ namespace ChessForge
             {
                 sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_PREAMBLE, line));
             }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Command text for xaml text.
+        /// </summary>
+        /// <param name="xaml"></param>
+        /// <returns></returns>
+        private static string BuildXamlCommandText(string xaml)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.XAML) + " " + xaml;
+            sb.Append("[" + sCmd + "]");
 
             return sb.ToString();
         }
@@ -358,22 +426,6 @@ namespace ChessForge
                 pos.MoveNumber += 1;
             }
         }
-
-        /// <summary>
-        /// Builds part of the header that is common to all types
-        /// of games.
-        /// </summary>
-        /// <param name="chapter"></param>
-        /// <returns></returns>
-        private static string BuildCommonGameHeaderText(Chapter chapter)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CHAPTER_TITLE, chapter.GetTitle()));
-
-            return sb.ToString();
-        }
-
 
         /// <summary>
         /// Divides a line into multiple lines no longer than maxChars
@@ -434,15 +486,38 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Build text for a single header.
+        /// Breaks a line into sublines of length on greater thanmaxCjars
         /// </summary>
-        /// <param name="key"></param>
-        private static void BuildHeader(string key, string value)
+        /// <param name="inp"></param>
+        /// <param name="maxChars"></param>
+        /// <returns></returns>
+        private static string DivideLineForced(string inp, int maxChars)
         {
-            _fileText.Append("[" + key + " \"");
-            _fileText.Append(value ?? "");
-            _fileText.Append("\"]");
-            _fileText.AppendLine();
+            StringBuilder sb = new StringBuilder();
+            int startIdx = 0;
+
+            while (true)
+            {
+                string nextLine;
+
+                // is this the last subline
+                if (inp.Length <= startIdx + maxChars)
+                {
+                    nextLine = inp.Substring(startIdx);
+                    sb.Append(nextLine);
+                    break;
+                }
+                else
+                {
+                    nextLine = inp.Substring(startIdx, maxChars);
+
+                    sb.Append(nextLine);
+                    sb.AppendLine();
+                    startIdx += maxChars;
+                }
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
