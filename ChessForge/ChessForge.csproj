@@ -113,6 +113,9 @@
     <Compile Include="ContentTypeListItem.cs" />
     <Compile Include="CustomCommands.cs" />
     <Compile Include="DebugDumps.cs" />
+    <Compile Include="DiagramSetupDialog.xaml.cs">
+      <DependentUpon>DiagramSetupDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EvaluationActiveLine.cs" />
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
@@ -125,6 +128,7 @@
       <DependentUpon>IdenticalPositionsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="IntroView.cs" />
+    <Compile Include="IntroViewDiagram.cs" />
     <Compile Include="LearningMode.cs" />
     <Compile Include="AppState.cs" />
     <Compile Include="AppTimers.cs" />
@@ -249,6 +253,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ChapterTitleDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DiagramSetupDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
