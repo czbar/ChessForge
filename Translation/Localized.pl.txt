@@ -1350,7 +1350,7 @@ GameNotFound=Partia nie znaleziona
 
 #description: FEN
 #english: FEN=FEN
-FEN=Kod FEN
+FEN=FEN
 
 #description: PGN
 #english: PGN=PGN

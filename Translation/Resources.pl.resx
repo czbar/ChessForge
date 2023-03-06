@@ -1021,7 +1021,7 @@
     <value>Partia nie znaleziona</value>
   </data>
   <data name="FEN" xml:space="preserve">
-    <value>Kod FEN</value>
+    <value>FEN</value>
   </data>
   <data name="PGN" xml:space="preserve">
     <value>PGN</value>
