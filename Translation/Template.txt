@@ -1276,8 +1276,9 @@ GotoNewChapter=
 #english: ChapterTitle=Chapter Title
 ChapterTitle=
 
-#Select a date
-#SelectDate=Select a date
+#description: Select a date
+#english: SelectDate=Select a date
+SelectDate=
 
 #description: Ignore Day and Month
 #english: IgnoreDayMonth=Ignore Day and Month

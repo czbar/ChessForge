@@ -970,6 +970,9 @@
   <data name="ChapterTitle" xml:space="preserve">
     <value>Chapter Title</value>
   </data>
+  <data name="SelectDate" xml:space="preserve">
+    <value>Select a date</value>
+  </data>
   <data name="IgnoreDayMonth" xml:space="preserve">
     <value>Ignore Day and Month</value>
   </data>

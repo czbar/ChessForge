@@ -993,7 +993,7 @@ GotoNewChapter=Go to the newly created chapter.
 ChapterTitle=Chapter Title
 
 #Select a date
-#SelectDate=Select a date
+SelectDate=Select a date
 
 #Ignore Day and Month
 IgnoreDayMonth=Ignore Day and Month
