@@ -597,6 +597,9 @@
   <data name="ConfirmDeleteExercise" xml:space="preserve">
     <value>Delete Exercise</value>
   </data>
+  <data name="InsertDiagram" xml:space="preserve">
+    <value>Insert Diagram</value>
+  </data>
   <data name="MnGameExerciseReferences" xml:space="preserve">
     <value>Game/Exercise References...</value>
   </data>
@@ -969,6 +972,9 @@
   </data>
   <data name="ChapterTitle" xml:space="preserve">
     <value>Chapter Title</value>
+  </data>
+  <data name="SelectDate" xml:space="preserve">
+    <value>Select a date</value>
   </data>
   <data name="IgnoreDayMonth" xml:space="preserve">
     <value>Ignore Day and Month</value>

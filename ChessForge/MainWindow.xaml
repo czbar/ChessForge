@@ -307,8 +307,8 @@
                                     <MenuItem x:Name="UiMnChptCollapseAll" Header="{x:Static p:Resources.CollapseAll}" Click="UiMnChptCollapseAll_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            <RichTextBox x:Name="UiRtbChaptersView" IsUndoEnabled="False" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
+                            <RichTextBox x:Name="UiRtbChaptersView" Grid.Row="1"  IsUndoEnabled="False" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True"  >
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
@@ -330,16 +330,21 @@
                     </TabItem>
                     <TabItem x:Name="UiTabIntro" Header="{x:Static p:Resources.Intro}" GotFocus="UiTabIntro_GotFocus" LostFocus="UiTabIntro_LostFocus"  >
                         <Grid Background="#FFE5E5E5" >
-                            <Grid.ContextMenu>
-                                <ContextMenu x:Name="UiCmIntro">
-                                </ContextMenu>
-                            </Grid.ContextMenu>
                             <RichTextBox x:Name="UiRtbIntroView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                 Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
+                                 Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500"  >
+                                <RichTextBox.ContextMenu>
+                                    <ContextMenu x:Name="UiCmIntro">
+                                        <MenuItem Command="ApplicationCommands.Cut"/>
+                                        <MenuItem Command="ApplicationCommands.Copy"/>
+                                        <MenuItem Command="ApplicationCommands.Paste"/>
+                                        <Separator></Separator>
+                                        <MenuItem x:Name="UiCmiInsertDiagram" Header="{x:Static p:Resources.InsertDiagram}" Click="UiCmiInsertDiagram_Click"  />
+                                    </ContextMenu>
+                                </RichTextBox.ContextMenu>
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
-                                        <Setter Property="Margin" Value="0" />
+                                        <Setter Property="Margin" Value="0,0,0,0" />
                                     </Style>
                                 </RichTextBox.Resources>
                                 <FlowDocument>

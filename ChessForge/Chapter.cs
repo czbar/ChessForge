@@ -26,7 +26,7 @@ namespace ChessForge
         /// <summary>
         /// The Intro article. There is exactly one Intro in a chapter.
         /// </summary>
-        public Article Intro = new Article(GameData.ContentType.INTRO);
+        public Article Intro;
 
         /// <summary>
         /// The list of Model Games Trees
@@ -97,15 +97,18 @@ namespace ChessForge
         public Chapter()
         {
             _opsManager = new WorkbookOperationsManager(this);
-        }
 
-        /// <summary>
-        /// Returns Model Game stored at a given index.
-        /// Null if invalid index.
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public Article GetModelGameAtIndex(int index)
+            Intro = new Article(GameData.ContentType.INTRO);
+            Intro.Tree.AddNode(new TreeNode(null, "", 0));
+    }
+
+    /// <summary>
+    /// Returns Model Game stored at a given index.
+    /// Null if invalid index.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    public Article GetModelGameAtIndex(int index)
         {
             if (index >= 0 && index < ModelGames.Count)
             {

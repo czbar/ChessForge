@@ -102,7 +102,6 @@ namespace ChessForge
         public void BuildFlowDocumentForChaptersView()
         {
             Document.Blocks.Clear();
-            Document.PageWidth = 2000; // prevent word wrap
             _dictChapterParas.Clear();
 
             Paragraph paraWorkbookTitle = AddNewParagraphToDoc(STYLE_WORKBOOK_TITLE, WorkbookManager.SessionWorkbook.Title);

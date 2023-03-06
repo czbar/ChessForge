@@ -2095,6 +2095,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert Diagram.
+        /// </summary>
+        public static string InsertDiagram {
+            get {
+                return ResourceManager.GetString("InsertDiagram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Intro.
         /// </summary>
         public static string Intro {
@@ -3127,6 +3136,15 @@ namespace ChessForge.Properties {
         public static string SelectChaptersToMerge {
             get {
                 return ResourceManager.GetString("SelectChaptersToMerge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a date.
+        /// </summary>
+        public static string SelectDate {
+            get {
+                return ResourceManager.GetString("SelectDate", resourceCulture);
             }
         }
         

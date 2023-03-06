@@ -8,6 +8,8 @@ using System.Windows.Markup;
 using System.Windows;
 using ChessPosition;
 using System.Windows.Controls;
+using GameTree;
+using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -16,6 +18,14 @@ namespace ChessForge
     /// </summary>
     public class IntroView
     {
+        /// <summary>
+        /// The list of diagrams in this view.
+        /// </summary>
+        private List<IntroViewDiagram> DiagramList = new List<IntroViewDiagram>();
+
+        // refrence to the RichTextBox of this view.
+        private RichTextBox _rtb = AppState.MainWin.UiRtbIntroView;
+
         // flag to use to prevent unnecessary saving after the load.
         private bool _ignoreTextChange = false;
 
@@ -24,11 +34,11 @@ namespace ChessForge
         /// </summary>
         public IntroView(Chapter parentChapter)
         {
-            AppState.MainWin.UiRtbIntroView.Document.Blocks.Clear();
+            _rtb.Document.Blocks.Clear();
             ParentChapter = parentChapter;
 
             // set the event handler we loaded the document.
-            AppState.MainWin.UiRtbIntroView.TextChanged += UiRtbIntroView_TextChanged;
+            _rtb.TextChanged += UiRtbIntroView_TextChanged;
             if (!string.IsNullOrEmpty(Intro.Tree.RootNode.Data))
             {
                 _ignoreTextChange = true;
@@ -42,7 +52,7 @@ namespace ChessForge
         public void Clear()
         {
             _ignoreTextChange = true;
-            AppState.MainWin.UiRtbIntroView.Document.Blocks.Clear();
+            _rtb.Document.Blocks.Clear();
         }
 
         /// <summary>
@@ -66,8 +76,155 @@ namespace ChessForge
             if (!string.IsNullOrEmpty(Intro.CodedContent))
             {
                 string xaml = EncodingUtils.Base64Decode(Intro.CodedContent);
-                AppState.MainWin.UiRtbIntroView.Document = StringToFlowDocument(xaml);
+                _rtb.Document = StringToFlowDocument(xaml);
+
+                //Paragraph para = BuildDiagramParagraph();
+                //_rtb.Document.Blocks.Add(para);
             }
+        }
+
+        /// <summary>
+        /// Saves content of the view.
+        /// </summary>
+        /// <returns></returns>
+        public void SaveXAMLContent()
+        {
+            FlowDocument doc = _rtb.Document;
+
+            TextRange t = new TextRange(doc.ContentStart, doc.ContentEnd);
+            MemoryStream ms = new MemoryStream();
+            t.Save(ms, DataFormats.Xaml);
+            ms.Position = 0;
+            var sr = new StreamReader(ms);
+            string myStr = sr.ReadToEnd();
+            string xamlText = XamlWriter.Save(_rtb.Document);
+            Intro.Tree.RootNode.Data = EncodingUtils.Base64Encode(xamlText);
+        }
+
+        /// <summary>
+        /// Invokes a PositionSetup dialog,
+        /// creates GUI objects for the position
+        /// and inserts in the document.
+        /// </summary>
+        public void CreateDiagram()
+        {
+            try
+            {
+                TextPointer tp = _rtb.CaretPosition.InsertParagraphBreak();
+                Paragraph nextPara = tp.Paragraph;
+
+                DiagramSetupDialog dlg = new DiagramSetupDialog(null)
+                {
+                    Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                    Top = AppState.MainWin.Top + 100,
+                    Topmost = false,
+                    Owner = AppState.MainWin
+                };
+
+                if (dlg.ShowDialog() == true)
+                {
+                    BoardPosition pos = dlg.PositionSetup;
+                    IntroViewDiagram diag = new IntroViewDiagram();
+                    Paragraph para = BuildDiagramParagraph(diag, pos);
+                    diag.Chessboard.DisplayPosition(null, pos);
+                    AppState.IsDirty = true;
+
+                    _rtb.Document.Blocks.InsertBefore(nextPara, para);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("CreateDiagram()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Builds a paragraph with the diagram.
+        /// </summary>
+        /// <param name="diag"></param>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        private Paragraph BuildDiagramParagraph(IntroViewDiagram diag, BoardPosition pos)
+        {
+            Paragraph para = new Paragraph();
+            para.Margin = new Thickness(20, 20, 0, 20);
+            para.Name = "Chessboard";
+
+            Canvas canvas = SetupDiagramCanvas();
+            Image imgChessBoard = CreateChessBoard(canvas, diag);
+            canvas.Children.Add(imgChessBoard);
+            Viewbox viewBox = SetupDiagramViewbox(canvas);
+
+            InlineUIContainer uIContainer = new InlineUIContainer();
+            uIContainer.Child = viewBox;
+            para.Inlines.Add(uIContainer);
+
+            return para;
+        }
+
+        /// <summary>
+        /// Creates the chessboard control.
+        /// </summary>
+        /// <param name="canvas"></param>
+        /// <returns></returns>
+        private Image CreateChessBoard(Canvas canvas, IntroViewDiagram diag)
+        {
+            Image imgChessBoard = new Image();
+            imgChessBoard.Margin = new Thickness(5, 5, 5, 5);
+            imgChessBoard.Source = ChessBoards.ChessBoardGreySmall;
+
+            diag.Chessboard = new ChessBoardSmall(canvas, imgChessBoard, null, null, false, false);
+            AlignExerciseAndMainBoards();
+
+            return imgChessBoard;
+        }
+
+        /// <summary>
+        /// Sets the "passive" exercise board to the same
+        /// orientation as the main board.
+        /// </summary>
+        public void AlignExerciseAndMainBoards()
+        {
+        }
+
+        /// <summary>
+        /// Creates a Canvas for the chessboard. 
+        /// </summary>
+        /// <returns></returns>
+        private Canvas SetupDiagramCanvas()
+        {
+            Canvas canvas = new Canvas();
+            canvas.Background = Brushes.Black;
+            canvas.Width = 250;
+            canvas.Height = 250;
+
+            return canvas;
+        }
+
+        /// <summary>
+        /// Creates a Viewbox for the chessboard
+        /// </summary>
+        /// <param name="canvas"></param>
+        /// <returns></returns>
+        private Viewbox SetupDiagramViewbox(Canvas canvas)
+        {
+            Viewbox viewBox = new Viewbox();
+            viewBox.Child = canvas;
+            viewBox.Width = 250;
+            viewBox.Height = 250;
+            viewBox.Visibility = Visibility.Visible;
+
+            return viewBox;
+        }
+
+        /// <summary>
+        /// Creates a FlowDocument from XAML string.
+        /// </summary>
+        /// <param name="xamlString"></param>
+        /// <returns></returns>
+        private FlowDocument StringToFlowDocument(string xamlString)
+        {
+            return XamlReader.Parse(xamlString) as FlowDocument;
         }
 
         /// <summary>
@@ -87,30 +244,5 @@ namespace ChessForge
             }
         }
 
-        /// <summary>
-        /// Saves content of the view.
-        /// </summary>
-        /// <returns></returns>
-        public void SaveXAMLContent()
-        {
-            FlowDocument doc = AppState.MainWin.UiRtbIntroView.Document;
-
-            TextRange t = new TextRange(doc.ContentStart, doc.ContentEnd);
-            MemoryStream ms = new MemoryStream();
-            t.Save(ms, DataFormats.Xaml);
-
-            string xamlText = XamlWriter.Save(AppState.MainWin.UiRtbIntroView.Document);
-            Intro.Tree.RootNode.Data = EncodingUtils.Base64Encode(xamlText);
-        }
-
-        /// <summary>
-        /// Creates a FlowDocument from XAML string.
-        /// </summary>
-        /// <param name="xamlString"></param>
-        /// <returns></returns>
-        private FlowDocument StringToFlowDocument(string xamlString)
-        {
-            return XamlReader.Parse(xamlString) as FlowDocument;
-        }
     }
 }

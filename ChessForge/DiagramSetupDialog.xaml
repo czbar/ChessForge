@@ -1,0 +1,36 @@
+﻿<Window x:Class="ChessForge.DiagramSetupDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+        Title="{x:Static p:Resources.PositionSetup}" Height="521" Width="595" MouseUp="Window_MouseUp" MouseMove="Window_MouseMove" MouseLeave="Window_MouseLeave" >
+    <Grid x:Name="_grdDialog" >
+        <Canvas x:Name="UiCnvSetup" Margin="63,41,0,0" Width="268" Height="368" HorizontalAlignment="Left" VerticalAlignment="Top" MouseDown="UiCnvSetup_MouseDown" >
+            <Canvas x:Name="UiCnvBoard" Background="Black" Height="268" Width="268" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="0" Canvas.Top="50"  >
+                <Image x:Name="UiImgChessBoard" HorizontalAlignment="Left" Height="240" VerticalAlignment="Top" Width="240" Source="/Resources/Images/ChessBoardGreySmall.png" Canvas.Left="14" Canvas.Top="14" />
+            </Canvas>
+            <Image x:Name="UiImgBlackKing" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/BlackKing.png" MouseDown="UiImgBlackKing_MouseDown" Canvas.Left="48" Canvas.Top="12"/>
+            <Image x:Name="UiImgBlackQueen" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/BlackQueen.png" MouseDown="UiImgBlackQueen_MouseDown" Canvas.Left="78" Canvas.Top="12"/>
+            <Image x:Name="UiImgBlackRook" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/BlackRook.png" MouseDown="UiImgBlackRook_MouseDown" Canvas.Left="108" Canvas.Top="12"/>
+            <Image x:Name="UiImgBlackBishop" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/BlackBishop.png" MouseDown="UiImgBlackBishop_MouseDown" Canvas.Left="138" Canvas.Top="12"/>
+            <Image x:Name="UiImgBlackKnight" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/BlackKnight.png" MouseDown="UiImgBlackKnight_MouseDown" Canvas.Left="168" Canvas.Top="12"/>
+            <Image x:Name="UiImgBlackPawn" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/BlackPawn.png" MouseDown="UiImgBlackPawn_MouseDown" Canvas.Left="198" Canvas.Top="12"/>
+
+            <Image x:Name="UiImgWhiteKing" HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/WhiteKing.png" MouseDown="UiImgWhiteKing_MouseDown" Canvas.Left="43" Canvas.Top="323"/>
+            <Image x:Name="UiImgWhiteQueen" HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/WhiteQueen.png" MouseDown="UiImgWhiteQueen_MouseDown" Canvas.Left="73" Canvas.Top="323"/>
+            <Image x:Name="UiImgWhiteRook" HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/WhiteRook.png" MouseDown="UiImgWhiteRook_MouseDown" Canvas.Left="103" Canvas.Top="323"/>
+            <Image x:Name="UiImgWhiteBishop" HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/WhiteBishop.png" MouseDown="UiImgWhiteBishop_MouseDown" Canvas.Left="133" Canvas.Top="323"/>
+            <Image x:Name="UiImgWhiteKnight" HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/WhiteKnight.png" MouseDown="UiImgWhiteKnight_MouseDown" Canvas.Left="163" Canvas.Top="323"/>
+            <Image x:Name="UiImgWhitePawn" HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/WhitePawn.png" MouseDown="UiImgWhitePawn_MouseDown" RenderTransformOrigin="-0.867,0.101" Canvas.Left="193" Canvas.Top="323"/>
+        </Canvas>
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" Width="80" HorizontalAlignment="Left" Margin="351,309,0,0" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" Width="80"  HorizontalAlignment="Left" Margin="449,309,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnStartingPos" Content="{x:Static p:Resources.StartingPosition}" Width="160" HorizontalAlignment="Left" Margin="361,125,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="UiBtnStartingPos_Click"/>
+        <Button x:Name="UiBtnClear" Content="{x:Static p:Resources.ClearBoard}" Width="160" HorizontalAlignment="Left" Margin="361,173,0,0" VerticalAlignment="Top"  Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="UiBtnClear_Click" />
+        <TextBox x:Name="UiTbFen" Text="" HorizontalAlignment="Left"  HorizontalContentAlignment="Center" BorderThickness="1" BorderBrush="Black"  Margin="62,419,0,0" Width="473" Height="24" VerticalAlignment="Top" VerticalContentAlignment="Center" TextChanged="UiTbFen_TextChanged"/>
+        <Label x:Name="UiLblFenLabel" Content="{x:Static p:Resources.FEN}" HorizontalAlignment="Left" Margin="21,417,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" RenderTransformOrigin="0.356,-0.268"/>
+    </Grid>
+</Window>

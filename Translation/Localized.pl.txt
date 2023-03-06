@@ -420,7 +420,7 @@ DlgMergeErrors=Błędy przetwarzania zapisu
 
 #description: Message about identical position not found
 #english: MsgNoIdenticalPositions=No identical positions found.
-MsgNoIdenticalPositions=No identical positions found.
+MsgNoIdenticalPositions=Nie znaleziono identycznych pozycji.
 
 #description: Opens the Workbook Options dialog
 #english: WorkbookOptions=Workbook Options...
@@ -702,6 +702,14 @@ DeleteSelectedExercise=Usuń Wybrane ćwiczenie
 #description: Confirm delete this exercise. The program will append exercise title
 #english: ConfirmDeleteExercise=Delete Exercise
 ConfirmDeleteExercise=Usunąć ćwiczenie
+
+#
+# CONTEXT MENU for Intro Tab
+#
+
+#description: Insert a diagram
+#english: InsertDiagram=Insert Diagram
+InsertDiagram=Wstaw Diagram
 
 #
 # CONTEXT MENU for Study Tree Tab
@@ -1079,7 +1087,7 @@ BookmarkAlreadyExists=Zakładka już istnieje
 
 #description: Error adding bookmark
 #english: ErrorAddBookmark=Failed to add the bookmark.
-ErrorAddBookmark=ErrorAddBookmarks
+ErrorAddBookmark=Błąd przy dodawaniu zakładki.
 
 #description: Error adding bookmarks 
 #english: ErrorAddBookmarks=Failed to add the bookmarks.
@@ -1164,7 +1172,7 @@ WrongTypeEntitiesNotImported=Elementy niewłaściwego typu nie zostały zaimport
 
 #description: Confirm deleting illegal moves from the solution after position was edited
 #english: ConfirmExerciseMoveDeletion=Some move in the solution are no longer legal $0. Delete them?
-ConfirmExerciseMoveDeletion=Niektore ruchy w rozwiazaniu są teraz neprawidłowe $0. Usunąć je?
+ConfirmExerciseMoveDeletion=Niektóre ruchy w rozwiązaniu są teraz nieprawidłowe $0. Usunąć je?
 
 
 ##################################
@@ -1276,8 +1284,9 @@ GotoNewChapter=Idź do Nowego Rozdziału
 #english: ChapterTitle=Chapter Title
 ChapterTitle=Tytuł Rozdziału
 
-#Select a date
-#SelectDate=Select a date
+#description: Select a date
+#english: SelectDate=Select a date
+SelectDate=Wybierz datę
 
 #description: Ignore Day and Month
 #english: IgnoreDayMonth=Ignore Day and Month
@@ -1309,7 +1318,7 @@ ImportIntoChapter=Importuj Partię
 
 #description: Downloading game from lichess
 #english: DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
-DownloadingGameFromLichess=Trwa ściągnanie partii z lichess. Proszę czekać...
+DownloadingGameFromLichess=Trwa ściąganie partii z lichess. Proszę czekać...
 
 #description: Please wait
 #english: PleaseWait=Please Wait
@@ -1341,7 +1350,7 @@ GameNotFound=Partia nie znaleziona
 
 #description: FEN
 #english: FEN=FEN
-FEN=Kod FEN
+FEN=FEN
 
 #description: PGN
 #english: PGN=PGN
@@ -1466,7 +1475,7 @@ MultiEntitiesValid=Liczba elementów złym formacie $0
 
 #description: not imported due to wrong type
 #english: BadTypeForImport=but not imported due to not being of the $0 type
-BadTypeForImport=BadTypeForImport
+BadTypeForImport=Niewłaściwy typ pliku 
 
 #description: Select Solving Mode
 #english: SelectSolvingMode=Select Solving Mode
@@ -1956,7 +1965,7 @@ PgnMissingMoveAfter=Brakuje ruchu po
 
 #description: Too few fields
 #english: FenTooFewFields=Error: FEN string has fewer than 6 fields
-FenTooFewFields=Błąd: FEN nie może mieć niż 6 pól
+FenTooFewFields=Błąd: FEN nie może mieć mniej niż 6 pól
 
 #description: Invalid Enpassant
 #english: FenInvalidEnpassant=Error: invalid enpassant field

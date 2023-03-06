@@ -544,6 +544,13 @@ DeleteSelectedExercise=Delete Selected Exercise
 ConfirmDeleteExercise=Delete Exercise
 
 #
+# CONTEXT MENU for Intro Tab
+#
+
+#Insert a diagram
+InsertDiagram=Insert Diagram
+
+#
 # CONTEXT MENU for Study Tree Tab
 #
 
@@ -993,7 +1000,7 @@ GotoNewChapter=Go to the newly created chapter.
 ChapterTitle=Chapter Title
 
 #Select a date
-#SelectDate=Select a date
+SelectDate=Select a date
 
 #Ignore Day and Month
 IgnoreDayMonth=Ignore Day and Month

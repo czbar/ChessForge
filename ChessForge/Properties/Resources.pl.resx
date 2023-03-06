@@ -403,7 +403,7 @@
     <value>Błędy przetwarzania zapisu</value>
   </data>
   <data name="MsgNoIdenticalPositions" xml:space="preserve">
-    <value>No identical positions found.</value>
+    <value>Nie znaleziono identycznych pozycji.</value>
   </data>
   <data name="WorkbookOptions" xml:space="preserve">
     <value>Opcje Podręcznika</value>
@@ -596,6 +596,9 @@
   </data>
   <data name="ConfirmDeleteExercise" xml:space="preserve">
     <value>Usunąć ćwiczenie</value>
+  </data>
+  <data name="InsertDiagram" xml:space="preserve">
+    <value>Wstaw Diagram</value>
   </data>
   <data name="MnGameExerciseReferences" xml:space="preserve">
     <value>Edytuj Odsyłacz do Partii i Ćwiczeń...</value>
@@ -826,7 +829,7 @@
     <value>Zakładka już istnieje</value>
   </data>
   <data name="ErrorAddBookmark" xml:space="preserve">
-    <value>ErrorAddBookmarks</value>
+    <value>Błąd przy dodawaniu zakładki.</value>
   </data>
   <data name="ErrorAddBookmarks" xml:space="preserve">
     <value>Błąd przy dodawaniu zakładek.</value>
@@ -889,7 +892,7 @@
     <value>Elementy niewłaściwego typu nie zostały zaimportowane</value>
   </data>
   <data name="ConfirmExerciseMoveDeletion" xml:space="preserve">
-    <value>Niektore ruchy w rozwiazaniu są teraz neprawidłowe $0. Usunąć je?</value>
+    <value>Niektóre ruchy w rozwiązaniu są teraz nieprawidłowe $0. Usunąć je?</value>
   </data>
   <data name="InfoGameExerciseReferences" xml:space="preserve">
     <value>Kliknij podwójnie po przegląd partii/ćwiczenia, prawy przycisk po opcje</value>
@@ -969,6 +972,9 @@
   <data name="ChapterTitle" xml:space="preserve">
     <value>Tytuł Rozdziału</value>
   </data>
+  <data name="SelectDate" xml:space="preserve">
+    <value>Wybierz datę</value>
+  </data>
   <data name="IgnoreDayMonth" xml:space="preserve">
     <value>Ignoruj Miesiąc/Dzień</value>
   </data>
@@ -991,7 +997,7 @@
     <value>Importuj Partię</value>
   </data>
   <data name="DownloadingGameFromLichess" xml:space="preserve">
-    <value>Trwa ściągnanie partii z lichess. Proszę czekać...</value>
+    <value>Trwa ściąganie partii z lichess. Proszę czekać...</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
     <value>Proszę czekać!</value>
@@ -1015,7 +1021,7 @@
     <value>Partia nie znaleziona</value>
   </data>
   <data name="FEN" xml:space="preserve">
-    <value>Kod FEN</value>
+    <value>FEN</value>
   </data>
   <data name="PGN" xml:space="preserve">
     <value>PGN</value>
@@ -1108,7 +1114,7 @@
     <value>Liczba elementów złym formacie $0 </value>
   </data>
   <data name="BadTypeForImport" xml:space="preserve">
-    <value>BadTypeForImport</value>
+    <value>Niewłaściwy typ pliku </value>
   </data>
   <data name="SelectSolvingMode" xml:space="preserve">
     <value>Wybierz Tryb Rozwiązywania</value>
@@ -1435,7 +1441,7 @@
     <value>Brakuje ruchu po</value>
   </data>
   <data name="FenTooFewFields" xml:space="preserve">
-    <value>Błąd: FEN nie może mieć niż 6 pól</value>
+    <value>Błąd: FEN nie może mieć mniej niż 6 pól</value>
   </data>
   <data name="FenInvalidEnpassant" xml:space="preserve">
     <value>Błąd: nieważne pole en passant </value>

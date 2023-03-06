@@ -3054,6 +3054,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// User wants to create a new diagram in the Intro view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCmiInsertDiagram_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.CreateDiagram();
+        }
+
+        /// <summary>
         /// The AutoSave Off image was clicked
         /// which toggles it to On.
         /// </summary>
