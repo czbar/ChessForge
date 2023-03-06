@@ -704,6 +704,14 @@ DeleteSelectedExercise=
 ConfirmDeleteExercise=
 
 #
+# CONTEXT MENU for Intro Tab
+#
+
+#description: Insert a diagram
+#english: InsertDiagram=Insert Diagram
+InsertDiagram=
+
+#
 # CONTEXT MENU for Study Tree Tab
 #
 

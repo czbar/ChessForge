@@ -704,6 +704,14 @@ DeleteSelectedExercise=Usuń Wybrane ćwiczenie
 ConfirmDeleteExercise=Usunąć ćwiczenie
 
 #
+# CONTEXT MENU for Intro Tab
+#
+
+#description: Insert a diagram
+#english: InsertDiagram=Insert Diagram
+InsertDiagram=Wstaw Diagram
+
+#
 # CONTEXT MENU for Study Tree Tab
 #
 

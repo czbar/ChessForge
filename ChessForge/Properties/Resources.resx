@@ -597,6 +597,9 @@
   <data name="ConfirmDeleteExercise" xml:space="preserve">
     <value>Delete Exercise</value>
   </data>
+  <data name="InsertDiagram" xml:space="preserve">
+    <value>Insert Diagram</value>
+  </data>
   <data name="MnGameExerciseReferences" xml:space="preserve">
     <value>Game/Exercise References...</value>
   </data>
