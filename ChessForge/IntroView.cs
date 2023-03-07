@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Documents;
@@ -11,6 +10,7 @@ using System.Windows.Controls;
 using GameTree;
 using System.Windows.Media;
 
+
 namespace ChessForge
 {
     /// <summary>
@@ -19,9 +19,32 @@ namespace ChessForge
     public class IntroView
     {
         /// <summary>
+        /// The selected node.
+        /// If no previous selection, returns the root node.
+        /// </summary>
+        public TreeNode SelectedNode
+        {
+            get
+            {
+                return _selectedNode ?? Nodes[0];
+            }
+        }
+
+        /// <summary>
         /// The list of diagrams in this view.
         /// </summary>
         private List<IntroViewDiagram> DiagramList = new List<IntroViewDiagram>();
+
+        /// <summary>
+        /// List of nodes currently represented in the view.
+        /// </summary>
+        private List<TreeNode> Nodes
+        {
+            get => Intro.Tree.Nodes;
+        }
+
+        // currently selected node
+        private TreeNode _selectedNode;
 
         // refrence to the RichTextBox of this view.
         private RichTextBox _rtb = AppState.MainWin.UiRtbIntroView;
@@ -31,13 +54,16 @@ namespace ChessForge
 
         /// <summary>
         /// Constructor. Builds the content if not empty.
+        /// Initializes data structures.
         /// </summary>
         public IntroView(Chapter parentChapter)
         {
             _rtb.Document.Blocks.Clear();
+            _rtb.IsDocumentEnabled = true;
+
             ParentChapter = parentChapter;
 
-            // set the event handler we loaded the document.
+            // set the event handler for text changes.
             _rtb.TextChanged += UiRtbIntroView_TextChanged;
             if (!string.IsNullOrEmpty(Intro.Tree.RootNode.Data))
             {
@@ -77,32 +103,37 @@ namespace ChessForge
             {
                 string xaml = EncodingUtils.Base64Decode(Intro.CodedContent);
                 _rtb.Document = StringToFlowDocument(xaml);
-
-                //Paragraph para = BuildDiagramParagraph();
-                //_rtb.Document.Blocks.Add(para);
             }
         }
 
         /// <summary>
-        /// Saves content of the view.
+        /// Saves the content of the view into the root node of the view.
         /// </summary>
         /// <returns></returns>
         public void SaveXAMLContent()
         {
-            FlowDocument doc = _rtb.Document;
-
-            TextRange t = new TextRange(doc.ContentStart, doc.ContentEnd);
-            MemoryStream ms = new MemoryStream();
-            t.Save(ms, DataFormats.Xaml);
-            ms.Position = 0;
-            var sr = new StreamReader(ms);
-            string myStr = sr.ReadToEnd();
             string xamlText = XamlWriter.Save(_rtb.Document);
-            Intro.Tree.RootNode.Data = EncodingUtils.Base64Encode(xamlText);
+            Nodes[0].Data = EncodingUtils.Base64Encode(xamlText);
         }
 
         /// <summary>
-        /// Invokes a PositionSetup dialog,
+        /// Inserts new move at the caret.
+        /// This function is invoked when the user made a move on the main chessboard.
+        /// TODO: try guessing the move number based on what number we see in the preceding paragraphs.
+        /// </summary>
+        /// <param name="node"></param>
+        public void InsertMove(TreeNode node)
+        {
+            Run rMove = new Run();
+            rMove.Text = node.LastMoveAlgebraicNotation;
+            // TODO: TRANSLATE at this point
+            rMove.Foreground = Brushes.Blue;
+
+            InsertMoveTextBlock(rMove);
+        }
+
+        /// <summary>
+        /// Invokes the Diagram Setup dialog,
         /// creates GUI objects for the position
         /// and inserts in the document.
         /// </summary>
@@ -113,7 +144,8 @@ namespace ChessForge
                 TextPointer tp = _rtb.CaretPosition.InsertParagraphBreak();
                 Paragraph nextPara = tp.Paragraph;
 
-                DiagramSetupDialog dlg = new DiagramSetupDialog(null)
+                _selectedNode = AppState.MainWin.MainChessBoard.DisplayedNode;
+                DiagramSetupDialog dlg = new DiagramSetupDialog(SelectedNode)
                 {
                     Left = AppState.MainWin.ChessForgeMain.Left + 100,
                     Top = AppState.MainWin.Top + 100,
@@ -127,6 +159,18 @@ namespace ChessForge
                     IntroViewDiagram diag = new IntroViewDiagram();
                     Paragraph para = BuildDiagramParagraph(diag, pos);
                     diag.Chessboard.DisplayPosition(null, pos);
+
+                    TreeNode node = new TreeNode(null, "", 0);
+                    node.Position = new BoardPosition(SelectedNode.Position);
+                    node.Position = pos;
+                    diag.Node = node;
+
+                    DiagramList.Add(diag);
+                    Nodes.Add(node);
+                    _selectedNode = node;
+
+                    AppState.MainWin.DisplayPosition(node);
+
                     AppState.IsDirty = true;
 
                     _rtb.Document.Blocks.InsertBefore(nextPara, para);
@@ -136,6 +180,69 @@ namespace ChessForge
             {
                 AppLog.Message("CreateDiagram()", ex);
             }
+        }
+
+        /// <summary>
+        /// Inserts a Run into a TextBlock that is then inserted into the Document.
+        /// </summary>
+        /// <param name="run"></param>
+        private void InsertMoveTextBlock(Run run)
+        {
+            // TEMP just break the paragraph
+            // later on, set all Inlines aside and rebuild inserting the text block in the right place
+            TextPointer tp = _rtb.CaretPosition.InsertParagraphBreak();
+            Paragraph nextPara = tp.Paragraph;
+
+            TextBlock newTextBlock = new TextBlock();
+            newTextBlock.Inlines.Add(run);
+
+            Paragraph para = new Paragraph();
+            para.Inlines.Add(run);
+
+            _rtb.Document.Blocks.InsertBefore(nextPara, para);
+            AppState.IsDirty = true;
+
+#if false
+            // If the current position is a Run, insert the new run after it.
+            // If it is a Paragraph, insert it as a new Run in the paragraph.
+            // Otherwise create a new paragraph.
+
+            Run runToInsertAfter = null;
+            Paragraph paraToInsertAfter = null;
+            Paragraph paraToInsertBefore = null;
+
+            if (caretPosition.Parent.GetType() != typeof(Run))
+            {
+                runToInsertAfter = caretPosition.Parent as Run;
+            }
+            else if (caretPosition.Parent.GetType() != typeof(Run))
+            {
+                paraToInsertAfter = caretPosition.Paragraph;
+            }
+
+            if (runToInsertAfter == null && paraToInsertAfter == null)
+            {
+                paraToInsertBefore = caretPosition.InsertParagraphBreak().Paragraph;
+            }
+
+            // Create the new TextBlock
+            TextBlock newTextBlock = new TextBlock();
+            newTextBlock.Inlines.Add(run);
+
+            // Insert the new TextBlock after the current Paragraph
+            Paragraph paragraph = (caretPosition.Parent as Run).Parent as Paragraph;
+            paragraph.Inlines.Add(newTextBlock);
+
+            paragraph.Inlines.InsertAfter(paragraph.Inlines.FirstInline, paraToInsertAfter);
+
+            //Paragraph para2 = new Paragraph();
+
+            //TextBlock tBlock = new TextBlock(run);
+            //tBlock.Background = ChessForgeColors.INTRO_MOVE_BACKGROUND;
+            //para2.Inlines.Add(tBlock);
+            //// add the new Paragraph to the FlowDocument
+            //_rtb.Document.Blocks.InsertBefore(paraToInsertBefore, para2);
+#endif
         }
 
         /// <summary>
@@ -234,6 +341,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRtbIntroView_TextChanged(object sender, TextChangedEventArgs e)
         {
+            //TODO: get Paragraph from CaretPosition to see if we are deleting a diagram
             if (_ignoreTextChange)
             {
                 _ignoreTextChange = false;
