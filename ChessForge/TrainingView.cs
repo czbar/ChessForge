@@ -178,6 +178,7 @@ namespace ChessForge
         private readonly string _run_user_wb_alignment_ = "user_wb_alignment_";
         private readonly string _run_wb_alternatives_ = "wb_alternatives_";
         private readonly string _run_wb_comment_ = "wb_comment_";
+        private readonly string _run_wb_ended_ = "wb_ended_";
 
         private readonly string _par_line_moves_ = "par_line_moves_";
         private readonly string _par_game_moves_ = "par_game_moves_";
@@ -486,7 +487,13 @@ namespace ChessForge
             string text = "";
             if (_currentEngineGameMoveCount == 0)
             {
+                // preserve note about the workbook line ending if there was one
+                Run rWbEnded = GetWorkbookEndedRun();
                 _paraCurrentEngineGame.Inlines.Clear();
+                if (rWbEnded != null)
+                {
+                    _paraCurrentEngineGame.Inlines.Add(rWbEnded);
+                }
                 _paraCurrentEngineGame.Inlines.Add(new Run("\n" + Properties.Resources.TrnGameInProgress + "\n"));
                 text = "          " + MoveUtils.BuildSingleMoveText(nd, true) + " ";
             }
@@ -512,6 +519,27 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Gets the Run with the text about Workbook line
+        /// having ended from the Engine Game paragraph.
+        /// </summary>
+        /// <returns></returns>
+        private Run GetWorkbookEndedRun()
+        {
+            Run r = null;
+
+            foreach (Inline inl in _paraCurrentEngineGame.Inlines)
+            {
+                if (inl is Run && inl.Name == _run_wb_ended_)
+                {
+                    r = inl as Run;
+                    break;
+                }
+            }
+
+            return r;
+        }
+
+        /// <summary>
         /// Rebuilds the Engine Game paragraph up to 
         /// a specified Node.
         /// </summary>
@@ -526,7 +554,13 @@ namespace ChessForge
             _currentEngineGameMoveCount = 0;
 
             string text = "";
+            // preserve note about the workbook line ending if there was one
+            Run rWbEnded = GetWorkbookEndedRun();
             _paraCurrentEngineGame.Inlines.Clear();
+            if (rWbEnded != null)
+            {
+                _paraCurrentEngineGame.Inlines.Add(rWbEnded);
+            }
             _paraCurrentEngineGame.Inlines.Add(new Run("\n" + Properties.Resources.TrnGameInProgress + "\n"));
             text = "          " + MoveUtils.BuildSingleMoveText(nd, true) + " ";
             Run r_root = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);

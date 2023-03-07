@@ -184,7 +184,9 @@ namespace ChessForge
                         _paraCurrentEngineGame.Name = _par_game_moves_;
                         if (foundMove != null)
                         {
-                            _paraCurrentEngineGame.Inlines.Add(new Run("\n" + Properties.Resources.TrnLineEnded + "."));
+                            Run rWbEnded = new Run("\n" + Properties.Resources.TrnLineEnded + ".");
+                            rWbEnded.Name = _run_wb_ended_;
+                            _paraCurrentEngineGame.Inlines.Add(rWbEnded);
                         }
 
                         if (!EngineMessageProcessor.IsEngineAvailable)
