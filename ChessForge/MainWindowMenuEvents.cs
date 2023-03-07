@@ -3060,7 +3060,10 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCmiInsertDiagram_Click(object sender, RoutedEventArgs e)
         {
-            _introView.CreateDiagram();
+            if (_introView != null)
+            {
+                _introView.CreateDiagram();
+            }
         }
 
         /// <summary>
