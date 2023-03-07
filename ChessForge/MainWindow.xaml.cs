@@ -1010,26 +1010,23 @@ namespace ChessForge
                 PieceColor pieceColor = MainChessBoard.GetPieceColor(sqNorm);
 
                 // in the Manual Review, the color of the piece on the main board must match the side on the move in the selected position
+                // unless we are on the Intro tab where no checks are performed
                 if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
                 {
-                    TreeNode nd = ActiveLine.GetSelectedTreeNode();
-                    if (nd == null)
+                    if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
                     {
-                        nd = ActiveVariationTree.Nodes[0];
-                    }
-
-                    if (pieceColor != PieceColor.None && pieceColor == nd.ColorToMove)
                         return true;
+                    }
                     else
-                        return false;
+                    {
+                        TreeNode nd = ActiveLine.GetSelectedTreeNode() ?? ActiveVariationTree.Nodes[0];
+                        return pieceColor != PieceColor.None && pieceColor == nd.ColorToMove;
+                    }
                 }
                 else if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
-                    || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE)
+                      || LearningMode.CurrentMode == LearningMode.Mode.TRAINING    && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE)
                 {
-                    if (EngineGame.GetPieceColor(sqNorm) == EngineGame.ColorToMove)
-                        return true;
-                    else
-                        return false;
+                    return EngineGame.GetPieceColor(sqNorm) == EngineGame.ColorToMove;
                 }
                 else
                 {
