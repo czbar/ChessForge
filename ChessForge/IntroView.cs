@@ -9,31 +9,42 @@ using ChessPosition;
 using System.Windows.Controls;
 using GameTree;
 using System.Windows.Media;
-
+using System.Windows.Input;
 
 namespace ChessForge
 {
     /// <summary>
     /// Encapsulates Intro Tab view with RichTextBox  
     /// </summary>
-    public class IntroView
+    public class IntroView : RichTextBuilder
     {
+        /// <summary>
+        /// Not needed in this class
+        /// but required for the calss dervied from RichTextBuilder.
+        /// </summary>
+        internal override Dictionary<string, RichTextPara> RichTextParas => throw new NotImplementedException();
+
         /// <summary>
         /// The selected node.
         /// If no previous selection, returns the root node.
         /// </summary>
         public TreeNode SelectedNode
         {
-            get
-            {
-                return _selectedNode ?? Nodes[0];
-            }
+            get => _selectedNode ?? Nodes[0];
         }
 
         /// <summary>
         /// The list of diagrams in this view.
         /// </summary>
         private List<IntroViewDiagram> DiagramList = new List<IntroViewDiagram>();
+
+        /// <summary>
+        /// Names and prefixes for Runs.
+        /// </summary>
+        private readonly string _run_move_ = "run_move_";
+
+        // current highest run id (it is 0 initially, because we have the root node)
+        private int _maxRunId = 0;
 
         /// <summary>
         /// List of nodes currently represented in the view.
@@ -56,10 +67,11 @@ namespace ChessForge
         /// Constructor. Builds the content if not empty.
         /// Initializes data structures.
         /// </summary>
-        public IntroView(Chapter parentChapter)
+        public IntroView(Chapter parentChapter) : base(AppState.MainWin.UiRtbIntroView.Document)
         {
             _rtb.Document.Blocks.Clear();
             _rtb.IsDocumentEnabled = true;
+            _rtb.AllowDrop = false;
 
             ParentChapter = parentChapter;
 
@@ -70,6 +82,7 @@ namespace ChessForge
                 _ignoreTextChange = true;
                 LoadXAMLContent();
             }
+            Nodes[0].Position = PositionUtils.SetupStartingPosition();
         }
 
         /// <summary>
@@ -124,12 +137,63 @@ namespace ChessForge
         /// <param name="node"></param>
         public void InsertMove(TreeNode node)
         {
+            if (string.IsNullOrEmpty(node.LastMoveAlgebraicNotation))
+            {
+                return;
+            }
+
+            _selectedNode = node;
+            int nodeId = AddNode(node);
+            
             Run rMove = new Run();
+            rMove.Name = _run_move_ + nodeId.ToString(); 
             rMove.Text = node.LastMoveAlgebraicNotation;
-            // TODO: TRANSLATE at this point
+            rMove.Text = Languages.MapPieceSymbols(node.LastMoveAlgebraicNotation);
+            // TODO: TRANSLATE back when saving ?!
             rMove.Foreground = Brushes.Blue;
 
+            rMove.MouseDown += EventMoveClicked;
             InsertMoveTextBlock(rMove);
+        }
+
+        /// <summary>
+        /// Returns the Node with the passed id.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        private TreeNode GetNodeById(int nodeId)
+        {
+            return Nodes.FirstOrDefault(x => x.NodeId == nodeId);
+        }
+
+        /// <summary>
+        /// Handles the click move event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventMoveClicked(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Source is Run)
+            {
+                try
+                {
+                    Run r = e.Source as Run;
+                    int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
+                    TreeNode nd = GetNodeById(nodeId);
+                    if (nd != null)
+                    {
+                        Inline runClicked = FindInlineByName(r.Name);
+                        _rtb.CaretPosition = runClicked.ElementEnd;
+                        AppState.MainWin.DisplayPosition(nd);
+
+                        if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+                        {
+                            // TODO: allow text edit and the option to edit position
+                        }
+                    }
+                }
+                catch { }
+            }
         }
 
         /// <summary>
@@ -188,61 +252,56 @@ namespace ChessForge
         /// <param name="run"></param>
         private void InsertMoveTextBlock(Run run)
         {
-            // TEMP just break the paragraph
-            // later on, set all Inlines aside and rebuild inserting the text block in the right place
-            TextPointer tp = _rtb.CaretPosition.InsertParagraphBreak();
-            Paragraph nextPara = tp.Paragraph;
-
-            TextBlock newTextBlock = new TextBlock();
-            newTextBlock.Inlines.Add(run);
-
-            Paragraph para = new Paragraph();
-            para.Inlines.Add(run);
-
-            _rtb.Document.Blocks.InsertBefore(nextPara, para);
-            AppState.IsDirty = true;
-
-#if false
-            // If the current position is a Run, insert the new run after it.
-            // If it is a Paragraph, insert it as a new Run in the paragraph.
-            // Otherwise create a new paragraph.
-
-            Run runToInsertAfter = null;
-            Paragraph paraToInsertAfter = null;
-            Paragraph paraToInsertBefore = null;
-
-            if (caretPosition.Parent.GetType() != typeof(Run))
+            try
             {
-                runToInsertAfter = caretPosition.Parent as Run;
+                TextPointer tp = _rtb.CaretPosition;
+                TextBlock tbMove = new TextBlock();
+                tbMove.Name = run.Name;
+
+                run.Text = " " + run.Text + " ";
+                tbMove.Inlines.Add(run);
+                tbMove.Background = ChessForgeColors.INTRO_MOVE_BACKGROUND;
+
+                InlineUIContainer uic = new InlineUIContainer();
+                uic.Name = run.Name;
+                uic.Child = tbMove;
+
+                // Insert the new Run after the original Run
+                Run newRun = SplitRun(_rtb);
+                if (newRun != null)
+                {
+                    Paragraph para = newRun.Parent as Paragraph;
+                    para.Inlines.InsertBefore(newRun, uic as Inline);
+                }
+                else
+                {
+                    Run adjRun = GetRunUnderCaret(_rtb);
+                    if (adjRun == null)
+                    {
+                        if (tp.Paragraph != null)
+                        {
+                            tp.Paragraph.Inlines.Add(uic);
+                        }
+                        else
+                        {
+                            tp = _rtb.CaretPosition.InsertParagraphBreak();
+                            tp.Paragraph.Inlines.Add(uic);
+                        }
+                    }
+                    else
+                    {
+                        Paragraph para = newRun.Parent as Paragraph;
+                        para.Inlines.InsertBefore(newRun, uic as Inline);
+                    }
+                }
+
+                _rtb.CaretPosition = uic.ElementEnd;
+                AppState.IsDirty = true;
             }
-            else if (caretPosition.Parent.GetType() != typeof(Run))
+            catch (Exception ex)
             {
-                paraToInsertAfter = caretPosition.Paragraph;
+                AppLog.Message("InsertMoveTextBlock()", ex);
             }
-
-            if (runToInsertAfter == null && paraToInsertAfter == null)
-            {
-                paraToInsertBefore = caretPosition.InsertParagraphBreak().Paragraph;
-            }
-
-            // Create the new TextBlock
-            TextBlock newTextBlock = new TextBlock();
-            newTextBlock.Inlines.Add(run);
-
-            // Insert the new TextBlock after the current Paragraph
-            Paragraph paragraph = (caretPosition.Parent as Run).Parent as Paragraph;
-            paragraph.Inlines.Add(newTextBlock);
-
-            paragraph.Inlines.InsertAfter(paragraph.Inlines.FirstInline, paraToInsertAfter);
-
-            //Paragraph para2 = new Paragraph();
-
-            //TextBlock tBlock = new TextBlock(run);
-            //tBlock.Background = ChessForgeColors.INTRO_MOVE_BACKGROUND;
-            //para2.Inlines.Add(tBlock);
-            //// add the new Paragraph to the FlowDocument
-            //_rtb.Document.Blocks.InsertBefore(paraToInsertBefore, para2);
-#endif
         }
 
         /// <summary>
@@ -295,6 +354,20 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Adds a new Node to the list and increments max run id.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private int AddNode(TreeNode nd)
+        {
+            _maxRunId++;
+            nd.NodeId = _maxRunId;
+            Nodes.Add(nd);
+            return nd.NodeId;
+        }
+
+
+        /// <summary>
         /// Creates a Canvas for the chessboard. 
         /// </summary>
         /// <returns></returns>
@@ -333,7 +406,6 @@ namespace ChessForge
         {
             return XamlReader.Parse(xamlString) as FlowDocument;
         }
-
         /// <summary>
         /// Handles the Text Change event. Sets the Workbook's dirty flag.
         /// </summary>
@@ -351,6 +423,5 @@ namespace ChessForge
                 AppState.IsDirty = true;
             }
         }
-
     }
 }
