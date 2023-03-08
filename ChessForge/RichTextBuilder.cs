@@ -87,7 +87,7 @@ namespace ChessForge
                 rtb.CaretPosition = newRun.ContentStart;
                 return newRun;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLog.Message("SplitRun()", ex);
                 return null;
@@ -444,7 +444,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Finds the first run with the passed name.
+        /// Finds the first Run with the passed name in the specified paragraph.
         /// Return null if not found.
         /// </summary>
         /// <param name="name"></param>
@@ -464,6 +464,53 @@ namespace ChessForge
             }
 
             return r;
+        }
+
+        /// <summary>
+        /// Finds the first Inline with the passed name in the specified paragraph.
+        /// Return null if not found.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public Inline FindInlineByName(string name, Paragraph para)
+        {
+            Inline ret = null;
+
+            foreach (Inline inl in para.Inlines)
+            {
+                if (inl.Name == name)
+                {
+                    ret = inl as Inline;
+                    break;
+                }
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// Finds the first Inline with the passed name in the Document.
+        /// Return null if not found.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public Inline FindInlineByName(string name)
+        {
+            Inline inl = null;
+            foreach (Block block in Document.Blocks)
+            {
+                if (block is Paragraph)
+                {
+                    inl = FindInlineByName(name, block as Paragraph);
+                    if (inl != null)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return inl;
         }
 
         /// <summary>
