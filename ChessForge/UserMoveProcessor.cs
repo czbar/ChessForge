@@ -148,7 +148,7 @@ namespace ChessForge
                 bool isPromotion = false;
                 PieceType promoteTo = PieceType.None;
 
-                if (IsPromotionSquare(destSquareNorm, color))
+                if (IsPromotionSquare(destSquareNorm, color) && piece == PieceType.Pawn)
                 {
                     isPromotion = true;
                     promoteTo = AppState.MainWin.GetUserPromoSelection(destSquareNorm);
@@ -189,6 +189,7 @@ namespace ChessForge
                 SoundPlayer.PlayMoveSound("");
 
                 PositionUtils.RepositionPiece(origSquareNorm, destSquareNorm, promoteTo, ref nd);
+                nd.Position.ColorToMove = MoveUtils.ReverseColor(color);
 
                 AppState.MainWin.MainChessBoard.DisplayPosition(nd, true);
             }
