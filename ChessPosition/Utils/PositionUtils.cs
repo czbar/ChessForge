@@ -214,6 +214,29 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Moves a piece from one square to another.
+        /// Handles promotion, if required.
+        /// </summary>
+        /// <param name="orig"></param>
+        /// <param name="dest"></param>
+        /// <param name="promoteTo"></param>
+        /// <param name="nd"></param>
+        public static void RepositionPiece(SquareCoords orig, SquareCoords dest, PieceType promoteTo, ref TreeNode nd)
+        {
+            if (promoteTo != PieceType.None)
+            {
+                PieceColor color = GetPieceColor(nd, orig);
+                PlacePieceOnBoard(promoteTo, color, (byte)dest.Xcoord, (byte)dest.Ycoord, ref nd.Position.Board);
+            }
+            else
+            {
+                nd.Position.Board[dest.Xcoord, dest.Ycoord] = nd.Position.Board[orig.Xcoord, orig.Ycoord];
+            }
+
+            nd.Position.Board[orig.Xcoord, orig.Ycoord] = 0;
+        }
+
+        /// <summary>
         /// Finds the king of a given color on the board.
         /// Assumes there is only one king of a given color so exits as
         /// soon as found.
@@ -248,6 +271,22 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Return the type of the piece at given coordinates. 
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="sq"></param>
+        /// <returns></returns>
+        public static PieceType GetPieceType(TreeNode nd, SquareCoords sq)
+        {
+            if (nd == null || !sq.IsValid())
+            {
+                return PieceType.None;
+            }
+
+            return GetPieceType(nd.Position.Board[sq.Xcoord, sq.Ycoord]);
+        }
+
+        /// <summary>
         /// Returns the color of the piece on a given square.
         /// </summary>
         /// <param name="square"></param>
@@ -260,6 +299,22 @@ namespace ChessPosition
             }
 
             return ((square & Constants.Color) != 0) ? PieceColor.White : PieceColor.Black;
+        }
+
+        /// <summary>
+        /// Returns the color of the piece on a given square.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="sq"></param>
+        /// <returns></returns>
+        public static PieceColor GetPieceColor(TreeNode nd, SquareCoords sq)
+        {
+            if (nd == null || !sq.IsValid())
+            {
+                return PieceColor.None;
+            }
+
+            return GetPieceColor(nd.Position.Board[sq.Xcoord, sq.Ycoord]);
         }
 
 

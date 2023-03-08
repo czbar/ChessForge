@@ -41,6 +41,89 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// If the caret is inside a Run, we split the Run in two
+        /// and return the newly created second Run.
+        /// Otherwise returns null.
+        /// </summary>
+        /// <param name="rtb"></param>
+        /// <returns></returns>
+        protected Run SplitRun(RichTextBox rtb)
+        {
+            try
+            {
+                TextPointer caretPosition = rtb.CaretPosition;
+
+                // if the current position is a Run, split it otherwise return
+                if (caretPosition.Parent.GetType() != typeof(Run))
+                {
+                    return null;
+                }
+
+                Run newRun;
+
+                // Split the Run at the current caret position
+                Run currentRun = caretPosition.Parent as Run;
+                Paragraph currentParagraph = caretPosition.Paragraph;
+
+                if (caretPosition.GetOffsetToPosition(currentRun.ContentEnd) > 0)
+                {
+                    // Get a TextPointer to the start of the second half of the Run
+                    TextPointer splitPosition = caretPosition.GetPositionAtOffset(0, LogicalDirection.Forward);
+
+                    // Create a new Run containing the second half of the original Run
+                    newRun = new Run(currentRun.Text.Substring(-1 * splitPosition.GetOffsetToPosition(currentRun.ContentStart)));
+
+                    // Remove the second half of the original Run
+                    currentRun.Text = currentRun.Text.Substring(0, -1 * splitPosition.GetOffsetToPosition(currentRun.ContentStart));
+                }
+                else
+                {
+                    // create a new Run with empty text
+                    newRun = new Run("");
+                }
+
+                // Insert the new Run after the original Run
+                currentParagraph.Inlines.InsertAfter(currentRun, newRun);
+                rtb.CaretPosition = newRun.ContentStart;
+                return newRun;
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("SplitRun()", ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns the Run where the caret is currently placed.
+        /// If the caret is not inside a Run, finds the first Run in the forward direction.
+        /// If not found, returns 0.
+        /// </summary>
+        /// <param name="rtb"></param>
+        /// <returns></returns>
+        protected Run GetRunUnderCaret(RichTextBox rtb)
+        {
+            // Get the position of the caret
+            TextPointer caretPosition = rtb.CaretPosition;
+
+            // Find the Run containing the caret position
+            Run run = caretPosition.Parent as Run;
+
+            // If the caret is not currently inside a Run, traverse up the logical tree to find the nearest Run
+            while (run == null && caretPosition != null)
+            {
+                caretPosition = caretPosition.GetNextContextPosition(LogicalDirection.Forward);
+                if (caretPosition == null)
+                {
+                    break;
+                }
+                run = caretPosition.Parent as Run;
+            }
+
+            return run;
+        }
+
+        /// <summary>
         /// Return a set of attributes for a given style.
         /// If the style is not found in the style dictionary, 
         /// uses the default style. 
@@ -308,7 +391,7 @@ namespace ChessForge
             }
 
             Paragraph parent = inlComment.Parent as Paragraph;
-            
+
             List<Inline> inlinesToRemove = new List<Inline>();
             foreach (Inline inl in parent.Inlines)
             {
@@ -361,7 +444,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Finds the first run with the passed name.
+        /// Finds the first Run with the passed name in the specified paragraph.
         /// Return null if not found.
         /// </summary>
         /// <param name="name"></param>
@@ -381,6 +464,53 @@ namespace ChessForge
             }
 
             return r;
+        }
+
+        /// <summary>
+        /// Finds the first Inline with the passed name in the specified paragraph.
+        /// Return null if not found.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public Inline FindInlineByName(string name, Paragraph para)
+        {
+            Inline ret = null;
+
+            foreach (Inline inl in para.Inlines)
+            {
+                if (inl.Name == name)
+                {
+                    ret = inl as Inline;
+                    break;
+                }
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// Finds the first Inline with the passed name in the Document.
+        /// Return null if not found.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public Inline FindInlineByName(string name)
+        {
+            Inline inl = null;
+            foreach (Block block in Document.Blocks)
+            {
+                if (block is Paragraph)
+                {
+                    inl = FindInlineByName(name, block as Paragraph);
+                    if (inl != null)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return inl;
         }
 
         /// <summary>

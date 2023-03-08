@@ -1010,26 +1010,24 @@ namespace ChessForge
                 PieceColor pieceColor = MainChessBoard.GetPieceColor(sqNorm);
 
                 // in the Manual Review, the color of the piece on the main board must match the side on the move in the selected position
+                // unless we are on the Intro tab where no checks are performed
                 if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
                 {
-                    TreeNode nd = ActiveLine.GetSelectedTreeNode();
-                    if (nd == null)
+                    if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
                     {
-                        nd = ActiveVariationTree.Nodes[0];
+                        // as long as there is a piece to drag
+                        return pieceColor != PieceColor.None;
                     }
-
-                    if (pieceColor != PieceColor.None && pieceColor == nd.ColorToMove)
-                        return true;
                     else
-                        return false;
+                    {
+                        TreeNode nd = ActiveLine.GetSelectedTreeNode() ?? ActiveVariationTree.Nodes[0];
+                        return pieceColor != PieceColor.None && pieceColor == nd.ColorToMove;
+                    }
                 }
                 else if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
-                    || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE)
+                      || LearningMode.CurrentMode == LearningMode.Mode.TRAINING    && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE)
                 {
-                    if (EngineGame.GetPieceColor(sqNorm) == EngineGame.ColorToMove)
-                        return true;
-                    else
-                        return false;
+                    return EngineGame.GetPieceColor(sqNorm) == EngineGame.ColorToMove;
                 }
                 else
                 {
@@ -1095,11 +1093,11 @@ namespace ChessForge
                 leftTop.X = ChessForgeMain.Left + ChessForgeMain.UiImgMainChessboard.Margin.Left + 20 + (7 - normTarget.Xcoord) * 80;
                 if (whitePromotion)
                 {
-                    leftTop.X = ChessForgeMain.Top + ChessForgeMain.UiImgMainChessboard.Margin.Top + 40 + (normTarget.Ycoord - 4) * 80;
+                    leftTop.Y = ChessForgeMain.Top + ChessForgeMain.UiImgMainChessboard.Margin.Top + 40 + (normTarget.Ycoord - 4) * 80;
                 }
                 else
                 {
-                    leftTop.X = ChessForgeMain.Top + ChessForgeMain.UiImgMainChessboard.Margin.Top + 40 + (normTarget.Ycoord) * 80;
+                    leftTop.Y = ChessForgeMain.Top + ChessForgeMain.UiImgMainChessboard.Margin.Top + 40 + (normTarget.Ycoord) * 80;
                 }
             }
 

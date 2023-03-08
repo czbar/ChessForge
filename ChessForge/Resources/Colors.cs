@@ -33,6 +33,8 @@ namespace ChessForge
         public static SolidColorBrush TABLE_HEADER_GREEN = new SolidColorBrush(Color.FromRgb(192, 214, 167));
         public static SolidColorBrush TABLE_HIGHLIGHT_GREEN = new SolidColorBrush(Color.FromRgb(224, 235, 211));
 
+        public static SolidColorBrush INTRO_MOVE_BACKGROUND = new SolidColorBrush(Color.FromRgb(225, 225, 225));
+
         public static SolidColorBrush EXPLORER_PCT_BORDER = new SolidColorBrush(Color.FromRgb(225, 225, 225));
         public static SolidColorBrush EXPLORER_PCT_WHITE = new SolidColorBrush(Color.FromRgb(238, 238, 238));
         public static SolidColorBrush EXPLORER_PCT_WHITE_GRAD = new SolidColorBrush(Color.FromRgb(218, 218, 218));

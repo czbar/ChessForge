@@ -10,6 +10,8 @@ using WebAccess;
 using System.Diagnostics;
 using System.Linq;
 using System.Collections;
+using static System.Net.Mime.MediaTypeNames;
+using System.Text.RegularExpressions;
 
 namespace ChessPositionTest
 {
@@ -25,6 +27,14 @@ namespace ChessPositionTest
             ,new TestPosition("r1r3k1/p2bppbp/3p1np1/q2Nn2P/1p1NP1P1/1B2BP2/PPPQ4/2KR3R b - - 1 15", "c6")
         };
 
+        private static bool IsChessMove(string move)
+        {
+            Regex urlRegex = new Regex(@"^(\d+\.|(\d+\.\.\.)|) ?((([NBRQK][a-h1-8]?|[a-h])?[1-8]?)|(O-O(-O)?))(=[NBRQ])?([+#])?$", RegexOptions.Compiled);
+
+            MatchCollection matches = urlRegex.Matches(move);
+            return matches.Count > 0;
+        }
+
         /// <summary>
         /// Tree to build.
         /// </summary>
@@ -38,7 +48,12 @@ namespace ChessPositionTest
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-
+            bool moveFound = IsChessMove("Nf3");
+            moveFound = IsChessMove("1. Nf3");
+            moveFound = IsChessMove("2... e5");
+            moveFound = IsChessMove("e4");
+            moveFound = IsChessMove("O-O");
+            moveFound = IsChessMove("O-O-O");
 
             TreeNode nd1 = new TreeNode(null, "", 0);
             FenParser.ParseFenIntoBoard("rnbqkb1r/ppp1pp1p/5np1/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 0 3", ref nd1.Position);
@@ -48,7 +63,7 @@ namespace ChessPositionTest
 
             string fen = "";
             int hash1 = 0;
-            int hash2 = 0;  
+            int hash2 = 0;
 
             for (int i = 0; i < 10000; i++)
             {
@@ -76,7 +91,7 @@ namespace ChessPositionTest
             //TestTreeMerge();
             //TestPgnGameParser();
             //TestFenParser();
-//            Console.ReadLine();
+            //            Console.ReadLine();
         }
 
         public static void OpeningStatsReceived(object sender, WebAccessEventArgs e)

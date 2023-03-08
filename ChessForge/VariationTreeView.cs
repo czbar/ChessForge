@@ -1775,6 +1775,12 @@ namespace ChessForge
                     parts.Add(new CommentPart(CommentPartType.QUIZ_POINTS, " *" + Properties.Resources.QuizPoints + ": " + nd.QuizPoints.ToString() + "* "));
                 }
 
+                if (nd.IsThumbnail)
+                {
+                    CommentPart thumb = new CommentPart(CommentPartType.THUMBNAIL_SYMBOL, "");
+                    parts.Insert(0, thumb);
+                }
+
                 // check only here as we may have quiz points
                 if (parts == null)
                 {
@@ -2306,47 +2312,6 @@ namespace ChessForge
             }
 
             return Char.IsDigit(txt.Trim()[0]);
-        }
-
-        /// <summary>
-        /// Builds text for the Comment Run
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <returns></returns>
-        private string BuildCommentRunText(TreeNode nd)
-        {
-            if (!IsCommentRunToShow(nd))
-            {
-                return "";
-            }
-
-            StringBuilder sb = new StringBuilder(" [");
-            if (nd.IsThumbnail)
-            {
-                sb.Append(Constants.CHAR_SQUARED_SQUARE);
-            }
-
-            if (!string.IsNullOrEmpty(nd.Comment))
-            {
-                sb.Append(nd.Comment);
-            }
-            if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0)
-            {
-                if (!string.IsNullOrEmpty(nd.Comment))
-                {
-                    sb.Append(" /");
-                }
-                sb.Append(" " + Properties.Resources.QuizPoints + ": " + nd.QuizPoints.ToString());
-            }
-
-            sb.Append("]");
-
-            // if this is a root node add a space because the first move does not have it in front.
-            if (nd.NodeId == 0)
-            {
-                sb.Append(" ");
-            }
-            return sb.ToString();
         }
 
         /// <summary>

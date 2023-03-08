@@ -3,6 +3,7 @@ using GameTree;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace ChessForge
@@ -181,8 +182,15 @@ namespace ChessForge
                                     || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE
                                     || LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
                                 {
-                                    AdjustEvaluationModeAfterUserMove();
-                                    UserMoveProcessor.FinalizeUserMove(targetSquare);
+                                    if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+                                    {
+                                        HandleMoveOnIntroView(targetSquare);
+                                    }
+                                    else
+                                    {
+                                        AdjustEvaluationModeAfterUserMove();
+                                        UserMoveProcessor.FinalizeUserMove(targetSquare);
+                                    }
                                 }
                                 else
                                 {
@@ -203,13 +211,30 @@ namespace ChessForge
             {
             }
 
-            if (AppState.MainWin.ActiveTreeView != null)
+            if (AppState.MainWin.ActiveTreeView != null && AppState.ActiveTab != WorkbookManager.TabViewType.INTRO)
             {
                 AppState.DoEvents();
                 AppState.MainWin.ActiveTreeView.BringSelectedRunIntoView();
             }
 
             _processingMouseUp = false;
+        }
+
+        /// <summary>
+        /// Handles moves made in the Intro View.
+        /// </summary>
+        /// <param name="targetSquare"></param>
+        private void HandleMoveOnIntroView(SquareCoords targetSquare)
+        {
+            if (_introView != null)
+            {
+                TreeNode nd = new TreeNode(null, "", 0);
+                nd.Position = new BoardPosition(_introView.SelectedNode.Position);
+
+                nd.LastMoveAlgebraicNotation = UserMoveProcessor.RepositionDraggedPiece(targetSquare, ref nd);
+
+                _introView.InsertMove(nd);
+            }
         }
 
         /// <summary>
@@ -919,6 +944,7 @@ namespace ChessForge
                 {
                     _introView = new IntroView(WorkbookManager.SessionWorkbook.ActiveChapter);
                 }
+                DisplayPosition(_introView.SelectedNode);
             }
             catch
             {
