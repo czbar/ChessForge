@@ -1015,7 +1015,8 @@ namespace ChessForge
                 {
                     if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
                     {
-                        return true;
+                        // as long as there is a piece to drag
+                        return pieceColor != PieceColor.None;
                     }
                     else
                     {
@@ -1092,11 +1093,11 @@ namespace ChessForge
                 leftTop.X = ChessForgeMain.Left + ChessForgeMain.UiImgMainChessboard.Margin.Left + 20 + (7 - normTarget.Xcoord) * 80;
                 if (whitePromotion)
                 {
-                    leftTop.X = ChessForgeMain.Top + ChessForgeMain.UiImgMainChessboard.Margin.Top + 40 + (normTarget.Ycoord - 4) * 80;
+                    leftTop.Y = ChessForgeMain.Top + ChessForgeMain.UiImgMainChessboard.Margin.Top + 40 + (normTarget.Ycoord - 4) * 80;
                 }
                 else
                 {
-                    leftTop.X = ChessForgeMain.Top + ChessForgeMain.UiImgMainChessboard.Margin.Top + 40 + (normTarget.Ycoord) * 80;
+                    leftTop.Y = ChessForgeMain.Top + ChessForgeMain.UiImgMainChessboard.Margin.Top + 40 + (normTarget.Ycoord) * 80;
                 }
             }
 
