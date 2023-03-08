@@ -228,48 +228,12 @@ namespace ChessForge
         {
             if (_introView != null)
             {
-                TreeNode nd = _introView.SelectedNode;
+                TreeNode nd = new TreeNode(null, "", 0);
+                nd.Position = new BoardPosition(_introView.SelectedNode.Position);
+
                 nd.LastMoveAlgebraicNotation = UserMoveProcessor.RepositionDraggedPiece(targetSquare, ref nd);
+
                 _introView.InsertMove(nd);
-            }
-        }
-
-        /// <summary>
-        /// Handle TextBlock dropped afer drag.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiRtbIntroView_PreviewDrop(object sender, DragEventArgs e)
-        {
-            if (_introView != null)
-            {
-                _introView.HandleTextBlockDrop(sender, e);
-            }
-        }
-
-        /// <summary>
-        /// Handle DragOver event in Intro
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiRtbIntroView_PreviewDragOver(object sender, DragEventArgs e)
-        {
-            if (_introView != null)
-            {
-                _introView.HandleDragOver(sender, e);
-            }
-        }
-
-        /// <summary>
-        /// Handle mouse leaving the Intro view
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiRtbIntroView_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (_introView != null)
-            {
-                _introView.HandleMouseLeave(sender, e);
             }
         }
 
