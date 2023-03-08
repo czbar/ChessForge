@@ -332,7 +332,7 @@
                         <Grid Background="#FFE5E5E5" >
                             <RichTextBox x:Name="UiRtbIntroView" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="640" MinHeight="500" PreviewDrop="UiRtbIntroView_PreviewDrop" PreviewDragOver="UiRtbIntroView_PreviewDragOver" MouseLeave="UiRtbIntroView_MouseLeave"  >
+                                   Height="640" MinHeight="500"  >
                                 <RichTextBox.ContextMenu>
                                     <ContextMenu x:Name="UiCmIntro">
                                         <MenuItem Command="ApplicationCommands.Cut"/>
