@@ -13,6 +13,13 @@ namespace GameTree
     public class ChfCommands
     {
         /// <summary>
+        /// Strings to use when encoding the XAML view.
+        /// </summary>
+        public const string XAML_NODE_ID = "node_id";
+        public const string XAML_MOVE_TEXT = "text";
+        public const string XAML_FEN = "fen";
+
+        /// <summary>
         /// Command IDs
         /// </summary>
         public enum Command
