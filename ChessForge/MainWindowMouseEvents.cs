@@ -942,7 +942,9 @@ namespace ChessForge
                 // otherwise build the view.
                 if (_introView == null || _introView.ParentChapter != WorkbookManager.SessionWorkbook.ActiveChapter)
                 {
-                    _introView = new IntroView(WorkbookManager.SessionWorkbook.ActiveChapter);
+                    UiRtbIntroView.IsDocumentEnabled = true;
+                    UiRtbIntroView.AllowDrop = false;
+                    _introView = new IntroView(UiRtbIntroView.Document, WorkbookManager.SessionWorkbook.ActiveChapter);
                 }
                 DisplayPosition(_introView.SelectedNode);
             }
