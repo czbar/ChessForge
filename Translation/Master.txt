@@ -332,6 +332,9 @@ WorkbookOptions=Workbook Options...
 #Workbook Options dialog title
 DlgTitleWorkbookOptions=Workbook Options
 
+#Dialog for editing move text in the Intro view
+DlgEditMoveInIntro=Edit Move
+
 #Opens a dialog allowing the user to select chess engine executable file
 AnalysisEngine=Analysis Engine...
 
@@ -920,6 +923,13 @@ ConfirmExerciseMoveDeletion=Some move in the solution are no longer legal $0. De
 #
 # Dialogs
 #
+
+#Label for Text for Display
+TextForDisplay=Text for Display
+
+#Button for Edit Position 
+EditPosition=Edit Position
+
 
 #Info in the View References Dialog
 InfoGameExerciseReferences=Double click to preview, right click for options

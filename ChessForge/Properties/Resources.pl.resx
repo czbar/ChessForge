@@ -411,6 +411,9 @@
   <data name="DlgTitleWorkbookOptions" xml:space="preserve">
     <value>Opcje Podręcznika</value>
   </data>
+  <data name="DlgEditMoveInIntro" xml:space="preserve">
+    <value>Edycja Posunięcia</value>
+  </data>
   <data name="AnalysisEngine" xml:space="preserve">
     <value>Wybór Silnika</value>
   </data>
@@ -893,6 +896,12 @@
   </data>
   <data name="ConfirmExerciseMoveDeletion" xml:space="preserve">
     <value>Niektóre ruchy w rozwiązaniu są teraz nieprawidłowe $0. Usunąć je?</value>
+  </data>
+  <data name="TextForDisplay" xml:space="preserve">
+    <value>Tekst na Ekran</value>
+  </data>
+  <data name="EditPosition" xml:space="preserve">
+    <value>Ustaw Pozycję</value>
   </data>
   <data name="InfoGameExerciseReferences" xml:space="preserve">
     <value>Kliknij podwójnie po przegląd partii/ćwiczenia, prawy przycisk po opcje</value>

@@ -430,6 +430,10 @@ WorkbookOptions=Opcje Podręcznika
 #english: DlgTitleWorkbookOptions=Workbook Options
 DlgTitleWorkbookOptions=Opcje Podręcznika
 
+#description: Dialog for editing move text in the Intro view
+#english: DlgEditMoveInIntro=Edit Move
+DlgEditMoveInIntro=Edycja Posunięcia
+
 #description: Opens a dialog allowing the user to select chess engine executable file
 #english: AnalysisEngine=Analysis Engine...
 AnalysisEngine=Wybór Silnika
@@ -1179,6 +1183,15 @@ ConfirmExerciseMoveDeletion=Niektóre ruchy w rozwiązaniu są teraz nieprawidł
 #
 # Dialogs
 #
+
+#description: Label for Text for Display
+#english: TextForDisplay=Text for Display
+TextForDisplay=Tekst na Ekran
+
+#description: Button for Edit Position 
+#english: EditPosition=Edit Position
+EditPosition=Ustaw Pozycję
+
 
 #description: Info in the View References Dialog
 #english: InfoGameExerciseReferences=Double click to preview, right click for options

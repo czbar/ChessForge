@@ -411,6 +411,9 @@
   <data name="DlgTitleWorkbookOptions" xml:space="preserve">
     <value>Workbook Options</value>
   </data>
+  <data name="DlgEditMoveInIntro" xml:space="preserve">
+    <value>Edit Move</value>
+  </data>
   <data name="AnalysisEngine" xml:space="preserve">
     <value>Analysis Engine...</value>
   </data>
@@ -894,6 +897,12 @@
   </data>
   <data name="ConfirmExerciseMoveDeletion" xml:space="preserve">
     <value>Some move in the solution are no longer legal $0. Delete them?</value>
+  </data>
+  <data name="TextForDisplay" xml:space="preserve">
+    <value>Text for Display</value>
+  </data>
+  <data name="EditPosition" xml:space="preserve">
+    <value>Edit Position</value>
   </data>
   <data name="InfoGameExerciseReferences" xml:space="preserve">
     <value>Double click to preview, right click for options</value>
