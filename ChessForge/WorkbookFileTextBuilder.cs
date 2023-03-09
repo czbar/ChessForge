@@ -177,10 +177,13 @@ namespace ChessForge
             {
                 string headerText = BuildIntroHeaderText(chapter);
 
-                string xamlContent = BuildCommentText(BuildXamlCommandText(chapter.Intro.CodedContent));
+                string xamlCmdText = BuildXamlCommandText(chapter.Intro.CodedContent);
+                string positionsText = BuildPositionsCommandText(chapter.Intro);
+
+                string introContent = BuildCommentText("[" + xamlCmdText + " " + positionsText + "]");
 
                 StringBuilder sbOutput = new StringBuilder();
-                sbOutput.Append(headerText + DivideLineForced(xamlContent, 80));
+                sbOutput.Append(headerText + DivideLineForced(introContent, 80));
                 sbOutput.AppendLine();
 
                 // add terminating character
@@ -406,12 +409,45 @@ namespace ChessForge
         /// <returns></returns>
         private static string BuildXamlCommandText(string xaml)
         {
+            return ChfCommands.GetStringForCommand(ChfCommands.Command.XAML) + " " + xaml;
+        }
+
+        /// <summary>
+        /// Builds command text for positions in the Intro
+        /// </summary>
+        /// <param name="intro"></param>
+        /// <returns></returns>
+        private static string BuildPositionsCommandText(Article intro)
+        {
             StringBuilder sb = new StringBuilder();
-
-            string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.XAML) + " " + xaml;
-            sb.Append("[" + sCmd + "]");
-
+            foreach (TreeNode node in intro.Tree.Nodes)
+            {
+                sb.Append(BuildPositionCommandText(node));
+            }
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Builds command text for a single position.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private static string BuildPositionCommandText(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append(ChfCommands.XAML_NODE_ID + "=" + nd.NodeId.ToString() + " ");
+                sb.Append(ChfCommands.XAML_MOVE_TEXT + "=" + EncodingUtils.Base64Encode(nd.LastMoveAlgebraicNotation) + " ");
+
+                string fen = EncodingUtils.Base64Encode(FenParser.GenerateFenFromPosition(nd.Position));
+                sb.Append(ChfCommands.XAML_FEN + "=" + fen + " ");
+                return sb.ToString();
+            }
+            else
+            {
+                return "";
+            }
         }
 
         /// <summary>
