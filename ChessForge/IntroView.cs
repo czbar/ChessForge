@@ -38,6 +38,8 @@ namespace ChessForge
         /// </summary>
         private List<IntroViewDiagram> DiagramList = new List<IntroViewDiagram>();
 
+        private bool _textDirty = false;
+
         /// <summary>
         /// Names and prefixes for xaml elements.
         /// </summary>
@@ -70,11 +72,9 @@ namespace ChessForge
         /// Constructor. Builds the content if not empty.
         /// Initializes data structures.
         /// </summary>
-        public IntroView(Chapter parentChapter) : base(AppState.MainWin.UiRtbIntroView.Document)
+        public IntroView(FlowDocument doc, Chapter parentChapter) : base(doc)
         {
-            _rtb.Document.Blocks.Clear();
-            _rtb.IsDocumentEnabled = true;
-            _rtb.AllowDrop = false;
+            Document.Blocks.Clear();
 
             ParentChapter = parentChapter;
 
@@ -84,6 +84,7 @@ namespace ChessForge
             {
                 _ignoreTextChange = true;
                 LoadXAMLContent();
+                SetEventHandlers();
             }
             Nodes[0].Position = PositionUtils.SetupStartingPosition();
             foreach (var node in Nodes)
@@ -101,7 +102,7 @@ namespace ChessForge
         public void Clear()
         {
             _ignoreTextChange = true;
-            _rtb.Document.Blocks.Clear();
+            Document.Blocks.Clear();
         }
 
         /// <summary>
@@ -125,7 +126,8 @@ namespace ChessForge
             if (!string.IsNullOrEmpty(Intro.CodedContent))
             {
                 string xaml = EncodingUtils.Base64Decode(Intro.CodedContent);
-                _rtb.Document = StringToFlowDocument(xaml);
+                StringToFlowDocument(xaml);
+                _rtb.Document = Document;
             }
         }
 
@@ -135,8 +137,53 @@ namespace ChessForge
         /// <returns></returns>
         public void SaveXAMLContent()
         {
-            string xamlText = XamlWriter.Save(_rtb.Document);
-            Nodes[0].Data = EncodingUtils.Base64Encode(xamlText);
+            if (_textDirty)
+            {
+                string xamlText = XamlWriter.Save(Document);
+                Nodes[0].Data = EncodingUtils.Base64Encode(xamlText);
+                RemoveUnusedNodes();
+            }
+
+            _textDirty = false;
+        }
+
+        /// <summary>
+        /// Remove nodes that are in the Nodes list but not
+        /// used in XAML.
+        /// Don't delete NodeId == 0.
+        /// </summary>
+        private void RemoveUnusedNodes()
+        {
+            List<int> activeNodes = new List<int>();
+
+            // get all active node ids
+            foreach (Block block in Document.Blocks)
+            {
+                if (block is Paragraph)
+                {
+                    foreach (Inline inl in (block as Paragraph).Inlines)
+                    {
+                        if (inl is InlineUIContainer)
+                        {
+                            activeNodes.Add(TextUtils.GetIdFromPrefixedString(inl.Name));
+                        }
+                    }
+                }
+            }
+
+            List<TreeNode> nodesToRemove = new List<TreeNode>();
+            // remove those whose IDs are not in the list above.
+            foreach (TreeNode nd in Intro.Tree.Nodes)
+            {
+                if (activeNodes.Find(x => x == nd.NodeId) == 0 && nd.NodeId != 0)
+                {
+                    nodesToRemove.Add(nd);
+                }
+            }
+            foreach (TreeNode nd in nodesToRemove)
+            {
+                Intro.Tree.Nodes.Remove(nd);
+            }
         }
 
         /// <summary>
@@ -154,15 +201,15 @@ namespace ChessForge
 
             _selectedNode = node;
             int nodeId = AddNode(node);
-            
+
             Run rMove = new Run();
-            rMove.Name = _run_move_ + nodeId.ToString(); 
+            rMove.Name = _run_move_ + nodeId.ToString();
             rMove.Text = node.LastMoveAlgebraicNotation;
             rMove.Text = Languages.MapPieceSymbols(node.LastMoveAlgebraicNotation);
-            // TODO: TRANSLATE back when saving ?!
+            // TODO: TRANSLATE back when saving ?! Detect if this has a move
             rMove.Foreground = Brushes.Blue;
+            rMove.FontWeight = FontWeights.Bold;
 
-            rMove.MouseDown += EventMoveClicked;
             InsertMoveTextBlock(rMove, nodeId);
         }
 
@@ -192,17 +239,45 @@ namespace ChessForge
                     TreeNode nd = GetNodeById(nodeId);
                     if (nd != null)
                     {
-                        Inline runClicked = FindInlineByName(r.Name);
-                        _rtb.CaretPosition = runClicked.ElementEnd;
+                        string uicName = _uic_move_ + nodeId.ToString();
+                        Inline inlClicked = FindInlineByName(uicName);
+                        _rtb.CaretPosition = inlClicked.ElementEnd;
                         AppState.MainWin.DisplayPosition(nd);
 
                         if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
                         {
-                            // TODO: allow text edit and the option to edit position
+                            IntroMoveDialog dlg = new IntroMoveDialog(nd)
+                            {
+                                Left = AppState.MainWin.Left + 100,
+                                Top = AppState.MainWin.Top + 100,
+                                Topmost = false,
+                                Owner = AppState.MainWin
+                            };
+                            dlg.ShowDialog();
                         }
                     }
                 }
                 catch { }
+            }
+        }
+
+        /// <summary>
+        /// Sets event handlers for the move Runs.
+        /// </summary>
+        private void SetEventHandlers()
+        {
+            foreach (Block block in Document.Blocks)
+            {
+                if (block is Paragraph)
+                {
+                    foreach (Inline inl in ((Paragraph)block).Inlines)
+                    {
+                        if (inl is InlineUIContainer && inl.Name.StartsWith(_uic_move_))
+                        {
+                            ((InlineUIContainer)inl).MouseDown += EventMoveClicked;
+                        }
+                    }
+                }
             }
         }
 
@@ -232,7 +307,7 @@ namespace ChessForge
                     BoardPosition pos = dlg.PositionSetup;
                     TreeNode node = new TreeNode(null, "", 0);
                     node.Position = new BoardPosition(pos);
-                    
+
                     int node_id = AddNode(node);
                     _selectedNode = node;
 
@@ -247,7 +322,7 @@ namespace ChessForge
 
                     AppState.IsDirty = true;
 
-                    _rtb.Document.Blocks.InsertBefore(nextPara, para);
+                    Document.Blocks.InsertBefore(nextPara, para);
                 }
             }
             catch (Exception ex)
@@ -270,11 +345,12 @@ namespace ChessForge
 
                 run.Text = " " + run.Text + " ";
                 tbMove.Inlines.Add(run);
-                tbMove.Background = ChessForgeColors.INTRO_MOVE_BACKGROUND;
+                //tbMove.Background = ChessForgeColors.INTRO_MOVE_BACKGROUND;
 
                 InlineUIContainer uic = new InlineUIContainer();
                 uic.Name = _uic_move_ + nodeId.ToString();
                 uic.Child = tbMove;
+                uic.MouseDown += EventMoveClicked;
 
                 // Insert the new Run after the original Run
                 Run newRun = SplitRun(_rtb);
@@ -285,23 +361,13 @@ namespace ChessForge
                 }
                 else
                 {
-                    Run adjRun = GetRunUnderCaret(_rtb);
-                    if (adjRun == null)
+                    if (tp.Paragraph == null)
                     {
-                        if (tp.Paragraph != null)
-                        {
-                            tp.Paragraph.Inlines.Add(uic);
-                        }
-                        else
-                        {
-                            tp = _rtb.CaretPosition.InsertParagraphBreak();
-                            tp.Paragraph.Inlines.Add(uic);
-                        }
+                        tp = _rtb.CaretPosition.InsertParagraphBreak();
                     }
-                    else
+                    if (tp.Paragraph != null)
                     {
-                        Paragraph para = newRun.Parent as Paragraph;
-                        para.Inlines.InsertBefore(newRun, uic as Inline);
+                        tp.Paragraph.Inlines.Add(uic);
                     }
                 }
 
@@ -414,19 +480,17 @@ namespace ChessForge
         /// <returns></returns>
         private FlowDocument StringToFlowDocument(string xamlString)
         {
-            FlowDocument flowDocument;
-
             try
             {
-                flowDocument = XamlReader.Parse(xamlString) as FlowDocument;
+                Document = XamlReader.Parse(xamlString) as FlowDocument;
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
-                flowDocument = new FlowDocument();
+                Document = new FlowDocument();
                 AppLog.Message("StringToFlowDocument()", ex);
             }
 
-            return flowDocument;
+            return Document;
         }
 
         /// <summary>
@@ -443,6 +507,7 @@ namespace ChessForge
             }
             else
             {
+                _textDirty = true;
                 AppState.IsDirty = true;
             }
         }
