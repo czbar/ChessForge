@@ -39,9 +39,12 @@ namespace ChessForge
         private List<IntroViewDiagram> DiagramList = new List<IntroViewDiagram>();
 
         /// <summary>
-        /// Names and prefixes for Runs.
+        /// Names and prefixes for xaml elements.
         /// </summary>
         private readonly string _run_move_ = "run_move_";
+        private readonly string _tb_move_ = "tb_move_";
+        private readonly string _uic_move_ = "uic_move_";
+        private readonly string _para_diagram_ = "para_diag_";
 
         // current highest run id (it is 0 initially, because we have the root node)
         private int _maxRunId = 0;
@@ -83,6 +86,13 @@ namespace ChessForge
                 LoadXAMLContent();
             }
             Nodes[0].Position = PositionUtils.SetupStartingPosition();
+            foreach (var node in Nodes)
+            {
+                if (node.NodeId > _maxRunId)
+                {
+                    _maxRunId = node.NodeId;
+                }
+            }
         }
 
         /// <summary>
@@ -153,7 +163,7 @@ namespace ChessForge
             rMove.Foreground = Brushes.Blue;
 
             rMove.MouseDown += EventMoveClicked;
-            InsertMoveTextBlock(rMove);
+            InsertMoveTextBlock(rMove, nodeId);
         }
 
         /// <summary>
@@ -220,18 +230,18 @@ namespace ChessForge
                 if (dlg.ShowDialog() == true)
                 {
                     BoardPosition pos = dlg.PositionSetup;
-                    IntroViewDiagram diag = new IntroViewDiagram();
-                    Paragraph para = BuildDiagramParagraph(diag, pos);
-                    diag.Chessboard.DisplayPosition(null, pos);
-
                     TreeNode node = new TreeNode(null, "", 0);
-                    node.Position = new BoardPosition(SelectedNode.Position);
-                    node.Position = pos;
+                    node.Position = new BoardPosition(pos);
+                    
+                    int node_id = AddNode(node);
+                    _selectedNode = node;
+
+                    IntroViewDiagram diag = new IntroViewDiagram();
+                    Paragraph para = BuildDiagramParagraph(diag, node);
+                    diag.Chessboard.DisplayPosition(node, false);
                     diag.Node = node;
 
                     DiagramList.Add(diag);
-                    Nodes.Add(node);
-                    _selectedNode = node;
 
                     AppState.MainWin.DisplayPosition(node);
 
@@ -250,20 +260,20 @@ namespace ChessForge
         /// Inserts a Run into a TextBlock that is then inserted into the Document.
         /// </summary>
         /// <param name="run"></param>
-        private void InsertMoveTextBlock(Run run)
+        private void InsertMoveTextBlock(Run run, int nodeId)
         {
             try
             {
                 TextPointer tp = _rtb.CaretPosition;
                 TextBlock tbMove = new TextBlock();
-                tbMove.Name = run.Name;
+                tbMove.Name = _tb_move_ + nodeId.ToString();
 
                 run.Text = " " + run.Text + " ";
                 tbMove.Inlines.Add(run);
                 tbMove.Background = ChessForgeColors.INTRO_MOVE_BACKGROUND;
 
                 InlineUIContainer uic = new InlineUIContainer();
-                uic.Name = run.Name;
+                uic.Name = _uic_move_ + nodeId.ToString();
                 uic.Child = tbMove;
 
                 // Insert the new Run after the original Run
@@ -310,11 +320,11 @@ namespace ChessForge
         /// <param name="diag"></param>
         /// <param name="pos"></param>
         /// <returns></returns>
-        private Paragraph BuildDiagramParagraph(IntroViewDiagram diag, BoardPosition pos)
+        private Paragraph BuildDiagramParagraph(IntroViewDiagram diag, TreeNode nd)
         {
             Paragraph para = new Paragraph();
             para.Margin = new Thickness(20, 20, 0, 20);
-            para.Name = "Chessboard";
+            para.Name = _para_diagram_ + nd.NodeId.ToString();
 
             Canvas canvas = SetupDiagramCanvas();
             Image imgChessBoard = CreateChessBoard(canvas, diag);
@@ -404,8 +414,21 @@ namespace ChessForge
         /// <returns></returns>
         private FlowDocument StringToFlowDocument(string xamlString)
         {
-            return XamlReader.Parse(xamlString) as FlowDocument;
+            FlowDocument flowDocument;
+
+            try
+            {
+                flowDocument = XamlReader.Parse(xamlString) as FlowDocument;
+            }
+            catch(Exception ex) 
+            {
+                flowDocument = new FlowDocument();
+                AppLog.Message("StringToFlowDocument()", ex);
+            }
+
+            return flowDocument;
         }
+
         /// <summary>
         /// Handles the Text Change event. Sets the Workbook's dirty flag.
         /// </summary>
