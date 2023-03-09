@@ -467,38 +467,59 @@ namespace GameTree
                     nd.Data = tokens[1];
 
                     TreeNode currNode = null;
-                    for (int i = 2; i < tokens.Length; i++) 
+                    for (int i = 2; i < tokens.Length; i++)
                     {
                         string keyVal = tokens[i];
-                        string[] vals = keyVal.Split('=');
-                        if (vals.Length == 2)
+                        ParseXamlKeyValuePair(keyVal, out string key, out string val);
+                        if (key == ChfCommands.XAML_NODE_ID)
                         {
-                            string key = vals[0];
-                            string val = vals[1];
-
-                            if (key == ChfCommands.XAML_NODE_ID)
+                            int nodeId = int.Parse(val);
+                            if (nodeId != 0)
                             {
-                                int nodeId = int.Parse(vals[1]);
-                                if (nodeId != 0)
-                                {
-                                    currNode = new TreeNode(null, "", nodeId);
-                                    Nodes.Add(currNode);
-                                }
-                                else
-                                {
-                                    currNode = Nodes[0];
-                                }
+                                currNode = new TreeNode(null, "", nodeId);
+                                Nodes.Add(currNode);
                             }
                             else
                             {
-                                ProcessXamlKeyVal(key, val, currNode);
+                                currNode = Nodes[0];
                             }
+                        }
+                        else
+                        {
+                            ProcessXamlKeyVal(key, val, currNode);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
                     AppLog.Message("ParseXamlCommandData()", ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Split the passed string at the first '=' (the following ones
+        /// might be part of the value) and returns the key and the value. 
+        /// </summary>
+        /// <param name="pair"></param>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        private void ParseXamlKeyValuePair(string pair, out string key, out string val)
+        {
+            key = "";
+            val = "";
+            if (string.IsNullOrEmpty(pair))
+            {
+                return;
+            }
+
+            int idx = pair.IndexOf('=');
+            if (idx > 0)
+            {
+                key = pair.Substring(0, idx);
+                if (idx < pair.Length - 1)
+                {
+                    val = pair.Substring(idx + 1);
                 }
             }
         }
@@ -517,7 +538,7 @@ namespace GameTree
                 switch (key)
                 {
                     case ChfCommands.XAML_MOVE_TEXT:
-                        node.LastMoveAlgebraicNotation = EncodingUtils.Base64Decode(val); 
+                        node.LastMoveAlgebraicNotation = EncodingUtils.Base64Decode(val);
                         break;
                     case ChfCommands.XAML_FEN:
                         FenParser.ParseFenIntoBoard(EncodingUtils.Base64Decode(val), ref node.Position);
