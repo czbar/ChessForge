@@ -129,7 +129,7 @@ namespace ChessForge
         /// This is called when building the Intro text.
         /// </summary>
         /// <param name="destSquare"></param>
-        public static string RepositionDraggedPiece(SquareCoords destSquare, ref TreeNode nd)
+        public static string RepositionDraggedPiece(SquareCoords destSquare, bool fullNotation, ref TreeNode nd)
         {
             StringBuilder sbMoveFullNotation = new StringBuilder();
 
@@ -163,9 +163,12 @@ namespace ChessForge
                 {
                     sbMoveFullNotation.Append(FenParser.PieceToFenChar[piece]);
                 }
-                sbMoveFullNotation.Append((char)(origSquareNorm.Xcoord + (int)'a'));
-                sbMoveFullNotation.Append((char)(origSquareNorm.Ycoord + (int)'1'));
-                sbMoveFullNotation.Append('-');
+                if (fullNotation)
+                {
+                    sbMoveFullNotation.Append((char)(origSquareNorm.Xcoord + (int)'a'));
+                    sbMoveFullNotation.Append((char)(origSquareNorm.Ycoord + (int)'1'));
+                    sbMoveFullNotation.Append('-');
+                }
                 sbMoveFullNotation.Append((char)(destSquareNorm.Xcoord + (int)'a'));
                 sbMoveFullNotation.Append((char)(destSquareNorm.Ycoord + (int)'1'));
 
