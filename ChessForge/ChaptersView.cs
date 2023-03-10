@@ -1107,6 +1107,7 @@ namespace ChessForge
                 {
                     Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
                     WorkbookManager.LastClickedChapterIndex = chapterIndex;
+                    WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.GENERIC);
 
                     if (e.ChangedButton == MouseButton.Left)
                     {
