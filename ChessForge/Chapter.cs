@@ -39,6 +39,13 @@ namespace ChessForge
         public List<Article> Exercises = new List<Article>();
 
         /// <summary>
+        /// Whether the IntroTab should be shown even if empty.
+        /// This is set to true when the user requested creation of the Intro
+        /// tab for the current chapter.
+        /// </summary>
+        public bool AlwaysShowIntroTab = false;
+
+        /// <summary>
         /// The Guid of the Workbook.
         /// Generates a guid if empty.
         /// </summary>
@@ -100,15 +107,27 @@ namespace ChessForge
 
             Intro = new Article(GameData.ContentType.INTRO);
             Intro.Tree.AddNode(new TreeNode(null, "", 0));
-    }
+        }
 
-    /// <summary>
-    /// Returns Model Game stored at a given index.
-    /// Null if invalid index.
-    /// </summary>
-    /// <param name="index"></param>
-    /// <returns></returns>
-    public Article GetModelGameAtIndex(int index)
+        /// <summary>
+        /// Tests if the content of the Intro article is empty.
+        /// It is empty if there is nothing in the CodedContent property
+        /// or no Paragraph in the decoded content.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsIntroEmpty()
+        {
+            string content = EncodingUtils.Base64Decode(Intro.CodedContent);
+            return content.IndexOf("Paragraph") < 0;
+        }
+
+        /// <summary>
+        /// Returns Model Game stored at a given index.
+        /// Null if invalid index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Article GetModelGameAtIndex(int index)
         {
             if (index >= 0 && index < ModelGames.Count)
             {
