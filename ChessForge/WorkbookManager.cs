@@ -400,6 +400,19 @@ namespace ChessForge
                                 menuItem.IsEnabled = isEnabled;
                                 menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
                                 break;
+                            case "UiMnChptCreateIntro":
+                                menuItem.IsEnabled = isEnabled;
+                                if (index >=0 && index <= SessionWorkbook.Chapters.Count
+                                    && !SessionWorkbook.Chapters[index].AlwaysShowIntroTab
+                                    && SessionWorkbook.Chapters[index].IsIntroEmpty())
+                                {
+                                    menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                                }
+                                else
+                                {
+                                    menuItem.Visibility = Visibility.Collapsed;
+                                }
+                                break;
                             case "_mnMergeChapters":
                                 menuItem.IsEnabled = isEnabled;
                                 menuItem.Visibility = Visibility.Visible;
