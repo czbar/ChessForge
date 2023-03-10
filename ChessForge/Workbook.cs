@@ -229,7 +229,10 @@ namespace ChessForge
                 }
                 return _activeChapter;
             }
-            set => _activeChapter = value;
+            set
+            {
+                SetActiveChapter(value);
+            }
         }
 
         /// <summary>
@@ -278,11 +281,11 @@ namespace ChessForge
         {
             if (Chapters.Count == 0)
             {
-                _activeChapter = null;
+                SetActiveChapter(null);
             }
             else
             {
-                _activeChapter = Chapters[0];
+                SetActiveChapter(Chapters[0]);
             }
 
             return _activeChapter;
@@ -310,7 +313,7 @@ namespace ChessForge
                 return;
             }
 
-            _activeChapter = Chapters[chapterIndex];
+            SetActiveChapter(Chapters[chapterIndex]);
             _activeChapter.SetActiveVariationTree(gameType, gameIndex);
         }
 
@@ -566,7 +569,7 @@ namespace ChessForge
             //TODO: we need to have a chapter specific version of SetupGuiForNewSession 
 
             Chapters.Add(chapter);
-            _activeChapter = chapter;
+            SetActiveChapter(chapter);
             _activeChapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
 
             return chapter;
@@ -585,10 +588,8 @@ namespace ChessForge
 
             if (makeActive)
             {
-                _activeChapter = chapter;
+                SetActiveChapter(chapter);
             }
-
-            //TrainingSideConfig = tree.TrainingSide;
 
             return chapter;
         }
@@ -631,5 +632,14 @@ namespace ChessForge
             return ret;
         }
 
+        /// <summary>
+        /// Method to be used for seeting the value of _activeChapter within this class.
+        /// </summary>
+        /// <param name="chapter"></param>
+        private void SetActiveChapter(Chapter chapter)
+        {
+            _activeChapter = chapter;
+            AppState.ShowIntroTab(_activeChapter);
+        }
     }
 }
