@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using GameTree;
 using System.Windows.Media;
 using System.Windows.Input;
+using System.Windows.Media.TextFormatting;
 
 namespace ChessForge
 {
@@ -204,13 +205,10 @@ namespace ChessForge
 
             Run rMove = new Run();
             rMove.Name = _run_move_ + nodeId.ToString();
-            rMove.Text = node.LastMoveAlgebraicNotation;
-            rMove.Text = Languages.MapPieceSymbols(node.LastMoveAlgebraicNotation);
-            // TODO: TRANSLATE back when saving ?! Detect if this has a move
             rMove.Foreground = Brushes.Blue;
             rMove.FontWeight = FontWeights.Bold;
 
-            InsertMoveTextBlock(rMove, nodeId);
+            InsertMoveTextBlock(rMove, node);
         }
 
         /// <summary>
@@ -239,6 +237,7 @@ namespace ChessForge
                     TreeNode nd = GetNodeById(nodeId);
                     if (nd != null)
                     {
+                        _selectedNode = nd;
                         string uicName = _uic_move_ + nodeId.ToString();
                         Inline inlClicked = FindInlineByName(uicName);
                         _rtb.CaretPosition = inlClicked.ElementEnd;
@@ -253,7 +252,15 @@ namespace ChessForge
                                 Topmost = false,
                                 Owner = AppState.MainWin
                             };
-                            dlg.ShowDialog();
+
+                            if (dlg.ShowDialog() == true)
+                            {
+                                _textDirty = true;
+                                AppState.IsDirty = true;
+
+                                nd.LastMoveAlgebraicNotation = dlg.MoveText;
+                                r.Text = " " + dlg.MoveText + " ";
+                            }
                         }
                     }
                 }
@@ -262,7 +269,39 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Sets event handlers for the move Runs.
+        /// The diagram paragraph was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventDiagramClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (sender is Paragraph)
+                {
+                    Paragraph para = sender as Paragraph;
+                    _rtb.CaretPosition = para.ContentStart;
+
+                    string s = para.Name;
+                    int nodeId = TextUtils.GetIdFromPrefixedString(s);
+                    TreeNode nd = GetNodeById(nodeId);
+                    if (nd != null)
+                    {
+                        _selectedNode = nd;
+                        AppState.MainWin.DisplayPosition(nd);
+
+                        if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+                        {
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Sets event handlers for the move Runs
+        /// and diagram Paragraphs.
         /// </summary>
         private void SetEventHandlers()
         {
@@ -270,7 +309,12 @@ namespace ChessForge
             {
                 if (block is Paragraph)
                 {
-                    foreach (Inline inl in ((Paragraph)block).Inlines)
+                    Paragraph p = (Paragraph)block;
+                    if (p.Name.StartsWith(_para_diagram_))
+                    {
+                        p.MouseDown += EventDiagramClicked;
+                    }
+                    foreach (Inline inl in p.Inlines)
                     {
                         if (inl is InlineUIContainer && inl.Name.StartsWith(_uic_move_))
                         {
@@ -279,6 +323,72 @@ namespace ChessForge
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Finds the last InlineUIContainer before the passed one
+        /// with a Run that has a text looking
+        /// like starting with a move number and then parses it.
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        private int FindLastMoveNumber(InlineUIContainer uicCurrent, out PieceColor color)
+        {
+            int number = -1;
+            color = PieceColor.None;
+
+            bool done = false;
+
+            try
+            {
+                foreach (Block block in Document.Blocks)
+                {
+                    if (done)
+                    {
+                        break;
+                    }
+
+                    if (block is Paragraph)
+                    {
+                        foreach (Inline inl in (block as Paragraph).Inlines)
+                        {
+                            if (inl is InlineUIContainer)
+                            {
+                                if (inl == uicCurrent)
+                                {
+                                    done = true;
+                                    break;
+                                }
+
+                                InlineUIContainer uic = inl as InlineUIContainer;
+                                TextBlock tb = uic.Child as TextBlock;
+                                if (tb != null)
+                                {
+                                    foreach (Inline tbLinline in tb.Inlines)
+                                    {
+                                        if (tbLinline is Run)
+                                        {
+                                            int no = MoveUtils.ExtractMoveNumber((tbLinline as Run).Text, out PieceColor pc);
+                                            if (no >= 0)
+                                            {
+                                                number = no;
+                                                color = pc;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+
+            return number;
         }
 
         /// <summary>
@@ -293,7 +403,6 @@ namespace ChessForge
                 TextPointer tp = _rtb.CaretPosition.InsertParagraphBreak();
                 Paragraph nextPara = tp.Paragraph;
 
-                _selectedNode = AppState.MainWin.MainChessBoard.DisplayedNode;
                 DiagramSetupDialog dlg = new DiagramSetupDialog(SelectedNode)
                 {
                     Left = AppState.MainWin.ChessForgeMain.Left + 100,
@@ -323,6 +432,7 @@ namespace ChessForge
                     AppState.IsDirty = true;
 
                     Document.Blocks.InsertBefore(nextPara, para);
+                    para.MouseDown += EventDiagramClicked;
                 }
             }
             catch (Exception ex)
@@ -332,51 +442,128 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Inserts a Run into a TextBlock that is then inserted into the Document.
+        /// Inserts a move's Run into a TextBlock that is then inserted into an InlineUIContainer
+        /// and finally in the Document.
+        /// This is called after the user made a move on the main board.
+        /// We determine the place to insert the new move in, and are guessing the number 
+        /// to prefix it with.
         /// </summary>
         /// <param name="run"></param>
-        private void InsertMoveTextBlock(Run run, int nodeId)
+        private void InsertMoveTextBlock(Run run, TreeNode node)
         {
             try
             {
-                TextPointer tp = _rtb.CaretPosition;
-                TextBlock tbMove = new TextBlock();
-                tbMove.Name = _tb_move_ + nodeId.ToString();
+                GetMoveInsertionPlace(out Paragraph paraToInsertIn, out Inline inlineToInsertBefore);
 
-                run.Text = " " + run.Text + " ";
+                TextBlock tbMove = new TextBlock();
+                tbMove.Name = _tb_move_ + node.NodeId.ToString();
                 tbMove.Inlines.Add(run);
-                //tbMove.Background = ChessForgeColors.INTRO_MOVE_BACKGROUND;
 
                 InlineUIContainer uic = new InlineUIContainer();
-                uic.Name = _uic_move_ + nodeId.ToString();
+                uic.Name = _uic_move_ + node.NodeId.ToString();
                 uic.Child = tbMove;
                 uic.MouseDown += EventMoveClicked;
 
-                // Insert the new Run after the original Run
-                Run newRun = SplitRun(_rtb);
-                if (newRun != null)
+
+                if (inlineToInsertBefore == null)
                 {
-                    Paragraph para = newRun.Parent as Paragraph;
-                    para.Inlines.InsertBefore(newRun, uic as Inline);
+                    paraToInsertIn.Inlines.Add(uic);
                 }
                 else
                 {
-                    if (tp.Paragraph == null)
-                    {
-                        tp = _rtb.CaretPosition.InsertParagraphBreak();
-                    }
-                    if (tp.Paragraph != null)
-                    {
-                        tp.Paragraph.Inlines.Add(uic);
-                    }
+                    paraToInsertIn.Inlines.InsertBefore(inlineToInsertBefore, uic);
                 }
 
+                // only now we will build the text so we get the number right
+                run.Text = " " + BuildMoveRunText(node, uic) + " ";
+
+                // set caret to the end of the new move
                 _rtb.CaretPosition = uic.ElementEnd;
+
                 AppState.IsDirty = true;
             }
             catch (Exception ex)
             {
                 AppLog.Message("InsertMoveTextBlock()", ex);
+            }
+        }
+
+        private string BuildMoveRunText(TreeNode node, InlineUIContainer iuc)
+        {
+            int moveNo = FindLastMoveNumber(iuc, out PieceColor color);
+
+            PieceColor moveColor = MoveUtils.ReverseColor(node.ColorToMove);
+
+            if (moveNo == -1)
+            {
+                moveNo = 1;
+            }
+            else
+            {
+                if (moveColor != color && moveColor == PieceColor.White)
+                {
+                    moveNo++;
+                }
+            }
+
+            string res = moveNo.ToString() + (moveColor == PieceColor.Black ? "... " : ". ") + node.LastMoveAlgebraicNotation;
+            res = Languages.MapPieceSymbols(res);
+            // TODO: TRANSLATE back when saving ?! Detect if this has a move?
+            node.LastMoveAlgebraicNotation = res;
+
+            return res;
+        }
+
+        /// <summary>
+        /// Based on the current caret position and selaction (if any)
+        /// determine the paragraph in which to insert the new move
+        /// and an Inline before which to insert it.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="insertBefore"></param>
+        private void GetMoveInsertionPlace(out Paragraph para, out Inline insertBefore)
+        {
+            TextSelection selection = _rtb.Selection;
+            if (!selection.IsEmpty)
+            {
+                // if there is a selection we want to insert after it.
+                // e.g. we just highlighted the move by clicking on it and, intuitively,
+                // want the next move to come after it.
+                _rtb.CaretPosition = selection.End;
+            }
+
+            // if caret is inside a Run, split it and return the second part
+            insertBefore = SplitRun(_rtb);
+            if (insertBefore != null && insertBefore.Parent is Paragraph)
+            {
+                para = insertBefore.Parent as Paragraph;
+            }
+            else
+            {
+                TextPointer tp = _rtb.CaretPosition;
+                para = tp.Paragraph;
+
+                DependencyObject inl = tp.GetAdjacentElement(LogicalDirection.Forward);
+                if (inl != null && inl is Inline && para != null)
+                {
+                    insertBefore = inl as Inline;
+                }
+                else
+                {
+                    // there is no Inline ahead so just append to the current paragraph
+                    // or create a new one if null
+                    insertBefore = null;
+                    if (para == null)
+                    {
+                        para = _rtb.CaretPosition.InsertParagraphBreak().Paragraph;
+                    }
+
+                    if (tp.Paragraph != null)
+                    {
+                        para = tp.Paragraph;
+                        insertBefore = null;
+                    }
+                }
             }
         }
 
@@ -397,9 +584,10 @@ namespace ChessForge
             canvas.Children.Add(imgChessBoard);
             Viewbox viewBox = SetupDiagramViewbox(canvas);
 
-            InlineUIContainer uIContainer = new InlineUIContainer();
-            uIContainer.Child = viewBox;
-            para.Inlines.Add(uIContainer);
+            InlineUIContainer uic = new InlineUIContainer();
+            uic.Child = viewBox;
+            uic.Name = _uic_move_ + nd.NodeId.ToString();
+            para.Inlines.Add(uic);
 
             return para;
         }
