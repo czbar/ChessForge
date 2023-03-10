@@ -250,6 +250,44 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Given a move with a number in front of it,
+        /// returns the number and the color.
+        /// Returns -1 if fails to parse.
+        /// </summary>
+        /// <param name="move"></param>
+        /// <returns></returns>
+        public static int ExtractMoveNumber(string move, out PieceColor color)
+        {
+            int number = -1;
+            color = PieceColor.None;
+
+            if (string.IsNullOrEmpty(move))
+            {
+                return number;
+            }
+
+            // find the first dot
+            int dot = move.IndexOf('.');
+            if (dot > 0)
+            {
+                if (dot == move.Length - 1 || move[dot + 1] != '.')
+                {
+                    color = PieceColor.White;
+                }
+                else
+                {
+                    color = PieceColor.Black;
+                }
+                if (int.TryParse(move.Substring(0, dot), out number) == false)
+                {
+                    number = -1;
+                }
+            }
+
+            return number;
+        }
+
+        /// <summary>
         /// Builds text of the line leading to the passed node.
         /// </summary>
         /// <param name="nd"></param>
