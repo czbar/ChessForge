@@ -229,9 +229,8 @@ namespace ChessForge
             if (_introView != null)
             {
                 TreeNode nd = new TreeNode(null, "", 0);
-                nd.Position = new BoardPosition(_introView.SelectedNode.Position);
-
-                nd.LastMoveAlgebraicNotation = UserMoveProcessor.RepositionDraggedPiece(targetSquare, ref nd);
+                nd.Position = new BoardPosition(MainChessBoard.DisplayedPosition);
+                nd.LastMoveAlgebraicNotation = UserMoveProcessor.RepositionDraggedPiece(targetSquare, false, ref nd);
 
                 _introView.InsertMove(nd);
             }
