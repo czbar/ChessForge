@@ -709,7 +709,7 @@ namespace ChessForge
             {
                 WorkbookManager.LastClickedChapterIndex = -1;
             }
-            WorkbookManager.EnableChaptersContextMenuItems(_cmChapters, WorkbookManager.LastClickedChapterIndex >= 0, GameData.ContentType.GENERIC);
+                WorkbookManager.EnableChaptersContextMenuItems(_cmChapters, WorkbookManager.LastClickedChapterIndex >= 0, GameData.ContentType.GENERIC);
         }
 
         /// <summary>
@@ -798,6 +798,22 @@ namespace ChessForge
         private void UiMnSelectChapter_Click(object sender, RoutedEventArgs e)
         {
             SelectChapterByIndex(WorkbookManager.LastClickedChapterIndex, true);
+        }
+
+        /// <summary>
+        /// Show the Intro tab for the selected chapter and go to it
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnChptCreateIntro_Click(object sender, RoutedEventArgs e)
+        {
+            Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[WorkbookManager.LastClickedChapterIndex];
+            if (chapter != null)
+            {
+                chapter.AlwaysShowIntroTab = true;
+                UiTabIntro.Visibility = Visibility.Visible;
+                UiTabIntro.Focus();
+            }
         }
 
         /// <summary>
