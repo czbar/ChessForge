@@ -19,8 +19,17 @@ namespace ChessForge
     {
         /// <summary>
         /// The node represented on the board.
+        /// Can be null.
         /// </summary>
         public TreeNode DisplayedNode;
+
+        /// <summary>
+        /// The position shown on the board.
+        /// </summary>
+        public BoardPosition DisplayedPosition
+        {
+            get { return DisplayedNode != null ? DisplayedNode.Position : _position; }
+        }
 
         /// <summary>
         /// Manager for arrows and circles.
