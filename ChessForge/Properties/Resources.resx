@@ -540,6 +540,9 @@
   <data name="RenameSelectedChapter" xml:space="preserve">
     <value>Rename Selected Chapter</value>
   </data>
+  <data name="CreateIntro" xml:space="preserve">
+    <value>Create Intro for Selected Chapter</value>
+  </data>
   <data name="OpenSelectedGame" xml:space="preserve">
     <value>Open Selected Game</value>
   </data>

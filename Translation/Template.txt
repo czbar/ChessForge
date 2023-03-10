@@ -626,6 +626,10 @@ OpenSelectedChapter=
 #english: RenameSelectedChapter=Rename Selected Chapter
 RenameSelectedChapter=
 
+#description: Create Intro 
+#english: CreateIntro=Create Intro for Selected Chapter
+CreateIntro=
+
 #description: Open the selected game
 #english: OpenSelectedGame=Open Selected Game
 OpenSelectedGame=

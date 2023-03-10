@@ -916,6 +916,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Intro for Selected Chapter.
+        /// </summary>
+        public static string CreateIntro {
+            get {
+                return ResourceManager.GetString("CreateIntro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create New Chapter.
         /// </summary>
         public static string CreateNewChapter {

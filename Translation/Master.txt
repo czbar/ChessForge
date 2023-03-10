@@ -485,6 +485,9 @@ OpenSelectedChapter=Open Selected Chapter
 #Rename the selected chapter
 RenameSelectedChapter=Rename Selected Chapter
 
+#Create Intro 
+CreateIntro=Create Intro for Selected Chapter
+
 #Open the selected game
 OpenSelectedGame=Open Selected Game
 

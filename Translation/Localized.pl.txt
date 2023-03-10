@@ -626,6 +626,10 @@ OpenSelectedChapter=Otwórz Wybrany Rozdział
 #english: RenameSelectedChapter=Rename Selected Chapter
 RenameSelectedChapter=Zmień Nazwę Rozdziału
 
+#description: Create Intro 
+#english: CreateIntro=Create Intro for Selected Chapter
+CreateIntro=Utwórz Wstęp do Rozdziału
+
 #description: Open the selected game
 #english: OpenSelectedGame=Open Selected Game
 OpenSelectedGame=Otwórz Wybraną Partię

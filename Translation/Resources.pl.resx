@@ -540,6 +540,9 @@
   <data name="RenameSelectedChapter" xml:space="preserve">
     <value>Zmień Nazwę Rozdziału</value>
   </data>
+  <data name="CreateIntro" xml:space="preserve">
+    <value>Utwórz Wstęp do Rozdziału</value>
+  </data>
   <data name="OpenSelectedGame" xml:space="preserve">
     <value>Otwórz Wybraną Partię</value>
   </data>
