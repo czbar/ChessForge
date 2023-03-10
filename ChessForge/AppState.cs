@@ -75,6 +75,20 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Determine whether the Intro tab should be shown
+        /// and set its visibility accordingly.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public static void ShowIntroTab(Chapter chapter)
+        {
+            if (chapter != null)
+            {
+                bool show = chapter.AlwaysShowIntroTab || !chapter.IsIntroEmpty();
+                MainWin.UiTabIntro.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        /// <summary>
         /// Whether a tab with an active Tree View is currently open.
         /// </summary>
         /// <returns></returns>
