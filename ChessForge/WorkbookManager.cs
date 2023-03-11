@@ -44,6 +44,7 @@ namespace ChessForge
         {
             NONE,
             CHAPTER,
+            INTRO,
             STUDY,
             MODEL_GAME,
             EXERCISE
@@ -367,7 +368,7 @@ namespace ChessForge
                 isEnabled = false;
             }
 
-            bool isChaptersMenu = contentType == GameData.ContentType.GENERIC || contentType == GameData.ContentType.STUDY_TREE;
+            bool isChaptersMenu = contentType == GameData.ContentType.GENERIC || contentType == GameData.ContentType.STUDY_TREE || contentType == GameData.ContentType.INTRO;
 
             int index = SessionWorkbook == null ? -1 : LastClickedChapterIndex;
 
@@ -399,6 +400,18 @@ namespace ChessForge
                             case "_mnRenameChapter":
                                 menuItem.IsEnabled = isEnabled;
                                 menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "UiMnChptCreateIntro":
+                                menuItem.IsEnabled = isEnabled;
+                                if (index >=0 && index <= SessionWorkbook.Chapters.Count
+                                    && !SessionWorkbook.Chapters[index].ShowIntro)
+                                {
+                                    menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
+                                }
+                                else
+                                {
+                                    menuItem.Visibility = Visibility.Collapsed;
+                                }
                                 break;
                             case "_mnMergeChapters":
                                 menuItem.IsEnabled = isEnabled;

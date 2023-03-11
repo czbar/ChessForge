@@ -277,6 +277,7 @@
                                     <Separator />
                                     <MenuItem x:Name="_mnSelectChapter" Header="{x:Static p:Resources.OpenSelectedChapter}" Click="UiMnSelectChapter_Click" />
                                     <MenuItem x:Name="_mnRenameChapter" Header="{x:Static p:Resources.RenameSelectedChapter}" Click="UiMnRenameChapter_Click" />
+                                    <MenuItem x:Name="UiMnChptCreateIntro" Header="{x:Static p:Resources.CreateIntro}" Click="UiMnChptCreateIntro_Click" />
                                     <MenuItem x:Name="_mnSelectGame" Header="{x:Static p:Resources.OpenSelectedGame}" Click="UiMnOpenGame_Click"  />
                                     <MenuItem x:Name="_mnRenameGame" Header="{x:Static p:Resources.EditGameHeaders}" Click="UiMnEditGameHeader_Click" />
                                     <MenuItem x:Name="_mnSelectExercise" Header="{x:Static p:Resources.OpenThisExercise}" Click="UiMnOpenExercise_Click"  />

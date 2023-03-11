@@ -127,6 +127,9 @@
     <Compile Include="IdenticalPositionsDialog.xaml.cs">
       <DependentUpon>IdenticalPositionsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IntroMoveDialog.xaml.cs">
+      <DependentUpon>IntroMoveDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IntroView.cs" />
     <Compile Include="IntroViewDiagram.cs" />
     <Compile Include="LearningMode.cs" />
@@ -265,6 +268,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="IdenticalPositionsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IntroMoveDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

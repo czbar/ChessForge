@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using ChessPosition.GameTree;
 using ChessForge;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace GameTree
 {
@@ -380,7 +381,7 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Processes a CfhCommand received from the parser.
+        /// Processes a ChfCommand received from the parser.
         /// If possible, applies the command to this node's
         /// properties.
         /// If not, stores in the list of unprocessed commands.
@@ -427,7 +428,7 @@ namespace GameTree
                     case ChfCommands.Command.XAML:
                         if (tokens.Length > 1)
                         {
-                            nd.Data = tokens[1];
+                            this.ParseXamlCommandData(nd, command);
                         }
                         break;
                     case ChfCommands.Command.ARROWS:
@@ -444,6 +445,109 @@ namespace GameTree
                         break;
                     default:
                         nd.AddUnprocessedChfCommand(command);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// The special case for the Intro view, where the first node
+        /// may have a comment with %xaml command.
+        /// We will only process this data if the passed Node is the root node and there
+        /// are no other nodes in the tree yet.
+        /// </summary>
+        /// <param name="nd"></param>
+        private void ParseXamlCommandData(TreeNode nd, string text)
+        {
+            if (nd.NodeId == 0 && Nodes.Count == 1 && !string.IsNullOrEmpty(text))
+            {
+                try
+                {
+                    string[] tokens = text.Split(' ');
+                    nd.Data = tokens[1];
+
+                    TreeNode currNode = null;
+                    for (int i = 2; i < tokens.Length; i++)
+                    {
+                        string keyVal = tokens[i];
+                        ParseXamlKeyValuePair(keyVal, out string key, out string val);
+                        if (key == ChfCommands.XAML_NODE_ID)
+                        {
+                            int nodeId = int.Parse(val);
+                            if (nodeId != 0)
+                            {
+                                currNode = new TreeNode(null, "", nodeId);
+                                Nodes.Add(currNode);
+                            }
+                            else
+                            {
+                                currNode = Nodes[0];
+                            }
+                        }
+                        else
+                        {
+                            ProcessXamlKeyVal(key, val, currNode);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("ParseXamlCommandData()", ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Split the passed string at the first '=' (the following ones
+        /// might be part of the value) and returns the key and the value. 
+        /// </summary>
+        /// <param name="pair"></param>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        private void ParseXamlKeyValuePair(string pair, out string key, out string val)
+        {
+            key = "";
+            val = "";
+            if (string.IsNullOrEmpty(pair))
+            {
+                return;
+            }
+
+            int idx = pair.IndexOf('=');
+            if (idx > 0)
+            {
+                key = pair.Substring(0, idx);
+                if (idx < pair.Length - 1)
+                {
+                    val = pair.Substring(idx + 1);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Process a key value pair applicable
+        /// to the passed node from a XAML view.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        /// <param name="node"></param>
+        private void ProcessXamlKeyVal(string key, string val, TreeNode node)
+        {
+            if (node != null)
+            {
+                switch (key)
+                {
+                    case ChfCommands.XAML_MOVE_TEXT:
+                        node.LastMoveAlgebraicNotation = EncodingUtils.Base64Decode(val);
+                        break;
+                    case ChfCommands.XAML_FEN:
+                        FenParser.ParseFenIntoBoard(EncodingUtils.Base64Decode(val), ref node.Position);
+                        break;
+                    case ChfCommands.XAML_CIRCLES:
+                        node.Circles = val;
+                        break;
+                    case ChfCommands.XAML_ARROWS:
+                        node.Arrows = val;
                         break;
                 }
             }

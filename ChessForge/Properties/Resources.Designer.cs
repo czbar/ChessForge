@@ -916,6 +916,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Intro for Selected Chapter.
+        /// </summary>
+        public static string CreateIntro {
+            get {
+                return ResourceManager.GetString("CreateIntro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create New Chapter.
         /// </summary>
         public static string CreateNewChapter {
@@ -1114,6 +1123,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Move.
+        /// </summary>
+        public static string DlgEditMoveInIntro {
+            get {
+                return ResourceManager.GetString("DlgEditMoveInIntro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Double click an item to open its view..
         /// </summary>
         public static string DlgLabelIdenticalPositionHint {
@@ -1227,6 +1245,15 @@ namespace ChessForge.Properties {
         public static string EditGameHeaders {
             get {
                 return ResourceManager.GetString("EditGameHeaders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Position.
+        /// </summary>
+        public static string EditPosition {
+            get {
+                return ResourceManager.GetString("EditPosition", resourceCulture);
             }
         }
         
@@ -3406,6 +3433,15 @@ namespace ChessForge.Properties {
         public static string Tablebases {
             get {
                 return ResourceManager.GetString("Tablebases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text for Display.
+        /// </summary>
+        public static string TextForDisplay {
+            get {
+                return ResourceManager.GetString("TextForDisplay", resourceCulture);
             }
         }
         

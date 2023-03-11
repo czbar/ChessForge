@@ -1015,8 +1015,8 @@ namespace ChessForge
                 {
                     if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
                     {
-                        // as long as there is a piece to drag
-                        return pieceColor != PieceColor.None;
+                        // as long as there is a piece to drag and the view is not null
+                        return pieceColor != PieceColor.None && _introView != null;
                     }
                     else
                     {

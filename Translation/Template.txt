@@ -430,6 +430,10 @@ WorkbookOptions=
 #english: DlgTitleWorkbookOptions=Workbook Options
 DlgTitleWorkbookOptions=
 
+#description: Dialog for editing move text in the Intro view
+#english: DlgEditMoveInIntro=Edit Move
+DlgEditMoveInIntro=
+
 #description: Opens a dialog allowing the user to select chess engine executable file
 #english: AnalysisEngine=Analysis Engine...
 AnalysisEngine=
@@ -621,6 +625,10 @@ OpenSelectedChapter=
 #description: Rename the selected chapter
 #english: RenameSelectedChapter=Rename Selected Chapter
 RenameSelectedChapter=
+
+#description: Create Intro 
+#english: CreateIntro=Create Intro for Selected Chapter
+CreateIntro=
 
 #description: Open the selected game
 #english: OpenSelectedGame=Open Selected Game
@@ -1179,6 +1187,15 @@ ConfirmExerciseMoveDeletion=
 #
 # Dialogs
 #
+
+#description: Label for Text for Display
+#english: TextForDisplay=Text for Display
+TextForDisplay=
+
+#description: Button for Edit Position 
+#english: EditPosition=Edit Position
+EditPosition=
+
 
 #description: Info in the View References Dialog
 #english: InfoGameExerciseReferences=Double click to preview, right click for options

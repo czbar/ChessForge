@@ -229,9 +229,8 @@ namespace ChessForge
             if (_introView != null)
             {
                 TreeNode nd = new TreeNode(null, "", 0);
-                nd.Position = new BoardPosition(_introView.SelectedNode.Position);
-
-                nd.LastMoveAlgebraicNotation = UserMoveProcessor.RepositionDraggedPiece(targetSquare, ref nd);
+                nd.Position = new BoardPosition(MainChessBoard.DisplayedPosition);
+                nd.LastMoveAlgebraicNotation = UserMoveProcessor.RepositionDraggedPiece(targetSquare, false, ref nd);
 
                 _introView.InsertMove(nd);
             }
@@ -887,14 +886,18 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabChapters_GotFocus(object sender, RoutedEventArgs e)
         {
-            //UiImgEngineOn.IsEnabled = false;
-            //UiImgEngineOff.IsEnabled = false;
             EngineMessageProcessor.StopEngineEvaluation();
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.CHAPTERS;
             AppState.ShowExplorers(false, false);
 
+            // we may need to show/hode Intro headers if something has changed
+            if (_chaptersView != null)
+            {
+                _chaptersView.UpdateIntroHeaders();
+            }
+            
             BoardCommentBox.ShowTabHints();
             try
             {
@@ -942,7 +945,9 @@ namespace ChessForge
                 // otherwise build the view.
                 if (_introView == null || _introView.ParentChapter != WorkbookManager.SessionWorkbook.ActiveChapter)
                 {
-                    _introView = new IntroView(WorkbookManager.SessionWorkbook.ActiveChapter);
+                    UiRtbIntroView.IsDocumentEnabled = true;
+                    UiRtbIntroView.AllowDrop = false;
+                    _introView = new IntroView(UiRtbIntroView.Document, WorkbookManager.SessionWorkbook.ActiveChapter);
                 }
                 DisplayPosition(_introView.SelectedNode);
             }

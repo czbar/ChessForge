@@ -69,6 +69,7 @@ namespace ChessForge
 
         private readonly string _run_chapter_title_ = "_run_chapter_title_";
         private readonly string _run_study_tree_ = "study_tree_";
+        private readonly string _run_intro_ = "intro_";
 
         private readonly string _run_model_games_header_ = "_run_model_games_";
         private readonly string _run_model_game_ = "_run_model_game_";
@@ -115,6 +116,88 @@ namespace ChessForge
             }
 
             HighlightActiveChapter();
+        }
+
+        /// <summary>
+        /// Show/Hide intro headers per the current status
+        /// </summary>
+        public void UpdateIntroHeaders()
+        {
+            List<IntroRunsToModify> lstRuns = new List<IntroRunsToModify>();
+
+            foreach (Block block in Document.Blocks)
+            {
+                if (block is Paragraph)
+                {
+                    Paragraph para = (Paragraph)block;
+
+                    Run introRun = null;
+                    Run studyRun = null;
+
+                    // we look for a Study Tree Run. From it, we'll get the chapter index
+                    // and whether we found Intro run before. Then we'll decide what to do
+                    foreach (Inline inl in para.Inlines)
+                    {
+                        if (inl is Run)
+                        {
+                            Run run = (Run)inl;
+                            if (run.Name.StartsWith(_run_intro_))
+                            {
+                                introRun = run;
+                            }
+                            else if (run.Name.StartsWith(_run_study_tree_))
+                            {
+                                studyRun = run;
+                                break;
+                            }
+                        }
+                    }
+                    if (studyRun != null)
+                    {
+                        lstRuns.Add(new IntroRunsToModify(para, introRun, studyRun));
+                    }
+                }
+            }
+
+            foreach (IntroRunsToModify r in lstRuns)
+            {
+                HandleIntroRun(r.Para, r.IntroRun, r.StudyRun);
+            }
+        }
+
+        /// <summary>
+        /// Deletes or creates the Intro run as necessary.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="introRun"></param>
+        /// <param name="studyRun"></param>
+        private void HandleIntroRun(Paragraph para, Run introRun, Run studyRun)
+        {
+            try
+            {
+                if (WorkbookManager.SessionWorkbook == null || studyRun == null)
+                {
+                    return;
+                }
+
+                int chapterIndex = TextUtils.GetIdFromPrefixedString(studyRun.Name);
+                if (chapterIndex >= 0)
+                {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
+                    bool introVisible = chapter.ShowIntro;
+                    if (introVisible && introRun == null)
+                    {
+                        InsertIntroRun(para, chapter, studyRun);
+                    }
+                    else if (!introVisible && introRun != null)
+                    {
+                        para.Inlines.Remove(introRun);
+                    }
+                }
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -263,6 +346,7 @@ namespace ChessForge
 
                 if (chapter.IsViewExpanded)
                 {
+                    InsertIntroRun(para, chapter);
                     InsertStudyRun(para, chapter);
                     InsertModelGamesRuns(para, chapter);
                     InsertExercisesRuns(para, chapter);
@@ -377,9 +461,9 @@ namespace ChessForge
         /// <returns></returns>
         private Run InsertStudyRun(Paragraph para, Chapter chapter)
         {
-            para.Inlines.Add(new Run("\n"));
+//            para.Inlines.Add(new Run("\n"));
             string res = Resources.Study;
-            Run r = CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT + res, true);
+            Run r = CreateRun(STYLE_SUBHEADER, "\n" + SUBHEADER_INDENT + res, true);
             r.Name = _run_study_tree_ + chapter.Index.ToString();
             if (LastClickedItemType == WorkbookManager.ItemType.STUDY)
             {
@@ -393,6 +477,43 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Inserts a Run representing the Intro to the Chapter.
+        /// It will be shown or not depending on the content.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        private Run InsertIntroRun(Paragraph para, Chapter chapter, Run studyRun = null)
+        {
+            if (chapter.ShowIntro)
+            {
+                //para.Inlines.Add(new Run("\n"));
+                string res = Resources.Intro;
+                Run r = CreateRun(STYLE_SUBHEADER, "\n" + SUBHEADER_INDENT + res, true);
+                r.Name = _run_intro_ + chapter.Index.ToString();
+                if (LastClickedItemType == WorkbookManager.ItemType.INTRO)
+                {
+                    r.FontWeight = FontWeights.Bold;
+                }
+                r.MouseDown += EventIntroHeaderClicked;
+                r.MouseMove += EventIntroHeaderHovered;
+                r.MouseLeave += EventIntroHeaderLeft;
+                if (studyRun == null)
+                {
+                    para.Inlines.Add(r);
+                }
+                else
+                {
+                    para.Inlines.InsertBefore(studyRun, r);
+                }
+                return r;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Inserts the Model Games subheader
         /// and model games titles
         /// </summary>
@@ -400,8 +521,8 @@ namespace ChessForge
         /// <returns></returns>
         private Run InsertModelGamesRuns(Paragraph para, Chapter chapter)
         {
-            para.Inlines.Add(new Run("\n"));
-            para.Inlines.Add(CreateRun(STYLE_SUBHEADER, SUBHEADER_INDENT, true));
+            //para.Inlines.Add(new Run("\n"));
+            para.Inlines.Add(CreateRun(STYLE_SUBHEADER, "\n" + SUBHEADER_INDENT, true));
             InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.Index, GameData.ContentType.MODEL_GAME, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
             string res = Resources.Games;
             Run r = CreateRun(STYLE_SUBHEADER, res, true);
@@ -590,7 +711,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Acts on selection i.e. opens the selected Study Tree, Game or Exercise.
+        /// Acts on selection i.e. opens the selected Intro, Study Tree, Game or Exercise.
         /// </summary>
         public void ActOnSelection()
         {
@@ -792,7 +913,7 @@ namespace ChessForge
 
 
         /// <summary>
-        /// Returns details of the currently selected item which could be chapter, study tree, game or exercise.
+        /// Returns details of the currently selected item which could be chapter, intro, study tree, game or exercise.
         /// </summary>
         /// <param name="itemType"></param>
         /// <param name="chapter"></param>
@@ -1107,6 +1228,7 @@ namespace ChessForge
                 {
                     Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
                     WorkbookManager.LastClickedChapterIndex = chapterIndex;
+                    WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.GENERIC);
 
                     if (e.ChangedButton == MouseButton.Left)
                     {
@@ -1240,11 +1362,58 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Display Study Tree's Thumbnail.
+        /// Event handler invoked when an Intro header was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventIntroHeaderClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+
+                LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
+
+                Run r = (Run)e.Source;
+                int chapterIndex = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapterIndex >= 0)
+                {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
+                    WorkbookManager.LastClickedChapterIndex = chapterIndex;
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        SelectChapter(chapterIndex, true);
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.INTRO);
+                        SelectChapter(chapterIndex, false);
+                    }
+                    _mainWin.UiTabIntro.Focus();
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventIntroRunClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Display Chapter's Thumbnail.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void EventStudyTreeHeaderHovered(object sender, MouseEventArgs e)
+        {
+            EventChapterHeaderHovered(sender, e);
+        }
+
+        /// <summary>
+        /// Display Chapter's Thumbnail.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventIntroHeaderHovered(object sender, MouseEventArgs e)
         {
             EventChapterHeaderHovered(sender, e);
         }
@@ -1255,6 +1424,16 @@ namespace ChessForge
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void EventStudyTreeHeaderLeft(object sender, MouseEventArgs e)
+        {
+            HideFloatingBoard();
+        }
+
+        /// <summary>
+        /// The mouse no longer hovers over the Intro header, so hide the floating board.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventIntroHeaderLeft(object sender, MouseEventArgs e)
         {
             HideFloatingBoard();
         }
@@ -1607,5 +1786,19 @@ namespace ChessForge
             }
         }
 
+    }
+
+    class IntroRunsToModify
+    {
+        public IntroRunsToModify(Paragraph para, Run introRun, Run studyRun)
+        {
+            Para = para;
+            IntroRun = introRun;
+            StudyRun = studyRun;
+        }
+
+        public Paragraph Para;
+        public Run IntroRun;
+        public Run StudyRun;
     }
 }

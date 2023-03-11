@@ -108,7 +108,11 @@ namespace GameTree
             _remainingGameText = ReadHeaders(pgnGametext);
             ParsePgnTreeText(tree, fen);
 
-            TreeUtils.SetCheckAndMates(ref _tree);
+            try
+            {
+                TreeUtils.SetCheckAndMates(ref _tree);
+            }
+            catch { }
         }
 
         /// <summary>
