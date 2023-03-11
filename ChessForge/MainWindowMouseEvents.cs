@@ -886,14 +886,18 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabChapters_GotFocus(object sender, RoutedEventArgs e)
         {
-            //UiImgEngineOn.IsEnabled = false;
-            //UiImgEngineOff.IsEnabled = false;
             EngineMessageProcessor.StopEngineEvaluation();
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.CHAPTERS;
             AppState.ShowExplorers(false, false);
 
+            // we may need to show/hode Intro headers if something has changed
+            if (_chaptersView != null)
+            {
+                _chaptersView.UpdateIntroHeaders();
+            }
+            
             BoardCommentBox.ShowTabHints();
             try
             {
