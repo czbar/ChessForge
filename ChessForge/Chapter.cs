@@ -46,6 +46,14 @@ namespace ChessForge
         public bool AlwaysShowIntroTab = false;
 
         /// <summary>
+        /// Wheter Intro tab is to be shown
+        /// </summary>
+        public bool ShowIntro
+        {
+            get => AlwaysShowIntroTab || !IsIntroEmpty();
+        }
+
+        /// <summary>
         /// The Guid of the Workbook.
         /// Generates a guid if empty.
         /// </summary>
