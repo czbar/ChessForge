@@ -83,8 +83,7 @@ namespace ChessForge
         {
             if (chapter != null)
             {
-                bool show = chapter.AlwaysShowIntroTab || !chapter.IsIntroEmpty();
-                MainWin.UiTabIntro.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+                MainWin.UiTabIntro.Visibility = chapter.ShowIntro ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
