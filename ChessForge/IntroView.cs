@@ -260,6 +260,13 @@ namespace ChessForge
 
                                 nd.LastMoveAlgebraicNotation = dlg.MoveText;
                                 r.Text = " " + dlg.MoveText + " ";
+
+                                if (dlg.InsertDialogRequest)
+                                {
+                                    TextSelection sel = _rtb.Selection;
+                                    _rtb.CaretPosition = inlClicked.ElementEnd;
+                                    InsertDiagram(nd);
+                                }
                             }
                         }
                     }
@@ -400,9 +407,6 @@ namespace ChessForge
         {
             try
             {
-                TextPointer tp = _rtb.CaretPosition.InsertParagraphBreak();
-                Paragraph nextPara = tp.Paragraph;
-
                 DiagramSetupDialog dlg = new DiagramSetupDialog(SelectedNode)
                 {
                     Left = AppState.MainWin.ChessForgeMain.Left + 100,
@@ -417,28 +421,43 @@ namespace ChessForge
                     TreeNode node = new TreeNode(null, "", 0);
                     node.Position = new BoardPosition(pos);
 
-                    int node_id = AddNode(node);
-                    _selectedNode = node;
-
-                    IntroViewDiagram diag = new IntroViewDiagram();
-                    Paragraph para = BuildDiagramParagraph(diag, node);
-                    diag.Chessboard.DisplayPosition(node, false);
-                    diag.Node = node;
-
-                    DiagramList.Add(diag);
-
-                    AppState.MainWin.DisplayPosition(node);
-
-                    AppState.IsDirty = true;
-
-                    Document.Blocks.InsertBefore(nextPara, para);
-                    para.MouseDown += EventDiagramClicked;
+                    InsertDiagram(node);
                 }
             }
             catch (Exception ex)
             {
                 AppLog.Message("CreateDiagram()", ex);
             }
+        }
+
+        /// <summary>
+        /// Inserts a diagram at the current position for the selected Node
+        /// </summary>
+        /// <param name="nd"></param>
+        private void InsertDiagram(TreeNode nd)
+        {
+            TextPointer tp = _rtb.CaretPosition.InsertParagraphBreak();
+            Paragraph nextPara = tp.Paragraph;
+
+            // need copy of the node as we may need the original for a move Run
+            TreeNode node = new TreeNode(null, "", 0);
+            node.Position = new BoardPosition(nd.Position);
+            int node_id = AddNode(node);
+            _selectedNode = node;
+
+            IntroViewDiagram diag = new IntroViewDiagram();
+            Paragraph para = BuildDiagramParagraph(diag, node);
+            diag.Chessboard.DisplayPosition(node, false);
+            diag.Node = node;
+
+            DiagramList.Add(diag);
+
+            AppState.MainWin.DisplayPosition(node);
+
+            AppState.IsDirty = true;
+
+            Document.Blocks.InsertBefore(nextPara, para);
+            para.MouseDown += EventDiagramClicked;
         }
 
         /// <summary>
