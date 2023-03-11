@@ -543,6 +543,12 @@ namespace GameTree
                     case ChfCommands.XAML_FEN:
                         FenParser.ParseFenIntoBoard(EncodingUtils.Base64Decode(val), ref node.Position);
                         break;
+                    case ChfCommands.XAML_CIRCLES:
+                        node.Circles = val;
+                        break;
+                    case ChfCommands.XAML_ARROWS:
+                        node.Arrows = val;
+                        break;
                 }
             }
         }

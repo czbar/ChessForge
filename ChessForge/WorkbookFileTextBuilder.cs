@@ -442,6 +442,17 @@ namespace ChessForge
 
                 string fen = EncodingUtils.Base64Encode(FenParser.GenerateFenFromPosition(nd.Position));
                 sb.Append(ChfCommands.XAML_FEN + "=" + fen + " ");
+
+                if (!string.IsNullOrEmpty(nd.Arrows))
+                {
+                    sb.Append(ChfCommands.XAML_ARROWS + "=" + nd.Arrows + " ");
+                }
+
+                if (!string.IsNullOrEmpty(nd.Circles))
+                {
+                    sb.Append(ChfCommands.XAML_CIRCLES + "=" + nd.Circles + " ");
+                }
+
                 return sb.ToString();
             }
             else
