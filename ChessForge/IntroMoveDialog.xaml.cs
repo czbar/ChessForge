@@ -28,6 +28,12 @@ namespace ChessForge
         public string MoveText;
 
         /// <summary>
+        /// Set to true when the user exits the dialog
+        /// with the request to create a dialog for the position.
+        /// </summary>
+        public bool InsertDialogRequest = false;
+
+        /// <summary>
         /// TreeNode handled in this dialog.
         /// </summary>
         private TreeNode _node;
@@ -104,7 +110,9 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnInsertDiagram_Click(object sender, RoutedEventArgs e)
         {
-
+            MoveText = UiTbMoveText.Text;
+            InsertDialogRequest = true;
+            DialogResult = true;
         }
     }
 }
