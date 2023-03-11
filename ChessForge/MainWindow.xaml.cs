@@ -915,7 +915,15 @@ namespace ChessForge
         /// </summary>
         public void SaveIntro()
         {
-            _introView.SaveXAMLContent();
+            try
+            {
+                if (_introView != null)
+                {
+                    _introView.SaveXAMLContent();
+                }
+            }
+            catch
+            { };
         }
 
         /// <summary>
