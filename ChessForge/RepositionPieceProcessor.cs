@@ -68,7 +68,8 @@ namespace ChessForge
                 SoundPlayer.PlayMoveSound("");
 
                 bool isCastle = TryCompleteCastle(movingPieceType, movingPieceColor, origSquareNorm, destSquareNorm, ref nd);
-                moveNotation = BuildMoveText(false, nd, origSquareNorm, destSquareNorm, isCastle, promoteTo);
+                bool isEnpassant = TryCompleteEnpassant(movingPieceType, movingPieceColor, origSquareNorm, destSquareNorm, ref nd);
+                moveNotation = BuildMoveText(false, nd, origSquareNorm, destSquareNorm, isCastle, promoteTo, isEnpassant);
 
                 PositionUtils.RepositionPiece(origSquareNorm, destSquareNorm, promoteTo, ref nd);
                 nd.Position.ColorToMove = MoveUtils.ReverseColor(movingPieceColor);
@@ -95,7 +96,7 @@ namespace ChessForge
         /// <param name="promoteTo"></param>
         /// <param name="fullNotation"></param>
         /// <returns></returns>
-        private static string BuildMoveText(bool fullNotation, TreeNode nd, SquareCoords orig, SquareCoords dest, bool isCastling, PieceType promoteTo)
+        private static string BuildMoveText(bool fullNotation, TreeNode nd, SquareCoords orig, SquareCoords dest, bool isCastling, PieceType promoteTo, bool isEnpassant)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -109,6 +110,9 @@ namespace ChessForge
             }
             else
             {
+                bool isCapture;
+                isCapture = isEnpassant || IsCapture(nd, orig, dest);
+
                 if (piece != PieceType.Pawn)
                 {
                     sb.Append(FenParser.PieceToFenChar[piece]);
@@ -118,8 +122,13 @@ namespace ChessForge
                     sb.Append((char)(orig.Xcoord + (int)'a'));
                     sb.Append((char)(orig.Ycoord + (int)'1'));
                 }
+                else if (isCapture && piece == PieceType.Pawn)
+                {
+                    sb.Append((char)(orig.Xcoord + (int)'a'));
+                }
+
                 // is this a capture
-                if (PositionUtils.GetPieceColor(nd, dest) == MoveUtils.ReverseColor(color))
+                if (isCapture)
                 {
                     sb.Append("x");
                 }
@@ -142,6 +151,30 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Determines whether the move data represents a capture.
+        /// For a piece move, we simply check that there was a pawn/piece of 
+        /// the opposite color on the destination square while for a pawn
+        /// move, we additionally check that it was made from an adjacent file.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="orig"></param>
+        /// <param name="dest"></param>
+        /// <param name="enPassant"></param>
+        /// <returns></returns>
+        private static bool IsCapture(TreeNode nd, SquareCoords orig, SquareCoords dest)
+        {
+            if (PositionUtils.GetPieceColor(nd, dest) == MoveUtils.ReverseColor(PositionUtils.GetPieceColor(nd, orig)))
+            {
+                if (PositionUtils.GetPieceType(nd, orig) != PieceType.Pawn || Math.Abs(orig.Xcoord - dest.Xcoord) == 1)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Determines if the move being processed is castling move by the king.
         /// If so, performs castling.
         /// </summary>
@@ -161,6 +194,62 @@ namespace ChessForge
             }
 
             return isCastle;
+        }
+
+        /// <summary>
+        /// Checks if the move represents enpassant and if so performs it.
+        /// </summary>
+        /// <param name="movingPieceType"></param>
+        /// <param name="movingPieceColor"></param>
+        /// <param name="orig"></param>
+        /// <param name="dest"></param>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private static bool TryCompleteEnpassant(PieceType movingPieceType, PieceColor movingPieceColor, SquareCoords orig, SquareCoords dest, ref TreeNode nd)
+        {
+            if (movingPieceType != PieceType.Pawn)
+            {
+                return false;
+            }
+
+            bool res = false;
+
+            SquareCoords adjustedDest = new SquareCoords(dest);
+            if (movingPieceColor == PieceColor.White)
+            {
+                adjustedDest.Ycoord = dest.Ycoord - 1;
+
+                if (orig.Ycoord == 4 && dest.Ycoord == 5
+                     && Math.Abs(dest.Xcoord - orig.Xcoord) == 1
+                     && PositionUtils.GetPieceType(nd, adjustedDest) == PieceType.Pawn
+                     && PositionUtils.GetPieceColor(nd, adjustedDest) == MoveUtils.ReverseColor(movingPieceColor))
+                {
+                    res = true;
+                }
+            }
+            else if (movingPieceColor == PieceColor.Black)
+            {
+                adjustedDest.Ycoord = dest.Ycoord + 1;
+
+                if (orig.Ycoord == 3 && dest.Ycoord == 2
+                     && Math.Abs(dest.Xcoord - orig.Xcoord) == 1
+                     && PositionUtils.GetPieceType(nd, adjustedDest) == PieceType.Pawn
+                     && PositionUtils.GetPieceColor(nd, adjustedDest) == MoveUtils.ReverseColor(movingPieceColor))
+                {
+                    res = true;
+                }
+            }
+
+            if (res)
+            {
+                // do the part that the main move processing won't do i.e. remove the pawn captured enpassant
+                PositionUtils.ClearSquare(ref nd, adjustedDest);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
