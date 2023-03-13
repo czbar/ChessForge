@@ -185,6 +185,21 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Clears a specified square on the board
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="sq"></param>
+        public static void ClearSquare(ref TreeNode nd, SquareCoords sq)
+        {
+            if (nd == null || !sq.IsValid())
+            {
+                return;
+            }
+
+            ClearSquare((byte)sq.Xcoord, (byte)sq.Ycoord, ref nd.Position.Board);
+        }
+
+        /// <summary>
         /// Removes all pieces from the baord.
         /// </summary>
         /// <param name="board"></param>
