@@ -125,85 +125,6 @@ namespace ChessForge
 
 
         /// <summary>
-        /// Similar to finalizing the move, except that we make no checks on the move. 
-        /// This is called when building the Intro text.
-        /// </summary>
-        /// <param name="destSquare"></param>
-        public static string RepositionDraggedPiece(SquareCoords destSquare, bool fullNotation, ref TreeNode nd)
-        {
-            StringBuilder sbMoveFullNotation = new StringBuilder();
-
-            if (destSquare.Xcoord != DraggedPiece.OriginSquare.Xcoord || destSquare.Ycoord != DraggedPiece.OriginSquare.Ycoord)
-            {
-                SquareCoords origSquareNorm = new SquareCoords(DraggedPiece.OriginSquare);
-                SquareCoords destSquareNorm = new SquareCoords(destSquare);
-                if (AppState.MainWin.MainChessBoard.IsFlipped)
-                {
-                    origSquareNorm.Flip();
-                    destSquareNorm.Flip();
-                }
-
-                PieceType piece = PositionUtils.GetPieceType(nd, origSquareNorm);
-                PieceColor color = PositionUtils.GetPieceColor(nd, origSquareNorm);
-                bool isPromotion = false;
-                PieceType promoteTo = PieceType.None;
-
-                if (IsPromotionSquare(destSquareNorm, color) && piece == PieceType.Pawn)
-                {
-                    isPromotion = true;
-                    promoteTo = AppState.MainWin.GetUserPromoSelection(destSquareNorm);
-                    // if user cancelled promotion, we will just leave the pawn on the promotion square.
-                    if (promoteTo == PieceType.None)
-                    {
-                        isPromotion = false;
-                    }
-                }
-
-                if (piece != PieceType.None && piece != PieceType.Pawn)
-                {
-                    sbMoveFullNotation.Append(FenParser.PieceToFenChar[piece]);
-                }
-                if (fullNotation)
-                {
-                    sbMoveFullNotation.Append((char)(origSquareNorm.Xcoord + (int)'a'));
-                    sbMoveFullNotation.Append((char)(origSquareNorm.Ycoord + (int)'1'));
-                    sbMoveFullNotation.Append('-');
-                }
-                sbMoveFullNotation.Append((char)(destSquareNorm.Xcoord + (int)'a'));
-                sbMoveFullNotation.Append((char)(destSquareNorm.Ycoord + (int)'1'));
-
-                // check promotion for the side who moved i.e. opposite of what we have in the new nd Node
-                ImageSource imgSrc = DraggedPiece.ImageControl.Source;
-                if (isPromotion)
-                {
-                    if (color == PieceColor.White)
-                    {
-                        imgSrc = AppState.MainWin.MainChessBoard.GetWhitePieceRegImg(promoteTo);
-                    }
-                    else
-                    {
-                        imgSrc = AppState.MainWin.MainChessBoard.GetBlackPieceRegImg(promoteTo);
-                    }
-                    sbMoveFullNotation.Append(FenParser.PieceToFenChar[promoteTo]);
-                }
-
-                AppState.MainWin.MainChessBoard.GetPieceImage(destSquare.Xcoord, destSquare.Ycoord, true).Source = imgSrc;
-                AppState.MainWin.ReturnDraggedPiece(true);
-                SoundPlayer.PlayMoveSound("");
-
-                PositionUtils.RepositionPiece(origSquareNorm, destSquareNorm, promoteTo, ref nd);
-                nd.Position.ColorToMove = MoveUtils.ReverseColor(color);
-
-                AppState.MainWin.MainChessBoard.DisplayPosition(nd, true);
-            }
-            else
-            {
-                AppState.MainWin.ReturnDraggedPiece(false);
-            }
-            return sbMoveFullNotation.ToString();
-        }
-
-        /// <summary>
         /// Processed the move's business logic.
         /// </summary>
         /// <param name="move"></param>
@@ -250,28 +171,6 @@ namespace ChessForge
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Checks if a given square is potentially a promotion square
-        /// </summary>
-        /// <param name="sqNorm"></param>
-        /// <param name="color"></param>
-        /// <returns></returns>
-        private static bool IsPromotionSquare(SquareCoords sqNorm, PieceColor color)
-        {
-            if (color == PieceColor.White && sqNorm.Ycoord == 7)
-            {
-                return true;
-            }
-            else if (color == PieceColor.Black && sqNorm.Ycoord == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         /// <summary>
