@@ -21,7 +21,7 @@ namespace ChessForge
         /// <param name="destSquare"></param>
         public static string RepositionDraggedPiece(SquareCoords destSquare, bool fullNotation, ref TreeNode nd)
         {
-            StringBuilder sbMoveFullNotation = new StringBuilder();
+            string moveNotation = "";
 
             if (destSquare.Xcoord != DraggedPiece.OriginSquare.Xcoord || destSquare.Ycoord != DraggedPiece.OriginSquare.Ycoord)
             {
@@ -49,19 +49,6 @@ namespace ChessForge
                     }
                 }
 
-                if (movingPieceType != PieceType.None && movingPieceType != PieceType.Pawn)
-                {
-                    sbMoveFullNotation.Append(FenParser.PieceToFenChar[movingPieceType]);
-                }
-                if (fullNotation)
-                {
-                    sbMoveFullNotation.Append((char)(origSquareNorm.Xcoord + (int)'a'));
-                    sbMoveFullNotation.Append((char)(origSquareNorm.Ycoord + (int)'1'));
-                    sbMoveFullNotation.Append('-');
-                }
-                sbMoveFullNotation.Append((char)(destSquareNorm.Xcoord + (int)'a'));
-                sbMoveFullNotation.Append((char)(destSquareNorm.Ycoord + (int)'1'));
-
                 // check promotion for the side who moved i.e. opposite of what we have in the new nd Node
                 ImageSource imgSrc = DraggedPiece.ImageControl.Source;
                 if (isPromotion)
@@ -74,14 +61,15 @@ namespace ChessForge
                     {
                         imgSrc = AppState.MainWin.MainChessBoard.GetBlackPieceRegImg(promoteTo);
                     }
-                    sbMoveFullNotation.Append(FenParser.PieceToFenChar[promoteTo]);
                 }
 
                 AppState.MainWin.MainChessBoard.GetPieceImage(destSquare.Xcoord, destSquare.Ycoord, true).Source = imgSrc;
                 AppState.MainWin.ReturnDraggedPiece(true);
                 SoundPlayer.PlayMoveSound("");
 
-                TryCompleteCastle(movingPieceType, movingPieceColor, origSquareNorm, destSquareNorm, ref nd);
+                bool isCastle = TryCompleteCastle(movingPieceType, movingPieceColor, origSquareNorm, destSquareNorm, ref nd);
+                moveNotation = BuildMoveText(false, nd, origSquareNorm, destSquareNorm, isCastle, promoteTo);
+
                 PositionUtils.RepositionPiece(origSquareNorm, destSquareNorm, promoteTo, ref nd);
                 nd.Position.ColorToMove = MoveUtils.ReverseColor(movingPieceColor);
 
@@ -91,7 +79,66 @@ namespace ChessForge
             {
                 AppState.MainWin.ReturnDraggedPiece(false);
             }
-            return sbMoveFullNotation.ToString();
+
+            return moveNotation;
+        }
+
+
+        /// <summary>
+        /// Builds an algebraic notation string for the move
+        /// in short or full notation.
+        /// </summary>
+        /// <param name="piece"></param>
+        /// <param name="color"></param>
+        /// <param name="orig"></param>
+        /// <param name="dest"></param>
+        /// <param name="promoteTo"></param>
+        /// <param name="fullNotation"></param>
+        /// <returns></returns>
+        private static string BuildMoveText(bool fullNotation, TreeNode nd, SquareCoords orig, SquareCoords dest, bool isCastling, PieceType promoteTo)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            PieceType piece = PositionUtils.GetPieceType(nd, orig);
+            PieceColor color = PositionUtils.GetPieceColor(nd, orig);
+
+            if (isCastling)
+            {
+                // before calling this method, it was determined that the move was a king's castling move, therefore, we do not need to check again
+                sb.Append(dest.Xcoord == 6 ? "O-O" : "O-O-O");
+            }
+            else
+            {
+                if (piece != PieceType.Pawn)
+                {
+                    sb.Append(FenParser.PieceToFenChar[piece]);
+                }
+                if (fullNotation)
+                {
+                    sb.Append((char)(orig.Xcoord + (int)'a'));
+                    sb.Append((char)(orig.Ycoord + (int)'1'));
+                }
+                // is this a capture
+                if (PositionUtils.GetPieceColor(nd, dest) == MoveUtils.ReverseColor(color))
+                {
+                    sb.Append("x");
+                }
+                else
+                {
+                    if (fullNotation)
+                    {
+                        sb.Append("-");
+                    }
+                }
+                sb.Append((char)(dest.Xcoord + (int)'a'));
+                sb.Append((char)(dest.Ycoord + (int)'1'));
+                if (promoteTo != PieceType.None)
+                {
+                    sb.Append(FenParser.PieceToFenChar[promoteTo]);
+                }
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
@@ -103,13 +150,17 @@ namespace ChessForge
         /// <param name="orig"></param>
         /// <param name="dest"></param>
         /// <param name="nd"></param>
-        private static void TryCompleteCastle(PieceType movingPieceType, PieceColor movingPieceColor, SquareCoords orig, SquareCoords dest, ref TreeNode nd)
+        private static bool TryCompleteCastle(PieceType movingPieceType, PieceColor movingPieceColor, SquareCoords orig, SquareCoords dest, ref TreeNode nd)
         {
+            bool isCastle = false;
+
             SquareCoords castlingRookPos = TryGetCastlingRookPosition(movingPieceType, movingPieceColor, orig, dest);
             if (castlingRookPos != null)
             {
-                TryMoveCastlingRook(castlingRookPos, movingPieceColor, ref nd);
+                isCastle = TryMoveCastlingRook(castlingRookPos, movingPieceColor, ref nd);
             }
+
+            return isCastle;
         }
 
         /// <summary>
@@ -118,8 +169,10 @@ namespace ChessForge
         /// </summary>
         /// <param name="orig"></param>
         /// <param name="movingPieceColor"></param>
-        private static void TryMoveCastlingRook(SquareCoords orig, PieceColor movingPieceColor, ref TreeNode nd)
+        private static bool TryMoveCastlingRook(SquareCoords orig, PieceColor movingPieceColor, ref TreeNode nd)
         {
+            bool isCastle = false;
+
             if (movingPieceColor == PieceColor.White && orig.Ycoord == 0
                 || movingPieceColor == PieceColor.Black && orig.Ycoord == 7)
             {
@@ -136,8 +189,11 @@ namespace ChessForge
                 if (PositionUtils.GetPieceType(nd, orig) == PieceType.Rook && PositionUtils.GetPieceColor(nd, orig) == movingPieceColor)
                 {
                     PositionUtils.RepositionPiece(orig, dest, PieceType.None, ref nd);
+                    isCastle = true;
                 }
             }
+
+            return isCastle;
         }
 
         /// <summary>
