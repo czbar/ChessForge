@@ -375,11 +375,21 @@ namespace ChessForge
                                     {
                                         if (tbLinline is Run)
                                         {
+
                                             int no = MoveUtils.ExtractMoveNumber((tbLinline as Run).Text, out PieceColor pc);
                                             if (no >= 0)
                                             {
                                                 number = no;
                                                 color = pc;
+                                            }
+                                            else
+                                            {
+                                                int nodeId = TextUtils.GetIdFromPrefixedString(tbLinline.Name);
+                                                TreeNode nd = GetNodeById(nodeId);
+                                                if (nd != null)
+                                                {
+                                                    color = MoveUtils.ReverseColor(nd.ColorToMove);
+                                                }
                                             }
                                             break;
                                         }
@@ -507,9 +517,20 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Builds a string to display in the GUI for the passed node.
+        /// We are looking for the previous Node TextBlock. If found
+        /// we parse the text to see if we can figure out the move number
+        /// and color.  If color cannot be determined (because it is Black's move
+        /// without ... in front) we determine the color from the Node's properties.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="iuc"></param>
+        /// <returns></returns>
         private string BuildMoveRunText(TreeNode node, InlineUIContainer iuc)
         {
-            int moveNo = FindLastMoveNumber(iuc, out PieceColor color);
+            int moveNo = FindLastMoveNumber(iuc, out PieceColor previousMoveColor);
+            bool previousMoveFound = moveNo > 0;
 
             PieceColor moveColor = MoveUtils.ReverseColor(node.ColorToMove);
 
@@ -519,13 +540,29 @@ namespace ChessForge
             }
             else
             {
-                if (moveColor != color && moveColor == PieceColor.White)
+                if (moveColor != previousMoveColor && moveColor == PieceColor.White)
                 {
                     moveNo++;
                 }
             }
 
-            string res = moveNo.ToString() + (moveColor == PieceColor.Black ? "... " : ". ") + node.LastMoveAlgebraicNotation;
+            string res;
+            //string res = moveNo.ToString() + (moveColor == PieceColor.Black ? "... " : ". ") + node.LastMoveAlgebraicNotation;
+            if (moveColor == PieceColor.White)
+            {
+                res = moveNo.ToString() + ". " + node.LastMoveAlgebraicNotation;
+            }
+            else
+            {
+                if (previousMoveFound && previousMoveColor != PieceColor.Black)
+                {
+                    res = node.LastMoveAlgebraicNotation;
+                }
+                else
+                {
+                    res = moveNo.ToString() + "... " + node.LastMoveAlgebraicNotation;
+                }
+            }
             res = Languages.MapPieceSymbols(res);
             // TODO: TRANSLATE back when saving ?! Detect if this has a move?
             node.LastMoveAlgebraicNotation = res;
