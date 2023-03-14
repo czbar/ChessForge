@@ -888,7 +888,7 @@ namespace ChessForge
         /// <param name="sq"></param>
         private void StartShapeDraw(SquareCoords sq, bool isTentative)
         {
-            string color = "yellow";
+            string color;
 
             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
