@@ -95,6 +95,7 @@ namespace ChessForge
                     _maxRunId = node.NodeId;
                 }
             }
+            WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, Nodes[0]);
         }
 
         /// <summary>
@@ -190,7 +191,6 @@ namespace ChessForge
         /// <summary>
         /// Inserts new move at the caret.
         /// This function is invoked when the user made a move on the main chessboard.
-        /// TODO: try guessing the move number based on what number we see in the preceding paragraphs.
         /// </summary>
         /// <param name="node"></param>
         public void InsertMove(TreeNode node)
@@ -233,8 +233,10 @@ namespace ChessForge
                 try
                 {
                     Run r = e.Source as Run;
+
                     int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
                     TreeNode nd = GetNodeById(nodeId);
+                    WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, nd);
                     if (nd != null)
                     {
                         _selectedNode = nd;
@@ -292,6 +294,7 @@ namespace ChessForge
                     string s = para.Name;
                     int nodeId = TextUtils.GetIdFromPrefixedString(s);
                     TreeNode nd = GetNodeById(nodeId);
+                    WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, nd);
                     if (nd != null)
                     {
                         _selectedNode = nd;
