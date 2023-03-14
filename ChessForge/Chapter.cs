@@ -299,6 +299,10 @@ namespace ChessForge
                     _activeTree = StudyTree.Tree;
                     _activeArticle = StudyTree;
                     break;
+                case GameData.ContentType.INTRO:
+                    _activeTree = Intro.Tree;
+                    _activeArticle = Intro;
+                    break;
                 case GameData.ContentType.MODEL_GAME:
                     if (gameIndex >= 0 && gameIndex < ModelGames.Count)
                     {
