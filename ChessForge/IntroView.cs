@@ -291,9 +291,9 @@ namespace ChessForge
                     Paragraph para = sender as Paragraph;
                     _rtb.CaretPosition = para.ContentStart;
 
-                    string s = para.Name;
-                    int nodeId = TextUtils.GetIdFromPrefixedString(s);
+                    int nodeId = TextUtils.GetIdFromPrefixedString(para.Name);
                     TreeNode nd = GetNodeById(nodeId);
+                    _selectedNode = nd;
                     WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, nd);
                     if (nd != null)
                     {
@@ -302,6 +302,21 @@ namespace ChessForge
 
                         if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
                         {
+                            DiagramSetupDialog dlg = new DiagramSetupDialog(SelectedNode)
+                            {
+                                Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                                Top = AppState.MainWin.Top + 100,
+                                Topmost = false,
+                                Owner = AppState.MainWin
+                            };
+
+                            if (dlg.ShowDialog() == true)
+                            {
+                                BoardPosition pos = dlg.PositionSetup;
+                                nd.Position = new BoardPosition(pos);
+                                UpdateDiagram(para, nd);
+                                WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, nd);
+                            }
                         }
                     }
                 }
@@ -474,6 +489,28 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Updates an existing diagram.
+        /// The caller passes a Paragraph hosting the diagram to update.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="nd"></param>
+        public void UpdateDiagram(Paragraph para, TreeNode nd)
+        {
+            IntroViewDiagram diag = DiagramList.Find(x => x.Node.NodeId == nd.NodeId);
+            if (diag == null)
+            {
+                diag = new IntroViewDiagram();
+                diag.Node = nd;
+            }
+            CreateDiagramElements(para, diag, nd);
+            DiagramList.Add(diag);
+            diag.Chessboard.DisplayPosition(nd, false);
+            AppState.MainWin.DisplayPosition(nd);
+
+            AppState.IsDirty = true;
+        }
+
+        /// <summary>
         /// Inserts a move's Run into a TextBlock that is then inserted into an InlineUIContainer
         /// and finally in the Document.
         /// This is called after the user made a move on the main board.
@@ -638,6 +675,20 @@ namespace ChessForge
             para.Margin = new Thickness(20, 20, 0, 20);
             para.Name = _para_diagram_ + nd.NodeId.ToString();
 
+            CreateDiagramElements(para, diag, nd);
+            return para;
+        }
+
+        /// <summary>
+        /// Creates UI Elements for the diagram.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="diag"></param>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private Paragraph CreateDiagramElements(Paragraph para, IntroViewDiagram diag, TreeNode nd)
+        {
+            para.Inlines.Clear();
             Canvas canvas = SetupDiagramCanvas();
             Image imgChessBoard = CreateChessBoard(canvas, diag);
             canvas.Children.Add(imgChessBoard);
@@ -647,7 +698,6 @@ namespace ChessForge
             uic.Child = viewBox;
             uic.Name = _uic_move_ + nd.NodeId.ToString();
             para.Inlines.Add(uic);
-
             return para;
         }
 
