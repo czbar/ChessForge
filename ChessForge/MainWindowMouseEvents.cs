@@ -57,7 +57,7 @@ namespace ChessForge
                     if (ActiveVariationTree != null)
                     {
                         bool isDrawTentative = !GuiUtilities.IsSpecialKeyPressed();
-                        StartShapeDraw(sq, isDrawTentative);
+                        MainChessBoard.Shapes.StartShapeDraw(sq, "", isDrawTentative);
                     }
                 }
             }
