@@ -27,7 +27,7 @@
             <Image x:Name="UiImgWhitePawn" HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/WhitePawn.png" MouseDown="UiImgWhitePawn_MouseDown" RenderTransformOrigin="-0.867,0.101" Canvas.Left="193" Canvas.Top="323"/>
         </Canvas>
 
-        <Label x:Name="UiLblSideToMove" Content="{x:Static p:Resources.WhiteToPlay}" BorderThickness="1" BorderBrush="Black" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="501,153,0,0" VerticalAlignment="Top" Width="136" MouseDown="UiLblSideToMove_MouseDown"/>
+        <Label x:Name="UiLblSideToMove" Content="{x:Static p:Resources.WhiteToMove}" BorderThickness="1" BorderBrush="Black" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="501,153,0,0" VerticalAlignment="Top" Width="136" MouseDown="UiLblSideToMove_MouseDown"/>
         <Image x:Name="UiImgSwapSides" HorizontalAlignment="Left" Height="25" Margin="648,157,0,0" VerticalAlignment="Top" Width="25" Source="/Resources/Images/swap_vert.png" RenderTransformOrigin="0.082,0.705" MouseDown="UiImgSwapSides_MouseDown"/>
         <GroupBox x:Name="UiGbCastling" HorizontalAlignment="Left" Height="93" Header="{x:Static p:Resources.Castling}" Margin="473,196,0,0" VerticalAlignment="Top" Width="253">
         </GroupBox>
