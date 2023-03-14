@@ -19,6 +19,9 @@ namespace ChessForge
         // square side's size
         private int _squareSize = 30;
 
+        // color of the side to move
+        private PieceColor _sideToMove = PieceColor.White;
+
         // left offset between the SetupCanvas and BoardCanvas
         private double _boardCanvasToSetupCanvasLeftOffset;
 
@@ -77,6 +80,7 @@ namespace ChessForge
             if (node != null) 
             {
                 InitializePosition(node);
+                SetSideToMove(node.ColorToMove);
             }
 
             PositionSetup.HalfMove50Clock = 1;
@@ -101,7 +105,6 @@ namespace ChessForge
         {
             UiTbFen.Text = FenParser.GenerateFenFromPosition(PositionSetup);
         }
-
 
         /// <summary>
         /// Displays board's square coordinates
@@ -563,6 +566,63 @@ namespace ChessForge
             }
 
             return position;
+        }
+
+        /// <summary>
+        /// Swaps the side to move.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLblSideToMove_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SwapSideToMove();
+        }
+
+        /// <summary>
+        /// Swaps the side to move.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgSwapSides_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SwapSideToMove();
+        }
+
+        /// <summary>
+        /// Swaps the color of the side on move.
+        /// </summary>
+        private void SwapSideToMove()
+        {
+            if (_sideToMove == PieceColor.Black)
+            {
+                SetSideToMove(PieceColor.White);
+            }
+            else
+            {
+                SetSideToMove(PieceColor.Black);
+            }
+        }
+
+        /// <summary>
+        /// Sets the color of the side on move.
+        /// This may change the FEN and enpassant squares.
+        /// </summary>
+        /// <param name="color"></param>
+        private void SetSideToMove(PieceColor color)
+        {
+            if (color == PieceColor.Black)
+            {
+                UiLblSideToMove.Content = BLACK_TO_MOVE;
+                _sideToMove = PieceColor.Black;
+            }
+            else
+            {
+                UiLblSideToMove.Content = WHITE_TO_MOVE;
+                _sideToMove = PieceColor.White;
+            }
+            PositionSetup.ColorToMove = _sideToMove;
+
+            SetFen();
         }
 
         /// <summary>
