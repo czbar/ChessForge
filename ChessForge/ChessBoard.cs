@@ -89,9 +89,9 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Hositing Canvas control
+        /// Hosting Canvas control
         /// </summary>
-        protected Canvas CanvasCtrl;
+        public Canvas CanvasCtrl;
 
         /// <summary>
         /// Image control for the board.
@@ -174,6 +174,26 @@ namespace ChessForge
             InitializeCoordinateLabels();
 
             Initialize(startPos);
+        }
+
+        /// <summary>
+        /// Enables or disables drawing of shapes.
+        /// </summary>
+        /// <param name="enable"></param>
+        /// <returns></returns>
+        public void EnableShapes(bool enable)
+        {
+            if (enable)
+            {
+                if (Shapes == null)
+                {
+                    Shapes = new BoardShapesManager();
+                }
+            }
+            else
+            {
+                Shapes = null;
+            }
         }
 
         /// <summary>
@@ -464,6 +484,59 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets an image for the requested piece on the specified square.
+        /// </summary>
+        /// <param name="piece"></param>
+        /// <param name="color"></param>
+        /// <param name="xCoord"></param>
+        /// <param name="yCoord"></param>
+        /// <param name="ignoreFlip"></param>
+        public void SetPieceImage(PieceType piece, PieceColor color, int xCoord, int yCoord, bool ignoreFlip)
+        {
+            if (piece == PieceType.None)
+            {
+                return;
+            }
+
+            BitmapImage img;
+            if (color == PieceColor.White)
+            {
+                img = WhitePieces[piece];
+            }
+            else
+            {
+                img = BlackPieces[piece];
+            }
+
+            if (ignoreFlip)
+            {
+                Pieces[xCoord, yCoord].Source = img;
+            }
+            else
+            {
+                Pieces[7 - xCoord, 7 - yCoord].Source = img;
+            }
+        }
+
+        /// <summary>
+        /// Nulls the image on the given square.
+        /// </summary>
+        /// <param name="xCoord"></param>
+        /// <param name="yCoord"></param>
+        /// <param name="ignoreFlip"></param>
+        public void ClearPieceImage(int xCoord, int yCoord, bool ignoreFlip)
+        {
+            if (ignoreFlip)
+            {
+                Pieces[xCoord, yCoord].Source = null;
+            }
+            else
+            {
+                Pieces[7 - xCoord, 7 - yCoord].Source = null;
+            }
+        }
+
+        /// <summary>
         /// Removes from Canvas the existing image object
         /// and replaces it with a new one.
         /// This is required after animation.
@@ -569,7 +642,7 @@ namespace ChessForge
         /// </summary>
         public PieceColor SideAtBottom
         {
-            get => _isFlipped ? PieceColor.Black : PieceColor.White;    
+            get => _isFlipped ? PieceColor.Black : PieceColor.White;
         }
 
         /// <summary>
@@ -739,7 +812,7 @@ namespace ChessForge
 
                     Pieces[xPos, yPos] = new Image();
                     CanvasCtrl.Children.Add(Pieces[xPos, yPos]);
-                    PlacePieceImageOnSquare(xPos, yPos);
+                    PositionImageControlForSquare(xPos, yPos);
                 }
             }
             if (startPosition)
@@ -757,7 +830,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="xPos"></param>
         /// <param name="yPos"></param>
-        public void PlacePieceImageOnSquare(int xPos, int yPos)
+        private void PositionImageControlForSquare(int xPos, int yPos)
         {
             Canvas.SetLeft(Pieces[xPos, yPos], SquareSize * xPos + BoardImgCtrl.Margin.Left);
             Canvas.SetTop(Pieces[xPos, yPos], SquareSize * (7 - yPos) + BoardImgCtrl.Margin.Top);
