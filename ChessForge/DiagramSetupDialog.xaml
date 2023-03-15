@@ -9,8 +9,8 @@
         Title="{x:Static p:Resources.PositionSetup}" Height="521" Width="595" MouseUp="Window_MouseUp" MouseMove="Window_MouseMove" MouseLeave="Window_MouseLeave" >
     <Grid x:Name="_grdDialog" >
         <Canvas x:Name="UiCnvSetup" Margin="63,41,0,0" Width="268" Height="368" HorizontalAlignment="Left" VerticalAlignment="Top" MouseDown="UiCnvSetup_MouseDown" >
-            <Canvas x:Name="UiCnvBoard" Background="Black" Height="268" Width="268" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="0" Canvas.Top="50"  >
-                <Image x:Name="UiImgChessBoard" HorizontalAlignment="Left" Height="240" VerticalAlignment="Top" Width="240" Source="/Resources/Images/ChessBoardGreySmall.png" Canvas.Left="14" Canvas.Top="14" />
+            <Canvas x:Name="UiCnvBoard" Background="Black" Height="268" Width="268" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,50,0,0"  >
+                <Image x:Name="UiImgChessBoard" HorizontalAlignment="Left" Height="240" VerticalAlignment="Top" Width="240" Source="/Resources/Images/ChessBoardGreySmall.png" Margin="14,14,14,14" />
             </Canvas>
             <Image x:Name="UiImgBlackKing" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/BlackKing.png" MouseDown="UiImgBlackKing_MouseDown" Canvas.Left="48" Canvas.Top="12"/>
             <Image x:Name="UiImgBlackQueen" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/BlackQueen.png" MouseDown="UiImgBlackQueen_MouseDown" Canvas.Left="78" Canvas.Top="12"/>
