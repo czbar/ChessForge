@@ -31,7 +31,7 @@ namespace ChessForge
             OriginSquare = null;
             Piece = PieceType.None;
             Color = PieceColor.None;
-            ImageControl = null;
+            ImageControl = new Image();
         }
 
         /// <summary>
