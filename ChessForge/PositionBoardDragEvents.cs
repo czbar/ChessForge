@@ -87,11 +87,25 @@ namespace ChessForge
         public void MouseDown(object sender, MouseButtonEventArgs e)
         {
             Point mousePoint = e.GetPosition(_chessboard.CanvasCtrl);
-
             SquareCoords sc = GetSquareCoordsFromBoardCanvasPoint(mousePoint);
-            if (sc != null && sc.IsValid() && _positionSetup.Board[sc.Xcoord, sc.Ycoord] != 0)
+
+            if (e.ChangedButton == MouseButton.Left)
             {
-                StartDrag(sc, e);
+                if (sc != null && sc.IsValid() && _chessboard.GetPieceColor(sc) != PieceColor.None)
+                {
+                    StartDrag(sc, e);
+                }
+                else
+                {
+                    if (_chessboard.GetPieceColor(sc) == PieceColor.None)
+                    {
+                        _chessboard.Shapes.Reset(true);
+                    }
+                }
+            }
+            else if (e.ChangedButton == MouseButton.Right)
+            {
+                _chessboard.Shapes.StartShapeDraw(sc, "", false);
             }
         }
 
@@ -107,9 +121,9 @@ namespace ChessForge
         /// <param name="e"></param>
         public void MouseMove(object sender, MouseEventArgs e)
         {
+            Point mousePoint;
             if (_draggedPiece.IsDragInProgress)
             {
-                Point mousePoint;
                 bool isDiagramPiece = _draggedPiece.OriginSquare != null;
                 if (!isDiagramPiece)
                 {
@@ -132,6 +146,18 @@ namespace ChessForge
                     Canvas.SetLeft(_draggedPiece.ImageControl, mousePoint.X - _squareSize / 2);
                     Canvas.SetTop(_draggedPiece.ImageControl, mousePoint.Y - _squareSize / 2);
                     Canvas.SetZIndex(_draggedPiece.ImageControl, Constants.ZIndex_PieceInAnimation);
+                }
+            }
+            else
+            {
+                if (e.RightButton == MouseButtonState.Pressed)
+                {
+                    if (_chessboard.Shapes.IsShapeBuildInProgress)
+                    {
+                        mousePoint = e.GetPosition(_chessboard.CanvasCtrl);
+                        SquareCoords sc = GetSquareCoordsFromBoardCanvasPoint(mousePoint);
+                        _chessboard.Shapes.UpdateShapeDraw(sc);
+                    }
                 }
             }
         }
