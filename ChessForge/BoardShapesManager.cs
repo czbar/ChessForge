@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -162,6 +163,11 @@ namespace ChessForge
         /// <param name="color"></param>
         public void StartShapeDraw(SquareCoords start, string color, bool isTentative)
         {
+            if (string.IsNullOrEmpty(color))
+            {
+                color = DetermineColorFromKeyboardState();
+            }
+
             _startSquare = new SquareCoords(start);
             _isShapeBuildInProgress = true;
             _isShapeBuildTentative = isTentative;
@@ -321,6 +327,34 @@ namespace ChessForge
                 _boardArrows.Remove(b);
             }
             return found;
+        }
+
+        /// <summary>
+        /// Determines the color to use based on the current state of the keyboard keys.
+        /// </summary>
+        /// <returns></returns>
+        private string DetermineColorFromKeyboardState()
+        {
+            string color;
+
+            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+            {
+                color = Constants.COLOR_YELLOW;
+            }
+            else if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            {
+                color = Constants.COLOR_RED;
+            }
+            else if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
+            {
+                color = Constants.COLOR_BLUE;
+            }
+            else
+            {
+                color = Constants.COLOR_GREEN;
+            }
+
+            return color;
         }
 
         /// <summary>

@@ -57,7 +57,7 @@ namespace ChessForge
                     if (ActiveVariationTree != null)
                     {
                         bool isDrawTentative = !GuiUtilities.IsSpecialKeyPressed();
-                        StartShapeDraw(sq, isDrawTentative);
+                        MainChessBoard.Shapes.StartShapeDraw(sq, "", isDrawTentative);
                     }
                 }
             }
@@ -230,7 +230,7 @@ namespace ChessForge
             {
                 TreeNode nd = new TreeNode(null, "", 0);
                 nd.Position = new BoardPosition(MainChessBoard.DisplayedPosition);
-                nd.LastMoveAlgebraicNotation = UserMoveProcessor.RepositionDraggedPiece(targetSquare, false, ref nd);
+                nd.LastMoveAlgebraicNotation = RepositionPieceProcessor.RepositionDraggedPiece(targetSquare, false, ref nd);
 
                 _introView.InsertMove(nd);
             }
@@ -938,6 +938,9 @@ namespace ChessForge
             }
 
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.INTRO;
+            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.INTRO);
+            AppState.ShowExplorers(AppState.AreExplorersOn, true);
+
             BoardCommentBox.ShowTabHints();
             try
             {

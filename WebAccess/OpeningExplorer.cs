@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using WebAccess;
@@ -55,22 +56,35 @@ namespace WebAccess
             }
             else
             {
+                string json;
                 try
                 {
                     AppLog.Message(2, "HttpClient sending OpeningStats request for FEN: " + fen);
-                    var json = await RestApiRequest.OpeningStatsClient.GetStringAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
-                    eventArgs.OpeningStats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
 
-                    if (_dictCachedStats.Count >= STATS_CACHE_SIZE)
+                    HttpResponseMessage response = await RestApiRequest.OpeningStatsClient.GetAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
+                    json = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
                     {
-                        MakeRoomInCache();
+                        eventArgs.OpeningStats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
+
+                        if (_dictCachedStats.Count >= STATS_CACHE_SIZE)
+                        {
+                            MakeRoomInCache();
+                        }
+
+                        _dictCachedStats[fen] = eventArgs.OpeningStats;
+                        _dictLastTouch[fen] = DateTime.Now.Ticks;
+
+                        eventArgs.Success = true;
+                        OpeningStatsReceived?.Invoke(null, eventArgs);
                     }
-
-                    _dictCachedStats[fen] = eventArgs.OpeningStats;
-                    _dictLastTouch[fen] = DateTime.Now.Ticks;
-
-                    eventArgs.Success = true;
-                    OpeningStatsReceived?.Invoke(null, eventArgs);
+                    else
+                    {
+                        eventArgs.Success = false;
+                        eventArgs.Message = json;
+                        OpeningStatsReceived?.Invoke(null, eventArgs);
+                    }
                     AppLog.Message(2, "HttpClient received OpeningStats response for FEN: " + fen);
                 }
                 catch (Exception ex)

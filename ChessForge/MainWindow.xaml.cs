@@ -881,41 +881,19 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Determined the color of the arrow to be drawn based
-        /// on the special key pressed and calls to BoardArrowsManager
-        /// to do the drawing.
-        /// </summary>
-        /// <param name="sq"></param>
-        private void StartShapeDraw(SquareCoords sq, bool isTentative)
-        {
-            string color = "yellow";
-
-            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
-            {
-                color = Constants.COLOR_YELLOW;
-            }
-            else if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
-            {
-                color = Constants.COLOR_RED;
-            }
-            else if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
-            {
-                color = Constants.COLOR_BLUE;
-            }
-            else
-            {
-                color = Constants.COLOR_GREEN;
-            }
-
-            MainChessBoard.Shapes.StartShapeDraw(sq, color, isTentative);
-        }
-
-        /// <summary>
         /// Accessor to Intro's SaveXAMLContent()
         /// </summary>
         public void SaveIntro()
         {
-            _introView.SaveXAMLContent();
+            try
+            {
+                if (_introView != null)
+                {
+                    _introView.SaveXAMLContent();
+                }
+            }
+            catch
+            { };
         }
 
         /// <summary>

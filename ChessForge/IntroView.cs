@@ -95,6 +95,7 @@ namespace ChessForge
                     _maxRunId = node.NodeId;
                 }
             }
+            WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, Nodes[0]);
         }
 
         /// <summary>
@@ -190,7 +191,6 @@ namespace ChessForge
         /// <summary>
         /// Inserts new move at the caret.
         /// This function is invoked when the user made a move on the main chessboard.
-        /// TODO: try guessing the move number based on what number we see in the preceding paragraphs.
         /// </summary>
         /// <param name="node"></param>
         public void InsertMove(TreeNode node)
@@ -233,8 +233,10 @@ namespace ChessForge
                 try
                 {
                     Run r = e.Source as Run;
+
                     int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
                     TreeNode nd = GetNodeById(nodeId);
+                    WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, nd);
                     if (nd != null)
                     {
                         _selectedNode = nd;
@@ -289,9 +291,10 @@ namespace ChessForge
                     Paragraph para = sender as Paragraph;
                     _rtb.CaretPosition = para.ContentStart;
 
-                    string s = para.Name;
-                    int nodeId = TextUtils.GetIdFromPrefixedString(s);
+                    int nodeId = TextUtils.GetIdFromPrefixedString(para.Name);
                     TreeNode nd = GetNodeById(nodeId);
+                    _selectedNode = nd;
+                    WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, nd);
                     if (nd != null)
                     {
                         _selectedNode = nd;
@@ -299,6 +302,21 @@ namespace ChessForge
 
                         if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
                         {
+                            DiagramSetupDialog dlg = new DiagramSetupDialog(SelectedNode)
+                            {
+                                Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                                Top = AppState.MainWin.Top + 100,
+                                Topmost = false,
+                                Owner = AppState.MainWin
+                            };
+
+                            if (dlg.ShowDialog() == true)
+                            {
+                                BoardPosition pos = dlg.PositionSetup;
+                                nd.Position = new BoardPosition(pos);
+                                UpdateDiagram(para, nd);
+                                WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, nd);
+                            }
                         }
                     }
                 }
@@ -375,11 +393,21 @@ namespace ChessForge
                                     {
                                         if (tbLinline is Run)
                                         {
+
                                             int no = MoveUtils.ExtractMoveNumber((tbLinline as Run).Text, out PieceColor pc);
                                             if (no >= 0)
                                             {
                                                 number = no;
                                                 color = pc;
+                                            }
+                                            else
+                                            {
+                                                int nodeId = TextUtils.GetIdFromPrefixedString(tbLinline.Name);
+                                                TreeNode nd = GetNodeById(nodeId);
+                                                if (nd != null)
+                                                {
+                                                    color = MoveUtils.ReverseColor(nd.ColorToMove);
+                                                }
                                             }
                                             break;
                                         }
@@ -461,6 +489,28 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Updates an existing diagram.
+        /// The caller passes a Paragraph hosting the diagram to update.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="nd"></param>
+        public void UpdateDiagram(Paragraph para, TreeNode nd)
+        {
+            IntroViewDiagram diag = DiagramList.Find(x => x.Node.NodeId == nd.NodeId);
+            if (diag == null)
+            {
+                diag = new IntroViewDiagram();
+                diag.Node = nd;
+            }
+            CreateDiagramElements(para, diag, nd);
+            DiagramList.Add(diag);
+            diag.Chessboard.DisplayPosition(nd, false);
+            AppState.MainWin.DisplayPosition(nd);
+
+            AppState.IsDirty = true;
+        }
+
+        /// <summary>
         /// Inserts a move's Run into a TextBlock that is then inserted into an InlineUIContainer
         /// and finally in the Document.
         /// This is called after the user made a move on the main board.
@@ -507,9 +557,20 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Builds a string to display in the GUI for the passed node.
+        /// We are looking for the previous Node TextBlock. If found
+        /// we parse the text to see if we can figure out the move number
+        /// and color.  If color cannot be determined (because it is Black's move
+        /// without ... in front) we determine the color from the Node's properties.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="iuc"></param>
+        /// <returns></returns>
         private string BuildMoveRunText(TreeNode node, InlineUIContainer iuc)
         {
-            int moveNo = FindLastMoveNumber(iuc, out PieceColor color);
+            int moveNo = FindLastMoveNumber(iuc, out PieceColor previousMoveColor);
+            bool previousMoveFound = moveNo > 0;
 
             PieceColor moveColor = MoveUtils.ReverseColor(node.ColorToMove);
 
@@ -519,13 +580,29 @@ namespace ChessForge
             }
             else
             {
-                if (moveColor != color && moveColor == PieceColor.White)
+                if (moveColor != previousMoveColor && moveColor == PieceColor.White)
                 {
                     moveNo++;
                 }
             }
 
-            string res = moveNo.ToString() + (moveColor == PieceColor.Black ? "... " : ". ") + node.LastMoveAlgebraicNotation;
+            string res;
+            //string res = moveNo.ToString() + (moveColor == PieceColor.Black ? "... " : ". ") + node.LastMoveAlgebraicNotation;
+            if (moveColor == PieceColor.White)
+            {
+                res = moveNo.ToString() + ". " + node.LastMoveAlgebraicNotation;
+            }
+            else
+            {
+                if (previousMoveFound && previousMoveColor != PieceColor.Black)
+                {
+                    res = node.LastMoveAlgebraicNotation;
+                }
+                else
+                {
+                    res = moveNo.ToString() + "... " + node.LastMoveAlgebraicNotation;
+                }
+            }
             res = Languages.MapPieceSymbols(res);
             // TODO: TRANSLATE back when saving ?! Detect if this has a move?
             node.LastMoveAlgebraicNotation = res;
@@ -598,6 +675,20 @@ namespace ChessForge
             para.Margin = new Thickness(20, 20, 0, 20);
             para.Name = _para_diagram_ + nd.NodeId.ToString();
 
+            CreateDiagramElements(para, diag, nd);
+            return para;
+        }
+
+        /// <summary>
+        /// Creates UI Elements for the diagram.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="diag"></param>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private Paragraph CreateDiagramElements(Paragraph para, IntroViewDiagram diag, TreeNode nd)
+        {
+            para.Inlines.Clear();
             Canvas canvas = SetupDiagramCanvas();
             Image imgChessBoard = CreateChessBoard(canvas, diag);
             canvas.Children.Add(imgChessBoard);
@@ -607,7 +698,6 @@ namespace ChessForge
             uic.Child = viewBox;
             uic.Name = _uic_move_ + nd.NodeId.ToString();
             para.Inlines.Add(uic);
-
             return para;
         }
 

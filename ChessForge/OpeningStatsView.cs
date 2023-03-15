@@ -136,8 +136,11 @@ namespace ChessForge
                     {
                         _node = AppState.ActiveVariationTree.GetNodeFromNodeId(e.NodeId);
                     }
-                    _moveNumberString = BuildMoveNumberString(_node);
-                    BuildFlowDocument(DataMode.OPENINGS, e.OpeningStats);
+                    if (_node != null)
+                    {
+                        _moveNumberString = BuildMoveNumberString(_node);
+                        BuildFlowDocument(DataMode.OPENINGS, e.OpeningStats);
+                    }
                 }
             }
             else
@@ -585,6 +588,11 @@ namespace ChessForge
         /// <returns></returns>
         private string BuildMoveNumberString(TreeNode nd)
         {
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+            {
+                return nd.ColorToMove == ChessPosition.PieceColor.Black ? "#..." : "#.";
+            }
+
             StringBuilder sb = new StringBuilder();
             if (nd.ColorToMove == ChessPosition.PieceColor.Black)
             {
