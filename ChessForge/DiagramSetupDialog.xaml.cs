@@ -49,7 +49,7 @@ namespace ChessForge
 
             ShowCoordinates();
 
-            if (node != null) 
+            if (node != null)
             {
                 InitializePosition(node);
                 SetSideToMove(node.ColorToMove);
@@ -153,11 +153,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCnvSetup_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                _dragEvents.MouseDown(sender, e);
-                e.Handled = true;
-            }
+            _dragEvents.MouseDown(sender, e);
+            e.Handled = true;
         }
 
         /// <summary>
