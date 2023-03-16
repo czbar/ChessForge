@@ -1,4 +1,5 @@
 ﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,6 +20,9 @@ namespace ChessForge
     {
         // parent chessboard
         private ChessBoard _chessboard;
+
+        // node operated on
+        private TreeNode _activeNode = null;
 
         // completed arrows 
         private List<BoardArrow> _boardArrows = new List<BoardArrow>();
@@ -52,6 +56,15 @@ namespace ChessForge
         public BoardShapesManager(ChessBoard chessboard)
         {
             _chessboard = chessboard;
+        }
+
+        /// <summary>
+        /// Sets the Node on which the shapes will be drawn,
+        /// </summary>
+        /// <param name="activeNode"></param>
+        public void SetActiveNode(TreeNode activeNode)
+        {
+            _activeNode = activeNode;
         }
 
         /// <summary>
@@ -410,11 +423,13 @@ namespace ChessForge
 
         /// <summary>
         /// Saves the shape positions to the Node.
+        /// If no Node is set, save to the one currently displayed one
+        /// on the chess baord.
         /// </summary>
         private bool SaveShapesStrings()
         {
-            bool arrRes = AppState.MainWin.SaveArrowsStringInCurrentNode(CodeArrowsString());
-            bool cirRes = AppState.MainWin.SaveCirclesStringInCurrentNode(CodeCirclesString());
+            bool arrRes = AppState.MainWin.SaveArrowsStringInCurrentNode(_activeNode, CodeArrowsString());
+            bool cirRes = AppState.MainWin.SaveCirclesStringInCurrentNode(_activeNode, CodeCirclesString());
 
             return arrRes || cirRes;
         }
