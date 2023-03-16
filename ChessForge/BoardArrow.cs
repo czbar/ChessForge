@@ -2,18 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Threading.Tasks;
-using System.Windows.Threading;
-using System.Security.Policy;
-using System.Diagnostics;
 using ChessPosition;
 using static System.Net.Mime.MediaTypeNames;
 using Image = System.Windows.Controls.Image;
@@ -43,6 +36,9 @@ namespace ChessForge
 
         // square at which the arrow ends
         public SquareCoords EndSquare;
+
+        // parent chessboard
+        private ChessBoard _chessboard;
 
         // angle of the arrow
         private double _angle;
@@ -84,8 +80,10 @@ namespace ChessForge
         /// </summary>
         /// <param name="start">Start point of the arrow</param>
         /// <param name="end">End point of the arrow.</param>
-        public BoardArrow(SquareCoords start, string color)
+        public BoardArrow(ChessBoard chessboard, SquareCoords start, string color)
         {
+            _chessboard = chessboard;
+
             Color = color.ToLower();
 
             StartSquare = new SquareCoords(start);
@@ -128,9 +126,9 @@ namespace ChessForge
         {
             AppState.MainWin.Dispatcher.Invoke(() =>
             {
-                AppState.MainWin.MainCanvas.Children.Remove(_triangle);
-                AppState.MainWin.MainCanvas.Children.Remove(_stem);
-                AppState.MainWin.MainCanvas.Children.Remove(_circle);
+                _chessboard.CanvasCtrl.Children.Remove(_triangle);
+                _chessboard.CanvasCtrl.Children.Remove(_stem);
+                _chessboard.CanvasCtrl.Children.Remove(_circle);
             });
         }
 
@@ -144,8 +142,8 @@ namespace ChessForge
             {
                 EndSquare = new SquareCoords(end);
 
-                _startPoint = MainChessBoardUtils.GetSquareCenterPoint(StartSquare);
-                _endPoint = MainChessBoardUtils.GetSquareCenterPoint(end);
+                _startPoint = _chessboard.GetSquareCenterPoint(StartSquare);
+                _endPoint = _chessboard.GetSquareCenterPoint(end);
 
                 _angle = CalculateAngle(_startPoint, _endPoint);
                 _distance = GuiUtilities.CalculateDistance(_startPoint, _endPoint);
@@ -214,8 +212,8 @@ namespace ChessForge
         /// </summary>
         private void DrawTriangle()
         {
-            AppState.MainWin.MainCanvas.Children.Remove(_triangle);
-            AppState.MainWin.MainCanvas.Children.Add(_triangle);
+            _chessboard.CanvasCtrl.Children.Remove(_triangle);
+            _chessboard.CanvasCtrl.Children.Add(_triangle);
             Canvas.SetLeft(_triangle, _endPoint.X - (_triangle.Source.Width / 2));
             Canvas.SetTop(_triangle, _endPoint.Y + 0);
             _triangle.RenderTransformOrigin = new Point(0.5,0);
@@ -228,8 +226,8 @@ namespace ChessForge
         /// </summary>
         private void DrawStem()
         {
-            AppState.MainWin.MainCanvas.Children.Remove(_stem);
-            AppState.MainWin.MainCanvas.Children.Add(_stem);
+            _chessboard.CanvasCtrl.Children.Remove(_stem);
+            _chessboard.CanvasCtrl.Children.Add(_stem);
             Canvas.SetLeft(_stem, _startPoint.X - (_stem.Source.Width / 2));
             Canvas.SetTop(_stem, _startPoint.Y - (_stem.Source.Height));
             _stem.RenderTransformOrigin = new Point(0.5, 1);
@@ -242,8 +240,8 @@ namespace ChessForge
         /// </summary>
         private void DrawCircle()
         {
-            AppState.MainWin.MainCanvas.Children.Remove(_circle);
-            AppState.MainWin.MainCanvas.Children.Add(_circle);
+            _chessboard.CanvasCtrl.Children.Remove(_circle);
+            _chessboard.CanvasCtrl.Children.Add(_circle);
             Canvas.SetLeft(_circle, _startPoint.X - (_circle.Source.Width / 2));
             Canvas.SetTop(_circle, _startPoint.Y - (_circle.Source.Height / 2));
             _circle.RenderTransformOrigin = new Point(0.5, 0.5);

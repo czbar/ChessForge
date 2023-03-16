@@ -17,6 +17,9 @@ namespace ChessForge
     /// </summary>
     public class BoardShapesManager
     {
+        // parent chessboard
+        private ChessBoard _chessboard;
+
         // completed arrows 
         private List<BoardArrow> _boardArrows = new List<BoardArrow>();
 
@@ -41,6 +44,15 @@ namespace ChessForge
         // end square for the arrow being drawn
         private SquareCoords _endSquare;
 
+        /// <summary>
+        /// Constructor.
+        /// Sets reference to the hosting chessboard.
+        /// </summary>
+        /// <param name="chessboard"></param>
+        public BoardShapesManager(ChessBoard chessboard)
+        {
+            _chessboard = chessboard;
+        }
 
         /// <summary>
         /// Resets the object and creates new arrows based 
@@ -174,8 +186,8 @@ namespace ChessForge
 
             AppState.MainWin.Dispatcher.Invoke(() =>
             {
-                _arrowInProgress = new BoardArrow(start, color);
-                _circleInProgress = new BoardCircle(start, color);
+                _arrowInProgress = new BoardArrow(_chessboard, start, color);
+                _circleInProgress = new BoardCircle(_chessboard, start, color);
             });
         }
 
@@ -426,7 +438,7 @@ namespace ChessForge
                 color = GetColorName(code[0]);
                 start = PositionUtils.ConvertAlgebraicToXY(code.Substring(1, 2));
                 end = PositionUtils.ConvertAlgebraicToXY(code.Substring(3, 2));
-                if (AppState.MainWin.IsMainChessboardFlipped())
+                if (_chessboard.IsFlipped)
                 {
                     start.Flip();
                     end.Flip();
@@ -453,7 +465,7 @@ namespace ChessForge
             {
                 color = GetColorName(code[0]);
                 square = PositionUtils.ConvertAlgebraicToXY(code.Substring(1, 2));
-                if (AppState.MainWin.IsMainChessboardFlipped())
+                if (_chessboard.IsFlipped)
                 {
                     square.Flip();
                 }
@@ -483,7 +495,7 @@ namespace ChessForge
                 sb.Append(GetCharForColor(arrow.Color));
                 SquareCoords start = new SquareCoords(arrow.StartSquare);
                 SquareCoords end = new SquareCoords(arrow.EndSquare);
-                if (AppState.MainWin.IsMainChessboardFlipped())
+                if (_chessboard.IsFlipped)
                 {
                     start.Flip();
                     end.Flip();
@@ -515,7 +527,7 @@ namespace ChessForge
                 }
                 sb.Append(GetCharForColor(circle.Color));
                 SquareCoords square = new SquareCoords(circle.Square);
-                if (AppState.MainWin.IsMainChessboardFlipped())
+                if (_chessboard.IsFlipped)
                 {
                     square.Flip();
                 }
