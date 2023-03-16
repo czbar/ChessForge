@@ -83,7 +83,7 @@ namespace ChessForge
         /// <summary>
         /// Size of an individual square in pixels
         /// </summary>
-        virtual protected int SquareSize
+        virtual public int SquareSize
         {
             get => _squareSize;
         }
@@ -181,13 +181,14 @@ namespace ChessForge
         /// </summary>
         /// <param name="enable"></param>
         /// <returns></returns>
-        public void EnableShapes(bool enable)
+        public void EnableShapes(bool enable, TreeNode nd)
         {
             if (enable)
             {
                 if (Shapes == null)
                 {
                     Shapes = new BoardShapesManager(this);
+                    Shapes.SetActiveNode(nd);
                 }
             }
             else
@@ -253,7 +254,7 @@ namespace ChessForge
         public Point GetSquareCenterPoint(SquareCoords sq)
         {
             Point pt = GetSquareTopLeftPointOffCanvas(sq);
-            return new Point(pt.X + _squareSize / 2, pt.Y + _squareSize / 2);
+            return new Point(pt.X + SquareSize / 2, pt.Y + SquareSize / 2);
         }
 
         /// <summary>
@@ -298,8 +299,8 @@ namespace ChessForge
         /// <returns></returns>
         public Point GetSquareTopLeftPointOffCanvas(SquareCoords sq)
         {
-            double left = _squareSize * sq.Xcoord + BoardImgCtrl.Margin.Left;
-            double top = _squareSize * (7 - sq.Ycoord) + BoardImgCtrl.Margin.Top;
+            double left = SquareSize * sq.Xcoord + BoardImgCtrl.Margin.Left;
+            double top = SquareSize * (7 - sq.Ycoord) + BoardImgCtrl.Margin.Top;
 
             return new Point(left, top);
         }
@@ -311,6 +312,20 @@ namespace ChessForge
         public void SetMainLabelColor(SolidColorBrush br)
         {
             _mainLabel.Foreground = br;
+        }
+
+        /// <summary>
+        /// Scales the source image to the size of the hosting chessboard.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public TransformedBitmap ScaleSource(BitmapImage source)
+        {
+            double scale = (double)SquareSize / (double) 80;
+            var transform = new ScaleTransform(scale, scale);
+
+            TransformedBitmap transformedBitmap = new TransformedBitmap(source, transform);
+            return transformedBitmap;
         }
 
         /// <summary>
