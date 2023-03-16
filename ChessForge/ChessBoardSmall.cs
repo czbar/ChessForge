@@ -24,7 +24,7 @@ namespace ChessForge
         /// <summary>
         /// Size of an individual square in pixels
         /// </summary>
-        override protected int SquareSize
+        override public int SquareSize
         {
             get => _squareSize;
         }
