@@ -164,7 +164,7 @@ namespace ChessForge
         {
             if (hasShapes)
             {
-                Shapes = new BoardShapesManager();
+                Shapes = new BoardShapesManager(this);
             }
             CanvasCtrl = cnv;
             BoardImgCtrl = BoardCtrl;
@@ -187,7 +187,7 @@ namespace ChessForge
             {
                 if (Shapes == null)
                 {
-                    Shapes = new BoardShapesManager();
+                    Shapes = new BoardShapesManager(this);
                 }
             }
             else
@@ -226,6 +226,59 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Get Image control at a given point.
+        /// Invoked when the user clicks on the chessboard
+        /// preparing to make a move.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public Image GetImageFromPoint(Point p)
+        {
+            SquareCoords sq = ClickedSquare(p);
+            if (sq == null)
+            {
+                return null;
+            }
+            else
+            {
+                return GetPieceImage(sq.Xcoord, sq.Ycoord, true);
+            }
+        }
+
+        /// <summary>
+        /// Get the center point of a chessboard's square
+        /// </summary>
+        /// <param name="sq">XY coordinates of the square</param>
+        /// <returns></returns>
+        public Point GetSquareCenterPoint(SquareCoords sq)
+        {
+            Point pt = GetSquareTopLeftPointOffCanvas(sq);
+            return new Point(pt.X + _squareSize / 2, pt.Y + _squareSize / 2);
+        }
+
+        /// <summary>
+        /// Get XY coordinates of the clicked square.
+        /// The passed point coordinates are relative to the board image.
+        /// </summary>
+        /// <param name="p">Location of the clicked point.</param>
+        /// <returns></returns>
+        public SquareCoords ClickedSquare(Point p)
+        {
+            double squareSide = BoardImgCtrl.Width / 8.0;
+            double xPos = p.X / squareSide;
+            double yPos = p.Y / squareSide;
+
+            if (xPos > 0 && xPos < 8 && yPos > 0 && yPos < 8)
+            {
+                return new SquareCoords((int)xPos, 7 - (int)yPos);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Returned Point position of a top left corner of a square.
         /// </summary>
         /// <param name="sq"></param>
@@ -239,6 +292,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Get position of a chessboard's square
+        /// </summary>
+        /// <param name="sq">XY coordinates of the square</param>
+        /// <returns></returns>
+        public Point GetSquareTopLeftPointOffCanvas(SquareCoords sq)
+        {
+            double left = _squareSize * sq.Xcoord + BoardImgCtrl.Margin.Left;
+            double top = _squareSize * (7 - sq.Ycoord) + BoardImgCtrl.Margin.Top;
+
+            return new Point(left, top);
+        }
+
+        /// <summary>
         /// Sets the color of the label's text.
         /// </summary>
         /// <param name="br"></param>
@@ -246,7 +312,6 @@ namespace ChessForge
         {
             _mainLabel.Foreground = br;
         }
-
 
         /// <summary>
         /// Creates the coordinates labels.
