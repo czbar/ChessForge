@@ -148,7 +148,6 @@
     <Compile Include="ListViewHelper.cs" />
     <Compile Include="CommentBox.cs" />
     <Compile Include="EngineLinesBox.cs" />
-    <Compile Include="MainChessBoardUtils.cs" />
     <Compile Include="MainWindowMenuEvents.cs" />
     <Compile Include="MainWindowMouseEvents.cs" />
     <Compile Include="MainWindowMoveAnimation.cs" />
