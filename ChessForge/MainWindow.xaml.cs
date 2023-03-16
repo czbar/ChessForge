@@ -897,17 +897,37 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Saves the Arrow positions string to the Node currently
-        /// hosted in the Main Chessboard.
+        /// Saves the Arrow positions string.
+        /// If the passed node is null, we find the node
+        /// currently displayed in the Main Board.
         /// </summary>
         /// <param name="arrowsString"></param>
         /// <return>whether the new string is different</return>
-        public bool SaveArrowsStringInCurrentNode(string arrowsString)
+        public bool SaveArrowsStringInCurrentNode(TreeNode nd, string arrowsString)
         {
-            if (MainChessBoard != null)
+            if (nd == null)
             {
-                TreeNode nd = MainChessBoard.DisplayedNode;
-                if (nd != null && nd.Arrows != arrowsString)
+                if (MainChessBoard != null)
+                {
+                    nd = MainChessBoard.DisplayedNode;
+                    if (nd != null && nd.Arrows != arrowsString)
+                    {
+                        nd.Arrows = arrowsString;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (nd.Arrows != arrowsString)
                 {
                     nd.Arrows = arrowsString;
                     return true;
@@ -917,10 +937,6 @@ namespace ChessForge
                     return false;
                 }
             }
-            else
-            {
-                return false;
-            }
         }
 
         /// <summary>
@@ -928,15 +944,22 @@ namespace ChessForge
         /// hosted in the Main Chessboard.
         /// </summary>
         /// <param name="circlesString"></param>
-        public bool SaveCirclesStringInCurrentNode(string circlesString)
+        public bool SaveCirclesStringInCurrentNode(TreeNode nd, string circlesString)
         {
-            if (MainChessBoard != null)
+            if (nd == null)
             {
-                TreeNode nd = MainChessBoard.DisplayedNode;
-                if (nd != null && nd.Circles != circlesString)
+                if (MainChessBoard != null)
                 {
-                    nd.Circles = circlesString;
-                    return true;
+                    nd = MainChessBoard.DisplayedNode;
+                    if (nd != null && nd.Circles != circlesString)
+                    {
+                        nd.Circles = circlesString;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
@@ -945,7 +968,15 @@ namespace ChessForge
             }
             else
             {
-                return false;
+                if (nd.Circles != circlesString)
+                {
+                    nd.Circles = circlesString;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 

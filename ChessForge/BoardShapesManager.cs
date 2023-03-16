@@ -1,4 +1,5 @@
 ﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,6 +18,12 @@ namespace ChessForge
     /// </summary>
     public class BoardShapesManager
     {
+        // parent chessboard
+        private ChessBoard _chessboard;
+
+        // node operated on
+        private TreeNode _activeNode = null;
+
         // completed arrows 
         private List<BoardArrow> _boardArrows = new List<BoardArrow>();
 
@@ -41,6 +48,24 @@ namespace ChessForge
         // end square for the arrow being drawn
         private SquareCoords _endSquare;
 
+        /// <summary>
+        /// Constructor.
+        /// Sets reference to the hosting chessboard.
+        /// </summary>
+        /// <param name="chessboard"></param>
+        public BoardShapesManager(ChessBoard chessboard)
+        {
+            _chessboard = chessboard;
+        }
+
+        /// <summary>
+        /// Sets the Node on which the shapes will be drawn,
+        /// </summary>
+        /// <param name="activeNode"></param>
+        public void SetActiveNode(TreeNode activeNode)
+        {
+            _activeNode = activeNode;
+        }
 
         /// <summary>
         /// Resets the object and creates new arrows based 
@@ -174,8 +199,8 @@ namespace ChessForge
 
             AppState.MainWin.Dispatcher.Invoke(() =>
             {
-                _arrowInProgress = new BoardArrow(start, color);
-                _circleInProgress = new BoardCircle(start, color);
+                _arrowInProgress = new BoardArrow(_chessboard, start, color);
+                _circleInProgress = new BoardCircle(_chessboard, start, color);
             });
         }
 
@@ -337,17 +362,29 @@ namespace ChessForge
         {
             string color;
 
-            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+            if (Keyboard.IsKeyDown(Key.LeftShift))
             {
                 color = Constants.COLOR_YELLOW;
             }
-            else if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            else if (Keyboard.IsKeyDown(Key.LeftCtrl))
             {
                 color = Constants.COLOR_RED;
             }
-            else if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
+            else if (Keyboard.IsKeyDown(Key.LeftAlt))
             {
                 color = Constants.COLOR_BLUE;
+            }
+            else if (Keyboard.IsKeyDown(Key.RightShift))
+            {
+                color = Constants.COLOR_ORANGE;
+            }
+            else if (Keyboard.IsKeyDown(Key.RightCtrl))
+            {
+                color = Constants.COLOR_PURPLE;
+            }
+            else if (Keyboard.IsKeyDown(Key.RightAlt))
+            {
+                color = Constants.COLOR_DARKRED;
             }
             else
             {
@@ -398,11 +435,13 @@ namespace ChessForge
 
         /// <summary>
         /// Saves the shape positions to the Node.
+        /// If no Node is set, save to the one currently displayed one
+        /// on the chess baord.
         /// </summary>
         private bool SaveShapesStrings()
         {
-            bool arrRes = AppState.MainWin.SaveArrowsStringInCurrentNode(CodeArrowsString());
-            bool cirRes = AppState.MainWin.SaveCirclesStringInCurrentNode(CodeCirclesString());
+            bool arrRes = AppState.MainWin.SaveArrowsStringInCurrentNode(_activeNode, CodeArrowsString());
+            bool cirRes = AppState.MainWin.SaveCirclesStringInCurrentNode(_activeNode, CodeCirclesString());
 
             return arrRes || cirRes;
         }
@@ -426,7 +465,7 @@ namespace ChessForge
                 color = GetColorName(code[0]);
                 start = PositionUtils.ConvertAlgebraicToXY(code.Substring(1, 2));
                 end = PositionUtils.ConvertAlgebraicToXY(code.Substring(3, 2));
-                if (AppState.MainWin.IsMainChessboardFlipped())
+                if (_chessboard.IsFlipped)
                 {
                     start.Flip();
                     end.Flip();
@@ -453,7 +492,7 @@ namespace ChessForge
             {
                 color = GetColorName(code[0]);
                 square = PositionUtils.ConvertAlgebraicToXY(code.Substring(1, 2));
-                if (AppState.MainWin.IsMainChessboardFlipped())
+                if (_chessboard.IsFlipped)
                 {
                     square.Flip();
                 }
@@ -483,7 +522,7 @@ namespace ChessForge
                 sb.Append(GetCharForColor(arrow.Color));
                 SquareCoords start = new SquareCoords(arrow.StartSquare);
                 SquareCoords end = new SquareCoords(arrow.EndSquare);
-                if (AppState.MainWin.IsMainChessboardFlipped())
+                if (_chessboard.IsFlipped)
                 {
                     start.Flip();
                     end.Flip();
@@ -515,7 +554,7 @@ namespace ChessForge
                 }
                 sb.Append(GetCharForColor(circle.Color));
                 SquareCoords square = new SquareCoords(circle.Square);
-                if (AppState.MainWin.IsMainChessboardFlipped())
+                if (_chessboard.IsFlipped)
                 {
                     square.Flip();
                 }
@@ -543,6 +582,12 @@ namespace ChessForge
                     return Constants.COLOR_RED;
                 case Constants.COLOR_YELLOW_CHAR:
                     return Constants.COLOR_YELLOW;
+                case Constants.COLOR_ORANGE_CHAR:
+                    return Constants.COLOR_ORANGE;
+                case Constants.COLOR_PURPLE_CHAR:
+                    return Constants.COLOR_PURPLE;
+                case Constants.COLOR_DARKRED_CHAR:
+                    return Constants.COLOR_DARKRED;
                 default:
                     return Constants.COLOR_YELLOW;
             }
@@ -565,6 +610,12 @@ namespace ChessForge
                     return Constants.COLOR_RED_CHAR;
                 case Constants.COLOR_YELLOW:
                     return Constants.COLOR_YELLOW_CHAR;
+                case Constants.COLOR_ORANGE:
+                    return Constants.COLOR_ORANGE_CHAR;
+                case Constants.COLOR_PURPLE:
+                    return Constants.COLOR_PURPLE_CHAR;
+                case Constants.COLOR_DARKRED:
+                    return Constants.COLOR_DARKRED_CHAR;
                 default:
                     return Constants.COLOR_YELLOW_CHAR;
             }

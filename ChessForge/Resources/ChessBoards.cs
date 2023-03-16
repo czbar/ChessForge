@@ -94,6 +94,19 @@ namespace ChessForge
         public static BitmapImage RedTriangle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowTriangleRed.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage RedStem = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowStemRed.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage RedHalfCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowHalfCircleRed.png", UriKind.RelativeOrAbsolute));
+
+        public static BitmapImage OrangeTriangle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowTriangleOrange.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage OrangeStem = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowStemOrange.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage OrangeHalfCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowHalfCircleOrange.png", UriKind.RelativeOrAbsolute));
+
+        public static BitmapImage PurpleTriangle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowTrianglePurple.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage PurpleStem = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowStemPurple.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage PurpleHalfCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowHalfCirclePurple.png", UriKind.RelativeOrAbsolute));
+
+        public static BitmapImage DarkredTriangle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowTriangleDarkred.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage DarkredStem = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowStemDarkred.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage DarkredHalfCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ArrowHalfCircleDarkred.png", UriKind.RelativeOrAbsolute));
+
     }
 
     /// <summary>
@@ -105,5 +118,9 @@ namespace ChessForge
         public static BitmapImage GreenCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/CircleGreen.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage BlueCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/CircleBlue.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage RedCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/CircleRed.png", UriKind.RelativeOrAbsolute));
+
+        public static BitmapImage OrangeCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/CircleOrange.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage PurpleCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/CirclePurple.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage DarkredCircle = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/CircleDarkred.png", UriKind.RelativeOrAbsolute));
     }
 }

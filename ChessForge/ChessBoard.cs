@@ -37,6 +37,11 @@ namespace ChessForge
         public BoardShapesManager Shapes;
 
         /// <summary>
+        /// Reference square size. All scaling is done using this as reference.
+        /// </summary>
+        protected const int _canonicalSquareSize = 80;
+
+        /// <summary>
         /// Images for White pieces 80x80.
         /// </summary>
         protected Dictionary<PieceType, BitmapImage> _dictWhitePieces =
@@ -83,7 +88,7 @@ namespace ChessForge
         /// <summary>
         /// Size of an individual square in pixels
         /// </summary>
-        virtual protected int SquareSize
+        virtual public int SquareSize
         {
             get => _squareSize;
         }
@@ -164,7 +169,7 @@ namespace ChessForge
         {
             if (hasShapes)
             {
-                Shapes = new BoardShapesManager();
+                Shapes = new BoardShapesManager(this);
             }
             CanvasCtrl = cnv;
             BoardImgCtrl = BoardCtrl;
@@ -181,13 +186,14 @@ namespace ChessForge
         /// </summary>
         /// <param name="enable"></param>
         /// <returns></returns>
-        public void EnableShapes(bool enable)
+        public void EnableShapes(bool enable, TreeNode nd)
         {
             if (enable)
             {
                 if (Shapes == null)
                 {
-                    Shapes = new BoardShapesManager();
+                    Shapes = new BoardShapesManager(this);
+                    Shapes.SetActiveNode(nd);
                 }
             }
             else
@@ -226,6 +232,59 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Get Image control at a given point.
+        /// Invoked when the user clicks on the chessboard
+        /// preparing to make a move.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public Image GetImageFromPoint(Point p)
+        {
+            SquareCoords sq = ClickedSquare(p);
+            if (sq == null)
+            {
+                return null;
+            }
+            else
+            {
+                return GetPieceImage(sq.Xcoord, sq.Ycoord, true);
+            }
+        }
+
+        /// <summary>
+        /// Get the center point of a chessboard's square
+        /// </summary>
+        /// <param name="sq">XY coordinates of the square</param>
+        /// <returns></returns>
+        public Point GetSquareCenterPoint(SquareCoords sq)
+        {
+            Point pt = GetSquareTopLeftPointOffCanvas(sq);
+            return new Point(pt.X + SquareSize / 2, pt.Y + SquareSize / 2);
+        }
+
+        /// <summary>
+        /// Get XY coordinates of the clicked square.
+        /// The passed point coordinates are relative to the board image.
+        /// </summary>
+        /// <param name="p">Location of the clicked point.</param>
+        /// <returns></returns>
+        public SquareCoords ClickedSquare(Point p)
+        {
+            double squareSide = BoardImgCtrl.Width / 8.0;
+            double xPos = p.X / squareSide;
+            double yPos = p.Y / squareSide;
+
+            if (xPos > 0 && xPos < 8 && yPos > 0 && yPos < 8)
+            {
+                return new SquareCoords((int)xPos, 7 - (int)yPos);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Returned Point position of a top left corner of a square.
         /// </summary>
         /// <param name="sq"></param>
@@ -239,6 +298,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Get position of a chessboard's square
+        /// </summary>
+        /// <param name="sq">XY coordinates of the square</param>
+        /// <returns></returns>
+        public Point GetSquareTopLeftPointOffCanvas(SquareCoords sq)
+        {
+            double left = SquareSize * sq.Xcoord + BoardImgCtrl.Margin.Left;
+            double top = SquareSize * (7 - sq.Ycoord) + BoardImgCtrl.Margin.Top;
+
+            return new Point(left, top);
+        }
+
+        /// <summary>
         /// Sets the color of the label's text.
         /// </summary>
         /// <param name="br"></param>
@@ -247,6 +319,19 @@ namespace ChessForge
             _mainLabel.Foreground = br;
         }
 
+        /// <summary>
+        /// Scales the source image to the size of the hosting chessboard.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public TransformedBitmap ScaleSource(BitmapImage source)
+        {
+            double scale = (double)SquareSize / (double) _canonicalSquareSize;
+            var transform = new ScaleTransform(scale, scale);
+
+            TransformedBitmap transformedBitmap = new TransformedBitmap(source, transform);
+            return transformedBitmap;
+        }
 
         /// <summary>
         /// Creates the coordinates labels.

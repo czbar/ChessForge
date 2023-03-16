@@ -256,5 +256,14 @@ namespace ChessPosition
 
         public const string COLOR_YELLOW = "yellow";
         public const char COLOR_YELLOW_CHAR = 'Y';
+
+        public const string COLOR_ORANGE = "orange";
+        public const char COLOR_ORANGE_CHAR = 'O';
+
+        public const string COLOR_PURPLE = "purple";
+        public const char COLOR_PURPLE_CHAR = 'P';
+
+        public const string COLOR_DARKRED = "darkred";
+        public const char COLOR_DARKRED_CHAR = 'D';
     }
 }

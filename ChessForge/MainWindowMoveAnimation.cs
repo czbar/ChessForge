@@ -105,8 +105,8 @@ namespace ChessForge
 
             Canvas.SetZIndex(img, Constants.ZIndex_PieceInAnimation);
 
-            Point orig = MainChessBoardUtils.GetSquareTopLeftPoint(origin);
-            Point dest = MainChessBoardUtils.GetSquareTopLeftPoint(destination);
+            Point orig = MainChessBoard.GetSquareTopLeftPointOffCanvas(origin);
+            Point dest = MainChessBoard.GetSquareTopLeftPointOffCanvas(destination);
 
             TranslateTransform trans = new TranslateTransform();
             if (img.RenderTransform != null)
@@ -165,7 +165,7 @@ namespace ChessForge
 
             MainChessBoard.GetPieceImage(MoveAnimation.Destination.Xcoord, MoveAnimation.Destination.Ycoord, true).Source = MoveAnimation.Piece.Source;
 
-            Point orig = MainChessBoardUtils.GetSquareTopLeftPoint(MoveAnimation.Origin);
+            Point orig = MainChessBoard.GetSquareTopLeftPointOffCanvas(MoveAnimation.Origin);
             //_pieces[AnimationOrigin.Xcoord, AnimationOrigin.Ycoord].Source = AnimationPiece.Source;
 
             Canvas.SetLeft(MainChessBoard.GetPieceImage(MoveAnimation.Origin.Xcoord, MoveAnimation.Origin.Ycoord, true), orig.X);

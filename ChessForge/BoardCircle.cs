@@ -4,6 +4,7 @@ using System.Windows;
 using Image = System.Windows.Controls.Image;
 using System.Windows.Controls;
 using System;
+using System.Windows.Media.Imaging;
 
 namespace ChessForge
 {
@@ -20,6 +21,9 @@ namespace ChessForge
         // square from which to start the arrow
         public SquareCoords Square;
 
+        // parent chessboard
+        private ChessBoard _chessboard;
+
         // center point of the square
         private Point _centerPoint;
 
@@ -30,8 +34,10 @@ namespace ChessForge
         /// Constructs the Circle object.
         /// </summary>
         /// <param name="square">Square for the Circle</param>
-        public BoardCircle(SquareCoords square, string color)
+        public BoardCircle(ChessBoard chessboard, SquareCoords square, string color)
         {
+            _chessboard = chessboard;
+
             Color = color.ToLower();
 
             Square = new SquareCoords(square);
@@ -47,10 +53,22 @@ namespace ChessForge
                 case Constants.COLOR_BLUE:
                     _circle.Source = ChessBoardCircles.BlueCircle;
                     break;
+                case Constants.COLOR_ORANGE:
+                    _circle.Source = ChessBoardCircles.OrangeCircle;
+                    break;
+                case Constants.COLOR_PURPLE:
+                    _circle.Source = ChessBoardCircles.PurpleCircle;
+                    break;
+                case Constants.COLOR_DARKRED:
+                    _circle.Source = ChessBoardCircles.DarkredCircle;
+                    break;
                 default:
                     _circle.Source = ChessBoardCircles.YellowCircle;
                     break;
             }
+
+            TransformedBitmap transformedBitmap = _chessboard.ScaleSource(_circle.Source as BitmapImage);
+            _circle.Source = transformedBitmap;
 
             _circle.Opacity = 0.7;
         }
@@ -62,7 +80,7 @@ namespace ChessForge
         {
             AppState.MainWin.Dispatcher.Invoke(() =>
             {
-                AppState.MainWin.MainCanvas.Children.Remove(_circle);
+                _chessboard.CanvasCtrl.Children.Remove(_circle);
             });
         }
 
@@ -72,7 +90,7 @@ namespace ChessForge
         /// <param name="end"></param>
         public void Draw(SquareCoords end)
         {
-            _centerPoint = MainChessBoardUtils.GetSquareCenterPoint(Square);
+            _centerPoint = _chessboard.GetSquareCenterPoint(Square);
             Draw();
         }
 
@@ -92,8 +110,8 @@ namespace ChessForge
         {
             AppState.MainWin.Dispatcher.Invoke(() =>
             {
-                AppState.MainWin.MainCanvas.Children.Remove(_circle);
-                AppState.MainWin.MainCanvas.Children.Add(_circle);
+                _chessboard.CanvasCtrl.Children.Remove(_circle);
+                _chessboard.CanvasCtrl.Children.Add(_circle);
                 Canvas.SetLeft(_circle, _centerPoint.X - (_circle.Source.Width / 2));
                 Canvas.SetTop(_circle, _centerPoint.Y - (_circle.Source.Height / 2));
                 Panel.SetZIndex(_circle, Constants.ZIndex_BoardArrow);
