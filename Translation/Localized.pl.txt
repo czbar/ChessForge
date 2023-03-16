@@ -340,7 +340,7 @@ ExpandChapters=Rozwiń Rozdziały
 
 #description: Collapse chapters
 #english: CollapseChapters=Collapse Chapters
-CollapseChapters=Rozwiń Rozdziały
+CollapseChapters=Zwiń Rozdziały
 
 
 
