@@ -59,6 +59,7 @@ namespace ChessForge
             SetFen();
 
             _chessboard = new ChessBoardSmall(UiCnvBoard, UiImgChessBoard, null, null, false, false);
+            _chessboard.EnableShapes(true, node);
             _chessboard.DisplayPosition(node, true);
 
             _dragEvents = new PositionBoardDragEvents(_chessboard, _draggedPiece, UiCnvSetup, ref PositionSetup);
