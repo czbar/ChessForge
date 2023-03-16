@@ -448,6 +448,18 @@
     <Resource Include="Resources\Images\ChessBoardLightGreenSmall.png" />
     <Resource Include="Resources\Images\ChessBoardGreenSmall.png" />
     <Resource Include="Resources\Images\eraser-rubber.png" />
+    <Resource Include="Resources\Images\ArrowHalfCircleDarkred.png" />
+    <Resource Include="Resources\Images\ArrowHalfCircleOrange.png" />
+    <Resource Include="Resources\Images\ArrowHalfCirclePurple.png" />
+    <Resource Include="Resources\Images\ArrowStemDarkred.png" />
+    <Resource Include="Resources\Images\ArrowStemOrange.png" />
+    <Resource Include="Resources\Images\ArrowStemPurple.png" />
+    <Resource Include="Resources\Images\ArrowTriangleDarkred.png" />
+    <Resource Include="Resources\Images\ArrowTriangleOrange.png" />
+    <Resource Include="Resources\Images\ArrowTrianglePurple.png" />
+    <Resource Include="Resources\Images\CircleDarkred.png" />
+    <Resource Include="Resources\Images\CircleOrange.png" />
+    <Resource Include="Resources\Images\CirclePurple.png" />
     <Content Include="Resources\Sounds\InvalidMove.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
