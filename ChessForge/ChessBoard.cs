@@ -37,6 +37,11 @@ namespace ChessForge
         public BoardShapesManager Shapes;
 
         /// <summary>
+        /// Reference square size. All scaling is done using this as reference.
+        /// </summary>
+        protected const int _canonicalSquareSize = 80;
+
+        /// <summary>
         /// Images for White pieces 80x80.
         /// </summary>
         protected Dictionary<PieceType, BitmapImage> _dictWhitePieces =
@@ -321,7 +326,7 @@ namespace ChessForge
         /// <returns></returns>
         public TransformedBitmap ScaleSource(BitmapImage source)
         {
-            double scale = (double)SquareSize / (double) 80;
+            double scale = (double)SquareSize / (double) _canonicalSquareSize;
             var transform = new ScaleTransform(scale, scale);
 
             TransformedBitmap transformedBitmap = new TransformedBitmap(source, transform);
