@@ -4,6 +4,7 @@ using System.Windows;
 using Image = System.Windows.Controls.Image;
 using System.Windows.Controls;
 using System;
+using System.Windows.Media.Imaging;
 
 namespace ChessForge
 {
@@ -56,6 +57,9 @@ namespace ChessForge
                     _circle.Source = ChessBoardCircles.YellowCircle;
                     break;
             }
+
+            TransformedBitmap transformedBitmap = _chessboard.ScaleSource(_circle.Source as BitmapImage);
+            _circle.Source = transformedBitmap;
 
             _circle.Opacity = 0.7;
         }

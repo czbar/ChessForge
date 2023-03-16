@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using ChessPosition;
 using static System.Net.Mime.MediaTypeNames;
 using Image = System.Windows.Controls.Image;
@@ -112,6 +113,15 @@ namespace ChessForge
 
                     break;
             }
+
+            TransformedBitmap trfTriangle = _chessboard.ScaleSource(_triangle.Source as BitmapImage);
+            _triangle.Source = trfTriangle;
+
+            TransformedBitmap trfStem = _chessboard.ScaleSource(_stem.Source as BitmapImage);
+            _stem.Source = trfStem;
+
+            TransformedBitmap trfCircle = _chessboard.ScaleSource(_circle.Source as BitmapImage);
+            _circle.Source = trfCircle;
 
             _triangle.Opacity = 0.5;
             _stem.Opacity = 0.5;
