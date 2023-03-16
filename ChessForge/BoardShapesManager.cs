@@ -362,17 +362,29 @@ namespace ChessForge
         {
             string color;
 
-            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+            if (Keyboard.IsKeyDown(Key.LeftShift))
             {
                 color = Constants.COLOR_YELLOW;
             }
-            else if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            else if (Keyboard.IsKeyDown(Key.LeftCtrl))
             {
                 color = Constants.COLOR_RED;
             }
-            else if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
+            else if (Keyboard.IsKeyDown(Key.LeftAlt))
             {
                 color = Constants.COLOR_BLUE;
+            }
+            else if (Keyboard.IsKeyDown(Key.RightShift))
+            {
+                color = Constants.COLOR_ORANGE;
+            }
+            else if (Keyboard.IsKeyDown(Key.RightCtrl))
+            {
+                color = Constants.COLOR_PURPLE;
+            }
+            else if (Keyboard.IsKeyDown(Key.RightAlt))
+            {
+                color = Constants.COLOR_DARKRED;
             }
             else
             {
@@ -570,6 +582,12 @@ namespace ChessForge
                     return Constants.COLOR_RED;
                 case Constants.COLOR_YELLOW_CHAR:
                     return Constants.COLOR_YELLOW;
+                case Constants.COLOR_ORANGE_CHAR:
+                    return Constants.COLOR_ORANGE;
+                case Constants.COLOR_PURPLE_CHAR:
+                    return Constants.COLOR_PURPLE;
+                case Constants.COLOR_DARKRED_CHAR:
+                    return Constants.COLOR_DARKRED;
                 default:
                     return Constants.COLOR_YELLOW;
             }
@@ -592,6 +610,12 @@ namespace ChessForge
                     return Constants.COLOR_RED_CHAR;
                 case Constants.COLOR_YELLOW:
                     return Constants.COLOR_YELLOW_CHAR;
+                case Constants.COLOR_ORANGE:
+                    return Constants.COLOR_ORANGE_CHAR;
+                case Constants.COLOR_PURPLE:
+                    return Constants.COLOR_PURPLE_CHAR;
+                case Constants.COLOR_DARKRED:
+                    return Constants.COLOR_DARKRED_CHAR;
                 default:
                     return Constants.COLOR_YELLOW_CHAR;
             }

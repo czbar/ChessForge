@@ -53,6 +53,15 @@ namespace ChessForge
                 case Constants.COLOR_BLUE:
                     _circle.Source = ChessBoardCircles.BlueCircle;
                     break;
+                case Constants.COLOR_ORANGE:
+                    _circle.Source = ChessBoardCircles.OrangeCircle;
+                    break;
+                case Constants.COLOR_PURPLE:
+                    _circle.Source = ChessBoardCircles.PurpleCircle;
+                    break;
+                case Constants.COLOR_DARKRED:
+                    _circle.Source = ChessBoardCircles.DarkredCircle;
+                    break;
                 default:
                     _circle.Source = ChessBoardCircles.YellowCircle;
                     break;

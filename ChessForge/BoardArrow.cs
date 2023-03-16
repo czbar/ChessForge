@@ -106,6 +106,21 @@ namespace ChessForge
                     _stem.Source = ChessBoardArrows.BlueStem;
                     _circle.Source = ChessBoardArrows.BlueHalfCircle;
                     break;
+                case Constants.COLOR_ORANGE:
+                    _triangle.Source = ChessBoardArrows.OrangeTriangle;
+                    _stem.Source = ChessBoardArrows.OrangeStem;
+                    _circle.Source = ChessBoardArrows.OrangeHalfCircle;
+                    break;
+                case Constants.COLOR_PURPLE:
+                    _triangle.Source = ChessBoardArrows.PurpleTriangle;
+                    _stem.Source = ChessBoardArrows.PurpleStem;
+                    _circle.Source = ChessBoardArrows.PurpleHalfCircle;
+                    break;
+                case Constants.COLOR_DARKRED:
+                    _triangle.Source = ChessBoardArrows.DarkredTriangle;
+                    _stem.Source = ChessBoardArrows.DarkredStem;
+                    _circle.Source = ChessBoardArrows.DarkredHalfCircle;
+                    break;
                 default:
                     _triangle.Source = ChessBoardArrows.YellowTriangle;
                     _stem.Source = ChessBoardArrows.YellowStem;
