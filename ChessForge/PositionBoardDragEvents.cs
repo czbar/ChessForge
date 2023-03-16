@@ -55,7 +55,6 @@ namespace ChessForge
         public PositionBoardDragEvents(ChessBoard chessBoard, PositionSetupDraggedPiece draggedPiece, Canvas hostCanvas, ref BoardPosition pos)
         {
             _chessboard = chessBoard;
-            _chessboard.EnableShapes(true);
 
             _draggedPiece = draggedPiece;
             _hostCanvas = hostCanvas;
@@ -170,19 +169,27 @@ namespace ChessForge
         /// <param name="e"></param>
         public void MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (_draggedPiece.IsDragInProgress)
+            SquareCoords sc = GetSquareCoordsFromBoardCanvasPoint(e.GetPosition(_chessboard.CanvasCtrl));
+
+            if (e.ChangedButton == MouseButton.Right)
             {
-                _draggedPiece.IsDragInProgress = false;
-                SquareCoords sc = GetSquareCoordsFromBoardCanvasPoint(e.GetPosition(_chessboard.CanvasCtrl));
-                if (sc != null)
+                HandleMouseUpRightButton(sc, e);
+            }
+            else
+            {
+                if (_draggedPiece.IsDragInProgress)
                 {
-                    AddPieceToBoard(sc, _draggedPiece.Piece, _draggedPiece.Color, _draggedPiece.ImageControl);
+                    _draggedPiece.IsDragInProgress = false;
+                    if (sc != null)
+                    {
+                        AddPieceToBoard(sc, _draggedPiece.Piece, _draggedPiece.Color, _draggedPiece.ImageControl);
+                    }
+                    else
+                    {
+                        RemovePieceFromBoard(sc);
+                    }
+                    StopDrag();
                 }
-                else
-                {
-                    RemovePieceFromBoard(sc);
-                }
-                StopDrag();
             }
         }
 
@@ -207,6 +214,18 @@ namespace ChessForge
         //
         //***********************************************************
 
+        /// <summary>
+        /// Completes the drawing of the shape 
+        /// </summary>
+        /// <param name="targetSquare"></param>
+        /// <param name="e"></param>
+        private void HandleMouseUpRightButton(SquareCoords targetSquare, MouseButtonEventArgs e)
+        {
+            if (_chessboard.Shapes.IsShapeBuildInProgress)
+            {
+                _chessboard.Shapes.FinalizeShape(targetSquare, true, true);
+            }
+        }
 
         /// <summary>
         /// Sets up the drag operation using an off-the-board piece.
