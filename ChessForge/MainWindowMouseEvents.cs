@@ -39,7 +39,7 @@ namespace ChessForge
             }
 
             Point clickedPoint = e.GetPosition(UiImgMainChessboard);
-            SquareCoords sq = MainChessBoardUtils.ClickedSquare(clickedPoint);
+            SquareCoords sq = MainChessBoard.ClickedSquare(clickedPoint);
             if (sq == null)
             {
                 return;
@@ -108,8 +108,8 @@ namespace ChessForge
                             DraggedPiece.isDragInProgress = true;
                             DraggedPiece.OriginSquare = sq;
 
-                            DraggedPiece.ImageControl = MainChessBoardUtils.GetImageFromPoint(clickedPoint);
-                            Point ptLeftTop = MainChessBoardUtils.GetSquareTopLeftPoint(sq);
+                            DraggedPiece.ImageControl = MainChessBoard.GetImageFromPoint(clickedPoint);
+                            Point ptLeftTop = MainChessBoard.GetSquareTopLeftPointOffCanvas(sq);
                             DraggedPiece.PtDraggedPieceOrigin = ptLeftTop;
 
                             // for the remainder, we need absolute point
@@ -118,7 +118,7 @@ namespace ChessForge
                             DraggedPiece.PtStartDragLocation = clickedPoint;
 
 
-                            Point ptCenter = MainChessBoardUtils.GetSquareCenterPoint(sq);
+                            Point ptCenter = MainChessBoard.GetSquareCenterPoint(sq);
 
                             Canvas.SetLeft(DraggedPiece.ImageControl, ptLeftTop.X + (clickedPoint.X - ptCenter.X));
                             Canvas.SetTop(DraggedPiece.ImageControl, ptLeftTop.Y + (clickedPoint.Y - ptCenter.Y));
@@ -157,7 +157,7 @@ namespace ChessForge
             try
             {
                 Point clickedPoint = e.GetPosition(UiImgMainChessboard);
-                SquareCoords targetSquare = MainChessBoardUtils.ClickedSquare(clickedPoint);
+                SquareCoords targetSquare = MainChessBoard.ClickedSquare(clickedPoint);
 
                 if (e.ChangedButton == MouseButton.Right)
                 {
@@ -272,7 +272,7 @@ namespace ChessForge
             }
 
             Point mousePoint = e.GetPosition(UiImgMainChessboard);
-            SquareCoords sq = MainChessBoardUtils.ClickedSquare(mousePoint);
+            SquareCoords sq = MainChessBoard.ClickedSquare(mousePoint);
 
             // if right button is pressed we may be drawing an arrow
             if (e.RightButton == MouseButtonState.Pressed)
