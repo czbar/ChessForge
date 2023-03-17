@@ -590,6 +590,23 @@ namespace ChessForge
 
         //**************************************************************
         //
+        //  INTRO VIEW mouse events 
+        // 
+        //**************************************************************
+
+        /// <summary>
+        /// Mouse click received in the view.
+        /// Configure the context menu according to what was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiRtbIntroView_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _introView.EnableMenuItems(false, false, null);
+        }
+
+        //**************************************************************
+        //
         //  EVALUATION TOGGLE mouse events 
         // 
         //**************************************************************
