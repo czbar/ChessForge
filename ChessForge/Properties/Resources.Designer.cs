@@ -1213,6 +1213,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Diagram.
+        /// </summary>
+        public static string EditDiagram {
+            get {
+                return ResourceManager.GetString("EditDiagram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Exercise Header.
         /// </summary>
         public static string EditExerciseHeader {
@@ -1245,6 +1254,15 @@ namespace ChessForge.Properties {
         public static string EditGameHeaders {
             get {
                 return ResourceManager.GetString("EditGameHeaders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Move.
+        /// </summary>
+        public static string EditMove {
+            get {
+                return ResourceManager.GetString("EditMove", resourceCulture);
             }
         }
         

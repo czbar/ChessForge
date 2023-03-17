@@ -556,6 +556,12 @@ ConfirmDeleteExercise=Delete Exercise
 #Insert a diagram
 InsertDiagram=Insert Diagram
 
+#Edit a diagram
+EditDiagram=Edit Diagram
+
+#Edit a move
+EditMove=Edit Move
+
 #
 # CONTEXT MENU for Study Tree Tab
 #

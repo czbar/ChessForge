@@ -719,6 +719,14 @@ ConfirmDeleteExercise=Usunąć ćwiczenie
 #english: InsertDiagram=Insert Diagram
 InsertDiagram=Wstaw Diagram
 
+#description: Edit a diagram
+#english: EditDiagram=Edit Diagram
+EditDiagram=Edytuj Diagram
+
+#description: Edit a move
+#english: EditMove=Edit Move
+EditMove=Edytuj Posunięcie
+
 #
 # CONTEXT MENU for Study Tree Tab
 #

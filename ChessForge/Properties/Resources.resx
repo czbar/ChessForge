@@ -606,6 +606,12 @@
   <data name="InsertDiagram" xml:space="preserve">
     <value>Insert Diagram</value>
   </data>
+  <data name="EditDiagram" xml:space="preserve">
+    <value>Edit Diagram</value>
+  </data>
+  <data name="EditMove" xml:space="preserve">
+    <value>Edit Move</value>
+  </data>
   <data name="MnGameExerciseReferences" xml:space="preserve">
     <value>Game/Exercise References...</value>
   </data>

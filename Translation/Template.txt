@@ -719,6 +719,14 @@ ConfirmDeleteExercise=
 #english: InsertDiagram=Insert Diagram
 InsertDiagram=
 
+#description: Edit a diagram
+#english: EditDiagram=Edit Diagram
+EditDiagram=
+
+#description: Edit a move
+#english: EditMove=Edit Move
+EditMove=
+
 #
 # CONTEXT MENU for Study Tree Tab
 #
