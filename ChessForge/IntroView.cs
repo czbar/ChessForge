@@ -475,7 +475,7 @@ namespace ChessForge
 
             IntroViewDiagram diag = new IntroViewDiagram();
             Paragraph para = BuildDiagramParagraph(diag, node);
-            diag.Chessboard.DisplayPosition(node, false);
+            diag.Chessboard.DisplayPosition(node, true);
             diag.Node = node;
 
             DiagramList.Add(diag);
@@ -504,7 +504,7 @@ namespace ChessForge
             }
             CreateDiagramElements(para, diag, nd);
             DiagramList.Add(diag);
-            diag.Chessboard.DisplayPosition(nd, false);
+            diag.Chessboard.DisplayPosition(nd, true);
             AppState.MainWin.DisplayPosition(nd);
 
             AppState.IsDirty = true;
@@ -691,6 +691,8 @@ namespace ChessForge
             para.Inlines.Clear();
             Canvas canvas = SetupDiagramCanvas();
             Image imgChessBoard = CreateChessBoard(canvas, diag);
+            diag.Chessboard.EnableShapes(true, nd);
+
             canvas.Children.Add(imgChessBoard);
             Viewbox viewBox = SetupDiagramViewbox(canvas);
 
