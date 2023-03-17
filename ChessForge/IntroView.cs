@@ -150,6 +150,43 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Enables context menu items according to the passed arguments
+        /// </summary>
+        /// <param name="isDiagram"></param>
+        /// <param name="isMove"></param>
+        /// <param name="nd"></param>
+        public void EnableMenuItems(bool isDiagram, bool isMove, TreeNode nd)
+        {
+            try
+            {
+                foreach (var item in AppState.MainWin.UiCmIntro.Items)
+                {
+                    if (item is MenuItem)
+                    {
+                        MenuItem menuItem = item as MenuItem;
+                        switch (menuItem.Name)
+                        {
+                            case "UiCmiInsertDiagram":
+                                menuItem.Visibility = !isDiagram ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "UiCmiEditDiagram":
+                                menuItem.Visibility = isDiagram && nd != null ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "UiCmiEditMove":
+                                menuItem.Visibility = isMove && nd != null ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("EnableMenuItems()", ex);
+            }
+
+        }
+
+        /// <summary>
         /// Remove nodes that are in the Nodes list but not
         /// used in XAML.
         /// Don't delete NodeId == 0.
@@ -211,6 +248,92 @@ namespace ChessForge
             InsertMoveTextBlock(rMove, node);
         }
 
+        /// Edits a Move element.
+        /// </summary>
+        public void EditMove()
+        {
+            if (SelectedNode == null)
+            {
+                return;
+            }
+
+            try
+            {
+                string uicName = _uic_move_ + SelectedNode.NodeId.ToString();
+                Inline inlClicked = FindInlineByName(uicName);
+
+                IntroMoveDialog dlg = new IntroMoveDialog(SelectedNode)
+                {
+                    Left = AppState.MainWin.Left + 100,
+                    Top = AppState.MainWin.Top + 100,
+                    Topmost = false,
+                    Owner = AppState.MainWin
+                };
+
+                if (dlg.ShowDialog() == true)
+                {
+                    _textDirty = true;
+                    AppState.IsDirty = true;
+
+                    SelectedNode.LastMoveAlgebraicNotation = dlg.MoveText;
+
+                    TextBlock tb = (inlClicked as InlineUIContainer).Child as TextBlock;
+
+                    foreach (Inline inl in tb.Inlines)
+                    {
+                        if (inl is Run r)
+                        {
+                            r.Text = " " + dlg.MoveText + " ";
+                        }
+                    }
+
+                    if (dlg.InsertDialogRequest)
+                    {
+                        TextSelection sel = _rtb.Selection;
+                        _rtb.CaretPosition = inlClicked.ElementEnd;
+                        InsertDiagram(SelectedNode);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("EditMove", ex);
+            }
+        }
+
+        /// <summary>
+        /// Invokes a dialog allowing the user to edit position on the clicked dialog.
+        /// </summary>
+        /// <param name="para"></param>
+        public void EditDiagram(Paragraph para = null)
+        {
+            if (para == null)
+            {
+                para = FindDiagramParagraph(SelectedNode);
+            }
+
+            if (para == null || SelectedNode == null)
+            {
+                return;
+            }
+
+            DiagramSetupDialog dlg = new DiagramSetupDialog(SelectedNode)
+            {
+                Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                Top = AppState.MainWin.Top + 100,
+                Topmost = false,
+                Owner = AppState.MainWin
+            };
+
+            if (dlg.ShowDialog() == true)
+            {
+                BoardPosition pos = dlg.PositionSetup;
+                SelectedNode.Position = new BoardPosition(pos);
+                UpdateDiagram(para, SelectedNode);
+                WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, SelectedNode);
+            }
+        }
+
         /// <summary>
         /// Returns the Node with the passed id.
         /// </summary>
@@ -243,33 +366,13 @@ namespace ChessForge
                         string uicName = _uic_move_ + nodeId.ToString();
                         Inline inlClicked = FindInlineByName(uicName);
                         _rtb.CaretPosition = inlClicked.ElementEnd;
-                        AppState.MainWin.DisplayPosition(nd);
+                        AppState.MainWin.DisplayPosition(_selectedNode);
+
+                        EnableMenuItems(false, true, nd);
 
                         if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
                         {
-                            IntroMoveDialog dlg = new IntroMoveDialog(nd)
-                            {
-                                Left = AppState.MainWin.Left + 100,
-                                Top = AppState.MainWin.Top + 100,
-                                Topmost = false,
-                                Owner = AppState.MainWin
-                            };
-
-                            if (dlg.ShowDialog() == true)
-                            {
-                                _textDirty = true;
-                                AppState.IsDirty = true;
-
-                                nd.LastMoveAlgebraicNotation = dlg.MoveText;
-                                r.Text = " " + dlg.MoveText + " ";
-
-                                if (dlg.InsertDialogRequest)
-                                {
-                                    TextSelection sel = _rtb.Selection;
-                                    _rtb.CaretPosition = inlClicked.ElementEnd;
-                                    InsertDiagram(nd);
-                                }
-                            }
+                            EditMove();
                         }
                     }
                 }
@@ -277,6 +380,7 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
         /// <summary>
         /// The diagram paragraph was clicked.
         /// </summary>
@@ -300,28 +404,49 @@ namespace ChessForge
                         _selectedNode = nd;
                         AppState.MainWin.DisplayPosition(nd);
 
+                        EnableMenuItems(true, false, nd);
+
                         if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
                         {
-                            DiagramSetupDialog dlg = new DiagramSetupDialog(SelectedNode)
-                            {
-                                Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                                Top = AppState.MainWin.Top + 100,
-                                Topmost = false,
-                                Owner = AppState.MainWin
-                            };
-
-                            if (dlg.ShowDialog() == true)
-                            {
-                                BoardPosition pos = dlg.PositionSetup;
-                                nd.Position = new BoardPosition(pos);
-                                UpdateDiagram(para, nd);
-                                WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, nd);
-                            }
+                            EditDiagram(para);
                         }
                     }
                 }
             }
             catch { }
+        }
+
+        /// <summary>
+        /// Finds diagram paragraph for a given node.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private Paragraph FindDiagramParagraph(TreeNode nd)
+        {
+            if (nd == null)
+            {
+                return null;
+            }
+
+            Paragraph para = null;
+
+            foreach (Block block in Document.Blocks)
+            {
+                if (block is Paragraph)
+                {
+                    Paragraph p = (Paragraph)block;
+                    if (p.Name.StartsWith(_para_diagram_))
+                    {
+                        if (TextUtils.GetIdFromPrefixedString(p.Name) == nd.NodeId)
+                        {
+                            para = p;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return para;
         }
 
         /// <summary>
