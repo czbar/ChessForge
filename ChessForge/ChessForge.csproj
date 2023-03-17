@@ -160,6 +160,7 @@
     <Compile Include="OpeningStatsView.cs" />
     <Compile Include="OpeningStatsViewRow.cs" />
     <Compile Include="PositionBoardDragEvents.cs" />
+    <Compile Include="PreviousNextViewBars.cs" />
     <Compile Include="Properties\OpeningNames.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
