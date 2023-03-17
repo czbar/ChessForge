@@ -461,6 +461,8 @@
     <Resource Include="Resources\Images\CircleDarkred.png" />
     <Resource Include="Resources\Images\CircleOrange.png" />
     <Resource Include="Resources\Images\CirclePurple.png" />
+    <Resource Include="Resources\Images\LeftArrowChapters.png" />
+    <Resource Include="Resources\Images\RightArrowChapters.png" />
     <Content Include="Resources\Sounds\InvalidMove.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
