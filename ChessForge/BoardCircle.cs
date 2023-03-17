@@ -70,7 +70,7 @@ namespace ChessForge
             TransformedBitmap transformedBitmap = _chessboard.ScaleSource(_circle.Source as BitmapImage);
             _circle.Source = transformedBitmap;
 
-            _circle.Opacity = 0.7;
+            _circle.Opacity = 0.8;
         }
 
         /// <summary>

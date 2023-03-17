@@ -138,9 +138,9 @@ namespace ChessForge
             TransformedBitmap trfCircle = _chessboard.ScaleSource(_circle.Source as BitmapImage);
             _circle.Source = trfCircle;
 
-            _triangle.Opacity = 0.5;
-            _stem.Opacity = 0.5;
-            _circle.Opacity = 0.5;
+            _triangle.Opacity = 0.8;
+            _stem.Opacity = 0.8;
+            _circle.Opacity = 0.8;
 
         }
 
