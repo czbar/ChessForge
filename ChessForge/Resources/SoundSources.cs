@@ -15,5 +15,7 @@ namespace ChessForge
         public static Uri Move = new Uri("pack://siteoforigin:,,,/Resources/Sounds/Move.mp3", UriKind.RelativeOrAbsolute);
         public static Uri Capture = new Uri("pack://siteoforigin:,,,/Resources/Sounds/Capture.mp3", UriKind.RelativeOrAbsolute);
         public static Uri InvalidMove = new Uri("pack://siteoforigin:,,,/Resources/Sounds/InvalidMove.mp3", UriKind.RelativeOrAbsolute);
+        public static Uri EndOfLine = new Uri("pack://siteoforigin:,,,/Resources/Sounds/EndOfLine.mp3", UriKind.RelativeOrAbsolute);
+        public static Uri NotInWorkbook = new Uri("pack://siteoforigin:,,,/Resources/Sounds/NotInWorkbook.mp3", UriKind.RelativeOrAbsolute);
     }
 }
