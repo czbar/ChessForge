@@ -463,6 +463,12 @@
     <Resource Include="Resources\Images\CirclePurple.png" />
     <Resource Include="Resources\Images\LeftArrowChapters.png" />
     <Resource Include="Resources\Images\RightArrowChapters.png" />
+    <Resource Include="Resources\Images\undo_16.png" />
+    <Resource Include="Resources\Images\format_bold.png" />
+    <Resource Include="Resources\Images\format_italic.png" />
+    <Resource Include="Resources\Images\left_indent.png" />
+    <Resource Include="Resources\Images\right_indent.png" />
+    <Resource Include="Resources\Images\format_underline.png" />
     <Content Include="Resources\Sounds\InvalidMove.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
