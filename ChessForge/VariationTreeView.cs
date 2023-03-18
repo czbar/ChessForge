@@ -304,7 +304,7 @@ namespace ChessForge
 
             Clear(GameData.ContentType.GENERIC);
 
-            BuildPreviousNextBar(contentType);
+            PreviousNextViewBars.BuildPreviousNextBar(contentType);
 
             Document.Blocks.Add(BuildDummyPararaph());
 
@@ -811,7 +811,7 @@ namespace ChessForge
         {
             Document.Blocks.Clear();
 
-            BuildPreviousNextBar(contentType);
+            PreviousNextViewBars.BuildPreviousNextBar(contentType);
 
             // resets
             _dictNodeToRun.Clear();
@@ -837,174 +837,6 @@ namespace ChessForge
             dummy.Margin = new Thickness(0, 0, 0, 0);
             dummy.Inlines.Add(new Run(""));
             return dummy;
-        }
-
-        /// <summary>
-        /// Populates or hides the Previous/Next game/exercise bar above the tree view
-        /// as appropriate.
-        /// </summary>
-        /// <param name="contentType"></param>
-        private void BuildPreviousNextBar(GameData.ContentType contentType)
-        {
-            try
-            {
-                switch (contentType)
-                {
-                    case GameData.ContentType.STUDY_TREE:
-                        BuildPreviousNextChapterBar();
-                        break;
-                    case GameData.ContentType.MODEL_GAME:
-                        BuildPreviousNextModelGameBar();
-                        break;
-                    case GameData.ContentType.EXERCISE:
-                        BuildPreviousNextExerciseBar();
-                        break;
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
-        /// Builds the Previous/Next bar for Chapter/Study Tree view.
-        /// </summary>
-        private void BuildPreviousNextChapterBar()
-        {
-            int chapterCount = 0;
-            int chapterIndex = -1;
-
-            if (WorkbookManager.SessionWorkbook != null)
-            {
-                chapterCount = WorkbookManager.SessionWorkbook.GetChapterCount();
-                chapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex;
-            }
-
-            if (chapterCount > 1)
-            {
-                _mainWin.UiGridStudyTreePrevNext.Visibility = Visibility.Visible;
-                _mainWin.UiGridStudyTree.RowDefinitions[0].Height = GridLength.Auto;
-                _mainWin.UiRtbStudyTreeView.Height = 620;
-
-                string counter = ResourceUtils.GetCounterBarText("Chapter", chapterIndex, chapterCount);
-                _mainWin.UiLblChapterCounter.Content = counter;
-                if (chapterIndex == 0)
-                {
-                    _mainWin.UiImgChapterRightArrow.Visibility = Visibility.Visible;
-                    _mainWin.UiImgChapterLeftArrow.Visibility = Visibility.Hidden;
-                }
-                else if (chapterIndex == chapterCount - 1)
-                {
-                    _mainWin.UiImgChapterRightArrow.Visibility = Visibility.Hidden;
-                    _mainWin.UiImgChapterLeftArrow.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    _mainWin.UiImgChapterRightArrow.Visibility = Visibility.Visible;
-                    _mainWin.UiImgChapterLeftArrow.Visibility = Visibility.Visible;
-                }
-            }
-            else
-            {
-                _mainWin.UiGridStudyTreePrevNext.Visibility = Visibility.Collapsed;
-                _mainWin.UiGridStudyTree.RowDefinitions[0].Height = new GridLength(0);
-                _mainWin.UiRtbStudyTreeView.Height = 640;
-            }
-        }
-
-
-        /// <summary>
-        /// Builds the Previous/Next bar for Model Games view.
-        /// </summary>
-        private void BuildPreviousNextModelGameBar()
-        {
-            int gameCount = 0;
-            int gameIndex = -1;
-
-            if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
-            {
-                gameCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount();
-                gameIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex;
-            }
-
-
-            if (gameCount > 1)
-            {
-                _mainWin.UiGridModelGamePrevNext.Visibility = Visibility.Visible;
-                _mainWin.UiGridModelGames.RowDefinitions[0].Height = GridLength.Auto;
-                _mainWin.UiRtbModelGamesView.Height = 620;
-
-                string counter = ResourceUtils.GetCounterBarText("Game", gameIndex, gameCount);
-                _mainWin.UiLblGameCounter.Content = counter;
-
-                if (gameIndex == 0)
-                {
-                    _mainWin.UiImgModelGameRightArrow.Visibility = Visibility.Visible;
-                    _mainWin.UiImgModelGameLeftArrow.Visibility = Visibility.Hidden;
-                }
-                else if (gameIndex == gameCount - 1)
-                {
-                    _mainWin.UiImgModelGameRightArrow.Visibility = Visibility.Hidden;
-                    _mainWin.UiImgModelGameLeftArrow.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    _mainWin.UiImgModelGameRightArrow.Visibility = Visibility.Visible;
-                    _mainWin.UiImgModelGameLeftArrow.Visibility = Visibility.Visible;
-                }
-            }
-            else
-            {
-                _mainWin.UiGridModelGamePrevNext.Visibility = Visibility.Collapsed;
-                _mainWin.UiGridModelGames.RowDefinitions[0].Height = new GridLength(0);
-                _mainWin.UiRtbModelGamesView.Height = 640;
-            }
-        }
-
-        /// <summary>
-        /// Builds the Previous/Next bar for the Exercises view.
-        /// </summary>
-        private void BuildPreviousNextExerciseBar()
-        {
-            int exerciseCount = 0;
-            int exerciseIndex = -1;
-
-            if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
-            {
-                exerciseCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount();
-                exerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex;
-            }
-
-            if (exerciseCount > 1)
-            {
-                _mainWin.UiGridExercisePrevNext.Visibility = Visibility.Visible;
-                _mainWin.UiGridExercises.RowDefinitions[0].Height = GridLength.Auto;
-                _mainWin.UiRtbExercisesView.Height = 620;
-
-                string counter = ResourceUtils.GetCounterBarText("Exercise", exerciseIndex, exerciseCount);
-                _mainWin.UiLblExerciseCounter.Content = counter;
-                if (exerciseIndex == 0)
-                {
-                    _mainWin.UiImgExerciseRightArrow.Visibility = Visibility.Visible;
-                    _mainWin.UiImgExerciseLeftArrow.Visibility = Visibility.Hidden;
-                }
-                else if (exerciseIndex == exerciseCount - 1)
-                {
-                    _mainWin.UiImgExerciseRightArrow.Visibility = Visibility.Hidden;
-                    _mainWin.UiImgExerciseLeftArrow.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    _mainWin.UiImgExerciseRightArrow.Visibility = Visibility.Visible;
-                    _mainWin.UiImgExerciseLeftArrow.Visibility = Visibility.Visible;
-                }
-            }
-            else
-            {
-                _mainWin.UiGridExercisePrevNext.Visibility = Visibility.Collapsed;
-                _mainWin.UiGridExercises.RowDefinitions[0].Height = new GridLength(0);
-                _mainWin.UiRtbExercisesView.Height = 640;
-            }
         }
 
         /// <summary>
@@ -1666,7 +1498,7 @@ namespace ChessForge
             {
                 if (!includeNumber && nd.Position.MoveNumber != 1)
                 {
-                    sb.Append(" ");
+                    //sb.Append(" ");
                 }
                 sb.Append(nd.Position.MoveNumber.ToString() + ".");
             }
@@ -1678,10 +1510,11 @@ namespace ChessForge
 
             if (nd.Position.ColorToMove == PieceColor.White)
             {
-                sb.Append(" ");
+                //sb.Append(" ");
             }
 
             sb.Append(nd.GetGuiPlyText(true));
+            sb.Append(" ");
             return sb.ToString();
         }
 
@@ -1787,10 +1620,10 @@ namespace ChessForge
                     return;
                 }
 
-                CommentPart startPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? "[" : " [");
+                CommentPart startPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? "[ " : "[ ");
                 parts.Insert(0, startPart);
 
-                CommentPart lastPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? "] " : "]");
+                CommentPart lastPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? " ] " : " ] ");
                 parts.Add(lastPart);
 
                 Inline inlPrevious = null;

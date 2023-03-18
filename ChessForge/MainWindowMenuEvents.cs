@@ -805,7 +805,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnChptCreateIntro_Click(object sender, RoutedEventArgs e)
+        public void UiMnChptCreateIntro_Click(object sender, RoutedEventArgs e)
         {
             Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[WorkbookManager.LastClickedChapterIndex];
             if (chapter != null)
@@ -3070,7 +3070,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// User wants to create a new diagram in the Intro view.
+        /// The user wants to create a new diagram in the Intro view.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -3079,6 +3079,32 @@ namespace ChessForge
             if (_introView != null)
             {
                 _introView.CreateDiagram();
+            }
+        }
+
+        /// <summary>
+        /// Editing of a diagram in the Intro view was requested.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCmiEditDiagram_Click(object sender, RoutedEventArgs e)
+        {
+            if (_introView != null)
+            {
+                _introView.EditDiagram();
+            }
+        }
+
+        /// <summary>
+        /// Editing of a move in the Intro view was requested.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCmiEditMove_Click(object sender, RoutedEventArgs e)
+        {
+            if (_introView != null)
+            {
+                _introView.EditMove();
             }
         }
 

@@ -721,6 +721,11 @@ namespace ChessForge
             {
                 view.Clear(contentType);
             }
+            else
+            {
+                // need to build an empty bar or we end up with PLACEHOLDER rubbish
+                PreviousNextViewBars.BuildPreviousNextBar(contentType);
+            }
         }
 
 
