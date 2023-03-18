@@ -304,7 +304,7 @@ namespace ChessForge
 
             Clear(GameData.ContentType.GENERIC);
 
-            BuildPreviousNextBar(contentType);
+            PreviousNextViewBars.BuildPreviousNextBar(contentType);
 
             Document.Blocks.Add(BuildDummyPararaph());
 
@@ -811,7 +811,7 @@ namespace ChessForge
         {
             Document.Blocks.Clear();
 
-            BuildPreviousNextBar(contentType);
+            PreviousNextViewBars.BuildPreviousNextBar(contentType);
 
             // resets
             _dictNodeToRun.Clear();
