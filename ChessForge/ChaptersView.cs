@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -70,6 +71,7 @@ namespace ChessForge
         private readonly string _run_chapter_title_ = "_run_chapter_title_";
         private readonly string _run_study_tree_ = "study_tree_";
         private readonly string _run_intro_ = "intro_";
+        private readonly string _run_create_intro_ = "create_intro_";
 
         private readonly string _run_model_games_header_ = "_run_model_games_";
         private readonly string _run_model_game_ = "_run_model_game_";
@@ -188,9 +190,11 @@ namespace ChessForge
                     if (introVisible && introRun == null)
                     {
                         InsertIntroRun(para, chapter, studyRun);
+                        RemoveCreateIntroRun(para);
                     }
                     else if (!introVisible && introRun != null)
                     {
+                        InsertCreateIntroRun(para, chapter, studyRun);
                         para.Inlines.Remove(introRun);
                     }
                 }
@@ -199,6 +203,29 @@ namespace ChessForge
             {
             }
         }
+
+        /// <summary>
+        /// Remove the CrateIntro run if found.
+        /// </summary>
+        /// <param name="para"></param>
+        private void RemoveCreateIntroRun(Paragraph para)
+        {
+            Run createIntro = null;
+
+            foreach (Inline inl in para.Inlines)
+            {
+                if (inl is Run)
+                {
+                    if (inl.Name.StartsWith(_run_create_intro_))
+                    {
+                        createIntro = inl as Run;
+                    }
+                }
+            }
+
+            para.Inlines.Remove(createIntro);
+        }
+
 
         /// <summary>
         /// Brings the title line of the chapter into view.
@@ -360,11 +387,6 @@ namespace ChessForge
             }
         }
 
-        private void RTitle_MouseMove(object sender, MouseEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Finds the Paragraph for a given chapter.
         /// </summary>
@@ -461,7 +483,6 @@ namespace ChessForge
         /// <returns></returns>
         private Run InsertStudyRun(Paragraph para, Chapter chapter)
         {
-//            para.Inlines.Add(new Run("\n"));
             string res = Resources.Study;
             Run r = CreateRun(STYLE_SUBHEADER, "\n" + SUBHEADER_INDENT + res, true);
             r.Name = _run_study_tree_ + chapter.Index.ToString();
@@ -486,7 +507,6 @@ namespace ChessForge
         {
             if (chapter.ShowIntro)
             {
-                //para.Inlines.Add(new Run("\n"));
                 string res = Resources.Intro;
                 Run r = CreateRun(STYLE_SUBHEADER, "\n" + SUBHEADER_INDENT + res, true);
                 r.Name = _run_intro_ + chapter.Index.ToString();
@@ -509,8 +529,37 @@ namespace ChessForge
             }
             else
             {
+                InsertCreateIntroRun(para, chapter, studyRun);
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Creates a Run advising the user of the option to create an Intro tab 
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="chapter"></param>
+        /// <param name="studyRun"></param>
+        /// <returns></returns>
+        private Run InsertCreateIntroRun(Paragraph para, Chapter chapter, Run studyRun = null)
+        {
+            string res = Resources.CreateIntro;
+            Run r = CreateRun(STYLE_SUBHEADER, "\n" + SUBHEADER_INDENT + "  " + res, true);
+            r.Name = _run_create_intro_ + chapter.Index.ToString();
+            r.FontWeight = FontWeights.Normal;
+            r.FontStyle = FontStyles.Italic;
+            r.Foreground = Brushes.Gray;
+            r.FontSize -= 2;
+            r.MouseDown += EventCreateIntroHeaderClicked;
+            if (studyRun == null)
+            {
+                para.Inlines.Add(r);
+            }
+            else
+            {
+                para.Inlines.InsertBefore(studyRun, r);
+            }
+            return r;
         }
 
         /// <summary>
@@ -1390,6 +1439,31 @@ namespace ChessForge
                         SelectChapter(chapterIndex, false);
                     }
                     _mainWin.UiTabIntro.Focus();
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("Exception in EventIntroRunClicked(): " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// A Create Intro line was clicked.
+        /// Add the Intro tab and switch the focus there.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventCreateIntroHeaderClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Run r = (Run)e.Source;
+                int chapterIndex = TextUtils.GetIdFromPrefixedString(r.Name);
+                if (chapterIndex >= 0)
+                {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
+                    WorkbookManager.LastClickedChapterIndex = chapterIndex;
+                    _mainWin.UiMnChptCreateIntro_Click(null, null);
                 }
             }
             catch (Exception ex)
