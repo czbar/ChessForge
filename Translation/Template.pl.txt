@@ -262,6 +262,33 @@ Stalemate=pat
 #english: GameExerciseReferences=Game and Exercise References
 GameExerciseReferences=Odsyłacze do Partii i Ćwiczeń
 
+##################################
+#
+# EDITING
+#
+
+#description: Font bold
+#english: FontBold=Bold
+FontBold=Pogrubienie
+
+#description: Font italic
+#english: FontItalic=Italic
+FontItalic=Kursywa
+
+#description: Font underscore
+#english: FontUnderline=Underline
+FontUnderline=Podkreślenie
+
+#description: Increase indent
+#english: IncreaseIndent=Increase Indent
+IncreaseIndent=Zwiększ wcięcie
+
+#description: Decrease indent
+#english: DecreaseIndent=Decrease Indent
+DecreaseIndent=Zmniejsz wcięcie
+
+
+
 
 ##################################
 #
@@ -440,7 +467,7 @@ AnalysisEngine=Wybór Silnika
 
 #description: Increase font size
 #english: IncreaseFontSize=Increase Font Size
-IncreaseFontSize=Powiększ Czcionkę
+IncreaseFontSize=Zwiększ Czcionkę
 
 #description: Decrease font size
 #english: DecreaseFontSize=Decrease Font Size

@@ -262,6 +262,33 @@ Stalemate=
 #english: GameExerciseReferences=Game and Exercise References
 GameExerciseReferences=
 
+##################################
+#
+# EDITING
+#
+
+#description: Font bold
+#english: FontBold=Bold
+FontBold=
+
+#description: Font italic
+#english: FontItalic=Italic
+FontItalic=
+
+#description: Font underscore
+#english: FontUnderline=Underline
+FontUnderline=
+
+#description: Increase indent
+#english: IncreaseIndent=Increase Indent
+IncreaseIndent=
+
+#description: Decrease indent
+#english: DecreaseIndent=Decrease Indent
+DecreaseIndent=
+
+
+
 
 ##################################
 #

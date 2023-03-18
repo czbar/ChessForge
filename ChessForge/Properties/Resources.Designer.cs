@@ -988,6 +988,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Decrease Indent.
+        /// </summary>
+        public static string DecreaseIndent {
+            get {
+                return ResourceManager.GetString("DecreaseIndent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete All Bookmarks.
         /// </summary>
         public static string DeleteAllBookmarks {
@@ -1789,6 +1798,33 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bold.
+        /// </summary>
+        public static string FontBold {
+            get {
+                return ResourceManager.GetString("FontBold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Italic.
+        /// </summary>
+        public static string FontItalic {
+            get {
+                return ResourceManager.GetString("FontItalic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Underline.
+        /// </summary>
+        public static string FontUnderline {
+            get {
+                return ResourceManager.GetString("FontUnderline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Free and Open Source Software (FOSS).
         /// </summary>
         public static string FreeAndOpenSource {
@@ -2073,6 +2109,15 @@ namespace ChessForge.Properties {
         public static string IncreaseFontSize {
             get {
                 return ResourceManager.GetString("IncreaseFontSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Increase Indent.
+        /// </summary>
+        public static string IncreaseIndent {
+            get {
+                return ResourceManager.GetString("IncreaseIndent", resourceCulture);
             }
         }
         

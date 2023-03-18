@@ -300,6 +300,21 @@
   <data name="GameExerciseReferences" xml:space="preserve">
     <value>Game and Exercise References</value>
   </data>
+  <data name="FontBold" xml:space="preserve">
+    <value>Bold</value>
+  </data>
+  <data name="FontItalic" xml:space="preserve">
+    <value>Italic</value>
+  </data>
+  <data name="FontUnderline" xml:space="preserve">
+    <value>Underline</value>
+  </data>
+  <data name="IncreaseIndent" xml:space="preserve">
+    <value>Increase Indent</value>
+  </data>
+  <data name="DecreaseIndent" xml:space="preserve">
+    <value>Decrease Indent</value>
+  </data>
   <data name="ErrFound" xml:space="preserve">
     <value>Found</value>
   </data>

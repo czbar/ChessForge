@@ -201,6 +201,28 @@ Stalemate=stalemate
 #Game and Exercise References
 GameExerciseReferences=Game and Exercise References
 
+##################################
+#
+# EDITING
+#
+
+#Font bold
+FontBold=Bold
+
+#Font italic
+FontItalic=Italic
+
+#Font underscore
+FontUnderline=Underline
+
+#Increase indent
+IncreaseIndent=Increase Indent
+
+#Decrease indent
+DecreaseIndent=Decrease Indent
+
+
+
 
 ##################################
 #
