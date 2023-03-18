@@ -17,7 +17,7 @@ namespace ChessForge
     public class PreviousNextViewBars
     {
         /// <summary>
-        /// Populates or hides the Previous/Next game/exercise bar above the tree view
+        /// Populates the Previous/Next bar above the main view
         /// as appropriate.
         /// </summary>
         /// <param name="contentType"></param>
@@ -28,31 +28,28 @@ namespace ChessForge
                 switch (contentType)
                 {
                     case GameData.ContentType.STUDY_TREE:
-                        BuildPreviousNextChapterBar();
-                        break;
                     case GameData.ContentType.INTRO:
-                        //BuildPreviousNextIntroBar();
-                        BuildPreviousNextChapterBar();
                         break;
                     case GameData.ContentType.MODEL_GAME:
-                        BuildPreviousNextModelGameBar();
-                        BuildPreviousNextChapterBar();
+                        SetModelGameCounterControls();
                         break;
                     case GameData.ContentType.EXERCISE:
-                        BuildPreviousNextExerciseBar();
-                        BuildPreviousNextChapterBar();
+                        SetExerciseCounterControls();
                         break;
                 }
+                SetChapterCounterControls(contentType);
             }
             catch
             {
             }
         }
 
+
         /// <summary>
-        /// Builds the Previous/Next bar for Chapter/Study Tree view.
+        /// Sets the chapter counter controls
         /// </summary>
-        private static void BuildPreviousNextChapterBar()
+        /// <param name="contentType"></param>
+        private static void SetChapterCounterControls(GameData.ContentType contentType)
         {
             MainWindow mainWin = AppState.MainWin;
 
@@ -65,11 +62,12 @@ namespace ChessForge
                 chapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex;
             }
 
-            if (chapterCount >= 1)
+            if (GetChapterCounterControls(contentType, out Image imgLeftArrow, out Image imgRightArrow, out Label lblCounter))
             {
-                SetupElements(mainWin.UiImgChapterLeftArrow,
-                              mainWin.UiImgChapterRightArrow,
-                              mainWin.UiLblExerciseCounter,
+
+                SetupElements(imgLeftArrow,
+                              imgRightArrow,
+                              lblCounter,
                               "Chapter",
                               chapterIndex,
                               chapterCount);
@@ -79,7 +77,7 @@ namespace ChessForge
         /// <summary>
         /// Builds the Previous/Next bar for Model Games view.
         /// </summary>
-        private static void BuildPreviousNextModelGameBar()
+        private static void SetModelGameCounterControls()
         {
             MainWindow mainWin = AppState.MainWin;
 
@@ -92,21 +90,18 @@ namespace ChessForge
                 gameIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex;
             }
 
-            if (gameCount > 0)
-            {
-                SetupElements(mainWin.UiImgModelGameLeftArrow,
-                              mainWin.UiImgModelGameRightArrow,
-                              mainWin.UiLblExerciseCounter,
-                              "Game",
-                              gameIndex,
-                              gameCount);
-            }
+            SetupElements(mainWin.UiImgModelGameLeftArrow,
+                          mainWin.UiImgModelGameRightArrow,
+                          mainWin.UiLblGameCounter,
+                          "Game",
+                          gameIndex,
+                          gameCount);
         }
 
         /// <summary>
         /// Builds the Previous/Next bar for the Exercises view.
         /// </summary>
-        private static void BuildPreviousNextExerciseBar()
+        private static void SetExerciseCounterControls()
         {
             MainWindow mainWin = AppState.MainWin;
 
@@ -119,15 +114,12 @@ namespace ChessForge
                 exerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex;
             }
 
-            if (exerciseCount > 0)
-            {
-                SetupElements(mainWin.UiImgExerciseLeftArrow,
-                              mainWin.UiImgExerciseRightArrow,
-                              mainWin.UiLblExerciseCounter,
-                              "Exercise",
-                              exerciseIndex,
-                              exerciseCount);
-            }
+            SetupElements(mainWin.UiImgExerciseLeftArrow,
+                          mainWin.UiImgExerciseRightArrow,
+                          mainWin.UiLblExerciseCounter,
+                          "Exercise",
+                          exerciseIndex,
+                          exerciseCount);
         }
 
         /// <summary>
@@ -153,6 +145,7 @@ namespace ChessForge
 
                 imgRightArrow.Visibility = Visibility.Visible;
                 imgLeftArrow.Visibility = Visibility.Visible;
+                lblCounter.Visibility = Visibility.Visible;
 
                 if (itemIndex == 0)
                 {
@@ -170,6 +163,54 @@ namespace ChessForge
                 imgRightArrow.Visibility = Visibility.Collapsed;
                 imgLeftArrow.Visibility = Visibility.Collapsed;
             }
+        }
+
+
+        /// <summary>
+        /// Returns the controls to use for the chapter counter.
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <param name="imgLeftArrow"></param>
+        /// <param name="imgRightArrow"></param>
+        /// <param name="lblCounter"></param>
+        /// <returns></returns>
+        private static bool GetChapterCounterControls(GameData.ContentType contentType, out Image imgLeftArrow, out Image imgRightArrow, out Label lblCounter)
+        {
+            bool res = true;
+            imgLeftArrow = null;
+            imgRightArrow = null;
+            lblCounter = null;
+
+            MainWindow mainWin = AppState.MainWin;
+
+            switch (contentType)
+            {
+                case GameData.ContentType.INTRO:
+                    imgLeftArrow = mainWin.UiIntroImgLeftArrowChapter;
+                    imgRightArrow = mainWin.UiIntroImgRightArrowChapter;
+                    lblCounter = mainWin.UiIntroLblCounterChapter;
+                    break;
+                case GameData.ContentType.STUDY_TREE:
+                    imgLeftArrow = mainWin.UiImgChapterLeftArrow;
+                    imgRightArrow = mainWin.UiImgChapterRightArrow;
+                    lblCounter = mainWin.UiLblChapterCounter;
+                    break;
+                case GameData.ContentType.MODEL_GAME:
+                    imgLeftArrow = mainWin.UiGamesImgLeftArrowChapter;
+                    imgRightArrow = mainWin.UiGamesImgRightArrowChapter;
+                    lblCounter = mainWin.UiGamesLblCounterChapter;
+                    break;
+                case GameData.ContentType.EXERCISE:
+                    imgLeftArrow = mainWin.UiExerciseImgLeftArrowChapter;
+                    imgRightArrow = mainWin.UiExerciseImgRightArrowChapter;
+                    lblCounter = mainWin.UiExerciseLblCounterChapter;
+                    break;
+                default:
+                    res = false;
+                    break;
+            }
+
+            return res;
         }
     }
 }
