@@ -805,7 +805,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnChptCreateIntro_Click(object sender, RoutedEventArgs e)
+        public void UiMnChptCreateIntro_Click(object sender, RoutedEventArgs e)
         {
             Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[WorkbookManager.LastClickedChapterIndex];
             if (chapter != null)
