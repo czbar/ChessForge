@@ -1498,7 +1498,7 @@ namespace ChessForge
             {
                 if (!includeNumber && nd.Position.MoveNumber != 1)
                 {
-                    sb.Append(" ");
+                    //sb.Append(" ");
                 }
                 sb.Append(nd.Position.MoveNumber.ToString() + ".");
             }
@@ -1510,10 +1510,11 @@ namespace ChessForge
 
             if (nd.Position.ColorToMove == PieceColor.White)
             {
-                sb.Append(" ");
+                //sb.Append(" ");
             }
 
             sb.Append(nd.GetGuiPlyText(true));
+            sb.Append(" ");
             return sb.ToString();
         }
 
@@ -1619,10 +1620,10 @@ namespace ChessForge
                     return;
                 }
 
-                CommentPart startPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? "[" : " [");
+                CommentPart startPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? "[ " : "[ ");
                 parts.Insert(0, startPart);
 
-                CommentPart lastPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? "] " : "]");
+                CommentPart lastPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? " ] " : " ] ");
                 parts.Add(lastPart);
 
                 Inline inlPrevious = null;
