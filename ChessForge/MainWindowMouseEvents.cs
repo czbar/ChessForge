@@ -968,6 +968,7 @@ namespace ChessForge
                     UiRtbIntroView.IsDocumentEnabled = true;
                     UiRtbIntroView.AllowDrop = false;
                     _introView = new IntroView(UiRtbIntroView.Document, WorkbookManager.SessionWorkbook.ActiveChapter);
+                    PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.INTRO);
                 }
                 DisplayPosition(_introView.SelectedNode);
             }
