@@ -413,6 +413,9 @@
     <Resource Include="ChessForge2.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Sounds\NotInWorkbook.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Images\exit.png" />
     <Resource Include="Resources\Images\FirstMove.png" />
     <Resource Include="Resources\Images\LastMove.png" />
@@ -469,6 +472,9 @@
     <Resource Include="Resources\Images\left_indent.png" />
     <Resource Include="Resources\Images\right_indent.png" />
     <Resource Include="Resources\Images\format_underline.png" />
+    <Content Include="Resources\Sounds\EndOfLine.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Sounds\InvalidMove.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

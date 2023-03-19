@@ -213,8 +213,15 @@ namespace ChessForge
 
             if (AppState.MainWin.ActiveTreeView != null && AppState.ActiveTab != WorkbookManager.TabViewType.INTRO)
             {
-                AppState.DoEvents();
-                AppState.MainWin.ActiveTreeView.BringSelectedRunIntoView();
+                try
+                {
+                    AppState.DoEvents();
+                    // it is possible that since the check above ActiveTreeView was set to null! Hence the try block.
+                    AppState.MainWin.ActiveTreeView.BringSelectedRunIntoView();
+                }
+                catch
+                {
+                }
             }
 
             _processingMouseUp = false;

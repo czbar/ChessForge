@@ -932,6 +932,7 @@ namespace ChessForge
                         if (!isWorkbookMove)
                         {
                             sbAlignmentNote.Append(Properties.Resources.TrnLineEnded + ". ");
+                            SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.END_OF_LINE);
                         }
                         wbAlignmentNoteRun.Text = sbAlignmentNote.ToString();
                         para.Inlines.Add(wbAlignmentNoteRun);
@@ -940,6 +941,7 @@ namespace ChessForge
                     {
                         if (!isWorkbookMove)
                         {
+                            SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.NOT_IN_WORKBOOK);
                             string note = "";
                             switch (_sourceType)
                             {

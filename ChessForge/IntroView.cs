@@ -10,7 +10,6 @@ using System.Windows.Controls;
 using GameTree;
 using System.Windows.Media;
 using System.Windows.Input;
-using System.Windows.Media.TextFormatting;
 
 namespace ChessForge
 {
@@ -48,6 +47,7 @@ namespace ChessForge
         private readonly string _tb_move_ = "tb_move_";
         private readonly string _uic_move_ = "uic_move_";
         private readonly string _para_diagram_ = "para_diag_";
+        private readonly string _flip_img_ = "flip_img_";
 
         // current highest run id (it is 0 initially, because we have the root node)
         private int _maxRunId = 0;
@@ -66,15 +66,14 @@ namespace ChessForge
         // refrence to the RichTextBox of this view.
         private RichTextBox _rtb = AppState.MainWin.UiRtbIntroView;
 
-        // flag to use to prevent unnecessary saving after the load.
-        private bool _ignoreTextChange = false;
-
         /// <summary>
         /// Constructor. Builds the content if not empty.
         /// Initializes data structures.
         /// </summary>
         public IntroView(FlowDocument doc, Chapter parentChapter) : base(doc)
         {
+            bool isAppDirty = AppState.IsDirty;
+
             Document.Blocks.Clear();
 
             ParentChapter = parentChapter;
@@ -83,9 +82,13 @@ namespace ChessForge
             _rtb.TextChanged += UiRtbIntroView_TextChanged;
             if (!string.IsNullOrEmpty(Intro.Tree.RootNode.Data))
             {
-                _ignoreTextChange = true;
                 LoadXAMLContent();
                 SetEventHandlers();
+
+                // as a result of the call to Clear(), the dirty flag were set so reset them
+                _textDirty = false;
+                AppState.IsDirty = isAppDirty;
+
             }
             Nodes[0].Position = PositionUtils.SetupStartingPosition();
             foreach (var node in Nodes)
@@ -103,7 +106,6 @@ namespace ChessForge
         /// </summary>
         public void Clear()
         {
-            _ignoreTextChange = true;
             Document.Blocks.Clear();
         }
 
@@ -141,12 +143,44 @@ namespace ChessForge
         {
             if (_textDirty)
             {
+                RemoveDuplicateNames();
                 string xamlText = XamlWriter.Save(Document);
                 Nodes[0].Data = EncodingUtils.Base64Encode(xamlText);
                 RemoveUnusedNodes();
             }
 
             _textDirty = false;
+        }
+
+        /// <summary>
+        /// Due to RTB idiosyncrasies, there may be multiple
+        /// Paragraphs with the same name which will cause failures
+        /// when loading saved document.
+        /// This method renamed all paragraphs sharing the same name
+        /// except the first one.
+        /// </summary>
+        public void RemoveDuplicateNames()
+        {
+            List<string> names = new List<string>();
+
+            foreach (Block block in Document.Blocks)
+            {
+                if (block is Paragraph)
+                {
+                    string name = block.Name;
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        if (names.Find(x => x == name) == null)
+                        {
+                            names.Add(name);
+                        }
+                        else
+                        {
+                            block.Name = name + Guid.NewGuid().ToString("N");
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -170,6 +204,9 @@ namespace ChessForge
                                 menuItem.Visibility = !isDiagram ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "UiCmiEditDiagram":
+                                menuItem.Visibility = isDiagram && nd != null ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "UiCmiFlipDiagram":
                                 menuItem.Visibility = isDiagram && nd != null ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "UiCmiEditMove":
@@ -330,7 +367,22 @@ namespace ChessForge
                 BoardPosition pos = dlg.PositionSetup;
                 SelectedNode.Position = new BoardPosition(pos);
                 UpdateDiagram(para, SelectedNode);
+                _textDirty = true;
+                AppState.IsDirty = true;
                 WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, SelectedNode);
+            }
+        }
+
+        /// <summary>
+        /// Flips the diagram.
+        /// </summary>
+        public void FlipDiagram()
+        {
+            Paragraph para = FindDiagramParagraph(SelectedNode);
+            if (para != null)
+            {
+                UpdateDiagram(para, SelectedNode, true);
+                return;
             }
         }
 
@@ -417,6 +469,33 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Responds to the click on the "flip" image
+        /// by effecting the flip.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventFlipRequest(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Image)
+            {
+                try
+                {
+                    Image image = sender as Image;
+                    int nodeId = TextUtils.GetIdFromPrefixedString(image.Name);
+                    TreeNode nd = GetNodeById(nodeId);
+                    if (nd != null)
+                    {
+                        _selectedNode = nd;
+                        FlipDiagram();
+                    }
+                }
+                catch
+                {
+                }
+            }
+        }
+
+        /// <summary>
         /// Finds diagram paragraph for a given node.
         /// </summary>
         /// <param name="nd"></param>
@@ -463,6 +542,12 @@ namespace ChessForge
                     if (p.Name.StartsWith(_para_diagram_))
                     {
                         p.MouseDown += EventDiagramClicked;
+
+                        Image flipImg = FindFlipImage(p);
+                        if (flipImg != null)
+                        {
+                            flipImg.MouseDown += EventFlipRequest;
+                        }
                     }
                     foreach (Inline inl in p.Inlines)
                     {
@@ -560,7 +645,10 @@ namespace ChessForge
         {
             try
             {
-                DiagramSetupDialog dlg = new DiagramSetupDialog(SelectedNode)
+                TreeNode node = new TreeNode(null, "", 0);
+                node.Position = new BoardPosition(SelectedNode.Position);
+
+                DiagramSetupDialog dlg = new DiagramSetupDialog(node)
                 {
                     Left = AppState.MainWin.ChessForgeMain.Left + 100,
                     Top = AppState.MainWin.Top + 100,
@@ -571,10 +659,11 @@ namespace ChessForge
                 if (dlg.ShowDialog() == true)
                 {
                     BoardPosition pos = dlg.PositionSetup;
-                    TreeNode node = new TreeNode(null, "", 0);
                     node.Position = new BoardPosition(pos);
 
                     InsertDiagram(node);
+                    _textDirty = true;
+                    AppState.IsDirty = true;
                 }
             }
             catch (Exception ex)
@@ -593,8 +682,7 @@ namespace ChessForge
             Paragraph nextPara = tp.Paragraph;
 
             // need copy of the node as we may need the original for a move Run
-            TreeNode node = new TreeNode(null, "", 0);
-            node.Position = new BoardPosition(nd.Position);
+            TreeNode node = nd.CloneMe(true);
             int node_id = AddNode(node);
             _selectedNode = node;
 
@@ -607,6 +695,7 @@ namespace ChessForge
 
             AppState.MainWin.DisplayPosition(node);
 
+            _textDirty = true;
             AppState.IsDirty = true;
 
             Document.Blocks.InsertBefore(nextPara, para);
@@ -619,7 +708,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="para"></param>
         /// <param name="nd"></param>
-        public void UpdateDiagram(Paragraph para, TreeNode nd)
+        public void UpdateDiagram(Paragraph para, TreeNode nd, bool flip = false)
         {
             IntroViewDiagram diag = DiagramList.Find(x => x.Node.NodeId == nd.NodeId);
             if (diag == null)
@@ -627,11 +716,25 @@ namespace ChessForge
                 diag = new IntroViewDiagram();
                 diag.Node = nd;
             }
-            CreateDiagramElements(para, diag, nd);
+
+            bool flipState = GetDiagramFlipState(para);
+            if (flip)
+            {
+                flipState = !flipState;
+            }
+
+            CreateDiagramElements(para, diag, nd, flipState);
             DiagramList.Add(diag);
+
+            if (flipState)
+            {
+                diag.Chessboard.FlipBoard();
+            }
+
             diag.Chessboard.DisplayPosition(nd, true);
             AppState.MainWin.DisplayPosition(nd);
 
+            _textDirty = true;
             AppState.IsDirty = true;
         }
 
@@ -674,6 +777,7 @@ namespace ChessForge
                 // set caret to the end of the new move
                 _rtb.CaretPosition = uic.ElementEnd;
 
+                _textDirty = true;
                 AppState.IsDirty = true;
             }
             catch (Exception ex)
@@ -800,7 +904,7 @@ namespace ChessForge
             para.Margin = new Thickness(20, 20, 0, 20);
             para.Name = _para_diagram_ + nd.NodeId.ToString();
 
-            CreateDiagramElements(para, diag, nd);
+            CreateDiagramElements(para, diag, nd, false);
             return para;
         }
 
@@ -811,21 +915,212 @@ namespace ChessForge
         /// <param name="diag"></param>
         /// <param name="nd"></param>
         /// <returns></returns>
-        private Paragraph CreateDiagramElements(Paragraph para, IntroViewDiagram diag, TreeNode nd)
+        private Paragraph CreateDiagramElements(Paragraph para, IntroViewDiagram diag, TreeNode nd, bool flipState)
         {
             para.Inlines.Clear();
-            Canvas canvas = SetupDiagramCanvas();
-            Image imgChessBoard = CreateChessBoard(canvas, diag);
+            Canvas baseCanvas = SetupDiagramCanvas();
+            Image imgChessBoard = CreateChessBoard(baseCanvas, diag);
             diag.Chessboard.EnableShapes(true, nd);
+            baseCanvas.Children.Add(imgChessBoard);
 
-            canvas.Children.Add(imgChessBoard);
-            Viewbox viewBox = SetupDiagramViewbox(canvas);
+            Canvas sideCanvas = CreateDiagramSideCanvas(baseCanvas);
+            CreateDiagramFlipImage(sideCanvas, nd);
+            
+            // add invisible checkbox holding the flipped state
+            CreateFlippedCheckBox(baseCanvas, flipState);
+
+            Viewbox viewBox = SetupDiagramViewbox(baseCanvas);
 
             InlineUIContainer uic = new InlineUIContainer();
             uic.Child = viewBox;
             uic.Name = _uic_move_ + nd.NodeId.ToString();
             para.Inlines.Add(uic);
             return para;
+        }
+
+        /// <summary>
+        /// Creates a canvas on the outside of the main canvas to host the flip image.
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        private Canvas CreateDiagramSideCanvas(Canvas parent)
+        {
+            Canvas sideCanvas = new Canvas();
+            sideCanvas.Width = 20;
+            sideCanvas.Height = parent.Height + 2;
+            sideCanvas.Background = Brushes.White;
+            parent.Children.Add(sideCanvas);
+            Canvas.SetLeft(sideCanvas, 250);
+            Canvas.SetTop(sideCanvas, -1);
+            return sideCanvas;
+        }
+
+        /// <summary>
+        /// Creates a "flip image" button and inserts it into the side canvas.
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private Image CreateDiagramFlipImage(Canvas parent, TreeNode nd)
+        {
+            Image imgFlip = new Image();
+            imgFlip.Source = ImageSources.FlipBoard;
+            imgFlip.Width = 16;
+            imgFlip.Height = 16;
+            imgFlip.MouseDown += EventFlipRequest;
+            imgFlip.Name = _flip_img_ + nd.NodeId;
+            parent.Children.Add(imgFlip);
+            Canvas.SetLeft(imgFlip, 4);
+            Canvas.SetTop(imgFlip, 117);
+            return imgFlip;
+        }
+
+        /// <summary>
+        /// Creates an invisible flip state CheckBox and inserts it in the diagram.
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="isFlipped"></param>
+        /// <returns></returns>
+        private CheckBox CreateFlippedCheckBox(Canvas parent, bool isFlipped)
+        {
+            CheckBox cbFlipped = new CheckBox();
+            cbFlipped.IsChecked = isFlipped;
+            cbFlipped.Visibility = Visibility.Collapsed;
+            parent.Children.Add(cbFlipped);
+
+            Canvas.SetLeft(cbFlipped, 100);
+            Canvas.SetTop(cbFlipped, 100);
+            
+            return cbFlipped;
+        }
+
+        /// <summary>
+        /// Determines the flipped state of the diagram by finding the hidden
+        /// Flipped Check Box and reading it state.
+        /// The passed Pararaph will have an InlineUIContainer as one of its inlines
+        /// which has a ViewBox as its only child which in turn has a Canvas
+        /// as its only child.
+        /// The 'flipped" CheckBox is one of the children of that Canvas.
+        /// 
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="isFlipped"></param>
+        private void SetDiagramFlipState(Paragraph para, bool isFlipped)
+        {
+            try
+            {
+                CheckBox cb = FindFlippedCheckBox(para);
+                if (cb != null)
+                {
+                    cb.IsChecked = isFlipped;
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Gets the orientation (aka "flip state") of the diagram
+        /// by checking the status of the hidden checkbox in the diagram.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        private bool GetDiagramFlipState(Paragraph para)
+        {
+            bool res = false;
+
+            try
+            {
+                CheckBox cb = FindFlippedCheckBox(para);
+                if (cb != null)
+                {
+                    res = cb.IsChecked == true;
+                }
+            }
+            catch
+            {
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Returns the diagram's "flip state" CheckBox
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        private CheckBox FindFlippedCheckBox(Paragraph para)
+        {
+            try
+            {
+                CheckBox cb = null;
+
+                foreach (Inline inl in para.Inlines)
+                {
+                    if (inl is InlineUIContainer)
+                    {
+                        Viewbox vb = ((InlineUIContainer)inl).Child as Viewbox;
+                        Canvas canvas = vb.Child as Canvas;
+                        foreach (UIElement uie in canvas.Children)
+                        {
+                            if (uie is CheckBox)
+                            {
+                                cb = uie as CheckBox;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                return cb;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns the diagram's "flip state" image.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        private Image FindFlipImage(Paragraph para)
+        {
+            try
+            {
+                Image img = null;
+
+                foreach (Inline inl in para.Inlines)
+                {
+                    if (inl is InlineUIContainer)
+                    {
+                        Viewbox vb = ((InlineUIContainer)inl).Child as Viewbox;
+                        Canvas canvas = vb.Child as Canvas;
+                        foreach (UIElement uie in canvas.Children)
+                        {
+                            if (uie is Canvas)
+                            {
+                                foreach (UIElement elm in (uie as Canvas).Children)
+                                {
+                                    if (elm is Image)
+                                    {
+                                        img = elm as Image;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return img;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -875,7 +1170,7 @@ namespace ChessForge
         {
             Canvas canvas = new Canvas();
             canvas.Background = Brushes.Black;
-            canvas.Width = 250;
+            canvas.Width = 270;
             canvas.Height = 250;
 
             return canvas;
@@ -890,7 +1185,7 @@ namespace ChessForge
         {
             Viewbox viewBox = new Viewbox();
             viewBox.Child = canvas;
-            viewBox.Width = 250;
+            viewBox.Width = 270;
             viewBox.Height = 250;
             viewBox.Visibility = Visibility.Visible;
 
@@ -924,16 +1219,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRtbIntroView_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //TODO: get Paragraph from CaretPosition to see if we are deleting a diagram
-            if (_ignoreTextChange)
-            {
-                _ignoreTextChange = false;
-            }
-            else
-            {
-                _textDirty = true;
-                AppState.IsDirty = true;
-            }
+            _textDirty = true;
+            AppState.IsDirty = true;
         }
     }
 }

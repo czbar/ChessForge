@@ -14,15 +14,27 @@ namespace ChessForge
     /// </summary>
     public class SoundPlayer
     {
+        public enum Sound
+        {
+            END_OF_LINE,
+            NOT_IN_WORKBOOK
+        }
+
         // plays a simple move sound
         private static MediaPlayer _soundMove = new MediaPlayer();
 
         // plays a move-with-capture sound
         private static MediaPlayer _soundCapture = new MediaPlayer();
 
-        // plays the Wormg Move soound
+        // plays the Wrong Move sound
         private static MediaPlayer _soundWrongMove = new MediaPlayer();
-        
+
+        // plays the End of Line sound
+        private static MediaPlayer _soundEndOfLine = new MediaPlayer();
+
+        // plays Not in the Workbook sound
+        private static MediaPlayer _soundNotInWorkbook = new MediaPlayer();
+
 
         // indicates if the players have been initialized yet
         private static bool _isInitialized = false;
@@ -35,6 +47,8 @@ namespace ChessForge
             _soundMove.Open(SoundSources.Move);
             _soundCapture.Open(SoundSources.Capture);
             _soundWrongMove.Open(SoundSources.InvalidMove);
+            _soundEndOfLine.Open(SoundSources.EndOfLine);
+            _soundNotInWorkbook.Open(SoundSources.NotInWorkbook);
         }
 
         /// <summary>
@@ -95,6 +109,38 @@ namespace ChessForge
                 _soundWrongMove.Position = TimeSpan.FromMilliseconds(0);
                 _soundWrongMove.Play();
             });
+        }
+
+        public static void PlayTrainingSound(Sound sound)
+        {
+            if (!Configuration.SoundOn)
+            {
+                return;
+            }
+
+            if (!_isInitialized)
+            {
+                Initialize();
+                _isInitialized = true;
+            }
+
+            switch (sound)
+            {
+                case Sound.NOT_IN_WORKBOOK:
+                    _soundNotInWorkbook.Dispatcher.Invoke(() =>
+                    {
+                        _soundNotInWorkbook.Position = TimeSpan.FromMilliseconds(0);
+                        _soundNotInWorkbook.Play();
+                    });
+                    break;
+                case Sound.END_OF_LINE:
+                    _soundEndOfLine.Dispatcher.Invoke(() =>
+                    {
+                        _soundEndOfLine.Position = TimeSpan.FromMilliseconds(0);
+                        _soundEndOfLine.Play();
+                    });
+                    break;
+            }
         }
     }
 }
