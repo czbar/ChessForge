@@ -3096,6 +3096,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Flip the diagram in the Intro view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCmiFlipDiagram_Click(object sender, RoutedEventArgs e)
+        {
+            if (_introView != null)
+            {
+                _introView.FlipDiagram();
+            }
+        }
+
+        /// <summary>
         /// Editing of a move in the Intro view was requested.
         /// </summary>
         /// <param name="sender"></param>
