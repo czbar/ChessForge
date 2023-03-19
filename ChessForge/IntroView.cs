@@ -330,6 +330,7 @@ namespace ChessForge
                 BoardPosition pos = dlg.PositionSetup;
                 SelectedNode.Position = new BoardPosition(pos);
                 UpdateDiagram(para, SelectedNode);
+                AppState.IsDirty = true;
                 WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, SelectedNode);
             }
         }
@@ -560,7 +561,10 @@ namespace ChessForge
         {
             try
             {
-                DiagramSetupDialog dlg = new DiagramSetupDialog(SelectedNode)
+                TreeNode node = new TreeNode(null, "", 0);
+                node.Position = new BoardPosition(SelectedNode.Position);
+
+                DiagramSetupDialog dlg = new DiagramSetupDialog(node)
                 {
                     Left = AppState.MainWin.ChessForgeMain.Left + 100,
                     Top = AppState.MainWin.Top + 100,
@@ -571,10 +575,10 @@ namespace ChessForge
                 if (dlg.ShowDialog() == true)
                 {
                     BoardPosition pos = dlg.PositionSetup;
-                    TreeNode node = new TreeNode(null, "", 0);
                     node.Position = new BoardPosition(pos);
 
                     InsertDiagram(node);
+                    AppState.IsDirty = true;
                 }
             }
             catch (Exception ex)
@@ -593,8 +597,7 @@ namespace ChessForge
             Paragraph nextPara = tp.Paragraph;
 
             // need copy of the node as we may need the original for a move Run
-            TreeNode node = new TreeNode(null, "", 0);
-            node.Position = new BoardPosition(nd.Position);
+            TreeNode node = nd.CloneMe(true);
             int node_id = AddNode(node);
             _selectedNode = node;
 
