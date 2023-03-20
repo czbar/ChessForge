@@ -609,7 +609,15 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRtbIntroView_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            _introView.EnableMenuItems(false, false, null);
+            if (_introView != null)
+            {
+                if (e.ChangedButton == MouseButton.Right)
+                {
+                    _introView.EnableMenuItems(false, false, null);
+                }
+
+                _introView.RestoreSelectionOpacity();
+            }
         }
 
         //**************************************************************
