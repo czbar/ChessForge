@@ -99,6 +99,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_A8AE5E58653641E78305A9F7805C7FD1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_AA34AAD8CA0841CB9BA022578E9F2C63"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -136,6 +142,12 @@
         "Entry"
         {
         "MsmKey" = "8:_D3C1F1A55BED47109404B31135FAE138"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E011FFC2F6824FE9B73083B2F4B2BE94"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -280,7 +292,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ChessPosition, Version=0.9.5.1, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:ChessPosition, Version=0.9.5.2, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_070F20AEE4156FF8A1EDCB6F32B33AB5"
@@ -373,7 +385,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:EngineService, Version=0.9.5.1, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:EngineService, Version=0.9.5.2, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_3A481BA820F80DDB75A02811800AC4B3"
@@ -520,6 +532,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A8AE5E58653641E78305A9F7805C7FD1"
+            {
+            "SourcePath" = "8:..\\ChessForge\\Resources\\Sounds\\NotInWorkbook.mp3"
+            "TargetName" = "8:NotInWorkbook.mp3"
+            "Tag" = "8:"
+            "Folder" = "8:_95CA9216F4F648DCB6BFB59BD2DBB64E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AA34AAD8CA0841CB9BA022578E9F2C63"
             {
             "SourcePath" = "8:..\\Workbooks\\Distribution\\Endgame Selection.pgn"
@@ -564,7 +596,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebAccess, Version=0.9.5.1, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:WebAccess, Version=0.9.5.2, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_B31923E79F360E25A9908EEE60355755"
@@ -657,6 +689,26 @@
             "TargetName" = "8:LICENSE.MD"
             "Tag" = "8:"
             "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E011FFC2F6824FE9B73083B2F4B2BE94"
+            {
+            "SourcePath" = "8:..\\ChessForge\\Resources\\Sounds\\EndOfLine.mp3"
+            "TargetName" = "8:EndOfLine.mp3"
+            "Tag" = "8:"
+            "Folder" = "8:_95CA9216F4F648DCB6BFB59BD2DBB64E"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -792,7 +844,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Chess Forge"
         "ProductCode" = "8:{087FC19F-2F5C-49FA-B1B0-A6491093B121}"
-        "PackageCode" = "8:{D2B4F724-8B97-4076-9422-406A64C7FEA1}"
+        "PackageCode" = "8:{E9E8AE7C-FBCC-4BC3-A2FD-705D71343922}"
         "UpgradeCode" = "8:{8FBE368E-7FA2-4112-9D18-7A5CD1CE504C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1341,7 +1393,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0B816B9828BC4414A662D7186EC23E8C"
             {
-            "SourcePath" = "8:..\\ChessForge\\obj\\Release\\ChessForge.exe"
+            "SourcePath" = "8:..\\ChessForge\\obj\\Debug\\ChessForge.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
