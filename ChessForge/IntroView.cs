@@ -38,6 +38,7 @@ namespace ChessForge
         /// </summary>
         private List<IntroViewDiagram> DiagramList = new List<IntroViewDiagram>();
 
+        // indicates if the text has been modified.
         private bool _textDirty = false;
 
         /// <summary>
@@ -51,6 +52,9 @@ namespace ChessForge
 
         // current highest run id (it is 0 initially, because we have the root node)
         private int _maxRunId = 0;
+
+        // selection opacity value to use when restoring the original opacity
+        private double _defaultSelectionOpacity = 0.4;
 
         /// <summary>
         /// List of nodes currently represented in the view.
@@ -73,6 +77,7 @@ namespace ChessForge
         public IntroView(FlowDocument doc, Chapter parentChapter) : base(doc)
         {
             bool isAppDirty = AppState.IsDirty;
+            _defaultSelectionOpacity = AppState.MainWin.UiRtbIntroView.SelectionOpacity;
 
             Document.Blocks.Clear();
 
@@ -107,6 +112,22 @@ namespace ChessForge
         public void Clear()
         {
             Document.Blocks.Clear();
+        }
+
+        /// <summary>
+        /// Restore the original opacity for selections.
+        /// </summary>
+        public void RestoreSelectionOpacity()
+        {
+            AppState.MainWin.UiRtbIntroView.SelectionOpacity = _defaultSelectionOpacity;
+        }
+
+        /// <summary>
+        /// Make selections invisible.
+        /// </summary>
+        public void RemoveSelectionOpacity()
+        {
+            AppState.MainWin.UiRtbIntroView.SelectionOpacity = 0;
         }
 
         /// <summary>
@@ -176,7 +197,7 @@ namespace ChessForge
                         }
                         else
                         {
-                            block.Name = name + Guid.NewGuid().ToString("N");
+                            block.Name = Guid.NewGuid().ToString("N");
                         }
                     }
                 }
@@ -442,9 +463,10 @@ namespace ChessForge
         {
             try
             {
-                if (sender is Paragraph)
+                RemoveSelectionOpacity();
+                if (sender is Canvas)
                 {
-                    Paragraph para = sender as Paragraph;
+                    Paragraph para = (((sender as Canvas).Parent as Viewbox).Parent as InlineUIContainer).Parent as Paragraph;
                     _rtb.CaretPosition = para.ContentStart;
 
                     int nodeId = TextUtils.GetIdFromPrefixedString(para.Name);
@@ -534,29 +556,40 @@ namespace ChessForge
         /// </summary>
         private void SetEventHandlers()
         {
-            foreach (Block block in Document.Blocks)
+            try
             {
-                if (block is Paragraph)
+                foreach (Block block in Document.Blocks)
                 {
-                    Paragraph p = (Paragraph)block;
-                    if (p.Name.StartsWith(_para_diagram_))
+                    if (block is Paragraph)
                     {
-                        p.MouseDown += EventDiagramClicked;
+                        Paragraph p = (Paragraph)block;
+                        if (p.Name.StartsWith(_para_diagram_))
+                        {
+                            Canvas boardCanvas = FindBoardCanvas(p);
+                            if (boardCanvas != null)
+                            {
+                                boardCanvas.MouseDown += EventDiagramClicked;
+                            }
 
-                        Image flipImg = FindFlipImage(p);
-                        if (flipImg != null)
-                        {
-                            flipImg.MouseDown += EventFlipRequest;
+                            Image flipImg = FindFlipImage(p);
+                            if (flipImg != null)
+                            {
+                                flipImg.MouseDown += EventFlipRequest;
+                            }
                         }
-                    }
-                    foreach (Inline inl in p.Inlines)
-                    {
-                        if (inl is InlineUIContainer && inl.Name.StartsWith(_uic_move_))
+                        foreach (Inline inl in p.Inlines)
                         {
-                            ((InlineUIContainer)inl).MouseDown += EventMoveClicked;
+                            if (inl is InlineUIContainer && inl.Name.StartsWith(_uic_move_))
+                            {
+                                ((InlineUIContainer)inl).MouseDown += EventMoveClicked;
+                            }
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("SetEventHandlers()", ex);
             }
         }
 
@@ -925,7 +958,7 @@ namespace ChessForge
 
             Canvas sideCanvas = CreateDiagramSideCanvas(baseCanvas);
             CreateDiagramFlipImage(sideCanvas, nd);
-            
+
             // add invisible checkbox holding the flipped state
             CreateFlippedCheckBox(baseCanvas, flipState);
 
@@ -990,7 +1023,7 @@ namespace ChessForge
 
             Canvas.SetLeft(cbFlipped, 100);
             Canvas.SetTop(cbFlipped, 100);
-            
+
             return cbFlipped;
         }
 
@@ -1116,6 +1149,35 @@ namespace ChessForge
                 }
 
                 return img;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns the Canvas for the chessboard if found
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        private Canvas FindBoardCanvas(Paragraph para)
+        {
+            try
+            {
+                Canvas canvas = null;
+
+                foreach (Inline inl in para.Inlines)
+                {
+                    if (inl is InlineUIContainer)
+                    {
+                        Viewbox vb = ((InlineUIContainer)inl).Child as Viewbox;
+                        canvas = vb.Child as Canvas;
+                        break;
+                    }
+                }
+
+                return canvas;
             }
             catch
             {
