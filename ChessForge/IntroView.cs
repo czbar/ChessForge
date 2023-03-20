@@ -464,9 +464,9 @@ namespace ChessForge
             try
             {
                 RemoveSelectionOpacity();
-                if (sender is Canvas)
+                if (sender is Paragraph)
                 {
-                    Paragraph para = (((sender as Canvas).Parent as Viewbox).Parent as InlineUIContainer).Parent as Paragraph;
+                    Paragraph para = sender as Paragraph;
                     _rtb.CaretPosition = para.ContentStart;
 
                     int nodeId = TextUtils.GetIdFromPrefixedString(para.Name);
@@ -565,11 +565,7 @@ namespace ChessForge
                         Paragraph p = (Paragraph)block;
                         if (p.Name.StartsWith(_para_diagram_))
                         {
-                            Canvas boardCanvas = FindBoardCanvas(p);
-                            if (boardCanvas != null)
-                            {
-                                boardCanvas.MouseDown += EventDiagramClicked;
-                            }
+                            p.MouseDown += EventDiagramClicked;
 
                             Image flipImg = FindFlipImage(p);
                             if (flipImg != null)
