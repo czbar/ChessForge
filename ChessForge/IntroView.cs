@@ -197,7 +197,7 @@ namespace ChessForge
                         }
                         else
                         {
-                            block.Name = Guid.NewGuid().ToString("N");
+                            block.Name = TextUtils.GenerateRandomElementName();
                         }
                     }
                 }
@@ -336,13 +336,20 @@ namespace ChessForge
                     SelectedNode.LastMoveAlgebraicNotation = dlg.MoveText;
 
                     TextBlock tb = (inlClicked as InlineUIContainer).Child as TextBlock;
-
+                    
+                    Run run = null;
                     foreach (Inline inl in tb.Inlines)
                     {
                         if (inl is Run r)
                         {
-                            r.Text = " " + dlg.MoveText + " ";
+                            run = r;
+                            break;
                         }
+                    }
+
+                    if (run != null)
+                    {
+                        run.Text = " " + dlg.MoveText + " ";
                     }
 
                     if (dlg.InsertDialogRequest)
@@ -742,6 +749,8 @@ namespace ChessForge
 
             Document.Blocks.InsertBefore(nextPara, para);
             para.MouseDown += EventDiagramClicked;
+
+            AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGrey;
         }
 
         /// <summary>
@@ -778,6 +787,19 @@ namespace ChessForge
 
             _textDirty = true;
             AppState.IsDirty = true;
+        }
+
+        /// <summary>
+        /// Invoke from main windows when a shape was drawn on the main chesboard while INTRO tab was active.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void UpdateDiagramShapes(TreeNode nd)
+        {
+            Paragraph para = FindDiagramParagraph(nd);
+            if (para != null)
+            {
+                UpdateDiagram(para, nd);
+            }
         }
 
         /// <summary>
@@ -904,7 +926,7 @@ namespace ChessForge
             if (IsDiagramPara(para, out _))
             {
                 para = _rtb.CaretPosition.InsertParagraphBreak().Paragraph;
-                para.Name = Guid.NewGuid().ToString("N");
+                para.Name = TextUtils.GenerateRandomElementName();
                 insertBefore = null;
             }
             else
