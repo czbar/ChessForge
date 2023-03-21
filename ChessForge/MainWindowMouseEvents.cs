@@ -360,6 +360,14 @@ namespace ChessForge
                 MainChessBoard.Shapes.FinalizeShape(targetSquare, true, true);
                 _lastRightClickedPoint = null;
 
+                if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+                {
+                    if (_introView != null)
+                    {
+                        _introView.UpdateDiagramShapes(MainChessBoard.DisplayedNode);
+                    }
+                }
+
                 // we have been building a shape so ensure context menu does not pop up
                 e.Handled = true;
             }
@@ -930,7 +938,7 @@ namespace ChessForge
             {
                 _chaptersView.UpdateIntroHeaders();
             }
-            
+
             BoardCommentBox.ShowTabHints();
             try
             {
@@ -960,7 +968,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabIntro_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (WorkbookManager.SessionWorkbook == null && _introView != null)
+            if (WorkbookManager.SessionWorkbook == null && WorkbookManager.SessionWorkbook.ActiveChapter != null && _introView != null)
             {
                 _introView.Clear();
             }
