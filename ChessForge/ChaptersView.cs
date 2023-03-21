@@ -1420,7 +1420,6 @@ namespace ChessForge
             try
             {
                 _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
-
                 LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
 
                 Run r = (Run)e.Source;
@@ -1457,12 +1456,25 @@ namespace ChessForge
         {
             try
             {
+                _mainWin.DisplayPosition(PositionUtils.SetupStartingPosition());
+                LastClickedItemType = WorkbookManager.ItemType.CHAPTER;
+
                 Run r = (Run)e.Source;
                 int chapterIndex = TextUtils.GetIdFromPrefixedString(r.Name);
                 if (chapterIndex >= 0)
                 {
                     Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
                     WorkbookManager.LastClickedChapterIndex = chapterIndex;
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
+                        SelectChapter(chapterIndex, true);
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.INTRO);
+                        SelectChapter(chapterIndex, false);
+                    }
+
                     _mainWin.UiMnChptCreateIntro_Click(null, null);
                 }
             }
