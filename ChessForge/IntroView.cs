@@ -596,10 +596,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="color"></param>
         /// <returns></returns>
-        private int FindLastMoveNumber(InlineUIContainer uicCurrent, out PieceColor color)
+        private int FindLastMoveNumber(InlineUIContainer uicCurrent, out PieceColor color, out bool isTextInbetween)
         {
             int number = -1;
             color = PieceColor.None;
+            isTextInbetween = false;
 
             bool done = false;
 
@@ -623,25 +624,29 @@ namespace ChessForge
                                     done = true;
                                     break;
                                 }
+                                else
+                                {
+                                    isTextInbetween = true;
+                                }
 
                                 InlineUIContainer uic = inl as InlineUIContainer;
                                 TextBlock tb = uic.Child as TextBlock;
                                 if (tb != null)
                                 {
-                                    foreach (Inline tbLinline in tb.Inlines)
+                                    foreach (Inline tbInline in tb.Inlines)
                                     {
-                                        if (tbLinline is Run)
+                                        if (tbInline is Run)
                                         {
-
-                                            int no = MoveUtils.ExtractMoveNumber((tbLinline as Run).Text, out PieceColor pc);
+                                            int no = MoveUtils.ExtractMoveNumber((tbInline as Run).Text, out PieceColor pc);
                                             if (no >= 0)
                                             {
                                                 number = no;
                                                 color = pc;
+                                                isTextInbetween = false;
                                             }
                                             else
                                             {
-                                                int nodeId = TextUtils.GetIdFromPrefixedString(tbLinline.Name);
+                                                int nodeId = TextUtils.GetIdFromPrefixedString(tbInline.Name);
                                                 TreeNode nd = GetNodeById(nodeId);
                                                 if (nd != null)
                                                 {
@@ -651,6 +656,13 @@ namespace ChessForge
                                             break;
                                         }
                                     }
+                                }
+                            }
+                            else
+                            {
+                                if (inl is Run && !string.IsNullOrEmpty((inl as Run).Text))
+                                {
+                                    isTextInbetween = true;
                                 }
                             }
                         }
@@ -827,7 +839,7 @@ namespace ChessForge
         /// <returns></returns>
         private string BuildMoveRunText(TreeNode node, InlineUIContainer iuc)
         {
-            int moveNo = FindLastMoveNumber(iuc, out PieceColor previousMoveColor);
+            int moveNo = FindLastMoveNumber(iuc, out PieceColor previousMoveColor, out bool isTextInbetween);
             bool previousMoveFound = moveNo > 0;
 
             PieceColor moveColor = MoveUtils.ReverseColor(node.ColorToMove);
@@ -845,14 +857,13 @@ namespace ChessForge
             }
 
             string res;
-            //string res = moveNo.ToString() + (moveColor == PieceColor.Black ? "... " : ". ") + node.LastMoveAlgebraicNotation;
             if (moveColor == PieceColor.White)
             {
                 res = moveNo.ToString() + ". " + node.LastMoveAlgebraicNotation;
             }
             else
             {
-                if (previousMoveFound && previousMoveColor != PieceColor.Black)
+                if (previousMoveFound && previousMoveColor != PieceColor.Black && !isTextInbetween)
                 {
                     res = node.LastMoveAlgebraicNotation;
                 }
@@ -862,7 +873,6 @@ namespace ChessForge
                 }
             }
             res = Languages.MapPieceSymbols(res);
-            // TODO: TRANSLATE back when saving ?! Detect if this has a move?
             node.LastMoveAlgebraicNotation = res;
 
             return res;
