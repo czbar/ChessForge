@@ -413,6 +413,7 @@
     <Resource Include="ChessForge2.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Images\ChessBoardGrey.png" />
     <Content Include="Resources\Sounds\NotInWorkbook.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
