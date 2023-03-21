@@ -617,6 +617,7 @@ namespace ChessForge
                 }
 
                 _introView.RestoreSelectionOpacity();
+                UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
             }
         }
 
@@ -972,6 +973,7 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.INTRO;
             WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.INTRO);
             AppState.ShowExplorers(AppState.AreExplorersOn, true);
+            UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
 
             BoardCommentBox.ShowTabHints();
             try
