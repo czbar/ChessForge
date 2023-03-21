@@ -986,6 +986,9 @@ namespace ChessForge
                     PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.INTRO);
                 }
                 DisplayPosition(_introView.SelectedNode);
+
+                AppState.ConfigureMainBoardContextMenu();
+                ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
             }
             catch
             {
