@@ -464,6 +464,7 @@ namespace ChessForge
             try
             {
                 RemoveSelectionOpacity();
+                AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGrey;
                 if (sender is Paragraph)
                 {
                     Paragraph para = sender as Paragraph;
@@ -879,7 +880,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Based on the current caret position and selaction (if any)
+        /// Based on the current caret position and selection (if any)
         /// determine the paragraph in which to insert the new move
         /// and an Inline before which to insert it.
         /// </summary>
@@ -896,39 +897,88 @@ namespace ChessForge
                 _rtb.CaretPosition = selection.End;
             }
 
-            // if caret is inside a Run, split it and return the second part
-            insertBefore = SplitRun(_rtb);
-            if (insertBefore != null && insertBefore.Parent is Paragraph)
+            TextPointer tpCaret = _rtb.CaretPosition;
+            para = tpCaret.Paragraph;
+
+            // if we are inside a diagram paragraph, create a new one
+            if (IsDiagramPara(para, out _))
             {
-                para = insertBefore.Parent as Paragraph;
+                para = _rtb.CaretPosition.InsertParagraphBreak().Paragraph;
+                para.Name = Guid.NewGuid().ToString("N");
+                insertBefore = null;
             }
             else
             {
-                TextPointer tp = _rtb.CaretPosition;
-                para = tp.Paragraph;
-
-                DependencyObject inl = tp.GetAdjacentElement(LogicalDirection.Forward);
-                if (inl != null && inl is Inline && para != null)
+                // if caret is inside a Run, split it and return the second part
+                insertBefore = SplitRun(_rtb);
+                if (insertBefore != null && insertBefore.Parent is Paragraph)
                 {
-                    insertBefore = inl as Inline;
+                    para = insertBefore.Parent as Paragraph;
                 }
                 else
                 {
-                    // there is no Inline ahead so just append to the current paragraph
-                    // or create a new one if null
-                    insertBefore = null;
-                    if (para == null)
+                    DependencyObject inl = tpCaret.GetAdjacentElement(LogicalDirection.Forward);
+                    if (inl != null && inl is Inline && para != null)
                     {
-                        para = _rtb.CaretPosition.InsertParagraphBreak().Paragraph;
+                        insertBefore = inl as Inline;
                     }
-
-                    if (tp.Paragraph != null)
+                    else
                     {
-                        para = tp.Paragraph;
+                        // there is no Inline ahead so just append to the current paragraph
+                        // or create a new one if null
                         insertBefore = null;
+                        if (para == null)
+                        {
+                            para = _rtb.CaretPosition.InsertParagraphBreak().Paragraph;
+                        }
+
+                        if (tpCaret.Paragraph != null)
+                        {
+                            para = tpCaret.Paragraph;
+                            insertBefore = null;
+                        }
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// The diagram will be deeemed a "diagram para" if its
+        /// name starts with _para_diag and it has a diagram content
+        /// (the name is not enough because of how RTB can duplicate the name
+        /// of a paragraph).
+        /// </summary>
+        /// <returns></returns>
+        private bool IsDiagramPara(Paragraph para, out InlineUIContainer diagram)
+        {
+            diagram = null;
+
+            if (para == null || para.Name == null)
+            {
+                return false;
+            }
+
+            bool res = false;
+            if (para.Name.StartsWith(_para_diagram_))
+            {
+                int paraNodeId = TextUtils.GetIdFromPrefixedString(para.Name);
+                foreach (Inline inl in para.Inlines)
+                {
+                    if (inl is InlineUIContainer)
+                    {
+                        string uicName = (inl as InlineUIContainer).Name;
+                        int uicNodeId = TextUtils.GetIdFromPrefixedString(uicName);
+                        if (paraNodeId == uicNodeId)
+                        {
+                            res = true;
+                            diagram = (inl as InlineUIContainer);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return res;
         }
 
         /// <summary>
@@ -985,7 +1035,7 @@ namespace ChessForge
         private Canvas CreateDiagramSideCanvas(Canvas parent)
         {
             Canvas sideCanvas = new Canvas();
-            sideCanvas.Width = 20;
+            sideCanvas.Width = 21;
             sideCanvas.Height = parent.Height + 2;
             sideCanvas.Background = Brushes.White;
             parent.Children.Add(sideCanvas);
@@ -1288,7 +1338,81 @@ namespace ChessForge
         private void UiRtbIntroView_TextChanged(object sender, TextChangedEventArgs e)
         {
             _textDirty = true;
+
+            // we want to avoid adding anything to the diagram paragraph outside of the diagram InlineUIElement so check for this
+            TextPointer tpCaret = _rtb.CaretPosition;
+            Paragraph para = tpCaret.Paragraph;
+
+            if (IsDiagramPara(para, out InlineUIContainer diagram))
+            {
+                CleanupDiagramPara(para, diagram);
+            }
+
             AppState.IsDirty = true;
+        }
+
+        /// <summary>
+        /// Ensures that only the Diagram InlineUIContainer remains
+        /// in the Diagram Paragraph.
+        /// If the user inserted something we will handle this as follows:
+        /// - if the extra inline was before the diagram, it will be deleted
+        /// - if the inline was after the diagram, a new Paragraph will be creatwed
+        ///   and the inline will be moved there along with the caret.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="diagram"></param>
+        private void CleanupDiagramPara(Paragraph para, InlineUIContainer diagram)
+        {
+            List<Inline> inlinesToDelete = new List<Inline>();
+            List<Inline> inlinesToMove = new List<Inline>();
+            if (para != null && diagram != null)
+            {
+                bool beforeDiagram = true;
+                foreach (Inline inl in para.Inlines)
+                {
+                    if (inl != diagram)
+                    {
+                        if (beforeDiagram)
+                        {
+                            inlinesToDelete.Add(inl);
+                        }
+                        else
+                        {
+                            inlinesToMove.Add(inl);
+                        }
+                    }
+                    else
+                    {
+                        beforeDiagram = false;
+                    }
+                }
+
+                // stop TextChanged event handler! 
+                _rtb.TextChanged -= UiRtbIntroView_TextChanged;
+
+                try
+                {
+                    foreach (Inline inl in inlinesToDelete)
+                    {
+                        para.Inlines.Remove(inl);
+                    }
+
+                    if (inlinesToMove.Count > 0)
+                    {
+                        Paragraph newPara = _rtb.CaretPosition.InsertParagraphBreak().Paragraph;
+                        foreach (Inline inl in inlinesToMove)
+                        {
+                            newPara.Inlines.Add(inl);
+                            _rtb.CaretPosition = inl.ElementEnd;
+                            para.Inlines.Remove(inl);
+                        }
+                    }
+                }
+                catch { }
+
+                // reset TextChanged event handler
+                _rtb.TextChanged += UiRtbIntroView_TextChanged;
+            }
         }
     }
 }
