@@ -145,6 +145,15 @@ namespace ChessForge
                 case WorkbookManager.TabViewType.EXERCISE:
                     AppState.MainWin.SelectExercise(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex, true);
                     break;
+                case WorkbookManager.TabViewType.STUDY:
+                    AppState.MainWin.UiTabStudyTree.Focus();
+                    break;
+                case WorkbookManager.TabViewType.INTRO:
+                    if (!WorkbookManager.SessionWorkbook.ActiveChapter.IsIntroEmpty())
+                    {
+                        AppState.MainWin.UiTabIntro.Focus();
+                    }
+                    break;
             }
         }
 

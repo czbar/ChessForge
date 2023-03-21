@@ -400,6 +400,11 @@ namespace ChessPosition
         /// <returns></returns>
         public static bool AreValidCoordinates(SquareCoords sq)
         {
+            if (sq == null)
+            {
+                return false;
+            }
+
             return AreValidCoordinates(sq.Xcoord, sq.Ycoord);
         }
 

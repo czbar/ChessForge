@@ -38,6 +38,7 @@ namespace ChessForge
         /// </summary>
         private List<IntroViewDiagram> DiagramList = new List<IntroViewDiagram>();
 
+        // indicates if the text has been modified.
         private bool _textDirty = false;
 
         /// <summary>
@@ -51,6 +52,9 @@ namespace ChessForge
 
         // current highest run id (it is 0 initially, because we have the root node)
         private int _maxRunId = 0;
+
+        // selection opacity value to use when restoring the original opacity
+        private double _defaultSelectionOpacity = 0.4;
 
         /// <summary>
         /// List of nodes currently represented in the view.
@@ -73,6 +77,7 @@ namespace ChessForge
         public IntroView(FlowDocument doc, Chapter parentChapter) : base(doc)
         {
             bool isAppDirty = AppState.IsDirty;
+            _defaultSelectionOpacity = AppState.MainWin.UiRtbIntroView.SelectionOpacity;
 
             Document.Blocks.Clear();
 
@@ -107,6 +112,22 @@ namespace ChessForge
         public void Clear()
         {
             Document.Blocks.Clear();
+        }
+
+        /// <summary>
+        /// Restore the original opacity for selections.
+        /// </summary>
+        public void RestoreSelectionOpacity()
+        {
+            AppState.MainWin.UiRtbIntroView.SelectionOpacity = _defaultSelectionOpacity;
+        }
+
+        /// <summary>
+        /// Make selections invisible.
+        /// </summary>
+        public void RemoveSelectionOpacity()
+        {
+            AppState.MainWin.UiRtbIntroView.SelectionOpacity = 0;
         }
 
         /// <summary>
@@ -176,7 +197,7 @@ namespace ChessForge
                         }
                         else
                         {
-                            block.Name = name + Guid.NewGuid().ToString("N");
+                            block.Name = TextUtils.GenerateRandomElementName();
                         }
                     }
                 }
@@ -315,13 +336,20 @@ namespace ChessForge
                     SelectedNode.LastMoveAlgebraicNotation = dlg.MoveText;
 
                     TextBlock tb = (inlClicked as InlineUIContainer).Child as TextBlock;
-
+                    
+                    Run run = null;
                     foreach (Inline inl in tb.Inlines)
                     {
                         if (inl is Run r)
                         {
-                            r.Text = " " + dlg.MoveText + " ";
+                            run = r;
+                            break;
                         }
+                    }
+
+                    if (run != null)
+                    {
+                        run.Text = " " + dlg.MoveText + " ";
                     }
 
                     if (dlg.InsertDialogRequest)
@@ -442,6 +470,8 @@ namespace ChessForge
         {
             try
             {
+                RemoveSelectionOpacity();
+                AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGrey;
                 if (sender is Paragraph)
                 {
                     Paragraph para = sender as Paragraph;
@@ -534,29 +564,36 @@ namespace ChessForge
         /// </summary>
         private void SetEventHandlers()
         {
-            foreach (Block block in Document.Blocks)
+            try
             {
-                if (block is Paragraph)
+                foreach (Block block in Document.Blocks)
                 {
-                    Paragraph p = (Paragraph)block;
-                    if (p.Name.StartsWith(_para_diagram_))
+                    if (block is Paragraph)
                     {
-                        p.MouseDown += EventDiagramClicked;
+                        Paragraph p = (Paragraph)block;
+                        if (p.Name.StartsWith(_para_diagram_))
+                        {
+                            p.MouseDown += EventDiagramClicked;
 
-                        Image flipImg = FindFlipImage(p);
-                        if (flipImg != null)
-                        {
-                            flipImg.MouseDown += EventFlipRequest;
+                            Image flipImg = FindFlipImage(p);
+                            if (flipImg != null)
+                            {
+                                flipImg.MouseDown += EventFlipRequest;
+                            }
                         }
-                    }
-                    foreach (Inline inl in p.Inlines)
-                    {
-                        if (inl is InlineUIContainer && inl.Name.StartsWith(_uic_move_))
+                        foreach (Inline inl in p.Inlines)
                         {
-                            ((InlineUIContainer)inl).MouseDown += EventMoveClicked;
+                            if (inl is InlineUIContainer && inl.Name.StartsWith(_uic_move_))
+                            {
+                                ((InlineUIContainer)inl).MouseDown += EventMoveClicked;
+                            }
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("SetEventHandlers()", ex);
             }
         }
 
@@ -567,10 +604,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="color"></param>
         /// <returns></returns>
-        private int FindLastMoveNumber(InlineUIContainer uicCurrent, out PieceColor color)
+        private int FindLastMoveNumber(InlineUIContainer uicCurrent, out PieceColor color, out bool isTextInbetween)
         {
             int number = -1;
             color = PieceColor.None;
+            isTextInbetween = false;
 
             bool done = false;
 
@@ -594,25 +632,29 @@ namespace ChessForge
                                     done = true;
                                     break;
                                 }
+                                else
+                                {
+                                    isTextInbetween = true;
+                                }
 
                                 InlineUIContainer uic = inl as InlineUIContainer;
                                 TextBlock tb = uic.Child as TextBlock;
                                 if (tb != null)
                                 {
-                                    foreach (Inline tbLinline in tb.Inlines)
+                                    foreach (Inline tbInline in tb.Inlines)
                                     {
-                                        if (tbLinline is Run)
+                                        if (tbInline is Run)
                                         {
-
-                                            int no = MoveUtils.ExtractMoveNumber((tbLinline as Run).Text, out PieceColor pc);
+                                            int no = MoveUtils.ExtractMoveNumber((tbInline as Run).Text, out PieceColor pc);
                                             if (no >= 0)
                                             {
                                                 number = no;
                                                 color = pc;
+                                                isTextInbetween = false;
                                             }
                                             else
                                             {
-                                                int nodeId = TextUtils.GetIdFromPrefixedString(tbLinline.Name);
+                                                int nodeId = TextUtils.GetIdFromPrefixedString(tbInline.Name);
                                                 TreeNode nd = GetNodeById(nodeId);
                                                 if (nd != null)
                                                 {
@@ -622,6 +664,13 @@ namespace ChessForge
                                             break;
                                         }
                                     }
+                                }
+                            }
+                            else
+                            {
+                                if (inl is Run && !string.IsNullOrEmpty((inl as Run).Text))
+                                {
+                                    isTextInbetween = true;
                                 }
                             }
                         }
@@ -700,6 +749,8 @@ namespace ChessForge
 
             Document.Blocks.InsertBefore(nextPara, para);
             para.MouseDown += EventDiagramClicked;
+
+            AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGrey;
         }
 
         /// <summary>
@@ -736,6 +787,19 @@ namespace ChessForge
 
             _textDirty = true;
             AppState.IsDirty = true;
+        }
+
+        /// <summary>
+        /// Invoke from main windows when a shape was drawn on the main chesboard while INTRO tab was active.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void UpdateDiagramShapes(TreeNode nd)
+        {
+            Paragraph para = FindDiagramParagraph(nd);
+            if (para != null)
+            {
+                UpdateDiagram(para, nd);
+            }
         }
 
         /// <summary>
@@ -798,7 +862,7 @@ namespace ChessForge
         /// <returns></returns>
         private string BuildMoveRunText(TreeNode node, InlineUIContainer iuc)
         {
-            int moveNo = FindLastMoveNumber(iuc, out PieceColor previousMoveColor);
+            int moveNo = FindLastMoveNumber(iuc, out PieceColor previousMoveColor, out bool isTextInbetween);
             bool previousMoveFound = moveNo > 0;
 
             PieceColor moveColor = MoveUtils.ReverseColor(node.ColorToMove);
@@ -816,14 +880,13 @@ namespace ChessForge
             }
 
             string res;
-            //string res = moveNo.ToString() + (moveColor == PieceColor.Black ? "... " : ". ") + node.LastMoveAlgebraicNotation;
             if (moveColor == PieceColor.White)
             {
                 res = moveNo.ToString() + ". " + node.LastMoveAlgebraicNotation;
             }
             else
             {
-                if (previousMoveFound && previousMoveColor != PieceColor.Black)
+                if (previousMoveFound && previousMoveColor != PieceColor.Black && !isTextInbetween)
                 {
                     res = node.LastMoveAlgebraicNotation;
                 }
@@ -833,14 +896,13 @@ namespace ChessForge
                 }
             }
             res = Languages.MapPieceSymbols(res);
-            // TODO: TRANSLATE back when saving ?! Detect if this has a move?
             node.LastMoveAlgebraicNotation = res;
 
             return res;
         }
 
         /// <summary>
-        /// Based on the current caret position and selaction (if any)
+        /// Based on the current caret position and selection (if any)
         /// determine the paragraph in which to insert the new move
         /// and an Inline before which to insert it.
         /// </summary>
@@ -857,39 +919,88 @@ namespace ChessForge
                 _rtb.CaretPosition = selection.End;
             }
 
-            // if caret is inside a Run, split it and return the second part
-            insertBefore = SplitRun(_rtb);
-            if (insertBefore != null && insertBefore.Parent is Paragraph)
+            TextPointer tpCaret = _rtb.CaretPosition;
+            para = tpCaret.Paragraph;
+
+            // if we are inside a diagram paragraph, create a new one
+            if (IsDiagramPara(para, out _))
             {
-                para = insertBefore.Parent as Paragraph;
+                para = _rtb.CaretPosition.InsertParagraphBreak().Paragraph;
+                para.Name = TextUtils.GenerateRandomElementName();
+                insertBefore = null;
             }
             else
             {
-                TextPointer tp = _rtb.CaretPosition;
-                para = tp.Paragraph;
-
-                DependencyObject inl = tp.GetAdjacentElement(LogicalDirection.Forward);
-                if (inl != null && inl is Inline && para != null)
+                // if caret is inside a Run, split it and return the second part
+                insertBefore = SplitRun(_rtb);
+                if (insertBefore != null && insertBefore.Parent is Paragraph)
                 {
-                    insertBefore = inl as Inline;
+                    para = insertBefore.Parent as Paragraph;
                 }
                 else
                 {
-                    // there is no Inline ahead so just append to the current paragraph
-                    // or create a new one if null
-                    insertBefore = null;
-                    if (para == null)
+                    DependencyObject inl = tpCaret.GetAdjacentElement(LogicalDirection.Forward);
+                    if (inl != null && inl is Inline && para != null)
                     {
-                        para = _rtb.CaretPosition.InsertParagraphBreak().Paragraph;
+                        insertBefore = inl as Inline;
                     }
-
-                    if (tp.Paragraph != null)
+                    else
                     {
-                        para = tp.Paragraph;
+                        // there is no Inline ahead so just append to the current paragraph
+                        // or create a new one if null
                         insertBefore = null;
+                        if (para == null)
+                        {
+                            para = _rtb.CaretPosition.InsertParagraphBreak().Paragraph;
+                        }
+
+                        if (tpCaret.Paragraph != null)
+                        {
+                            para = tpCaret.Paragraph;
+                            insertBefore = null;
+                        }
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// The diagram will be deeemed a "diagram para" if its
+        /// name starts with _para_diag and it has a diagram content
+        /// (the name is not enough because of how RTB can duplicate the name
+        /// of a paragraph).
+        /// </summary>
+        /// <returns></returns>
+        private bool IsDiagramPara(Paragraph para, out InlineUIContainer diagram)
+        {
+            diagram = null;
+
+            if (para == null || para.Name == null)
+            {
+                return false;
+            }
+
+            bool res = false;
+            if (para.Name.StartsWith(_para_diagram_))
+            {
+                int paraNodeId = TextUtils.GetIdFromPrefixedString(para.Name);
+                foreach (Inline inl in para.Inlines)
+                {
+                    if (inl is InlineUIContainer)
+                    {
+                        string uicName = (inl as InlineUIContainer).Name;
+                        int uicNodeId = TextUtils.GetIdFromPrefixedString(uicName);
+                        if (paraNodeId == uicNodeId)
+                        {
+                            res = true;
+                            diagram = (inl as InlineUIContainer);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return res;
         }
 
         /// <summary>
@@ -925,7 +1036,7 @@ namespace ChessForge
 
             Canvas sideCanvas = CreateDiagramSideCanvas(baseCanvas);
             CreateDiagramFlipImage(sideCanvas, nd);
-            
+
             // add invisible checkbox holding the flipped state
             CreateFlippedCheckBox(baseCanvas, flipState);
 
@@ -946,7 +1057,7 @@ namespace ChessForge
         private Canvas CreateDiagramSideCanvas(Canvas parent)
         {
             Canvas sideCanvas = new Canvas();
-            sideCanvas.Width = 20;
+            sideCanvas.Width = 21;
             sideCanvas.Height = parent.Height + 2;
             sideCanvas.Background = Brushes.White;
             parent.Children.Add(sideCanvas);
@@ -990,7 +1101,7 @@ namespace ChessForge
 
             Canvas.SetLeft(cbFlipped, 100);
             Canvas.SetTop(cbFlipped, 100);
-            
+
             return cbFlipped;
         }
 
@@ -1124,6 +1235,35 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the Canvas for the chessboard if found
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        private Canvas FindBoardCanvas(Paragraph para)
+        {
+            try
+            {
+                Canvas canvas = null;
+
+                foreach (Inline inl in para.Inlines)
+                {
+                    if (inl is InlineUIContainer)
+                    {
+                        Viewbox vb = ((InlineUIContainer)inl).Child as Viewbox;
+                        canvas = vb.Child as Canvas;
+                        break;
+                    }
+                }
+
+                return canvas;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Creates the chessboard control.
         /// </summary>
         /// <param name="canvas"></param>
@@ -1220,7 +1360,81 @@ namespace ChessForge
         private void UiRtbIntroView_TextChanged(object sender, TextChangedEventArgs e)
         {
             _textDirty = true;
+
+            // we want to avoid adding anything to the diagram paragraph outside of the diagram InlineUIElement so check for this
+            TextPointer tpCaret = _rtb.CaretPosition;
+            Paragraph para = tpCaret.Paragraph;
+
+            if (IsDiagramPara(para, out InlineUIContainer diagram))
+            {
+                CleanupDiagramPara(para, diagram);
+            }
+
             AppState.IsDirty = true;
+        }
+
+        /// <summary>
+        /// Ensures that only the Diagram InlineUIContainer remains
+        /// in the Diagram Paragraph.
+        /// If the user inserted something we will handle this as follows:
+        /// - if the extra inline was before the diagram, it will be deleted
+        /// - if the inline was after the diagram, a new Paragraph will be creatwed
+        ///   and the inline will be moved there along with the caret.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="diagram"></param>
+        private void CleanupDiagramPara(Paragraph para, InlineUIContainer diagram)
+        {
+            List<Inline> inlinesToDelete = new List<Inline>();
+            List<Inline> inlinesToMove = new List<Inline>();
+            if (para != null && diagram != null)
+            {
+                bool beforeDiagram = true;
+                foreach (Inline inl in para.Inlines)
+                {
+                    if (inl != diagram)
+                    {
+                        if (beforeDiagram)
+                        {
+                            inlinesToDelete.Add(inl);
+                        }
+                        else
+                        {
+                            inlinesToMove.Add(inl);
+                        }
+                    }
+                    else
+                    {
+                        beforeDiagram = false;
+                    }
+                }
+
+                // stop TextChanged event handler! 
+                _rtb.TextChanged -= UiRtbIntroView_TextChanged;
+
+                try
+                {
+                    foreach (Inline inl in inlinesToDelete)
+                    {
+                        para.Inlines.Remove(inl);
+                    }
+
+                    if (inlinesToMove.Count > 0)
+                    {
+                        Paragraph newPara = _rtb.CaretPosition.InsertParagraphBreak().Paragraph;
+                        foreach (Inline inl in inlinesToMove)
+                        {
+                            newPara.Inlines.Add(inl);
+                            _rtb.CaretPosition = inl.ElementEnd;
+                            para.Inlines.Remove(inl);
+                        }
+                    }
+                }
+                catch { }
+
+                // reset TextChanged event handler
+                _rtb.TextChanged += UiRtbIntroView_TextChanged;
+            }
         }
     }
 }

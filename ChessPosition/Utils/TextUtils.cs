@@ -564,5 +564,15 @@ namespace ChessPosition
                 return text.Substring(0, spaceCount);
             }
         }
+
+        /// <summary>
+        /// Uses Guid to generatean alphanumeric string starting with 'R'
+        /// as names in many contexts must start with a letter.
+        /// </summary>
+        /// <returns></returns>
+        public static string GenerateRandomElementName()
+        {
+            return "R" + Guid.NewGuid().ToString("N");
+        }
     }
 }

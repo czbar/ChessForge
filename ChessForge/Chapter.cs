@@ -4,11 +4,14 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Markup;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Navigation;
+using System.Xml.Linq;
 
 namespace ChessForge
 {
@@ -63,7 +66,7 @@ namespace ChessForge
             {
                 if (string.IsNullOrEmpty(_guid))
                 {
-                    _guid = System.Guid.NewGuid().ToString();
+                    _guid = TextUtils.GenerateRandomElementName();
                 }
                 return _guid;
             }
@@ -126,7 +129,42 @@ namespace ChessForge
         public bool IsIntroEmpty()
         {
             string content = EncodingUtils.Base64Decode(Intro.CodedContent);
-            return content.IndexOf("Paragraph") < 0;
+            int paraPos = content.IndexOf("<Paragraph");
+            if (paraPos < 0)
+            {
+                return true;
+            }
+            else
+            {
+                bool result = true;
+                // it will still be empty if there is no other paragraph, and it only has an empty Run element
+                if (content.IndexOf("<Paragraph", paraPos + 1) < 0)
+                {
+                    // has just 1 para so check if it all it has are empty runs
+                    FlowDocument doc = XamlReader.Parse(content) as FlowDocument;
+                    foreach (Block block in doc.Blocks)
+                    {
+                        if (block is Paragraph)
+                        {
+                            foreach (Inline inl in (block as Paragraph).Inlines)
+                            {
+                                if (inl is Run && !string.IsNullOrEmpty((inl as Run).Text)
+                                    || !(inl is Run))
+                                {
+                                    result = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    // has more than 1 paragraph
+                    result = false;
+                }
+                return result;
+            }
         }
 
         /// <summary>

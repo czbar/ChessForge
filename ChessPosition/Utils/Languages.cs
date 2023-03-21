@@ -26,6 +26,11 @@ namespace ChessPosition
         public static Dictionary<char, char> ChessSymbolMapping = new Dictionary<char, char>();
 
         /// <summary>
+        /// Reverse mapping of chess symbols i.e. from the local language to the PGN (i.e. English)
+        /// </summary>
+        public static Dictionary<char, char> ReverseChessSymbolMapping = new Dictionary<char, char>();
+
+        /// <summary>
         /// Whether the default mapping is used.
         /// If so the callers do not need to call MapPieceSymbols
         /// before displaying moves. 
@@ -102,12 +107,19 @@ namespace ChessPosition
             {
                 IsDefaultMapping = false;
                 ChessSymbolMapping.Clear();
+                ReverseChessSymbolMapping.Clear();
 
                 ChessSymbolMapping['K'] = symbols[0];
                 ChessSymbolMapping['Q'] = symbols[1];
                 ChessSymbolMapping['R'] = symbols[2];
                 ChessSymbolMapping['B'] = symbols[3];
                 ChessSymbolMapping['N'] = symbols[4];
+
+                ReverseChessSymbolMapping[symbols[0]] = 'K';
+                ReverseChessSymbolMapping[symbols[1]] = 'Q';
+                ReverseChessSymbolMapping[symbols[2]] = 'R';
+                ReverseChessSymbolMapping[symbols[3]] = 'B';
+                ReverseChessSymbolMapping[symbols[4]] = 'N';
             }
         }
 

@@ -332,7 +332,7 @@ namespace GameTree
             string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
             if (string.IsNullOrEmpty(value))
             {
-                value = Guid.NewGuid().ToString();
+                value = TextUtils.GenerateRandomElementName();
                 SetHeaderValue(PgnHeaders.KEY_GUID, value);
             }
 
@@ -353,7 +353,7 @@ namespace GameTree
             string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
             if (string.IsNullOrEmpty(value))
             {
-                value = Guid.NewGuid().ToString();
+                value = TextUtils.GenerateRandomElementName();
                 SetHeaderValue(PgnHeaders.KEY_GUID, value);
                 generated = true;
             }

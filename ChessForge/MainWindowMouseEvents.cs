@@ -360,6 +360,14 @@ namespace ChessForge
                 MainChessBoard.Shapes.FinalizeShape(targetSquare, true, true);
                 _lastRightClickedPoint = null;
 
+                if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+                {
+                    if (_introView != null)
+                    {
+                        _introView.UpdateDiagramShapes(MainChessBoard.DisplayedNode);
+                    }
+                }
+
                 // we have been building a shape so ensure context menu does not pop up
                 e.Handled = true;
             }
@@ -609,7 +617,16 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRtbIntroView_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            _introView.EnableMenuItems(false, false, null);
+            if (_introView != null)
+            {
+                if (e.ChangedButton == MouseButton.Right)
+                {
+                    _introView.EnableMenuItems(false, false, null);
+                }
+
+                _introView.RestoreSelectionOpacity();
+                UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
+            }
         }
 
         //**************************************************************
@@ -921,7 +938,7 @@ namespace ChessForge
             {
                 _chaptersView.UpdateIntroHeaders();
             }
-            
+
             BoardCommentBox.ShowTabHints();
             try
             {
@@ -951,7 +968,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabIntro_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (WorkbookManager.SessionWorkbook == null && _introView != null)
+            if (WorkbookManager.SessionWorkbook == null && WorkbookManager.SessionWorkbook.ActiveChapter != null && _introView != null)
             {
                 _introView.Clear();
             }
@@ -964,6 +981,7 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.INTRO;
             WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.INTRO);
             AppState.ShowExplorers(AppState.AreExplorersOn, true);
+            UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
 
             BoardCommentBox.ShowTabHints();
             try
@@ -978,6 +996,9 @@ namespace ChessForge
                     PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.INTRO);
                 }
                 DisplayPosition(_introView.SelectedNode);
+
+                AppState.ConfigureMainBoardContextMenu();
+                ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
             }
             catch
             {
