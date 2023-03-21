@@ -66,7 +66,7 @@ namespace ChessForge
             {
                 if (string.IsNullOrEmpty(_guid))
                 {
-                    _guid = System.Guid.NewGuid().ToString();
+                    _guid = TextUtils.GenerateRandomElementName();
                 }
                 return _guid;
             }

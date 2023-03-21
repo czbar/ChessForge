@@ -95,7 +95,7 @@ namespace GameTree
             Header.SetContentType(contentType);
 
             // create GUID (it will be overwritten when parsing entities from a file)
-            Header.SetHeaderValue(PgnHeaders.KEY_GUID, Guid.NewGuid().ToString());
+            Header.SetHeaderValue(PgnHeaders.KEY_GUID, TextUtils.GenerateRandomElementName());
 
             if (contentType == GameData.ContentType.EXERCISE)
             {
