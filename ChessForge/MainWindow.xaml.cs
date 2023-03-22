@@ -1374,10 +1374,9 @@ namespace ChessForge
             SetActiveLine(startLineId, startNodeId);
 
             BookmarkManager.IsDirty = true;
-            //BookmarkManager.ShowBookmarks();
 
             int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
-            SelectLineAndMoveInWorkbookViews(_studyTreeView, startLineId, nodeIndex);
+            SelectLineAndMoveInWorkbookViews(_studyTreeView, startLineId, nodeIndex, false);
         }
 
         /// <summary>
@@ -1429,7 +1428,7 @@ namespace ChessForge
             }
 
             int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
-            SelectLineAndMoveInWorkbookViews(_modelGameTreeView, startLineId, nodeIndex);
+            SelectLineAndMoveInWorkbookViews(_modelGameTreeView, startLineId, nodeIndex, false);
         }
 
         /// <summary>
@@ -1494,7 +1493,7 @@ namespace ChessForge
             }
 
             int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
-            SelectLineAndMoveInWorkbookViews(_exerciseTreeView, startLineId, nodeIndex);
+            SelectLineAndMoveInWorkbookViews(_exerciseTreeView, startLineId, nodeIndex, false);
         }
 
         /// <summary>
@@ -1504,7 +1503,8 @@ namespace ChessForge
         {
             _chaptersView = new ChaptersView(UiRtbChaptersView.Document, this);
             _chaptersView.BuildFlowDocumentForChaptersView();
-
+            AppState.DoEvents();
+            _chaptersView.BringChapterIntoView(WorkbookManager.SessionWorkbook.ActiveChapterIndex);
         }
 
         /// <summary>
@@ -1524,7 +1524,7 @@ namespace ChessForge
         public void RefreshSelectedActiveLineAndNode()
         {
             string lineId = ActiveLine.GetLineId();
-            SelectLineAndMoveInWorkbookViews(ActiveTreeView, lineId, ActiveLine.GetSelectedPlyNodeIndex(true));
+            SelectLineAndMoveInWorkbookViews(ActiveTreeView, lineId, ActiveLine.GetSelectedPlyNodeIndex(true), true);
         }
 
         /// <summary>
@@ -1546,7 +1546,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="lineId"></param>
         /// <param name="index"></param>
-        public void SelectLineAndMoveInWorkbookViews(VariationTreeView view, string lineId, int index)
+        public void SelectLineAndMoveInWorkbookViews(VariationTreeView view, string lineId, int index, bool queryExplorer)
         {
             TreeNode nd = ActiveLine.GetNodeAtIndex(index);
             if (nd != null)
@@ -1557,11 +1557,20 @@ namespace ChessForge
                 {
                     EvaluateActiveLineSelectedPosition(nd);
                 }
-                _openingStatsView.SetOpeningName();
-                WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
+                if (queryExplorer)
+                {
+                    _openingStatsView.SetOpeningName();
+                    WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
+                }
             }
         }
 
+        /// <summary>
+        /// Sets active line and node in the ActiveVariationTree
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <param name="selectedNodeId"></param>
+        /// <param name="displayPosition"></param>
         public void SetActiveLine(string lineId, int selectedNodeId, bool displayPosition = true)
         {
             ObservableCollection<TreeNode> line = ActiveVariationTree.SelectLine(lineId);
