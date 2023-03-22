@@ -493,7 +493,7 @@ namespace ChessForge
                     _selectedColumn = column;
 
                     _mainWin.DisplayPosition(nd);
-                    _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, Line.GetLineId(), moveIndex);
+                    _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, Line.GetLineId(), moveIndex, true);
                 }
             }
             else
@@ -681,7 +681,7 @@ namespace ChessForge
                         {
                             _mainWin.DisplayPosition(nd);
                         }
-                        _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, Line.GetLineId(), plyIndex);
+                        _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, Line.GetLineId(), plyIndex, true);
                     }
                 }
                 handled = true;
