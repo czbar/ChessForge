@@ -492,7 +492,7 @@ namespace ChessPosition
 
             int nodeId = -1;
 
-            int lastCharPos = s.LastIndexOf('_');
+            int lastCharPos = s.LastIndexOf(lastChar);
             if (lastCharPos >= 0 && lastCharPos < s.Length - 1)
             {
                 if (!int.TryParse(s.Substring(lastCharPos + 1), out nodeId))
