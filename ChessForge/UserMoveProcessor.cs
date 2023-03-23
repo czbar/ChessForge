@@ -266,7 +266,7 @@ namespace ChessForge
                     else
                     {
                         AppState.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
-                        AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), false);
+                        AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
                     }
                 }
                 else
