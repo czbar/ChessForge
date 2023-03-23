@@ -277,7 +277,7 @@ namespace ChessForge
                     AppState.MainWin.ActiveVariationTree.SetLineIdForNewNode(nd);
                     AppState.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
                     AppState.MainWin.RebuildActiveTreeView();
-                    AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), false);
+                    AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
                 }
 
                 try
