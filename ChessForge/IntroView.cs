@@ -1377,13 +1377,16 @@ namespace ChessForge
         /// in the Diagram Paragraph.
         /// If the user inserted something we will handle this as follows:
         /// - if the extra inline was before the diagram, it will be deleted
-        /// - if the inline was after the diagram, a new Paragraph will be creatwed
+        /// - if the inline was after the diagram, a new Paragraph will be created
         ///   and the inline will be moved there along with the caret.
         /// </summary>
         /// <param name="para"></param>
         /// <param name="diagram"></param>
         private void CleanupDiagramPara(Paragraph para, InlineUIContainer diagram)
         {
+            // stop TextChanged event handler! 
+            _rtb.TextChanged -= UiRtbIntroView_TextChanged;
+
             List<Inline> inlinesToDelete = new List<Inline>();
             List<Inline> inlinesToMove = new List<Inline>();
             if (para != null && diagram != null)
@@ -1407,9 +1410,6 @@ namespace ChessForge
                         beforeDiagram = false;
                     }
                 }
-
-                // stop TextChanged event handler! 
-                _rtb.TextChanged -= UiRtbIntroView_TextChanged;
 
                 try
                 {
