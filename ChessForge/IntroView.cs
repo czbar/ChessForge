@@ -54,7 +54,7 @@ namespace ChessForge
         private int _maxRunId = 0;
 
         // selection opacity value to use when restoring the original opacity
-        private double _defaultSelectionOpacity = 0.4;
+        private const double _defaultSelectionOpacity = 0.4;
 
         /// <summary>
         /// List of nodes currently represented in the view.
@@ -77,7 +77,6 @@ namespace ChessForge
         public IntroView(FlowDocument doc, Chapter parentChapter) : base(doc)
         {
             bool isAppDirty = AppState.IsDirty;
-            _defaultSelectionOpacity = AppState.MainWin.UiRtbIntroView.SelectionOpacity;
 
             Document.Blocks.Clear();
 
