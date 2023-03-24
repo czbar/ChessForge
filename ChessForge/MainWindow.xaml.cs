@@ -647,27 +647,34 @@ namespace ChessForge
         {
             bool res = false;
 
-            if (WebAccess.SourceForgeCheck.ChessForgeVersion != null)
+            try
             {
-                this.Dispatcher.Invoke(() =>
+                if (WebAccess.SourceForgeCheck.ChessForgeVersion != null)
                 {
-                    if (!suppress || WebAccess.SourceForgeCheck.ChessForgeVersion.ToString() != Configuration.DoNotShowVersion)
+                    this.Dispatcher.Invoke(() =>
                     {
-                        int verCompare = AppState.GetAssemblyVersion().CompareTo(WebAccess.SourceForgeCheck.ChessForgeVersion);
-                        if (verCompare < 0)
+                        if (!suppress || WebAccess.SourceForgeCheck.ChessForgeVersion.ToString() != Configuration.DoNotShowVersion)
                         {
-                            UpdateAvailableDialog dlg = new UpdateAvailableDialog(WebAccess.SourceForgeCheck.ChessForgeVersion)
+                            int verCompare = AppState.GetAssemblyVersion().CompareTo(WebAccess.SourceForgeCheck.ChessForgeVersion);
+                            if (verCompare < 0)
                             {
-                                Left = ChessForgeMain.Left + 100,
-                                Top = ChessForgeMain.Top + 100,
-                                Topmost = false,
-                                Owner = this
-                            };
-                            dlg.ShowDialog();
-                            res = true;
+                                UpdateAvailableDialog dlg = new UpdateAvailableDialog(WebAccess.SourceForgeCheck.ChessForgeVersion)
+                                {
+                                    Left = ChessForgeMain.Left + 100,
+                                    Top = ChessForgeMain.Top + 100,
+                                    Topmost = false,
+                                    Owner = this
+                                };
+                                dlg.ShowDialog();
+                                res = true;
+                            }
                         }
-                    }
-                });
+                    });
+                }
+            }
+            catch
+            {
+                res = false;
             }
 
             return res;
