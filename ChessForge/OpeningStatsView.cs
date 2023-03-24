@@ -567,6 +567,8 @@ namespace ChessForge
             {
                 AppLog.Message("EventMoveClicked()", ex);
             }
+
+            e.Handled = true;
         }
 
         /// <summary>

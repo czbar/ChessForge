@@ -1506,8 +1506,21 @@ namespace ChessForge
                 Point pt = e.GetPosition(_mainWin.UiRtbTrainingProgress);
                 _mainWin.TrainingFloatingBoard.FlipBoard(_mainWin.MainChessBoard.IsFlipped);
                 _mainWin.TrainingFloatingBoard.DisplayPosition(_mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId), false);
+                
+                double xCoord = pt.X;
+                if (_mainWin.UiRtbTrainingProgress.ActualWidth < xCoord + 170)
+                {
+                    xCoord = _mainWin.UiRtbTrainingProgress.ActualWidth - 170;
+                }
+
                 int yOffset = r.Name.StartsWith(_run_stem_move_) ? 25 : -165;
-                _mainWin.UiVbTrainingFloatingBoard.Margin = new Thickness(pt.X, pt.Y + yOffset, 0, 0);
+                double yCoord = pt.Y + yOffset;
+                if (yCoord < 0)
+                {
+                    yCoord = 0;
+                }
+
+                _mainWin.UiVbTrainingFloatingBoard.Margin = new Thickness(xCoord, yCoord, 0, 0);
                 if (_nodeIdSuppressFloatingBoard != nodeId)
                 {
                     _mainWin.ShowTrainingFloatingBoard(true);

@@ -85,7 +85,6 @@ namespace ChessForge
             _row = new TableRow();
 
             _runMove = new Run("");
-            _runMove.MouseLeftButtonDown += _parentView.EventMoveClicked;
             _runMove.Name = "";
             _runMove.Cursor = Cursors.Arrow;
 

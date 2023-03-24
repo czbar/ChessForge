@@ -1325,11 +1325,16 @@ namespace ChessForge
                         _mainWin.ChaptersFloatingBoard.DisplayPosition(thumb, false);
                         int xOffset = 20;
                         int yOffset = 20;
-                        if (_mainWin.UiRtbChaptersView.Height < pt.Y + 180)
+                        if (_mainWin.UiRtbChaptersView.ActualHeight < pt.Y + 170)
                         {
                             yOffset = -170;
                         }
-                        _mainWin.UiVbChaptersFloatingBoard.Margin = new Thickness(pt.X + xOffset, pt.Y + yOffset, 0, 0);
+                        double xCoord = pt.X + xOffset;
+                        if (xCoord + 170 > _mainWin.UiRtbChaptersView.ActualWidth)
+                        {
+                            xCoord = _mainWin.UiRtbChaptersView.ActualWidth - 170;
+                        }
+                        _mainWin.UiVbChaptersFloatingBoard.Margin = new Thickness(xCoord, pt.Y + yOffset, 0, 0);
                         _mainWin.ShowChaptersFloatingBoard(true);
                     }
                 }

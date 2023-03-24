@@ -54,7 +54,7 @@ namespace ChessForge
         private int _maxRunId = 0;
 
         // selection opacity value to use when restoring the original opacity
-        private double _defaultSelectionOpacity = 0.4;
+        private const double _defaultSelectionOpacity = 0.4;
 
         /// <summary>
         /// List of nodes currently represented in the view.
@@ -77,7 +77,6 @@ namespace ChessForge
         public IntroView(FlowDocument doc, Chapter parentChapter) : base(doc)
         {
             bool isAppDirty = AppState.IsDirty;
-            _defaultSelectionOpacity = AppState.MainWin.UiRtbIntroView.SelectionOpacity;
 
             Document.Blocks.Clear();
 
@@ -1378,13 +1377,16 @@ namespace ChessForge
         /// in the Diagram Paragraph.
         /// If the user inserted something we will handle this as follows:
         /// - if the extra inline was before the diagram, it will be deleted
-        /// - if the inline was after the diagram, a new Paragraph will be creatwed
+        /// - if the inline was after the diagram, a new Paragraph will be created
         ///   and the inline will be moved there along with the caret.
         /// </summary>
         /// <param name="para"></param>
         /// <param name="diagram"></param>
         private void CleanupDiagramPara(Paragraph para, InlineUIContainer diagram)
         {
+            // stop TextChanged event handler! 
+            _rtb.TextChanged -= UiRtbIntroView_TextChanged;
+
             List<Inline> inlinesToDelete = new List<Inline>();
             List<Inline> inlinesToMove = new List<Inline>();
             if (para != null && diagram != null)
@@ -1408,9 +1410,6 @@ namespace ChessForge
                         beforeDiagram = false;
                     }
                 }
-
-                // stop TextChanged event handler! 
-                _rtb.TextChanged -= UiRtbIntroView_TextChanged;
 
                 try
                 {

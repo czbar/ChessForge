@@ -23,8 +23,13 @@ namespace WebAccess
         /// </summary>
         public static event EventHandler<WebAccessEventArgs> OpeningStatsReceived;
 
+        /// <summary>
+        /// Handler for the case where we did not send a request
+        /// </summary>
+        public static event EventHandler<WebAccessEventArgs> OpeningStatsRequestIgnored;
+
         // max number of results to store in cache
-        private static int STATS_CACHE_SIZE = 1000;
+        private static int STATS_CACHE_SIZE = 100;
 
         // number of entires to remove when cache is full
         private static int COUNT_TO_FREE_ON_FULL = STATS_CACHE_SIZE / 5;
@@ -35,6 +40,9 @@ namespace WebAccess
         /// Last tocuh times for the cached items. The key is FEN.
         private static Dictionary<string, long> _dictLastTouch = new Dictionary<string, long>();
 
+        // the last requested fen
+        private static string _lastRequestedFen;
+
         /// <summary>
         /// Requests Opening Stats from lichess
         /// </summary>
@@ -42,6 +50,15 @@ namespace WebAccess
         public static async void RequestOpeningStats(int treeId, TreeNode nd)
         {
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
+            if (fen == _lastRequestedFen)
+            {
+                OpeningStatsRequestIgnored?.Invoke(null, null);
+                return;
+            }
+            else
+            {
+                _lastRequestedFen = fen;
+            }
 
             WebAccessEventArgs eventArgs = new WebAccessEventArgs();
             eventArgs.TreeId = treeId;

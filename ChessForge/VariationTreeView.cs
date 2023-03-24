@@ -454,7 +454,7 @@ namespace ChessForge
                 _shownVariationTree.PromoteLine(nd);
                 _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
                 BuildFlowDocumentForVariationTree();
-                _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false));
+                _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false), false);
                 AppState.IsDirty = true;
             }
             catch (Exception ex)
@@ -588,7 +588,7 @@ namespace ChessForge
                 _shownVariationTree.BuildLines();
                 _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
                 BuildFlowDocumentForVariationTree();
-                _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true));
+                _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true), false);
                 AppState.IsDirty = true;
 
                 BookmarkManager.ResyncBookmarks(1);
