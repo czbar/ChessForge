@@ -123,7 +123,7 @@ namespace ChessPosition
             try
             {
                 // Make the move on it
-                MoveUtils.MakeMove(newNode.Position, move);
+                MakeMove(newNode.Position, move);
             }
             catch
             {
@@ -138,12 +138,23 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Makes the passed move on the supplied Position after
-        /// verifying that it is legal and not ambiguous.
+        /// Checks if 2 algebraic notations are identincal (having removed any check or mate signs)
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="move1"></param>
+        /// <param name="move2"></param>
         /// <returns></returns>
-        public static void MakeMove(BoardPosition position, MoveData move)
+        public static bool AreAlgMovesIdentical(string move1, string move2)
+        {
+            return TextUtils.StripCheckOrMateChar(move1) == TextUtils.StripCheckOrMateChar(move2);
+        }
+
+    /// <summary>
+    /// Makes the passed move on the supplied Position after
+    /// verifying that it is legal and not ambiguous.
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public static void MakeMove(BoardPosition position, MoveData move)
         {
             // for each piece, that can potentially move, verify the legality of the move
             List<SquareCoords> goodOrigins = new List<SquareCoords>();
