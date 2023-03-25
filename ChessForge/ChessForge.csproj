@@ -110,6 +110,7 @@
     <Compile Include="ChapterViewState.cs" />
     <Compile Include="ChessBoardSmall.cs" />
     <Compile Include="ChessForgeEventArgs.cs" />
+    <Compile Include="ChfClipboard.cs" />
     <Compile Include="ContentTypeListItem.cs" />
     <Compile Include="CustomCommands.cs" />
     <Compile Include="DebugDumps.cs" />
