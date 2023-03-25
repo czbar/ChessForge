@@ -91,7 +91,14 @@ namespace ChessPosition
             }
         }
 
-        // TODO: remove dupe from PgnParser
+        /// <summary>
+        /// Creates a TreeNode for the passed move, givent the parent's node/position.
+        /// </summary>
+        /// <param name="algMove"></param>
+        /// <param name="parentNode"></param>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static TreeNode ProcessAlgMove(string algMove, TreeNode parentNode, int nodeId)
         {
             PieceColor parentSideToMove = parentNode.ColorToMove;
