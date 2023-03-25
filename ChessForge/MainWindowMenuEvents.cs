@@ -2383,8 +2383,33 @@ namespace ChessForge
                 {
                     if (AppState.IsVariationTreeTabType)
                     {
-                        ActiveTreeView.InsertSubtree(ChfClipboard.Value as List<TreeNode>);
-                        ActiveTreeView.BuildFlowDocumentForVariationTree();
+                        List<TreeNode> insertedNewNodes = new List<TreeNode>();
+                        List<TreeNode> failedInsertions = new List<TreeNode>();
+                        TreeNode firstInserted = ActiveTreeView.InsertSubtree(ChfClipboard.Value as List<TreeNode>, ref insertedNewNodes, ref failedInsertions);
+                        if (failedInsertions.Count == 0)
+                        {
+                            ActiveVariationTree.BuildLines();
+                            ActiveTreeView.BuildFlowDocumentForVariationTree();
+                            TreeNode insertedRoot = ActiveVariationTree.GetNodeFromNodeId(firstInserted.NodeId);
+                            SetActiveLine(insertedRoot.LineId, insertedRoot.NodeId);
+                            ActiveTreeView.SelectNode(firstInserted.NodeId);
+                        }
+                        else
+                        {
+                            if (insertedNewNodes.Count > 0)
+                            {
+                                // remove inserted nodes after first removing the inserted root from the parent's children list.
+                                insertedNewNodes[0].Parent.Children.Remove(insertedNewNodes[0]);
+                                foreach (TreeNode node in insertedNewNodes)
+                                {
+                                    ActiveVariationTree.Nodes.Remove(node);
+                                }
+                            }
+
+                            string msg = Properties.Resources.ErrClipboardLinePaste + " (" 
+                                + MoveUtils.BuildSingleMoveText(failedInsertions[0], true) + ")";
+                            MessageBox.Show(msg, Properties.Resources.ClipboardOperation, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        }
                     }
                 }
             }
