@@ -648,6 +648,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Inserts the passed subtree at the currently selected node, or the node before it (parent)
+        /// depending on the match/mismatch of side-to-move.
+        /// </summary>
+        /// <param name="lstNodes"></param>
+        public void InsertSubtree(List<TreeNode> lstNodes)
+        {
+            TreeUtils.InsertSubtreeMovesIntoTree(_shownVariationTree, GetSelectedNode(), lstNodes);
+        }
+
+        /// <summary>
         /// Sets up ActiveTreeView's context menu.
         /// </summary>
         /// <param name="cmn"></param>
@@ -1172,14 +1182,17 @@ namespace ChessForge
         {
             foreach (TreeNode nd in _shownVariationTree.Nodes)
             {
-                nd.DistanceToLeaf = -1;
-                nd.DistanceToNextFork = 0;
+                if (nd != null)
+                {
+                    nd.DistanceToLeaf = -1;
+                    nd.DistanceToNextFork = 0;
+                }
             }
 
             foreach (TreeNode nd in _shownVariationTree.Nodes)
             {
                 // if the node is a leaf start traversing
-                if (IsLeaf(nd))
+                if (nd != null && IsLeaf(nd))
                 {
                     int distanceFromLeaf = 0;
                     int distanceFromFork = -1;
@@ -2018,6 +2031,8 @@ namespace ChessForge
             {
                 AppLog.Message("EventForkChildClicked()", ex);
             }
+
+            e.Handled = true;
         }
 
         /// <summary>
