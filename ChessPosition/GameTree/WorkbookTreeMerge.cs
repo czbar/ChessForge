@@ -11,21 +11,8 @@ namespace ChessPosition.GameTree
     /// </summary>
     public class WorkbookTreeMerge
     {
-        // the Workbook that will be built and returned
+        // the VariationTree that will be built and returned
         private static VariationTree _mergedTree;
-
-        /// <summary>
-        /// Helper dictionaries to hold distinct nodes at a given tree level. 
-        /// Map FEN of the node (FEN uniquely identifies a chess position) to the Node objects.
-        /// </summary>
-        //private static Dictionary<string, TreeNode> _dict1 = new Dictionary<string, TreeNode>();
-        //private static Dictionary<string, TreeNode> _dict2 = new Dictionary<string, TreeNode>();
-
-        //// helper lists to hold duplicate nodes at a given tree level
-        //private static List<TreeNode> _dupes1 = new List<TreeNode>();
-        //private static List<TreeNode> _dupes2 = new List<TreeNode>();
-        //private static List<string> _dupeFens = new List<string>();
-
 
         /// <summary>
         /// Performs merging of 2 Variation Trees returns a new, merged tree as the result.
@@ -46,7 +33,7 @@ namespace ChessPosition.GameTree
 
 
         /// <summary>
-        /// Merges 2 subtrees begining from the passed Nodes.
+        /// Merges 2 subtrees beginning from the passed Nodes.
         /// A single Node representing those passed Nodes must already be in the
         /// final tree (a single node because these 2 nodes represent the same position
         /// in the 2 input trees).
