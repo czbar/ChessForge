@@ -113,6 +113,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns true if the active tab if of the type that hosts a variation tree.
+        /// </summary>
+        public static bool IsVariationTreeTabType
+        {
+            get =>
+                 ActiveTab == WorkbookManager.TabViewType.STUDY
+                || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
+                || ActiveTab == WorkbookManager.TabViewType.EXERCISE;
+        }
+
+        /// <summary>
         /// The most recent active tab in the Manual Review tab control.
         /// This value does not include the Training tab which is in a different
         /// tab control.
