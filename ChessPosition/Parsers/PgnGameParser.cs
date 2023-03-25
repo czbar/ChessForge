@@ -298,10 +298,10 @@ namespace GameTree
                         ProcessComment(parentNode);
                         break;
                     case PgnTokenType.Move:
-                        // ProcessMove() will return a new node
-                        // that will then be the "parentNode" for
-                        // the processing of the next move (ply)
-                        TreeNode newNode = ProcessMove(token, parentNode);
+                        // ProcessMove() will return a new node that will then be the "parentNode"
+                        // for the processing of the next move (ply)
+                        TreeNode newNode = MoveUtils.ProcessAlgMove(token, parentNode, _runningNodeId);
+                        _runningNodeId++;
                         parentNode.AddChild(newNode);
                         previousNode = parentNode;
                         parentNode = newNode;
@@ -338,63 +338,6 @@ namespace GameTree
         {
             TreeNode nd = tree.Nodes[tree.Nodes.Count - 1];
             nd.AddNag(nag);
-        }
-
-        /// <summary>
-        /// This is the core processing method.
-        /// It creates a new node in the game tree, parses the
-        /// move text and creates a position in the new node
-        /// by making the parsed move on the board of the parent position.
-        /// </summary>
-        /// <param name="algMove"></param>
-        /// <param name="charIndex"></param>
-        /// <param name="previousNode"></param>
-        /// <returns></returns>
-        private TreeNode ProcessMove(string algMove, TreeNode parentNode)
-        {
-            PieceColor parentSideToMove = parentNode.ColorToMove;
-
-            // check for bad PGN with '0-0' instead of 'O-O' castling
-            if (algMove.Length > 1 && algMove[0] == '0')
-            {
-                algMove = algMove.Replace('0', 'O');
-            }
-
-            PgnMoveParser pmp = new PgnMoveParser();
-            int suffixLen = pmp.ParseAlgebraic(algMove, parentSideToMove);
-            // remove suffix from algMove
-            algMove = algMove.Substring(0, algMove.Length - suffixLen);
-            MoveData move = pmp.Move;
-            algMove = TextUtils.StripCheckOrMateChar(algMove);
-
-            // create a new node
-            TreeNode newNode = CreateNewNode(algMove, move, parentNode, parentSideToMove, _runningNodeId);
-            _runningNodeId++;
-
-            if (move.IsCheckmate)
-            {
-                newNode.Position.IsCheckmate = true;
-            }
-            else if (move.IsCheck)
-            {
-                newNode.Position.IsCheck = true;
-            }
-
-            try
-            {
-                // Make the move on it
-                MoveUtils.MakeMove(newNode.Position, move);
-            }
-            catch
-            {
-                throw new Exception(TextUtils.BuildErrortext(newNode, algMove));
-            }
-
-            // do the postprocessing
-            PositionUtils.UpdateCastlingRights(ref newNode.Position, move, false);
-            PositionUtils.SetEnpassantSquare(ref newNode.Position, move);
-
-            return newNode;
         }
 
         /// <summary>
