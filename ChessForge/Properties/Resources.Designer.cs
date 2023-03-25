@@ -727,6 +727,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clipboard Operation.
+        /// </summary>
+        public static string ClipboardOperation {
+            get {
+                return ResourceManager.GetString("ClipboardOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string Close {
@@ -1389,6 +1398,15 @@ namespace ChessForge.Properties {
         public static string ErrAfterMove {
             get {
                 return ResourceManager.GetString("ErrAfterMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error pasting the variation from the Clipboard .
+        /// </summary>
+        public static string ErrClipboardLinePaste {
+            get {
+                return ResourceManager.GetString("ErrClipboardLinePaste", resourceCulture);
             }
         }
         

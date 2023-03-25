@@ -324,6 +324,12 @@
   <data name="ErrAfterMove" xml:space="preserve">
     <value>after move</value>
   </data>
+  <data name="ErrClipboardLinePaste" xml:space="preserve">
+    <value>Error pasting the variation from the Clipboard </value>
+  </data>
+  <data name="ClipboardOperation" xml:space="preserve">
+    <value>Clipboard Operation</value>
+  </data>
   <data name="File" xml:space="preserve">
     <value>File</value>
   </data>
