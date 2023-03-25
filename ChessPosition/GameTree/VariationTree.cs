@@ -1486,16 +1486,8 @@ namespace GameTree
                 }
             }
 
-            _subTree.Clear();
-            GetSubTree(nd, false);
-
-            List<TreeNode> nodes = new List<TreeNode>();
-            foreach (TreeNode subNode in _subTree)
-            {
-                nodes.Add(subNode.CloneMe(true));
-            }
-
-            return nodes;
+            TreeNode clonedRoot = nd.CloneMe(false);
+            return TreeUtils.NodeToNodeList(clonedRoot); 
         }
 
         /// <summary>
