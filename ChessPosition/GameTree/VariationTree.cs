@@ -1471,6 +1471,34 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Makes a copy of a subtree starting at the passed node.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public List<TreeNode> CopySubtree(TreeNode nd)
+        {
+            if (nd == null)
+            {
+                nd = SelectedNode;
+                if (nd == null)
+                {
+                    return null;
+                }
+            }
+
+            _subTree.Clear();
+            GetSubTree(nd, false);
+
+            List<TreeNode> nodes = new List<TreeNode>();
+            foreach (TreeNode subNode in _subTree)
+            {
+                nodes.Add(subNode.CloneMe(true));
+            }
+
+            return nodes;
+        }
+
+        /// <summary>
         /// Removes nodes with the passed Ids from the tree.
         /// </summary>
         /// <param name="nodeIds"></param>

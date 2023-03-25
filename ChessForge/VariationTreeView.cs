@@ -188,7 +188,7 @@ namespace ChessForge
         protected VariationTree _mainVariationTree;
 
         /// <summary>
-        /// The shown variation tree is either the main _variationTreeOld or the associated tree
+        /// The shown variation tree is either the _mainVariationTree or the AssociatedSecondary tree
         /// </summary>
         protected VariationTree _shownVariationTree
         {
@@ -571,6 +571,16 @@ namespace ChessForge
             {
                 AppLog.Message("CreateChapterFromLine()", ex);
             }
+        }
+
+        /// <summary>
+        /// Makes a copy of a subtree of the shown tree, starting at the passed node.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public List<TreeNode> CopySelectedSubtree(TreeNode nd)
+        {
+            return _shownVariationTree.CopySubtree(nd);
         }
 
         /// <summary>
