@@ -652,9 +652,10 @@ namespace ChessForge
         /// depending on the match/mismatch of side-to-move.
         /// </summary>
         /// <param name="lstNodes"></param>
-        public void InsertSubtree(List<TreeNode> lstNodes)
+        public TreeNode InsertSubtree(List<TreeNode> lstNodes, ref List<TreeNode> insertedNodes, ref List<TreeNode> failedInsertions)
         {
-            TreeUtils.InsertSubtreeMovesIntoTree(_shownVariationTree, GetSelectedNode(), lstNodes);
+            TreeNode node = TreeUtils.InsertSubtreeMovesIntoTree(_shownVariationTree, GetSelectedNode(), lstNodes, ref insertedNodes, ref failedInsertions);
+            return node;
         }
 
         /// <summary>
@@ -729,6 +730,16 @@ namespace ChessForge
 
         // counter to prevent too many debug messages in debug mode
         private static int _debugSelectedBkgMsgCount = 0;
+
+        /// <summary>
+        /// Selects the passed node along with its line id.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        public void SelectNode(int nodeId)
+        {
+            TreeNode node = _shownVariationTree.GetNodeFromNodeId(nodeId);
+            SelectLineAndMove(node.LineId, nodeId);
+        }
 
         /// <summary>
         /// Selects the move and the line in this view on a request from another view (as opposed
