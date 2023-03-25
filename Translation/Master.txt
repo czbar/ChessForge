@@ -238,6 +238,13 @@ ErrInsteadOfMoveNumber=instead of a move number
 #After move
 ErrAfterMove=after move
 
+#Cannot insert line from the Clipboard
+ErrClipboardLinePaste=Error pasting variation from the Clipboard 
+
+#Clipboard operation
+ClipboardOperation=Clipboard Operation
+
+
 
 #
 # MAIN MENU

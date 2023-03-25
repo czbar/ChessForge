@@ -307,6 +307,15 @@ ErrInsteadOfMoveNumber=zamiast numeru posunięcia
 #english: ErrAfterMove=after move
 ErrAfterMove=po ruchu
 
+#description: Cannot insert line from the Clipboard
+#english: ErrClipboardLinePaste=Error pasting the variation from the Clipboard 
+ErrClipboardLinePaste=Błąd przy wklejaniu wariantu ze schowka 
+
+#description: Clipboard operation
+#english: ClipboardOperation=Clipboard Operation
+ClipboardOperation=Operacja Schowka
+
+
 
 #
 # MAIN MENU

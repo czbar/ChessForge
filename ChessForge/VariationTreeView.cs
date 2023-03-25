@@ -188,7 +188,7 @@ namespace ChessForge
         protected VariationTree _mainVariationTree;
 
         /// <summary>
-        /// The shown variation tree is either the main _variationTreeOld or the associated tree
+        /// The shown variation tree is either the _mainVariationTree or the AssociatedSecondary tree
         /// </summary>
         protected VariationTree _shownVariationTree
         {
@@ -574,6 +574,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Makes a copy of a subtree of the shown tree, starting at the passed node.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public List<TreeNode> CopySelectedSubtree(TreeNode nd)
+        {
+            return _shownVariationTree.CopySubtree(nd);
+        }
+
+        /// <summary>
         /// Deletes the current move and all moves that follow it.
         /// </summary>
         public void DeleteRemainingMoves()
@@ -622,7 +632,7 @@ namespace ChessForge
                 // Prepare info for potential Undo
                 EditOperation op = new EditOperation(EditOperation.EditType.MERGE_TREE, targetTree.GetListOfNodeIds(true), null);
 
-                VariationTree merged = WorkbookTreeMerge.MergeWorkbooks(targetTree, treeFromGame);
+                VariationTree merged = WorkbookTreeMerge.MergeVariationTrees(targetTree, treeFromGame);
                 WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree = merged;
                 merged.BuildLines();
 
@@ -635,6 +645,17 @@ namespace ChessForge
             {
                 AppLog.Message("MergeIntoStudy()", ex);
             }
+        }
+
+        /// <summary>
+        /// Inserts the passed subtree at the currently selected node, or the node before it (parent)
+        /// depending on the match/mismatch of side-to-move.
+        /// </summary>
+        /// <param name="lstNodes"></param>
+        public TreeNode InsertSubtree(List<TreeNode> lstNodes, ref List<TreeNode> insertedNodes, ref List<TreeNode> failedInsertions)
+        {
+            TreeNode node = TreeUtils.InsertSubtreeMovesIntoTree(_shownVariationTree, GetSelectedNode(), lstNodes, ref insertedNodes, ref failedInsertions);
+            return node;
         }
 
         /// <summary>
@@ -709,6 +730,16 @@ namespace ChessForge
 
         // counter to prevent too many debug messages in debug mode
         private static int _debugSelectedBkgMsgCount = 0;
+
+        /// <summary>
+        /// Selects the passed node along with its line id.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        public void SelectNode(int nodeId)
+        {
+            TreeNode node = _shownVariationTree.GetNodeFromNodeId(nodeId);
+            SelectLineAndMove(node.LineId, nodeId);
+        }
 
         /// <summary>
         /// Selects the move and the line in this view on a request from another view (as opposed
@@ -1162,14 +1193,17 @@ namespace ChessForge
         {
             foreach (TreeNode nd in _shownVariationTree.Nodes)
             {
-                nd.DistanceToLeaf = -1;
-                nd.DistanceToNextFork = 0;
+                if (nd != null)
+                {
+                    nd.DistanceToLeaf = -1;
+                    nd.DistanceToNextFork = 0;
+                }
             }
 
             foreach (TreeNode nd in _shownVariationTree.Nodes)
             {
                 // if the node is a leaf start traversing
-                if (IsLeaf(nd))
+                if (nd != null && IsLeaf(nd))
                 {
                     int distanceFromLeaf = 0;
                     int distanceFromFork = -1;
@@ -2008,6 +2042,8 @@ namespace ChessForge
             {
                 AppLog.Message("EventForkChildClicked()", ex);
             }
+
+            e.Handled = true;
         }
 
         /// <summary>

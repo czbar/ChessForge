@@ -12,3 +12,5 @@ stockfish_15_x86_64.exe
 Resources/Sounds/Capture.mp3
 Resources/Sounds/InvalidMove.mp3
 Resources/Sounds/Move.mp3
+Resources/Sounds/NotInWorkbook.mp3
+Resources/Sounds/EndOfLine.mp3

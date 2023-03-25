@@ -7,11 +7,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Xml.Linq;
 
 namespace ChessPosition
 {
     public class TreeUtils
     {
+        /// <summary>
+        /// Puts the subtree starting at the passed node into a list of nodes.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static List<TreeNode> NodeToNodeList(TreeNode node)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+
+            List<TreeNode> lstNodes = new List<TreeNode>();
+            EnlistNodeAndChildren(node, ref lstNodes);
+            return lstNodes;
+        }
+
         /// <summary>
         /// Finds nodes featuring the passed Position.
         /// </summary>
@@ -29,7 +47,7 @@ namespace ChessPosition
             {
                 if (refBoard.Board.Cast<byte>().SequenceEqual(nd.Position.Board.Cast<byte>()))
                 {
-                    if ((!checkEnpassant || IsSameEnpassantPossibilities(refBoard, nd.Position)) 
+                    if ((!checkEnpassant || IsSameEnpassantPossibilities(refBoard, nd.Position))
                         && (!checkSideToMove || refBoard.ColorToMove == nd.Position.ColorToMove)
                         && (!checkCastleRights || refBoard.CastlingRights == nd.Position.CastlingRights))
                     {
@@ -43,6 +61,56 @@ namespace ChessPosition
             }
 
             return nodeList;
+        }
+
+        /// <summary>
+        /// Walks the tree and inserts all nodes into the passed list.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="lstNodes"></param>
+        private static void EnlistNodeAndChildren(TreeNode node, ref List<TreeNode> lstNodes)
+        {
+            lstNodes.Add(node);
+            foreach (TreeNode child in node.Children)
+            {
+                EnlistNodeAndChildren(child, ref lstNodes);
+            }
+        }
+
+        /// <summary>
+        /// Inserts a Subtree into a tree.
+        /// If nodeToInsertAt has the opposite ColorToMove to the root node of the subtree, 
+        /// the insertion will occur with nodeToInsertAt as Parent.
+        /// Otherwise we will assume that the intent was to insert at the parent of nodeToInsertAt.
+        /// </summary>
+        /// <param name="targetTree"></param>
+        /// <param name="nodeToInsertAt"></param>
+        /// <param name="subtree"></param>
+        public static TreeNode InsertSubtreeMovesIntoTree(VariationTree targetTree, TreeNode nodeToInsertAt, List<TreeNode> subtree, ref List<TreeNode> insertedInsertions, ref List<TreeNode> failedInsertions)
+        {
+            try
+            {
+                TreeNode subtreeRoot = subtree[0];
+                TreeNode updatedRoot = null;
+                if (subtreeRoot != null && subtree.Count > 0 && nodeToInsertAt != null && targetTree != null)
+                {
+                    if (subtreeRoot.ColorToMove == nodeToInsertAt.ColorToMove)
+                    {
+                        nodeToInsertAt = nodeToInsertAt.Parent;
+                    }
+                    if (nodeToInsertAt != null)
+                    {
+                        updatedRoot = InsertMoveAndChildrenIntoTree(targetTree, nodeToInsertAt, subtreeRoot, ref insertedInsertions, ref failedInsertions);
+                    }
+                }
+
+                return updatedRoot;
+            }
+            catch
+            {
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -243,6 +311,78 @@ namespace ChessPosition
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Recursively inserts a node and its children into a Tree.
+        /// </summary>
+        /// <param name="targetTree"></param>
+        /// <param name="insertAtNode"></param>
+        /// <param name="moveToInsert"></param>
+        /// <param name="failedInsertions"></param>
+        private static TreeNode InsertMoveAndChildrenIntoTree(VariationTree targetTree, TreeNode insertAtNode, TreeNode moveToInsert, ref List<TreeNode> insertedNodes, ref List<TreeNode> failedInsertions)
+        {
+            TreeNode insertedNode = InsertMoveIntoTree(targetTree, insertAtNode, moveToInsert.LastMoveAlgebraicNotation, ref insertedNodes);
+            if (insertedNode == null)
+            {
+                failedInsertions.Add(moveToInsert);
+                return null;
+            }
+
+            foreach (TreeNode child in moveToInsert.Children)
+            {
+                InsertMoveAndChildrenIntoTree(targetTree, insertedNode, child, ref insertedNodes, ref failedInsertions);
+            }
+
+            return insertedNode;
+        }
+
+        /// <summary>
+        /// Inserts a move given by its algebraic notation in an existing variation tree.
+        /// If the move already exists in the tree, that existing Node will be returned.
+        /// We only add NEW nodes to the insertedNodes. They are subject to deletion if the
+        /// operation fails or when undo is called.
+        /// </summary>
+        /// <param name="targetTree"></param>
+        /// <param name="insertAtNode"></param>
+        /// <param name="algMove"></param>
+        /// <returns></returns>
+        private static TreeNode InsertMoveIntoTree(VariationTree targetTree, TreeNode insertAtNode, string algMove, ref List<TreeNode> insertedNodes)
+        {
+            TreeNode retNode = null;
+
+            // if the target tree already has a node with the passed algMove, return it
+            foreach (TreeNode nd in insertAtNode.Children)
+            {
+                if (MoveUtils.AreAlgMovesIdentical(nd.LastMoveAlgebraicNotation, algMove))
+                {
+                    retNode = nd;
+                    break;
+                }
+            }
+
+            // if not found above, create a new node
+            if (retNode == null)
+            {
+                try
+                {
+                    int nodeId = targetTree.GetNewNodeId();
+                    retNode = MoveUtils.ProcessAlgMove(algMove, insertAtNode, nodeId);
+                }
+                catch
+                {
+                    retNode = null;
+                }
+
+                if (retNode != null)
+                {
+                    targetTree.AddNode(retNode);
+                    insertAtNode.AddChild(retNode);
+                    insertedNodes.Add(retNode);
+                }
+            }
+
+            return retNode;
         }
 
         /// <summary>

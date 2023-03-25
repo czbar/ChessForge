@@ -556,6 +556,15 @@ namespace ChessForge
                             break;
                         case Key.T:
                             _mainWin.CustomCommand_SetThumbnail(null, null);
+                            e.Handled = true;
+                            break;
+                        case Key.C:
+                            ChfClipboard.HoldNodeList(_mainWin.ActiveVariationTree.CopySubtree(null));
+                            e.Handled= true;
+                            break;
+                        case Key.V:
+                            _mainWin.PasteChfClipboard();
+                            e.Handled= true;
                             break;
                     }
                 }
