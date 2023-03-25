@@ -2373,6 +2373,28 @@ namespace ChessForge
         //**********************
 
         /// <summary>
+        /// Checks the type of the clipboard content and undertakes appropriate action.
+        /// </summary>
+        public void PasteChfClipboard()
+        {
+            try
+            {
+                if (ChfClipboard.Type == ChfClipboard.ItemType.NODE_LIST)
+                {
+                    if (AppState.IsVariationTreeTabType)
+                    {
+                        ActiveTreeView.InsertSubtree(ChfClipboard.Value as List<TreeNode>);
+                        ActiveTreeView.BuildFlowDocumentForVariationTree();
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                AppLog.Message("PasteChfClipboard()", ex);
+            }
+        }
+
+        /// <summary>
         /// Handles Game import from the Games context menu
         /// </summary>
         /// <param name="sender"></param>
@@ -2525,7 +2547,6 @@ namespace ChessForge
             _studyTreeView.BuildFlowDocumentForVariationTree();
             UiTabStudyTree.Focus();
         }
-
 
         //*********************
         //
