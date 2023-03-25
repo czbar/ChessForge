@@ -632,7 +632,7 @@ namespace ChessForge
                 // Prepare info for potential Undo
                 EditOperation op = new EditOperation(EditOperation.EditType.MERGE_TREE, targetTree.GetListOfNodeIds(true), null);
 
-                VariationTree merged = WorkbookTreeMerge.MergeWorkbooks(targetTree, treeFromGame);
+                VariationTree merged = WorkbookTreeMerge.MergeVariationTrees(targetTree, treeFromGame);
                 WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree = merged;
                 merged.BuildLines();
 

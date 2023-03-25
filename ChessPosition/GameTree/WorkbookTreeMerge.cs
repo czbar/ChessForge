@@ -28,14 +28,14 @@ namespace ChessPosition.GameTree
 
 
         /// <summary>
-        /// Performs the merging of 2 WorbookTree objects and returns the result.
+        /// Performs merging of 2 Variation Trees returns a new, merged tree as the result.
         /// </summary>
         /// <param name="tree1"></param>
         /// <param name="tree2"></param>
         /// <returns></returns>
-        public static VariationTree MergeWorkbooks(VariationTree tree1, VariationTree tree2)
+        public static VariationTree MergeVariationTrees(VariationTree tree1, VariationTree tree2)
         {
-            // create a new Workbook and create a root Node
+            // create a new Variation Tree and create a root Node
             _mergedTree = new VariationTree(GameData.ContentType.STUDY_TREE);
             _mergedTree.CreateNew();
 

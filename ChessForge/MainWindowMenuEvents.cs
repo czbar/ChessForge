@@ -155,7 +155,7 @@ namespace ChessForge
                         }
                         else
                         {
-                            merged = WorkbookTreeMerge.MergeWorkbooks(merged, ch.Chapter.StudyTree.Tree);
+                            merged = WorkbookTreeMerge.MergeVariationTrees(merged, ch.Chapter.StudyTree.Tree);
                         }
                         mergedCount++;
                     }
