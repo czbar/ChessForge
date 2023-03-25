@@ -17,6 +17,7 @@ namespace ChessForge
         /// </summary>
         public enum ItemType
         {
+            EMPTY,
             NODE_LIST
         }
 
