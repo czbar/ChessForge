@@ -36,7 +36,7 @@ namespace ChessPosition.Utils
                         int pos_end = pos_start + urls[i].Length - 1;
                         if (pos_start > firstUnprocessedChar)
                         {
-                            parts.Add(new CommentPart(CommentPartType.TEXT, comment.Substring(firstUnprocessedChar, pos_start)));
+                            parts.Add(new CommentPart(CommentPartType.TEXT, comment.Substring(firstUnprocessedChar, pos_start - firstUnprocessedChar)));
                         }
                         parts.Add(new CommentPart(CommentPartType.URL, urls[i]));
                         firstUnprocessedChar = pos_end + 1;
