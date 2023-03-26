@@ -132,6 +132,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the list of nodes in the active line.
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<TreeNode> GetNodeList()
+        {
+            return Line.GetNodeList();
+        }
+
+        /// <summary>
         /// Returns the last Node of the Line.
         /// </summary>
         /// <returns></returns>
@@ -546,27 +555,35 @@ namespace ChessForge
             {
                 if ((Keyboard.Modifiers & ModifierKeys.Control) > 0)
                 {
-                    switch (e.Key)
+                    try
                     {
-                        case Key.U:
-                            _mainWin.CustomCommand_MoveItemUp(null, null);
-                            break;
-                        case Key.D:
-                            _mainWin.CustomCommand_MoveItemDown(null, null);
-                            break;
-                        case Key.T:
-                            _mainWin.CustomCommand_SetThumbnail(null, null);
-                            e.Handled = true;
-                            break;
-                        case Key.C:
-                            ChfClipboard.HoldNodeList(_mainWin.ActiveVariationTree.CopySubtree(null));
-                            e.Handled= true;
-                            break;
-                        case Key.V:
-                            _mainWin.PasteChfClipboard();
-                            e.Handled= true;
-                            break;
+                        switch (e.Key)
+                        {
+                            case Key.U:
+                                _mainWin.CustomCommand_MoveItemUp(null, null);
+                                break;
+                            case Key.D:
+                                _mainWin.CustomCommand_MoveItemDown(null, null);
+                                break;
+                            case Key.T:
+                                _mainWin.CustomCommand_SetThumbnail(null, null);
+                                e.Handled = true;
+                                break;
+                            case Key.C:
+                                _mainWin.ActiveTreeView.PlaceSelectedForCopyInClipboard();
+                                e.Handled = true;
+                                break;
+                            case Key.V:
+                                _mainWin.PasteChfClipboard();
+                                e.Handled = true;
+                                break;
+                            case Key.A:
+                                _mainWin.UiMnSelectSubtree_Click(null, null);
+                                e.Handled = true;
+                                break;
+                        }
                     }
+                    catch { }
                 }
             }
         }

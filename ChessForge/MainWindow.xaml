@@ -240,7 +240,7 @@
                                     <MenuItem x:Name="_mnTrainEvalLine" Header="{x:Static p:Resources.EvaluateLine}" Click="UiMnTrainEvalLine_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            <RichTextBox x:Name="UiRtbTrainingProgress" IsUndoEnabled="False" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                            <RichTextBox x:Name="UiRtbTrainingProgress" IsUndoEnabled="False"  ContextMenu="{x:Null}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                  IsReadOnly="True"  MinHeight="640" PreviewMouseMove="TrainingView_OnPreviewMouseMove" GotFocus="UiRtbTrainingProgress_GotFocus" PreviewMouseRightButtonDown="TrainingView_PreviewMouseRightButtonDown">
                                 <RichTextBox.Resources>
@@ -308,7 +308,7 @@
                                     <MenuItem x:Name="UiMnChptCollapseAll" Header="{x:Static p:Resources.CollapseAll}" Click="UiMnChptCollapseAll_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            <RichTextBox x:Name="UiRtbChaptersView" Grid.Row="1"  IsUndoEnabled="False" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                            <RichTextBox x:Name="UiRtbChaptersView" Grid.Row="1"  ContextMenu="{x:Null}" IsUndoEnabled="False" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="640" MinHeight="500" IsReadOnly="True"  >
                                 <RichTextBox.Resources>
@@ -434,6 +434,12 @@
                                     <MenuItem x:Name="UiMnReferenceArticles" Header="{x:Static p:Resources.MnGameExerciseReferences}" Click="UiMnReferenceArticles_Click"/>
                                     <MenuItem x:Name="UiMnCopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnCopyFen_Click" />
                                     <Separator />
+                                    <MenuItem x:Name="UiMnStCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
+                                    <MenuItem x:Name="UiMnStPasteMoves" Header="{x:Static p:Resources.PasteMoves}"  InputGestureText="Ctrl+V" Click="UiMnPasteMoves_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="UiMnStSelectHighlighted" Header="{x:Static p:Resources.SelectHighlightedLine}"  InputGestureText="Ctrl+A" Click="UiMnSelectHighlighted_Click" />
+                                    <MenuItem x:Name="UiMnStSelectSubtree" Header="{x:Static p:Resources.SelectSubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
+                                    <Separator />
                                     <MenuItem x:Name="UiMnPromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnPromoteLine_Click" />
                                     <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnDeleteMovesFromHere_Click" />
                                     <MenuItem x:Name="UiMnCreateChapterFromLine" Header="{x:Static p:Resources.CreateNewChapterFromLine}" Click="UiMnCreateChapterFromLine_Click" />
@@ -460,7 +466,7 @@
                                 <Label x:Name="UiLblChapterCounter" Grid.Column="1" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Bold"/>
                                 <Image x:Name="UiImgChapterRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="0,0,10,0" Source="Resources/Images/RightArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
                             </Grid>
-                            <RichTextBox x:Name="UiRtbStudyTreeView" IsUndoEnabled="False"  Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                            <RichTextBox x:Name="UiRtbStudyTreeView"  ContextMenu="{x:Null}" IsUndoEnabled="False"  Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="620" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbStudyTree_PreviewKeyDown">
                                 <RichTextBox.Resources>
@@ -497,6 +503,12 @@
                                     <MenuItem x:Name="_mnGame_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="_mnGame_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnGame_CreateExercise_Click" />
                                     <MenuItem x:Name="_mnGame_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnGame_CopyFen_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="UiMnGameCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
+                                    <MenuItem x:Name="UiMnGamePasteMoves" Header="{x:Static p:Resources.PasteMoves}"  InputGestureText="Ctrl+V" Click="UiMnPasteMoves_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="UiMnGameSelectHighlighted" Header="{x:Static p:Resources.SelectHighlightedLine}"  InputGestureText="Ctrl+A" Click="UiMnSelectHighlighted_Click" />
+                                    <MenuItem x:Name="UiMnGameSelectSubtree" Header="{x:Static p:Resources.SelectSubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnGame_PromoteLine_Click" />
                                     <MenuItem x:Name="_mnGame_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnGame_DeleteMovesFromHere_Click" />
@@ -537,7 +549,7 @@
                                 <Label x:Name="UiGamesLblCounterChapter" Grid.Column="1" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Bold"/>
                                 <Image x:Name="UiGamesImgRightArrowChapter" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="0,0,10,0" Source="Resources/Images/RightArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
                             </Grid>
-                            <RichTextBox x:Name="UiRtbModelGamesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                            <RichTextBox x:Name="UiRtbModelGamesView"  ContextMenu="{x:Null}" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                    Height="620" MinHeight="500" IsReadOnly="True" >
                                 <RichTextBox.Resources>
@@ -550,7 +562,7 @@
                             </RichTextBox>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="UiTabExercises"  Header="{x:Static p:Resources.Exercises}" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
+                    <TabItem x:Name="UiTabExercises"  Header="{x:Static p:Resources.Exercises}"  ContextMenu="{x:Null}" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
                         <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu"
                               PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
                             <Grid.RowDefinitions>
@@ -569,6 +581,12 @@
                                     <MenuItem x:Name="_mnExerc_CreateExercise" Header="{x:Static p:Resources.CreateNewExercise}" Click="UiMnExerc_CreateExercise_Click" />
                                     <MenuItem x:Name="_mnExerc_ImportExercises" Header="{x:Static p:Resources.ImportExercises}" Click="UiMnExerc_ImportExercises_Click"  />
                                     <MenuItem x:Name="_mnExerc_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnExerc_CopyFen_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="UiMnExercCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
+                                    <MenuItem x:Name="UiMnExercPasteMoves" Header="{x:Static p:Resources.PasteMoves}"  InputGestureText="Ctrl+V" Click="UiMnPasteMoves_Click" />
+                                    <Separator />
+                                    <MenuItem x:Name="UiMnExercSelectHighlighted" Header="{x:Static p:Resources.SelectHighlightedLine}"  InputGestureText="Ctrl+A" Click="UiMnSelectHighlighted_Click" />
+                                    <MenuItem x:Name="UiMnExercSelectSubtree" Header="{x:Static p:Resources.SelectSubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnExerc_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnExerc_PromoteLine_Click" />
                                     <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnExerc_DeleteMovesFromHere_Click" />
@@ -623,7 +641,7 @@
                             </RichTextBox>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="UiTabBookmarks" Header="{x:Static p:Resources.Bookmarks}" GotFocus="UiTabBookmarks_GotFocus" >
+                    <TabItem x:Name="UiTabBookmarks" Header="{x:Static p:Resources.Bookmarks}"  ContextMenu="{x:Null}" GotFocus="UiTabBookmarks_GotFocus" >
                         <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown" ContextMenuOpening="UiBookmarkMenuOpening">
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="_cmBookmarks">
@@ -894,7 +912,7 @@
                         <DataGridTextColumn Header="{x:Static p:Resources.EvaluationShort}" Width="50" Binding="{Binding BlackEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <RichTextBox x:Name="UiRtbBoardComment" IsUndoEnabled="False" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
+                <RichTextBox x:Name="UiRtbBoardComment"  ContextMenu="{x:Null}" IsUndoEnabled="False" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
                             <Setter Property="Margin" Value="0" />
@@ -912,7 +930,7 @@
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
-                <RichTextBox x:Name="UiRtbOpenings" IsUndoEnabled="False" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="5,10,0,0" Grid.Row="2" VerticalScrollBarVisibility="Auto"
+                <RichTextBox x:Name="UiRtbOpenings" IsUndoEnabled="False"  ContextMenu="{x:Null}" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="5,10,0,0" Grid.Row="2" VerticalScrollBarVisibility="Auto"
                              Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="590" BorderThickness="1" IsReadOnly="True">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">

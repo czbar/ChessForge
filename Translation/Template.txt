@@ -308,7 +308,7 @@ ErrInsteadOfMoveNumber=
 ErrAfterMove=
 
 #description: Cannot insert line from the Clipboard
-#english: ErrClipboardLinePaste=Error pasting the variation from the Clipboard 
+#english: ErrClipboardLinePaste=Error pasting variation from the Clipboard 
 ErrClipboardLinePaste=
 
 #description: Clipboard operation
@@ -795,10 +795,21 @@ MarkAsThumbnail=
 #english: ChapterThumbnail=Thumbnail for Chapters View
 ChapterThumbnail=
 
+#description: Copy selected moves
+#english: CopyMoves=Copy Selected Moves to Clipboard
+CopyMoves=
 
-#
-# NEXT / PREVIOUS BAR
-#
+#description: Paste selected moves
+#english: PasteMoves=Paste Moves from Clipboard
+PasteMoves=
+
+#description: Select Highlighted line
+#english: SelectHighlightedLine=Select Highlighted Line
+SelectHighlightedLine=
+
+#description: Select subtree under the selected move.
+#english: SelectSubtree=Select All under Highlighted Move
+SelectSubtree=
 
 #description: The "Next" term
 #english: Next=Next

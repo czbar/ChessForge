@@ -325,7 +325,7 @@
     <value>after move</value>
   </data>
   <data name="ErrClipboardLinePaste" xml:space="preserve">
-    <value>Error pasting the variation from the Clipboard </value>
+    <value>Error pasting variation from the Clipboard </value>
   </data>
   <data name="ClipboardOperation" xml:space="preserve">
     <value>Clipboard Operation</value>
@@ -653,6 +653,18 @@
   </data>
   <data name="ChapterThumbnail" xml:space="preserve">
     <value>Thumbnail for Chapters View</value>
+  </data>
+  <data name="CopyMoves" xml:space="preserve">
+    <value>Copy Selected Moves to Clipboard</value>
+  </data>
+  <data name="PasteMoves" xml:space="preserve">
+    <value>Paste Moves from Clipboard</value>
+  </data>
+  <data name="SelectHighlightedLine" xml:space="preserve">
+    <value>Select Highlighted Line</value>
+  </data>
+  <data name="SelectSubtree" xml:space="preserve">
+    <value>Select All under Highlighted Move</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>

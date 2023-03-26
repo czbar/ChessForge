@@ -488,6 +488,18 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Makes a clone of the Node but not of the children.
+        /// </summary>
+        /// <returns></returns>
+        public TreeNode CloneJustMe()
+        {
+            TreeNode clone = this.MemberwiseClone() as TreeNode;
+            BoardPosition pos = new BoardPosition(this.Position);
+            clone.Position = pos;
+            return clone;
+        }
+
+        /// <summary>
         /// Adds a node to this node's Children list.
         /// </summary>
         /// <param name="node"></param>

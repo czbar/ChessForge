@@ -2381,11 +2381,12 @@ namespace ChessForge
             {
                 if (ChfClipboard.Type == ChfClipboard.ItemType.NODE_LIST)
                 {
-                    if (AppState.IsVariationTreeTabType)
+                    List<TreeNode> lstNodes = ChfClipboard.Value as List<TreeNode>;
+                    if (lstNodes.Count > 0 && AppState.IsVariationTreeTabType)
                     {
                         List<TreeNode> insertedNewNodes = new List<TreeNode>();
                         List<TreeNode> failedInsertions = new List<TreeNode>();
-                        TreeNode firstInserted = ActiveTreeView.InsertSubtree(ChfClipboard.Value as List<TreeNode>, ref insertedNewNodes, ref failedInsertions);
+                        TreeNode firstInserted = ActiveTreeView.InsertSubtree(lstNodes, ref insertedNewNodes, ref failedInsertions);
                         if (failedInsertions.Count == 0)
                         {
                             ActiveVariationTree.BuildLines();
@@ -2560,7 +2561,6 @@ namespace ChessForge
             ActiveTreeView.DeleteRemainingMoves();
         }
 
-
         /// <summary>
         /// The user requested to merge the currently selected subtree into the Study Tree
         /// </summary>
@@ -2571,6 +2571,55 @@ namespace ChessForge
             ActiveTreeView.MergeIntoStudy();
             _studyTreeView.BuildFlowDocumentForVariationTree();
             UiTabStudyTree.Focus();
+        }
+
+        /// <summary>
+        /// Copies selected moves from the view into the Clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnCopyMoves_Click(object sender, RoutedEventArgs e)
+        {
+            if (ActiveTreeView != null)
+            {
+                ActiveTreeView.PlaceSelectedForCopyInClipboard();
+            }
+        }
+
+        /// <summary>
+        /// Pastes moves from the Clipboard in the view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnPasteMoves_Click(object sender, RoutedEventArgs e)
+        {
+            PasteChfClipboard();
+        }
+
+        /// <summary>
+        /// Selects the line currently highlighted in the view (Active Line)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnSelectHighlighted_Click(object sender, RoutedEventArgs e)
+        {
+            if (ActiveTreeView != null)
+            {
+                ActiveTreeView.SelectActiveLineForCopy();
+            }
+        }
+
+        /// <summary>
+        /// Selects the Subtree under the currently selected node
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnSelectSubtree_Click(object sender, RoutedEventArgs e)
+        {
+            if (ActiveTreeView != null)
+            {
+                ActiveTreeView.SelectSubtreeForCopy();
+            }
         }
 
         //*********************

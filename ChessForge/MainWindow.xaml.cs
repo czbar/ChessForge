@@ -1647,6 +1647,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns th elist of nodes in the current line
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<TreeNode> GetActiveLine()
+        {
+            return ActiveLine.GetNodeList();
+        }
+
+        /// <summary>
         /// Appends a new node to the Active Line.
         /// </summary>
         /// <param name="nd"></param>
