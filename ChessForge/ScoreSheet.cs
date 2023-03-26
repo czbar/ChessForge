@@ -284,6 +284,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the list of nodes in the line.
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<TreeNode> GetNodeList()
+        {
+            return NodeList;
+        }
+
+        /// <summary>
         /// Gets the number of plies in the Line.
         /// </summary>
         /// <returns></returns>
