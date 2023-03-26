@@ -92,6 +92,10 @@ namespace ChessForge
         // currently showing fork table
         private Table _forkTable;
 
+        // the list of nodes currently selected for copying into clipboard
+        private List<TreeNode> _selectedForCopy = new List<TreeNode>();
+
+
         /// <summary>
         /// Constructor. Sets a reference to the 
         /// FlowDocument for the RichTextBox control, via
@@ -236,6 +240,11 @@ namespace ChessForge
         private SolidColorBrush _brushSelectedBkg = new SolidColorBrush(Color.FromRgb(255, 255, 206));
 
         /// <summary>
+        /// Color to use for the background of the moves selected for copy.
+        /// </summary>
+        private SolidColorBrush _brushSelectedForCopyBkg = Brushes.LightBlue;
+
+        /// <summary>
         /// Color to use for the background of the selected move.
         /// </summary>
         private SolidColorBrush _brushSelectedMoveBkg = new SolidColorBrush(Color.FromRgb(0, 0, 0));
@@ -244,6 +253,16 @@ namespace ChessForge
         /// Color to use for the foreground of the selected move.
         /// </summary>
         private SolidColorBrush _brushSelectedMoveFore = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+
+        /// <summary>
+        /// Color to use for the background of the selected move when showing copy selection.
+        /// </summary>
+        private SolidColorBrush _brushCopySelectedMoveBkg = Brushes.Blue;
+
+        /// <summary>
+        /// Color to use for the foreground of the selected move when showing copy selection.
+        /// </summary>
+        private SolidColorBrush _brushCopySelectedMoveFore = new SolidColorBrush(Color.FromRgb(255, 255, 255));
 
         /// <summary>
         /// Color to use for the overall background.
@@ -651,10 +670,25 @@ namespace ChessForge
         /// Inserts the passed subtree at the currently selected node, or the node before it (parent)
         /// depending on the match/mismatch of side-to-move.
         /// </summary>
-        /// <param name="lstNodes"></param>
-        public TreeNode InsertSubtree(List<TreeNode> lstNodes, ref List<TreeNode> insertedNodes, ref List<TreeNode> failedInsertions)
+        /// <param name="nodesToInsert"></param>
+        public TreeNode InsertSubtree(List<TreeNode> nodesToInsert, ref List<TreeNode> insertedNodes, ref List<TreeNode> failedInsertions)
         {
-            TreeNode node = TreeUtils.InsertSubtreeMovesIntoTree(_shownVariationTree, GetSelectedNode(), lstNodes, ref insertedNodes, ref failedInsertions);
+            if (nodesToInsert == null || nodesToInsert.Count == 0)
+            {
+                return null;
+            }
+
+            // if the first node of nodes to insert has id = 0, we will insert it at the root of the tree, regardless of which node is currently selected
+            TreeNode nodeToInsertAt;
+            if (nodesToInsert[0].NodeId == 0)
+            {
+                nodeToInsertAt = _shownVariationTree.RootNode;
+            }
+            else
+            {
+                nodeToInsertAt = GetSelectedNode();
+            }
+            TreeNode node = TreeUtils.InsertSubtreeMovesIntoTree(_shownVariationTree, nodeToInsertAt, nodesToInsert, ref insertedNodes, ref failedInsertions);
             return node;
         }
 
@@ -1774,6 +1808,161 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Places a deep copy of the "selected for copy" nodes in the clipboard
+        /// </summary>
+        public void PlaceSelectedForCopyInClipboard()
+        {
+            if (_selectedForCopy.Count > 0)
+            {
+                List<TreeNode> lstNodes = _mainWin.ActiveVariationTree.CopyNodeList(_selectedForCopy);
+                ChfClipboard.HoldNodeList(lstNodes);
+            }
+        }
+
+        /// <summary>
+        /// Selects the entire subtree under the currently selected node.
+        /// </summary>
+        public void SelectSubtreeForCopy()
+        {
+            ClearCopySelect();
+
+            TreeNode selectedNode = GetSelectedNode();
+            if (selectedNode != null)
+            {
+                List<TreeNode> lstNodes = _shownVariationTree.BuildSubTreeNodeList(selectedNode, false);
+                _selectedForCopy.AddRange(lstNodes);
+                HighlightSelectedForCopy();
+            }
+        }
+
+        /// <summary>
+        /// Selects for copy the currently highlighted line.
+        /// </summary>
+        public void SelectActiveLineForCopy()
+        {
+            ClearCopySelect();
+
+            ObservableCollection<TreeNode> lstNodes = _mainWin.GetActiveLine();
+            _selectedForCopy.AddRange(lstNodes);
+            HighlightSelectedForCopy();
+        }
+
+        /// <summary>
+        /// Change background to the "Copy Select" color
+        /// for all nodes between the selected node to the passed one. 
+        /// </summary>
+        /// <param name="r"></param>
+        private void SetCopySelect(Run r)
+        {
+            try
+            {
+                if (_selectedForCopy.Count > 0)
+                {
+                    HighlightActiveLine();
+                }
+
+                _selectedForCopy.Clear();
+
+                TreeNode currSelected = GetSelectedNode();
+                TreeNode shiftClicked = null;
+                if (r.Name != null && r.Name.StartsWith(_run_))
+                {
+                    int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
+                    shiftClicked = _shownVariationTree.GetNodeFromNodeId(nodeId);
+                }
+
+                if (currSelected != null && shiftClicked != null)
+                {
+                    // check if there is a branch between the 2
+                    TreeNode node_1 = shiftClicked;
+                    TreeNode node_2 = currSelected;
+
+                    if (currSelected.MoveNumber < shiftClicked.MoveNumber || currSelected.MoveNumber == shiftClicked.MoveNumber && currSelected.ColorToMove == PieceColor.Black)
+                    {
+                        node_1 = currSelected;
+                        node_2 = shiftClicked;
+                    }
+
+                    bool found = false;
+                    while (node_2.Parent != null && node_1.MoveNumber <= node_2.MoveNumber)
+                    {
+                        _selectedForCopy.Insert(0, node_2);
+                        if (node_2.NodeId == node_1.NodeId)
+                        {
+                            found = true;
+                            break;
+                        }
+                        node_2 = node_2.Parent;
+                    }
+
+                    if (found)
+                    {
+                        HighlightSelectedForCopy();
+                    }
+                    else
+                    {
+                        _selectedForCopy.Clear();
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Highlights the nodes selected for copy.
+        /// </summary>
+        private void HighlightSelectedForCopy()
+        {
+            TreeNode selectedNode = GetSelectedNode();
+            foreach (TreeNode nd in _selectedForCopy)
+            {
+                if (nd == selectedNode)
+                {
+                    _dictNodeToRun[nd.NodeId].Foreground = _brushCopySelectedMoveFore;
+                    _dictNodeToRun[nd.NodeId].Background = _brushCopySelectedMoveBkg;
+                }
+                else
+                {
+                    _dictNodeToRun[nd.NodeId].Foreground = _brushRegularFore;
+                    _dictNodeToRun[nd.NodeId].Background = _brushSelectedForCopyBkg;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Clears the "for Copy" selection.
+        /// </summary>
+        private void ClearCopySelect()
+        {
+            try
+            {
+                // reset copy selection if any
+                if (_selectedForCopy.Count > 0)
+                {
+                    HighlightActiveLine();
+
+                    TreeNode selectedNode = GetSelectedNode();
+                    foreach (TreeNode nd in _selectedForCopy)
+                    {
+                        _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
+                    }
+                    HighlightActiveLine();
+                    if (selectedNode != null)
+                    {
+                        _dictNodeToRun[selectedNode.NodeId].Foreground = _brushSelectedMoveFore;
+                        _dictNodeToRun[selectedNode.NodeId].Background = _brushSelectedMoveBkg;
+                    }
+                    _selectedForCopy.Clear();
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Select a Run.
         /// </summary>
         /// <param name="r"></param>
@@ -1784,6 +1973,11 @@ namespace ChessForge
             if (!IsSelectionEnabled())
             {
                 return;
+            }
+
+            if (changedButton == MouseButton.Left)
+            {
+                ClearCopySelect();
             }
 
             if (clickCount == 2)
@@ -1800,80 +1994,122 @@ namespace ChessForge
             }
             else
             {
-                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+                if (changedButton == MouseButton.Left && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
                 {
-                    _mainWin.StopEvaluation(true);
-                    AppState.SwapCommentBoxForEngineLines(false);
+                    SetCopySelect(r);
                 }
-
-                if (_selectedRun != null)
+                else
                 {
-                    _selectedRun.Background = _selectedRunBkg;
-                    _selectedRun.Foreground = _selectedRunFore;
-                }
-
-                foreach (TreeNode nd in _mainWin.ActiveLine.Line.NodeList)
-                {
-                    if (nd.NodeId != 0)
+                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                     {
-                        Run run;
-                        // if we are dealing with a subtree, we may not have 
-                        // all nodes from the line.
-                        if (_dictNodeToRun.TryGetValue(nd.NodeId, out run))
-                        {
-                            _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
-                        }
+                        _mainWin.StopEvaluation(true);
+                        AppState.SwapCommentBoxForEngineLines(false);
                     }
-                }
 
-                _selectedRun = r;
+                    if (_selectedRun != null)
+                    {
+                        _selectedRun.Background = _selectedRunBkg;
+                        _selectedRun.Foreground = _selectedRunFore;
+                    }
 
-                int idd = TextUtils.GetIdFromPrefixedString(r.Name);
-                BuildForkTable(idd);
-
-                int nodeId = -1;
-                if (r.Name != null && r.Name.StartsWith(_run_))
-                {
-                    nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-                    TreeNode foundNode = _shownVariationTree.GetNodeFromNodeId(nodeId);
-                    string lineId = _shownVariationTree.GetDefaultLineIdForNode(nodeId);
-
-                    // TODO: do not select line and therefore repaint everything if the clicked line is already selected
-                    ObservableCollection<TreeNode> lineToSelect = _shownVariationTree.SelectLine(lineId);
-                    WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nodeId);
-                    foreach (TreeNode nd in lineToSelect)
+                    foreach (TreeNode nd in _mainWin.ActiveLine.Line.NodeList)
                     {
                         if (nd.NodeId != 0)
                         {
                             Run run;
+                            // if we are dealing with a subtree, we may not have all nodes from the line.
                             if (_dictNodeToRun.TryGetValue(nd.NodeId, out run))
                             {
-                                _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
+                                run.Background = _brushRegularBkg;
                             }
                         }
                     }
 
-                    _mainWin.SetActiveLine(lineToSelect, nodeId);
-                    LearningMode.ActiveLineId = lineId;
-                }
+                    _selectedRun = r;
 
-                _selectedRunBkg = (SolidColorBrush)r.Background;
-                _selectedRunFore = (SolidColorBrush)r.Foreground;
+                    int idd = TextUtils.GetIdFromPrefixedString(r.Name);
+                    BuildForkTable(idd);
 
-                r.Background = _brushSelectedMoveBkg;
-                r.Foreground = _brushSelectedMoveFore;
+                    int nodeId = -1;
+                    if (r.Name != null && r.Name.StartsWith(_run_))
+                    {
+                        nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
+                        string lineId = _shownVariationTree.GetDefaultLineIdForNode(nodeId);
 
-                // this is a right click offer the context menu
-                if (changedButton == MouseButton.Right)
-                {
-                    _lastClickedNodeId = nodeId;
-                    EnableActiveTreeViewMenus(changedButton, true);
-                }
-                else
-                {
-                    _lastClickedNodeId = nodeId;
+                        SelectAndHighlightLine(lineId, nodeId);
+                        LearningMode.ActiveLineId = lineId;
+                    }
+
+                    _selectedRunBkg = (SolidColorBrush)r.Background;
+                    _selectedRunFore = (SolidColorBrush)r.Foreground;
+
+                    r.Background = _brushSelectedMoveBkg;
+                    r.Foreground = _brushSelectedMoveFore;
+
+                    // this is a right click offer the context menu
+                    if (changedButton == MouseButton.Right)
+                    {
+                        _lastClickedNodeId = nodeId;
+                        EnableActiveTreeViewMenus(changedButton, true);
+                    }
+                    else
+                    {
+                        _lastClickedNodeId = nodeId;
+                    }
+
+                    if (changedButton != MouseButton.Left)
+                    {
+                        // restore selection for copy
+                        HighlightSelectedForCopy();
+                    }
                 }
             }
+        }
+
+        /// <summary>
+        /// Sets background for all moves in the currently selected line.
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <param name="nodeId"></param>
+        private void SelectAndHighlightLine(string lineId, int nodeId)
+        {
+            // TODO: do not select line and therefore repaint everything if the clicked line is already selected
+            // UNLESS there is "copy select" active
+            ObservableCollection<TreeNode> lineToSelect = _shownVariationTree.SelectLine(lineId);
+            WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nodeId);
+            foreach (TreeNode nd in lineToSelect)
+            {
+                if (nd.NodeId != 0)
+                {
+                    if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
+                    {
+                        run.Background = _brushSelectedBkg;
+                    }
+                }
+            }
+            _mainWin.SetActiveLine(lineToSelect, nodeId);
+        }
+
+        /// <summary>
+        /// Highlights the active line.
+        /// </summary>
+        private void HighlightActiveLine()
+        {
+            try
+            {
+                ObservableCollection<TreeNode> line = _mainWin.GetActiveLine();
+                foreach (TreeNode nd in line)
+                {
+                    if (nd.NodeId != 0)
+                    {
+                        if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
+                        {
+                            run.Background = _brushSelectedBkg;
+                        }
+                    }
+                }
+            }
+            catch { }
         }
 
         /// <summary>
