@@ -308,7 +308,7 @@ ErrInsteadOfMoveNumber=zamiast numeru posunięcia
 ErrAfterMove=po ruchu
 
 #description: Cannot insert line from the Clipboard
-#english: ErrClipboardLinePaste=Error pasting the variation from the Clipboard 
+#english: ErrClipboardLinePaste=Error pasting variation from the Clipboard 
 ErrClipboardLinePaste=Błąd przy wklejaniu wariantu ze schowka 
 
 #description: Clipboard operation
@@ -795,10 +795,21 @@ MarkAsThumbnail= Zaznacz jako Wizytówkę Rozdziału
 #english: ChapterThumbnail=Thumbnail for Chapters View
 ChapterThumbnail=Wizytówka Rozdziału
 
+#description: Copy selected moves
+#english: CopyMoves=Copy Selected Moves to Clipboard
+CopyMoves=Skopiuj zaznaczone ruchy do schowka
 
-#
-# NEXT / PREVIOUS BAR
-#
+#description: Paste selected moves
+#english: PasteMoves=Paste Moves from Clipboard
+PasteMoves=Wklej ruchy ze schowka
+
+#description: Select Highlighted line
+#english: SelectHighlightedLine=Select Highlighted Line
+SelectHighlightedLine=Wybierz podświetlony wariant
+
+#description: Select subtree under the selected move.
+#english: SelectSubtree=Select All under Highlighted Move
+SelectSubtree=Wybierz wszystko pod wyróżnionym ruchem
 
 #description: The "Next" term
 #english: Next=Next

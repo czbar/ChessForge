@@ -889,6 +889,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy Selected Moves to Clipboard.
+        /// </summary>
+        public static string CopyMoves {
+            get {
+                return ResourceManager.GetString("CopyMoves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not import game .
         /// </summary>
         public static string CouldNotImportGame {
@@ -1402,7 +1411,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error pasting the variation from the Clipboard .
+        ///   Looks up a localized string similar to Error pasting variation from the Clipboard .
         /// </summary>
         public static string ErrClipboardLinePaste {
             get {
@@ -2807,6 +2816,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Paste Moves from Clipboard.
+        /// </summary>
+        public static string PasteMoves {
+            get {
+                return ResourceManager.GetString("PasteMoves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PGN.
         /// </summary>
         public static string PGN {
@@ -3293,6 +3311,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Highlighted Line.
+        /// </summary>
+        public static string SelectHighlightedLine {
+            get {
+                return ResourceManager.GetString("SelectHighlightedLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Items.
         /// </summary>
         public static string SelectItems {
@@ -3334,6 +3361,15 @@ namespace ChessForge.Properties {
         public static string SelectSolvingMode {
             get {
                 return ResourceManager.GetString("SelectSolvingMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select All under Highlighted Move.
+        /// </summary>
+        public static string SelectSubtree {
+            get {
+                return ResourceManager.GetString("SelectSubtree", resourceCulture);
             }
         }
         

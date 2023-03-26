@@ -616,10 +616,17 @@ MarkAsThumbnail=Mark as Thumbnail
 #ChapterThumbnail
 ChapterThumbnail=Thumbnail for Chapters View
 
+#Copy selected moves
+CopyMoves=Copy Selected Moves to Clipboard
 
-#
-# NEXT / PREVIOUS BAR
-#
+#Paste selected moves
+PasteMoves=Paste Moves from Clipboard
+
+#Select Highlighted line
+SelectHighlightedLine=Select Highlighted Line
+
+#Select subtree under the selected move.
+SelectSubtree=Select All under Highlighted Move
 
 #The "Next" term
 Next=Next
