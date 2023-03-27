@@ -2389,11 +2389,15 @@ namespace ChessForge
                         TreeNode firstInserted = ActiveTreeView.InsertSubtree(lstNodes, ref insertedNewNodes, ref failedInsertions);
                         if (failedInsertions.Count == 0)
                         {
-                            ActiveVariationTree.BuildLines();
-                            ActiveTreeView.BuildFlowDocumentForVariationTree();
-                            TreeNode insertedRoot = ActiveVariationTree.GetNodeFromNodeId(firstInserted.NodeId);
-                            SetActiveLine(insertedRoot.LineId, insertedRoot.NodeId);
-                            ActiveTreeView.SelectNode(firstInserted.NodeId);
+                            // if we inserted an already existing line, do nothing
+                            if (insertedNewNodes.Count > 0)
+                            {
+                                ActiveVariationTree.BuildLines();
+                                ActiveTreeView.BuildFlowDocumentForVariationTree();
+                                TreeNode insertedRoot = ActiveVariationTree.GetNodeFromNodeId(firstInserted.NodeId);
+                                SetActiveLine(insertedRoot.LineId, insertedRoot.NodeId);
+                                ActiveTreeView.SelectNode(firstInserted.NodeId);
+                            }
                         }
                         else
                         {
@@ -2601,7 +2605,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnSelectHighlighted_Click(object sender, RoutedEventArgs e)
+        public void UiMnSelectHighlighted_Click(object sender, RoutedEventArgs e)
         {
             if (ActiveTreeView != null)
             {
