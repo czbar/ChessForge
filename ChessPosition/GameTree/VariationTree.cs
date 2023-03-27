@@ -1538,7 +1538,7 @@ namespace GameTree
                     {
                         // 0 (default) returned can be ignored because that would be the root node
                         // that we always want to keep.
-                        if (nodeIds.Find(x => x == nd.NodeId) == 0 && nd.NodeId != 0)
+                        if (nodeIds.Find(x => x == nd.NodeId) != 0 && nd.NodeId != 0)
                         {
                             RemoveTailAfter(nd);
                             nd.Parent.Children.Remove(nd);
