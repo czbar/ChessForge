@@ -895,15 +895,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Chess Forge"
-        "ProductCode" = "8:{BDF0615E-9337-461D-8434-B493D6520E9D}"
-        "PackageCode" = "8:{69EF09A9-1EA6-4F09-9E6C-5039FE7813C7}"
+        "ProductCode" = "8:{A84FE4DF-3003-4017-939A-DAF26CFC669B}"
+        "PackageCode" = "8:{3CC21859-DD33-4CFA-8F8A-E0E84E55025E}"
         "UpgradeCode" = "8:{8FBE368E-7FA2-4112-9D18-7A5CD1CE504C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.9.7"
+        "ProductVersion" = "8:0.9.8"
         "Manufacturer" = "8:Mindrose Pty Ltd"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1445,7 +1445,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0B816B9828BC4414A662D7186EC23E8C"
             {
-            "SourcePath" = "8:..\\ChessForge\\obj\\Debug\\ChessForge.exe"
+            "SourcePath" = "8:..\\ChessForge\\obj\\Release\\ChessForge.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
