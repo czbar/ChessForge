@@ -54,6 +54,9 @@ namespace GameTree
                     case EditOperation.EditType.MERGE_TREE:
                         _owningTree.UndoAddedNodeList(op.OpData_1);
                         break;
+                    case EditOperation.EditType.PASTE_MOVES:
+                        _owningTree.UndoAddedNodeList(op.OpData_1);
+                        break;
                     case EditOperation.EditType.SAVE_TRAINING_MOVES:
                         _owningTree.UndoAddedNodeList(op.OpData_1);
                         break;
