@@ -602,7 +602,7 @@ MnGameExerciseReferences=Game/Exercise References...
 PromoteLine=Promote Line
 
 #Delete the line starting from the current position
-DeleteMovesFromHere=Delete Moves From Here
+DeleteMovesFromHere=Delete Moves from Here
 
 #Create a new chpater from the selected line
 CreateNewChapterFromLine=Create New Chapter From Line
@@ -617,16 +617,16 @@ MarkAsThumbnail=Mark as Thumbnail
 ChapterThumbnail=Thumbnail for Chapters View
 
 #Copy selected moves
-CopyMoves=Copy Selected Moves to Clipboard
+CopyMoves=Copy Moves
 
 #Paste selected moves
-PasteMoves=Paste Moves from Clipboard
+PasteMoves=Paste Moves
 
 #Select Highlighted line
 SelectHighlightedLine=Select Highlighted Line
 
 #Select subtree under the selected move.
-SelectSubtree=Select All under Highlighted Move
+SelectSubtree=Select All from Here
 
 #The "Next" term
 Next=Next

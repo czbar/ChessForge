@@ -776,7 +776,7 @@ MnGameExerciseReferences=
 PromoteLine=
 
 #description: Delete the line starting from the current position
-#english: DeleteMovesFromHere=Delete Moves From Here
+#english: DeleteMovesFromHere=Delete Moves from Here
 DeleteMovesFromHere=
 
 #description: Create a new chpater from the selected line
@@ -796,11 +796,11 @@ MarkAsThumbnail=
 ChapterThumbnail=
 
 #description: Copy selected moves
-#english: CopyMoves=Copy Selected Moves to Clipboard
+#english: CopyMoves=Copy Moves
 CopyMoves=
 
 #description: Paste selected moves
-#english: PasteMoves=Paste Moves from Clipboard
+#english: PasteMoves=Paste Moves
 PasteMoves=
 
 #description: Select Highlighted line
@@ -808,7 +808,7 @@ PasteMoves=
 SelectHighlightedLine=
 
 #description: Select subtree under the selected move.
-#english: SelectSubtree=Select All under Highlighted Move
+#english: SelectSubtree=Select All from Here
 SelectSubtree=
 
 #description: The "Next" term

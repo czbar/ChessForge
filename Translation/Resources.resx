@@ -640,7 +640,7 @@
     <value>Promote Line</value>
   </data>
   <data name="DeleteMovesFromHere" xml:space="preserve">
-    <value>Delete Moves From Here</value>
+    <value>Delete Moves from Here</value>
   </data>
   <data name="CreateNewChapterFromLine" xml:space="preserve">
     <value>Create New Chapter From Line</value>
@@ -655,16 +655,16 @@
     <value>Thumbnail for Chapters View</value>
   </data>
   <data name="CopyMoves" xml:space="preserve">
-    <value>Copy Selected Moves to Clipboard</value>
+    <value>Copy Moves</value>
   </data>
   <data name="PasteMoves" xml:space="preserve">
-    <value>Paste Moves from Clipboard</value>
+    <value>Paste Moves</value>
   </data>
   <data name="SelectHighlightedLine" xml:space="preserve">
     <value>Select Highlighted Line</value>
   </data>
   <data name="SelectSubtree" xml:space="preserve">
-    <value>Select All under Highlighted Move</value>
+    <value>Select All from Here</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>

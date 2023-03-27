@@ -655,16 +655,16 @@
     <value>Wizytówka Rozdziału</value>
   </data>
   <data name="CopyMoves" xml:space="preserve">
-    <value>Skopiuj zaznaczone ruchy do schowka</value>
+    <value>Skopiuj ruchy</value>
   </data>
   <data name="PasteMoves" xml:space="preserve">
-    <value>Wklej ruchy ze schowka</value>
+    <value>Wklej ruchy</value>
   </data>
   <data name="SelectHighlightedLine" xml:space="preserve">
-    <value>Wybierz podświetlony wariant</value>
+    <value>Zaznacz podświetlony wariant</value>
   </data>
   <data name="SelectSubtree" xml:space="preserve">
-    <value>Wybierz wszystko pod wyróżnionym ruchem</value>
+    <value>Zaznacz wszystko pod wybranym ruchem</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Następny</value>
