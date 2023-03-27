@@ -570,6 +570,10 @@ namespace ChessForge
 
             Chapters.Add(chapter);
             SetActiveChapter(chapter);
+
+            WorkbookOperation op = new WorkbookOperation(WorkbookOperation.WorkbookOperationType.CREATE_CHAPTER, chapter, 0);
+            WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+
             _activeChapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
 
             return chapter;
@@ -585,6 +589,9 @@ namespace ChessForge
             chapter.StudyTree = new Article(tree);
 
             Chapters.Add(chapter);
+
+            WorkbookOperation op = new WorkbookOperation(WorkbookOperation.WorkbookOperationType.CREATE_CHAPTER, chapter, 0);
+            WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
 
             if (makeActive)
             {

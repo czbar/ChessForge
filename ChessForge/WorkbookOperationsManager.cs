@@ -81,6 +81,18 @@ namespace ChessForge
                         WorkbookManager.SessionWorkbook.UndoDeleteChapter(op.Chapter, op.ChapterIndex);
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
+                    case WorkbookOperation.WorkbookOperationType.CREATE_CHAPTER:
+                        if (WorkbookManager.SessionWorkbook.GetChapterCount() > 1)
+                        {
+                            selectedChapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(op.Chapter);
+                            WorkbookManager.SessionWorkbook.Chapters.Remove(op.Chapter);
+                            if (selectedChapterIndex >= WorkbookManager.SessionWorkbook.GetChapterCount())
+                            {
+                                selectedChapterIndex--;
+                            }
+                            WorkbookManager.SessionWorkbook.ActiveChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(selectedChapterIndex);
+                        }
+                        break;
                     case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAME:
                         WorkbookManager.SessionWorkbook.UndoDeleteModelGame(op.Chapter, op.Article, op.ArticleIndex);
                         selectedArticleIndex = op.ArticleIndex;

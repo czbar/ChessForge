@@ -78,21 +78,38 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// <summary>
         /// Inserts a Subtree into a tree.
         /// If nodeToInsertAt has the opposite ColorToMove to the root node of the subtree, 
         /// the insertion will occur with nodeToInsertAt as Parent.
         /// Otherwise we will assume that the intent was to insert at the parent of nodeToInsertAt.
         /// </summary>
+        /// </summary>
         /// <param name="targetTree"></param>
         /// <param name="nodeToInsertAt"></param>
-        /// <param name="subtree"></param>
-        public static TreeNode InsertSubtreeMovesIntoTree(VariationTree targetTree, TreeNode nodeToInsertAt, List<TreeNode> subtree, ref List<TreeNode> insertedInsertions, ref List<TreeNode> failedInsertions)
+        /// <param name="nodesToInsert"></param>
+        /// <param name="insertedInsertions"></param>
+        /// <param name="failedInsertions"></param>
+        /// <returns></returns>
+        public static TreeNode InsertSubtreeMovesIntoTree(VariationTree targetTree, TreeNode nodeToInsertAt, List<TreeNode> nodesToInsertOrig, ref List<TreeNode> insertedInsertions, ref List<TreeNode> failedInsertions)
         {
             try
             {
-                TreeNode subtreeRoot = subtree[0];
+                List<TreeNode> nodesToInsert;
+                if (nodesToInsertOrig[0].NodeId == 0)
+                {
+                    nodesToInsert = new List<TreeNode>();
+                    nodesToInsert.AddRange(nodesToInsertOrig);
+                    nodesToInsert.RemoveAt(0);
+                }
+                else
+                {
+                    nodesToInsert = nodesToInsertOrig;
+                }
+
+                TreeNode subtreeRoot = nodesToInsert[0];
                 TreeNode updatedRoot = null;
-                if (subtreeRoot != null && subtree.Count > 0 && nodeToInsertAt != null && targetTree != null)
+                if (subtreeRoot != null && nodesToInsert.Count > 0 && nodeToInsertAt != null && targetTree != null)
                 {
                     if (subtreeRoot.ColorToMove == nodeToInsertAt.ColorToMove)
                     {

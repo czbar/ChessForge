@@ -322,33 +322,41 @@ namespace ChessForge
         /// </summary>
         private void UndoWorkbookOperation()
         {
-            WorkbookManager.SessionWorkbook.OpsManager.Undo(out WorkbookOperation.WorkbookOperationType opType, out int selectedChapterIndex, out int selectedArticleIndex);
-            switch (opType)
+            try
             {
-                case WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER:
-                    if (AppState.MainWin.ActiveTreeView != null)
-                    {
-                        AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
-                    }
-                    _chaptersView.BuildFlowDocumentForChaptersView();
-                    break;
-                case WorkbookOperation.WorkbookOperationType.DELETE_CHAPTER:
-                    _chaptersView.BuildFlowDocumentForChaptersView();
-                    if (AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
-                    {
-                        UiTabChapters.Focus();
-                    }
-                    AppState.DoEvents();
-                    _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
-                    break;
-                case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAME:
-                    _chaptersView.BuildFlowDocumentForChaptersView();
-                    SelectModelGame(selectedArticleIndex, AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
-                    break;
-                case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISE:
-                    _chaptersView.BuildFlowDocumentForChaptersView();
-                    SelectExercise(selectedArticleIndex, AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
-                    break;
+                WorkbookManager.SessionWorkbook.OpsManager.Undo(out WorkbookOperation.WorkbookOperationType opType, out int selectedChapterIndex, out int selectedArticleIndex);
+                switch (opType)
+                {
+                    case WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER:
+                        if (AppState.MainWin.ActiveTreeView != null)
+                        {
+                            AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                        }
+                        _chaptersView.BuildFlowDocumentForChaptersView();
+                        break;
+                    case WorkbookOperation.WorkbookOperationType.DELETE_CHAPTER:
+                    case WorkbookOperation.WorkbookOperationType.CREATE_CHAPTER:
+                        _chaptersView.BuildFlowDocumentForChaptersView();
+                        if (AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
+                        {
+                            UiTabChapters.Focus();
+                        }
+                        AppState.DoEvents();
+                        _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
+                        break;
+                    case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAME:
+                        _chaptersView.BuildFlowDocumentForChaptersView();
+                        SelectModelGame(selectedArticleIndex, AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
+                        break;
+                    case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISE:
+                        _chaptersView.BuildFlowDocumentForChaptersView();
+                        SelectExercise(selectedArticleIndex, AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UndoWorkbookOperation()", ex);
             }
 
             AppState.IsDirty = true;
@@ -2389,11 +2397,15 @@ namespace ChessForge
                         TreeNode firstInserted = ActiveTreeView.InsertSubtree(lstNodes, ref insertedNewNodes, ref failedInsertions);
                         if (failedInsertions.Count == 0)
                         {
-                            ActiveVariationTree.BuildLines();
-                            ActiveTreeView.BuildFlowDocumentForVariationTree();
-                            TreeNode insertedRoot = ActiveVariationTree.GetNodeFromNodeId(firstInserted.NodeId);
-                            SetActiveLine(insertedRoot.LineId, insertedRoot.NodeId);
-                            ActiveTreeView.SelectNode(firstInserted.NodeId);
+                            // if we inserted an already existing line, do nothing
+                            if (insertedNewNodes.Count > 0)
+                            {
+                                ActiveVariationTree.BuildLines();
+                                ActiveTreeView.BuildFlowDocumentForVariationTree();
+                                TreeNode insertedRoot = ActiveVariationTree.GetNodeFromNodeId(firstInserted.NodeId);
+                                SetActiveLine(insertedRoot.LineId, insertedRoot.NodeId);
+                                ActiveTreeView.SelectNode(firstInserted.NodeId);
+                            }
                         }
                         else
                         {
@@ -2562,18 +2574,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The user requested to merge the currently selected subtree into the Study Tree
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiGame_MergeToStudy_Click(object sender, RoutedEventArgs e)
-        {
-            ActiveTreeView.MergeIntoStudy();
-            _studyTreeView.BuildFlowDocumentForVariationTree();
-            UiTabStudyTree.Focus();
-        }
-
-        /// <summary>
         /// Copies selected moves from the view into the Clipboard
         /// </summary>
         /// <param name="sender"></param>
@@ -2601,7 +2601,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnSelectHighlighted_Click(object sender, RoutedEventArgs e)
+        public void UiMnSelectHighlighted_Click(object sender, RoutedEventArgs e)
         {
             if (ActiveTreeView != null)
             {

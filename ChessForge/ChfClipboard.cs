@@ -45,5 +45,14 @@ namespace ChessForge
             Type = ItemType.NODE_LIST;
             Value = lst;
         }
+
+        /// <summary>
+        /// Empties the clipboard.
+        /// </summary>
+        public static void Clear()
+        {
+            Type = ItemType.EMPTY;
+            Value = null;
+        }
     }
 }

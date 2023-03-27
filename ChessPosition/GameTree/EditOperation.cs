@@ -20,6 +20,7 @@ namespace GameTree
             ADD_MOVE,
             UPDATE_ANNOTATION,
             MERGE_TREE,
+            PASTE_MOVES,
             SAVE_TRAINING_MOVES,
         }
 

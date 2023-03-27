@@ -873,6 +873,7 @@ namespace ChessForge
             try
             {
                 VariationTree tree = ActiveVariationTree;
+                VariationTreeView view = AppState.MainWin.ActiveTreeView;
                 foreach (var item in MainWin.UiCmnWorkbookRightClick.Items)
                 {
                     if (item is MenuItem)
@@ -892,6 +893,12 @@ namespace ChessForge
                                 break;
                             case "_mnStudyTree_MarkThumbnail":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
+                                break;
+                            case "UiMnStCopyMoves":
+                                menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
+                                break;
+                            case "UiMnStPasteMoves":
+                                menuItem.IsEnabled = ChfClipboard.Type == ChfClipboard.ItemType.NODE_LIST && ChfClipboard.Value != null;
                                 break;
                         }
                     }
@@ -915,6 +922,8 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int gameCount = chapter.GetModelGameCount();
                 int gameIndex = chapter.ActiveModelGameIndex;
+
+                VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
                 foreach (var item in MainWin.UiCmModelGames.Items)
                 {
@@ -953,6 +962,12 @@ namespace ChessForge
                             case "_mnGame_MarkThumbnail":
                                 menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
                                 break;
+                            case "UiMnGameCopyMoves":
+                                menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
+                                break;
+                            case "UiMnGamePasteMoves":
+                                menuItem.IsEnabled = ChfClipboard.Type == ChfClipboard.ItemType.NODE_LIST && ChfClipboard.Value != null;
+                                break;
                         }
                     }
                 }
@@ -974,6 +989,8 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int exerciseCount = chapter.GetExerciseCount();
                 int exerciseIndex = chapter.ActiveExerciseIndex;
+
+                VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
                 foreach (var item in MainWin.UiCmExercises.Items)
                 {
@@ -1011,6 +1028,12 @@ namespace ChessForge
                                 break;
                             case "_mnExerc_MarkThumbnail":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
+                                break;
+                            case "UiMnExercCopyMoves":
+                                menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
+                                break;
+                            case "UiMnExercPasteMoves":
+                                menuItem.IsEnabled = ChfClipboard.Type == ChfClipboard.ItemType.NODE_LIST && ChfClipboard.Value != null;
                                 break;
                         }
                     }
