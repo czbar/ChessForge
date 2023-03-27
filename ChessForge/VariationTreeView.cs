@@ -65,6 +65,14 @@ namespace ChessForge
             get => _entityIndex;
         }
 
+        /// <summary>
+        /// Checks whether there are any moves selected for copying
+        /// </summary>
+        public bool HasMovesSelectedForCopy
+        {
+            get => _selectedForCopy.Count > 0;
+        }
+
         // flags freshness of the view
         private bool _isFresh = false;
 
