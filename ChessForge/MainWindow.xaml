@@ -498,8 +498,6 @@
                                     <MenuItem x:Name="_mnGame_CreateModelGame" Header="{x:Static p:Resources.CreateNewGame}" Click="_UiMnGame_CreateModelGame_Click" />
                                     <MenuItem x:Name="_mnGame_ImportGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnGame_ImportGames_Click"  />
                                     <Separator />
-                                    <MenuItem x:Name="_mnGame_MergeToStudy" Header="{x:Static p:Resources.MergeSelectionIntoStudy}" Click="UiGame_MergeToStudy_Click"  />
-                                    <Separator />
                                     <MenuItem x:Name="_mnGame_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="_mnGame_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnGame_CreateExercise_Click" />
                                     <MenuItem x:Name="_mnGame_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnGame_CopyFen_Click" />

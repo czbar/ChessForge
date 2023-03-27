@@ -2566,18 +2566,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The user requested to merge the currently selected subtree into the Study Tree
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiGame_MergeToStudy_Click(object sender, RoutedEventArgs e)
-        {
-            ActiveTreeView.MergeIntoStudy();
-            _studyTreeView.BuildFlowDocumentForVariationTree();
-            UiTabStudyTree.Focus();
-        }
-
-        /// <summary>
         /// Copies selected moves from the view into the Clipboard
         /// </summary>
         /// <param name="sender"></param>

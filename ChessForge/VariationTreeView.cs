@@ -637,44 +637,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Merges the selected line in the game into the Study tree
-        /// </summary>
-        public void MergeIntoStudy()
-        {
-            try
-            {
-                GameData.ContentType contentType = _mainVariationTree.ContentType;
-                if (_mainVariationTree.ContentType != GameData.ContentType.MODEL_GAME)
-                {
-                    return;
-                }
-
-                TreeNode nd = _mainVariationTree.GetNodeFromNodeId(_lastClickedNodeId);
-                List<TreeNode> lstNodes = _mainVariationTree.BuildSubTreeNodeList(nd, true);
-
-                VariationTree treeFromGame = new VariationTree(GameData.ContentType.GENERIC);
-                treeFromGame.CreateNew(lstNodes);
-                VariationTree targetTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree;
-
-                // Prepare info for potential Undo
-                EditOperation op = new EditOperation(EditOperation.EditType.MERGE_TREE, targetTree.GetListOfNodeIds(true), null);
-
-                VariationTree merged = WorkbookTreeMerge.MergeVariationTrees(targetTree, treeFromGame);
-                WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree = merged;
-                merged.BuildLines();
-
-                // Save info for undo in the new tree
-                WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree.OpsManager.PushOperation(op);
-
-                AppState.IsDirty = true;
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("MergeIntoStudy()", ex);
-            }
-        }
-
-        /// <summary>
         /// Inserts the passed subtree at the currently selected node, or the node before it (parent)
         /// depending on the match/mismatch of side-to-move.
         /// </summary>
@@ -696,7 +658,21 @@ namespace ChessForge
             {
                 nodeToInsertAt = GetSelectedNode();
             }
+
             TreeNode node = TreeUtils.InsertSubtreeMovesIntoTree(_shownVariationTree, nodeToInsertAt, nodesToInsert, ref insertedNodes, ref failedInsertions);
+
+            if (insertedNodes.Count > 0 && failedInsertions.Count == 0)
+            {
+                // Prepare info for potential Undo
+                List<int> nodeIds = new List<int>();
+                foreach (TreeNode nd in insertedNodes)
+                {
+                    nodeIds.Add(nd.NodeId);
+                }
+                EditOperation op = new EditOperation(EditOperation.EditType.PASTE_MOVES, nodeIds, null);
+                _shownVariationTree.OpsManager.PushOperation(op);
+            }
+
             return node;
         }
 
