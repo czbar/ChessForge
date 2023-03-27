@@ -417,9 +417,9 @@
                             </RichTextBox>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="UiTabStudyTree"  Header="{x:Static p:Resources.Study}" GotFocus="UiTabStudyTree_GotFocus" >
+                    <TabItem x:Name="UiTabStudyTree"  Header="{x:Static p:Resources.Study}" GotFocus="UiTabStudyTree_GotFocus" PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
                         <Grid x:Name="UiGridStudyTree"  Background="#FFE5E5E5" PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu"
-                              PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
+                              >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="20"/>
                                 <RowDefinition />
@@ -437,7 +437,7 @@
                                     <MenuItem x:Name="UiMnStCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
                                     <MenuItem x:Name="UiMnStPasteMoves" Header="{x:Static p:Resources.PasteMoves}"  InputGestureText="Ctrl+V" Click="UiMnPasteMoves_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="UiMnStSelectHighlighted" Header="{x:Static p:Resources.SelectHighlightedLine}"  InputGestureText="Ctrl+A" Click="UiMnSelectHighlighted_Click" />
+                                    <MenuItem x:Name="UiMnStSelectHighlighted" Header="{x:Static p:Resources.SelectHighlightedLine}"  InputGestureText="Ctrl+L" Click="UiMnSelectHighlighted_Click" />
                                     <MenuItem x:Name="UiMnStSelectSubtree" Header="{x:Static p:Resources.SelectSubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnPromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnPromoteLine_Click" />
