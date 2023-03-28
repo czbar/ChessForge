@@ -776,8 +776,8 @@ MnGameExerciseReferences=Edytuj Odsyłacz do Partii i Ćwiczeń...
 PromoteLine=Promuj Wariant
 
 #description: Delete the line starting from the current position
-#english: DeleteMovesFromHere=Delete Moves from Here
-DeleteMovesFromHere=Usuń Resztę Wariantu 
+#english: DeleteMovesFromHere=Delete the Selected Move and All Moves that Follow
+DeleteMovesFromHere=Usuń zaznaczony ruch i wszystkie dalsze posunięcia
 
 #description: Create a new chpater from the selected line
 #english: CreateNewChapterFromLine=Create New Chapter From Line
@@ -1043,6 +1043,10 @@ WorkbookNotSaved=Podręcznik nie Zapisany
 #description: No node selected to paste at
 #english: MsgSelectNodeToInserAt=Select position to paste the moves at.
 MsgSelectNodeToInserAt=Zaznacz pozycję gdzie wkleić ruchy.
+
+#description: Confirm deleting remaining moves
+#english: MsgConfirmDeleteSubtree=Delete the selected move and all moves that follow? 
+MsgConfirmDeleteSubtree=Usunąć zaznaczony ruch i wszystkie dalsze posunięcia? 
 
 #description: Copy Paste error
 #english: MbtTitleCopyPasteError=Copy/Paste Error

@@ -776,7 +776,7 @@ MnGameExerciseReferences=
 PromoteLine=
 
 #description: Delete the line starting from the current position
-#english: DeleteMovesFromHere=Delete Moves from Here
+#english: DeleteMovesFromHere=Delete the Selected Move and All Moves that Follow
 DeleteMovesFromHere=
 
 #description: Create a new chpater from the selected line
@@ -1043,6 +1043,10 @@ WorkbookNotSaved=
 #description: No node selected to paste at
 #english: MsgSelectNodeToInserAt=Select position to paste the moves at.
 MsgSelectNodeToInserAt=
+
+#description: Confirm deleting remaining moves
+#english: MsgConfirmDeleteSubtree=Delete the selected move and all moves that follow? 
+MsgConfirmDeleteSubtree=
 
 #description: Copy Paste error
 #english: MbtTitleCopyPasteError=Copy/Paste Error

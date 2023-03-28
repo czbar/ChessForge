@@ -1078,7 +1078,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete Moves from Here.
+        ///   Looks up a localized string similar to Delete the Selected Move and All Moves that Follow.
         /// </summary>
         public static string DeleteMovesFromHere {
             get {
@@ -2514,6 +2514,15 @@ namespace ChessForge.Properties {
         public static string Moves {
             get {
                 return ResourceManager.GetString("Moves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete the selected move and all moves that follow? .
+        /// </summary>
+        public static string MsgConfirmDeleteSubtree {
+            get {
+                return ResourceManager.GetString("MsgConfirmDeleteSubtree", resourceCulture);
             }
         }
         
