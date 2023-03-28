@@ -798,6 +798,12 @@
   <data name="WorkbookNotSaved" xml:space="preserve">
     <value>Workbook not Saved</value>
   </data>
+  <data name="MsgSelectNodeToInserAt" xml:space="preserve">
+    <value>Select position to paste the moves at.</value>
+  </data>
+  <data name="MbtTitleCopyPasteError" xml:space="preserve">
+    <value>Copy/Paste Error</value>
+  </data>
   <data name="FlMsgGameImportSuccess" xml:space="preserve">
     <value>Game Imported Successfully.</value>
   </data>

@@ -889,7 +889,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copy Selected Moves to Clipboard.
+        ///   Looks up a localized string similar to Copy Moves.
         /// </summary>
         public static string CopyMoves {
             get {
@@ -1078,7 +1078,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete Moves From Here.
+        ///   Looks up a localized string similar to Delete Moves from Here.
         /// </summary>
         public static string DeleteMovesFromHere {
             get {
@@ -2347,6 +2347,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy/Paste Error.
+        /// </summary>
+        public static string MbtTitleCopyPasteError {
+            get {
+                return ResourceManager.GetString("MbtTitleCopyPasteError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Medium.
         /// </summary>
         public static string Medium {
@@ -2514,6 +2523,15 @@ namespace ChessForge.Properties {
         public static string MsgNoIdenticalPositions {
             get {
                 return ResourceManager.GetString("MsgNoIdenticalPositions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select position to paste the moves at..
+        /// </summary>
+        public static string MsgSelectNodeToInserAt {
+            get {
+                return ResourceManager.GetString("MsgSelectNodeToInserAt", resourceCulture);
             }
         }
         
@@ -2816,7 +2834,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Paste Moves from Clipboard.
+        ///   Looks up a localized string similar to Paste Moves.
         /// </summary>
         public static string PasteMoves {
             get {
@@ -3365,7 +3383,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select All under Highlighted Move.
+        ///   Looks up a localized string similar to Select All from Here.
         /// </summary>
         public static string SelectSubtree {
             get {

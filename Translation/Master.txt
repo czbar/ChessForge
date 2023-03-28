@@ -813,7 +813,11 @@ AllFiles=All files
 #Workbook not saved
 WorkbookNotSaved=Workbook not Saved
 
+#No node selected to paste at
+MsgSelectNodeToInserAt=Select position to paste the moves at.
 
+#Copy Paste error
+MbtTitleCopyPasteError=Copy/Paste Error
 
 ##################################
 #

@@ -1040,7 +1040,13 @@ AllFiles=
 #english: WorkbookNotSaved=Workbook not Saved
 WorkbookNotSaved=
 
+#description: No node selected to paste at
+#english: MsgSelectNodeToInserAt=Select position to paste the moves at.
+MsgSelectNodeToInserAt=
 
+#description: Copy Paste error
+#english: MbtTitleCopyPasteError=Copy/Paste Error
+MbtTitleCopyPasteError=
 
 ##################################
 #

@@ -1040,7 +1040,13 @@ AllFiles=Wszystkie pliki
 #english: WorkbookNotSaved=Workbook not Saved
 WorkbookNotSaved=Podręcznik nie Zapisany
 
+#description: No node selected to paste at
+#english: MsgSelectNodeToInserAt=Select position to paste the moves at.
+MsgSelectNodeToInserAt=Zaznacz pozycję gdzie wkleić ruchy.
 
+#description: Copy Paste error
+#english: MbtTitleCopyPasteError=Copy/Paste Error
+MbtTitleCopyPasteError=Błąd w Kopiuj/Wklej
 
 ##################################
 #
