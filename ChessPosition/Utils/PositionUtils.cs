@@ -525,11 +525,13 @@ namespace ChessPosition
         /// Determines if the passed position is checkmate.
         /// </summary>
         /// <returns></returns>
-        public static bool IsCheckmate(BoardPosition pos)
+        public static bool IsCheckmate(BoardPosition pos, out bool isCheck)
         {
+            isCheck = false;
             // we are checking of the ColorToMove side is checkmates
             if (IsKingInCheck(pos, pos.ColorToMove))
             {
+                isCheck = true;
                 var lst = PieceMoves.GetLegalMoves(pos.ColorToMove, pos, true);
                 if (lst.Count == 0)
                 {

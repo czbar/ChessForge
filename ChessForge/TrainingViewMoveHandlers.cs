@@ -131,7 +131,7 @@ namespace ChessForge
                     }
                 }
 
-                if (PositionUtils.IsCheckmate(_userMove.Position))
+                if (PositionUtils.IsCheckmate(_userMove.Position, out _))
                 {
                     _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
                     _userMove.Position.IsCheckmate = true;

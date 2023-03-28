@@ -306,7 +306,7 @@ namespace ChessForge
             _mainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
 
             // check for mate and stalemate
-            bool isMateCf = PositionUtils.IsCheckmate(nd.Position);
+            bool isMateCf = PositionUtils.IsCheckmate(nd.Position, out _);
             bool isStalemate = false;
             if (!isMateCf)
             {

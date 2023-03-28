@@ -867,7 +867,7 @@ namespace ChessForge
         {
             TreeNode nd = EngineGame.GetLastGameNode();
 
-            bool isMateCf = PositionUtils.IsCheckmate(nd.Position);
+            bool isMateCf = PositionUtils.IsCheckmate(nd.Position, out _);
 
             bool isStalemate = false;
             if (!isMateCf)
