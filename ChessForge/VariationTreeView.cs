@@ -619,6 +619,8 @@ namespace ChessForge
             {
                 GameData.ContentType contentType = _shownVariationTree.ContentType;
 
+                ClearCopySelect();
+
                 TreeNode nd = _shownVariationTree.GetNodeFromNodeId(_lastClickedNodeId);
                 TreeNode parent = nd.Parent;
                 _shownVariationTree.DeleteRemainingMoves(nd);
@@ -1909,19 +1911,26 @@ namespace ChessForge
         /// </summary>
         private void HighlightSelectedForCopy()
         {
-            TreeNode selectedNode = GetSelectedNode();
-            foreach (TreeNode nd in _selectedForCopy)
+            try
             {
-                if (nd == selectedNode)
+                TreeNode selectedNode = GetSelectedNode();
+                foreach (TreeNode nd in _selectedForCopy)
                 {
-                    _dictNodeToRun[nd.NodeId].Foreground = _brushCopySelectedMoveFore;
-                    _dictNodeToRun[nd.NodeId].Background = _brushCopySelectedMoveBkg;
+                    if (nd == selectedNode)
+                    {
+                        _dictNodeToRun[nd.NodeId].Foreground = _brushCopySelectedMoveFore;
+                        _dictNodeToRun[nd.NodeId].Background = _brushCopySelectedMoveBkg;
+                    }
+                    else
+                    {
+                        _dictNodeToRun[nd.NodeId].Foreground = _brushRegularFore;
+                        _dictNodeToRun[nd.NodeId].Background = _brushSelectedForCopyBkg;
+                    }
                 }
-                else
-                {
-                    _dictNodeToRun[nd.NodeId].Foreground = _brushRegularFore;
-                    _dictNodeToRun[nd.NodeId].Background = _brushSelectedForCopyBkg;
-                }
+            }
+            catch(Exception ex)
+            {
+                AppLog.Message("HighlightSelectedForCopy()", ex);
             }
         }
 
