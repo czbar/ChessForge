@@ -2542,6 +2542,25 @@ namespace ChessForge
             ActiveTreeView.PromoteCurrentLine();
         }
 
+        /// <summary>
+        /// Deletes the subtree having checked with the user.
+        /// </summary>
+        public void DeleteRemainingMoves()
+        {
+            if (ActiveTreeView != null && AppState.IsVariationTreeTabType)
+            {
+                TreeNode nd = ActiveTreeView.GetSelectedNode();
+                if (nd != null)
+                {
+                    if (nd.Children.Count == 0 ||
+                        MessageBox.Show(Properties.Resources.MsgConfirmDeleteSubtree, Properties.Resources.Confirmation, 
+                           MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        ActiveTreeView.DeleteRemainingMoves();
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// The user requested from the Study menu to delete the sub-tree starting at the selected node.
