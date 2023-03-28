@@ -640,7 +640,7 @@
     <value>Promote Line</value>
   </data>
   <data name="DeleteMovesFromHere" xml:space="preserve">
-    <value>Delete Moves from Here</value>
+    <value>Delete the Selected Move and All Moves that Follow</value>
   </data>
   <data name="CreateNewChapterFromLine" xml:space="preserve">
     <value>Create New Chapter From Line</value>
@@ -797,6 +797,15 @@
   </data>
   <data name="WorkbookNotSaved" xml:space="preserve">
     <value>Workbook not Saved</value>
+  </data>
+  <data name="MsgSelectNodeToInserAt" xml:space="preserve">
+    <value>Select position to paste the moves at.</value>
+  </data>
+  <data name="MsgConfirmDeleteSubtree" xml:space="preserve">
+    <value>Delete the selected move and all moves that follow? </value>
+  </data>
+  <data name="MbtTitleCopyPasteError" xml:space="preserve">
+    <value>Copy/Paste Error</value>
   </data>
   <data name="FlMsgGameImportSuccess" xml:space="preserve">
     <value>Game Imported Successfully.</value>

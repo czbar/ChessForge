@@ -188,7 +188,7 @@ namespace ChessForge
             if (CreateNewPlyNode(move, out nd, out isCastle, out bool preExist))
             {
                 bool endOfGame = false;
-                if (PositionUtils.IsCheckmate(nd.Position))
+                if (PositionUtils.IsCheckmate(nd.Position, out _))
                 {
                     endOfGame = true;
                     AppState.MainWin.BoardCommentBox.ReportCheckmate(true);
@@ -221,7 +221,7 @@ namespace ChessForge
         {
             if (CreateNewPlyNode(move, out nd, out isCastle, out bool preExist))
             {
-                if (PositionUtils.IsCheckmate(nd.Position))
+                if (PositionUtils.IsCheckmate(nd.Position, out _))
                 {
                     nd.Position.IsCheckmate = true;
                 }

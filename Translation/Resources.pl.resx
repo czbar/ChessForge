@@ -640,7 +640,7 @@
     <value>Promuj Wariant</value>
   </data>
   <data name="DeleteMovesFromHere" xml:space="preserve">
-    <value>Usuń Resztę Wariantu </value>
+    <value>Usuń zaznaczony ruch i wszystkie dalsze posunięcia</value>
   </data>
   <data name="CreateNewChapterFromLine" xml:space="preserve">
     <value>Utwórz Nowy Rozdział z Wariantu</value>
@@ -797,6 +797,15 @@
   </data>
   <data name="WorkbookNotSaved" xml:space="preserve">
     <value>Podręcznik nie Zapisany</value>
+  </data>
+  <data name="MsgSelectNodeToInserAt" xml:space="preserve">
+    <value>Zaznacz pozycję gdzie wkleić ruchy.</value>
+  </data>
+  <data name="MsgConfirmDeleteSubtree" xml:space="preserve">
+    <value>Usunąć zaznaczony ruch i wszystkie dalsze posunięcia? </value>
+  </data>
+  <data name="MbtTitleCopyPasteError" xml:space="preserve">
+    <value>Błąd w Kopiuj/Wklej</value>
   </data>
   <data name="FlMsgGameImportSuccess" xml:space="preserve">
     <value>Partia Została Zaimportowana.</value>

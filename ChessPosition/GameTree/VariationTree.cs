@@ -322,7 +322,7 @@ namespace GameTree
         /// that appear anywhere in the tree before a fork (a node with multiple children)
         /// will be included more than ones.
         /// </summary>
-        public ObservableCollection<VariationLine> VariationLines = new ObservableCollection<VariationLine>();
+        private ObservableCollection<VariationLine> VariationLines = new ObservableCollection<VariationLine>();
 
         /// <summary>
         /// Creates a new Tree with the root node at the starting position. 
@@ -1479,7 +1479,7 @@ namespace GameTree
         public List<TreeNode> CopyNodeList(List<TreeNode> nodesToCopy)
         {
             List<TreeNode> copiedList = new List<TreeNode>();
-            foreach(TreeNode nd in nodesToCopy)
+            foreach (TreeNode nd in nodesToCopy)
             {
                 copiedList.Add(nd.CloneMe(true));
             }
@@ -1585,11 +1585,7 @@ namespace GameTree
         private List<TreeNode> GetSubTree(TreeNode nd, bool includeStem = false)
         {
             _subTree.Add(nd);
-            if (nd.Children.Count == 0)
-            {
-                return _subTree;
-            }
-            else
+            if (nd.Children.Count > 0)
             {
                 for (int i = 0; i < nd.Children.Count; i++)
                 {
