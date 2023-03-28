@@ -546,9 +546,17 @@ namespace ChessForge
         {
             if (Keyboard.Modifiers != ModifierKeys.Control)
             {
-                if (HandleKeyDown(e.Key))
+                if (e.Key == Key.Delete)
                 {
+                    _mainWin.DeleteRemainingMoves();
                     e.Handled = true;
+                }
+                else
+                {
+                    if (HandleKeyDown(e.Key))
+                    {
+                        e.Handled = true;
+                    }
                 }
             }
             else
