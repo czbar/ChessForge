@@ -877,6 +877,7 @@ namespace ChessForge
                         mi.Header = fileName;
                         MenuFile.Items.Add(mi);
                         mi.Click += OpenRecentWorkbookFile;
+                        mi.ToolTip = recentFiles.ElementAt(i);
                     }
                 }
                 catch { };
