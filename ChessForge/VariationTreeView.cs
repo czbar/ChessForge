@@ -648,6 +648,8 @@ namespace ChessForge
                 return null;
             }
 
+            TreeNode node = null;
+
             // if the first node of nodes to insert has id = 0, we will insert it at the root of the tree, regardless of which node is currently selected
             TreeNode nodeToInsertAt;
             if (nodesToInsert[0].NodeId == 0)
@@ -657,20 +659,28 @@ namespace ChessForge
             else
             {
                 nodeToInsertAt = GetSelectedNode();
+                if (nodeToInsertAt == null || nodeToInsertAt.NodeId == 0)
+                {
+                    node = null;
+                    MessageBox.Show(Properties.Resources.MsgSelectNodeToInserAt, Properties.Resources.MbtTitleCopyPasteError, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
             }
 
-            TreeNode node = TreeUtils.InsertSubtreeMovesIntoTree(_shownVariationTree, nodeToInsertAt, nodesToInsert, ref insertedNodes, ref failedInsertions);
-
-            if (insertedNodes.Count > 0 && failedInsertions.Count == 0)
+            if (nodeToInsertAt != null)
             {
-                // Prepare info for potential Undo
-                List<int> nodeIds = new List<int>();
-                foreach (TreeNode nd in insertedNodes)
+                node = TreeUtils.InsertSubtreeMovesIntoTree(_shownVariationTree, nodeToInsertAt, nodesToInsert, ref insertedNodes, ref failedInsertions);
+
+                if (insertedNodes.Count > 0 && failedInsertions.Count == 0)
                 {
-                    nodeIds.Add(nd.NodeId);
+                    // Prepare info for potential Undo
+                    List<int> nodeIds = new List<int>();
+                    foreach (TreeNode nd in insertedNodes)
+                    {
+                        nodeIds.Add(nd.NodeId);
+                    }
+                    EditOperation op = new EditOperation(EditOperation.EditType.PASTE_MOVES, nodeIds, null);
+                    _shownVariationTree.OpsManager.PushOperation(op);
                 }
-                EditOperation op = new EditOperation(EditOperation.EditType.PASTE_MOVES, nodeIds, null);
-                _shownVariationTree.OpsManager.PushOperation(op);
             }
 
             return node;
