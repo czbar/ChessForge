@@ -70,7 +70,25 @@ namespace ChessForge
         /// </summary>
         public bool HasMovesSelectedForCopy
         {
-            get => _selectedForCopy.Count > 0;
+            get
+            {
+                if (_selectedForCopy.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    TreeNode nd = GetSelectedNode();
+                    if (nd != null && nd.NodeId != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
         }
 
         // flags freshness of the view
@@ -621,7 +639,7 @@ namespace ChessForge
 
                 ClearCopySelect();
 
-                TreeNode nd = _shownVariationTree.GetNodeFromNodeId(_lastClickedNodeId);
+                TreeNode nd = GetSelectedNode(); // _shownVariationTree.GetNodeFromNodeId(_lastClickedNodeId);
                 TreeNode parent = nd.Parent;
                 _shownVariationTree.DeleteRemainingMoves(nd);
                 _shownVariationTree.BuildLines();
@@ -1808,6 +1826,15 @@ namespace ChessForge
         /// </summary>
         public void PlaceSelectedForCopyInClipboard()
         {
+            if (_selectedForCopy.Count == 0)
+            {
+                TreeNode nd = GetSelectedNode();
+                if (nd != null && nd.NodeId != 0)
+                {
+                    _selectedForCopy.Add(nd);
+                }
+            }
+
             if (_selectedForCopy.Count > 0)
             {
                 List<TreeNode> lstNodes = _mainWin.ActiveVariationTree.CopyNodeList(_selectedForCopy);
@@ -1928,7 +1955,7 @@ namespace ChessForge
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLog.Message("HighlightSelectedForCopy()", ex);
             }
