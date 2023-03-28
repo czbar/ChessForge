@@ -322,7 +322,7 @@ namespace GameTree
         /// that appear anywhere in the tree before a fork (a node with multiple children)
         /// will be included more than ones.
         /// </summary>
-        public ObservableCollection<VariationLine> VariationLines = new ObservableCollection<VariationLine>();
+        private ObservableCollection<VariationLine> VariationLines = new ObservableCollection<VariationLine>();
 
         /// <summary>
         /// Creates a new Tree with the root node at the starting position. 
