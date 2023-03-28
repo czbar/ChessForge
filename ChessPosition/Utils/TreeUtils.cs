@@ -216,7 +216,7 @@ namespace ChessPosition
                 if (PositionUtils.IsKingInCheck(nd.Position, nd.ColorToMove))
                 {
                     nd.Position.IsCheck = true;
-                    if (PositionUtils.IsCheckmate(nd.Position))
+                    if (PositionUtils.IsCheckmate(nd.Position, out _))
                     {
                         nd.Position.IsCheck = false;
                         nd.Position.IsCheckmate = true;
@@ -339,7 +339,8 @@ namespace ChessPosition
         /// <param name="failedInsertions"></param>
         private static TreeNode InsertMoveAndChildrenIntoTree(VariationTree targetTree, TreeNode insertAtNode, TreeNode moveToInsert, ref List<TreeNode> insertedNodes, ref List<TreeNode> failedInsertions)
         {
-            TreeNode insertedNode = InsertMoveIntoTree(targetTree, insertAtNode, moveToInsert.LastMoveAlgebraicNotation, ref insertedNodes);
+            TreeNode insertedNode = InsertMoveIntoTree(targetTree, insertAtNode, moveToInsert, ref insertedNodes);
+
             if (insertedNode == null)
             {
                 failedInsertions.Add(moveToInsert);
@@ -364,10 +365,11 @@ namespace ChessPosition
         /// <param name="insertAtNode"></param>
         /// <param name="algMove"></param>
         /// <returns></returns>
-        private static TreeNode InsertMoveIntoTree(VariationTree targetTree, TreeNode insertAtNode, string algMove, ref List<TreeNode> insertedNodes)
+        private static TreeNode InsertMoveIntoTree(VariationTree targetTree, TreeNode insertAtNode, TreeNode nodeToInsert, ref List<TreeNode> insertedNodes)
         {
             TreeNode retNode = null;
 
+            string algMove = nodeToInsert.LastMoveAlgebraicNotation;
             // if the target tree already has a node with the passed algMove, return it
             foreach (TreeNode nd in insertAtNode.Children)
             {
@@ -385,6 +387,12 @@ namespace ChessPosition
                 {
                     int nodeId = targetTree.GetNewNodeId();
                     retNode = MoveUtils.ProcessAlgMove(algMove, insertAtNode, nodeId);
+                    // copy some fields from the original one to the one created here
+                    retNode.Comment = nodeToInsert.Comment;
+                    retNode.Nags = nodeToInsert.Nags;
+                    retNode.LastMoveAlgebraicNotationWithNag = nodeToInsert.LastMoveAlgebraicNotationWithNag;
+                    retNode.Position.IsCheckmate = PositionUtils.IsCheckmate(retNode.Position, out bool isCheck);
+                    retNode.Position.IsCheck = isCheck;
                 }
                 catch
                 {
