@@ -114,5 +114,18 @@ namespace ChessForge
             InsertDialogRequest = true;
             DialogResult = true;
         }
+
+        /// <summary>
+        /// Handles the key down event in the text box. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTbMoveText_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (GuiUtilities.InsertFigurine(UiTbMoveText, sender, e))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }
