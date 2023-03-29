@@ -40,7 +40,7 @@ namespace ChessPosition
         /// </summary>
         public static Dictionary<char, char> WhiteFigurinesMapping = new Dictionary<char, char>()
         {
-            ['K'] = '♚',
+            ['K'] = '♔',
             ['Q'] = '♕',
             ['R'] = '♖',
             ['B'] = '♗',
