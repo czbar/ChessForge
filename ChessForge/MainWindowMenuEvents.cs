@@ -410,6 +410,8 @@ namespace ChessForge
                 }
             }
 
+            SoundPlayer.CloseAll();
+
             if (e.Cancel != true)
             {
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
