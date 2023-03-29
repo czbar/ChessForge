@@ -762,6 +762,12 @@
   <data name="Clear" xml:space="preserve">
     <value>Wyczyść</value>
   </data>
+  <data name="Notation" xml:space="preserve">
+    <value>Zapis</value>
+  </data>
+  <data name="UseFigurines" xml:space="preserve">
+    <value>Używaj figurek</value>
+  </data>
   <data name="FileError" xml:space="preserve">
     <value>Błąd w Pliku</value>
   </data>

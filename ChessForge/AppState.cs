@@ -616,6 +616,7 @@ namespace ChessForge
                 MainWin.UiMnAnnotations.IsEnabled = false;
                 MainWin.UiMnMergeChapters.IsEnabled = false;
 
+                MainWin.UiMnWorkbookOptions.IsEnabled = WorkbookManager.SessionWorkbook != null; 
                 switch (CurrentLearningMode)
                 {
                     case LearningMode.Mode.IDLE:

@@ -9,7 +9,7 @@
         Title="{x:Static p:Resources.DlgEditMoveInIntro}" Height="180" Width="400">
     <Grid>
         <Label x:Name="UiLblText" Content="{x:Static p:Resources.TextForDisplay}" HorizontalAlignment="Left" Margin="31,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="UiTbMoveText" HorizontalAlignment="Left" Margin="156,15,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="202"/>
+        <TextBox x:Name="UiTbMoveText" HorizontalAlignment="Left" Margin="156,15,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="202" PreviewKeyDown="UiTbMoveText_PreviewKeyDown"/>
         <Button x:Name="UiBtnEditPosition"  Content="{x:Static p:Resources.EditPosition}" HorizontalAlignment="Center" Margin="-180,56,0,0" VerticalAlignment="Top" Width="150" Click="UiBtnEditPosition_Click"/>
         <Button x:Name="UiBtnInsertDiagram" Content="{x:Static p:Resources.InsertDiagram}" HorizontalAlignment="Center" Margin="180,56,0,0" VerticalAlignment="Top" Width="150" Click="UiBtnInsertDiagram_Click"/>
         <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-120,96,0,0" VerticalAlignment="Top" Width="90" Click="UiBtnOk_Click" />

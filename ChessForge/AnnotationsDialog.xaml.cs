@@ -1,4 +1,5 @@
-﻿using GameTree;
+﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -263,7 +265,7 @@ namespace ChessForge
             {
                 return 0;
             }
-            else 
+            else
             {
                 if (int.TryParse(pts, out int quizPoints))
                 {
@@ -293,7 +295,7 @@ namespace ChessForge
             Nags = "";
             if (UiRbGood.IsChecked == true)
             {
-                Nags += " " + "$1"; 
+                Nags += " " + "$1";
             }
             else if (UiRbMistake.IsChecked == true)
             {
@@ -392,5 +394,20 @@ namespace ChessForge
         {
             System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Annotation-Editor");
         }
+
+        /// <summary>
+        /// Handles the key down event in the text box. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTbComment_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (GuiUtilities.InsertFigurine(UiTbComment, sender, e))
+            {
+                e.Handled = true;
+            }
+        }
+
     }
 }
+

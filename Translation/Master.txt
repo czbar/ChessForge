@@ -772,6 +772,12 @@ ShowExplorer=Show Explorer
 #Clear
 Clear=Clear
 
+#Notation
+Notation=Notation
+
+#Use figurines
+UseFigurines=Use Figurines
+
 ##################################
 #
 # Message Box Titles

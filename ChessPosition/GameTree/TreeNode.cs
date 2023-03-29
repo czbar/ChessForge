@@ -557,7 +557,7 @@ namespace GameTree
                 }
             }
 
-            res = Languages.MapPieceSymbols(res);
+            res = Languages.MapPieceSymbols(res, MoveUtils.ReverseColor(Position.ColorToMove));
 
             return res;
         }

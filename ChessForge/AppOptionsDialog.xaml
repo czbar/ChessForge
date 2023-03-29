@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         Title="{x:Static p:Resources.DlgTitleApplicationOptions}" Height="390" SizeToContent="Width">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >
-        <Button x:Name="_btnSave" IsDefault="True" Content="{x:Static p:Resources.Save}" HorizontalAlignment="Left" Margin="250,259,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnSave_Click"/>
-        <Button x:Name="_btnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="346,259,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnCancel_Click" />
+        <Button x:Name="_btnSave" IsDefault="True" Content="{x:Static p:Resources.Save}" HorizontalAlignment="Left" Margin="416,244,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnSave_Click"/>
+        <Button x:Name="_btnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="416,280,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnCancel_Click" />
         <GroupBox x:Name="_boxEngThinkTime" HorizontalAlignment="Left" Height="115" Header="{x:Static p:Resources.EngineTimePerMove}" Margin="13,86,0,0" VerticalAlignment="Top" Width="165"/>
         <Label x:Name="_lblThinkTimeInGame" Content="{x:Static p:Resources.ThinkTimeInGame}" HorizontalAlignment="Left" Margin="23,117,0,0" VerticalAlignment="Top" Width="84"/>
         <TextBox x:Name="UiTbEngTimeInGame" HorizontalAlignment="Left" HorizontalContentAlignment="Center"  Margin="101,120,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60"/>
@@ -31,6 +31,11 @@
         </GroupBox>
         <GroupBox x:Name="UiGbLanguage" Margin="13,210,0,0" Height="120" Width="165" Header="{x:Static p:Resources.Language}" HorizontalAlignment="Left" VerticalAlignment="Top">
             <ListBox x:Name="UiLbLanguages" Margin="10" />
+        </GroupBox>
+        <GroupBox x:Name="UiGbNotation" Header="{x:Static p:Resources.Notation}" HorizontalAlignment="Left" Margin="191,210,15,0" VerticalAlignment="Top" Height="120" Width="190">
+            <StackPanel>
+                <CheckBox x:Name="UiCbFigurines" Content="{x:Static p:Resources.UseFigurines}" HorizontalAlignment="Left" Margin="15,38,0,0" VerticalAlignment="Top"/>
+            </StackPanel>
         </GroupBox>
 
     </Grid>

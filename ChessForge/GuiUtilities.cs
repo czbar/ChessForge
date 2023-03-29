@@ -15,6 +15,62 @@ namespace ChessForge
     public class GuiUtilities
     {
         /// <summary>
+        /// Checks if the KeyEvent in the TextBox indicates the insertion of a figurine symbol
+        /// and if so, performs it.
+        /// </summary>
+        /// <param name="textBox"></param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public static bool InsertFigurine(TextBox textBox, object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            char charToInsert = '\0';
+
+            var key = (e.Key == Key.System ? e.SystemKey : e.Key);
+
+            if ((Keyboard.Modifiers & ModifierKeys.Alt) > 0)
+            {
+                bool isShift = (Keyboard.Modifiers & ModifierKeys.Shift) > 0;
+                switch (key)
+                {
+                    case Key.K:
+                        charToInsert = isShift ? Languages.BlackFigurinesMapping['K'] : Languages.WhiteFigurinesMapping['K'];
+                        break;
+                    case Key.Q:
+                        charToInsert = isShift ? Languages.BlackFigurinesMapping['Q'] : Languages.WhiteFigurinesMapping['Q'];
+                        break;
+                    case Key.R:
+                        charToInsert = isShift ? Languages.BlackFigurinesMapping['R'] : Languages.WhiteFigurinesMapping['R'];
+                        break;
+                    case Key.B:
+                        charToInsert = isShift ? Languages.BlackFigurinesMapping['B'] : Languages.WhiteFigurinesMapping['B'];
+                        break;
+                    case Key.N:
+                        charToInsert = isShift ? Languages.BlackFigurinesMapping['N'] : Languages.WhiteFigurinesMapping['N'];
+                        break;
+                    default:
+                        break;
+                }
+
+                if (charToInsert != '\0')
+                {
+                    if (!string.IsNullOrEmpty(textBox.SelectedText))
+                    {
+                        textBox.SelectedText = "";
+                    }
+
+                    int caretIndex = textBox.CaretIndex;
+                    string newText = textBox.Text.Insert(textBox.CaretIndex, charToInsert.ToString());
+                    textBox.Text = newText;
+                    textBox.CaretIndex = caretIndex + 1;
+                }
+            }
+
+            return charToInsert != '\0';
+        }
+
+
+        /// <summary>
         /// Produces text for user interface from the received ParserException.
         /// </summary>
         /// <param name="ex"></param>

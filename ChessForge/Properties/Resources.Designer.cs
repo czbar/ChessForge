@@ -2672,6 +2672,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notation.
+        /// </summary>
+        public static string Notation {
+            get {
+                return ResourceManager.GetString("Notation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [not named].
         /// </summary>
         public static string NotNamed {
@@ -4081,6 +4090,15 @@ namespace ChessForge.Properties {
         public static string UpdatedVersion {
             get {
                 return ResourceManager.GetString("UpdatedVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Figurines.
+        /// </summary>
+        public static string UseFigurines {
+            get {
+                return ResourceManager.GetString("UseFigurines", resourceCulture);
             }
         }
         

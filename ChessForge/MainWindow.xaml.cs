@@ -102,19 +102,31 @@ namespace ChessForge
         /// <summary>
         /// Clears content of the tree views.
         /// </summary>
-        public void ClearTreeViews()
+        public void ClearTreeViews(bool rebuild = false)
         {
             if (_studyTreeView != null)
             {
                 _studyTreeView.Clear(GameData.ContentType.STUDY_TREE);
+                if (rebuild)
+                {
+                    _studyTreeView.BuildFlowDocumentForVariationTree();
+                }
             }
             if (_modelGameTreeView != null)
             {
                 _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
+                if (rebuild)
+                {
+                    _modelGameTreeView.BuildFlowDocumentForVariationTree();
+                }
             }
             if (_exerciseTreeView != null)
             {
                 _exerciseTreeView.Clear(GameData.ContentType.EXERCISE);
+                if (rebuild)
+                {
+                    _exerciseTreeView.BuildFlowDocumentForVariationTree();
+                }
             }
         }
 
@@ -286,6 +298,7 @@ namespace ChessForge
 
             // the next lines pertain to localization, must be invoked here (before InitializeComponent) and in this order
             ReadConfiguration();
+            Languages.UseFigurines = Configuration.UseFigurines;
             SetCultureInfo(Configuration.CultureName);
             InitializedLocalizedDictionary();
             InitializeLanguages();
@@ -483,7 +496,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Reads in configuration and initializes appropriate entities.
+        /// Initializes configurable entities.
         /// </summary>
         private void InitializeConfiguration()
         {
@@ -2211,6 +2224,12 @@ namespace ChessForge
 
                 Configuration.WriteOutConfiguration();
 
+                if (dlg.UseFigurinesChanged)
+                {
+                    Languages.UseFigurines = Configuration.UseFigurines;
+                    ClearTreeViews(true);
+                }
+
                 if (dlg.ChangedEnginePath)
                 {
                     ReloadEngine();
@@ -2599,6 +2618,16 @@ namespace ChessForge
         private void UiComboBoxBmContent_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BookmarkManager.ComboBoxContentSelectionChanged();
+        }
+
+        /// <summary>
+        /// A key was pressed in the Intro view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiRtbIntroView_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+
         }
     }
 }
