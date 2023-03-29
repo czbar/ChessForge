@@ -1411,10 +1411,10 @@ namespace ChessForge
                             if (EngineGame.GetLastGameNode() != _lastClickedNode)
                             {
                                 string moveTxt = BuildMoveTextForMenu(_lastClickedNode);
-                                if (MessageBox.Show(Properties.Resources.RestartFrom + " " + moveTxt + "?", Properties.Resources.Training, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                                {
+                                //if (MessageBox.Show(Properties.Resources.RestartFrom + " " + moveTxt + "?", Properties.Resources.Training, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                                //{
                                     RestartFromClickedMove(_moveContext);
-                                }
+                                //}
                             }
                         }
                     }
@@ -1504,28 +1504,41 @@ namespace ChessForge
             if (nodeId >= 0)
             {
                 Point pt = e.GetPosition(_mainWin.UiRtbTrainingProgress);
-                _mainWin.TrainingFloatingBoard.FlipBoard(_mainWin.MainChessBoard.IsFlipped);
-                _mainWin.TrainingFloatingBoard.DisplayPosition(_mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId), false);
-                
-                double xCoord = pt.X;
-                if (_mainWin.UiRtbTrainingProgress.ActualWidth < xCoord + 170)
-                {
-                    xCoord = _mainWin.UiRtbTrainingProgress.ActualWidth - 170;
-                }
+                bool isStemMove = r.Name.StartsWith(_run_stem_move_);
+                ShowFloatingBoard(nodeId, pt, isStemMove);
+            }
+        }
 
-                int yOffset = r.Name.StartsWith(_run_stem_move_) ? 25 : -165;
-                double yCoord = pt.Y + yOffset;
-                if (yCoord < 0)
-                {
-                    yCoord = 0;
-                }
+        /// <summary>
+        /// Places the floating board over the move.
+        /// If the move is close to the boundary, place the board such that it is fully visible.
+        /// Also, it must not covert the point where the mouse is positioned so that the user can click it.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        private void ShowFloatingBoard(int nodeId, Point pt, bool isStemMove)
+        {
+            _mainWin.TrainingFloatingBoard.FlipBoard(_mainWin.MainChessBoard.IsFlipped);
+            _mainWin.TrainingFloatingBoard.DisplayPosition(_mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId), false);
 
-                _mainWin.UiVbTrainingFloatingBoard.Margin = new Thickness(xCoord, yCoord, 0, 0);
-                if (_nodeIdSuppressFloatingBoard != nodeId)
-                {
-                    _mainWin.ShowTrainingFloatingBoard(true);
-                    _nodeIdSuppressFloatingBoard = -1;
-                }
+            double xCoord = pt.X + 10;
+            if (_mainWin.UiRtbTrainingProgress.ActualWidth < xCoord + 170)
+            {
+                xCoord = _mainWin.UiRtbTrainingProgress.ActualWidth - 170;
+            }
+
+            int yOffset = isStemMove ? 25 : -165;
+            double yCoord = pt.Y + yOffset;
+            if (yCoord < 0)
+            {
+                // show under the move
+                yCoord = pt.Y + 10;
+            }
+
+            _mainWin.UiVbTrainingFloatingBoard.Margin = new Thickness(xCoord, yCoord, 0, 0);
+            if (_nodeIdSuppressFloatingBoard != nodeId)
+            {
+                _mainWin.ShowTrainingFloatingBoard(true);
+                _nodeIdSuppressFloatingBoard = -1;
             }
         }
 
