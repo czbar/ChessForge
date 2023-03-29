@@ -28,9 +28,9 @@ namespace ChessForge
 
             var key = (e.Key == Key.System ? e.SystemKey : e.Key);
 
-            if (Keyboard.IsKeyDown(Key.LeftAlt))
+            if ((Keyboard.Modifiers & ModifierKeys.Alt) > 0)
             {
-                bool isShift = Keyboard.IsKeyDown(Key.LeftShift);
+                bool isShift = (Keyboard.Modifiers & ModifierKeys.Shift) > 0;
                 switch (key)
                 {
                     case Key.K:
