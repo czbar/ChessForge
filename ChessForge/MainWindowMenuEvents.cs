@@ -717,7 +717,7 @@ namespace ChessForge
             {
                 WorkbookManager.LastClickedChapterIndex = -1;
             }
-                WorkbookManager.EnableChaptersContextMenuItems(_cmChapters, WorkbookManager.LastClickedChapterIndex >= 0, GameData.ContentType.GENERIC);
+            WorkbookManager.EnableChaptersContextMenuItems(_cmChapters, WorkbookManager.LastClickedChapterIndex >= 0, GameData.ContentType.GENERIC);
         }
 
         /// <summary>
@@ -2419,14 +2419,14 @@ namespace ChessForge
                                 }
                             }
 
-                            string msg = Properties.Resources.ErrClipboardLinePaste + " (" 
+                            string msg = Properties.Resources.ErrClipboardLinePaste + " ("
                                 + MoveUtils.BuildSingleMoveText(failedInsertions[0], true) + ")";
                             MessageBox.Show(msg, Properties.Resources.ClipboardOperation, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         }
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLog.Message("PasteChfClipboard()", ex);
             }
@@ -2553,7 +2553,7 @@ namespace ChessForge
                 if (nd != null)
                 {
                     if (nd.Children.Count == 0 ||
-                        MessageBox.Show(Properties.Resources.MsgConfirmDeleteSubtree, Properties.Resources.Confirmation, 
+                        MessageBox.Show(Properties.Resources.MsgConfirmDeleteSubtree, Properties.Resources.Confirmation,
                            MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         ActiveTreeView.DeleteRemainingMoves();
@@ -2703,10 +2703,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnApplicationOptions_Click(object sender, RoutedEventArgs e)
         {
-            if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE)
-            {
-                ShowApplicationOptionsDialog();
-            }
+            ShowApplicationOptionsDialog();
         }
 
 
