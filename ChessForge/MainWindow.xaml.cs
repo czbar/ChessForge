@@ -286,6 +286,7 @@ namespace ChessForge
 
             // the next lines pertain to localization, must be invoked here (before InitializeComponent) and in this order
             ReadConfiguration();
+            Languages.UseFigurines = Configuration.UseFigurines;
             SetCultureInfo(Configuration.CultureName);
             InitializedLocalizedDictionary();
             InitializeLanguages();
@@ -483,7 +484,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Reads in configuration and initializes appropriate entities.
+        /// Initializes configurable entities.
         /// </summary>
         private void InitializeConfiguration()
         {

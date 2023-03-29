@@ -65,6 +65,11 @@ namespace ChessForge
         public bool SoundOn;
 
         /// <summary>
+        /// Whether to use figurine notation.
+        /// </summary>
+        public bool UseFigurines;
+
+        /// <summary>
         // Whether the engine path was changed by the user in this dialog.
         /// </summary>
         public bool ChangedEnginePath = false;
@@ -88,6 +93,7 @@ namespace ChessForge
             AllowMouseWheel = Configuration.AllowMouseWheelForMoves;
             ShowMovesAtFork = Configuration.ShowMovesAtFork;
             SoundOn = Configuration.SoundOn;
+            UseFigurines = Configuration.UseFigurines;
 
             UiTbEngineExe.Text = EnginePath;
             UiTbReplaySpeed.Text = ReplaySpeed.ToString("F1");
@@ -96,6 +102,7 @@ namespace ChessForge
             UiCbAllowWheel.IsChecked = (AllowMouseWheel == true);
             UiCbShowForkMoves.IsChecked = (ShowMovesAtFork == true);
             UiCbSoundOn.IsChecked = (SoundOn == true);
+            UiCbFigurines.IsChecked = (UseFigurines == true);
 
             Languages.AvailableLanguages.Sort();
             foreach (Language lang in Languages.AvailableLanguages)
@@ -161,6 +168,7 @@ namespace ChessForge
             Configuration.AllowMouseWheelForMoves = (UiCbAllowWheel.IsChecked == true);
             Configuration.ShowMovesAtFork = (UiCbShowForkMoves.IsChecked == true);
             Configuration.SoundOn = (UiCbSoundOn.IsChecked == true);
+            Configuration.UseFigurines = (UiCbFigurines.IsChecked == true);
 
             if (UiLbLanguages.SelectedItem != null)
             {
