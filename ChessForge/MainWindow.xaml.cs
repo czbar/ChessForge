@@ -2619,5 +2619,15 @@ namespace ChessForge
         {
             BookmarkManager.ComboBoxContentSelectionChanged();
         }
+
+        /// <summary>
+        /// A key was pressed in the Intro view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiRtbIntroView_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }
