@@ -1410,11 +1410,7 @@ namespace ChessForge
                             // if not the last move, ask if to restart
                             if (EngineGame.GetLastGameNode() != _lastClickedNode)
                             {
-                                string moveTxt = BuildMoveTextForMenu(_lastClickedNode);
-                                //if (MessageBox.Show(Properties.Resources.RestartFrom + " " + moveTxt + "?", Properties.Resources.Training, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                                //{
-                                    RestartFromClickedMove(_moveContext);
-                                //}
+                                RestartFromClickedMove(_moveContext);
                             }
                         }
                     }
