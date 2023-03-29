@@ -987,6 +987,14 @@ ShowExplorer=Pokaż Bibliotekę
 #english: Clear=Clear
 Clear=Wyczyść
 
+#description: Notation
+#english: Notation=Notation
+Notation=Zapis
+
+#description: Use figurines
+#english: UseFigurines=Use Figurines
+UseFigurines=Używaj figurek
+
 ##################################
 #
 # Message Box Titles
