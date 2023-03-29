@@ -16,6 +16,9 @@ namespace ChessForge
         // the code of the language currently configured
         private string _currentConfiguredLanguage = "";
 
+        // UseFigurines value on entry
+        private bool _currentUseFigurines;
+
         /// <summary>
         /// The language selected upon exit
         /// </summary>
@@ -26,6 +29,12 @@ namespace ChessForge
         /// differs from the one configured before the dialog was opened
         /// </summary>
         public bool LanguageChanged = false;
+
+        /// <summary>
+        /// Set on Exit to indicate whether the UseFigurines value
+        /// differs from the one configured before the dialog was opened
+        /// </summary>
+        public bool UseFigurinesChanged = false;
 
         /// <summary>
         /// Configured path to the engine's executable.
@@ -65,11 +74,6 @@ namespace ChessForge
         public bool SoundOn;
 
         /// <summary>
-        /// Whether to use figurine notation.
-        /// </summary>
-        public bool UseFigurines;
-
-        /// <summary>
         // Whether the engine path was changed by the user in this dialog.
         /// </summary>
         public bool ChangedEnginePath = false;
@@ -93,7 +97,8 @@ namespace ChessForge
             AllowMouseWheel = Configuration.AllowMouseWheelForMoves;
             ShowMovesAtFork = Configuration.ShowMovesAtFork;
             SoundOn = Configuration.SoundOn;
-            UseFigurines = Configuration.UseFigurines;
+
+            _currentUseFigurines = Configuration.UseFigurines;
 
             UiTbEngineExe.Text = EnginePath;
             UiTbReplaySpeed.Text = ReplaySpeed.ToString("F1");
@@ -102,7 +107,7 @@ namespace ChessForge
             UiCbAllowWheel.IsChecked = (AllowMouseWheel == true);
             UiCbShowForkMoves.IsChecked = (ShowMovesAtFork == true);
             UiCbSoundOn.IsChecked = (SoundOn == true);
-            UiCbFigurines.IsChecked = (UseFigurines == true);
+            UiCbFigurines.IsChecked = (Configuration.UseFigurines == true);
 
             Languages.AvailableLanguages.Sort();
             foreach (Language lang in Languages.AvailableLanguages)
@@ -178,6 +183,11 @@ namespace ChessForge
             if (ExitLanguage != _currentConfiguredLanguage)
             {
                 LanguageChanged = true;
+            }
+
+            if (_currentUseFigurines != Configuration.UseFigurines)
+            {
+                UseFigurinesChanged = true;
             }
 
             DialogResult = true;

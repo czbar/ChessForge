@@ -102,19 +102,31 @@ namespace ChessForge
         /// <summary>
         /// Clears content of the tree views.
         /// </summary>
-        public void ClearTreeViews()
+        public void ClearTreeViews(bool rebuild = false)
         {
             if (_studyTreeView != null)
             {
                 _studyTreeView.Clear(GameData.ContentType.STUDY_TREE);
+                if (rebuild)
+                {
+                    _studyTreeView.BuildFlowDocumentForVariationTree();
+                }
             }
             if (_modelGameTreeView != null)
             {
                 _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
+                if (rebuild)
+                {
+                    _modelGameTreeView.BuildFlowDocumentForVariationTree();
+                }
             }
             if (_exerciseTreeView != null)
             {
                 _exerciseTreeView.Clear(GameData.ContentType.EXERCISE);
+                if (rebuild)
+                {
+                    _exerciseTreeView.BuildFlowDocumentForVariationTree();
+                }
             }
         }
 
@@ -2211,6 +2223,12 @@ namespace ChessForge
                 }
 
                 Configuration.WriteOutConfiguration();
+
+                if (dlg.UseFigurinesChanged)
+                {
+                    Languages.UseFigurines = Configuration.UseFigurines;
+                    ClearTreeViews(true);
+                }
 
                 if (dlg.ChangedEnginePath)
                 {
