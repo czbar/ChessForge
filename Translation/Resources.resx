@@ -762,6 +762,12 @@
   <data name="Clear" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="Notation" xml:space="preserve">
+    <value>Notation</value>
+  </data>
+  <data name="UseFigurines" xml:space="preserve">
+    <value>Use Figurines</value>
+  </data>
   <data name="FileError" xml:space="preserve">
     <value>File Error</value>
   </data>

@@ -987,6 +987,14 @@ ShowExplorer=
 #english: Clear=Clear
 Clear=
 
+#description: Notation
+#english: Notation=Notation
+Notation=
+
+#description: Use figurines
+#english: UseFigurines=Use Figurines
+UseFigurines=
+
 ##################################
 #
 # Message Box Titles
