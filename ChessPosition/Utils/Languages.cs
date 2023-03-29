@@ -80,10 +80,10 @@ namespace ChessPosition
         private static readonly int SYMBOL_COUNT = 5;
 
         //Unicode symbols for White Pieces
-        private static readonly string UnicodeWhitePieces = "♔♕♖♗♘";
+        // private static readonly string UnicodeWhitePieces = "♔♕♖♗♘";
 
         //Unicode symbols for Black Pieces
-        private static readonly string UnicodeBlackPieces = "♚♛♜♝♞";
+        // private static readonly string UnicodeBlackPieces = "♚♛♜♝♞";
 
         /// <summary>
         /// Saves the session language based in the passed string.
