@@ -894,7 +894,7 @@ namespace ChessForge
                     res = moveNo.ToString() + "... " + node.LastMoveAlgebraicNotation;
                 }
             }
-            res = Languages.MapPieceSymbols(res);
+            res = Languages.MapPieceSymbols(res, moveColor);
             node.LastMoveAlgebraicNotation = res;
 
             return res;

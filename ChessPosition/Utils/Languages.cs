@@ -31,6 +31,45 @@ namespace ChessPosition
         public static Dictionary<char, char> ReverseChessSymbolMapping = new Dictionary<char, char>();
 
         /// <summary>
+        /// Whether to use Unicode symbols
+        /// </summary>
+        public static bool UseFigurines = false;
+
+        /// <summary>
+        /// Mapping of Unicode chess symbols.
+        /// </summary>
+        public static Dictionary<char, char> WhiteFigurinesMapping = new Dictionary<char, char>()
+        {
+            ['K'] = '♚',
+            ['Q'] = '♕',
+            ['R'] = '♖',
+            ['B'] = '♗',
+            ['N'] = '♘',
+        };
+
+        /// <summary>
+        /// Reverse mapping of Unicode chess symbols
+        /// </summary>
+        public static Dictionary<char, char> ReverseWhiteFigurinesMapping = new Dictionary<char, char>();
+
+        /// <summary>
+        /// Mapping of Unicode chess symbols.
+        /// </summary>
+        public static Dictionary<char, char> BlackFigurinesMapping = new Dictionary<char, char>()
+        {
+            ['K'] = '♚',
+            ['Q'] = '♛',
+            ['R'] = '♜',
+            ['B'] = '♝',
+            ['N'] = '♞',
+        };
+
+        /// <summary>
+        /// Reverse mapping of Unicode chess symbols
+        /// </summary>
+        public static Dictionary<char, char> ReverseBlackFigurinesMapping = new Dictionary<char, char>();
+
+        /// <summary>
         /// Whether the default mapping is used.
         /// If so the callers do not need to call MapPieceSymbols
         /// before displaying moves. 
@@ -40,6 +79,11 @@ namespace ChessPosition
         // Number of symbols expected in the mapping string
         private static readonly int SYMBOL_COUNT = 5;
 
+        //Unicode symbols for White Pieces
+        private static readonly string UnicodeWhitePieces = "♔♕♖♗♘";
+
+        //Unicode symbols for Black Pieces
+        private static readonly string UnicodeBlackPieces = "♚♛♜♝♞";
 
         /// <summary>
         /// Saves the session language based in the passed string.
@@ -83,13 +127,35 @@ namespace ChessPosition
         /// <param name="inputString"></param>
         /// <param name="mapping"></param>
         /// <returns></returns>
-        public static string MapPieceSymbols(string inputString)
+        public static string MapPieceSymbols(string inputString, PieceColor color = PieceColor.None)
         {
-            return Regex.Replace(inputString, "[A-Z]", m =>
+            if (!UseFigurines)
             {
-                char c = m.Value[0];
-                return ChessSymbolMapping.ContainsKey(c) ? ChessSymbolMapping[c].ToString() : c.ToString();
-            });
+                return Regex.Replace(inputString, "[A-Z]", m =>
+                {
+                    char c = m.Value[0];
+                    return ChessSymbolMapping.ContainsKey(c) ? ChessSymbolMapping[c].ToString() : c.ToString();
+                });
+            }
+            else
+            {
+                if (color == PieceColor.Black)
+                {
+                    return Regex.Replace(inputString, "[A-Z]", m =>
+                    {
+                        char c = m.Value[0];
+                        return BlackFigurinesMapping.ContainsKey(c) ? BlackFigurinesMapping[c].ToString() : c.ToString();
+                    });
+                }
+                else
+                {
+                    return Regex.Replace(inputString, "[A-Z]", m =>
+                    {
+                        char c = m.Value[0];
+                        return WhiteFigurinesMapping.ContainsKey(c) ? WhiteFigurinesMapping[c].ToString() : c.ToString();
+                    });
+                }
+            }
         }
 
         /// <summary>
