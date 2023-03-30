@@ -76,6 +76,22 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Used to refresh move notation when we change to/from "figurines".
+        /// </summary>
+        public void RefreshMovesText()
+        {
+            ObservableCollection<MoveWithEval> tmp = PositionUtils.BuildMoveListFromLine(NodeList);
+            if (tmp.Count == MoveList.Count)
+            {
+                for (int i = 0; i < tmp.Count; i++)
+                {
+                    MoveList[i].WhitePly = tmp[i].WhitePly;
+                    MoveList[i].BlackPly = tmp[i].BlackPly;
+                }
+            }
+        }
+
+        /// <summary>
         /// Removes all moves and plies trailing
         /// the specified Node.
         /// </summary>
@@ -363,6 +379,10 @@ namespace ChessForge
             });
         }
 
+        /// <summary>
+        /// Replaces the last play with the passed node.
+        /// </summary>
+        /// <param name="nd"></param>
         public void ReplaceLastPly(TreeNode nd)
         {
             NodeList[NodeList.Count - 1] = nd;
