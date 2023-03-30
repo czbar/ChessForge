@@ -47,10 +47,10 @@ namespace WebAccess
         /// Requests Opening Stats from lichess
         /// </summary>
         /// <returns></returns>
-        public static async void RequestOpeningStats(int treeId, TreeNode nd)
+        public static async void RequestOpeningStats(int treeId, TreeNode nd, bool force = false)
         {
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
-            if (fen == _lastRequestedFen)
+            if (!force && fen == _lastRequestedFen)
             {
                 OpeningStatsRequestIgnored?.Invoke(null, null);
                 return;
