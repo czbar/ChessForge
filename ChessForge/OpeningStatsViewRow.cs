@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChessPosition;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -71,10 +72,10 @@ namespace ChessForge
         /// </summary>
         /// <param name="move"></param>
         /// <param name="moveNumberString"></param>
-        public void SetLabels(LichessMoveStats move, string moveNumberString)
+        public void SetLabels(LichessMoveStats move, string moveNumberString, PieceColor color)
         {
             _moveNumberString = moveNumberString;
-            PopulateCellsInRow(move);
+            PopulateCellsInRow(move, color);
         }
 
         /// <summary>
@@ -190,17 +191,15 @@ namespace ChessForge
         /// <param name="_row"></param>
         /// <param name="move"></param>
         /// <param name="scaleFactor"></param>
-        private void PopulateCellsInRow(LichessMoveStats move)
+        private void PopulateCellsInRow(LichessMoveStats move, PieceColor color)
         {
             try
             {
-                _runMove.Text = _moveNumberString + move.San;
+                _runMove.Text = _moveNumberString + Languages.MapPieceSymbols(move.San, color);
                 _runMove.MouseLeftButtonDown += _parentView.EventMoveClicked;
                 _runMove.Name = MOVE_PREFIX + move.Uci;
                 _runMove.Cursor = Cursors.Arrow;
 
-                //TableCell cellMove = new TableCell(new Paragraph(_runMove));
-                //_row.Cells.Add(cellMove);
 
                 int whiteWins = int.Parse(move.White);
                 int draws = int.Parse(move.Draws);

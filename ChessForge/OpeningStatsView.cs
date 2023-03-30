@@ -474,7 +474,7 @@ namespace ChessForge
                 }
 
                 TableRow row = _lstRows[rowNo].Row;
-                _lstRows[rowNo].SetLabels(move, _moveNumberString);
+                _lstRows[rowNo].SetLabels(move, _moveNumberString, _node.ColorToMove);
                 rowNo++;
             }
         }
