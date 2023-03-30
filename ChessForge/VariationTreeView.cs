@@ -2101,7 +2101,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="lineId"></param>
         /// <param name="nodeId"></param>
-        private void SelectAndHighlightLine(string lineId, int nodeId)
+        public void SelectAndHighlightLine(string lineId, int nodeId)
         {
             // TODO: do not select line and therefore repaint everything if the clicked line is already selected
             // UNLESS there is "copy select" active
