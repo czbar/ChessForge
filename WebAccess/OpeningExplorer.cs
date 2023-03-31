@@ -64,9 +64,12 @@ namespace WebAccess
             eventArgs.TreeId = treeId;
             eventArgs.NodeId = nd.NodeId;
 
-            if (_dictCachedStats.ContainsKey(fen))
+             if (_dictCachedStats.ContainsKey(fen))
             {
-                eventArgs.OpeningStats = _dictCachedStats[fen];
+                eventArgs.OpeningStats = await Task.Run(() =>
+                {
+                    return _dictCachedStats[fen];
+                });
                 _dictLastTouch[fen] = DateTime.Now.Ticks;
                 eventArgs.Success = true;
                 OpeningStatsReceived?.Invoke(null, eventArgs);
