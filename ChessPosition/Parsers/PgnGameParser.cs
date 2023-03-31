@@ -549,17 +549,49 @@ namespace GameTree
             // update endPos as it may have been changed above when removing commands
             endPos = _remainingGameText.IndexOf('}');
 
+            // extract comment text
             string comment = _remainingGameText.Substring(0, endPos);
-            // trim to check if there is any comment but do not trim the comment if it is there.
-            if (comment.Trim().Length > 0)
-            {
-                // remove CRLF
-                comment = comment.Replace("\r", "");
-                comment = comment.Replace("\n", "");
 
-                node.Comment = comment;
+            // check if this is a NAG disguised as comment
+            string nag = GetNagMascaradingAsComment(comment);
+            if (nag != null)
+            {
+                AddNAGtoLastMove(_tree, nag);
+            }
+            else
+            {
+                // trim to check if there is any comment but do not trim the comment if it is there.
+                if (comment.Trim().Length > 0)
+                {
+                    // remove CRLF
+                    comment = comment.Replace("\r", "");
+                    comment = comment.Replace("\n", "");
+
+                    node.Comment = comment;
+                }
             }
             _remainingGameText = _remainingGameText.Substring(endPos + 1);
+        }
+
+        /// <summary>
+        /// In some case, e.g. import from lichess, NAGS are presented
+        /// as comments, for example {$16}. 
+        /// We will consider such entities as nags only if there
+        /// is nothing beside them in the comment.
+        /// </summary>
+        /// <returns></returns>
+        private string GetNagMascaradingAsComment(string comment)
+        {
+            string nag = null;
+            if (comment.Length > 1 && comment[0] == '$')
+            {
+                if (int.TryParse(comment.Substring(1), out _))
+                {
+                    nag = comment;
+                }
+            }
+
+            return nag;
         }
 
         /// <summary>
