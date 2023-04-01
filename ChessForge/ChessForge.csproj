@@ -132,6 +132,7 @@
       <DependentUpon>IntroMoveDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="IntroView.cs" />
+    <Compile Include="IntroViewClipboard.cs" />
     <Compile Include="IntroViewCopyPaste.cs" />
     <Compile Include="IntroViewDiagram.cs" />
     <Compile Include="LearningMode.cs" />

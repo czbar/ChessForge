@@ -1,0 +1,139 @@
+﻿using GameTree;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Documents;
+
+namespace ChessForge
+{
+    /// <summary>
+    /// Holds the last selection that the user sent a request to Copy on
+    /// </summary>
+    public class IntroViewClipboard
+    {
+        /// <summary>
+        /// Types of elements that can be found in the view
+        /// </summary>
+        public enum ElementType
+        {
+            None,
+            Paragraph,
+            Run,
+            Move,
+            Diagram
+        }
+
+        /// <summary>
+        /// The list of elements in the Clipboard.
+        /// </summary>
+        public static List<IntroViewClipboardElement> Elements = new List<IntroViewClipboardElement>();
+
+        /// <summary>
+        /// Clears the clipboard.
+        /// </summary>
+        public static void Clear()
+        {
+            Elements.Clear();
+        }
+
+        /// <summary>
+        /// Makes a copy of a Run.
+        /// </summary>
+        /// <param name="src"></param>
+        /// <returns></returns>
+        public static Run CopyRun(Run src)
+        {
+            Run runToAdd = new Run();
+
+            runToAdd.Name = src.Name;
+            runToAdd.Text = src.Text;
+            runToAdd.FontWeight = src.FontWeight;
+            runToAdd.FontSize = src.FontSize;
+            //runToAdd.TextDecorations = run.TextDecorations;
+
+            return runToAdd;
+        }
+
+        /// <summary>
+        /// Adds a Run element to the Clipboard.
+        /// </summary>
+        /// <param name="run"></param>
+        public static void AddRun(Run run)
+        {
+            IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Run);
+
+            // make a copy of the run
+            Run runToAdd = CopyRun(run);
+            runToAdd.Name = run.Name;
+            runToAdd.Text = run.Text;
+            runToAdd.FontWeight = run.FontWeight;
+            runToAdd.FontSize = run.FontSize;
+            //runToAdd.TextDecorations = run.TextDecorations;
+
+            element.DataObject = runToAdd;
+
+            Elements.Add(element);
+        }
+
+        /// <summary>
+        /// Adds a paragraph element to the Clipboard.
+        /// </summary>
+        /// <param name="para"></param>
+        public static void AddParagraph(Paragraph para)
+        {
+            IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Paragraph);
+
+            // make a copy of the paragraph (without content)
+            Paragraph paraToAdd = new Paragraph();
+            paraToAdd.Name = para.Name;
+            paraToAdd.FontWeight = para.FontWeight;
+            paraToAdd.FontSize = para.FontSize;
+            //paraToAdd.TextDecorations = para.TextDecorations;
+
+            element.DataObject = paraToAdd;
+
+            Elements.Add(element);
+        }
+
+        /// <summary>
+        /// Adds a Move element to the Clipboard.
+        /// </summary>
+        /// <param name="node"></param>
+        public static void AddMove(TreeNode node)
+        {
+            IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Move);
+            element.DataObject = node;
+            Elements.Add(element);
+        }
+
+        /// <summary>
+        /// Adds a diagram element to the clipboard.
+        /// </summary>
+        /// <param name="diagram"></param>
+        public static void AddDiagram(IntroViewDiagram diagram)
+        {
+            IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Diagram);
+            element.DataObject = diagram;
+            Elements.Add(element);
+        }
+    }
+
+    /// <summary>
+    /// A class for elements to store in the IntroViewClipboard
+    /// </summary>
+    public class IntroViewClipboardElement
+    {
+        public IntroViewClipboardElement(IntroViewClipboard.ElementType type)
+        {
+            Type = type;
+        }
+
+        public IntroViewClipboard.ElementType Type = IntroViewClipboard.ElementType.None;
+        public int NodeId = -1;
+        public object DataObject = null;
+    }
+
+}
