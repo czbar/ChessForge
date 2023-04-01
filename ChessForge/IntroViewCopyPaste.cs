@@ -1,8 +1,9 @@
-﻿using System;
+﻿using ChessPosition;
+using GameTree;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -55,66 +56,17 @@ namespace ChessForge
         {
             try
             {
-                TextSelection selection = _rtb.Selection;
-                TextRange textRange = new TextRange(selection.Start, selection.End);
-
-                TextPointer start = selection.Start;
-                TextPointer end = selection.End;
-
-                //TextPointer position = start.GetNextInsertionPosition(LogicalDirection.Forward);
-                //position = position.GetNextInsertionPosition(LogicalDirection.Forward);
-                //UiRtbIntroView.Selection.Select(start, position);
-
+                IntroViewClipboard.Clear();
+                CopySelectionToClipboard();
                 _rtb.Copy();
-                string s = Clipboard.GetText();
-                Object o = Clipboard.GetData(DataFormats.Xaml);
-                //List<InlineUIContainer> lst = GetInlineUIElements(textRange);
-
-                Run r1 = new Run("a111");
-                r1.FontWeight = FontWeights.Bold;
-
-                Paragraph paragraph = new Paragraph();
-                paragraph.Inlines.Add(r1);
-
-                _rtb.Document.Blocks.Add(paragraph);
             }
             catch { }
         }
 
         /// <summary>
-        /// Gets selected inlines. TBD
-        /// </summary>
-        private void StoreSelection()
-        {
-            RichTextBox richTextBox = _rtb;
-
-            // Get the selected paragraphs in the RichTextBox
-            List<Paragraph> selectedParagraphs = new List<Paragraph>();
-            TextPointer start = richTextBox.Selection.Start;
-            TextPointer end = richTextBox.Selection.End;
-            TextPointer position = start.GetNextInsertionPosition(LogicalDirection.Forward);
-
-            while (position != null && position.CompareTo(end) < 0)
-            {
-                if (position.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart && position.Parent is Paragraph)
-                {
-                    Paragraph paragraph = position.Parent as Paragraph;
-
-                    if (start.CompareTo(paragraph.ContentStart) <= 0 && end.CompareTo(paragraph.ContentEnd) >= 0)
-                    {
-                        selectedParagraphs.Add(paragraph);
-                    }
-                }
-
-                position = position.GetNextContextPosition(LogicalDirection.Forward);
-                //                position = position.GetNextInsertionPosition(LogicalDirection.Forward);
-            }
-        }
-
-        /// <summary>
-        /// Builds a list of inlines from the passed TextRange. TBD
-        /// This will be called when the user performs a copy of the current selection
-        /// in th eIntro tab.
+        /// Builds a list of elements in the current selection. 
+        /// This will be called when the user requests a copy of the current selection
+        /// in the Intro tab.
         /// We expect the following types of Inlines:
         /// - Paragraphs
         /// - Runs
@@ -127,25 +79,54 @@ namespace ChessForge
         /// A paragraph with an InlineUiContainers will not be split, but if it has Runs, it will be recreated with 
         /// only the elements that are in the curent selection.
         /// </summary>
-        /// <param name="textRange"></param>
-        /// <returns></returns>
-        private List<Inline> GetInlinesFromTextRange(TextRange textRange)
+        private void CopySelectionToClipboard()
         {
-            List<Inline> lstInlines = new List<Inline>();
+            TextPointer position = _rtb.Selection.Start;
+            TextPointer end = _rtb.Selection.End;
 
-            // Iterate over the Inline elements in the TextRange
-            for (Inline inline = textRange.Start.Parent as Inline; inline != null; inline = inline.NextInline)
+            while (position.CompareTo(end) < 0)
             {
-                // if this is a paragraph with a diagram, save it whole, otherwise create a new one and copy all inlines to it
-                if (inline.Parent is Paragraph)
+                switch (position.GetPointerContext(LogicalDirection.Forward))
                 {
-                    //GetInlinesFormParagraph(ref lstInlines);
+                    case TextPointerContext.ElementStart:
+                        if (position.Parent is Paragraph)
+                        {
+                            IntroViewClipboard.AddParagraph(position.Parent as Paragraph);
+                        }
+                        break;
+                    case TextPointerContext.ElementEnd:
+                        break;
+                    case TextPointerContext.EmbeddedElement:
+                        if (position.Parent is TextElement)
+                        {
+                            string name = ((TextElement)position.Parent).Name;
+                            int nodeId = TextUtils.GetIdFromPrefixedString(name);
+                            TreeNode node = GetNodeById(nodeId);
+                            if (name.StartsWith(_uic_move_))
+                            {
+                                IntroViewClipboard.AddMove(node);
+                            }
+                        }
+                        break;
+                    case TextPointerContext.Text:
+                        Run r = (Run)position.Parent;
+                        if (r.ElementEnd.CompareTo(end) > 0)
+                        {
+                            TextRange tr = new TextRange(position, end);
+                            Run runCopy = IntroViewClipboard.CopyRun(r);
+                            runCopy.Text = tr.Text;
+                            IntroViewClipboard.AddRun(runCopy);
+                        }
+                        else
+                        {
+                            IntroViewClipboard.AddRun(r);
+                        }
+                        break;
                 }
-                lstInlines.Add(inline);
+
+                position = position.GetNextContextPosition(LogicalDirection.Forward);
             }
-
-            return lstInlines;
         }
-
     }
+
 }
