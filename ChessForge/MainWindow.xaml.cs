@@ -2650,21 +2650,5 @@ namespace ChessForge
                 e.Handled = true;
             }
         }
-
-        /// <summary>
-        /// To be used if early text input preview is required.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiRtbIntroView_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            //if (e.SystemText.Length > 0 && e.SystemText[0] >= 32)
-            //{
-            //    if (GuiUtilities.InsertFigurine(UiRtbIntroView, e.SystemText[0]))
-            //    {
-            //        e.Handled = true;
-            //    }
-            //}
-        }
     }
 }
