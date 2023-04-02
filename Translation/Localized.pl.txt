@@ -2091,3 +2091,7 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
+MsgTakebackWanted=Cofnąć?
+
+#Takeback instructions
+MsgTakebackInfo=Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni ruch.

@@ -976,6 +976,11 @@ WrongTypeEntitiesNotImported=Valid entities of the wrong type were not imported
 #Confirm deleting illegal moves from the solution after position was edited
 ConfirmExerciseMoveDeletion=Some move in the solution are no longer legal $0. Delete them?
 
+#Ask if takeback desired
+MsgTakebackWanted=Takeback?
+
+#Takeback instructions
+MsgTakebackInfo=Click here or press the space key to take back your move.
 
 ##################################
 #

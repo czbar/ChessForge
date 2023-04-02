@@ -1255,6 +1255,13 @@ WrongTypeEntitiesNotImported=Elementy niewłaściwego typu nie zostały zaimport
 #english: ConfirmExerciseMoveDeletion=Some move in the solution are no longer legal $0. Delete them?
 ConfirmExerciseMoveDeletion=Niektóre ruchy w rozwiązaniu są teraz nieprawidłowe $0. Usunąć je?
 
+#description: Ask if takeback desired
+#english: MsgTakebackWanted=Takeback?
+MsgTakebackWanted=Cofnąć?
+
+#description: Takeback instructions
+#english: MsgTakebackInfo=Click here or press the space key to take back your move.
+MsgTakebackInfo=Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni ruch.
 
 ##################################
 #

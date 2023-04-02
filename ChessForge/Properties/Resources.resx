@@ -955,6 +955,12 @@
   <data name="ConfirmExerciseMoveDeletion" xml:space="preserve">
     <value>Some move in the solution are no longer legal $0. Delete them?</value>
   </data>
+  <data name="MsgTakebackWanted" xml:space="preserve">
+    <value>Takeback?</value>
+  </data>
+  <data name="MsgTakebackInfo" xml:space="preserve">
+    <value>Click here or press the space key to take back your move.</value>
+  </data>
   <data name="TextForDisplay" xml:space="preserve">
     <value>Text for Display</value>
   </data>

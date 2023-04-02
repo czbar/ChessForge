@@ -2563,6 +2563,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click here or press the space key to take back your move..
+        /// </summary>
+        public static string MsgTakebackInfo {
+            get {
+                return ResourceManager.GetString("MsgTakebackInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Takeback?.
+        /// </summary>
+        public static string MsgTakebackWanted {
+            get {
+                return ResourceManager.GetString("MsgTakebackWanted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to $0  entities were valid.
         /// </summary>
         public static string MultiEntitiesValid {

@@ -954,6 +954,12 @@
   <data name="ConfirmExerciseMoveDeletion" xml:space="preserve">
     <value>Niektóre ruchy w rozwiązaniu są teraz nieprawidłowe $0. Usunąć je?</value>
   </data>
+  <data name="MsgTakebackWanted" xml:space="preserve">
+    <value>Cofnąć?</value>
+  </data>
+  <data name="MsgTakebackInfo" xml:space="preserve">
+    <value>Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni ruch.</value>
+  </data>
   <data name="TextForDisplay" xml:space="preserve">
     <value>Tekst na Ekran</value>
   </data>
