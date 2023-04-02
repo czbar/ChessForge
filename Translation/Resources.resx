@@ -660,11 +660,11 @@
   <data name="PasteMoves" xml:space="preserve">
     <value>Paste Moves</value>
   </data>
-  <data name="SelectHighlightedLine" xml:space="preserve">
-    <value>Select Highlighted Line</value>
+  <data name="CopyHighlightedLine" xml:space="preserve">
+    <value>Copy Highlighted Line</value>
   </data>
-  <data name="SelectSubtree" xml:space="preserve">
-    <value>Select All from Here</value>
+  <data name="CopySubtree" xml:space="preserve">
+    <value>Copy Tree from Selected Move</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>

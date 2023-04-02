@@ -889,11 +889,29 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy Highlighted Line.
+        /// </summary>
+        public static string CopyHighlightedLine {
+            get {
+                return ResourceManager.GetString("CopyHighlightedLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy Moves.
         /// </summary>
         public static string CopyMoves {
             get {
                 return ResourceManager.GetString("CopyMoves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Tree from Selected Move.
+        /// </summary>
+        public static string CopySubtree {
+            get {
+                return ResourceManager.GetString("CopySubtree", resourceCulture);
             }
         }
         
@@ -3347,15 +3365,6 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Highlighted Line.
-        /// </summary>
-        public static string SelectHighlightedLine {
-            get {
-                return ResourceManager.GetString("SelectHighlightedLine", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Select Items.
         /// </summary>
         public static string SelectItems {
@@ -3397,15 +3406,6 @@ namespace ChessForge.Properties {
         public static string SelectSolvingMode {
             get {
                 return ResourceManager.GetString("SelectSolvingMode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select All from Here.
-        /// </summary>
-        public static string SelectSubtree {
-            get {
-                return ResourceManager.GetString("SelectSubtree", resourceCulture);
             }
         }
         

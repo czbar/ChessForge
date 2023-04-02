@@ -622,11 +622,11 @@ CopyMoves=Copy Moves
 #Paste selected moves
 PasteMoves=Paste Moves
 
-#Select Highlighted line
-SelectHighlightedLine=Select Highlighted Line
+#Copy Highlighted line
+CopyHighlightedLine=Copy Highlighted Line
 
-#Select subtree under the selected move.
-SelectSubtree=Select All from Here
+#Copy subtree under the selected move.
+CopySubtree=Copy Tree from Selected Move
 
 #The "Next" term
 Next=Next

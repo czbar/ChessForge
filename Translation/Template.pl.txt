@@ -803,13 +803,13 @@ CopyMoves=Skopiuj ruchy
 #english: PasteMoves=Paste Moves
 PasteMoves=Wklej ruchy
 
-#description: Select Highlighted line
-#english: SelectHighlightedLine=Select Highlighted Line
-SelectHighlightedLine=Zaznacz podświetlony wariant
+#description: Copy Highlighted line
+#english: CopyHighlightedLine=Copy Highlighted Line
+CopyHighlightedLine=Skopiuj podświetlony wariant
 
-#description: Select subtree under the selected move.
-#english: SelectSubtree=Select All from Here
-SelectSubtree=Zaznacz wszystko pod wybranym ruchem
+#description: Copy subtree under the selected move.
+#english: CopySubtree=Copy Tree from Selected Move
+CopySubtree=Skopiuj drzewo pod wybranym ruchem
 
 #description: The "Next" term
 #english: Next=Next

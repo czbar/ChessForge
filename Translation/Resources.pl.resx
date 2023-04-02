@@ -660,11 +660,11 @@
   <data name="PasteMoves" xml:space="preserve">
     <value>Wklej ruchy</value>
   </data>
-  <data name="SelectHighlightedLine" xml:space="preserve">
-    <value>Zaznacz podświetlony wariant</value>
+  <data name="CopyHighlightedLine" xml:space="preserve">
+    <value>Skopiuj podświetlony wariant</value>
   </data>
-  <data name="SelectSubtree" xml:space="preserve">
-    <value>Zaznacz wszystko pod wybranym ruchem</value>
+  <data name="CopySubtree" xml:space="preserve">
+    <value>Skopiuj drzewo pod wybranym ruchem</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Następny</value>
