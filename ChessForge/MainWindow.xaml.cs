@@ -2228,6 +2228,24 @@ namespace ChessForge
                 {
                     Languages.UseFigurines = Configuration.UseFigurines;
                     ClearTreeViews(true);
+                    try
+                    {
+                        TreeNode nd = ActiveLine.GetSelectedTreeNode();
+                        if (nd != null)
+                        {
+                            string lineId = ActiveVariationTree.GetDefaultLineIdForNode(nd.NodeId);
+                            ActiveTreeView.SelectAndHighlightLine(lineId, nd.NodeId);
+                            RefreshSelectedActiveLineAndNode();
+                        }
+
+                        EngineGame.Line.RefreshMovesText();
+
+                        if (AppState.AreExplorersOn)
+                        {
+                            WebAccessManager.ExplorerRequest(ActiveVariationTree.TreeId, nd, true);
+                        }
+                    }
+                    catch { }
                 }
 
                 if (dlg.ChangedEnginePath)
@@ -2627,7 +2645,10 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRtbIntroView_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-
+            if (GuiUtilities.InsertFigurine(UiRtbIntroView, sender, e))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

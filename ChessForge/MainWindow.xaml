@@ -394,7 +394,13 @@
                             </Grid>
                             <RichTextBox x:Name="UiRtbIntroView"  Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="620" MinHeight="500" PreviewMouseDown="UiRtbIntroView_PreviewMouseDown"  AcceptsTab="True" PreviewKeyDown="UiRtbIntroView_PreviewKeyDown" >
+                                   Height="620" MinHeight="500" PreviewMouseDown="UiRtbIntroView_PreviewMouseDown"  AcceptsTab="True" PreviewKeyDown="UiRtbIntroView_PreviewKeyDown" PreviewTextInput="UiRtbIntroView_PreviewTextInput" SelectionChanged="UiRtbIntroView_SelectionChanged" >
+                                <RichTextBox.CommandBindings>
+                                    <CommandBinding Command="ApplicationCommands.Undo"  Executed="IntroViewUndo_Click"/>
+                                    <CommandBinding Command="ApplicationCommands.Copy"  Executed="IntroViewCopy_Click"/>
+                                    <CommandBinding Command="ApplicationCommands.Paste" Executed="IntroViewPaste_Click"/>
+                                    <CommandBinding Command="ApplicationCommands.Cut"   Executed="IntroViewCut_Click"/>
+                                </RichTextBox.CommandBindings>
                                 <RichTextBox.ContextMenu>
                                     <ContextMenu x:Name="UiCmIntro">
                                         <MenuItem Command="ApplicationCommands.Cut"/>

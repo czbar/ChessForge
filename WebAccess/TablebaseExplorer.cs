@@ -28,7 +28,7 @@ namespace WebAccess
         /// Requests Opening Stats from lichess
         /// </summary>
         /// <returns></returns>
-        public static async void RequestTablebaseData(int treeId, TreeNode nd)
+        public static async void RequestTablebaseData(int treeId, TreeNode nd, bool force = false)
         {
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
             WebAccessEventArgs eventArgs = new WebAccessEventArgs();

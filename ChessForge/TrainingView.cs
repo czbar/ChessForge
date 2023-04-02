@@ -289,30 +289,38 @@ namespace ChessForge
             _lastClickedNode = nd;
         }
 
-
         /// <summary>
         /// Rolls back the training to the ply
         /// that we want to replace with the last clicked node.
         /// </summary>
         public void RollbackToWorkbookMove()
         {
-            _currentEngineGameMoveCount = 0;
-
-            TrainingSession.RollbackTrainingLine(_lastClickedNode);
-            EngineGame.RollbackGame(_lastClickedNode);
-
-            TrainingSession.ChangeCurrentState(TrainingSession.State.USER_MOVE_COMPLETED);
-
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
-            AppState.SetupGuiForCurrentStates();
-
-            _mainWin.BoardCommentBox.GameMoveMade(_lastClickedNode, true);
-
-            RemoveParagraphsFromMove(_lastClickedNode);
-            ReportLastMoveVsWorkbook();
-            if (TrainingSession.IsContinuousEvaluation)
+            try
             {
-                RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
+                _currentEngineGameMoveCount = 0;
+
+                TrainingSession.RollbackTrainingLine(_lastClickedNode);
+                EngineGame.RollbackGame(_lastClickedNode);
+
+                SoundPlayer.PlayMoveSound(_lastClickedNode.LastMoveAlgebraicNotation);
+
+                TrainingSession.ChangeCurrentState(TrainingSession.State.USER_MOVE_COMPLETED);
+
+                LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
+                AppState.SetupGuiForCurrentStates();
+
+                _mainWin.BoardCommentBox.GameMoveMade(_lastClickedNode, true);
+
+                RemoveParagraphsFromMove(_lastClickedNode);
+                ReportLastMoveVsWorkbook();
+                if (TrainingSession.IsContinuousEvaluation)
+                {
+                    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("RollbackToWorkbookMove()", ex);
             }
         }
 
@@ -323,22 +331,30 @@ namespace ChessForge
         {
             _currentEngineGameMoveCount = 0;
 
-            TrainingSession.RollbackTrainingLine(_lastClickedNode);
-            EngineGame.RollbackGame(_lastClickedNode);
-
-            TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
-
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
-            AppState.SetupGuiForCurrentStates();
-
-            _mainWin.BoardCommentBox.GameMoveMade(_lastClickedNode, false);
-
-            RemoveParagraphsFromMove(_lastClickedNode);
-            BuildSecondPromptParagraph();
-            _mainWin.DisplayPosition(_lastClickedNode);
-            if (TrainingSession.IsContinuousEvaluation)
+            try
             {
-                RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
+                TrainingSession.RollbackTrainingLine(_lastClickedNode);
+                EngineGame.RollbackGame(_lastClickedNode);
+
+                SoundPlayer.PlayMoveSound(_lastClickedNode.LastMoveAlgebraicNotation);
+                TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
+
+                LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
+                AppState.SetupGuiForCurrentStates();
+
+                _mainWin.BoardCommentBox.GameMoveMade(_lastClickedNode, false);
+
+                RemoveParagraphsFromMove(_lastClickedNode);
+                BuildSecondPromptParagraph();
+                _mainWin.DisplayPosition(_lastClickedNode);
+                if (TrainingSession.IsContinuousEvaluation)
+                {
+                    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("RollbackToUserMove()", ex);
             }
         }
 
@@ -1322,21 +1338,30 @@ namespace ChessForge
             TreeNode nd = _lastClickedNode;
             if (nd != null)
             {
-                if (_lastClickedNode.ColorToMove != _trainingSide)
+                try
                 {
-                    EngineGame.RestartAtUserMove(nd);
-                    _mainWin.BoardCommentBox.GameMoveMade(nd, true);
-                }
-                else
-                {
-                    EngineGame.RestartAtEngineMove(nd);
-                    _mainWin.BoardCommentBox.GameMoveMade(nd, false);
-                }
-                _mainWin.DisplayPosition(nd);
-                RebuildEngineGamePara(nd);
+                    if (_lastClickedNode.ColorToMove != _trainingSide)
+                    {
+                        SoundPlayer.PlayMoveSound(_lastClickedNode.LastMoveAlgebraicNotation);
+                        EngineGame.RestartAtUserMove(nd);
+                        _mainWin.BoardCommentBox.GameMoveMade(nd, true);
+                    }
+                    else
+                    {
+                        SoundPlayer.PlayMoveSound(_lastClickedNode.LastMoveAlgebraicNotation);
+                        EngineGame.RestartAtEngineMove(nd);
+                        _mainWin.BoardCommentBox.GameMoveMade(nd, false);
+                    }
+                    _mainWin.DisplayPosition(nd);
+                    RebuildEngineGamePara(nd);
 
-                RemoveCheckmatePara();
-                RemoveStalematePara();
+                    RemoveCheckmatePara();
+                    RemoveStalematePara();
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("RestartGameAfter()", ex);
+                }
             }
         }
 

@@ -52,6 +52,22 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Closes all open media
+        /// </summary>
+        public static void CloseAll()
+        {
+            try
+            {
+                _soundMove.Close();
+                _soundCapture.Close();
+                _soundWrongMove.Close();
+                _soundEndOfLine.Close();
+                _soundNotInWorkbook.Close();
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// Plays a sound according to the type of move.
         /// If the move's notation includes the 'x' character
         /// it is considered a capture.

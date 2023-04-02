@@ -95,6 +95,28 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the Run where a new text should be inserted.
+        /// If there is no run at the caret, or nearby a new one is created.
+        /// </summary>
+        /// <param name="rtb"></param>
+        /// <returns></returns>
+        protected Run GetRunForInsertion(RichTextBox rtb)
+        {
+            Run run = GetRunUnderCaret(rtb);
+
+            if (run == null)
+            {
+                run = new Run();
+                if (rtb.CaretPosition.Paragraph != null)
+                {
+                    rtb.CaretPosition.Paragraph.Inlines.Add(run);
+                }
+            }
+
+            return run;
+        }
+
+        /// <summary>
         /// Returns the Run where the caret is currently placed.
         /// If the caret is not inside a Run, finds the first Run in the forward direction.
         /// If not found, returns 0.

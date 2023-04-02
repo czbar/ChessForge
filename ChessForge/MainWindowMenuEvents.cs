@@ -15,6 +15,7 @@ using ChessForge;
 using System.Reflection;
 using System.Runtime.Remoting.Messaging;
 using System.Windows.Documents;
+using System.Linq;
 
 namespace ChessForge
 {
@@ -409,6 +410,8 @@ namespace ChessForge
                     e.Cancel = true;
                 }
             }
+
+            SoundPlayer.CloseAll();
 
             if (e.Cancel != true)
             {
@@ -3180,6 +3183,13 @@ namespace ChessForge
             }
         }
 
+
+        //*****************************************************************
+        //
+        // INTRO VIEW methods
+        //
+        //*****************************************************************
+
         /// <summary>
         /// The user wants to create a new diagram in the Intro view.
         /// </summary>
@@ -3205,6 +3215,84 @@ namespace ChessForge
                 _introView.EditDiagram();
             }
         }
+
+        /// <summary>
+        /// Paste previously copied content 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IntroViewPaste_Click(object sender, RoutedEventArgs e)
+        {
+            if (_introView != null)
+            {
+                _introView.Paste(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// Cut selected content
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IntroViewCut_Click(object sender, RoutedEventArgs e)
+        {
+            if (_introView != null)
+            {
+                _introView.Cut(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// Store the current selection.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IntroViewCopy_Click(object sender, RoutedEventArgs e)
+        {
+            if (_introView != null)
+            {
+                _introView.Copy(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// Undo previous edit operation.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IntroViewUndo_Click(object sender, RoutedEventArgs e)
+        {
+            if (_introView != null)
+            {
+                _introView.Undo(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// To be used if early text input preview is required.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiRtbIntroView_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            //if (e.SystemText.Length > 0 && e.SystemText[0] >= 32)
+            //{
+            //    if (GuiUtilities.InsertFigurine(UiRtbIntroView, e.SystemText[0]))
+            //    {
+            //        e.Handled = true;
+            //    }
+            //}
+        }
+
+        /// <summary>
+        /// Invoked when selection in the Intro view changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiRtbIntroView_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+        }
+
 
         /// <summary>
         /// Flip the diagram in the Intro view.

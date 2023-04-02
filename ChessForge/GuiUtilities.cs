@@ -2,6 +2,7 @@
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using ChessPosition;
@@ -24,36 +25,18 @@ namespace ChessForge
         /// <returns></returns>
         public static bool InsertFigurine(TextBox textBox, object sender, System.Windows.Input.KeyEventArgs e)
         {
-            char charToInsert = '\0';
-
-            var key = (e.Key == Key.System ? e.SystemKey : e.Key);
+            bool res = false;
 
             if ((Keyboard.Modifiers & ModifierKeys.Alt) > 0)
             {
-                bool isShift = (Keyboard.Modifiers & ModifierKeys.Shift) > 0;
-                switch (key)
-                {
-                    case Key.K:
-                        charToInsert = isShift ? Languages.BlackFigurinesMapping['K'] : Languages.WhiteFigurinesMapping['K'];
-                        break;
-                    case Key.Q:
-                        charToInsert = isShift ? Languages.BlackFigurinesMapping['Q'] : Languages.WhiteFigurinesMapping['Q'];
-                        break;
-                    case Key.R:
-                        charToInsert = isShift ? Languages.BlackFigurinesMapping['R'] : Languages.WhiteFigurinesMapping['R'];
-                        break;
-                    case Key.B:
-                        charToInsert = isShift ? Languages.BlackFigurinesMapping['B'] : Languages.WhiteFigurinesMapping['B'];
-                        break;
-                    case Key.N:
-                        charToInsert = isShift ? Languages.BlackFigurinesMapping['N'] : Languages.WhiteFigurinesMapping['N'];
-                        break;
-                    default:
-                        break;
-                }
+                var key = (e.Key == Key.System ? e.SystemKey : e.Key);
+
+                char charToInsert = GetFigurineChar(key);
 
                 if (charToInsert != '\0')
                 {
+                    res = true;
+
                     if (!string.IsNullOrEmpty(textBox.SelectedText))
                     {
                         textBox.SelectedText = "";
@@ -66,9 +49,49 @@ namespace ChessForge
                 }
             }
 
-            return charToInsert != '\0';
+            return res;
         }
 
+        /// <summary>
+        /// Checks if the KeyEvent in the RichTextBox indicates the insertion of a figurine symbol
+        /// and if so, performs it.
+        /// </summary>
+        /// <param name="rtb"></param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public static bool InsertFigurine(RichTextBox rtb, object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            bool res = false;
+
+            if ((Keyboard.Modifiers & ModifierKeys.Alt) > 0)
+            {
+                var key = (e.Key == Key.System ? e.SystemKey : e.Key);
+
+                char charToInsert = GetFigurineChar(key);
+
+                if (charToInsert != '\0')
+                {
+                    res = true;
+
+                    // Get the current selection
+                    TextSelection selection = rtb.Selection;
+
+                    // If there is a non-empty selection, replace it with the character
+                    if (!selection.IsEmpty)
+                    {
+                        selection.Text = charToInsert.ToString();
+                    }
+                    else // Otherwise, insert the character at the current caret position
+                    {
+                        rtb.CaretPosition.InsertTextInRun(charToInsert.ToString());
+                    }
+
+                }
+            }
+
+            return res;
+        }
 
         /// <summary>
         /// Produces text for user interface from the received ParserException.
@@ -241,6 +264,40 @@ namespace ChessForge
                     row = dr.GetIndex();
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns the figurine symbol corresponding to the pressed keys.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        private static char GetFigurineChar(Key key)
+        {
+            char charToInsert = '\0';
+
+            bool isShift = (Keyboard.Modifiers & ModifierKeys.Shift) > 0;
+            switch (key)
+            {
+                case Key.K:
+                    charToInsert = isShift ? Languages.BlackFigurinesMapping['K'] : Languages.WhiteFigurinesMapping['K'];
+                    break;
+                case Key.Q:
+                    charToInsert = isShift ? Languages.BlackFigurinesMapping['Q'] : Languages.WhiteFigurinesMapping['Q'];
+                    break;
+                case Key.R:
+                    charToInsert = isShift ? Languages.BlackFigurinesMapping['R'] : Languages.WhiteFigurinesMapping['R'];
+                    break;
+                case Key.B:
+                    charToInsert = isShift ? Languages.BlackFigurinesMapping['B'] : Languages.WhiteFigurinesMapping['B'];
+                    break;
+                case Key.N:
+                    charToInsert = isShift ? Languages.BlackFigurinesMapping['N'] : Languages.WhiteFigurinesMapping['N'];
+                    break;
+                default:
+                    break;
+            }
+
+            return charToInsert;
         }
 
     }

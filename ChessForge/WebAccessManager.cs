@@ -29,7 +29,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="treeId"></param>
         /// <param name="nd"></param>
-        public static void ExplorerRequest(int treeId, TreeNode nd)
+        public static void ExplorerRequest(int treeId, TreeNode nd, bool force = false)
         {
             if (nd != null)
             {
@@ -52,11 +52,11 @@ namespace ChessForge
                         int pieceCount = PositionUtils.GetPieceCount(nd.Position);
                         if (pieceCount > 7)
                         {
-                            OpeningExplorer.RequestOpeningStats(treeId, nd);
+                            OpeningExplorer.RequestOpeningStats(treeId, nd, force);
                         }
                         else
                         {
-                            TablebaseExplorer.RequestTablebaseData(treeId, nd);
+                            TablebaseExplorer.RequestTablebaseData(treeId, nd, force);
                         }
                     }
                 }

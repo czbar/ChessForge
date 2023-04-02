@@ -273,7 +273,8 @@ namespace ChessForge
                         }
                         firstMove = false;
                         bool isCastle;
-                        sb.Append(MoveUtils.EngineNotationToAlgebraic(move, ref workingPosition, out isCastle));
+                        string strMove = MoveUtils.EngineNotationToAlgebraic(move, ref workingPosition, out isCastle);
+                        sb.Append(Languages.MapPieceSymbols(strMove, workingPosition.ColorToMove));
                         workingPosition.InheritedEnPassantSquare = workingPosition.EnPassantSquare;
 
                         // invert colors

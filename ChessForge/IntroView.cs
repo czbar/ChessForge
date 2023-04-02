@@ -16,7 +16,7 @@ namespace ChessForge
     /// <summary>
     /// Encapsulates Intro Tab view with RichTextBox  
     /// </summary>
-    public class IntroView : RichTextBuilder
+    public partial class IntroView : RichTextBuilder
     {
         /// <summary>
         /// Not needed in this class

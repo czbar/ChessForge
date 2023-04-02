@@ -47,10 +47,10 @@ namespace WebAccess
         /// Requests Opening Stats from lichess
         /// </summary>
         /// <returns></returns>
-        public static async void RequestOpeningStats(int treeId, TreeNode nd)
+        public static async void RequestOpeningStats(int treeId, TreeNode nd, bool force = false)
         {
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
-            if (fen == _lastRequestedFen)
+            if (!force && fen == _lastRequestedFen)
             {
                 OpeningStatsRequestIgnored?.Invoke(null, null);
                 return;
@@ -64,9 +64,12 @@ namespace WebAccess
             eventArgs.TreeId = treeId;
             eventArgs.NodeId = nd.NodeId;
 
-            if (_dictCachedStats.ContainsKey(fen))
+             if (_dictCachedStats.ContainsKey(fen))
             {
-                eventArgs.OpeningStats = _dictCachedStats[fen];
+                eventArgs.OpeningStats = await Task.Run(() =>
+                {
+                    return _dictCachedStats[fen];
+                });
                 _dictLastTouch[fen] = DateTime.Now.Ticks;
                 eventArgs.Success = true;
                 OpeningStatsReceived?.Invoke(null, eventArgs);
