@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="{x:Static p:Resources.ChapterTitle}" Height="150" Width="600">
     <Grid>
-        <TextBox x:Name="UiTbChapterTitle" HorizontalAlignment="Center" Margin="0,20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="428"/>
+        <TextBox x:Name="UiTbChapterTitle" HorizontalAlignment="Center" Margin="0,20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="428" PreviewKeyDown="UiTbChapterTitle_PreviewKeyDown"/>
         <Button x:Name="UiBtnOK" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-120,60,0,0" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOK_Click"/>
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="120,60,0,0" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
 
