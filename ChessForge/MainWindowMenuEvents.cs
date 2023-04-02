@@ -1270,7 +1270,52 @@ namespace ChessForge
         {
             try
             {
-                int selectedChapterIndex = InvokeSelectSingleChapterDialog();
+                Chapter activeChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int selectedChapterIndex = MoveGameBetweenChapters();
+
+                if (selectedChapterIndex >= 0)
+                {
+                    Chapter targetChapter = WorkbookManager.SessionWorkbook.Chapters[selectedChapterIndex];
+                    activeChapter.CorrectActiveModelGameIndex();
+
+                    switch (AppState.ActiveTab)
+                    {
+                        case WorkbookManager.TabViewType.CHAPTERS:
+                            WorkbookManager.SessionWorkbook.ActiveChapter = targetChapter;
+                            targetChapter.ActiveModelGameIndex = targetChapter.GetModelGameCount() - 1;
+                            _chaptersView.BuildFlowDocumentForChaptersView();
+
+                            AppState.DoEvents();
+                            _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
+                            break;
+                        case WorkbookManager.TabViewType.MODEL_GAME:
+                            if (activeChapter.ActiveModelGameIndex < 0)
+                            {
+                                DisplayPosition(PositionUtils.SetupStartingPosition());
+                            }
+                            SelectModelGame(activeChapter.ActiveModelGameIndex, false);
+                            _chaptersView.BuildFlowDocumentForChaptersView();
+                            break;
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Moves a game between chapters after invoking a dialog
+        /// to select the target chapter
+        /// </summary>
+        /// <returns></returns>
+        private int MoveGameBetweenChapters()
+        {
+            int selectedChapterIndex = -1;
+
+            try
+            {
+                selectedChapterIndex = InvokeSelectSingleChapterDialog();
 
                 if (selectedChapterIndex >= 0)
                 {
@@ -1286,19 +1331,16 @@ namespace ChessForge
                         activeChapter.ModelGames.Remove(game);
 
                         targetChapter.IsModelGamesListExpanded = true;
-                        WorkbookManager.SessionWorkbook.ActiveChapter = targetChapter;
-                        targetChapter.ActiveModelGameIndex = targetChapter.GetModelGameCount() - 1;
 
                         AppState.IsDirty = true;
-                        _chaptersView.BuildFlowDocumentForChaptersView();
-                        AppState.DoEvents();
-                        _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
                     }
                 }
             }
             catch
             {
             }
+
+            return selectedChapterIndex;
         }
 
         /// <summary>
