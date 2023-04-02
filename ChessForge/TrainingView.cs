@@ -47,7 +47,8 @@ namespace ChessForge
             INSTRUCTIONS,
             PROMPT_TO_MOVE,
             USER_MOVE,
-            WORKBOOK_MOVES
+            WORKBOOK_MOVES,
+            TAKEBACK
         }
 
         /// <summary>
@@ -61,7 +62,8 @@ namespace ChessForge
             [ParaType.INSTRUCTIONS] = null,
             [ParaType.PROMPT_TO_MOVE] = null,
             [ParaType.USER_MOVE] = null,
-            [ParaType.WORKBOOK_MOVES] = null
+            [ParaType.WORKBOOK_MOVES] = null,
+            [ParaType.TAKEBACK] = null,
         };
 
         /// <summary>
@@ -77,7 +79,8 @@ namespace ChessForge
             ParaType.INSTRUCTIONS,
             ParaType.PROMPT_TO_MOVE,
             ParaType.USER_MOVE,
-            ParaType.WORKBOOK_MOVES
+            ParaType.WORKBOOK_MOVES,
+            ParaType.TAKEBACK
         };
 
         /// <summary>
@@ -128,6 +131,11 @@ namespace ChessForge
         /// The user's move being currently examined.
         /// </summary>
         private TreeNode _userMove;
+
+        /// <summary>
+        /// Node id of the last move made by the user
+        /// </summary>
+        private int _lastUserMoveNodeId = -1;
 
         /// <summary>
         /// The last clicked move in the view
@@ -208,6 +216,7 @@ namespace ChessForge
         private static readonly string STYLE_FIRST_PROMPT = "first_prompt";
         private static readonly string STYLE_SECOND_PROMPT = "second_prompt";
         private static readonly string STYLE_STEM_LINE = "stem_line";
+        private static readonly string STYLE_TAKEBACK = "takeback";
         private static readonly string STYLE_MOVES_MAIN = "moves_main";
         private static readonly string STYLE_COACH_NOTES = "coach_notes";
         private static readonly string STYLE_ENGINE_EVAL = "engine_eval";
@@ -236,6 +245,7 @@ namespace ChessForge
             [STYLE_FIRST_PROMPT] = new RichTextPara(10, 0, 16, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
             [STYLE_SECOND_PROMPT] = new RichTextPara(10, 0, 14, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
             [STYLE_STEM_LINE] = new RichTextPara(0, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
+            [STYLE_TAKEBACK] = new RichTextPara(20, 0, 16, FontWeights.Bold, Brushes.Blue, TextAlignment.Left, Brushes.DarkOrange),
             [STYLE_DEFAULT] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
 
             [STYLE_MOVES_MAIN] = new RichTextPara(10, 5, 16, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
@@ -259,6 +269,7 @@ namespace ChessForge
             _dictParas[ParaType.PROMPT_TO_MOVE] = null;
             _dictParas[ParaType.USER_MOVE] = null;
             _dictParas[ParaType.WORKBOOK_MOVES] = null;
+            _dictParas[ParaType.TAKEBACK] = null;
         }
 
         /// <summary>
@@ -297,6 +308,9 @@ namespace ChessForge
         {
             try
             {
+                TrainingSession.IsTakebackAvailable = false;
+                RemoveTakebackParagraph();
+
                 _currentEngineGameMoveCount = 0;
 
                 TrainingSession.RollbackTrainingLine(_lastClickedNode);
@@ -327,26 +341,34 @@ namespace ChessForge
         /// <summary>
         /// The user requested rollback to one of their moves.
         /// </summary>
-        public void RollbackToUserMove()
+        public void RollbackToUserMove(TreeNode ndToRollbackTo = null)
         {
+            TrainingSession.IsTakebackAvailable = false;
+            RemoveTakebackParagraph();
+
+            if (ndToRollbackTo == null)
+            {
+                ndToRollbackTo = _lastClickedNode;
+            }
+
             _currentEngineGameMoveCount = 0;
 
             try
             {
-                TrainingSession.RollbackTrainingLine(_lastClickedNode);
-                EngineGame.RollbackGame(_lastClickedNode);
+                TrainingSession.RollbackTrainingLine(ndToRollbackTo);
+                EngineGame.RollbackGame(ndToRollbackTo);
 
-                SoundPlayer.PlayMoveSound(_lastClickedNode.LastMoveAlgebraicNotation);
+                SoundPlayer.PlayMoveSound(ndToRollbackTo.LastMoveAlgebraicNotation);
                 TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
 
                 LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
                 AppState.SetupGuiForCurrentStates();
 
-                _mainWin.BoardCommentBox.GameMoveMade(_lastClickedNode, false);
+                _mainWin.BoardCommentBox.GameMoveMade(ndToRollbackTo, false);
 
-                RemoveParagraphsFromMove(_lastClickedNode);
+                RemoveParagraphsFromMove(ndToRollbackTo);
                 BuildSecondPromptParagraph();
-                _mainWin.DisplayPosition(_lastClickedNode);
+                _mainWin.DisplayPosition(ndToRollbackTo);
                 if (TrainingSession.IsContinuousEvaluation)
                 {
                     RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
@@ -774,6 +796,44 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Adds a Paragraph with a Run to click if the user wants to take their move back.
+        /// </summary>
+        private void AddTakebackParagraph()
+        {
+            // first check if exsists
+            if (_dictParas[ParaType.TAKEBACK] == null)
+            {
+                Paragraph para = AddNewParagraphToDoc(STYLE_TAKEBACK, "");
+                _dictParas[ParaType.TAKEBACK] = para;
+                para.MouseDown += EventTakebackParaClicked;
+                para.Cursor = Cursors.Hand;
+
+                para.Inlines.Add(new Run("\n "+ Properties.Resources.MsgTakebackWanted));
+
+                Run note = new Run();
+                note.FontSize = para.FontSize - 2;
+                note.FontStyle = FontStyles.Italic;   
+                note.FontWeight = FontWeights.Normal;
+                note.Foreground = Brushes.Black;  
+
+                note.Text = "  " + Properties.Resources.MsgTakebackInfo;
+                para.Inlines.Add(note);
+            }
+        }
+
+        /// <summary>
+        /// Removes takeback paragraph if exists
+        /// </summary>
+        private void RemoveTakebackParagraph()
+        {
+            if (_dictParas[ParaType.TAKEBACK] != null)
+            {
+                Document.Blocks.Remove(_dictParas[ParaType.TAKEBACK]);
+                _dictParas[ParaType.TAKEBACK] = null;
+            }
+        }
+
+        /// <summary>
         /// Builds a paragraph reporting stalemate
         /// </summary>
         /// <param name="nd"></param>
@@ -958,6 +1018,10 @@ namespace ChessForge
                         if (!isWorkbookMove)
                         {
                             SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.NOT_IN_WORKBOOK);
+                            TrainingSession.IsTakebackAvailable = true;
+
+                            AddTakebackParagraph();
+
                             string note = "";
                             switch (_sourceType)
                             {
@@ -1474,6 +1538,59 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Handles key presses.
+        /// </summary>
+        /// <param name="e"></param>
+        public void ProcessKeyDown(KeyEventArgs e)
+        {
+            try
+            {
+                switch (e.Key)
+                {
+                    case Key.Space:
+                        if (TrainingSession.IsTakebackAvailable)
+                        {
+                            RestartFromLastUserWorkbookMove();
+                            e.Handled = true;
+                        }
+                        break;
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Find the last user move that was in the workbook
+        /// and restart the training from there.
+        /// </summary>
+        private void RestartFromLastUserWorkbookMove()
+        {
+            // make sure there is no game in progress
+            if (_lastUserMoveNodeId <= 0)
+            {
+                return;
+            }
+
+            try
+            {
+                TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(_lastUserMoveNodeId);
+                if (nd != null)
+                {
+                    // we expect this to be marked as "Training Move"
+                    if (nd.IsNewTrainingMove)
+                    {
+                        // get previous move
+                        if (nd.Parent != null)
+                        {
+                            RollbackToUserMove(nd.Parent);
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// Restarts training from the clicked mode.
         /// </summary>
         /// <param name="context"></param>
@@ -1501,6 +1618,17 @@ namespace ChessForge
             int nodeId = GetNodeIdFromObjectName(r.Name, prefix);
             TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
             SetLastClicked(nd, r, e);
+        }
+
+        /// <summary>
+        /// User requested takeback by clicking the takeback para
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventTakebackParaClicked(object sender, MouseEventArgs e)
+        {
+            RemoveTakebackParagraph();
+            RestartFromLastUserWorkbookMove();
         }
 
         /// <summary>
