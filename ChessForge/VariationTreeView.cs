@@ -1921,6 +1921,7 @@ namespace ChessForge
                     if (found)
                     {
                         HighlightSelectedForCopy();
+                        PlaceSelectedForCopyInClipboard();
                     }
                     else
                     {

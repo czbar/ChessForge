@@ -2628,6 +2628,7 @@ namespace ChessForge
             if (ActiveTreeView != null)
             {
                 ActiveTreeView.SelectActiveLineForCopy();
+                ActiveTreeView.PlaceSelectedForCopyInClipboard();
             }
         }
 
@@ -2641,6 +2642,7 @@ namespace ChessForge
             if (ActiveTreeView != null)
             {
                 ActiveTreeView.SelectSubtreeForCopy();
+                ActiveTreeView.PlaceSelectedForCopyInClipboard();
             }
         }
 
