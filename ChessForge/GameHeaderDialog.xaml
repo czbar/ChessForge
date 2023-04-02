@@ -34,8 +34,8 @@
         </Button>
         <GroupBox x:Name="UiGbDate" HorizontalAlignment="Left" Height="165" Header="Date" Margin="369,160,0,0" VerticalAlignment="Top" Width="265">
         </GroupBox>
-        <TextBox x:Name="UiTbPreamble" AcceptsReturn="True" HorizontalAlignment="Left" Margin="24,132,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" Height="182"/>
-        <GroupBox x:Name="UiGbPreamble" HorizontalAlignment="Left" Height="215" Header="{x:Static p:Resources.Preamble}" Margin="12,111,0,0" VerticalAlignment="Top" Width="342"/>
+        <TextBox x:Name="UiTbPreamble" AcceptsReturn="True" HorizontalAlignment="Left" Margin="24,132,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" Height="182" PreviewKeyDown="UiTbPreamble_PreviewKeyDown"/>
+        <GroupBox x:Name="UiGbPreamble" HorizontalAlignment="Left" Height="215" Header="{x:Static p:Resources.Preamble}" Margin="12,111,0,0" VerticalAlignment="Top" Width="342" />
         <GroupBox x:Name="UiGbPlayers" HorizontalAlignment="Left" Height="90" Header="" Margin="12,12,0,0" VerticalAlignment="Top" Width="646"/>
     </Grid>
 </Window>

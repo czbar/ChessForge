@@ -912,7 +912,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Sets up ModelGames's context menu.
+        /// Sets up ModelGames context menu.
         /// </summary>
         /// <param name="lastClickedNodeId"></param>
         /// <param name="isEnabled"></param>
@@ -934,6 +934,7 @@ namespace ChessForge
                         switch (menuItem.Name)
                         {
                             case "_mnGame_EditHeader":
+                            case "UiMnGameMoveToChapter":
                                 menuItem.IsEnabled = gameIndex >= 0;
                                 break;
                             case "_mnGame_CreateModelGame":
@@ -980,7 +981,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Sets up Exercises's context menu.
+        /// Sets up Exercises context menu.
         /// </summary>
         /// <param name="lastClickedNodeId"></param>
         private static void EnableExercisesMenuItems(int lastClickedNodeId)

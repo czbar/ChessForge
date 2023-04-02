@@ -803,13 +803,13 @@ CopyMoves=
 #english: PasteMoves=Paste Moves
 PasteMoves=
 
-#description: Select Highlighted line
-#english: SelectHighlightedLine=Select Highlighted Line
-SelectHighlightedLine=
+#description: Copy Highlighted line
+#english: CopyHighlightedLine=Copy Highlighted Line
+CopyHighlightedLine=
 
-#description: Select subtree under the selected move.
-#english: SelectSubtree=Select All from Here
-SelectSubtree=
+#description: Copy subtree under the selected move.
+#english: CopySubtree=Copy Tree from Selected Move
+CopySubtree=
 
 #description: The "Next" term
 #english: Next=Next
@@ -1255,6 +1255,13 @@ WrongTypeEntitiesNotImported=
 #english: ConfirmExerciseMoveDeletion=Some move in the solution are no longer legal $0. Delete them?
 ConfirmExerciseMoveDeletion=
 
+#description: Ask if takeback desired
+#english: MsgTakebackWanted=Takeback?
+MsgTakebackWanted=
+
+#description: Takeback instructions
+#english: MsgTakebackInfo=Click here or press the space key to take back your move.
+MsgTakebackInfo=
 
 ##################################
 #

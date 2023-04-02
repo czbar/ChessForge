@@ -50,6 +50,9 @@ namespace ChessForge
         /// </summary>
         public void UserGameMoveMade()
         {
+            TrainingSession.IsTakebackAvailable = false;
+            RemoveTakebackParagraph();
+
             TreeNode nd = EngineGame.GetLastGameNode();
             AddMoveToEngineGamePara(nd, true);
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
@@ -93,6 +96,9 @@ namespace ChessForge
         /// </summary>
         public void ReportLastMoveVsWorkbook()
         {
+            TrainingSession.IsTakebackAvailable = false;
+            RemoveTakebackParagraph();
+
             lock (TrainingSession.UserVsWorkbookMoveLock)
             {
                 if (TrainingSession.CurrentState != TrainingSession.State.USER_MOVE_COMPLETED)
@@ -108,6 +114,8 @@ namespace ChessForge
                 _otherMovesInWorkbook.Clear();
 
                 _userMove = EngineGame.GetLastGameNode();
+                _lastUserMoveNodeId = _userMove.NodeId;
+
                 TreeNode parent = _userMove.Parent;
 
                 TreeNode foundMove = null;

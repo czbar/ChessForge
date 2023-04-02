@@ -69,6 +69,11 @@ namespace ChessForge
             UiDatePicker.SelectedDate = TextUtils.GetDateFromPgnString(date);
         }
 
+        /// <summary>
+        /// Sets date parts checkboxes.
+        /// </summary>
+        /// <param name="hasMonth"></param>
+        /// <param name="hasDay"></param>
         private void SetCheckBoxes(bool hasMonth, bool hasDay)
         {
             UiCbIgnoreMonthDay.IsChecked = !hasMonth;
@@ -183,18 +188,33 @@ namespace ChessForge
             System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Game-Header-Editor");
         }
 
+        /// <summary>
+        /// Clears the date controls.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiBtnClearDate_Click(object sender, RoutedEventArgs e)
         {
             UiDatePicker.Text = "";
             UiTbPgnDate.Text = TextUtils.BuildPgnDateString(null);
         }
 
+        /// <summary>
+        /// Sets the pgn text date when Date Picker loses focus.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiDatePicker_LostFocus(object sender, RoutedEventArgs e)
         {
             DateTime? dt = UiDatePicker.SelectedDate;
             UiTbPgnDate.Text = TextUtils.BuildPgnDateString(dt, UiCbIgnoreMonthDay.IsChecked == true, UiCbIgnoreDay.IsChecked == true);
         }
 
+        /// <summary>
+        /// Parsers the text set in the pgn text box and sets the Date Picker accordingly.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiTbPgnDate_LostFocus(object sender, RoutedEventArgs e)
         {
             string pgnDate = TextUtils.AdjustPgnDateString(UiTbPgnDate.Text, out bool hasMonth, out bool hasDay);
@@ -205,31 +225,67 @@ namespace ChessForge
             UiDatePicker.SelectedDate = dt;
         }
 
+        /// <summary>
+        /// Handles IgnoreMonthDay check event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiCbIgnoreMonthDay_Checked(object sender, RoutedEventArgs e)
         {
             CheckedEventOccurred();
         }
 
+        /// <summary>
+        /// Handles IgnoreMonthDay uncheck event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiCbIgnoreMonthDay_Unchecked(object sender, RoutedEventArgs e)
         {
             CheckedEventOccurred();
         }
 
+        /// <summary>
+        /// Handles IgnoreDay uncheck event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiCbIgnoreDay_Unchecked(object sender, RoutedEventArgs e)
         {
             CheckedEventOccurred();
         }
 
+        /// <summary>
+        /// Handles IgnoreDay check event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiCbIgnoreDay_Checked(object sender, RoutedEventArgs e)
         {
             CheckedEventOccurred();
         }
 
+        /// <summary>
+        /// Adjusts date controls content after one of the "ignore month/day" boxes was checked.
+        /// </summary>
         private void CheckedEventOccurred()
         {
             UiTbPgnDate.Text = TextUtils.BuildPgnDateString(UiDatePicker.SelectedDate, UiCbIgnoreMonthDay.IsChecked == true, UiCbIgnoreDay.IsChecked == true);
             DateTime? dt = TextUtils.GetDateFromPgnString(UiTbPgnDate.Text);
             UiDatePicker.SelectedDate = dt;
+        }
+
+        /// <summary>
+        /// Check if the user pressed key combination to enter a figurine.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTbPreamble_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (GuiUtilities.InsertFigurine(UiTbPreamble, sender, e))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

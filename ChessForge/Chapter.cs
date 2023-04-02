@@ -236,6 +236,27 @@ namespace ChessForge
             set => _activeExerciseIndex = value;
         }
 
+        /// <summary>
+        /// Corrects the index if it is out of range e.g. after deletion.
+        /// </summary>
+        public void CorrectActiveModelGameIndex()
+        {
+            if (_activeModelGameIndex >= ModelGames.Count)
+            {
+                _activeModelGameIndex = ModelGames.Count - 1;
+            }
+        }
+
+        /// <summary>
+        /// Corrects the index if it is out of range e.g. after deletion.
+        /// </summary>
+        public void CorrectActiveExerciseIndex()
+        {
+            if (_activeExerciseIndex >= Exercises.Count)
+            {
+                _activeExerciseIndex = Exercises.Count - 1;
+            }
+        }
 
         /// <summary>
         /// Returns Tree "active" in this chapter.

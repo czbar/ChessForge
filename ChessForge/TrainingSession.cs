@@ -50,6 +50,13 @@ namespace ChessForge
         { get => _isContinuousEvaluation; set => _isContinuousEvaluation = value; }
 
         /// <summary>
+        /// Whether takeback is currently available. 
+        /// It is only set to true when the user made a move not in the workbook.
+        /// </summary>
+        public static bool IsTakebackAvailable
+        { get => _isTakebackAvailable; set => _isTakebackAvailable = value; }
+
+        /// <summary>
         /// The current state of the Training session.
         /// </summary>
         public static State CurrentState { get => _currentState; }
@@ -96,6 +103,9 @@ namespace ChessForge
         // The current state of the Training sessioin.
         private static State _currentState;
 
+        // Whether takeback is available at this moment
+        private static bool _isTakebackAvailable = false;
+
         /// <summary>
         /// Rolls back training line to the move corresponding
         /// the passed nd.
@@ -132,7 +142,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Adds the passed noe to the Training Line.
+        /// Adds the passed node to the Training Line.
         /// </summary>
         /// <returns></returns>
         public static void AddNodeToTrainingLine(TreeNode nd)

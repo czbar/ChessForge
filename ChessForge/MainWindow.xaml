@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         Title="Chess Forge" Height="900" Width="1676" Loaded="Window_Loaded" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" Closing="ChessForgeMain_Closing" 
+        PreviewKeyDown="MainWindow_PreviewKeyDown"
         PreviewMouseWheel="OnPreviewMouseWheel" 
         MouseEnter="ChessForgeMain_MouseEnter" >
 
@@ -443,8 +444,8 @@
                                     <MenuItem x:Name="UiMnStCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
                                     <MenuItem x:Name="UiMnStPasteMoves" Header="{x:Static p:Resources.PasteMoves}"  InputGestureText="Ctrl+V" Click="UiMnPasteMoves_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="UiMnStSelectHighlighted" Header="{x:Static p:Resources.SelectHighlightedLine}"  InputGestureText="Ctrl+L" Click="UiMnSelectHighlighted_Click" />
-                                    <MenuItem x:Name="UiMnStSelectSubtree" Header="{x:Static p:Resources.SelectSubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
+                                    <MenuItem x:Name="UiMnStSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+L" Click="UiMnSelectHighlighted_Click" />
+                                    <MenuItem x:Name="UiMnStSelectSubtree" Header="{x:Static p:Resources.CopySubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnPromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnPromoteLine_Click" />
                                     <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnDeleteMovesFromHere_Click" />
@@ -501,6 +502,7 @@
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiCmModelGames">
                                     <MenuItem x:Name="_mnGame_EditHeader" Header="{x:Static p:Resources.EditGameHeader}" Click="UiMnGame_EditHeader_Click" />
+                                    <MenuItem x:Name="UiMnGameMoveToChapter" Header="{x:Static p:Resources.MoveGameToChapter}" Click="UiMnMoveGameToChapter_Click" />
                                     <MenuItem x:Name="_mnGame_CreateModelGame" Header="{x:Static p:Resources.CreateNewGame}" Click="_UiMnGame_CreateModelGame_Click" />
                                     <MenuItem x:Name="_mnGame_ImportGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnGame_ImportGames_Click"  />
                                     <Separator />
@@ -511,8 +513,8 @@
                                     <MenuItem x:Name="UiMnGameCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
                                     <MenuItem x:Name="UiMnGamePasteMoves" Header="{x:Static p:Resources.PasteMoves}"  InputGestureText="Ctrl+V" Click="UiMnPasteMoves_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="UiMnGameSelectHighlighted" Header="{x:Static p:Resources.SelectHighlightedLine}"  InputGestureText="Ctrl+A" Click="UiMnSelectHighlighted_Click" />
-                                    <MenuItem x:Name="UiMnGameSelectSubtree" Header="{x:Static p:Resources.SelectSubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
+                                    <MenuItem x:Name="UiMnGameSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+A" Click="UiMnSelectHighlighted_Click" />
+                                    <MenuItem x:Name="UiMnGameSelectSubtree" Header="{x:Static p:Resources.CopySubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnGame_PromoteLine_Click" />
                                     <MenuItem x:Name="_mnGame_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnGame_DeleteMovesFromHere_Click" />
@@ -589,8 +591,8 @@
                                     <MenuItem x:Name="UiMnExercCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
                                     <MenuItem x:Name="UiMnExercPasteMoves" Header="{x:Static p:Resources.PasteMoves}"  InputGestureText="Ctrl+V" Click="UiMnPasteMoves_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="UiMnExercSelectHighlighted" Header="{x:Static p:Resources.SelectHighlightedLine}"  InputGestureText="Ctrl+A" Click="UiMnSelectHighlighted_Click" />
-                                    <MenuItem x:Name="UiMnExercSelectSubtree" Header="{x:Static p:Resources.SelectSubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
+                                    <MenuItem x:Name="UiMnExercSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+A" Click="UiMnSelectHighlighted_Click" />
+                                    <MenuItem x:Name="UiMnExercSelectSubtree" Header="{x:Static p:Resources.CopySubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnExerc_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnExerc_PromoteLine_Click" />
                                     <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnExerc_DeleteMovesFromHere_Click" />

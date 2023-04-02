@@ -2650,5 +2650,18 @@ namespace ChessForge
                 e.Handled = true;
             }
         }
+
+        /// <summary>
+        /// Handles selected key events from the main window and lets the rest route further.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (TrainingSession.IsTrainingInProgress && UiTrainingView != null)
+            {
+                UiTrainingView.ProcessKeyDown(e);
+            }
+        }
     }
 }

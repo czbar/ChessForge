@@ -660,11 +660,11 @@
   <data name="PasteMoves" xml:space="preserve">
     <value>Paste Moves</value>
   </data>
-  <data name="SelectHighlightedLine" xml:space="preserve">
-    <value>Select Highlighted Line</value>
+  <data name="CopyHighlightedLine" xml:space="preserve">
+    <value>Copy Highlighted Line</value>
   </data>
-  <data name="SelectSubtree" xml:space="preserve">
-    <value>Select All from Here</value>
+  <data name="CopySubtree" xml:space="preserve">
+    <value>Copy Tree from Selected Move</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>
@@ -954,6 +954,12 @@
   </data>
   <data name="ConfirmExerciseMoveDeletion" xml:space="preserve">
     <value>Some move in the solution are no longer legal $0. Delete them?</value>
+  </data>
+  <data name="MsgTakebackWanted" xml:space="preserve">
+    <value>Takeback?</value>
+  </data>
+  <data name="MsgTakebackInfo" xml:space="preserve">
+    <value>Click here or press the space key to take back your move.</value>
   </data>
   <data name="TextForDisplay" xml:space="preserve">
     <value>Text for Display</value>
