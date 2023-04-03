@@ -381,6 +381,32 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Find the last move in training that is in ActiveTree.
+        /// Note that if the user chose not to add the last training line ot the tree,
+        /// this won't me the last movein training bu the last one that aligned with the Workbook source.
+        /// </summary>
+        /// <returns></returns>
+        public TreeNode LastTrainingNodePresentInActiveTree()
+        {
+            TreeNode lastNode = null;
+
+            if (_mainWin.ActiveVariationTree != null)
+            {
+                for (int i = EngineGame.Line.NodeList.Count - 1; i >= 0; i--)
+                {
+                    TreeNode nd = EngineGame.Line.NodeList[i];
+                    if (_mainWin.ActiveVariationTree.Nodes.FirstOrDefault(x => x.NodeId == nd.NodeId) != null)
+                    {
+                        lastNode = nd;
+                        break;
+                    }
+                }
+            }
+
+            return lastNode;
+        }
+
+        /// <summary>
         /// Removes all nodes marked "IsNewTrainingNode" unless they exist in the EngineGame.Line
         /// </summary>
         public void CleanupVariationTree()
