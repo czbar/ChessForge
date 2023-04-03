@@ -2286,6 +2286,17 @@ namespace ChessForge
                         }
                         AppState.SetupGuiForCurrentStates();
 
+                        // at this point the source tree is set.
+                        // Find the last node in EngineGame that we can find in the ActiveTree too 
+                        TreeNode lastNode = UiTrainingView.LastTrainingNodePresentInActiveTree();
+                        {
+                            if (lastNode != null)
+                            {
+                                SetActiveLine(lastNode.LineId, lastNode.NodeId);
+                                ActiveTreeView.SelectLineAndMove(lastNode.LineId, lastNode.NodeId);
+                            }
+                        }
+
                         ActiveLine.DisplayPositionForSelectedCell();
                         AppState.SwapCommentBoxForEngineLines(false);
                         BoardCommentBox.RestoreTitleMessage();
