@@ -786,7 +786,10 @@ namespace ChessForge
         public void SelectNode(int nodeId)
         {
             TreeNode node = _shownVariationTree.GetNodeFromNodeId(nodeId);
-            SelectLineAndMove(node.LineId, nodeId);
+            if (node != null)
+            {
+                SelectLineAndMove(node.LineId, nodeId);
+            }
         }
 
         /// <summary>
