@@ -1112,7 +1112,14 @@ namespace ChessForge
 
                 activeTree.ClearTrainingFlags();
                 activeTree.BuildLines();
-                AppState.SaveWorkbookFile(null);
+                if (isAppClosing)
+                {
+                    AppState.SaveWorkbookFile(null);
+                }
+                else
+                {
+                    AppState.IsDirty = true;
+                }
                 AppState.MainWin.RebuildActiveTreeView();
                 AppState.MainWin.RefreshSelectedActiveLineAndNode();
             }
