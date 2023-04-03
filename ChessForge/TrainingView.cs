@@ -614,21 +614,40 @@ namespace ChessForge
             {
                 _paraCurrentEngineGame = AddNewParagraphToDoc(STYLE_ENGINE_GAME, "");
             }
+
+            Dictionary<int, Run> dictEvalRunsToKeep = new Dictionary<int, Run>();
+            foreach (Inline inline in _paraCurrentEngineGame.Inlines)
+            {
+                if (inline is Run)
+                {
+                    Run r = inline as Run;
+                    if (r.Name.StartsWith(_run_move_eval_))
+                    {
+                        int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
+                        dictEvalRunsToKeep[nodeId] = r;
+                    }
+                }
+            }
+
             TreeNode nd = _engineGameRootNode.Children[0];
             _currentEngineGameMoveCount = 0;
 
-            string text = "";
             // preserve note about the workbook line ending if there was one
             Run rWbEnded = GetWorkbookEndedRun();
+
             _paraCurrentEngineGame.Inlines.Clear();
             if (rWbEnded != null)
             {
                 _paraCurrentEngineGame.Inlines.Add(rWbEnded);
             }
             _paraCurrentEngineGame.Inlines.Add(new Run("\n" + Properties.Resources.TrnGameInProgress + "\n"));
-            text = "          " + MoveUtils.BuildSingleMoveText(nd, true) + " ";
+            string text = "          " + MoveUtils.BuildSingleMoveText(nd, true) + " ";
             Run r_root = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
             _paraCurrentEngineGame.Inlines.Add(r_root);
+            if (dictEvalRunsToKeep.ContainsKey(nd.NodeId))
+            {
+                _paraCurrentEngineGame.Inlines.Add(dictEvalRunsToKeep[nd.NodeId]);
+            }
 
             _currentEngineGameMoveCount++;
 
@@ -639,6 +658,10 @@ namespace ChessForge
                 text = MoveUtils.BuildSingleMoveText(nd, false) + " ";
                 Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
                 _paraCurrentEngineGame.Inlines.Add(gm);
+                if (dictEvalRunsToKeep.ContainsKey(nd.NodeId))
+                {
+                    _paraCurrentEngineGame.Inlines.Add(dictEvalRunsToKeep[nd.NodeId]);
+                }
             };
         }
 
