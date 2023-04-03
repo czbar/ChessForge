@@ -287,6 +287,11 @@ namespace ChessForge
         /// </summary>
         private static void ProcessEngineGameMove(TreeNode nd)
         {
+            if (nd == null)
+            {
+                return;
+            }
+
             BoardPosition pos = null;
 
             // NOTE: need to invoke from the Dispatcher here or the program

@@ -100,8 +100,9 @@ namespace ChessForge
         {
             for (int i = NodeList.Count - 1; i >= 0; i--)
             {
-                if (NodeList[i].NodeId == nd.NodeId)
+                if (NodeList[i].NodeId == nd.NodeId && NodeList[i].IsNewTrainingMove)
                 {
+                    NodeList[i].Children.Clear();
                     break;
                 }
                 else

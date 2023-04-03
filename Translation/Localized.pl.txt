@@ -1227,8 +1227,8 @@ SaveWorkbook=Zapisać Podręcznik?
 FileAlreadyOpen=Plik już otwarty
 
 #description: Confirmation to merge training moves into the Study Tree / Game or Exercise
-#english: MergeTrainingIntoStudy=Merge and Save new moves from this session into the source
-MergeTrainingIntoStudy=Dodaj ruchy z tej sesji do źródła
+#english: MergeTrainingIntoStudy=Merge new moves from this session into the source
+MergeTrainingIntoStudy=Dodać ruchy z tej sesji do źródła
 
 #description: (Move) no longer valid 
 #english: NoLongerValid=is no longer valid
@@ -1255,6 +1255,13 @@ WrongTypeEntitiesNotImported=Elementy niewłaściwego typu nie zostały zaimport
 #english: ConfirmExerciseMoveDeletion=Some move in the solution are no longer legal $0. Delete them?
 ConfirmExerciseMoveDeletion=Niektóre ruchy w rozwiązaniu są teraz nieprawidłowe $0. Usunąć je?
 
+#description: Ask if takeback desired
+#english: MsgTakebackWanted=Takeback?
+MsgTakebackWanted=Cofnąć?
+
+#description: Takeback instructions
+#english: MsgTakebackInfo=Click here or press the space key to take back your move.
+MsgTakebackInfo=Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni ruch.
 
 ##################################
 #
@@ -2091,7 +2098,3 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
-MsgTakebackWanted=Cofnąć?
-
-#Takeback instructions
-MsgTakebackInfo=Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni ruch.
