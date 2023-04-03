@@ -935,7 +935,7 @@
     <value>$0 is already open."</value>
   </data>
   <data name="MergeTrainingIntoStudy" xml:space="preserve">
-    <value>Merge and Save new moves from this session into the source</value>
+    <value>Merge new moves from this session into the source</value>
   </data>
   <data name="NoLongerValid" xml:space="preserve">
     <value>is no longer valid</value>

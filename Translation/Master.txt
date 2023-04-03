@@ -955,7 +955,7 @@ SaveWorkbook=Save the Workbook?
 FileAlreadyOpen=$0 is already open."
 
 #Confirmation to merge training moves into the Study Tree / Game or Exercise
-MergeTrainingIntoStudy=Merge and Save new moves from this session into the source
+MergeTrainingIntoStudy=Merge new moves from this session into the source
 
 #(Move) no longer valid 
 NoLongerValid=is no longer valid

@@ -1227,7 +1227,7 @@ SaveWorkbook=
 FileAlreadyOpen=
 
 #description: Confirmation to merge training moves into the Study Tree / Game or Exercise
-#english: MergeTrainingIntoStudy=Merge and Save new moves from this session into the source
+#english: MergeTrainingIntoStudy=Merge new moves from this session into the source
 MergeTrainingIntoStudy=
 
 #description: (Move) no longer valid 
