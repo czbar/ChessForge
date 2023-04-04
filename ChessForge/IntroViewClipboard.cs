@@ -58,7 +58,7 @@ namespace ChessForge
         /// Adds a paragraph element to the Clipboard.
         /// </summary>
         /// <param name="para"></param>
-        public static void AddParagraph(Paragraph para)
+        public static void AddParagraph(Paragraph para, bool? flipped)
         {
             IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Paragraph);
 
@@ -70,6 +70,11 @@ namespace ChessForge
             //paraToAdd.TextDecorations = para.TextDecorations;
 
             element.DataObject = paraToAdd;
+
+            if (flipped != null)
+            {
+                element.BoolState = flipped;
+            }
 
             Elements.Add(element);
         }
@@ -102,14 +107,34 @@ namespace ChessForge
     /// </summary>
     public class IntroViewClipboardElement
     {
+        /// <summary>
+        /// Constructs an element of a specified type.
+        /// </summary>
+        /// <param name="type"></param>
         public IntroViewClipboardElement(IntroViewClipboard.ElementType type)
         {
             Type = type;
         }
 
+        /// <summary>
+        /// Type of the element.
+        /// </summary>
         public IntroViewClipboard.ElementType Type = IntroViewClipboard.ElementType.None;
+
+        /// <summary>
+        /// Node id that will be used by some elements.
+        /// </summary>
         public int NodeId = -1;
+
+        /// <summary>
+        /// An object with data of the type appropriate for the type of the element.
+        /// </summary>
         public object DataObject = null;
+
+        /// <summary>
+        /// A boolean value to use for the elements that require it.
+        /// </summary>
+        public bool? BoolState;
     }
 
 }
