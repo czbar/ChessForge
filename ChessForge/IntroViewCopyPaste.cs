@@ -36,9 +36,9 @@ namespace ChessForge
                     {
                         case IntroViewClipboard.ElementType.Paragraph:
                             Paragraph paragraph = element.DataObject as Paragraph;
-                            if (RichTextBoxUtilities.IsDiagramPara(paragraph, out InlineUIContainer diagram))
+                            if (RichTextBoxUtilities.IsDiagramPara(paragraph))
                             {
-                                InsertDiagramFromClipboard(paragraph);
+                                InsertDiagramFromClipboard(paragraph, element.BoolState == true);
                             }
                             else
                             {
@@ -72,13 +72,13 @@ namespace ChessForge
         /// Creats a new diagram paragraph and inserts it.
         /// </summary>
         /// <param name="diagPara"></param>
-        public void InsertDiagramFromClipboard(Paragraph diagPara)
+        public void InsertDiagramFromClipboard(Paragraph diagPara, bool isFlipped)
         {
             int nodeId = TextUtils.GetIdFromPrefixedString(diagPara.Name);
             TreeNode nd = GetNodeById(nodeId);
             if (nd != null)
             {
-                Paragraph para = InsertDiagram(nd);
+                Paragraph para = InsertDiagram(nd, isFlipped);
                 _rtb.CaretPosition = para.ElementEnd;
                 _rtb.CaretPosition = _rtb.CaretPosition.GetNextContextPosition(LogicalDirection.Forward);
             }
@@ -117,7 +117,8 @@ namespace ChessForge
         {
             TreeNode node = nodeForMove.CloneMe(true);
             TextBlock tb = InsertMove(node);
-            _rtb.CaretPosition = _rtb.CaretPosition.GetNextInsertionPosition(LogicalDirection.Forward);
+            TextPointer nextPos = _rtb.CaretPosition.GetNextInsertionPosition(LogicalDirection.Forward);
+            _rtb.CaretPosition =  nextPos ?? _rtb.Document.ContentEnd;
         }
 
         /// <summary>
@@ -191,9 +192,15 @@ namespace ChessForge
                     case TextPointerContext.ElementStart:
                         if (position.Parent is Paragraph)
                         {
-                            if (position.Parent != currParagraph)
+                            Paragraph positionParent = position.Parent as Paragraph;
+                            if (positionParent != currParagraph)
                             {
-                                IntroViewClipboard.AddParagraph(position.Parent as Paragraph);
+                                bool? flipped = null;
+                                if (RichTextBoxUtilities.IsDiagramPara(positionParent))
+                                {
+                                    flipped = GetDiagramFlipState(positionParent); 
+                                }
+                                IntroViewClipboard.AddParagraph(position.Parent as Paragraph, flipped);
                                 currParagraph = position.Parent as Paragraph;
                             }
                         }
