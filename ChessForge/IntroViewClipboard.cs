@@ -40,24 +40,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Makes a copy of a Run.
-        /// </summary>
-        /// <param name="src"></param>
-        /// <returns></returns>
-        public static Run CopyRun(Run src)
-        {
-            Run runToAdd = new Run();
-
-            runToAdd.Name = src.Name;
-            runToAdd.Text = src.Text;
-            runToAdd.FontWeight = src.FontWeight;
-            runToAdd.FontSize = src.FontSize;
-            //runToAdd.TextDecorations = run.TextDecorations;
-
-            return runToAdd;
-        }
-
-        /// <summary>
         /// Adds a Run element to the Clipboard.
         /// </summary>
         /// <param name="run"></param>
@@ -66,13 +48,7 @@ namespace ChessForge
             IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Run);
 
             // make a copy of the run
-            Run runToAdd = CopyRun(run);
-            runToAdd.Name = run.Name;
-            runToAdd.Text = run.Text;
-            runToAdd.FontWeight = run.FontWeight;
-            runToAdd.FontSize = run.FontSize;
-            //runToAdd.TextDecorations = run.TextDecorations;
-
+            Run runToAdd = RichTextBoxUtilities.CopyRun(run);
             element.DataObject = runToAdd;
 
             Elements.Add(element);
