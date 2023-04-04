@@ -47,8 +47,8 @@ namespace ChessForge
         private readonly string _run_move_ = "run_move_";
         private readonly string _tb_move_ = "tb_move_";
         private readonly string _uic_move_ = "uic_move_";
-        private readonly string _para_diagram_ = "para_diag_";
         private readonly string _flip_img_ = "flip_img_";
+
 
         // current highest run id (it is 0 initially, because we have the root node)
         private int _maxRunId = 0;
@@ -287,11 +287,11 @@ namespace ChessForge
         /// This function is invoked when the user made a move on the main chessboard.
         /// </summary>
         /// <param name="node"></param>
-        public void InsertMove(TreeNode node)
+        public TextBlock InsertMove(TreeNode node)
         {
             if (string.IsNullOrEmpty(node.LastMoveAlgebraicNotation))
             {
-                return;
+                return null;
             }
 
             _selectedNode = node;
@@ -302,7 +302,7 @@ namespace ChessForge
             rMove.Foreground = Brushes.Blue;
             rMove.FontWeight = FontWeights.Bold;
 
-            InsertMoveTextBlock(rMove, node);
+            return InsertMoveTextBlock(rMove, node);
         }
 
         /// Edits a Move element.
@@ -495,6 +495,8 @@ namespace ChessForge
                 }
             }
             catch { }
+            
+            e.Handled = true;
         }
 
         /// <summary>
@@ -543,7 +545,7 @@ namespace ChessForge
                 if (block is Paragraph)
                 {
                     Paragraph p = (Paragraph)block;
-                    if (p.Name.StartsWith(_para_diagram_))
+                    if (p.Name.StartsWith(RichTextBoxUtilities._para_diagram_))
                     {
                         if (TextUtils.GetIdFromPrefixedString(p.Name) == nd.NodeId)
                         {
@@ -570,7 +572,7 @@ namespace ChessForge
                     if (block is Paragraph)
                     {
                         Paragraph p = (Paragraph)block;
-                        if (p.Name.StartsWith(_para_diagram_))
+                        if (p.Name.StartsWith(RichTextBoxUtilities._para_diagram_))
                         {
                             p.MouseDown += EventDiagramClicked;
 
@@ -724,7 +726,7 @@ namespace ChessForge
         /// Inserts a diagram at the current position for the selected Node
         /// </summary>
         /// <param name="nd"></param>
-        private void InsertDiagram(TreeNode nd)
+        private Paragraph InsertDiagram(TreeNode nd)
         {
             TextPointer tp = _rtb.CaretPosition.InsertParagraphBreak();
             Paragraph nextPara = tp.Paragraph;
@@ -750,6 +752,8 @@ namespace ChessForge
             para.MouseDown += EventDiagramClicked;
 
             AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGrey;
+
+            return para;
         }
 
         /// <summary>
@@ -809,13 +813,15 @@ namespace ChessForge
         /// to prefix it with.
         /// </summary>
         /// <param name="run"></param>
-        private void InsertMoveTextBlock(Run run, TreeNode node)
+        private TextBlock InsertMoveTextBlock(Run run, TreeNode node)
         {
+            TextBlock tbMove = null;
+
             try
             {
-                GetMoveInsertionPlace(out Paragraph paraToInsertIn, out Inline inlineToInsertBefore);
+                RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph paraToInsertIn, out Inline inlineToInsertBefore);
 
-                TextBlock tbMove = new TextBlock();
+                tbMove = new TextBlock();
                 tbMove.Name = _tb_move_ + node.NodeId.ToString();
                 tbMove.Inlines.Add(run);
 
@@ -847,6 +853,8 @@ namespace ChessForge
             {
                 AppLog.Message("InsertMoveTextBlock()", ex);
             }
+
+            return tbMove;
         }
 
         /// <summary>
@@ -901,108 +909,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Based on the current caret position and selection (if any)
-        /// determine the paragraph in which to insert the new move
-        /// and an Inline before which to insert it.
-        /// </summary>
-        /// <param name="para"></param>
-        /// <param name="insertBefore"></param>
-        private void GetMoveInsertionPlace(out Paragraph para, out Inline insertBefore)
-        {
-            TextSelection selection = _rtb.Selection;
-            if (!selection.IsEmpty)
-            {
-                // if there is a selection we want to insert after it.
-                // e.g. we just highlighted the move by clicking on it and, intuitively,
-                // want the next move to come after it.
-                _rtb.CaretPosition = selection.End;
-            }
-
-            TextPointer tpCaret = _rtb.CaretPosition;
-            para = tpCaret.Paragraph;
-
-            // if we are inside a diagram paragraph, create a new one
-            if (IsDiagramPara(para, out _))
-            {
-                para = _rtb.CaretPosition.InsertParagraphBreak().Paragraph;
-                para.Name = TextUtils.GenerateRandomElementName();
-                insertBefore = null;
-            }
-            else
-            {
-                // if caret is inside a Run, split it and return the second part
-                insertBefore = SplitRun(_rtb);
-                if (insertBefore != null && insertBefore.Parent is Paragraph)
-                {
-                    para = insertBefore.Parent as Paragraph;
-                }
-                else
-                {
-                    DependencyObject inl = tpCaret.GetAdjacentElement(LogicalDirection.Forward);
-                    if (inl != null && inl is Inline && para != null)
-                    {
-                        insertBefore = inl as Inline;
-                    }
-                    else
-                    {
-                        // there is no Inline ahead so just append to the current paragraph
-                        // or create a new one if null
-                        insertBefore = null;
-                        if (para == null)
-                        {
-                            para = _rtb.CaretPosition.InsertParagraphBreak().Paragraph;
-                        }
-
-                        if (tpCaret.Paragraph != null)
-                        {
-                            para = tpCaret.Paragraph;
-                            insertBefore = null;
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// The diagram will be deeemed a "diagram para" if its
-        /// name starts with _para_diag and it has a diagram content
-        /// (the name is not enough because of how RTB can duplicate the name
-        /// of a paragraph).
-        /// </summary>
-        /// <returns></returns>
-        private bool IsDiagramPara(Paragraph para, out InlineUIContainer diagram)
-        {
-            diagram = null;
-
-            if (para == null || para.Name == null)
-            {
-                return false;
-            }
-
-            bool res = false;
-            if (para.Name.StartsWith(_para_diagram_))
-            {
-                int paraNodeId = TextUtils.GetIdFromPrefixedString(para.Name);
-                foreach (Inline inl in para.Inlines)
-                {
-                    if (inl is InlineUIContainer)
-                    {
-                        string uicName = (inl as InlineUIContainer).Name;
-                        int uicNodeId = TextUtils.GetIdFromPrefixedString(uicName);
-                        if (paraNodeId == uicNodeId)
-                        {
-                            res = true;
-                            diagram = (inl as InlineUIContainer);
-                            break;
-                        }
-                    }
-                }
-            }
-
-            return res;
-        }
-
-        /// <summary>
         /// Builds a paragraph with the diagram.
         /// </summary>
         /// <param name="diag"></param>
@@ -1012,7 +918,7 @@ namespace ChessForge
         {
             Paragraph para = new Paragraph();
             para.Margin = new Thickness(20, 20, 0, 20);
-            para.Name = _para_diagram_ + nd.NodeId.ToString();
+            para.Name = RichTextBoxUtilities._para_diagram_ + nd.NodeId.ToString();
 
             CreateDiagramElements(para, diag, nd, false);
             return para;
@@ -1364,7 +1270,7 @@ namespace ChessForge
             TextPointer tpCaret = _rtb.CaretPosition;
             Paragraph para = tpCaret.Paragraph;
 
-            if (IsDiagramPara(para, out InlineUIContainer diagram))
+            if (RichTextBoxUtilities.IsDiagramPara(para, out InlineUIContainer diagram))
             {
                 CleanupDiagramPara(para, diagram);
             }
