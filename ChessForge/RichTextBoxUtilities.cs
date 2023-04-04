@@ -14,7 +14,10 @@ namespace ChessForge
     /// </summary>
     public class RichTextBoxUtilities
     {
-        public static readonly string _para_diagram_ = "para_diag_";
+        /// <summary>
+        /// Prefix for naming paragraphs representing a diagram.
+        /// </summary>
+        public static readonly string DiagramParaPrefix = "para_diag_";
 
         /// <summary>
         /// Makes a copy of a Run with selected properties.
@@ -126,7 +129,7 @@ namespace ChessForge
             para = tpCaret.Paragraph;
 
             // if we are inside a diagram paragraph, create a new one
-            if (IsDiagramPara(para, out _))
+            if (GetDiagramFromParagraph(para, out _))
             {
                 para = rtb.CaretPosition.InsertParagraphBreak().Paragraph;
                 para.Name = TextUtils.GenerateRandomElementName();
@@ -168,13 +171,23 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if Pargraph's name indicates that it contains a Paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public static bool IsDiagramPara(Paragraph para)
+        {
+            return para != null && para.Name != null && para.Name.StartsWith(DiagramParaPrefix);
+        }
+
+        /// <summary>
         /// The diagram will be deeemed a "diagram para" if its
         /// name starts with _para_diag and it has a diagram content
         /// (the name is not enough because of how RTB can duplicate the name
         /// of a paragraph).
         /// </summary>
         /// <returns></returns>
-        public static bool IsDiagramPara(Paragraph para, out InlineUIContainer diagram)
+        public static bool GetDiagramFromParagraph(Paragraph para, out InlineUIContainer diagram)
         {
             diagram = null;
 
@@ -184,7 +197,7 @@ namespace ChessForge
             }
 
             bool res = false;
-            if (para.Name.StartsWith(_para_diagram_))
+            if (para.Name.StartsWith(DiagramParaPrefix))
             {
                 int paraNodeId = TextUtils.GetIdFromPrefixedString(para.Name);
                 foreach (Inline inl in para.Inlines)
