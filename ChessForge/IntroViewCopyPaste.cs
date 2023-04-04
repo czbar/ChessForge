@@ -19,7 +19,105 @@ namespace ChessForge
         /// <param name="e"></param>
         public void Paste(object sender, RoutedEventArgs e)
         {
-            _rtb.Paste();
+            try
+            {
+                // We will paste objects from the clipboard one by one
+
+                // first delete the current selection if any
+                if (!_rtb.Selection.IsEmpty)
+                {
+                    TextRange selection = new TextRange(_rtb.Selection.Start, _rtb.Selection.End);
+                    selection.Text = "";
+                }
+
+                foreach (IntroViewClipboardElement element in IntroViewClipboard.Elements)
+                {
+                    switch (element.Type)
+                    {
+                        case IntroViewClipboard.ElementType.Paragraph:
+                            Paragraph paragraph = element.DataObject as Paragraph;
+                            if (RichTextBoxUtilities.IsDiagramPara(paragraph, out InlineUIContainer diagram))
+                            {
+                                InsertDiagramFromClipboard(paragraph);
+                            }
+                            else
+                            {
+                                InsertParagraphFromClipboard(paragraph);
+                            }
+                            break;
+                        case IntroViewClipboard.ElementType.Run:
+                            InsertRunFromClipboard(element.DataObject as Run);
+                            break;
+                        case IntroViewClipboard.ElementType.Move:
+                            InsertMoveFromClipboard(element.DataObject as TreeNode);
+                            break;
+                    }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Makes a copy of a paragraph from the clipboard
+        /// and insert it at the current position.
+        /// </summary>
+        /// <param name="paraToInsert"></param>
+        public void InsertParagraphFromClipboard(Paragraph paraToInsert)
+        {
+            Paragraph para = RichTextBoxUtilities.CopyParagraph(paraToInsert);
+            _rtb.CaretPosition.InsertParagraphBreak();
+        }
+
+        /// <summary>
+        /// Creats a new diagram paragraph and inserts it.
+        /// </summary>
+        /// <param name="diagPara"></param>
+        public void InsertDiagramFromClipboard(Paragraph diagPara)
+        {
+            int nodeId = TextUtils.GetIdFromPrefixedString(diagPara.Name);
+            TreeNode nd = GetNodeById(nodeId);
+            if (nd != null)
+            {
+                Paragraph para = InsertDiagram(nd);
+                _rtb.CaretPosition = para.ElementEnd;
+                _rtb.CaretPosition = _rtb.CaretPosition.GetNextContextPosition(LogicalDirection.Forward);
+            }
+        }
+
+        /// <summary>
+        /// If parent is a run, split the run and insert this one in between.
+        /// If parent is a Paragraph and it is not a diagram paragraph, insert it at the caret point.
+        /// </summary>
+        /// <param name="run"></param>
+        private void InsertRunFromClipboard(Run runToInsert)
+        {
+            RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph para, out Inline insertBefore);
+            if (para != null)
+            {
+                Run run = RichTextBoxUtilities.CopyRun(runToInsert);
+                if (insertBefore == null)
+                {
+                    para.Inlines.Add(run);
+                }
+                else
+                {
+                    para.Inlines.InsertBefore(insertBefore, run);
+                }
+
+                _rtb.CaretPosition = run.ElementEnd;
+            }
+        }
+
+        /// <summary>
+        /// Makes a copy of the passed node, inserts it into the Tree
+        /// creates an InlineUiContainer for the Move and inserts it.
+        /// </summary>
+        /// <param name="nodeForMove"></param>
+        private void InsertMoveFromClipboard(TreeNode nodeForMove)
+        {
+            TreeNode node = nodeForMove.CloneMe(true);
+            TextBlock tb = InsertMove(node);
+            _rtb.CaretPosition = _rtb.CaretPosition.GetNextInsertionPosition(LogicalDirection.Forward);
         }
 
         /// <summary>
@@ -58,7 +156,6 @@ namespace ChessForge
             {
                 IntroViewClipboard.Clear();
                 CopySelectionToClipboard();
-                _rtb.Copy();
             }
             catch { }
         }
@@ -84,6 +181,9 @@ namespace ChessForge
             TextPointer position = _rtb.Selection.Start;
             TextPointer end = _rtb.Selection.End;
 
+            Paragraph currParagraph = null;
+            currParagraph = position.Paragraph;
+
             while (position.CompareTo(end) < 0)
             {
                 switch (position.GetPointerContext(LogicalDirection.Forward))
@@ -91,7 +191,11 @@ namespace ChessForge
                     case TextPointerContext.ElementStart:
                         if (position.Parent is Paragraph)
                         {
-                            IntroViewClipboard.AddParagraph(position.Parent as Paragraph);
+                            if (position.Parent != currParagraph)
+                            {
+                                IntroViewClipboard.AddParagraph(position.Parent as Paragraph);
+                                currParagraph = position.Parent as Paragraph;
+                            }
                         }
                         break;
                     case TextPointerContext.ElementEnd:
@@ -113,7 +217,7 @@ namespace ChessForge
                         if (r.ElementEnd.CompareTo(end) > 0)
                         {
                             TextRange tr = new TextRange(position, end);
-                            Run runCopy = IntroViewClipboard.CopyRun(r);
+                            Run runCopy = RichTextBoxUtilities.CopyRun(r);
                             runCopy.Text = tr.Text;
                             IntroViewClipboard.AddRun(runCopy);
                         }
