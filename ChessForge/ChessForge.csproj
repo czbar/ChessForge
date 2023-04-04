@@ -177,6 +177,7 @@
     <Compile Include="ReferenceGamePreviewDialog.cs" />
     <Compile Include="RepositionPieceProcessor.cs" />
     <Compile Include="ResourceUtils.cs" />
+    <Compile Include="RichTextBoxUtilities.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
       <DependentUpon>SelectArticlesDialog.xaml</DependentUpon>
     </Compile>
