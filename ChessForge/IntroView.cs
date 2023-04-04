@@ -355,7 +355,7 @@ namespace ChessForge
                     {
                         TextSelection sel = _rtb.Selection;
                         _rtb.CaretPosition = inlClicked.ElementEnd;
-                        InsertDiagram(SelectedNode);
+                        InsertDiagram(SelectedNode, false);
                     }
                 }
             }
@@ -545,7 +545,7 @@ namespace ChessForge
                 if (block is Paragraph)
                 {
                     Paragraph p = (Paragraph)block;
-                    if (p.Name.StartsWith(RichTextBoxUtilities._para_diagram_))
+                    if (p.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
                     {
                         if (TextUtils.GetIdFromPrefixedString(p.Name) == nd.NodeId)
                         {
@@ -572,7 +572,7 @@ namespace ChessForge
                     if (block is Paragraph)
                     {
                         Paragraph p = (Paragraph)block;
-                        if (p.Name.StartsWith(RichTextBoxUtilities._para_diagram_))
+                        if (p.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
                         {
                             p.MouseDown += EventDiagramClicked;
 
@@ -711,7 +711,7 @@ namespace ChessForge
                     BoardPosition pos = dlg.PositionSetup;
                     node.Position = new BoardPosition(pos);
 
-                    InsertDiagram(node);
+                    InsertDiagram(node, false);
                     _textDirty = true;
                     AppState.IsDirty = true;
                 }
@@ -726,7 +726,7 @@ namespace ChessForge
         /// Inserts a diagram at the current position for the selected Node
         /// </summary>
         /// <param name="nd"></param>
-        private Paragraph InsertDiagram(TreeNode nd)
+        private Paragraph InsertDiagram(TreeNode nd, bool isFlipped)
         {
             TextPointer tp = _rtb.CaretPosition.InsertParagraphBreak();
             Paragraph nextPara = tp.Paragraph;
@@ -737,7 +737,7 @@ namespace ChessForge
             _selectedNode = node;
 
             IntroViewDiagram diag = new IntroViewDiagram();
-            Paragraph para = BuildDiagramParagraph(diag, node);
+            Paragraph para = BuildDiagramParagraph(diag, node, isFlipped);
             diag.Chessboard.DisplayPosition(node, true);
             diag.Node = node;
 
@@ -914,13 +914,13 @@ namespace ChessForge
         /// <param name="diag"></param>
         /// <param name="pos"></param>
         /// <returns></returns>
-        private Paragraph BuildDiagramParagraph(IntroViewDiagram diag, TreeNode nd)
+        private Paragraph BuildDiagramParagraph(IntroViewDiagram diag, TreeNode nd, bool isFlipped)
         {
             Paragraph para = new Paragraph();
             para.Margin = new Thickness(20, 20, 0, 20);
-            para.Name = RichTextBoxUtilities._para_diagram_ + nd.NodeId.ToString();
+            para.Name = RichTextBoxUtilities.DiagramParaPrefix + nd.NodeId.ToString();
 
-            CreateDiagramElements(para, diag, nd, false);
+            CreateDiagramElements(para, diag, nd, isFlipped);
             return para;
         }
 
@@ -936,6 +936,7 @@ namespace ChessForge
             para.Inlines.Clear();
             Canvas baseCanvas = SetupDiagramCanvas();
             Image imgChessBoard = CreateChessBoard(baseCanvas, diag);
+            diag.Chessboard.IsFlipped = flipState;
             diag.Chessboard.EnableShapes(true, nd);
             baseCanvas.Children.Add(imgChessBoard);
 
@@ -1270,7 +1271,7 @@ namespace ChessForge
             TextPointer tpCaret = _rtb.CaretPosition;
             Paragraph para = tpCaret.Paragraph;
 
-            if (RichTextBoxUtilities.IsDiagramPara(para, out InlineUIContainer diagram))
+            if (RichTextBoxUtilities.GetDiagramFromParagraph(para, out InlineUIContainer diagram))
             {
                 CleanupDiagramPara(para, diagram);
             }
