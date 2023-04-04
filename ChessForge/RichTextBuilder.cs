@@ -41,60 +41,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// If the caret is inside a Run, we split the Run in two
-        /// and return the newly created second Run.
-        /// Otherwise returns null.
-        /// </summary>
-        /// <param name="rtb"></param>
-        /// <returns></returns>
-        protected Run SplitRun(RichTextBox rtb)
-        {
-            try
-            {
-                TextPointer caretPosition = rtb.CaretPosition;
-
-                // if the current position is a Run, split it otherwise return
-                if (caretPosition.Parent.GetType() != typeof(Run))
-                {
-                    return null;
-                }
-
-                Run newRun;
-
-                // Split the Run at the current caret position
-                Run currentRun = caretPosition.Parent as Run;
-                Paragraph currentParagraph = caretPosition.Paragraph;
-
-                if (caretPosition.GetOffsetToPosition(currentRun.ContentEnd) > 0)
-                {
-                    // Get a TextPointer to the start of the second half of the Run
-                    TextPointer splitPosition = caretPosition.GetPositionAtOffset(0, LogicalDirection.Forward);
-
-                    // Create a new Run containing the second half of the original Run
-                    newRun = new Run(currentRun.Text.Substring(-1 * splitPosition.GetOffsetToPosition(currentRun.ContentStart)));
-
-                    // Remove the second half of the original Run
-                    currentRun.Text = currentRun.Text.Substring(0, -1 * splitPosition.GetOffsetToPosition(currentRun.ContentStart));
-                }
-                else
-                {
-                    // create a new Run with empty text
-                    newRun = new Run("");
-                }
-
-                // Insert the new Run after the original Run
-                currentParagraph.Inlines.InsertAfter(currentRun, newRun);
-                rtb.CaretPosition = newRun.ContentStart;
-                return newRun;
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("SplitRun()", ex);
-                return null;
-            }
-        }
-
-        /// <summary>
         /// Returns the Run where a new text should be inserted.
         /// If there is no run at the caret, or nearby a new one is created.
         /// </summary>
