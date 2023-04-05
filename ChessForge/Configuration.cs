@@ -83,7 +83,17 @@ namespace ChessForge
         /// be worse than by this centipawn value from the
         /// best move.
         /// </summary>
-        public static int ViableMoveCpDiff = 100;
+        public static int ViableMoveCpDiff
+        {
+            get
+            {
+                return Math.Max(0, _viableMoveCpDiff);
+            }
+            set
+            {
+                _viableMoveCpDiff = Math.Max(0, value);
+            }
+        }
 
         /// <summary>
         /// Number of moves to return with evaluations.
@@ -160,6 +170,8 @@ namespace ChessForge
         /// 3 - some heavy debug tools are enabled (e.g. an extra button in Position Setup to show the current setup in the main window)
         /// </summary>
         public static int DebugLevel = 1;
+
+        private static int _viableMoveCpDiff = 50;
 
         // max value by which a font size can be increased from the standard size
         private const int MAX_UP_FONT_SIZE_DIFF = 4;
@@ -655,9 +667,9 @@ namespace ChessForge
                             int.TryParse(value, out EngineMpv);
                             break;
                         case CFG_VIABLE_MOVE_CP_DIFF:
-                            int.TryParse(value, out ViableMoveCpDiff);
+                            int.TryParse(value, out _viableMoveCpDiff);
                             // make sure this is not negative
-                            ViableMoveCpDiff = Math.Abs(ViableMoveCpDiff);
+                            ViableMoveCpDiff = Math.Abs(_viableMoveCpDiff);
                             break;
                         case CFG_PGN_EXP_BOOKMARKS:
                             PgnExportBookmarks = value != "0" ? true : false;
