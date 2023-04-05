@@ -178,6 +178,8 @@ namespace ChessForge
         /// when loading saved document.
         /// This method renamed all paragraphs sharing the same name
         /// except the first one.
+        /// Also renames paragraph if empty (as opposed to null) names as
+        /// empty names break XAML.
         /// </summary>
         public void RemoveDuplicateNames()
         {
@@ -195,6 +197,13 @@ namespace ChessForge
                             names.Add(name);
                         }
                         else
+                        {
+                            block.Name = TextUtils.GenerateRandomElementName();
+                        }
+                    }
+                    else
+                    {
+                        if (name == string.Empty)
                         {
                             block.Name = TextUtils.GenerateRandomElementName();
                         }
