@@ -59,6 +59,12 @@ namespace ChessForge
         public double EngineTimePerMoveInEvaluation;
 
         /// <summary>
+        /// Tolerance of engine move selection in centipawns
+        /// while evaluating.
+        /// </summary>
+        public int EngineMoveAccuracy;
+
+        /// <summary>
         /// Whether mouse wheel can be used to scroll through the notation..
         /// </summary>
         public bool AllowMouseWheel;
@@ -94,6 +100,7 @@ namespace ChessForge
             ReplaySpeed = (double)Configuration.MoveSpeed / 1000.0;
             EngineTimePerMoveInGame = (double)Configuration.EngineMoveTime / 1000.0;
             EngineTimePerMoveInEvaluation = (double)Configuration.EngineEvaluationTime / 1000.0;
+            EngineMoveAccuracy = (int)Configuration.ViableMoveCpDiff;
             AllowMouseWheel = Configuration.AllowMouseWheelForMoves;
             ShowMovesAtFork = Configuration.ShowMovesAtFork;
             SoundOn = Configuration.SoundOn;
@@ -104,6 +111,7 @@ namespace ChessForge
             UiTbReplaySpeed.Text = ReplaySpeed.ToString("F1");
             UiTbEngTimeInGame.Text = EngineTimePerMoveInGame.ToString("F1");
             UiTbEngEvalTime.Text = EngineTimePerMoveInEvaluation.ToString("F1");
+            UiTbMoveAcc.Text = EngineMoveAccuracy.ToString();
             UiCbAllowWheel.IsChecked = (AllowMouseWheel == true);
             UiCbShowForkMoves.IsChecked = (ShowMovesAtFork == true);
             UiCbSoundOn.IsChecked = (SoundOn == true);
@@ -168,6 +176,11 @@ namespace ChessForge
             if (double.TryParse(UiTbEngEvalTime.Text, out dval))
             {
                 Configuration.EngineEvaluationTime = (int)(dval * 1000);
+            }
+
+            if (int.TryParse(UiTbMoveAcc.Text, out int iVal))
+            {
+                Configuration.ViableMoveCpDiff = iVal;
             }
 
             Configuration.AllowMouseWheelForMoves = (UiCbAllowWheel.IsChecked == true);
