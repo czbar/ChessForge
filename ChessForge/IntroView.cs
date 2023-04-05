@@ -126,7 +126,7 @@ namespace ChessForge
         /// </summary>
         public void RemoveSelectionOpacity()
         {
-            AppState.MainWin.UiRtbIntroView.SelectionOpacity = 0;
+            AppState.MainWin.UiRtbIntroView.SelectionOpacity = 0.1;
         }
 
         /// <summary>
@@ -284,10 +284,15 @@ namespace ChessForge
 
         /// <summary>
         /// Inserts new move at the caret.
-        /// This function is invoked when the user made a move on the main chessboard.
+        /// This function is invoked when the user made a move on the main chessboard
+        /// or a move from the clipboard is being inserted.
+        /// If the latter, the text of the move will be taken from LastMoveAlgebraicNotation
+        /// rather then worked out based on the context.
         /// </summary>
         /// <param name="node"></param>
-        public TextBlock InsertMove(TreeNode node)
+        /// <param name="fromClipboard"></param>
+        /// <returns></returns>
+        public TextBlock InsertMove(TreeNode node, bool fromClipboard = false)
         {
             if (string.IsNullOrEmpty(node.LastMoveAlgebraicNotation))
             {
@@ -302,7 +307,7 @@ namespace ChessForge
             rMove.Foreground = Brushes.Blue;
             rMove.FontWeight = FontWeights.Bold;
 
-            return InsertMoveTextBlock(rMove, node);
+            return InsertMoveTextBlock(rMove, node, fromClipboard);
         }
 
         /// Edits a Move element.
@@ -474,7 +479,9 @@ namespace ChessForge
                 if (sender is Paragraph)
                 {
                     Paragraph para = sender as Paragraph;
-                    _rtb.CaretPosition = para.ContentStart;
+
+                    _rtb.Focus();
+                    _rtb.CaretPosition = para.ContentEnd;
 
                     int nodeId = TextUtils.GetIdFromPrefixedString(para.Name);
                     TreeNode nd = GetNodeById(nodeId);
@@ -780,11 +787,6 @@ namespace ChessForge
             CreateDiagramElements(para, diag, nd, flipState);
             DiagramList.Add(diag);
 
-            if (flipState)
-            {
-                diag.Chessboard.FlipBoard();
-            }
-
             diag.Chessboard.DisplayPosition(nd, true);
             AppState.MainWin.DisplayPosition(nd);
 
@@ -808,12 +810,17 @@ namespace ChessForge
         /// <summary>
         /// Inserts a move's Run into a TextBlock that is then inserted into an InlineUIContainer
         /// and finally in the Document.
-        /// This is called after the user made a move on the main board.
         /// We determine the place to insert the new move in, and are guessing the number 
         /// to prefix it with.
+        /// This is called after the user made a move on the main board or when pasting a move from the clipboard.
+        /// If the latter, the text of the move will be taken from LastMoveAlgebraicNotation
+        /// rather then worked out based on the context.
         /// </summary>
         /// <param name="run"></param>
-        private TextBlock InsertMoveTextBlock(Run run, TreeNode node)
+        /// <param name="node"></param>
+        /// <param name="fromClipboard"></param>
+        /// <returns></returns>
+        private TextBlock InsertMoveTextBlock(Run run, TreeNode node, bool fromClipboard)
         {
             TextBlock tbMove = null;
 
@@ -841,7 +848,14 @@ namespace ChessForge
                 }
 
                 // only now we will build the text so we get the number right
-                run.Text = " " + BuildMoveRunText(node, uic) + " ";
+                if (fromClipboard)
+                {
+                    run.Text = " " + node.LastMoveAlgebraicNotation + " ";
+                }
+                else
+                {
+                    run.Text = " " + BuildMoveRunText(node, uic) + " ";
+                }
 
                 // set caret to the end of the new move
                 _rtb.CaretPosition = uic.ElementEnd;
@@ -936,7 +950,10 @@ namespace ChessForge
             para.Inlines.Clear();
             Canvas baseCanvas = SetupDiagramCanvas();
             Image imgChessBoard = CreateChessBoard(baseCanvas, diag);
-            diag.Chessboard.IsFlipped = flipState;
+            if (flipState)
+            {
+                diag.Chessboard.FlipBoard();
+            }
             diag.Chessboard.EnableShapes(true, nd);
             baseCanvas.Children.Add(imgChessBoard);
 
@@ -1259,6 +1276,23 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// If mouse is outside a diagram, make sure the main board is blue
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (_rtb.CaretPosition.Paragraph != null)
+            {
+                if (!RichTextBoxUtilities.IsDiagramPara(_rtb.CaretPosition.Paragraph))
+                {
+                    RestoreSelectionOpacity();
+                    AppState.MainWin.UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
+                }
+            }
+        }
+
+        /// <summary>
         /// Handles the Text Change event. Sets the Workbook's dirty flag.
         /// </summary>
         /// <param name="sender"></param>
@@ -1274,6 +1308,11 @@ namespace ChessForge
             if (RichTextBoxUtilities.GetDiagramFromParagraph(para, out InlineUIContainer diagram))
             {
                 CleanupDiagramPara(para, diagram);
+            }
+            else
+            {
+                RestoreSelectionOpacity();
+                AppState.MainWin.UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
             }
 
             AppState.IsDirty = true;
