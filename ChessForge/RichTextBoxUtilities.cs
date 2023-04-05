@@ -28,7 +28,6 @@ namespace ChessForge
         {
             Run runToAdd = new Run();
 
-            runToAdd.Name = "";
             runToAdd.Text = src.Text;
             runToAdd.FontWeight = src.FontWeight;
             runToAdd.FontSize = src.FontSize;
@@ -46,7 +45,6 @@ namespace ChessForge
         {
             Paragraph paraToAdd = new Paragraph();
 
-            paraToAdd.Name = "";
             paraToAdd.FontWeight = src.FontWeight;
             paraToAdd.FontSize = src.FontSize;
 
