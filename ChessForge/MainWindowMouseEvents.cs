@@ -968,24 +968,24 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabIntro_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (WorkbookManager.SessionWorkbook == null && WorkbookManager.SessionWorkbook.ActiveChapter != null && _introView != null)
-            {
-                _introView.Clear();
-            }
-
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
-            {
-                return;
-            }
-
-            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.INTRO;
-            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.INTRO);
-            AppState.ShowExplorers(AppState.AreExplorersOn, true);
-            UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
-
-            BoardCommentBox.ShowTabHints();
             try
             {
+                if (WorkbookManager.SessionWorkbook == null && _introView != null)
+                {
+                    _introView.Clear();
+                }
+
+                if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+                {
+                    return;
+                }
+
+                WorkbookManager.ActiveTab = WorkbookManager.TabViewType.INTRO;
+                WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.INTRO);
+                AppState.ShowExplorers(AppState.AreExplorersOn, true);
+                UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
+
+                BoardCommentBox.ShowTabHints();
                 // if _introView is not null and ParentChapter is the same, leave things as they are,
                 // otherwise build the view.
                 if (_introView == null || _introView.ParentChapter != WorkbookManager.SessionWorkbook.ActiveChapter)
