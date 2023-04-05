@@ -10,8 +10,53 @@ using System.Windows.Documents;
 
 namespace ChessForge
 {
+    /// <summary>
+    /// Functions handling Copy/Cut/Paste/Undo operations.
+    /// </summary>
     public partial class IntroView : RichTextBuilder
     {
+        /// <summary>
+        /// Calls the built-in Undo and the calls 
+        /// SetEventHandlers so that event associations are restored
+        /// if any Diagram or Move was part of Undo.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Undo(object sender, RoutedEventArgs e)
+        {
+            _rtb.Undo();
+            SetEventHandlers();
+        }
+
+        /// <summary>
+        /// Stores the current selection before calling
+        /// the built-in cut operation.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Cut(object sender, RoutedEventArgs e)
+        {
+            IntroViewClipboard.Clear();
+            CopySelectionToClipboard();
+            _rtb.Cut();
+        }
+
+        /// <summary>
+        /// Stores the current selection in custom format
+        /// so that it can get properly restored.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Copy(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                IntroViewClipboard.Clear();
+                CopySelectionToClipboard();
+            }
+            catch { }
+        }
+
         /// <summary>
         /// Pastes stored selection into the view.
         /// </summary>
@@ -116,49 +161,9 @@ namespace ChessForge
         private void InsertMoveFromClipboard(TreeNode nodeForMove)
         {
             TreeNode node = nodeForMove.CloneMe(true);
-            TextBlock tb = InsertMove(node);
+            TextBlock tb = InsertMove(node, true);
             TextPointer nextPos = _rtb.CaretPosition.GetNextInsertionPosition(LogicalDirection.Forward);
             _rtb.CaretPosition =  nextPos ?? _rtb.Document.ContentEnd;
-        }
-
-        /// <summary>
-        /// Calls the built-in Undo and the calls 
-        /// SetEventHandlers so that event associations are restored
-        /// if any Diagram or Move was part of Undo.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void Undo(object sender, RoutedEventArgs e)
-        {
-            _rtb.Undo();
-            SetEventHandlers();
-        }
-
-        /// <summary>
-        /// Stores the current selection before calling
-        /// the built-in cut operation.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void Cut(object sender, RoutedEventArgs e)
-        {
-            _rtb.Cut();
-        }
-
-        /// <summary>
-        /// Stores the current selection in custom format
-        /// so that it can get properly restored.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void Copy(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                IntroViewClipboard.Clear();
-                CopySelectionToClipboard();
-            }
-            catch { }
         }
 
         /// <summary>
@@ -193,7 +198,7 @@ namespace ChessForge
                         if (position.Parent is Paragraph)
                         {
                             Paragraph positionParent = position.Parent as Paragraph;
-                            if (positionParent != currParagraph)
+                            if (positionParent != currParagraph || RichTextBoxUtilities.IsDiagramPara(positionParent))
                             {
                                 bool? flipped = null;
                                 if (RichTextBoxUtilities.IsDiagramPara(positionParent))
