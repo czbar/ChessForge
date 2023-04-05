@@ -47,8 +47,8 @@ namespace ChessForge
         private readonly string _run_move_ = "run_move_";
         private readonly string _tb_move_ = "tb_move_";
         private readonly string _uic_move_ = "uic_move_";
-        private readonly string _para_diagram_ = "para_diag_";
         private readonly string _flip_img_ = "flip_img_";
+
 
         // current highest run id (it is 0 initially, because we have the root node)
         private int _maxRunId = 0;
@@ -126,7 +126,7 @@ namespace ChessForge
         /// </summary>
         public void RemoveSelectionOpacity()
         {
-            AppState.MainWin.UiRtbIntroView.SelectionOpacity = 0;
+            AppState.MainWin.UiRtbIntroView.SelectionOpacity = 0.1;
         }
 
         /// <summary>
@@ -178,6 +178,8 @@ namespace ChessForge
         /// when loading saved document.
         /// This method renamed all paragraphs sharing the same name
         /// except the first one.
+        /// Also renames paragraph if empty (as opposed to null) names as
+        /// empty names break XAML.
         /// </summary>
         public void RemoveDuplicateNames()
         {
@@ -195,6 +197,13 @@ namespace ChessForge
                             names.Add(name);
                         }
                         else
+                        {
+                            block.Name = TextUtils.GenerateRandomElementName();
+                        }
+                    }
+                    else
+                    {
+                        if (name == string.Empty)
                         {
                             block.Name = TextUtils.GenerateRandomElementName();
                         }
@@ -284,14 +293,19 @@ namespace ChessForge
 
         /// <summary>
         /// Inserts new move at the caret.
-        /// This function is invoked when the user made a move on the main chessboard.
+        /// This function is invoked when the user made a move on the main chessboard
+        /// or a move from the clipboard is being inserted.
+        /// If the latter, the text of the move will be taken from LastMoveAlgebraicNotation
+        /// rather then worked out based on the context.
         /// </summary>
         /// <param name="node"></param>
-        public void InsertMove(TreeNode node)
+        /// <param name="fromClipboard"></param>
+        /// <returns></returns>
+        public TextBlock InsertMove(TreeNode node, bool fromClipboard = false)
         {
             if (string.IsNullOrEmpty(node.LastMoveAlgebraicNotation))
             {
-                return;
+                return null;
             }
 
             _selectedNode = node;
@@ -302,7 +316,7 @@ namespace ChessForge
             rMove.Foreground = Brushes.Blue;
             rMove.FontWeight = FontWeights.Bold;
 
-            InsertMoveTextBlock(rMove, node);
+            return InsertMoveTextBlock(rMove, node, fromClipboard);
         }
 
         /// Edits a Move element.
@@ -355,7 +369,7 @@ namespace ChessForge
                     {
                         TextSelection sel = _rtb.Selection;
                         _rtb.CaretPosition = inlClicked.ElementEnd;
-                        InsertDiagram(SelectedNode);
+                        InsertDiagram(SelectedNode, false);
                     }
                 }
             }
@@ -474,7 +488,9 @@ namespace ChessForge
                 if (sender is Paragraph)
                 {
                     Paragraph para = sender as Paragraph;
-                    _rtb.CaretPosition = para.ContentStart;
+
+                    _rtb.Focus();
+                    _rtb.CaretPosition = para.ContentEnd;
 
                     int nodeId = TextUtils.GetIdFromPrefixedString(para.Name);
                     TreeNode nd = GetNodeById(nodeId);
@@ -495,6 +511,8 @@ namespace ChessForge
                 }
             }
             catch { }
+            
+            e.Handled = true;
         }
 
         /// <summary>
@@ -543,7 +561,7 @@ namespace ChessForge
                 if (block is Paragraph)
                 {
                     Paragraph p = (Paragraph)block;
-                    if (p.Name.StartsWith(_para_diagram_))
+                    if (p.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
                     {
                         if (TextUtils.GetIdFromPrefixedString(p.Name) == nd.NodeId)
                         {
@@ -570,7 +588,7 @@ namespace ChessForge
                     if (block is Paragraph)
                     {
                         Paragraph p = (Paragraph)block;
-                        if (p.Name.StartsWith(_para_diagram_))
+                        if (p.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
                         {
                             p.MouseDown += EventDiagramClicked;
 
@@ -709,7 +727,7 @@ namespace ChessForge
                     BoardPosition pos = dlg.PositionSetup;
                     node.Position = new BoardPosition(pos);
 
-                    InsertDiagram(node);
+                    InsertDiagram(node, false);
                     _textDirty = true;
                     AppState.IsDirty = true;
                 }
@@ -724,7 +742,7 @@ namespace ChessForge
         /// Inserts a diagram at the current position for the selected Node
         /// </summary>
         /// <param name="nd"></param>
-        private void InsertDiagram(TreeNode nd)
+        private Paragraph InsertDiagram(TreeNode nd, bool isFlipped)
         {
             TextPointer tp = _rtb.CaretPosition.InsertParagraphBreak();
             Paragraph nextPara = tp.Paragraph;
@@ -735,7 +753,7 @@ namespace ChessForge
             _selectedNode = node;
 
             IntroViewDiagram diag = new IntroViewDiagram();
-            Paragraph para = BuildDiagramParagraph(diag, node);
+            Paragraph para = BuildDiagramParagraph(diag, node, isFlipped);
             diag.Chessboard.DisplayPosition(node, true);
             diag.Node = node;
 
@@ -750,6 +768,8 @@ namespace ChessForge
             para.MouseDown += EventDiagramClicked;
 
             AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGrey;
+
+            return para;
         }
 
         /// <summary>
@@ -776,11 +796,6 @@ namespace ChessForge
             CreateDiagramElements(para, diag, nd, flipState);
             DiagramList.Add(diag);
 
-            if (flipState)
-            {
-                diag.Chessboard.FlipBoard();
-            }
-
             diag.Chessboard.DisplayPosition(nd, true);
             AppState.MainWin.DisplayPosition(nd);
 
@@ -804,18 +819,25 @@ namespace ChessForge
         /// <summary>
         /// Inserts a move's Run into a TextBlock that is then inserted into an InlineUIContainer
         /// and finally in the Document.
-        /// This is called after the user made a move on the main board.
         /// We determine the place to insert the new move in, and are guessing the number 
         /// to prefix it with.
+        /// This is called after the user made a move on the main board or when pasting a move from the clipboard.
+        /// If the latter, the text of the move will be taken from LastMoveAlgebraicNotation
+        /// rather then worked out based on the context.
         /// </summary>
         /// <param name="run"></param>
-        private void InsertMoveTextBlock(Run run, TreeNode node)
+        /// <param name="node"></param>
+        /// <param name="fromClipboard"></param>
+        /// <returns></returns>
+        private TextBlock InsertMoveTextBlock(Run run, TreeNode node, bool fromClipboard)
         {
+            TextBlock tbMove = null;
+
             try
             {
-                GetMoveInsertionPlace(out Paragraph paraToInsertIn, out Inline inlineToInsertBefore);
+                RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph paraToInsertIn, out Inline inlineToInsertBefore);
 
-                TextBlock tbMove = new TextBlock();
+                tbMove = new TextBlock();
                 tbMove.Name = _tb_move_ + node.NodeId.ToString();
                 tbMove.Inlines.Add(run);
 
@@ -835,7 +857,14 @@ namespace ChessForge
                 }
 
                 // only now we will build the text so we get the number right
-                run.Text = " " + BuildMoveRunText(node, uic) + " ";
+                if (fromClipboard)
+                {
+                    run.Text = " " + node.LastMoveAlgebraicNotation + " ";
+                }
+                else
+                {
+                    run.Text = " " + BuildMoveRunText(node, uic) + " ";
+                }
 
                 // set caret to the end of the new move
                 _rtb.CaretPosition = uic.ElementEnd;
@@ -847,6 +876,8 @@ namespace ChessForge
             {
                 AppLog.Message("InsertMoveTextBlock()", ex);
             }
+
+            return tbMove;
         }
 
         /// <summary>
@@ -901,120 +932,18 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Based on the current caret position and selection (if any)
-        /// determine the paragraph in which to insert the new move
-        /// and an Inline before which to insert it.
-        /// </summary>
-        /// <param name="para"></param>
-        /// <param name="insertBefore"></param>
-        private void GetMoveInsertionPlace(out Paragraph para, out Inline insertBefore)
-        {
-            TextSelection selection = _rtb.Selection;
-            if (!selection.IsEmpty)
-            {
-                // if there is a selection we want to insert after it.
-                // e.g. we just highlighted the move by clicking on it and, intuitively,
-                // want the next move to come after it.
-                _rtb.CaretPosition = selection.End;
-            }
-
-            TextPointer tpCaret = _rtb.CaretPosition;
-            para = tpCaret.Paragraph;
-
-            // if we are inside a diagram paragraph, create a new one
-            if (IsDiagramPara(para, out _))
-            {
-                para = _rtb.CaretPosition.InsertParagraphBreak().Paragraph;
-                para.Name = TextUtils.GenerateRandomElementName();
-                insertBefore = null;
-            }
-            else
-            {
-                // if caret is inside a Run, split it and return the second part
-                insertBefore = SplitRun(_rtb);
-                if (insertBefore != null && insertBefore.Parent is Paragraph)
-                {
-                    para = insertBefore.Parent as Paragraph;
-                }
-                else
-                {
-                    DependencyObject inl = tpCaret.GetAdjacentElement(LogicalDirection.Forward);
-                    if (inl != null && inl is Inline && para != null)
-                    {
-                        insertBefore = inl as Inline;
-                    }
-                    else
-                    {
-                        // there is no Inline ahead so just append to the current paragraph
-                        // or create a new one if null
-                        insertBefore = null;
-                        if (para == null)
-                        {
-                            para = _rtb.CaretPosition.InsertParagraphBreak().Paragraph;
-                        }
-
-                        if (tpCaret.Paragraph != null)
-                        {
-                            para = tpCaret.Paragraph;
-                            insertBefore = null;
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// The diagram will be deeemed a "diagram para" if its
-        /// name starts with _para_diag and it has a diagram content
-        /// (the name is not enough because of how RTB can duplicate the name
-        /// of a paragraph).
-        /// </summary>
-        /// <returns></returns>
-        private bool IsDiagramPara(Paragraph para, out InlineUIContainer diagram)
-        {
-            diagram = null;
-
-            if (para == null || para.Name == null)
-            {
-                return false;
-            }
-
-            bool res = false;
-            if (para.Name.StartsWith(_para_diagram_))
-            {
-                int paraNodeId = TextUtils.GetIdFromPrefixedString(para.Name);
-                foreach (Inline inl in para.Inlines)
-                {
-                    if (inl is InlineUIContainer)
-                    {
-                        string uicName = (inl as InlineUIContainer).Name;
-                        int uicNodeId = TextUtils.GetIdFromPrefixedString(uicName);
-                        if (paraNodeId == uicNodeId)
-                        {
-                            res = true;
-                            diagram = (inl as InlineUIContainer);
-                            break;
-                        }
-                    }
-                }
-            }
-
-            return res;
-        }
-
-        /// <summary>
         /// Builds a paragraph with the diagram.
         /// </summary>
         /// <param name="diag"></param>
         /// <param name="pos"></param>
         /// <returns></returns>
-        private Paragraph BuildDiagramParagraph(IntroViewDiagram diag, TreeNode nd)
+        private Paragraph BuildDiagramParagraph(IntroViewDiagram diag, TreeNode nd, bool isFlipped)
         {
             Paragraph para = new Paragraph();
             para.Margin = new Thickness(20, 20, 0, 20);
-            para.Name = _para_diagram_ + nd.NodeId.ToString();
+            para.Name = RichTextBoxUtilities.DiagramParaPrefix + nd.NodeId.ToString();
 
-            CreateDiagramElements(para, diag, nd, false);
+            CreateDiagramElements(para, diag, nd, isFlipped);
             return para;
         }
 
@@ -1030,6 +959,10 @@ namespace ChessForge
             para.Inlines.Clear();
             Canvas baseCanvas = SetupDiagramCanvas();
             Image imgChessBoard = CreateChessBoard(baseCanvas, diag);
+            if (flipState)
+            {
+                diag.Chessboard.FlipBoard();
+            }
             diag.Chessboard.EnableShapes(true, nd);
             baseCanvas.Children.Add(imgChessBoard);
 
@@ -1352,6 +1285,23 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// If mouse is outside a diagram, make sure the main board is blue
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (_rtb.CaretPosition.Paragraph != null)
+            {
+                if (!RichTextBoxUtilities.IsDiagramPara(_rtb.CaretPosition.Paragraph))
+                {
+                    RestoreSelectionOpacity();
+                    AppState.MainWin.UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
+                }
+            }
+        }
+
+        /// <summary>
         /// Handles the Text Change event. Sets the Workbook's dirty flag.
         /// </summary>
         /// <param name="sender"></param>
@@ -1364,9 +1314,14 @@ namespace ChessForge
             TextPointer tpCaret = _rtb.CaretPosition;
             Paragraph para = tpCaret.Paragraph;
 
-            if (IsDiagramPara(para, out InlineUIContainer diagram))
+            if (RichTextBoxUtilities.GetDiagramFromParagraph(para, out InlineUIContainer diagram))
             {
                 CleanupDiagramPara(para, diagram);
+            }
+            else
+            {
+                RestoreSelectionOpacity();
+                AppState.MainWin.UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
             }
 
             AppState.IsDirty = true;

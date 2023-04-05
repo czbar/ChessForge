@@ -2649,6 +2649,13 @@ namespace ChessForge
             {
                 e.Handled = true;
             }
+            else
+            {
+                if (_introView != null)
+                {
+                    _introView.PreviewKeyDown(sender, e);
+                }
+            }
         }
 
         /// <summary>
