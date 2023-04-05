@@ -1375,6 +1375,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Engine Parameters.
+        /// </summary>
+        public static string EngineParameters {
+            get {
+                return ResourceManager.GetString("EngineParameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The engine played.
         /// </summary>
         public static string EnginePlayed {
@@ -2311,6 +2320,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language / Notation.
+        /// </summary>
+        public static string LanguageNotation {
+            get {
+                return ResourceManager.GetString("LanguageNotation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Most recent file $0 could not be found..
         /// </summary>
         public static string LastFileNotFound {
@@ -2419,7 +2437,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Merge and Save new moves from this session into the source.
+        ///   Looks up a localized string similar to Merge new moves from this session into the source.
         /// </summary>
         public static string MergeTrainingIntoStudy {
             get {
@@ -2532,6 +2550,15 @@ namespace ChessForge.Properties {
         public static string Moves {
             get {
                 return ResourceManager.GetString("Moves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Selection (cp).
+        /// </summary>
+        public static string MoveSelectionAccuracy {
+            get {
+                return ResourceManager.GetString("MoveSelectionAccuracy", resourceCulture);
             }
         }
         
@@ -3617,7 +3644,16 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In Game.
+        ///   Looks up a localized string similar to Evaluation Time (s).
+        /// </summary>
+        public static string ThinkTimeEvaluation {
+            get {
+                return ResourceManager.GetString("ThinkTimeEvaluation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Move Time (s).
         /// </summary>
         public static string ThinkTimeInGame {
             get {

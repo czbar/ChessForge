@@ -123,6 +123,9 @@
   <data name="Language" xml:space="preserve">
     <value>Language</value>
   </data>
+  <data name="LanguageNotation" xml:space="preserve">
+    <value>Language / Notation</value>
+  </data>
   <data name="LangSystem" xml:space="preserve">
     <value>System</value>
   </data>
@@ -1003,8 +1006,17 @@
   <data name="EngineTimePerMove" xml:space="preserve">
     <value>Engine Think Time (s)</value>
   </data>
+  <data name="EngineParameters" xml:space="preserve">
+    <value>Engine Parameters</value>
+  </data>
   <data name="ThinkTimeInGame" xml:space="preserve">
-    <value>In Game</value>
+    <value>Game Move Time (s)</value>
+  </data>
+  <data name="ThinkTimeEvaluation" xml:space="preserve">
+    <value>Evaluation Time (s)</value>
+  </data>
+  <data name="MoveSelectionAccuracy" xml:space="preserve">
+    <value>Move Selection (cp)</value>
   </data>
   <data name="MoveReplay" xml:space="preserve">
     <value>Move Replay</value>

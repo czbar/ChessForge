@@ -17,6 +17,11 @@ ChessForge=
 #english: Language=Language
 Language=
 
+#description: Language/Notation
+#english: LanguageNotation=Language / Notation
+LanguageNotation=
+
+
 #description: Language System
 #english: LangSystem=System
 LangSystem=
@@ -1325,9 +1330,21 @@ EngineExecutable=
 #english: EngineTimePerMove=Engine Think Time (s)
 EngineTimePerMove=
 
+#description: Engine Parameters (group frame title)
+#english: EngineParameters=Engine Parameters
+EngineParameters=
+
 #description: Time to think in the Game (inside a frame titled "Engine Time per Move")
-#english: ThinkTimeInGame=In Game
+#english: ThinkTimeInGame=Game Move Time (s)
 ThinkTimeInGame=
+
+#description: Time to think in Evaluation (inside a frame titled "Engine Time per Move")
+#english: ThinkTimeEvaluation=Evaluation Time (s)
+ThinkTimeEvaluation=
+
+#description: Allows diff from best move when selecting game moves
+#english: MoveSelectionAccuracy=Move Selection (cp)
+MoveSelectionAccuracy=
 
 #description: Move Replay(group frame title)
 #english: MoveReplay=Move Replay
