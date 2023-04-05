@@ -20,7 +20,7 @@ namespace ChessForge
     {
         /// <summary>
         /// Not needed in this class
-        /// but required for the calss dervied from RichTextBuilder.
+        /// but required for the class derived from RichTextBuilder.
         /// </summary>
         internal override Dictionary<string, RichTextPara> RichTextParas => throw new NotImplementedException();
 
