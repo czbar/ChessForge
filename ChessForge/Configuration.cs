@@ -13,8 +13,22 @@ namespace ChessForge
     public class Configuration
     {
         //*********************************
-        // CONFIGURATION ITEMS
+        //
+        //   SPECIAL/SYSTEM DATA
+        //
         //*********************************
+
+        /// <summary>
+        /// Physical memory on the system.
+        /// </summary>
+        public long TotalMemory;
+
+        //*********************************
+        //
+        //   CONFIGURATION ITEMS
+        //
+        //*********************************
+
         /// <summary>
         /// Last directory from which a Workbook PGN file was read.
         /// </summary>

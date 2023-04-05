@@ -19,6 +19,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using WebAccess;
+using System.Management;
 
 namespace ChessForge
 {
@@ -346,6 +347,18 @@ namespace ChessForge
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                ObjectQuery winQuery = new ObjectQuery("SELECT * FROM Win32_ComputerSystem");
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher(winQuery);
+                foreach (ManagementObject item in searcher.Get())
+                {
+                    long totalMemory = Convert.ToInt64(item["TotalPhysicalMemory"]);
+                    Configuration.TotalMemory = totalMemory;
+                }
+            }
+            catch { }
+
             if (Configuration.IsMainWinMaximized())
             {
                 this.WindowState = WindowState.Maximized;
