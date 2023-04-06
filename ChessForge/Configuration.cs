@@ -23,6 +23,12 @@ namespace ChessForge
         /// </summary>
         public static long TotalMemory;
 
+        /// <summary>
+        /// Number of processor cores in the system.
+        /// </summary>
+        public static int CoreCount;
+
+
         //*********************************
         //
         //   CONFIGURATION ITEMS
@@ -94,12 +100,55 @@ namespace ChessForge
         /// <summary>
         /// Number of threads for the engine to use. 
         /// </summary>
-        public static int EngineThreads = 1;
+        public static int EngineThreads
+        {
+            get
+            {
+                if (_engineThreads > 0)
+                {
+                    return _engineThreads;
+                }
+                else
+                {
+                    return Math.Max((int)(CoreCount / 2), 1);
+                }
+            }
+            set
+            {
+                _engineThreads = Math.Max(1, value);
+            }
+        }
 
         /// <summary>
         /// The size in MB of the engine's hash table memory
         /// </summary>
-        public static long EngineHashSize = 0;
+        public static long EngineHashSize
+        {
+            get
+            {
+                long ret;
+                if (_engineHashSize > 0)
+                {
+                    ret = _engineHashSize;
+                }
+                else
+                {
+                    if (TotalMemory > 0)
+                    {
+                        ret = (long)(((double)TotalMemory / (double)(1024 * 1024)) / (double)5);
+                    }
+                    else
+                    {
+                        ret = 16; // stockfish default
+                    }
+                }
+                return Math.Max(1, ret);
+            }
+            set
+            {
+                _engineHashSize = Math.Max(1, value);
+            }
+        }
 
 
         /// <summary>
@@ -196,9 +245,14 @@ namespace ChessForge
         /// </summary>
         public static int DebugLevel = 1;
 
+        // allowed diff between the chosen engine move and the best move
         private static int _viableMoveCpDiff = 50;
 
-        private static int _engineHashSize = 0;
+        // the size of engine hash table in MB
+        private static long _engineHashSize = 0;
+
+        // number of allowed threads
+        private static int _engineThreads = 0;
 
         // max value by which a font size can be increased from the standard size
         private const int MAX_UP_FONT_SIZE_DIFF = 4;
@@ -244,7 +298,7 @@ namespace ChessForge
         /// Time for the engine to evaluate position in the evaluation mode.
         /// </summary>
         private const string CFG_ENGINE_EVALUATION_TIME = "EngineEvaluationTime";
-        private const string CFG_ENGINE_THREADS= "EngineThreads";
+        private const string CFG_ENGINE_THREADS = "EngineThreads";
         private const string CFG_ENGINE_HASH_SIZE = "EngineHashSize";
         private const string CFG_ENGINE_MPV = "EngineMpv";
         private const string CFG_VIABLE_MOVE_CP_DIFF = "ViableMoveCpDiff";
@@ -695,10 +749,10 @@ namespace ChessForge
                             int.TryParse(value, out EngineMoveTime);
                             break;
                         case CFG_ENGINE_THREADS:
-                            int.TryParse(value, out EngineThreads);
+                            int.TryParse(value, out _engineThreads);
                             break;
                         case CFG_ENGINE_HASH_SIZE:
-                            long.TryParse(value, out EngineHashSize);
+                            long.TryParse(value, out _engineHashSize);
                             break;
                         case CFG_VIABLE_MOVE_CP_DIFF:
                             int.TryParse(value, out _viableMoveCpDiff);
