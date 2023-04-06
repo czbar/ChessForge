@@ -356,6 +356,8 @@ namespace ChessForge
                     long totalMemory = Convert.ToInt64(item["TotalPhysicalMemory"]);
                     Configuration.TotalMemory = totalMemory;
                 }
+
+                Configuration.CoreCount = Environment.ProcessorCount;
             }
             catch { }
 
@@ -2236,6 +2238,11 @@ namespace ChessForge
                 }
 
                 Configuration.WriteOutConfiguration();
+
+                if (dlg.EngineParamsChanged)
+                {
+                    EngineMessageProcessor.SendOptionsCommand();
+                }
 
                 if (dlg.UseFigurinesChanged)
                 {
