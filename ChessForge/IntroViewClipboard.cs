@@ -1,7 +1,9 @@
-﻿using GameTree;
+﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -58,7 +60,7 @@ namespace ChessForge
         /// Adds a paragraph element to the Clipboard.
         /// </summary>
         /// <param name="para"></param>
-        public static void AddParagraph(Paragraph para, bool? flipped)
+        public static void AddParagraph(Paragraph para)
         {
             IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Paragraph);
 
@@ -70,11 +72,6 @@ namespace ChessForge
             //paraToAdd.TextDecorations = para.TextDecorations;
 
             element.DataObject = paraToAdd;
-
-            if (flipped != null)
-            {
-                element.BoolState = flipped;
-            }
 
             Elements.Add(element);
         }
@@ -94,10 +91,16 @@ namespace ChessForge
         /// Adds a diagram element to the clipboard.
         /// </summary>
         /// <param name="diagram"></param>
-        public static void AddDiagram(IntroViewDiagram diagram)
+        public static void AddDiagram(TreeNode node, bool? flipped)
         {
             IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Diagram);
-            element.DataObject = diagram;
+            element.DataObject = node;
+
+            if (flipped != null)
+            {
+                element.BoolState = flipped;
+            }
+
             Elements.Add(element);
         }
     }

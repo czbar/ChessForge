@@ -81,14 +81,10 @@ namespace ChessForge
                     {
                         case IntroViewClipboard.ElementType.Paragraph:
                             Paragraph paragraph = element.DataObject as Paragraph;
-                            if (RichTextBoxUtilities.IsDiagramPara(paragraph))
-                            {
-                                InsertDiagramFromClipboard(paragraph, element.BoolState == true);
-                            }
-                            else
-                            {
-                                InsertParagraphFromClipboard(paragraph);
-                            }
+                            InsertParagraphFromClipboard(paragraph);
+                            break;
+                        case IntroViewClipboard.ElementType.Diagram:
+                            InsertDiagramFromClipboard(element.DataObject as TreeNode, element.BoolState == true);
                             break;
                         case IntroViewClipboard.ElementType.Run:
                             InsertRunFromClipboard(element.DataObject as Run);
@@ -117,10 +113,9 @@ namespace ChessForge
         /// Creats a new diagram paragraph and inserts it.
         /// </summary>
         /// <param name="diagPara"></param>
-        public void InsertDiagramFromClipboard(Paragraph diagPara, bool isFlipped)
+        public void InsertDiagramFromClipboard(TreeNode nodeForDiag, bool isFlipped)
         {
-            int nodeId = TextUtils.GetIdFromPrefixedString(diagPara.Name);
-            TreeNode nd = GetNodeById(nodeId);
+            TreeNode nd = nodeForDiag.CloneMe(true);
             if (nd != null)
             {
                 Paragraph para = InsertDiagram(nd, isFlipped);
@@ -161,9 +156,7 @@ namespace ChessForge
         private void InsertMoveFromClipboard(TreeNode nodeForMove)
         {
             TreeNode node = nodeForMove.CloneMe(true);
-            TextBlock tb = InsertMove(node, true);
-            TextPointer nextPos = _rtb.CaretPosition.GetNextInsertionPosition(LogicalDirection.Forward);
-            _rtb.CaretPosition =  nextPos ?? _rtb.Document.ContentEnd;
+            InsertMove(node, true);
         }
 
         /// <summary>
@@ -203,9 +196,15 @@ namespace ChessForge
                                 bool? flipped = null;
                                 if (RichTextBoxUtilities.IsDiagramPara(positionParent))
                                 {
-                                    flipped = GetDiagramFlipState(positionParent); 
+                                    int nodeId = TextUtils.GetIdFromPrefixedString(positionParent.Name);
+                                    TreeNode node = GetNodeById(nodeId);
+                                    flipped = GetDiagramFlipState(positionParent);
+                                    IntroViewClipboard.AddDiagram(node, flipped);
                                 }
-                                IntroViewClipboard.AddParagraph(position.Parent as Paragraph, flipped);
+                                else
+                                {
+                                    IntroViewClipboard.AddParagraph(position.Parent as Paragraph);
+                                }
                                 currParagraph = position.Parent as Paragraph;
                             }
                         }
