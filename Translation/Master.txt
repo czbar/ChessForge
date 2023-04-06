@@ -519,7 +519,7 @@ OpenSelectedChapter=Open Selected Chapter
 RenameSelectedChapter=Rename Selected Chapter
 
 #Create Intro 
-CreateIntro=Create Intro for Selected Chapter
+CreateIntro=Create Intro for This Chapter
 
 #Open the selected game
 OpenSelectedGame=Open Selected Game
@@ -1045,6 +1045,12 @@ ThinkTimeEvaluation=Evaluation Time (s)
 
 #Allows diff from best move when selecting game moves
 MoveSelectionAccuracy=Move Selection (cp)
+
+#Number of threads for the engine to use
+EngineThreads=Thread Count
+
+#Engine hash table size
+EngineHashSize=Hash Table (MB)
 
 #Move Replay(group frame title)
 MoveReplay=Move Replay

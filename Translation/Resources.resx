@@ -565,7 +565,7 @@
     <value>Rename Selected Chapter</value>
   </data>
   <data name="CreateIntro" xml:space="preserve">
-    <value>Create Intro for Selected Chapter</value>
+    <value>Create Intro for This Chapter</value>
   </data>
   <data name="OpenSelectedGame" xml:space="preserve">
     <value>Open Selected Game</value>
@@ -1017,6 +1017,12 @@
   </data>
   <data name="MoveSelectionAccuracy" xml:space="preserve">
     <value>Move Selection (cp)</value>
+  </data>
+  <data name="EngineThreads" xml:space="preserve">
+    <value>Thread Count</value>
+  </data>
+  <data name="EngineHashSize" xml:space="preserve">
+    <value>Hash Table (MB)</value>
   </data>
   <data name="MoveReplay" xml:space="preserve">
     <value>Move Replay</value>

@@ -668,7 +668,7 @@ OpenSelectedChapter=Otwórz Wybrany Rozdział
 RenameSelectedChapter=Zmień Nazwę Rozdziału
 
 #description: Create Intro 
-#english: CreateIntro=Create Intro for Selected Chapter
+#english: CreateIntro=Create Intro for This Chapter
 CreateIntro=Utwórz Wstęp do Rozdziału
 
 #description: Open the selected game
@@ -1345,6 +1345,14 @@ ThinkTimeEvaluation=Czas na ewaluację (s)
 #description: Allows diff from best move when selecting game moves
 #english: MoveSelectionAccuracy=Move Selection (cp)
 MoveSelectionAccuracy=Wybór ruchu (cp)
+
+#description: Number of threads for the engine to use
+#english: EngineThreads=Thread Count
+EngineThreads=Liczba wątków
+
+#description: Engine hash table size
+#english: EngineHashSize=Hash Table (MB)
+EngineHashSize=Tablica mieszająca (MB)
 
 #description: Move Replay(group frame title)
 #english: MoveReplay=Move Replay

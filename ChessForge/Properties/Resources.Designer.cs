@@ -952,7 +952,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Intro for Selected Chapter.
+        ///   Looks up a localized string similar to Create Intro for This Chapter.
         /// </summary>
         public static string CreateIntro {
             get {
@@ -1366,6 +1366,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hash Table (MB).
+        /// </summary>
+        public static string EngineHashSize {
+            get {
+                return ResourceManager.GetString("EngineHashSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chess Engine not available..
         /// </summary>
         public static string EngineNotAvailable {
@@ -1398,6 +1407,15 @@ namespace ChessForge.Properties {
         public static string EngineReplaced {
             get {
                 return ResourceManager.GetString("EngineReplaced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thread Count.
+        /// </summary>
+        public static string EngineThreads {
+            get {
+                return ResourceManager.GetString("EngineThreads", resourceCulture);
             }
         }
         

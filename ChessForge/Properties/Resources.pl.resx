@@ -1017,6 +1017,12 @@
   <data name="MoveSelectionAccuracy" xml:space="preserve">
     <value>Wybór ruchu (cp)</value>
   </data>
+  <data name="EngineThreads" xml:space="preserve">
+    <value>Liczba wątków</value>
+  </data>
+  <data name="EngineHashSize" xml:space="preserve">
+    <value>Tablica mieszająca (MB)</value>
+  </data>
   <data name="MoveReplay" xml:space="preserve">
     <value>Odtwarzanie Ruchów</value>
   </data>
