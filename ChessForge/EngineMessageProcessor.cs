@@ -71,7 +71,15 @@ namespace ChessForge
         public static bool StartEngineService()
         {
             string enginePath = Configuration.EngineExecutableFilePath();
-            return ChessEngineService.StartEngine(enginePath);
+
+            // get the configured options
+            List<KeyValuePair<string, string>> options = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("Threads", Configuration.EngineThreads.ToString()),
+                new KeyValuePair<string, string>("Hash", Configuration.EngineHashSize.ToString())
+            };
+
+            return ChessEngineService.StartEngine(enginePath, options);
         }
 
         /// <summary>

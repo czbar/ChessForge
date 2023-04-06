@@ -2,6 +2,7 @@
 using System.IO;
 using System.Diagnostics;
 using System.Timers;
+using System.Collections.Generic;
 
 namespace EngineService
 {
@@ -122,6 +123,8 @@ namespace EngineService
         {
         }
 
+        // engine options
+        private List<KeyValuePair<string, string>> _options;
 
         //**************************************************
         //
@@ -134,10 +137,12 @@ namespace EngineService
         /// Initializes all relevant objects and variables.
         /// </summary>
         /// <returns></returns>
-        public bool StartEngine(string enginePath)
+        public bool StartEngine(string enginePath, List<KeyValuePair<string, string>> options)
         {
             try
             {
+                _options = options;
+
                 EngineLog.Message("Starting the Engine: " + enginePath);
                 _engineProcess = new Process();
                 _engineProcess.StartInfo.FileName = enginePath;
@@ -295,18 +300,32 @@ namespace EngineService
             }
         }
 
-
-        //**************************************************
-        //
-        // PRIVATE METHODS
-        //
-        //**************************************************
-
         /// <summary>
-        /// Writes directly to the engine.
+        /// Sens a setoption command.
         /// </summary>
-        /// <param name="command"></param>
-        private void WriteOut(string command)
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public void SendSetOptionCommand(string name, string value)
+        {
+            lock (_lockSendCommand)
+            {
+                string command = string.Format(UciCommands.ENG_SET_OPTION, name, value);
+                EngineLog.Message("Sending SetOption command: " + command);
+                WriteOut(command);
+            }
+        }
+
+            //**************************************************
+            //
+            // PRIVATE METHODS
+            //
+            //**************************************************
+
+            /// <summary>
+            /// Writes directly to the engine.
+            /// </summary>
+            /// <param name="command"></param>
+            private void WriteOut(string command)
         {
             _strmWriter.WriteLine(command);
             EngineLog.Message("Command sent: " + command + " : State=" + _currentState.ToString());
@@ -539,6 +558,18 @@ namespace EngineService
             {
                 _currentState = State.IDLE;
             }
+
+            try
+            {
+                if (_options != null)
+                {
+                    foreach (var option in _options)
+                    {
+                        SendSetOptionCommand(option.Key, option.Value);
+                    }
+                }
+            }
+            catch { }
         }
 
         /// <summary>

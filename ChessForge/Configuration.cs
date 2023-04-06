@@ -21,7 +21,7 @@ namespace ChessForge
         /// <summary>
         /// Physical memory on the system.
         /// </summary>
-        public long TotalMemory;
+        public static long TotalMemory;
 
         //*********************************
         //
@@ -90,6 +90,17 @@ namespace ChessForge
         /// (in milliseconds)
         /// </summary>
         public static int EngineMoveTime = 1000;
+
+        /// <summary>
+        /// Number of threads for the engine to use. 
+        /// </summary>
+        public static int EngineThreads = 1;
+
+        /// <summary>
+        /// The size in MB of the engine's hash table memory
+        /// </summary>
+        public static long EngineHashSize = 0;
+
 
         /// <summary>
         /// When choosing "viable" repsonsed from the engine
@@ -187,6 +198,8 @@ namespace ChessForge
 
         private static int _viableMoveCpDiff = 50;
 
+        private static int _engineHashSize = 0;
+
         // max value by which a font size can be increased from the standard size
         private const int MAX_UP_FONT_SIZE_DIFF = 4;
 
@@ -231,6 +244,8 @@ namespace ChessForge
         /// Time for the engine to evaluate position in the evaluation mode.
         /// </summary>
         private const string CFG_ENGINE_EVALUATION_TIME = "EngineEvaluationTime";
+        private const string CFG_ENGINE_THREADS= "EngineThreads";
+        private const string CFG_ENGINE_HASH_SIZE = "EngineHashSize";
         private const string CFG_ENGINE_MPV = "EngineMpv";
         private const string CFG_VIABLE_MOVE_CP_DIFF = "ViableMoveCpDiff";
 
@@ -384,6 +399,8 @@ namespace ChessForge
 
                 sb.Append(CFG_ENGINE_MOVE_TIME + "=" + EngineMoveTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_EVALUATION_TIME + "=" + EngineEvaluationTime.ToString() + Environment.NewLine);
+                sb.Append(CFG_ENGINE_THREADS + "=" + EngineThreads.ToString() + Environment.NewLine);
+                sb.Append(CFG_ENGINE_HASH_SIZE + "=" + EngineHashSize.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_MPV + "=" + EngineMpv.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_FONT_SIZE_DIFF + "=" + FontSizeDiff.ToString() + Environment.NewLine);
@@ -677,8 +694,11 @@ namespace ChessForge
                         case CFG_ENGINE_MOVE_TIME:
                             int.TryParse(value, out EngineMoveTime);
                             break;
-                        case CFG_ENGINE_MPV:
-                            int.TryParse(value, out EngineMpv);
+                        case CFG_ENGINE_THREADS:
+                            int.TryParse(value, out EngineThreads);
+                            break;
+                        case CFG_ENGINE_HASH_SIZE:
+                            long.TryParse(value, out EngineHashSize);
                             break;
                         case CFG_VIABLE_MOVE_CP_DIFF:
                             int.TryParse(value, out _viableMoveCpDiff);
