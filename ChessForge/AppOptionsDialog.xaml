@@ -12,14 +12,18 @@
         <Button x:Name="UiBtnLocateEngine" Content=". . ." HorizontalAlignment="Left" Margin="536,34,15,0" VerticalAlignment="Top" RenderTransformOrigin="-0.681,0.002" Width="28" Click="UiBtnLocateEngine_Click"/>
         <TextBox x:Name="UiTbEngineExe" IsEnabled="False" HorizontalAlignment="Left" Margin="132,36,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="387"/>
         
-        <GroupBox x:Name="UiGbEngParameters" HorizontalAlignment="Left" Height="245" Header="{x:Static p:Resources.EngineParameters}" Margin="13,86,0,0" VerticalAlignment="Top" Width="205">
+        <GroupBox x:Name="UiGbEngParameters" HorizontalAlignment="Left" Height="244" Header="{x:Static p:Resources.EngineParameters}" Margin="13,86,0,0" VerticalAlignment="Top" Width="215">
             <StackPanel>
-                <Label x:Name="UiLblThinkTimeInGame" Content="{x:Static p:Resources.ThinkTimeInGame}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="118"/>
-                <TextBox x:Name="UiTbEngTimeInGame" HorizontalAlignment="Left" HorizontalContentAlignment="Center"  Margin="140,-20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
+                <Label x:Name="UiLblThinkTimeInGame" Content="{x:Static p:Resources.ThinkTimeInGame}" HorizontalAlignment="Left" Margin="0,25,0,0" VerticalAlignment="Top" Width="118"/>
+                <TextBox x:Name="UiTbEngTimeInGame" HorizontalAlignment="Left" HorizontalContentAlignment="Center"  Margin="158,-20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
                 <Label x:Name="UiLblEvalTime" Content="{x:Static p:Resources.ThinkTimeEvaluation}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="UiTbEngEvalTime" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="140,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
+                <TextBox x:Name="UiTbEngEvalTime" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="158,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
                 <Label x:Name="UiLblMoveAcc" Content="{x:Static p:Resources.MoveSelectionAccuracy}" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="UiTbMoveAcc" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="140,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
+                <TextBox x:Name="UiTbMoveAcc" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="158,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
+                <Label x:Name="UiLblThreads" Content="{x:Static p:Resources.EngineThreads}" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="UiTbThreads" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="158,-20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
+                <Label x:Name="UiLblHash" Content="{x:Static p:Resources.EngineHashSize}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="UiTbHashSize" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="143,-20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="55"/>
             </StackPanel>
         </GroupBox>
         <GroupBox x:Name="UiGbAutoReplay" HorizontalAlignment="Left" Height="105" Header="{x:Static p:Resources.MoveReplay}" Margin="230,86,0,0" VerticalAlignment="Top" Width="175">
