@@ -1940,10 +1940,53 @@ namespace ChessForge
         {
             if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
             {
-                ActiveLine.PreviewKeyDown(sender, e);
+                // first handle special cases
+                if (!HandleSpecialKeys(sender, e))
+                {
+                    ActiveLine.PreviewKeyDown(sender, e);
+                }
             }
         }
 
+        /// <summary>
+        /// Handles special cases that need to be handled here and not
+        /// in ActiveLine
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        private bool HandleSpecialKeys(object sender, KeyEventArgs e)
+        {
+            bool handled = false;
+
+            if (Keyboard.Modifiers != ModifierKeys.Shift && ActiveTreeView != null)
+            {
+                TreeNode node = null;
+                switch (e.Key)
+                {
+                    case Key.Up:
+                        node = ActiveTreeView.SelectSiblingLineAndMove(true);
+                        handled = true;
+                        break;
+                    case Key.Down:
+                        node = ActiveTreeView.SelectSiblingLineAndMove(false);
+                        handled = true;
+                        break;
+                }
+
+                if (node != null)
+                {
+                    SetActiveLine(node.LineId, node.NodeId);
+                }
+            }
+
+            if (handled)
+            {
+                e.Handled = true;
+            }
+
+            return handled;
+        }
 
         /// <summary>
         /// Main Window received a Key Up event.
@@ -1966,9 +2009,6 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRtbStudyTree_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            // Hand it off to the ActiveLine view.
-            // In the future we may want to handle some key strokes here
-            // but for now we will respond to whatever the ActiveLine view will request.
             ActiveLine.PreviewKeyDown(sender, e);
         }
 
