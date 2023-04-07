@@ -17,6 +17,11 @@ ChessForge=Chess Forge
 #english: Language=Language
 Language=Język
 
+#description: Language/Notation
+#english: LanguageNotation=Language / Notation
+LanguageNotation=Język / Notacja
+
+
 #description: Language System
 #english: LangSystem=System
 LangSystem=Systemowy
@@ -663,7 +668,7 @@ OpenSelectedChapter=Otwórz Wybrany Rozdział
 RenameSelectedChapter=Zmień Nazwę Rozdziału
 
 #description: Create Intro 
-#english: CreateIntro=Create Intro for Selected Chapter
+#english: CreateIntro=Create Intro for This Chapter
 CreateIntro=Utwórz Wstęp do Rozdziału
 
 #description: Open the selected game
@@ -1325,9 +1330,29 @@ EngineExecutable=Silnik
 #english: EngineTimePerMove=Engine Think Time (s)
 EngineTimePerMove=Czas Namysłu Silnika (s)
 
+#description: Engine Parameters (group frame title)
+#english: EngineParameters=Engine Parameters
+EngineParameters=Parametry Silnika
+
 #description: Time to think in the Game (inside a frame titled "Engine Time per Move")
-#english: ThinkTimeInGame=In Game
-ThinkTimeInGame=W Partii
+#english: ThinkTimeInGame=Game Move Time (s)
+ThinkTimeInGame=Czas na posunięcie
+
+#description: Time to think in Evaluation (inside a frame titled "Engine Time per Move")
+#english: ThinkTimeEvaluation=Evaluation Time (s)
+ThinkTimeEvaluation=Czas na ewaluację (s)
+
+#description: Allows diff from best move when selecting game moves
+#english: MoveSelectionAccuracy=Move Selection (cp)
+MoveSelectionAccuracy=Wybór ruchu (cp)
+
+#description: Number of threads for the engine to use
+#english: EngineThreads=Thread Count
+EngineThreads=Liczba wątków
+
+#description: Engine hash table size
+#english: EngineHashSize=Hash Table (MB)
+EngineHashSize=Tablica mieszająca (MB)
 
 #description: Move Replay(group frame title)
 #english: MoveReplay=Move Replay

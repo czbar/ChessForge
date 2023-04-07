@@ -93,7 +93,7 @@ namespace StockfishTest
         /// <param name="engine"></param>
         private static void StartStockfishEngine(EngineService.EngineProcess engine)
         {
-            engine.StartEngine("stockfish_15_x86_64.exe");
+            engine.StartEngine("stockfish_15_x86_64.exe", null);
 
             // wait for "readyok"
             while (true)

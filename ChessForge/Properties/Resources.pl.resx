@@ -123,6 +123,9 @@
   <data name="Language" xml:space="preserve">
     <value>Język</value>
   </data>
+  <data name="LanguageNotation" xml:space="preserve">
+    <value>Język / Notacja</value>
+  </data>
   <data name="LangSystem" xml:space="preserve">
     <value>Systemowy</value>
   </data>
@@ -1002,8 +1005,23 @@
   <data name="EngineTimePerMove" xml:space="preserve">
     <value>Czas Namysłu Silnika (s)</value>
   </data>
+  <data name="EngineParameters" xml:space="preserve">
+    <value>Parametry Silnika</value>
+  </data>
   <data name="ThinkTimeInGame" xml:space="preserve">
-    <value>W Partii</value>
+    <value>Czas na posunięcie</value>
+  </data>
+  <data name="ThinkTimeEvaluation" xml:space="preserve">
+    <value>Czas na ewaluację (s)</value>
+  </data>
+  <data name="MoveSelectionAccuracy" xml:space="preserve">
+    <value>Wybór ruchu (cp)</value>
+  </data>
+  <data name="EngineThreads" xml:space="preserve">
+    <value>Liczba wątków</value>
+  </data>
+  <data name="EngineHashSize" xml:space="preserve">
+    <value>Tablica mieszająca (MB)</value>
   </data>
   <data name="MoveReplay" xml:space="preserve">
     <value>Odtwarzanie Ruchów</value>

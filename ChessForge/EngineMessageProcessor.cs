@@ -71,7 +71,31 @@ namespace ChessForge
         public static bool StartEngineService()
         {
             string enginePath = Configuration.EngineExecutableFilePath();
-            return ChessEngineService.StartEngine(enginePath);
+
+            // get the configured options
+            List<KeyValuePair<string, string>> options = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("Threads", Configuration.EngineThreads.ToString()),
+                new KeyValuePair<string, string>("Hash", Configuration.EngineHashSize.ToString())
+            };
+
+            return ChessEngineService.StartEngine(enginePath, GetEngineOptions());
+        }
+
+        /// <summary>
+        /// Sends selected setoption commands to the engine. 
+        /// </summary>
+        public static void SendOptionsCommand()
+        {
+            try
+            {
+                List<KeyValuePair<string, string>> options = GetEngineOptions();
+                foreach (var option in options)
+                {
+                    ChessEngineService.SendSetOptionCommand(option.Key, option.Value);
+                }
+            }
+            catch { }
         }
 
         /// <summary>
@@ -119,6 +143,23 @@ namespace ChessForge
             StopEngineEvaluation();
             EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
         }
+
+        /// <summary>
+        /// Builds a list of engine options to send to the engine
+        /// when options need to be set or reset.
+        /// </summary>
+        /// <returns></returns>
+        private static List<KeyValuePair<string, string>> GetEngineOptions()
+        {
+            List<KeyValuePair<string, string>> options = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("Threads", Configuration.EngineThreads.ToString()),
+                new KeyValuePair<string, string>("Hash", Configuration.EngineHashSize.ToString())
+            };
+
+            return options;
+        }
+
 
         //*********************************************************************************
         //

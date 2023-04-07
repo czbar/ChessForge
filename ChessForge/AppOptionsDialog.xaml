@@ -8,35 +8,45 @@
         mc:Ignorable="d"
         Title="{x:Static p:Resources.DlgTitleApplicationOptions}" Height="390" SizeToContent="Width">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >
-        <Button x:Name="_btnSave" IsDefault="True" Content="{x:Static p:Resources.Save}" HorizontalAlignment="Left" Margin="416,244,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnSave_Click"/>
-        <Button x:Name="_btnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="416,280,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnCancel_Click" />
-        <GroupBox x:Name="_boxEngThinkTime" HorizontalAlignment="Left" Height="115" Header="{x:Static p:Resources.EngineTimePerMove}" Margin="13,86,0,0" VerticalAlignment="Top" Width="165"/>
-        <Label x:Name="_lblThinkTimeInGame" Content="{x:Static p:Resources.ThinkTimeInGame}" HorizontalAlignment="Left" Margin="23,117,0,0" VerticalAlignment="Top" Width="84"/>
-        <TextBox x:Name="UiTbEngTimeInGame" HorizontalAlignment="Left" HorizontalContentAlignment="Center"  Margin="101,120,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60"/>
-        <TextBox x:Name="UiTbEngEvalTime" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="101,157,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60"/>
-        <Label x:Name="_lblEvalTime" Content="{x:Static p:Resources.Evaluation}" HorizontalAlignment="Left" Margin="23,154,0,0" VerticalAlignment="Top"/>
-        <GroupBox x:Name="_boxAutoReplay" HorizontalAlignment="Left" Height="115" Header="{x:Static p:Resources.MoveReplay}" Margin="191,86,0,0" VerticalAlignment="Top" Width="190">
-        </GroupBox>
-        <TextBox x:Name="UiTbReplaySpeed" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="308,123,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60"/>
-        <Label x:Name="_lblReplaySpeed" Content="{x:Static p:Resources.AutoReplaySpeed}" HorizontalAlignment="Left" Margin="208,118,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="UiCbAllowWheel" Content="{x:Static p:Resources.AllowMouseWheel}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,157,0,0" Height="20"/>
-        <Label x:Name="_lblEngineExe" Content="{x:Static p:Resources.EngineExecutable}" HorizontalAlignment="Left" Margin="17,31,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="_btnLocateEngine" Content=". . ." HorizontalAlignment="Left" Margin="536,34,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.681,0.002" Width="28" Click="UiBtnLocateEngine_Click"/>
+        <Label x:Name="UiLblEngineExe" Content="{x:Static p:Resources.EngineExecutable}" HorizontalAlignment="Left" Margin="17,31,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnLocateEngine" Content=". . ." HorizontalAlignment="Left" Margin="536,34,15,0" VerticalAlignment="Top" RenderTransformOrigin="-0.681,0.002" Width="28" Click="UiBtnLocateEngine_Click"/>
         <TextBox x:Name="UiTbEngineExe" IsEnabled="False" HorizontalAlignment="Left" Margin="132,36,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="387"/>
-        <GroupBox x:Name="UiGbViews" Header="{x:Static p:Resources.Views}" HorizontalAlignment="Left" Height="115" Margin="395,86,15,0" VerticalAlignment="Top" Width="Auto">
+        
+        <GroupBox x:Name="UiGbEngParameters" HorizontalAlignment="Left" Height="244" Header="{x:Static p:Resources.EngineParameters}" Margin="13,86,0,0" VerticalAlignment="Top" Width="215">
             <StackPanel>
-                <CheckBox x:Name="UiCbShowForkMoves" Content="{x:Static p:Resources.ShowMovesAtFork}" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top"/>
-                <CheckBox x:Name="UiCbSoundOn" Content="{x:Static p:Resources.SoundOn}" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="UiLblThinkTimeInGame" Content="{x:Static p:Resources.ThinkTimeInGame}" HorizontalAlignment="Left" Margin="0,25,0,0" VerticalAlignment="Top" Width="118"/>
+                <TextBox x:Name="UiTbEngTimeInGame" HorizontalAlignment="Left" HorizontalContentAlignment="Center"  Margin="158,-20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
+                <Label x:Name="UiLblEvalTime" Content="{x:Static p:Resources.ThinkTimeEvaluation}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="UiTbEngEvalTime" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="158,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
+                <Label x:Name="UiLblMoveAcc" Content="{x:Static p:Resources.MoveSelectionAccuracy}" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="UiTbMoveAcc" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="158,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
+                <Label x:Name="UiLblThreads" Content="{x:Static p:Resources.EngineThreads}" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="UiTbThreads" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="158,-20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
+                <Label x:Name="UiLblHash" Content="{x:Static p:Resources.EngineHashSize}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="UiTbHashSize" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="143,-20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="55"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="UiGbLanguage" Margin="13,210,0,0" Height="120" Width="165" Header="{x:Static p:Resources.Language}" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <ListBox x:Name="UiLbLanguages" Margin="10" />
-        </GroupBox>
-        <GroupBox x:Name="UiGbNotation" Header="{x:Static p:Resources.Notation}" HorizontalAlignment="Left" Margin="191,210,15,0" VerticalAlignment="Top" Height="120" Width="190">
+        <GroupBox x:Name="UiGbAutoReplay" HorizontalAlignment="Left" Height="105" Header="{x:Static p:Resources.MoveReplay}" Margin="230,86,0,0" VerticalAlignment="Top" Width="175">
             <StackPanel>
-                <CheckBox x:Name="UiCbFigurines" Content="{x:Static p:Resources.UseFigurines}" HorizontalAlignment="Left" Margin="15,38,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="UiLblReplaySpeed" Content="{x:Static p:Resources.AutoReplaySpeed}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="UiTbReplaySpeed" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="115,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
+                <CheckBox x:Name="UiCbAllowWheel" Content="{x:Static p:Resources.AllowMouseWheel}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,10,0,0" Height="20"/>
             </StackPanel>
         </GroupBox>
+        <GroupBox x:Name="UiGbViews" Header="{x:Static p:Resources.Views}" HorizontalAlignment="Left" Height="105" Margin="405,86,15,0" VerticalAlignment="Top" Width="Auto">
+            <StackPanel>
+                <CheckBox x:Name="UiCbShowForkMoves" Content="{x:Static p:Resources.ShowMovesAtFork}" HorizontalAlignment="Left" Margin="5,15,10,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="UiCbSoundOn" Content="{x:Static p:Resources.SoundOn}" HorizontalAlignment="Left" Margin="5,15,0,0" VerticalAlignment="Top"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="UiGbLanguage" Margin="230,200,15,0" Height="130" Width="175" Header="{x:Static p:Resources.LanguageNotation}" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <StackPanel>
+                <ListBox x:Name="UiLbLanguages" Margin="10,10,10,0" Height="60" />
+                <CheckBox x:Name="UiCbFigurines" Content="{x:Static p:Resources.UseFigurines}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top"/>
+            </StackPanel>
+        </GroupBox>
+        <Button x:Name="UiBtnSave" IsDefault="True" Content="{x:Static p:Resources.Save}" HorizontalAlignment="Left" Margin="436,240,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnSave_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="436,276,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnCancel_Click" />
 
     </Grid>
 </Window>

@@ -15,6 +15,8 @@
         public const string ENG_STOP = "stop";
         public const string ENG_SET_MULTIPV = "setoption name multipv value";
 
+        public const string ENG_SET_OPTION = "setoption name {0} value {1}";
+
         // responses from the engine
         public const string ENG_UCI_OK = "uciok";
         public const string ENG_READY_OK = "readyok";

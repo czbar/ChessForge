@@ -13,8 +13,28 @@ namespace ChessForge
     public class Configuration
     {
         //*********************************
-        // CONFIGURATION ITEMS
+        //
+        //   SPECIAL/SYSTEM DATA
+        //
         //*********************************
+
+        /// <summary>
+        /// Physical memory on the system.
+        /// </summary>
+        public static long TotalMemory;
+
+        /// <summary>
+        /// Number of processor cores in the system.
+        /// </summary>
+        public static int CoreCount;
+
+
+        //*********************************
+        //
+        //   CONFIGURATION ITEMS
+        //
+        //*********************************
+
         /// <summary>
         /// Last directory from which a Workbook PGN file was read.
         /// </summary>
@@ -78,12 +98,76 @@ namespace ChessForge
         public static int EngineMoveTime = 1000;
 
         /// <summary>
+        /// Number of threads for the engine to use. 
+        /// </summary>
+        public static int EngineThreads
+        {
+            get
+            {
+                if (_engineThreads > 0)
+                {
+                    return _engineThreads;
+                }
+                else
+                {
+                    return Math.Max((int)(CoreCount / 2), 1);
+                }
+            }
+            set
+            {
+                _engineThreads = Math.Max(1, value);
+            }
+        }
+
+        /// <summary>
+        /// The size in MB of the engine's hash table memory
+        /// </summary>
+        public static long EngineHashSize
+        {
+            get
+            {
+                long ret;
+                if (_engineHashSize > 0)
+                {
+                    ret = _engineHashSize;
+                }
+                else
+                {
+                    if (TotalMemory > 0)
+                    {
+                        ret = (long)(((double)TotalMemory / (double)(1024 * 1024)) / (double)5);
+                    }
+                    else
+                    {
+                        ret = 16; // stockfish default
+                    }
+                }
+                return Math.Max(1, ret);
+            }
+            set
+            {
+                _engineHashSize = Math.Max(1, value);
+            }
+        }
+
+
+        /// <summary>
         /// When choosing "viable" repsonsed from the engine
         /// during a game, moves under consideration must not
         /// be worse than by this centipawn value from the
         /// best move.
         /// </summary>
-        public static int ViableMoveCpDiff = 100;
+        public static int ViableMoveCpDiff
+        {
+            get
+            {
+                return Math.Max(0, _viableMoveCpDiff);
+            }
+            set
+            {
+                _viableMoveCpDiff = Math.Max(0, value);
+            }
+        }
 
         /// <summary>
         /// Number of moves to return with evaluations.
@@ -161,6 +245,15 @@ namespace ChessForge
         /// </summary>
         public static int DebugLevel = 1;
 
+        // allowed diff between the chosen engine move and the best move
+        private static int _viableMoveCpDiff = 50;
+
+        // the size of engine hash table in MB
+        private static long _engineHashSize = 0;
+
+        // number of allowed threads
+        private static int _engineThreads = 0;
+
         // max value by which a font size can be increased from the standard size
         private const int MAX_UP_FONT_SIZE_DIFF = 4;
 
@@ -205,6 +298,8 @@ namespace ChessForge
         /// Time for the engine to evaluate position in the evaluation mode.
         /// </summary>
         private const string CFG_ENGINE_EVALUATION_TIME = "EngineEvaluationTime";
+        private const string CFG_ENGINE_THREADS = "EngineThreads";
+        private const string CFG_ENGINE_HASH_SIZE = "EngineHashSize";
         private const string CFG_ENGINE_MPV = "EngineMpv";
         private const string CFG_VIABLE_MOVE_CP_DIFF = "ViableMoveCpDiff";
 
@@ -358,6 +453,8 @@ namespace ChessForge
 
                 sb.Append(CFG_ENGINE_MOVE_TIME + "=" + EngineMoveTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_EVALUATION_TIME + "=" + EngineEvaluationTime.ToString() + Environment.NewLine);
+                sb.Append(CFG_ENGINE_THREADS + "=" + EngineThreads.ToString() + Environment.NewLine);
+                sb.Append(CFG_ENGINE_HASH_SIZE + "=" + EngineHashSize.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_MPV + "=" + EngineMpv.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_FONT_SIZE_DIFF + "=" + FontSizeDiff.ToString() + Environment.NewLine);
@@ -651,13 +748,16 @@ namespace ChessForge
                         case CFG_ENGINE_MOVE_TIME:
                             int.TryParse(value, out EngineMoveTime);
                             break;
-                        case CFG_ENGINE_MPV:
-                            int.TryParse(value, out EngineMpv);
+                        case CFG_ENGINE_THREADS:
+                            int.TryParse(value, out _engineThreads);
+                            break;
+                        case CFG_ENGINE_HASH_SIZE:
+                            long.TryParse(value, out _engineHashSize);
                             break;
                         case CFG_VIABLE_MOVE_CP_DIFF:
-                            int.TryParse(value, out ViableMoveCpDiff);
+                            int.TryParse(value, out _viableMoveCpDiff);
                             // make sure this is not negative
-                            ViableMoveCpDiff = Math.Abs(ViableMoveCpDiff);
+                            ViableMoveCpDiff = Math.Abs(_viableMoveCpDiff);
                             break;
                         case CFG_PGN_EXP_BOOKMARKS:
                             PgnExportBookmarks = value != "0" ? true : false;

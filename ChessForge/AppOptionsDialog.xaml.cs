@@ -19,6 +19,12 @@ namespace ChessForge
         // UseFigurines value on entry
         private bool _currentUseFigurines;
 
+        // number of threads on entry
+        private int _currentEngineThreads;
+
+        // hash table size on entry
+        private long _currentEngineHashSize;
+
         /// <summary>
         /// The language selected upon exit
         /// </summary>
@@ -35,6 +41,12 @@ namespace ChessForge
         /// differs from the one configured before the dialog was opened
         /// </summary>
         public bool UseFigurinesChanged = false;
+
+        /// <summary>
+        /// Set on Exit to indicate whether engine parameters changed
+        /// that require updating engine options.
+        /// </summary>
+        public bool EngineParamsChanged = false;
 
         /// <summary>
         /// Configured path to the engine's executable.
@@ -57,6 +69,22 @@ namespace ChessForge
         /// while evaluating.
         /// </summary>
         public double EngineTimePerMoveInEvaluation;
+
+        /// <summary>
+        /// Tolerance of engine move selection in centipawns
+        /// while evaluating.
+        /// </summary>
+        public int EngineMoveAccuracy;
+
+        /// <summary>
+        /// Number of threads for the engine to use.
+        /// </summary>
+        public int EngineThreads;
+
+        /// <summary>
+        /// Hash table size.
+        /// </summary>
+        public long EngineHashSize;
 
         /// <summary>
         /// Whether mouse wheel can be used to scroll through the notation..
@@ -94,16 +122,24 @@ namespace ChessForge
             ReplaySpeed = (double)Configuration.MoveSpeed / 1000.0;
             EngineTimePerMoveInGame = (double)Configuration.EngineMoveTime / 1000.0;
             EngineTimePerMoveInEvaluation = (double)Configuration.EngineEvaluationTime / 1000.0;
+            EngineMoveAccuracy = (int)Configuration.ViableMoveCpDiff;
+            EngineThreads = (int)Configuration.EngineThreads;
+            EngineHashSize = (long)Configuration.EngineHashSize;
             AllowMouseWheel = Configuration.AllowMouseWheelForMoves;
             ShowMovesAtFork = Configuration.ShowMovesAtFork;
             SoundOn = Configuration.SoundOn;
 
             _currentUseFigurines = Configuration.UseFigurines;
+            _currentEngineThreads = Configuration.EngineThreads;
+            _currentEngineHashSize = Configuration.EngineHashSize;
 
             UiTbEngineExe.Text = EnginePath;
             UiTbReplaySpeed.Text = ReplaySpeed.ToString("F1");
             UiTbEngTimeInGame.Text = EngineTimePerMoveInGame.ToString("F1");
             UiTbEngEvalTime.Text = EngineTimePerMoveInEvaluation.ToString("F1");
+            UiTbMoveAcc.Text = EngineMoveAccuracy.ToString();
+            UiTbThreads.Text = EngineThreads.ToString();
+            UiTbHashSize.Text = EngineHashSize.ToString();
             UiCbAllowWheel.IsChecked = (AllowMouseWheel == true);
             UiCbShowForkMoves.IsChecked = (ShowMovesAtFork == true);
             UiCbSoundOn.IsChecked = (SoundOn == true);
@@ -154,6 +190,8 @@ namespace ChessForge
             }
 
             double dval;
+            int iVal;
+            long lVal;
 
             if (double.TryParse(UiTbReplaySpeed.Text, out dval))
             {
@@ -168,6 +206,21 @@ namespace ChessForge
             if (double.TryParse(UiTbEngEvalTime.Text, out dval))
             {
                 Configuration.EngineEvaluationTime = (int)(dval * 1000);
+            }
+
+            if (int.TryParse(UiTbMoveAcc.Text, out iVal))
+            {
+                Configuration.ViableMoveCpDiff = iVal;
+            }
+
+            if (int.TryParse(UiTbThreads.Text, out iVal))
+            {
+                Configuration.EngineThreads = iVal;
+            }
+
+            if (long.TryParse(UiTbHashSize.Text, out lVal))
+            {
+                Configuration.EngineHashSize = lVal;
             }
 
             Configuration.AllowMouseWheelForMoves = (UiCbAllowWheel.IsChecked == true);
@@ -188,6 +241,12 @@ namespace ChessForge
             if (_currentUseFigurines != Configuration.UseFigurines)
             {
                 UseFigurinesChanged = true;
+            }
+
+            if (_currentEngineThreads != Configuration.EngineThreads
+                || _currentEngineHashSize != Configuration.EngineHashSize)
+            {
+                EngineParamsChanged = true;
             }
 
             DialogResult = true;
