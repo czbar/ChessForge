@@ -2662,6 +2662,21 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Cuts the selected moves i.e. removes the selected moves
+        /// and places them in the clipboard.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnCutMoves_Click(object sender, RoutedEventArgs e)
+        {
+            if (ActiveTreeView != null)
+            {
+                ActiveTreeView.PlaceSelectedForCopyInClipboard();
+                ActiveTreeView.DeleteRemainingMoves();
+            }
+        }
+
+        /// <summary>
         /// Pastes moves from the Clipboard in the view
         /// </summary>
         /// <param name="sender"></param>

@@ -896,6 +896,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 break;
                             case "UiMnStCopyMoves":
+                            case "UiMnStCutMoves":
                                 menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
                                 break;
                             case "UiMnStPasteMoves":
@@ -965,6 +966,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
                                 break;
                             case "UiMnGameCopyMoves":
+                            case "UiMnGameCutMoves":
                                 menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
                                 break;
                             case "UiMnGamePasteMoves":
@@ -1032,6 +1034,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = exerciseIndex >= 0;
                                 break;
                             case "UiMnExercCopyMoves":
+                            case "UiMnExercCutMoves":
                                 menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
                                 break;
                             case "UiMnExercPasteMoves":
