@@ -804,6 +804,10 @@ ChapterThumbnail=Wizytówka Rozdziału
 #english: CopyMoves=Copy Moves
 CopyMoves=Skopiuj ruchy
 
+#description: Copy selected moves
+#english: CutMoves=Cut Moves
+CutMoves=Wytnij ruchy
+
 #description: Paste selected moves
 #english: PasteMoves=Paste Moves
 PasteMoves=Wklej ruchy

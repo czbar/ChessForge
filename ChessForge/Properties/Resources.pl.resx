@@ -660,6 +660,9 @@
   <data name="CopyMoves" xml:space="preserve">
     <value>Skopiuj ruchy</value>
   </data>
+  <data name="CutMoves" xml:space="preserve">
+    <value>Wytnij ruchy</value>
+  </data>
   <data name="PasteMoves" xml:space="preserve">
     <value>Wklej ruchy</value>
   </data>

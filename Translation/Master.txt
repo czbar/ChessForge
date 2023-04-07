@@ -623,6 +623,9 @@ ChapterThumbnail=Thumbnail for Chapters View
 #Copy selected moves
 CopyMoves=Copy Moves
 
+#Copy selected moves
+CutMoves=Cut Moves
+
 #Paste selected moves
 PasteMoves=Paste Moves
 

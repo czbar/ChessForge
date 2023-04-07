@@ -1006,6 +1006,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cut Moves.
+        /// </summary>
+        public static string CutMoves {
+            get {
+                return ResourceManager.GetString("CutMoves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string Date {

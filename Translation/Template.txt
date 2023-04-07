@@ -804,6 +804,10 @@ ChapterThumbnail=
 #english: CopyMoves=Copy Moves
 CopyMoves=
 
+#description: Copy selected moves
+#english: CutMoves=Cut Moves
+CutMoves=
+
 #description: Paste selected moves
 #english: PasteMoves=Paste Moves
 PasteMoves=

@@ -660,6 +660,9 @@
   <data name="CopyMoves" xml:space="preserve">
     <value>Copy Moves</value>
   </data>
+  <data name="CutMoves" xml:space="preserve">
+    <value>Cut Moves</value>
+  </data>
   <data name="PasteMoves" xml:space="preserve">
     <value>Paste Moves</value>
   </data>
