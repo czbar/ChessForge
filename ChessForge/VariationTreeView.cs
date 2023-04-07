@@ -781,6 +781,7 @@ namespace ChessForge
 
         /// <summary>
         /// Selects the passed node along with its line id.
+        /// TODO: this should not be necessary, replace with a call to SelectNode(TreeNode);
         /// </summary>
         /// <param name="nodeId"></param>
         public void SelectNode(int nodeId)
@@ -790,6 +791,38 @@ namespace ChessForge
             {
                 SelectLineAndMove(node.LineId, nodeId);
             }
+        }
+
+        /// <summary>
+        /// Selects the move and line for the sibling node
+        /// of the current selection.
+        /// </summary>
+        /// <param name="prevNext"></param>
+        /// <returns></returns>
+        public TreeNode SelectSiblingLineAndMove(bool prevNext)
+        {
+            TreeNode node = null;
+
+            try
+            {
+                node = _shownVariationTree.GetNextSibling(GetSelectedNode(), prevNext);
+                if (node != null)
+                {
+                    SelectNode(node);
+                }
+            } catch { } 
+
+            return node;
+        }
+
+        /// <summary>
+        /// Selects the passed node.
+        /// Selects the move, its line and the line in ActiveLine.
+        /// </summary>
+        /// <param name="node"></param>
+        public void SelectNode(TreeNode node)
+        {
+            SelectRun(_dictNodeToRun[node.NodeId], 1, MouseButton.Left);
         }
 
         /// <summary>
