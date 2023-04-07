@@ -672,7 +672,7 @@ namespace ChessForge
 
             // if the first node of nodes to insert has id = 0, we will insert it at the root of the tree, regardless of which node is currently selected
             TreeNode nodeToInsertAt;
-            if (nodesToInsert[0].NodeId == 0)
+            if (nodesToInsert[0].NodeId == 0 || _shownVariationTree.Nodes.Count == 1)
             {
                 nodeToInsertAt = _shownVariationTree.RootNode;
             }
@@ -683,6 +683,7 @@ namespace ChessForge
                 {
                     node = null;
                     MessageBox.Show(Properties.Resources.MsgSelectNodeToInserAt, Properties.Resources.MbtTitleCopyPasteError, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    nodeToInsertAt = null;
                 }
             }
 
