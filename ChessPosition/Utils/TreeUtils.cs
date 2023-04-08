@@ -64,6 +64,56 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Returns the list of positions from the start (no including position 0)
+        /// until the passed node.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public static List<TreeNode> GetStemLine(TreeNode nd)
+        {
+            List<TreeNode> line = new List<TreeNode>();
+
+            while (nd != null && nd.Parent != null)
+            {
+                line.Insert(0, nd);
+                nd = nd.Parent;
+            }
+
+            return line;
+        }
+
+        /// <summary>
+        /// Returns the list of positions from after the passed nod start 
+        /// until the last node.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public static List<TreeNode> GetTailLine(TreeNode nd)
+        {
+            List<TreeNode> line = new List<TreeNode>();
+
+            if (nd != null || nd.Children.Count > 0)
+            {
+                nd = nd.Children[0];
+
+                while (nd != null)
+                {
+                    line.Add(nd);
+                    if (nd.Children.Count > 0)
+                    {
+                        nd = nd.Children[0];
+                    }
+                    else
+                    {
+                        nd = null;
+                    }
+                }
+            }
+
+            return line;
+        }
+
+        /// <summary>
         /// Walks the tree and inserts all nodes into the passed list.
         /// </summary>
         /// <param name="node"></param>
