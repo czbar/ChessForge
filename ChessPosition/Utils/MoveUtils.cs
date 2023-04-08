@@ -323,6 +323,43 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Builds text of the main line from the first move after the passed node
+        /// to the end.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="plyCount"></param>
+        /// <returns></returns>
+        public static string BuildTailText(TreeNode nd, out int plyCount)
+        {
+            plyCount = 0;
+
+            if (nd == null || nd.Children.Count == 0)
+            {
+                return "";
+            }
+
+            nd = nd.Children[0];
+
+            StringBuilder sb = new StringBuilder();
+            while (nd != null)
+            {
+                sb.Insert(0, BuildSingleMoveText(nd, nd.Parent.NodeId == 0 || plyCount == 0) + " ");
+                plyCount++;
+
+                if (nd.Children.Count > 0)
+                {
+                    nd = nd.Children[0];
+                }
+                else
+                {
+                    nd = null;
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
         /// Performs castling on the passed BoardPosition object.
         /// Throws an exception if castling is illegal.
         /// </summary>
