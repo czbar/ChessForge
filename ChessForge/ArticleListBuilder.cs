@@ -38,7 +38,10 @@ namespace ChessForge
                         if (!excludePassedNode || node != nd)
                         {
                             ArticleListItem ali = new ArticleListItem(null, chIndex, chapter.StudyTree, 0, node);
-                            ali.StemLine = MoveUtils.BuildStemText(node);
+                            ali.StemLineText = MoveUtils.BuildStemText(node);
+                            ali.TailLineText = MoveUtils.BuildTailText(node, out ali.TailLinePlyCount);
+                            ali.StemLine = TreeUtils.GetStemLine(node);
+                            ali.TailLine = TreeUtils.GetTailLine(node);
                             lstIdenticalPositions.Add(ali);
                         }
                     }
@@ -55,7 +58,10 @@ namespace ChessForge
                             if (!excludePassedNode || node != nd)
                             {
                                 ArticleListItem ali = new ArticleListItem(null, chIndex, article, art, node);
-                                ali.StemLine = MoveUtils.BuildStemText(node);
+                                ali.StemLineText = MoveUtils.BuildStemText(node);
+                                ali.TailLineText = MoveUtils.BuildTailText(node, out ali.TailLinePlyCount);
+                                ali.StemLine = TreeUtils.GetStemLine(node);
+                                ali.TailLine = TreeUtils.GetTailLine(node);
                                 lstIdenticalPositions.Add(ali);
                             }
                         }
@@ -73,7 +79,10 @@ namespace ChessForge
                             if (!excludePassedNode || node != nd)
                             {
                                 ArticleListItem ali = new ArticleListItem(null, chIndex, article, art, node);
-                                ali.StemLine = MoveUtils.BuildStemText(node);
+                                ali.StemLineText = MoveUtils.BuildStemText(node);
+                                ali.TailLineText = MoveUtils.BuildTailText(node, out ali.TailLinePlyCount);
+                                ali.StemLine = TreeUtils.GetStemLine(node);
+                                ali.TailLine = TreeUtils.GetTailLine(node);
                                 lstIdenticalPositions.Add(ali);
                             }
                         }
