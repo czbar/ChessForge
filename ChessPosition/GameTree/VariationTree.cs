@@ -1519,38 +1519,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Makes a deep copy of each node in the list
-        /// dropping references to children that are not in this list.
-        /// </summary>
-        /// <param name="nodesToCopy"></param>
-        /// <returns></returns>
-        public List<TreeNode> CopyNodeList(List<TreeNode> nodesToCopy)
-        {
-            List<TreeNode> copiedList = new List<TreeNode>();
-            foreach (TreeNode nd in nodesToCopy)
-            {
-                copiedList.Add(nd.CloneMe(true));
-            }
-
-            // set children
-            for (int i = 0; i < copiedList.Count; i++)
-            {
-                TreeNode source = nodesToCopy[i];
-                TreeNode target = copiedList[i];
-                for (int j = 0; j < source.Children.Count; j++)
-                {
-                    TreeNode found = copiedList.Find(x => x.NodeId == source.Children[j].NodeId);
-                    if (found != null)
-                    {
-                        target.Children.Add(found);
-                    }
-                }
-            }
-
-            return copiedList;
-        }
-
-        /// <summary>
         /// Makes a copy of a subtree starting at the passed node.
         /// </summary>
         /// <param name="nd"></param>
@@ -1560,14 +1528,9 @@ namespace GameTree
             if (nd == null)
             {
                 nd = SelectedNode;
-                if (nd == null)
-                {
-                    return null;
-                }
             }
 
-            TreeNode clonedRoot = nd.CloneMe(false);
-            return TreeUtils.NodeToNodeList(clonedRoot);
+            return TreeUtils.CopySubtree(nd);
         }
 
         /// <summary>
