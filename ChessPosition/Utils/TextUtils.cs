@@ -152,7 +152,7 @@ namespace ChessPosition
         /// <param name="toIndex">The index of the last included ply.  
         /// If -1, the whole line starting as fromIndex will be included.</param>
         /// <returns></returns>
-        public static string BuildTextForLine(List<TreeNode> line, bool withNAG = false, int fromIndex = 0, int toIndex = -1)
+        public static string BuildLineText(List<TreeNode> line, bool withNAG = false, int fromIndex = 0, int toIndex = -1)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -161,7 +161,6 @@ namespace ChessPosition
                 toIndex = line.Count - 1;
             }
 
-            bool isFirstPly = true;
             for (int i = fromIndex; i <= toIndex; i++)
             {
                 TreeNode nd = line[i];
@@ -169,29 +168,7 @@ namespace ChessPosition
                 // if NodeId is 0 this the starting position Node and we must not process it
                 if (nd.NodeId != 0)
                 {
-                    if (nd.Position.ColorToMove == PieceColor.Black)
-                    {
-                        if (nd.Position.MoveNumber != 1)
-                        {
-                            sb.Append(" ");
-                        }
-                        sb.Append(nd.Position.MoveNumber.ToString() + ".");
-                    }
-                    else if (isFirstPly)
-                    {
-                        sb.Append(nd.Position.MoveNumber.ToString() + "...");
-                    }
-
-                    isFirstPly = false;
-
-                    if (withNAG)
-                    {
-                        sb.Append(" " + MoveUtils.BuildSingleMoveText(nd, true, true));
-                    }
-                    else
-                    {
-                        sb.Append(" " + MoveUtils.BuildSingleMoveText(nd, true, false));
-                    }
+                    sb.Append(" " + MoveUtils.BuildSingleMoveText(nd, i == fromIndex, withNAG));
                 }
             }
 
