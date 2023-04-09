@@ -267,6 +267,10 @@ Stalemate=pat
 #english: GameExerciseReferences=Game and Exercise References
 GameExerciseReferences=Odsyłacze do Partii i Ćwiczeń
 
+#description: Open a view
+#english: OpenView=Open View
+OpenView=Otwórz widok
+
 ##################################
 #
 # EDITING
@@ -804,6 +808,10 @@ ChapterThumbnail=Wizytówka Rozdziału
 #english: CopyMoves=Copy Moves
 CopyMoves=Skopiuj ruchy
 
+#description: Copy selected moves
+#english: CutMoves=Cut Moves
+CutMoves=Wytnij ruchy
+
 #description: Paste selected moves
 #english: PasteMoves=Paste Moves
 PasteMoves=Wklej ruchy
@@ -815,6 +823,18 @@ CopyHighlightedLine=Skopiuj podświetlony wariant
 #description: Copy subtree under the selected move.
 #english: CopySubtree=Copy Tree from Selected Move
 CopySubtree=Skopiuj drzewo pod wybranym ruchem
+
+#description: Copy main line from move
+#english: CopyMainLineAfterMove=Copy Main Line after
+CopyMainLineAfterMove=Skopiuj główny wariant po
+
+#description: Copy subtree aftre the selected move.
+#english: CopySubtreeAfterMove=Copy Tree after
+CopySubtreeAfterMove=Skopiuj wszystkie warianty po
+
+#description: Main line
+#english: MainLine=Main Line
+MainLine=Główny wariant
 
 #description: The "Next" term
 #english: Next=Next

@@ -611,7 +611,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    IdenticalPositionsDialog dlg = new IdenticalPositionsDialog(nd, ref lstIdenticalPositions)
+                    IdenticalPositionsExDialog dlgEx = new IdenticalPositionsExDialog(nd, ref lstIdenticalPositions)
                     {
                         Left = AppState.MainWin.ChessForgeMain.Left + 100,
                         Top = AppState.MainWin.ChessForgeMain.Top + 100,
@@ -619,16 +619,31 @@ namespace ChessForge
                         Owner = this
                     };
 
-                    if (dlg.ShowDialog() == true && dlg.SelectedArticleListItem != null)
+                    if (dlgEx.ShowDialog() == true && dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
                     {
-                        ArticleListItem item = dlg.SelectedArticleListItem;
-                        SelectArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
-                        if (item.Article.Tree.ContentType == GameData.ContentType.STUDY_TREE)
+                        ArticleListItem item = lstIdenticalPositions[dlgEx.ArticleIndexId];
+                        List<TreeNode> nodelList = null;
+                        switch (dlgEx.Request)
                         {
-                            SetupGuiForActiveStudyTree(true);
+                            case IdenticalPositionsExDialog.Action.CopyLine:
+                                nodelList = TreeUtils.CopyNodeList(item.TailLine);
+                                ChfClipboard.HoldNodeList(nodelList);
+                                break;
+                            case IdenticalPositionsExDialog.Action.CopyTree:
+                                nodelList = TreeUtils.CopySubtree(item.TailLine[0]);
+                                ChfClipboard.HoldNodeList(nodelList);
+                                break;
+                            case IdenticalPositionsExDialog.Action.OpenView:
+                                // TODO: this should be something encapsulated in TabNavigator
+                                SelectArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
+                                if (item.Article.Tree.ContentType == GameData.ContentType.STUDY_TREE)
+                                {
+                                    SetupGuiForActiveStudyTree(true);
+                                }
+                                AppState.MainWin.SetActiveLine(item.Node.LineId, item.Node.NodeId);
+                                AppState.MainWin.ActiveTreeView.SelectLineAndMove(item.Node.LineId, item.Node.NodeId);
+                                break;
                         }
-                        AppState.MainWin.SetActiveLine(item.Node.LineId, item.Node.NodeId);
-                        AppState.MainWin.ActiveTreeView.SelectLineAndMove(item.Node.LineId, item.Node.NodeId);
                     }
                 }
             }
@@ -2658,6 +2673,21 @@ namespace ChessForge
             if (ActiveTreeView != null)
             {
                 ActiveTreeView.PlaceSelectedForCopyInClipboard();
+            }
+        }
+
+        /// <summary>
+        /// Cuts the selected moves i.e. removes the selected moves
+        /// and places them in the clipboard.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnCutMoves_Click(object sender, RoutedEventArgs e)
+        {
+            if (ActiveTreeView != null)
+            {
+                ActiveTreeView.PlaceSelectedForCopyInClipboard();
+                ActiveTreeView.DeleteRemainingMoves();
             }
         }
 

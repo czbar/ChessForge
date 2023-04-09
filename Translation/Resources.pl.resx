@@ -303,6 +303,9 @@
   <data name="GameExerciseReferences" xml:space="preserve">
     <value>Odsyłacze do Partii i Ćwiczeń</value>
   </data>
+  <data name="OpenView" xml:space="preserve">
+    <value>Otwórz widok</value>
+  </data>
   <data name="FontBold" xml:space="preserve">
     <value>Pogrubienie</value>
   </data>
@@ -660,6 +663,9 @@
   <data name="CopyMoves" xml:space="preserve">
     <value>Skopiuj ruchy</value>
   </data>
+  <data name="CutMoves" xml:space="preserve">
+    <value>Wytnij ruchy</value>
+  </data>
   <data name="PasteMoves" xml:space="preserve">
     <value>Wklej ruchy</value>
   </data>
@@ -668,6 +674,15 @@
   </data>
   <data name="CopySubtree" xml:space="preserve">
     <value>Skopiuj drzewo pod wybranym ruchem</value>
+  </data>
+  <data name="CopyMainLineAfterMove" xml:space="preserve">
+    <value>Skopiuj główny wariant po</value>
+  </data>
+  <data name="CopySubtreeAfterMove" xml:space="preserve">
+    <value>Skopiuj wszystkie warianty po</value>
+  </data>
+  <data name="MainLine" xml:space="preserve">
+    <value>Główny wariant</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Następny</value>

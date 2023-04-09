@@ -898,6 +898,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy Main Line after.
+        /// </summary>
+        public static string CopyMainLineAfterMove {
+            get {
+                return ResourceManager.GetString("CopyMainLineAfterMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy Moves.
         /// </summary>
         public static string CopyMoves {
@@ -912,6 +921,15 @@ namespace ChessForge.Properties {
         public static string CopySubtree {
             get {
                 return ResourceManager.GetString("CopySubtree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Tree after.
+        /// </summary>
+        public static string CopySubtreeAfterMove {
+            get {
+                return ResourceManager.GetString("CopySubtreeAfterMove", resourceCulture);
             }
         }
         
@@ -1002,6 +1020,15 @@ namespace ChessForge.Properties {
         public static string CurrentVersion {
             get {
                 return ResourceManager.GetString("CurrentVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cut Moves.
+        /// </summary>
+        public static string CutMoves {
+            get {
+                return ResourceManager.GetString("CutMoves", resourceCulture);
             }
         }
         
@@ -2392,6 +2419,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Main Line.
+        /// </summary>
+        public static string MainLine {
+            get {
+                return ResourceManager.GetString("MainLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mark as Thumbnail.
         /// </summary>
         public static string MarkAsThumbnail {
@@ -2911,6 +2947,15 @@ namespace ChessForge.Properties {
         public static string OpenThisExercise {
             get {
                 return ResourceManager.GetString("OpenThisExercise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open View.
+        /// </summary>
+        public static string OpenView {
+            get {
+                return ResourceManager.GetString("OpenView", resourceCulture);
             }
         }
         

@@ -581,6 +581,10 @@ namespace ChessForge
                                 _mainWin.ActiveTreeView.PlaceSelectedForCopyInClipboard();
                                 e.Handled = true;
                                 break;
+                            case Key.X:
+                                _mainWin.UiMnCutMoves_Click(null, null);
+                                e.Handled = true;
+                                break;
                             case Key.V:
                                 _mainWin.PasteChfClipboard();
                                 e.Handled = true;
@@ -798,13 +802,22 @@ namespace ChessForge
                     }
                     break;
                 case Key.Up:
-                    postKeyDownColumn = _dgActiveLineWhitePlyColumn;
-                    postKeyDownRow = 0;
+                    if (Keyboard.Modifiers == ModifierKeys.Shift)
+                    {
+                        postKeyDownColumn = _dgActiveLineWhitePlyColumn;
+                        postKeyDownRow = 0;
+                    }
                     break;
                 case Key.Home:
                     postKeyDownRow = -1;
                     break;
                 case Key.Down:
+                    if (Keyboard.Modifiers == ModifierKeys.Shift)
+                    {
+                        postKeyDownRow = _dgActiveLine.Items.Count - 1;
+                        postKeyDownColumn = (Line.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
+                    }
+                    break;
                 case Key.End:
                     postKeyDownRow = _dgActiveLine.Items.Count - 1;
                     postKeyDownColumn = (Line.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;

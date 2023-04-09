@@ -1195,6 +1195,54 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Get the adjacent sibling of the passed node.
+        /// If there are no siblings returns null.
+        /// It there are no more siblings in the requested direction (prev/next)
+        /// wraps around.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="prevNext"></param>
+        /// <returns></returns>
+        public TreeNode GetNextSibling(TreeNode nd, bool prevNext)
+        {
+            TreeNode sib = null;
+
+            if (nd != null && nd.Parent != null && nd.Parent.Children.Count > 1)
+            {
+                for (int i = 0; i < nd.Parent.Children.Count; i++)
+                {
+                    if (nd.Parent.Children[i] == nd)
+                    {
+                        if (prevNext)
+                        {
+                            if (i > 0)
+                            {
+                                sib = nd.Parent.Children[i - 1];
+                            }
+                            else
+                            {
+                                sib = nd.Parent.Children[nd.Parent.Children.Count - 1];
+                            }
+                        }
+                        else
+                        {
+                            if (i < nd.Parent.Children.Count - 1)
+                            {
+                                sib = nd.Parent.Children[i + 1];
+                            }
+                            else
+                            {
+                                sib = nd.Parent.Children[0];
+                            }
+                        }
+                    }
+                }
+            }
+
+            return sib;
+        }
+
+        /// <summary>
         /// Each invocation of this method builds a Line for 
         /// the flattened view of the Workbook.
         /// The method calls itself recursively to build
@@ -1471,38 +1519,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Makes a deep copy of each node in the list
-        /// dropping references to children that are not in this list.
-        /// </summary>
-        /// <param name="nodesToCopy"></param>
-        /// <returns></returns>
-        public List<TreeNode> CopyNodeList(List<TreeNode> nodesToCopy)
-        {
-            List<TreeNode> copiedList = new List<TreeNode>();
-            foreach (TreeNode nd in nodesToCopy)
-            {
-                copiedList.Add(nd.CloneMe(true));
-            }
-
-            // set children
-            for (int i = 0; i < copiedList.Count; i++)
-            {
-                TreeNode source = nodesToCopy[i];
-                TreeNode target = copiedList[i];
-                for (int j = 0; j < source.Children.Count; j++)
-                {
-                    TreeNode found = copiedList.Find(x => x.NodeId == source.Children[j].NodeId);
-                    if (found != null)
-                    {
-                        target.Children.Add(found);
-                    }
-                }
-            }
-
-            return copiedList;
-        }
-
-        /// <summary>
         /// Makes a copy of a subtree starting at the passed node.
         /// </summary>
         /// <param name="nd"></param>
@@ -1512,14 +1528,9 @@ namespace GameTree
             if (nd == null)
             {
                 nd = SelectedNode;
-                if (nd == null)
-                {
-                    return null;
-                }
             }
 
-            TreeNode clonedRoot = nd.CloneMe(false);
-            return TreeUtils.NodeToNodeList(clonedRoot);
+            return TreeUtils.CopySubtree(nd);
         }
 
         /// <summary>

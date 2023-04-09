@@ -45,7 +45,10 @@ namespace ChessForge
         private TreeNode _node;
 
         // line from the start to this item's node
-        private string _stemLine = null;
+        private string _stemLineText = null;
+
+        // main line from this items' node to the end
+        private string _tailLineText = null;
 
         /// <summary>
         /// Creates the object and sets IsSelected to true.
@@ -115,6 +118,17 @@ namespace ChessForge
         public TreeNode Node
         {
             get { return _node; }
+        }
+
+        /// <summary>
+        /// Returns content type of this item.
+        /// </summary>
+        public GameData.ContentType ContentType
+        {
+            get
+            {
+                return _contentType;
+            }
         }
 
         /// <summary>
@@ -247,7 +261,6 @@ namespace ChessForge
             }
         }
 
-
         /// <summary>
         /// Accessor to _isSelected.
         /// Indicates wheter the item is selected.
@@ -273,14 +286,38 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// List of nodes for the stem line. 
+        /// </summary>
+        public List<TreeNode> StemLine;
+
+        /// <summary>
+        /// List of nodes for the tail line.
+        /// </summary>
+        public List<TreeNode> TailLine;
+
+        /// <summary>
         /// Text of the line from the first node of the Tree to this item's node
         /// </summary>
-        public string StemLine
+        public string StemLineText
         {
-            get => _stemLine;
-            set => _stemLine = value;
+            get => _stemLineText;
+            set => _stemLineText = value;
         }
 
+        /// <summary>
+        /// Text of the main line from a certain node of the Tree to th end
+        /// </summary>
+        public string TailLineText
+        {
+            get => _tailLineText;
+            set => _tailLineText = value;
+        }
+
+        /// <summary>
+        /// Number of plies in the tail line
+        /// </summary>
+        public int TailLinePlyCount;
+        
         /// <summary>
         /// Tool tip that shows the stem line if the item is an Article,
         /// or the chapter index if the item is a Chapter.
@@ -289,9 +326,9 @@ namespace ChessForge
         {
             get
             {
-                if (!string.IsNullOrEmpty(_stemLine))
+                if (!string.IsNullOrEmpty(_stemLineText))
                 {
-                    return _stemLine;
+                    return _stemLineText;
                 }
                 else
                 {

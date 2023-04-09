@@ -243,7 +243,7 @@ namespace ChessPosition
         {
             if (nd == null)
             {
-                return null;
+                return "";
             }
 
             if (nd.NodeId == 0)
@@ -317,6 +317,43 @@ namespace ChessPosition
             {
                 sb.Insert(0, BuildSingleMoveText(nd, nd.Parent.NodeId == 0) + " ");
                 nd = nd.Parent;
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Builds text of the main line from the first move after the passed node
+        /// to the end.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="plyCount"></param>
+        /// <returns></returns>
+        public static string BuildTailText(TreeNode nd, out int plyCount)
+        {
+            plyCount = 0;
+
+            if (nd == null || nd.Children.Count == 0)
+            {
+                return "";
+            }
+
+            nd = nd.Children[0];
+
+            StringBuilder sb = new StringBuilder();
+            while (nd != null)
+            {
+                sb.Insert(0, BuildSingleMoveText(nd, nd.Parent.NodeId == 0 || plyCount == 0) + " ");
+                plyCount++;
+
+                if (nd.Children.Count > 0)
+                {
+                    nd = nd.Children[0];
+                }
+                else
+                {
+                    nd = null;
+                }
             }
 
             return sb.ToString();

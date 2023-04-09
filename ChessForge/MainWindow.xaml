@@ -442,6 +442,7 @@
                                     <MenuItem x:Name="UiMnCopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnCopyFen_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnStCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
+                                    <MenuItem x:Name="UiMnStCutMoves" Header="{x:Static p:Resources.CutMoves}"  InputGestureText="Ctrl+X" Click="UiMnCutMoves_Click" />
                                     <MenuItem x:Name="UiMnStPasteMoves" Header="{x:Static p:Resources.PasteMoves}"  InputGestureText="Ctrl+V" Click="UiMnPasteMoves_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnStSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+L" Click="UiMnSelectHighlighted_Click" />
@@ -511,6 +512,7 @@
                                     <MenuItem x:Name="_mnGame_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnGame_CopyFen_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnGameCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
+                                    <MenuItem x:Name="UiMnGameCutMoves" Header="{x:Static p:Resources.CutMoves}"  InputGestureText="Ctrl+X" Click="UiMnCutMoves_Click" />
                                     <MenuItem x:Name="UiMnGamePasteMoves" Header="{x:Static p:Resources.PasteMoves}"  InputGestureText="Ctrl+V" Click="UiMnPasteMoves_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnGameSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+A" Click="UiMnSelectHighlighted_Click" />
@@ -589,6 +591,7 @@
                                     <MenuItem x:Name="_mnExerc_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnExerc_CopyFen_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnExercCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
+                                    <MenuItem x:Name="UiMnExercCutMoves" Header="{x:Static p:Resources.CutMoves}"  InputGestureText="Ctrl+X" Click="UiMnCutMoves_Click" />
                                     <MenuItem x:Name="UiMnExercPasteMoves" Header="{x:Static p:Resources.PasteMoves}"  InputGestureText="Ctrl+V" Click="UiMnPasteMoves_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnExercSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+A" Click="UiMnSelectHighlighted_Click" />

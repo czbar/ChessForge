@@ -303,6 +303,9 @@
   <data name="GameExerciseReferences" xml:space="preserve">
     <value>Game and Exercise References</value>
   </data>
+  <data name="OpenView" xml:space="preserve">
+    <value>Open View</value>
+  </data>
   <data name="FontBold" xml:space="preserve">
     <value>Bold</value>
   </data>
@@ -660,6 +663,9 @@
   <data name="CopyMoves" xml:space="preserve">
     <value>Copy Moves</value>
   </data>
+  <data name="CutMoves" xml:space="preserve">
+    <value>Cut Moves</value>
+  </data>
   <data name="PasteMoves" xml:space="preserve">
     <value>Paste Moves</value>
   </data>
@@ -668,6 +674,15 @@
   </data>
   <data name="CopySubtree" xml:space="preserve">
     <value>Copy Tree from Selected Move</value>
+  </data>
+  <data name="CopyMainLineAfterMove" xml:space="preserve">
+    <value>Copy Main Line after</value>
+  </data>
+  <data name="CopySubtreeAfterMove" xml:space="preserve">
+    <value>Copy Tree after</value>
+  </data>
+  <data name="MainLine" xml:space="preserve">
+    <value>Main Line</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>

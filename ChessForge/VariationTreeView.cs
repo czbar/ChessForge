@@ -672,7 +672,7 @@ namespace ChessForge
 
             // if the first node of nodes to insert has id = 0, we will insert it at the root of the tree, regardless of which node is currently selected
             TreeNode nodeToInsertAt;
-            if (nodesToInsert[0].NodeId == 0)
+            if (nodesToInsert[0].NodeId == 0 || _shownVariationTree.Nodes.Count == 1)
             {
                 nodeToInsertAt = _shownVariationTree.RootNode;
             }
@@ -683,6 +683,7 @@ namespace ChessForge
                 {
                     node = null;
                     MessageBox.Show(Properties.Resources.MsgSelectNodeToInserAt, Properties.Resources.MbtTitleCopyPasteError, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    nodeToInsertAt = null;
                 }
             }
 
@@ -781,6 +782,7 @@ namespace ChessForge
 
         /// <summary>
         /// Selects the passed node along with its line id.
+        /// TODO: this should not be necessary, replace with a call to SelectNode(TreeNode);
         /// </summary>
         /// <param name="nodeId"></param>
         public void SelectNode(int nodeId)
@@ -790,6 +792,38 @@ namespace ChessForge
             {
                 SelectLineAndMove(node.LineId, nodeId);
             }
+        }
+
+        /// <summary>
+        /// Selects the move and line for the sibling node
+        /// of the current selection.
+        /// </summary>
+        /// <param name="prevNext"></param>
+        /// <returns></returns>
+        public TreeNode SelectSiblingLineAndMove(bool prevNext)
+        {
+            TreeNode node = null;
+
+            try
+            {
+                node = _shownVariationTree.GetNextSibling(GetSelectedNode(), prevNext);
+                if (node != null)
+                {
+                    SelectNode(node);
+                }
+            } catch { } 
+
+            return node;
+        }
+
+        /// <summary>
+        /// Selects the passed node.
+        /// Selects the move, its line and the line in ActiveLine.
+        /// </summary>
+        /// <param name="node"></param>
+        public void SelectNode(TreeNode node)
+        {
+            SelectRun(_dictNodeToRun[node.NodeId], 1, MouseButton.Left);
         }
 
         /// <summary>
@@ -1840,7 +1874,7 @@ namespace ChessForge
 
             if (_selectedForCopy.Count > 0)
             {
-                List<TreeNode> lstNodes = _mainWin.ActiveVariationTree.CopyNodeList(_selectedForCopy);
+                List<TreeNode> lstNodes = TreeUtils.CopyNodeList(_selectedForCopy);
                 ChfClipboard.HoldNodeList(lstNodes);
             }
         }

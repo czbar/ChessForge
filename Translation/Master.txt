@@ -205,6 +205,9 @@ Stalemate=stalemate
 #Game and Exercise References
 GameExerciseReferences=Game and Exercise References
 
+#Open a view
+OpenView=Open View
+
 ##################################
 #
 # EDITING
@@ -623,6 +626,9 @@ ChapterThumbnail=Thumbnail for Chapters View
 #Copy selected moves
 CopyMoves=Copy Moves
 
+#Copy selected moves
+CutMoves=Cut Moves
+
 #Paste selected moves
 PasteMoves=Paste Moves
 
@@ -631,6 +637,15 @@ CopyHighlightedLine=Copy Highlighted Line
 
 #Copy subtree under the selected move.
 CopySubtree=Copy Tree from Selected Move
+
+#Copy main line from move
+CopyMainLineAfterMove=Copy Main Line after
+
+#Copy subtree aftre the selected move.
+CopySubtreeAfterMove=Copy Tree after
+
+#Main line
+MainLine=Main Line
 
 #The "Next" term
 Next=Next
