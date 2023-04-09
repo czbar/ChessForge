@@ -611,7 +611,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    IdenticalPositionsDialog dlg = new IdenticalPositionsDialog(nd, ref lstIdenticalPositions)
+                    IdenticalPositionsExDialog dlgEx = new IdenticalPositionsExDialog(nd, ref lstIdenticalPositions)
                     {
                         Left = AppState.MainWin.ChessForgeMain.Left + 100,
                         Top = AppState.MainWin.ChessForgeMain.Top + 100,
@@ -619,16 +619,28 @@ namespace ChessForge
                         Owner = this
                     };
 
-                    if (dlg.ShowDialog() == true && dlg.SelectedArticleListItem != null)
+                    if (dlgEx.ShowDialog() == true && dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
                     {
-                        ArticleListItem item = dlg.SelectedArticleListItem;
-                        SelectArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
-                        if (item.Article.Tree.ContentType == GameData.ContentType.STUDY_TREE)
+                        ArticleListItem item = lstIdenticalPositions[dlgEx.ArticleIndexId];
+                        switch (dlgEx.Request)
                         {
-                            SetupGuiForActiveStudyTree(true);
+                            case IdenticalPositionsExDialog.Action.CopyLine:
+                                ChfClipboard.HoldNodeList(TreeUtils.CopyNodeList(item.StemLine));
+                                break;
+                            case IdenticalPositionsExDialog.Action.CopyTree:
+                                ChfClipboard.HoldNodeList(TreeUtils.CopySubtree(item.StemLine[0]));
+                                break;
+                            case IdenticalPositionsExDialog.Action.OpenView:
+                                // TODO: this should be something encapsulated in TabNavigator
+                                SelectArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
+                                if (item.Article.Tree.ContentType == GameData.ContentType.STUDY_TREE)
+                                {
+                                    SetupGuiForActiveStudyTree(true);
+                                }
+                                AppState.MainWin.SetActiveLine(item.Node.LineId, item.Node.NodeId);
+                                AppState.MainWin.ActiveTreeView.SelectLineAndMove(item.Node.LineId, item.Node.NodeId);
+                                break;
                         }
-                        AppState.MainWin.SetActiveLine(item.Node.LineId, item.Node.NodeId);
-                        AppState.MainWin.ActiveTreeView.SelectLineAndMove(item.Node.LineId, item.Node.NodeId);
                     }
                 }
             }
