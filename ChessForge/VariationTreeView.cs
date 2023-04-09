@@ -1874,7 +1874,7 @@ namespace ChessForge
 
             if (_selectedForCopy.Count > 0)
             {
-                List<TreeNode> lstNodes = _mainWin.ActiveVariationTree.CopyNodeList(_selectedForCopy);
+                List<TreeNode> lstNodes = TreeUtils.CopyNodeList(_selectedForCopy);
                 ChfClipboard.HoldNodeList(lstNodes);
             }
         }
