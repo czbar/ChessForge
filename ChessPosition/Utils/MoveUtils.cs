@@ -243,7 +243,7 @@ namespace ChessPosition
         {
             if (nd == null)
             {
-                return null;
+                return "";
             }
 
             if (nd.NodeId == 0)
