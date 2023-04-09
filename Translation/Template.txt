@@ -267,6 +267,10 @@ Stalemate=
 #english: GameExerciseReferences=Game and Exercise References
 GameExerciseReferences=
 
+#description: Open a view
+#english: OpenView=Open View
+OpenView=
+
 ##################################
 #
 # EDITING
@@ -819,6 +823,18 @@ CopyHighlightedLine=
 #description: Copy subtree under the selected move.
 #english: CopySubtree=Copy Tree from Selected Move
 CopySubtree=
+
+#description: Copy main line from move
+#english: CopyMainLineAfterMove=Copy Main Line after
+CopyMainLineAfterMove=
+
+#description: Copy subtree aftre the selected move.
+#english: CopySubtreeAfterMove=Copy Tree after
+CopySubtreeAfterMove=
+
+#description: Main line
+#english: MainLine=Main Line
+MainLine=
 
 #description: The "Next" term
 #english: Next=Next
