@@ -622,13 +622,16 @@ namespace ChessForge
                     if (dlgEx.ShowDialog() == true && dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
                     {
                         ArticleListItem item = lstIdenticalPositions[dlgEx.ArticleIndexId];
+                        List<TreeNode> nodelList = null;
                         switch (dlgEx.Request)
                         {
                             case IdenticalPositionsExDialog.Action.CopyLine:
-                                ChfClipboard.HoldNodeList(TreeUtils.CopyNodeList(item.StemLine));
+                                nodelList = TreeUtils.CopyNodeList(item.TailLine);
+                                ChfClipboard.HoldNodeList(nodelList);
                                 break;
                             case IdenticalPositionsExDialog.Action.CopyTree:
-                                ChfClipboard.HoldNodeList(TreeUtils.CopySubtree(item.StemLine[0]));
+                                nodelList = TreeUtils.CopySubtree(item.TailLine[0]);
+                                ChfClipboard.HoldNodeList(nodelList);
                                 break;
                             case IdenticalPositionsExDialog.Action.OpenView:
                                 // TODO: this should be something encapsulated in TabNavigator
