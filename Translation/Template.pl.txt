@@ -504,6 +504,14 @@ UseVariableFontSize=Użyj Zmienną Czcionkę
 RestoreFontDefaults=Przywróć Domyślne Wartości
 
 
+#description: TOP LEVEL MENU: Tools
+#english: Tools=Tools
+Tools=Narzędzia
+
+#description: Strip all comments
+#english: StripComments=Strip All Comments
+StripComments=Usuń wszystkie komentarze
+
 
 #description: TOP LEVEL MENU: Help
 #english: Help=Help

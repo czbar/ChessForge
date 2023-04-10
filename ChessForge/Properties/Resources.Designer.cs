@@ -448,7 +448,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Press F3 or use context menu to show it. .
+        ///   Looks up a localized string similar to Press F3 or use the context menu to show it. .
         /// </summary>
         public static string cbInvestigateIdenticalPositions {
             get {
@@ -3671,6 +3671,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Strip All Comments.
+        /// </summary>
+        public static string StripComments {
+            get {
+                return ResourceManager.GetString("StripComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Study.
         /// </summary>
         public static string Study {
@@ -3748,6 +3757,15 @@ namespace ChessForge.Properties {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tools.
+        /// </summary>
+        public static string Tools {
+            get {
+                return ResourceManager.GetString("Tools", resourceCulture);
             }
         }
         

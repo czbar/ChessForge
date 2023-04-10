@@ -459,6 +459,12 @@
   <data name="RestoreFontDefaults" xml:space="preserve">
     <value>Restore Font Defaults</value>
   </data>
+  <data name="Tools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="StripComments" xml:space="preserve">
+    <value>Strip All Comments</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>
   </data>

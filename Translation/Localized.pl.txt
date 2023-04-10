@@ -2150,3 +2150,7 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
+Tools=Narzędzia
+
+#Strip all comments
+StripComments=Usuń wszystkie komentarze

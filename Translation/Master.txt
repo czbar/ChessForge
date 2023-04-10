@@ -390,6 +390,12 @@ UseVariableFontSize=Variable Font Size
 RestoreFontDefaults=Restore Font Defaults
 
 
+#TOP LEVEL MENU: Tools
+Tools=Tools
+
+#Strip all comments
+StripComments=Strip All Comments
+
 
 #TOP LEVEL MENU: Help
 Help=Help
