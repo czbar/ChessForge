@@ -2159,7 +2159,7 @@ namespace ChessForge
             {
                 MainChessBoard.RemoveMoveSquareColors();
 
-                MoveUtils.EngineNotationToCoords(engCode, out SquareCoords sqOrig, out SquareCoords sqDest);
+                MoveUtils.EngineNotationToCoords(engCode, out SquareCoords sqOrig, out SquareCoords sqDest, out _);
                 MainChessBoard.ColorMoveSquare(sqOrig.Xcoord, sqOrig.Ycoord, true);
                 MainChessBoard.ColorMoveSquare(sqDest.Xcoord, sqDest.Ycoord, false);
             });
