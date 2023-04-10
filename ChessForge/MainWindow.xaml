@@ -454,7 +454,7 @@
                                     <Separator />
                                     <MenuItem x:Name="_mnWorkbookEvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnWorkbookEvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
-                                    <MenuItem x:Name="UiMnStudyFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}"  Click="UiMnFindIdenticalPosition_Click" />
+                                    <MenuItem x:Name="UiMnStudyFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}"  Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                     <Separator />
