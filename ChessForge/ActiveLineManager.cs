@@ -551,6 +551,11 @@ namespace ChessForge
                     _mainWin.DeleteRemainingMoves();
                     e.Handled = true;
                 }
+                else if (e.Key == Key.F3)
+                {
+                    _mainWin.UiMnFindIdenticalPosition_Click(null, null);
+                    e.Handled= true;
+                }
                 else
                 {
                     if (HandleKeyDown(e.Key))
