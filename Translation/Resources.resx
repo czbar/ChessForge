@@ -1483,6 +1483,12 @@
   <data name="cbStalemateAndDraw" xml:space="preserve">
     <value>This is a stalemate! You have drawn the game.</value>
   </data>
+  <data name="cbIdenticalPositionFound" xml:space="preserve">
+    <value>An identical position was found elsewhere.</value>
+  </data>
+  <data name="cbInvestigateIdenticalPositions" xml:space="preserve">
+    <value>Press F3 or use the context menu to show it. </value>
+  </data>
   <data name="ChessEngineLoading" xml:space="preserve">
     <value>Chess engine loading...</value>
   </data>

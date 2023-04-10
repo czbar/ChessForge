@@ -1537,6 +1537,11 @@ cbEngineCheckmatedYou=You have been checkmated by the engine. Better luck next t
 #This is a stalemate.
 cbStalemateAndDraw=This is a stalemate! You have drawn the game.
 
+#Identical position was found
+cbIdenticalPositionFound=An identical position was found elsewhere.
+
+#how to open the dialog with identical positions
+cbInvestigateIdenticalPositions=Press F3 or use the context menu to show it. 
 
 ##################################
 #
