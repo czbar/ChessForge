@@ -559,7 +559,9 @@ namespace ChessForge
                     || tab == WorkbookManager.TabViewType.EXERCISE)
                 {
                     string moveEngCode = GetMoveCodeFromCellName(rMove.Name);
-                    UserMoveProcessor.ProcessMove(moveEngCode, out TreeNode node, out bool isCastle);
+                    //UserMoveProcessor.ProcessMove(moveEngCode, out TreeNode node, out bool isCastle, out _);
+                    MoveUtils.EngineNotationToCoords(moveEngCode, out _, out SquareCoords destSquare, out PieceType promoteTo);
+                    UserMoveProcessor.ProcessMoveAndReport(moveEngCode, destSquare, promoteTo, out TreeNode node, out bool isCastle, out _);
                     AppState.MainWin.DisplayPosition(node);
                 }
             }
