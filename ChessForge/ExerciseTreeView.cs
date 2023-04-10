@@ -71,7 +71,7 @@ namespace ChessForge
 
             if ((_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS
                 || _mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
-                && _shownVariationTree.Nodes.Count == 1)
+                && ShownVariationTree.Nodes.Count == 1)
             {
                 para = CreateParagraph("1", true);
 
@@ -778,26 +778,26 @@ namespace ChessForge
                     }
 
                     _mainVariationTree.IsAssociatedTreeActive = true;
-                    _shownVariationTree.ShowTreeLines = true;
+                    ShownVariationTree.ShowTreeLines = true;
 
                     SetSolvingMode(mode);
                     _mainWin.EngineToggleOn_OnPreviewMouseLeftButtonDown(null, null);
                     _mainWin.ExplorersToggleOn_PreviewMouseDown(null, null);
 
-                    string lineId = _shownVariationTree.SelectedLineId;
+                    string lineId = ShownVariationTree.SelectedLineId;
                     if (string.IsNullOrEmpty(lineId))
                     {
                         lineId = "1";
                     }
 
-                    int nodeId = _shownVariationTree.SelectedNodeId;
+                    int nodeId = ShownVariationTree.SelectedNodeId;
                     if (nodeId < 0)
                     {
                         nodeId = 0;
                     }
                     SelectLineAndMove(lineId, nodeId);
 
-                    ObservableCollection<TreeNode> lineToSelect = _shownVariationTree.SelectLine(lineId);
+                    ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.SelectLine(lineId);
                     _mainWin.SetActiveLine(lineToSelect, nodeId);
 
                     SetupGuiForSolvingMode(mode);

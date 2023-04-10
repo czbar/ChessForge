@@ -1608,7 +1608,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _UiMnGame_CreateModelGame_Click(object sender, RoutedEventArgs e)
+        private void UiMnGame_CreateModelGame_Click(object sender, RoutedEventArgs e)
         {
             CreateNewModelGame();
         }
