@@ -278,6 +278,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Adds a note about identical position(s) found elsewhere.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void ReportIdenticalPositionFound(TreeNode nd)
+        {
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                AddNewParagraphToDoc("bold_prompt", Resources.cbIdenticalPositionFound).Foreground = Brushes.Green;
+                AddNewParagraphToDoc("normal_14", Resources.cbInvestigateIdenticalPositions).Foreground = Brushes.Green;
+            });
+        }
+
+        /// <summary>
         /// Informs the user about the auto-replay
         /// in progress.
         /// </summary>

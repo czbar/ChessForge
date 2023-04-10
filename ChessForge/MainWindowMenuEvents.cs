@@ -593,9 +593,8 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnFindIdenticalPosition_Click(object sender, RoutedEventArgs e)
+        public void UiMnFindIdenticalPosition_Click(object sender, RoutedEventArgs e)
         {
-
             if (ActiveVariationTree == null || AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
             {
                 return;
@@ -604,48 +603,7 @@ namespace ChessForge
             try
             {
                 TreeNode nd = ActiveLine.GetSelectedTreeNode();
-                ObservableCollection<ArticleListItem> lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(nd);
-                if (lstIdenticalPositions.Count == 0)
-                {
-                    MessageBox.Show(Properties.Resources.MsgNoIdenticalPositions, Properties.Resources.ChessForge, MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    IdenticalPositionsExDialog dlgEx = new IdenticalPositionsExDialog(nd, ref lstIdenticalPositions)
-                    {
-                        Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                        Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                        Topmost = false,
-                        Owner = this
-                    };
-
-                    if (dlgEx.ShowDialog() == true && dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
-                    {
-                        ArticleListItem item = lstIdenticalPositions[dlgEx.ArticleIndexId];
-                        List<TreeNode> nodelList = null;
-                        switch (dlgEx.Request)
-                        {
-                            case IdenticalPositionsExDialog.Action.CopyLine:
-                                nodelList = TreeUtils.CopyNodeList(item.TailLine);
-                                ChfClipboard.HoldNodeList(nodelList);
-                                break;
-                            case IdenticalPositionsExDialog.Action.CopyTree:
-                                nodelList = TreeUtils.CopySubtree(item.TailLine[0]);
-                                ChfClipboard.HoldNodeList(nodelList);
-                                break;
-                            case IdenticalPositionsExDialog.Action.OpenView:
-                                // TODO: this should be something encapsulated in TabNavigator
-                                SelectArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
-                                if (item.Article.Tree.ContentType == GameData.ContentType.STUDY_TREE)
-                                {
-                                    SetupGuiForActiveStudyTree(true);
-                                }
-                                AppState.MainWin.SetActiveLine(item.Node.LineId, item.Node.NodeId);
-                                AppState.MainWin.ActiveTreeView.SelectLineAndMove(item.Node.LineId, item.Node.NodeId);
-                                break;
-                        }
-                    }
-                }
+                FindIdenticalPositions.Search(nd, FindIdenticalPositions.Mode.FIND_AND_REPORT);
             }
             catch
             {

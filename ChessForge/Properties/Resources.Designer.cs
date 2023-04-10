@@ -439,6 +439,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An identical position was found elsewhere..
+        /// </summary>
+        public static string cbIdenticalPositionFound {
+            get {
+                return ResourceManager.GetString("cbIdenticalPositionFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press F3 or use context menu to show it. .
+        /// </summary>
+        public static string cbInvestigateIdenticalPositions {
+            get {
+                return ResourceManager.GetString("cbInvestigateIdenticalPositions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This is just a picture! Make your moves on the big board..
         /// </summary>
         public static string cbJustPicture {

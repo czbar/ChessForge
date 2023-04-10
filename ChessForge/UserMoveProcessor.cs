@@ -57,55 +57,9 @@ namespace ChessForge
                     {
                         moveEngCode.Append(FenParser.PieceToFenChar[promoteTo]);
                     }
-                    bool isCastle;
-                    TreeNode nd;
-                    if (ProcessMove(moveEngCode.ToString(), out nd, out isCastle))
+
+                    if (ProcessMoveAndReport(moveEngCode.ToString(), destSquare, promoteTo, out TreeNode nd, out bool isCastle, out bool reportDupe))
                     {
-                        // check promotion for the side who moved i.e. opposite of what we have in the new nd Node
-                        ImageSource imgSrc = DraggedPiece.ImageControl.Source;
-                        if (isPromotion)
-                        {
-                            if (nd.ColorToMove == PieceColor.Black)
-                            {
-                                imgSrc = AppState.MainWin.MainChessBoard.GetWhitePieceRegImg(promoteTo);
-                            }
-                            else
-                            {
-                                imgSrc = AppState.MainWin.MainChessBoard.GetBlackPieceRegImg(promoteTo);
-                            }
-                        }
-                        AppState.MainWin.MainChessBoard.GetPieceImage(destSquare.Xcoord, destSquare.Ycoord, true).Source = imgSrc;
-
-                        AppState.MainWin.ReturnDraggedPiece(true);
-                        if (isCastle)
-                        {
-                            AppState.MainWin.MoveCastlingRook(moveEngCode.ToString());
-                        }
-
-                        SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
-
-                        if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
-                        {
-                            AppState.ShowMoveEvaluationControls(TrainingSession.IsContinuousEvaluation, false);
-                        }
-
-                        if (nd.Position.IsCheckmate)
-                        {
-                            AppState.MainWin.BoardCommentBox.ReportCheckmate(true);
-                        }
-                        else if (nd.Position.IsStalemate)
-                        {
-                            AppState.MainWin.BoardCommentBox.ReportStalemate();
-                        }
-                        else
-                        {
-                            AppState.MainWin.BoardCommentBox.GameMoveMade(nd, true);
-                        }
-                        AppState.MainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
-                        if (nd != null)
-                        {
-                            AppState.MainWin.MainChessBoard.DisplayPosition(nd, true);
-                        }
                     }
                     else
                     {
@@ -123,6 +77,78 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Processes the move and reflects it in the GUI
+        /// </summary>
+        /// <param name="moveEngCode"></param>
+        /// <param name="destSquare"></param>
+        /// <param name="promoteTo"></param>
+        /// <param name="nd"></param>
+        /// <param name="isCastle"></param>
+        /// <param name="reportDupe"></param>
+        /// <returns></returns>
+        public static bool ProcessMoveAndReport(string moveEngCode, SquareCoords destSquare, PieceType promoteTo,
+                                                out TreeNode nd, out bool isCastle, out bool reportDupe)
+        {
+            if (ProcessMove(moveEngCode.ToString(), out nd, out isCastle, out reportDupe))
+            {
+                // check promotion for the side who moved i.e. opposite of what we have in the new nd Node
+                ImageSource imgSrc = DraggedPiece.ImageControl.Source;
+                if (promoteTo != PieceType.None)
+                {
+                    if (nd.ColorToMove == PieceColor.Black)
+                    {
+                        imgSrc = AppState.MainWin.MainChessBoard.GetWhitePieceRegImg(promoteTo);
+                    }
+                    else
+                    {
+                        imgSrc = AppState.MainWin.MainChessBoard.GetBlackPieceRegImg(promoteTo);
+                    }
+                }
+                AppState.MainWin.MainChessBoard.GetPieceImage(destSquare.Xcoord, destSquare.Ycoord, true).Source = imgSrc;
+
+                AppState.MainWin.ReturnDraggedPiece(true);
+                if (isCastle)
+                {
+                    AppState.MainWin.MoveCastlingRook(moveEngCode.ToString());
+                }
+
+                SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
+
+                if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                {
+                    AppState.ShowMoveEvaluationControls(TrainingSession.IsContinuousEvaluation, false);
+                }
+
+                if (nd.Position.IsCheckmate)
+                {
+                    AppState.MainWin.BoardCommentBox.ReportCheckmate(true);
+                }
+                else if (nd.Position.IsStalemate)
+                {
+                    AppState.MainWin.BoardCommentBox.ReportStalemate();
+                }
+                else
+                {
+                    AppState.MainWin.BoardCommentBox.GameMoveMade(nd, true);
+                    if (reportDupe)
+                    {
+                        AppState.MainWin.BoardCommentBox.ReportIdenticalPositionFound(nd);
+                    }
+                }
+                AppState.MainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
+                if (nd != null)
+                {
+                    AppState.MainWin.MainChessBoard.DisplayPosition(nd, true);
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         /// Processed the move's business logic.
@@ -131,11 +157,13 @@ namespace ChessForge
         /// <param name="nd"></param>
         /// <param name="isCastle"></param>
         /// <returns></returns>
-        public static bool ProcessMove(string move, out TreeNode nd, out bool isCastle)
+        public static bool ProcessMove(string move, out TreeNode nd, out bool isCastle, out bool reportDupe)
         {
+            reportDupe = false;
+
             if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
             {
-                return ProcessMoveInManualReviewMode(move, out nd, out isCastle);
+                return ProcessMoveInManualReviewMode(move, out nd, out isCastle, out reportDupe);
             }
             else
             {
@@ -217,8 +245,10 @@ namespace ChessForge
         /// <param name="nd"></param>
         /// <param name="isCastle"></param>
         /// <returns></returns>
-        private static bool ProcessMoveInManualReviewMode(string move, out TreeNode nd, out bool isCastle)
+        private static bool ProcessMoveInManualReviewMode(string move, out TreeNode nd, out bool isCastle, out bool reportDupe)
         {
+            reportDupe = false;
+
             if (CreateNewPlyNode(move, out nd, out isCastle, out bool preExist))
             {
                 if (PositionUtils.IsCheckmate(nd.Position, out _))
@@ -292,6 +322,11 @@ namespace ChessForge
                     return false;
                 }
 
+                if (!preExist)
+                {
+                    ChessForgeEventArgs args = new ChessForgeEventArgs();
+                    reportDupe = FindIdenticalPositions.Search(nd, FindIdenticalPositions.Mode.CHECK_IF_ANY);
+                }
                 return true;
             }
             else

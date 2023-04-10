@@ -85,7 +85,7 @@ namespace ChessForge
         {
             _nodeAnimated = node;
 
-            MoveUtils.EngineNotationToCoords(node.LastMoveEngineNotation, out _origin, out _destination);
+            MoveUtils.EngineNotationToCoords(node.LastMoveEngineNotation, out _origin, out _destination, out _);
 
             // caller already accounted for a possible flipped board so call with ignoreFlip = true
             _animatedImage = _chessBoard.GetPieceImage(_origin.Xcoord, _origin.Ycoord, true);

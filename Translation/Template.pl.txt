@@ -1992,6 +1992,13 @@ cbEngineCheckmatedYou=Zostałeś zamatowany przez silnik. Powodzenia następnym 
 #english: cbStalemateAndDraw=This is a stalemate! You have drawn the game.
 cbStalemateAndDraw=Pat! Partia zakończyła się remisem.
 
+#description: Identical position was found
+#english: cbIdenticalPositionFound=An identical position was found elsewhere.
+cbIdenticalPositionFound=Taka sama pozycja jest już gdzie indziej.
+
+#description: how to open the dialog with identical positions
+#english: cbInvestigateIdenticalPositions=Press F3 or use the context menu to show it. 
+cbInvestigateIdenticalPositions=Naciśnij klawisz F3 albo użyj menu kontekstowego, aby ją pokazać. 
 
 ##################################
 #
