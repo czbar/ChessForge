@@ -65,6 +65,9 @@ namespace GameTree
                         selectedNodeId= op.Node.Parent.NodeId;
                         selectedLineId= op.Node.Parent.LineId;
                         break;
+                    case EditOperation.EditType.STRIP_COMMENTS:
+                        _owningTree.UndoStripComments(op.OpData_1);
+                        break;
                 }
             }
             catch

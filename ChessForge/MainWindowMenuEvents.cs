@@ -2209,8 +2209,15 @@ namespace ChessForge
             if (ActiveTreeView != null)
             {
                 VariationTree tree = ActiveTreeView.ShownVariationTree;
+
+                // get data for the Undo operation first
+                List<NagsAndComment> comments = TreeUtils.BuildNagsAndCommentsList(tree);
+                EditOperation op = new EditOperation(EditOperation.EditType.STRIP_COMMENTS, comments, null);                
+                tree.OpsManager.PushOperation(op);
+
                 tree.StripCommentsAndNags();
                 AppState.IsDirty = true;
+
                 ActiveTreeView.BuildFlowDocumentForVariationTree();
             }
         }

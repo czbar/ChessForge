@@ -1506,6 +1506,28 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Restores stripped comments and nags.
+        /// </summary>
+        /// <param name="opData"></param>
+        public void UndoStripComments(object opData)
+        {
+            try
+            {
+                List<NagsAndComment> lst = opData as List<NagsAndComment>;
+                foreach (NagsAndComment nac in lst)
+                {
+                    TreeNode nd = GetNodeFromNodeId(nac.NodeId);
+                    nd.Comment = nac.Comment;
+                    nd.Nags = nac.Nags;
+                    nd.SetNags(nac.Nags);
+                }
+            }
+            catch 
+            { 
+            }
+        }
+
+        /// <summary>
         /// Builds a list of Nodes belonging to a subtree
         /// identified by the passed node.
         /// </summary>
