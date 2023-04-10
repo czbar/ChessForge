@@ -2200,6 +2200,22 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Strips all the comments from the currently shown tree. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiStripComments_Click(object sender, RoutedEventArgs e)
+        {
+            if (ActiveTreeView != null)
+            {
+                VariationTree tree = ActiveTreeView.ShownVariationTree;
+                tree.StripCommentsAndNags();
+                AppState.IsDirty = true;
+                ActiveTreeView.BuildFlowDocumentForVariationTree();
+            }
+        }
+
+        /// <summary>
         /// A request from the menu to start training at the currently selected position.
         /// </summary>
         /// <param name="sender"></param>

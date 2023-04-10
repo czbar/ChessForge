@@ -225,6 +225,25 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Removes comments and nags from all nodes.
+        /// </summary>
+        public void StripCommentsAndNags()
+        {
+            foreach (TreeNode nd in Nodes)
+            {
+                if (!string.IsNullOrEmpty(nd.Comment))
+                {
+                    nd.Comment = string.Empty;
+                }
+                if (!string.IsNullOrEmpty(nd.Nags))
+                {
+                    nd.Nags = string.Empty;
+                    nd.SetNags(string.Empty);
+                }
+            }
+        }
+
+        /// <summary>
         /// The complete list of Nodes for the current Workbook.
         /// </summary>
         public List<TreeNode> Nodes = new List<TreeNode>();
