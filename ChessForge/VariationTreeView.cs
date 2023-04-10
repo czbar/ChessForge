@@ -543,7 +543,7 @@ namespace ChessForge
                 if (nd != null || defaultToRootNode)
                 {
                     TreeNode prevThumbnail = _mainVariationTree.GetThumbnail();
-                    _mainVariationTree.SetThumbnail(nd == null ? _mainVariationTree.RootNode : nd);
+                    _mainVariationTree.SetThumbnail(nd ?? _mainVariationTree.RootNode);
 
                     InsertOrUpdateCommentRun(prevThumbnail);
                     InsertOrUpdateCommentRun(nd);
@@ -756,10 +756,7 @@ namespace ChessForge
         /// </summary>
         public void BringSelectedRunIntoView()
         {
-            if (_selectedRun != null)
-            {
-                _selectedRun.BringIntoView();
-            }
+            _selectedRun?.BringIntoView();
         }
 
         /// <summary>
@@ -768,10 +765,7 @@ namespace ChessForge
         /// </summary>
         public void AlignExerciseAndMainBoards()
         {
-            if (_exercisePassiveChessBoard != null)
-            {
-                _exercisePassiveChessBoard.FlipBoard(_mainWin.MainChessBoard.SideAtBottom);
-            }
+            _exercisePassiveChessBoard?.FlipBoard(_mainWin.MainChessBoard.SideAtBottom);
         }
 
         // counter to prevent too many debug messages in debug mode

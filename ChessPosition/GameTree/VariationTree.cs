@@ -890,7 +890,7 @@ namespace GameTree
         {
             TreeNode ret = null;
 
-            string engNotation = engMove == null ? nd.LastMoveEngineNotation : engMove;
+            string engNotation = engMove ?? nd.LastMoveEngineNotation;
 
             if (nd.Parent != null)
             {
@@ -1052,10 +1052,7 @@ namespace GameTree
                 if (nd.IsNewTrainingMove)
                 {
                     nodesToRemove.Add(nd);
-                    if (nd.Parent != null)
-                    {
-                        nd.Parent.Children.Remove(nd);
-                    }
+                    nd.Parent?.Children.Remove(nd);
                 }
             }
 

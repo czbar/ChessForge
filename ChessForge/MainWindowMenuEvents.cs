@@ -329,10 +329,7 @@ namespace ChessForge
                 switch (opType)
                 {
                     case WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER:
-                        if (AppState.MainWin.ActiveTreeView != null)
-                        {
-                            AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
-                        }
+                        AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree();
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         break;
                     case WorkbookOperation.WorkbookOperationType.DELETE_CHAPTER:
@@ -704,10 +701,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void Chapters_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (_chaptersView != null)
-            {
-                _chaptersView.BringRunToview();
-            }
+            _chaptersView?.BringRunToview();
         }
 
         /// <summary>
@@ -768,10 +762,7 @@ namespace ChessForge
                 }
             }
 
-            if (_chaptersView != null)
-            {
-                _chaptersView.BuildFlowDocumentForChaptersView();
-            }
+            _chaptersView?.BuildFlowDocumentForChaptersView();
         }
 
         /// <summary>
@@ -1586,10 +1577,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMn_MarkThumbnail_Click(object sender, RoutedEventArgs e)
         {
-            if (ActiveTreeView != null)
-            {
-                ActiveTreeView.MarkSelectedNodeAsThumbnail();
-            }
+            ActiveTreeView?.MarkSelectedNodeAsThumbnail();
         }
 
         /// <summary>
@@ -1600,10 +1588,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMn_ExerciseMarkThumbnail_Click(object sender, RoutedEventArgs e)
         {
-            if (ActiveTreeView != null)
-            {
-                ActiveTreeView.MarkSelectedNodeAsThumbnail(true);
-            }
+            ActiveTreeView?.MarkSelectedNodeAsThumbnail(true);
         }
 
         /// <summary>
@@ -2651,10 +2636,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnCopyMoves_Click(object sender, RoutedEventArgs e)
         {
-            if (ActiveTreeView != null)
-            {
-                ActiveTreeView.PlaceSelectedForCopyInClipboard();
-            }
+            ActiveTreeView?.PlaceSelectedForCopyInClipboard();
         }
 
         /// <summary>
@@ -2811,10 +2793,7 @@ namespace ChessForge
                     SetCustomBoardOrientation((isFlipped ? PieceColor.Black : PieceColor.White), WorkbookManager.ItemType.MODEL_GAME);
                     break;
                 case WorkbookManager.TabViewType.EXERCISE:
-                    if (_exerciseTreeView != null)
-                    {
-                        _exerciseTreeView.AlignExerciseAndMainBoards();
-                    }
+                    _exerciseTreeView?.AlignExerciseAndMainBoards();
                     SetCustomBoardOrientation((isFlipped ? PieceColor.Black : PieceColor.White), WorkbookManager.ItemType.EXERCISE);
                     break;
             }
@@ -3133,10 +3112,7 @@ namespace ChessForge
                     if (affectedNodes.Count > 0)
                     {
                         // TODO: we should save this list for the Undo operation
-                        if (_studyTreeView != null)
-                        {
-                            _studyTreeView.UpdateReferenceRuns(affectedNodes);
-                        }
+                        _studyTreeView?.UpdateReferenceRuns(affectedNodes);
                     }
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                     AppState.IsDirty = true;
@@ -3167,10 +3143,7 @@ namespace ChessForge
                     if (affectedNodes.Count > 0)
                     {
                         // TODO: we should save this list for the Undo operation
-                        if (_studyTreeView != null)
-                        {
-                            _studyTreeView.UpdateReferenceRuns(affectedNodes);
-                        }
+                        _studyTreeView?.UpdateReferenceRuns(affectedNodes);
                     }
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                     AppState.IsDirty = true;
@@ -3263,10 +3236,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCmiInsertDiagram_Click(object sender, RoutedEventArgs e)
         {
-            if (_introView != null)
-            {
-                _introView.CreateDiagram();
-            }
+            _introView?.CreateDiagram();
         }
 
         /// <summary>
@@ -3276,10 +3246,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCmiEditDiagram_Click(object sender, RoutedEventArgs e)
         {
-            if (_introView != null)
-            {
-                _introView.EditDiagram();
-            }
+            _introView?.EditDiagram();
         }
 
         /// <summary>
@@ -3289,10 +3256,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void IntroViewPaste_Click(object sender, RoutedEventArgs e)
         {
-            if (_introView != null)
-            {
-                _introView.Paste(sender, e);
-            }
+            _introView?.Paste(sender, e);
         }
 
         /// <summary>
@@ -3302,10 +3266,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void IntroViewCut_Click(object sender, RoutedEventArgs e)
         {
-            if (_introView != null)
-            {
-                _introView.Cut(sender, e);
-            }
+            _introView?.Cut(sender, e);
         }
 
         /// <summary>
@@ -3315,10 +3276,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void IntroViewCopy_Click(object sender, RoutedEventArgs e)
         {
-            if (_introView != null)
-            {
-                _introView.Copy(sender, e);
-            }
+            _introView?.Copy(sender, e);
         }
 
         /// <summary>
@@ -3328,10 +3286,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void IntroViewUndo_Click(object sender, RoutedEventArgs e)
         {
-            if (_introView != null)
-            {
-                _introView.Undo(sender, e);
-            }
+            _introView?.Undo(sender, e);
         }
 
         /// <summary>
@@ -3367,10 +3322,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCmiFlipDiagram_Click(object sender, RoutedEventArgs e)
         {
-            if (_introView != null)
-            {
-                _introView.FlipDiagram();
-            }
+            _introView?.FlipDiagram();
         }
 
         /// <summary>
@@ -3380,10 +3332,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCmiEditMove_Click(object sender, RoutedEventArgs e)
         {
-            if (_introView != null)
-            {
-                _introView.EditMove();
-            }
+            _introView?.EditMove();
         }
 
         /// <summary>
@@ -3417,25 +3366,13 @@ namespace ChessForge
         /// </summary>
         private void RebuildAllTreeViews()
         {
-            if (_studyTreeView != null)
-            {
-                _studyTreeView.BuildFlowDocumentForVariationTree();
-            }
+            _studyTreeView?.BuildFlowDocumentForVariationTree();
 
-            if (_modelGameTreeView != null)
-            {
-                _modelGameTreeView.BuildFlowDocumentForVariationTree();
-            }
+            _modelGameTreeView?.BuildFlowDocumentForVariationTree();
 
-            if (_exerciseTreeView != null)
-            {
-                _exerciseTreeView.BuildFlowDocumentForVariationTree();
-            }
+            _exerciseTreeView?.BuildFlowDocumentForVariationTree();
 
-            if (_chaptersView != null)
-            {
-                _chaptersView.BuildFlowDocumentForChaptersView();
-            }
+            _chaptersView?.BuildFlowDocumentForChaptersView();
 
             RestoreSelectedLineAndMoveInActiveView();
         }
