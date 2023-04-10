@@ -81,7 +81,8 @@ namespace ChessForge
                     {
                         case IntroViewClipboard.ElementType.Paragraph:
                             Paragraph paragraph = element.DataObject as Paragraph;
-                            InsertParagraphFromClipboard(paragraph);
+                            TextPointer tp = InsertParagraphFromClipboard(paragraph);
+                            _rtb.CaretPosition = tp;
                             break;
                         case IntroViewClipboard.ElementType.Diagram:
                             InsertDiagramFromClipboard(element.DataObject as TreeNode, element.BoolState == true);
@@ -103,10 +104,10 @@ namespace ChessForge
         /// and insert it at the current position.
         /// </summary>
         /// <param name="paraToInsert"></param>
-        public void InsertParagraphFromClipboard(Paragraph paraToInsert)
+        public TextPointer InsertParagraphFromClipboard(Paragraph paraToInsert)
         {
             Paragraph para = RichTextBoxUtilities.CopyParagraph(paraToInsert);
-            _rtb.CaretPosition.InsertParagraphBreak();
+            return _rtb.CaretPosition.InsertParagraphBreak();
         }
 
         /// <summary>
