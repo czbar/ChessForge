@@ -581,8 +581,10 @@ namespace ChessPosition
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <exception cref="Exception"></exception>
-        public static void EngineNotationToCoords(string engMove, out SquareCoords from, out SquareCoords to)
+        public static void EngineNotationToCoords(string engMove, out SquareCoords from, out SquareCoords to, out PieceType promoteTo)
         {
+            promoteTo = PieceType.None;
+
             if (engMove.Length < 4 || engMove.Length > 5)
             {
                 LocalizedStrings.Values.TryGetValue(LocalizedStrings.StringId.InvalidEngineMoveReceived, out string msg);
@@ -601,6 +603,11 @@ namespace ChessPosition
             int xTo = (int)engDestFile - (int)'a';
             int yTo = (int)engDestRank - (int)'1';
             to = new SquareCoords(xTo, yTo);
+
+            if (engMove.Length == 5)
+            {
+                promoteTo = FenParser.FenCharToPiece[char.ToUpper(engMove[4])];
+            }
         }
 
         /// <summary>
