@@ -142,7 +142,7 @@ namespace ChessPosition
         {
             List<TreeNode> line = new List<TreeNode>();
 
-            if (nd != null || nd.Children.Count > 0)
+            if (nd != null && nd.Children.Count > 0)
             {
                 nd = nd.Children[0];
 
