@@ -682,10 +682,10 @@
     <value>Copy Tree from Selected Move</value>
   </data>
   <data name="CopyMainLineAfterMove" xml:space="preserve">
-    <value>Copy Main Line after</value>
+    <value>Copy and Paste Main Line after</value>
   </data>
   <data name="CopySubtreeAfterMove" xml:space="preserve">
-    <value>Copy Tree after</value>
+    <value>Copy and Paste Variation Tree after</value>
   </data>
   <data name="MainLine" xml:space="preserve">
     <value>Main Line</value>

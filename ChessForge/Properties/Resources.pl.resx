@@ -682,10 +682,10 @@
     <value>Skopiuj drzewo pod wybranym ruchem</value>
   </data>
   <data name="CopyMainLineAfterMove" xml:space="preserve">
-    <value>Skopiuj główny wariant po</value>
+    <value>Skopiuj i wklej główny wariant po</value>
   </data>
   <data name="CopySubtreeAfterMove" xml:space="preserve">
-    <value>Skopiuj wszystkie warianty po</value>
+    <value>Skopiuj i wklej wszystkie warianty po</value>
   </data>
   <data name="MainLine" xml:space="preserve">
     <value>Główny wariant</value>

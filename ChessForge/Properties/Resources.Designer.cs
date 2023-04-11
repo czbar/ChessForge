@@ -916,7 +916,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copy Main Line after.
+        ///   Looks up a localized string similar to Copy and Paste Main Line after.
         /// </summary>
         public static string CopyMainLineAfterMove {
             get {
@@ -943,7 +943,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copy Tree after.
+        ///   Looks up a localized string similar to Copy and Paste Variation Tree after.
         /// </summary>
         public static string CopySubtreeAfterMove {
             get {
