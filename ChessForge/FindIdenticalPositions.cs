@@ -63,10 +63,12 @@ namespace ChessForge
                             case IdenticalPositionsExDialog.Action.CopyLine:
                                 nodelList = TreeUtils.CopyNodeList(item.TailLine);
                                 ChfClipboard.HoldNodeList(nodelList);
+                                AppState.MainWin.PasteChfClipboard();
                                 break;
                             case IdenticalPositionsExDialog.Action.CopyTree:
                                 nodelList = TreeUtils.CopySubtree(item.TailLine[0]);
                                 ChfClipboard.HoldNodeList(nodelList);
+                                AppState.MainWin.PasteChfClipboard();
                                 break;
                             case IdenticalPositionsExDialog.Action.OpenView:
                                 // TODO: this should be something encapsulated in TabNavigator
