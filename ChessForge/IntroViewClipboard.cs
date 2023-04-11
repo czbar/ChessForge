@@ -45,9 +45,13 @@ namespace ChessForge
         /// Adds a Run element to the Clipboard.
         /// </summary>
         /// <param name="run"></param>
-        public static void AddRun(Run run)
+        public static void AddRun(Run run, Thickness? margins = null)
         {
             IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Run);
+            if (margins != null)
+            {
+                element.Margins = margins.Value;
+            }
 
             // make a copy of the run
             Run runToAdd = RichTextBoxUtilities.CopyRun(run);
@@ -65,12 +69,7 @@ namespace ChessForge
             IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Paragraph);
 
             // make a copy of the paragraph (without content)
-            Paragraph paraToAdd = new Paragraph();
-            paraToAdd.Name = para.Name;
-            paraToAdd.FontWeight = para.FontWeight;
-            paraToAdd.FontSize = para.FontSize;
-            //paraToAdd.TextDecorations = para.TextDecorations;
-
+            Paragraph paraToAdd = RichTextBoxUtilities.CopyParagraph(para);
             element.DataObject = paraToAdd;
 
             Elements.Add(element);

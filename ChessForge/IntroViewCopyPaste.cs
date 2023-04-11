@@ -66,6 +66,13 @@ namespace ChessForge
         {
             try
             {
+                if (IntroViewClipboard.Elements.Count == 0)
+                {
+                    return;
+                }
+
+                AppState.IsDirty = true;
+
                 // We will paste objects from the clipboard one by one
 
                 // first delete the current selection if any
@@ -74,6 +81,8 @@ namespace ChessForge
                     TextRange selection = new TextRange(_rtb.Selection.Start, _rtb.Selection.End);
                     selection.Text = "";
                 }
+
+                bool isFirstElem = true;
 
                 foreach (IntroViewClipboardElement element in IntroViewClipboard.Elements)
                 {
@@ -88,12 +97,14 @@ namespace ChessForge
                             InsertDiagramFromClipboard(element.DataObject as TreeNode, element.BoolState == true);
                             break;
                         case IntroViewClipboard.ElementType.Run:
-                            InsertRunFromClipboard(element.DataObject as Run);
+                            InsertRunFromClipboard(element.DataObject as Run, isFirstElem ? element.Margins : null);
                             break;
                         case IntroViewClipboard.ElementType.Move:
                             InsertMoveFromClipboard(element.DataObject as TreeNode);
                             break;
                     }
+
+                    isFirstElem = false;
                 }
             }
             catch { }
@@ -106,8 +117,24 @@ namespace ChessForge
         /// <param name="paraToInsert"></param>
         public TextPointer InsertParagraphFromClipboard(Paragraph paraToInsert)
         {
+            Paragraph paraToInsertAfter = null;
+            if (_rtb.CaretPosition.Paragraph != null)
+            {
+                paraToInsertAfter = _rtb.CaretPosition.Paragraph;
+            }
+
             Paragraph para = RichTextBoxUtilities.CopyParagraph(paraToInsert);
-            return _rtb.CaretPosition.InsertParagraphBreak();
+
+            if (paraToInsertAfter != null)
+            {
+                _rtb.Document.Blocks.InsertAfter(paraToInsertAfter, para);
+            }
+            else
+            {
+                _rtb.Document.Blocks.Add(para);
+            }
+            return para.ContentEnd;
+            //return _rtb.CaretPosition.InsertParagraphBreak();
         }
 
         /// <summary>
@@ -130,11 +157,16 @@ namespace ChessForge
         /// If parent is a Paragraph and it is not a diagram paragraph, insert it at the caret point.
         /// </summary>
         /// <param name="run"></param>
-        private void InsertRunFromClipboard(Run runToInsert)
+        private void InsertRunFromClipboard(Run runToInsert, Thickness? margins)
         {
             RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph para, out Inline insertBefore);
             if (para != null)
             {
+                if (margins != null)
+                {
+                    para.Margin = margins.Value;
+                }
+
                 Run run = RichTextBoxUtilities.CopyRun(runToInsert);
                 if (insertBefore == null)
                 {
@@ -189,10 +221,11 @@ namespace ChessForge
                 switch (position.GetPointerContext(LogicalDirection.Forward))
                 {
                     case TextPointerContext.ElementStart:
+                    case TextPointerContext.ElementEnd:
                         if (position.Parent is Paragraph)
                         {
                             Paragraph positionParent = position.Parent as Paragraph;
-                            if (positionParent != currParagraph || RichTextBoxUtilities.IsDiagramPara(positionParent))
+                            if (positionParent != currParagraph) // || RichTextBoxUtilities.IsDiagramPara(positionParent))
                             {
                                 bool? flipped = null;
                                 if (RichTextBoxUtilities.IsDiagramPara(positionParent))
@@ -210,8 +243,6 @@ namespace ChessForge
                             }
                         }
                         break;
-                    case TextPointerContext.ElementEnd:
-                        break;
                     case TextPointerContext.EmbeddedElement:
                         if (position.Parent is TextElement)
                         {
@@ -226,16 +257,22 @@ namespace ChessForge
                         break;
                     case TextPointerContext.Text:
                         Run r = (Run)position.Parent;
+                        Thickness? margins = null;
+                        if (r.Parent is Paragraph para)
+                        {
+                            margins = para.Margin;
+                        }
+
                         if (r.ElementEnd.CompareTo(end) > 0)
                         {
                             TextRange tr = new TextRange(position, end);
                             Run runCopy = RichTextBoxUtilities.CopyRun(r);
                             runCopy.Text = tr.Text;
-                            IntroViewClipboard.AddRun(runCopy);
+                            IntroViewClipboard.AddRun(runCopy, margins);
                         }
                         else
                         {
-                            IntroViewClipboard.AddRun(r);
+                            IntroViewClipboard.AddRun(r, margins);
                         }
                         break;
                 }
