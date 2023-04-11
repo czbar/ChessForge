@@ -270,7 +270,9 @@ namespace GameTree
             {
                 _lastMoveAlg = value;
                 if (string.IsNullOrEmpty(_lastMoveAlgWithNag))
+                {
                     _lastMoveAlgWithNag = value;
+                }
             }
         }
 

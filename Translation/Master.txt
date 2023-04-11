@@ -390,6 +390,12 @@ UseVariableFontSize=Variable Font Size
 RestoreFontDefaults=Restore Font Defaults
 
 
+#TOP LEVEL MENU: Tools
+Tools=Tools
+
+#Strip all comments
+StripComments=Strip All Comments
+
 
 #TOP LEVEL MENU: Help
 Help=Help
@@ -639,10 +645,10 @@ CopyHighlightedLine=Copy Highlighted Line
 CopySubtree=Copy Tree from Selected Move
 
 #Copy main line from move
-CopyMainLineAfterMove=Copy Main Line after
+CopyMainLineAfterMove=Copy and Paste Main Line after
 
 #Copy subtree aftre the selected move.
-CopySubtreeAfterMove=Copy Tree after
+CopySubtreeAfterMove=Copy and Paste Variation Tree after
 
 #Main line
 MainLine=Main Line

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ChessForge
 {
@@ -29,6 +30,11 @@ namespace ChessForge
         /// Node id that will be used by some elements.
         /// </summary>
         public int NodeId = -1;
+
+        /// <summary>
+        /// Margins of the this paragraph or the parent paragraph.
+        /// </summary>
+        public Thickness? Margins;
 
         /// <summary>
         /// An object with data of the type appropriate for the type of the element.

@@ -459,6 +459,12 @@
   <data name="RestoreFontDefaults" xml:space="preserve">
     <value>Restore Font Defaults</value>
   </data>
+  <data name="Tools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="StripComments" xml:space="preserve">
+    <value>Strip All Comments</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>
   </data>
@@ -676,10 +682,10 @@
     <value>Copy Tree from Selected Move</value>
   </data>
   <data name="CopyMainLineAfterMove" xml:space="preserve">
-    <value>Copy Main Line after</value>
+    <value>Copy and Paste Main Line after</value>
   </data>
   <data name="CopySubtreeAfterMove" xml:space="preserve">
-    <value>Copy Tree after</value>
+    <value>Copy and Paste Variation Tree after</value>
   </data>
   <data name="MainLine" xml:space="preserve">
     <value>Main Line</value>

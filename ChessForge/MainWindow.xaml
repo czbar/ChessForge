@@ -120,6 +120,9 @@
                         </MenuItem>
                         <MenuItem  x:Name="UiMnFontDefaults" Header="{x:Static p:Resources.RestoreFontDefaults}" Click="UiMnFontDefaults_Click" />
                     </MenuItem>
+                    <MenuItem Header="{x:Static p:Resources.Tools}" Margin="0,0,0,0">
+                        <MenuItem Header="{x:Static p:Resources.StripComments}" Click="UiStripComments_Click" />
+                    </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Help}" Margin="0,0,0,0">
                         <MenuItem Header="{x:Static p:Resources.Wiki}" Click="UiMnHelpWiki_Click" />
                         <MenuItem Header="{x:Static p:Resources.CheckForUpdates}" Click="UiMnCheckForUpdates_Click" />
@@ -504,7 +507,7 @@
                                 <ContextMenu x:Name="UiCmModelGames">
                                     <MenuItem x:Name="_mnGame_EditHeader" Header="{x:Static p:Resources.EditGameHeader}" Click="UiMnGame_EditHeader_Click" />
                                     <MenuItem x:Name="UiMnGameMoveToChapter" Header="{x:Static p:Resources.MoveGameToChapter}" Click="UiMnMoveGameToChapter_Click" />
-                                    <MenuItem x:Name="_mnGame_CreateModelGame" Header="{x:Static p:Resources.CreateNewGame}" Click="_UiMnGame_CreateModelGame_Click" />
+                                    <MenuItem x:Name="_mnGame_CreateModelGame" Header="{x:Static p:Resources.CreateNewGame}" Click="UiMnGame_CreateModelGame_Click" />
                                     <MenuItem x:Name="_mnGame_ImportGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnGame_ImportGames_Click"  />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />

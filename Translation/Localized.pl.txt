@@ -826,11 +826,11 @@ CopySubtree=Skopiuj drzewo pod wybranym ruchem
 
 #description: Copy main line from move
 #english: CopyMainLineAfterMove=Copy Main Line after
-CopyMainLineAfterMove=Skopiuj główny wariant po
+CopyMainLineAfterMove=Skopiuj i wklej główny wariant po
 
 #description: Copy subtree aftre the selected move.
 #english: CopySubtreeAfterMove=Copy Tree after
-CopySubtreeAfterMove=Skopiuj wszystkie warianty po
+CopySubtreeAfterMove=Skopiuj i wklej wszystkie warianty po
 
 #description: Main line
 #english: MainLine=Main Line
@@ -2150,3 +2150,7 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
+Tools=Narzędzia
+
+#Strip all comments
+StripComments=Usuń wszystkie komentarze

@@ -50,14 +50,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Returns reference to the shown variation tree
-        /// </summary>
-        public VariationTree ShownVariationTree
-        {
-            get => _shownVariationTree;
-        }
-
-        /// <summary>
         /// Index of the entity (game or exercise) in the Active Chapter.
         /// </summary>
         public int EntityIndex
@@ -220,7 +212,7 @@ namespace ChessForge
         /// <summary>
         /// The shown variation tree is either the _mainVariationTree or the AssociatedSecondary tree
         /// </summary>
-        protected VariationTree _shownVariationTree
+        public VariationTree ShownVariationTree
         {
             get => _mainVariationTree.IsAssociatedTreeActive ? _mainVariationTree.AssociatedSecondary : _mainVariationTree;
         }
@@ -379,7 +371,7 @@ namespace ChessForge
                 Document.Blocks.Add(movePromptPara);
             }
 
-            if (contentType != GameData.ContentType.EXERCISE || _shownVariationTree.ShowTreeLines)
+            if (contentType != GameData.ContentType.EXERCISE || ShownVariationTree.ShowTreeLines)
             {
                 // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
                 // and note the distances in the Nodes so that we can use them when creating the document
@@ -389,11 +381,11 @@ namespace ChessForge
                 TreeNode root;
                 if (rootNodeId == 0)
                 {
-                    root = _shownVariationTree.Nodes[0];
+                    root = ShownVariationTree.Nodes[0];
                 }
                 else
                 {
-                    root = _shownVariationTree.GetNodeFromNodeId(rootNodeId);
+                    root = ShownVariationTree.GetNodeFromNodeId(rootNodeId);
                     if (includeStem)
                     {
                         Paragraph paraStem = BuildWorkbookStemLine(root, true);
@@ -472,7 +464,7 @@ namespace ChessForge
                 if (_selectedRun != null)
                 {
                     int nodeId = TextUtils.GetIdFromPrefixedString(_selectedRun.Name);
-                    node = _shownVariationTree.GetNodeFromNodeId(nodeId);
+                    node = ShownVariationTree.GetNodeFromNodeId(nodeId);
                 }
             }
             catch (Exception ex)
@@ -491,12 +483,12 @@ namespace ChessForge
         {
             try
             {
-                TreeNode nd = _shownVariationTree.GetNodeFromNodeId(_lastClickedNodeId);
+                TreeNode nd = ShownVariationTree.GetNodeFromNodeId(_lastClickedNodeId);
                 // TODO: it would be more precise to get the last move of the line being promoted and set it as line id
                 // otherwise we end up selecting a different line that the one we are promoting.
                 // However, with the current GUI logic, the selected line changes when the user right-clicks on the
                 // move to promote the line, so the end result wouldn't change. But it may if we change that other logic.
-                _shownVariationTree.PromoteLine(nd);
+                ShownVariationTree.PromoteLine(nd);
                 _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
                 BuildFlowDocumentForVariationTree();
                 _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false), false);
@@ -543,7 +535,7 @@ namespace ChessForge
                 if (nd != null || defaultToRootNode)
                 {
                     TreeNode prevThumbnail = _mainVariationTree.GetThumbnail();
-                    _mainVariationTree.SetThumbnail(nd == null ? _mainVariationTree.RootNode : nd);
+                    _mainVariationTree.SetThumbnail(nd ?? _mainVariationTree.RootNode);
 
                     InsertOrUpdateCommentRun(prevThumbnail);
                     InsertOrUpdateCommentRun(nd);
@@ -625,7 +617,7 @@ namespace ChessForge
         /// <returns></returns>
         public List<TreeNode> CopySelectedSubtree(TreeNode nd)
         {
-            return _shownVariationTree.CopySubtree(nd);
+            return ShownVariationTree.CopySubtree(nd);
         }
 
         /// <summary>
@@ -635,14 +627,14 @@ namespace ChessForge
         {
             try
             {
-                GameData.ContentType contentType = _shownVariationTree.ContentType;
+                GameData.ContentType contentType = ShownVariationTree.ContentType;
 
                 ClearCopySelect();
 
                 TreeNode nd = GetSelectedNode(); // _shownVariationTree.GetNodeFromNodeId(_lastClickedNodeId);
                 TreeNode parent = nd.Parent;
-                _shownVariationTree.DeleteRemainingMoves(nd);
-                _shownVariationTree.BuildLines();
+                ShownVariationTree.DeleteRemainingMoves(nd);
+                ShownVariationTree.BuildLines();
                 _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
                 BuildFlowDocumentForVariationTree();
                 _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true), false);
@@ -672,9 +664,9 @@ namespace ChessForge
 
             // if the first node of nodes to insert has id = 0, we will insert it at the root of the tree, regardless of which node is currently selected
             TreeNode nodeToInsertAt;
-            if (nodesToInsert[0].NodeId == 0 || _shownVariationTree.Nodes.Count == 1)
+            if (nodesToInsert[0].NodeId == 0 || ShownVariationTree.Nodes.Count == 1)
             {
-                nodeToInsertAt = _shownVariationTree.RootNode;
+                nodeToInsertAt = ShownVariationTree.RootNode;
             }
             else
             {
@@ -689,7 +681,7 @@ namespace ChessForge
 
             if (nodeToInsertAt != null)
             {
-                node = TreeUtils.InsertSubtreeMovesIntoTree(_shownVariationTree, nodeToInsertAt, nodesToInsert, ref insertedNodes, ref failedInsertions);
+                node = TreeUtils.InsertSubtreeMovesIntoTree(ShownVariationTree, nodeToInsertAt, nodesToInsert, ref insertedNodes, ref failedInsertions);
 
                 if (insertedNodes.Count > 0 && failedInsertions.Count == 0)
                 {
@@ -700,7 +692,7 @@ namespace ChessForge
                         nodeIds.Add(nd.NodeId);
                     }
                     EditOperation op = new EditOperation(EditOperation.EditType.PASTE_MOVES, nodeIds, null);
-                    _shownVariationTree.OpsManager.PushOperation(op);
+                    ShownVariationTree.OpsManager.PushOperation(op);
                 }
             }
 
@@ -756,10 +748,7 @@ namespace ChessForge
         /// </summary>
         public void BringSelectedRunIntoView()
         {
-            if (_selectedRun != null)
-            {
-                _selectedRun.BringIntoView();
-            }
+            _selectedRun?.BringIntoView();
         }
 
         /// <summary>
@@ -768,10 +757,7 @@ namespace ChessForge
         /// </summary>
         public void AlignExerciseAndMainBoards()
         {
-            if (_exercisePassiveChessBoard != null)
-            {
-                _exercisePassiveChessBoard.FlipBoard(_mainWin.MainChessBoard.SideAtBottom);
-            }
+            _exercisePassiveChessBoard?.FlipBoard(_mainWin.MainChessBoard.SideAtBottom);
         }
 
         // counter to prevent too many debug messages in debug mode
@@ -787,7 +773,7 @@ namespace ChessForge
         /// <param name="nodeId"></param>
         public void SelectNode(int nodeId)
         {
-            TreeNode node = _shownVariationTree.GetNodeFromNodeId(nodeId);
+            TreeNode node = ShownVariationTree.GetNodeFromNodeId(nodeId);
             if (node != null)
             {
                 SelectLineAndMove(node.LineId, nodeId);
@@ -806,7 +792,7 @@ namespace ChessForge
 
             try
             {
-                node = _shownVariationTree.GetNextSibling(GetSelectedNode(), prevNext);
+                node = ShownVariationTree.GetNextSibling(GetSelectedNode(), prevNext);
                 if (node != null)
                 {
                     SelectNode(node);
@@ -840,7 +826,7 @@ namespace ChessForge
                 return;
             }
 
-            if (_shownVariationTree.ShowTreeLines)
+            if (ShownVariationTree.ShowTreeLines)
             {
                 try
                 {
@@ -852,7 +838,7 @@ namespace ChessForge
                         _selectedRun.Foreground = _selectedRunFore;
                     }
 
-                    ObservableCollection<TreeNode> lineToSelect = _shownVariationTree.SelectLine(lineId);
+                    ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.SelectLine(lineId);
                     foreach (TreeNode nd in lineToSelect)
                     {
                         if (nd.NodeId != 0)
@@ -1069,7 +1055,7 @@ namespace ChessForge
             Document.Blocks.Remove(_forkTable);
             _forkTable = null;
 
-            TreeNode node = _shownVariationTree.GetNodeFromNodeId(nodeId);
+            TreeNode node = ShownVariationTree.GetNodeFromNodeId(nodeId);
 
             if (node == null || node.Children.Count <= 2)
             {
@@ -1080,7 +1066,7 @@ namespace ChessForge
             Paragraph para = _dictRunToParagraph[r];
             _forkTable = null;
 
-            if (_shownVariationTree != null)
+            if (ShownVariationTree != null)
             {
                 try
                 {
@@ -1171,7 +1157,7 @@ namespace ChessForge
         {
             if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.NONE)
             {
-                string result = _shownVariationTree.Header.GetResult(out _);
+                string result = ShownVariationTree.Header.GetResult(out _);
                 if (!string.IsNullOrWhiteSpace(result))
                 {
                     Paragraph para = CreateParagraph("0", true);
@@ -1276,7 +1262,7 @@ namespace ChessForge
         /// </summary>
         private void SetNodeDistances()
         {
-            foreach (TreeNode nd in _shownVariationTree.Nodes)
+            foreach (TreeNode nd in ShownVariationTree.Nodes)
             {
                 if (nd != null)
                 {
@@ -1285,7 +1271,7 @@ namespace ChessForge
                 }
             }
 
-            foreach (TreeNode nd in _shownVariationTree.Nodes)
+            foreach (TreeNode nd in ShownVariationTree.Nodes)
             {
                 // if the node is a leaf start traversing
                 if (nd != null && IsLeaf(nd))
@@ -1889,7 +1875,7 @@ namespace ChessForge
             TreeNode selectedNode = GetSelectedNode();
             if (selectedNode != null)
             {
-                List<TreeNode> lstNodes = _shownVariationTree.BuildSubTreeNodeList(selectedNode, false);
+                List<TreeNode> lstNodes = ShownVariationTree.BuildSubTreeNodeList(selectedNode, false);
                 _selectedForCopy.AddRange(lstNodes);
                 HighlightSelectedForCopy();
             }
@@ -1928,7 +1914,7 @@ namespace ChessForge
                 if (r.Name != null && r.Name.StartsWith(_run_))
                 {
                     int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-                    shiftClicked = _shownVariationTree.GetNodeFromNodeId(nodeId);
+                    shiftClicked = ShownVariationTree.GetNodeFromNodeId(nodeId);
                 }
 
                 if (currSelected != null && shiftClicked != null)
@@ -2053,7 +2039,7 @@ namespace ChessForge
                 if (r != null)
                 {
                     int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-                    TreeNode nd = _shownVariationTree.GetNodeFromNodeId(nodeId);
+                    TreeNode nd = ShownVariationTree.GetNodeFromNodeId(nodeId);
                     if (_mainWin.InvokeAnnotationsDialog(nd))
                     {
                         InsertOrUpdateCommentRun(nd);
@@ -2102,7 +2088,7 @@ namespace ChessForge
                     if (r.Name != null && r.Name.StartsWith(_run_))
                     {
                         nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-                        string lineId = _shownVariationTree.GetDefaultLineIdForNode(nodeId);
+                        string lineId = ShownVariationTree.GetDefaultLineIdForNode(nodeId);
 
                         SelectAndHighlightLine(lineId, nodeId);
                         LearningMode.ActiveLineId = lineId;
@@ -2143,7 +2129,7 @@ namespace ChessForge
         {
             // TODO: do not select line and therefore repaint everything if the clicked line is already selected
             // UNLESS there is "copy select" active
-            ObservableCollection<TreeNode> lineToSelect = _shownVariationTree.SelectLine(lineId);
+            ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.SelectLine(lineId);
             WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nodeId);
             foreach (TreeNode nd in lineToSelect)
             {

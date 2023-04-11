@@ -142,7 +142,7 @@ namespace ChessPosition
         {
             List<TreeNode> line = new List<TreeNode>();
 
-            if (nd != null || nd.Children.Count > 0)
+            if (nd != null && nd.Children.Count > 0)
             {
                 nd = nd.Children[0];
 
@@ -376,6 +376,27 @@ namespace ChessPosition
             {
                 node.MoveNumber = (uint)((int)node.MoveNumber - decrement);
             }
+        }
+
+        /// <summary>
+        /// Builds a list of NagsAndComments.
+        /// Only includes those that have non empty Nags and Comments.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <returns></returns>
+        public static List<NagsAndComment> BuildNagsAndCommentsList(VariationTree tree)
+        {
+            List<NagsAndComment> lst = new List<NagsAndComment>();
+
+            foreach (TreeNode nd in tree.Nodes)
+            {
+                if (!string.IsNullOrEmpty(nd.Comment) || !string.IsNullOrEmpty(nd.Nags))
+                {
+                    lst.Add(new NagsAndComment(nd.NodeId, nd.Comment, nd.Nags));
+                }
+            }
+
+            return lst;
         }
 
         /// <summary>

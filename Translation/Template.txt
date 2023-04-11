@@ -504,6 +504,14 @@ UseVariableFontSize=
 RestoreFontDefaults=
 
 
+#description: TOP LEVEL MENU: Tools
+#english: Tools=Tools
+Tools=
+
+#description: Strip all comments
+#english: StripComments=Strip All Comments
+StripComments=
+
 
 #description: TOP LEVEL MENU: Help
 #english: Help=Help
@@ -825,11 +833,11 @@ CopyHighlightedLine=
 CopySubtree=
 
 #description: Copy main line from move
-#english: CopyMainLineAfterMove=Copy Main Line after
+#english: CopyMainLineAfterMove=Copy and Paste Main Line after
 CopyMainLineAfterMove=
 
 #description: Copy subtree aftre the selected move.
-#english: CopySubtreeAfterMove=Copy Tree after
+#english: CopySubtreeAfterMove=Copy and Paste Variation Tree after
 CopySubtreeAfterMove=
 
 #description: Main line

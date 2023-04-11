@@ -504,6 +504,14 @@ UseVariableFontSize=Użyj Zmienną Czcionkę
 RestoreFontDefaults=Przywróć Domyślne Wartości
 
 
+#description: TOP LEVEL MENU: Tools
+#english: Tools=Tools
+Tools=Narzędzia
+
+#description: Strip all comments
+#english: StripComments=Strip All Comments
+StripComments=Usuń wszystkie komentarze
+
 
 #description: TOP LEVEL MENU: Help
 #english: Help=Help
@@ -825,12 +833,12 @@ CopyHighlightedLine=Skopiuj podświetlony wariant
 CopySubtree=Skopiuj drzewo pod wybranym ruchem
 
 #description: Copy main line from move
-#english: CopyMainLineAfterMove=Copy Main Line after
-CopyMainLineAfterMove=Skopiuj główny wariant po
+#english: CopyMainLineAfterMove=Copy and Paste Main Line after
+CopyMainLineAfterMove=Skopiuj i wklej główny wariant po
 
 #description: Copy subtree aftre the selected move.
-#english: CopySubtreeAfterMove=Copy Tree after
-CopySubtreeAfterMove=Skopiuj wszystkie warianty po
+#english: CopySubtreeAfterMove=Copy and Paste Variation Tree after
+CopySubtreeAfterMove=Skopiuj i wklej wszystkie warianty po
 
 #description: Main line
 #english: MainLine=Main Line

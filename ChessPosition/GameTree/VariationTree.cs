@@ -225,6 +225,25 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Removes comments and nags from all nodes.
+        /// </summary>
+        public void StripCommentsAndNags()
+        {
+            foreach (TreeNode nd in Nodes)
+            {
+                if (!string.IsNullOrEmpty(nd.Comment))
+                {
+                    nd.Comment = string.Empty;
+                }
+                if (!string.IsNullOrEmpty(nd.Nags))
+                {
+                    nd.Nags = string.Empty;
+                    nd.SetNags(string.Empty);
+                }
+            }
+        }
+
+        /// <summary>
         /// The complete list of Nodes for the current Workbook.
         /// </summary>
         public List<TreeNode> Nodes = new List<TreeNode>();
@@ -871,7 +890,7 @@ namespace GameTree
         {
             TreeNode ret = null;
 
-            string engNotation = engMove == null ? nd.LastMoveEngineNotation : engMove;
+            string engNotation = engMove ?? nd.LastMoveEngineNotation;
 
             if (nd.Parent != null)
             {
@@ -1033,10 +1052,7 @@ namespace GameTree
                 if (nd.IsNewTrainingMove)
                 {
                     nodesToRemove.Add(nd);
-                    if (nd.Parent != null)
-                    {
-                        nd.Parent.Children.Remove(nd);
-                    }
+                    nd.Parent?.Children.Remove(nd);
                 }
             }
 
@@ -1483,6 +1499,28 @@ namespace GameTree
             }
             catch
             {
+            }
+        }
+
+        /// <summary>
+        /// Restores stripped comments and nags.
+        /// </summary>
+        /// <param name="opData"></param>
+        public void UndoStripComments(object opData)
+        {
+            try
+            {
+                List<NagsAndComment> lst = opData as List<NagsAndComment>;
+                foreach (NagsAndComment nac in lst)
+                {
+                    TreeNode nd = GetNodeFromNodeId(nac.NodeId);
+                    nd.Comment = nac.Comment;
+                    nd.Nags = nac.Nags;
+                    nd.SetNags(nac.Nags);
+                }
+            }
+            catch 
+            { 
             }
         }
 

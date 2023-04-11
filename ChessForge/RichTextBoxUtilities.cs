@@ -47,6 +47,7 @@ namespace ChessForge
 
             paraToAdd.FontWeight = src.FontWeight;
             paraToAdd.FontSize = src.FontSize;
+            paraToAdd.Margin = src.Margin;
 
             return paraToAdd;
         }
