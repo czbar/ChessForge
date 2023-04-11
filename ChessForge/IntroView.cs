@@ -39,7 +39,13 @@ namespace ChessForge
         private List<IntroViewDiagram> DiagramList = new List<IntroViewDiagram>();
 
         // indicates if the text has been modified.
-        private bool _textDirty = false;
+        private static bool _isTextDirty = false;
+
+        // used to temporarily block text change events
+        private static bool _allowTextChanged = true;
+
+        // whether static methods have been initialized
+        private bool _initialized = false;
 
         /// <summary>
         /// Names and prefixes for xaml elements.
@@ -68,7 +74,7 @@ namespace ChessForge
         private TreeNode _selectedNode;
 
         // refrence to the RichTextBox of this view.
-        private RichTextBox _rtb = AppState.MainWin.UiRtbIntroView;
+        private static RichTextBox _rtb = AppState.MainWin.UiRtbIntroView;
 
         /// <summary>
         /// Constructor. Builds the content if not empty.
@@ -83,14 +89,19 @@ namespace ChessForge
             ParentChapter = parentChapter;
 
             // set the event handler for text changes.
-            _rtb.TextChanged += UiRtbIntroView_TextChanged;
+            if (!_initialized)
+            {
+                _rtb.TextChanged += UiRtbIntroView_TextChanged;
+                _initialized = true;
+            }
+
             if (!string.IsNullOrEmpty(Intro.Tree.RootNode.Data))
             {
                 LoadXAMLContent();
                 SetEventHandlers();
 
                 // as a result of the call to Clear(), the dirty flag were set so reset them
-                _textDirty = false;
+                _isTextDirty = false;
                 AppState.IsDirty = isAppDirty;
 
             }
@@ -116,7 +127,7 @@ namespace ChessForge
         /// <summary>
         /// Restore the original opacity for selections.
         /// </summary>
-        public void RestoreSelectionOpacity()
+        public static void RestoreSelectionOpacity()
         {
             AppState.MainWin.UiRtbIntroView.SelectionOpacity = _defaultSelectionOpacity;
         }
@@ -161,7 +172,7 @@ namespace ChessForge
         /// <returns></returns>
         public void SaveXAMLContent()
         {
-            if (_textDirty)
+            if (_isTextDirty)
             {
                 RemoveDuplicateNames();
                 string xamlText = XamlWriter.Save(Document);
@@ -169,7 +180,7 @@ namespace ChessForge
                 RemoveUnusedNodes();
             }
 
-            _textDirty = false;
+            _isTextDirty = false;
         }
 
         /// <summary>
@@ -343,7 +354,7 @@ namespace ChessForge
 
                 if (dlg.ShowDialog() == true)
                 {
-                    _textDirty = true;
+                    _isTextDirty = true;
                     AppState.IsDirty = true;
 
                     SelectedNode.LastMoveAlgebraicNotation = dlg.MoveText;
@@ -408,7 +419,7 @@ namespace ChessForge
                 BoardPosition pos = dlg.PositionSetup;
                 SelectedNode.Position = new BoardPosition(pos);
                 UpdateDiagram(para, SelectedNode);
-                _textDirty = true;
+                _isTextDirty = true;
                 AppState.IsDirty = true;
                 WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, SelectedNode);
             }
@@ -728,7 +739,7 @@ namespace ChessForge
                     node.Position = new BoardPosition(pos);
 
                     InsertDiagram(node, false);
-                    _textDirty = true;
+                    _isTextDirty = true;
                     AppState.IsDirty = true;
                 }
             }
@@ -761,7 +772,7 @@ namespace ChessForge
 
             AppState.MainWin.DisplayPosition(node);
 
-            _textDirty = true;
+            _isTextDirty = true;
             AppState.IsDirty = true;
 
             Document.Blocks.InsertBefore(nextPara, para);
@@ -799,7 +810,7 @@ namespace ChessForge
             diag.Chessboard.DisplayPosition(nd, true);
             AppState.MainWin.DisplayPosition(nd);
 
-            _textDirty = true;
+            _isTextDirty = true;
             AppState.IsDirty = true;
         }
 
@@ -869,7 +880,7 @@ namespace ChessForge
                 // set caret to the end of the new move
                 _rtb.CaretPosition = uic.ElementEnd;
 
-                _textDirty = true;
+                _isTextDirty = true;
                 AppState.IsDirty = true;
             }
             catch (Exception ex)
@@ -1306,9 +1317,17 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiRtbIntroView_TextChanged(object sender, TextChangedEventArgs e)
+        private static void UiRtbIntroView_TextChanged(object sender, TextChangedEventArgs e)
         {
-            _textDirty = true;
+            if (!_allowTextChanged)
+            {
+                return;
+            }
+
+            _isTextDirty = true;
+
+            // stop TextChanged event handler! 
+            _rtb.TextChanged -= UiRtbIntroView_TextChanged;
 
             // we want to avoid adding anything to the diagram paragraph outside of the diagram InlineUIElement so check for this
             TextPointer tpCaret = _rtb.CaretPosition;
@@ -1317,6 +1336,7 @@ namespace ChessForge
             if (RichTextBoxUtilities.GetDiagramFromParagraph(para, out InlineUIContainer diagram))
             {
                 CleanupDiagramPara(para, diagram);
+                AppState.DoEvents();
             }
             else
             {
@@ -1324,7 +1344,11 @@ namespace ChessForge
                 AppState.MainWin.UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
             }
 
+            e.Handled   = true;
             AppState.IsDirty = true;
+
+            // reset TextChanged event handler
+            _rtb.TextChanged += UiRtbIntroView_TextChanged;
         }
 
         /// <summary>
@@ -1337,11 +1361,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="para"></param>
         /// <param name="diagram"></param>
-        private void CleanupDiagramPara(Paragraph para, InlineUIContainer diagram)
+        private static void CleanupDiagramPara(Paragraph para, InlineUIContainer diagram)
         {
-            // stop TextChanged event handler! 
-            _rtb.TextChanged -= UiRtbIntroView_TextChanged;
-
+            _allowTextChanged = false;
             List<Inline> inlinesToDelete = new List<Inline>();
             List<Inline> inlinesToMove = new List<Inline>();
             if (para != null && diagram != null)
@@ -1385,10 +1407,8 @@ namespace ChessForge
                     }
                 }
                 catch { }
-
-                // reset TextChanged event handler
-                _rtb.TextChanged += UiRtbIntroView_TextChanged;
             }
+            _allowTextChanged = true;
         }
     }
 }

@@ -624,7 +624,7 @@ namespace ChessForge
                     _introView.EnableMenuItems(false, false, null);
                 }
 
-                _introView.RestoreSelectionOpacity();
+                IntroView.RestoreSelectionOpacity();
                 UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
             }
         }
