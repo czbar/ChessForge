@@ -133,6 +133,9 @@
     <Compile Include="IdenticalPositionsExDialog.xaml.cs">
       <DependentUpon>IdenticalPositionsExDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DownloadWebGamesDialog.xaml.cs">
+      <DependentUpon>DownloadWebGamesDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IntroMoveDialog.xaml.cs">
       <DependentUpon>IntroMoveDialog.xaml</DependentUpon>
     </Compile>
@@ -284,6 +287,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="IdenticalPositionsExDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DownloadWebGamesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
