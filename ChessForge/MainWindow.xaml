@@ -121,7 +121,9 @@
                         <MenuItem  x:Name="UiMnFontDefaults" Header="{x:Static p:Resources.RestoreFontDefaults}" Click="UiMnFontDefaults_Click" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Tools}" Margin="0,0,0,0">
-                        <MenuItem Header="{x:Static p:Resources.StripComments}" Click="UiStripComments_Click" />
+                        <MenuItem x:Name="UiMnDownloadWebGames" Header="{x:Static p:Resources.DownloadGamesFromWeb}" Click="UiMnDownloadWebGames_Click" />
+                        <Separator />
+                        <MenuItem x:Name="UiMnStripComments" Header="{x:Static p:Resources.StripComments}" Click="UiStripComments_Click" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Help}" Margin="0,0,0,0">
                         <MenuItem Header="{x:Static p:Resources.Wiki}" Click="UiMnHelpWiki_Click" />

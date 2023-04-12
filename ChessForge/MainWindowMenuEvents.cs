@@ -2208,6 +2208,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Opens the dialog for importing games from the Web
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnDownloadWebGames_Click(object sender, RoutedEventArgs e)
+        {
+            DownloadWebGamesDialog dlg = new DownloadWebGamesDialog();  
+            dlg.ShowDialog();
+        }
+
+        /// <summary>
         /// A request from the menu to start training at the currently selected position.
         /// </summary>
         /// <param name="sender"></param>
