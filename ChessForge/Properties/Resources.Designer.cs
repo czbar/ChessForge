@@ -70,6 +70,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        public static string Account {
+            get {
+                return ResourceManager.GetString("Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Chapters.
         /// </summary>
         public static string AllChapters {
@@ -147,6 +156,15 @@ namespace ChessForge.Properties {
         public static string ApplicationOptions {
             get {
                 return ResourceManager.GetString("ApplicationOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply Date.
+        /// </summary>
+        public static string ApplyDate {
+            get {
+                return ResourceManager.GetString("ApplyDate", resourceCulture);
             }
         }
         
@@ -1285,6 +1303,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download Games from a Web Site.
+        /// </summary>
+        public static string DownloadGamesFromWeb {
+            get {
+                return ResourceManager.GetString("DownloadGamesFromWeb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Downloading Game From lichess.org. Please wait....
         /// </summary>
         public static string DownloadingGameFromLichess {
@@ -1510,6 +1537,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Game text is empty.
+        /// </summary>
+        public static string ErrEmptyGame {
+            get {
+                return ResourceManager.GetString("ErrEmptyGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Found.
         /// </summary>
         public static string ErrFound {
@@ -1519,11 +1555,38 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Game not found.
+        /// </summary>
+        public static string ErrGameNotFound {
+            get {
+                return ResourceManager.GetString("ErrGameNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Games not found.
+        /// </summary>
+        public static string ErrGamesNotFound {
+            get {
+                return ResourceManager.GetString("ErrGamesNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to instead of a move number.
         /// </summary>
         public static string ErrInsteadOfMoveNumber {
             get {
                 return ResourceManager.GetString("ErrInsteadOfMoveNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No games have been downloaded.
+        /// </summary>
+        public static string ErrNoGamesDownloaded {
+            get {
+                return ResourceManager.GetString("ErrNoGamesDownloaded", resourceCulture);
             }
         }
         
@@ -2410,6 +2473,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Limits.
+        /// </summary>
+        public static string Limits {
+            get {
+                return ResourceManager.GetString("Limits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line.
         /// </summary>
         public static string Line {
@@ -2707,6 +2779,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Games Only.
+        /// </summary>
+        public static string NewGamesOnly {
+            get {
+                return ResourceManager.GetString("NewGamesOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New version $0 available from.
         /// </summary>
         public static string NewVersionAvailable {
@@ -2785,6 +2866,15 @@ namespace ChessForge.Properties {
         public static string NoLongerValidPlural {
             get {
                 return ResourceManager.GetString("NoLongerValidPlural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No More Than.
+        /// </summary>
+        public static string NoMoreThan {
+            get {
+                return ResourceManager.GetString("NoMoreThan", resourceCulture);
             }
         }
         
@@ -3001,6 +3091,15 @@ namespace ChessForge.Properties {
         public static string PasteMoves {
             get {
                 return ResourceManager.GetString("PasteMoves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string PerformDownload {
+            get {
+                return ResourceManager.GetString("PerformDownload", resourceCulture);
             }
         }
         
@@ -3622,6 +3721,15 @@ namespace ChessForge.Properties {
         public static string Stalemate {
             get {
                 return ResourceManager.GetString("Stalemate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Date.
+        /// </summary>
+        public static string StartDate {
+            get {
+                return ResourceManager.GetString("StartDate", resourceCulture);
             }
         }
         
@@ -4265,6 +4373,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User.
+        /// </summary>
+        public static string User {
+            get {
+                return ResourceManager.GetString("User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Variable Font Size.
         /// </summary>
         public static string UseVariableFontSize {
@@ -4333,6 +4450,15 @@ namespace ChessForge.Properties {
         public static string WaitForResponse {
             get {
                 return ResourceManager.GetString("WaitForResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site.
+        /// </summary>
+        public static string WebSite {
+            get {
+                return ResourceManager.GetString("WebSite", resourceCulture);
             }
         }
         

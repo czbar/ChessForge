@@ -73,6 +73,9 @@ Title=
 #english: WorkbookTitle=Workbook Title
 WorkbookTitle=
 
+#description: User
+#english: User=User
+User=
 
 #description: Event
 #english: Event=Event
@@ -113,7 +116,6 @@ Games=
 #description: Engine Game
 #english: EngineGame=Engine Game
 EngineGame=
-
 
 #description: Exercise 
 #english: Exercise=Exercise
@@ -271,6 +273,38 @@ GameExerciseReferences=
 #english: OpenView=Open View
 OpenView=
 
+#description: Account
+#english: Account=Account
+Account=
+
+#description: Limits
+#english: Limits=Limits
+Limits=
+
+#description: No more than
+#english: NoMoreThan=No More Than
+NoMoreThan=
+
+#description: New games only
+#english: NewGamesOnly=New Games Only
+NewGamesOnly=
+
+#description: Perform download
+#english: PerformDownload=Download
+PerformDownload=
+
+#description: Apply date
+#english: ApplyDate=Apply Date
+ApplyDate=
+
+#description: Start date
+#english: StartDate=Start Date
+StartDate=
+
+#description: Web site
+#english: WebSite=Site
+WebSite=
+
 ##################################
 #
 # EDITING
@@ -324,6 +358,22 @@ ErrClipboardLinePaste=
 #english: ClipboardOperation=Clipboard Operation
 ClipboardOperation=
 
+
+#description: No games downloaded
+#english: ErrNoGamesDownloaded=No games have been downloaded
+ErrNoGamesDownloaded=
+
+#description: Game not found
+#english: ErrGameNotFound=Game not found
+ErrGameNotFound=
+
+#description: Games not found
+#english: ErrGamesNotFound=Games not found
+ErrGamesNotFound=
+
+#description: Empty game tekst
+#english: ErrEmptyGame=Game text is empty
+ErrEmptyGame=
 
 
 #
@@ -1469,6 +1519,10 @@ ImportIntoChapter=
 #description: Downloading game from lichess
 #english: DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
 DownloadingGameFromLichess=
+
+#description: DownloadGamesFromWeb
+#english: DownloadGamesFromWeb=Download Games from a Web Site
+DownloadGamesFromWeb=
 
 #description: Please wait
 #english: PleaseWait=Please Wait

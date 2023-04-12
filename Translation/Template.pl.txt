@@ -73,6 +73,9 @@ Title=Tytuł
 #english: WorkbookTitle=Workbook Title
 WorkbookTitle=Tytuł Podręcznika
 
+#description: User
+#english: User=User
+User=Użytkownik
 
 #description: Event
 #english: Event=Event
@@ -113,7 +116,6 @@ Games=Partie
 #description: Engine Game
 #english: EngineGame=Engine Game
 EngineGame=Partia z Silnikiem
-
 
 #description: Exercise 
 #english: Exercise=Exercise
@@ -271,6 +273,38 @@ GameExerciseReferences=Odsyłacze do Partii i Ćwiczeń
 #english: OpenView=Open View
 OpenView=Otwórz widok
 
+#description: Account
+#english: Account=Account
+Account=Konto
+
+#description: Limits
+#english: Limits=Limits
+Limits=Ograniczenia
+
+#description: No more than
+#english: NoMoreThan=No More Than
+NoMoreThan=Nie więcej niż
+
+#description: New games only
+#english: NewGamesOnly=New Games Only
+NewGamesOnly=Tylko nowe partie
+
+#description: Perform download
+#english: PerformDownload=Download
+PerformDownload=Pobierz
+
+#description: Apply date
+#english: ApplyDate=Apply Date
+ApplyDate=Zastosuj datę początkową
+
+#description: Start date
+#english: StartDate=Start Date
+StartDate=Data początkowa
+
+#description: Web site
+#english: WebSite=Site
+WebSite=Strona
+
 ##################################
 #
 # EDITING
@@ -324,6 +358,22 @@ ErrClipboardLinePaste=Błąd przy wklejaniu wariantu ze schowka
 #english: ClipboardOperation=Clipboard Operation
 ClipboardOperation=Operacja Schowka
 
+
+#description: No games downloaded
+#english: ErrNoGamesDownloaded=No games have been downloaded
+ErrNoGamesDownloaded=Nie pobrano żadnych partii
+
+#description: Game not found
+#english: ErrGameNotFound=Game not found
+ErrGameNotFound=Partii nie znaleziono 
+
+#description: Games not found
+#english: ErrGamesNotFound=Games not found
+ErrGamesNotFound=Partii nie znaleziono
+
+#description: Empty game tekst
+#english: ErrEmptyGame=Game text is empty
+ErrEmptyGame=Pusty zapis partii
 
 
 #
@@ -1469,6 +1519,10 @@ ImportIntoChapter=Importuj Partię
 #description: Downloading game from lichess
 #english: DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
 DownloadingGameFromLichess=Trwa ściąganie partii z lichess. Proszę czekać...
+
+#description: DownloadGamesFromWeb
+#english: DownloadGamesFromWeb=Download Games from a Web Site
+DownloadGamesFromWeb=Pobierz partie z Internetu
 
 #description: Please wait
 #english: PleaseWait=Please Wait

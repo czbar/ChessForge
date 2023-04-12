@@ -59,6 +59,8 @@ Title=Title
 #Workbook title
 WorkbookTitle=Workbook Title
 
+#User
+User=User
 
 #Event
 Event=Event
@@ -89,7 +91,6 @@ Games=Games
 
 #Engine Game
 EngineGame=Engine Game
-
 
 #Exercise 
 Exercise=Exercise
@@ -208,6 +209,30 @@ GameExerciseReferences=Game and Exercise References
 #Open a view
 OpenView=Open View
 
+#Account
+Account=Account
+
+#Limits
+Limits=Limits
+
+#No more than
+NoMoreThan=No More Than
+
+#New games only
+NewGamesOnly=New Games Only
+
+#Perform download
+PerformDownload=Download
+
+#Apply date
+ApplyDate=Apply Date
+
+#Start date
+StartDate=Start Date
+
+#Web site
+WebSite=Site
+
 ##################################
 #
 # EDITING
@@ -251,6 +276,18 @@ ErrClipboardLinePaste=Error pasting variation from the Clipboard
 #Clipboard operation
 ClipboardOperation=Clipboard Operation
 
+
+#No games downloaded
+ErrNoGamesDownloaded=No games have been downloaded
+
+#Game not found
+ErrGameNotFound=Game not found
+
+#Games not found
+ErrGamesNotFound=Games not found
+
+#Empty game tekst
+ErrEmptyGame=Game text is empty
 
 
 #
@@ -1138,6 +1175,9 @@ ImportIntoChapter=Import into Chapter
 
 #Downloading game from lichess
 DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
+
+#DownloadGamesFromWeb
+DownloadGamesFromWeb=Download Games from a Web Site
 
 #Please wait
 PleaseWait=Please Wait
