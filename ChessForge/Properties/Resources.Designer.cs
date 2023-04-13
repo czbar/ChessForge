@@ -1303,6 +1303,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloaded Games.
+        /// </summary>
+        public static string DownloadedGames {
+            get {
+                return ResourceManager.GetString("DownloadedGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download Games from a Web Site.
         /// </summary>
         public static string DownloadGamesFromWeb {
@@ -1312,11 +1321,56 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downloading Game From lichess.org. Please wait....
+        ///   Looks up a localized string similar to Downloading from lichess.org. Please wait....
+        /// </summary>
+        public static string DownloadingFromLichess {
+            get {
+                return ResourceManager.GetString("DownloadingFromLichess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading Game from lichess.org. Please wait....
         /// </summary>
         public static string DownloadingGameFromLichess {
             get {
                 return ResourceManager.GetString("DownloadingGameFromLichess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Append to the current Chapter.
+        /// </summary>
+        public static string DwnLdAppendToCurrentChapter {
+            get {
+                return ResourceManager.GetString("DwnLdAppendToCurrentChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a New Chapter.
+        /// </summary>
+        public static string DwnLdCreateNewChapter {
+            get {
+                return ResourceManager.GetString("DwnLdCreateNewChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a new Workbook.
+        /// </summary>
+        public static string DwnLdCreateNewWorkbook {
+            get {
+                return ResourceManager.GetString("DwnLdCreateNewWorkbook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ECO.
+        /// </summary>
+        public static string ECO {
+            get {
+                return ResourceManager.GetString("ECO", resourceCulture);
             }
         }
         
@@ -1542,6 +1596,15 @@ namespace ChessForge.Properties {
         public static string ErrEmptyGame {
             get {
                 return ResourceManager.GetString("ErrEmptyGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provide User Name.
+        /// </summary>
+        public static string ErrEmptyUserName {
+            get {
+                return ResourceManager.GetString("ErrEmptyUserName", resourceCulture);
             }
         }
         
@@ -3077,6 +3140,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string OrderNo {
+            get {
+                return ResourceManager.GetString("OrderNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page $0 of $1.
         /// </summary>
         public static string Page0of0 {
@@ -3298,6 +3370,15 @@ namespace ChessForge.Properties {
         public static string PromoteLine {
             get {
                 return ResourceManager.GetString("PromoteLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incorrect Input Data.
+        /// </summary>
+        public static string PromptCorrectData {
+            get {
+                return ResourceManager.GetString("PromptCorrectData", resourceCulture);
             }
         }
         
@@ -3577,6 +3658,15 @@ namespace ChessForge.Properties {
         public static string SelectGameAndExercises {
             get {
                 return ResourceManager.GetString("SelectGameAndExercises", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Games.
+        /// </summary>
+        public static string SelectGames {
+            get {
+                return ResourceManager.GetString("SelectGames", resourceCulture);
             }
         }
         

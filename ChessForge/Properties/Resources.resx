@@ -264,6 +264,12 @@
   <data name="Item" xml:space="preserve">
     <value>Item</value>
   </data>
+  <data name="OrderNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ECO" xml:space="preserve">
+    <value>ECO</value>
+  </data>
   <data name="GameHeader" xml:space="preserve">
     <value>Game Header</value>
   </data>
@@ -374,6 +380,12 @@
   </data>
   <data name="ErrEmptyGame" xml:space="preserve">
     <value>Game text is empty</value>
+  </data>
+  <data name="ErrEmptyUserName" xml:space="preserve">
+    <value>Provide User Name</value>
+  </data>
+  <data name="PromptCorrectData" xml:space="preserve">
+    <value>Incorrect Input Data</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>File</value>
@@ -1045,6 +1057,12 @@
   <data name="SelectItemsforWorkbook" xml:space="preserve">
     <value>Select Items to create a new Workbook from:</value>
   </data>
+  <data name="SelectGames" xml:space="preserve">
+    <value>Select Games</value>
+  </data>
+  <data name="DownloadedGames" xml:space="preserve">
+    <value>Downloaded Games</value>
+  </data>
   <data name="SelectGamesToImport" xml:space="preserve">
     <value>Select Games to Import:</value>
   </data>
@@ -1148,7 +1166,10 @@
     <value>Import into Chapter</value>
   </data>
   <data name="DownloadingGameFromLichess" xml:space="preserve">
-    <value>Downloading Game From lichess.org. Please wait...</value>
+    <value>Downloading Game from lichess.org. Please wait...</value>
+  </data>
+  <data name="DownloadingFromLichess" xml:space="preserve">
+    <value>Downloading from lichess.org. Please wait...</value>
   </data>
   <data name="DownloadGamesFromWeb" xml:space="preserve">
     <value>Download Games from a Web Site</value>
@@ -1239,6 +1260,15 @@
   </data>
   <data name="CreateChapterPerGame" xml:space="preserve">
     <value>Create Chapter per Game</value>
+  </data>
+  <data name="DwnLdAppendToCurrentChapter" xml:space="preserve">
+    <value>Append to the current Chapter</value>
+  </data>
+  <data name="DwnLdCreateNewChapter" xml:space="preserve">
+    <value>Create a New Chapter</value>
+  </data>
+  <data name="DwnLdCreateNewWorkbook" xml:space="preserve">
+    <value>Create a new Workbook</value>
   </data>
   <data name="NewVersionAvailable" xml:space="preserve">
     <value>New version $0 available from</value>

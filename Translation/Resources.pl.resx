@@ -264,6 +264,12 @@
   <data name="Item" xml:space="preserve">
     <value>Element</value>
   </data>
+  <data name="OrderNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ECO" xml:space="preserve">
+    <value>ECO</value>
+  </data>
   <data name="GameHeader" xml:space="preserve">
     <value>Nagłówek Partii</value>
   </data>
@@ -374,6 +380,12 @@
   </data>
   <data name="ErrEmptyGame" xml:space="preserve">
     <value>Pusty zapis partii</value>
+  </data>
+  <data name="ErrEmptyUserName" xml:space="preserve">
+    <value>Brak nazwy użytkownika</value>
+  </data>
+  <data name="PromptCorrectData" xml:space="preserve">
+    <value>Niewłaściwe Dane</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>Plik</value>
@@ -1044,6 +1056,12 @@
   <data name="SelectItemsforWorkbook" xml:space="preserve">
     <value>Wybierz elementy do utworzenia nowego Podręcznika:</value>
   </data>
+  <data name="SelectGames" xml:space="preserve">
+    <value>Wybierz Partie</value>
+  </data>
+  <data name="DownloadedGames" xml:space="preserve">
+    <value>Pobrane Partie</value>
+  </data>
   <data name="SelectGamesToImport" xml:space="preserve">
     <value>Wybierz Partie do Importu:</value>
   </data>
@@ -1149,6 +1167,9 @@
   <data name="DownloadingGameFromLichess" xml:space="preserve">
     <value>Trwa ściąganie partii z lichess. Proszę czekać...</value>
   </data>
+  <data name="DownloadingFromLichess" xml:space="preserve">
+    <value>Trwa pobieranie partii z lichess. Proszę czekać...</value>
+  </data>
   <data name="DownloadGamesFromWeb" xml:space="preserve">
     <value>Pobierz partie z Internetu</value>
   </data>
@@ -1238,6 +1259,15 @@
   </data>
   <data name="CreateChapterPerGame" xml:space="preserve">
     <value>Utwórz Rozdział do Każdej Partii</value>
+  </data>
+  <data name="DwnLdAppendToCurrentChapter" xml:space="preserve">
+    <value>Dodaj do obecnego rozdziału</value>
+  </data>
+  <data name="DwnLdCreateNewChapter" xml:space="preserve">
+    <value>Utwórz nowy rozdział</value>
+  </data>
+  <data name="DwnLdCreateNewWorkbook" xml:space="preserve">
+    <value>Utwórz nowy podręcznik</value>
   </data>
   <data name="NewVersionAvailable" xml:space="preserve">
     <value>Dostępna nowa wersja $0</value>

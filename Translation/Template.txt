@@ -213,6 +213,14 @@ Confirm=
 #english: Item=Item
 Item=
 
+#description: Order No
+#english: OrderNo=No
+OrderNo=
+
+#description: ECO
+#english: ECO=ECO
+ECO=
+
 #description: Game Header
 #english: GameHeader=Game Header
 GameHeader=
@@ -375,6 +383,13 @@ ErrGamesNotFound=
 #english: ErrEmptyGame=Game text is empty
 ErrEmptyGame=
 
+#description: User name cannot be empty 
+#english: ErrEmptyUserName=Provide User Name
+ErrEmptyUserName=
+
+#description: Title of the dialog reporting incomplete data
+#english: PromptCorrectData=Incorrect Input Data
+PromptCorrectData=
 
 #
 # MAIN MENU
@@ -1380,6 +1395,14 @@ SaveNewWorkbookAs=
 #english: SelectItemsforWorkbook=Select Items to create a new Workbook from:
 SelectItemsforWorkbook=
 
+#description: Select Games
+#english: SelectGames=Select Games
+SelectGames=
+
+#description: Downloaded Games
+#english: DownloadedGames=Downloaded Games
+DownloadedGames=
+
 #description: Select Games to Import
 #english: SelectGamesToImport=Select Games to Import:
 SelectGamesToImport=
@@ -1517,8 +1540,12 @@ NextGame=
 ImportIntoChapter=
 
 #description: Downloading game from lichess
-#english: DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
+#english: DownloadingGameFromLichess=Downloading Game from lichess.org. Please wait...
 DownloadingGameFromLichess=
+
+#description: Downloading from lichess
+#english: DownloadingFromLichess=Downloading from lichess.org. Please wait...
+DownloadingFromLichess=
 
 #description: DownloadGamesFromWeb
 #english: DownloadGamesFromWeb=Download Games from a Web Site
@@ -1640,6 +1667,18 @@ CopyGamesNoMerge=
 #description: Create a separate chapter for each game
 #english: CreateChapterPerGame=Create Chapter per Game
 CreateChapterPerGame=
+
+#description: Append games to the current chapter
+#english: DwnLdAppendToCurrentChapter=Append to the current Chapter
+DwnLdAppendToCurrentChapter=
+
+#description: Create a new chapter for the downloaded games
+#english: DwnLdCreateNewChapter=Create a New Chapter
+DwnLdCreateNewChapter=
+
+#description: Create a new workbook for the downloaded games
+#english: DwnLdCreateNewWorkbook=Create a new Workbook
+DwnLdCreateNewWorkbook=
 
 #description: New version available from 
 #english: NewVersionAvailable=New version $0 available from

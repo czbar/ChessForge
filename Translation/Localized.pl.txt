@@ -213,6 +213,14 @@ Confirm=Potwierdź
 #english: Item=Item
 Item=Element
 
+#description: Order No
+#english: OrderNo=No
+OrderNo=No
+
+#description: ECO
+#english: ECO=ECO
+ECO=ECO
+
 #description: Game Header
 #english: GameHeader=Game Header
 GameHeader=Nagłówek Partii
@@ -375,6 +383,13 @@ ErrGamesNotFound=Partii nie znaleziono
 #english: ErrEmptyGame=Game text is empty
 ErrEmptyGame=Pusty zapis partii
 
+#description: User name cannot be empty 
+#english: ErrEmptyUserName=Provide User Name
+ErrEmptyUserName=Brak nazwy użytkownika
+
+#description: Title of the dialog reporting incomplete data
+#english: PromptCorrectData=Incorrect Input Data
+PromptCorrectData=Niewłaściwe Dane
 
 #
 # MAIN MENU
@@ -1380,6 +1395,14 @@ SaveNewWorkbookAs=Zapisz nowy podręcznik jako ...
 #english: SelectItemsforWorkbook=Select Items to create a new Workbook from:
 SelectItemsforWorkbook=Wybierz elementy do utworzenia nowego Podręcznika:
 
+#description: Select Games
+#english: SelectGames=Select Games
+SelectGames=Wybierz Partie
+
+#description: Downloaded Games
+#english: DownloadedGames=Downloaded Games
+DownloadedGames=Pobrane Partie
+
 #description: Select Games to Import
 #english: SelectGamesToImport=Select Games to Import:
 SelectGamesToImport=Wybierz Partie do Importu:
@@ -1517,8 +1540,12 @@ NextGame=Następna Partia
 ImportIntoChapter=Importuj Partię
 
 #description: Downloading game from lichess
-#english: DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
+#english: DownloadingGameFromLichess=Downloading Game from lichess.org. Please wait...
 DownloadingGameFromLichess=Trwa ściąganie partii z lichess. Proszę czekać...
+
+#description: Downloading from lichess
+#english: DownloadingFromLichess=Downloading from lichess.org. Please wait...
+DownloadingFromLichess=Trwa pobieranie partii z lichess. Proszę czekać...
 
 #description: DownloadGamesFromWeb
 #english: DownloadGamesFromWeb=Download Games from a Web Site
@@ -1640,6 +1667,18 @@ CopyGamesNoMerge=Skopiuj Partie do Sekcji Partii i zostaw Teorię pustą
 #description: Create a separate chapter for each game
 #english: CreateChapterPerGame=Create Chapter per Game
 CreateChapterPerGame=Utwórz Rozdział do Każdej Partii
+
+#description: Append games to the current chapter
+#english: DwnLdAppendToCurrentChapter=Append to the current Chapter
+DwnLdAppendToCurrentChapter=Dodaj do obecnego rozdziału
+
+#description: Create a new chapter for the downloaded games
+#english: DwnLdCreateNewChapter=Create a New Chapter
+DwnLdCreateNewChapter=Utwórz nowy rozdział
+
+#description: Create a new workbook for the downloaded games
+#english: DwnLdCreateNewWorkbook=Create a new Workbook
+DwnLdCreateNewWorkbook=Utwórz nowy podręcznik
 
 #description: New version available from 
 #english: NewVersionAvailable=New version $0 available from

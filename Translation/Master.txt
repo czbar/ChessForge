@@ -164,6 +164,12 @@ Confirm=Confirm
 #Item
 Item=Item
 
+#Order No
+OrderNo=No
+
+#ECO
+ECO=ECO
+
 #Game Header
 GameHeader=Game Header
 
@@ -289,6 +295,11 @@ ErrGamesNotFound=Games not found
 #Empty game tekst
 ErrEmptyGame=Game text is empty
 
+#User name cannot be empty 
+ErrEmptyUserName=Provide User Name
+
+#Title of the dialog reporting incomplete data
+PromptCorrectData=Incorrect Input Data
 
 #
 # MAIN MENU
@@ -1071,6 +1082,12 @@ SaveNewWorkbookAs=Save New Workbook As ...
 #Select Items to create a new Workbook
 SelectItemsforWorkbook=Select Items to create a new Workbook from:
 
+#Select Games
+SelectGames=Select Games
+
+#Downloaded Games
+DownloadedGames=Downloaded Games
+
 #Select Games to Import
 SelectGamesToImport=Select Games to Import:
 
@@ -1174,7 +1191,10 @@ NextGame=Next Game
 ImportIntoChapter=Import into Chapter
 
 #Downloading game from lichess
-DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
+DownloadingGameFromLichess=Downloading Game from lichess.org. Please wait...
+
+#Downloading from lichess
+DownloadingFromLichess=Downloading from lichess.org. Please wait...
 
 #DownloadGamesFromWeb
 DownloadGamesFromWeb=Download Games from a Web Site
@@ -1266,6 +1286,15 @@ CopyGamesNoMerge=Copy Games into the Games section only (leave the study tree em
 
 #Create a separate chapter for each game
 CreateChapterPerGame=Create Chapter per Game
+
+#Append games to the current chapter
+DwnLdAppendToCurrentChapter=Append to the current Chapter
+
+#Create a new chapter for the downloaded games
+DwnLdCreateNewChapter=Create a New Chapter
+
+#Create a new workbook for the downloaded games
+DwnLdCreateNewWorkbook=Create a new Workbook
 
 #New version available from 
 NewVersionAvailable=New version $0 available from
