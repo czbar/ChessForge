@@ -45,6 +45,7 @@ namespace ChessForge
             IMPORT_GAMES,
             IMPORT_EXERCISES,
             CREATE_WORKBOOK,
+            DOWNLOAD_WEB_GAMES,
         }
 
         /// <summary>
@@ -76,12 +77,50 @@ namespace ChessForge
             _gameList = gameList;
             SetGameAndExerciseCount();
             InitializeComponent();
+
+            if (mode == Mode.DOWNLOAD_WEB_GAMES)
+            {
+                PrepareGuiInDownloadMode();
+            }
+
             UiLvGames.ItemsSource = gameList;
 
             SetInstructionText();
             InitializeCopyOptionsRadioButtons();
 
             ShowMultiChapterCheckBox();
+        }
+
+        /// <summary>
+        /// In the Download mode, the list looks different and we need different text
+        /// in some places.
+        /// </summary>
+        private void PrepareGuiInDownloadMode()
+        {
+            GridView gridView = UiLvGames.View as GridView;
+
+            // remove all columns except the first one, which is a special one with the selection check box
+            while (gridView.Columns.Count > 1)
+            {
+                gridView.Columns.RemoveAt(1);
+            }
+
+            // create columns 
+            GridViewColumn no = ListViewHelper.CreateColumn(Properties.Resources.OrderNo, 30, "OrderNo");
+            gridView.Columns.Add(no);
+
+            GridViewColumn eco = ListViewHelper.CreateColumn(Properties.Resources.OrderNo, 40, "ECO");
+            gridView.Columns.Add(eco);
+
+            GridViewColumn game = ListViewHelper.CreateColumn(Properties.Resources.Game, 570, "GameTitle");
+            gridView.Columns.Add(game);
+
+            GridViewColumn date = ListViewHelper.CreateColumn(Properties.Resources.Game, 90, "Date");
+            gridView.Columns.Add(date);
+
+            // change the title and the "instruction" label
+            this.Title = Properties.Resources.DownloadedGames;
+            UiLblInstruct.Content = Properties.Resources.SelectGames;
         }
 
         /// <summary>
@@ -147,7 +186,32 @@ namespace ChessForge
         /// </summary>
         private void InitializeCopyOptionsRadioButtons()
         {
-            if (_mode == Mode.IMPORT_GAMES || _mode == Mode.IMPORT_EXERCISES)
+            bool isDL = _mode == Mode.DOWNLOAD_WEB_GAMES;
+
+            UiRbAppendCurrentChapter.Visibility = isDL ? Visibility.Visible : Visibility.Collapsed;
+            UiRbCreateNewChapter.Visibility = isDL ? Visibility.Visible : Visibility.Collapsed;
+            UiRbCreateNewWorkbook.Visibility = isDL ? Visibility.Visible : Visibility.Collapsed;
+
+            if (isDL)
+            {
+                if (WorkbookManager.SessionWorkbook == null)
+                {
+                    UiRbAppendCurrentChapter.IsEnabled = false;
+                    UiRbCreateNewChapter.IsEnabled = false;
+                    UiRbCreateNewWorkbook.IsChecked = true;
+                }
+                else if (WorkbookManager.SessionWorkbook.ActiveChapter == null)
+                {
+                    UiRbAppendCurrentChapter.IsEnabled = false;
+                    UiRbCreateNewChapter.IsChecked = true;
+                }
+                else
+                {
+                    UiRbAppendCurrentChapter.IsChecked = true;
+                }
+            }
+
+            if (_mode == Mode.IMPORT_GAMES || _mode == Mode.IMPORT_EXERCISES || _mode == Mode.DOWNLOAD_WEB_GAMES)
             {
 
                 UiRbStudyAndGames.Visibility = Visibility.Collapsed;
@@ -235,7 +299,7 @@ namespace ChessForge
             CopyGames = UiRbGamesOnly.IsChecked == true || UiRbStudyAndGames.IsChecked == true;
             CreateStudy = UiRbStudyOnly.IsChecked == true || UiRbStudyAndGames.IsChecked == true;
             MultiChapter = UiCbMultiChapter.IsChecked == true;
-            
+
             DialogResult = true;
         }
 
