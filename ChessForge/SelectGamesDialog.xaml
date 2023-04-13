@@ -39,9 +39,15 @@
         <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Left" Margin="580,42,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
         <Button x:Name="UiBtnCancel" IsCancel="False" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="580,77,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
         <Label x:Name="UiLblInstruct" Content="{x:Static p:Resources.SelectItems}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
+        
         <RadioButton x:Name="UiRbStudyAndGames" Content="{x:Static p:Resources.MergeGamesAndCopy}" HorizontalAlignment="Left" Margin="30,50,0,0" Grid.Row="2" VerticalAlignment="Top"/>
         <RadioButton x:Name="UiRbStudyOnly" Content="{x:Static p:Resources.MergeGamesNoCopy}" HorizontalAlignment="Left" Margin="30,75,0,0" Grid.Row="2" VerticalAlignment="Top"/>
         <RadioButton x:Name="UiRbGamesOnly" Content="{x:Static p:Resources.CopyGamesNoMerge}" HorizontalAlignment="Left" Margin="30,100,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+
+        <RadioButton x:Name="UiRbAppendCurrentChapter" Content="{x:Static p:Resources.DwnLdAppendToCurrentChapter}" HorizontalAlignment="Left" Margin="30,35,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbCreateNewChapter" Content="{x:Static p:Resources.DwnLdCreateNewChapter}" HorizontalAlignment="Left" Margin="30,60,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UiRbCreateNewWorkbook" Content="{x:Static p:Resources.DwnLdCreateNewWorkbook}" HorizontalAlignment="Left" Margin="30,85,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+
         <CheckBox x:Name="UiCbMultiChapter" Content="{x:Static p:Resources.CreateChapterPerGame}" HorizontalAlignment="Left" Margin="30,15,0,0" Grid.Row="2" VerticalAlignment="Top"/>
 
     </Grid>
