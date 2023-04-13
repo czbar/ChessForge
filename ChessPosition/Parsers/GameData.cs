@@ -101,6 +101,11 @@ namespace GameTree
         public string GameText { get; set; }
 
         /// <summary>
+        /// Number that the client may set if it wants to have displayed back.
+        /// </summary>
+        public string OrderNo { get; set; }
+
+        /// <summary>
         /// The property that binds in the SelectGames ListView control.
         /// </summary>
         public string GameTitleForList
@@ -124,6 +129,17 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Game title without prefix for display
+        /// </summary>
+        public string GameTitle
+        {
+            get
+            {
+                return Header.BuildGameHeaderLine(true);
+            }
+        }
+
+        /// <summary>
         /// Date string for display
         /// </summary>
         public string Date
@@ -132,6 +148,17 @@ namespace GameTree
             {
                 string date = Header.GetDate(out _);
                 return TextUtils.BuildDateFromDisplayFromPgnString(date);
+            }
+        }
+
+        /// <summary>
+        /// ECO code for display
+        /// </summary>
+        public string ECO
+        {
+            get
+            {
+                return Header.GetECO(out _);
             }
         }
 
