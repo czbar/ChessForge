@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -30,6 +29,7 @@ namespace ChessForge
         {
             InitializeComponent();
             GameDownload.UserGamesReceived += UserGamesReceived;
+            EnableControls(false);
         }
 
         /// <summary>
@@ -53,6 +53,7 @@ namespace ChessForge
                     }
                     ObservableCollection<GameData> games = new ObservableCollection<GameData>();
                     int gamesCount = PgnMultiGameParser.ParsePgnMultiGameText(e.TextData, ref games);
+                    SelectGames(ref games);
                 }
                 else
                 {
@@ -62,10 +63,52 @@ namespace ChessForge
             {
                 MessageBox.Show(Properties.Resources.GameDownloadError + ": " + ex.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            EnableControls(false);
+        }
+
+        /// <summary>
+        /// Invokes the dialog to select games for import.
+        /// </summary>
+        /// <param name="games"></param>
+        /// <returns></returns>
+        private bool SelectGames(ref ObservableCollection<GameData> games)
+        {
+            for (int i = 0; i < games.Count; i++)
+            {
+                games[i].OrderNo = (i + 1).ToString();
+            }
+
+            SelectGamesDialog dlg = new SelectGamesDialog(ref games, SelectGamesDialog.Mode.DOWNLOAD_WEB_GAMES )
+            {
+                Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                Top = AppState.MainWin.ChessForgeMain.Top + 100,
+                Topmost = false,
+                Owner = AppState.MainWin
+            };
+            return dlg.ShowDialog() == true;
+        }
+
+        /// <summary>
+        /// Enables/disables controls depending on whether there is a download in progress.
+        /// </summary>
+        /// <param name="isDownloading"></param>
+        private void EnableControls(bool isDownloading)
+        {
+            UiLblLoading.Visibility = isDownloading ? Visibility.Visible : Visibility.Collapsed;
+
+            UiBtnDownload.IsEnabled = !isDownloading;
+            UiCbOnlyNew.IsEnabled = !isDownloading;
+            UiCbUseStartDate.IsEnabled = !isDownloading;
+            UiCmbSite.IsEnabled = !isDownloading;
+            UiTbMaxGames.IsEnabled = !isDownloading;
+            UiTbUserName.IsEnabled = !isDownloading;
+            UiDtStartDate.IsEnabled = !isDownloading;
         }
 
         /// <summary>
         /// The user clicked the button requesting the download.
+        /// This method kicks off the process.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -73,13 +116,14 @@ namespace ChessForge
         {
             if (string.IsNullOrEmpty(UiTbUserName.Text))
             {
-                MessageBox.Show("", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.ErrEmptyUserName, Properties.Resources.PromptCorrectData, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
+                EnableControls(true);
                 GamesFilter filter = new GamesFilter();
                 filter.User = UiTbUserName.Text;
-                
+
                 int gameCount;
                 int.TryParse(UiTbMaxGames.Text, out gameCount);
                 if (gameCount <= 0)
