@@ -1699,6 +1699,7 @@ namespace ChessForge
             tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, header.GetBlackPlayer(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_RESULT, header.GetResult(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, header.GetEventName(out _));
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_ECO, header.GetECO(out _));
             if (overrideGuid)
             {
                 tree.Header.SetHeaderValue(PgnHeaders.KEY_GUID, header.GetGuid(out _));
@@ -1933,7 +1934,7 @@ namespace ChessForge
         /// <param name="contentType"></param>
         /// <param name="games"></param>
         /// <returns></returns>
-        private bool ShowSelectGamesDialog(GameData.ContentType contentType, ref ObservableCollection<GameData> games)
+        public bool ShowSelectGamesDialog(GameData.ContentType contentType, ref ObservableCollection<GameData> games)
         {
             SelectGamesDialog.Mode mode = SelectGamesDialog.Mode.IMPORT_GAMES;
             if (contentType == GameData.ContentType.EXERCISE)
@@ -2214,7 +2215,15 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnDownloadWebGames_Click(object sender, RoutedEventArgs e)
         {
-            DownloadWebGamesDialog dlg = new DownloadWebGamesDialog();  
+            e.Handled = true;
+
+            DownloadWebGamesDialog dlg = new DownloadWebGamesDialog()
+            {
+                Left = AppState.MainWin.ChessForgeMain.Left + 150,
+                Top = AppState.MainWin.Top + 150,
+                Topmost = false,
+                Owner = AppState.MainWin
+            };
             dlg.ShowDialog();
         }
 
