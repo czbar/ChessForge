@@ -321,11 +321,14 @@
   <data name="Limits" xml:space="preserve">
     <value>Ograniczenia</value>
   </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtr</value>
+  </data>
   <data name="NoMoreThan" xml:space="preserve">
     <value>Nie więcej niż</value>
   </data>
-  <data name="NewGamesOnly" xml:space="preserve">
-    <value>Tylko nowe partie</value>
+  <data name="MostRecentGames" xml:space="preserve">
+    <value>Ostatnie partie</value>
   </data>
   <data name="PerformDownload" xml:space="preserve">
     <value>Pobierz</value>
@@ -335,6 +338,9 @@
   </data>
   <data name="StartDate" xml:space="preserve">
     <value>Data początkowa</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>Data końcowa</value>
   </data>
   <data name="WebSite" xml:space="preserve">
     <value>Strona</value>

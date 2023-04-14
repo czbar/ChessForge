@@ -1465,6 +1465,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End Date.
+        /// </summary>
+        public static string EndDate {
+            get {
+                return ResourceManager.GetString("EndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Engine.
         /// </summary>
         public static string Engine {
@@ -2010,6 +2019,15 @@ namespace ChessForge.Properties {
         public static string FileNotFound {
             get {
                 return ResourceManager.GetString("FileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string Filter {
+            get {
+                return ResourceManager.GetString("Filter", resourceCulture);
             }
         }
         
@@ -2662,6 +2680,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Most Recent Games.
+        /// </summary>
+        public static string MostRecentGames {
+            get {
+                return ResourceManager.GetString("MostRecentGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move.
         /// </summary>
         public static string Move {
@@ -2838,15 +2865,6 @@ namespace ChessForge.Properties {
         public static string NewChapterToBeCreate {
             get {
                 return ResourceManager.GetString("NewChapterToBeCreate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New Games Only.
-        /// </summary>
-        public static string NewGamesOnly {
-            get {
-                return ResourceManager.GetString("NewGamesOnly", resourceCulture);
             }
         }
         

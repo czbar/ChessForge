@@ -289,13 +289,17 @@ Account=Konto
 #english: Limits=Limits
 Limits=Ograniczenia
 
+#description: Filter
+#english: Filter=Filter
+Filter=Filtr
+
 #description: No more than
 #english: NoMoreThan=No More Than
 NoMoreThan=Nie więcej niż
 
-#description: New games only
-#english: NewGamesOnly=New Games Only
-NewGamesOnly=Tylko nowe partie
+#description: Most recent games only
+#english: MostRecentGames=Most Recent Games
+MostRecentGames=Ostatnie partie
 
 #description: Perform download
 #english: PerformDownload=Download
@@ -308,6 +312,10 @@ ApplyDate=Zastosuj datę początkową
 #description: Start date
 #english: StartDate=Start Date
 StartDate=Data początkowa
+
+#description: End date
+#english: EndDate=End Date
+EndDate=Data końcowa
 
 #description: Web site
 #english: WebSite=Site

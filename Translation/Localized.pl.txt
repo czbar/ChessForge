@@ -295,7 +295,7 @@ NoMoreThan=Nie więcej niż
 
 #description: New games only
 #english: NewGamesOnly=New Games Only
-NewGamesOnly=Tylko nowe partie
+MostRecentGames=Ostatnie partie
 
 #description: Perform download
 #english: PerformDownload=Download
@@ -2251,3 +2251,6 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
+
+Filter=Filtr
+EndDate=Data końcowa

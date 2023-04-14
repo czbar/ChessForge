@@ -221,11 +221,14 @@ Account=Account
 #Limits
 Limits=Limits
 
+#Filter
+Filter=Filter
+
 #No more than
 NoMoreThan=No More Than
 
-#New games only
-NewGamesOnly=New Games Only
+#Most recent games only
+MostRecentGames=Most Recent Games
 
 #Perform download
 PerformDownload=Download
@@ -235,6 +238,9 @@ ApplyDate=Apply Date
 
 #Start date
 StartDate=Start Date
+
+#End date
+EndDate=End Date
 
 #Web site
 WebSite=Site
