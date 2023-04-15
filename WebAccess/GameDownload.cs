@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.IO;
+using System.Text;
 
 namespace WebAccess
 {
@@ -139,16 +140,64 @@ namespace WebAccess
         /// <returns></returns>
         private static string BuildLichessUserGamesUrl(GamesFilter filter)
         {
-            string url = String.Format(_urlLichessUserGames, filter.User);
+            bool hasParam = false;
+
+            StringBuilder url = new StringBuilder();
+            url.Append(String.Format(_urlLichessUserGames, filter.User));
             int gamesCount = Math.Max(DEFAULT_DOWNLOAD_GAME_COUNT, filter.MaxGames);
             if (gamesCount > 0)
             {
-                url += "?" + "max=" + gamesCount.ToString();
+                url.Append("?" + "max=" + gamesCount.ToString());
+                hasParam = true;
             }
 
-            return url;
+            long? startTime = ConvertDateToEpoch(filter.StartDate, true);
+            long? endTime = ConvertDateToEpoch(filter.EndDate, false);
+
+            if (startTime.HasValue)
+            {
+                url.Append(hasParam ? "&" : "?");
+                hasParam = true;
+                url.Append("since=" + startTime.Value.ToString());
+            }
+
+            if (endTime.HasValue)
+            {
+                url.Append(hasParam ? "&" : "?");
+                hasParam = true;
+                url.Append("until=" + endTime.Value.ToString());
+            }
+
+            return url.ToString();
         }
 
+        /// <summary>
+        /// Converts the data to epoch Unix time
+        /// If this is for the end of the day, then takes the start of the next day and subtracts a millisecond.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        private static long? ConvertDateToEpoch(DateTime? date, bool dayStart)
+        {
+            long? millisec = null;
+
+            if (date != null)
+            {
+                DateTime dt;
+                if (dayStart)
+                {
+                    dt = date.Value;
+                }
+                else
+                {
+                    dt = date.Value.AddDays(1).AddMilliseconds(-1);
+                }
+                DateTimeOffset dateTimeOffset = dt.ToUniversalTime();
+                millisec = dateTimeOffset.ToUnixTimeMilliseconds();
+            }
+
+            return millisec;
+        }
 
         /// <summary>
         /// Add game to cache.
