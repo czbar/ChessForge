@@ -19,6 +19,11 @@ namespace ChessForge
     public partial class DownloadWebGamesDialog : Window
     {
         /// <summary>
+        /// The list of downloaded games 
+        /// </summary>
+        public ObservableCollection<GameData> Games = new ObservableCollection<GameData>();
+
+        /// <summary>
         /// Constructor. Sets up event handler.
         /// </summary>
         public DownloadWebGamesDialog()
@@ -49,6 +54,8 @@ namespace ChessForge
         /// <param name="e"></param>
         public void UserGamesReceived(object sender, WebAccessEventArgs e)
         {
+            bool exit = false;
+
             try
             {
                 if (e.Success)
@@ -63,9 +70,13 @@ namespace ChessForge
                         {
                             throw new Exception(Properties.Resources.ErrGameNotFound);
                         }
-                        ObservableCollection<GameData> games = new ObservableCollection<GameData>();
-                        int gamesCount = PgnMultiGameParser.ParsePgnMultiGameText(e.TextData, ref games);
-                        SelectGames(ref games);
+                        Games = new ObservableCollection<GameData>();
+                        int gamesCount = PgnMultiGameParser.ParsePgnMultiGameText(e.TextData, ref Games);
+                        if (SelectGames(ref Games))
+                        {
+                            DialogResult = true;
+                            exit = true;
+                        }
                     }
                 }
                 else
@@ -77,7 +88,10 @@ namespace ChessForge
                 MessageBox.Show(Properties.Resources.GameDownloadError + ": " + ex.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            EnableControls(false);
+            if (!exit)
+            {
+                EnableControls(false);
+            }
         }
 
         /// <summary>
