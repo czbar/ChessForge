@@ -534,7 +534,7 @@ namespace ChessForge
                 sb.AppendLine(CFG_WG_LICHESS_USER + "=" + WebGamesLichessUser);
                 sb.AppendLine(CFG_WG_CHESSCOM_USER + "=" + WebGamesChesscomUser);
                 sb.AppendLine(CFG_WG_MAX_GAMES + "=" + WebGamesMaxCount);
-                sb.AppendLine(CFG_WG_MOST_RECENT + "=" + WebGamesMostRecent);
+                sb.AppendLine(CFG_WG_MOST_RECENT + "=" + (WebGamesMostRecent ? "1" : "0"));
                 sb.AppendLine(CFG_WG_START_DATE + "=" + WebGamesStartDate);
                 sb.AppendLine(CFG_WG_END_DATE + "=" + WebGamesEndDate);
 
@@ -877,7 +877,7 @@ namespace ChessForge
                             WebGamesStartDate = GetDate(value);
                             break;
                         case CFG_WG_END_DATE:
-                            WebGamesStartDate = GetDate(value);
+                            WebGamesEndDate = GetDate(value);
                             break;
                         case CFG_MAIN_WINDOW_POS:
                             string[] sizes = value.Split(',');
