@@ -28,6 +28,7 @@ namespace ChessForge
             EnableControls(false);
 
             SetControlValues();
+            AdjustDates(true);
 
             UiCmbSite.Items.Add(Constants.LichessNameId);
             UiCmbSite.Items.Add(Constants.ChesscomNameId);
@@ -54,15 +55,18 @@ namespace ChessForge
                 {
                     if (string.IsNullOrEmpty(e.TextData))
                     {
-                        throw new Exception(Properties.Resources.ErrNoGamesDownloaded);
+                        MessageBox.Show(Properties.Resources.ErrGamesNotFound, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
                     }
-                    if (e.TextData.IndexOf("DOCTYPE") > 0 && e.TextData.IndexOf("DOCTYPE") < 10)
+                    else
                     {
-                        throw new Exception(Properties.Resources.ErrGameNotFound);
+                        if (e.TextData.IndexOf("DOCTYPE") > 0 && e.TextData.IndexOf("DOCTYPE") < 10)
+                        {
+                            throw new Exception(Properties.Resources.ErrGameNotFound);
+                        }
+                        ObservableCollection<GameData> games = new ObservableCollection<GameData>();
+                        int gamesCount = PgnMultiGameParser.ParsePgnMultiGameText(e.TextData, ref games);
+                        SelectGames(ref games);
                     }
-                    ObservableCollection<GameData> games = new ObservableCollection<GameData>();
-                    int gamesCount = PgnMultiGameParser.ParsePgnMultiGameText(e.TextData, ref games);
-                    SelectGames(ref games);
                 }
                 else
                 {
@@ -172,6 +176,9 @@ namespace ChessForge
                 }
                 filter.MaxGames = gameCount;
 
+                filter.StartDate = UiDtStartDate.SelectedDate;
+                filter.EndDate = UiDtEndDate.SelectedDate;
+
                 _ = WebAccess.GameDownload.GetLichessUserGames(filter);
             }
         }
@@ -210,6 +217,27 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Makes sure that start date is not later that end date.
+        /// </summary>
+        private void AdjustDates(bool startDatePriority)
+        {
+            if (UiDtStartDate.SelectedDate.HasValue && UiDtEndDate.SelectedDate.HasValue)
+            {
+                if (UiDtStartDate.SelectedDate.Value > UiDtEndDate.SelectedDate.Value)
+                {
+                    if (startDatePriority)
+                    {
+                        UiDtEndDate.SelectedDate = UiDtStartDate.SelectedDate;
+                    }
+                    else
+                    {
+                        UiDtStartDate.SelectedDate = UiDtEndDate.SelectedDate;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Checkbox for "Recent Games only" chnaged.
         /// Disable date controls.
         /// </summary>
@@ -239,6 +267,26 @@ namespace ChessForge
         private void UiCmbSite_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SetUserName();
+        }
+
+        /// <summary>
+        /// StartDate control value changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiDtStartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            AdjustDates(true);
+        }
+
+        /// <summary>
+        /// EndDate control value changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiDtEndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            AdjustDates(false);
         }
 
         /// <summary>

@@ -25,9 +25,9 @@
                 <TextBox x:Name="UiTbMaxGames" HorizontalAlignment="Left" Margin="150,-20,0,0" HorizontalContentAlignment="Center" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="60"/>
                 <CheckBox x:Name="UiCbOnlyNew" Content="{x:Static p:Resources.MostRecentGames}" HorizontalAlignment="Left" Margin="12,10,0,0" VerticalAlignment="Top" Checked="UiCbOnlyNew_Checked" Unchecked="UiCbOnlyNew_Unchecked"/>
                 <Label x:Name="UiLblStartDate" Content="{x:Static p:Resources.StartDate}" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top"/>
-                <DatePicker x:Name="UiDtStartDate" HorizontalAlignment="Left" Margin="150,-25,0,0" VerticalAlignment="Top" Width="120"/>
+                <DatePicker x:Name="UiDtStartDate" HorizontalAlignment="Left" Margin="150,-25,0,0" VerticalAlignment="Top" Width="120" SelectedDateChanged="UiDtStartDate_SelectedDateChanged"/>
                 <Label x:Name="UiLblEndDate" Content="{x:Static p:Resources.EndDate}" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
-                <DatePicker x:Name="UiDtEndDate" HorizontalAlignment="Left" Margin="150,-25,0,0" VerticalAlignment="Top" Width="120"/>
+                <DatePicker x:Name="UiDtEndDate" HorizontalAlignment="Left" Margin="150,-25,0,0" VerticalAlignment="Top" Width="120" SelectedDateChanged="UiDtEndDate_SelectedDateChanged"/>
             </StackPanel>
         </GroupBox>
 
