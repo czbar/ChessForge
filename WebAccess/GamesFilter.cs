@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace WebAccess
 {
@@ -17,23 +16,18 @@ namespace WebAccess
         public string User;
 
         /// <summary>
-        /// Whether to only download games newer than the last downloaded game.
-        /// </summary>
-        public bool NewGamesOnly;
-
-        /// <summary>
         /// Maximum number of games to download.
         /// </summary>
         public int MaxGames;
 
         /// <summary>
-        /// Whether to use the specified Start Date or to ignore it
-        /// </summary>
-        public bool UseStartDate;
-
-        /// <summary>
         /// The earliest date for which to look for the games.
         /// </summary>
         public DateTime? StartDate;
+
+        /// <summary>
+        /// The end date at which to look for the games.
+        /// </summary>
+        public DateTime? EndDate;
     }
 }
