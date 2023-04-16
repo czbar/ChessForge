@@ -193,7 +193,14 @@ namespace ChessForge
                 filter.StartDate = UiDtStartDate.SelectedDate;
                 filter.EndDate = UiDtEndDate.SelectedDate;
 
-                _ = WebAccess.GameDownload.GetLichessUserGames(filter);
+                if ((string)UiCmbSite.SelectedItem == Constants.ChesscomNameId)
+                {
+                    _ = WebAccess.ChesscomUserGames.GetChesscomUserGames(filter);
+                }
+                else
+                {
+                    _ = WebAccess.GameDownload.GetLichessUserGames(filter);
+                }
             }
         }
 
