@@ -44,10 +44,6 @@
         <RadioButton x:Name="UiRbStudyOnly" Content="{x:Static p:Resources.MergeGamesNoCopy}" HorizontalAlignment="Left" Margin="30,75,0,0" Grid.Row="2" VerticalAlignment="Top"/>
         <RadioButton x:Name="UiRbGamesOnly" Content="{x:Static p:Resources.CopyGamesNoMerge}" HorizontalAlignment="Left" Margin="30,100,0,0" Grid.Row="2" VerticalAlignment="Top"/>
 
-        <RadioButton x:Name="UiRbAppendCurrentChapter" Content="{x:Static p:Resources.DwnLdAppendToCurrentChapter}" HorizontalAlignment="Left" Margin="30,35,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-        <RadioButton x:Name="UiRbCreateNewChapter" Content="{x:Static p:Resources.DwnLdCreateNewChapter}" HorizontalAlignment="Left" Margin="30,60,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-        <RadioButton x:Name="UiRbCreateNewWorkbook" Content="{x:Static p:Resources.DwnLdCreateNewWorkbook}" HorizontalAlignment="Left" Margin="30,85,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-
         <CheckBox x:Name="UiCbMultiChapter" Content="{x:Static p:Resources.CreateChapterPerGame}" HorizontalAlignment="Left" Margin="30,15,0,0" Grid.Row="2" VerticalAlignment="Top"/>
 
     </Grid>

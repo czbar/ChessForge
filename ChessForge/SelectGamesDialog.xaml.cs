@@ -186,31 +186,6 @@ namespace ChessForge
         /// </summary>
         private void InitializeCopyOptionsRadioButtons()
         {
-            bool isDL = _mode == Mode.DOWNLOAD_WEB_GAMES;
-
-            UiRbAppendCurrentChapter.Visibility = isDL ? Visibility.Visible : Visibility.Collapsed;
-            UiRbCreateNewChapter.Visibility = isDL ? Visibility.Visible : Visibility.Collapsed;
-            UiRbCreateNewWorkbook.Visibility = isDL ? Visibility.Visible : Visibility.Collapsed;
-
-            if (isDL)
-            {
-                if (WorkbookManager.SessionWorkbook == null)
-                {
-                    UiRbAppendCurrentChapter.IsEnabled = false;
-                    UiRbCreateNewChapter.IsEnabled = false;
-                    UiRbCreateNewWorkbook.IsChecked = true;
-                }
-                else if (WorkbookManager.SessionWorkbook.ActiveChapter == null)
-                {
-                    UiRbAppendCurrentChapter.IsEnabled = false;
-                    UiRbCreateNewChapter.IsChecked = true;
-                }
-                else
-                {
-                    UiRbAppendCurrentChapter.IsChecked = true;
-                }
-            }
-
             if (_mode == Mode.IMPORT_GAMES || _mode == Mode.IMPORT_EXERCISES || _mode == Mode.DOWNLOAD_WEB_GAMES)
             {
 
