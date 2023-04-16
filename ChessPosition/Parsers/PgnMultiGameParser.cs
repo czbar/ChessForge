@@ -41,6 +41,12 @@ namespace GameTree
                 {
                     ProcessMultiPgnTextLine(line, lineNo, ref gameText, ref gm, ref games);
                 }
+
+                if (games.Count > 0)
+                {
+                    // add game text to the last object
+                    games[games.Count - 1].GameText = gameText.ToString();
+                }
             }
 
             return games.Count;
