@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChesscomUserGames.cs" />
     <Compile Include="GameDownload.cs" />
     <Compile Include="GamesFilter.cs" />
     <Compile Include="OpeningExplorer.cs" />
