@@ -38,13 +38,15 @@ namespace ChessForge
         /// <summary>
         /// Constructor.
         /// </summary>
-        public DownloadedGamesActionDialog()
+        public DownloadedGamesActionDialog(int gamesCount)
         {
             InitializeComponent();
 
             // set label here because we want to add a colon
             UiLblNumberOfGames.Content = Properties.Resources.NumberOfGames + ": ";
             UiRbAppendCurrentChapter.IsChecked = true;
+
+            UiTbGameCount.Text = gamesCount.ToString();
         }
 
         /// <summary>
