@@ -1580,10 +1580,12 @@ namespace ChessForge
                     {
                         WorkbookManager.SessionWorkbook.GetArticleByGuid(dlg.SelectedArticle.Tree.Header.GetGuid(out _), out int chapterIndex, out int articleIndex);
 
-                        ChessForgeEventArgs args = new ChessForgeEventArgs();
-                        args.ChapterIndex = chapterIndex;
-                        args.ArticleIndex = articleIndex;
-                        args.ContentType = dlg.SelectedArticle.Tree.Header.GetContentType(out _);
+                        ChessForgeEventArgs args = new ChessForgeEventArgs
+                        {
+                            ChapterIndex = chapterIndex,
+                            ArticleIndex = articleIndex,
+                            ContentType = dlg.SelectedArticle.Tree.Header.GetContentType(out _)
+                        };
 
                         ArticleSelected?.Invoke(this, args);
                     }
