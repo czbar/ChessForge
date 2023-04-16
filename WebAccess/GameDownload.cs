@@ -76,7 +76,6 @@ namespace WebAccess
                 }
                 else
                 {
-                    HttpClient client = new HttpClient();
                     var response = await RestApiRequest.GameImportClient.GetAsync("https://lichess.org/game/export/" + gameId);
                     using (var fs = new MemoryStream())
                     {
@@ -111,7 +110,6 @@ namespace WebAccess
             try
             {
                 string url = BuildLichessUserGamesUrl(filter);
-                HttpClient client = new HttpClient();
                 var response = await RestApiRequest.GameImportClient.GetAsync(url);
                 using (var fs = new MemoryStream())
                 {
