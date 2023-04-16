@@ -6,20 +6,20 @@
         xmlns:local="clr-namespace:ChessForge"
         xmlns:p="clr-namespace:ChessForge.Properties"
         mc:Ignorable="d"
-        Title="Process Downloaded Games" Height="270" Width="400">
+        Title="{x:Static p:Resources.SaveDownloadedGames}" Height="270" Width="400">
     <Grid>
-        <Label x:Name="label" Content="Number of downloaded games: " HorizontalAlignment="Left" Margin="48,9,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" IsEnabled="False" Margin="251,15,0,0" BorderThickness="0" 
+        <Label x:Name="UiLblNumberOfGames" Content="{x:Static p:Resources.NumberOfGames}" HorizontalAlignment="Left" Margin="48,9,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" IsEnabled="False" Margin="220,15,0,0" BorderThickness="0" 
                  FontWeight="Bold" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="50"/>
-        <GroupBox Header="Choose Action" Margin="10,45,10,0" Height="120" VerticalAlignment="Top">
+        <GroupBox Header="{x:Static p:Resources.SelectOption}" Margin="15,45,15,0" Height="120" VerticalAlignment="Top">
             <StackPanel Margin="2,0,-2,0">
                 <RadioButton x:Name="UiRbAppendCurrentChapter" Content="{x:Static p:Resources.DwnLdAppendToCurrentChapter}" HorizontalAlignment="Left" Margin="30,15,0,0" Grid.Row="2" VerticalAlignment="Top"/>
                 <RadioButton x:Name="UiRbCreateNewChapter" Content="{x:Static p:Resources.DwnLdCreateNewChapter}" HorizontalAlignment="Left" Margin="30,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
                 <RadioButton x:Name="UiRbCreateNewWorkbook" Content="{x:Static p:Resources.DwnLdCreateNewWorkbook}" HorizontalAlignment="Left" Margin="30,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
             </StackPanel>
         </GroupBox>
-        <Button x:Name="UiBtnOk" Content="Ok" HorizontalAlignment="Center" Margin="-220,189,0,0" Width="100" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnCancel" Content="Cancel" HorizontalAlignment="Center" Margin="0,189,0,0" Width="100" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="Ok" HorizontalAlignment="Center" Margin="-220,189,0,0" Width="100" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="Cancel" HorizontalAlignment="Center" Margin="0,189,0,0" Width="100" VerticalAlignment="Top"/>
         <Button x:Name="UiBtnHelp" Content="Help" HorizontalAlignment="Center" Margin="220,189,0,0" Width="100" VerticalAlignment="Top"/>
 
     </Grid>
