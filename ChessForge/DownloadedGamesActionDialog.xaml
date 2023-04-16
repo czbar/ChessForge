@@ -9,7 +9,7 @@
         Title="{x:Static p:Resources.SaveDownloadedGames}" Height="270" Width="400">
     <Grid>
         <Label x:Name="UiLblNumberOfGames" Content="{x:Static p:Resources.NumberOfGames}" HorizontalAlignment="Left" Margin="48,9,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" IsEnabled="False" Margin="220,15,0,0" BorderThickness="0" 
+        <TextBox x:Name="UiTbGameCount" HorizontalAlignment="Left" IsEnabled="False" Margin="220,15,0,0" BorderThickness="0" 
                  FontWeight="Bold" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="50"/>
         <GroupBox Header="{x:Static p:Resources.SelectOption}" Margin="15,45,15,0" Height="120" VerticalAlignment="Top">
             <StackPanel Margin="2,0,-2,0">
