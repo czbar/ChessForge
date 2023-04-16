@@ -973,8 +973,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="games"></param>
-        public void CopySelectedItemsToChapter(Chapter chapter, bool copyGames, out string error, ObservableCollection<GameData> games)
+        public int CopySelectedItemsToChapter(Chapter chapter, bool copyGames, out string error, ObservableCollection<GameData> games)
         {
+            int copiedCount = 0; 
             error = string.Empty;
 
             foreach (GameData gd in games)
@@ -983,15 +984,23 @@ namespace ChessForge
                 {
                     if (gd.GetContentType() == GameData.ContentType.EXERCISE)
                     {
-                        chapter.AddArticle(gd, GameData.ContentType.EXERCISE, out error, GameData.ContentType.EXERCISE);
+                        if (chapter.AddArticle(gd, GameData.ContentType.EXERCISE, out error, GameData.ContentType.EXERCISE) >= 0)
+                        {
+                            copiedCount++;
+                        }
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
                     }
                     else if (copyGames && (gd.GetContentType() == GameData.ContentType.GENERIC || gd.GetContentType() == GameData.ContentType.MODEL_GAME))
                     {
-                        chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, out error, GameData.ContentType.MODEL_GAME);
+                        if (chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, out error, GameData.ContentType.MODEL_GAME) >= 0)
+                        {
+                            copiedCount++;
+                        }
                     }
                 }
             }
+
+            return copiedCount;
         }
 
         /// <summary>
