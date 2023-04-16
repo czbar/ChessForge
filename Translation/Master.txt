@@ -1085,6 +1085,13 @@ SaveWorkbookAs=Save Workbook $0 As ...
 #Save newly crated Workbook into a different file
 SaveNewWorkbookAs=Save New Workbook As ...
 
+
+#Save downloaded games (dialog title)
+SaveDownloadedGames=Save Downloaded Games
+
+#Select option  
+SelectOption=Select Option
+
 #Select Items to create a new Workbook
 SelectItemsforWorkbook=Select Items to create a new Workbook from:
 
@@ -1102,6 +1109,9 @@ SelectExercisesToImport=Select Exercises to Import:
 
 #Select Items to create a new Chapter from
 SelectItemsForChapter=Select Items to create a new Chapter from:
+
+#Number of games
+NumberOfGames=Number of Games
 
 #Quiz points
 QuizPoints=Quiz points
@@ -1297,7 +1307,7 @@ CreateChapterPerGame=Create Chapter per Game
 DwnLdAppendToCurrentChapter=Append to the current Chapter
 
 #Create a new chapter for the downloaded games
-DwnLdCreateNewChapter=Create a New Chapter
+DwnLdCreateNewChapter=Create a new Chapter
 
 #Create a new workbook for the downloaded games
 DwnLdCreateNewWorkbook=Create a new Workbook

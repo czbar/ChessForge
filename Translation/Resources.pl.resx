@@ -1059,6 +1059,12 @@
   <data name="SaveNewWorkbookAs" xml:space="preserve">
     <value>Zapisz nowy podręcznik jako ...</value>
   </data>
+  <data name="SaveDownloadedGames" xml:space="preserve">
+    <value>Zapisz Pobrane Partie</value>
+  </data>
+  <data name="SelectOption" xml:space="preserve">
+    <value>Wybierz Opcję</value>
+  </data>
   <data name="SelectItemsforWorkbook" xml:space="preserve">
     <value>Wybierz elementy do utworzenia nowego Podręcznika:</value>
   </data>
@@ -1076,6 +1082,9 @@
   </data>
   <data name="SelectItemsForChapter" xml:space="preserve">
     <value>Wybierz elementy do utworzenia nowego Rozdziału:</value>
+  </data>
+  <data name="NumberOfGames" xml:space="preserve">
+    <value>Liczba partii</value>
   </data>
   <data name="QuizPoints" xml:space="preserve">
     <value>Punktacja do Quizu</value>

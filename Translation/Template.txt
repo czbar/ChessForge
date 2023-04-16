@@ -1399,6 +1399,15 @@ SaveWorkbookAs=
 #english: SaveNewWorkbookAs=Save New Workbook As ...
 SaveNewWorkbookAs=
 
+
+#description: Save downloaded games (dialog title)
+#english: SaveDownloadedGames=Save Downloaded Games
+SaveDownloadedGames=
+
+#description: Select option  
+#english: SelectOption=Select Option
+SelectOption=
+
 #description: Select Items to create a new Workbook
 #english: SelectItemsforWorkbook=Select Items to create a new Workbook from:
 SelectItemsforWorkbook=
@@ -1422,6 +1431,10 @@ SelectExercisesToImport=
 #description: Select Items to create a new Chapter from
 #english: SelectItemsForChapter=Select Items to create a new Chapter from:
 SelectItemsForChapter=
+
+#description: Number of games
+#english: NumberOfGames=Number of Games
+NumberOfGames=
 
 #description: Quiz points
 #english: QuizPoints=Quiz points
@@ -1681,7 +1694,7 @@ CreateChapterPerGame=
 DwnLdAppendToCurrentChapter=
 
 #description: Create a new chapter for the downloaded games
-#english: DwnLdCreateNewChapter=Create a New Chapter
+#english: DwnLdCreateNewChapter=Create a new Chapter
 DwnLdCreateNewChapter=
 
 #description: Create a new workbook for the downloaded games

@@ -1060,6 +1060,12 @@
   <data name="SaveNewWorkbookAs" xml:space="preserve">
     <value>Save New Workbook As ...</value>
   </data>
+  <data name="SaveDownloadedGames" xml:space="preserve">
+    <value>Save Downloaded Games</value>
+  </data>
+  <data name="SelectOption" xml:space="preserve">
+    <value>Select Option</value>
+  </data>
   <data name="SelectItemsforWorkbook" xml:space="preserve">
     <value>Select Items to create a new Workbook from:</value>
   </data>
@@ -1077,6 +1083,9 @@
   </data>
   <data name="SelectItemsForChapter" xml:space="preserve">
     <value>Select Items to create a new Chapter from:</value>
+  </data>
+  <data name="NumberOfGames" xml:space="preserve">
+    <value>Number of Games</value>
   </data>
   <data name="QuizPoints" xml:space="preserve">
     <value>Quiz points</value>
@@ -1271,7 +1280,7 @@
     <value>Append to the current Chapter</value>
   </data>
   <data name="DwnLdCreateNewChapter" xml:space="preserve">
-    <value>Create a New Chapter</value>
+    <value>Create a new Chapter</value>
   </data>
   <data name="DwnLdCreateNewWorkbook" xml:space="preserve">
     <value>Create a new Workbook</value>

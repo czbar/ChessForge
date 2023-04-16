@@ -1399,6 +1399,15 @@ SaveWorkbookAs=Zapisz podręcznik $0 jako ...
 #english: SaveNewWorkbookAs=Save New Workbook As ...
 SaveNewWorkbookAs=Zapisz nowy podręcznik jako ...
 
+
+#description: Save downloaded games (dialog title)
+#english: SaveDownloadedGames=Save Downloaded Games
+SaveDownloadedGames=Zapisz Pobrane Partie
+
+#description: Select option  
+#english: SelectOption=Select Option
+SelectOption=Wybierz Opcję
+
 #description: Select Items to create a new Workbook
 #english: SelectItemsforWorkbook=Select Items to create a new Workbook from:
 SelectItemsforWorkbook=Wybierz elementy do utworzenia nowego Podręcznika:
@@ -1422,6 +1431,10 @@ SelectExercisesToImport=Wybierz Ćwiczenia do Importu:
 #description: Select Items to create a new Chapter from
 #english: SelectItemsForChapter=Select Items to create a new Chapter from:
 SelectItemsForChapter=Wybierz elementy do utworzenia nowego Rozdziału:
+
+#description: Number of games
+#english: NumberOfGames=Number of Games
+NumberOfGames=Liczba partii
 
 #description: Quiz points
 #english: QuizPoints=Quiz points
@@ -1681,7 +1694,7 @@ CreateChapterPerGame=Utwórz Rozdział do Każdej Partii
 DwnLdAppendToCurrentChapter=Dodaj do obecnego rozdziału
 
 #description: Create a new chapter for the downloaded games
-#english: DwnLdCreateNewChapter=Create a New Chapter
+#english: DwnLdCreateNewChapter=Create a new Chapter
 DwnLdCreateNewChapter=Utwórz nowy rozdział
 
 #description: Create a new workbook for the downloaded games

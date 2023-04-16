@@ -1348,7 +1348,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create a New Chapter.
+        ///   Looks up a localized string similar to Create a new Chapter.
         /// </summary>
         public static string DwnLdCreateNewChapter {
             get {
@@ -3005,6 +3005,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of Games.
+        /// </summary>
+        public static string NumberOfGames {
+            get {
+                return ResourceManager.GetString("NumberOfGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to checkmate.
         /// </summary>
         public static string OebCheckmate {
@@ -3581,6 +3590,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save Downloaded Games.
+        /// </summary>
+        public static string SaveDownloadedGames {
+            get {
+                return ResourceManager.GetString("SaveDownloadedGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save New Workbook As ....
         /// </summary>
         public static string SaveNewWorkbookAs {
@@ -3721,6 +3739,15 @@ namespace ChessForge.Properties {
         public static string SelectItemsforWorkbook {
             get {
                 return ResourceManager.GetString("SelectItemsforWorkbook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Option.
+        /// </summary>
+        public static string SelectOption {
+            get {
+                return ResourceManager.GetString("SelectOption", resourceCulture);
             }
         }
         
