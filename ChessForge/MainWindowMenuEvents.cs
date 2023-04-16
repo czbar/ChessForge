@@ -21,6 +21,54 @@ namespace ChessForge
 {
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Handles creation of a new Workbook
+        /// </summary>
+        /// <returns></returns>
+        public bool CreateNewWorkbook()
+        {
+            if (!WorkbookManager.AskToCloseWorkbook())
+            {
+                return false;
+            }
+
+            // prepare document
+            AppState.RestartInIdleMode(false);
+            WorkbookManager.CreateNewWorkbook();
+
+            // TODO: this call looks unnecessary as SetupGuiForNewSession() below creates this view again.
+            _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
+
+            // ask for the options
+            if (!ShowWorkbookOptionsDialog(false))
+            {
+                // user abandoned
+                return false;
+            }
+
+            if (!WorkbookManager.SaveWorkbookToNewFile(null))
+            {
+                AppState.RestartInIdleMode(false);
+                return false;
+            }
+
+            BoardCommentBox.ShowTabHints();
+
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
+
+            SetupGuiForNewSession(AppState.WorkbookFilePath, true);
+
+            AppState.SetupGuiForCurrentStates();
+            //StudyTree.CreateNew();
+            _studyTreeView.BuildFlowDocumentForVariationTree();
+            UiTabStudyTree.Focus();
+
+            int startingNode = 0;
+            string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(startingNode);
+            SetActiveLine(startLineId, startingNode);
+
+            return true;
+        }
 
         //**********************
         //
@@ -480,47 +528,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnNewWorkbook_Click(object sender, RoutedEventArgs e)
         {
-            if (!WorkbookManager.AskToCloseWorkbook())
-            {
-                return;
-            }
-
-            // prepare document
-            AppState.RestartInIdleMode(false);
-            WorkbookManager.CreateNewWorkbook();
-
-            // TODO: this call looks unnecessary as SetupGuiForNewSession() below creates this view again.
-            _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
-
-            // ask for the options
-            if (!ShowWorkbookOptionsDialog(false))
-            {
-                // user abandoned
-                return;
-            }
-
-            if (!WorkbookManager.SaveWorkbookToNewFile(null))
-            {
-                AppState.RestartInIdleMode(false);
-                return;
-            }
-
-            BoardCommentBox.ShowTabHints();
-
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-
-            SetupGuiForNewSession(AppState.WorkbookFilePath, true);
-
-            AppState.SetupGuiForCurrentStates();
-            //StudyTree.CreateNew();
-            _studyTreeView.BuildFlowDocumentForVariationTree();
-            UiTabStudyTree.Focus();
-
-            int startingNode = 0;
-            string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(startingNode);
-            SetActiveLine(startLineId, startingNode);
+            CreateNewWorkbook();
         }
-
 
         //**********************
         //
@@ -901,6 +910,13 @@ namespace ChessForge
                     CreateChapterFromNewGames(gamesCount, ref games, fileName);
                 }
             }
+        }
+
+        public void FocusOnChapterView()
+        {
+            UiTabChapters.Focus();
+            AppState.DoEvents();
+            _chaptersView.BringChapterIntoView(WorkbookManager.SessionWorkbook.ActiveChapterIndex);
         }
 
         /// <summary>
