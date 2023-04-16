@@ -1208,7 +1208,7 @@ namespace ChessForge
         /// <summary>
         /// Configures menu items for the Manual Review mode
         /// </summary>
-        private static void ConfigureMenusForManualReview()
+        public static void ConfigureMenusForManualReview()
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
@@ -1218,6 +1218,7 @@ namespace ChessForge
 
                 _mainWin.UiMnciPlayEngine.IsEnabled = true;
 
+                _mainWin.UiMnStripComments.IsEnabled = AppState.IsTreeViewTabActive();
                 _mainWin.UiMnAnnotations.IsEnabled = AppState.IsTreeViewTabActive();
                 _mainWin.UiMnMergeChapters.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
             });

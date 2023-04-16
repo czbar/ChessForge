@@ -938,7 +938,7 @@ namespace ChessForge
             {
                 _chaptersView.UpdateIntroHeaders();
             }
-
+            AppState.ConfigureMenusForManualReview();
             BoardCommentBox.ShowTabHints();
             try
             {
@@ -980,6 +980,7 @@ namespace ChessForge
                     return;
                 }
 
+                AppState.ConfigureMenusForManualReview();
                 WorkbookManager.ActiveTab = WorkbookManager.TabViewType.INTRO;
                 WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.INTRO);
                 AppState.ShowExplorers(AppState.AreExplorersOn, true);
@@ -1032,6 +1033,7 @@ namespace ChessForge
                 return;
             }
 
+            AppState.ConfigureMenusForManualReview();
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
 
@@ -1060,6 +1062,7 @@ namespace ChessForge
                 return;
             }
 
+            AppState.ConfigureMenusForManualReview();
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.BOOKMARKS;
             AppState.ShowExplorers(false, false);
 
@@ -1163,6 +1166,7 @@ namespace ChessForge
                 return;
             }
 
+            AppState.ConfigureMenusForManualReview();
             RefreshGamesView();
         }
 
@@ -1257,6 +1261,7 @@ namespace ChessForge
                 return;
             }
 
+            AppState.ConfigureMenusForManualReview();
             RefreshExercisesView();
         }
 
