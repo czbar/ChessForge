@@ -916,6 +916,9 @@ MsgSelectNodeToInserAt=Select position to paste the moves at.
 #Confirm deleting remaining moves
 MsgConfirmDeleteSubtree=Delete the selected move and all moves that follow? 
 
+#Confirm stripping comments
+MsgConfirmStripComments=Strip all comments in this view? 
+
 #Copy Paste error
 MbtTitleCopyPasteError=Copy/Paste Error
 

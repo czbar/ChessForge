@@ -2833,6 +2833,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Strip all comments in this view? .
+        /// </summary>
+        public static string MsgConfirmStripComments {
+            get {
+                return ResourceManager.GetString("MsgConfirmStripComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No identical positions found..
         /// </summary>
         public static string MsgNoIdenticalPositions {

@@ -1178,6 +1178,10 @@ MsgSelectNodeToInserAt=Zaznacz pozycję gdzie wkleić ruchy.
 #english: MsgConfirmDeleteSubtree=Delete the selected move and all moves that follow? 
 MsgConfirmDeleteSubtree=Usunąć zaznaczony ruch i wszystkie dalsze posunięcia? 
 
+#description: Confirm stripping comments
+#english: MsgConfirmStripComments=Strip all comments in this view? 
+MsgConfirmStripComments=Usunąć wszystkie komentarze w tym widoku? 
+
 #description: Copy Paste error
 #english: MbtTitleCopyPasteError=Copy/Paste Error
 MbtTitleCopyPasteError=Błąd w Kopiuj/Wklej

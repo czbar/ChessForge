@@ -1178,6 +1178,10 @@ MsgSelectNodeToInserAt=
 #english: MsgConfirmDeleteSubtree=Delete the selected move and all moves that follow? 
 MsgConfirmDeleteSubtree=
 
+#description: Confirm stripping comments
+#english: MsgConfirmStripComments=Strip all comments in this view? 
+MsgConfirmStripComments=
+
 #description: Copy Paste error
 #english: MbtTitleCopyPasteError=Copy/Paste Error
 MbtTitleCopyPasteError=

@@ -903,6 +903,9 @@
   <data name="MsgConfirmDeleteSubtree" xml:space="preserve">
     <value>Usunąć zaznaczony ruch i wszystkie dalsze posunięcia? </value>
   </data>
+  <data name="MsgConfirmStripComments" xml:space="preserve">
+    <value>Usunąć wszystkie komentarze w tym widoku? </value>
+  </data>
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Błąd w Kopiuj/Wklej</value>
   </data>
