@@ -16,6 +16,23 @@ namespace ChessForge
 {
     public static class ListViewHelper
     {
+        /// <summary>
+        /// Creates new GridViewColumn object.
+        /// </summary>
+        /// <param name="header"></param>
+        /// <param name="width"></param>
+        /// <param name="memberBinding"></param>
+        /// <returns></returns>
+        public static GridViewColumn CreateColumn(string header, int width, string memberBinding)
+        {
+            GridViewColumn col = new GridViewColumn();
+            col.Header = header;
+            col.Width = width;
+            col.DisplayMemberBinding = new Binding(memberBinding);
+
+            return col;
+        }
+
         public static TextBlock GetElementFromCellTemplate(ListView listView, Int32 row, Int32 column, String name)
         {
             if (row >= listView.Items.Count || row < 0)

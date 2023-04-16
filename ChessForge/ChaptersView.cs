@@ -233,8 +233,12 @@ namespace ChessForge
         /// <param name="chapterIndex"></param>
         public void BringChapterIntoView(int chapterIndex)
         {
-            Run rChapter = FindChapterTitleRun(chapterIndex);
-            rChapter?.BringIntoView();
+            try
+            {
+                Run rChapter = FindChapterTitleRun(chapterIndex);
+                rChapter?.BringIntoView();
+            }
+            catch { }
         }
 
         /// <summary>

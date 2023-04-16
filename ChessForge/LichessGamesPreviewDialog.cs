@@ -78,11 +78,11 @@ namespace ChessForge
                 {
                     if (string.IsNullOrEmpty(GameDownload.GameText))
                     {
-                        throw new Exception("Game text is empty.");
+                        throw new Exception(Properties.Resources.ErrEmptyGame);
                     }
                     if (GameDownload.GameText.IndexOf("DOCTYPE") > 0 && GameDownload.GameText.IndexOf("DOCTYPE") < 10)
                     {
-                        throw new Exception("Game not found.");
+                        throw new Exception(Properties.Resources.ErrGamesNotFound);
                     }
                     _tree = new VariationTree(GameData.ContentType.MODEL_GAME);
                     PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, _tree);

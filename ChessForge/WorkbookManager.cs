@@ -11,9 +11,6 @@ using GameTree;
 using ChessPosition;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Runtime.CompilerServices;
-using System.Reflection;
-using System.Diagnostics;
 
 namespace ChessForge
 {
@@ -229,10 +226,12 @@ namespace ChessForge
 
                 while (sr.Peek() >= 0)
                 {
+                    string line = sr.ReadLine();
+
+                    // TODO: switch to using PgnMultiGameParser.ParsePgnMultiGameText
                     lineNo++;
                     headerLine = true;
 
-                    string line = sr.ReadLine();
                     string header = PgnHeaders.ParsePgnHeaderLine(line, out string val);
                     if (header != null)
                     {

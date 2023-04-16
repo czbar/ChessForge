@@ -320,6 +320,24 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the Event Name
+        /// </summary>
+        /// <returns></returns>
+        public string GetECO(out string key)
+        {
+            string headerKey = PgnHeaders.KEY_ECO;
+            key = headerKey;
+
+            string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            if (string.IsNullOrEmpty(value))
+            {
+                value = "";
+            }
+
+            return value;
+        }
+
+        /// <summary>
         /// Returns the Guid.
         /// If there is no Guid, generates and saves it.
         /// </summary>

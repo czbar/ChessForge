@@ -62,6 +62,11 @@ namespace GameTree
         public const string KEY_EVENT = "Event";
 
         /// <summary>
+        /// Encyclopedia of Chess Openings code.
+        /// </summary>
+        public const string KEY_ECO = "ECO";
+
+        /// <summary>
         /// Event round number.
         /// </summary>
         public const string KEY_ROUND = "Round";

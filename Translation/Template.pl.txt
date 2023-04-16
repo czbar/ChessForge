@@ -73,6 +73,9 @@ Title=Tytuł
 #english: WorkbookTitle=Workbook Title
 WorkbookTitle=Tytuł Podręcznika
 
+#description: User
+#english: User=User
+User=Użytkownik
 
 #description: Event
 #english: Event=Event
@@ -113,7 +116,6 @@ Games=Partie
 #description: Engine Game
 #english: EngineGame=Engine Game
 EngineGame=Partia z Silnikiem
-
 
 #description: Exercise 
 #english: Exercise=Exercise
@@ -211,6 +213,14 @@ Confirm=Potwierdź
 #english: Item=Item
 Item=Element
 
+#description: Order No
+#english: OrderNo=No
+OrderNo=No
+
+#description: ECO
+#english: ECO=ECO
+ECO=ECO
+
 #description: Game Header
 #english: GameHeader=Game Header
 GameHeader=Nagłówek Partii
@@ -271,6 +281,46 @@ GameExerciseReferences=Odsyłacze do Partii i Ćwiczeń
 #english: OpenView=Open View
 OpenView=Otwórz widok
 
+#description: Account
+#english: Account=Account
+Account=Konto
+
+#description: Limits
+#english: Limits=Limits
+Limits=Ograniczenia
+
+#description: Filter
+#english: Filter=Filter
+Filter=Filtr
+
+#description: No more than
+#english: NoMoreThan=No More Than
+NoMoreThan=Nie więcej niż
+
+#description: Most recent games only
+#english: MostRecentGames=Most Recent Games
+MostRecentGames=Ostatnie partie
+
+#description: Perform download
+#english: PerformDownload=Download
+PerformDownload=Pobierz
+
+#description: Apply date
+#english: ApplyDate=Apply Date
+ApplyDate=Zastosuj datę początkową
+
+#description: Start date
+#english: StartDate=Start Date
+StartDate=Data początkowa
+
+#description: End date
+#english: EndDate=End Date
+EndDate=Data końcowa
+
+#description: Web site
+#english: WebSite=Site
+WebSite=Strona
+
 ##################################
 #
 # EDITING
@@ -325,6 +375,41 @@ ErrClipboardLinePaste=Błąd przy wklejaniu wariantu ze schowka
 ClipboardOperation=Operacja Schowka
 
 
+#description: No games downloaded
+#english: ErrNoGamesDownloaded=No games have been downloaded
+ErrNoGamesDownloaded=Nie pobrano żadnych partii
+
+#description: No games selected
+#english: ErrNoGamesSelected=No games have been selected
+ErrNoGamesSelected=Nie wybrano żadnych partii
+
+#description: No games were copied
+#english: ErrNoGamesCopied=No games have been copied
+ErrNoGamesCopied=Nie skopiowano żadnej partii
+
+#description: Some games were not copied
+#english: ErrNotAllGamesCopied=Not all games were copied
+ErrNotAllGamesCopied=Nie wszystkie partie zostały skopiowane
+
+#description: Game not found
+#english: ErrGameNotFound=Game not found
+ErrGameNotFound=Partii nie znaleziono 
+
+#description: Games not found
+#english: ErrGamesNotFound=Games not found
+ErrGamesNotFound=Partii nie znaleziono
+
+#description: Empty game tekst
+#english: ErrEmptyGame=Game text is empty
+ErrEmptyGame=Pusty zapis partii
+
+#description: User name cannot be empty 
+#english: ErrEmptyUserName=Provide User Name
+ErrEmptyUserName=Brak nazwy użytkownika
+
+#description: Title of the dialog reporting incomplete data
+#english: PromptCorrectData=Incorrect Input Data
+PromptCorrectData=Niewłaściwe Dane
 
 #
 # MAIN MENU
@@ -1041,6 +1126,10 @@ FileError=Błąd w Pliku
 #english: Error=Error
 Error=Błąd
 
+#description: Warning
+#english: Warning=Warning
+Warning=Ostrzeżenie
+
 #description: Information
 #english: Information=Information
 Information=Informacja
@@ -1326,9 +1415,26 @@ SaveWorkbookAs=Zapisz podręcznik $0 jako ...
 #english: SaveNewWorkbookAs=Save New Workbook As ...
 SaveNewWorkbookAs=Zapisz nowy podręcznik jako ...
 
+
+#description: Save downloaded games (dialog title)
+#english: SaveDownloadedGames=Save Downloaded Games
+SaveDownloadedGames=Zapisz Pobrane Partie
+
+#description: Select option  
+#english: SelectOption=Select Option
+SelectOption=Wybierz Opcję
+
 #description: Select Items to create a new Workbook
 #english: SelectItemsforWorkbook=Select Items to create a new Workbook from:
 SelectItemsforWorkbook=Wybierz elementy do utworzenia nowego Podręcznika:
+
+#description: Select Games
+#english: SelectGames=Select Games
+SelectGames=Wybierz Partie
+
+#description: Downloaded Games
+#english: DownloadedGames=Downloaded Games
+DownloadedGames=Pobrane Partie
 
 #description: Select Games to Import
 #english: SelectGamesToImport=Select Games to Import:
@@ -1341,6 +1447,10 @@ SelectExercisesToImport=Wybierz Ćwiczenia do Importu:
 #description: Select Items to create a new Chapter from
 #english: SelectItemsForChapter=Select Items to create a new Chapter from:
 SelectItemsForChapter=Wybierz elementy do utworzenia nowego Rozdziału:
+
+#description: Number of games
+#english: NumberOfGames=Number of Games
+NumberOfGames=Liczba partii
 
 #description: Quiz points
 #english: QuizPoints=Quiz points
@@ -1467,8 +1577,16 @@ NextGame=Następna Partia
 ImportIntoChapter=Importuj Partię
 
 #description: Downloading game from lichess
-#english: DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
+#english: DownloadingGameFromLichess=Downloading Game from lichess.org. Please wait...
 DownloadingGameFromLichess=Trwa ściąganie partii z lichess. Proszę czekać...
+
+#description: Downloading from lichess
+#english: DownloadingFromLichess=Downloading from lichess.org. Please wait...
+DownloadingFromLichess=Trwa pobieranie partii z lichess. Proszę czekać...
+
+#description: DownloadGamesFromWeb
+#english: DownloadGamesFromWeb=Download Games from a Web Site
+DownloadGamesFromWeb=Pobierz partie z Internetu
 
 #description: Please wait
 #english: PleaseWait=Please Wait
@@ -1586,6 +1704,18 @@ CopyGamesNoMerge=Skopiuj Partie do Sekcji Partii i zostaw Teorię pustą
 #description: Create a separate chapter for each game
 #english: CreateChapterPerGame=Create Chapter per Game
 CreateChapterPerGame=Utwórz Rozdział do Każdej Partii
+
+#description: Append games to the current chapter
+#english: DwnLdAppendToCurrentChapter=Append to the current Chapter
+DwnLdAppendToCurrentChapter=Dodaj do obecnego rozdziału
+
+#description: Create a new chapter for the downloaded games
+#english: DwnLdCreateNewChapter=Create a new Chapter
+DwnLdCreateNewChapter=Utwórz nowy rozdział
+
+#description: Create a new workbook for the downloaded games
+#english: DwnLdCreateNewWorkbook=Create a new Workbook
+DwnLdCreateNewWorkbook=Utwórz nowy podręcznik
 
 #description: New version available from 
 #english: NewVersionAvailable=New version $0 available from

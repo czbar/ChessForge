@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using ChessPosition;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -96,6 +97,45 @@ namespace ChessForge
         /// (in milliseconds)
         /// </summary>
         public static int EngineMoveTime = 1000;
+
+        //***************** WEB GAMES ITEMS *************************
+
+        /// <summary>
+        /// Site to download the games from: lichess or chesscom
+        /// </summary>
+        public static string WebGamesSite = Constants.LichessNameId;
+
+        /// <summary>
+        /// User name for the lichess site
+        /// </summary>
+        public static string WebGamesLichessUser = "";
+
+        /// <summary>
+        /// User name for the chess.com site
+        /// </summary>
+        public static string WebGamesChesscomUser = "";
+
+        /// <summary>
+        /// User name for the chess.com site
+        /// </summary>
+        public static int WebGamesMaxCount = 50;
+
+        /// <summary>
+        /// Whether to download the most recent games 
+        /// or use specified dates.
+        /// </summary>
+        public static bool WebGamesMostRecent = true;
+
+        /// <summary>
+        /// Start date for downloading games
+        /// </summary>
+        public static DateTime? WebGamesStartDate = null;
+
+        /// <summary>
+        /// End date for downloading games.
+        /// </summary>
+        public static DateTime? WebGamesEndDate = null;
+
 
         /// <summary>
         /// Number of threads for the engine to use. 
@@ -324,6 +364,18 @@ namespace ChessForge
         private const string CFG_SHOW_GENERIC_PGN_INFO = "ShowGenericPgnInfo";
         private const string CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES = "AllowMouseWheelForMoves";
 
+
+        //***************** WEB GAMES ITEMS *************************
+
+        private const string CFG_WG_SITE = "WebGamesSite";
+        private const string CFG_WG_LICHESS_USER = "WebGamesLichessUser";
+        private const string CFG_WG_CHESSCOM_USER = "WebGamesChessComUser";
+        private const string CFG_WG_MAX_GAMES = "WebGamesMaxCount";
+        private const string CFG_WG_MOST_RECENT = "WebGamesMostRecent";
+        private const string CFG_WG_START_DATE = "WebGamesStartDate";
+        private const string CFG_WG_END_DATE = "WebGamesEndDate";
+
+
         public static string StartDirectory = "";
 
         // name of the file in which this configuration is stored.
@@ -338,6 +390,7 @@ namespace ChessForge
         public static List<string> RecentFiles = new List<string>();
 
         private static int MAX_RECENT_FILES = 12;
+
 
         /// <summary>
         /// Returns true if the font size is set to its max allowed value
@@ -474,6 +527,16 @@ namespace ChessForge
                 sb.Append(CFG_SHOW_INTRO_TAB + "=" + (ShowIntroTab ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_GENERIC_PGN_INFO + "=" + (ShowGenericPgnInfo ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES + "=" + (AllowMouseWheelForMoves ? "1" : "0") + Environment.NewLine);
+
+                sb.Append(Environment.NewLine);
+
+                sb.AppendLine(CFG_WG_SITE + "=" + WebGamesSite);
+                sb.AppendLine(CFG_WG_LICHESS_USER + "=" + WebGamesLichessUser);
+                sb.AppendLine(CFG_WG_CHESSCOM_USER + "=" + WebGamesChesscomUser);
+                sb.AppendLine(CFG_WG_MAX_GAMES + "=" + WebGamesMaxCount);
+                sb.AppendLine(CFG_WG_MOST_RECENT + "=" + (WebGamesMostRecent ? "1" : "0"));
+                sb.AppendLine(CFG_WG_START_DATE + "=" + WebGamesStartDate);
+                sb.AppendLine(CFG_WG_END_DATE + "=" + WebGamesEndDate);
 
                 sb.Append(Environment.NewLine);
 
@@ -795,6 +858,27 @@ namespace ChessForge
                         case CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES:
                             AllowMouseWheelForMoves = value != "0" ? true : false;
                             break;
+                        case CFG_WG_SITE:
+                            WebGamesSite = value;
+                            break;
+                        case CFG_WG_LICHESS_USER:
+                            WebGamesLichessUser = value;
+                            break;
+                        case CFG_WG_CHESSCOM_USER:
+                            WebGamesChesscomUser = value;
+                            break;
+                        case CFG_WG_MAX_GAMES:
+                            int.TryParse(value, out WebGamesMaxCount);
+                            break;
+                        case CFG_WG_MOST_RECENT:
+                            WebGamesMostRecent = value != "0" ? true : false;
+                            break;
+                        case CFG_WG_START_DATE:
+                            WebGamesStartDate = GetDate(value);
+                            break;
+                        case CFG_WG_END_DATE:
+                            WebGamesEndDate = GetDate(value);
+                            break;
                         case CFG_MAIN_WINDOW_POS:
                             string[] sizes = value.Split(',');
                             if (sizes.Length == 4)
@@ -813,6 +897,24 @@ namespace ChessForge
                             break;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// If the passed string represents a date, that date will be returned.
+        /// Otherwise it will return null;
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private static DateTime? GetDate(string value)
+        {
+            if (DateTime.TryParse(value, out var date))
+            {
+                return date;
+            }
+            else
+            {
+                return null;
             }
         }
 

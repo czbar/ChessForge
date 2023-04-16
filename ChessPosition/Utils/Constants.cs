@@ -125,6 +125,16 @@ namespace ChessPosition
         public static int OPENING_MAX_MOVE = 15;
 
         /// <summary>
+        /// Name to use for lichess in configuration for selecting a web site
+        /// </summary>
+        public static string LichessNameId = "lichess.org";
+
+        /// <summary>
+        /// Name to use for chess.com in configuration for selecting a web site
+        /// </summary>
+        public static string ChesscomNameId = "chess.com";
+
+        /// <summary>
         /// Character to use as an "expand" symbol in the tree/table views.
         /// </summary>
         public const char CharExpand = '\u229E';

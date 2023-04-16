@@ -59,6 +59,8 @@ Title=Title
 #Workbook title
 WorkbookTitle=Workbook Title
 
+#User
+User=User
 
 #Event
 Event=Event
@@ -89,7 +91,6 @@ Games=Games
 
 #Engine Game
 EngineGame=Engine Game
-
 
 #Exercise 
 Exercise=Exercise
@@ -163,6 +164,12 @@ Confirm=Confirm
 #Item
 Item=Item
 
+#Order No
+OrderNo=No
+
+#ECO
+ECO=ECO
+
 #Game Header
 GameHeader=Game Header
 
@@ -208,6 +215,36 @@ GameExerciseReferences=Game and Exercise References
 #Open a view
 OpenView=Open View
 
+#Account
+Account=Account
+
+#Limits
+Limits=Limits
+
+#Filter
+Filter=Filter
+
+#No more than
+NoMoreThan=No More Than
+
+#Most recent games only
+MostRecentGames=Most Recent Games
+
+#Perform download
+PerformDownload=Download
+
+#Apply date
+ApplyDate=Apply Date
+
+#Start date
+StartDate=Start Date
+
+#End date
+EndDate=End Date
+
+#Web site
+WebSite=Site
+
 ##################################
 #
 # EDITING
@@ -252,6 +289,32 @@ ErrClipboardLinePaste=Error pasting variation from the Clipboard
 ClipboardOperation=Clipboard Operation
 
 
+#No games downloaded
+ErrNoGamesDownloaded=No games have been downloaded
+
+#No games selected
+ErrNoGamesSelected=No games have been selected
+
+#No games were copied
+ErrNoGamesCopied=No games have been copied
+
+#Some games were not copied
+ErrNotAllGamesCopied=Not all games were copied
+
+#Game not found
+ErrGameNotFound=Game not found
+
+#Games not found
+ErrGamesNotFound=Games not found
+
+#Empty game tekst
+ErrEmptyGame=Game text is empty
+
+#User name cannot be empty 
+ErrEmptyUserName=Provide User Name
+
+#Title of the dialog reporting incomplete data
+PromptCorrectData=Incorrect Input Data
 
 #
 # MAIN MENU
@@ -814,6 +877,9 @@ FileError=File Error
 #Error
 Error=Error
 
+#Warning
+Warning=Warning
+
 #Information
 Information=Information
 
@@ -1031,8 +1097,21 @@ SaveWorkbookAs=Save Workbook $0 As ...
 #Save newly crated Workbook into a different file
 SaveNewWorkbookAs=Save New Workbook As ...
 
+
+#Save downloaded games (dialog title)
+SaveDownloadedGames=Save Downloaded Games
+
+#Select option  
+SelectOption=Select Option
+
 #Select Items to create a new Workbook
 SelectItemsforWorkbook=Select Items to create a new Workbook from:
+
+#Select Games
+SelectGames=Select Games
+
+#Downloaded Games
+DownloadedGames=Downloaded Games
 
 #Select Games to Import
 SelectGamesToImport=Select Games to Import:
@@ -1042,6 +1121,9 @@ SelectExercisesToImport=Select Exercises to Import:
 
 #Select Items to create a new Chapter from
 SelectItemsForChapter=Select Items to create a new Chapter from:
+
+#Number of games
+NumberOfGames=Number of Games
 
 #Quiz points
 QuizPoints=Quiz points
@@ -1137,7 +1219,13 @@ NextGame=Next Game
 ImportIntoChapter=Import into Chapter
 
 #Downloading game from lichess
-DownloadingGameFromLichess=Downloading Game From lichess.org. Please wait...
+DownloadingGameFromLichess=Downloading Game from lichess.org. Please wait...
+
+#Downloading from lichess
+DownloadingFromLichess=Downloading from lichess.org. Please wait...
+
+#DownloadGamesFromWeb
+DownloadGamesFromWeb=Download Games from a Web Site
 
 #Please wait
 PleaseWait=Please Wait
@@ -1226,6 +1314,15 @@ CopyGamesNoMerge=Copy Games into the Games section only (leave the study tree em
 
 #Create a separate chapter for each game
 CreateChapterPerGame=Create Chapter per Game
+
+#Append games to the current chapter
+DwnLdAppendToCurrentChapter=Append to the current Chapter
+
+#Create a new chapter for the downloaded games
+DwnLdCreateNewChapter=Create a new Chapter
+
+#Create a new workbook for the downloaded games
+DwnLdCreateNewWorkbook=Create a new Workbook
 
 #New version available from 
 NewVersionAvailable=New version $0 available from

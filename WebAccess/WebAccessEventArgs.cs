@@ -37,6 +37,12 @@ namespace WebAccess
         public LichessOpeningsStats OpeningStats { get; set; }
 
         /// <summary>
+        /// Text received from the server in reponse the query.
+        /// For example, text of downloaded games.
+        /// </summary>
+        public string TextData { get; set; }
+        
+        /// <summary>
         /// A message to pass back to the caller
         /// e.g. the Exception error message.
         /// </summary>

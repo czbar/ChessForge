@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameDownload.cs" />
+    <Compile Include="GamesFilter.cs" />
     <Compile Include="OpeningExplorer.cs" />
     <Compile Include="RestApiRequest.cs" />
     <Compile Include="SourceForgeCheck.cs" />

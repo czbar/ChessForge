@@ -159,6 +159,9 @@
   <data name="WorkbookTitle" xml:space="preserve">
     <value>Tytuł Podręcznika</value>
   </data>
+  <data name="User" xml:space="preserve">
+    <value>Użytkownik</value>
+  </data>
   <data name="Event" xml:space="preserve">
     <value>Miejsce</value>
   </data>
@@ -261,6 +264,12 @@
   <data name="Item" xml:space="preserve">
     <value>Element</value>
   </data>
+  <data name="OrderNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ECO" xml:space="preserve">
+    <value>ECO</value>
+  </data>
   <data name="GameHeader" xml:space="preserve">
     <value>Nagłówek Partii</value>
   </data>
@@ -306,6 +315,36 @@
   <data name="OpenView" xml:space="preserve">
     <value>Otwórz widok</value>
   </data>
+  <data name="Account" xml:space="preserve">
+    <value>Konto</value>
+  </data>
+  <data name="Limits" xml:space="preserve">
+    <value>Ograniczenia</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtr</value>
+  </data>
+  <data name="NoMoreThan" xml:space="preserve">
+    <value>Nie więcej niż</value>
+  </data>
+  <data name="MostRecentGames" xml:space="preserve">
+    <value>Ostatnie partie</value>
+  </data>
+  <data name="PerformDownload" xml:space="preserve">
+    <value>Pobierz</value>
+  </data>
+  <data name="ApplyDate" xml:space="preserve">
+    <value>Zastosuj datę początkową</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Data początkowa</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>Data końcowa</value>
+  </data>
+  <data name="WebSite" xml:space="preserve">
+    <value>Strona</value>
+  </data>
   <data name="FontBold" xml:space="preserve">
     <value>Pogrubienie</value>
   </data>
@@ -335,6 +374,33 @@
   </data>
   <data name="ClipboardOperation" xml:space="preserve">
     <value>Operacja Schowka</value>
+  </data>
+  <data name="ErrNoGamesDownloaded" xml:space="preserve">
+    <value>Nie pobrano żadnych partii</value>
+  </data>
+  <data name="ErrNoGamesSelected" xml:space="preserve">
+    <value>Nie wybrano żadnych partii</value>
+  </data>
+  <data name="ErrNoGamesCopied" xml:space="preserve">
+    <value>Nie skopiowano żadnej partii</value>
+  </data>
+  <data name="ErrNotAllGamesCopied" xml:space="preserve">
+    <value>Nie wszystkie partie zostały skopiowane</value>
+  </data>
+  <data name="ErrGameNotFound" xml:space="preserve">
+    <value>Partii nie znaleziono </value>
+  </data>
+  <data name="ErrGamesNotFound" xml:space="preserve">
+    <value>Partii nie znaleziono</value>
+  </data>
+  <data name="ErrEmptyGame" xml:space="preserve">
+    <value>Pusty zapis partii</value>
+  </data>
+  <data name="ErrEmptyUserName" xml:space="preserve">
+    <value>Brak nazwy użytkownika</value>
+  </data>
+  <data name="PromptCorrectData" xml:space="preserve">
+    <value>Niewłaściwe Dane</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>Plik</value>
@@ -798,6 +864,9 @@
   <data name="Error" xml:space="preserve">
     <value>Błąd</value>
   </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Ostrzeżenie</value>
+  </data>
   <data name="Information" xml:space="preserve">
     <value>Informacja</value>
   </data>
@@ -1002,8 +1071,20 @@
   <data name="SaveNewWorkbookAs" xml:space="preserve">
     <value>Zapisz nowy podręcznik jako ...</value>
   </data>
+  <data name="SaveDownloadedGames" xml:space="preserve">
+    <value>Zapisz Pobrane Partie</value>
+  </data>
+  <data name="SelectOption" xml:space="preserve">
+    <value>Wybierz Opcję</value>
+  </data>
   <data name="SelectItemsforWorkbook" xml:space="preserve">
     <value>Wybierz elementy do utworzenia nowego Podręcznika:</value>
+  </data>
+  <data name="SelectGames" xml:space="preserve">
+    <value>Wybierz Partie</value>
+  </data>
+  <data name="DownloadedGames" xml:space="preserve">
+    <value>Pobrane Partie</value>
   </data>
   <data name="SelectGamesToImport" xml:space="preserve">
     <value>Wybierz Partie do Importu:</value>
@@ -1013,6 +1094,9 @@
   </data>
   <data name="SelectItemsForChapter" xml:space="preserve">
     <value>Wybierz elementy do utworzenia nowego Rozdziału:</value>
+  </data>
+  <data name="NumberOfGames" xml:space="preserve">
+    <value>Liczba partii</value>
   </data>
   <data name="QuizPoints" xml:space="preserve">
     <value>Punktacja do Quizu</value>
@@ -1110,6 +1194,12 @@
   <data name="DownloadingGameFromLichess" xml:space="preserve">
     <value>Trwa ściąganie partii z lichess. Proszę czekać...</value>
   </data>
+  <data name="DownloadingFromLichess" xml:space="preserve">
+    <value>Trwa pobieranie partii z lichess. Proszę czekać...</value>
+  </data>
+  <data name="DownloadGamesFromWeb" xml:space="preserve">
+    <value>Pobierz partie z Internetu</value>
+  </data>
   <data name="PleaseWait" xml:space="preserve">
     <value>Proszę czekać!</value>
   </data>
@@ -1196,6 +1286,15 @@
   </data>
   <data name="CreateChapterPerGame" xml:space="preserve">
     <value>Utwórz Rozdział do Każdej Partii</value>
+  </data>
+  <data name="DwnLdAppendToCurrentChapter" xml:space="preserve">
+    <value>Dodaj do obecnego rozdziału</value>
+  </data>
+  <data name="DwnLdCreateNewChapter" xml:space="preserve">
+    <value>Utwórz nowy rozdział</value>
+  </data>
+  <data name="DwnLdCreateNewWorkbook" xml:space="preserve">
+    <value>Utwórz nowy podręcznik</value>
   </data>
   <data name="NewVersionAvailable" xml:space="preserve">
     <value>Dostępna nowa wersja $0</value>

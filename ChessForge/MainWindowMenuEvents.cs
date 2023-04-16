@@ -21,6 +21,54 @@ namespace ChessForge
 {
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Handles creation of a new Workbook
+        /// </summary>
+        /// <returns></returns>
+        public bool CreateNewWorkbook()
+        {
+            if (!WorkbookManager.AskToCloseWorkbook())
+            {
+                return false;
+            }
+
+            // prepare document
+            AppState.RestartInIdleMode(false);
+            WorkbookManager.CreateNewWorkbook();
+
+            // TODO: this call looks unnecessary as SetupGuiForNewSession() below creates this view again.
+            _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
+
+            // ask for the options
+            if (!ShowWorkbookOptionsDialog(false))
+            {
+                // user abandoned
+                return false;
+            }
+
+            if (!WorkbookManager.SaveWorkbookToNewFile(null))
+            {
+                AppState.RestartInIdleMode(false);
+                return false;
+            }
+
+            BoardCommentBox.ShowTabHints();
+
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
+
+            SetupGuiForNewSession(AppState.WorkbookFilePath, true);
+
+            AppState.SetupGuiForCurrentStates();
+            //StudyTree.CreateNew();
+            _studyTreeView.BuildFlowDocumentForVariationTree();
+            UiTabStudyTree.Focus();
+
+            int startingNode = 0;
+            string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(startingNode);
+            SetActiveLine(startLineId, startingNode);
+
+            return true;
+        }
 
         //**********************
         //
@@ -480,47 +528,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnNewWorkbook_Click(object sender, RoutedEventArgs e)
         {
-            if (!WorkbookManager.AskToCloseWorkbook())
-            {
-                return;
-            }
-
-            // prepare document
-            AppState.RestartInIdleMode(false);
-            WorkbookManager.CreateNewWorkbook();
-
-            // TODO: this call looks unnecessary as SetupGuiForNewSession() below creates this view again.
-            _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
-
-            // ask for the options
-            if (!ShowWorkbookOptionsDialog(false))
-            {
-                // user abandoned
-                return;
-            }
-
-            if (!WorkbookManager.SaveWorkbookToNewFile(null))
-            {
-                AppState.RestartInIdleMode(false);
-                return;
-            }
-
-            BoardCommentBox.ShowTabHints();
-
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-
-            SetupGuiForNewSession(AppState.WorkbookFilePath, true);
-
-            AppState.SetupGuiForCurrentStates();
-            //StudyTree.CreateNew();
-            _studyTreeView.BuildFlowDocumentForVariationTree();
-            UiTabStudyTree.Focus();
-
-            int startingNode = 0;
-            string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(startingNode);
-            SetActiveLine(startLineId, startingNode);
+            CreateNewWorkbook();
         }
-
 
         //**********************
         //
@@ -903,6 +912,13 @@ namespace ChessForge
             }
         }
 
+        public void FocusOnChapterView()
+        {
+            UiTabChapters.Focus();
+            AppState.DoEvents();
+            _chaptersView.BringChapterIntoView(WorkbookManager.SessionWorkbook.ActiveChapterIndex);
+        }
+
         /// <summary>
         /// Lets the user select games exercises from which to create a new Chapter.
         /// </summary>
@@ -957,8 +973,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="games"></param>
-        public void CopySelectedItemsToChapter(Chapter chapter, bool copyGames, out string error, ObservableCollection<GameData> games)
+        public int CopySelectedItemsToChapter(Chapter chapter, bool copyGames, out string error, ObservableCollection<GameData> games)
         {
+            int copiedCount = 0; 
             error = string.Empty;
 
             foreach (GameData gd in games)
@@ -967,15 +984,23 @@ namespace ChessForge
                 {
                     if (gd.GetContentType() == GameData.ContentType.EXERCISE)
                     {
-                        chapter.AddArticle(gd, GameData.ContentType.EXERCISE, out error, GameData.ContentType.EXERCISE);
+                        if (chapter.AddArticle(gd, GameData.ContentType.EXERCISE, out error, GameData.ContentType.EXERCISE) >= 0)
+                        {
+                            copiedCount++;
+                        }
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
                     }
                     else if (copyGames && (gd.GetContentType() == GameData.ContentType.GENERIC || gd.GetContentType() == GameData.ContentType.MODEL_GAME))
                     {
-                        chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, out error, GameData.ContentType.MODEL_GAME);
+                        if (chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, out error, GameData.ContentType.MODEL_GAME) >= 0)
+                        {
+                            copiedCount++;
+                        }
                     }
                 }
             }
+
+            return copiedCount;
         }
 
         /// <summary>
@@ -1699,6 +1724,7 @@ namespace ChessForge
             tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, header.GetBlackPlayer(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_RESULT, header.GetResult(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, header.GetEventName(out _));
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_ECO, header.GetECO(out _));
             if (overrideGuid)
             {
                 tree.Header.SetHeaderValue(PgnHeaders.KEY_GUID, header.GetGuid(out _));
@@ -1933,7 +1959,7 @@ namespace ChessForge
         /// <param name="contentType"></param>
         /// <param name="games"></param>
         /// <returns></returns>
-        private bool ShowSelectGamesDialog(GameData.ContentType contentType, ref ObservableCollection<GameData> games)
+        public bool ShowSelectGamesDialog(GameData.ContentType contentType, ref ObservableCollection<GameData> games)
         {
             SelectGamesDialog.Mode mode = SelectGamesDialog.Mode.IMPORT_GAMES;
             if (contentType == GameData.ContentType.EXERCISE)
@@ -2205,6 +2231,18 @@ namespace ChessForge
 
                 ActiveTreeView.BuildFlowDocumentForVariationTree();
             }
+        }
+
+        /// <summary>
+        /// Opens the dialog for importing games from the Web
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnDownloadWebGames_Click(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+
+            DownloadWebGamesManager.DownloadGames();
         }
 
         /// <summary>

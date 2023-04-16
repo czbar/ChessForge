@@ -159,6 +159,9 @@
   <data name="WorkbookTitle" xml:space="preserve">
     <value>Workbook Title</value>
   </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
   <data name="Event" xml:space="preserve">
     <value>Event</value>
   </data>
@@ -261,6 +264,12 @@
   <data name="Item" xml:space="preserve">
     <value>Item</value>
   </data>
+  <data name="OrderNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ECO" xml:space="preserve">
+    <value>ECO</value>
+  </data>
   <data name="GameHeader" xml:space="preserve">
     <value>Game Header</value>
   </data>
@@ -306,6 +315,36 @@
   <data name="OpenView" xml:space="preserve">
     <value>Open View</value>
   </data>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Limits" xml:space="preserve">
+    <value>Limits</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="NoMoreThan" xml:space="preserve">
+    <value>No More Than</value>
+  </data>
+  <data name="MostRecentGames" xml:space="preserve">
+    <value>Most Recent Games</value>
+  </data>
+  <data name="PerformDownload" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="ApplyDate" xml:space="preserve">
+    <value>Apply Date</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="WebSite" xml:space="preserve">
+    <value>Site</value>
+  </data>
   <data name="FontBold" xml:space="preserve">
     <value>Bold</value>
   </data>
@@ -335,6 +374,33 @@
   </data>
   <data name="ClipboardOperation" xml:space="preserve">
     <value>Clipboard Operation</value>
+  </data>
+  <data name="ErrNoGamesDownloaded" xml:space="preserve">
+    <value>No games have been downloaded</value>
+  </data>
+  <data name="ErrNoGamesSelected" xml:space="preserve">
+    <value>No games have been selected</value>
+  </data>
+  <data name="ErrNoGamesCopied" xml:space="preserve">
+    <value>No games have been copied</value>
+  </data>
+  <data name="ErrNotAllGamesCopied" xml:space="preserve">
+    <value>Not all games were copied</value>
+  </data>
+  <data name="ErrGameNotFound" xml:space="preserve">
+    <value>Game not found</value>
+  </data>
+  <data name="ErrGamesNotFound" xml:space="preserve">
+    <value>Games not found</value>
+  </data>
+  <data name="ErrEmptyGame" xml:space="preserve">
+    <value>Game text is empty</value>
+  </data>
+  <data name="ErrEmptyUserName" xml:space="preserve">
+    <value>Provide User Name</value>
+  </data>
+  <data name="PromptCorrectData" xml:space="preserve">
+    <value>Incorrect Input Data</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>File</value>
@@ -798,6 +864,9 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="Information" xml:space="preserve">
     <value>Information</value>
   </data>
@@ -1003,8 +1072,20 @@
   <data name="SaveNewWorkbookAs" xml:space="preserve">
     <value>Save New Workbook As ...</value>
   </data>
+  <data name="SaveDownloadedGames" xml:space="preserve">
+    <value>Save Downloaded Games</value>
+  </data>
+  <data name="SelectOption" xml:space="preserve">
+    <value>Select Option</value>
+  </data>
   <data name="SelectItemsforWorkbook" xml:space="preserve">
     <value>Select Items to create a new Workbook from:</value>
+  </data>
+  <data name="SelectGames" xml:space="preserve">
+    <value>Select Games</value>
+  </data>
+  <data name="DownloadedGames" xml:space="preserve">
+    <value>Downloaded Games</value>
   </data>
   <data name="SelectGamesToImport" xml:space="preserve">
     <value>Select Games to Import:</value>
@@ -1014,6 +1095,9 @@
   </data>
   <data name="SelectItemsForChapter" xml:space="preserve">
     <value>Select Items to create a new Chapter from:</value>
+  </data>
+  <data name="NumberOfGames" xml:space="preserve">
+    <value>Number of Games</value>
   </data>
   <data name="QuizPoints" xml:space="preserve">
     <value>Quiz points</value>
@@ -1109,7 +1193,13 @@
     <value>Import into Chapter</value>
   </data>
   <data name="DownloadingGameFromLichess" xml:space="preserve">
-    <value>Downloading Game From lichess.org. Please wait...</value>
+    <value>Downloading Game from lichess.org. Please wait...</value>
+  </data>
+  <data name="DownloadingFromLichess" xml:space="preserve">
+    <value>Downloading from lichess.org. Please wait...</value>
+  </data>
+  <data name="DownloadGamesFromWeb" xml:space="preserve">
+    <value>Download Games from a Web Site</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
     <value>Please Wait</value>
@@ -1197,6 +1287,15 @@
   </data>
   <data name="CreateChapterPerGame" xml:space="preserve">
     <value>Create Chapter per Game</value>
+  </data>
+  <data name="DwnLdAppendToCurrentChapter" xml:space="preserve">
+    <value>Append to the current Chapter</value>
+  </data>
+  <data name="DwnLdCreateNewChapter" xml:space="preserve">
+    <value>Create a new Chapter</value>
+  </data>
+  <data name="DwnLdCreateNewWorkbook" xml:space="preserve">
+    <value>Create a new Workbook</value>
   </data>
   <data name="NewVersionAvailable" xml:space="preserve">
     <value>New version $0 available from</value>

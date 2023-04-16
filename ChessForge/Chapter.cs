@@ -565,7 +565,7 @@ namespace ChessForge
 
         /// <summary>
         /// Adds a new game to this chapter.
-        /// The caller must handle exceptions.
+        /// The caller must handle errors if returned index is -1.
         /// </summary>
         /// <param name="gm"></param>
         public int AddArticle(GameData gm, GameData.ContentType typ, out string errorText, GameData.ContentType targetcontentType = GameData.ContentType.GENERIC)
@@ -577,52 +577,53 @@ namespace ChessForge
             try
             {
                 PgnGameParser pp = new PgnGameParser(gm.GameText, article.Tree, gm.Header.GetFenString());
+
+                article.Tree.Header = gm.Header.CloneMe(true);
+
+                if (typ == GameData.ContentType.GENERIC)
+                {
+                    typ = gm.GetContentType();
+                }
+                article.Tree.ContentType = typ;
+
+                switch (typ)
+                {
+                    case GameData.ContentType.STUDY_TREE:
+                        StudyTree = article;
+                        break;
+                    case GameData.ContentType.INTRO:
+                        Intro = article;
+                        break;
+                    case GameData.ContentType.MODEL_GAME:
+                        if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.MODEL_GAME)
+                        {
+                            ModelGames.Add(article);
+                            index = ModelGames.Count - 1;
+                        }
+                        else
+                        {
+                            index = -1;
+                        }
+                        break;
+                    case GameData.ContentType.EXERCISE:
+                        if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.EXERCISE)
+                        {
+                            TreeUtils.RestartMoveNumbering(article.Tree);
+                            Exercises.Add(article);
+                            index = Exercises.Count - 1;
+                        }
+                        else
+                        {
+                            index = -1;
+                        }
+                        break;
+                }
             }
             catch (Exception ex)
             {
                 errorText = ex.Message;
                 AppLog.Message("AddArticle()", ex);
-            }
-
-            article.Tree.Header = gm.Header.CloneMe(true);
-
-            if (typ == GameData.ContentType.GENERIC)
-            {
-                typ = gm.GetContentType();
-            }
-            article.Tree.ContentType = typ;
-
-            switch (typ)
-            {
-                case GameData.ContentType.STUDY_TREE:
-                    StudyTree = article;
-                    break;
-                case GameData.ContentType.INTRO:
-                    Intro = article;
-                    break;
-                case GameData.ContentType.MODEL_GAME:
-                    if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.MODEL_GAME)
-                    {
-                        ModelGames.Add(article);
-                        index = ModelGames.Count - 1;
-                    }
-                    else
-                    {
-                        index = -1;
-                    }
-                    break;
-                case GameData.ContentType.EXERCISE:
-                    if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.EXERCISE)
-                    {
-                        TreeUtils.RestartMoveNumbering(article.Tree);
-                        Exercises.Add(article);
-                        index = Exercises.Count - 1;
-                    }
-                    else
-                    {
-                        index = -1;
-                    }
-                    break;
+                index = -1;
             }
 
             return index;

@@ -118,6 +118,10 @@
     <Compile Include="DiagramSetupDialog.xaml.cs">
       <DependentUpon>DiagramSetupDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DownloadedGamesActionDialog.xaml.cs">
+      <DependentUpon>DownloadedGamesActionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DownloadWebGamesManager.cs" />
     <Compile Include="EvaluationActiveLine.cs" />
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
@@ -132,6 +136,9 @@
     </Compile>
     <Compile Include="IdenticalPositionsExDialog.xaml.cs">
       <DependentUpon>IdenticalPositionsExDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DownloadWebGamesDialog.xaml.cs">
+      <DependentUpon>DownloadWebGamesDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="IntroMoveDialog.xaml.cs">
       <DependentUpon>IntroMoveDialog.xaml</DependentUpon>
@@ -275,6 +282,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DownloadedGamesActionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GameHeaderDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -284,6 +295,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="IdenticalPositionsExDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DownloadWebGamesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
