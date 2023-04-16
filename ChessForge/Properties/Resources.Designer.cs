@@ -1654,11 +1654,38 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No games have been copied.
+        /// </summary>
+        public static string ErrNoGamesCopied {
+            get {
+                return ResourceManager.GetString("ErrNoGamesCopied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No games have been downloaded.
         /// </summary>
         public static string ErrNoGamesDownloaded {
             get {
                 return ResourceManager.GetString("ErrNoGamesDownloaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No games have been selected.
+        /// </summary>
+        public static string ErrNoGamesSelected {
+            get {
+                return ResourceManager.GetString("ErrNoGamesSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not all games were copied.
+        /// </summary>
+        public static string ErrNotAllGamesCopied {
+            get {
+                return ResourceManager.GetString("ErrNotAllGamesCopied", resourceCulture);
             }
         }
         
@@ -4585,6 +4612,15 @@ namespace ChessForge.Properties {
         public static string WaitForResponse {
             get {
                 return ResourceManager.GetString("WaitForResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
             }
         }
         

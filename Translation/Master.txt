@@ -292,6 +292,15 @@ ClipboardOperation=Clipboard Operation
 #No games downloaded
 ErrNoGamesDownloaded=No games have been downloaded
 
+#No games selected
+ErrNoGamesSelected=No games have been selected
+
+#No games were copied
+ErrNoGamesCopied=No games have been copied
+
+#Some games were not copied
+ErrNotAllGamesCopied=Not all games were copied
+
 #Game not found
 ErrGameNotFound=Game not found
 
@@ -867,6 +876,9 @@ FileError=File Error
 
 #Error
 Error=Error
+
+#Warning
+Warning=Warning
 
 #Information
 Information=Information

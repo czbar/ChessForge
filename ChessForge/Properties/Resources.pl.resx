@@ -378,6 +378,15 @@
   <data name="ErrNoGamesDownloaded" xml:space="preserve">
     <value>Nie pobrano żadnych partii</value>
   </data>
+  <data name="ErrNoGamesSelected" xml:space="preserve">
+    <value>Nie wybrano żadnych partii</value>
+  </data>
+  <data name="ErrNoGamesCopied" xml:space="preserve">
+    <value>Nie skopiowano żadnej partii</value>
+  </data>
+  <data name="ErrNotAllGamesCopied" xml:space="preserve">
+    <value>Nie wszystkie partie zostały skopiowane</value>
+  </data>
   <data name="ErrGameNotFound" xml:space="preserve">
     <value>Partii nie znaleziono </value>
   </data>
@@ -854,6 +863,9 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Błąd</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Ostrzeżenie</value>
   </data>
   <data name="Information" xml:space="preserve">
     <value>Informacja</value>

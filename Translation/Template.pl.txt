@@ -379,6 +379,18 @@ ClipboardOperation=Operacja Schowka
 #english: ErrNoGamesDownloaded=No games have been downloaded
 ErrNoGamesDownloaded=Nie pobrano żadnych partii
 
+#description: No games selected
+#english: ErrNoGamesSelected=No games have been selected
+ErrNoGamesSelected=Nie wybrano żadnych partii
+
+#description: No games were copied
+#english: ErrNoGamesCopied=No games have been copied
+ErrNoGamesCopied=Nie skopiowano żadnej partii
+
+#description: Some games were not copied
+#english: ErrNotAllGamesCopied=Not all games were copied
+ErrNotAllGamesCopied=Nie wszystkie partie zostały skopiowane
+
 #description: Game not found
 #english: ErrGameNotFound=Game not found
 ErrGameNotFound=Partii nie znaleziono 
@@ -1113,6 +1125,10 @@ FileError=Błąd w Pliku
 #description: Error
 #english: Error=Error
 Error=Błąd
+
+#description: Warning
+#english: Warning=Warning
+Warning=Ostrzeżenie
 
 #description: Information
 #english: Information=Information

@@ -378,6 +378,15 @@
   <data name="ErrNoGamesDownloaded" xml:space="preserve">
     <value>No games have been downloaded</value>
   </data>
+  <data name="ErrNoGamesSelected" xml:space="preserve">
+    <value>No games have been selected</value>
+  </data>
+  <data name="ErrNoGamesCopied" xml:space="preserve">
+    <value>No games have been copied</value>
+  </data>
+  <data name="ErrNotAllGamesCopied" xml:space="preserve">
+    <value>Not all games were copied</value>
+  </data>
   <data name="ErrGameNotFound" xml:space="preserve">
     <value>Game not found</value>
   </data>
@@ -854,6 +863,9 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="Information" xml:space="preserve">
     <value>Information</value>
