@@ -5,13 +5,11 @@ using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ChessPosition;
 using GameTree;
-using static System.Net.Mime.MediaTypeNames;
 using static System.Net.WebRequestMethods;
 
 namespace WebAccess
@@ -68,6 +66,11 @@ namespace WebAccess
             }
         }
 
+        /// <summary>
+        /// Reads games from monthly archives.
+        /// </summary>
+        /// <param name="lstYearMonths"></param>
+        /// <param name="filter"></param>
         private async static void ReadGamesFromArchives(List<uint> lstYearMonths, GamesFilter filter)
         {
             int totalGames = 0;
@@ -92,10 +95,85 @@ namespace WebAccess
 
                 ObservableCollection<GameData> games = new ObservableCollection<GameData>();
                 totalGames += PgnMultiGameParser.ParsePgnMultiGameText(text, ref games);
-                if (totalGames >= filter.MaxGames || totalGames == 0)
+                if (totalGames >= filter.MaxGames && filter.MaxGames != 0)
                 {
+                    // sort games from earliest to latest
+                    List<GameData> lstGames = SortGamesByDateTime(games);
+                    lstGames.RemoveRange(0, totalGames - filter.MaxGames);
                     break;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Sorts games by date/time found in the headers
+        /// </summary>
+        /// <param name="games"></param>
+        /// <returns></returns>
+        private static List<GameData> SortGamesByDateTime(ObservableCollection<GameData> games)
+        {
+            List<GameData> lstGames = new List<GameData>(games);
+            lstGames.Sort(CompareGamesByDateTime);
+            return lstGames;
+        }
+
+        /// <summary>
+        /// Compares games by date/time found in the headers
+        /// </summary>
+        /// <param name="game1"></param>
+        /// <param name="game2"></param>
+        /// <returns></returns>
+        private static int CompareGamesByDateTime(GameData game1, GameData game2)
+        {
+            DateTime? dt1 = GetDateTimeFromGameData(game1);
+            DateTime? dt2 = GetDateTimeFromGameData(game2);
+
+            if (dt1.HasValue && dt2.HasValue)
+            {
+                return (DateTime.Compare(dt1.Value, dt2.Value));
+            }
+            else
+            {
+                if (!dt1.HasValue && !dt2.HasValue)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return dt1.HasValue ? 1 : -1;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Makes best effort to find date/time for the passed game.
+        /// </summary>
+        /// <param name="game"></param>
+        /// <returns></returns>
+        private static DateTime? GetDateTimeFromGameData(GameData game)
+        {
+            string date = game.Header.GetHeaderValue(PgnHeaders.KEY_UTC_DATE);
+            string time = game.Header.GetHeaderValue(PgnHeaders.KEY_UTC_TIME);
+            if (string.IsNullOrEmpty(date))
+            {
+                date = game.Header.GetDate(out _);
+            }
+
+            if (!string.IsNullOrEmpty(time))
+            {
+                date += " " + time;
+            }
+
+            DateTime dt;
+            bool res = DateTime.TryParse(date, out dt);
+
+            if (res)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -200,11 +278,23 @@ namespace WebAccess
             return url;
         }
 
+        /// <summary>
+        /// Encodes year+month into an uint
+        /// </summary>
+        /// <param name="year"></param>
+        /// <param name="month"></param>
+        /// <returns></returns>
         private static uint EncodeYearMonth(uint year, uint month)
         {
             return year << 4 | month;
         }
 
+        /// <summary>
+        /// Decodes year and month from an uint
+        /// </summary>
+        /// <param name="encoded"></param>
+        /// <param name="year"></param>
+        /// <param name="month"></param>
         private static void DecodeYearMonth(uint encoded, out uint year, out uint month)
         {
             month = encoded & 0x0F;
