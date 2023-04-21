@@ -1224,8 +1224,11 @@ ImportIntoChapter=Import into Chapter
 #Downloading game from lichess
 DownloadingGameFromLichess=Downloading Game from lichess.org. Please wait...
 
-#Downloading from lichess
+#Downloading games from lichess
 DownloadingFromLichess=Downloading from lichess.org. Please wait...
+
+#Downloading games from Chesscom
+DownloadingFromChesscom=Downloading from chess.com. Please wait...
 
 #DownloadGamesFromWeb
 DownloadGamesFromWeb=Download Games from a Web Site

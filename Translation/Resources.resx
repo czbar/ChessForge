@@ -1201,6 +1201,9 @@
   <data name="DownloadingFromLichess" xml:space="preserve">
     <value>Downloading from lichess.org. Please wait...</value>
   </data>
+  <data name="DownloadingFromChesscom" xml:space="preserve">
+    <value>Downloading from chess.com. Please wait...</value>
+  </data>
   <data name="DownloadGamesFromWeb" xml:space="preserve">
     <value>Download Games from a Web Site</value>
   </data>

@@ -1195,10 +1195,13 @@
     <value>Importuj Partię</value>
   </data>
   <data name="DownloadingGameFromLichess" xml:space="preserve">
-    <value>Trwa ściąganie partii z lichess. Proszę czekać...</value>
+    <value>Trwa pobieranie partii z lichess. Proszę czekać...</value>
   </data>
   <data name="DownloadingFromLichess" xml:space="preserve">
     <value>Trwa pobieranie partii z lichess. Proszę czekać...</value>
+  </data>
+  <data name="DownloadingFromChesscom" xml:space="preserve">
+    <value>Trwa pobieranie partii z chess.com. Proszę czekać...</value>
   </data>
   <data name="DownloadGamesFromWeb" xml:space="preserve">
     <value>Pobierz partie z Internetu</value>
