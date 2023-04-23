@@ -1321,6 +1321,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloading from chess.com. Please wait....
+        /// </summary>
+        public static string DownloadingFromChesscom {
+            get {
+                return ResourceManager.GetString("DownloadingFromChesscom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Downloading from lichess.org. Please wait....
         /// </summary>
         public static string DownloadingFromLichess {
@@ -2829,6 +2838,15 @@ namespace ChessForge.Properties {
         public static string MsgConfirmDeleteSubtree {
             get {
                 return ResourceManager.GetString("MsgConfirmDeleteSubtree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Strip all comments in this view? .
+        /// </summary>
+        public static string MsgConfirmStripComments {
+            get {
+                return ResourceManager.GetString("MsgConfirmStripComments", resourceCulture);
             }
         }
         

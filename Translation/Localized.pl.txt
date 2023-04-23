@@ -1178,6 +1178,10 @@ MsgSelectNodeToInserAt=Zaznacz pozycję gdzie wkleić ruchy.
 #english: MsgConfirmDeleteSubtree=Delete the selected move and all moves that follow? 
 MsgConfirmDeleteSubtree=Usunąć zaznaczony ruch i wszystkie dalsze posunięcia? 
 
+#description: Confirm stripping comments
+#english: MsgConfirmStripComments=Strip all comments in this view? 
+MsgConfirmStripComments=Usunąć wszystkie komentarze w tym widoku? 
+
 #description: Copy Paste error
 #english: MbtTitleCopyPasteError=Copy/Paste Error
 MbtTitleCopyPasteError=Błąd w Kopiuj/Wklej
@@ -1578,7 +1582,7 @@ ImportIntoChapter=Importuj Partię
 
 #description: Downloading game from lichess
 #english: DownloadingGameFromLichess=Downloading Game from lichess.org. Please wait...
-DownloadingGameFromLichess=Trwa ściąganie partii z lichess. Proszę czekać...
+DownloadingGameFromLichess=Trwa pobieranie partii z lichess. Proszę czekać...
 
 #description: Downloading from lichess
 #english: DownloadingFromLichess=Downloading from lichess.org. Please wait...
@@ -2288,3 +2292,4 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
+DownloadingFromChesscom=Trwa pobieranie partii z chess.com. Proszę czekać...

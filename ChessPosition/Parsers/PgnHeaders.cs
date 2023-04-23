@@ -105,6 +105,16 @@ namespace GameTree
         public const string KEY_DATE = "Date";
 
         /// <summary>
+        /// UTCDate
+        /// </summary>
+        public const string KEY_UTC_DATE = "UTCDate";
+
+        /// <summary>
+        /// UTCDate
+        /// </summary>
+        public const string KEY_UTC_TIME = "UTCTime";
+
+        /// <summary>
         /// Store White's name in model games 
         /// and dummy values in non-game Variation Trees
         /// to keep some PGN viewers happy.

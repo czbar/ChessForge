@@ -903,6 +903,9 @@
   <data name="MsgConfirmDeleteSubtree" xml:space="preserve">
     <value>Usunąć zaznaczony ruch i wszystkie dalsze posunięcia? </value>
   </data>
+  <data name="MsgConfirmStripComments" xml:space="preserve">
+    <value>Usunąć wszystkie komentarze w tym widoku? </value>
+  </data>
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Błąd w Kopiuj/Wklej</value>
   </data>
@@ -1192,10 +1195,13 @@
     <value>Importuj Partię</value>
   </data>
   <data name="DownloadingGameFromLichess" xml:space="preserve">
-    <value>Trwa ściąganie partii z lichess. Proszę czekać...</value>
+    <value>Trwa pobieranie partii z lichess. Proszę czekać...</value>
   </data>
   <data name="DownloadingFromLichess" xml:space="preserve">
     <value>Trwa pobieranie partii z lichess. Proszę czekać...</value>
+  </data>
+  <data name="DownloadingFromChesscom" xml:space="preserve">
+    <value>Trwa pobieranie partii z chess.com. Proszę czekać...</value>
   </data>
   <data name="DownloadGamesFromWeb" xml:space="preserve">
     <value>Pobierz partie z Internetu</value>

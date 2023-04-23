@@ -29,7 +29,8 @@ namespace ChessForge
         public DownloadWebGamesDialog()
         {
             InitializeComponent();
-            GameDownload.UserGamesReceived += UserGamesReceived;
+            LichessUserGames.UserGamesReceived += UserGamesReceived;
+            ChesscomUserGames.UserGamesReceived += UserGamesReceived;
             EnableControls(false);
 
             SetControlValues();
@@ -70,8 +71,26 @@ namespace ChessForge
                         {
                             throw new Exception(Properties.Resources.ErrGameNotFound);
                         }
-                        Games = new ObservableCollection<GameData>();
-                        int gamesCount = PgnMultiGameParser.ParsePgnMultiGameText(e.TextData, ref Games);
+
+                        var lstGames = e.GameData;
+                        int gamesCount = lstGames.Count;
+
+                        // sort games from earliest to latest
+                        lstGames = GameUtils.SortGamesByDateTime(lstGames);
+
+                        if (gamesCount >= e.GamesFilter.MaxGames && e.GamesFilter.MaxGames != 0)
+                        {
+                            if (e.GamesFilter.StartDate.HasValue)
+                            {
+                                lstGames.RemoveRange(e.GamesFilter.MaxGames, lstGames.Count - e.GamesFilter.MaxGames);
+                            }
+                            else
+                            {
+                                lstGames.RemoveRange(0, gamesCount - e.GamesFilter.MaxGames);
+                            }
+                        }
+
+                        Games = new ObservableCollection<GameData>(lstGames);
                         if (SelectGames(ref Games))
                         {
                             DialogResult = true;
@@ -81,6 +100,7 @@ namespace ChessForge
                 }
                 else
                 {
+                    MessageBox.Show(Properties.Resources.GameDownloadError + ": " + e.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
@@ -152,6 +172,17 @@ namespace ChessForge
         private void EnableControls(bool isDownloading)
         {
             UiLblLoading.Visibility = isDownloading ? Visibility.Visible : Visibility.Collapsed;
+            if (isDownloading)
+            {
+                if (IsChesscomDownload())
+                {
+                    UiLblLoading.Content = Properties.Resources.DownloadingFromChesscom;
+                }
+                else
+                {
+                    UiLblLoading.Content = Properties.Resources.DownloadingFromLichess;
+                }
+            }
 
             UiBtnDownload.IsEnabled = !isDownloading;
             UiCbOnlyNew.IsEnabled = !isDownloading;
@@ -184,17 +215,33 @@ namespace ChessForge
 
                 int gameCount;
                 int.TryParse(UiTbMaxGames.Text, out gameCount);
-                if (gameCount <= 0)
+                if (gameCount <= 0 || gameCount > DownloadWebGamesManager.MAX_DOWNLOAD_GAME_COUNT)
                 {
-                    gameCount = WebAccess.GameDownload.DEFAULT_DOWNLOAD_GAME_COUNT;
+                    gameCount = DownloadWebGamesManager.MAX_DOWNLOAD_GAME_COUNT;
                 }
                 filter.MaxGames = gameCount;
 
                 filter.StartDate = UiDtStartDate.SelectedDate;
                 filter.EndDate = UiDtEndDate.SelectedDate;
 
-                _ = WebAccess.GameDownload.GetLichessUserGames(filter);
+                if (IsChesscomDownload())
+                {
+                    _ = WebAccess.ChesscomUserGames.GetChesscomUserGames(filter);
+                }
+                else
+                {
+                    _ = WebAccess.LichessUserGames.GetLichessUserGames(filter);
+                }
             }
+        }
+
+        /// <summary>
+        /// Checks the Site combobox selection to determine which site we are downloading from.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsChesscomDownload()
+        {
+            return (string)UiCmbSite.SelectedItem == Constants.ChesscomNameId;
         }
 
         /// <summary>
@@ -311,7 +358,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            GameDownload.UserGamesReceived -= UserGamesReceived;
+            LichessUserGames.UserGamesReceived -= UserGamesReceived;
         }
     }
 }

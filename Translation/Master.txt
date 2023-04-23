@@ -916,6 +916,9 @@ MsgSelectNodeToInserAt=Select position to paste the moves at.
 #Confirm deleting remaining moves
 MsgConfirmDeleteSubtree=Delete the selected move and all moves that follow? 
 
+#Confirm stripping comments
+MsgConfirmStripComments=Strip all comments in this view? 
+
 #Copy Paste error
 MbtTitleCopyPasteError=Copy/Paste Error
 
@@ -1221,8 +1224,11 @@ ImportIntoChapter=Import into Chapter
 #Downloading game from lichess
 DownloadingGameFromLichess=Downloading Game from lichess.org. Please wait...
 
-#Downloading from lichess
+#Downloading games from lichess
 DownloadingFromLichess=Downloading from lichess.org. Please wait...
+
+#Downloading games from Chesscom
+DownloadingFromChesscom=Downloading from chess.com. Please wait...
 
 #DownloadGamesFromWeb
 DownloadGamesFromWeb=Download Games from a Web Site

@@ -20,7 +20,7 @@
         </GroupBox>
         <Button x:Name="UiBtnOk" IsDefault="True" Content="Ok" HorizontalAlignment="Center" Margin="-220,189,0,0" Width="100" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="Cancel" HorizontalAlignment="Center" Margin="0,189,0,0" Width="100" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnHelp" Content="Help" HorizontalAlignment="Center" Margin="220,189,0,0" Width="100" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnHelp" Content="Help" HorizontalAlignment="Center" Margin="220,189,0,0" Width="100" VerticalAlignment="Top" Click="UiBtnHelp_Click"/>
 
     </Grid>
 </Window>

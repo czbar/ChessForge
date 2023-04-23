@@ -1178,6 +1178,10 @@ MsgSelectNodeToInserAt=
 #english: MsgConfirmDeleteSubtree=Delete the selected move and all moves that follow? 
 MsgConfirmDeleteSubtree=
 
+#description: Confirm stripping comments
+#english: MsgConfirmStripComments=Strip all comments in this view? 
+MsgConfirmStripComments=
+
 #description: Copy Paste error
 #english: MbtTitleCopyPasteError=Copy/Paste Error
 MbtTitleCopyPasteError=
@@ -1580,9 +1584,13 @@ ImportIntoChapter=
 #english: DownloadingGameFromLichess=Downloading Game from lichess.org. Please wait...
 DownloadingGameFromLichess=
 
-#description: Downloading from lichess
+#description: Downloading games from lichess
 #english: DownloadingFromLichess=Downloading from lichess.org. Please wait...
 DownloadingFromLichess=
+
+#description: Downloading games from Chesscom
+#english: DownloadingFromChesscom=Downloading from chess.com. Please wait...
+DownloadingFromChesscom=
 
 #description: DownloadGamesFromWeb
 #english: DownloadGamesFromWeb=Download Games from a Web Site

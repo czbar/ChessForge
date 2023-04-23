@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameTree;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,9 +33,19 @@ namespace WebAccess
         public string GameId { get; set; }
 
         /// <summary>
+        /// Games filter if used in the event
+        /// </summary>
+        public GamesFilter GamesFilter { get; set; }
+
+        /// <summary>
         /// Opening stats received from Lichess
         /// </summary>
         public LichessOpeningsStats OpeningStats { get; set; }
+
+        /// <summary>
+        /// List of GameData objects
+        /// </summary>
+        public List<GameData> GameData { get; set; }
 
         /// <summary>
         /// Text received from the server in reponse the query.
