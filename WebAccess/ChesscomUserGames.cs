@@ -4,13 +4,11 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ChessPosition;
 using GameTree;
-using static System.Net.WebRequestMethods;
 
 namespace WebAccess
 {
@@ -33,6 +31,8 @@ namespace WebAccess
         public static async Task<string> GetChesscomUserGames(GamesFilter filter)
         {
             WebAccessEventArgs eventArgs = new WebAccessEventArgs();
+            eventArgs.GamesFilter = filter;
+            eventArgs.GameData = new List<GameData>();
             try
             {
                 // STAGE 1: get list of possible archives
@@ -51,7 +51,8 @@ namespace WebAccess
                 else
                 {
                     // STAGE 2: start loading archive after archive and retrieving games until we get the required number
-                    ReadGamesFromArchives(lstYearMonth, filter);
+                    var lst = await ReadGamesFromArchives(lstYearMonth, filter);
+                    eventArgs.GameData.AddRange(lst);
                 }
                 eventArgs.Success = true;
                 UserGamesReceived?.Invoke(null, eventArgs);
@@ -59,7 +60,7 @@ namespace WebAccess
             }
             catch (Exception ex)
             {
-                eventArgs.Success = true;
+                eventArgs.Success = false;
                 eventArgs.Message = ex.Message;
                 UserGamesReceived?.Invoke(null, eventArgs);
                 return "";
@@ -71,10 +72,8 @@ namespace WebAccess
         /// </summary>
         /// <param name="lstYearMonths"></param>
         /// <param name="filter"></param>
-        private async static void ReadGamesFromArchives(List<uint> lstYearMonths, GamesFilter filter)
+        private async static Task<List<GameData>> ReadGamesFromArchives(List<uint> lstYearMonths, GamesFilter filter)
         {
-            int totalGames = 0;
-
             // if start date is not null we start from there, otherwise, we go back from the EndDate or latest.
             if (!filter.StartDate.HasValue)
             {
@@ -83,6 +82,8 @@ namespace WebAccess
 
             StringBuilder allGames = new StringBuilder();
 
+            int downloadedCount = 0;
+            List<GameData> games = new List<GameData>();
             foreach (uint yearMonth in lstYearMonths)
             {
                 // get month and year
@@ -91,90 +92,18 @@ namespace WebAccess
                 string sMonth = month.ToString("00");
                 string url = string.Format("https://api.chess.com/pub/player/{0}/games/{1}/{2}/pgn", filter.User, sYear, sMonth);
                 string text = await ExecuteHttpCall(url);
-                allGames.AppendLine(text);
 
-                ObservableCollection<GameData> games = new ObservableCollection<GameData>();
-                totalGames += PgnMultiGameParser.ParsePgnMultiGameText(text, ref games);
-                if (totalGames >= filter.MaxGames && filter.MaxGames != 0)
+                allGames.AppendLine(text);
+                var newGames = PgnMultiGameParser.ParsePgnMultiGameText(text);
+                games.AddRange(newGames);
+
+                downloadedCount += newGames.Count;
+                if (downloadedCount >= filter.MaxGames)
                 {
-                    // sort games from earliest to latest
-                    List<GameData> lstGames = SortGamesByDateTime(games);
-                    lstGames.RemoveRange(0, totalGames - filter.MaxGames);
                     break;
                 }
             }
-        }
-
-        /// <summary>
-        /// Sorts games by date/time found in the headers
-        /// </summary>
-        /// <param name="games"></param>
-        /// <returns></returns>
-        private static List<GameData> SortGamesByDateTime(ObservableCollection<GameData> games)
-        {
-            List<GameData> lstGames = new List<GameData>(games);
-            lstGames.Sort(CompareGamesByDateTime);
-            return lstGames;
-        }
-
-        /// <summary>
-        /// Compares games by date/time found in the headers
-        /// </summary>
-        /// <param name="game1"></param>
-        /// <param name="game2"></param>
-        /// <returns></returns>
-        private static int CompareGamesByDateTime(GameData game1, GameData game2)
-        {
-            DateTime? dt1 = GetDateTimeFromGameData(game1);
-            DateTime? dt2 = GetDateTimeFromGameData(game2);
-
-            if (dt1.HasValue && dt2.HasValue)
-            {
-                return (DateTime.Compare(dt1.Value, dt2.Value));
-            }
-            else
-            {
-                if (!dt1.HasValue && !dt2.HasValue)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return dt1.HasValue ? 1 : -1;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Makes best effort to find date/time for the passed game.
-        /// </summary>
-        /// <param name="game"></param>
-        /// <returns></returns>
-        private static DateTime? GetDateTimeFromGameData(GameData game)
-        {
-            string date = game.Header.GetHeaderValue(PgnHeaders.KEY_UTC_DATE);
-            string time = game.Header.GetHeaderValue(PgnHeaders.KEY_UTC_TIME);
-            if (string.IsNullOrEmpty(date))
-            {
-                date = game.Header.GetDate(out _);
-            }
-
-            if (!string.IsNullOrEmpty(time))
-            {
-                date += " " + time;
-            }
-
-            DateTime dt;
-            bool res = DateTime.TryParse(date, out dt);
-
-            if (res)
-            {
-                return dt;
-            }
-            else
-            {
-                return null;
-            }
+            return games;
         }
 
         /// <summary>
@@ -193,7 +122,7 @@ namespace WebAccess
                 await response.Content.CopyToAsync(fs);
                 fs.Position = 0;
                 StreamReader sr = new StreamReader(fs);
-                text = sr.ReadToEnd().Replace(',', ' ');
+                text = sr.ReadToEnd();
             }
 
             return text;
