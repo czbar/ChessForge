@@ -557,7 +557,7 @@ namespace GameTree
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        private string GetHeaderValue(string name)
+        public string GetHeaderValue(string name)
         {
             var header = _headers.Where(kvp => kvp.Key == name).FirstOrDefault();
             return header.Value;
