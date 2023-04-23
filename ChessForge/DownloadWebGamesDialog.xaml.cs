@@ -71,8 +71,26 @@ namespace ChessForge
                         {
                             throw new Exception(Properties.Resources.ErrGameNotFound);
                         }
-                        Games = new ObservableCollection<GameData>();
-                        int gamesCount = PgnMultiGameParser.ParsePgnMultiGameText(e.TextData, ref Games);
+
+                        var lstGames = e.GameData;
+                        int gamesCount = lstGames.Count;
+
+                        // sort games from earliest to latest
+                        lstGames = GameUtils.SortGamesByDateTime(lstGames);
+
+                        if (gamesCount >= e.GamesFilter.MaxGames && e.GamesFilter.MaxGames != 0)
+                        {
+                            if (e.GamesFilter.StartDate.HasValue)
+                            {
+                                lstGames.RemoveRange(e.GamesFilter.MaxGames, lstGames.Count - e.GamesFilter.MaxGames);
+                            }
+                            else
+                            {
+                                lstGames.RemoveRange(0, gamesCount - e.GamesFilter.MaxGames);
+                            }
+                        }
+
+                        Games = new ObservableCollection<GameData>(lstGames);
                         if (SelectGames(ref Games))
                         {
                             DialogResult = true;
@@ -82,6 +100,7 @@ namespace ChessForge
                 }
                 else
                 {
+                    MessageBox.Show(Properties.Resources.GameDownloadError + ": " + e.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
@@ -152,9 +171,9 @@ namespace ChessForge
         /// <param name="isDownloading"></param>
         private void EnableControls(bool isDownloading)
         {
+            UiLblLoading.Visibility = isDownloading ? Visibility.Visible : Visibility.Collapsed;
             if (isDownloading)
             {
-                UiLblLoading.Visibility = isDownloading ? Visibility.Visible : Visibility.Collapsed;
                 if (IsChesscomDownload())
                 {
                     UiLblLoading.Content = Properties.Resources.DownloadingFromChesscom;
@@ -196,9 +215,9 @@ namespace ChessForge
 
                 int gameCount;
                 int.TryParse(UiTbMaxGames.Text, out gameCount);
-                if (gameCount <= 0)
+                if (gameCount <= 0 || gameCount > DownloadWebGamesManager.MAX_DOWNLOAD_GAME_COUNT)
                 {
-                    gameCount = WebAccess.LichessUserGames.DEFAULT_DOWNLOAD_GAME_COUNT;
+                    gameCount = DownloadWebGamesManager.MAX_DOWNLOAD_GAME_COUNT;
                 }
                 filter.MaxGames = gameCount;
 
