@@ -42,5 +42,33 @@ namespace ChessPosition
             var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
             return Encoding.UTF8.GetString(base64EncodedBytes);
         }
+
+        /// <summary>
+        /// Converts the data to epoch Unix time
+        /// If this is for the end of the day, then takes the start of the next day and subtracts a millisecond.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static long? ConvertDateToEpoch(DateTime? date, bool dayStart)
+        {
+            long? millisec = null;
+
+            if (date != null)
+            {
+                DateTime dt;
+                if (dayStart)
+                {
+                    dt = date.Value;
+                }
+                else
+                {
+                    dt = date.Value.AddDays(1).AddMilliseconds(-1);
+                }
+                DateTimeOffset dateTimeOffset = dt.ToUniversalTime();
+                millisec = dateTimeOffset.ToUnixTimeMilliseconds();
+            }
+
+            return millisec;
+        }
     }
 }
