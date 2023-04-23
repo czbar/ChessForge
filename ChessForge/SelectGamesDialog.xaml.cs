@@ -106,16 +106,16 @@ namespace ChessForge
             }
 
             // create columns 
-            GridViewColumn no = ListViewHelper.CreateColumn(Properties.Resources.OrderNo, 30, "OrderNo");
+            GridViewColumn no = ListViewHelper.CreateColumn(Properties.Resources.OrderNo, 40, "OrderNo");
             gridView.Columns.Add(no);
 
-            GridViewColumn eco = ListViewHelper.CreateColumn(Properties.Resources.OrderNo, 40, "ECO");
+            GridViewColumn eco = ListViewHelper.CreateColumn(Properties.Resources.ECO, 40, "ECO");
             gridView.Columns.Add(eco);
 
             GridViewColumn game = ListViewHelper.CreateColumn(Properties.Resources.Game, 570, "GameTitle");
             gridView.Columns.Add(game);
 
-            GridViewColumn date = ListViewHelper.CreateColumn(Properties.Resources.Game, 90, "Date");
+            GridViewColumn date = ListViewHelper.CreateColumn(Properties.Resources.Date, 90, "Date");
             gridView.Columns.Add(date);
 
             // change the title and the "instruction" label
