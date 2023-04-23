@@ -1,17 +1,18 @@
-﻿using System;
+﻿using ChessPosition;
+using GameTree;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WebAccess
 {
     public class LichessUserGames
     {
-        // default number of games to download if not specified.
-        public static int DEFAULT_DOWNLOAD_GAME_COUNT = 20;
-
         // urls for downloading user games from lichess
         private static string _urlLichessUserGames = "https://lichess.org/api/games/user/{0}";
 
@@ -28,6 +29,7 @@ namespace WebAccess
         public static async Task<string> GetLichessUserGames(GamesFilter filter)
         {
             WebAccessEventArgs eventArgs = new WebAccessEventArgs();
+            eventArgs.GamesFilter = filter;
             try
             {
                 string url = BuildLichessUserGamesUrl(filter);
@@ -39,13 +41,14 @@ namespace WebAccess
                     StreamReader sr = new StreamReader(fs);
                     eventArgs.TextData = sr.ReadToEnd();
                 }
+                eventArgs.GameData = PgnMultiGameParser.ParsePgnMultiGameText(eventArgs.TextData);
                 eventArgs.Success = true;
                 UserGamesReceived?.Invoke(null, eventArgs);
                 return "";
             }
             catch (Exception ex)
             {
-                eventArgs.Success = true;
+                eventArgs.Success = false;
                 eventArgs.Message = ex.Message;
                 UserGamesReceived?.Invoke(null, eventArgs);
                 return "";
@@ -63,15 +66,15 @@ namespace WebAccess
 
             StringBuilder url = new StringBuilder();
             url.Append(String.Format(_urlLichessUserGames, filter.User));
-            int gamesCount = Math.Max(DEFAULT_DOWNLOAD_GAME_COUNT, filter.MaxGames);
+            int gamesCount = filter.MaxGames;
             if (gamesCount > 0)
             {
                 url.Append("?" + "max=" + gamesCount.ToString());
                 hasParam = true;
             }
 
-            long? startTime = ConvertDateToEpoch(filter.StartDate, true);
-            long? endTime = ConvertDateToEpoch(filter.EndDate, false);
+            long? startTime = EncodingUtils.ConvertDateToEpoch(filter.StartDate, true);
+            long? endTime = EncodingUtils.ConvertDateToEpoch(filter.EndDate, false);
 
             if (startTime.HasValue)
             {
@@ -88,34 +91,6 @@ namespace WebAccess
             }
 
             return url.ToString();
-        }
-
-        /// <summary>
-        /// Converts the data to epoch Unix time
-        /// If this is for the end of the day, then takes the start of the next day and subtracts a millisecond.
-        /// </summary>
-        /// <param name="date"></param>
-        /// <returns></returns>
-        private static long? ConvertDateToEpoch(DateTime? date, bool dayStart)
-        {
-            long? millisec = null;
-
-            if (date != null)
-            {
-                DateTime dt;
-                if (dayStart)
-                {
-                    dt = date.Value;
-                }
-                else
-                {
-                    dt = date.Value.AddDays(1).AddMilliseconds(-1);
-                }
-                DateTimeOffset dateTimeOffset = dt.ToUniversalTime();
-                millisec = dateTimeOffset.ToUnixTimeMilliseconds();
-            }
-
-            return millisec;
         }
 
     }
