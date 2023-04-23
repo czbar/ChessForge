@@ -21,10 +21,9 @@ namespace GameTree
         /// <param name="text"></param>
         /// <param name="games"></param>
         /// <returns></returns>
-        public static int ParsePgnMultiGameText(string text,
-                                                ref ObservableCollection<GameData> games)
+        public static List<GameData> ParsePgnMultiGameText(string text)
         {
-            games.Clear();
+            List<GameData> games = new List<GameData>();
 
             // read line by line, fishing for lines with PGN headers i.e. beginning with "[" followed by a keyword.
             // Note we may accidentally hit a comment formatted that way, so make sure that the last char on the line is "]".
@@ -49,7 +48,7 @@ namespace GameTree
                 }
             }
 
-            return games.Count;
+            return games;
         }
 
         /// <summary>
@@ -67,7 +66,7 @@ namespace GameTree
                                          int lineNo,
                                          ref StringBuilder sbGameText,
                                          ref GameData gm,
-                                         ref ObservableCollection<GameData> games)
+                                         ref List<GameData> games)
         {
             bool headerLine = true;
 
