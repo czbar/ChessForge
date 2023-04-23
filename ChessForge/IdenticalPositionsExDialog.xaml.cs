@@ -241,7 +241,7 @@ namespace ChessForge
         /// <param name="item"></param>
         private void InsertCopyMainLineButton(Paragraph para, ArticleListItem item, int itemIndex)
         {
-            TreeNode nd = item.StemLine.Last();
+            TreeNode nd = item.StemLine.LastOrDefault();
 
             if (nd != null && item.TailLine.Count > 0)
             {
@@ -270,7 +270,7 @@ namespace ChessForge
         /// <param name="itemIndex"></param>
         private void InsertCopySubtreeButton(Paragraph para, ArticleListItem item, int itemIndex)
         {
-            TreeNode nd = item.StemLine.Last();
+            TreeNode nd = item.StemLine.LastOrDefault();
 
             if (nd != null && item.TailLine.Count > 0)
             {
