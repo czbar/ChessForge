@@ -1,27 +1,30 @@
 [ChessForgeWorkbook "Checkmate Patterns"]
+[WorkbookVersion "1.0"]
+[Guid "R310ca94324444af7a4d7ae5b2c8869bc"]
 [TrainingSide "White"]
 [StudyBoardOrientation "White"]
 [GameBoardOrientation "White"]
 [ExerciseBoardOrientation "White"]
-[White "Chess Forge"]
-[Black "Workbook File"]
+[White "CHESS FORGE"]
+[Black "WORKBOOK"]
 [Result "*"]
 
 *
 
-[ChapterId "1"]
 [ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[Guid "R3daedfa685c74fc29d45bf4d13a25bb2"]
 [ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Basic Patterns (source: Wikipedia)"]
 
 
  *
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "3k4/8/3KQ3/8/8/8/8/8 w - - 1 1"]
 [Event "Queen Mate"]
-[Date "????.??.??"]
+[Guid "R38df2c9cadb0427288b382f9801b799b"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -30,12 +33,11 @@
 
 1. Qd7# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "3k4/8/3K4/8/8/8/8/R7 w - - 1 1"]
 [Event "Rook Mate (box mate)"]
-[Date "????.??.??"]
+[Guid "Rf05e287ac11e41f3a9f3fe491aca0408"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -44,12 +46,11 @@
 
 1. Ra8# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "7k/4B3/4B2K/8/8/8/8/8 w - - 1 1"]
 [Event "King and Two Bishops Mate"]
-[Date "????.??.??"]
+[Guid "Rc9349e9821ea44adb27acac4eda39bbd"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -58,12 +59,11 @@
 
 1. Bf6# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "3B3k/8/6KN/8/8/8/8/8 w - - 1 1"]
 [Event "Bishop and Knight Mate"]
-[Date ""]
+[Guid "R75a89a94fa804da5a040de8184baef93"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -72,12 +72,11 @@
 
 1. Bf6# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "7k/8/5N1K/4N3/8/8/8/8 w - - 1 1"]
 [Event "King and Two Knights Mate"]
-[Date "????.??.??"]
+[Guid "R82ef975e76e94d87be8d18df96070abd"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -86,12 +85,11 @@
 
 1. Ng6# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "8/7k/R7/1R6/8/8/8/7K w - - 1 1"]
 [Event "Ladder Mate (lawnmower mate)"]
-[Date "????.??.??"]
+[Guid "R3cad7da6bc554a64a232a15146b92b71"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -100,12 +98,11 @@
 
 1. Rb7+ Kg8 2. Ra8# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "7k/7p/8/8/1BB5/8/8/7K w - - 1 1"]
 [Event "Double Bishop Mate"]
-[Date ""]
+[Guid "R0abc7b6c52ab4df3a315e634c3569f3a"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -114,12 +111,11 @@
 
 1. Bc3# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "1kn5/pp6/8/3NN3/8/8/8/7K w - - 1 1"]
 [Event "Double Knight Mate"]
-[Date "????.??.??"]
+[Guid "R35c64dd5aa5b4d6fb0a617852735628f"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -128,12 +124,11 @@
 
 1. Nd7+ Ka8 2. Nc7# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "8/8/4N1pk/8/8/1R6/8/5K2 w - - 0 1"]
 [Event "Anastasia's Mate"]
-[Date "????.??.??"]
+[Guid "Ra8607269679644179f401707b8fb7fe3"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -142,12 +137,11 @@
 
 1. Rh3# (1. Kf2)  1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "6k1/6P1/5K2/8/8/8/8/7R w - - 1 1"]
 [Event "Anderssen's Mate"]
-[Date ""]
+[Guid "R373c122dba52460a8ced8a68d479a566"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -156,12 +150,11 @@
 
 1. Rh8# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "7k/1R6/5N2/8/8/3K4/8/8 w - - 1 1"]
 [Event "Arabian Mate"]
-[Date "????.??.??"]
+[Guid "Ra0e50e7cd6aa45678b001cab8955addd"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -170,12 +163,11 @@
 
 1. Rh7# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "6k1/5ppp/8/8/8/8/8/4R1K1 w - - 1 1"]
 [Event "Back Rank Mate"]
-[Date "????.??.??"]
+[Guid "R0de294b078734b7dbd110d804d08dbca"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -184,12 +176,11 @@
 
 1. Re8# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "6k1/8/7Q/8/8/7B/8/7K w - - 1 1"]
 [Event "Balestra Mate"]
-[Date ""]
+[Guid "R1874f1ebbef345baacbce492807713eb"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -198,12 +189,11 @@
 
 1. Be6# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "5rk1/8/8/6N1/8/8/1B6/1B5K w - - 1 1"]
 [Event "Blackburn's Mate"]
-[Date "????.??.??"]
+[Guid "R993f728ca7554bfc89bee47c67ba833b"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -212,12 +202,11 @@
 
 1. Bh7# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "5rk1/2R1R1pp/8/8/8/8/8/7K w - - 1 1"]
 [Event "Blind Swine Mate"]
-[Date ""]
+[Guid "R45e78775a6364fbc9e423f3a2e96aea7"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -226,12 +215,11 @@
 
 1. Rxg7+ Kh8 2. Rxh7+ Kg8 3. Rcg7# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "2kr4/3p4/8/4B3/8/8/4B3/2K5 w - - 0 1"]
 [Event "Boden's Mate"]
-[Date "????.??.??"]
+[Guid "Rdee300043ff843e2b363baa9e50f54de"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -240,12 +228,11 @@
 
 1. Ba6# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "7k/7p/3N4/8/8/8/8/6RK w - - 1 1"]
 [Event "Corner Mate"]
-[Date ""]
+[Guid "R28600cd3cdeb4de69391c973c77ff1a9"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -254,12 +241,11 @@
 
 1. Nf7# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "5k2/8/6B1/8/8/1Q6/8/7K w - - 1 1"]
 [Event "Damiano's Bishop Mate"]
-[Date ""]
+[Guid "R76cc033374df48b3a14e0f2680cdae1c"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -268,12 +254,11 @@
 
 1. Qf7# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "5qk1/6p1/6P1/8/8/7Q/8/6K1 w - - 1 1"]
 [Event "Damiano's Mate"]
-[Date "????.??.??"]
+[Guid "R8063abf990f245f4b8cdeea1a9e65740"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -282,12 +267,11 @@
 
 1. Qh7# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "6bk/7p/8/8/5B2/8/8/2K5 w - - 1 1"]
 [Event "Diagonal Corridor Mate"]
-[Date "????.??.??"]
+[Guid "R540691a7c101405da55b57176c7d68b4"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -296,12 +280,11 @@
 
 1. Be5# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "8/8/8/6p1/5qk1/1Q6/6K1/8 w - - 1 1"]
 [Event "Dovetail Mate (Cozio's mate)"]
-[Date "????.??.??"]
+[Guid "Re86b136d71cb42b39bd458299e9e21f3"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -310,12 +293,11 @@
 
 1. Qh3# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "2rkr3/8/8/8/1Q6/8/8/6K1 w - - 1 1"]
 [Event "Epaulette Mate"]
-[Date "????.??.??"]
+[Guid "R10d215f4f4314d0a9b16492b32061c68"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -324,12 +306,11 @@
 
 1. Qd6# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "7k/6p1/8/6Q1/2B5/8/8/7K w - - 1 1"]
 [Event "Greco's Mate"]
-[Date "????.??.??"]
+[Guid "Rcc807f312c68400685b4bf2dc64068b3"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -338,12 +319,11 @@
 
 1. Qh5# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "R7/4kp2/5N2/4P3/8/8/8/7K w - - 1 1"]
 [Event "Hook Mate"]
-[Date ""]
+[Guid "Ra570a311ae3a4a48b65f2f43dda286ff"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -352,12 +332,11 @@
 
 1. Re8# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "8/8/7R/k7/2Q5/8/8/7K w - - 1 1"]
 [Event "Kill Box Mate"]
-[Date "????.??.??"]
+[Guid "R55451ac5218b4a0dad3b03d46929ea1f"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -366,12 +345,11 @@
 
 1. Ra6# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "3q1b2/4kB2/3p4/4N3/8/2N5/8/7K w - - 1 1"]
 [Event "Légal's mate"]
-[Date ""]
+[Guid "R42658e03039b426187a90bece02400cc"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -380,12 +358,11 @@
 
 1. Nd5# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "6k1/5p2/5PpQ/8/8/8/8/7K w - - 1 1"]
 [Event "Lolli's Mate"]
-[Date ""]
+[Guid "R38debdda3f32442e941c2e3b967a71a2"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -394,12 +371,11 @@
 
 1. Qg7# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "Q7/5Bpk/7p/8/8/8/8/7K w - - 1 1"]
 [Event "Max Lange's Mate"]
-[Date ""]
+[Guid "R242c4461fcb34c928d75c2e5bf429d2f"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -408,12 +384,11 @@
 
 1. Qg8# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "6k1/5p2/8/8/8/8/1B6/6KR w - - 1 1"]
 [Event "Mayet's Mate"]
-[Date "????.??.??"]
+[Guid "R04df6f19b24a4f82bd26eb9643b3d656"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -422,12 +397,11 @@
 
 1. Rh8# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "7k/7p/8/8/7B/8/8/6RK w - - 1 1"]
 [Event "Morphy's Mate"]
-[Date ""]
+[Guid "Rb75348a6660d401db8beb4c5044a8941"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -436,12 +410,11 @@
 
 1. Bf6# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "4k3/5p2/8/6B1/8/8/8/3R3K w - - 1 1"]
 [Event "Opera Mate"]
-[Date "????.??.??"]
+[Guid "Rcc97ba427fc447cb87ae86b4751a8cfd"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -450,12 +423,11 @@
 
 1. Rd8# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "8/8/8/7R/pkp5/1n6/PP6/7K w - - 1 1"]
 [Event "Pawn Mate (David and Goliath mate)"]
-[Date "????.??.??"]
+[Guid "R7ab9d86cef7e45dea95d208f744a9baa"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -464,12 +436,11 @@
 
 1. a3# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "5rk1/5pBp/8/8/8/8/8/6RK w - - 1 1"]
 [Event "Pillsbury's Mate"]
-[Date "????.??.??"]
+[Guid "Re7e20ba524c04380b56a2ebbe5ff725b"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -478,12 +449,11 @@
 
 1. Bf6# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "1nb5/1pk5/2p5/8/7B/8/8/3R3K w - - 1 1"]
 [Event "Réti's Mate"]
-[Date ""]
+[Guid "R2d4f1eb516094516bad1bd85b421b086"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -492,12 +462,11 @@
 
 1. Bd8# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "6rk/6pp/8/4N3/8/8/8/7K w - - 1 1"]
 [Event "Smothered Mate"]
-[Date ""]
+[Guid "R78ce18f0a60e485dadc2bd4af0b0b6a6"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -506,12 +475,11 @@
 
 1. Nf7# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "5rk1/5p1p/8/3N4/8/2B5/8/7K w - - 1 1"]
 [Event "Suffocation Mate"]
-[Date "????.??.??"]
+[Guid "Rcdf57cb315ed4be5b693ce8cbaf2f764"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -520,12 +488,11 @@
 
 1. Ne7# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "3r1r2/4k3/R7/3Q4/8/8/8/7K w - - 1 1"]
 [Event "Swallow's Tail Mate (guéridon mate)"]
-[Date "????.??.??"]
+[Guid "R41f5b233d1bb4421a1271d1084943765"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -534,12 +501,11 @@
 
 1. Qe6# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "3R4/4kp2/8/8/8/8/7Q/7K w - - 1 1"]
 [Event "Triangle Mate"]
-[Date ""]
+[Guid "R6ac7eee003654f92b413dd7369a4bd9f"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -549,12 +515,11 @@
 
 1. Qd6# 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Basic Patterns (source: Wikipedia)"]
 [ContentType "Exercise"]
 [FEN "4k3/R7/4NK2/8/8/8/8/8 w - - 1 1"]
 [Event "Vuković's Mate"]
-[Date "????.??.??"]
+[Guid "Rfb0292ce17af45878f63ff8cfaed38b8"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -565,19 +530,20 @@
 
 
 
-[ChapterId "2"]
 [ChapterTitle "Complex Exercises using Basic Patterns"]
+[Guid "Rc6576662496c40298da2d479cab5d5ba"]
 [ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Complex Exercises using Basic Patterns"]
 
 
  *
 
-[ChapterId "2"]
-[ChapterTitle "Complex Exercises using Basic Patterns"]
 [ContentType "Exercise"]
 [FEN "3r1rk1/pp3ppp/3pn3/1qpN4/5PP1/P5PQ/1PP5/1K1R4 w - - 0 1"]
 [Event "Mate in 3 with Anastasia's Mate Pattern"]
-[Date "????.??.??"]
+[Guid "R6f59c1dafc5b4c87bcebe809ae675336"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -586,12 +552,11 @@
 
 1. Ne7+ Kh8 2. Qxh7+ $1 {[%quiz 1]}  Kxh7 3. Rh1# 1-0
 
-[ChapterId "2"]
-[ChapterTitle "Complex Exercises using Basic Patterns"]
 [ContentType "Exercise"]
 [FEN "6R1/2p1qr1k/1p1p1r1p/p3p3/2P1P3/2P3Q1/PP3P2/2K3R1 w - - 0 1"]
 [Event "Mate in 2 with Damiano's Mate Pattern"]
-[Date "????.??.??"]
+[Guid "R4c1b9e2f852e4794acbb4c7a39b4dad7"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -600,12 +565,11 @@
 
 1. Rh8+ $1 {[%quiz 1]}  Kxh8 2. Qg8# 1-0
 
-[ChapterId "2"]
-[ChapterTitle "Complex Exercises using Basic Patterns"]
 [ContentType "Exercise"]
 [FEN "2kr2nr/pp1n1ppp/2p1p3/8/1P1P1B2/2N2Q1P/1PPKBPP1/7q w - - 0 1"]
 [Event "Mate in 2 with Boden's Mate Pattern"]
-[Date "????.??.??"]
+[Guid "Ra06bac11a73b4d29a48cf3f87d36fb54"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -614,12 +578,11 @@
 
 1. Qxc6+ $1 {[%quiz 1]}  bxc6 2. Ba6# 1-0
 
-[ChapterId "2"]
-[ChapterTitle "Complex Exercises using Basic Patterns"]
 [ContentType "Exercise"]
 [FEN "5r2/p3Qnkp/1p3Np1/2p3P1/3q4/5P2/PP3R1r/4R1K1 w - - 0 1"]
 [Event "Mate in 3 with Hook Mate Pattern"]
-[Date "????.??.??"]
+[Guid "R6b46d72ac26e43169389caee72400463"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -628,12 +591,11 @@
 
 1. Qxf8+ $1 {[%eval +#2][%quiz 1]}  Kxf8 2. Re8+ Kg7 3. Rg8# 1-0
 
-[ChapterId "2"]
-[ChapterTitle "Complex Exercises using Basic Patterns"]
 [ContentType "Exercise"]
 [FEN "5r1k/6p1/p2p1rRp/2pPpq1Q/8/PPp1P3/5P1R/K7 w - - 0 1"]
 [Event "Mate in 2 with Ladder Mate Pattern"]
-[Date "????.??.??"]
+[Guid "R2a1e57e776174a1083d0bd447f90680b"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -643,12 +605,11 @@
  {[%eval +#2]} 1. Qxh6+ $1 {[%eval +#2][%quiz 1]}  gxh6 {[%eval +#1]}  2. Rhxh6+ 
 {[%eval #]}  1-0
 
-[ChapterId "2"]
-[ChapterTitle "Complex Exercises using Basic Patterns"]
 [ContentType "Exercise"]
 [FEN "r1n3k1/pp2q2p/2ppr1pQ/4p3/8/2N4R/PPP3PP/5RK1 w - - 0 1"]
 [Event "Mate in 2 with Swallow's Tale Mate Pattern"]
-[Date "????.??.??"]
+[Guid "Rb42613aa8f5141d4afa9b6217ba13555"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -657,12 +618,11 @@
 
  {[%eval +#2]} 1. Rf8+ $1 {[%eval +#1][%quiz 1]}  Qxf8 2. Qxh7# 1-0
 
-[ChapterId "2"]
-[ChapterTitle "Complex Exercises using Basic Patterns"]
 [ContentType "Exercise"]
 [FEN "4rr1k/p4pb1/5R1p/1p2q3/3p4/3P2R1/PP1Q2BP/7K w - - 0 1"]
 [Event "Mate in 2 with Ladder Mate Pattern"]
-[Date "????.??.??"]
+[Guid "Rf03765212a6e46d4b50c2b79c5d5ff93"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -671,12 +631,11 @@
 
  {[%eval +#2]} 1. Qxh6+ $1 {[%eval +#1][%quiz 1]}  Bxh6 2. Rxh6# 1-0
 
-[ChapterId "2"]
-[ChapterTitle "Complex Exercises using Basic Patterns"]
 [ContentType "Exercise"]
 [FEN "2kr1r2/pp1n3p/2p1bp2/8/5B2/8/PP2BP1P/2R1K1R1 w - - 0 1"]
 [Event "Mate in 2 with Boden's Mate Pattern"]
-[Date ""]
+[Guid "R5f52d3148cf942429dbff9ee14cbf4f5"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -685,12 +644,11 @@
 
  {[%eval +#2]} 1. Rxc6+ $1 {[%eval +#1][%quiz 1]}  bxc6 2. Ba6# 1-0
 
-[ChapterId "2"]
-[ChapterTitle "Complex Exercises using Basic Patterns"]
 [ContentType "Exercise"]
 [FEN "1q1r1r2/1bb2pk1/pN1pp3/4n1p1/1PPQP3/1N2BPp1/P5P1/2RR1B1K b - - 0 1"]
 [Event "Mate in 6 with Anderssen's Mate"]
-[Date ""]
+[Guid "Rb704623b58de413ca4e7174d53d8d784"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "0-1"]
@@ -702,12 +660,11 @@
 Rh1+ {[%eval -#2]}  5. Kxh1 {[%eval -#2]}  Qh8+ {[%eval -#1]}  6. Kg1 {[%eval 
 -#1]}  Qh2# {[%eval #]}  0-1
 
-[ChapterId "2"]
-[ChapterTitle "Complex Exercises using Basic Patterns"]
 [ContentType "Exercise"]
 [FEN "1rb1nrk1/5p1p/p1q1p1p1/1pbp2N1/2P2P2/PP1BP3/1B4PP/1R1QK2R w - - 0 1"]
 [Event "Mate in 5 with Damiano's Bishop Mate and Légal's Mate Patterns"]
-[Date "????.??.??"]
+[Guid "Rc6e82257a3d44895a9b8d09bf4f33bc7"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -720,12 +677,11 @@ Rh1+ {[%eval -#2]}  5. Kxh1 {[%eval -#2]}  Qh8+ {[%eval -#1]}  6. Kg1 {[%eval
 Bxh7#) 2. Qxh6 {[%eval +#3]}  Nf6 {[%eval +#3]}  3. Bxf6 {[%eval +#2]}  Bb4+ 
 {[%eval +#2]}  4. axb4 {[%eval +#1]}  Re8 {[%eval +#1]}  5. Qg7# {[%eval #]}  1-0
 
-[ChapterId "2"]
-[ChapterTitle "Complex Exercises using Basic Patterns"]
 [ContentType "Exercise"]
 [FEN "r1bq1rk1/pp1pb1p1/2n1p3/4P1P1/3P4/2P5/P4PP1/R1BQK2R w - - 0 1"]
 [Event "Mate in 5 with Damiano's Mate Pattern"]
-[Date ""]
+[Guid "R7811d55753b24d27a23bd2290564d542"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -735,12 +691,11 @@ Bxh7#) 2. Qxh6 {[%eval +#3]}  Nf6 {[%eval +#3]}  3. Bxf6 {[%eval +#2]}  Bb4+
  {[%eval +#5]} 1. Rh8+ $1 {[%eval +#4][%quiz 1]}  Kxh8 2. Qh5+ Kg8 3. g6 Rf5 4. 
 Qh7+ Kf8 5. Qh8# {[%cal Gf8f7,Gh8d8,Gg6f7][%csl Gf7,Gd8]}  1-0
 
-[ChapterId "2"]
-[ChapterTitle "Complex Exercises using Basic Patterns"]
 [ContentType "Exercise"]
 [FEN "6k1/1b5p/pp1pPqp1/2p1r3/8/8/PPQ2PPP/3R1RK1 b - - 0 1"]
 [Event "Mate in 5 with Morphy's Mate Pattern"]
-[Date "????.??.??"]
+[Guid "R87a581e2221f4053ad079caa989d7996"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "0-1"]

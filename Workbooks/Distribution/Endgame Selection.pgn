@@ -1,27 +1,30 @@
 [ChessForgeWorkbook "Endgame Selection"]
+[WorkbookVersion "1.0"]
+[Guid "Rc7f466de1783449f8ccc255faf677771"]
 [TrainingSide "White"]
 [StudyBoardOrientation "White"]
 [GameBoardOrientation "White"]
 [ExerciseBoardOrientation "White"]
-[White "Chess Forge"]
-[Black "Workbook File"]
+[White "CHESS FORGE"]
+[Black "WORKBOOK"]
 [Result "*"]
 
 *
 
-[ChapterId "1"]
 [ChapterTitle "Pawn Endgames"]
+[Guid "Rffeee2e7d3ed4747a78eaaf0d7892f99"]
 [ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Pawn Endgames"]
 
 
  *
 
-[ChapterId "1"]
-[ChapterTitle "Pawn Endgames"]
 [ContentType "Exercise"]
 [FEN "5k2/8/8/8/1P6/8/8/3K4 w - - 1 1"]
 [Event "Opposition"]
-[Date "????.??.??"]
+[Guid "R881a38309d99433a8930ed1c3fcc0d19"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -31,12 +34,11 @@
  {[%eval 0.00]} 1. Kc2 $1 Ke7 2. Kb3 Kd6 3. Ka4 (3. Kc4 $2 Kc6 $11) 3... Kc6 4. 
 Ka5 Kb7 5. Kb5 $18 {[%eval +5.93][%csl Bb5,Bb7]Opposition.}  1-0
 
-[ChapterId "1"]
-[ChapterTitle "Pawn Endgames"]
 [ContentType "Exercise"]
 [FEN "8/8/8/4p1p1/8/5P2/6K1/3k4 w - - 1 1"]
 [Event "Distant Opposition"]
-[Date ""]
+[Guid "R20640a76f09d42409fe3cc06e13e536d"]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "1/2-1/2"]
@@ -47,11 +49,10 @@ Ka5 Kb7 5. Kb5 $18 {[%eval +5.93][%csl Bb5,Bb7]Opposition.}  1-0
 (1... g4 2. Kg2 $1 Kd2 3. fxg4 $11) 2. Kh2 {[%eval 0.00]}  Kd3 {[%eval 0.00]}  
 3. Kh3 $11 {[%eval +#18]}  1/2-1/2
 
-[ChapterId "1"]
-[ChapterTitle "Pawn Endgames"]
 [ContentType "Exercise"]
 [FEN "2k5/8/8/7p/8/8/6P1/5K2 w - - 1 1"]
 [Event "J. Moravec"]
+[Guid "R98762afcb5e548289097ad6f9d30fef2"]
 [Date "1952.??.??"]
 [White ""]
 [Black ""]
@@ -64,12 +65,11 @@ Kg1 $3 (2. Kf3 $2 h3 $11 3. g4 Kd7 4. Kg3 Ke6 5. Kxh3 Kf6 6. Kh4 Kg6 $11 {White
 cannot gain control of the key squares.} ) 2... h3 3. g3 $1 Kd7 4. Kh2 Ke6 5. 
 Kxh3 Kf5 6. Kh4 Kg6 7. Kg4 $18 {[%csl Bg6,Bg4]Gaining opposition and winning.}  1-0
 
-[ChapterId "1"]
-[ChapterTitle "Pawn Endgames"]
 [ContentType "Exercise"]
 [FEN "8/1p1k4/1P6/2PK4/8/8/8/8 w - - 1 1"]
 [Event "Triangulation"]
-[Date "????.??.??"]
+[Guid "R6ae23637d4c5480a97412e589a36c7b8"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -80,11 +80,10 @@ Kxh3 Kf5 6. Kh4 Kg6 7. Kg4 $18 {[%csl Bg6,Bg4]Gaining opposition and winning.}  
 2. Kd4 Kd7 3. Kd5 {We are back to the starting position but it's Black's move.}  
 Kc8 4. Ke6 $1 {[%quiz 2]}  Kd8 5. Kd6 Kc8 6. Ke7 Kb8 7. Kd7 Ka8 8. c6 $18 1-0
 
-[ChapterId "1"]
-[ChapterTitle "Pawn Endgames"]
 [ContentType "Exercise"]
 [FEN "7K/8/k1P5/7p/8/8/8/8 w - - 1 1"]
 [Event "R. Reti"]
+[Guid "R8181a8f896524964ad1b0257ef4fba28"]
 [Date "1921.??.??"]
 [White ""]
 [Black ""]
@@ -95,11 +94,10 @@ Kc8 4. Ke6 $1 {[%quiz 2]}  Kd8 5. Kd6 Kc8 6. Ke7 Kb8 7. Kd7 Ka8 8. c6 $18 1-0
  {[%eval -0.06]} 1. Kg7 {[%quiz 2]}  h4 2. Kf6 Kb6 3. Ke5 {[%quiz 1]}  Kxc6 4. 
 Kf4 1/2-1/2
 
-[ChapterId "1"]
-[ChapterTitle "Pawn Endgames"]
 [ContentType "Exercise"]
 [FEN "8/1pPK3b/8/8/8/5k2/8/8 w - - 1 1"]
 [Event "A & K Sarychev"]
+[Guid "R86d05ab5413149ddb6f2d544f1b261f6"]
 [Date "1928.??.??"]
 [White ""]
 [Black ""]
@@ -115,19 +113,20 @@ Kd6 {[%eval 0.00]}  Bf5 {[%eval 0.00]}  4. Ke5 $1 {[%eval 0.00][%quiz 1]}  Bc8
 
 
 
-[ChapterId "2"]
 [ChapterTitle "Rook and Pawn vs Rook"]
+[Guid "Rfd60779c7a8a4596b617d8cd3886a4b8"]
 [ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Rook and Pawn vs Rook"]
 
 
  *
 
-[ChapterId "2"]
-[ChapterTitle "Rook and Pawn vs Rook"]
 [ContentType "Exercise"]
 [FEN "4K3/4P1k1/8/8/8/8/r7/5R2 w - - 1 1"]
 [Event "Pawn on the Seventh Rank"]
-[Date "????.??.??"]
+[Guid "R7feca394f4744e978088eb0bb9e5904b"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]
@@ -137,12 +136,11 @@ Kd6 {[%eval 0.00]}  Bf5 {[%eval 0.00]}  4. Ke5 $1 {[%eval 0.00][%quiz 1]}  Bc8
 1. Rg1+ {[%eval +7.29]}  Kh7 2. Rg4 $1 Rd2 {[%eval +#12]}  3. Kf7 Rf2+ 4. Ke6 
 Re2+ 5. Kf6 Rf2+ 6. Ke5 Re2+ 7. Re4 $18 {[%eval +#6]}  1-0
 
-[ChapterId "2"]
-[ChapterTitle "Rook and Pawn vs Rook"]
 [ContentType "Exercise"]
 [FEN "r5k1/8/5PK1/8/8/8/8/1R6 w - - 1 1"]
 [Event "Pawn on the Sixth Rank"]
-[Date "????.??.??"]
+[Guid "R6163065f92f945f4818e43d1bde3ae7d"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "1-0"]

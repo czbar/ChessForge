@@ -1,28 +1,31 @@
 [ChessForgeWorkbook "Endgames by NoseKnowsAll@lichess.org"]
+[WorkbookVersion "1.0"]
+[Guid "Ra01fbd55395d4ca6ba26b040d75df770"]
 [TrainingSide "White"]
 [StudyBoardOrientation "White"]
 [GameBoardOrientation "White"]
 [ExerciseBoardOrientation "None"]
-[White "Chess Forge"]
-[Black "Workbook File"]
+[White "CHESS FORGE"]
+[Black "WORKBOOK"]
 [Result "*"]
 
 *
 
-[ChapterId "2"]
 [ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
+[Guid "R85059193c8774d58b3bb990dc200db30"]
 [ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Beginner endgames you must know by @NoseKnowsAll"]
 
 
  {This is a Lichess study https://lichess.org/study/wukLYIXj by @NoseKnowsAll 
 imported into ChessForge}  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "4k3/R7/8/8/8/8/8/4K3 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: Introduction"]
-[Date "????.??.??"]
+[Guid "R0c4b0d4a37ec4a9aa3ec4ac260032b11"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -41,12 +44,11 @@ general advice occurs, I'll write it just like this:PRO TIP: Always bring your
 king up in the endgame!If you find this study useful, please heart it and share 
 it with any friends! }  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/8/4k3/Q7/1Q6/4K3 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: Staircase mate"]
-[Date "????.??.??"]
+[Guid "R35681c710244474399fa3bfca9d759ad"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -66,12 +68,11 @@ goes. }  Kd7 4. Qaa7+ {[%cal Ba7h7,Bb6h6]}  Kc8 5. Qbb8# {[%cal Bb8h8,Ba7h7]
 With every move coming with check, you can be sure you're heading towards 
 checkmate and not going to accidentally stalemate your opponent. }  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/4k3/2Q5/3Q4/8/4K3 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: Sideways staircase mate"]
-[Date "????.??.??"]
+[Guid "R57451b0058d14508ac6bebf3df98d4d9"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -86,12 +87,11 @@ doom. }  Kf6 2. Qdf3+ {[%cal Be4e8,Bf3f8]}  Kg5 3. Qeg4+ Kh6 4. Qfh3# { Notice
 how you can premove this entire checkmating sequence. The black king can't stop 
 you! }  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/2k5/1R6/Q7/8/4K3 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: Staircase mate with a rook"]
-[Date "????.??.??"]
+[Guid "Rd41d872269dc4833a123a0bce6a6e77b"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -107,12 +107,11 @@ Oops! Remember: with the rook between the queen and enemy king, there's no way
 for his king to attack any of your undefended pieces! }  Kxe5 $1) 1... Kc6 2. 
 Rb6+ {[%cal Bb6h6,Ba5h5]}  Kd7 3. Qa7+ Kc8 4. Rb8# *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/2k5/R7/1Q6/8/4K3 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: Exercise 1: Staircase mate with a rook"]
-[Date "????.??.??"]
+[Guid "Ra460f85d65614d2684f2e0f1b9f47eaf"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -137,12 +136,11 @@ checkmates, but being able to pull this off quickly is a crucial part of
 everyone's game. Even the World Champion Magnus Carlsen needs to know this 
 checkmate! https://lichess.org/II6pkHsh#123 }  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/8/8/1k6/R7/2Q1K3 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: Ladder mate"]
-[Date "????.??.??"]
+[Guid "Rafbae714a1d14454acaef9bd962c406e"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -165,12 +163,11 @@ Ra7+ Kb8 6. Qc7# {[%cal Gc1a3,Ga3c3,Gc3a5,Ga5c5,Gc5a7,Ga7c7][%csl
 Gc1,Ga3,Gc3,Ga5,Gc5,Ga7,Gc7] This checkmate pattern gets its name from the 
 squares our queen and rook took - resembling a ladder. }  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/1k6/8/R7/8/2Q1K3 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: A small trick in the ladder mate"]
-[Date "????.??.??"]
+[Guid "R698b94ef514d427ab89ab5c4f72ee7a5"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -189,12 +186,11 @@ Black again only has one legal move. But this move walks directly into the
 ladder mate we know and love. }  5. Ra7+ Kb8 6. Qc7# { Nice. The pattern hits 
 exclusively with checks and ends in checkmate. } )  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/8/8/3k4/1R6/R3K3 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: The two rook shuffle"]
-[Date "????.??.??"]
+[Guid "R8894fc85ff434724b00233218f384f1a"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -219,12 +215,11 @@ Ke6 6. Rh6+ {[%cal Bg5a5,Bh6a6]}  Kf7 7. Ra5 $1 { We've been here before. Give
 your rooks space to check before continuing the staircase mate. }  Kg7 8. Rb6 
 Kf7 9. Ra7+ {[%cal Bb6h6,Ba7h7]}  Ke8 10. Rb8# *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/8/2k5/4K2R/6R1/8 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: Exercise 2: The two rook shuffle"]
-[Date "????.??.??"]
+[Guid "R1e68e124fb0f4ba0a44cd6330a9ba9d6"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -252,12 +247,11 @@ have already mastered such as by playing Ke2 at the beginning of this
 exercise.Here's Magnus Carlsen himself pulling this off! 
 https://lichess.org/bqu8Ozhr/black#65 }  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/3k4/8/2Q5/4K3/8 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: The queen box"]
-[Date "????.??.??"]
+[Guid "R919c55d8b8cb4dbcbf8ccee69d00d1da"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -287,12 +281,11 @@ directly in front of the king. Now that we finally can cover those last two
 squares in the box, black is checkmated. }  (10. Kc7 Ka7 11. Qb7# { Just as 
 good. } )  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/3k4/8/3K4/7R/8 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: An important king standoff"]
-[Date "????.??.??"]
+[Guid "R5eedec32a6d34348b05d0c0134093d83"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -308,12 +301,11 @@ backwards with this annoying rook check.This concept of taking opposition
 between two kings in order to force your opponent backwards will be a crucial 
 part of many endgames, especially king and pawn endgames. }  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/3k4/7R/4K3/8/8/8/8 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: A first rook mate"]
-[Date "????.??.??"]
+[Guid "R1733b1bf01974551a41d7f4429d437eb"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -352,12 +344,11 @@ and the king has to self-destruct by walking into opposition. }  Kg8 {[%cal
 Gg6f7,Gg6g7,Gg6h7]}  12. Ra8# {[%cal Gg6f7,Gg6g7,Gg6h7,Ba8h8][%csl 
 Gf7,Gg7,Gh7,Gh8,Gg8,Gf8]}  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/8/8/3k4/1R6/3K4 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: The rook box"]
-[Date "????.??.??"]
+[Guid "R4115c783945d472c871788f966dc2a1d"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -394,12 +385,11 @@ would be stepping directly into opposition and therefore mate with Ra1#. }  Ka6
 go, the black king is finally forced to walk into opposition and checkmate 
 himself. }  Ka7 14. Ra1# *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/8/8/3k4/R7/3K4 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: The rook box with better defense"]
-[Date "????.??.??"]
+[Guid "Rb508811501554b55893bec673664a514"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -445,12 +435,11 @@ box around the king further? If so, make a rook move. If not, (2) Where do I
 need to position my king to keep shrinking this box further? This usually means 
 taking opposition from our opponent and push him back more. }  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/2k5/8/3K4/4R3/8/8 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: Exercise 3: The crucial rook box position"]
-[Date "????.??.??"]
+[Guid "R1f48576f63df417f90050270cd6a116b"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -500,12 +489,11 @@ against the top wall. }  Kb5 7. Rb3+ Ka4 8. Kc4)  (6. Rc5 $1 { An equally good
 move. We have shrunk the box to the bottom left corner and have made 
 considerable progress. Play Kd4 instead to solve this exercise. } )  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/3k4/8/8/3PK3/8/8/8 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: King and pawn endgame"]
-[Date "????.??.??"]
+[Guid "R3985e70ea1d94493a7ad5cc4ebe70245"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -528,12 +516,11 @@ square, we can push our pawn all the way home until we queen. }  Ke7 5. d5 Ke8
 6. d6 Kf7 7. d7 Ke7 8. d8=Q+ $18 { We'll be able to win this endgame as in 
 https://lichess.org/study/wukLYIXj/56iA0NCU }  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/3k4/8/8/4K3/3P4/8/8 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: King and pawn endgame"]
-[Date "????.??.??"]
+[Guid "R1baca82527014ede9d93be8dfd83fd76"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -551,12 +538,11 @@ the opposition between the kings, so again black must give ground. }  Kc8 6. Ke7
 {[%csl Bd8]}  Kc7 7. d6+ Kc8 8. d7+ Kc7 9. d8=Q+ $18 { After promotion, 
 checkmate is soon to follow. }  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/3k4/3P4/3K4/8/8/8 b - - 0 1"]
 [Event "Beginner Endgames You Must Know!: Drawing a king and pawn endgame"]
-[Date "????.??.??"]
+[Guid "R685e6d0d163f449ab91c9f454f8ffc91"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -580,12 +566,11 @@ $10 { If white ever pushes this pawn to the 7th rank, we immediately get
 stalemated. Black draws the game.This concept of opposition is explored further 
 in the next endgame study: https://lichess.org/study/UsqmCsgC/YBtOyp2n }  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/3k4/3P4/3K4/8/8/8 b - - 0 1"]
 [Event "Beginner Endgames You Must Know!: Exercise 4: Can you draw this?"]
-[Date "????.??.??"]
+[Guid "R86fff1499237468dbf5925cd2dbc72dd"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -615,12 +600,11 @@ game. } ) 8. Ke6 Ke8 9. d7+ Kd8 10. Kd6 $10 { Nice job escaping with the
 draw.Here's Magnus Carlsen nailing this technique against the upcomer Alireza 
 Firouzja as well! https://lichess.org/VRbVnnAa/black#138 }  *
 
-[ChapterId "2"]
-[ChapterTitle "Beginner endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "4k3/R7/8/8/8/8/8/4K3 w - - 0 1"]
 [Event "Beginner Endgames You Must Know!: Thanks for enjoying this study!"]
-[Date "????.??.??"]
+[Guid "Rf7b82eb763484a37b28d4132f6ad4339"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -643,20 +627,21 @@ https://lichess.org/study/YtBYXc3m }  *
 
 
 
-[ChapterId "3"]
 [ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
+[Guid "Rd59180edf21d49dfbe9e75f2cce53d3a"]
 [ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Intermediate endgames you must know by @NoseKnowsAll"]
 
 
  {This is a Lichess study https://lichess.org/study/UsqmCsgC by @NoseKnowsAll 
 imported into ChessForge}  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "4K3/2k1P3/8/8/8/3R4/4r3/8 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: Introduction"]
-[Date "????.??.??"]
+[Guid "R70e75ad4071d44eebb8ca364c896b2b2"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -677,12 +662,11 @@ general advice occurs, I'll write it just like this:PRO TIP: Always bring your
 king up in the endgame!If you find this study useful, please heart it and share 
 it with any friends! }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/1k6/8/8/8/7P/8/K7 b - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: The rule of the square"]
-[Date "????.??.??"]
+[Guid "R48a0560cd44e458a969c18a77ae802d5"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -703,12 +687,11 @@ shortcut allows us to "calculate" pawn races without ever having to spend time
 visualizing any specific moves! Carlsen and his opponent prove they've both 
 internalized this shortcut too! https://lichess.org/b6dMgmMm/black#89 }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/k7/8/8/8/8/7P/K7 b - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: The rule of the square: small caveat"]
-[Date "????.??.??"]
+[Guid "R627b77122b67401a8f98076fbba48ad5"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -725,12 +708,11 @@ with this "rule." If the pawn is on its starting position, make sure to draw the
 square 1 size smaller than normal to account for the first move the pawn can 
 make! }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/3k4/8/8/3PK3/8/8/8 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: Revisiting opposition"]
-[Date "????.??.??"]
+[Guid "R10dfecc92b394552982626102103cc4d"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -744,12 +726,11 @@ Gd6c7,Gd6d7,Gd6e7,Rd8c7,Rd8d7,Rd8e7] Opposition again allows us to now control
 the all-important queening square: d8. }  Kc8 3. Ke7 {[%csl Bd8]}  Kc7 4. d5 Kc8 
 5. d6 Kb7 6. d7 Kc6 7. d8=Q $18 *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/7k/8/8/6KP/8/8/8 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: When opposition isn't enough: rook pawns"]
-[Date "????.??.??"]
+[Guid "R0dfb6a896cda4703802b3a3d98230199"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -765,12 +746,11 @@ king near the h8 square. White cannot ever push them out of the corner without
 forcing stalemate. }  2. Kg5 Kh8 3. Kh6 Kg8 4. h5 Kh8 5. Kg6 Kg8 6. h6 Kh8 7. h7 
 $10 { Stalemate. }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "6k1/8/6K1/6P1/8/8/8/8 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: A stalemate trap with knight pawns"]
-[Date "????.??.??"]
+[Guid "R5117fcf1902a42878e64dbaa4051506b"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -788,12 +768,11 @@ position, and win as in the main line. } ) ) 1... Kh8 { Black maintains the
 opposition. }  2. g6 Kg8 3. g7 Kf7 4. Kh7 $18 {[%csl Bg8] The black king is 
 forced away from the g8 blockade, and white promotes next. }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "7k/8/8/7P/5K2/8/2B5/8 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: The wrong-color bishop"]
-[Date "????.??.??"]
+[Guid "R256b0a17d3f74a3db98375d6a1fa7ad6"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -811,12 +790,11 @@ Kg5 (5. Bd5 $10 { Stalemate } ) 5... Kg7 6. h6+ Kh7 7. Bd3+ Kh8 8. Kg6 Kg8 9.
 Bc4+ Kh8 10. h7 $10 { No matter what white tries, black stays in the corner for 
 the draw. }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "B1B1B3/1B1B1Bk1/B1B1B3/1B1B1BKP/B1B1B2P/1B1B1B1P/B1B1B1BP/1B1B1B2 b - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: Exercise 1: Is it all over?"]
-[Date "????.??.??"]
+[Guid "R5e5a8c7d5b78462c8b05f4785e5b9e44"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -832,12 +810,11 @@ h7 $18) 4. h7 Kg7 5. h5 Kh8 6. h6 { Knowing this rook-pawn endgame is drawn will
 allow you to quickly calculate king and pawn endgames as well as save seemingly 
 lost positions with a bishop on the board! }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "1k6/ppr5/5R2/8/4b3/8/3KB3/8 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: Exercise 2: Tricky simplification"]
-[Date "????.??.??"]
+[Guid "R27482b2b0d72461b893da36b3e511ec6"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -853,12 +830,11 @@ can use endgame knowledge of specific positions to transform positions you don't
 fully understand into positions you know the correct evaluation of. }  (3... Bc6 
 4. Bxb7+ Kxb7 { Black cannot avoid the wrong-color bishop ending. } )  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/3k4/8/8/5K2/4P3/8 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: Retaking the opposition"]
-[Date "????.??.??"]
+[Guid "Ra4476940d1a441d3885672c97176efd7"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -880,12 +856,11 @@ With control of the queening square, white pushes through and makes a new queen.
 Remember that if the kings are at least two squares in front of the pawn, the 
 player with the pawn will always be able to win, opposition or not! }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "5k2/8/8/8/8/1P3K2/8/8 b - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: Distant opposition"]
-[Date "????.??.??"]
+[Guid "R30eb2a0c9b2a45829da66d4178727dd1"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -918,12 +893,11 @@ don't count squares, but rather look at the color of the squares the kings are
 on. If white goes to a light square, we go to a light square. If black goes 
 dark, we go dark. It's an alternative method to counting. }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "5k2/8/8/8/1P6/8/8/3K4 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: Exercise 3: A tricky standoff"]
-[Date "????.??.??"]
+[Guid "Rc6fc2458cad74ff7beae4eccf845598a"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -948,12 +922,11 @@ position.For a more advanced look at this concept, please check out this
 excellent video by the Saint Louis Chess Club on king and pawn endgames: 
 https://www.youtube.com/watch?v=GypgXL6L-ag }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/4p1p1/8/5P2/8/3k2K1 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: Exercise 4: Can you draw this?"]
-[Date "????.??.??"]
+[Guid "R5592a311f17f4fdcb289b37e207788cf"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -987,12 +960,11 @@ Kh3 $1 { Distant opposition again. Nice job showing your understanding of this
 position. If you want to see the many tries black has, please click "Analyse" 
 below and check my annotations on moves you might not have considered. }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "4k3/1R6/r7/4PK2/8/8/8/8 b - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: The Philidor position"]
-[Date "????.??.??"]
+[Guid "Rfeae4c9a02d44646bf018da24a5c96e3"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1022,12 +994,11 @@ our king away from the queening square, they will have to allow perpetual check.
 } ) 8... Rf1+ 9. Ke5 Re1+ 10. Kd6 Rd1+ 11. Kc6 Rc1+ 12. Kd6 Rd1+ $10 { Draw by 
 perpetual check }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "4k3/7R/8/3KP3/8/8/r7/8 b - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: Exercise 5: Reaching the Philidor"]
-[Date "????.??.??"]
+[Guid "R7e6749e061e4406bb301db410e4b3307"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1041,12 +1012,11 @@ prepare to perpetually check the white king from behind. }  3. Kd6 Rd1+ 4. Ke5
 Re1+ 5. Kf6 Rf1+ 6. Kg6 Rg1+ 7. Kf6 Rf1+ 8. Ke5 Re1+ { White has no choice but 
 accept the draw by perpetual check. }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "4K3/2k1P3/8/8/8/8/3R4/4r3 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: The Lucena position: Black makes it easy"]
-[Date "????.??.??"]
+[Guid "Rf7d04d9b8e444511bd3231be558f61dc"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1066,12 +1036,11 @@ win this rook. Hopefully we all feel confident checkmating the black king from
 this final position. If not, please revisit the first study: 
 https://lichess.org/study/wukLYIXj/OPBv5FWe. }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "4K3/2k1P3/8/8/8/8/3R4/4r3 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: The Lucena position: Building the \"]
-[Date "????.??.??"]
+[Guid "Rfa2ea80452444949861d03600551c891"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1103,12 +1072,11 @@ your opponent's pieces.With just these two positions under your belt, you should
 now feel comfortable converting or holding rook and pawn endgames that might be 
 decided by a single pawn! }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "1K6/1P6/4k3/8/8/8/1r6/3R4 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: Exercise 6: The crucial Lucena move"]
-[Date "????.??.??"]
+[Guid "R09d3bf7f54324393a571e6ca703b7c63"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1124,11 +1092,10 @@ Kc6 (4. Ka6 { This move works equally well. Play Kc6 instead for the solution. }
 Rxb7 $10) 4... Rc1+ 5. Kb5 Rb1+ 6. Rb4 $18 { After walking a tightrope, the 
 white king is now safe from checks, and the pawn promotes next. }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "3R4/4K1k1/4P3/r7/8/8/8/8 b - - 0 1"]
 [Event "Tal Memorial"]
+[Guid "Rc0b8653e6e87447cb7a7c97c4665c7e0"]
 [Date "2006.11.12"]
 [White "Levon Aronian"]
 [Black "Magnus Carlsen"]
@@ -1152,12 +1119,11 @@ handled easily. } ) 5. Rd8 Ra1 6. e7 Re1 7. Rd2 Kf6 8. Rf2+ Kg7 $18 { Arriving
 at the Lucena position we've seen earlier. Indeed, even Super GMs need to know 
 these endgames cold! }  1-0
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "3K4/8/5Q2/3b4/2k5/8/8/8 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: Queen vs bishop"]
-[Date "????.??.??"]
+[Guid "R0dc71d3cda594ff7bd55b683ba05f5be"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1177,12 +1143,11 @@ Qd2#) 10. Ke3 Kc2 11. Qxe2+ $18 { Black will quickly be mated, for instance,
 using the queen box method we learned in our previous study: 
 https://lichess.org/study/wukLYIXj/56iA0NCU. }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/8/3kn3/8/2K1Q3/8 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: Queen vs knight"]
-[Date "????.??.??"]
+[Guid "R1080c4ea9d1d4ddb87a2f4535bbbdaa8"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1216,12 +1181,11 @@ checkmate is somewhat tricky to pull off in blitz, but as long as you can
 remember this recurring setup, the checkmate follows directly by pushing the 
 king up the board. }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/4n3/3k4/6Q1/4K3/8/8 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: Exercise 7: Queen vs knight"]
-[Date "????.??.??"]
+[Guid "R4094767dd81b4f829c074acbe5d0e09d"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1235,12 +1199,11 @@ correct setup, as long as you are ready to meet Nc5 with Qf5! }  Nc5 3. Qf5 Ne6
 4. Kc3 Nc5 5. Kd4 Ne6+ 6. Kc4) 2... Nc5 3. Kd4 Ne6+ 4. Kc4 { We've reached the 
 key setup. Black has no useful knight moves and so his king must retreat. }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "Q1R1B1B1/4B1N1/8/8/8/8/8/4K3 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: Know what can mate!"]
-[Date "????.??.??"]
+[Guid "R1016bdcfc3664f2ca50d73a86a663f0c"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1259,12 +1222,11 @@ comfortable entering such endgames. On the other hand, this knowledge can also
 allow you to save many bad positions by leaving your opponent with insufficient 
 mating material. }  *
 
-[ChapterId "3"]
-[ChapterTitle "Intermediate endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "4K3/2k1P3/8/8/8/3R4/4r3/8 w - - 0 1"]
 [Event "Intermediate Endgames You Must Know!: Thanks for enjoying this study!"]
-[Date "????.??.??"]
+[Guid "Rc4ce526898eb44f798f2bd54b034bac6"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1287,20 +1249,21 @@ https://lichess.org/study/YtBYXc3m }  *
 
 
 
-[ChapterId "4"]
 [ChapterTitle "More endgames you must know by @NoseKnowsAll"]
+[Guid "R8a2345d673b044628b54d43a59729b15"]
 [ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "More endgames you must know by @NoseKnowsAll"]
 
 
  {This is a Lichess study https://lichess.org/study/xtDSXkyi by @NoseKnowsAll 
 imported into ChessForge}  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "7k/7P/8/5KN1/8/8/8/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: Introduction"]
-[Date "????.??.??"]
+[Guid "R00e2b0cada494b6fa0ebb0f97a923538"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1322,12 +1285,11 @@ this general advice occurs, I'll write it just like this:PRO TIP: Always bring
 your king up in the endgame!If you find this study useful, please heart it and 
 share it with any friends! }  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/1k3p2/5Pp1/KP4P1/8/8/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: Sacrificing for king activity"]
-[Date "????.??.??"]
+[Guid "Rb9c3446508e04ebeb6e7d9a2bb21bef3"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1351,12 +1313,11 @@ likely it is that the stronger side will be able to win. We've seen how hard it
 is to win with only one pawn left. But 3 against 2 is often much easier. 4 
 against 3 is easier still. }  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/2k3p1/1p6/1K6/6PP/8/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: Freezing a pawn majority"]
-[Date "????.??.??"]
+[Guid "R009740c8e94e42b48eefa03e22bb1ae6"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1383,12 +1344,11 @@ https://lichess.org/study/UsqmCsgC/0UNWhbnU. } ) 8. Kc4 Kg3 9. Kd4 Kxh3 10. Ke4
 Kxg4 $19 { We will win by maintaining the opposition, as in 
 https://lichess.org/study/wukLYIXj/2ru3TC7p. }  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/3k4/p7/3K3p/P6P/8/8/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: Exercise 1: The ole' switcheroo"]
-[Date "????.??.??"]
+[Guid "R2046a06f4a944fb0ad708b66f88076f1"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1422,12 +1382,11 @@ Naroditsky's king to secure the win: https://lichess.org/wLIkjU4x/black#97 }
 (7. Kf5 { Just as good as the main line. Play Kf6 instead for the solution. } )  
 (7. Kf4 { Just as good as the main line. Play Kf6 instead for the solution. } )  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/1p2kp2/p3p2p/4P2P/1P4P1/P3K3/8/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: Exercise 2: Unfreezing the pawn majority"]
-[Date "????.??.??"]
+[Guid "R5abb4aecb5e54ef8a1b150357c3dc885"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1457,12 +1416,11 @@ after Kh8 Kg5. } ) 6... Kxh6 7. Kxf7 Kg5 8. Kxe6 $18 { We'll win the game with
 our passed e pawn. }  (8. Ke7 $1 $18 { Also winning if you understand the 
 "trebuchet" technique. Let's just win directly with Kxe6 instead. } )  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "4k3/8/4N3/5n1P/8/8/8/7K w - - 0 1"]
 [Event "More Endgames You Must Know!: Knights vs pawns"]
-[Date "????.??.??"]
+[Guid "R65dea628e984492c8c5aa7ec0fbcf942"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1480,12 +1438,11 @@ unstoppable. We'll win this final position by following the pattern we learned
 in the other intermediate endgame study 
 https://lichess.org/study/UsqmCsgC/AGJrweqW. }  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "K7/8/5N2/8/8/7p/4k3/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: The correct circuit: knight against rook pawn"]
-[Date "????.??.??"]
+[Guid "R2df954e2e3b54e1cab044d34ef8d08d1"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1518,12 +1475,11 @@ visualize the knight move that reaches the 8th rank (in this case f1), and then
 complete the circuit by making two more knight moves (in this case e3 and g4). } 
  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/8/8/p2K4/k3N3/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: When the knight is stronger than the pawn"]
-[Date "????.??.??"]
+[Guid "Rd5f07b8cadf24a82af09e64cbb3b8863"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1544,12 +1500,11 @@ can move to the same color square as the black king. Since neither piece can
 triangulate, we need our knight to eventually attack the other color square (a2) 
 to force black to push the pawn forward and self-mate. }  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "7k/7P/8/5KN1/8/8/8/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: An important knight fortress"]
-[Date "????.??.??"]
+[Guid "Rf509a9496c444458bf96f291f668ce1a"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1567,12 +1522,11 @@ Therefore, our knight cannot move anywhere to let us control the h8 square and
 kick the enemy king out from this blockading square. If only we had activated 
 our king first and not pushed the h pawn so far up the board! }  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "K7/8/8/5N2/8/7p/8/3k4 w - - 0 1"]
 [Event "More Endgames You Must Know!: Exercise 3: Reaching the correct circuit"]
-[Date "????.??.??"]
+[Guid "R1ea5bab0ee0f4b92a08561c8573de338"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1591,12 +1545,11 @@ have to push the pawn to h2, but they were clearly not making any progress
 otherwise. Nice job nailing this concept!Here's Magnus Carlsen explaining his 
 understanding of a similar position: https://youtu.be/k1SCXb2WA2U?t=120 }  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/1p3pkp/3n2p1/P2Bp3/8/6P1/5PKP/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: Exercise 4: The power of the rook pawn"]
-[Date "????.??.??"]
+[Guid "R78b9ba7e391240dc8e32199151d6cf30"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1609,12 +1562,11 @@ passed a pawn! }  Nxb7 (1... Kf6 2. a6 Nb5 3. Bc6 Na7 4. Bd5 Ke7 $18) 2. a6 Nd6
 3. a7 Nb5 4. a8=Q $18 { This is another excellent example about how learning a 
 few important endgames will open your mind to so many new possibilities! }  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/8/3N4/p7/k2K4/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: Exercise 5: A draw or a win?"]
-[Date "????.??.??"]
+[Guid "R04ff91a75acd4ed59d099d0604cdbdd9"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1636,12 +1588,11 @@ precise moves, the a2 square is covered, and black is forced to push the a
 pawn... }  5. Nb3# { I've personally never had the pleasure of playing such a 
 checkmate in one of my games. Maybe one day! }  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/4B3/8/6K1/8/8/p1k5/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: Bishops vs pawns"]
-[Date "????.??.??"]
+[Guid "Rec917f23c53946488a25f2f9339faefd"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1655,12 +1606,11 @@ square (actually any square on the pawn's path to promotion), then it's an easy
 draw. }  Kb1 2. Bh8 { Our bishop can wait on correct diagonal forever. There is 
 no progress. }  Kc2 3. Bg7 Kb1 4. Bf6 a1=Q 5. Bxa1 $10 *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/B3k3/4pp2/8/5K2/8/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: Bishop against two pawns"]
-[Date "????.??.??"]
+[Guid "Rda9455cbeb804a5c9bd26cdd2902663d"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1681,12 +1631,11 @@ Kd5 $2 6. Bxf5 $10 { There is no progress on the queenside either. } ) 6. Bxe4
 fxe4+ 7. Kxe4 $10 { Eventually black has to admit that the game is a dead draw. 
 }  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/4kp2/4p3/3p4/3B1K2/8/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: Bishop against three pawns?"]
-[Date "????.??.??"]
+[Guid "R194ef6d008a14d8f9a5c6ba62eeed60a"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1706,12 +1655,11 @@ have to scramble in order to regain the easy blockade we previously had. }  4.
 Bc4+ $1 Ke7 5. Kf5 $10 {[%csl Gf6]} ) 3... Ke6 4. Kg4 Kf7 5. Kf5 Ke7 6. Be4 $10 
 { The pawns remain blockaded on the b1-h7 diagonal. No progress can be made. }  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/b7/B3k3/4pp2/8/5K2/8/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: Exercise 6: Opposite-color bishops"]
-[Date "????.??.??"]
+[Guid "Rc7e63d43d7bc427cbc9954256845714d"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1730,12 +1678,11 @@ e4+ 4. Bxe4 fxe4+ 5. Kxe4 $10 { Our defensive task exists purely on the light
 squares. Even giving our opponent an extra dark squared bishop isn't enough to 
 break our light square blockade. }  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "7k/8/8/7P/5K2/8/2B5/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: The wrong-color bishop"]
-[Date "????.??.??"]
+[Guid "Rf9975daf853841c58f6e823e390899cf"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1749,12 +1696,11 @@ Kg6 Kg8 4. Bb3+ Kh8 5. h7 $10 { No matter what we try, black stays in the corner
 for a draw. For a great example of what this means, see: 
 https://lichess.org/study/UsqmCsgC/zyG2WNmK }  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "6k1/7p/4K2P/4B3/8/8/8/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: Another important fortress"]
-[Date "????.??.??"]
+[Guid "R10c2efd15cf2407b94280178b5345aa5"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1768,12 +1714,11 @@ rare situation where a single bishop is able to deliver checkmate! } ) 2. Kf5
 Kg8 3. Ke6 Kf8 4. Kd7 Kg8 5. Ke7 $10 { Stalemate. We either let black stay in 
 the corner, or stalemate the black king. }  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/5k1p/7P/5KP1/8/4B2n/8/8 b - - 0 1"]
 [Event "More Endgames You Must Know!: Exercise 7: A desperation play"]
-[Date "????.??.??"]
+[Guid "R1619cb4e6f594d3ea11e38901b6b9f2e"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1792,12 +1737,11 @@ that white cannot make further progress without stalemating us. }  (7... Kh8 $4
 { The last trick left! White plays Kf7# and you have to go home in tears... }  
 8. Kf7#)  *
 
-[ChapterId "4"]
-[ChapterTitle "More endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "7k/7P/8/5KN1/8/8/8/8 w - - 0 1"]
 [Event "More Endgames You Must Know!: Thanks for enjoying this study!"]
-[Date "????.??.??"]
+[Guid "R46f2c4365ff241c18cd505ee3ef6adbe"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1820,20 +1764,21 @@ https://lichess.org/study/YtBYXc3m }  *
 
 
 
-[ChapterId "1"]
 [ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
+[Guid "Rc34986672cf94b93978ae52e1946a8a2"]
 [ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Advanced endgames you must know by @NoseKnowsAll"]
 
 
  {This is a Lichess study https://lichess.org/study/UO2zqigQ by @NoseKnowsAll 
 imported into ChessForge}  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/5pk1/8/2K2Q2/8/8/8/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Introduction"]
-[Date "????.??.??"]
+[Guid "R08de0c56b0b244b98b95463f9f3b517d"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1856,12 +1801,11 @@ general advice occurs, I'll write it just like this:PRO TIP: Always bring your
 king up in the endgame!If you find this study useful, please heart it and share 
 it with any friends! }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/1k1p4/3P1K2/8/8/8/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Trebuchet position"]
-[Date "????.??.??"]
+[Guid "Re0d8a1e41e04475aa8fccb8653357b61"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1889,12 +1833,11 @@ force because the king can no longer defend their last pawn. }  Kc4 { Any king
 move is equivalent, as the d6 pawn could no longer be defended. }  4. Kxd6 Kd4 
 5. Ke6 $18 {[%cal Gd5d8] White will easily promote the pawn. }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "7K/8/k1P5/7p/8/8/8/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: The famous Reti endgame"]
-[Date "????.??.??"]
+[Guid "Rf20e11c946d84c2d979a0a49846825d8"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1927,12 +1870,11 @@ endgame. } ) 6. c8=Q $10 { With best play, we reach an equal queen vs queen
 endgame. Hopefully this example gets you excited to explore more exciting pawn 
 races! }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/5p1p/8/K6k/8/8/PP6/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: A typical pawn race"]
-[Date "????.??.??"]
+[Guid "R571ec062dd814fbf9fd0eecf67740111"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1955,12 +1897,11 @@ tempo to move their king off of the a file, (2) our a pawn could stop the h pawn
 by queening first, and (3) this final position is a win.To help with (3), we'll 
 explore some possible queen vs 7th rank pawn endgames later in this study. }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/1p6/8/k7/3K4/5P2/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Baiting out a future check"]
-[Date "????.??.??"]
+[Guid "R656d0ddb37cc45fc863b3446ceaea74b"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -1991,12 +1932,11 @@ difficult to calculate from the starting position, you'll find that the lines
 are extremely forcing, and so the only trick is to stay acutely aware of each 
 tempo and possible checks throughout the calculation. }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/4K1pp/6Bk/7P/8/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Exercise 1: Loading the trebuchet"]
-[Date "????.??.??"]
+[Guid "Rca58ec4b37594475be64bfd047b00724"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2016,12 +1956,11 @@ pawn endgame! }  Kg3 3. Kxg5 $18 { We will be able to easily queen this last
 remaining pawn.PRO TIP: Learning a few important endgames will allow you to 
 break down more complicated positions into positions you fully understand. }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/4K3/8/8/5p1k/5P1P/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Exercise 2: An intense pawn race"]
-[Date "????.??.??"]
+[Guid "Rf939deceeeeb40cf9c1e19ead80d238a"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2047,12 +1986,11 @@ queen! With our king on d5, however, this is a perfectly drawn queen vs queen
 endgame as long as we keep our king off the long diagonal, avoiding that one 
 trick.Click "Analyze" to explore the important sidelines of this pawn race. }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/4K1pp/8/8/8/8/k6P/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Exercise 3: Visualizing to the end"]
-[Date "????.??.??"]
+[Guid "R836a6e7d96e540c5b3bbcb38ac8e2076"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2086,12 +2024,11 @@ check, gaining a crucial tempo that ensures the h pawn will fall next.This
 puzzle is actually quite similar to the ending found in MVL - Shankland, 2021: 
 https://www.youtube.com/watch?v=Xt4spX_7h34 }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/3P1K2/8/8/8/6k1/7q b - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Queen vs 6th rank pawn"]
-[Date "????.??.??"]
+[Guid "R6c119476dd93499c94470d9742db5889"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2103,12 +2040,11 @@ the pawn is permanently blockaded, black can approach the pawn with the king at
 their leisure. Once the pawn is won, black converts as in the beginner endgame 
 study: https://lichess.org/study/wukLYIXj/56iA0NCU }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "KQ6/8/8/8/8/8/5kp1/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Queen vs 7th rank pawn"]
-[Date "????.??.??"]
+[Guid "Rebbc1ff7f26b402ebf717a9d6c1a6f65"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2139,12 +2075,11 @@ queen is better than the pawn if the pawn is a knight pawn or center pawn
 Qf3+ Ke1 22. Qxg2 $18 { Even if there wasn't immediately mate, white wins the 
 pawn and is about to mate anyway. } )  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "KQ6/8/8/8/8/8/6kp/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Queen vs 7th rank rook pawn"]
-[Date "????.??.??"]
+[Guid "R59f621342cc3423d857ad34b62263a3c"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2163,12 +2098,11 @@ issue with queening here and enters a trivially drawn queen vs queen endgame. }
 (9... Kh1 $4 { If black is premoving Kh1-Kg1, then it's possible to accidentally 
 walk into checkmate! }  10. Qf1# { The final trick in action. } )  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "KQ6/8/8/8/8/8/5pk1/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Queen vs 7th rank bishop pawn"]
-[Date "????.??.??"]
+[Guid "Rc9ab96de165a48e7b3eefb7bab7719cb"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2187,12 +2121,11 @@ out IM Eric Rosen abusing this trick against some strong GMs!
 https://www.youtube.com/watch?v=YB_LLivPlY8 }  (8. Qf3+ $5 Kg1 $10 { Black is 
 happy to repeat the position and accept a draw. } )  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/3K4/Q7/8/2pk4/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Refuting the draw"]
-[Date "????.??.??"]
+[Guid "R84d37f76dfbf4dc2ac9acbfa36aad46c"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2209,12 +2142,11 @@ Qc1#) 8. Qa6+ Kb1 9. Qa2# { This same idea works in the case of a rook pawn as
 well. If white's king is active enough, then remember that winning the pawn 
 doesn't end the game - checkmate ends the game. }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/3K4/8/4Q3/4p3/5k2 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Exercise 4: Converting the win"]
-[Date "????.??.??"]
+[Guid "R56ddabf090d74b30b10a011e83540d26"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2228,12 +2160,11 @@ White wins the pawn and the game.Now that you know which of these queen endgames
 are winning/drawing, you should feel much more comfortable converting pawn races 
 where one player queens only one move before the other! }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/1K6/8/Q7/p7/1k6 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Exercise 5: Win or draw?"]
-[Date "????.??.??"]
+[Guid "R056bcc1ff82b46e58de63b54b94c3960"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2254,12 +2185,11 @@ up! }  Kxa1 $10) 4... Kb1 5. Kb3 $1 $18 { Nicely done! Black has the move, but
 there are no legal king moves and no queen moves that stop both Qb2# and Qd1# 
 without sacrificing the queen. White has forced mate in 3 from this position. }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/6P1/4K3/1n6/8/1p6/1k6 b - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Exercise 6: Race interference"]
-[Date "????.??.??"]
+[Guid "Rff92ac808b63442594c4dd32bc242667"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2278,11 +2208,10 @@ winning. Play Kc1 instead for the solution. } ) 5. Kxg8 b1=Q $19 { Excellent!
 With our knowledge on queen vs pawn endgames, we know that the knight pawn will 
 eventually fall. }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "2r5/1p3p2/1q2p1k1/p2pPpPp/2r2P2/P1PR1Q2/1P1R2KP/8 b - - 3 1"]
 [Event "New York"]
+[Guid "Rcba73e96a9a4488b9b3b8e84e25f0c73"]
 [Date "1927.03.13"]
 [White "Aron Nimzowitsch"]
 [Black "Jose Raul Capablanca"]
@@ -2338,12 +2267,11 @@ their dominance against an opponent's forces. This is exactly why an open file
 for your rooks in the middlegame is not so important unless there is a way to 
 actually infiltrate into your opponent's camp. }  0-1
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "3k4/8/3BB3/4K3/8/8/8/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Two bishops mate"]
-[Date "????.??.??"]
+[Guid "R37d18de8112b47d180e238ecf96b06e4"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2373,12 +2301,11 @@ checkmate, very few moves are actually check. We are seeking to control the
 king's escape route more often than actually check the king itself until the 
 very end. }  (7. Bc5 $4 $10 { A typical stalemate that we must avoid. } )  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "4k3/8/8/8/8/8/8/B3K2B w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Reaching the two bishops mate"]
-[Date "????.??.??"]
+[Guid "R359461d4a88840bb85c5f56b443795f3"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2398,12 +2325,11 @@ black king is forced against the wall. Now we plan to keep him there. }  11. Be5
 {[%cal Be5b8,Bd5a8]}  Kd8 12. Bd6 Kc8 13. Bc6 $18 { We've returned to the key 
 position seen in the previous chapter. Can you now finish off your opponent? }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "3k4/8/2BBK3/8/8/8/8/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Exercise 7: Finishing off the two bishop mate"]
-[Date "????.??.??"]
+[Guid "R975fbe0ed9724b0ca16ffd361d89ff0d"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2429,12 +2355,11 @@ stronger than a queen under certain circumstances in this beautiful game from
 the 2021 World Cup: https://www.youtube.com/watch?v=DcTOcaGGPDA (the real fun 
 starts at 10:18). }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "k7/1NK5/8/1B6/8/8/8/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Knight and bishop mate"]
-[Date "????.??.??"]
+[Guid "R146458d61bec481cb00a0ba3bd2db5ad"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2458,12 +2383,11 @@ c8 to control the a7 square. Placing it on b5 was impossible, and c6 would have
 been in the way of the bishop delivering checkmate. Now let's back up and see 
 how to arrive at this checkmate. }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/2N5/8/2K5/2B5/k7 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: The W maneuver"]
-[Date "????.??.??"]
+[Guid "R9e56446a87224e0f985b806a9dcd8b13"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2511,12 +2435,11 @@ where black is in zugzwang, the fact that your king must be as active as
 possible, and that both of your pieces should stay on the same color to 
 maximally control the board is all you need - no memorization required! }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/8/k7/1NK5/8/1B6 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Best defense in the W maneuver"]
-[Date "????.??.??"]
+[Guid "R8637aa2e5cb84f339ad5b21183f0d3b7"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2558,12 +2481,11 @@ maneuver. }  Ka6 10. Kc6 Ka7 11. Kc7 Ka6 12. Bc4+ {[%csl Ba5,Bb5,Bb6,Bb7]}  Ka7
 13. Bb5 $18 { The same mate in 3 we've already seen is right around the corner. 
 }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/8/6N1/5KB1/8/6k1 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Exercise 8: Starting the W maneuver"]
-[Date "????.??.??"]
+[Guid "Rfdfbb0e564ad40029a64beffe86dc70f"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2584,12 +2506,11 @@ final position is mate in 4. Do you see it?GM Aman Hambleton also explains this
 maneuver in an educational chessbrah video 
 https://www.youtube.com/watch?v=kZ3gi_yFW40 }  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/8/8/8/5K2/5N1B/4k3 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Exercise 9: The tricky defense"]
-[Date "????.??.??"]
+[Guid "Ref879ebeb0c0420488f3b6b0cc07c070"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2615,11 +2536,10 @@ duo. Once your opponent's king is stuck on the edge of the board, setup for the
 W maneuver and prepare to mate him! }  (8. Nc4 $5 { Also good. Play Bf2 instead 
 to reset to the configuration we are used to seeing. } )  *
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "6k1/5p2/2r1p1p1/3p1n2/3P3p/1P5P/3RNPP1/6K1 b - - 0 1"]
 [Event "Lasker - Capablanca World Championship Match"]
+[Guid "R3a100cd25ca04d94b916728c9199799e"]
 [Date "1921.04.08"]
 [White "Emanuel Lasker"]
 [Black "Jose Raul Capablanca"]
@@ -2695,12 +2615,11 @@ title of World Champion.The game could have continued Rd1 Nf2, Rb1, d3. At that
 point, Ne4 followed by d2-d1 is unstoppable unless black sacrifices a full 
 piece. }  0-1
 
-[ChapterId "1"]
-[ChapterTitle "Advanced endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/5pk1/8/2K2Q2/8/8/8/8 w - - 0 1"]
 [Event "Advanced Endgames You Must Know!: Thanks for enjoying this study!"]
-[Date "????.??.??"]
+[Guid "R2e4c22ff4bd0422faf3518b731cacd77"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2723,20 +2642,21 @@ https://lichess.org/study/YtBYXc3m }  *
 
 
 
-[ChapterId "5"]
 [ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
+[Guid "Rda81b1cdba56489c88da3b3c0af6c102"]
 [ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Rook endgames you must know by @NoseKnowsAll"]
 
 
  {This is a Lichess study https://lichess.org/study/bnboDhFM by @NoseKnowsAll 
 imported into ChessForge}  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "R7/K5k1/P7/8/8/8/8/1r6 w - - 21 1"]
 [Event "Rook Endgames You Must Know!: Introduction"]
-[Date "????.??.??"]
+[Guid "Rad79c422c1b743e9907fc98ff8e53c1f"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2761,12 +2681,11 @@ general advice occurs, I'll write it just like this:PRO TIP: Always bring your
 king up in the endgame!If you find this study useful, please heart it and share 
 it with any friends! }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "1K1k4/1P6/8/8/8/8/r7/2R5 w - - 1 1"]
 [Event "Rook Endgames You Must Know!: Fundamental rook endgames"]
-[Date "????.??.??"]
+[Guid "R3d516195880a464fb413ea84070fe077"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2778,12 +2697,11 @@ some overlap between the beginning of this study and my intermediate endgames
 study https://lichess.org/study/UsqmCsgC, so feel free to skip the next four 
 chapters if you have already mastered those endgames. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "4k3/1R6/r7/4PK2/8/8/8/8 b - - 0 1"]
 [Event "Rook Endgames You Must Know!: The Philidor position"]
-[Date "????.??.??"]
+[Guid "R87cd8b03276c4d5ba4d955e100749b27"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2821,12 +2739,11 @@ Besides giving perpetual check, black can also return to directly attacking the
 pawn if the white king travels too far. } ) 12... Rd1+ $10 { Draw by perpetual 
 check. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "4k3/7R/8/3KP3/8/8/r7/8 b - - 0 1"]
 [Event "Rook Endgames You Must Know!: Exercise 1: Reaching the Philidor"]
-[Date "????.??.??"]
+[Guid "Ree738e2ae5774af8b51fbdd5b5ea176b"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2840,12 +2757,11 @@ prepare to perpetually check the white king from behind. }  3. Kd6 Rd1+ 4. Ke5
 Re1+ 5. Kf6 Rf1+ 6. Kg6 Rg1+ 7. Kf6 Rf1+ 8. Ke5 Re1+ { White has no choice but 
 accept the draw by perpetual check. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "1K1k4/1P6/8/8/8/8/r7/2R5 w - - 1 1"]
 [Event "Rook Endgames You Must Know!: The Lucena position: Building the \"]
-[Date "????.??.??"]
+[Guid "Re9fef863ee65447a916e1c41dae2d05b"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2873,12 +2789,11 @@ next. } ) 6. Kb5 Rb2+ 7. Rb4 $1 { The bridge is complete, and the mystery behind
 pawn is queening next. }  Rxb4+ 8. Kxb4 Kd7 9. b8=Q $18 { White promotes and 
 wins the game. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "1K6/1P6/4k3/8/8/8/1r6/3R4 w - - 0 1"]
 [Event "Rook Endgames You Must Know!: Exercise 2: The crucial Lucena move"]
-[Date "????.??.??"]
+[Guid "R202b87b6c4374c149369af29b60c9d71"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2898,12 +2813,11 @@ Rxb7 $10)  (4. Kc5 $4 { Oh no your pawn! }  Rxb7 $10) 4... Rc1+ 5. Kb5 Rb1+ 6.
 Rb4 $18 { After walking a tightrope, the white king is now safe from checks, and 
 the pawn promotes next. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "k7/8/6R1/7P/6P1/8/K7/7r w - - 0 1"]
 [Event "Rook Endgames You Must Know!: Escorting two connected passed pawns"]
-[Date "????.??.??"]
+[Guid "R4228190ac6c24297ae88ebea3752bebc"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2919,12 +2833,11 @@ protected square in front of the lead pawn. The "Slinky" has moved forward,
 making progress towards the queening squares. }  Kd6 4. h7 Ke6 5. g6 Kf6 6. Rg8 
 $18 { Repeating the Slinky maneuver. h8=Q is coming next. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "R7/P4k2/8/8/8/8/5K2/r7 b - - 11 1"]
 [Event "Rook Endgames You Must Know!: The rook in front of the pawn"]
-[Date "????.??.??"]
+[Guid "R799ff72afbfe4782b7dfa3364e1a035f"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2955,12 +2868,11 @@ But black does not budge from the important a file. }  13. Kb3 Kh7 14. Kb4 Kg7
 15. Kb5 Ra1 $1 16. Kb6 Rb1+ $1 $10 { As we have now seen, white cannot make 
 progress. The game will be drawn by the 50 move rule. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "R7/P4k2/8/8/8/8/r7/7K b - - 42 1"]
 [Event "Rook Endgames You Must Know!: Exercise 3: A huge mis-step"]
-[Date "????.??.??"]
+[Guid "R8fcdfb49e92447c7872bd0d62acd88b3"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -2975,12 +2887,11 @@ solution. } ) 2... Rxa7 { You were threatening to promote, so black was forced
 to take your pawn. What next? }  3. Rh7+ Kd6 4. Rxa7 $18 { Nicely done! Up a 
 full rook, white is now easily winning. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "2r5/3k2pp/1pn1p3/p7/P1pP4/4B2P/RP1K1PP1/8 b - - 0 1"]
 [Event "London 1922"]
-[Date "????.??.??"]
+[Guid "Reafee07f7f2647b1b5990fc9c687f65a"]
+[Date ""]
 [White "Henry Atkins"]
 [Black "Jose Raul Capablanca"]
 [Result "0-1"]
@@ -3033,12 +2944,11 @@ Rxg2 27. Bf2 Nb4 $1 $19 {[%cal Bb4a2] White resigned rather than allow a2 or
 Rxa3?? Nc2+. This passed pawn is completely out of control. }  28. Rxa3 $2 (28. 
 Ke2 a2 $19) 28... Nc2+ 29. Ke2 Nxa3 $19 0-1
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "R7/P5k1/8/8/8/8/r4P2/6K1 w - - 0 1"]
 [Event "Rook Endgames You Must Know!: Advanced rook endgames"]
-[Date "????.??.??"]
+[Guid "Ra3f96e17daf3457790c2a53b1ac9bc09"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3054,12 +2964,11 @@ building-block positions we've just explored. This upcoming material will be
 mostly designed for players with a lichess rating >2000, but anyone who feels 
 comfortable with the previous positions is welcome to explore as well! }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "1K1k4/1P6/8/8/r7/8/8/2R5 w - - 1 1"]
 [Event "Rook Endgames You Must Know!: Exercise 4: Black prevents the bridge"]
-[Date "????.??.??"]
+[Guid "R2c3f75938d0741d2a65f6d62672a7a23"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3084,12 +2993,11 @@ you're losing your new queen! }  Rb2+ 7. Kc6 Rxb8 $10)  (6. Rd4 $1 { Yes, we can
 revert to the bridge method here too. Play Rb1 instead for the solution. } )  
 (6. Rd8)  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "K7/P4k2/8/8/8/8/1r6/4R3 w - - 1 1"]
 [Event "Rook Endgames You Must Know!: The Lucena rook pawn"]
-[Date "????.??.??"]
+[Guid "Rf51b984e2b4a42cb93ed96e54228ccf2"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3129,12 +3037,11 @@ do not try and memorize these queen checks. Instead, notice that each check
 forces the black king further away from the rook and/or onto a dark square from 
 which there is an inevitable fork. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "R7/6k1/P7/8/8/5K2/8/r7 b - - 11 1"]
 [Event "Rook Endgames You Must Know!: Failing to reach the Vancura position"]
-[Date "????.??.??"]
+[Guid "R05cf9cd6d6ae439ea8e37dd9c125139e"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3158,12 +3065,11 @@ Kd3 Rd1+ 16. Kc2 { No more checks. }  Ra1 17. a8=Q Rxa8 18. Rxa8 $18 { PRO TIP:
 One can always escape a rook's perpetual check attempt by zigzagging with the 
 king towards the rook until the rook is attacked and forced away. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "R7/6k1/P7/8/8/5K2/8/r7 b - - 11 1"]
 [Event "Rook Endgames You Must Know!: The Vancura position"]
-[Date "????.??.??"]
+[Guid "Rb03d6f34d3e44268804ebc6b994992a8"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3187,12 +3093,11 @@ instead of from behind. }  6. Kb6 Rf6+ 7. Ka7 Rf7+ 8. Kb8 Rf8+ 9. Kb7 Rf7+ 10.
 Kc6 Rf6+ 11. Kd7 Rf7+ 12. Ke6 Rf6+ 13. Kd5 Rb6 $10 { White has made no progress 
 and black repeats the position once. No progress can be made here. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "R7/6k1/P7/8/5K2/8/8/r7 b - - 20 1"]
 [Event "Rook Endgames You Must Know!: A trick in the Vancura"]
-[Date "????.??.??"]
+[Guid "Rf5ccd013ba034245a827cdbb8e995c32"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3228,12 +3133,11 @@ white will never be able to escape the a file. }  Rb1+ 13. Ka7 Ra1 14. Rb6 Kc7
 $1 $10 { As long as black's king prevents white's king from leaving the a file, 
 the game is drawn. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/5k2/P6R/r7/4K3/8/8/8 b - - 31 1"]
 [Event "Rook Endgames You Must Know!: Exercise 5: The issue with memorization"]
-[Date "????.??.??"]
+[Guid "R4dc2c4e0a2f24ec0bb0f45dd7cd7426d"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3251,12 +3155,11 @@ pawn threatens to queen next and so must be taken. }  Rxa7 4. Rh7+ Kc6 5. Rxa7
 $18 { Memorizing these variations is not good enough. You have to understand WHY 
 the moves are being made if you want to truly learn these endgames! }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "R7/P5k1/8/8/8/8/r5P1/6K1 w - - 0 1"]
 [Event "Rook Endgames You Must Know!: Extra g pawn is drawn"]
-[Date "????.??.??"]
+[Guid "R580f23c790e046d0bc8079099f3f2fdb"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3277,12 +3180,11 @@ defends the a pawn. }  13. Kc7 Ra1 $10 { This exact drawing technique works just
 as well if white has an extra h pawn instead of an extra g pawn. In that case, 
 black's king remains secure on h7 instead of g7. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "R7/P5k1/8/8/8/8/r4P2/6K1 w - - 0 1"]
 [Event "Rook Endgames You Must Know!: Extra f pawn is winning"]
-[Date "????.??.??"]
+[Guid "R2d95008dec1f495eb85b65ef18b8db85"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3303,12 +3205,11 @@ ensuring the game was drawn after all. Be sure to watch for these small tricks
 in your own games! } ) 7. Rh8 $1 Rxa7 8. Rh7+ $1 Kxf6 9. Rxa7 $18 { The usual 
 skewer decides the game. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "R7/P5k1/8/8/8/8/r4P2/6K1 w - - 0 1"]
 [Event "Rook Endgames You Must Know!: A tricky stalemate"]
-[Date "????.??.??"]
+[Guid "R8c580a5e72b34236a3eaf22c0c342415"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3327,12 +3228,11 @@ Rxa7 $1 9. Rh7+ Kf6 $1 10. Rxa7 $10 { Stalemate! If you're on the black side of
 this position, feel free to try to set up this trick if you can tell your 
 opponent knows how to convert from the original position. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/7k/8/6KP/6P1/8/R7/6r1 w - - 0 1"]
 [Event "Rook Endgames You Must Know!: When two connected pawns are enough"]
-[Date "????.??.??"]
+[Guid "R042bf88dc4de4c3a8bb0b5138004cf53"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3375,12 +3275,11 @@ makes progress, how to block the rook checks, and how black can attempt to
 stalemate themselves. If you can internalize these little tricks, you are sure 
 to convert this endgame under pressure! }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/r5kP/6P1/3R1K2/8/8/8 b - - 0 1"]
 [Event "Rook Endgames You Must Know!: When two connected pawns are not enough"]
-[Date "????.??.??"]
+[Guid "Rd1db1429c83e46439f40996e39e87e35"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3408,12 +3307,11 @@ The g pawn is again threatened for real. }  6. Kf4 (6. Ke6 $2 Kxg5 $10)  (6.
 Re6+ $2 Kxg5 $10) 6... Rb4+ $1 7. Re4 Rb6 $10 { Repeating the original position. 
 Black's 6th rank blockade cannot be disturbed in any variation. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "4K3/1r4k1/3RP3/8/8/8/8/8 b - - 6 1"]
 [Event "Rook Endgames You Must Know!: Exercise 6: Reaching the Lucena"]
-[Date "????.??.??"]
+[Guid "Ree4f533da24b423081a2e5a1ef099ebb"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3432,12 +3330,11 @@ to prevent Kf7 with Rf6+. } )  (4. Rd2 $1 { Equally good. Play Rd1 instead for
 the solution. } )  (4. Rd3 $1 { Equally good. Play Rd1 instead for the solution. 
 } )  (4. Rd4 $1 { Equally good. Play Rd1 instead for the solution. } )  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/R7/8/6k1/p7/6K1/r7 w - - 0 1"]
 [Event "Rook Endgames You Must Know!: Exercise 7: Preventing the Vancura"]
-[Date "????.??.??"]
+[Guid "Rb55a5908d20e419d860ad3b36646d5ba"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3470,12 +3367,11 @@ position. }  (5... Rc2 $1 $19 { Also winning. Play Rb2 instead for the solution.
 } )  (5... Rd2 $1 $19 { Also winning. Play Rb2 instead for the solution. } )  
 (5... Re2 $1 $19 { Also winning. Play Rb2 instead for the solution. } )  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/8/6PR/3k4/8/6rP/8/K7 b - - 0 1"]
 [Event "Rook Endgames You Must Know!: Exercise 8: Actively stopping the Slinky"]
-[Date "????.??.??"]
+[Guid "R24c5dda576eb4115b3f9902c45775347"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3516,12 +3412,11 @@ this difficult position. Sequences like this are the reason masters joke that
 "all rook endgames are drawn." King activity sometimes matters more than two 
 pawns! }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "R7/6k1/P7/8/5K2/8/8/r7 b - - 21 1"]
 [Event "Rook Endgames You Must Know!: Exercise 9: Punishing an inaccuracy in the Vancura"]
-[Date "????.??.??"]
+[Guid "R23bceecca434430cb191189f80ed73d3"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3544,12 +3439,11 @@ unstoppable. }  6. a8=Q Rxa8 7. Rxa8 $18 { Now that we understand why the king
 cannot go to the back rank after our rook check, let's explore what happens if 
 the black king tries to walk up the board to challenge us next. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "R7/6k1/P7/8/5K2/8/8/r7 b - - 21 1"]
 [Event "Rook Endgames You Must Know!: Exercise 10: The critical line after Rb1"]
-[Date "????.??.??"]
+[Guid "R26b81590a36d451f85f9e165589496e7"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3569,12 +3463,11 @@ solution. } ) 5... Ra4 6. a7 $1 $18 { Excellent job! Black's king is more than 1
 square away from the g7/h7 safe squares, so we transition to the known winning 
 rook and pawn endgame. }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "8/1kp5/1p6/p5r1/8/3P4/PPP4R/1K6 w - - 0 1"]
 [Event "Rook Endgames You Must Know!: Practical endgame advice"]
-[Date "????.??.??"]
+[Guid "Rcf232efa3ffe415585b4d06eb594fd0f"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -3595,12 +3488,11 @@ rook endgames, 4 vs 3 are often drawn, 3 vs 2 are usually drawn, and 2 vs 1 or 1
 vs 0 are almost always drawn using the techniques we've explored in this study. 
 }  *
 
-[ChapterId "5"]
-[ChapterTitle "Rook endgames you must know by @NoseKnowsAll"]
 [ContentType "Exercise"]
 [FEN "R7/K5k1/P7/8/8/8/8/1r6 w - - 21 1"]
 [Event "Rook Endgames You Must Know!: Thanks for enjoying this study!"]
-[Date "????.??.??"]
+[Guid "R6f7e30a0e8154628b8fbe08cd45f9b0d"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
