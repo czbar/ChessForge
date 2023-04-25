@@ -11,8 +11,8 @@
 
 *
 
-[ChapterId "1"]
 [ChapterTitle "Introduction"]
+[Guid "Rde3db7b1aeb54df89dd102207c302bf2"]
 [ContentType "Study Tree"]
 [White "CHAPTER"]
 [Black "Introduction"]
@@ -30,8 +30,8 @@ the many traps in this video: https://youtu.be/nH_fiqlLp2U }  *
 
 
 
-[ChapterId "2"]
 [ChapterTitle "Oh no my queen!"]
+[Guid "R89c247c81d1146348f5ad43548e17cb0"]
 [ContentType "Study Tree"]
 [White "CHAPTER"]
 [Black "Oh no my queen!"]
@@ -43,13 +43,11 @@ Ke2 Bg4+ $19) 8... Qxd1 $19)  (7. Qe2 Qxg5 8. Qxe4+ Kd8 $1 9. Be2 Qc1+ {
 Yuuki_is_here - IM EricRosen, 0-1, -, https://lichess.org/f2yOCAVe } ) 7... 
 Bxf2+ 8. Ke2 Bg4# *
 
-[ChapterId "2"]
-[ChapterTitle "Oh no my queen!"]
 [ContentType "Exercise"]
 [FEN "r1bqk2r/ppp2ppp/2p2n2/2b3B1/4P3/3P4/PPP2PPP/RN1QKB1R b KQkq - 1 1"]
 [Event "Study Tree after 6.Bg5?"]
 [Guid "6820f227-c9dc-4da8-812a-85261da30fbb"]
-[Date ""]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -62,8 +60,8 @@ Qc1+ { Yuuki_is_here - IM EricRosen, 0-1, -, https://lichess.org/f2yOCAVe } )
 
 
 
-[ChapterId "3"]
 [ChapterTitle "Oh no my knight!"]
+[Guid "R68ea742671a44b09963d86b4bb664752"]
 [ContentType "Study Tree"]
 [White "CHAPTER"]
 [Black "Oh no my knight!"]
@@ -76,13 +74,11 @@ Rf2]}  7. dxe4 { oh no my knight! }  (7. Be3 Bxe3 8. fxe3 Qh4+ 9. g3 (9. Ke2
 Qf2#) 9... Nxg3 10. hxg3 Qxh1 $19) 7... Bxf2+ 8. Kxf2 (8. Ke2 Bg4+ $19) 8... 
 Qxd1 $19 { Oh no! White's queen 😋 }  *
 
-[ChapterId "3"]
-[ChapterTitle "Oh no my knight!"]
 [ContentType "Exercise"]
 [FEN "r1bqkb1r/ppp2ppp/2p5/4P3/4n3/3P4/PPP2PPP/RNBQKB1R b KQkq - 0 1"]
 [Event "Study Tree after 6.d3?"]
 [Guid "2b9bdb9b-5d21-4f36-ae73-fc7052ca77ca"]
-[Date ""]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -93,13 +89,11 @@ dxe4 { oh no my knight! }  (2. Be3 Bxe3 3. fxe3 Qh4+ 4. g3 (4. Ke2 Qf2#) 4...
 Nxg3 5. hxg3 Qxh1 $19) 2... Bxf2+ 3. Kxf2 (3. Ke2 Bg4+ $19) 3... Qxd1 $19 { Oh 
 no! White's queen 😋 }  *
 
-[ChapterId "3"]
-[ChapterTitle "Oh no my knight!"]
 [ContentType "Exercise"]
 [FEN "r1bqkb1r/ppp2ppp/2p5/4P3/3Pn3/8/PPP2PPP/RNBQKB1R b KQkq - 0 1"]
 [Event "Study Tree after 6.d4"]
 [Guid "4310a7db-60c7-42b1-9250-c9d72fa3fb45"]
-[Date ""]
+[Date "????.??.??"]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -110,8 +104,8 @@ no! White's queen 😋 }  *
 
 
 
-[ChapterId "4"]
 [ChapterTitle "Take my knight, but I'll take your rook..."]
+[Guid "R46460ae333bb437aa78e12f943a7f38c"]
 [ContentType "Study Tree"]
 [White "CHAPTER"]
 [Black "Take my knight, but I'll take your rook..."]
@@ -120,13 +114,11 @@ no! White's queen 😋 }  *
 1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nc6 4. Nxc6 dxc6 5. e5 Ne4 6. d4 Qh4 7. g3 $2 Nxg3 
 {[%cal Gh4h1]}  8. fxg3 Qe4+ $19 {[%cal Ge4h1,Ge4e1]}  *
 
-[ChapterId "4"]
-[ChapterTitle "Take my knight, but I'll take your rook..."]
 [ContentType "Exercise"]
 [FEN "r1b1kb1r/ppp2ppp/2p5/4P3/3Pn2q/6P1/PPP2P1P/RNBQKB1R b KQkq - 0 1"]
 [Event "Study Tree after 7.g3?"]
 [Guid "6f776a84-c4ef-4c4e-a5b0-2eb7a70e7146"]
-[Date "????.??.??"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -136,8 +128,8 @@ no! White's queen 😋 }  *
 
 
 
-[ChapterId "5"]
 [ChapterTitle "Most common trap"]
+[Guid "Rc4087983fd3345c5a8dd2a2df6a43f3d"]
 [ContentType "Study Tree"]
 [White "CHAPTER"]
 [Black "Most common trap"]
@@ -149,13 +141,11 @@ black a better position }  7. Be3 Nxe3 8. fxe3 Bxe3 $17 {[%cal Ge3g1,Ge3c1] with
 the only dark-squared bishop on the board piercing through white's position (and 
 preventing castling), black has a very comfortable advantage }  *
 
-[ChapterId "5"]
-[ChapterTitle "Most common trap"]
 [ContentType "Exercise"]
 [FEN "r1bqk2r/ppp2ppp/2p2n2/2b5/4P3/2NP4/PPP2PPP/R1BQKB1R b KQkq - 0 1"]
 [Event "Study Tree after 6.d3?"]
 [Guid "29d58c4c-8351-4a3b-be1e-eb7770edecdc"]
-[Date "????.??.??"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -168,8 +158,8 @@ has a very comfortable advantage }  *
 
 
 
-[ChapterId "6"]
 [ChapterTitle "Punishing Natural Development"]
+[Guid "Rda668ef6fa2542859060299a68858529"]
 [ContentType "Study Tree"]
 [White "CHAPTER"]
 [Black "Punishing Natural Development"]
@@ -184,13 +174,11 @@ O-O-O $19) 7... Qh4 8. h3 Nxf2 9. Qf3 Nxh3+ {[%cal Gh3g1,Gc5g1] At this point
 you should retrieve some tissues to wipe away white's tears }  10. Kh1 Nf2+ 11. 
 Kg1 Qh1# *
 
-[ChapterId "6"]
-[ChapterTitle "Punishing Natural Development"]
 [ContentType "Exercise"]
 [FEN "r1bqk2r/ppp2ppp/2p5/2b5/2B1P1n1/2N2Q2/PPPP1PPP/R1B1K2R b KQkq - 1 1"]
 [Event "Study Tree after 7.Qf3"]
 [Guid "21302a5f-f70d-4045-b6ac-57719814c898"]
-[Date "????.??.??"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -201,13 +189,11 @@ $17 {[%cal Gc8g4,Gh4e1][%csl Rf2]}  3. d3 (3. g3 Qh3 $19 {[%cal
 Gc8g4,Ge5f3,Ge5c4,Gh3g2][%csl Rf3,Re2,Rc4]} ) 3... Bg4 4. Qf1 Nxc4 5. dxc4 O-O-O 
 $19 *
 
-[ChapterId "6"]
-[ChapterTitle "Punishing Natural Development"]
 [ContentType "Exercise"]
 [FEN "r1b1k2r/ppp2ppp/2p5/2b5/2B1P1nq/2N4P/PPPP1PP1/R1BQ1RK1 b kq - 0 1"]
 [Event "Study Tree after 8.h3"]
 [Guid "23a65cbb-b874-4832-9c1a-a2f140227a81"]
-[Date "????.??.??"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -218,8 +204,8 @@ tissues to wipe away white's tears }  3. Kh1 Nf2+ 4. Kg1 Qh1# *
 
 
 
-[ChapterId "7"]
 [ChapterTitle "My Favorite Trap (Sometimes works against GM's!)"]
+[Guid "Re14bfee17ff34f15b352b4fafc181849"]
 [ContentType "Study Tree"]
 [White "CHAPTER"]
 [Black "My Favorite Trap (Sometimes works against GM's!)"]
@@ -238,10 +224,9 @@ move, white would survive }  12. Kxf2 (12. Rxf2 Qh5 {[%cal Gh5h3]}  13. Rf4 Qh2+
 developing move, black prepares to 0-0-0 continuing initiative. Feel free to 
 analyze further with the engine, but white is totally busted }  *
 
-[ChapterId "7"]
-[ChapterTitle "My Favorite Trap (Sometimes works against GM's!)"]
 [ContentType "Model Game"]
 [Event "Third Sat 146 Mix 2020"]
+[ECO ""]
 [Guid "70b18a19-e119-4b76-940a-2ffe1d47e9f4"]
 [Date "2020.11.21"]
 [White "Van Dael, Siem"]
@@ -252,10 +237,9 @@ analyze further with the engine, but white is totally busted }  *
 1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nc6 4. Nxc6 dxc6 5. Nc3 Bc5 6. Be2 h5 7. h3 Qd4 8. 
 O-O Ng4 {[%bkm]}  9. hxg4 hxg4 10. g3 Qe5 11. Kg2 Bxf2 12. Rxf2 Qh5 0-1
 
-[ChapterId "7"]
-[ChapterTitle "My Favorite Trap (Sometimes works against GM's!)"]
 [ContentType "Model Game"]
 [Event "Titled Tuesday Blitz September 27 Late 2022"]
+[ECO ""]
 [Guid "7d49edd0-75bd-4ba0-91a3-fcea31beee62"]
 [Date "2022.09.27"]
 [White "Gabrielian, Artur"]
@@ -278,13 +262,11 @@ Qe2 {[%eval -3.06]}  Be6 {[%eval -1.44]}  33. Rxd8 {[%eval -1.30]}  Bxd8 {[%eval
 -1.09]}  34. Qd2 {[%eval -5.46]}  Qxf3 {[%eval -5.29]}  35. b3 Bb6 36. Kb2 axb3 
 37. Nd3 Qe3 38. Qd1 Bg4 39. Qxg4 Qxd3 40. Kxb3 Qb1# 0-1
 
-[ChapterId "7"]
-[ChapterTitle "My Favorite Trap (Sometimes works against GM's!)"]
 [ContentType "Exercise"]
 [FEN "r1b1k2r/ppp2pp1/2p2n2/2b4p/3qP3/2N4P/PPPPBPP1/R1BQ1RK1 b kq - 1 1"]
 [Event "Study Tree after 8.O-O"]
 [Guid "0b2ad591-e541-411d-a4b9-5c2066c4427c"]
-[Date "????.??.??"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -302,8 +284,8 @@ busted }  *
 
 
 
-[ChapterId "8"]
 [ChapterTitle "Drag white's king to e4 (before move 10!)"]
+[Guid "R7073c3a219e440618f9fa64e4ca40580"]
 [ContentType "Study Tree"]
 [White "CHAPTER"]
 [Black "Drag white's king to e4 (before move 10!)"]
@@ -317,8 +299,8 @@ required! }  *
 
 
 
-[ChapterId "9"]
 [ChapterTitle "Everyone falls for this trap"]
+[Guid "Rafd8f490410049a48fb505c57edfbb68"]
 [ContentType "Study Tree"]
 [White "CHAPTER"]
 [Black "Everyone falls for this trap"]
@@ -333,13 +315,11 @@ Gg4h3,Gc5g1,Gd6h2,Gc8h3,Gh8h1] White's in trouble because there are so many
 arrows } ) 9... hxg4 $19 {[%cal Gd6h2] White can't stop mate. If you don't be 
 believe me, just ask Lord Stockfish }  *
 
-[ChapterId "9"]
-[ChapterTitle "Everyone falls for this trap"]
 [ContentType "Exercise"]
 [FEN "r1bqk2r/ppp2pp1/2p5/2b4p/4P1n1/3P3P/PPP1BPP1/RNBQ1RK1 b kq - 0 1"]
 [Event "Study Tree after 8.h3"]
 [Guid "a17c4580-61b9-4a42-80fa-937fc77d987d"]
-[Date "????.??.??"]
+[Date ""]
 [White ""]
 [Black ""]
 [Result "*"]
@@ -354,8 +334,8 @@ don't be believe me, just ask Lord Stockfish }  *
 
 
 
-[ChapterId "10"]
 [ChapterTitle "Miscellaneous Lines"]
+[Guid "Rae05589243024b12806d06645a0df8fd"]
 [ContentType "Study Tree"]
 [White "CHAPTER"]
 [Black "Miscellaneous Lines"]
@@ -364,10 +344,9 @@ don't be believe me, just ask Lord Stockfish }  *
 1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nc6 4. Nxc6 dxc6 5. d3 Bc5 6. Be3 Bxe3 7. fxe3 Ng4 
 8. Qf3 Qg5 {[%cal Ge1d2,Gf3f4][%csl Gd2,Gf4]}  9. Qf4 Qc5 10. Kd2 *
 
-[ChapterId "10"]
-[ChapterTitle "Miscellaneous Lines"]
 [ContentType "Model Game"]
 [Event "Titled Tuesday Blitz September 28 2021"]
+[ECO ""]
 [Guid "25bbb83a-1a4b-460e-9fe5-134ca153b790"]
 [Date "2021.09.28"]
 [White "Vladimir Demin"]
