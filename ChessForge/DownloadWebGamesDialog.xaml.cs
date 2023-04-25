@@ -90,6 +90,7 @@ namespace ChessForge
                             }
                         }
 
+                        UiLblLoading.Visibility = Visibility.Collapsed;
                         Games = new ObservableCollection<GameData>(lstGames);
                         if (SelectGames(ref Games))
                         {
