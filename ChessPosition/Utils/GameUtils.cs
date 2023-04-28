@@ -23,6 +23,47 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Remove games that are not in the passed date range.
+        /// </summary>
+        /// <param name="games"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        public static List<GameData> RemoveGamesOutOfDateRange(List<GameData> games, DateTime? startDate, DateTime? endDate)
+        {
+            List<GameData> lstGames = new List<GameData>();
+            foreach (GameData game in games)
+            {
+                if ((!startDate.HasValue || CompareGameDateToDate(game, startDate.Value) >= 0)
+                    && (!endDate.HasValue || CompareGameDateToDate(game, endDate.Value) <= 0))
+                {
+                    lstGames.Add(game);
+                }
+            }
+            return lstGames;
+        }
+
+        /// <summary>
+        /// Compares the date of the game against the passed reference date
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="dtRef"></param>
+        /// <returns></returns>
+        public static int CompareGameDateToDate(GameData game, DateTime dtRef)
+        {
+            DateTime? dtGame = GetDateTimeFromGameData(game);
+
+            if (dtGame.HasValue)
+            {
+                return (DateTime.Compare(dtGame.Value, dtRef));
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
         /// Makes best effort to find date/time for the passed game.
         /// </summary>
         /// <param name="game"></param>
