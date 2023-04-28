@@ -47,7 +47,7 @@ namespace ChessForge
             para.TextAlignment = TextAlignment.Left;
             para.Foreground = Brushes.Teal;
 
-            Run run = new Run("CHESS FORGE beta");
+            Run run = new Run("CHESS FORGE");
             para.Inlines.Add(run);
 
             return para;
