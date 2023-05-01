@@ -101,10 +101,17 @@ namespace ChessForge
 
                         UiLblLoading.Visibility = Visibility.Collapsed;
                         Games = new ObservableCollection<GameData>(lstGames);
-                        if (SelectGames(ref Games))
+                        if (Games.Count > 0)
                         {
-                            DialogResult = true;
-                            exit = true;
+                            if (SelectGames(ref Games))
+                            {
+                                DialogResult = true;
+                                exit = true;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show(Properties.Resources.NoGamesFound, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                     }
                 }
