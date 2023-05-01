@@ -2252,6 +2252,35 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Opens the dialog for selecting and evaluating games
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEvaluateGames_Click(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+
+            try
+            {
+                if (AppState.ActiveChapter != null)
+                {
+                    int chapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(AppState.ActiveChapter);
+                    SelectGamesForEvalDialog dlg = new SelectGamesForEvalDialog(AppState.ActiveChapter, chapterIndex, AppState.ActiveChapter.ModelGames)
+                    {
+                        Left = ChessForgeMain.Left + 100,
+                        Top = ChessForgeMain.Top + 100,
+                        Topmost = false,
+                        Owner = AppState.MainWin
+                    };
+                    dlg.ShowDialog();
+                }
+            }
+            catch
+            { 
+            }
+        }
+
+        /// <summary>
         /// A request from the menu to start training at the currently selected position.
         /// </summary>
         /// <param name="sender"></param>
