@@ -345,6 +345,21 @@
   <data name="WebSite" xml:space="preserve">
     <value>Strona</value>
   </data>
+  <data name="Days" xml:space="preserve">
+    <value>dni</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>godziny</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>minuty</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>sekundy</value>
+  </data>
+  <data name="Proceed" xml:space="preserve">
+    <value>Kontynuować?</value>
+  </data>
   <data name="FontBold" xml:space="preserve">
     <value>Pogrubienie</value>
   </data>
@@ -1125,6 +1140,12 @@
   <data name="ThinkTimeEvaluation" xml:space="preserve">
     <value>Czas na ewaluację (s)</value>
   </data>
+  <data name="ThinkTimeEvaluationPerMove" xml:space="preserve">
+    <value>Czas na ewaluację ruchu (s)</value>
+  </data>
+  <data name="EstimatedEvalTime" xml:space="preserve">
+    <value>Szacowany czas oceny</value>
+  </data>
   <data name="MoveSelectionAccuracy" xml:space="preserve">
     <value>Wybór ruchu (cp)</value>
   </data>
@@ -1208,6 +1229,9 @@
   </data>
   <data name="DownloadGamesFromWeb" xml:space="preserve">
     <value>Pobierz partie z Internetu</value>
+  </data>
+  <data name="EvaluateGames" xml:space="preserve">
+    <value>Oceń partie</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
     <value>Proszę czekać!</value>

@@ -245,6 +245,22 @@ EndDate=End Date
 #Web site
 WebSite=Site
 
+#Days
+Days=days
+
+#Hours
+Hours=hours
+
+#Minutes
+Minutes=minutes
+
+#Seconds
+Seconds=seconds
+
+
+#Proceed
+Proceed=Proceed?
+
 ##################################
 #
 # EDITING
@@ -1152,6 +1168,12 @@ ThinkTimeInGame=Game Move Time (s)
 #Time to think in Evaluation (inside a frame titled "Engine Time per Move")
 ThinkTimeEvaluation=Evaluation Time (s)
 
+#Time to think in Evaluation (longer wording where there is space)
+ThinkTimeEvaluationPerMove=Evaluation Time per Move(s)
+
+#EstimatedEvalTime
+EstimatedEvalTime=Estimated evaluation time
+
 #Allows diff from best move when selecting game moves
 MoveSelectionAccuracy=Move Selection (cp)
 
@@ -1233,8 +1255,11 @@ DownloadingFromLichess=Downloading from lichess.org. Please wait...
 #Downloading games from Chesscom
 DownloadingFromChesscom=Downloading from chess.com. Please wait...
 
-#DownloadGamesFromWeb
+#Download Games From Web
 DownloadGamesFromWeb=Download Games from a Web Site
+
+#Evaluate Games
+EvaluateGames=Evaluate Games
 
 #Please wait
 PleaseWait=Please Wait

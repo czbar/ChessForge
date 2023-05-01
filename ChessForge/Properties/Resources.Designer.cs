@@ -1078,6 +1078,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to days.
+        /// </summary>
+        public static string Days {
+            get {
+                return ResourceManager.GetString("Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Decrease Font Size.
         /// </summary>
         public static string DecreaseFontSize {
@@ -1744,6 +1753,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Estimated Evaluation Time.
+        /// </summary>
+        public static string EstimatedEvalTime {
+            get {
+                return ResourceManager.GetString("EstimatedEvalTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evaluate Games.
+        /// </summary>
+        public static string EvaluateGames {
+            get {
+                return ResourceManager.GetString("EvaluateGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Evaluate Line.
         /// </summary>
         public static string EvaluateLine {
@@ -2320,6 +2347,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to hours.
+        /// </summary>
+        public static string Hours {
+            get {
+                return ResourceManager.GetString("Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ignore Day.
         /// </summary>
         public static string IgnoreDay {
@@ -2703,6 +2739,15 @@ namespace ChessForge.Properties {
         public static string MergeTrainingIntoStudy {
             get {
                 return ResourceManager.GetString("MergeTrainingIntoStudy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to minutes.
+        /// </summary>
+        public static string Minutes {
+            get {
+                return ResourceManager.GetString("Minutes", resourceCulture);
             }
         }
         
@@ -3446,6 +3491,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proceed?.
+        /// </summary>
+        public static string Proceed {
+            get {
+                return ResourceManager.GetString("Proceed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Promote Line.
         /// </summary>
         public static string PromoteLine {
@@ -3685,6 +3739,15 @@ namespace ChessForge.Properties {
         public static string Scoresheet {
             get {
                 return ResourceManager.GetString("Scoresheet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to seconds.
+        /// </summary>
+        public static string Seconds {
+            get {
+                return ResourceManager.GetString("Seconds", resourceCulture);
             }
         }
         
@@ -4036,6 +4099,15 @@ namespace ChessForge.Properties {
         public static string ThinkTimeEvaluation {
             get {
                 return ResourceManager.GetString("ThinkTimeEvaluation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evaluation Time per Move(s).
+        /// </summary>
+        public static string ThinkTimeEvaluationPerMove {
+            get {
+                return ResourceManager.GetString("ThinkTimeEvaluationPerMove", resourceCulture);
             }
         }
         

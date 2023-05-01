@@ -321,6 +321,27 @@ EndDate=Data końcowa
 #english: WebSite=Site
 WebSite=Strona
 
+#description: Days
+#english: Days=days
+Days=dni
+
+#description: Hours
+#english: Hours=hours
+Hours=godziny
+
+#description: Minutes
+#english: Minutes=minutes
+Minutes=minuty
+
+#description: Seconds
+#english: Seconds=seconds
+Seconds=sekundy
+
+
+#description: Proceed
+#english: Proceed=Proceed?
+Proceed=Kontynuować?
+
 ##################################
 #
 # EDITING
@@ -1488,6 +1509,14 @@ ThinkTimeInGame=Czas na posunięcie
 #english: ThinkTimeEvaluation=Evaluation Time (s)
 ThinkTimeEvaluation=Czas na ewaluację (s)
 
+#description: Time to think in Evaluation (longer wording where there is space)
+#english: ThinkTimeEvaluationPerMove=Evaluation Time per Move(s)
+ThinkTimeEvaluationPerMove=Czas na ewaluację ruchu (s)
+
+#description: EstimatedEvalTime
+#english: EstimatedEvalTime=Estimated evaluation time
+EstimatedEvalTime=Szacowany czas oceny
+
 #description: Allows diff from best move when selecting game moves
 #english: MoveSelectionAccuracy=Move Selection (cp)
 MoveSelectionAccuracy=Wybór ruchu (cp)
@@ -1596,9 +1625,13 @@ DownloadingFromLichess=Trwa pobieranie partii z lichess. Proszę czekać...
 #english: DownloadingFromChesscom=Downloading from chess.com. Please wait...
 DownloadingFromChesscom=Trwa pobieranie partii z chess.com. Proszę czekać...
 
-#description: DownloadGamesFromWeb
+#description: Download Games From Web
 #english: DownloadGamesFromWeb=Download Games from a Web Site
 DownloadGamesFromWeb=Pobierz partie z Internetu
+
+#description: Evaluate Games
+#english: EvaluateGames=Evaluate Games
+EvaluateGames=Oceń partie
 
 #description: Please wait
 #english: PleaseWait=Please Wait
