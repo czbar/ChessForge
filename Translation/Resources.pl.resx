@@ -325,7 +325,7 @@
     <value>Filtr</value>
   </data>
   <data name="NoMoreThan" xml:space="preserve">
-    <value>Nie więcej niż</value>
+    <value>Liczba partii</value>
   </data>
   <data name="MostRecentGames" xml:space="preserve">
     <value>Ostatnie partie</value>
@@ -980,6 +980,9 @@
   </data>
   <data name="NoGamesInFile" xml:space="preserve">
     <value>Partie nie znalezione w </value>
+  </data>
+  <data name="NoGamesFound" xml:space="preserve">
+    <value>Nie znaleziono żadnej partii. </value>
   </data>
   <data name="BookmarkAlreadyExists" xml:space="preserve">
     <value>Zakładka już istnieje</value>

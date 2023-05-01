@@ -325,7 +325,7 @@
     <value>Filter</value>
   </data>
   <data name="NoMoreThan" xml:space="preserve">
-    <value>No More Than</value>
+    <value>Max Games</value>
   </data>
   <data name="MostRecentGames" xml:space="preserve">
     <value>Most Recent Games</value>
@@ -980,6 +980,9 @@
   </data>
   <data name="NoGamesInFile" xml:space="preserve">
     <value>No Games found in </value>
+  </data>
+  <data name="NoGamesFound" xml:space="preserve">
+    <value>No games have been found. </value>
   </data>
   <data name="BookmarkAlreadyExists" xml:space="preserve">
     <value>This bookmark already exists</value>

@@ -294,8 +294,8 @@ Limits=Ograniczenia
 Filter=Filtr
 
 #description: No more than
-#english: NoMoreThan=No More Than
-NoMoreThan=Nie więcej niż
+#english: NoMoreThan=Max Games
+NoMoreThan=Liczba partii
 
 #description: Most recent games only
 #english: MostRecentGames=Most Recent Games
@@ -1287,6 +1287,10 @@ NoExerciseInFile=Ćwiczenia nie znalezione w
 #english: NoGamesInFile=No Games found in 
 NoGamesInFile=Partie nie znalezione w 
 
+#description: No games found (e.g. whet attempting download from the Web
+#english: NoGamesFound=No games have been found. 
+NoGamesFound=Nie znaleziono żadnej partii. 
+
 #description: Bookmark already exists
 #english: BookmarkAlreadyExists=This bookmark already exists
 BookmarkAlreadyExists=Zakładka już istnieje
@@ -1584,9 +1588,13 @@ ImportIntoChapter=Importuj Partię
 #english: DownloadingGameFromLichess=Downloading Game from lichess.org. Please wait...
 DownloadingGameFromLichess=Trwa pobieranie partii z lichess. Proszę czekać...
 
-#description: Downloading from lichess
+#description: Downloading games from lichess
 #english: DownloadingFromLichess=Downloading from lichess.org. Please wait...
 DownloadingFromLichess=Trwa pobieranie partii z lichess. Proszę czekać...
+
+#description: Downloading games from Chesscom
+#english: DownloadingFromChesscom=Downloading from chess.com. Please wait...
+DownloadingFromChesscom=Trwa pobieranie partii z chess.com. Proszę czekać...
 
 #description: DownloadGamesFromWeb
 #english: DownloadGamesFromWeb=Download Games from a Web Site
@@ -2292,4 +2300,3 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
-DownloadingFromChesscom=Trwa pobieranie partii z chess.com. Proszę czekać...

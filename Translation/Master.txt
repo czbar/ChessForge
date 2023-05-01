@@ -225,7 +225,7 @@ Limits=Limits
 Filter=Filter
 
 #No more than
-NoMoreThan=No More Than
+NoMoreThan=Max Games
 
 #Most recent games only
 MostRecentGames=Most Recent Games
@@ -998,6 +998,9 @@ NoExerciseInFile=No Exercises found in
  
 #No games in file
 NoGamesInFile=No Games found in 
+
+#No games found (e.g. whet attempting download from the Web
+NoGamesFound=No games have been found. 
 
 #Bookmark already exists
 BookmarkAlreadyExists=This bookmark already exists

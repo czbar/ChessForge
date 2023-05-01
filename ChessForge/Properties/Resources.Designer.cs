@@ -2969,6 +2969,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No games have been found. .
+        /// </summary>
+        public static string NoGamesFound {
+            get {
+                return ResourceManager.GetString("NoGamesFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Games found in .
         /// </summary>
         public static string NoGamesInFile {
@@ -2996,7 +3005,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No More Than.
+        ///   Looks up a localized string similar to Max Games.
         /// </summary>
         public static string NoMoreThan {
             get {
