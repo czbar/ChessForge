@@ -11,6 +11,7 @@ using System.Windows.Ink;
 using System.Windows;
 using static System.Net.Mime.MediaTypeNames;
 using ChessForge.Properties;
+using WebAccess;
 
 namespace ChessForge
 {
@@ -22,6 +23,11 @@ namespace ChessForge
     /// </summary>
     public class EngineMessageProcessor
     {
+        /// <summary>
+        /// Handler for the Move Evaluation Finished event.
+        /// </summary>
+        public static event EventHandler<MoveEvalEventArgs> MoveEvalFinished;
+
         // An instance of the engine service
         public static EngineProcess ChessEngineService;
 
@@ -286,7 +292,7 @@ namespace ChessForge
                         _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                     }
 
-                    if (ContinueLineEvaluation())
+                    if (ContinueLineEvaluation(index))
                     {
                         if (!delayed)
                         {
@@ -315,10 +321,24 @@ namespace ChessForge
         /// was not the last in the evaluated Line.
         /// </summary>
         /// <returns></returns>
-        private static bool ContinueLineEvaluation()
+        private static bool ContinueLineEvaluation(int index)
         {
-            return EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE
-                && !EvaluationManager.IsLastPositionIndex();
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+            {
+                bool islastPosition = EvaluationManager.IsLastPositionIndex();
+                
+                // raise event
+                MoveEvalEventArgs args = new MoveEvalEventArgs();
+                args.MoveIndex = index;
+                args.IsLastMove = islastPosition;
+                MoveEvalFinished?.Invoke(null, args);
+                
+                return !islastPosition;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
