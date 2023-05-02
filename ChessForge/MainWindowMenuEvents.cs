@@ -561,7 +561,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnEvaluateLine_Click(object sender, RoutedEventArgs e)
+        public void UiMnEvaluateLine_Click(object sender, RoutedEventArgs e)
         {
             // a defensive check
             if (ActiveLine.GetPlyCount() <= 1)
@@ -2258,7 +2258,6 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnEvaluateGames_Click(object sender, RoutedEventArgs e)
         {
-            e.Handled = true;
 
             try
             {
@@ -2278,6 +2277,8 @@ namespace ChessForge
             catch
             { 
             }
+
+            e.Handled = true;
         }
 
         /// <summary>
