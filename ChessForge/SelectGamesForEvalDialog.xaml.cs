@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using GameTree;
+using System.Windows.Shapes;
 
 namespace ChessForge
 {
@@ -166,9 +167,21 @@ namespace ChessForge
 
                 sb.Append(". " + Properties.Resources.Proceed);
                 MessageBox.Show(sb.ToString(), Properties.Resources.Information, MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                PerformEvaluations();
             }
 
             DialogResult = true;
+        }
+
+        /// <summary>
+        /// Kicks off the evaluation process.
+        /// This dialog will close and the games eval process will open a new
+        /// one with the progress bar.
+        /// </summary>
+        private void PerformEvaluations()
+        {
+            GamesEvaluationManager.InitializeProcess(_gameList);
         }
 
         /// <summary>
