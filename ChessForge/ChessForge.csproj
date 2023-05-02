@@ -131,6 +131,10 @@
       <DependentUpon>GameHeaderDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Article.cs" />
+    <Compile Include="GamesEvalDialog.xaml.cs">
+      <DependentUpon>GamesEvalDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GamesEvaluationManager.cs" />
     <Compile Include="IdenticalPositionsDialog.xaml.cs">
       <DependentUpon>IdenticalPositionsDialog.xaml</DependentUpon>
     </Compile>
@@ -290,6 +294,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GameHeaderDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GamesEvalDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
