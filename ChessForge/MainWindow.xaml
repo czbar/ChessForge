@@ -128,7 +128,7 @@
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Help}" Margin="0,0,0,0">
                         <MenuItem Header="{x:Static p:Resources.Wiki}" Click="UiMnHelpWiki_Click" />
-                        <MenuItem Header="{x:Static p:Resources.CheckForUpdates}" Click="UiMnCheckForUpdates_Click" />
+                        <!--<MenuItem Header="{x:Static p:Resources.CheckForUpdates}" Click="UiMnCheckForUpdates_Click" />-->
                         <Separator />
                         <MenuItem Header="{x:Static p:Resources.About}" Click="UiMnHelpAbout_Click" />
                     </MenuItem>
