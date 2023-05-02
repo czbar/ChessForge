@@ -24,6 +24,7 @@ namespace ChessForge
             DUMMY,
             AUTO_SAVE,
             EVALUATION_LINE_DISPLAY,
+            GAMES_EVALUATION,
             CHECK_FOR_USER_MOVE,
             CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE,
             REQUEST_WORKBOOK_MOVE,
@@ -52,6 +53,11 @@ namespace ChessForge
         /// engine lines in the GUI.
         /// </summary>
         private Timer _evaluationLinesDisplayTimer;
+
+        /// <summary>
+        /// This timer starts and monitors the game evaluation process
+        /// </summary>
+        private Timer _gamesEvaluationTimer;
 
         /// <summary>
         /// This timer invokes the method checking if a user made their move and if so
@@ -124,6 +130,10 @@ namespace ChessForge
             _evaluationLinesDisplayTimer = new Timer();
             InitEvaluationLinesDisplayTimer();
             _dictTimers.Add(TimerId.EVALUATION_LINE_DISPLAY, _evaluationLinesDisplayTimer);
+
+            _gamesEvaluationTimer = new Timer();
+            InitGamesEvaluationTimer();
+            _dictTimers.Add(TimerId.GAMES_EVALUATION, _gamesEvaluationTimer);
 
             _autoSaveTimer = new Timer();
             InitAutoSaveTimer();
@@ -236,7 +246,7 @@ namespace ChessForge
             foreach (var id in _dictTimers.Keys)
             {
                 var timer = _dictTimers[id];
-                if (id == TimerId.EVALUATION_LINE_DISPLAY)
+                if (id == TimerId.EVALUATION_LINE_DISPLAY || id == TimerId.GAMES_EVALUATION)
                 {
                     timer.Stop();
                 }
@@ -281,11 +291,24 @@ namespace ChessForge
             return _dictStopwatches[sw].ElapsedMilliseconds;
         }
 
+        /// <summary>
+        /// Configures the timer for Lines display.
+        /// </summary>
         private void InitEvaluationLinesDisplayTimer()
         {
             _evaluationLinesDisplayTimer.Elapsed += new ElapsedEventHandler(EngineLinesBox.ShowEngineLines);
             _evaluationLinesDisplayTimer.Interval = 100;
             _evaluationLinesDisplayTimer.Enabled = false;
+        }
+
+        /// <summary>
+        /// Configures the timer reponsible for controlling multi game evaluation
+        /// </summary>
+        private void InitGamesEvaluationTimer()
+        {
+            _gamesEvaluationTimer.Elapsed += new ElapsedEventHandler(GamesEvaluationManager.StartGamesEvaluation);
+            _gamesEvaluationTimer.Interval = 100;
+            _gamesEvaluationTimer.Enabled = false;
         }
 
         private void InitAutoSaveTimer()
