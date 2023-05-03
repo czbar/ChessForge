@@ -294,7 +294,7 @@ Limits=
 Filter=
 
 #description: No more than
-#english: NoMoreThan=No More Than
+#english: NoMoreThan=Max Games
 NoMoreThan=
 
 #description: Most recent games only
@@ -320,6 +320,27 @@ EndDate=
 #description: Web site
 #english: WebSite=Site
 WebSite=
+
+#description: Days
+#english: Days=days
+Days=
+
+#description: Hours
+#english: Hours=hours
+Hours=
+
+#description: Minutes
+#english: Minutes=minutes
+Minutes=
+
+#description: Seconds
+#english: Seconds=seconds
+Seconds=
+
+
+#description: Proceed
+#english: Proceed=Proceed?
+Proceed=
 
 ##################################
 #
@@ -1287,6 +1308,10 @@ NoExerciseInFile=
 #english: NoGamesInFile=No Games found in 
 NoGamesInFile=
 
+#description: No games found (e.g. whet attempting download from the Web
+#english: NoGamesFound=No games have been found. 
+NoGamesFound=
+
 #description: Bookmark already exists
 #english: BookmarkAlreadyExists=This bookmark already exists
 BookmarkAlreadyExists=
@@ -1394,6 +1419,14 @@ MsgTakebackInfo=
 # Dialogs
 #
 
+#description: Games Evaluation
+#english: GamesEvaluation=Games Evaluation
+GamesEvaluation=
+
+#description: Time Remaining
+#english: TimeRemainig=Time Remaining
+TimeRemainig=
+
 #description: Label for Text for Display
 #english: TextForDisplay=Text for Display
 TextForDisplay=
@@ -1483,6 +1516,14 @@ ThinkTimeInGame=
 #description: Time to think in Evaluation (inside a frame titled "Engine Time per Move")
 #english: ThinkTimeEvaluation=Evaluation Time (s)
 ThinkTimeEvaluation=
+
+#description: Time to think in Evaluation (longer wording where there is space)
+#english: ThinkTimeEvaluationPerMove=Evaluation Time per Move(s)
+ThinkTimeEvaluationPerMove=
+
+#description: EstimatedEvalTime
+#english: EstimatedEvalTime=Estimated evaluation time
+EstimatedEvalTime=
 
 #description: Allows diff from best move when selecting game moves
 #english: MoveSelectionAccuracy=Move Selection (cp)
@@ -1592,9 +1633,13 @@ DownloadingFromLichess=
 #english: DownloadingFromChesscom=Downloading from chess.com. Please wait...
 DownloadingFromChesscom=
 
-#description: DownloadGamesFromWeb
+#description: Download Games From Web
 #english: DownloadGamesFromWeb=Download Games from a Web Site
 DownloadGamesFromWeb=
+
+#description: Evaluate Games
+#english: EvaluateGames=Evaluate Games
+EvaluateGames=
 
 #description: Please wait
 #english: PleaseWait=Please Wait

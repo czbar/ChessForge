@@ -11,6 +11,8 @@ using System.Windows.Ink;
 using System.Windows;
 using static System.Net.Mime.MediaTypeNames;
 using ChessForge.Properties;
+using WebAccess;
+using System.Diagnostics.Tracing;
 
 namespace ChessForge
 {
@@ -22,6 +24,11 @@ namespace ChessForge
     /// </summary>
     public class EngineMessageProcessor
     {
+        /// <summary>
+        /// Handler for the Move Evaluation Finished event.
+        /// </summary>
+        public static event EventHandler<MoveEvalEventArgs> MoveEvalFinished;
+
         // An instance of the engine service
         public static EngineProcess ChessEngineService;
 
@@ -286,7 +293,8 @@ namespace ChessForge
                         _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                     }
 
-                    if (ContinueLineEvaluation())
+                    MoveEvalEventArgs eventArgs = null;
+                    if (ContinueLineEvaluation(index, out eventArgs))
                     {
                         if (!delayed)
                         {
@@ -305,6 +313,11 @@ namespace ChessForge
                             EvaluationManager.Reset();
                         }
                     }
+
+                    if (eventArgs != null && GamesEvaluationManager.IsEvaluationInProgress)
+                    {
+                        MoveEvalFinished?.Invoke(null, eventArgs);
+                    }
                 }
             }
         }
@@ -315,10 +328,25 @@ namespace ChessForge
         /// was not the last in the evaluated Line.
         /// </summary>
         /// <returns></returns>
-        private static bool ContinueLineEvaluation()
+        private static bool ContinueLineEvaluation(int index, out MoveEvalEventArgs eventArgs)
         {
-            return EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE
-                && !EvaluationManager.IsLastPositionIndex();
+            eventArgs = null;
+
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+            {
+                bool islastPosition = EvaluationManager.IsLastPositionIndex();
+
+                // raise event
+                eventArgs = new MoveEvalEventArgs();
+                eventArgs.MoveIndex = index;
+                eventArgs.IsLastMove = islastPosition;
+
+                return !islastPosition;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>

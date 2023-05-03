@@ -84,6 +84,7 @@
     <Compile Include="Utils\Language.cs" />
     <Compile Include="Utils\Languages.cs" />
     <Compile Include="Utils\LocalizedStrings.cs" />
+    <Compile Include="Utils\MoveEvalEventArgs.cs" />
     <Compile Include="Utils\MoveOrigDest.cs" />
     <Compile Include="Utils\MoveUtils.cs" />
     <Compile Include="Utils\PieceMoves.cs" />

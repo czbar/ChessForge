@@ -225,7 +225,7 @@ Limits=Limits
 Filter=Filter
 
 #No more than
-NoMoreThan=No More Than
+NoMoreThan=Max Games
 
 #Most recent games only
 MostRecentGames=Most Recent Games
@@ -244,6 +244,22 @@ EndDate=End Date
 
 #Web site
 WebSite=Site
+
+#Days
+Days=days
+
+#Hours
+Hours=hours
+
+#Minutes
+Minutes=minutes
+
+#Seconds
+Seconds=seconds
+
+
+#Proceed
+Proceed=Proceed?
 
 ##################################
 #
@@ -999,6 +1015,9 @@ NoExerciseInFile=No Exercises found in
 #No games in file
 NoGamesInFile=No Games found in 
 
+#No games found (e.g. whet attempting download from the Web
+NoGamesFound=No games have been found. 
+
 #Bookmark already exists
 BookmarkAlreadyExists=This bookmark already exists
 
@@ -1081,6 +1100,12 @@ MsgTakebackInfo=Click here or press the space key to take back your move.
 # Dialogs
 #
 
+#Games Evaluation
+GamesEvaluation=Games Evaluation
+
+#Time Remaining
+TimeRemainig=Time Remaining
+
 #Label for Text for Display
 TextForDisplay=Text for Display
 
@@ -1148,6 +1173,12 @@ ThinkTimeInGame=Game Move Time (s)
 
 #Time to think in Evaluation (inside a frame titled "Engine Time per Move")
 ThinkTimeEvaluation=Evaluation Time (s)
+
+#Time to think in Evaluation (longer wording where there is space)
+ThinkTimeEvaluationPerMove=Evaluation Time per Move(s)
+
+#EstimatedEvalTime
+EstimatedEvalTime=Estimated evaluation time
 
 #Allows diff from best move when selecting game moves
 MoveSelectionAccuracy=Move Selection (cp)
@@ -1230,8 +1261,11 @@ DownloadingFromLichess=Downloading from lichess.org. Please wait...
 #Downloading games from Chesscom
 DownloadingFromChesscom=Downloading from chess.com. Please wait...
 
-#DownloadGamesFromWeb
+#Download Games From Web
 DownloadGamesFromWeb=Download Games from a Web Site
+
+#Evaluate Games
+EvaluateGames=Evaluate Games
 
 #Please wait
 PleaseWait=Please Wait

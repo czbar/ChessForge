@@ -131,6 +131,10 @@
       <DependentUpon>GameHeaderDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Article.cs" />
+    <Compile Include="GamesEvalDialog.xaml.cs">
+      <DependentUpon>GamesEvalDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GamesEvaluationManager.cs" />
     <Compile Include="IdenticalPositionsDialog.xaml.cs">
       <DependentUpon>IdenticalPositionsDialog.xaml</DependentUpon>
     </Compile>
@@ -193,6 +197,9 @@
     <Compile Include="RichTextBoxUtilities.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
       <DependentUpon>SelectArticlesDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelectGamesForEvalDialog.xaml.cs">
+      <DependentUpon>SelectGamesForEvalDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SelectSingleChapterDialog.xaml.cs">
       <DependentUpon>SelectSingleChapterDialog.xaml</DependentUpon>
@@ -290,6 +297,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GamesEvalDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="IdenticalPositionsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -339,6 +350,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SelectGamesDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectGamesForEvalDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

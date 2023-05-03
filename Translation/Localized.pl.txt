@@ -294,8 +294,8 @@ Limits=Ograniczenia
 Filter=Filtr
 
 #description: No more than
-#english: NoMoreThan=No More Than
-NoMoreThan=Nie więcej niż
+#english: NoMoreThan=Max Games
+NoMoreThan=Liczba partii
 
 #description: Most recent games only
 #english: MostRecentGames=Most Recent Games
@@ -320,6 +320,27 @@ EndDate=Data końcowa
 #description: Web site
 #english: WebSite=Site
 WebSite=Strona
+
+#description: Days
+#english: Days=days
+Days=dni
+
+#description: Hours
+#english: Hours=hours
+Hours=godziny
+
+#description: Minutes
+#english: Minutes=minutes
+Minutes=minuty
+
+#description: Seconds
+#english: Seconds=seconds
+Seconds=sekundy
+
+
+#description: Proceed
+#english: Proceed=Proceed?
+Proceed=Kontynuować?
 
 ##################################
 #
@@ -1287,6 +1308,10 @@ NoExerciseInFile=Ćwiczenia nie znalezione w
 #english: NoGamesInFile=No Games found in 
 NoGamesInFile=Partie nie znalezione w 
 
+#description: No games found (e.g. whet attempting download from the Web
+#english: NoGamesFound=No games have been found. 
+NoGamesFound=Nie znaleziono żadnej partii. 
+
 #description: Bookmark already exists
 #english: BookmarkAlreadyExists=This bookmark already exists
 BookmarkAlreadyExists=Zakładka już istnieje
@@ -1394,6 +1419,14 @@ MsgTakebackInfo=Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni 
 # Dialogs
 #
 
+#description: Games Evaluation
+#english: GamesEvaluation=Games Evaluation
+GamesEvaluation=Ocena Partii
+
+#description: Time Remaining
+#english: TimeRemainig=Time Remaining
+TimeRemainig=Czas do zakończenia
+
 #description: Label for Text for Display
 #english: TextForDisplay=Text for Display
 TextForDisplay=Tekst na Ekran
@@ -1483,6 +1516,14 @@ ThinkTimeInGame=Czas na posunięcie
 #description: Time to think in Evaluation (inside a frame titled "Engine Time per Move")
 #english: ThinkTimeEvaluation=Evaluation Time (s)
 ThinkTimeEvaluation=Czas na ewaluację (s)
+
+#description: Time to think in Evaluation (longer wording where there is space)
+#english: ThinkTimeEvaluationPerMove=Evaluation Time per Move(s)
+ThinkTimeEvaluationPerMove=Czas na ewaluację ruchu (s)
+
+#description: EstimatedEvalTime
+#english: EstimatedEvalTime=Estimated evaluation time
+EstimatedEvalTime=Szacowany czas oceny
 
 #description: Allows diff from best move when selecting game moves
 #english: MoveSelectionAccuracy=Move Selection (cp)
@@ -1584,13 +1625,21 @@ ImportIntoChapter=Importuj Partię
 #english: DownloadingGameFromLichess=Downloading Game from lichess.org. Please wait...
 DownloadingGameFromLichess=Trwa pobieranie partii z lichess. Proszę czekać...
 
-#description: Downloading from lichess
+#description: Downloading games from lichess
 #english: DownloadingFromLichess=Downloading from lichess.org. Please wait...
 DownloadingFromLichess=Trwa pobieranie partii z lichess. Proszę czekać...
 
-#description: DownloadGamesFromWeb
+#description: Downloading games from Chesscom
+#english: DownloadingFromChesscom=Downloading from chess.com. Please wait...
+DownloadingFromChesscom=Trwa pobieranie partii z chess.com. Proszę czekać...
+
+#description: Download Games From Web
 #english: DownloadGamesFromWeb=Download Games from a Web Site
 DownloadGamesFromWeb=Pobierz partie z Internetu
+
+#description: Evaluate Games
+#english: EvaluateGames=Evaluate Games
+EvaluateGames=Oceń partie
 
 #description: Please wait
 #english: PleaseWait=Please Wait
@@ -2292,4 +2341,3 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
-DownloadingFromChesscom=Trwa pobieranie partii z chess.com. Proszę czekać...

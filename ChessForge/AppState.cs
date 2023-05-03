@@ -1218,6 +1218,7 @@ namespace ChessForge
 
                 _mainWin.UiMnciPlayEngine.IsEnabled = true;
 
+                _mainWin.UiMnEvaluateGames.IsEnabled = ActiveChapter != null && ActiveChapter.GetModelGameCount() > 0;
                 _mainWin.UiMnStripComments.IsEnabled = AppState.IsTreeViewTabActive();
                 _mainWin.UiMnAnnotations.IsEnabled = AppState.IsTreeViewTabActive();
                 _mainWin.UiMnMergeChapters.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;

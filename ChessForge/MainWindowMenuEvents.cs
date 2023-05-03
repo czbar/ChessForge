@@ -561,7 +561,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnEvaluateLine_Click(object sender, RoutedEventArgs e)
+        public void UiMnEvaluateLine_Click(object sender, RoutedEventArgs e)
         {
             // a defensive check
             if (ActiveLine.GetPlyCount() <= 1)
@@ -2249,6 +2249,36 @@ namespace ChessForge
             e.Handled = true;
 
             DownloadWebGamesManager.DownloadGames();
+        }
+
+        /// <summary>
+        /// Opens the dialog for selecting and evaluating games
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEvaluateGames_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                if (AppState.ActiveChapter != null)
+                {
+                    int chapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(AppState.ActiveChapter);
+                    SelectGamesForEvalDialog dlg = new SelectGamesForEvalDialog(AppState.ActiveChapter, chapterIndex, AppState.ActiveChapter.ModelGames)
+                    {
+                        Left = ChessForgeMain.Left + 100,
+                        Top = ChessForgeMain.Top + 100,
+                        Topmost = false,
+                        Owner = AppState.MainWin
+                    };
+                    dlg.ShowDialog();
+                }
+            }
+            catch
+            { 
+            }
+
+            e.Handled = true;
         }
 
         /// <summary>

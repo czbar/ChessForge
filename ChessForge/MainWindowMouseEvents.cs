@@ -1159,7 +1159,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiTabModelGames_GotFocus(object sender, RoutedEventArgs e)
+        public void UiTabModelGames_GotFocus(object sender, RoutedEventArgs e)
         {
             if (AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
             {

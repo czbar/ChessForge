@@ -18,6 +18,9 @@ namespace ChessForge
     /// </summary>
     public partial class DownloadWebGamesDialog : Window
     {
+        // whether handlers have been set
+        private static bool IsHandlersInitialized = false;
+            
         /// <summary>
         /// The list of downloaded games 
         /// </summary>
@@ -29,8 +32,13 @@ namespace ChessForge
         public DownloadWebGamesDialog()
         {
             InitializeComponent();
-            LichessUserGames.UserGamesReceived += UserGamesReceived;
-            ChesscomUserGames.UserGamesReceived += UserGamesReceived;
+            if (!IsHandlersInitialized)
+            {
+                LichessUserGames.UserGamesReceived += UserGamesReceived;
+                ChesscomUserGames.UserGamesReceived += UserGamesReceived;
+            }
+            IsHandlersInitialized = true;
+
             EnableControls(false);
 
             SetControlValues();
@@ -73,11 +81,12 @@ namespace ChessForge
                         }
 
                         var lstGames = e.GameData;
-                        int gamesCount = lstGames.Count;
 
                         // sort games from earliest to latest
                         lstGames = GameUtils.SortGamesByDateTime(lstGames);
+                        lstGames = GameUtils.RemoveGamesOutOfDateRange(lstGames, e.GamesFilter.StartDate, e.GamesFilter.EndDate);
 
+                        int gamesCount = lstGames.Count;
                         if (gamesCount >= e.GamesFilter.MaxGames && e.GamesFilter.MaxGames != 0)
                         {
                             if (e.GamesFilter.StartDate.HasValue)
@@ -90,11 +99,19 @@ namespace ChessForge
                             }
                         }
 
+                        UiLblLoading.Visibility = Visibility.Collapsed;
                         Games = new ObservableCollection<GameData>(lstGames);
-                        if (SelectGames(ref Games))
+                        if (Games.Count > 0)
                         {
-                            DialogResult = true;
-                            exit = true;
+                            if (SelectGames(ref Games))
+                            {
+                                DialogResult = true;
+                                exit = true;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show(Properties.Resources.NoGamesFound, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                     }
                 }
@@ -189,8 +206,8 @@ namespace ChessForge
             UiCmbSite.IsEnabled = !isDownloading;
             UiTbMaxGames.IsEnabled = !isDownloading;
             UiTbUserName.IsEnabled = !isDownloading;
-            UiDtStartDate.IsEnabled = !isDownloading;
-            UiDtEndDate.IsEnabled = !isDownloading;
+            UiDtStartDate.IsEnabled = !isDownloading && !UiCbOnlyNew.IsChecked == true;
+            UiDtEndDate.IsEnabled = !isDownloading && !UiCbOnlyNew.IsChecked == true;
         }
 
         /// <summary>
@@ -221,8 +238,22 @@ namespace ChessForge
                 }
                 filter.MaxGames = gameCount;
 
-                filter.StartDate = UiDtStartDate.SelectedDate;
-                filter.EndDate = UiDtEndDate.SelectedDate;
+                if (UiCbOnlyNew.IsChecked == true)
+                {
+                    filter.StartDate = null;
+                    filter.EndDate = null;
+                }
+                else
+                {
+                    filter.StartDate = UiDtStartDate.SelectedDate;
+                    filter.EndDate = UiDtEndDate.SelectedDate;
+                }
+
+                // adjust the end date to end of day
+                if (filter.EndDate.HasValue)
+                {
+                    filter.EndDate = filter.EndDate.Value.AddDays(1).AddTicks(-1);
+                }
 
                 if (IsChesscomDownload())
                 {

@@ -89,21 +89,29 @@ namespace ChessForge
         /// Time given to the engine to evaluate a single move
         /// (in milliseconds)
         /// </summary>
-        public static int EngineEvaluationTime = 1000;
+        public static int EngineEvaluationTime 
+        {
+            get => Math.Max(100, _engineEvaluationTime);
+            set => _engineEvaluationTime = value;
+        }
 
         /// <summary>
         /// Time given to the engine to respond
         /// during a training game.
         /// (in milliseconds)
         /// </summary>
-        public static int EngineMoveTime = 1000;
+        public static int EngineMoveTime
+        {
+            get => Math.Max(100, _engineMoveTime);
+            set => _engineMoveTime = value;
+        }
 
-        //***************** WEB GAMES ITEMS *************************
+    //***************** WEB GAMES ITEMS *************************
 
-        /// <summary>
-        /// Site to download the games from: lichess or chesscom
-        /// </summary>
-        public static string WebGamesSite = Constants.LichessNameId;
+    /// <summary>
+    /// Site to download the games from: lichess or chesscom
+    /// </summary>
+    public static string WebGamesSite = Constants.LichessNameId;
 
         /// <summary>
         /// User name for the lichess site
@@ -136,6 +144,11 @@ namespace ChessForge
         /// </summary>
         public static DateTime? WebGamesEndDate = null;
 
+        // time per move for engine evaluation
+        private static int _engineEvaluationTime = 1000;
+
+        // time per move in engine game
+        private static int _engineMoveTime = 1000;
 
         /// <summary>
         /// Number of threads for the engine to use. 
@@ -806,10 +819,10 @@ namespace ChessForge
                             int.TryParse(value, out AutoSaveFrequency);
                             break;
                         case CFG_ENGINE_EVALUATION_TIME:
-                            int.TryParse(value, out EngineEvaluationTime);
+                            int.TryParse(value, out _engineEvaluationTime);
                             break;
                         case CFG_ENGINE_MOVE_TIME:
-                            int.TryParse(value, out EngineMoveTime);
+                            int.TryParse(value, out _engineMoveTime);
                             break;
                         case CFG_ENGINE_THREADS:
                             int.TryParse(value, out _engineThreads);
