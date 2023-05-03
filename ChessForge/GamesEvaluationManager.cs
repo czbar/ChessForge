@@ -35,6 +35,21 @@ namespace ChessForge
         // list of games to evaluate
         private static ObservableCollection<ArticleListItem> _games;
 
+        // total plies to evaluate
+        private static int _plyCountToEvaluate;
+
+        // plies evaluated running count
+        private static int _pliesEvaluated;
+
+        // games evaluated running count
+        private static int _gamesEvaluated = 0;
+
+        // total games to evaluate
+        private static int _gamesToEvaluate = 0;
+
+        // estimated execution time
+        private static long _estExecutionTime;
+
         /// <summary>
         /// Flags if the evaluation is currently in progress.
         /// </summary>
@@ -50,12 +65,31 @@ namespace ChessForge
         /// </summary>
         public static void InitializeProcess(ObservableCollection<ArticleListItem> games)
         {
+            _isEvaluationStarted = false;
+
             if (!_initialized)
             {
                 EngineMessageProcessor.MoveEvalFinished += MoveEvalFinished;
                 _initialized = true;
             }
             _games = games;
+
+            _plyCountToEvaluate = 0;
+            _pliesEvaluated = 0;
+            _gamesEvaluated = 0;
+            _gamesToEvaluate = 0;
+
+            foreach (ArticleListItem game in _games)
+            {
+                if (game.IsSelected)
+                {
+                    _plyCountToEvaluate += (game.Article.Tree.SelectLine("1").Count - 1);
+                    _gamesToEvaluate++;
+                }
+            }
+
+            _estExecutionTime = _plyCountToEvaluate * Configuration.EngineEvaluationTime;
+
             AppState.MainWin.Timers.Start(AppTimers.TimerId.GAMES_EVALUATION);
             _isEvaluationInProgress = true;
         }
@@ -77,29 +111,16 @@ namespace ChessForge
                     _evalGameIndex = FindNextGameIndex(_evalGameIndex);
                     if (_evalGameIndex >= 0)
                     {
+                        _dlgProgress = new GamesEvalDialog(_plyCountToEvaluate, _estExecutionTime);
+                        _dlgProgress.UiPbProgress.Minimum = 0;
+                        _dlgProgress.UiPbProgress.Maximum = 100;
+                        SetGameNoLabel();
                         KickoffSingleGameEval(_evalGameIndex);
+                        _dlgProgress.ShowDialog();
                     }
 
-                    // display dialog monitoring progress
-                    _dlgProgress = new GamesEvalDialog();
-                    _dlgProgress.ShowDialog();
+                    AppState.MainWin.Timers.Stop(AppTimers.TimerId.GAMES_EVALUATION);
                 }
-
-                //foreach (ArticleListItem game in _games)
-                //{
-                //    if (game.IsSelected)
-                //    {
-                //        AppState.MainWin.SelectArticle(game.ChapterIndex, GameData.ContentType.MODEL_GAME, game.ArticleIndex);
-
-                //        ObservableCollection<TreeNode> lineToSelect = game.Article.Tree.SelectLine("1");
-                //        if (game.Article.Tree.Nodes.Count > 1)
-                //        {
-                //            int firstNodeId = game.Article.Tree.Nodes[0].Children[0].NodeId;
-                //            AppState.MainWin.SetActiveLine(lineToSelect, firstNodeId);
-                //            AppState.MainWin.UiMnEvaluateLine_Click(null, null);
-                //        }
-                //    }
-                //}
             });
         }
 
@@ -112,11 +133,47 @@ namespace ChessForge
         {
             if (_isEvaluationInProgress)
             {
+                _pliesEvaluated++;
                 AppState.MainWin.Dispatcher.Invoke(() =>
                 {
-                    // update dialog
+                    try
+                    {
+                        double fract = (double)_pliesEvaluated / (double)_plyCountToEvaluate;
+                        long timeRemaining = _estExecutionTime - (long)(fract * (double)_estExecutionTime);
+                        _dlgProgress.UiLblTimeRemaining.Content = Properties.Resources.TimeRemainig + ": " + GuiUtilities.TimeStringInTwoParts(timeRemaining);
+                        int pct = (int)(fract * 100.0);
+                        _dlgProgress.UiLblProgressPct.Content = pct.ToString() + "%";
+                        _dlgProgress.UiPbProgress.Value = pct;
+
+                        if (e.IsLastMove)
+                        {
+                            _gamesEvaluated++;
+                            _evalGameIndex = FindNextGameIndex(_evalGameIndex);
+                            if (_evalGameIndex >= 0)
+                            {
+                                SetGameNoLabel();
+                                KickoffSingleGameEval(_evalGameIndex);
+                            }
+                            else
+                            {
+                                _dlgProgress.Close();
+                            }
+                        }
+                    }
+                    catch
+                    {
+                    }
                 });
             }
+        }
+
+        /// <summary>
+        /// Sets text of the "Game N of M" label. 
+        /// </summary>
+        private static void SetGameNoLabel()
+        {
+            string gameNo = (Properties.Resources.Game0of0).Replace("$0", (_gamesEvaluated + 1).ToString()).Replace("$1", _gamesToEvaluate.ToString());
+            _dlgProgress.UiLblCurrentGame.Content = gameNo;
         }
 
         /// <summary>
@@ -153,16 +210,6 @@ namespace ChessForge
                 AppState.MainWin.SetActiveLine(lineToSelect, firstNodeId);
                 AppState.MainWin.UiMnEvaluateLine_Click(null, null);
             }
-        }
-
-        /// <summary>
-        /// Stops the evaluation process.
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="e"></param>
-        public static void StopGamesEvaluation(object source, ElapsedEventArgs e)
-        {
-            AppState.MainWin.Timers.Stop(AppTimers.TimerId.GAMES_EVALUATION);
         }
     }
 }
