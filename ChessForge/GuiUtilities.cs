@@ -94,6 +94,73 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds text for display representing the passed millisecond value
+        /// in human friendly way.
+        /// The text will consist of at most 2 parts e.g. days and hours, or minutes and seconds.
+        /// </summary>
+        /// <param name="milliseconds"></param>
+        /// <returns></returns>
+        public static string TimeStringInTwoParts(long estTime)
+        {
+            TimeSpan ts = TimeSpan.FromMilliseconds(estTime);
+            bool hasDays = false;
+            bool hasHours = false;
+            bool hasMinutes = false;
+
+            StringBuilder sb = new StringBuilder();
+
+            bool done = false;
+            if (ts.Days > 0)
+            {
+                sb.Append(ts.Days.ToString() + " " + Properties.Resources.Days);
+                hasDays = true;
+                if (ts.Days > 10)
+                {
+                    done = true;
+                }
+                if (!done)
+                {
+                    sb.Append(", ");
+                }
+            }
+
+            if (!done && (hasDays || ts.Hours > 0))
+            {
+                sb.Append(ts.Hours.ToString() + " " + Properties.Resources.Hours);
+                hasHours = true;
+                if (ts.Hours > 10 || hasDays)
+                {
+                    done = true;
+                }
+                if (!done)
+                {
+                    sb.Append(", ");
+                }
+            }
+
+            if (!done && (hasHours || ts.Minutes > 0))
+            {
+                sb.Append(ts.Minutes.ToString() + " " + Properties.Resources.Minutes);
+                hasMinutes = true;
+                if (ts.Minutes > 10 || hasHours)
+                {
+                    done = true;
+                }
+                if (!done)
+                {
+                    sb.Append(", ");
+                }
+            }
+
+            if (!done && (hasMinutes || ts.Seconds >= 0))
+            {
+                sb.Append(ts.Seconds.ToString() + " " + Properties.Resources.Seconds);
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
         /// Produces text for user interface from the received ParserException.
         /// </summary>
         /// <param name="ex"></param>
