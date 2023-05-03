@@ -1606,7 +1606,7 @@ namespace ChessForge
                 {
                     EvaluateActiveLineSelectedPosition(nd);
                 }
-                if (queryExplorer)
+                if (queryExplorer && !GamesEvaluationManager.IsEvaluationInProgress)
                 {
                     _openingStatsView.SetOpeningName();
                     WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
