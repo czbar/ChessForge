@@ -34,7 +34,7 @@ namespace ChessForge
         public SelectGamesForEvalDialog(Chapter chapter, int chapterIndex, List<Article> articles)
         {
             _gameList = new ObservableCollection<ArticleListItem>();
-            for(int i = 0; i < articles.Count; i++)
+            for (int i = 0; i < articles.Count; i++)
             {
                 ArticleListItem game = new ArticleListItem(chapter, chapterIndex, articles[i], i);
                 _gameList.Add(game);
@@ -91,85 +91,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            int plyCount = 0;
-            foreach (ArticleListItem game in _gameList)
+            if (double.TryParse(UiTbEngEvalTime.Text, out double dval))
             {
-                if (game.IsSelected)
-                {
-                    plyCount += (game.Article.Tree.SelectLine("1").Count - 1);
-                }
+                Configuration.EngineEvaluationTime = (int)(dval * 1000);
             }
-
-            if (plyCount > 0)
-            {
-                if (double.TryParse(UiTbEngEvalTime.Text, out double dval))
-                {
-                    Configuration.EngineEvaluationTime = (int)(dval * 1000);
-                }
-
-                long estTime = plyCount * Configuration.EngineEvaluationTime;
-                TimeSpan ts = TimeSpan.FromMilliseconds(estTime);
-                bool hasDays = false;
-                bool hasHours = false;
-                bool hasMinutes = false;
-
-                StringBuilder sb = new StringBuilder();
-                sb.Append(Properties.Resources.EstimatedEvalTime);
-                sb.Append(": ");
-
-                bool done = false;
-                if (ts.Days > 0)
-                {
-                    sb.Append(Properties.Resources.Days + " " + ts.Days.ToString());
-                    hasDays = true;
-                    if (ts.Days > 10)
-                    {
-                        done = true;
-                    }
-                    if (!done)
-                    {
-                        sb.Append(", ");
-                    }
-                }
-
-                if (!done && (hasDays || ts.Hours > 0))
-                {
-                    sb.Append(Properties.Resources.Hours + " " + ts.Hours.ToString());
-                    hasHours = true;
-                    if (ts.Hours > 10 || hasDays)
-                    {
-                        done = true;
-                    }
-                    if (!done)
-                    {
-                        sb.Append(", ");
-                    }
-                }
-
-                if (!done && (hasHours || ts.Minutes > 0))
-                {
-                    sb.Append(Properties.Resources.Minutes + " " + ts.Minutes.ToString());
-                    hasMinutes = true;
-                    if (ts.Minutes > 10 || hasHours)
-                    {
-                        done = true;
-                    }
-                    if (!done)
-                    {
-                        sb.Append(", ");
-                    }
-                }
-
-                if (!done && (hasMinutes || ts.Seconds > 0))
-                {
-                    sb.Append(Properties.Resources.Seconds + " " + ts.Seconds.ToString());
-                }
-
-                sb.Append(". " + Properties.Resources.Proceed);
-                MessageBox.Show(sb.ToString(), Properties.Resources.Information, MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-                PerformEvaluations();
-            }
+            PerformEvaluations();
 
             DialogResult = true;
         }
