@@ -8,9 +8,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ChessForge
 {
@@ -19,9 +16,15 @@ namespace ChessForge
     /// </summary>
     public partial class GamesEvalDialog : Window
     {
-        public GamesEvalDialog()
+        public GamesEvalDialog(int plyCountToEvaluate, long estEvaluationTime)
         {
             InitializeComponent();
+        }
+
+        private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            AppState.MainWin.StopEvaluation(true);
+            DialogResult = false;
         }
     }
 }
