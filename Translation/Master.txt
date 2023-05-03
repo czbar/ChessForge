@@ -1100,6 +1100,12 @@ MsgTakebackInfo=Click here or press the space key to take back your move.
 # Dialogs
 #
 
+#Games Evaluation
+GamesEvaluation=Games Evaluation
+
+#Time Remaining
+TimeRemainig=Time Remaining
+
 #Label for Text for Display
 TextForDisplay=Text for Display
 

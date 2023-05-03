@@ -1419,6 +1419,14 @@ MsgTakebackInfo=
 # Dialogs
 #
 
+#description: Games Evaluation
+#english: GamesEvaluation=Games Evaluation
+GamesEvaluation=
+
+#description: Time Remaining
+#english: TimeRemainig=Time Remaining
+TimeRemainig=
+
 #description: Label for Text for Display
 #english: TextForDisplay=Text for Display
 TextForDisplay=

@@ -1753,7 +1753,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Estimated Evaluation Time.
+        ///   Looks up a localized string similar to Estimated evaluation time.
         /// </summary>
         public static string EstimatedEvalTime {
             get {
@@ -2244,6 +2244,15 @@ namespace ChessForge.Properties {
         public static string Games {
             get {
                 return ResourceManager.GetString("Games", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Games Evaluation.
+        /// </summary>
+        public static string GamesEvaluation {
+            get {
+                return ResourceManager.GetString("GamesEvaluation", resourceCulture);
             }
         }
         
@@ -4117,6 +4126,15 @@ namespace ChessForge.Properties {
         public static string ThinkTimeInGame {
             get {
                 return ResourceManager.GetString("ThinkTimeInGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time Remaining.
+        /// </summary>
+        public static string TimeRemainig {
+            get {
+                return ResourceManager.GetString("TimeRemainig", resourceCulture);
             }
         }
         

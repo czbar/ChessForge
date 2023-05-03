@@ -1075,6 +1075,12 @@
   <data name="MsgTakebackInfo" xml:space="preserve">
     <value>Click here or press the space key to take back your move.</value>
   </data>
+  <data name="GamesEvaluation" xml:space="preserve">
+    <value>Games Evaluation</value>
+  </data>
+  <data name="TimeRemainig" xml:space="preserve">
+    <value>Time Remaining</value>
+  </data>
   <data name="TextForDisplay" xml:space="preserve">
     <value>Text for Display</value>
   </data>

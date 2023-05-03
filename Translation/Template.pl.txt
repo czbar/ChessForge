@@ -1419,6 +1419,14 @@ MsgTakebackInfo=Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni 
 # Dialogs
 #
 
+#description: Games Evaluation
+#english: GamesEvaluation=Games Evaluation
+GamesEvaluation=Ocena Partii
+
+#description: Time Remaining
+#english: TimeRemainig=Time Remaining
+TimeRemainig=Czas do zakończenia
+
 #description: Label for Text for Display
 #english: TextForDisplay=Text for Display
 TextForDisplay=Tekst na Ekran

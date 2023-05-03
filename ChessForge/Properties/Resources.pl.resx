@@ -1074,6 +1074,12 @@
   <data name="MsgTakebackInfo" xml:space="preserve">
     <value>Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni ruch.</value>
   </data>
+  <data name="GamesEvaluation" xml:space="preserve">
+    <value>Ocena Partii</value>
+  </data>
+  <data name="TimeRemainig" xml:space="preserve">
+    <value>Czas do zakończenia</value>
+  </data>
   <data name="TextForDisplay" xml:space="preserve">
     <value>Tekst na Ekran</value>
   </data>
