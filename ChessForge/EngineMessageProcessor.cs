@@ -12,6 +12,7 @@ using System.Windows;
 using static System.Net.Mime.MediaTypeNames;
 using ChessForge.Properties;
 using WebAccess;
+using System.Diagnostics.Tracing;
 
 namespace ChessForge
 {
@@ -292,7 +293,8 @@ namespace ChessForge
                         _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                     }
 
-                    if (ContinueLineEvaluation(index))
+                    MoveEvalEventArgs eventArgs = null;
+                    if (ContinueLineEvaluation(index, out eventArgs))
                     {
                         if (!delayed)
                         {
@@ -311,6 +313,11 @@ namespace ChessForge
                             EvaluationManager.Reset();
                         }
                     }
+
+                    if (eventArgs != null && GamesEvaluationManager.IsEvaluationInProgress)
+                    {
+                        MoveEvalFinished?.Invoke(null, eventArgs);
+                    }
                 }
             }
         }
@@ -321,18 +328,19 @@ namespace ChessForge
         /// was not the last in the evaluated Line.
         /// </summary>
         /// <returns></returns>
-        private static bool ContinueLineEvaluation(int index)
+        private static bool ContinueLineEvaluation(int index, out MoveEvalEventArgs eventArgs)
         {
+            eventArgs = null;
+
             if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
             {
                 bool islastPosition = EvaluationManager.IsLastPositionIndex();
-                
+
                 // raise event
-                MoveEvalEventArgs args = new MoveEvalEventArgs();
-                args.MoveIndex = index;
-                args.IsLastMove = islastPosition;
-                MoveEvalFinished?.Invoke(null, args);
-                
+                eventArgs = new MoveEvalEventArgs();
+                eventArgs.MoveIndex = index;
+                eventArgs.IsLastMove = islastPosition;
+
                 return !islastPosition;
             }
             else
