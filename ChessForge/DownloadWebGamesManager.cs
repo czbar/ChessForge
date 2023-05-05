@@ -50,6 +50,29 @@ namespace ChessForge
                             AddGamesToNewWorkbook(dlg.Games, selected);
                             break;
                     }
+                    // if there were any exercises, display info
+                    int gameCount = 0;
+                    int exerciseCount = 0;
+                    try
+                    {
+                        foreach (GameData gd in dlg.Games)
+                        {
+                            if (gd.GetContentType() == GameData.ContentType.MODEL_GAME || gd.GetContentType() == GameData.ContentType.GENERIC)
+                            {
+                                gameCount++;
+                            }
+                            else if (gd.GetContentType() == GameData.ContentType.EXERCISE)
+                            {
+                                exerciseCount++;
+                            }
+                        }
+                        if (exerciseCount > 0)
+                        {
+                            string msg = Properties.Resources.DownloadedGamesAndExercises.Replace("$0", gameCount.ToString()).Replace("$1", exerciseCount.ToString());
+                            MessageBox.Show(msg, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                    catch { }
                     AppState.IsDirty = true;
                 }
                 else
