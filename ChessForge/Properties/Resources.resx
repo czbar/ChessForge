@@ -1150,6 +1150,9 @@
   <data name="ThinkTimeEvaluationPerMove" xml:space="preserve">
     <value>Evaluation Time per Move(s)</value>
   </data>
+  <data name="MultipleLines" xml:space="preserve">
+    <value>Multiple Lines</value>
+  </data>
   <data name="EstimatedEvalTime" xml:space="preserve">
     <value>Estimated evaluation time</value>
   </data>
@@ -1236,6 +1239,9 @@
   </data>
   <data name="DownloadGamesFromWeb" xml:space="preserve">
     <value>Download Games from a Web Site</value>
+  </data>
+  <data name="DownloadedGamesAndExercises" xml:space="preserve">
+    <value>Game count $0, Exercises count $1</value>
   </data>
   <data name="EvaluateGames" xml:space="preserve">
     <value>Evaluate Games</value>

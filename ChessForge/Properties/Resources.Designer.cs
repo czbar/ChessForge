@@ -1321,6 +1321,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Game count $0, Exercises count $1.
+        /// </summary>
+        public static string DownloadedGamesAndExercises {
+            get {
+                return ResourceManager.GetString("DownloadedGamesAndExercises", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download Games from a Web Site.
         /// </summary>
         public static string DownloadGamesFromWeb {
@@ -2946,6 +2955,15 @@ namespace ChessForge.Properties {
         public static string MultiEntitiesValid {
             get {
                 return ResourceManager.GetString("MultiEntitiesValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multiple Lines.
+        /// </summary>
+        public static string MultipleLines {
+            get {
+                return ResourceManager.GetString("MultipleLines", resourceCulture);
             }
         }
         

@@ -1177,6 +1177,10 @@ ThinkTimeEvaluation=Evaluation Time (s)
 #Time to think in Evaluation (longer wording where there is space)
 ThinkTimeEvaluationPerMove=Evaluation Time per Move(s)
 
+#Multiple lines (MultiPV)
+MultipleLines=Multiple Lines
+
+
 #EstimatedEvalTime
 EstimatedEvalTime=Estimated evaluation time
 
@@ -1263,6 +1267,9 @@ DownloadingFromChesscom=Downloading from chess.com. Please wait...
 
 #Download Games From Web
 DownloadGamesFromWeb=Download Games from a Web Site
+
+#Downloaded Games And Exercises
+DownloadedGamesAndExercises=Game count $0, Exercise count $1
 
 #Evaluate Games
 EvaluateGames=Evaluate Games
