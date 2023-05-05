@@ -71,6 +71,11 @@ namespace ChessForge
         public double EngineTimePerMoveInEvaluation;
 
         /// <summary>
+        /// Number of lines returned by the engine
+        /// </summary>
+        public double EngineMpv;
+
+        /// <summary>
         /// Tolerance of engine move selection in centipawns
         /// while evaluating.
         /// </summary>
@@ -122,6 +127,7 @@ namespace ChessForge
             ReplaySpeed = (double)Configuration.MoveSpeed / 1000.0;
             EngineTimePerMoveInGame = (double)Configuration.EngineMoveTime / 1000.0;
             EngineTimePerMoveInEvaluation = (double)Configuration.EngineEvaluationTime / 1000.0;
+            EngineMpv = Configuration.EngineMpv;
             EngineMoveAccuracy = (int)Configuration.ViableMoveCpDiff;
             EngineThreads = (int)Configuration.EngineThreads;
             EngineHashSize = (long)Configuration.EngineHashSize;
@@ -137,6 +143,7 @@ namespace ChessForge
             UiTbReplaySpeed.Text = ReplaySpeed.ToString("F1");
             UiTbEngTimeInGame.Text = EngineTimePerMoveInGame.ToString("F1");
             UiTbEngEvalTime.Text = EngineTimePerMoveInEvaluation.ToString("F1");
+            UiTbMultiPv.Text = EngineMpv.ToString();
             UiTbMoveAcc.Text = EngineMoveAccuracy.ToString();
             UiTbThreads.Text = EngineThreads.ToString();
             UiTbHashSize.Text = EngineHashSize.ToString();
@@ -169,6 +176,7 @@ namespace ChessForge
             if (!string.IsNullOrEmpty(res))
             {
                 EnginePath = res;
+                UiTbEngineExe.Text = EnginePath;
             }
         }
 
@@ -206,6 +214,11 @@ namespace ChessForge
             if (double.TryParse(UiTbEngEvalTime.Text, out dval))
             {
                 Configuration.EngineEvaluationTime = (int)(dval * 1000);
+            }
+
+            if (int.TryParse(UiTbMultiPv.Text, out iVal))
+            {
+                Configuration.EngineMpv = iVal;
             }
 
             if (int.TryParse(UiTbMoveAcc.Text, out iVal))
@@ -260,6 +273,16 @@ namespace ChessForge
         private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
+        }
+
+        /// <summary>
+        /// Links to the relevant Wiki page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Application-Options-Dialog");
         }
     }
 }

@@ -14,10 +14,12 @@
         
         <GroupBox x:Name="UiGbEngParameters" HorizontalAlignment="Left" Height="244" Header="{x:Static p:Resources.EngineParameters}" Margin="13,86,0,0" VerticalAlignment="Top" Width="215">
             <StackPanel>
-                <Label x:Name="UiLblThinkTimeInGame" Content="{x:Static p:Resources.ThinkTimeInGame}" HorizontalAlignment="Left" Margin="0,25,0,0" VerticalAlignment="Top" Width="118"/>
+                <Label x:Name="UiLblThinkTimeInGame" Content="{x:Static p:Resources.ThinkTimeInGame}" HorizontalAlignment="Left" Margin="0,15,0,0" VerticalAlignment="Top" Width="118"/>
                 <TextBox x:Name="UiTbEngTimeInGame" HorizontalAlignment="Left" HorizontalContentAlignment="Center"  Margin="158,-20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
                 <Label x:Name="UiLblEvalTime" Content="{x:Static p:Resources.ThinkTimeEvaluation}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="UiTbEngEvalTime" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="158,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
+                <Label x:Name="UiLblMultiPv" Content="{x:Static p:Resources.MultipleLines}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="UiTbMultiPv" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="158,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
                 <Label x:Name="UiLblMoveAcc" Content="{x:Static p:Resources.MoveSelectionAccuracy}" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="UiTbMoveAcc" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="158,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
                 <Label x:Name="UiLblThreads" Content="{x:Static p:Resources.EngineThreads}" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top"/>
@@ -45,8 +47,9 @@
                 <CheckBox x:Name="UiCbFigurines" Content="{x:Static p:Resources.UseFigurines}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top"/>
             </StackPanel>
         </GroupBox>
-        <Button x:Name="UiBtnSave" IsDefault="True" Content="{x:Static p:Resources.Save}" HorizontalAlignment="Left" Margin="436,240,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnSave_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="436,276,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnCancel_Click" />
+        <Button x:Name="UiBtnSave" IsDefault="True" Content="{x:Static p:Resources.Save}" HorizontalAlignment="Left" Margin="436,220,0,0" VerticalAlignment="Top" Width="100" Height="22"  Visibility="Visible" Click="UiBtnSave_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="436,256,0,0" VerticalAlignment="Top" Width="100" Height="22"  Visibility="Visible" Click="UiBtnCancel_Click" />
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Left" Margin="436,292,0,0" VerticalAlignment="Top" Width="100" Height="22"  Visibility="Visible" Click="UiBtnHelp_Click" />
 
     </Grid>
 </Window>
