@@ -736,13 +736,17 @@ namespace ChessForge
         /// <summary>
         /// Rebuilds the Chapters view.
         /// </summary>
-        public void RebuildChaptersView(bool forceExpandGames = false)
+        public void RebuildChaptersView(bool forceExpandGames = false, bool forceExpandExercises = false)
         {
             try
             {
                 if (forceExpandGames)
                 {
                     WorkbookManager.SessionWorkbook.ActiveChapter.IsModelGamesListExpanded = true;
+                }
+                if (forceExpandExercises)
+                {
+                    WorkbookManager.SessionWorkbook.ActiveChapter.IsExercisesListExpanded = true;
                 }
                 _chaptersView.BuildFlowDocumentForChaptersView();
             }
