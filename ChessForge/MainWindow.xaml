@@ -138,8 +138,8 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Image x:Name="UiImgArrowLeft" Grid.Column="0" ToolTip="{x:Static p:Resources.GoBack}" VerticalAlignment="Center" Margin="0,5,50,0"  HorizontalAlignment="Right" Height="20" Width="24" Source="Resources/Images/arrow-left.png" IsEnabled="False" Visibility="Visible" />
-                    <Image x:Name="UiImgArrowRight" Grid.Column="0" ToolTip="{x:Static p:Resources.GoForward}" VerticalAlignment="Center" Margin="0,5,20,0"  HorizontalAlignment="Right" Height="20" Width="24" Source="Resources/Images/arrow-right.png" IsEnabled="False" Visibility="Visible" />
+                    <Image x:Name="UiImgArrowLeft" Grid.Column="0" ToolTip="{x:Static p:Resources.GoBack}" VerticalAlignment="Center" Margin="0,5,50,0"  HorizontalAlignment="Right" Height="20" Width="24" Source="Resources/Images/arrow-left.png" Visibility="Visible" />
+                    <Image x:Name="UiImgArrowRight" Grid.Column="0" ToolTip="{x:Static p:Resources.GoForward}" VerticalAlignment="Center" Margin="0,5,20,0"  HorizontalAlignment="Right" Height="20" Width="24" Source="Resources/Images/arrow-right.png" Visibility="Visible" />
                 </Grid>
                 <Grid x:Name="UiGridToggles" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
                     <Grid.ColumnDefinitions>
