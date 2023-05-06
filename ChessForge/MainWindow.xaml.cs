@@ -1976,7 +1976,7 @@ namespace ChessForge
         {
             bool handled = false;
 
-            if (Keyboard.Modifiers != ModifierKeys.Shift && ActiveTreeView != null)
+            if (Keyboard.Modifiers != ModifierKeys.Shift && ActiveTreeView != null && AppState.IsVariationTreeTabType)
             {
                 TreeNode node = null;
                 switch (e.Key)
