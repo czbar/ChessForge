@@ -342,6 +342,15 @@ Seconds=
 #english: Proceed=Proceed?
 Proceed=
 
+#description: Go forward
+#english: GoForward=Go forward 
+GoForward=
+
+#description: Go back
+#english: GoBack=Go back 
+GoBack=
+
+
 ##################################
 #
 # EDITING
@@ -1643,7 +1652,7 @@ DownloadingFromChesscom=
 DownloadGamesFromWeb=
 
 #description: Downloaded Games And Exercises
-#english: DownloadedGamesAndExercises=Game count $0, Exercises count $1
+#english: DownloadedGamesAndExercises=Game count $0, Exercise count $1
 DownloadedGamesAndExercises=
 
 #description: Evaluate Games

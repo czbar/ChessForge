@@ -360,6 +360,12 @@
   <data name="Proceed" xml:space="preserve">
     <value>Proceed?</value>
   </data>
+  <data name="GoForward" xml:space="preserve">
+    <value>Go forward </value>
+  </data>
+  <data name="GoBack" xml:space="preserve">
+    <value>Go back </value>
+  </data>
   <data name="FontBold" xml:space="preserve">
     <value>Bold</value>
   </data>
@@ -1241,7 +1247,7 @@
     <value>Download Games from a Web Site</value>
   </data>
   <data name="DownloadedGamesAndExercises" xml:space="preserve">
-    <value>Game count $0, Exercises count $1</value>
+    <value>Game count $0, Exercise count $1</value>
   </data>
   <data name="EvaluateGames" xml:space="preserve">
     <value>Evaluate Games</value>

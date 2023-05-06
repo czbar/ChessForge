@@ -342,6 +342,15 @@ Seconds=sekundy
 #english: Proceed=Proceed?
 Proceed=Kontynuować?
 
+#description: Go forward
+#english: GoForward=Go forward 
+GoForward=Idź do przodu 
+
+#description: Go back
+#english: GoBack=Go back 
+GoBack=Idź wstecz 
+
+
 ##################################
 #
 # EDITING
@@ -1643,7 +1652,7 @@ DownloadingFromChesscom=Trwa pobieranie partii z chess.com. Proszę czekać...
 DownloadGamesFromWeb=Pobierz partie z Internetu
 
 #description: Downloaded Games And Exercises
-#english: DownloadedGamesAndExercises=Game count $0, Exercises count $1
+#english: DownloadedGamesAndExercises=Game count $0, Exercise count $1
 DownloadedGamesAndExercises=Liczba partii $0, liczba ćwiczeń $1
 
 #description: Evaluate Games

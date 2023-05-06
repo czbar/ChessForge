@@ -261,6 +261,13 @@ Seconds=seconds
 #Proceed
 Proceed=Proceed?
 
+#Go forward
+GoForward=Go forward 
+
+#Go back
+GoBack=Go back 
+
+
 ##################################
 #
 # EDITING
