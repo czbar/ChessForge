@@ -18,9 +18,7 @@ namespace ChessForge
     /// </summary>
     public partial class DownloadWebGamesDialog : Window
     {
-        // whether handlers have been set
-        private static bool IsHandlersInitialized = false;
-            
+
         /// <summary>
         /// The list of downloaded games 
         /// </summary>
@@ -32,12 +30,9 @@ namespace ChessForge
         public DownloadWebGamesDialog()
         {
             InitializeComponent();
-            if (!IsHandlersInitialized)
-            {
-                LichessUserGames.UserGamesReceived += UserGamesReceived;
-                ChesscomUserGames.UserGamesReceived += UserGamesReceived;
-            }
-            IsHandlersInitialized = true;
+
+            LichessUserGames.UserGamesReceived += UserGamesReceived;
+            ChesscomUserGames.UserGamesReceived += UserGamesReceived;
 
             EnableControls(false);
 
@@ -390,6 +385,7 @@ namespace ChessForge
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             LichessUserGames.UserGamesReceived -= UserGamesReceived;
+            ChesscomUserGames.UserGamesReceived -= UserGamesReceived;
         }
     }
 }
