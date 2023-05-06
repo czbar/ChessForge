@@ -89,7 +89,7 @@ namespace ChessForge
         /// Time given to the engine to evaluate a single move
         /// (in milliseconds)
         /// </summary>
-        public static int EngineEvaluationTime 
+        public static int EngineEvaluationTime
         {
             get => Math.Max(100, _engineEvaluationTime);
             set => _engineEvaluationTime = value;
@@ -106,12 +106,19 @@ namespace ChessForge
             set => _engineMoveTime = value;
         }
 
-    //***************** WEB GAMES ITEMS *************************
+        // Max allowed number of options to return
+        public const int MAX_ENGINE_MPV = 20;
 
-    /// <summary>
-    /// Site to download the games from: lichess or chesscom
-    /// </summary>
-    public static string WebGamesSite = Constants.LichessNameId;
+        // Default number of options to return
+        private const int DEFAULT_ENGIME_MPV = 5;
+
+
+        //***************** WEB GAMES ITEMS *************************
+
+        /// <summary>
+        /// Site to download the games from: lichess or chesscom
+        /// </summary>
+        public static string WebGamesSite = Constants.LichessNameId;
 
         /// <summary>
         /// User name for the lichess site
@@ -225,7 +232,22 @@ namespace ChessForge
         /// <summary>
         /// Number of moves to return with evaluations.
         /// </summary>
-        public static int EngineMpv = 5;
+        public static int EngineMpv
+        {
+            get
+            {
+                if (_engineMpv < 1)
+                {
+                    _engineMpv = 1;
+                }
+                else
+                {
+                    _engineMpv = Math.Min(MAX_ENGINE_MPV, _engineMpv);
+                }
+                return _engineMpv;
+            }
+            set { _engineMpv = value; }
+        }
 
         /// <summary>
         /// Whether the main window was maximized
@@ -306,6 +328,9 @@ namespace ChessForge
 
         // number of allowed threads
         private static int _engineThreads = 0;
+
+        // number of options to return
+        private static int _engineMpv = DEFAULT_ENGIME_MPV;
 
         // max value by which a font size can be increased from the standard size
         private const int MAX_UP_FONT_SIZE_DIFF = 4;
@@ -753,7 +778,6 @@ namespace ChessForge
             }
 
             bool? result;
-            openFileDialog.InitialDirectory = "";
             result = openFileDialog.ShowDialog();
 
             if (result == true)
@@ -826,6 +850,9 @@ namespace ChessForge
                             break;
                         case CFG_ENGINE_THREADS:
                             int.TryParse(value, out _engineThreads);
+                            break;
+                        case CFG_ENGINE_MPV:
+                            int.TryParse(value, out _engineMpv);
                             break;
                         case CFG_ENGINE_HASH_SIZE:
                             long.TryParse(value, out _engineHashSize);

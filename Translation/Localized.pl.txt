@@ -1521,6 +1521,11 @@ ThinkTimeEvaluation=Czas na ewaluację (s)
 #english: ThinkTimeEvaluationPerMove=Evaluation Time per Move(s)
 ThinkTimeEvaluationPerMove=Czas na ewaluację ruchu (s)
 
+#description: Multiple lines (MultiPV)
+#english: MultipleLines=Multiple Lines
+MultipleLines=Liczba wariantów
+
+
 #description: EstimatedEvalTime
 #english: EstimatedEvalTime=Estimated evaluation time
 EstimatedEvalTime=Szacowany czas oceny
@@ -1636,6 +1641,10 @@ DownloadingFromChesscom=Trwa pobieranie partii z chess.com. Proszę czekać...
 #description: Download Games From Web
 #english: DownloadGamesFromWeb=Download Games from a Web Site
 DownloadGamesFromWeb=Pobierz partie z Internetu
+
+#description: Downloaded Games And Exercises
+#english: DownloadedGamesAndExercises=Game count $0, Exercises count $1
+DownloadedGamesAndExercises=Liczba partii $0, liczba ćwiczeń $1
 
 #description: Evaluate Games
 #english: EvaluateGames=Evaluate Games

@@ -685,15 +685,15 @@ namespace ChessForge
                 BookmarkManager.ResetSelections();
 
                 if (AppState.MainWin.SelectArticlesFromPgnFile(ref games,
-                                                                      SelectGamesDialog.Mode.CREATE_WORKBOOK,
-                                                                      out bool createStudy, out bool copyGames, out bool multiChapter))
+                                                               SelectGamesDialog.Mode.CREATE_WORKBOOK,
+                                                               out bool createStudy, out bool copyGames, out bool multiChapter))
                 {
                     if (createStudy && !multiChapter)
                     {
                         MergeGames(ref chapter.StudyTree.Tree, ref games);
                         // the content type may have been reset to generic
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
-                        AppState.MainWin.CopySelectedItemsToChapter(chapter, copyGames, out string error, games);
+                        AppState.MainWin.CopySelectedItemsToChapter(chapter, copyGames, out string error, games, out _);
                     }
                     else
                     {

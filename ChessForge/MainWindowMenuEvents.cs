@@ -943,7 +943,7 @@ namespace ChessForge
                         // content type may have been reset to GENERIC in MergeGames above
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
 
-                        CopySelectedItemsToChapter(chapter, copyGames, out string error, games);
+                        CopySelectedItemsToChapter(chapter, copyGames, out string error, games, out _);
 
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         SelectChapterByIndex(chapter.Index, false);
@@ -973,8 +973,10 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="games"></param>
-        public int CopySelectedItemsToChapter(Chapter chapter, bool copyGames, out string error, ObservableCollection<GameData> games)
+        public int CopySelectedItemsToChapter(Chapter chapter, bool copyGames, out string error, ObservableCollection<GameData> games, out int copiedExercises)
         {
+            copiedExercises = 0;
+
             int copiedCount = 0; 
             error = string.Empty;
 
@@ -987,6 +989,7 @@ namespace ChessForge
                         if (chapter.AddArticle(gd, GameData.ContentType.EXERCISE, out error, GameData.ContentType.EXERCISE) >= 0)
                         {
                             copiedCount++;
+                            copiedExercises++;
                         }
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
                     }

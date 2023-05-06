@@ -34,6 +34,9 @@ namespace ChessForge
 
             if (dlg.ShowDialog() == true)
             {
+                int gameCount = 0;
+                int exerciseCount = 0;
+
                 int selected = GetSelectedGamesCount(dlg.Games);
                 if (dlg.Games != null && selected > 0)
                 {
@@ -41,15 +44,22 @@ namespace ChessForge
                     switch (action)
                     {
                         case DownloadedGamesActionDialog.Action.CurrentChapter:
-                            AddGamesToCurrentChapter(dlg.Games, selected);
+                            AddGamesToCurrentChapter(dlg.Games, out gameCount, out exerciseCount);
                             break;
                         case DownloadedGamesActionDialog.Action.NewChapter:
-                            AddGamesToNewChapter(dlg.Games, selected);
+                            AddGamesToNewChapter(dlg.Games, out gameCount, out exerciseCount);
                             break;
                         case DownloadedGamesActionDialog.Action.NewWorkbook:
-                            AddGamesToNewWorkbook(dlg.Games, selected);
+                            AddGamesToNewWorkbook(dlg.Games, out gameCount, out exerciseCount);
                             break;
                     }
+
+                    if (exerciseCount > 0)
+                    {
+                        string msg = Properties.Resources.DownloadedGamesAndExercises.Replace("$0", gameCount.ToString()).Replace("$1", exerciseCount.ToString());
+                        MessageBox.Show(msg, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+
                     AppState.IsDirty = true;
                 }
                 else
@@ -83,14 +93,17 @@ namespace ChessForge
         /// Closes the current workbook, opens a new one and adds games to it.
         /// </summary>
         /// <param name="games"></param>
-        private static void AddGamesToNewWorkbook(ObservableCollection<GameData> games, int gameCount)
+        private static void AddGamesToNewWorkbook(ObservableCollection<GameData> games, out int addedGames, out int addedExercises)
         {
+            addedGames = 0;
+            addedExercises = 0;
+
             try
             {
                 if (WorkbookManager.AskToSaveWorkbookOnClose())
                 {
                     AppState.MainWin.CreateNewWorkbook();
-                    AddGamesToCurrentChapter(games, gameCount);
+                    AddGamesToCurrentChapter(games, out addedGames, out addedExercises);
 
                     WorkbookManager.SessionWorkbook.ActiveChapter.SetTitle(Properties.Resources.DownloadedGames);
                 }
@@ -104,12 +117,16 @@ namespace ChessForge
         /// Adds selected games to the current chapter
         /// </summary>
         /// <param name="games"></param>
-        private static void AddGamesToCurrentChapter(ObservableCollection<GameData> games, int gameCount)
+        private static void AddGamesToCurrentChapter(ObservableCollection<GameData> games, out int addedGames, out int addedExercises)
         {
+            addedGames = 0;
+            addedExercises = 0;
+
             try
             {
                 int selected = GetSelectedGamesCount(games);
-                int copied = AppState.MainWin.CopySelectedItemsToChapter(AppState.ActiveChapter, true, out string error, games);
+                int copied = AppState.MainWin.CopySelectedItemsToChapter(AppState.ActiveChapter, true, out string error, games, out addedExercises);
+                addedGames = copied - addedExercises;
                 if (copied == 0)
                 {
                     // no games were copied
@@ -123,7 +140,7 @@ namespace ChessForge
                         string message = Properties.Resources.ErrNotAllGamesCopied + " (" + copied.ToString() + "/" + selected.ToString() + ")";
                         MessageBox.Show(Properties.Resources.ErrNotAllGamesCopied, Properties.Resources.Warning, MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
-                    AppState.MainWin.RebuildChaptersView(true);
+                    AppState.MainWin.RebuildChaptersView(addedGames > 0, addedExercises > 0);
                     AppState.MainWin.FocusOnChapterView();
                 }
             }
@@ -136,7 +153,7 @@ namespace ChessForge
         /// Creates a new chapter in the current workbook and adds games to it.
         /// </summary>
         /// <param name="games"></param>
-        private static void AddGamesToNewChapter(ObservableCollection<GameData> games, int gameCount)
+        private static void AddGamesToNewChapter(ObservableCollection<GameData> games, out int addedGames, out int addedExercises)
         {
             VariationTree tree = new VariationTree(GameData.ContentType.STUDY_TREE);
             tree.AddNode(new TreeNode(null, "", 0));
@@ -144,7 +161,7 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter(tree, true);
             chapter.SetTitle(Properties.Resources.DownloadedGames);
 
-            AddGamesToCurrentChapter(games, gameCount);
+            AddGamesToCurrentChapter(games, out addedGames, out addedExercises);
         }
 
         /// <summary>
