@@ -458,6 +458,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\ChessBoardGrey.png" />
+    <Resource Include="Resources\Images\arrow-left.png" />
+    <Resource Include="Resources\Images\arrow-right.png" />
     <Content Include="Resources\Sounds\NotInWorkbook.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
