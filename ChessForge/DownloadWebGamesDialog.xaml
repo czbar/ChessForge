@@ -9,8 +9,8 @@
         Title="{x:Static p:Resources.DownloadGamesFromWeb}" Height="330" Width="500" Closing="Window_Closing">
     <Grid>
         <Label x:Name="UiLblLoading" Background="Blue" Foreground="White" FontSize="16" FontWeight="Bold" Content="{x:Static p:Resources.DownloadingFromLichess}" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Panel.ZIndex="1"/>
-        <Button x:Name="UiBtnDownload" Content="{x:Static p:Resources.PerformDownload}" HorizontalAlignment="Left" Margin="358,81,0,0" Width="100"  VerticalAlignment="Top" Click="UiBtnDownload_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="358,118,0,0" Width="100" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnDownload" Content="{x:Static p:Resources.PerformDownload}" HorizontalAlignment="Left" Margin="358,56,0,0" Width="100"  VerticalAlignment="Top" Click="UiBtnDownload_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="358,88,0,0" Width="100" VerticalAlignment="Top"/>
         <GroupBox x:Name="UiGbAccount" Header="{x:Static p:Resources.Account}" Margin="18,5,0,0" Width="300" Height="95" HorizontalAlignment="Left" VerticalAlignment="Top">
             <StackPanel>
                 <Label x:Name="UiLblSite" Content="{x:Static p:Resources.WebSite}" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
