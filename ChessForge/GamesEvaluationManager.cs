@@ -78,6 +78,7 @@ namespace ChessForge
             _pliesEvaluated = 0;
             _gamesEvaluated = 0;
             _gamesToEvaluate = 0;
+            _evalGameIndex = -1;
 
             foreach (ArticleListItem game in _games)
             {
