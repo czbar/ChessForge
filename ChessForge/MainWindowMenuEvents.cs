@@ -337,6 +337,14 @@ namespace ChessForge
 
             AppState.ActiveVariationTree.OpsManager.Undo(out EditOperation.EditType opType, out string selectedLineId, out int selectedNodeId);
             TreeNode selectedNode = AppState.ActiveVariationTree.GetNodeFromNodeId(selectedNodeId);
+
+            if (selectedNode == null)
+            {
+                selectedNodeId = 0;
+                selectedLineId = "1";
+                MainChessBoard.DisplayPosition(AppState.ActiveVariationTree.RootNode, true);
+            }
+
             AppState.ActiveVariationTree.BuildLines();
             if (!string.IsNullOrEmpty(selectedLineId))
             {
