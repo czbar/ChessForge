@@ -71,8 +71,7 @@ namespace ChessForge
                                 AppState.MainWin.PasteChfClipboard();
                                 break;
                             case IdenticalPositionsExDialog.Action.OpenView:
-                                // TODO: this should be something encapsulated in TabNavigator
-                                AppState.MainWin.SelectArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
+                                WorkbookLocationNavigator.GotoArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
                                 if (item.Article.Tree.ContentType == GameData.ContentType.STUDY_TREE)
                                 {
                                     AppState.MainWin.SetupGuiForActiveStudyTree(true);
