@@ -66,7 +66,7 @@ namespace ChessForge
                                 AppState.MainWin.PasteChfClipboard();
                                 break;
                             case IdenticalPositionsExDialog.Action.CopyTree:
-                                nodelList = TreeUtils.CopySubtree(item.TailLine[0]);
+                                nodelList = TreeUtils.CopySubtree(item.TailLine[0].Parent);
                                 ChfClipboard.HoldNodeList(nodelList);
                                 AppState.MainWin.PasteChfClipboard();
                                 break;
