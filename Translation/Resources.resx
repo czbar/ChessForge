@@ -1577,7 +1577,7 @@
     <value>Double click in the Scoresheet for auto-replay</value>
   </data>
   <data name="cbClickBookmarkToTrain" xml:space="preserve">
-    <value>Click a bookmark to navigate to the bookmarked psoition</value>
+    <value>Click a bookmark to navigate to the bookmarked position</value>
   </data>
   <data name="cbRightClickBookmarkManager" xml:space="preserve">
     <value>Right click to open menu for Bookmark management options</value>

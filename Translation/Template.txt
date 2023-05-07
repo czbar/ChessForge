@@ -2114,7 +2114,7 @@ cbAdvancedEditig=
 cbDoubleClickAutoReplay=
 
 #description: Click bookmark to start training
-#english: cbClickBookmarkToTrain=Click a bookmark to navigate to the bookmarked psoition
+#english: cbClickBookmarkToTrain=Click a bookmark to navigate to the bookmarked position
 cbClickBookmarkToTrain=
 
 #description: Right click to open bookmarks menu
