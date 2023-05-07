@@ -484,19 +484,7 @@ namespace ChessForge
         /// <param name="articleIndex"></param>
         public void SelectArticle(int chapterIndex, GameData.ContentType contentType, int articleIndex)
         {
-            try
-            {
-                WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(chapterIndex, contentType, articleIndex);
-                if (contentType == GameData.ContentType.MODEL_GAME)
-                {
-                    SelectModelGame(articleIndex, true);
-                }
-                else if (contentType == GameData.ContentType.EXERCISE)
-                {
-                    AppState.MainWin.SelectExercise(articleIndex, true);
-                }
-            }
-            catch { }
+            WorkbookLocationNavigator.GotoArticle(chapterIndex, contentType, articleIndex);
         }
 
         /// <summary>
