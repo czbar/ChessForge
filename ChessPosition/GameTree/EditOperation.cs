@@ -35,6 +35,12 @@ namespace GameTree
         /// </summary>
         public TreeNode Node { get { return _node; } }
 
+
+        /// <summary>
+        /// Id of the TreeNode operated no.
+        /// </summary>
+        public int NodeId { get { return _nodeId; } }
+
         /// <summary>
         /// Child index in its parent's children list that will be required e.g. when promoting
         /// a line it will be the original index from which the line was promoted.
@@ -60,6 +66,11 @@ namespace GameTree
         /// The node operated on
         /// </summary>
         private TreeNode _node;
+
+        /// <summary>
+        /// Id of the node being operated on.
+        /// </summary>
+        private int _nodeId;
 
         // Child index 
         private int _childIndex;
@@ -103,6 +114,17 @@ namespace GameTree
             {
                 _node = nd;
             }
+        }
+
+        /// <summary>
+        /// Constructor for "other" operations.
+        /// </summary>
+        public EditOperation(EditType tp, int nodeId, object data_1, object data_2) : base()
+        {
+            _opType = tp;
+            _nodeId = nodeId;
+            _opData_1 = data_1;
+            _opData_2 = data_2;
         }
 
         /// <summary>
