@@ -691,7 +691,7 @@ namespace ChessForge
                     {
                         nodeIds.Add(nd.NodeId);
                     }
-                    EditOperation op = new EditOperation(EditOperation.EditType.PASTE_MOVES, nodeIds, null);
+                    EditOperation op = new EditOperation(EditOperation.EditType.PASTE_MOVES, nodeToInsertAt.NodeId, nodeIds, null);
                     ShownVariationTree.OpsManager.PushOperation(op);
                 }
             }
