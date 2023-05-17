@@ -306,7 +306,7 @@ namespace ChessForge
         /// <param name="chapterIndex">index of the requested chapter in the Chapters list.</param>
         /// <param name="gameType"></param>
         /// <param name="gameIndex">index in the list of elements of the requested type i.e. Model Games or Exercises </param>
-        public Chapter SetActiveChapterTreeByIndex(int chapterIndex, GameData.ContentType gameType, int gameIndex = 0)
+        public Chapter SetActiveChapterTreeByIndex(int chapterIndex, GameData.ContentType gameType, int gameIndex = 0, bool saveLocation = true)
         {
             if (chapterIndex < 0 || chapterIndex >= Chapters.Count)
             {
@@ -316,6 +316,10 @@ namespace ChessForge
             SetActiveChapter(Chapters[chapterIndex]);
             _activeChapter.SetActiveVariationTree(gameType, gameIndex);
 
+            if (saveLocation)
+            {
+                WorkbookLocationNavigator.SaveNewLocation(_activeChapter, gameType, gameIndex);
+            }
             return _activeChapter;
         }
 
