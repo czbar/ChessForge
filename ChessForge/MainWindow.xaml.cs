@@ -710,7 +710,7 @@ namespace ChessForge
         {
             if (chapterIndex >= 0 && chapterIndex < WorkbookManager.SessionWorkbook.Chapters.Count)
             {
-                WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(chapterIndex, GameData.ContentType.STUDY_TREE);
+                WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(chapterIndex, GameData.ContentType.STUDY_TREE, 0, focusOnStudyTree);
                 _chaptersView.HighlightActiveChapter();
 
                 if (rebuild)
@@ -719,6 +719,14 @@ namespace ChessForge
                     SetupGuiForActiveStudyTree(focusOnStudyTree);
                 }
             }
+        }
+
+        /// <summary>
+        /// Highlights the chapter's header line in ChaptersView.
+        /// </summary>
+        public void HighlightActiveChapterHeader()
+        {
+            _chaptersView.HighlightActiveChapter();
         }
 
         /// <summary>
@@ -787,6 +795,10 @@ namespace ChessForge
                     MainChessBoard.FlipBoard(orient);
 
                     SetupGuiForActiveModelGame(gameIndex, setFocus);
+                    if (setFocus)
+                    {
+                        WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.MODEL_GAME, gameIndex);
+                    }
                 }
                 else
                 {
@@ -866,6 +878,10 @@ namespace ChessForge
                     MainChessBoard.FlipBoard(orient);
 
                     SetupGuiForActiveExercise(exerciseIndex, setFocus);
+                    if (setFocus)
+                    {
+                        WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.EXERCISE, exerciseIndex);
+                    }
                 }
                 else
                 {
@@ -1365,6 +1381,24 @@ namespace ChessForge
                     UiTabChapters.Focus();
                     SetupGuiForChapters();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Rebuilds and shows the Intro view.
+        /// </summary>
+        public void SetupGuiForIntro()
+        {
+            // if we are in the INTRO tab, we need to force a rebuilds
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+            {
+                RebuildIntroView();
+            }
+            else
+            {
+                // if not in the INTRO tab, calling Focus will do the job.
+                UiTabIntro.Focus();
+                UiRtbIntroView.Focus();
             }
         }
 
