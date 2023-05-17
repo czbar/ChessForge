@@ -3018,7 +3018,8 @@ namespace ChessForge
                         = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
-                    RefreshGamesView();
+                    RefreshGamesView(out Chapter chapter, out int articleIndex);
+                    WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
                     AppState.IsDirty = true;
                 }
             }
@@ -3063,7 +3064,8 @@ namespace ChessForge
                     if (dlgHeader.ExitOK)
                     {
                         CreateNewExerciseFromTree(tree);
-                        RefreshExercisesView();
+                        RefreshExercisesView(out Chapter chapter, out int articleIndex);
+                        WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.EXERCISE, articleIndex);
                         AppState.IsDirty = true;
                     }
                 }
