@@ -35,26 +35,87 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Opens a view for the specified chapter and specified content (tab) type.
+        /// The active article of the requested type will be open if exists.
+        /// If the type is Intro and there the Intro tab is not visible in the target
+        /// chapter, the Study view will open.
+        /// </summary>
+        /// <param name="chapterIndex"></param>
+        /// <param name="tabType"></param>
+        public static void GotoArticle(int chapterIndex, WorkbookManager.TabViewType tabType)
+        {
+            Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(chapterIndex);
+            if (chapter != null)
+            {
+                if (tabType == WorkbookManager.TabViewType.INTRO && !chapter.ShowIntro)
+                {
+                    tabType = WorkbookManager.TabViewType.STUDY;
+                }
+
+                WorkbookManager.SessionWorkbook.ActiveChapter = chapter;
+                AppState.MainWin.HighlightActiveChapterHeader();
+                GameData.ContentType contentType = GameData.ContentType.NONE;
+                int articleIndex = -1;
+                switch (tabType)
+                {
+                    case WorkbookManager.TabViewType.STUDY:
+                        contentType = GameData.ContentType.STUDY_TREE;
+                        AppState.MainWin.SetupGuiForActiveStudyTree(true);
+                        break;
+                    case WorkbookManager.TabViewType.INTRO:
+                        contentType = GameData.ContentType.INTRO;
+                        AppState.MainWin.SetupGuiForIntro();
+                        break;
+                    case WorkbookManager.TabViewType.MODEL_GAME:
+                        contentType = GameData.ContentType.MODEL_GAME;
+                        articleIndex = chapter.ActiveModelGameIndex;
+                        AppState.MainWin.SelectModelGame(articleIndex, true);
+                        break;
+                    case WorkbookManager.TabViewType.EXERCISE:
+                        contentType = GameData.ContentType.EXERCISE;
+                        articleIndex = chapter.ActiveExerciseIndex;
+                        AppState.MainWin.SelectExercise(articleIndex, true);
+                        break;
+                }
+
+                SaveNewLocation(chapter, contentType, articleIndex);
+                AppState.EnableNavigationArrows();
+            }
+        }
+
+        /// <summary>
         /// Opens a view for the specified article.
         /// </summary>
         /// <param name="chapterIndex"></param>
         /// <param name="contentType"></param>
         /// <param name="articleIndex"></param>
-        public static void GotoArticle(int chapterIndex, GameData.ContentType contentType, int articleIndex)
+        public static void GotoArticle(int chapterIndex, GameData.ContentType contentType, int articleIndex, bool save = true)
         {
             try
             {
-                Chapter chapter = WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(chapterIndex, contentType, articleIndex);
-                if (contentType == GameData.ContentType.MODEL_GAME)
+                Chapter chapter = WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(chapterIndex, contentType, articleIndex, save);
+                if (chapter != null)
                 {
-                    AppState.MainWin.SelectModelGame(articleIndex, true);
-                }
-                else if (contentType == GameData.ContentType.EXERCISE)
-                {
-                    AppState.MainWin.SelectExercise(articleIndex, true);
+                    if (contentType == GameData.ContentType.MODEL_GAME)
+                    {
+                        // TODO: should SelectModelGame/Exercise be part of SetActiveChapterTreeByIndex above?
+                        AppState.MainWin.SelectModelGame(articleIndex, true);
+                    }
+                    else if (contentType == GameData.ContentType.EXERCISE)
+                    {
+                        AppState.MainWin.SelectExercise(articleIndex, true);
+                    }
+                    else if (contentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        AppState.MainWin.SetupGuiForActiveStudyTree(true);
+                    }
+                    else if (contentType == GameData.ContentType.INTRO)
+                    {
+                        AppState.MainWin.SetupGuiForIntro();
+                    }
                 }
 
-                SaveNewLocation(chapter, contentType, articleIndex);
+                AppState.EnableNavigationArrows();
             }
             catch { }
         }
@@ -64,6 +125,12 @@ namespace ChessForge
         /// </summary>
         public static void MoveToNextLocation()
         {
+            if (_currentLocationIndex < _locations.Count - 1)
+            {
+                _currentLocationIndex++;
+                GotoLocation(_locations[_currentLocationIndex]);
+                AppState.EnableNavigationArrows();
+            }
         }
 
         /// <summary>
@@ -71,6 +138,12 @@ namespace ChessForge
         /// </summary>
         public static void MoveToPreviousLocation()
         {
+            if (_currentLocationIndex > 0)
+            {
+                _currentLocationIndex--;
+                GotoLocation(_locations[_currentLocationIndex]);
+                AppState.EnableNavigationArrows();
+            }
         }
 
         /// <summary>
@@ -79,7 +152,7 @@ namespace ChessForge
         /// <param name="chapter"></param>
         /// <param name="contentType"></param>
         /// <param name="articleIndex"></param>
-        private static void SaveNewLocation(Chapter chapter, GameData.ContentType contentType, int articleIndex = -1)
+        public static void SaveNewLocation(Chapter chapter, GameData.ContentType contentType, int articleIndex = -1)
         {
             WorkbookManager.TabViewType tab = WorkbookManager.TabViewType.NONE;
 
@@ -87,6 +160,9 @@ namespace ChessForge
 
             switch (contentType)
             {
+                case GameData.ContentType.INTRO:
+                    tab = WorkbookManager.TabViewType.INTRO;
+                    break;
                 case GameData.ContentType.STUDY_TREE:
                     tab = WorkbookManager.TabViewType.STUDY;
                     break;
@@ -101,7 +177,24 @@ namespace ChessForge
             }
 
             WorkbookLocation location = new WorkbookLocation(chapter.Guid, tab, articleGuid);
-            AppendLocation(location);
+
+            // if different than last location, append to the list
+            WorkbookLocation lastLocation = null;
+
+            if (_currentLocationIndex >= 0)
+            {
+                lastLocation = _locations[_currentLocationIndex];
+            }
+
+            if (lastLocation == null
+                || lastLocation.ChapterGuid != location.ChapterGuid
+                || lastLocation.ViewType != location.ViewType
+                || lastLocation.ArticleGuid != location.ArticleGuid)
+            {
+                AppendLocation(location);
+            }
+
+            AppState.EnableNavigationArrows();
         }
 
         /// <summary>
@@ -122,34 +215,40 @@ namespace ChessForge
         /// <param name="location"></param>
         private static void GotoLocation(WorkbookLocation location)
         {
-            // if the tab type is a Tree holding tab identify chapter and article by guid
-            Chapter chapter = null;
-            Article article = null;
-            int articleIndex = -1;
-            GameData.ContentType contentType = GameData.ContentType.NONE;
-
-            if (AppState.IsVariationTreeTabType)
+            try
             {
-                chapter = WorkbookManager.SessionWorkbook.GetChapterByGuid(location.ChapterGuid, out int chapterIndex);
+                int articleIndex = -1;
+
+                // if the tab type is a Tree holding tab identify the chapter by guid
+                Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByGuid(location.ChapterGuid, out int chapterIndex);
                 if (chapter != null)
                 {
-                    if (location.ViewType == WorkbookManager.TabViewType.STUDY)
+                    GameData.ContentType contentType = GameData.ContentType.NONE;
+                    switch (location.ViewType)
                     {
-                        article = chapter.StudyTree;
-                        contentType = GameData.ContentType.STUDY_TREE;
+                        case WorkbookManager.TabViewType.INTRO:
+                            contentType = GameData.ContentType.INTRO;
+                            GotoArticle(chapterIndex, contentType, -1, false);
+                            break;
+                        case WorkbookManager.TabViewType.STUDY:
+                            contentType = GameData.ContentType.STUDY_TREE;
+                            GotoArticle(chapterIndex, contentType, -1, false);
+                            break;
+                        case WorkbookManager.TabViewType.MODEL_GAME:
+                            contentType = GameData.ContentType.MODEL_GAME;
+                            WorkbookManager.SessionWorkbook.GetArticleByGuid(location.ArticleGuid, out chapterIndex, out articleIndex);
+                            GotoArticle(chapterIndex, contentType, articleIndex, false);
+                            break;
+                        case WorkbookManager.TabViewType.EXERCISE:
+                            contentType = GameData.ContentType.EXERCISE;
+                            WorkbookManager.SessionWorkbook.GetArticleByGuid(location.ArticleGuid, out chapterIndex, out articleIndex);
+                            GotoArticle(chapterIndex, contentType, articleIndex, false);
+                            break;
                     }
-                    else if (location.ViewType == WorkbookManager.TabViewType.MODEL_GAME)
-                    {
-                        article = chapter.GetModelGameByGuid(location.ArticleGuid, out articleIndex);
-                        contentType = GameData.ContentType.MODEL_GAME;
-                    }
-                    else if (location.ViewType == WorkbookManager.TabViewType.EXERCISE)
-                    {
-                        article = chapter.GetExerciseByGuid(location.ArticleGuid, out articleIndex);
-                        contentType = GameData.ContentType.EXERCISE;
-                    }
-                    GotoArticle(chapterIndex, contentType, articleIndex);
                 }
+            }
+            catch
+            {
             }
         }
 
