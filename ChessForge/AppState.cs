@@ -633,11 +633,21 @@ namespace ChessForge
                         ShowExplorers(false, false);
                         break;
                 }
+                EnableNavigationArrows();
                 ShowEvaluationControlsForCurrentStates();
                 ConfigureMainBoardContextMenu();
                 ConfigureSaveMenus();
                 ConfigureFontSizeMenus();
             });
+        }
+
+        /// <summary>
+        /// Set up Navigation arrows opacity per current learning mode and location position.
+        /// </summary>
+        public static void EnableNavigationArrows()
+        {
+            MainWin.UiImgNavigateBack.Opacity = WorkbookLocationNavigator.IsFirstLocation || CurrentLearningMode != LearningMode.Mode.MANUAL_REVIEW ? 0.5 : 1;
+            MainWin.UiImgNavigateForward.Opacity = WorkbookLocationNavigator.IsLastLocation || CurrentLearningMode != LearningMode.Mode.MANUAL_REVIEW ? 0.5 : 1;
         }
 
         /// <summary>
