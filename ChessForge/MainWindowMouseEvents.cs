@@ -414,6 +414,29 @@ namespace ChessForge
             AppState.EnableTabViewMenuItems(WorkbookManager.ActiveTab, lastClickedNode, false);
         }
 
+        /// <summary>
+        /// Navigate back arrow clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgNavigateBack_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            WorkbookLocationNavigator.MoveToPreviousLocation();
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Navigate forward arrow clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgNavigateForward_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            WorkbookLocationNavigator.MoveToNextLocation();
+            e.Handled = true;
+        }
+
+
         //**************************************************************
         //
         //  TRAINING VIEW mouse events 
