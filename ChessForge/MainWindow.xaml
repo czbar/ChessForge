@@ -64,6 +64,7 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="400" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Menu x:Name = "UiMainMenu" VerticalAlignment="Center" Margin="0,0,0,0" Background="LightGray" BorderBrush="#993C3C3C" Grid.ColumnSpan="3" Height="20">
@@ -133,6 +134,13 @@
                         <MenuItem Header="{x:Static p:Resources.About}" Click="UiMnHelpAbout_Click" />
                     </MenuItem>
                 </Menu>
+                <Grid  x:Name="UiBackForwardArrows" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="UiImgNavigateBack" Grid.Column="0" ToolTip="{x:Static p:Resources.GoBack}" VerticalAlignment="Center" Margin="0,5,50,0"  HorizontalAlignment="Right" Height="20" Width="24" Source="Resources/Images/arrow-left.png" Visibility="Visible" MouseDown="UiImgNavigateBack_MouseDown" />
+                    <Image x:Name="UiImgNavigateForward" Grid.Column="0" ToolTip="{x:Static p:Resources.GoForward}" VerticalAlignment="Center" Margin="0,5,20,0"  HorizontalAlignment="Right" Height="20" Width="24" Source="Resources/Images/arrow-right.png" Visibility="Visible" MouseDown="UiImgNavigateForward_MouseDown" />
+                </Grid>
                 <Grid x:Name="UiGridToggles" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto "/>

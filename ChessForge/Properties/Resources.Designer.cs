@@ -1321,7 +1321,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game count $0, Exercises count $1.
+        ///   Looks up a localized string similar to Game count $0, Exercise count $1.
         /// </summary>
         public static string DownloadedGamesAndExercises {
             get {
@@ -2280,6 +2280,24 @@ namespace ChessForge.Properties {
         public static string GeneratedBookmarksReplace {
             get {
                 return ResourceManager.GetString("GeneratedBookmarksReplace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go back .
+        /// </summary>
+        public static string GoBack {
+            get {
+                return ResourceManager.GetString("GoBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go forward .
+        /// </summary>
+        public static string GoForward {
+            get {
+                return ResourceManager.GetString("GoForward", resourceCulture);
             }
         }
         

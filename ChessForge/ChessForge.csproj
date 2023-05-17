@@ -207,6 +207,8 @@
     <Compile Include="SingleGamePreviewDialog.cs" />
     <Compile Include="TopGamesViewRow.cs" />
     <Compile Include="TrainingViewMoveHandlers.cs" />
+    <Compile Include="WorkbookLocation.cs" />
+    <Compile Include="WorkbookLocationNavigator.cs" />
     <Compile Include="WorkbookOperation.cs" />
     <Compile Include="WorkbookOperationsManager.cs" />
     <Compile Include="PositionSetupDialog.xaml.cs">
@@ -458,6 +460,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\ChessBoardGrey.png" />
+    <Resource Include="Resources\Images\arrow-left.png" />
+    <Resource Include="Resources\Images\arrow-right.png" />
     <Content Include="Resources\Sounds\NotInWorkbook.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

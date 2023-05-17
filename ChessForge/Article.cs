@@ -32,6 +32,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Guid of the article
+        /// </summary>
+        public string Guid
+        {
+            get => Tree.Header.GetGuid(out _);
+        }
+
+        /// <summary>
         /// Constructs a new object with a Tree of the requested ContentType.
         /// </summary>
         /// <param name="contentType"></param>

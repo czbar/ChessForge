@@ -168,7 +168,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Returns Model Game stored at a given index.
+        /// Returns a Model Game stored at a given index.
         /// Null if invalid index.
         /// </summary>
         /// <param name="index"></param>
@@ -183,6 +183,35 @@ namespace ChessForge
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Returns a Model Game with a given guid and its index.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Article GetModelGameByGuid(string guid, out int index)
+        {
+            index = -1;
+
+            if (string.IsNullOrEmpty(guid))
+            {
+                return null;
+            }
+
+            Article article = null;
+
+            for (int i = 0; i < ModelGames.Count; i++)
+            {
+                if (ModelGames[i].Guid == guid)
+                {
+                    article = ModelGames[i];
+                    index = i;
+                }
+            }
+
+            return article;
         }
 
         /// <summary>
@@ -201,6 +230,35 @@ namespace ChessForge
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Returns a Exercise with a given guid and its index.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Article GetExerciseByGuid(string guid, out int index)
+        {
+            index = -1;
+
+            if (string.IsNullOrEmpty(guid))
+            {
+                return null;
+            }
+
+            Article article = null;
+
+            for (int i = 0; i < Exercises.Count; i++)
+            {
+                if (Exercises[i].Guid == guid)
+                {
+                    article = Exercises[i];
+                    index = i;
+                }
+            }
+
+            return article;
         }
 
         /// <summary>

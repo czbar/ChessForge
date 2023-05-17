@@ -360,6 +360,12 @@
   <data name="Proceed" xml:space="preserve">
     <value>Kontynuować?</value>
   </data>
+  <data name="GoForward" xml:space="preserve">
+    <value>Idź do przodu </value>
+  </data>
+  <data name="GoBack" xml:space="preserve">
+    <value>Idź wstecz </value>
+  </data>
   <data name="FontBold" xml:space="preserve">
     <value>Pogrubienie</value>
   </data>

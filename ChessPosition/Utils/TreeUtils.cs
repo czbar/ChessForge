@@ -133,7 +133,7 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Returns the list of positions from after the passed nod start 
+        /// Returns the list of positions from after the passed node start 
         /// until the last node.
         /// </summary>
         /// <param name="nd"></param>

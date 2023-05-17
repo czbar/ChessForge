@@ -261,6 +261,13 @@ Seconds=seconds
 #Proceed
 Proceed=Proceed?
 
+#Go forward
+GoForward=Go forward 
+
+#Go back
+GoBack=Go back 
+
+
 ##################################
 #
 # EDITING
@@ -1621,7 +1628,7 @@ cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating ex
 cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay
 
 #Click bookmark to start training
-cbClickBookmarkToTrain=Click a bookmark to navigate to the bookmarked psoition
+cbClickBookmarkToTrain=Click a bookmark to navigate to the bookmarked position
 
 #Right click to open bookmarks menu
 cbRightClickBookmarkManager=Right click to open menu for Bookmark management options

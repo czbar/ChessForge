@@ -306,15 +306,21 @@ namespace ChessForge
         /// <param name="chapterIndex">index of the requested chapter in the Chapters list.</param>
         /// <param name="gameType"></param>
         /// <param name="gameIndex">index in the list of elements of the requested type i.e. Model Games or Exercises </param>
-        public void SetActiveChapterTreeByIndex(int chapterIndex, GameData.ContentType gameType, int gameIndex = 0)
+        public Chapter SetActiveChapterTreeByIndex(int chapterIndex, GameData.ContentType gameType, int gameIndex = 0, bool saveLocation = true)
         {
             if (chapterIndex < 0 || chapterIndex >= Chapters.Count)
             {
-                return;
+                return null;
             }
 
             SetActiveChapter(Chapters[chapterIndex]);
             _activeChapter.SetActiveVariationTree(gameType, gameIndex);
+
+            if (saveLocation)
+            {
+                WorkbookLocationNavigator.SaveNewLocation(_activeChapter, gameType, gameIndex);
+            }
+            return _activeChapter;
         }
 
         /// <summary>
@@ -558,6 +564,35 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns chapter with a given guid and its index.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Chapter GetChapterByGuid(string guid, out int index)
+        {
+            index = -1;
+         
+            if (string.IsNullOrEmpty(guid))
+            {
+                return null;
+            }
+
+            Chapter chapter = null;
+            for (int i = 0; i < Chapters.Count; i++)
+            {
+                if (Chapters[i].Guid == guid)
+                {
+                    chapter = Chapters[i];
+                    index = i;
+                    break;
+                }
+            }
+
+            return chapter;
+        }
+
+        /// <summary>
         /// Creates a new chapter.
         /// </summary>
         /// <param name="tree"></param>
@@ -640,13 +675,14 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Method to be used for seeting the value of _activeChapter within this class.
+        /// Method to be used for setting the value of _activeChapter within this class.
         /// </summary>
         /// <param name="chapter"></param>
-        private void SetActiveChapter(Chapter chapter)
+        private Chapter SetActiveChapter(Chapter chapter)
         {
             _activeChapter = chapter;
             AppState.ShowIntroTab(_activeChapter);
+            return _activeChapter;
         }
     }
 }

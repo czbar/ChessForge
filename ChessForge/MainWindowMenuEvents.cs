@@ -337,6 +337,14 @@ namespace ChessForge
 
             AppState.ActiveVariationTree.OpsManager.Undo(out EditOperation.EditType opType, out string selectedLineId, out int selectedNodeId);
             TreeNode selectedNode = AppState.ActiveVariationTree.GetNodeFromNodeId(selectedNodeId);
+
+            if (selectedNode == null)
+            {
+                selectedNodeId = 0;
+                selectedLineId = "1";
+                MainChessBoard.DisplayPosition(AppState.ActiveVariationTree.RootNode, true);
+            }
+
             AppState.ActiveVariationTree.BuildLines();
             if (!string.IsNullOrEmpty(selectedLineId))
             {
@@ -3010,7 +3018,8 @@ namespace ChessForge
                         = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
-                    RefreshGamesView();
+                    RefreshGamesView(out Chapter chapter, out int articleIndex);
+                    WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
                     AppState.IsDirty = true;
                 }
             }
@@ -3055,7 +3064,8 @@ namespace ChessForge
                     if (dlgHeader.ExitOK)
                     {
                         CreateNewExerciseFromTree(tree);
-                        RefreshExercisesView();
+                        RefreshExercisesView(out Chapter chapter, out int articleIndex);
+                        WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.EXERCISE, articleIndex);
                         AppState.IsDirty = true;
                     }
                 }
