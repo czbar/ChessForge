@@ -815,7 +815,11 @@ namespace ChessForge
         //**************************************************************
 
         /// <summary>
-        /// In the Study view, the user requested the previous chapter
+        /// The Previous Chapter arrow was clicked.
+        /// Go to the target chapter, keep the the current tab
+        /// active and select the active article of the tab's type.
+        /// If the Intro is the tab type and there is no Intro in the
+        /// target chapter, select Study.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -825,7 +829,8 @@ namespace ChessForge
             {
                 if (WorkbookManager.SessionWorkbook.ActiveChapterIndex > 0)
                 {
-                    SelectChapterByIndex(WorkbookManager.SessionWorkbook.ActiveChapterIndex - 1, true);
+                    int targetChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex - 1;
+                    WorkbookLocationNavigator.GotoArticle(targetChapterIndex, AppState.ActiveTab);
                 }
             }
             catch
@@ -835,7 +840,11 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// In the Study view, the user requested the next chapter
+        /// The Next Chapter arrow was clicked.
+        /// Go to the target chapter, keep the the current tab
+        /// active and select the active article of the tab's type.
+        /// If the Intro is the tab type and there is no Intro in the
+        /// target chapter, select Study.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -846,7 +855,8 @@ namespace ChessForge
                 if (WorkbookManager.SessionWorkbook.ActiveChapterIndex >= 0
                     && WorkbookManager.SessionWorkbook.ActiveChapterIndex < WorkbookManager.SessionWorkbook.Chapters.Count - 1)
                 {
-                    SelectChapterByIndex(WorkbookManager.SessionWorkbook.ActiveChapterIndex + 1, true);
+                    int targetChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex + 1;
+                    WorkbookLocationNavigator.GotoArticle(targetChapterIndex, AppState.ActiveTab);
                 }
             }
             catch
@@ -1003,30 +1013,39 @@ namespace ChessForge
                     return;
                 }
 
-                AppState.ConfigureMenusForManualReview();
-                WorkbookManager.ActiveTab = WorkbookManager.TabViewType.INTRO;
-                WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.INTRO);
-                AppState.ShowExplorers(AppState.AreExplorersOn, true);
-                UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
-
-                BoardCommentBox.ShowTabHints();
-                // if _introView is not null and ParentChapter is the same, leave things as they are,
-                // otherwise build the view.
-                if (_introView == null || _introView.ParentChapter != WorkbookManager.SessionWorkbook.ActiveChapter)
-                {
-                    UiRtbIntroView.IsDocumentEnabled = true;
-                    UiRtbIntroView.AllowDrop = false;
-                    _introView = new IntroView(UiRtbIntroView.Document, WorkbookManager.SessionWorkbook.ActiveChapter);
-                    PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.INTRO);
-                }
-                DisplayPosition(_introView.SelectedNode);
-
-                AppState.ConfigureMainBoardContextMenu();
-                ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+                RebuildIntroView();
+                WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.INTRO, -1);
             }
             catch
             {
             }
+        }
+
+        /// <summary>
+        /// Rebuilds and shows the Intro view.
+        /// </summary>
+        private void RebuildIntroView()
+        {
+            AppState.ConfigureMenusForManualReview();
+            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.INTRO;
+            WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.INTRO);
+            AppState.ShowExplorers(AppState.AreExplorersOn, true);
+            UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
+
+            BoardCommentBox.ShowTabHints();
+            // if _introView is not null and ParentChapter is the same, leave things as they are,
+            // otherwise build the view.
+            if (_introView == null || _introView.ParentChapter != WorkbookManager.SessionWorkbook.ActiveChapter)
+            {
+                UiRtbIntroView.IsDocumentEnabled = true;
+                UiRtbIntroView.AllowDrop = false;
+                _introView = new IntroView(UiRtbIntroView.Document, WorkbookManager.SessionWorkbook.ActiveChapter);
+                PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.INTRO);
+            }
+            DisplayPosition(_introView.SelectedNode);
+
+            AppState.ConfigureMainBoardContextMenu();
+            ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
         }
 
         /// <summary>
@@ -1071,6 +1090,7 @@ namespace ChessForge
             catch
             {
             }
+            WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter,  GameData.ContentType.STUDY_TREE, -1);
         }
 
         /// <summary>
@@ -1190,14 +1210,18 @@ namespace ChessForge
             }
 
             AppState.ConfigureMenusForManualReview();
-            RefreshGamesView();
+            RefreshGamesView(out Chapter chapter, out int articleIndex);
+            WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
         }
 
         /// <summary>
         /// Rebuilds the Game view
         /// </summary>
-        private void RefreshGamesView()
+        private void RefreshGamesView(out Chapter chapter, out int articleIndex)
         {
+            chapter = null;
+            articleIndex = -1;
+
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
 
@@ -1225,7 +1249,7 @@ namespace ChessForge
                 {
                     MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.MODEL_GAME));
 
-                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     if (chapter != null && chapter.GetModelGameCount() > 0)
                     {
                         if (chapter.ActiveModelGameIndex == -1)
@@ -1234,6 +1258,7 @@ namespace ChessForge
                         }
 
                         SelectModelGame(chapter.ActiveModelGameIndex, false);
+                        articleIndex = chapter.ActiveModelGameIndex;
                     }
                     else
                     {
@@ -1285,14 +1310,18 @@ namespace ChessForge
             }
 
             AppState.ConfigureMenusForManualReview();
-            RefreshExercisesView();
+            RefreshExercisesView(out Chapter chapter, out int articleIndex);
+            WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
         }
 
         /// <summary>
         /// Rebuilds the Exercise view
         /// </summary>
-        private void RefreshExercisesView()
+        private void RefreshExercisesView(out Chapter chapter, out int articleIndex)
         {
+            chapter = null;
+            articleIndex = -1;
+
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
 
@@ -1319,7 +1348,7 @@ namespace ChessForge
                 {
                     MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.EXERCISE));
 
-                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     if (chapter != null && chapter.GetExerciseCount() > 0)
                     {
                         if (chapter.ActiveExerciseIndex == -1)
@@ -1328,6 +1357,7 @@ namespace ChessForge
                         }
 
                         SelectExercise(chapter.ActiveExerciseIndex, false);
+                        articleIndex = chapter.ActiveExerciseIndex;
                     }
                     else
                     {
