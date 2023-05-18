@@ -661,10 +661,6 @@ namespace ChessForge
         /// <returns></returns>
         public bool ReportNewVersionAvailable(bool suppress)
         {
-            // TODO: needs reworking to cover MS shop and SourceForge appropriately !!
-            return false;
-
-#if false
             bool res = false;
 
             try
@@ -698,7 +694,6 @@ namespace ChessForge
             }
 
             return res;
-#endif
         }
 
         /// <summary>
