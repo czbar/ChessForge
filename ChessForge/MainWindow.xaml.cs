@@ -845,8 +845,11 @@ namespace ChessForge
                 }
                 else
                 {
-                    _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
-                    WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.NONE);
+                    if (_modelGameTreeView != null)
+                    {
+                        _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
+                        WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.NONE);
+                    }
                 }
             }
             catch (Exception ex)
@@ -928,7 +931,10 @@ namespace ChessForge
                 }
                 else
                 {
-                    _exerciseTreeView.Clear(GameData.ContentType.EXERCISE);
+                    if (_exerciseTreeView != null)
+                    {
+                        _exerciseTreeView.Clear(GameData.ContentType.EXERCISE);
+                    }
                 }
             }
             catch (Exception ex)
