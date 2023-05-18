@@ -654,31 +654,30 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// If there is a new version available for download, shows the informational dialog
-        /// and returns true.
-        /// Otherwise returns false.
+        /// If there is a new version available for download, and it is not "supressed", 
+        /// shows the informational dialog and return true.
+        /// Otherwise return false.
+        /// Two locations are checked with the Microsoft Store given priority.
+        /// Only when there is a newer version on SourceForge, we report that one.
         /// </summary>
         /// <returns></returns>
         public bool ReportNewVersionAvailable(bool suppress)
         {
-            // TODO: needs reworking to cover MS shop and SourceForge appropriately !!
-            return false;
-
-#if false
             bool res = false;
 
             try
             {
-                if (WebAccess.SourceForgeCheck.ChessForgeVersion != null)
+                Version ver = SelectAvailableUpdate(out int updSource);
+                if (updSource != 0) 
                 {
                     this.Dispatcher.Invoke(() =>
                     {
-                        if (!suppress || WebAccess.SourceForgeCheck.ChessForgeVersion.ToString() != Configuration.DoNotShowVersion)
+                        if (!suppress || ver.ToString() != Configuration.DoNotShowVersion)
                         {
-                            int verCompare = AppState.GetAssemblyVersion().CompareTo(WebAccess.SourceForgeCheck.ChessForgeVersion);
+                            int verCompare = AppState.GetAssemblyVersion().CompareTo(ver);
                             if (verCompare < 0)
                             {
-                                UpdateAvailableDialog dlg = new UpdateAvailableDialog(WebAccess.SourceForgeCheck.ChessForgeVersion)
+                                UpdateAvailableDialog dlg = new UpdateAvailableDialog(ver, updSource)
                                 {
                                     Left = ChessForgeMain.Left + 100,
                                     Top = ChessForgeMain.Top + 100,
@@ -698,7 +697,51 @@ namespace ChessForge
             }
 
             return res;
-#endif
+        }
+
+        /// <summary>
+        /// Checks which new version to handle.
+        /// If the Microsoft Store version is at least as new as the SourceForge one,
+        /// returns 1. If SourceForge one is newer, retruns -1.
+        /// If both are null, retruns 0.
+        /// </summary>
+        /// <returns></returns>
+        private Version SelectAvailableUpdate(out int updSource)
+        {
+            Version ver = null;
+
+            if (SourceForgeCheck.VersionAtSourceForge == null)
+            {
+                if (SourceForgeCheck.VersionAtMicrosoftAppStore == null)
+                {
+                    updSource = 0;
+                }
+                else
+                {
+                    updSource = 1;
+                    ver = SourceForgeCheck.VersionAtMicrosoftAppStore;
+                }
+            }
+            else if (SourceForgeCheck.VersionAtMicrosoftAppStore == null)
+            {
+                updSource = 0;
+            }
+            else
+            {
+                int comp = (SourceForgeCheck.VersionAtMicrosoftAppStore).CompareTo(SourceForgeCheck.VersionAtSourceForge);
+                if (comp < 0)
+                {
+                    updSource = -1;
+                    ver = SourceForgeCheck.VersionAtSourceForge;
+                }
+                else
+                {
+                    updSource = 1;
+                    ver = SourceForgeCheck.VersionAtMicrosoftAppStore;
+                }
+            }
+
+            return ver;
         }
 
         /// <summary>
@@ -802,8 +845,11 @@ namespace ChessForge
                 }
                 else
                 {
-                    _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
-                    WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.NONE);
+                    if (_modelGameTreeView != null)
+                    {
+                        _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
+                        WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.NONE);
+                    }
                 }
             }
             catch (Exception ex)
@@ -885,7 +931,10 @@ namespace ChessForge
                 }
                 else
                 {
-                    _exerciseTreeView.Clear(GameData.ContentType.EXERCISE);
+                    if (_exerciseTreeView != null)
+                    {
+                        _exerciseTreeView.Clear(GameData.ContentType.EXERCISE);
+                    }
                 }
             }
             catch (Exception ex)

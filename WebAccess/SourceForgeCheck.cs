@@ -14,7 +14,12 @@ namespace WebAccess
         /// <summary>
         /// Version of ChessForge's download package on SourceForge.
         /// </summary>
-        public static Version ChessForgeVersion = null;
+        public static Version VersionAtSourceForge = null;
+
+        /// <summary>
+        /// Version of ChessForge's download package at Microsoft App Store.
+        /// </summary>
+        public static Version VersionAtMicrosoftAppStore = null;
 
         /// <summary>
         /// Gets the version number of Chess Forge currently available from Source Forge.
@@ -27,20 +32,19 @@ namespace WebAccess
                 // used only once so create a transient client
                 using (System.Net.Http.HttpClient client = new System.Net.Http.HttpClient())
                 {
-                    var json = await client.GetStringAsync("https://sourceforge.net/projects/ChessForge/best_release.json");
+                    var json = await client.GetStringAsync("https://chessforge.sourceforge.io/Releases/Releases.json");
 
                     dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
-                    string latestFileName = obj.platform_releases.windows.filename;
+                    
+                    string valueSourceForge = obj.SourceForge;
+                    string valueMicrosoftAppStore = obj.MicrosoftAppStore;
 
-                    string versionString = ExtractVersionString(latestFileName);
-                    if (!string.IsNullOrEmpty(versionString))
-                    {
-                        bool result = TextUtils.GetVersionNumbers(versionString, out int major, out int minor, out int patch);
-                        if (result)
-                        {
-                            ChessForgeVersion = new Version(major, minor, patch);
-                        }
-                    }
+                    string verAtSourceForge = ExtractVersionString(valueSourceForge);
+                    string verAtMicrosoftAppStore = ExtractVersionString(valueMicrosoftAppStore);
+
+                    VersionAtSourceForge = GetVersionFromString(verAtSourceForge);
+                    VersionAtMicrosoftAppStore = GetVersionFromString(verAtMicrosoftAppStore);
+                    
                     return json;
                 }
             }
@@ -48,6 +52,27 @@ namespace WebAccess
             {
                 return "";
             }
+        }
+
+        /// <summary>
+        /// Create a Version object representing the passed string.
+        /// </summary>
+        /// <param name="ver"></param>
+        /// <returns></returns>
+        private static Version GetVersionFromString(string ver)
+        {
+            Version cfVer = null;
+
+            if (!string.IsNullOrEmpty(ver))
+            {
+                bool result = TextUtils.GetVersionNumbers(ver, out int major, out int minor, out int patch);
+                if (result)
+                {
+                    cfVer = new Version(major, minor, patch);
+                }
+            }
+
+            return cfVer;
         }
 
         /// <summary>

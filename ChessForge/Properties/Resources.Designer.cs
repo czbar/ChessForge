@@ -358,7 +358,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click a bookmark to navigate to the bookmarked psoition.
+        ///   Looks up a localized string similar to Click a bookmark to navigate to the bookmarked position.
         /// </summary>
         public static string cbClickBookmarkToTrain {
             get {
@@ -2779,6 +2779,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Microsoft Store.
+        /// </summary>
+        public static string MicrosoftAppStore {
+            get {
+                return ResourceManager.GetString("MicrosoftAppStore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to minutes.
         /// </summary>
         public static string Minutes {
@@ -4009,6 +4018,15 @@ namespace ChessForge.Properties {
         public static string SoundOn {
             get {
                 return ResourceManager.GetString("SoundOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source Forge web site.
+        /// </summary>
+        public static string SourceForgeSite {
+            get {
+                return ResourceManager.GetString("SourceForgeSite", resourceCulture);
             }
         }
         

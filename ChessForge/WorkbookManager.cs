@@ -608,7 +608,7 @@ namespace ChessForge
         /// </summary>
         public static bool PrepareWorkbook(ref ObservableCollection<GameData> games, out bool isChessForgeFile)
         {
-            bool res = false;
+            bool res;
 
             if (IsChessForgeWorkbook(ref games))
             {
@@ -630,6 +630,7 @@ namespace ChessForge
                     SessionWorkbook.ActiveChapter.IsExercisesListExpanded = true;
                 }
             }
+            SessionWorkbook.OpsManager.Reset();
 
             return res;
         }
@@ -660,6 +661,7 @@ namespace ChessForge
                 workbook.ExerciseBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetExerciseBoardOrientation(out _));
 
                 ProcessGames(ref GameList, ref workbook);
+
             }
             catch
             {

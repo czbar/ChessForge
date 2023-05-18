@@ -1348,7 +1348,13 @@
     <value>Utwórz nowy podręcznik</value>
   </data>
   <data name="NewVersionAvailable" xml:space="preserve">
-    <value>Dostępna nowa wersja $0</value>
+    <value>Dostępna jest nowa wersja $0</value>
+  </data>
+  <data name="SourceForgeSite" xml:space="preserve">
+    <value>Strona Source Forge</value>
+  </data>
+  <data name="MicrosoftAppStore" xml:space="preserve">
+    <value>Sklep Microsoftu</value>
   </data>
   <data name="NoShowForCurrentVersion" xml:space="preserve">
     <value>Nie pokazuj już dla tej wersji</value>

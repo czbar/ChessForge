@@ -8,9 +8,9 @@
         mc:Ignorable="d"
         Title="{x:Static p:Resources.UpdateCheck}" Height="180" Width="300">
     <Grid>
-        <Label x:Name="UiLblPreamble" Content="PLACEHOLDER" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblPreamble" Content="New version" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblDownloadLink" Foreground="Blue" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Top" MouseDown="UiLblDownloadLink_MouseDown">
-            <TextBlock TextDecorations="Underline" Text="https://sourceforge.net/projects/chessforge/" Cursor="Hand">
+            <TextBlock x:Name="UiTbDownloadLink" TextDecorations="Underline" Text="https://sourceforge.net/projects/chessforge/" Cursor="Hand">
             </TextBlock>
         </Label>
         <CheckBox x:Name="UiCbDontShowAgain" Content="{x:Static p:Resources.NoShowForCurrentVersion}" HorizontalAlignment="Center" Margin="0,65,0,0" VerticalAlignment="Top"/>
