@@ -27,10 +27,10 @@ namespace WebAccess
                 // used only once so create a transient client
                 using (System.Net.Http.HttpClient client = new System.Net.Http.HttpClient())
                 {
-                    var json = await client.GetStringAsync("https://sourceforge.net/projects/ChessForge/best_release.json");
+                    var json = await client.GetStringAsync("https://chessforge.sourceforge.io/Releases/Releases.json");
 
                     dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
-                    string latestFileName = obj.platform_releases.windows.filename;
+                    string latestFileName = obj.SourceForge;
 
                     string versionString = ExtractVersionString(latestFileName);
                     if (!string.IsNullOrEmpty(versionString))
