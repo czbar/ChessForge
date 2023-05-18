@@ -99,11 +99,25 @@ namespace ChessForge
                     if (contentType == GameData.ContentType.MODEL_GAME)
                     {
                         // TODO: should SelectModelGame/Exercise be part of SetActiveChapterTreeByIndex above?
-                        AppState.MainWin.SelectModelGame(articleIndex, true);
+                        if (articleIndex < 0)
+                        {
+                            AppState.MainWin.UiTabModelGames.Focus();
+                        }
+                        else
+                        {
+                            AppState.MainWin.SelectModelGame(articleIndex, true);
+                        }
                     }
                     else if (contentType == GameData.ContentType.EXERCISE)
                     {
-                        AppState.MainWin.SelectExercise(articleIndex, true);
+                        if (articleIndex < 0)
+                        {
+                            AppState.MainWin.UiTabExercises.Focus();
+                        }
+                        else
+                        {
+                            AppState.MainWin.SelectExercise(articleIndex, true);
+                        }
                     }
                     else if (contentType == GameData.ContentType.STUDY_TREE)
                     {
@@ -248,12 +262,12 @@ namespace ChessForge
                             break;
                         case WorkbookManager.TabViewType.MODEL_GAME:
                             contentType = GameData.ContentType.MODEL_GAME;
-                            WorkbookManager.SessionWorkbook.GetArticleByGuid(location.ArticleGuid, out chapterIndex, out articleIndex);
+                            WorkbookManager.SessionWorkbook.GetArticleByGuid(location.ArticleGuid, out _, out articleIndex);
                             GotoArticle(chapterIndex, contentType, articleIndex, false);
                             break;
                         case WorkbookManager.TabViewType.EXERCISE:
                             contentType = GameData.ContentType.EXERCISE;
-                            WorkbookManager.SessionWorkbook.GetArticleByGuid(location.ArticleGuid, out chapterIndex, out articleIndex);
+                            WorkbookManager.SessionWorkbook.GetArticleByGuid(location.ArticleGuid, out _, out articleIndex);
                             GotoArticle(chapterIndex, contentType, articleIndex, false);
                             break;
                     }
