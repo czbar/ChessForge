@@ -158,43 +158,55 @@ namespace ChessForge
 
             string articleGuid = null;
 
-            switch (contentType)
+            try
             {
-                case GameData.ContentType.INTRO:
-                    tab = WorkbookManager.TabViewType.INTRO;
-                    break;
-                case GameData.ContentType.STUDY_TREE:
-                    tab = WorkbookManager.TabViewType.STUDY;
-                    break;
-                case GameData.ContentType.MODEL_GAME:
-                    tab = WorkbookManager.TabViewType.MODEL_GAME;
-                    articleGuid = chapter.ModelGames[articleIndex].Guid;
-                    break;
-                case GameData.ContentType.EXERCISE:
-                    tab = WorkbookManager.TabViewType.EXERCISE;
-                    articleGuid = chapter.Exercises[articleIndex].Guid;
-                    break;
+                switch (contentType)
+                {
+                    case GameData.ContentType.INTRO:
+                        tab = WorkbookManager.TabViewType.INTRO;
+                        break;
+                    case GameData.ContentType.STUDY_TREE:
+                        tab = WorkbookManager.TabViewType.STUDY;
+                        break;
+                    case GameData.ContentType.MODEL_GAME:
+                        tab = WorkbookManager.TabViewType.MODEL_GAME;
+                        if (articleIndex >= 0)
+                        {
+                            articleGuid = chapter.ModelGames[articleIndex].Guid;
+                        }
+                        break;
+                    case GameData.ContentType.EXERCISE:
+                        tab = WorkbookManager.TabViewType.EXERCISE;
+                        if (articleIndex >= 0)
+                        {
+                            articleGuid = chapter.Exercises[articleIndex].Guid;
+                        }
+                        break;
+                }
+
+                WorkbookLocation location = new WorkbookLocation(chapter.Guid, tab, articleGuid);
+
+                // if different than last location, append to the list
+                WorkbookLocation lastLocation = null;
+
+                if (_currentLocationIndex >= 0)
+                {
+                    lastLocation = _locations[_currentLocationIndex];
+                }
+
+                if (lastLocation == null
+                    || lastLocation.ChapterGuid != location.ChapterGuid
+                    || lastLocation.ViewType != location.ViewType
+                    || lastLocation.ArticleGuid != location.ArticleGuid)
+                {
+                    AppendLocation(location);
+                }
+
+                AppState.EnableNavigationArrows();
             }
-
-            WorkbookLocation location = new WorkbookLocation(chapter.Guid, tab, articleGuid);
-
-            // if different than last location, append to the list
-            WorkbookLocation lastLocation = null;
-
-            if (_currentLocationIndex >= 0)
+            catch
             {
-                lastLocation = _locations[_currentLocationIndex];
             }
-
-            if (lastLocation == null
-                || lastLocation.ChapterGuid != location.ChapterGuid
-                || lastLocation.ViewType != location.ViewType
-                || lastLocation.ArticleGuid != location.ArticleGuid)
-            {
-                AppendLocation(location);
-            }
-
-            AppState.EnableNavigationArrows();
         }
 
         /// <summary>
