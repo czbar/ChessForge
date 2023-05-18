@@ -64,11 +64,13 @@ namespace ChessForge
                                 nodelList = TreeUtils.CopyNodeList(item.TailLine);
                                 ChfClipboard.HoldNodeList(nodelList);
                                 AppState.MainWin.PasteChfClipboard();
+                                AppState.IsDirty = true;
                                 break;
                             case IdenticalPositionsExDialog.Action.CopyTree:
                                 nodelList = TreeUtils.CopySubtree(item.TailLine[0].Parent);
                                 ChfClipboard.HoldNodeList(nodelList);
                                 AppState.MainWin.PasteChfClipboard();
+                                AppState.IsDirty = true;
                                 break;
                             case IdenticalPositionsExDialog.Action.OpenView:
                                 WorkbookLocationNavigator.GotoArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
