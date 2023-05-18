@@ -1790,7 +1790,15 @@ DwnLdCreateNewWorkbook=Utwórz nowy podręcznik
 
 #description: New version available from 
 #english: NewVersionAvailable=New version $0 available from
-NewVersionAvailable=Dostępna nowa wersja $0
+NewVersionAvailable=Dostępna jest nowa wersja $0
+
+#description: Source Forge site
+#english: SourceForgeSite=Source Forge web site
+SourceForgeSite=Strona Source Forge
+
+#description: Microsoft App Store
+#english: MicrosoftAppStore=Microsoft Store
+MicrosoftAppStore=Sklep Microsoftu
 
 #description: Checkbox to not show update reminde
 #english: NoShowForCurrentVersion=Do not show for this version.
@@ -2114,7 +2122,7 @@ cbAdvancedEditig=Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowan
 cbDoubleClickAutoReplay=Dwukrotnie kliknij posunięcie w Zapisie, by rozpocząć auto-odtwarzanie
 
 #description: Click bookmark to start training
-#english: cbClickBookmarkToTrain=Click a bookmark to navigate to the bookmarked psoition
+#english: cbClickBookmarkToTrain=Click a bookmark to navigate to the bookmarked position
 cbClickBookmarkToTrain=Kliknij zakładkę, aby przejść do zapamiętanej pozycji 
 
 #description: Right click to open bookmarks menu

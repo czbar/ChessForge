@@ -1790,7 +1790,15 @@ DwnLdCreateNewWorkbook=Utwórz nowy podręcznik
 
 #description: New version available from 
 #english: NewVersionAvailable=New version $0 available from
-NewVersionAvailable=Dostępna nowa wersja $0
+NewVersionAvailable=Dostępna jest nowa wersja $0
+
+#description: Source Forge site
+#english: SourceForgeSite=Source Forge web site
+SourceForgeSite=Strona Source Forge
+
+#description: Microsoft App Store
+#english: MicrosoftAppStore=Microsoft Store
+MicrosoftAppStore=Sklep Microsoftu
 
 #description: Checkbox to not show update reminde
 #english: NoShowForCurrentVersion=Do not show for this version.

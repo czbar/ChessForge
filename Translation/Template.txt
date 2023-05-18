@@ -1792,6 +1792,14 @@ DwnLdCreateNewWorkbook=
 #english: NewVersionAvailable=New version $0 available from
 NewVersionAvailable=
 
+#description: Source Forge site
+#english: SourceForgeSite=Source Forge web site
+SourceForgeSite=
+
+#description: Microsoft App Store
+#english: MicrosoftAppStore=Microsoft Store
+MicrosoftAppStore=
+
 #description: Checkbox to not show update reminde
 #english: NoShowForCurrentVersion=Do not show for this version.
 NoShowForCurrentVersion=

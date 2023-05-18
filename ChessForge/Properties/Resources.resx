@@ -1351,6 +1351,12 @@
   <data name="NewVersionAvailable" xml:space="preserve">
     <value>New version $0 available from</value>
   </data>
+  <data name="SourceForgeSite" xml:space="preserve">
+    <value>Source Forge web site</value>
+  </data>
+  <data name="MicrosoftAppStore" xml:space="preserve">
+    <value>Microsoft Store</value>
+  </data>
   <data name="NoShowForCurrentVersion" xml:space="preserve">
     <value>Do not show for this version.</value>
   </data>
