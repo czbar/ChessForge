@@ -2137,6 +2137,8 @@ namespace ChessForge
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             TrainingSession.IsTrainingInProgress = true;
             TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
+            
+            AppState.EnableNavigationArrows();
 
             if (isContinuousEvaluation)
             {
