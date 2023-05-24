@@ -646,6 +646,17 @@ namespace ChessForge
         /// </summary>
         public static void EnableNavigationArrows()
         {
+            if (TrainingSession.IsTrainingInProgress)
+            {
+                MainWin.UiImgNavigateBack.Visibility = Visibility.Collapsed;
+                MainWin.UiImgNavigateForward.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                MainWin.UiImgNavigateBack.Visibility = Visibility.Visible;
+                MainWin.UiImgNavigateForward.Visibility = Visibility.Visible;
+            }
+
             MainWin.UiImgNavigateBack.Opacity = WorkbookLocationNavigator.IsFirstLocation || CurrentLearningMode != LearningMode.Mode.MANUAL_REVIEW ? 0.5 : 1;
             MainWin.UiImgNavigateForward.Opacity = WorkbookLocationNavigator.IsLastLocation || CurrentLearningMode != LearningMode.Mode.MANUAL_REVIEW ? 0.5 : 1;
         }

@@ -966,6 +966,8 @@ namespace ChessForge
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.CHAPTERS;
             AppState.ShowExplorers(false, false);
 
+            WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.TabViewType.CHAPTERS);
+
             // we may need to show/hode Intro headers if something has changed
             if (_chaptersView != null)
             {
