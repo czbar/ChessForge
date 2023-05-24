@@ -67,6 +67,15 @@ namespace ChessForge
             _boardImageToBoardCanvasTopOffset = _chessboard.BoardImgCtrl.Margin.Top;
         }
 
+        /// <summary>
+        /// Upadates the position being referenced.
+        /// </summary>
+        /// <param name="pos"></param>
+        public void UpdatePositionRef(ref BoardPosition pos)
+        {
+            _positionSetup = pos;
+        }
+
         //***********************************************************
         //
         //  MOUSE EVENTS
@@ -90,13 +99,16 @@ namespace ChessForge
 
             if (e.ChangedButton == MouseButton.Left)
             {
-                if (sc != null && sc.IsValid() && _chessboard.GetPieceColor(sc) != PieceColor.None)
+                byte square = _positionSetup.Board[sc.Xcoord, sc.Ycoord];
+                PieceColor pc = PositionUtils.GetPieceColor(square);
+
+                if (sc != null && sc.IsValid() && pc != PieceColor.None)
                 {
                     StartDrag(sc, e);
                 }
                 else
                 {
-                    if (_chessboard.GetPieceColor(sc) == PieceColor.None)
+                    if (pc == PieceColor.None)
                     {
                         _chessboard.Shapes.Reset(true);
                     }
