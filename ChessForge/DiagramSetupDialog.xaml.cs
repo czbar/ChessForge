@@ -365,6 +365,7 @@ namespace ChessForge
             ClearAll();
 
             PositionSetup = PositionUtils.SetupStartingPosition();
+            _dragEvents.UpdatePositionRef(ref PositionSetup);
             _chessboard.DisplayPosition(null, PositionSetup);
 
             SetFen();
