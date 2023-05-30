@@ -197,6 +197,9 @@ namespace ChessForge
         // Application's Main Window
         private MainWindow _mainWin;
 
+        // node after which the training starts i.e. the last node in the "stem"
+        private TreeNode _startingNode;
+
         /// <summary>
         /// Creates an instance of this class and sets reference 
         /// to the FlowDocument managed by the object.
@@ -284,6 +287,7 @@ namespace ChessForge
             _currentEngineGameMoveCount = 0;
             _trainingSide = node.ColorToMove;
 
+            _startingNode = node;
             TrainingSession.ResetTrainingLine(node);
             Document.Blocks.Clear();
             InitParaDictionary();
@@ -443,6 +447,9 @@ namespace ChessForge
         {
             List<Block> parasToRemove = new List<Block>();
 
+            // there is a special case where we are going back to the _startingNode in which case
+            // we need to remove all paras after INSTRUCTIONS (we will not find a separate para for this move)
+            bool isStartingNode = move.NodeId == _startingNode.NodeId;
             bool found = false;
             foreach (var block in Document.Blocks)
             {
@@ -452,12 +459,22 @@ namespace ChessForge
                 }
                 else if (block is Paragraph)
                 {
-                    int nodeId = TextUtils.GetIdFromPrefixedString(((Paragraph)block).Name);
-                    TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
-                    if (nd != null && nd.MoveNumber == move.MoveNumber && nd.ColorToMove == move.ColorToMove)
+                    if (isStartingNode)
                     {
-                        found = true;
-                        parasToRemove.Add(block);
+                        if (block == _dictParas[ParaType.INSTRUCTIONS])
+                        {
+                            found = true;
+                        }
+                    }
+                    else
+                    {
+                        int nodeId = TextUtils.GetIdFromPrefixedString(((Paragraph)block).Name);
+                        TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
+                        if (nd != null && nd.MoveNumber == move.MoveNumber && nd.ColorToMove == move.ColorToMove)
+                        {
+                            found = true;
+                            parasToRemove.Add(block);
+                        }
                     }
                 }
             }
@@ -1014,7 +1031,10 @@ namespace ChessForge
             }
             else
             {
-                BuildMoveParagraph(nd, false);
+                if (nd.NodeId != _startingNode.NodeId)
+                {
+                    BuildMoveParagraph(nd, false);
+                }
 
                 Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
                 _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn + "...");
