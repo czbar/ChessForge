@@ -19,6 +19,15 @@ namespace ChessForge
         private static int _currentLocationIndex = -1;
 
         /// <summary>
+        /// Clears the locations cache
+        /// </summary>
+        public static void Reset()
+        {
+            _currentLocationIndex = -1;
+            _locations.Clear();
+        }
+
+        /// <summary>
         /// Returns true if there is no newer location after the current one
         /// </summary>
         public static bool IsLastLocation
