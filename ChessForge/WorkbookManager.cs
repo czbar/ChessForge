@@ -631,6 +631,7 @@ namespace ChessForge
                 }
             }
             SessionWorkbook.OpsManager.Reset();
+            WorkbookLocationNavigator.Reset();
 
             return res;
         }

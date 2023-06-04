@@ -184,6 +184,7 @@ namespace ChessForge
         private readonly string _run_move_eval_ = "move_eval_";
         private readonly string _run_stem_move_ = "stem_move_";
         private readonly string _run_user_wb_alignment_ = "user_wb_alignment_";
+        private readonly string _run_wb_response_alignment_ = "wb_reponse_alignment_";
         private readonly string _run_wb_alternatives_ = "wb_alternatives_";
         private readonly string _run_wb_comment_ = "wb_comment_";
         private readonly string _run_wb_ended_ = "wb_ended_";
@@ -196,6 +197,9 @@ namespace ChessForge
 
         // Application's Main Window
         private MainWindow _mainWin;
+
+        // node after which the training starts i.e. the last node in the "stem"
+        private TreeNode _startingNode;
 
         /// <summary>
         /// Creates an instance of this class and sets reference 
@@ -284,6 +288,7 @@ namespace ChessForge
             _currentEngineGameMoveCount = 0;
             _trainingSide = node.ColorToMove;
 
+            _startingNode = node;
             TrainingSession.ResetTrainingLine(node);
             Document.Blocks.Clear();
             InitParaDictionary();
@@ -443,6 +448,9 @@ namespace ChessForge
         {
             List<Block> parasToRemove = new List<Block>();
 
+            // there is a special case where we are going back to the _startingNode in which case
+            // we need to remove all paras after INSTRUCTIONS (we will not find a separate para for this move)
+            bool isStartingNode = move.NodeId == _startingNode.NodeId;
             bool found = false;
             foreach (var block in Document.Blocks)
             {
@@ -452,12 +460,22 @@ namespace ChessForge
                 }
                 else if (block is Paragraph)
                 {
-                    int nodeId = TextUtils.GetIdFromPrefixedString(((Paragraph)block).Name);
-                    TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
-                    if (nd != null && nd.MoveNumber == move.MoveNumber && nd.ColorToMove == move.ColorToMove)
+                    if (isStartingNode)
                     {
-                        found = true;
-                        parasToRemove.Add(block);
+                        if (block == _dictParas[ParaType.INSTRUCTIONS])
+                        {
+                            found = true;
+                        }
+                    }
+                    else
+                    {
+                        int nodeId = TextUtils.GetIdFromPrefixedString(((Paragraph)block).Name);
+                        TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
+                        if (nd != null && nd.MoveNumber == move.MoveNumber && nd.ColorToMove == move.ColorToMove)
+                        {
+                            found = true;
+                            parasToRemove.Add(block);
+                        }
                     }
                 }
             }
@@ -857,13 +875,13 @@ namespace ChessForge
                 para.MouseDown += EventTakebackParaClicked;
                 para.Cursor = Cursors.Hand;
 
-                para.Inlines.Add(new Run("\n "+ Properties.Resources.MsgTakebackWanted));
+                para.Inlines.Add(new Run("\n " + Properties.Resources.MsgTakebackWanted));
 
                 Run note = new Run();
                 note.FontSize = para.FontSize - 2;
-                note.FontStyle = FontStyles.Italic;   
+                note.FontStyle = FontStyles.Italic;
                 note.FontWeight = FontWeights.Normal;
-                note.Foreground = Brushes.Black;  
+                note.Foreground = Brushes.Black;
 
                 note.Text = "  " + Properties.Resources.MsgTakebackInfo;
                 para.Inlines.Add(note);
@@ -1014,7 +1032,10 @@ namespace ChessForge
             }
             else
             {
-                BuildMoveParagraph(nd, false);
+                if (nd.NodeId != _startingNode.NodeId)
+                {
+                    BuildMoveParagraph(nd, false);
+                }
 
                 Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
                 _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn + "...");
@@ -1044,7 +1065,10 @@ namespace ChessForge
                 {
                     para.FontWeight = FontWeights.Normal;
 
-                    InsertCheckmarkRun(para, isWorkbookMove);
+                    if (isWorkbookMove || userMove.Parent.Children.Count > 1)
+                    {
+                        InsertCheckmarkRun(para, isWorkbookMove);
+                    }
                     InsertWorkbookCommentRun(para, userMove);
 
                     Run wbAlignmentNoteRun = new Run();
@@ -1056,8 +1080,12 @@ namespace ChessForge
                     {
                         if (!isWorkbookMove)
                         {
-                            sbAlignmentNote.Append(Properties.Resources.TrnLineEnded + ". ");
-                            SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.END_OF_LINE);
+                            // if the parent has only this move as a child, we already announced end-of-training-line on previous move
+                            if (userMove.Parent.Children.Count > 1)
+                            {
+                                sbAlignmentNote.Append(Properties.Resources.TrnLineEnded + ". ");
+                                SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.END_OF_LINE);
+                            }
                         }
                         wbAlignmentNoteRun.Text = sbAlignmentNote.ToString();
                         para.Inlines.Add(wbAlignmentNoteRun);
@@ -1187,6 +1215,21 @@ namespace ChessForge
 
                 BuildOtherWorkbookMovesRun(para, lstAlternatives, false);
             }
+
+            StringBuilder sbAlignmentNote = new StringBuilder();
+            if (moveNode.Children.Count == 0)
+            {
+                Run wbAlignmentNoteRun = new Run();
+                string wbAlignmentRunName = _run_wb_response_alignment_ + moveNode.NodeId.ToString();
+                wbAlignmentNoteRun.Name = wbAlignmentRunName;
+                wbAlignmentNoteRun.FontSize = para.FontSize - 1;
+
+                sbAlignmentNote.Append(Properties.Resources.TrnLineEnded + ". ");
+                SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.END_OF_LINE);
+                wbAlignmentNoteRun.Text = sbAlignmentNote.ToString();
+                para.Inlines.Add(wbAlignmentNoteRun);
+            }
+
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 

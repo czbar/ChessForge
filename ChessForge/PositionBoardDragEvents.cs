@@ -68,7 +68,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Upadates the position being referenced.
+        /// Updates the position being referenced.
         /// </summary>
         /// <param name="pos"></param>
         public void UpdatePositionRef(ref BoardPosition pos)

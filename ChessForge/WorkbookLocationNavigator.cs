@@ -19,6 +19,15 @@ namespace ChessForge
         private static int _currentLocationIndex = -1;
 
         /// <summary>
+        /// Clears the locations cache
+        /// </summary>
+        public static void Reset()
+        {
+            _currentLocationIndex = -1;
+            _locations.Clear();
+        }
+
+        /// <summary>
         /// Returns true if there is no newer location after the current one
         /// </summary>
         public static bool IsLastLocation
@@ -60,6 +69,7 @@ namespace ChessForge
                 {
                     case WorkbookManager.TabViewType.STUDY:
                         contentType = GameData.ContentType.STUDY_TREE;
+                        WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
                         AppState.MainWin.SetupGuiForActiveStudyTree(true);
                         break;
                     case WorkbookManager.TabViewType.INTRO:
