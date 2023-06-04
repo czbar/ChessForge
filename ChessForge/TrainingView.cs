@@ -184,6 +184,7 @@ namespace ChessForge
         private readonly string _run_move_eval_ = "move_eval_";
         private readonly string _run_stem_move_ = "stem_move_";
         private readonly string _run_user_wb_alignment_ = "user_wb_alignment_";
+        private readonly string _run_wb_response_alignment_ = "wb_reponse_alignment_";
         private readonly string _run_wb_alternatives_ = "wb_alternatives_";
         private readonly string _run_wb_comment_ = "wb_comment_";
         private readonly string _run_wb_ended_ = "wb_ended_";
@@ -874,13 +875,13 @@ namespace ChessForge
                 para.MouseDown += EventTakebackParaClicked;
                 para.Cursor = Cursors.Hand;
 
-                para.Inlines.Add(new Run("\n "+ Properties.Resources.MsgTakebackWanted));
+                para.Inlines.Add(new Run("\n " + Properties.Resources.MsgTakebackWanted));
 
                 Run note = new Run();
                 note.FontSize = para.FontSize - 2;
-                note.FontStyle = FontStyles.Italic;   
+                note.FontStyle = FontStyles.Italic;
                 note.FontWeight = FontWeights.Normal;
-                note.Foreground = Brushes.Black;  
+                note.Foreground = Brushes.Black;
 
                 note.Text = "  " + Properties.Resources.MsgTakebackInfo;
                 para.Inlines.Add(note);
@@ -1064,7 +1065,10 @@ namespace ChessForge
                 {
                     para.FontWeight = FontWeights.Normal;
 
-                    InsertCheckmarkRun(para, isWorkbookMove);
+                    if (isWorkbookMove || userMove.Parent.Children.Count > 1)
+                    {
+                        InsertCheckmarkRun(para, isWorkbookMove);
+                    }
                     InsertWorkbookCommentRun(para, userMove);
 
                     Run wbAlignmentNoteRun = new Run();
@@ -1076,8 +1080,12 @@ namespace ChessForge
                     {
                         if (!isWorkbookMove)
                         {
-                            sbAlignmentNote.Append(Properties.Resources.TrnLineEnded + ". ");
-                            SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.END_OF_LINE);
+                            // if the parent has only this move as a child, we already announced end-of-training-line on previous move
+                            if (userMove.Parent.Children.Count > 1)
+                            {
+                                sbAlignmentNote.Append(Properties.Resources.TrnLineEnded + ". ");
+                                SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.END_OF_LINE);
+                            }
                         }
                         wbAlignmentNoteRun.Text = sbAlignmentNote.ToString();
                         para.Inlines.Add(wbAlignmentNoteRun);
@@ -1207,6 +1215,21 @@ namespace ChessForge
 
                 BuildOtherWorkbookMovesRun(para, lstAlternatives, false);
             }
+
+            StringBuilder sbAlignmentNote = new StringBuilder();
+            if (moveNode.Children.Count == 0)
+            {
+                Run wbAlignmentNoteRun = new Run();
+                string wbAlignmentRunName = _run_wb_response_alignment_ + moveNode.NodeId.ToString();
+                wbAlignmentNoteRun.Name = wbAlignmentRunName;
+                wbAlignmentNoteRun.FontSize = para.FontSize - 1;
+
+                sbAlignmentNote.Append(Properties.Resources.TrnLineEnded + ". ");
+                SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.END_OF_LINE);
+                wbAlignmentNoteRun.Text = sbAlignmentNote.ToString();
+                para.Inlines.Add(wbAlignmentNoteRun);
+            }
+
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
         }
 
