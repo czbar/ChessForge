@@ -92,7 +92,7 @@ namespace ChessForge
         /// we are "out of the book".
         /// 
         /// Having found the parent, checks if the user's move corresponds to any move
-        /// in the Workbook (i.e. children of that parent) and report accordingly)
+        /// in the Workbook (i.e. children of that parent) and reports accordingly.
         /// </summary>
         public void ReportLastMoveVsWorkbook()
         {
