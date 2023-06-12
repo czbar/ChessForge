@@ -25,6 +25,7 @@ namespace ChessForge
             AUTO_SAVE,
             EVALUATION_LINE_DISPLAY,
             GAMES_EVALUATION,
+            EVALUATION_BAR,
             CHECK_FOR_USER_MOVE,
             CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE,
             REQUEST_WORKBOOK_MOVE,
@@ -58,6 +59,11 @@ namespace ChessForge
         /// This timer starts and monitors the game evaluation process
         /// </summary>
         private Timer _gamesEvaluationTimer;
+
+        /// <summary>
+        /// Triggers refresh of the evaluation bar
+        /// </summary>
+        private Timer _evaluationBarTimer;
 
         /// <summary>
         /// This timer invokes the method checking if a user made their move and if so
@@ -134,6 +140,10 @@ namespace ChessForge
             _gamesEvaluationTimer = new Timer();
             InitGamesEvaluationTimer();
             _dictTimers.Add(TimerId.GAMES_EVALUATION, _gamesEvaluationTimer);
+
+            _evaluationBarTimer = new Timer();
+            InitEvaluationBarTimer();
+            _dictTimers.Add(TimerId.EVALUATION_BAR, _evaluationBarTimer);
 
             _autoSaveTimer = new Timer();
             InitAutoSaveTimer();
@@ -309,6 +319,16 @@ namespace ChessForge
             _gamesEvaluationTimer.Elapsed += new ElapsedEventHandler(GamesEvaluationManager.StartGamesEvaluation);
             _gamesEvaluationTimer.Interval = 100;
             _gamesEvaluationTimer.Enabled = false;
+        }
+
+        /// <summary>
+        /// Configures the timer triggering refresh of the evaluation bar's position
+        /// </summary>
+        private void InitEvaluationBarTimer()
+        {
+            _evaluationBarTimer.Elapsed += new ElapsedEventHandler(_mainWin.UpdateEvaluationBar);
+            _evaluationBarTimer.Interval = 100;
+            _evaluationBarTimer.Enabled = false;
         }
 
         private void InitAutoSaveTimer()
