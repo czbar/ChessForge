@@ -1,0 +1,41 @@
+Chess Forge - Free Open Source Windows application facilitating chess training
+==
+
+In a single, compact application, Chess Forge offers a rich set of tools and techniques for effective chess studies and training.
+==
+
+## Feature Overview
+
+You can find a very brief outline of the main functionality on the [program's download page](https://sourceforge.net/projects/chessforge/) while Chess Forge's key differentiating feature is described in the **Training Mode** section below.
+
+Naturally, the program has all the features that you would expect in a fully fledged chess application. It is not possible to list, let alone describe, all of them, in this short article.
+
+So, let's just mention a rich set of functionality for storing and editing games, opening variation trees, exercises and endgames. See the **Workbooks** section below.
+
+![](https://image.lichess1.org/display?h=0&op=resize&path=czbar:ublogBody:EFmMiyCOKOCh:7oMiLmI9.png&w=720&sig=1f3fb0f774453b9ef35cf0fa5b49aba0b09a2ac8)
+
+As you can notice in the screenshot above, if the hosting PC has Internet access, Chess Forge can connect to **lichess.org** and obtain relevant data through its public API. Depending on the position being analyzed, it will show the Opening / Endgame Explorer and/or the list of applicable Master Games.
+
+In addition, the user can request that games of a particular player be downloaded from **lichess.org** or **chess.com**.
+
+The program comes packaged with the Stockfish engine. The engine can be used for continuous evaluation of positions being viewed, for training or for playing a game against it.
+
+## Training Mode
+
+Chess Forge's **key differentiating feature** is a special training mode where users can test themselves against an item (a Study Tree or a Game) in the Workbook. The program will assess users' moves against that item and report after each move. If they wish to, users can request engine evaluation on all training moves too. When the Workbook line ends, or the user diverts from it, a game against the engine will start automatically. The training line/session can be roll back to any preceding move or position at any time.
+
+![](https://image.lichess1.org/display?h=0&op=resize&path=czbar:ublogBody:W5qbHRswz7pw:nqac3GuO.png&w=720&sig=67d5dcf4fb273feac7a80cb3cb48fb279f937a7b)
+
+## Workbooks
+
+The application uses the standard PGN format with some Chess Forge's specific extensions.
+
+Chess Forge's PGN data file is called a **Workbook**. It is divided into **Chapters**, each of which contains an optional **Intro** (rich formatted text with diagrams and clickable moves), a **Study Tree** plus any number of **Games** and **Exercises**.
+
+![](https://image.lichess1.org/display?h=0&op=resize&path=czbar:ublogBody:PE7oWwgdh3Iv:E0L1lmRO.png&w=720&sig=0ae57aa46bd8ba1dc07162dcfbae75260f479c20)
+
+## Download and Installation
+
+Chess Forge is available from the [Source Forge web site.](https://sourceforge.net/projects/chessforge/) It can be installed as a standard Windows application or used as a portable application (so, for example, you can run it from a USB drive, without any installation, if you wish). Details can be found [here](https://github.com/czbar/ChessForge/wiki/Installation).
+
+The installation/distribution contains several sample Workbooks with opening variations, endgames etc.
