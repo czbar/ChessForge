@@ -123,6 +123,7 @@
     </Compile>
     <Compile Include="DownloadWebGamesManager.cs" />
     <Compile Include="EvaluationActiveLine.cs" />
+    <Compile Include="EvaluationBar.cs" />
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
     <Compile Include="ExerciseTreeView.cs" />
