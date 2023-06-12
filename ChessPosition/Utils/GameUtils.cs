@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,32 @@ namespace ChessPosition
 {
     public class GameUtils
     {
+        /// <summary>
+        /// Splits games into the collection of White and Black games
+        /// played by the specified player.
+        /// </summary>
+        /// <param name="games"></param>
+        /// <param name="player"></param>
+        /// <param name="whiteGames"></param>
+        /// <param name="blackGames"></param>
+        public static void SplitGamesByColor(ObservableCollection<GameData> games, string player, out ObservableCollection<GameData> whiteGames, out ObservableCollection<GameData> blackGames)
+        {
+            whiteGames = new ObservableCollection<GameData>();
+            blackGames = new ObservableCollection<GameData>();
+
+            foreach (GameData game in games)
+            {
+                if (game.Header.GetWhitePlayer(out _) == player)
+                {
+                    whiteGames.Add(game);
+                }
+                else if (game.Header.GetBlackPlayer(out _) == player)
+                {
+                    blackGames.Add(game);
+                }
+            }
+        }
+
         /// <summary>
         /// Sorts games by date/time found in the headers
         /// </summary>
