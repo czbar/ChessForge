@@ -394,6 +394,7 @@ namespace ChessForge
 
             ArticleSelected += EventSelectArticle;
 
+            Timers.Start(AppTimers.TimerId.EVALUATION_BAR);
             AppLog.LogAvailableThreadsCounts();
         }
 
@@ -668,7 +669,7 @@ namespace ChessForge
             try
             {
                 Version ver = SelectAvailableUpdate(out int updSource);
-                if (updSource != 0) 
+                if (updSource != 0)
                 {
                     this.Dispatcher.Invoke(() =>
                     {
@@ -1145,7 +1146,7 @@ namespace ChessForge
                     }
                 }
                 else if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
-                      || LearningMode.CurrentMode == LearningMode.Mode.TRAINING    && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE)
+                      || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE)
                 {
                     return EngineGame.GetPieceColor(sqNorm) == EngineGame.ColorToMove;
                 }
@@ -1952,6 +1953,47 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// In response to the EVALUATION_BAR timer event
+        /// checks if the evaluation bar should be shown, and if so, updates its value.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public void UpdateEvaluationBar(object source, ElapsedEventArgs e)
+        {
+            bool show = false;
+
+            Dispatcher.Invoke(() =>
+            {
+                if (AppState.IsVariationTreeTabType
+                || TrainingSession.IsTrainingInProgress
+                   && (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE || EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+               )
+                {
+                    TreeNode nd = null;
+                    if (TrainingSession.IsTrainingInProgress)
+                    {
+                        nd = EvaluationManager.GetEvaluatedNode(out _);
+                    }
+                    else if (ActiveTreeView != null)
+                    {
+                        nd = ActiveTreeView.GetSelectedNode();
+                    }
+
+                    if (nd != null)
+                    {
+                        bool res = double.TryParse(nd.EngineEvaluation, out double dVal);
+                        if (res)
+                        {
+                            EvaluationBar.ShowEvaluation(dVal * 100);
+                            show = true;
+                        }
+                    }
+                }
+                EvaluationBar.Show(show);
+            });
+        }
+
+        /// <summary>
         /// The app is in the Solving GUESS_MOVE mode
         /// and the user made their move.
         /// </summary>
@@ -2137,7 +2179,7 @@ namespace ChessForge
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             TrainingSession.IsTrainingInProgress = true;
             TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
-            
+
             AppState.EnableNavigationArrows();
 
             if (isContinuousEvaluation)
