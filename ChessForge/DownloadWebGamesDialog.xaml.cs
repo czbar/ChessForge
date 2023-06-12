@@ -25,6 +25,11 @@ namespace ChessForge
         public ObservableCollection<GameData> Games = new ObservableCollection<GameData>();
 
         /// <summary>
+        /// Nickname of the user for who the games were downloaded.
+        /// </summary>
+        public string UserNick;
+
+        /// <summary>
         /// Constructor. Sets up event handler.
         /// </summary>
         public DownloadWebGamesDialog()
@@ -100,6 +105,7 @@ namespace ChessForge
                         {
                             if (SelectGames(ref Games))
                             {
+                                UserNick = UiTbUserName.Text;
                                 DialogResult = true;
                                 exit = true;
                             }
