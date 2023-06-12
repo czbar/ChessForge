@@ -219,6 +219,8 @@
                             <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                         </Canvas.Background>
                         <Image x:Name="UiImgMainChessboard" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBlue.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="640" Height="640" Grid.Column="0"/>
+                        <Label x:Name="UiLblEvalBarHost" Content="" Canvas.Left="666" Canvas.Top="20" Width="8" Height="640" Background="Gray" Panel.ZIndex="1" Visibility="Collapsed" />
+                        <Label x:Name="UiLblEvalBarWhite" Content="" Canvas.Left="666" Canvas.Top="20" Width="8" Height="320" Background="White" Panel.ZIndex="2" Visibility="Collapsed"/>
                     </Canvas>
                 </Viewbox>
 
