@@ -1107,6 +1107,12 @@ MsgTakebackInfo=Click here or press the space key to take back your move.
 # Dialogs
 #
 
+#Games with White
+GamesWithWhite=Games with White
+
+#Games with Black
+GamesWithBlack=Games with Black
+
 #Games Evaluation
 GamesEvaluation=Games Evaluation
 
@@ -1369,14 +1375,17 @@ CopyGamesNoMerge=Copy Games into the Games section only (leave the study tree em
 #Create a separate chapter for each game
 CreateChapterPerGame=Create Chapter per Game
 
+#Generate repertoire chapters
+DwnLdCreateRepertoireChapter=Create Repertoire Chapters
+
 #Append games to the current chapter
-DwnLdAppendToCurrentChapter=Append to the current Chapter
+DwnLdAppendToCurrentChapter=Append Games to the current Chapter
 
 #Create a new chapter for the downloaded games
-DwnLdCreateNewChapter=Create a new Chapter
+DwnLdCreateNewChapter=Save Games to a new Chapter
 
 #Create a new workbook for the downloaded games
-DwnLdCreateNewWorkbook=Create a new Workbook
+DwnLdCreateNewWorkbook=Save to a new Workbook
 
 #New version available from 
 NewVersionAvailable=New version $0 available from

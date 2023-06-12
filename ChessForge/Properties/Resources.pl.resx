@@ -1080,6 +1080,12 @@
   <data name="MsgTakebackInfo" xml:space="preserve">
     <value>Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni ruch.</value>
   </data>
+  <data name="GamesWithWhite" xml:space="preserve">
+    <value>Partie białymi</value>
+  </data>
+  <data name="GamesWithBlack" xml:space="preserve">
+    <value>Partie czarnymi</value>
+  </data>
   <data name="GamesEvaluation" xml:space="preserve">
     <value>Ocena Partii</value>
   </data>
@@ -1338,14 +1344,17 @@
   <data name="CreateChapterPerGame" xml:space="preserve">
     <value>Utwórz Rozdział do Każdej Partii</value>
   </data>
+  <data name="DwnLdCreateRepertoireChapter" xml:space="preserve">
+    <value>Utwórz rozdziały repertuarowe</value>
+  </data>
   <data name="DwnLdAppendToCurrentChapter" xml:space="preserve">
-    <value>Dodaj do obecnego rozdziału</value>
+    <value>Dodaj partie do obecnego rozdziału</value>
   </data>
   <data name="DwnLdCreateNewChapter" xml:space="preserve">
-    <value>Utwórz nowy rozdział</value>
+    <value>Zapisz partie w nowym rozdziale</value>
   </data>
   <data name="DwnLdCreateNewWorkbook" xml:space="preserve">
-    <value>Utwórz nowy podręcznik</value>
+    <value>Zapisz w nowym podręczniku</value>
   </data>
   <data name="NewVersionAvailable" xml:space="preserve">
     <value>Dostępna jest nowa wersja $0</value>

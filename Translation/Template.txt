@@ -1428,6 +1428,14 @@ MsgTakebackInfo=
 # Dialogs
 #
 
+#description: Games with White
+#english: GamesWithWhite=Games with White
+GamesWithWhite=
+
+#description: Games with Black
+#english: GamesWithBlack=Games with Black
+GamesWithBlack=
+
 #description: Games Evaluation
 #english: GamesEvaluation=Games Evaluation
 GamesEvaluation=
@@ -1776,16 +1784,20 @@ CopyGamesNoMerge=
 #english: CreateChapterPerGame=Create Chapter per Game
 CreateChapterPerGame=
 
+#description: Generate repertoire chapters
+#english: DwnLdCreateRepertoireChapter=Create Repertoire Chapters
+DwnLdCreateRepertoireChapter=
+
 #description: Append games to the current chapter
-#english: DwnLdAppendToCurrentChapter=Append to the current Chapter
+#english: DwnLdAppendToCurrentChapter=Append Games to the current Chapter
 DwnLdAppendToCurrentChapter=
 
 #description: Create a new chapter for the downloaded games
-#english: DwnLdCreateNewChapter=Create a new Chapter
+#english: DwnLdCreateNewChapter=Save Games to a new Chapter
 DwnLdCreateNewChapter=
 
 #description: Create a new workbook for the downloaded games
-#english: DwnLdCreateNewWorkbook=Create a new Workbook
+#english: DwnLdCreateNewWorkbook=Save to a new Workbook
 DwnLdCreateNewWorkbook=
 
 #description: New version available from 

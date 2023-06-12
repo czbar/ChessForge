@@ -1428,6 +1428,14 @@ MsgTakebackInfo=Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni 
 # Dialogs
 #
 
+#description: Games with White
+#english: GamesWithWhite=Games with White
+GamesWithWhite=Partie białymi
+
+#description: Games with Black
+#english: GamesWithBlack=Games with Black
+GamesWithBlack=Partie czarnymi
+
 #description: Games Evaluation
 #english: GamesEvaluation=Games Evaluation
 GamesEvaluation=Ocena Partii
@@ -1776,17 +1784,21 @@ CopyGamesNoMerge=Skopiuj Partie do Sekcji Partii i zostaw Teorię pustą
 #english: CreateChapterPerGame=Create Chapter per Game
 CreateChapterPerGame=Utwórz Rozdział do Każdej Partii
 
+#description: Generate repertoire chapters
+#english: DwnLdCreateRepertoireChapter=Create Repertoire Chapters
+DwnLdCreateRepertoireChapter=Utwórz rozdziały repertuarowe
+
 #description: Append games to the current chapter
-#english: DwnLdAppendToCurrentChapter=Append to the current Chapter
-DwnLdAppendToCurrentChapter=Dodaj do obecnego rozdziału
+#english: DwnLdAppendToCurrentChapter=Append Games to the current Chapter
+DwnLdAppendToCurrentChapter=Dodaj partie do obecnego rozdziału
 
 #description: Create a new chapter for the downloaded games
-#english: DwnLdCreateNewChapter=Create a new Chapter
-DwnLdCreateNewChapter=Utwórz nowy rozdział
+#english: DwnLdCreateNewChapter=Save Games to a new Chapter
+DwnLdCreateNewChapter=Zapisz partie w nowym rozdziale
 
 #description: Create a new workbook for the downloaded games
-#english: DwnLdCreateNewWorkbook=Create a new Workbook
-DwnLdCreateNewWorkbook=Utwórz nowy podręcznik
+#english: DwnLdCreateNewWorkbook=Save to a new Workbook
+DwnLdCreateNewWorkbook=Zapisz w nowym podręczniku
 
 #description: New version available from 
 #english: NewVersionAvailable=New version $0 available from
