@@ -1778,15 +1778,15 @@ CreateChapterPerGame=Utwórz Rozdział do Każdej Partii
 
 #description: Append games to the current chapter
 #english: DwnLdAppendToCurrentChapter=Append to the current Chapter
-DwnLdAppendToCurrentChapter=Dodaj do obecnego rozdziału
+DwnLdAppendToCurrentChapter=Dodaj partie do obecnego rozdziału
 
 #description: Create a new chapter for the downloaded games
 #english: DwnLdCreateNewChapter=Create a new Chapter
-DwnLdCreateNewChapter=Utwórz nowy rozdział
+DwnLdCreateNewChapter=Zapisz partie w nowym rozdziale
 
 #description: Create a new workbook for the downloaded games
 #english: DwnLdCreateNewWorkbook=Create a new Workbook
-DwnLdCreateNewWorkbook=Utwórz nowy podręcznik
+DwnLdCreateNewWorkbook=Zapisz w nowym podręczniku
 
 #description: New version available from 
 #english: NewVersionAvailable=New version $0 available from
@@ -2367,3 +2367,9 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
+DwnLdCreateRepertoireChapter=Utwórz rozdziały repertuarowe
+
+GamesWithWhite=Partie białymi
+
+#Games with Black
+GamesWithBlack=Partie czarnymi

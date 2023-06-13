@@ -36,6 +36,11 @@ namespace ChessForge
         public Action SaveOption = Action.None;
 
         /// <summary>
+        /// Whether the user chose to build repertoire chapters
+        /// </summary>
+        public bool BuildRepertoireChapters;
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         public DownloadedGamesActionDialog(int gamesCount)
@@ -43,10 +48,11 @@ namespace ChessForge
             InitializeComponent();
 
             // set label here because we want to add a colon
-            UiLblNumberOfGames.Content = Properties.Resources.NumberOfGames + ": ";
             UiRbAppendCurrentChapter.IsChecked = true;
+            UiGbOptions.Header = Properties.Resources.NumberOfGames + ": " + gamesCount.ToString();
 
-            UiTbGameCount.Text = gamesCount.ToString();
+            UiCbCreateNewWorkbook.IsChecked = false;
+            UiRbRepertoireChapters.IsChecked = true;
         }
 
         /// <summary>
@@ -56,18 +62,20 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            if (UiRbAppendCurrentChapter.IsChecked == true)
-            {
-                SaveOption = Action.CurrentChapter;
-            }
-            else if (UiRbCreateNewChapter.IsChecked == true)
-            {
-                SaveOption = Action.NewChapter;
-            }
-            else
+            if (UiCbCreateNewWorkbook.IsChecked == true)
             {
                 SaveOption = Action.NewWorkbook;
             }
+            else if (UiRbAppendCurrentChapter.IsChecked == true)
+            {
+                SaveOption = Action.CurrentChapter;
+            }
+            else if (UiRbCreateNewChapter.IsChecked == true || UiRbRepertoireChapters.IsChecked == true)
+            {
+                SaveOption = Action.NewChapter;
+            }
+
+            BuildRepertoireChapters = UiRbRepertoireChapters.IsChecked == true;
             DialogResult = true;
         }
 
@@ -79,6 +87,33 @@ namespace ChessForge
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Save-Downloaded-Games-Dialog");
+        }
+
+        /// <summary>
+        /// The Create New Workbook box was checked.
+        /// Ensure the Append to Current Chapter option is not enabled as it makes no sense in this case.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbCreateNewWorkbook_Checked(object sender, RoutedEventArgs e)
+        {
+            UiRbAppendCurrentChapter.IsEnabled = false;
+
+            if (UiRbAppendCurrentChapter.IsChecked == true)
+            {
+                UiRbCreateNewChapter.IsChecked = true;
+            }
+        }
+
+        /// <summary>
+        /// The Create New Workbook box was unchecked.
+        /// The Append to Current Chapter option can be enabled now.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbCreateNewWorkbook_Unchecked(object sender, RoutedEventArgs e)
+        {
+            UiRbAppendCurrentChapter.IsEnabled = true;
         }
     }
 }

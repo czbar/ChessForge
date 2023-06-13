@@ -1366,7 +1366,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Append to the current Chapter.
+        ///   Looks up a localized string similar to Append Games to the current Chapter.
         /// </summary>
         public static string DwnLdAppendToCurrentChapter {
             get {
@@ -1375,7 +1375,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create a new Chapter.
+        ///   Looks up a localized string similar to Save Games to a new Chapter.
         /// </summary>
         public static string DwnLdCreateNewChapter {
             get {
@@ -1384,11 +1384,20 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create a new Workbook.
+        ///   Looks up a localized string similar to Save to a new Workbook.
         /// </summary>
         public static string DwnLdCreateNewWorkbook {
             get {
                 return ResourceManager.GetString("DwnLdCreateNewWorkbook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Repertoire Chapters.
+        /// </summary>
+        public static string DwnLdCreateRepertoireChapter {
+            get {
+                return ResourceManager.GetString("DwnLdCreateRepertoireChapter", resourceCulture);
             }
         }
         
@@ -2262,6 +2271,24 @@ namespace ChessForge.Properties {
         public static string GamesEvaluation {
             get {
                 return ResourceManager.GetString("GamesEvaluation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Games with Black.
+        /// </summary>
+        public static string GamesWithBlack {
+            get {
+                return ResourceManager.GetString("GamesWithBlack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Games with White.
+        /// </summary>
+        public static string GamesWithWhite {
+            get {
+                return ResourceManager.GetString("GamesWithWhite", resourceCulture);
             }
         }
         
