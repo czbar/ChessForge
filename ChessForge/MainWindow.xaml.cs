@@ -1399,6 +1399,9 @@ namespace ChessForge
                     WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(
                         Math.Max(0, WorkbookManager.SessionWorkbook.ActiveChapterIndex),
                         GameData.ContentType.STUDY_TREE);
+                    // here SetActiveChapterTreeByIndex will set the wrong Location in location history so fix this
+                    WorkbookLocationNavigator.Reset();
+                    WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.TabViewType.CHAPTERS);
                     break;
             }
 
