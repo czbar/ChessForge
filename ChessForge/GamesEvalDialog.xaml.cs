@@ -24,6 +24,7 @@ namespace ChessForge
         private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
             AppState.MainWin.StopEvaluation(true);
+            GamesEvaluationManager.IsEvaluationInProgress = false;
             DialogResult = false;
         }
     }
