@@ -4,6 +4,7 @@ using System.Windows;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Net;
 
 namespace ChessForge
 {
@@ -16,10 +17,10 @@ namespace ChessForge
         private const double BAR_HEIGHT = 640;
 
         // max allowed height of the white part of the bar
-        private const double MAX_WHITE_BAR_HEIGHT = 630;
+        private const double MAX_WHITE_BAR_HEIGHT = 636;
 
         // min allowed height of the white part of the bar
-        private const double MIN_WHITE_BAR_HEIGHT = 10;
+        private const double MIN_WHITE_BAR_HEIGHT = 4;
 
         // top position of the bar
         private const double TOP = 20;
@@ -84,6 +85,22 @@ namespace ChessForge
                     Canvas.SetTop(AppState.MainWin.UiLblEvalBarWhite, BOTTOM - whiteBarLength);
                 }
             });
+        }
+
+        /// <summary>
+        /// Show max possible positive evaluation.
+        /// </summary>
+        public static void ShowMaxEvaluation()
+        {
+            ShowEvaluation(10000);
+        }
+
+        /// <summary>
+        /// Show min possible negative evaluation.
+        /// </summary>
+        public static void ShowMinEvaluation()
+        {
+            ShowEvaluation(-10000);
         }
     }
 }
