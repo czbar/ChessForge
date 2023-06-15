@@ -255,6 +255,44 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the value of the "WhiteElo" header.
+        /// </summary>
+        /// <returns></returns>
+        public string GetWhitePlayerElo(out string key, string value = null)
+        {
+            string headerKey = PgnHeaders.KEY_WHITE_ELO;
+            key = headerKey;
+
+            if (value == null)
+            {
+                return _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        /// <summary>
+        /// Returns the value of the "BlackElo" header.
+        /// </summary>
+        /// <returns></returns>
+        public string GetBlackPlayerElo(out string key, string value = null)
+        {
+            string headerKey = PgnHeaders.KEY_BLACK_ELO;
+            key = headerKey;
+
+            if (value == null)
+            {
+                return _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        /// <summary>
         /// Returns the value of the "Date" header.
         /// </summary>
         /// <returns></returns>
