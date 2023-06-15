@@ -1127,6 +1127,11 @@ Ok=OK
 #english: Cancel=Cancel
 Cancel=Kasuj
 
+#description: Stop
+#english: Stop=Stop
+Stop=Zatrzymaj
+
+
 #description: Show explorers
 #english: ShowExplorer=Show Explorer
 ShowExplorer=Pokaż Bibliotekę
@@ -1664,8 +1669,8 @@ DownloadGamesFromWeb=Pobierz partie z Internetu
 DownloadedGamesAndExercises=Liczba partii $0, liczba ćwiczeń $1
 
 #description: Evaluate Games
-#english: EvaluateGames=Evaluate Games
-EvaluateGames=Oceń partie
+#english: EvaluateGames=Evaluate Games in Chapter
+EvaluateGames=Oceń partie z rozdziału
 
 #description: Please wait
 #english: PleaseWait=Please Wait
