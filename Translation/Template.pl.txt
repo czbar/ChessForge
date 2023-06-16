@@ -221,6 +221,11 @@ OrderNo=No
 #english: ECO=ECO
 ECO=ECO
 
+#description: Elo
+#english: Elo=Elo
+Elo=Elo
+
+
 #description: Game Header
 #english: GameHeader=Game Header
 GameHeader=Nagłówek Partii

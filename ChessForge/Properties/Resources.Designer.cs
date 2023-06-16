@@ -1492,6 +1492,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Elo.
+        /// </summary>
+        public static string Elo {
+            get {
+                return ResourceManager.GetString("Elo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game text is empty..
         /// </summary>
         public static string EmptyGameText {

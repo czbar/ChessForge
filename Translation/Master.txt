@@ -170,6 +170,10 @@ OrderNo=No
 #ECO
 ECO=ECO
 
+#Elo
+Elo=Elo
+
+
 #Game Header
 GameHeader=Game Header
 

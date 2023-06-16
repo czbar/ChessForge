@@ -270,6 +270,9 @@
   <data name="ECO" xml:space="preserve">
     <value>ECO</value>
   </data>
+  <data name="Elo" xml:space="preserve">
+    <value>Elo</value>
+  </data>
   <data name="GameHeader" xml:space="preserve">
     <value>Game Header</value>
   </data>

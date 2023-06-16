@@ -221,6 +221,11 @@ OrderNo=No
 #english: ECO=ECO
 ECO=ECO
 
+#description: Elo
+#english: Elo=Elo
+Elo=Elo
+
+
 #description: Game Header
 #english: GameHeader=Game Header
 GameHeader=Nagłówek Partii
@@ -1669,7 +1674,7 @@ DownloadGamesFromWeb=Pobierz partie z Internetu
 DownloadedGamesAndExercises=Liczba partii $0, liczba ćwiczeń $1
 
 #description: Evaluate Games
-#english: EvaluateGames=Evaluate Games
+#english: EvaluateGames=Evaluate Games in Chapter
 EvaluateGames=Oceń partie z rozdziału
 
 #description: Please wait
