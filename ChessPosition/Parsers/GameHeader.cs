@@ -138,24 +138,46 @@ namespace GameTree
             bool hasWhite = !string.IsNullOrEmpty(white);
             bool hasBlack = !string.IsNullOrEmpty(black);
 
+            string whiteElo = GetWhitePlayerElo(out _);
+            string blackElo = GetBlackPlayerElo(out _);
+
+            string eco = GetECO(out _);
+
             if (simplified)
             {
-                if (hasWhite)
-                {
-                    sb.Append(white);
-                }
                 if (hasWhite || hasBlack)
                 {
+                    if (!string.IsNullOrWhiteSpace(eco))
+                    {
+                        sb.Append(eco + " ");
+                    }
+
+                    if (hasWhite)
+                    {
+                        sb.Append(white);
+                        sb.Append(string.IsNullOrWhiteSpace(whiteElo) ? "" : (" (" + whiteElo + ")"));
+                    }
+
                     sb.Append(" - ");
-                }
-                if (hasBlack)
-                {
-                    sb.Append(black);
+
+                    if (hasBlack)
+                    {
+                        sb.Append(black);
+                        sb.Append(string.IsNullOrWhiteSpace(blackElo) ? "" : (" (" + blackElo + ")"));
+                    }
                 }
             }
             else
             {
-                sb.Append((white ?? "NN") + " - " + (black ?? "NN"));
+                if (!string.IsNullOrWhiteSpace(eco))
+                {
+                    sb.Append(eco + " ");
+                }
+                sb.Append(white ?? "NN");
+                sb.Append(string.IsNullOrWhiteSpace(whiteElo) ? "" : (" (" + whiteElo + ")"));
+                sb.Append(" - ");
+                sb.Append(black ?? "NN");
+                sb.Append(string.IsNullOrWhiteSpace(blackElo) ? "" : (" (" + blackElo + ")"));
             }
 
             if (includeResult)
