@@ -839,7 +839,7 @@ namespace ChessForge
                     MainChessBoard.FlipBoard(orient);
 
                     SetupGuiForActiveModelGame(gameIndex, setFocus);
-                    if (setFocus)
+                    if (setFocus && WorkbookManager.SessionWorkbook != null)
                     {
                         WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.MODEL_GAME, gameIndex);
                     }
@@ -925,7 +925,7 @@ namespace ChessForge
                     MainChessBoard.FlipBoard(orient);
 
                     SetupGuiForActiveExercise(exerciseIndex, setFocus);
-                    if (setFocus)
+                    if (setFocus && WorkbookManager.SessionWorkbook != null)
                     {
                         WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.EXERCISE, exerciseIndex);
                     }
