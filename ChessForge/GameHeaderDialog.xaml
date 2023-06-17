@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="PLACEHOLDER" Height="430" Width="690">
+        Title="PLACEHOLDER" Height="450" Width="690">
     <Grid>
         <GroupBox x:Name="UiGbPlayers" HorizontalAlignment="Left" Height="120" Header="" Margin="12,12,0,0" VerticalAlignment="Top" Width="646">
             <Canvas>
