@@ -12,6 +12,6 @@
         <ProgressBar x:Name="UiPbProgress" HorizontalAlignment="Center" Height="20" Margin="-20,50,0,0" VerticalAlignment="Top" Width="230"/>
         <Label x:Name="UiLblProgressPct" Content="-" HorizontalAlignment="Left" Margin="320,48,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblTimeRemaining" Content="-" HorizontalAlignment="Center" Margin="0,85,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="0,125,0,0" Width="100" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Stop}" IsCancel="True" HorizontalAlignment="Center" Margin="0,125,0,0" Width="100" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
     </Grid>
 </Window>

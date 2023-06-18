@@ -797,7 +797,8 @@ namespace ChessForge
                 {
                     SelectNode(node);
                 }
-            } catch { } 
+            }
+            catch { }
 
             return node;
         }
@@ -960,6 +961,9 @@ namespace ChessForge
                         string whitePlayer = _mainVariationTree.Header.GetWhitePlayer(out _);
                         string blackPlayer = _mainVariationTree.Header.GetBlackPlayer(out _);
 
+                        string whitePlayerElo = _mainVariationTree.Header.GetWhitePlayerElo(out _);
+                        string blackPlayerElo = _mainVariationTree.Header.GetBlackPlayerElo(out _);
+
                         para = CreateParagraph("0", true);
                         para.Margin = new Thickness(0, 0, 0, 0);
                         para.Name = _para_header_;
@@ -973,14 +977,14 @@ namespace ChessForge
                             rWhiteSquare.FontWeight = FontWeights.Normal;
                             para.Inlines.Add(rWhiteSquare);
 
-                            Run rWhite = CreateRun("0", (whitePlayer ?? "NN") + "\n", true);
+                            Run rWhite = CreateRun("0", (BuildPlayerLine(whitePlayer, whitePlayerElo) + "\n"), true);
                             para.Inlines.Add(rWhite);
 
                             Run rBlackSquare = CreateRun("0", (Constants.CharBlackSquare.ToString() + " "), true);
                             rBlackSquare.FontWeight = FontWeights.Normal;
                             para.Inlines.Add(rBlackSquare);
 
-                            Run rBlack = CreateRun("0", (blackPlayer ?? "NN") + "\n", true);
+                            Run rBlack = CreateRun("0", (BuildPlayerLine(blackPlayer, blackPlayerElo)) + "\n", true);
                             para.Inlines.Add(rBlack);
                         }
 
@@ -1005,14 +1009,30 @@ namespace ChessForge
                             para.Inlines.Add(rDate);
                         }
 
+                        string eco = _mainVariationTree.Header.GetECO(out _);
                         string result = _mainVariationTree.Header.GetResult(out _);
-                        if (!string.IsNullOrWhiteSpace(result) && result != "*")
+                        BuildResultAndEcoLine(eco, result, out Run rEco, out Run rResult);
+                        if (rEco != null || rResult != null)
                         {
-                            Run rResult = new Run("      (" + result + ")\n");
-                            rResult.FontWeight = FontWeights.Normal;
-                            para.Inlines.Add(rResult);
-                        }
+                            Run rIndent = new Run("      ");
+                            rIndent.FontWeight = FontWeights.Normal;
+                            para.Inlines.Add(rIndent);
 
+                            if (rEco != null)
+                            {
+                                rEco.FontWeight = FontWeights.Bold;
+                                para.Inlines.Add(rEco);
+                            }
+                            if (rResult != null)
+                            {
+                                rResult.FontWeight = FontWeights.Normal;
+                                para.Inlines.Add(rResult);
+                            }
+
+                            Run rNewLine = new Run("\n");
+                            rResult.FontWeight = FontWeights.Normal;
+                            para.Inlines.Add(rNewLine);
+                        }
                         break;
                     case GameData.ContentType.STUDY_TREE:
                         if (WorkbookManager.SessionWorkbook.ActiveChapter != null)
@@ -1035,6 +1055,50 @@ namespace ChessForge
             return para;
         }
 
+        /// <summary>
+        /// Builds the player line for the header.
+        /// </summary>
+        /// <param name="playerName"></param>
+        /// <param name="playerElo"></param>
+        /// <returns></returns>
+        private string BuildPlayerLine(string playerName, string playerElo)
+        {
+            if (string.IsNullOrWhiteSpace(playerName))
+            {
+                return "NN";
+            }
+
+            if (string.IsNullOrWhiteSpace(playerElo))
+            {
+                return playerName;
+            }
+            else
+            {
+                return playerName + " (" + playerElo + ")";
+            }
+        }
+
+        /// <summary>
+        /// Builds the line with the ECO code and the result.
+        /// </summary>
+        /// <param name="eco"></param>
+        /// <param name="result"></param>
+        /// <param name="rEco"></param>
+        /// <param name="rResult"></param>
+        private void BuildResultAndEcoLine(string eco, string result, out Run rEco, out Run rResult)
+        {
+            rEco = null;
+            rResult = null;
+            if (!string.IsNullOrWhiteSpace(eco))
+            {
+                rEco = new Run(eco + "  ");
+            }
+
+            if (!string.IsNullOrWhiteSpace(result) && result != "*")
+            {
+                rResult = new Run("(" + result + ")");
+            }
+        }
 
         /// <summary>
         /// Builds a Table with moves available at the passed node.

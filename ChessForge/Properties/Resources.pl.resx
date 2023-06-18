@@ -270,6 +270,9 @@
   <data name="ECO" xml:space="preserve">
     <value>ECO</value>
   </data>
+  <data name="Elo" xml:space="preserve">
+    <value>Elo</value>
+  </data>
   <data name="GameHeader" xml:space="preserve">
     <value>Nagłówek Partii</value>
   </data>
@@ -867,6 +870,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Kasuj</value>
   </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Zatrzymaj</value>
+  </data>
   <data name="ShowExplorer" xml:space="preserve">
     <value>Pokaż Bibliotekę</value>
   </data>
@@ -1255,7 +1261,7 @@
     <value>Liczba partii $0, liczba ćwiczeń $1</value>
   </data>
   <data name="EvaluateGames" xml:space="preserve">
-    <value>Oceń partie</value>
+    <value>Oceń partie z rozdziału</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
     <value>Proszę czekać!</value>

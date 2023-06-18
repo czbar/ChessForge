@@ -1016,7 +1016,10 @@ namespace ChessForge
                 }
 
                 RebuildIntroView();
-                WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.INTRO, -1);
+                if (WorkbookManager.SessionWorkbook != null)
+                {
+                    WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.INTRO, -1);
+                }
             }
             catch
             {
@@ -1088,11 +1091,15 @@ namespace ChessForge
             try
             {
                 SetStudyStateOnFocus();
+                if (WorkbookManager.SessionWorkbook != null)
+                {
+                    WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.STUDY_TREE, -1);
+                }
             }
             catch
             {
             }
-            WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter,  GameData.ContentType.STUDY_TREE, -1);
+
         }
 
         /// <summary>

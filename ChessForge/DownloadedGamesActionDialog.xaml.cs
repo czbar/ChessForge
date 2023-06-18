@@ -47,12 +47,22 @@ namespace ChessForge
         {
             InitializeComponent();
 
-            // set label here because we want to add a colon
-            UiRbAppendCurrentChapter.IsChecked = true;
             UiGbOptions.Header = Properties.Resources.NumberOfGames + ": " + gamesCount.ToString();
-
-            UiCbCreateNewWorkbook.IsChecked = false;
             UiRbRepertoireChapters.IsChecked = true;
+
+            if (WorkbookManager.SessionWorkbook == null)
+            {
+                UiCbCreateNewWorkbook.IsChecked = true;
+                UiCbCreateNewWorkbook.IsEnabled = false;
+
+                UiRbAppendCurrentChapter.IsEnabled = false;
+            }
+            else
+            {
+                UiCbCreateNewWorkbook.IsChecked = false;
+            }
+
+
         }
 
         /// <summary>

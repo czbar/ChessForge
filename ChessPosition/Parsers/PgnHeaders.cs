@@ -129,6 +129,16 @@ namespace GameTree
         public const string KEY_BLACK = "Black";
 
         /// <summary>
+        /// Elo of the White player
+        /// </summary>
+        public const string KEY_WHITE_ELO = "WhiteElo";
+
+        /// <summary>
+        /// Elo of the Black player
+        /// </summary>
+        public const string KEY_BLACK_ELO = "BlackElo";
+
+        /// <summary>
         /// A preamble line. There can be many per header and will be combined
         /// together into a preamble.
         /// </summary>

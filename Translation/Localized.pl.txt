@@ -221,6 +221,11 @@ OrderNo=No
 #english: ECO=ECO
 ECO=ECO
 
+#description: Elo
+#english: Elo=Elo
+Elo=Elo
+
+
 #description: Game Header
 #english: GameHeader=Game Header
 GameHeader=Nagłówek Partii
@@ -1127,6 +1132,11 @@ Ok=OK
 #english: Cancel=Cancel
 Cancel=Kasuj
 
+#description: Stop
+#english: Stop=Stop
+Stop=Zatrzymaj
+
+
 #description: Show explorers
 #english: ShowExplorer=Show Explorer
 ShowExplorer=Pokaż Bibliotekę
@@ -1428,6 +1438,14 @@ MsgTakebackInfo=Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni 
 # Dialogs
 #
 
+#description: Games with White
+#english: GamesWithWhite=Games with White
+GamesWithWhite=Partie białymi
+
+#description: Games with Black
+#english: GamesWithBlack=Games with Black
+GamesWithBlack=Partie czarnymi
+
 #description: Games Evaluation
 #english: GamesEvaluation=Games Evaluation
 GamesEvaluation=Ocena Partii
@@ -1656,8 +1674,8 @@ DownloadGamesFromWeb=Pobierz partie z Internetu
 DownloadedGamesAndExercises=Liczba partii $0, liczba ćwiczeń $1
 
 #description: Evaluate Games
-#english: EvaluateGames=Evaluate Games
-EvaluateGames=Oceń partie
+#english: EvaluateGames=Evaluate Games in Chapter
+EvaluateGames=Oceń partie z rozdziału
 
 #description: Please wait
 #english: PleaseWait=Please Wait
@@ -1776,16 +1794,20 @@ CopyGamesNoMerge=Skopiuj Partie do Sekcji Partii i zostaw Teorię pustą
 #english: CreateChapterPerGame=Create Chapter per Game
 CreateChapterPerGame=Utwórz Rozdział do Każdej Partii
 
+#description: Generate repertoire chapters
+#english: DwnLdCreateRepertoireChapter=Create Repertoire Chapters
+DwnLdCreateRepertoireChapter=Utwórz rozdziały repertuarowe
+
 #description: Append games to the current chapter
-#english: DwnLdAppendToCurrentChapter=Append to the current Chapter
+#english: DwnLdAppendToCurrentChapter=Append Games to the current Chapter
 DwnLdAppendToCurrentChapter=Dodaj partie do obecnego rozdziału
 
 #description: Create a new chapter for the downloaded games
-#english: DwnLdCreateNewChapter=Create a new Chapter
+#english: DwnLdCreateNewChapter=Save Games to a new Chapter
 DwnLdCreateNewChapter=Zapisz partie w nowym rozdziale
 
 #description: Create a new workbook for the downloaded games
-#english: DwnLdCreateNewWorkbook=Create a new Workbook
+#english: DwnLdCreateNewWorkbook=Save to a new Workbook
 DwnLdCreateNewWorkbook=Zapisz w nowym podręczniku
 
 #description: New version available from 
@@ -2367,9 +2389,3 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
-DwnLdCreateRepertoireChapter=Utwórz rozdziały repertuarowe
-
-GamesWithWhite=Partie białymi
-
-#Games with Black
-GamesWithBlack=Partie czarnymi

@@ -159,8 +159,8 @@ namespace ChessForge
         /// one for White and one for Black games of the player.
         /// </summary>
         /// <param name="games"></param>
-        private static void AddGamesToNewChapter(ObservableCollection<GameData> games, 
-            string player, bool buildRepertoireChapters, 
+        private static void AddGamesToNewChapter(ObservableCollection<GameData> games,
+            string player, bool buildRepertoireChapters,
             bool createWhiteChapter, out int addedGames, out int addedExercises)
         {
             addedGames = 0;
@@ -213,25 +213,18 @@ namespace ChessForge
 
             DownloadedGamesActionDialog.Action action = DownloadedGamesActionDialog.Action.None;
 
-            if (WorkbookManager.SessionWorkbook == null)
+            DownloadedGamesActionDialog dlgAct = new DownloadedGamesActionDialog(gameCount)
             {
-                // we only have one option i.e. to create a new workbook
-                action = DownloadedGamesActionDialog.Action.NewWorkbook;
-            }
-            else
+                Left = AppState.MainWin.ChessForgeMain.Left + 150,
+                Top = AppState.MainWin.Top + 150,
+                Topmost = false,
+                Owner = AppState.MainWin
+            };
+
+            if (dlgAct.ShowDialog() == true)
             {
-                DownloadedGamesActionDialog dlgAct = new DownloadedGamesActionDialog(gameCount)
-                {
-                    Left = AppState.MainWin.ChessForgeMain.Left + 150,
-                    Top = AppState.MainWin.Top + 150,
-                    Topmost = false,
-                    Owner = AppState.MainWin
-                };
-                if (dlgAct.ShowDialog() == true)
-                {
-                    action = dlgAct.SaveOption;
-                    repertoireChapters = dlgAct.BuildRepertoireChapters;
-                }
+                action = dlgAct.SaveOption;
+                repertoireChapters = dlgAct.BuildRepertoireChapters;
             }
 
             return action;

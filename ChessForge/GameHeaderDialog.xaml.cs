@@ -48,6 +48,11 @@ namespace ChessForge
             UiTbWhite.Text = _tree.Header.GetWhitePlayer(out _) ?? "";
             UiTbBlack.Text = _tree.Header.GetBlackPlayer(out _) ?? "";
 
+            UiTbWhiteElo.Text = _tree.Header.GetWhitePlayerElo(out _) ?? "";
+            UiTbBlackElo.Text = _tree.Header.GetBlackPlayerElo(out _) ?? "";
+
+            UiTbEco.Text = _tree.Header.GetECO(out _) ?? "";
+
             UiTbEvent.Text = _tree.Header.GetEventName(out _) ?? "";
             UiTbRound.Text = _tree.Header.GetRound(out _) ?? "";
 
@@ -120,6 +125,11 @@ namespace ChessForge
         {
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE, UiTbWhite.Text);
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, UiTbBlack.Text);
+            _tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE_ELO, UiTbWhiteElo.Text);
+            _tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK_ELO, UiTbBlackElo.Text);
+
+            _tree.Header.SetHeaderValue(PgnHeaders.KEY_ECO, UiTbEco.Text);
+
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, UiTbEvent.Text);
 
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, TextUtils.AdjustPgnDateString(UiTbPgnDate.Text, out _, out _));

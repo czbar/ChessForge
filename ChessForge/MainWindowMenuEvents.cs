@@ -1735,6 +1735,8 @@ namespace ChessForge
         {
             tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE, header.GetWhitePlayer(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, header.GetBlackPlayer(out _));
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE_ELO, header.GetWhitePlayerElo(out _));
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK_ELO, header.GetBlackPlayerElo(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_RESULT, header.GetResult(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, header.GetEventName(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_ECO, header.GetECO(out _));

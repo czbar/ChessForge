@@ -1492,6 +1492,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Elo.
+        /// </summary>
+        public static string Elo {
+            get {
+                return ResourceManager.GetString("Elo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game text is empty..
         /// </summary>
         public static string EmptyGameText {
@@ -1780,7 +1789,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Evaluate Games.
+        ///   Looks up a localized string similar to Evaluate Games in Chapter.
         /// </summary>
         public static string EvaluateGames {
             get {
@@ -4117,6 +4126,15 @@ namespace ChessForge.Properties {
         public static string StartTrainingFromThisBookmark {
             get {
                 return ResourceManager.GetString("StartTrainingFromThisBookmark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop.
+        /// </summary>
+        public static string Stop {
+            get {
+                return ResourceManager.GetString("Stop", resourceCulture);
             }
         }
         

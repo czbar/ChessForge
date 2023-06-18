@@ -56,7 +56,7 @@ namespace ChessForge
         public static bool IsEvaluationInProgress
         {
             get => _isEvaluationInProgress;
-            private set => _isEvaluationInProgress = value;
+            set => _isEvaluationInProgress = value;
         }
 
         /// <summary>
@@ -120,6 +120,7 @@ namespace ChessForge
                         _dlgProgress.ShowDialog();
                     }
 
+                    _isEvaluationInProgress = false;
                     AppState.MainWin.Timers.Stop(AppTimers.TimerId.GAMES_EVALUATION);
                 }
             });

@@ -16,8 +16,8 @@
                 <RadioButton x:Name="UiRbAppendCurrentChapter" Content="{x:Static p:Resources.DwnLdAppendToCurrentChapter}" HorizontalAlignment="Left" Margin="30,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
             </StackPanel>
         </GroupBox>
-        <Button x:Name="UiBtnOk" IsDefault="True" Content="Ok" HorizontalAlignment="Center" Margin="-220,210,0,0" Width="100" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="Cancel" HorizontalAlignment="Center" Margin="0,210,0,0" Width="100" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-220,210,0,0" Width="100" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,210,0,0" Width="100" VerticalAlignment="Top"/>
         <Button x:Name="UiBtnHelp" Content="Help" HorizontalAlignment="Center" Margin="220,210,0,0" Width="100" VerticalAlignment="Top" Click="UiBtnHelp_Click"/>
 
     </Grid>

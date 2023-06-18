@@ -170,6 +170,10 @@ OrderNo=No
 #ECO
 ECO=ECO
 
+#Elo
+Elo=Elo
+
+
 #Game Header
 GameHeader=Game Header
 
@@ -877,6 +881,10 @@ Ok=OK
 #Cancel
 Cancel=Cancel
 
+#Stop
+Stop=Stop
+
+
 #Show explorers
 ShowExplorer=Show Explorer
 
@@ -1285,7 +1293,7 @@ DownloadGamesFromWeb=Download Games from a Web Site
 DownloadedGamesAndExercises=Game count $0, Exercise count $1
 
 #Evaluate Games
-EvaluateGames=Evaluate Games
+EvaluateGames=Evaluate Games in Chapter
 
 #Please wait
 PleaseWait=Please Wait

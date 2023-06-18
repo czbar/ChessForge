@@ -221,6 +221,11 @@ OrderNo=
 #english: ECO=ECO
 ECO=
 
+#description: Elo
+#english: Elo=Elo
+Elo=
+
+
 #description: Game Header
 #english: GameHeader=Game Header
 GameHeader=
@@ -1127,6 +1132,11 @@ Ok=
 #english: Cancel=Cancel
 Cancel=
 
+#description: Stop
+#english: Stop=Stop
+Stop=
+
+
 #description: Show explorers
 #english: ShowExplorer=Show Explorer
 ShowExplorer=
@@ -1664,7 +1674,7 @@ DownloadGamesFromWeb=
 DownloadedGamesAndExercises=
 
 #description: Evaluate Games
-#english: EvaluateGames=Evaluate Games
+#english: EvaluateGames=Evaluate Games in Chapter
 EvaluateGames=
 
 #description: Please wait

@@ -336,8 +336,6 @@ namespace ChessForge
         {
             StringBuilder sb = new StringBuilder();
 
-            //sb.Append(BuildCommonGameHeaderText(chapter));
-
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_MODEL_GAME));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_EVENT, tree.Header.GetEventName(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_ECO, tree.Header.GetECO(out _)));
@@ -345,6 +343,8 @@ namespace ChessForge
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_DATE, tree.Header.GetDate(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_WHITE, tree.Header.GetWhitePlayer(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK, tree.Header.GetBlackPlayer(out _)));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_WHITE_ELO, tree.Header.GetWhitePlayerElo(out _)));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK_ELO, tree.Header.GetBlackPlayerElo(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_RESULT, tree.Header.GetResult(out _)));
             sb.AppendLine(BuildPreamble(tree));
 
@@ -364,8 +364,6 @@ namespace ChessForge
         {
             StringBuilder sb = new StringBuilder();
 
-            //sb.Append(BuildCommonGameHeaderText(chapter));
-
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_EXERCISE));
 
             BoardPosition pos = new BoardPosition(tree.Nodes[0].Position);
@@ -379,6 +377,8 @@ namespace ChessForge
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_DATE, tree.Header.GetDate(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_WHITE, tree.Header.GetWhitePlayer(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK, tree.Header.GetBlackPlayer(out _)));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_WHITE_ELO, tree.Header.GetWhitePlayerElo(out _)));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK_ELO, tree.Header.GetBlackPlayerElo(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_RESULT, tree.Header.GetResult(out _)));
             sb.AppendLine(BuildPreamble(tree));
 

@@ -6,36 +6,51 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="PLACEHOLDER" Height="430" Width="690">
+        Title="PLACEHOLDER" Height="450" Width="690">
     <Grid>
-        <Label x:Name="UiLblWhite" Content="{x:Static p:Resources.White}" HorizontalAlignment="Left" Margin="20,31,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="UiTbWhite" HorizontalAlignment="Left" Margin="68,34,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="260"/>
-        <Label x:Name="UiLblBlack" Content="{x:Static p:Resources.Black}" HorizontalAlignment="Left" Margin="340,31,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="UiTbBlack" HorizontalAlignment="Left" Margin="385,34,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="260"/>
-        <Label x:Name="UiLblEvent" Content="{x:Static p:Resources.Event}" HorizontalAlignment="Left" Margin="20,66,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="UiTbEvent" HorizontalAlignment="Left" Margin="68,69,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="400"/>
-        <Label x:Name="UiLblRound" Content="{x:Static p:Resources.Round}" HorizontalAlignment="Left" Margin="497,66,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="UiTbRound" HorizontalAlignment="Left" Margin="547,69,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="40"/>
-        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Left" Margin="180,344,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="280,344,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
-        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Left" Margin="410,344,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnHelp_Click"/>
-        <GroupBox x:Name="UiGbResult" HorizontalAlignment="Left" Height="46" Header="{x:Static p:Resources.Result}" Margin="369,111,0,0" VerticalAlignment="Top" Width="265"/>
-        <RadioButton x:Name="UiRbWhiteWin" Content="1-0" HorizontalAlignment="Left" Margin="420,133,0,0" VerticalAlignment="Top" Width="50"/>
-        <RadioButton x:Name="UiRbBlackWin" Content="0-1" HorizontalAlignment="Left" Margin="470,133,0,0" VerticalAlignment="Top" Width="50"/>
-        <RadioButton x:Name="UiRbDraw" Content="1/2" HorizontalAlignment="Left" Margin="520,133,0,0" VerticalAlignment="Top" Width="50"/>
-        <RadioButton x:Name="UiRbNoResult" Content="*" HorizontalAlignment="Left" Margin="570,133,0,0" VerticalAlignment="Top" Width="50"/>
-        <DatePicker x:Name="UiDatePicker" HorizontalAlignment="Left" Margin="405,186,0,0" VerticalAlignment="Top" IsTodayHighlighted="False" Width="150" LostFocus="UiDatePicker_LostFocus"/>
-        <Label x:Name="UiLblPgnDate" Content="{x:Static p:Resources.PGN}" HorizontalAlignment="Left" Margin="400,217,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="UiCbIgnoreMonthDay" Content="{x:Static p:Resources.IgnoreDayMonth}" HorizontalAlignment="Left" Margin="405,262,0,0" VerticalAlignment="Top" Checked="UiCbIgnoreMonthDay_Checked" Unchecked="UiCbIgnoreMonthDay_Unchecked"/>
-        <CheckBox x:Name="UiCbIgnoreDay" Content="{x:Static p:Resources.IgnoreDay}" HorizontalAlignment="Left" Margin="405,285,0,0" VerticalAlignment="Top" Unchecked="UiCbIgnoreDay_Unchecked" Checked="UiCbIgnoreDay_Checked"/>
-        <TextBox x:Name="UiTbPgnDate" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalAlignment="Top" TextWrapping="Wrap" Text="????.??.??" Width="80" LostFocus="UiTbPgnDate_LostFocus" Margin="449,221,0,0" />
-        <Button Name="UiBtnClearDate" Width="32" Height="32"  HorizontalAlignment="Left" Margin="575,182,0,0" VerticalAlignment="Top" ToolTip="{x:Static p:Resources.Clear}" Click="UiBtnClearDate_Click" >
-            <Image Source="Resources/Images/eraser-rubber.png" Width="18" Height="18"></Image>
-        </Button>
-        <GroupBox x:Name="UiGbDate" HorizontalAlignment="Left" Height="165" Header="Date" Margin="369,160,0,0" VerticalAlignment="Top" Width="265">
+        <GroupBox x:Name="UiGbPlayers" HorizontalAlignment="Left" Height="120" Header="" Margin="12,12,0,0" VerticalAlignment="Top" Width="646">
+            <Canvas>
+                <Label x:Name="UiLblWhite" Content="{x:Static p:Resources.White}" HorizontalAlignment="Left" Margin="2,1,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="UiTbWhite" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" Width="260" Canvas.Left="63" Canvas.Top="5"/>
+                <Label x:Name="UiLblEvent" Content="{x:Static p:Resources.Event}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="2" Canvas.Top="61"/>
+                <TextBox x:Name="UiTbEvent" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" Width="400" Canvas.Left="63" Canvas.Top="66"/>
+                <Label x:Name="UiLblBlack" Content="{x:Static p:Resources.Black}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="2" Canvas.Top="31"/>
+                <TextBox x:Name="UiTbBlack" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" Width="260" Canvas.Left="63" Canvas.Top="35"/>
+                <Label x:Name="UiLblRound" Content="{x:Static p:Resources.Round}" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="503" Canvas.Top="61"/>
+                <TextBox x:Name="UiTbRound" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" Width="40" Canvas.Left="563" Canvas.Top="66"/>
+                <Label x:Name="UiLblWhiteElo" Content="{x:Static p:Resources.Elo}" Canvas.Left="383" Canvas.Top="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Label x:Name="UiLblBlackElo" Content="{x:Static p:Resources.Elo}" Canvas.Left="383" Canvas.Top="31" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBox x:Name="UiTbWhiteElo" TextWrapping="Wrap" Text="" Width="40" Canvas.Left="423" Canvas.Top="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBox x:Name="UiTbBlackElo" TextWrapping="Wrap" Text="" Width="40" Canvas.Left="423" Canvas.Top="35" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Label x:Name="UiLblEco" Content="{x:Static p:Resources.ECO}" Canvas.Left="504" Canvas.Top="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBox x:Name="UiTbEco" TextWrapping="Wrap" Text="" Width="40" Canvas.Left="563" Canvas.Top="22" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </Canvas>
         </GroupBox>
-        <TextBox x:Name="UiTbPreamble" AcceptsReturn="True" HorizontalAlignment="Left" Margin="24,132,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" Height="182" PreviewKeyDown="UiTbPreamble_PreviewKeyDown"/>
-        <GroupBox x:Name="UiGbPreamble" HorizontalAlignment="Left" Height="215" Header="{x:Static p:Resources.Preamble}" Margin="12,111,0,0" VerticalAlignment="Top" Width="342" />
-        <GroupBox x:Name="UiGbPlayers" HorizontalAlignment="Left" Height="90" Header="" Margin="12,12,0,0" VerticalAlignment="Top" Width="646"/>
+        <GroupBox x:Name="UiGbResult" HorizontalAlignment="Left" Height="46" Header="{x:Static p:Resources.Result}" Margin="369,143,0,0" VerticalAlignment="Top" Width="265">
+            <StackPanel>
+                <RadioButton x:Name="UiRbWhiteWin" Content="1-0" HorizontalAlignment="Left" Margin="35,4,0,0" VerticalAlignment="Top" Width="50"/>
+                <RadioButton x:Name="UiRbBlackWin" Content="0-1" HorizontalAlignment="Left" Margin="85,-15,0,0" VerticalAlignment="Top" Width="50"/>
+                <RadioButton x:Name="UiRbDraw" Content="1/2" HorizontalAlignment="Left" Margin="135,-15,0,0" VerticalAlignment="Top" Width="50"/>
+                <RadioButton x:Name="UiRbNoResult" Content="*" HorizontalAlignment="Left" Margin="185,-15,0,0" VerticalAlignment="Top" Width="50"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="UiGbDate" HorizontalAlignment="Left" Height="165" Header="Date" Margin="369,192,0,0" VerticalAlignment="Top" Width="265">
+            <Canvas>
+                <DatePicker x:Name="UiDatePicker" HorizontalAlignment="Left" Margin="28,10,0,0" VerticalAlignment="Top" IsTodayHighlighted="False" Width="150" LostFocus="UiDatePicker_LostFocus"/>
+                <Button Name="UiBtnClearDate" Width="32" Height="32"  HorizontalAlignment="Left" Margin="195,6,0,0" VerticalAlignment="Top" ToolTip="{x:Static p:Resources.Clear}" Click="UiBtnClearDate_Click" >
+                    <Image Source="Resources/Images/eraser-rubber.png" Width="18" Height="18"></Image>
+                </Button>
+                <Label x:Name="UiLblPgnDate" Content="{x:Static p:Resources.PGN}" HorizontalAlignment="Left" Margin="25,40,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="UiTbPgnDate" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalAlignment="Top" TextWrapping="Wrap" Text="????.??.??" Width="80" LostFocus="UiTbPgnDate_LostFocus" Margin="70,45,0,0" />
+                <CheckBox x:Name="UiCbIgnoreMonthDay" Content="{x:Static p:Resources.IgnoreDayMonth}" HorizontalAlignment="Left" Margin="30,85,0,0" VerticalAlignment="Top" Checked="UiCbIgnoreMonthDay_Checked" Unchecked="UiCbIgnoreMonthDay_Unchecked"/>
+                <CheckBox x:Name="UiCbIgnoreDay" Content="{x:Static p:Resources.IgnoreDay}" HorizontalAlignment="Left" Margin="30,110,0,0" VerticalAlignment="Top" Unchecked="UiCbIgnoreDay_Unchecked" Checked="UiCbIgnoreDay_Checked"/>
+            </Canvas>
+        </GroupBox>
+        <GroupBox x:Name="UiGbPreamble" HorizontalAlignment="Left" Height="215" Header="{x:Static p:Resources.Preamble}" Margin="12,143,0,0" VerticalAlignment="Top" Width="342">
+            <TextBox x:Name="UiTbPreamble" AcceptsReturn="True" HorizontalAlignment="Left" Margin="7,4,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" Height="182" PreviewKeyDown="UiTbPreamble_PreviewKeyDown"/>
+        </GroupBox>
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Left" Margin="180,374,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="280,374,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Left" Margin="410,374,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnHelp_Click"/>
     </Grid>
 </Window>

@@ -839,7 +839,7 @@ namespace ChessForge
                     MainChessBoard.FlipBoard(orient);
 
                     SetupGuiForActiveModelGame(gameIndex, setFocus);
-                    if (setFocus)
+                    if (setFocus && WorkbookManager.SessionWorkbook != null)
                     {
                         WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.MODEL_GAME, gameIndex);
                     }
@@ -925,7 +925,7 @@ namespace ChessForge
                     MainChessBoard.FlipBoard(orient);
 
                     SetupGuiForActiveExercise(exerciseIndex, setFocus);
-                    if (setFocus)
+                    if (setFocus && WorkbookManager.SessionWorkbook != null)
                     {
                         WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.EXERCISE, exerciseIndex);
                     }
@@ -1982,13 +1982,26 @@ namespace ChessForge
                         nd = ActiveTreeView.GetSelectedNode();
                     }
 
-                    if (nd != null)
+                    if (nd != null && !string.IsNullOrEmpty(nd.EngineEvaluation))
                     {
-                        bool res = double.TryParse(nd.EngineEvaluation, out double dVal);
-                        if (res)
+                        if (nd.EngineEvaluation.StartsWith("+#"))
                         {
-                            EvaluationBar.ShowEvaluation(dVal * 100);
+                            EvaluationBar.ShowMaxEvaluation();
                             show = true;
+                        }
+                        else if (nd.EngineEvaluation.StartsWith("-#"))
+                        {
+                            EvaluationBar.ShowMinEvaluation();
+                            show = true;
+                        }
+                        else
+                        {
+                            bool res = double.TryParse(nd.EngineEvaluation, out double dVal);
+                            if (res)
+                            {
+                                EvaluationBar.ShowEvaluation(dVal * 100);
+                                show = true;
+                            }
                         }
                     }
                 }
