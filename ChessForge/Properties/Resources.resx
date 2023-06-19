@@ -1354,6 +1354,9 @@
   <data name="DwnLdCreateRepertoireChapter" xml:space="preserve">
     <value>Create Repertoire Chapters</value>
   </data>
+  <data name="TrimStudyTree" xml:space="preserve">
+    <value>Trim Study Tree after Move</value>
+  </data>
   <data name="DwnLdAppendToCurrentChapter" xml:space="preserve">
     <value>Append Games to the current Chapter</value>
   </data>

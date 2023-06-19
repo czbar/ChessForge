@@ -1798,6 +1798,10 @@ CreateChapterPerGame=Utwórz Rozdział do Każdej Partii
 #english: DwnLdCreateRepertoireChapter=Create Repertoire Chapters
 DwnLdCreateRepertoireChapter=Utwórz rozdziały repertuarowe
 
+#description: Move number aftre which to trim the study tree
+#english: TrimStudyTree=Trim Study Tree after Move
+TrimStudyTree=Drzewo teorii do ruchu
+
 #description: Append games to the current chapter
 #english: DwnLdAppendToCurrentChapter=Append Games to the current Chapter
 DwnLdAppendToCurrentChapter=Dodaj partie do obecnego rozdziału

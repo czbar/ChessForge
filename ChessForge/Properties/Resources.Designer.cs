@@ -4301,6 +4301,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Trim Study Tree after Move.
+        /// </summary>
+        public static string TrimStudyTree {
+            get {
+                return ResourceManager.GetString("TrimStudyTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alternative.
         /// </summary>
         public static string TrnAlternative {

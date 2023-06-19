@@ -1798,6 +1798,10 @@ CreateChapterPerGame=
 #english: DwnLdCreateRepertoireChapter=Create Repertoire Chapters
 DwnLdCreateRepertoireChapter=
 
+#description: Move number aftre which to trim the study tree
+#english: TrimStudyTree=Trim Study Tree after Move
+TrimStudyTree=
+
 #description: Append games to the current chapter
 #english: DwnLdAppendToCurrentChapter=Append Games to the current Chapter
 DwnLdAppendToCurrentChapter=

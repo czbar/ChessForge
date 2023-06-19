@@ -1386,6 +1386,9 @@ CreateChapterPerGame=Create Chapter per Game
 #Generate repertoire chapters
 DwnLdCreateRepertoireChapter=Create Repertoire Chapters
 
+#Move number aftre which to trim the study tree
+TrimStudyTree=Trim Study Tree after Move
+
 #Append games to the current chapter
 DwnLdAppendToCurrentChapter=Append Games to the current Chapter
 
