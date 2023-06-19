@@ -41,6 +41,11 @@ namespace ChessForge
         public bool BuildRepertoireChapters;
 
         /// <summary>
+        /// Number of the last move to include in the merged repertoire tree.
+        /// </summary>
+        public int LastTreeMoveNumber;
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         public DownloadedGamesActionDialog(int gamesCount)
@@ -86,6 +91,14 @@ namespace ChessForge
             }
 
             BuildRepertoireChapters = UiRbRepertoireChapters.IsChecked == true;
+            if (BuildRepertoireChapters)
+            {
+                if (!int.TryParse(UiTbLastTreeMoveNo.Text, out LastTreeMoveNumber))
+                {
+                    LastTreeMoveNumber = 0;
+                }
+            }
+
             DialogResult = true;
         }
 
@@ -124,6 +137,30 @@ namespace ChessForge
         private void UiCbCreateNewWorkbook_Unchecked(object sender, RoutedEventArgs e)
         {
             UiRbAppendCurrentChapter.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Repertoire radio button was checked.
+        /// Enable the "last move" controls.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiRbRepertoireChapters_Checked(object sender, RoutedEventArgs e)
+        {
+            UilblLastTreeMoveNo.IsEnabled = true;
+            UiTbLastTreeMoveNo.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Repertoire radio button was unchecked.
+        /// Disable the "last move" controls.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiRbRepertoireChapters_Unchecked(object sender, RoutedEventArgs e)
+        {
+            UilblLastTreeMoveNo.IsEnabled = false;
+            UiTbLastTreeMoveNo.IsEnabled = false;
         }
     }
 }

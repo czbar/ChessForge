@@ -1353,6 +1353,9 @@
   <data name="DwnLdCreateRepertoireChapter" xml:space="preserve">
     <value>Utwórz rozdziały repertuarowe</value>
   </data>
+  <data name="TrimStudyTree" xml:space="preserve">
+    <value>Drzewo teorii do ruchu</value>
+  </data>
   <data name="DwnLdAppendToCurrentChapter" xml:space="preserve">
     <value>Dodaj partie do obecnego rozdziału</value>
   </data>

@@ -81,6 +81,40 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Removes all moves after the specified move/ply.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="lastMoveNo"></param>
+        /// <param name="lastMoveColor"></param>
+        public static void TrimTree(ref VariationTree tree, int lastMoveNo, PieceColor lastMoveColor)
+        {
+            // find all moves that meet the "last ply" criterion and trim the subtree
+            List<TreeNode> markedForDeletion = new List<TreeNode>();
+            List<TreeNode> leaves = new List<TreeNode>();
+
+            foreach (TreeNode nd in tree.Nodes)
+            {
+                if (nd.MoveNumber == lastMoveNo && nd.ColorToMove == MoveUtils.ReverseColor(lastMoveColor))
+                {
+                    leaves.Add(nd);
+                }
+                else if (nd.MoveNumber > lastMoveNo || nd.MoveNumber == lastMoveNo && nd.ColorToMove == PieceColor.White && lastMoveColor == PieceColor.Black)
+                {
+                    markedForDeletion.Add(nd);
+                }
+            }
+
+            foreach (TreeNode nd in leaves)
+            {
+                nd.Children.Clear(); 
+            }
+            foreach (TreeNode nd in markedForDeletion)
+            {
+                tree.Nodes.Remove(nd);
+            }
+        }
+
+        /// <summary>
         /// Finds nodes featuring the passed Position.
         /// </summary>
         /// <param name="tree"></param>

@@ -41,7 +41,7 @@ namespace ChessForge
                 if (dlg.Games != null && selected > 0)
                 {
                     bool buildRepertoireChapters;
-                    DownloadedGamesActionDialog.Action action = SelectSaveOption(selected, out buildRepertoireChapters);
+                    DownloadedGamesActionDialog.Action action = SelectSaveOption(selected, out buildRepertoireChapters, out int lastRepertoireMoveNo);
                     if (action != DownloadedGamesActionDialog.Action.None)
                     {
                         switch (action)
@@ -50,10 +50,10 @@ namespace ChessForge
                                 AddGamesToCurrentChapter(dlg.Games, out gameCount, out exerciseCount);
                                 break;
                             case DownloadedGamesActionDialog.Action.NewChapter:
-                                AddGamesToNewChapter(dlg.Games, dlg.UserNick, buildRepertoireChapters, true, out gameCount, out exerciseCount);
+                                AddGamesToNewChapter(dlg.Games, dlg.UserNick, buildRepertoireChapters, true, out gameCount, out exerciseCount, lastRepertoireMoveNo);
                                 break;
                             case DownloadedGamesActionDialog.Action.NewWorkbook:
-                                AddGamesToNewWorkbook(dlg.Games, dlg.UserNick, buildRepertoireChapters, out gameCount, out exerciseCount);
+                                AddGamesToNewWorkbook(dlg.Games, dlg.UserNick, buildRepertoireChapters, out gameCount, out exerciseCount, lastRepertoireMoveNo);
                                 break;
                         }
 
@@ -135,7 +135,7 @@ namespace ChessForge
         /// one for White and one for Black games of the player.
         /// </summary>
         /// <param name="games"></param>
-        private static void AddGamesToNewWorkbook(ObservableCollection<GameData> games, string player, bool buildRepertoireChapters, out int addedGames, out int addedExercises)
+        private static void AddGamesToNewWorkbook(ObservableCollection<GameData> games, string player, bool buildRepertoireChapters, out int addedGames, out int addedExercises, int lastRepertoireMoveNo)
         {
             addedGames = 0;
             addedExercises = 0;
@@ -145,7 +145,7 @@ namespace ChessForge
                 if (WorkbookManager.AskToSaveWorkbookOnClose())
                 {
                     AppState.MainWin.CreateNewWorkbook();
-                    AddGamesToNewChapter(games, player, buildRepertoireChapters, false, out addedGames, out addedExercises);
+                    AddGamesToNewChapter(games, player, buildRepertoireChapters, false, out addedGames, out addedExercises, lastRepertoireMoveNo);
                 }
             }
             catch
@@ -161,7 +161,7 @@ namespace ChessForge
         /// <param name="games"></param>
         private static void AddGamesToNewChapter(ObservableCollection<GameData> games,
             string player, bool buildRepertoireChapters,
-            bool createWhiteChapter, out int addedGames, out int addedExercises)
+            bool createWhiteChapter, out int addedGames, out int addedExercises, int lastRepertoireMoveNo)
         {
             addedGames = 0;
             addedExercises = 0;
@@ -181,6 +181,10 @@ namespace ChessForge
                     addedGames += addGames;
                     addedExercises += addExercises;
                     WorkbookManager.MergeGames(ref WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, ref whiteGames);
+                    if (lastRepertoireMoveNo > 0)
+                    {
+                        TreeUtils.TrimTree(ref WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, lastRepertoireMoveNo, PieceColor.Black);
+                    }
                 }
                 if (blackGames.Count > 0)
                 {
@@ -194,6 +198,10 @@ namespace ChessForge
                     addedGames += addGames;
                     addedExercises += addExercises;
                     WorkbookManager.MergeGames(ref WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, ref blackGames);
+                    if (lastRepertoireMoveNo > 0)
+                    {
+                        TreeUtils.TrimTree(ref WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, lastRepertoireMoveNo, PieceColor.Black);
+                    }
                 }
             }
             else
@@ -207,9 +215,10 @@ namespace ChessForge
         /// Shows a dialog for selecting the Save option.
         /// </summary>
         /// <returns></returns>
-        private static DownloadedGamesActionDialog.Action SelectSaveOption(int gameCount, out bool repertoireChapters)
+        private static DownloadedGamesActionDialog.Action SelectSaveOption(int gameCount, out bool repertoireChapters, out int lastRepertoireMoveNo)
         {
             repertoireChapters = false;
+            lastRepertoireMoveNo = 0;
 
             DownloadedGamesActionDialog.Action action = DownloadedGamesActionDialog.Action.None;
 
@@ -225,6 +234,7 @@ namespace ChessForge
             {
                 action = dlgAct.SaveOption;
                 repertoireChapters = dlgAct.BuildRepertoireChapters;
+                lastRepertoireMoveNo = dlgAct.LastTreeMoveNumber;
             }
 
             return action;
