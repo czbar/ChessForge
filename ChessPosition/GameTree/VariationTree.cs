@@ -1397,7 +1397,7 @@ namespace GameTree
         /// <returns></returns>
         public bool DeleteRemainingMoves(TreeNode nd)
         {
-            // need child index for unod
+            // need child index for undo
             int childIndex = GetChildIndex(nd);
 
             // identify moves to delete
