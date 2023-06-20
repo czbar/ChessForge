@@ -182,7 +182,16 @@ namespace ChessForge
                 }
             }
 
-            SetBars(whiteBarLength, Math.Abs(dVal).ToString("F1"), dVal >= 0);
+            double absDval = Math.Abs(dVal);
+            if (absDval >= 10)
+            {
+                SetBars(whiteBarLength, Math.Abs(dVal).ToString("F0"), dVal >= 0);
+            }
+            else
+            {
+                SetBars(whiteBarLength, Math.Abs(dVal).ToString("F1"), dVal >= 0);
+            }
+
             AppState.MainWin.UiLblEvalBarWhite.Height = whiteBarLength;
             if (AppState.MainWin.MainChessBoard.IsFlipped)
             {
