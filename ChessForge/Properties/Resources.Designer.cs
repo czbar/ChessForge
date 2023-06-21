@@ -1690,6 +1690,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bad response from the server. Error: $0.
+        /// </summary>
+        public static string ErrHttpStatus {
+            get {
+                return ResourceManager.GetString("ErrHttpStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to instead of a move number.
         /// </summary>
         public static string ErrInsteadOfMoveNumber {
@@ -1731,6 +1740,15 @@ namespace ChessForge.Properties {
         public static string ErrNotAllGamesCopied {
             get {
                 return ResourceManager.GetString("ErrNotAllGamesCopied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no text received..
+        /// </summary>
+        public static string ErrNoTextReceived {
+            get {
+                return ResourceManager.GetString("ErrNoTextReceived", resourceCulture);
             }
         }
         

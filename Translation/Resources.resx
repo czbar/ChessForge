@@ -426,6 +426,12 @@
   <data name="PromptCorrectData" xml:space="preserve">
     <value>Incorrect Input Data</value>
   </data>
+  <data name="ErrHttpStatus" xml:space="preserve">
+    <value>Bad response from the server. Error: $0</value>
+  </data>
+  <data name="ErrNoTextReceived" xml:space="preserve">
+    <value>no text received.</value>
+  </data>
   <data name="File" xml:space="preserve">
     <value>File</value>
   </data>

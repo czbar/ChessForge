@@ -426,6 +426,12 @@
   <data name="PromptCorrectData" xml:space="preserve">
     <value>Niewłaściwe Dane</value>
   </data>
+  <data name="ErrHttpStatus" xml:space="preserve">
+    <value>Błąd w odpowiedzi serwera. Kod: $0</value>
+  </data>
+  <data name="ErrNoTextReceived" xml:space="preserve">
+    <value>brak tekstu partii.</value>
+  </data>
   <data name="File" xml:space="preserve">
     <value>Plik</value>
   </data>
