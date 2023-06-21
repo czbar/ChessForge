@@ -517,7 +517,7 @@ namespace ChessForge
                     PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, tree);
                     if (string.IsNullOrEmpty(GameDownload.GameText))
                     {
-                        throw new Exception("no text received.");
+                        throw new Exception(Properties.Resources.ErrNoTextReceived);
                     }
                     tree.ContentType = GameData.ContentType.MODEL_GAME;
                     chapter.AddModelGame(tree);
