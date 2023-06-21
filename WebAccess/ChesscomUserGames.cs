@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -116,7 +117,9 @@ namespace WebAccess
         {
             string text = "";
 
-            var response = await RestApiRequest.GameImportClient.GetAsync(rest);
+            HttpClient httpClient = RestApiRequest.GameImportClient;
+            httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgent);
+            var response = await httpClient.GetAsync(rest);
             using (var fs = new MemoryStream())
             {
                 await response.Content.CopyToAsync(fs);

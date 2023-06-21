@@ -12,6 +12,7 @@ namespace WebAccess
     /// </summary>
     public class RestApiRequest
     {
+        public const string UserAgent = "ChessForge/1 (contact robert.rozycki@gmail.com; czbar on chess.com)";
         static public HttpClient OpeningStatsClient = new HttpClient();
         static public HttpClient TablebaseClient = new HttpClient();
         static public HttpClient GameImportClient = new HttpClient();

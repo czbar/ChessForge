@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,9 @@ namespace WebAccess
             try
             {
                 string url = BuildLichessUserGamesUrl(filter);
-                var response = await RestApiRequest.GameImportClient.GetAsync(url);
+                HttpClient httpClient = RestApiRequest.GameImportClient;
+                httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgent);
+                var response = await httpClient.GetAsync(url);
                 using (var fs = new MemoryStream())
                 {
                     await response.Content.CopyToAsync(fs);
