@@ -1978,6 +1978,10 @@ namespace ChessForge
                     else if (ActiveTreeView != null)
                     {
                         nd = ActiveTreeView.GetSelectedNode();
+                        if (nd == null && ActiveVariationTree != null && ActiveVariationTree.Nodes.Count > 0)
+                        {
+                            nd = ActiveVariationTree.Nodes[0];
+                        }
                     }
 
                     EvaluationBar.ShowEvaluation(nd);
