@@ -120,6 +120,11 @@ namespace WebAccess
             HttpClient httpClient = RestApiRequest.GameImportClient;
             httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgent);
             var response = await httpClient.GetAsync(rest);
+            int statusCode = RestApiRequest.GetResponseCode(response.ToString());
+            if (statusCode != 200)
+            {
+                throw new Exception(RestApiRequest.STATUS_CODE + statusCode.ToString());
+            }
             using (var fs = new MemoryStream())
             {
                 await response.Content.CopyToAsync(fs);
