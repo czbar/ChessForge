@@ -82,7 +82,7 @@ namespace GameTree
 
             if (typ == ContentType.GENERIC)
             {
-                if (!string.IsNullOrWhiteSpace(Header.GetFenString()))
+                if (!string.IsNullOrWhiteSpace(Header.GetFenString()) && Header.GetFenString() != FenParser.FEN_INITIAL_POS)
                 {
                     typ = ContentType.EXERCISE;
                 }

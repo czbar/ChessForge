@@ -11,6 +11,7 @@ using GameTree;
 using ChessPosition;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Runtime.Remoting.Messaging;
 
 namespace ChessForge
 {
@@ -880,8 +881,8 @@ namespace ChessForge
                 // merge workbooks
                 for (int i = 0; i < games.Count; i++)
                 {
-                    // check if this a game, not an exercise
-                    if (games[i].IsSelected && string.IsNullOrEmpty(games[i].Header.GetFenString()))
+                    // check if this is a game, not an exercise
+                    if (games[i].IsSelected && (string.IsNullOrEmpty(games[i].Header.GetFenString()) || games[i].Header.GetFenString() == FenParser.FEN_INITIAL_POS))
                     {
                         if (mergedCount == 0)
                         {

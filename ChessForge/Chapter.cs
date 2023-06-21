@@ -634,7 +634,12 @@ namespace ChessForge
             Article article = new Article(typ);
             try
             {
-                PgnGameParser pp = new PgnGameParser(gm.GameText, article.Tree, gm.Header.GetFenString());
+                string fen = gm.Header.GetFenString();
+                if (string.IsNullOrEmpty(fen) || fen == FenParser.FEN_INITIAL_POS)
+                {
+                    fen = null;
+                }
+                PgnGameParser pp = new PgnGameParser(gm.GameText, article.Tree, fen);
 
                 article.Tree.Header = gm.Header.CloneMe(true);
 
