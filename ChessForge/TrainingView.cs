@@ -1384,11 +1384,11 @@ namespace ChessForge
                                 mi.Visibility = _moveContext == MoveContext.WORKBOOK_COMMENT ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnTrainRestartGame":
-                                mi.Header = "Restart game from " + moveTxt;
+                                mi.Header = Properties.Resources.RestartGameFrom + moveTxt;
                                 mi.Visibility = _moveContext == MoveContext.GAME ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "_mnRollBackTraining":
-                                mi.Header = Properties.Resources.RestartGameFrom + " " + moveTxt;
+                                mi.Header = Properties.Resources.RestartFrom + " " + moveTxt;
                                 mi.Visibility = (_moveContext == MoveContext.LINE || _moveContext == MoveContext.WORKBOOK_COMMENT) ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "_mnTrainSwitchToWorkbook":

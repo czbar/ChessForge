@@ -1963,8 +1963,6 @@ namespace ChessForge
         /// <param name="e"></param>
         public void UpdateEvaluationBar(object source, ElapsedEventArgs e)
         {
-            bool show = false;
-
             Dispatcher.Invoke(() =>
             {
                 if (AppState.IsVariationTreeTabType
@@ -1980,32 +1978,18 @@ namespace ChessForge
                     else if (ActiveTreeView != null)
                     {
                         nd = ActiveTreeView.GetSelectedNode();
+                        if (nd == null && ActiveVariationTree != null && ActiveVariationTree.Nodes.Count > 0)
+                        {
+                            nd = ActiveVariationTree.Nodes[0];
+                        }
                     }
 
-                    if (nd != null && !string.IsNullOrEmpty(nd.EngineEvaluation))
-                    {
-                        if (nd.EngineEvaluation.StartsWith("+#"))
-                        {
-                            EvaluationBar.ShowMaxEvaluation();
-                            show = true;
-                        }
-                        else if (nd.EngineEvaluation.StartsWith("-#"))
-                        {
-                            EvaluationBar.ShowMinEvaluation();
-                            show = true;
-                        }
-                        else
-                        {
-                            bool res = double.TryParse(nd.EngineEvaluation, out double dVal);
-                            if (res)
-                            {
-                                EvaluationBar.ShowEvaluation(dVal * 100);
-                                show = true;
-                            }
-                        }
-                    }
+                    EvaluationBar.ShowEvaluation(nd);
                 }
-                EvaluationBar.Show(show);
+                else
+                {
+                    EvaluationBar.Show(false);
+                }
             });
         }
 

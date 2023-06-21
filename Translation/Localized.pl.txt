@@ -446,6 +446,14 @@ ErrEmptyUserName=Brak nazwy użytkownika
 #english: PromptCorrectData=Incorrect Input Data
 PromptCorrectData=Niewłaściwe Dane
 
+#description: Http response bad code
+#english: ErrHttpStatus=Bad response from the server. Error: $0
+ErrHttpStatus=Błąd w odpowiedzi serwera. Kod: $0
+
+#description: No text in the downloaded game
+#english: ErrNoTextReceived=no text received.
+ErrNoTextReceived=brak tekstu partii.
+
 #
 # MAIN MENU
 #

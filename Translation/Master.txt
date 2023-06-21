@@ -343,6 +343,12 @@ ErrEmptyUserName=Provide User Name
 #Title of the dialog reporting incomplete data
 PromptCorrectData=Incorrect Input Data
 
+#Http response bad code
+ErrHttpStatus=Bad response from the server. Error: $0
+
+#No text in the downloaded game
+ErrNoTextReceived=no text received.
+
 #
 # MAIN MENU
 #
