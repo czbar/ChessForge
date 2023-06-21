@@ -135,7 +135,7 @@ namespace GameTree
         {
             get
             {
-                return Header.BuildGameHeaderLine(true);
+                return Header.BuildGameHeaderLine(true, true, false);
             }
         }
 

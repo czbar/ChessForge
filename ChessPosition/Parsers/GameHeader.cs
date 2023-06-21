@@ -128,7 +128,7 @@ namespace GameTree
         /// <summary>
         /// Builds text for the column with the name of the game.
         /// </summary>
-        public string BuildGameHeaderLine(bool simplified, bool includeResult = true)
+        public string BuildGameHeaderLine(bool simplified, bool includeResult = true, bool includeECO = true)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -147,7 +147,7 @@ namespace GameTree
             {
                 if (hasWhite || hasBlack)
                 {
-                    if (!string.IsNullOrWhiteSpace(eco))
+                    if (includeECO && !string.IsNullOrWhiteSpace(eco))
                     {
                         sb.Append(eco + " ");
                     }
@@ -169,7 +169,7 @@ namespace GameTree
             }
             else
             {
-                if (!string.IsNullOrWhiteSpace(eco))
+                if (includeECO && !string.IsNullOrWhiteSpace(eco))
                 {
                     sb.Append(eco + " ");
                 }
