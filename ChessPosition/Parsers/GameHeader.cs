@@ -277,6 +277,26 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the value of the "Variant" header.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public string GetVariant(out string key, string value = null)
+        {
+            string headerKey = PgnHeaders.KEY_VARIANT;
+            key = headerKey;
+
+            if (value == null)
+            {
+                return _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            }
+            else
+            {
+                return value;
+            }
+        }
+        /// <summary>
         /// Returns the value of the "WhiteElo" header.
         /// </summary>
         /// <returns></returns>
