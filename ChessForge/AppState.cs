@@ -673,7 +673,7 @@ namespace ChessForge
                 || ActiveTab == WorkbookManager.TabViewType.EXERCISE
                 || ActiveTab == WorkbookManager.TabViewType.INTRO;
 
-            if (visible && validTabActive)
+            if (visible && validTabActive && WorkbookManager.SessionWorkbook != null)
             {
                 MainWin.UiRtbOpenings.Visibility = Visibility.Visible;
                 MainWin.UiRtbTopGames.Visibility = Visibility.Visible;
