@@ -882,7 +882,7 @@ namespace ChessForge
                 for (int i = 0; i < games.Count; i++)
                 {
                     // check if this is a game, not an exercise
-                    if (games[i].IsSelected && (string.IsNullOrEmpty(games[i].Header.GetFenString()) || games[i].Header.GetFenString() == FenParser.FEN_INITIAL_POS))
+                    if (games[i].IsSelected && games[i].Header.IsGame())
                     {
                         if (mergedCount == 0)
                         {

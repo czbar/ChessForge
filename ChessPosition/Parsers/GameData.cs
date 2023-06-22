@@ -31,6 +31,7 @@ namespace GameTree
             MODEL_GAME,
             EXERCISE,
             INTRO,
+            UNKNOWN,
         }
 
         // whether this game is selected in the GUI
@@ -82,7 +83,7 @@ namespace GameTree
 
             if (typ == ContentType.GENERIC)
             {
-                if (!string.IsNullOrWhiteSpace(Header.GetFenString()) && Header.GetFenString() != FenParser.FEN_INITIAL_POS)
+                if (Header.IsExercise())
                 {
                     typ = ContentType.EXERCISE;
                 }
