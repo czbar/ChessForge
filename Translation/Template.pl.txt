@@ -442,6 +442,10 @@ ErrEmptyGame=Pusty zapis partii
 #english: ErrEmptyUserName=Provide User Name
 ErrEmptyUserName=Brak nazwy użytkownika
 
+#description: PGN is not for the Standard Chess variant
+#english: ErrNotStandardChessVariant=Non Standard Chess variant
+ErrNotStandardChessVariant=Niestandardowy wariant szachów
+
 #description: Title of the dialog reporting incomplete data
 #english: PromptCorrectData=Incorrect Input Data
 PromptCorrectData=Niewłaściwe Dane

@@ -2401,3 +2401,4 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
 
+ErrNotStandardChessVariant=Niestandardowy wariant szachów

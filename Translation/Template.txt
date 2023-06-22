@@ -442,6 +442,10 @@ ErrEmptyGame=
 #english: ErrEmptyUserName=Provide User Name
 ErrEmptyUserName=
 
+#description: PGN is not for the Standard Chess variant
+#english: ErrNotStandardChessVariant=Non Standard Chess variant
+ErrNotStandardChessVariant=
+
 #description: Title of the dialog reporting incomplete data
 #english: PromptCorrectData=Incorrect Input Data
 PromptCorrectData=

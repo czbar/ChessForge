@@ -340,6 +340,9 @@ ErrEmptyGame=Game text is empty
 #User name cannot be empty 
 ErrEmptyUserName=Provide User Name
 
+#PGN is not for the Standard Chess variant
+ErrNotStandardChessVariant=Non Standard Chess variant
+
 #Title of the dialog reporting incomplete data
 PromptCorrectData=Incorrect Input Data
 
