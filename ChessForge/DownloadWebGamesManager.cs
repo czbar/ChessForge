@@ -47,7 +47,7 @@ namespace ChessForge
                         switch (action)
                         {
                             case DownloadedGamesActionDialog.Action.CurrentChapter:
-                                AddGamesToCurrentChapter(dlg.Games, out gameCount, out exerciseCount);
+                                AddGamesToCurrentChapter(dlg.Games, out gameCount, out exerciseCount, null);
                                 break;
                             case DownloadedGamesActionDialog.Action.NewChapter:
                                 AddGamesToNewChapter(dlg.Games, dlg.UserNick, buildRepertoireChapters, true, out gameCount, out exerciseCount, lastRepertoireMoveNo);
@@ -97,7 +97,7 @@ namespace ChessForge
         /// Adds selected games to the current chapter
         /// </summary>
         /// <param name="games"></param>
-        private static void AddGamesToCurrentChapter(ObservableCollection<GameData> games, out int addedGames, out int addedExercises)
+        private static void AddGamesToCurrentChapter(ObservableCollection<GameData> games, out int addedGames, out int addedExercises, string errMsgPrefix)
         {
             addedGames = 0;
             addedExercises = 0;
@@ -110,7 +110,12 @@ namespace ChessForge
                 if (copied == 0)
                 {
                     // no games were copied
-                    MessageBox.Show(Properties.Resources.ErrNoGamesCopied, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                    string message = Properties.Resources.ErrNoGamesCopied;
+                    if (!string.IsNullOrEmpty(errMsgPrefix))
+                    {
+                        message = errMsgPrefix + ": " + message;
+                    }
+                    MessageBox.Show(message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
@@ -118,7 +123,11 @@ namespace ChessForge
                     {
                         // only some games were copied
                         string message = Properties.Resources.ErrNotAllGamesCopied + " (" + copied.ToString() + "/" + selected.ToString() + ")";
-                        MessageBox.Show(Properties.Resources.ErrNotAllGamesCopied, Properties.Resources.Warning, MessageBoxButton.OK, MessageBoxImage.Warning);
+                        if (!string.IsNullOrEmpty(errMsgPrefix))
+                        {
+                            message = errMsgPrefix + ": " + message;
+                        }
+                        MessageBox.Show(message, Properties.Resources.Warning, MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                     AppState.MainWin.RebuildChaptersView(addedGames > 0, addedExercises > 0);
                     AppState.MainWin.FocusOnChapterView();
@@ -177,7 +186,7 @@ namespace ChessForge
                         WorkbookManager.SessionWorkbook.CreateNewChapter();
                     }
                     WorkbookManager.SessionWorkbook.ActiveChapter.SetTitle(player + ": " + Properties.Resources.GamesWithWhite);
-                    AddGamesToCurrentChapter(whiteGames, out int addGames, out int addExercises);
+                    AddGamesToCurrentChapter(whiteGames, out int addGames, out int addExercises, Properties.Resources.GamesWithWhite);
                     addedGames += addGames;
                     addedExercises += addExercises;
                     WorkbookManager.MergeGames(ref WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, ref whiteGames);
@@ -194,7 +203,7 @@ namespace ChessForge
                         WorkbookManager.SessionWorkbook.CreateNewChapter();
                     }
                     WorkbookManager.SessionWorkbook.ActiveChapter.SetTitle(player + ": " + Properties.Resources.GamesWithBlack);
-                    AddGamesToCurrentChapter(blackGames, out int addGames, out int addExercises);
+                    AddGamesToCurrentChapter(blackGames, out int addGames, out int addExercises, Properties.Resources.GamesWithBlack);
                     addedGames += addGames;
                     addedExercises += addExercises;
                     WorkbookManager.MergeGames(ref WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, ref blackGames);
@@ -207,7 +216,7 @@ namespace ChessForge
             else
             {
                 WorkbookManager.SessionWorkbook.ActiveChapter.SetTitle(player + ": " + Properties.Resources.DownloadedGames);
-                AddGamesToCurrentChapter(games, out addedGames, out addedExercises);
+                AddGamesToCurrentChapter(games, out addedGames, out addedExercises, null);
             }
         }
 
