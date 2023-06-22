@@ -5,13 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Markup;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Navigation;
-using System.Xml.Linq;
 
 namespace ChessForge
 {
@@ -628,17 +622,24 @@ namespace ChessForge
         /// <param name="gm"></param>
         public int AddArticle(GameData gm, GameData.ContentType typ, out string errorText, GameData.ContentType targetcontentType = GameData.ContentType.GENERIC)
         {
-            errorText = string.Empty;
+            if (!gm.Header.IsStandardChess())
+            {
+                errorText = Properties.Resources.ErrNotStandardChessVariant;
+                return -1;
+            }
+
             int index = -1;
+            errorText = string.Empty;
 
             Article article = new Article(typ);
             try
             {
                 string fen = gm.Header.GetFenString();
-                if (string.IsNullOrEmpty(fen) || fen == FenParser.FEN_INITIAL_POS)
+                if (!gm.Header.IsExercise())
                 {
                     fen = null;
                 }
+
                 PgnGameParser pp = new PgnGameParser(gm.GameText, article.Tree, fen);
 
                 article.Tree.Header = gm.Header.CloneMe(true);
