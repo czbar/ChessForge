@@ -62,6 +62,16 @@ namespace GameTree
         public const string FEN_INITIAL_POS = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
         /// <summary>
+        /// Indicates the standard variant of chess
+        /// </summary>
+        public const string VARIANT_STANDARD = "Standard";
+
+        /// <summary>
+        /// Indicates the standard variant of chess
+        /// </summary>
+        public const string VARIANT_CHESS = "Chess";
+
+        /// <summary>
         /// Mapping of FEN/PGN symbols to the piece type 
         /// </summary>
         public static Dictionary<char, PieceType> FenCharToPiece
