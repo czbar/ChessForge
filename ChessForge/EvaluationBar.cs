@@ -62,7 +62,9 @@ namespace ChessForge
                 bool advantageWhite = true;
                 bool show = true;
 
-                if (nd != null && (!string.IsNullOrEmpty(nd.EngineEvaluation) || nd.Position.IsCheckmate || nd.Position.IsStalemate))
+                if (nd != null && 
+                      (!string.IsNullOrEmpty(nd.EngineEvaluation) || nd.Position.IsCheckmate || nd.Position.IsStalemate || EvaluationManager.IsRunning)
+                   )
                 {
                     bool res = double.TryParse(nd.EngineEvaluation, out double dVal);
                     if (res)
@@ -86,7 +88,7 @@ namespace ChessForge
                         else
                         {
                             // check if eval indicates upcoming mate
-                            if (nd.EngineEvaluation.StartsWith("+#") || (nd.EngineEvaluation.StartsWith("-#")))
+                            if (!string.IsNullOrEmpty(nd.EngineEvaluation) && (nd.EngineEvaluation.StartsWith("+#") || (nd.EngineEvaluation.StartsWith("-#"))))
                             {
                                 try
                                 {
@@ -106,8 +108,7 @@ namespace ChessForge
                             }
                             else
                             {
-                                //nothing to show then
-                                show = false;
+                                show = EvaluationManager.IsRunning;
                             }
                         }
                     }
