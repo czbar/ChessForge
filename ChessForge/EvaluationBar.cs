@@ -25,6 +25,12 @@ namespace ChessForge
         // min allowed height of the white part of the bar
         private const double MIN_WHITE_BAR_HEIGHT = 0;
 
+        // max allowed height of the white part of the bar when showing CP eval (as opposed to checkmate)
+        private const double MAX_CPEVAL_WHITE_BAR_HEIGHT = 615;
+
+        // min allowed height of the white part of the bar when showing CP eval (as opposed to checkmate)
+        private const double MIN_CPEVAL_WHITE_BAR_HEIGHT = 25;
+
         // top position of the bar
         private const double TOP = 20;
 
@@ -169,17 +175,17 @@ namespace ChessForge
             if (centiPawns >= 0)
             {
                 whiteBarLength = (centiPawns / CENTI_PAWNS_PER_SQUARE) * SQUARE_HEIGHT + (BAR_HEIGHT / 2);
-                if (whiteBarLength > MAX_WHITE_BAR_HEIGHT)
+                if (whiteBarLength > MAX_CPEVAL_WHITE_BAR_HEIGHT)
                 {
-                    whiteBarLength = MAX_WHITE_BAR_HEIGHT;
+                    whiteBarLength = MAX_CPEVAL_WHITE_BAR_HEIGHT;
                 }
             }
             else
             {
                 whiteBarLength = (BAR_HEIGHT / 2) - (-centiPawns / CENTI_PAWNS_PER_SQUARE) * SQUARE_HEIGHT;
-                if (whiteBarLength < MIN_WHITE_BAR_HEIGHT)
+                if (whiteBarLength < MIN_CPEVAL_WHITE_BAR_HEIGHT)
                 {
-                    whiteBarLength = MIN_WHITE_BAR_HEIGHT;
+                    whiteBarLength = MIN_CPEVAL_WHITE_BAR_HEIGHT;
                 }
             }
 
