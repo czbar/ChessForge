@@ -344,6 +344,22 @@
                                     <Image x:Name="_imgChaptersFloatingBoard" Margin="2,2,0,0" Source="Resources/Images/ChessBoardGreySmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" />
                                 </Canvas>
                             </Viewbox>
+                            <Viewbox x:Name="UiVbExerciseFloatingBoard" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Margin="0,0" Height="160" Width="160"  >
+                                <Canvas x:Name="_cnvExerciseFloat" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244">
+                                    <Canvas.Background>
+                                        <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                    </Canvas.Background>
+                                    <Image x:Name="_imgExerciseFloatingBoard" Margin="2,2,0,0" Source="Resources/Images/ChessBoardLightGreenSmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" />
+                                </Canvas>
+                            </Viewbox>
+                            <Viewbox x:Name="UiVbModelGameFloatingBoard" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Margin="0,0" Height="160" Width="160"  >
+                                <Canvas x:Name="_cnvModelGameFloat" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244">
+                                    <Canvas.Background>
+                                        <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                    </Canvas.Background>
+                                    <Image x:Name="_imgModelGameFloatingBoard" Margin="2,2,0,0" Source="Resources/Images/ChessBoardLightBlueSmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" />
+                                </Canvas>
+                            </Viewbox>
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabIntro" Header="{x:Static p:Resources.Intro}" GotFocus="UiTabIntro_GotFocus" LostFocus="UiTabIntro_LostFocus"  >

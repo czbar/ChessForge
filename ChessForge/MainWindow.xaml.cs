@@ -182,9 +182,19 @@ namespace ChessForge
         public ChessBoardSmall TrainingFloatingBoard;
 
         /// <summary>
-        /// Chessboard shown over moves in Chapters View
+        /// Chessboard shown over chapters headers in Chapters View
         /// </summary>
         public ChessBoardSmall ChaptersFloatingBoard;
+
+        /// <summary>
+        /// Chessboard shown over game headers in Chapters View
+        /// </summary>
+        public ChessBoardSmall ModelGameFloatingBoard;
+
+        /// <summary>
+        /// Chessboard shown over exercise headers in Chapters View
+        /// </summary>
+        public ChessBoardSmall ExerciseFloatingBoard;
 
         /// <summary>
         /// The RichTextBox based comment box
@@ -325,8 +335,11 @@ namespace ChessForge
             // main chess board
             MainChessBoard = new ChessBoard(true, MainCanvas, UiImgMainChessboard, null, true, true);
 
+            // floating boards
             TrainingFloatingBoard = new ChessBoardSmall(_cnvTrainingFloat, _imgTrainingFloatingBoard, null, null, true, false);
             ChaptersFloatingBoard = new ChessBoardSmall(_cnvChaptersFloat, _imgChaptersFloatingBoard, null, null, true, false);
+            ModelGameFloatingBoard = new ChessBoardSmall(_cnvModelGameFloat, _imgModelGameFloatingBoard, null, null, true, false);
+            ExerciseFloatingBoard = new ChessBoardSmall(_cnvExerciseFloat, _imgExerciseFloatingBoard, null, null, true, false);
 
 
             BookmarkManager.InitBookmarksGui(this);
@@ -2251,11 +2264,22 @@ namespace ChessForge
         /// Displays Floating Board in Chapters View
         /// </summary>
         /// <param name="visible"></param>
-        public void ShowChaptersFloatingBoard(bool visible)
+        public void ShowChaptersFloatingBoard(bool visible, WorkbookManager.TabViewType viewType)
         {
             this.Dispatcher.Invoke(() =>
             {
-                UiVbChaptersFloatingBoard.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
+                switch (viewType)
+                {
+                    case WorkbookManager.TabViewType.CHAPTERS:
+                        UiVbChaptersFloatingBoard.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
+                        break;
+                    case WorkbookManager.TabViewType.MODEL_GAME:
+                        UiVbModelGameFloatingBoard.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
+                        break;
+                    case WorkbookManager.TabViewType.EXERCISE:
+                        UiVbExerciseFloatingBoard.Visibility = visible ? Visibility.Visible : Visibility.Hidden;
+                        break;
+                }
             });
         }
 
