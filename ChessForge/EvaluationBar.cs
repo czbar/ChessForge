@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Net;
 using GameTree;
-using System.Diagnostics.Eventing.Reader;
 using System.Xml;
+using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -53,6 +53,10 @@ namespace ChessForge
             {
                 AppState.MainWin.UiLblEvalBarHost.Visibility = showHide ? Visibility.Visible : Visibility.Collapsed;
                 AppState.MainWin.UiLblEvalBarWhite.Visibility = showHide ? Visibility.Visible : Visibility.Collapsed;
+                if (!showHide)
+                {
+                    AppState.MainWin.UiLblEvalFloat.Visibility = Visibility.Collapsed;
+                }
             });
         }
 
@@ -132,22 +136,29 @@ namespace ChessForge
         /// Adjust bars' lengths and labels
         /// </summary>
         /// <param name="whiteBarLength"></param>
-        /// <param name="labelText"></param>
+        /// <param name="shortText"></param>
+        /// <param name="fullText"></param>
         /// <param name="advantageWhite"></param>
-        private static void SetBars(double whiteBarLength, string labelText, bool advantageWhite)
+        private static void SetBars(double whiteBarLength, string shortText, string fullText, bool advantageWhite)
         {
             bool isFlipped = AppState.MainWin.MainChessBoard.IsFlipped;
 
             if (advantageWhite)
             {
-                AppState.MainWin.UiLblEvalBarWhite.Content = labelText;
+                AppState.MainWin.UiLblEvalBarWhite.Content = shortText;
                 AppState.MainWin.UiLblEvalBarHost.Content = "";
+                AppState.MainWin.UiLblEvalFloat.Content = "+" + fullText;
+                AppState.MainWin.UiLblEvalFloat.Background = Brushes.WhiteSmoke;
+                AppState.MainWin.UiLblEvalFloat.Foreground = Brushes.Black;
                 AppState.MainWin.UiLblEvalBarWhite.VerticalContentAlignment = isFlipped ? VerticalAlignment.Top : VerticalAlignment.Bottom;
             }
             else
             {
                 AppState.MainWin.UiLblEvalBarWhite.Content = "";
-                AppState.MainWin.UiLblEvalBarHost.Content = labelText;
+                AppState.MainWin.UiLblEvalBarHost.Content = shortText;
+                AppState.MainWin.UiLblEvalFloat.Background = Brushes.SlateGray;
+                AppState.MainWin.UiLblEvalFloat.Foreground = Brushes.White;
+                AppState.MainWin.UiLblEvalFloat.Content = "-" + fullText;
                 AppState.MainWin.UiLblEvalBarHost.VerticalContentAlignment = isFlipped ? VerticalAlignment.Bottom : VerticalAlignment.Top;
             }
 
@@ -192,11 +203,11 @@ namespace ChessForge
             double absDval = Math.Abs(dVal);
             if (absDval >= 10)
             {
-                SetBars(whiteBarLength, Math.Abs(dVal).ToString("F0"), dVal >= 0);
+                SetBars(whiteBarLength, Math.Abs(dVal).ToString("F0"), Math.Abs(dVal).ToString("F1"), dVal >= 0);
             }
             else
             {
-                SetBars(whiteBarLength, Math.Abs(dVal).ToString("F1"), dVal >= 0);
+                SetBars(whiteBarLength, Math.Abs(dVal).ToString("F1"), Math.Abs(dVal).ToString("F2"), dVal >= 0);
             }
 
             AppState.MainWin.UiLblEvalBarWhite.Height = whiteBarLength;
@@ -227,7 +238,7 @@ namespace ChessForge
                 whiteBarLength = MIN_WHITE_BAR_HEIGHT;
             }
 
-            SetBars(whiteBarLength, "M0", advantageWhite);
+            SetBars(whiteBarLength, "M0", "M0", advantageWhite);
         }
 
         /// <summary>
@@ -250,7 +261,7 @@ namespace ChessForge
 
             // no room for 2 digits
             string labelText = movesToMate > 9 ? "M*" : ("M" + movesToMate.ToString());
-            SetBars(whiteBarLength, labelText, advantageWhite);
+            SetBars(whiteBarLength, labelText, movesToMate.ToString(), advantageWhite);
         }
 
     }

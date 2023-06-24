@@ -2886,5 +2886,54 @@ namespace ChessForge
                 UiTrainingView.ProcessKeyDown(e);
             }
         }
+
+        /// <summary>
+        /// Hover over the host bar detected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLblEvalBarHost_MouseMove(object sender, MouseEventArgs e)
+        {
+            ShowFloatEval(true);
+        }
+
+        /// <summary>
+        /// Hover over the "white" bar detected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLblEvalBarWhite_MouseMove(object sender, MouseEventArgs e)
+        {
+            ShowFloatEval(true);
+        }
+
+        /// <summary>
+        /// The mouse left the host bar.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLblEvalBarHost_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ShowFloatEval(false);
+        }
+
+        /// <summary>
+        /// The mouse left the "white" bar.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLblEvalBarWhite_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ShowFloatEval(false);
+        }
+
+        /// <summary>
+        /// Show or collapse the floating eval label
+        /// </summary>
+        /// <param name="show"></param>
+        private void ShowFloatEval(bool show)
+        {
+            UiLblEvalFloat.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+        }
     }
 }
