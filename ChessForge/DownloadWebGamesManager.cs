@@ -215,6 +215,7 @@ namespace ChessForge
             }
             else
             {
+                WorkbookManager.SessionWorkbook.CreateNewChapter();
                 WorkbookManager.SessionWorkbook.ActiveChapter.SetTitle(player + ": " + Properties.Resources.DownloadedGames);
                 AddGamesToCurrentChapter(games, out addedGames, out addedExercises, null);
             }
