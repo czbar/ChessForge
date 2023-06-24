@@ -129,6 +129,11 @@ namespace GameTree
         public const string KEY_BLACK = "Black";
 
         /// <summary>
+        /// Chess variant
+        /// </summary>
+        public const string KEY_VARIANT = "Variant";
+
+        /// <summary>
         /// Elo of the White player
         /// </summary>
         public const string KEY_WHITE_ELO = "WhiteElo";

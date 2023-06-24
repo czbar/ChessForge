@@ -54,6 +54,44 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Checks if the header represents a standard chess PGN Game/Exercise
+        /// </summary>
+        /// <returns></returns>
+        public bool IsStandardChess()
+        {
+            string variant = GetVariant(out _);
+            return string.IsNullOrEmpty(variant) || variant == FenParser.VARIANT_STANDARD || variant == FenParser.VARIANT_CHESS;
+        }
+
+        /// <summary>
+        /// Checks if the header represents a standard chess game
+        /// </summary>
+        /// <returns></returns>
+        public bool IsGame()
+        {
+            return IsStandardChess() && !IsExercise();
+        }
+
+        /// <summary>
+        /// For the header to represent an Exercise
+        /// the FEN string cannot be empty and cannot
+        /// represent the starting position
+        /// </summary>
+        /// <returns></returns>
+        public bool IsExercise()
+        {
+            string fen = GetFenString();
+            if (string.IsNullOrEmpty(fen) || fen == FenParser.FEN_INITIAL_POS)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
         /// Divides the passed string into lines and stores them in the _preamble list
         /// </summary>
         /// <param name="text"></param>
@@ -128,7 +166,7 @@ namespace GameTree
         /// <summary>
         /// Builds text for the column with the name of the game.
         /// </summary>
-        public string BuildGameHeaderLine(bool simplified, bool includeResult = true)
+        public string BuildGameHeaderLine(bool simplified, bool includeResult = true, bool includeECO = true)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -147,7 +185,7 @@ namespace GameTree
             {
                 if (hasWhite || hasBlack)
                 {
-                    if (!string.IsNullOrWhiteSpace(eco))
+                    if (includeECO && !string.IsNullOrWhiteSpace(eco))
                     {
                         sb.Append(eco + " ");
                     }
@@ -169,7 +207,7 @@ namespace GameTree
             }
             else
             {
-                if (!string.IsNullOrWhiteSpace(eco))
+                if (includeECO && !string.IsNullOrWhiteSpace(eco))
                 {
                     sb.Append(eco + " ");
                 }
@@ -276,6 +314,26 @@ namespace GameTree
             }
         }
 
+        /// <summary>
+        /// Returns the value of the "Variant" header.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public string GetVariant(out string key, string value = null)
+        {
+            string headerKey = PgnHeaders.KEY_VARIANT;
+            key = headerKey;
+
+            if (value == null)
+            {
+                return _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            }
+            else
+            {
+                return value;
+            }
+        }
         /// <summary>
         /// Returns the value of the "WhiteElo" header.
         /// </summary>
@@ -556,11 +614,15 @@ namespace GameTree
         /// <returns></returns>
         public GameData.ContentType DetermineContentType()
         {
-            if (!string.IsNullOrEmpty(GetContentTypeString(out _)))
+            if (!IsStandardChess())
+            {
+                return GameData.ContentType.UNKNOWN;
+            }
+            else if (!string.IsNullOrEmpty(GetContentTypeString(out _)))
             {
                 return GetContentType(out _);
             }
-            else if (!string.IsNullOrEmpty(GetFenString()))
+            else if (IsExercise())
             {
                 SetHeaderValue(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_EXERCISE);
                 return GameData.ContentType.EXERCISE;
@@ -595,6 +657,12 @@ namespace GameTree
                         break;
                     case PgnHeaders.VALUE_EXERCISE:
                         typ = GameData.ContentType.EXERCISE;
+                        break;
+                    default:
+                        if (!IsStandardChess())
+                        {
+                            typ = GameData.ContentType.UNKNOWN;
+                        }
                         break;
                 }
             }

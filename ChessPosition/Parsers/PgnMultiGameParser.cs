@@ -86,8 +86,10 @@ namespace GameTree
                 // if we do have any header data we add a new game to the list
                 if (gm.HasAnyHeader())
                 {
-                    gm.Header.DetermineContentType();
-                    games.Add(gm);
+                    if (gm.Header.DetermineContentType() != GameData.ContentType.UNKNOWN)
+                    {
+                        games.Add(gm);
+                    }
                     gm = new GameData();
                 }
             }
@@ -97,8 +99,13 @@ namespace GameTree
             if (headerLine == true && gm.FirstLineInFile == 0)
             {
                 gm.FirstLineInFile = lineNo - 1;
-                // add game text to the previous game object 
-                games[games.Count - 1].GameText = sbGameText.ToString();
+                if (games.Count > 0 && string.IsNullOrEmpty(games[games.Count - 1].GameText))
+                {
+                    // add game text to the previous game object
+                    // but check if it exists and is empty. It may not be the case if rejected
+                    // the previuous game for not being of valid format
+                    games[games.Count - 1].GameText = sbGameText.ToString();
+                }
                 sbGameText.Clear();
             }
 

@@ -423,6 +423,9 @@
   <data name="ErrEmptyUserName" xml:space="preserve">
     <value>Provide User Name</value>
   </data>
+  <data name="ErrNotStandardChessVariant" xml:space="preserve">
+    <value>Non Standard Chess variant</value>
+  </data>
   <data name="PromptCorrectData" xml:space="preserve">
     <value>Incorrect Input Data</value>
   </data>

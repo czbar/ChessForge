@@ -1221,16 +1221,16 @@ namespace ChessForge
                 int xOffset = 20;
                 int yOffset = 20;
                 _mainWin.UiVbChaptersFloatingBoard.Margin = new Thickness(pt.X + xOffset, pt.Y + yOffset, 0, 0);
-                _mainWin.ShowChaptersFloatingBoard(true);
+                _mainWin.ShowChaptersFloatingBoard(true, WorkbookManager.TabViewType.CHAPTERS);
             }
         }
 
         /// <summary>
         /// Hides the floating chessboard.
         /// </summary>
-        private void HideFloatingBoard()
+        private void HideFloatingBoard(WorkbookManager.TabViewType viewType)
         {
-            _mainWin.ShowChaptersFloatingBoard(false);
+            _mainWin.ShowChaptersFloatingBoard(false, viewType);
         }
 
         //*******************************************************************************************
@@ -1324,22 +1324,7 @@ namespace ChessForge
                     TreeNode thumb = chapter.StudyTree.Tree.GetThumbnail();
                     if (thumb != null)
                     {
-                        Point pt = e.GetPosition(_mainWin.UiRtbChaptersView);
-                        _mainWin.ChaptersFloatingBoard.FlipBoard(WorkbookManager.SessionWorkbook.TrainingSideConfig == PieceColor.Black);
-                        _mainWin.ChaptersFloatingBoard.DisplayPosition(thumb, false);
-                        int xOffset = 20;
-                        int yOffset = 20;
-                        if (_mainWin.UiRtbChaptersView.ActualHeight < pt.Y + 170)
-                        {
-                            yOffset = -170;
-                        }
-                        double xCoord = pt.X + xOffset;
-                        if (xCoord + 170 > _mainWin.UiRtbChaptersView.ActualWidth)
-                        {
-                            xCoord = _mainWin.UiRtbChaptersView.ActualWidth - 170;
-                        }
-                        _mainWin.UiVbChaptersFloatingBoard.Margin = new Thickness(xCoord, pt.Y + yOffset, 0, 0);
-                        _mainWin.ShowChaptersFloatingBoard(true);
+                        ShowFloatingBoardForNode(e, thumb, WorkbookManager.TabViewType.CHAPTERS);
                     }
                 }
             }
@@ -1355,7 +1340,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventChapterHeaderLeft(object sender, MouseEventArgs e)
         {
-            HideFloatingBoard();
+            HideFloatingBoard(WorkbookManager.TabViewType.CHAPTERS);
         }
 
         /// <summary>
@@ -1520,7 +1505,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventStudyTreeHeaderLeft(object sender, MouseEventArgs e)
         {
-            HideFloatingBoard();
+            HideFloatingBoard(WorkbookManager.TabViewType.CHAPTERS);
         }
 
         /// <summary>
@@ -1530,7 +1515,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventIntroHeaderLeft(object sender, MouseEventArgs e)
         {
-            HideFloatingBoard();
+            HideFloatingBoard(WorkbookManager.TabViewType.CHAPTERS);
         }
 
         /// <summary>
@@ -1713,9 +1698,12 @@ namespace ChessForge
 
                 Chapter chapter = GetChapterAndItemIndexFromRun(r, out int index);
                 Article game = chapter.GetModelGameAtIndex(index);
-                TreeNode thumb = game.Tree.GetThumbnail();
-
-                ShowFloatingBoard(thumb, e);
+                TreeNode node = game.Tree.GetThumbnail();
+                if (node == null)
+                {
+                    node = game.Tree.GetFinalPosition();
+                }
+                ShowFloatingBoardForNode(e, node, WorkbookManager.TabViewType.MODEL_GAME);
             }
             catch
             {
@@ -1729,7 +1717,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventModelGameRunLeft(object sender, MouseEventArgs e)
         {
-            HideFloatingBoard();
+            HideFloatingBoard(WorkbookManager.TabViewType.MODEL_GAME);
         }
 
         /// <summary>
@@ -1802,9 +1790,12 @@ namespace ChessForge
 
                 Chapter chapter = GetChapterAndItemIndexFromRun(r, out int index);
                 Article exer = chapter.GetExerciseAtIndex(index);
-                TreeNode thumb = exer.Tree.GetThumbnail();
-
-                ShowFloatingBoard(thumb, e, exer.Tree.RootNode.ColorToMove);
+                TreeNode node = exer.Tree.GetThumbnail();
+                if (node == null)
+                {
+                    node = exer.Tree.Nodes[0];
+                }
+                ShowFloatingBoardForNode(e, node, WorkbookManager.TabViewType.EXERCISE);
             }
             catch
             {
@@ -1818,7 +1809,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventExerciseRunLeft(object sender, MouseEventArgs e)
         {
-            HideFloatingBoard();
+            HideFloatingBoard(WorkbookManager.TabViewType.EXERCISE);
         }
 
         /// <summary>
@@ -1881,6 +1872,60 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Shows the floating board of the requested type.
+        /// </summary>
+        /// <param name="e"></param>
+        /// <param name="nd"></param>
+        /// <param name="viewType"></param>
+        private void ShowFloatingBoardForNode(MouseEventArgs e, TreeNode nd, WorkbookManager.TabViewType viewType)
+        {
+            Point pt = e.GetPosition(_mainWin.UiRtbChaptersView);
+            ChessBoardSmall floatingBoard = null;
+            switch (viewType)
+            {
+                case WorkbookManager.TabViewType.CHAPTERS:
+                    floatingBoard = _mainWin.ChaptersFloatingBoard;
+                    break;
+                case WorkbookManager.TabViewType.MODEL_GAME:
+                    floatingBoard = _mainWin.ModelGameFloatingBoard;
+                    break;
+                case WorkbookManager.TabViewType.EXERCISE:
+                    floatingBoard = _mainWin.ExerciseFloatingBoard;
+                    break;
+            }
+
+            if (floatingBoard != null)
+            {
+                floatingBoard.FlipBoard(WorkbookManager.SessionWorkbook.TrainingSideConfig == PieceColor.Black);
+                floatingBoard.DisplayPosition(nd, false);
+                int xOffset = 20;
+                int yOffset = 20;
+                if (_mainWin.UiRtbChaptersView.ActualHeight < pt.Y + 170)
+                {
+                    yOffset = -170;
+                }
+                double xCoord = pt.X + xOffset;
+                if (xCoord + 170 > _mainWin.UiRtbChaptersView.ActualWidth)
+                {
+                    xCoord = _mainWin.UiRtbChaptersView.ActualWidth - 170;
+                }
+
+                switch (viewType)
+                {
+                    case WorkbookManager.TabViewType.CHAPTERS:
+                        _mainWin.UiVbChaptersFloatingBoard.Margin = new Thickness(xCoord, pt.Y + yOffset, 0, 0);
+                        break;
+                    case WorkbookManager.TabViewType.MODEL_GAME:
+                        _mainWin.UiVbModelGameFloatingBoard.Margin = new Thickness(xCoord, pt.Y + yOffset, 0, 0);
+                        break;
+                    case WorkbookManager.TabViewType.EXERCISE:
+                        _mainWin.UiVbExerciseFloatingBoard.Margin = new Thickness(xCoord, pt.Y + yOffset, 0, 0);
+                        break;
+                }
+                _mainWin.ShowChaptersFloatingBoard(true, viewType);
+            }
+        }
     }
 
     class IntroRunsToModify

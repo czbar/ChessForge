@@ -1753,6 +1753,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Non Standard Chess variant.
+        /// </summary>
+        public static string ErrNotStandardChessVariant {
+            get {
+                return ResourceManager.GetString("ErrNotStandardChessVariant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {

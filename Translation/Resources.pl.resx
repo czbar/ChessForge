@@ -423,6 +423,9 @@
   <data name="ErrEmptyUserName" xml:space="preserve">
     <value>Brak nazwy użytkownika</value>
   </data>
+  <data name="ErrNotStandardChessVariant" xml:space="preserve">
+    <value>Niestandardowy wariant szachów</value>
+  </data>
   <data name="PromptCorrectData" xml:space="preserve">
     <value>Niewłaściwe Dane</value>
   </data>

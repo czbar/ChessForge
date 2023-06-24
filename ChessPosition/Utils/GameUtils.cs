@@ -26,11 +26,11 @@ namespace ChessPosition
 
             foreach (GameData game in games)
             {
-                if (game.Header.GetWhitePlayer(out _) == player)
+                if (string.Compare(game.Header.GetWhitePlayer(out _),player,true) == 0)
                 {
                     whiteGames.Add(game);
                 }
-                else if (game.Header.GetBlackPlayer(out _) == player)
+                else if (string.Compare(game.Header.GetBlackPlayer(out _), player, true) == 0)
                 {
                     blackGames.Add(game);
                 }

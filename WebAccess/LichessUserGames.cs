@@ -17,6 +17,9 @@ namespace WebAccess
         // urls for downloading user games from lichess
         private static string _urlLichessUserGames = "https://lichess.org/api/games/user/{0}";
 
+        // REST parameter specifying the type of games to include in the download
+        private static string _perfTypeParameter = "perfType=ultraBullet,bullet,blitz,rapid,classical,correspondence";
+
         /// <summary>
         /// Handler for the UserGamesReceived event
         /// </summary>
@@ -74,10 +77,15 @@ namespace WebAccess
 
             StringBuilder url = new StringBuilder();
             url.Append(String.Format(_urlLichessUserGames, filter.User));
+
+            url.Append("?" + _perfTypeParameter);
+            hasParam = true;
+
             int gamesCount = filter.MaxGames;
             if (gamesCount > 0)
             {
-                url.Append("?" + "max=" + gamesCount.ToString());
+                url.Append(hasParam ? "&" : "?");
+                url.Append("max=" + gamesCount.ToString());
                 hasParam = true;
             }
 

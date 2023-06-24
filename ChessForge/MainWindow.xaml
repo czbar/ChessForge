@@ -219,8 +219,9 @@
                             <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                         </Canvas.Background>
                         <Image x:Name="UiImgMainChessboard" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBlue.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="640" Height="640" Grid.Column="0"/>
-                        <Label x:Name="UiLblEvalBarHost" Content=""  FontSize="8" Padding="0,8,0,8" HorizontalContentAlignment="Center" Foreground="White" Canvas.Left="663" Canvas.Top="20" Width="14" Height="640" Background="SlateGray" Panel.ZIndex="1" Visibility="Collapsed" />
-                        <Label x:Name="UiLblEvalBarWhite" Content="" FontSize="8" Padding="0,8,0,8" HorizontalContentAlignment="Center" Foreground="Black" Canvas.Left="663" Canvas.Top="20" Width="14" Height="320" Background="WhiteSmoke" Panel.ZIndex="2" Visibility="Collapsed"/>
+                        <Label x:Name="UiLblEvalBarHost" Content=""  FontSize="8" Padding="0,8,0,8" HorizontalContentAlignment="Center" Foreground="White" Canvas.Left="663" Canvas.Top="20" Width="14" Height="640" Background="SlateGray" Panel.ZIndex="1" Visibility="Collapsed" MouseMove="UiLblEvalBarHost_MouseMove" MouseLeave="UiLblEvalBarHost_MouseLeave" />
+                        <Label x:Name="UiLblEvalBarWhite" Content="" FontSize="8" Padding="0,8,0,8" HorizontalContentAlignment="Center" Foreground="Black" Canvas.Left="663" Canvas.Top="20" Width="14" Height="320" Background="WhiteSmoke" Panel.ZIndex="2" Visibility="Collapsed" MouseMove="UiLblEvalBarWhite_MouseMove" MouseLeave="UiLblEvalBarWhite_MouseLeave"/>
+                        <Label x:Name="UiLblEvalFloat" Style="{StaticResource RoundedBorder}" Content="" FontSize="10" FontWeight="Bold" Padding="0,0,0,0" HorizontalContentAlignment="Center" Canvas.Left="654" Canvas.Top="332" Width="32" Height="16" Background="WhiteSmoke" Panel.ZIndex="3" Visibility="Collapsed"/>
                     </Canvas>
                 </Viewbox>
 
@@ -342,6 +343,22 @@
                                         <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                                     </Canvas.Background>
                                     <Image x:Name="_imgChaptersFloatingBoard" Margin="2,2,0,0" Source="Resources/Images/ChessBoardGreySmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" />
+                                </Canvas>
+                            </Viewbox>
+                            <Viewbox x:Name="UiVbExerciseFloatingBoard" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Margin="0,0" Height="160" Width="160"  >
+                                <Canvas x:Name="_cnvExerciseFloat" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244">
+                                    <Canvas.Background>
+                                        <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                    </Canvas.Background>
+                                    <Image x:Name="_imgExerciseFloatingBoard" Margin="2,2,0,0" Source="Resources/Images/ChessBoardLightGreenSmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" />
+                                </Canvas>
+                            </Viewbox>
+                            <Viewbox x:Name="UiVbModelGameFloatingBoard" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Margin="0,0" Height="160" Width="160"  >
+                                <Canvas x:Name="_cnvModelGameFloat" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244">
+                                    <Canvas.Background>
+                                        <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
+                                    </Canvas.Background>
+                                    <Image x:Name="_imgModelGameFloatingBoard" Margin="2,2,0,0" Source="Resources/Images/ChessBoardLightBlueSmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" />
                                 </Canvas>
                             </Viewbox>
                         </Grid>
