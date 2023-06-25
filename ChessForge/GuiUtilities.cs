@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using ChessPosition;
 using GameTree;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ChessForge
 {
@@ -64,30 +65,44 @@ namespace ChessForge
         {
             bool res = false;
 
-            if ((Keyboard.Modifiers & ModifierKeys.Alt) > 0)
+            try
             {
-                var key = (e.Key == Key.System ? e.SystemKey : e.Key);
-
-                char charToInsert = GetFigurineChar(key);
-
-                if (charToInsert != '\0')
+                if ((Keyboard.Modifiers & ModifierKeys.Alt) > 0)
                 {
-                    res = true;
+                    var key = (e.Key == Key.System ? e.SystemKey : e.Key);
 
-                    // Get the current selection
-                    TextSelection selection = rtb.Selection;
+                    char charToInsert = GetFigurineChar(key);
 
-                    // If there is a non-empty selection, replace it with the character
-                    if (!selection.IsEmpty)
+                    if (charToInsert != '\0')
                     {
-                        selection.Text = charToInsert.ToString();
-                    }
-                    else // Otherwise, insert the character at the current caret position
-                    {
-                        rtb.CaretPosition.InsertTextInRun(charToInsert.ToString());
-                    }
+                        string stringToInsert = charToInsert.ToString();
+                        res = true;
 
+                        // Get the current selection
+                        TextSelection selection = rtb.Selection;
+
+                        // get the data to then place the caret after the insertion
+                        TextPointer startPtr = rtb.Document.ContentStart;
+                        int start = startPtr.GetOffsetToPosition(rtb.CaretPosition);
+
+                        // If there is a non-empty selection, replace it with the character
+                        if (!selection.IsEmpty)
+                        {
+                            selection.Text = stringToInsert;
+                        }
+                        else // Otherwise, insert the character at the current caret position
+                        {
+                            rtb.CaretPosition.InsertTextInRun(stringToInsert);
+                        }
+
+                        // place the caret after insertion
+                        rtb.CaretPosition = startPtr.GetPositionAtOffset((start) + stringToInsert.Length);
+                    }
                 }
+            }
+            catch 
+            {
+                res = true;
             }
 
             return res;
