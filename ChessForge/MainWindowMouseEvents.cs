@@ -380,7 +380,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (Configuration.AllowMouseWheelForMoves)
+            if (Configuration.AllowMouseWheelForMoves && LearningMode.CurrentMode != LearningMode.Mode.TRAINING && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
             {
                 if (e.Delta > 0)
                 {
