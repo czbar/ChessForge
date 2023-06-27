@@ -2908,6 +2908,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Hover over the "float" bar detected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLblEvalFloat_MouseMove(object sender, MouseEventArgs e)
+        {
+            ShowFloatEval(true);
+        }
+
+        /// <summary>
         /// The mouse left the host bar.
         /// </summary>
         /// <param name="sender"></param>
@@ -2923,6 +2933,16 @@ namespace ChessForge
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiLblEvalBarWhite_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ShowFloatEval(false);
+        }
+
+        /// <summary>
+        /// The mouse left the "float" bar.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLblEvalFloat_MouseLeave(object sender, MouseEventArgs e)
         {
             ShowFloatEval(false);
         }

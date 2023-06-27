@@ -139,7 +139,7 @@ namespace ChessForge
         /// <param name="shortText"></param>
         /// <param name="fullText"></param>
         /// <param name="advantageWhite"></param>
-        private static void SetBars(double whiteBarLength, string shortText, string fullText, bool advantageWhite)
+        private static void SetBars(double whiteBarLength, string shortText, string fullText, bool advantageWhite, bool prependSign = true)
         {
             bool isFlipped = AppState.MainWin.MainChessBoard.IsFlipped;
 
@@ -147,7 +147,7 @@ namespace ChessForge
             {
                 AppState.MainWin.UiLblEvalBarWhite.Content = shortText;
                 AppState.MainWin.UiLblEvalBarHost.Content = "";
-                AppState.MainWin.UiLblEvalFloat.Content = "+" + fullText;
+                AppState.MainWin.UiLblEvalFloat.Content = (prependSign ? "+" : "") + fullText;
                 AppState.MainWin.UiLblEvalFloat.Background = Brushes.WhiteSmoke;
                 AppState.MainWin.UiLblEvalFloat.Foreground = Brushes.Black;
                 AppState.MainWin.UiLblEvalBarWhite.VerticalContentAlignment = isFlipped ? VerticalAlignment.Top : VerticalAlignment.Bottom;
@@ -158,7 +158,7 @@ namespace ChessForge
                 AppState.MainWin.UiLblEvalBarHost.Content = shortText;
                 AppState.MainWin.UiLblEvalFloat.Background = Brushes.SlateGray;
                 AppState.MainWin.UiLblEvalFloat.Foreground = Brushes.White;
-                AppState.MainWin.UiLblEvalFloat.Content = "-" + fullText;
+                AppState.MainWin.UiLblEvalFloat.Content = (prependSign ? "-" : "") + fullText;
                 AppState.MainWin.UiLblEvalBarHost.VerticalContentAlignment = isFlipped ? VerticalAlignment.Bottom : VerticalAlignment.Top;
             }
 
@@ -238,7 +238,8 @@ namespace ChessForge
                 whiteBarLength = MIN_WHITE_BAR_HEIGHT;
             }
 
-            SetBars(whiteBarLength, "M0", "M0", advantageWhite);
+            string txt = advantageWhite ? "1-0" : "0-1";
+            SetBars(whiteBarLength, txt, txt, advantageWhite, false);
         }
 
         /// <summary>
@@ -261,7 +262,7 @@ namespace ChessForge
 
             // no room for 2 digits
             string labelText = movesToMate > 9 ? "M*" : ("M" + movesToMate.ToString());
-            SetBars(whiteBarLength, labelText, movesToMate.ToString(), advantageWhite);
+            SetBars(whiteBarLength, labelText, "M" + movesToMate.ToString(), advantageWhite);
         }
 
     }

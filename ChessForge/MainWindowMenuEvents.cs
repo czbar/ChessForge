@@ -3454,7 +3454,7 @@ namespace ChessForge
         /// <summary>
         /// Rebuilds all tree views
         /// </summary>
-        private void RebuildAllTreeViews()
+        private void RebuildAllTreeViews(bool? increaseFontDirection = null)
         {
             _studyTreeView?.BuildFlowDocumentForVariationTree();
 
@@ -3464,7 +3464,14 @@ namespace ChessForge
 
             _chaptersView?.BuildFlowDocumentForChaptersView();
 
-            RestoreSelectedLineAndMoveInActiveView();
+            if (TrainingSession.IsTrainingInProgress)
+            {
+                UiTrainingView.IncrementFontSize(increaseFontDirection);
+            }
+            else
+            {
+                RestoreSelectedLineAndMoveInActiveView();
+            }
         }
 
         /// <summary>
@@ -3479,7 +3486,7 @@ namespace ChessForge
             {
                 Configuration.FontSizeDiff++;
                 SetupMenuBarControls();
-                RebuildAllTreeViews();
+                RebuildAllTreeViews(true);
             }
             AppState.ConfigureFontSizeMenus();
         }
@@ -3496,7 +3503,7 @@ namespace ChessForge
             {
                 Configuration.FontSizeDiff--;
                 SetupMenuBarControls();
-                RebuildAllTreeViews();
+                RebuildAllTreeViews(false);
             }
 
             AppState.ConfigureFontSizeMenus();
