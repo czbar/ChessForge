@@ -306,6 +306,27 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Increase/decrease font size in the Training View
+        /// </summary>
+        /// <param name="increase"></param>
+        public void IncrementFontSize(bool? increase)
+        {
+            if (increase != null)
+            {
+                foreach (var block in Document.Blocks)
+                {
+                    if (block is Paragraph)
+                    {
+                        foreach (Inline inl in (block as Paragraph).Inlines)
+                        {
+                            inl.FontSize = increase == true ? inl.FontSize + 1 : inl.FontSize - 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Rolls back the training to the ply
         /// that we want to replace with the last clicked node.
         /// </summary>
