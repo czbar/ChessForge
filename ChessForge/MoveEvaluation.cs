@@ -11,7 +11,7 @@ namespace ChessForge
     /// Encapsulates all info from the engine for
     /// a single candidate move (first move in the "Line"). 
     /// </summary>
-    public class MoveEvaluation
+    public class MoveEvaluation : IComparable<MoveEvaluation>
     {
         /// <summary>
         /// The string with moves from the eninge single
@@ -65,17 +65,55 @@ namespace ChessForge
         /// Copy constructor;
         /// </summary>
         /// <param name="moveEval"></param>
-        public MoveEvaluation(MoveEvaluation moveEval)
+        public MoveEvaluation(MoveEvaluation moveEval, PieceColor color)
         {
+            this.Color = color;
             this.Fen = string.Copy(moveEval.Fen);
             this.Line = string.Copy(moveEval.Line);
             this.MoveNumber = moveEval.MoveNumber;
-            this.Color = moveEval.Color;
             this.ScoreCp = moveEval.ScoreCp;
             this.IsMateDetected = moveEval.IsMateDetected;
             this.MovesToMate = moveEval.MovesToMate;
         }
 
+        /// <summary>
+        /// Compares 2 move evaluations.
+        /// Detected mate wins over ScoreCp. If both are mates then
+        /// the lower number of moves to mate wins.
+        /// </summary>
+        /// <param name="mev"></param>
+        /// <returns></returns>
+        public int CompareTo(MoveEvaluation mev)
+        {
+            int res;
+
+            if (mev == null)
+            {
+                return -1;
+            }
+
+            if (this.IsMateDetected)
+            {
+                if (mev.IsMateDetected)
+                {
+                    res = this.MovesToMate - mev.MovesToMate;
+                }
+                else
+                {
+                    res = -1;
+                }
+            }
+            else if (mev.IsMateDetected)
+            {
+                res = 1;
+            }
+            else
+            {
+                res = mev.ScoreCp - this.ScoreCp;
+            }
+
+            return res;
+        }
 
         /// <summary>
         /// Returns the first move in the Line string which is the move
