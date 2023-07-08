@@ -638,6 +638,10 @@ namespace ChessForge
                         {
                             ProcessBestMoveMessage(message, evalNode, treeId, mode, delayed);
                         }
+                        else if (message.StartsWith("error", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ProcessErrorMessage(message);
+                        }
                     }
                     else
                     {
@@ -769,7 +773,7 @@ namespace ChessForge
             try
             {
                 // make sure the last lines are shown before we stop the timer.
-                if (message.Contains(UciCommands.ENG_BESTMOVE_NONE))
+                if (message.Contains(UciCommands.ENG_BESTMOVE_NONE) || message.Contains(UciCommands.ENG_BESTMOVE_NONE_LEILA))
                 {
                     if (nd == null)
                     {
@@ -783,7 +787,7 @@ namespace ChessForge
 
                         if (isMate)
                         {
-                            EngineLinesBox.ShowEngineLines(nd, null);
+                            EngineLinesBox.ShowEngineLines(nd, null, true);
                             nd.Position.IsCheckmate = true;
                         }
 
@@ -942,6 +946,16 @@ namespace ChessForge
             {
                 IsInfoMessageProcessing = false;
             }
+        }
+
+        /// <summary>
+        /// Displays the message in the Lines window when "error" is detected
+        /// in the text.
+        /// </summary>
+        /// <param name="message"></param>
+        private static void ProcessErrorMessage(string message)
+        {
+            EngineLinesBox.ShowEngineLines(Properties.Resources.Error + ": " + message, null, true);
         }
 
         /// <summary>
