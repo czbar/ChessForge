@@ -22,7 +22,8 @@
         public const string ENG_READY_OK = "readyok";
         public const string ENG_BEST_MOVE = "bestmove";
         public const string ENG_INFO = "info";
-        public const string ENG_BESTMOVE_NONE = "(none)";
+        public const string ENG_BESTMOVE_NONE = "none";
+        public const string ENG_BESTMOVE_NONE_LEILA = "a1a1";
 
         // prefix in the engine's message naming itself
         public const string ENG_ID_NAME = "id name";
