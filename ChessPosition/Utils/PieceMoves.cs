@@ -368,11 +368,11 @@ namespace ChessPosition.Utils
                     if (PositionUtils.IsKingSafe(positionAfterMove, color))
                     {
                         moves.Add(new MoveOrigDest(orig, dest));
-                        if (square != 0)
-                        {
-                            // there is a piece here  so the rest of the rank/file is blocked
-                            break;
-                        }
+                    }
+                    if (square != 0)
+                    {
+                        // there is a piece here so the rest of the rank/file is blocked
+                        break;
                     }
                 }
                 else
@@ -413,11 +413,11 @@ namespace ChessPosition.Utils
                     if (PositionUtils.IsKingSafe(positionAfterMove, color))
                     {
                         moves.Add(new MoveOrigDest(orig, dest));
-                        if (square != 0)
-                        {
-                            // there is a piece here  so the rest of the diagonal is blocked
-                            break;
-                        }
+                    }
+                    if (square != 0)
+                    {
+                        // there is a piece here  so the rest of the diagonal is blocked
+                        break;
                     }
                 }
                 else
@@ -461,7 +461,6 @@ namespace ChessPosition.Utils
                 }
             }
         }
-
 
         /// <summary>
         /// Checks if the move is valid in the sense of not leaving the king
