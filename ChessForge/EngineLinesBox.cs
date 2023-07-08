@@ -60,26 +60,42 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Shows the latest engine lines in response to 
+        /// Shows the latest engine lines.
         /// a timer event.
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        public static void ShowEngineLines(object source, ElapsedEventArgs e)
+        /// <param name="force">if true request the display of the lines even if the current one is in progress.</param>
+        public static void ShowEngineLines(object source, ElapsedEventArgs e, bool force = false)
         {
-            // prevent choking
-            if (_isShowEngineLinesRunning)
+            // prevent "choking"
+            if (!force && _isShowEngineLinesRunning && (source == null || source is Timer))
+            {
+                return;
+            }
+            else
+            {
+                _isShowEngineLinesRunning = false;
+                ShowEngineLinesEx(source, e);
+            }
+        }
+
+        /// <summary>
+        /// Shows the latest engine lines in response to a timer event
+        /// or when called from ShowEngineLines().
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public static void ShowEngineLinesEx(object source, ElapsedEventArgs e)
+        {
+            if (_isShowEngineLinesRunning && (source == null || source is Timer))
             {
                 return;
             }
 
-            if (source is string)
+            if (ShowSpecialText(source, e))
             {
-                if ((source as string).Contains(EngineService.UciCommands.ENG_BESTMOVE_NONE))
-                {
-                    ShowEmptyLines("---");
-                    return;
-                }
+                return;
             }
 
             _isShowEngineLinesRunning = true;
@@ -106,7 +122,7 @@ namespace ChessForge
                             // make a copy of Move candidates so we can release the lock asap
                             foreach (MoveEvaluation me in EngineMessageProcessor.EngineMoveCandidates.Lines)
                             {
-                                EvalLinesToProcess[evalNode].AddEvaluation(new MoveEvaluation(me));
+                                EvalLinesToProcess[evalNode].AddEvaluation(new MoveEvaluation(me, evalNode.Position.ColorToMove));
                             }
                         }
                     }
@@ -114,6 +130,7 @@ namespace ChessForge
                     if (moveCandidates != null && moveCandidates.EvalNode != null)
                     {
                         StringBuilder sb = new StringBuilder();
+                        moveCandidates.Lines.Sort();
                         _tbEvalLines.Dispatcher.Invoke(() =>
                         {
                             for (int i = 0; i < moveCandidates.Lines.Count; i++)
@@ -162,6 +179,58 @@ namespace ChessForge
 
             _isShowEngineLinesRunning = false;
         }
+
+        /// <summary>
+        /// Checks if there is a special text passed in the source parameters
+        /// and if so displays it.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        private static bool ShowSpecialText(object source, ElapsedEventArgs e)
+        {
+            bool handled = false;
+
+            if (source is string && e == null)
+            {
+                ShowEmptyLines(source as string);
+                handled = true;
+            }
+            else if (source is TreeNode)
+            {
+                TreeNode evalNode = (TreeNode)source;
+                EngineMessageProcessor.EngineMoveCandidates.EvalNode = evalNode;
+                bool isMate = evalNode.Position.IsCheckmate;
+                bool isStalemate = evalNode.Position.IsStalemate;
+
+                if (!isMate && !isStalemate)
+                {
+                    // if not handled but TreeNode was passed, let's check if it is a checkmate or stalemate after all
+                    if (PositionUtils.IsCheckmate(evalNode.Position, out _))
+                    {
+                        evalNode.Position.IsCheckmate = true;
+                    }
+                    else if (PositionUtils.IsStalemate(evalNode.Position))
+                    {
+                        evalNode.Position.IsStalemate = true;
+                    }
+                }
+
+                if (evalNode.Position.IsStalemate)
+                {
+                    ShowEmptyLines(Properties.Resources.Stalemate);
+                    handled = true;
+                }
+                else if (evalNode.Position.IsCheckmate)
+                {
+                    ShowEmptyLines("# " + Properties.Resources.Checkmate);
+                    handled = true;
+                }
+            }
+
+            return handled;
+        }
+
 
         /// <summary>
         /// Called when there are no lines to show and we 

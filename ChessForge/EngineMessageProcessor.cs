@@ -122,10 +122,18 @@ namespace ChessForge
         public static void ClearMoveCandidates(bool force)
         {
             if (force || !(AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME))
+            {
                 lock (MoveCandidatesLock)
                 {
+                    // explicitly invoke ShowEngineLines as in some cases we may arrive here before having a chance
+                    // to show the lines at a timer event
+                    if (EngineMoveCandidates.Lines.Count > 0)
+                    {
+                        EngineLinesBox.ShowEngineLines(null, null, true);
+                    }
                     EngineMoveCandidates.Clear();
                 }
+            }
         }
 
         /// <summary>
@@ -573,6 +581,7 @@ namespace ChessForge
 
             if (nd != null)
             {
+                AppLog.Message(2, "RequestPositionEvaluation() for node=" + nd.NodeId.ToString());
                 string fen = FenParser.GenerateFenFromPosition(nd.Position);
 
                 GoFenCommand.EvaluationMode mode = ConvertEvaluationManagertoFenEvaluationMode(EvaluationManager.CurrentMode);
@@ -628,6 +637,10 @@ namespace ChessForge
                         else if (message.StartsWith(UciCommands.ENG_BEST_MOVE))
                         {
                             ProcessBestMoveMessage(message, evalNode, treeId, mode, delayed);
+                        }
+                        else if (message.StartsWith("error", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ProcessErrorMessage(message);
                         }
                     }
                     else
@@ -760,11 +773,34 @@ namespace ChessForge
             try
             {
                 // make sure the last lines are shown before we stop the timer.
-                //TODO: after recent fixes for "freezing" this may return without execution so EvalLinesToProcess won't
-                // be set per the latest. This needs some redesign.
-                if (message.Contains(UciCommands.ENG_BESTMOVE_NONE))
+                if (message.Contains(UciCommands.ENG_BESTMOVE_NONE) || message.Contains(UciCommands.ENG_BESTMOVE_NONE_LEILA))
                 {
-                    EngineLinesBox.ShowEngineLines(UciCommands.ENG_BESTMOVE_NONE, null);
+                    if (nd == null)
+                    {
+                        EngineLinesBox.ShowEngineLines("---", null);
+                    }
+                    else
+                    {
+                        // this is a checkmate or stalemate
+                        bool isMate = nd.EngineEvaluation != null && nd.EngineEvaluation.Contains("#");
+                        bool possibleStalemate = string.IsNullOrEmpty(nd.EngineEvaluation) || nd.Position.IsStalemate == true;
+
+                        if (isMate)
+                        {
+                            EngineLinesBox.ShowEngineLines(nd, null, true);
+                            nd.Position.IsCheckmate = true;
+                        }
+
+                        if (!isMate && possibleStalemate)
+                        {
+                            if (PositionUtils.IsStalemate(nd.Position))
+                            {
+                                nd.Position.IsStalemate = true;
+                                nd.EngineEvaluation = 0.ToString("F2");
+                            }
+                            EngineLinesBox.ShowEngineLines(nd, null);
+                        }
+                    }
                 }
                 else
                 {
@@ -910,6 +946,16 @@ namespace ChessForge
             {
                 IsInfoMessageProcessing = false;
             }
+        }
+
+        /// <summary>
+        /// Displays the message in the Lines window when "error" is detected
+        /// in the text.
+        /// </summary>
+        /// <param name="message"></param>
+        private static void ProcessErrorMessage(string message)
+        {
+            EngineLinesBox.ShowEngineLines(Properties.Resources.Error + ": " + message, null, true);
         }
 
         /// <summary>

@@ -306,7 +306,7 @@ namespace ChessForge
         /// </summary>
         private void InitEvaluationLinesDisplayTimer()
         {
-            _evaluationLinesDisplayTimer.Elapsed += new ElapsedEventHandler(EngineLinesBox.ShowEngineLines);
+            _evaluationLinesDisplayTimer.Elapsed += new ElapsedEventHandler(EngineLinesBox.ShowEngineLinesEx);
             _evaluationLinesDisplayTimer.Interval = 100;
             _evaluationLinesDisplayTimer.Enabled = false;
         }

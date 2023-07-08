@@ -2344,7 +2344,7 @@ namespace ChessForge
             }
             else
             {
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineReplaced);
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineReplaced, Brushes.Green);
                 return true;
             }
         }
