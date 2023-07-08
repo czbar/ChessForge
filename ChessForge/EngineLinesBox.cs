@@ -122,7 +122,7 @@ namespace ChessForge
                             // make a copy of Move candidates so we can release the lock asap
                             foreach (MoveEvaluation me in EngineMessageProcessor.EngineMoveCandidates.Lines)
                             {
-                                EvalLinesToProcess[evalNode].AddEvaluation(new MoveEvaluation(me));
+                                EvalLinesToProcess[evalNode].AddEvaluation(new MoveEvaluation(me, evalNode.Position.ColorToMove));
                             }
                         }
                     }
@@ -130,6 +130,7 @@ namespace ChessForge
                     if (moveCandidates != null && moveCandidates.EvalNode != null)
                     {
                         StringBuilder sb = new StringBuilder();
+                        moveCandidates.Lines.Sort();
                         _tbEvalLines.Dispatcher.Invoke(() =>
                         {
                             for (int i = 0; i < moveCandidates.Lines.Count; i++)
@@ -197,10 +198,32 @@ namespace ChessForge
             }
             else if (source is TreeNode)
             {
-                EngineMessageProcessor.EngineMoveCandidates.EvalNode = (TreeNode)source;
-                if (((TreeNode)source).Position.IsStalemate)
+                TreeNode evalNode = (TreeNode)source;
+                EngineMessageProcessor.EngineMoveCandidates.EvalNode = evalNode;
+                bool isMate = evalNode.Position.IsCheckmate;
+                bool isStalemate = evalNode.Position.IsStalemate;
+
+                if (!isMate && !isStalemate)
+                {
+                    // if not handled but TreeNode was passed, let's check if it is a checkmate or stalemate after all
+                    if (PositionUtils.IsCheckmate(evalNode.Position, out _))
+                    {
+                        evalNode.Position.IsCheckmate = true;
+                    }
+                    else if (PositionUtils.IsStalemate(evalNode.Position))
+                    {
+                        evalNode.Position.IsStalemate = true;
+                    }
+                }
+
+                if (evalNode.Position.IsStalemate)
                 {
                     ShowEmptyLines(Properties.Resources.Stalemate);
+                    handled = true;
+                }
+                else if (evalNode.Position.IsCheckmate)
+                {
+                    ShowEmptyLines("# " + Properties.Resources.Checkmate);
                     handled = true;
                 }
             }
