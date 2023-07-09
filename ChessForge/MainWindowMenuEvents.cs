@@ -987,6 +987,8 @@ namespace ChessForge
 
             int copiedCount = 0; 
             error = string.Empty;
+            StringBuilder sbErrors = new StringBuilder();
+            int gameIndex = 0;
 
             foreach (GameData gd in games)
             {
@@ -1007,9 +1009,17 @@ namespace ChessForge
                         {
                             copiedCount++;
                         }
+                        if (!string.IsNullOrEmpty(error))
+                        {
+                            sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(gd, gameIndex + 1, error));
+                        }
                     }
+
+                    gameIndex++;
                 }
             }
+
+            error = sbErrors.ToString();
 
             return copiedCount;
         }
@@ -1502,7 +1512,7 @@ namespace ChessForge
                             Topmost = false,
                             Owner = this
                         };
-                        tbDlg.Show();
+                        tbDlg.ShowDialog();
                     }
                 }
             }
