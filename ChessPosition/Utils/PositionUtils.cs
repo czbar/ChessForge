@@ -469,7 +469,7 @@ namespace ChessPosition
         /// <returns></returns>
         public static bool IsEnPassantCapture(BoardPosition position, MoveData move)
         {
-            if (position.InheritedEnPassantSquare == (byte)(move.Destination.Xcoord << 4 | move.Destination.Ycoord) && move.MovingPiece == PieceType.Pawn)
+            if (position.InheritedEnPassantSquare == (byte)(move.Destination.Xcoord << 4 | move.Destination.Ycoord) && position.InheritedEnPassantSquare != 0 && move.MovingPiece == PieceType.Pawn)
             {
                 return true;
             }
