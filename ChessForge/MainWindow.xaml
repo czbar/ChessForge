@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="Chess Forge" Height="900" Width="1676" Loaded="Window_Loaded" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" Closing="ChessForgeMain_Closing" 
         PreviewKeyDown="MainWindow_PreviewKeyDown"
+        PreviewKeyUp="MainWindow_PreviewKeyUp"
         PreviewMouseWheel="OnPreviewMouseWheel" 
         MouseEnter="ChessForgeMain_MouseEnter" >
 

@@ -2875,7 +2875,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Handles selected key events from the main window and lets the rest route further.
+        /// Handles key down events from the main window.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2885,6 +2885,20 @@ namespace ChessForge
             {
                 UiTrainingView.ProcessKeyDown(e);
             }
+            else
+            {
+                ChessForgeMain_PreviewKeyDown(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// Handles key up events from the main window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainWindow_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            ChessForgeMain_PreviewKeyUp(sender, e);
         }
 
         /// <summary>
