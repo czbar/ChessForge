@@ -215,12 +215,20 @@ namespace ChessForge
             }
             else
             {
+                Chapter currentActiveChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                Chapter addedChapter = null;
                 if (createWhiteChapter)
                 {
-                    WorkbookManager.SessionWorkbook.CreateNewChapter();
+                    addedChapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
                 }
                 WorkbookManager.SessionWorkbook.ActiveChapter.SetTitle(player + ": " + Properties.Resources.DownloadedGames);
                 AddGamesToCurrentChapter(games, out addedGames, out addedExercises, null);
+                if (addedGames + addedExercises == 0)
+                {
+                    // undo creation of the chapter
+                    WorkbookManager.SessionWorkbook.Chapters.Remove(addedChapter);
+                    WorkbookManager.SessionWorkbook.ActiveChapter = currentActiveChapter;
+                }
             }
         }
 
