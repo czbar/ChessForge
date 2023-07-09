@@ -565,6 +565,7 @@ namespace ChessForge
         public static void RestartInIdleMode(bool updateCommentBox = true)
         {
             BookmarkManager.ClearBookmarksGui();
+            OpeningExplorer.ResetLastRequestedFen();
             IsDirty = false;
             WorkbookManager.ClearAll();
             _mainWin.ClearTreeViews();
