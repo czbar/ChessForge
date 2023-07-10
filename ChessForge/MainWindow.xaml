@@ -618,6 +618,7 @@
                                 <ContextMenu x:Name="UiCmExercises">
                                     <MenuItem x:Name="_mnExerc_EditHeader" Header="{x:Static p:Resources.EditExerciseHeader}" Click="UiMnExerc_EditHeader_Click" />
                                     <MenuItem x:Name="_mnExerc_EditPosition" Header="{x:Static p:Resources.EditStartingPosition}" Click="UiMnExerc_EditPosition_Click" />
+                                    <MenuItem x:Name="UiMnExercExitSolving" Header="{x:Static p:Resources.ExitSolvingMode}" Click="UiMnExercExitSolving_Click" />
                                     <Separator x:Name="UiMnExerc_Separator_1"/>
                                     <MenuItem x:Name="_mnExerc_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="_mnExerc_CreateExercise" Header="{x:Static p:Resources.CreateNewExercise}" Click="UiMnExerc_CreateExercise_Click" />

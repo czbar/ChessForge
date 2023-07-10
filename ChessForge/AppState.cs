@@ -1029,6 +1029,9 @@ namespace ChessForge
                         MenuItem menuItem = item as MenuItem;
                         switch (menuItem.Name)
                         {
+                            case "UiMnExercExitSolving":
+                                menuItem.Visibility = AppState.CurrentSolvingMode == VariationTree.SolvingMode.NONE ? Visibility.Collapsed : Visibility.Visible;
+                                break;
                             case "_mnExerc_EditHeader":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
@@ -1092,7 +1095,6 @@ namespace ChessForge
                         Separator separ = item as Separator;
                         switch (separ.Name)
                         {
-                            case "UiMnExerc_Separator_1":
                             case "UiMnExerc_Separator_2":
                             case "UiMnExerc_Separator_3":
                             case "UiMnExerc_Separator_4":
