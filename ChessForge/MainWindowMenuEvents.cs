@@ -1858,6 +1858,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Exits solving mode if currently active
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExercExitSolving_Click(object sender, RoutedEventArgs e)
+        {
+            DeactivateSolvingMode();
+        }
+
+        /// <summary>
         /// Edits a Game header.
         /// Invoked from Chapters View menu.
         /// </summary>
