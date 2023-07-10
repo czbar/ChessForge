@@ -218,9 +218,9 @@ namespace GameTree
                 if (algSubstring.Length >= 4 && Char.IsLetter(algSubstring[2]) && Char.IsDigit(algSubstring[3]))
                 {
                     Move.Origin.Xcoord = algSubstring[0] - 'a';
-                    Move.Origin.Ycoord = algSubstring[1] - '0';
+                    Move.Origin.Ycoord = algSubstring[1] - '1';
                     Move.Destination.Xcoord = algSubstring[2] - 'a';
-                    Move.Destination.Ycoord = algSubstring[3] - '0';
+                    Move.Destination.Ycoord = algSubstring[3] - '1';
                     lenProcessed = 3;
                 }
                 else
