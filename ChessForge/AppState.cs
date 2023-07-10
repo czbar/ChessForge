@@ -251,6 +251,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if the user is currently solving an exercise rather thanjust editing it 
+        /// (or being in a different mode altogether)
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsUserSolving()
+        {
+            return CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE || CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS;
+        }
+
+        /// <summary>
         /// Returns the ContentType of the curent ActiveVariationTree
         /// </summary>
         public static GameData.ContentType ActiveContentType
@@ -897,7 +907,6 @@ namespace ChessForge
             {
                 VariationTree tree = ActiveVariationTree;
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
-                bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.CurrentSolvingMode == VariationTree.SolvingMode.NONE;
 
                 foreach (var item in MainWin.UiCmnWorkbookRightClick.Items)
                 {
@@ -950,7 +959,6 @@ namespace ChessForge
                 int gameIndex = chapter.ActiveModelGameIndex;
 
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
-                bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.CurrentSolvingMode == VariationTree.SolvingMode.NONE;
 
                 foreach (var item in MainWin.UiCmModelGames.Items)
                 {
@@ -1019,7 +1027,7 @@ namespace ChessForge
                 int exerciseCount = chapter.GetExerciseCount();
                 int exerciseIndex = chapter.ActiveExerciseIndex;
 
-                bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.CurrentSolvingMode != VariationTree.SolvingMode.NONE;
+                bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || IsUserSolving();
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
                 foreach (var item in MainWin.UiCmExercises.Items)
@@ -1030,7 +1038,7 @@ namespace ChessForge
                         switch (menuItem.Name)
                         {
                             case "UiMnExercExitSolving":
-                                menuItem.Visibility = AppState.CurrentSolvingMode == VariationTree.SolvingMode.NONE ? Visibility.Collapsed : Visibility.Visible;
+                                menuItem.Visibility = AppState.IsUserSolving() ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "_mnExerc_EditHeader":
                                 menuItem.IsEnabled = exerciseIndex >= 0;

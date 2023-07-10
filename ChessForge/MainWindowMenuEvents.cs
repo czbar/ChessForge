@@ -609,7 +609,9 @@ namespace ChessForge
         /// <param name="e"></param>
         public void UiMnFindIdenticalPosition_Click(object sender, RoutedEventArgs e)
         {
-            if (ActiveVariationTree == null || AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.IsUserSolving();
+
+            if (isTrainingOrSolving || ActiveVariationTree == null || AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
             {
                 return;
             }
@@ -2199,7 +2201,7 @@ namespace ChessForge
         {
             try
             {
-                if (AppState.CurrentSolvingMode == VariationTree.SolvingMode.NONE)
+                if (AppState.IsUserSolving())
                 {
                     Bookmark bm = BookmarkManager.AddBookmark(AppState.ActiveVariationTree, AppState.ActiveVariationTree.SelectedNodeId, AppState.ActiveArticleIndex);
                     BookmarkManager.SetLastAddedBookmark(bm);
