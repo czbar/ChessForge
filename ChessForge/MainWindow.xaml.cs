@@ -412,6 +412,18 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// If the user is currently solving an exercise,
+        /// leaves the Solving Mode and returns to the main tree viewing editing
+        /// </summary>
+        public void DeactivateSolvingMode()
+        {
+            if (ActiveVariationTree != null && ActiveVariationTree.ContentType == GameData.ContentType.EXERCISE)
+            {
+                _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
+            }
+        }
+
+        /// <summary>
         /// Fills the Bookmark View's ComboBox for Content Type selection.
         /// </summary>
         private void InitializeContentTypeSelectionComboBox()
