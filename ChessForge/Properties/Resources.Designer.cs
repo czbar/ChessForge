@@ -1798,6 +1798,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot bookmark positions while solving..
+        /// </summary>
+        public static string ErrorNoBookmarksWhileSolving {
+            get {
+                return ResourceManager.GetString("ErrorNoBookmarksWhileSolving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to parse engine&apos;s move..
         /// </summary>
         public static string ErrorParseMove {

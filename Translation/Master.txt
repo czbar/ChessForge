@@ -1052,6 +1052,9 @@ ErrorAddBookmark=Failed to add the bookmark.
 #Error adding bookmarks 
 ErrorAddBookmarks=Failed to add the bookmarks.
 
+#No bookmarks in solving mode
+ErrorNoBookmarksWhileSolving=Cannot bookmark positions while solving.
+
 #No move to start training from
 NoTrainingStartMove=No move selected to start training from.
 

@@ -1352,6 +1352,9 @@ BookmarkAlreadyExists=Zakładka już istnieje
 #english: ErrorAddBookmark=Failed to add the bookmark.
 ErrorAddBookmark=Błąd przy dodawaniu zakładki.
 
+#No bookmarks in solving mode
+ErrorNoBookmarksWhileSolving=Nie można dodawać zakładek podczas rozwiąywania.
+
 #description: Error adding bookmarks 
 #english: ErrorAddBookmarks=Failed to add the bookmarks.
 ErrorAddBookmarks=Błąd przy dodawaniu zakładek.

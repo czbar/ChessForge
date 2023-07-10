@@ -1356,6 +1356,10 @@ ErrorAddBookmark=Błąd przy dodawaniu zakładki.
 #english: ErrorAddBookmarks=Failed to add the bookmarks.
 ErrorAddBookmarks=Błąd przy dodawaniu zakładek.
 
+#description: No bookmarks in solving mode
+#english: ErrorNoBookmarksWhileSolving=Cannot bookmark positions while solving.
+ErrorNoBookmarksWhileSolving=Nie można dodawać zakładek podczas rozwiąywania.
+
 #description: No move to start training from
 #english: NoTrainingStartMove=No move selected to start training from.
 NoTrainingStartMove=Takie posunięcie nie istnieje

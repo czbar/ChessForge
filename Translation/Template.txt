@@ -1356,6 +1356,10 @@ ErrorAddBookmark=
 #english: ErrorAddBookmarks=Failed to add the bookmarks.
 ErrorAddBookmarks=
 
+#description: No bookmarks in solving mode
+#english: ErrorNoBookmarksWhileSolving=Cannot bookmark positions while solving.
+ErrorNoBookmarksWhileSolving=
+
 #description: No move to start training from
 #english: NoTrainingStartMove=No move selected to start training from.
 NoTrainingStartMove=
