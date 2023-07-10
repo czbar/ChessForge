@@ -1461,7 +1461,10 @@ namespace ChessForge
                                             int index = chapter.AddArticle(games[i], contentType, out string error, targetcontentType);
                                             if (index < 0)
                                             {
-                                                skippedDueToType++;
+                                                if (string.IsNullOrEmpty(error))
+                                                {
+                                                    skippedDueToType++;
+                                                }
                                             }
                                             else if (firstImportedGameIndex < 0)
                                             {
