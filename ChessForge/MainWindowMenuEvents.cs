@@ -2189,17 +2189,24 @@ namespace ChessForge
         {
             try
             {
-                Bookmark bm = BookmarkManager.AddBookmark(AppState.ActiveVariationTree, AppState.ActiveVariationTree.SelectedNodeId, AppState.ActiveArticleIndex);
-                BookmarkManager.SetLastAddedBookmark(bm);
-
-                if (bm == null)
+                if (AppState.CurrentSolvingMode == VariationTree.SolvingMode.NONE)
                 {
-                    MessageBox.Show(Properties.Resources.BookmarkAlreadyExists, Properties.Resources.Bookmarks, MessageBoxButton.OK);
+                    Bookmark bm = BookmarkManager.AddBookmark(AppState.ActiveVariationTree, AppState.ActiveVariationTree.SelectedNodeId, AppState.ActiveArticleIndex);
+                    BookmarkManager.SetLastAddedBookmark(bm);
+
+                    if (bm == null)
+                    {
+                        MessageBox.Show(Properties.Resources.BookmarkAlreadyExists, Properties.Resources.Bookmarks, MessageBoxButton.OK);
+                    }
+                    else
+                    {
+                        AppState.IsDirty = true;
+                        UiTabBookmarks.Focus();
+                    }
                 }
                 else
                 {
-                    AppState.IsDirty = true;
-                    UiTabBookmarks.Focus();
+                    MessageBox.Show(Properties.Resources.ErrorNoBookmarksWhileSolving, Properties.Resources.ChessForge, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch
