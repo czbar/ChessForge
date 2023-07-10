@@ -617,7 +617,7 @@ namespace ChessForge
                 MainWin.UiMnAnnotations.IsEnabled = false;
                 MainWin.UiMnMergeChapters.IsEnabled = false;
 
-                MainWin.UiMnWorkbookOptions.IsEnabled = WorkbookManager.SessionWorkbook != null; 
+                MainWin.UiMnWorkbookOptions.IsEnabled = WorkbookManager.SessionWorkbook != null;
                 switch (CurrentLearningMode)
                 {
                     case LearningMode.Mode.IDLE:
@@ -897,6 +897,8 @@ namespace ChessForge
             {
                 VariationTree tree = ActiveVariationTree;
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
+                bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.CurrentSolvingMode == VariationTree.SolvingMode.NONE;
+
                 foreach (var item in MainWin.UiCmnWorkbookRightClick.Items)
                 {
                     if (item is MenuItem)
@@ -948,6 +950,7 @@ namespace ChessForge
                 int gameIndex = chapter.ActiveModelGameIndex;
 
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
+                bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.CurrentSolvingMode == VariationTree.SolvingMode.NONE;
 
                 foreach (var item in MainWin.UiCmModelGames.Items)
                 {
@@ -1016,6 +1019,7 @@ namespace ChessForge
                 int exerciseCount = chapter.GetExerciseCount();
                 int exerciseIndex = chapter.ActiveExerciseIndex;
 
+                bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.CurrentSolvingMode != VariationTree.SolvingMode.NONE;
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
                 foreach (var item in MainWin.UiCmExercises.Items)
@@ -1027,40 +1031,75 @@ namespace ChessForge
                         {
                             case "_mnExerc_EditHeader":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_EditPosition":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_StartTrainingFromHere":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_CreateExercise":
                                 menuItem.IsEnabled = true;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_CopyFen":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && ActiveVariationTree != null;
                                 break;
                             case "_mnExerc_PromoteLine":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_DeleteMovesFromHere":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_DeleteThisExercise":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_EvalLine":
                                 menuItem.Visibility = Visibility.Collapsed;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_MarkThumbnail":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "UiMnExercCopyMoves":
                             case "UiMnExercCutMoves":
                                 menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "UiMnExercPasteMoves":
                                 menuItem.IsEnabled = ChfClipboard.Type == ChfClipboard.ItemType.NODE_LIST && ChfClipboard.Value != null;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                break;
+                            case "UiMnExercMarkBookmark":
+                            case "UiMnExerc_ImportExercises":
+                            case "UiMnExercSelectHighlighted":
+                            case "UiMnExercSelectSubtree":
+                            case "UiMnExerc_EvalMove":
+                            case "UiMnExercFindIdentical":
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                break;
+                        }
+                    }
+                    else if (item is Separator)
+                    {
+                        Separator separ = item as Separator;
+                        switch (separ.Name)
+                        {
+                            case "UiMnExerc_Separator_1":
+                            case "UiMnExerc_Separator_2":
+                            case "UiMnExerc_Separator_3":
+                            case "UiMnExerc_Separator_4":
+                            case "UiMnExerc_Separator_5":
+                            case "UiMnExerc_Separator_6":
+                            case "UiMnExerc_Separator_7":
+                                separ.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                         }
                     }
