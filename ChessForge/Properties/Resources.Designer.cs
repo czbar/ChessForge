@@ -1969,6 +1969,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exit Solving Mode.
+        /// </summary>
+        public static string ExitSolvingMode {
+            get {
+                return ResourceManager.GetString("ExitSolvingMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit Training.
         /// </summary>
         public static string ExitTraining {

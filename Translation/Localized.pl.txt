@@ -538,7 +538,9 @@ RestartTrainingSession=Zacznij Trening od Początku
 #english: ExitTraining=Exit Training
 ExitTraining=Zakończ Trening
 
-
+#description: Exit solving mode
+#english: ExitSolvingMode=Exit Solving Mode
+ExitSolvingMode=Wyjdź z trybu rozwiązywania
 
 #description: TOP LEVEL MENU: Edit
 #english: Edit=Edit
@@ -1352,12 +1354,13 @@ BookmarkAlreadyExists=Zakładka już istnieje
 #english: ErrorAddBookmark=Failed to add the bookmark.
 ErrorAddBookmark=Błąd przy dodawaniu zakładki.
 
-#No bookmarks in solving mode
-ErrorNoBookmarksWhileSolving=Nie można dodawać zakładek podczas rozwiąywania.
-
 #description: Error adding bookmarks 
 #english: ErrorAddBookmarks=Failed to add the bookmarks.
 ErrorAddBookmarks=Błąd przy dodawaniu zakładek.
+
+#description: No bookmarks in solving mode
+#english: ErrorNoBookmarksWhileSolving=Cannot bookmark positions while solving.
+ErrorNoBookmarksWhileSolving=Nie można dodawać zakładek podczas rozwiąywania.
 
 #description: No move to start training from
 #english: NoTrainingStartMove=No move selected to start training from.

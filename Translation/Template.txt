@@ -538,7 +538,9 @@ RestartTrainingSession=
 #english: ExitTraining=Exit Training
 ExitTraining=
 
-
+#description: Exit solving mode
+#english: ExitSolvingMode=Exit Solving Mode
+ExitSolvingMode=
 
 #description: TOP LEVEL MENU: Edit
 #english: Edit=Edit

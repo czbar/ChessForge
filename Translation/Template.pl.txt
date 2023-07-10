@@ -538,7 +538,9 @@ RestartTrainingSession=Zacznij Trening od Początku
 #english: ExitTraining=Exit Training
 ExitTraining=Zakończ Trening
 
-
+#description: Exit solving mode
+#english: ExitSolvingMode=Exit Solving Mode
+ExitSolvingMode=Wyjdź z trybu rozwiązywania
 
 #description: TOP LEVEL MENU: Edit
 #english: Edit=Edit

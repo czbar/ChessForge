@@ -489,6 +489,9 @@
   <data name="ExitTraining" xml:space="preserve">
     <value>Zakończ Trening</value>
   </data>
+  <data name="ExitSolvingMode" xml:space="preserve">
+    <value>Wyjdź z trybu rozwiązywania</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edytuj</value>
   </data>

@@ -489,6 +489,9 @@
   <data name="ExitTraining" xml:space="preserve">
     <value>Exit Training</value>
   </data>
+  <data name="ExitSolvingMode" xml:space="preserve">
+    <value>Exit Solving Mode</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>

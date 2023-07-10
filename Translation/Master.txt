@@ -414,7 +414,8 @@ RestartTrainingSession=Restart Training Session
 #Exit the Training Session
 ExitTraining=Exit Training
 
-
+#Exit solving mode
+ExitSolvingMode=Exit Solving Mode
 
 #TOP LEVEL MENU: Edit
 Edit=Edit
