@@ -201,7 +201,7 @@
                                 <MenuItem x:Name="UiMnciRestartTraining"  Header="{x:Static p:Resources.RestartTraining}" Click="UiMnTrainRestartTraining_Click"/>
                                 <MenuItem x:Name="UiMnciExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
                                 <Separator x:Name="UiMncMainBoardSepar_1" />
-                                <MenuItem x:Name="UiMnMain_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnStudy_CreateExercise_Click"  />
+                                <MenuItem x:Name="UiMnMain_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMn_CreateExercise_Click"  />
                                 <MenuItem x:Name="UiMnciCopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnciCopyFen_Click" />
                                 <Separator x:Name="UiMncMainBoardSepar_1a" />
                                 <MenuItem x:Name="UiMnciEvalPos" Header="{x:Static p:Resources.EvaluatePosition}" Click="UiMnEvaluatePosition_Click" />
@@ -471,7 +471,7 @@
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiCmnWorkbookRightClick">
                                     <MenuItem x:Name="UiMnStudyStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
-                                    <MenuItem x:Name="UiMnStudy_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnStudy_CreateExercise_Click"  />
+                                    <MenuItem x:Name="UiMnStudy_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMn_CreateExercise_Click"  />
                                     <MenuItem x:Name="UiMnReferenceArticles" Header="{x:Static p:Resources.MnGameExerciseReferences}" Click="UiMnReferenceArticles_Click"/>
                                     <MenuItem x:Name="UiMnCopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnCopyFen_Click" />
                                     <Separator />

@@ -1677,7 +1677,6 @@ namespace ChessForge
             ActiveTreeView.CopyFenToClipboard();
         }
 
-
         /// <summary>
         /// Creates a new Exercise from the Model Games View context menu.
         /// </summary>
@@ -1685,21 +1684,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnGame_CreateExercise_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                TreeNode nd = _modelGameTreeView.GetSelectedNode();
-                if (nd != null)
-                {
-                    VariationTree tree = TreeUtils.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
-                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                    CopyHeaderFromGame(tree, chapter.GetActiveModelGameHeader(), false);
-                    CreateNewExerciseFromTree(tree);
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("UiMnGame_CreateExercise_Click()", ex);
-            }
+            UiMn_CreateExercise_Click(sender, e);
         }
 
         /// <summary>
@@ -1707,19 +1692,20 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnStudy_CreateExercise_Click(object sender, RoutedEventArgs e)
+        private void UiMn_CreateExercise_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                TreeNode nd = _studyTreeView.GetSelectedNode();
+                TreeNode nd = ActiveLine.GetSelectedTreeNode();
                 if (nd != null)
                 {
                     VariationTree tree = TreeUtils.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                    CopyHeaderFromGame(tree, chapter.StudyTree.Tree.Header, false);
-                    if (string.IsNullOrEmpty(tree.Header.GetEventName(out _)))
+                    CopyHeaderFromGame(tree, ActiveVariationTree.Header, false);
+                    if (ActiveVariationTree.Header.GetContentType(out _) == GameData.ContentType.STUDY_TREE)
                     {
-                        tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, Properties.Resources.StudyTreeAfter + " " + MoveUtils.BuildSingleMoveText(nd, true, true));
+                        tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE, chapter.Title);
+                        tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, Properties.Resources.StudyTreeAfter + " " + MoveUtils.BuildSingleMoveText(nd, true, true));
                     }
                     CreateNewExerciseFromTree(tree);
                 }
