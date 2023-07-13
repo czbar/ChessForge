@@ -123,16 +123,13 @@ namespace ChessForge
         {
             if (force || !(AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME))
             {
-                lock (MoveCandidatesLock)
+                // explicitly invoke ShowEngineLines as in some cases we may arrive here before having a chance
+                // to show the lines at a timer event
+                if (EngineMoveCandidates.Lines.Count > 0)
                 {
-                    // explicitly invoke ShowEngineLines as in some cases we may arrive here before having a chance
-                    // to show the lines at a timer event
-                    if (EngineMoveCandidates.Lines.Count > 0)
-                    {
-                        EngineLinesBox.ShowEngineLines(null, null, true);
-                    }
-                    EngineMoveCandidates.Clear();
+                    EngineLinesBox.ShowEngineLines(null, null, true);
                 }
+                EngineMoveCandidates.Clear();
             }
         }
 
@@ -306,7 +303,7 @@ namespace ChessForge
                     {
                         if (!delayed)
                         {
-                            AppLog.Message("Continue evaluation next move after index " + index.ToString());
+                            AppLog.Message("Continue evaluation for next move after index " + index.ToString());
                             ClearMoveCandidates(false);
                             AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                             RequestMoveEvaluation(index + 1, EvaluationManager.GetNextLineNodeToEvaluate(), treeId);

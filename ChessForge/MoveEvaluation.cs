@@ -102,10 +102,18 @@ namespace ChessForge
                 {
                     res = -1;
                 }
+                if (this.MovesToMate < 0)
+                {
+                    res = -1 * res;
+                }
             }
             else if (mev.IsMateDetected)
             {
                 res = 1;
+                if (mev.MovesToMate < 0)
+                {
+                    res = -1;
+                }
             }
             else
             {

@@ -47,7 +47,7 @@ namespace ChessForge
                         switch (action)
                         {
                             case DownloadedGamesActionDialog.Action.CurrentChapter:
-                                AddGamesToCurrentChapter(dlg.Games, out gameCount, out exerciseCount, null);
+                                AddGamesToCurrentChapter(dlg.Games, out gameCount, out exerciseCount, null, true);
                                 break;
                             case DownloadedGamesActionDialog.Action.NewChapter:
                                 AddGamesToNewChapter(dlg.Games, dlg.UserNick, buildRepertoireChapters, true, out gameCount, out exerciseCount, lastRepertoireMoveNo);
@@ -97,7 +97,7 @@ namespace ChessForge
         /// Adds selected games to the current chapter
         /// </summary>
         /// <param name="games"></param>
-        private static void AddGamesToCurrentChapter(ObservableCollection<GameData> games, out int addedGames, out int addedExercises, string errMsgPrefix)
+        private static void AddGamesToCurrentChapter(ObservableCollection<GameData> games, out int addedGames, out int addedExercises, string errMsgPrefix, bool reportErrors)
         {
             addedGames = 0;
             addedExercises = 0;
@@ -105,32 +105,48 @@ namespace ChessForge
             try
             {
                 int selected = GetSelectedGamesCount(games);
-                int copied = AppState.MainWin.CopySelectedItemsToChapter(AppState.ActiveChapter, true, out string error, games, out addedExercises);
-                addedGames = copied - addedExercises;
-                if (copied == 0)
+                if (selected > 0)
                 {
-                    // no games were copied
-                    string message = Properties.Resources.ErrNoGamesCopied;
-                    if (!string.IsNullOrEmpty(errMsgPrefix))
+                    int copied = AppState.MainWin.CopySelectedItemsToChapter(AppState.ActiveChapter, true, out string error, games, out addedExercises);
+
+                    addedGames = copied - addedExercises;
+                    if (copied == 0)
                     {
-                        message = errMsgPrefix + ": " + message;
-                    }
-                    MessageBox.Show(message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else
-                {
-                    if (copied < selected)
-                    {
-                        // only some games were copied
-                        string message = Properties.Resources.ErrNotAllGamesCopied + " (" + copied.ToString() + "/" + selected.ToString() + ")";
+                        // no games were copied
+                        string message = Properties.Resources.ErrNoGamesCopied;
                         if (!string.IsNullOrEmpty(errMsgPrefix))
                         {
                             message = errMsgPrefix + ": " + message;
                         }
-                        MessageBox.Show(message, Properties.Resources.Warning, MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show(message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                    AppState.MainWin.RebuildChaptersView(addedGames > 0, addedExercises > 0);
-                    AppState.MainWin.FocusOnChapterView();
+                    else
+                    {
+                        if (copied < selected)
+                        {
+                            // only some games were copied
+                            string message = Properties.Resources.ErrNotAllGamesCopied + " (" + copied.ToString() + "/" + selected.ToString() + ")";
+                            if (!string.IsNullOrEmpty(errMsgPrefix))
+                            {
+                                message = errMsgPrefix + ": " + message;
+                            }
+                            MessageBox.Show(message, Properties.Resources.Warning, MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        AppState.MainWin.RebuildChaptersView(addedGames > 0, addedExercises > 0);
+                        AppState.MainWin.FocusOnChapterView();
+                    }
+
+                    if (reportErrors && !string.IsNullOrEmpty(error))
+                    {
+                        TextBoxDialog tbDlg = new TextBoxDialog(Properties.Resources.PgnErrors, error)
+                        {
+                            Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                            Top = AppState.MainWin.ChessForgeMain.Top + 100,
+                            Topmost = false,
+                            Owner = AppState.MainWin
+                        };
+                        tbDlg.ShowDialog();
+                    }
                 }
             }
             catch
@@ -186,7 +202,7 @@ namespace ChessForge
                         WorkbookManager.SessionWorkbook.CreateNewChapter();
                     }
                     WorkbookManager.SessionWorkbook.ActiveChapter.SetTitle(player + ": " + Properties.Resources.GamesWithWhite);
-                    AddGamesToCurrentChapter(whiteGames, out int addGames, out int addExercises, Properties.Resources.GamesWithWhite);
+                    AddGamesToCurrentChapter(whiteGames, out int addGames, out int addExercises, Properties.Resources.GamesWithWhite, false);
                     addedGames += addGames;
                     addedExercises += addExercises;
                     WorkbookManager.MergeGames(ref WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, ref whiteGames);
@@ -203,7 +219,7 @@ namespace ChessForge
                         WorkbookManager.SessionWorkbook.CreateNewChapter();
                     }
                     WorkbookManager.SessionWorkbook.ActiveChapter.SetTitle(player + ": " + Properties.Resources.GamesWithBlack);
-                    AddGamesToCurrentChapter(blackGames, out int addGames, out int addExercises, Properties.Resources.GamesWithBlack);
+                    AddGamesToCurrentChapter(blackGames, out int addGames, out int addExercises, Properties.Resources.GamesWithBlack, false);
                     addedGames += addGames;
                     addedExercises += addExercises;
                     WorkbookManager.MergeGames(ref WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, ref blackGames);
@@ -215,12 +231,20 @@ namespace ChessForge
             }
             else
             {
+                Chapter currentActiveChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                Chapter addedChapter = null;
                 if (createWhiteChapter)
                 {
-                    WorkbookManager.SessionWorkbook.CreateNewChapter();
+                    addedChapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
                 }
                 WorkbookManager.SessionWorkbook.ActiveChapter.SetTitle(player + ": " + Properties.Resources.DownloadedGames);
-                AddGamesToCurrentChapter(games, out addedGames, out addedExercises, null);
+                AddGamesToCurrentChapter(games, out addedGames, out addedExercises, null, true);
+                if (addedGames + addedExercises == 0)
+                {
+                    // undo creation of the chapter
+                    WorkbookManager.SessionWorkbook.Chapters.Remove(addedChapter);
+                    WorkbookManager.SessionWorkbook.ActiveChapter = currentActiveChapter;
+                }
             }
         }
 

@@ -56,6 +56,7 @@ namespace ChessForge
                         }
                         else
                         {
+                            OpeningExplorer.ResetLastRequestedFen();
                             TablebaseExplorer.RequestTablebaseData(treeId, nd, force);
                         }
                     }

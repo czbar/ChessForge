@@ -118,6 +118,14 @@ namespace WebAccess
         }
 
         /// <summary>
+        /// Resets last requested fen e.g. when closing a workbook or switching to tablebase
+        /// </summary>
+        public static void ResetLastRequestedFen()
+        {
+            _lastRequestedFen = "";
+        }
+
+        /// <summary>
         /// Remove some elements from the cache to make room for new ones
         /// </summary>
         private static void MakeRoomInCache()

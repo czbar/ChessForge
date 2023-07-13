@@ -414,7 +414,8 @@ RestartTrainingSession=Restart Training Session
 #Exit the Training Session
 ExitTraining=Exit Training
 
-
+#Exit solving mode
+ExitSolvingMode=Exit Solving Mode
 
 #TOP LEVEL MENU: Edit
 Edit=Edit
@@ -1051,6 +1052,9 @@ ErrorAddBookmark=Failed to add the bookmark.
 
 #Error adding bookmarks 
 ErrorAddBookmarks=Failed to add the bookmarks.
+
+#No bookmarks in solving mode
+ErrorNoBookmarksWhileSolving=Cannot bookmark positions while solving.
 
 #No move to start training from
 NoTrainingStartMove=No move selected to start training from.

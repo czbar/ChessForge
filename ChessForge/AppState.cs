@@ -251,6 +251,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if the user is currently solving an exercise rather thanjust editing it 
+        /// (or being in a different mode altogether)
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsUserSolving()
+        {
+            return CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE || CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS;
+        }
+
+        /// <summary>
         /// Returns the ContentType of the curent ActiveVariationTree
         /// </summary>
         public static GameData.ContentType ActiveContentType
@@ -565,6 +575,7 @@ namespace ChessForge
         public static void RestartInIdleMode(bool updateCommentBox = true)
         {
             BookmarkManager.ClearBookmarksGui();
+            OpeningExplorer.ResetLastRequestedFen();
             IsDirty = false;
             WorkbookManager.ClearAll();
             _mainWin.ClearTreeViews();
@@ -616,7 +627,7 @@ namespace ChessForge
                 MainWin.UiMnAnnotations.IsEnabled = false;
                 MainWin.UiMnMergeChapters.IsEnabled = false;
 
-                MainWin.UiMnWorkbookOptions.IsEnabled = WorkbookManager.SessionWorkbook != null; 
+                MainWin.UiMnWorkbookOptions.IsEnabled = WorkbookManager.SessionWorkbook != null;
                 switch (CurrentLearningMode)
                 {
                     case LearningMode.Mode.IDLE:
@@ -856,6 +867,28 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns true if the position with a given NodeId is the active tree
+        /// is a checkmate or a stalemate.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        public static bool IsCheckMateOrStalemate(int nodeId)
+        {
+            bool isMate = false;
+
+            if (ActiveVariationTree != null)
+            {
+                TreeNode nd = ActiveVariationTree.GetNodeFromNodeId(nodeId);
+                if (nd != null && (nd.Position.IsCheckmate || nd.Position.IsStalemate))
+                {
+                    isMate = true;
+                }
+            }
+
+            return isMate;
+        }
+
+        /// <summary>
         /// Sets the image for the main chessboard matching the current active tab.
         /// </summary>
         /// <param name="tabType"></param>
@@ -894,8 +927,11 @@ namespace ChessForge
         {
             try
             {
+                bool isMate = IsCheckMateOrStalemate(lastClickedNodeId);
+
                 VariationTree tree = ActiveVariationTree;
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
+
                 foreach (var item in MainWin.UiCmnWorkbookRightClick.Items)
                 {
                     if (item is MenuItem)
@@ -903,6 +939,10 @@ namespace ChessForge
                         MenuItem menuItem = item as MenuItem;
                         switch (menuItem.Name)
                         {
+                            case "UiMnStudyStartTrainingHere":
+                            case "UiMnStudy_CreateExercise":
+                                menuItem.IsEnabled = !isMate;
+                                break;
                             case "UiMnMarkBookmark":
                             case "UiMnStudyFindIdentical":
                                 menuItem.IsEnabled = isEnabled;
@@ -942,6 +982,8 @@ namespace ChessForge
         {
             try
             {
+                bool isMate = IsCheckMateOrStalemate(lastClickedNodeId);
+
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int gameCount = chapter.GetModelGameCount();
                 int gameIndex = chapter.ActiveModelGameIndex;
@@ -963,7 +1005,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = true;
                                 break;
                             case "_mnGame_StartTrainingFromHere":
-                                menuItem.IsEnabled = gameIndex >= 0;
+                                menuItem.IsEnabled = gameIndex >= 0 && !isMate;
                                 break;
                             case "_mnGame_MergeToStudy":
                                 menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
@@ -972,7 +1014,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = gameIndex >= 0 && ActiveVariationTree != null;
                                 break;
                             case "_mnGame_CreateExercise":
-                                menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0 && !isMate;
                                 break;
                             case "_mnGame_PromoteLine":
                                 menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
@@ -1009,12 +1051,15 @@ namespace ChessForge
         /// <param name="lastClickedNodeId"></param>
         private static void EnableExercisesMenuItems(int lastClickedNodeId)
         {
+            bool isMate = IsCheckMateOrStalemate(lastClickedNodeId);
+
             try
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int exerciseCount = chapter.GetExerciseCount();
                 int exerciseIndex = chapter.ActiveExerciseIndex;
 
+                bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || IsUserSolving();
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
                 foreach (var item in MainWin.UiCmExercises.Items)
@@ -1024,42 +1069,79 @@ namespace ChessForge
                         MenuItem menuItem = item as MenuItem;
                         switch (menuItem.Name)
                         {
+                            case "UiMnExercExitSolving":
+                                menuItem.Visibility = AppState.IsUserSolving() ? Visibility.Visible : Visibility.Collapsed;
+                                break;
                             case "_mnExerc_EditHeader":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_EditPosition":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_StartTrainingFromHere":
-                                menuItem.IsEnabled = exerciseIndex >= 0;
+                                menuItem.IsEnabled = exerciseIndex >= 0 && !isMate;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_CreateExercise":
-                                menuItem.IsEnabled = true;
+                                menuItem.IsEnabled = !isMate;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_CopyFen":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && ActiveVariationTree != null;
                                 break;
                             case "_mnExerc_PromoteLine":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_DeleteMovesFromHere":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_DeleteThisExercise":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_EvalLine":
                                 menuItem.Visibility = Visibility.Collapsed;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_MarkThumbnail":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "UiMnExercCopyMoves":
                             case "UiMnExercCutMoves":
                                 menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "UiMnExercPasteMoves":
                                 menuItem.IsEnabled = ChfClipboard.Type == ChfClipboard.ItemType.NODE_LIST && ChfClipboard.Value != null;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                break;
+                            case "UiMnExercMarkBookmark":
+                            case "UiMnExerc_ImportExercises":
+                            case "UiMnExercSelectHighlighted":
+                            case "UiMnExercSelectSubtree":
+                            case "UiMnExerc_EvalMove":
+                            case "UiMnExercFindIdentical":
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                break;
+                        }
+                    }
+                    else if (item is Separator)
+                    {
+                        Separator separ = item as Separator;
+                        switch (separ.Name)
+                        {
+                            case "UiMnExerc_Separator_2":
+                            case "UiMnExerc_Separator_3":
+                            case "UiMnExerc_Separator_4":
+                            case "UiMnExerc_Separator_5":
+                            case "UiMnExerc_Separator_6":
+                            case "UiMnExerc_Separator_7":
+                                separ.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                         }
                     }

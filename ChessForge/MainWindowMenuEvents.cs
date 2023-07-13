@@ -609,7 +609,9 @@ namespace ChessForge
         /// <param name="e"></param>
         public void UiMnFindIdenticalPosition_Click(object sender, RoutedEventArgs e)
         {
-            if (ActiveVariationTree == null || AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.IsUserSolving();
+
+            if (isTrainingOrSolving || ActiveVariationTree == null || AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
             {
                 return;
             }
@@ -987,6 +989,8 @@ namespace ChessForge
 
             int copiedCount = 0; 
             error = string.Empty;
+            StringBuilder sbErrors = new StringBuilder();
+            int gameIndex = 0;
 
             foreach (GameData gd in games)
             {
@@ -1007,9 +1011,17 @@ namespace ChessForge
                         {
                             copiedCount++;
                         }
+                        if (!string.IsNullOrEmpty(error))
+                        {
+                            sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(gd, gameIndex + 1, error));
+                        }
                     }
+
+                    gameIndex++;
                 }
             }
+
+            error = sbErrors.ToString();
 
             return copiedCount;
         }
@@ -1451,7 +1463,10 @@ namespace ChessForge
                                             int index = chapter.AddArticle(games[i], contentType, out string error, targetcontentType);
                                             if (index < 0)
                                             {
-                                                skippedDueToType++;
+                                                if (string.IsNullOrEmpty(error))
+                                                {
+                                                    skippedDueToType++;
+                                                }
                                             }
                                             else if (firstImportedGameIndex < 0)
                                             {
@@ -1502,7 +1517,7 @@ namespace ChessForge
                             Topmost = false,
                             Owner = this
                         };
-                        tbDlg.Show();
+                        tbDlg.ShowDialog();
                     }
                 }
             }
@@ -1662,7 +1677,6 @@ namespace ChessForge
             ActiveTreeView.CopyFenToClipboard();
         }
 
-
         /// <summary>
         /// Creates a new Exercise from the Model Games View context menu.
         /// </summary>
@@ -1670,21 +1684,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnGame_CreateExercise_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                TreeNode nd = _modelGameTreeView.GetSelectedNode();
-                if (nd != null)
-                {
-                    VariationTree tree = TreeUtils.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
-                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                    CopyHeaderFromGame(tree, chapter.GetActiveModelGameHeader(), false);
-                    CreateNewExerciseFromTree(tree);
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("UiMnGame_CreateExercise_Click()", ex);
-            }
+            UiMn_CreateExercise_Click(sender, e);
         }
 
         /// <summary>
@@ -1692,19 +1692,20 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnStudy_CreateExercise_Click(object sender, RoutedEventArgs e)
+        private void UiMn_CreateExercise_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                TreeNode nd = _studyTreeView.GetSelectedNode();
+                TreeNode nd = ActiveLine.GetSelectedTreeNode();
                 if (nd != null)
                 {
                     VariationTree tree = TreeUtils.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                    CopyHeaderFromGame(tree, chapter.StudyTree.Tree.Header, false);
-                    if (string.IsNullOrEmpty(tree.Header.GetEventName(out _)))
+                    CopyHeaderFromGame(tree, ActiveVariationTree.Header, false);
+                    if (ActiveVariationTree.Header.GetContentType(out _) == GameData.ContentType.STUDY_TREE)
                     {
-                        tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, Properties.Resources.StudyTreeAfter + " " + MoveUtils.BuildSingleMoveText(nd, true, true));
+                        tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE, chapter.Title);
+                        tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, Properties.Resources.StudyTreeAfter + " " + MoveUtils.BuildSingleMoveText(nd, true, true));
                     }
                     CreateNewExerciseFromTree(tree);
                 }
@@ -1842,6 +1843,16 @@ namespace ChessForge
             {
                 AppLog.Message("UiMnExerc_EditPosition_Click()", ex);
             }
+        }
+
+        /// <summary>
+        /// Exits solving mode if currently active
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExercExitSolving_Click(object sender, RoutedEventArgs e)
+        {
+            DeactivateSolvingMode();
         }
 
         /// <summary>
@@ -2176,17 +2187,24 @@ namespace ChessForge
         {
             try
             {
-                Bookmark bm = BookmarkManager.AddBookmark(AppState.ActiveVariationTree, AppState.ActiveVariationTree.SelectedNodeId, AppState.ActiveArticleIndex);
-                BookmarkManager.SetLastAddedBookmark(bm);
-
-                if (bm == null)
+                if (AppState.IsUserSolving())
                 {
-                    MessageBox.Show(Properties.Resources.BookmarkAlreadyExists, Properties.Resources.Bookmarks, MessageBoxButton.OK);
+                    Bookmark bm = BookmarkManager.AddBookmark(AppState.ActiveVariationTree, AppState.ActiveVariationTree.SelectedNodeId, AppState.ActiveArticleIndex);
+                    BookmarkManager.SetLastAddedBookmark(bm);
+
+                    if (bm == null)
+                    {
+                        MessageBox.Show(Properties.Resources.BookmarkAlreadyExists, Properties.Resources.Bookmarks, MessageBoxButton.OK);
+                    }
+                    else
+                    {
+                        AppState.IsDirty = true;
+                        UiTabBookmarks.Focus();
+                    }
                 }
                 else
                 {
-                    AppState.IsDirty = true;
-                    UiTabBookmarks.Focus();
+                    MessageBox.Show(Properties.Resources.ErrorNoBookmarksWhileSolving, Properties.Resources.ChessForge, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch

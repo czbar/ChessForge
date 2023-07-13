@@ -489,6 +489,9 @@
   <data name="ExitTraining" xml:space="preserve">
     <value>Zakończ Trening</value>
   </data>
+  <data name="ExitSolvingMode" xml:space="preserve">
+    <value>Wyjdź z trybu rozwiązywania</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edytuj</value>
   </data>
@@ -1028,6 +1031,9 @@
   </data>
   <data name="ErrorAddBookmarks" xml:space="preserve">
     <value>Błąd przy dodawaniu zakładek.</value>
+  </data>
+  <data name="ErrorNoBookmarksWhileSolving" xml:space="preserve">
+    <value>Nie można dodawać zakładek podczas rozwiąywania.</value>
   </data>
   <data name="NoTrainingStartMove" xml:space="preserve">
     <value>Takie posunięcie nie istnieje</value>

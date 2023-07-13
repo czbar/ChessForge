@@ -80,7 +80,7 @@ namespace ChessPosition
                 return;
             }
 
-            IsInheritedEnPassantSquare = position.InheritedEnPassantSquare == (byte)(XposTarget << 4 | YposTarget);
+            IsInheritedEnPassantSquare = position.InheritedEnPassantSquare != 0 && position.InheritedEnPassantSquare == (byte)(XposTarget << 4 | YposTarget);
 
             FindMoversAttackers();
 

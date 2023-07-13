@@ -412,6 +412,18 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// If the user is currently solving an exercise,
+        /// leaves the Solving Mode and returns to the main tree viewing editing
+        /// </summary>
+        public void DeactivateSolvingMode()
+        {
+            if (ActiveVariationTree != null && ActiveVariationTree.ContentType == GameData.ContentType.EXERCISE)
+            {
+                _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
+            }
+        }
+
+        /// <summary>
         /// Fills the Bookmark View's ComboBox for Content Type selection.
         /// </summary>
         private void InitializeContentTypeSelectionComboBox()
@@ -1586,55 +1598,60 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForActiveExercise(int exerciseIndex, bool focusOnExercise)
         {
-            _exerciseTreeView = new ExerciseTreeView(UiRtbExercisesView.Document, this, GameData.ContentType.EXERCISE, exerciseIndex);
-            UiRtbExercisesView.IsDocumentEnabled = true;
-
-            if (ActiveVariationTree.Nodes.Count == 0)
+            try
             {
-                ActiveVariationTree.CreateNew();
-            }
-            else
-            {
-                ActiveVariationTree.BuildLines();
-            }
+                _exerciseTreeView = new ExerciseTreeView(UiRtbExercisesView.Document, this, GameData.ContentType.EXERCISE, exerciseIndex);
+                UiRtbExercisesView.IsDocumentEnabled = true;
 
-            _exerciseTreeView.BuildFlowDocumentForVariationTree();
-            if (_exerciseTreeView.IsMainVariationTreeEmpty && !_exerciseTreeView.AreLinesShown)
-            {
-                _exerciseTreeView.EventShowHideButtonClicked(null, null);
+                if (ActiveVariationTree.Nodes.Count == 0)
+                {
+                    ActiveVariationTree.CreateNew();
+                }
+                else
+                {
+                    ActiveVariationTree.BuildLines();
+                }
+
+                _exerciseTreeView.BuildFlowDocumentForVariationTree();
+                if (_exerciseTreeView.IsMainVariationTreeEmpty && !_exerciseTreeView.AreLinesShown)
+                {
+                    _exerciseTreeView.EventShowHideButtonClicked(null, null);
+                }
+
+                string startLineId;
+                int startNodeId = 0;
+
+                if (!string.IsNullOrEmpty(ActiveVariationTree.SelectedLineId) && ActiveVariationTree.SelectedNodeId >= 0 && ActiveVariationTree.ShowTreeLines)
+                {
+                    startLineId = ActiveVariationTree.SelectedLineId;
+                    startNodeId = ActiveVariationTree.SelectedNodeId;
+                }
+                else
+                {
+                    startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
+                }
+
+                ActiveVariationTree.SelectedLineId = startLineId;
+                ActiveVariationTree.SelectedNodeId = startNodeId;
+
+                bool isExerciseTabAlready = AppState.ActiveTab == WorkbookManager.TabViewType.EXERCISE;
+                if (focusOnExercise)
+                {
+                    UiTabExercises.Focus();
+                    UiRtbExercisesView.Focus();
+                }
+
+                // if !focusOnExercise and or we are already in the Exercise tab, the Focus methods above won't be called or won't refresh the view
+                if (!focusOnExercise || isExerciseTabAlready)
+                {
+                    SetActiveLine(startLineId, startNodeId);
+                }
+
+                int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
+                SelectLineAndMoveInWorkbookViews(_exerciseTreeView, startLineId, nodeIndex, false);
             }
-
-            string startLineId;
-            int startNodeId = 0;
-
-            if (!string.IsNullOrEmpty(ActiveVariationTree.SelectedLineId) && ActiveVariationTree.SelectedNodeId >= 0)
-            {
-                startLineId = ActiveVariationTree.SelectedLineId;
-                startNodeId = ActiveVariationTree.SelectedNodeId;
-            }
-            else
-            {
-                startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
-            }
-
-            ActiveVariationTree.SelectedLineId = startLineId;
-            ActiveVariationTree.SelectedNodeId = startNodeId;
-
-            bool isExerciseTabAlready = AppState.ActiveTab == WorkbookManager.TabViewType.EXERCISE;
-            if (focusOnExercise)
-            {
-                UiTabExercises.Focus();
-                UiRtbExercisesView.Focus();
-            }
-
-            // if !focusOnExercise and or we are already in the Exercise tab, the Focus methods above won't be called or won't refresh the view
-            if (!focusOnExercise || isExerciseTabAlready)
-            {
-                SetActiveLine(startLineId, startNodeId);
-            }
-
-            int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
-            SelectLineAndMoveInWorkbookViews(_exerciseTreeView, startLineId, nodeIndex, false);
+            catch 
+            { }
         }
 
         /// <summary>
@@ -2875,7 +2892,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Handles selected key events from the main window and lets the rest route further.
+        /// Handles key down events from the main window.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2885,6 +2902,20 @@ namespace ChessForge
             {
                 UiTrainingView.ProcessKeyDown(e);
             }
+            else
+            {
+                ChessForgeMain_PreviewKeyDown(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// Handles key up events from the main window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainWindow_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            ChessForgeMain_PreviewKeyUp(sender, e);
         }
 
         /// <summary>

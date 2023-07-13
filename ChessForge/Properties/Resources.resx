@@ -489,6 +489,9 @@
   <data name="ExitTraining" xml:space="preserve">
     <value>Exit Training</value>
   </data>
+  <data name="ExitSolvingMode" xml:space="preserve">
+    <value>Exit Solving Mode</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
@@ -1028,6 +1031,9 @@
   </data>
   <data name="ErrorAddBookmarks" xml:space="preserve">
     <value>Failed to add the bookmarks.</value>
+  </data>
+  <data name="ErrorNoBookmarksWhileSolving" xml:space="preserve">
+    <value>Cannot bookmark positions while solving.</value>
   </data>
   <data name="NoTrainingStartMove" xml:space="preserve">
     <value>No move selected to start training from.</value>

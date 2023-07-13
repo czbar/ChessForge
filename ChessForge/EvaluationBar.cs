@@ -203,11 +203,11 @@ namespace ChessForge
             double absDval = Math.Abs(dVal);
             if (absDval >= 10)
             {
-                SetBars(whiteBarLength, Math.Abs(dVal).ToString("F0"), Math.Abs(dVal).ToString("F1"), dVal >= 0);
+                SetBars(whiteBarLength, Math.Abs(dVal).ToString("F0"), Math.Abs(dVal).ToString("F1"), dVal >= 0, dVal != 0);
             }
             else
             {
-                SetBars(whiteBarLength, Math.Abs(dVal).ToString("F1"), Math.Abs(dVal).ToString("F2"), dVal >= 0);
+                SetBars(whiteBarLength, Math.Abs(dVal).ToString("F1"), Math.Abs(dVal).ToString("F2"), dVal >= 0, dVal != 0);
             }
 
             AppState.MainWin.UiLblEvalBarWhite.Height = whiteBarLength;
