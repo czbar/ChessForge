@@ -1030,7 +1030,6 @@ namespace ChessForge
                             }
 
                             Run rNewLine = new Run("\n");
-                            rResult.FontWeight = FontWeights.Normal;
                             para.Inlines.Add(rNewLine);
                         }
                         break;
