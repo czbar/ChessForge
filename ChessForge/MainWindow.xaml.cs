@@ -1649,6 +1649,11 @@ namespace ChessForge
 
                 int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
                 SelectLineAndMoveInWorkbookViews(_exerciseTreeView, startLineId, nodeIndex, false);
+
+                if (!ActiveVariationTree.ShowTreeLines)
+                {
+                    AppState.ShowExplorers(false, false);
+                }
             }
             catch 
             { }

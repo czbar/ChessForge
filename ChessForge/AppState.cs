@@ -681,7 +681,7 @@ namespace ChessForge
         {
             bool validTabActive = ActiveTab == WorkbookManager.TabViewType.STUDY
                 || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
-                || ActiveTab == WorkbookManager.TabViewType.EXERCISE
+                || ActiveTab == WorkbookManager.TabViewType.EXERCISE && (ActiveVariationTree == null || ActiveVariationTree.ShowTreeLines)
                 || ActiveTab == WorkbookManager.TabViewType.INTRO;
 
             if (visible && validTabActive && WorkbookManager.SessionWorkbook != null)

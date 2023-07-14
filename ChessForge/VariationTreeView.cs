@@ -1311,6 +1311,7 @@ namespace ChessForge
             {
                 _mainVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.NONE;
             }
+            AppState.ShowExplorers(AppState.AreExplorersOn, true);
             BuildFlowDocumentForVariationTree();
             _mainWin.BoardCommentBox.ShowTabHints();
             if (e != null)
