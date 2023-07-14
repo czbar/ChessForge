@@ -148,7 +148,7 @@ namespace ChessForge
             else
             {
                 AppState.MainWin.BoardCommentBox.GameMoveMade(nd, true);
-                if (reportDupe)
+                if (reportDupe && !AppState.IsUserSolving())
                 {
                     AppState.MainWin.BoardCommentBox.ReportIdenticalPositionFound(nd);
                 }
