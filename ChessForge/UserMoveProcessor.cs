@@ -113,41 +113,52 @@ namespace ChessForge
                     AppState.MainWin.MoveCastlingRook(moveEngCode.ToString());
                 }
 
-                SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
-
-                if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
-                {
-                    AppState.ShowMoveEvaluationControls(TrainingSession.IsContinuousEvaluation, false);
-                }
-
-                if (nd.Position.IsCheckmate)
-                {
-                    AppState.MainWin.BoardCommentBox.ReportCheckmate(true);
-                }
-                else if (nd.Position.IsStalemate)
-                {
-                    AppState.MainWin.BoardCommentBox.ReportStalemate();
-                }
-                else
-                {
-                    AppState.MainWin.BoardCommentBox.GameMoveMade(nd, true);
-                    if (reportDupe)
-                    {
-                        AppState.MainWin.BoardCommentBox.ReportIdenticalPositionFound(nd);
-                    }
-                }
-                AppState.MainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
-                if (nd != null)
-                {
-                    AppState.MainWin.MainChessBoard.DisplayPosition(nd, true);
-                }
-
+                PostMoveReporting(nd, reportDupe);
                 return true;
             }
             else
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Post processes a move, updating the board position
+        /// and the board comment box.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="reportDupe"></param>
+        public static void PostMoveReporting(TreeNode nd, bool reportDupe)
+        {
+            SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
+
+            if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+            {
+                AppState.ShowMoveEvaluationControls(TrainingSession.IsContinuousEvaluation, false);
+            }
+
+            if (nd.Position.IsCheckmate)
+            {
+                AppState.MainWin.BoardCommentBox.ReportCheckmate(true);
+            }
+            else if (nd.Position.IsStalemate)
+            {
+                AppState.MainWin.BoardCommentBox.ReportStalemate();
+            }
+            else
+            {
+                AppState.MainWin.BoardCommentBox.GameMoveMade(nd, true);
+                if (reportDupe)
+                {
+                    AppState.MainWin.BoardCommentBox.ReportIdenticalPositionFound(nd);
+                }
+            }
+            AppState.MainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
+            if (nd != null)
+            {
+                AppState.MainWin.MainChessBoard.DisplayPosition(nd, true);
+            }
+
         }
 
         /// <summary>
