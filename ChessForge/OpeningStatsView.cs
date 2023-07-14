@@ -277,7 +277,6 @@ namespace ChessForge
                         {
                             Document.Blocks.Add(_openingNameTable);
                         }
-                        //                        BuildOpeningStatsTable(openingStats);
                         BuildOpeningStatsTableEx(openingStats);
                         Document.Blocks.Add(_openingStatsTable);
                         break;
@@ -291,10 +290,10 @@ namespace ChessForge
                         }
                         else
                         {
-                            InsertTablebaseCategoryTable("win");
+                            InsertTablebaseCategoryTable("loss");
                             InsertTablebaseCategoryTable("unknown");
                             InsertTablebaseCategoryTable("draw");
-                            InsertTablebaseCategoryTable("loss");
+                            InsertTablebaseCategoryTable("win");
                         }
                         break;
                     case DataMode.NO_DATA:
