@@ -855,6 +855,7 @@ namespace ChessForge
         {
             try
             {
+                gameIndex = AdjustArticleIndex(gameIndex, WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount());
                 if (gameIndex >= 0 && gameIndex < WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount())
                 {
                     WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
@@ -937,6 +938,7 @@ namespace ChessForge
         {
             try
             {
+                exerciseIndex = AdjustArticleIndex(exerciseIndex, WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount());
                 if (exerciseIndex >= 0 && exerciseIndex < WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount())
                 {
                     WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = exerciseIndex;
@@ -977,6 +979,30 @@ namespace ChessForge
             if (ActiveTreeView != null)
             {
                 ActiveTreeView.BringSelectedRunIntoView();
+            }
+        }
+
+        /// <summary>
+        /// Corrects the index of an article if the passed one is out of range.
+        /// This can happen e.g. when the workbook is exited without saving while
+        /// the last edited article was a newly created one.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="articleCount"></param>
+        /// <returns></returns>
+        private int AdjustArticleIndex(int index, int articleCount)
+        {
+            if (index >= 0 && index < WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount())
+            {
+                return index;
+            }
+            else
+            {
+                if (index >= articleCount)
+                {
+                    index = articleCount - 1;
+                }
+                return index;
             }
         }
 
