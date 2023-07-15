@@ -5,9 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace ChessForge
 {
@@ -35,22 +33,44 @@ namespace ChessForge
                     destSquareNorm.Flip();
                 }
 
+                moveEngCode.Append((char)(origSquareNorm.Xcoord + (int)'a'));
+                moveEngCode.Append((char)(origSquareNorm.Ycoord + (int)'1'));
+                moveEngCode.Append((char)(destSquareNorm.Xcoord + (int)'a'));
+                moveEngCode.Append((char)(destSquareNorm.Ycoord + (int)'1'));
+
                 bool isPromotion = false;
                 PieceType promoteTo = PieceType.None;
 
                 if (IsMoveToPromotionSquare(origSquareNorm, destSquareNorm))
                 {
                     isPromotion = true;
-                    promoteTo = AppState.MainWin.GetUserPromoSelection(destSquareNorm);
+
+                    // check if the move is valid before offering promotion piece selection
+                    bool isValidMove;
+                    try
+                    {
+                        isValidMove = AppState.IsMoveValid(moveEngCode.ToString());
+                    }
+                    catch 
+                    {
+                        isValidMove = false;
+                    }
+
+                    if (isValidMove)
+                    {
+                        // go ahead with the piece selection
+                        promoteTo = AppState.MainWin.GetUserPromoSelection(destSquareNorm);
+                    }
+                    else
+                    {
+                        // mark promotion as cancelled
+                        promoteTo = PieceType.None;
+                    }
                 }
 
-                // do not process if this was a canceled promotion
+                // do not process if this was a cancelled promotion
                 if ((!isPromotion || promoteTo != PieceType.None))
                 {
-                    moveEngCode.Append((char)(origSquareNorm.Xcoord + (int)'a'));
-                    moveEngCode.Append((char)(origSquareNorm.Ycoord + (int)'1'));
-                    moveEngCode.Append((char)(destSquareNorm.Xcoord + (int)'a'));
-                    moveEngCode.Append((char)(destSquareNorm.Ycoord + (int)'1'));
 
                     // add promotion char if this is a promotion
                     if (isPromotion)
