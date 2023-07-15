@@ -197,6 +197,51 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the currently selected ("active") node.
+        /// </summary>
+        /// <returns></returns>
+        public static TreeNode GetCurrentNode()
+        {
+            TreeNode nd;
+
+            if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+            {
+                nd = MainWin.ActiveLine.GetSelectedTreeNode();
+            }
+            else
+            {
+                nd = EngineGame.GetLastGameNode();
+            }
+
+            return nd;
+        }
+
+        /// <summary>
+        /// Checks if the passed move (in the engine notation) is valid
+        /// in the currently selected position.
+        /// </summary>
+        /// <param name="engMove"></param>
+        /// <returns></returns>
+        public static bool IsMoveValid(string engMove)
+        {
+            bool valid = false;
+
+            TreeNode nd = GetCurrentNode();
+            if (nd != null)
+            {
+                BoardPosition pos = new BoardPosition(nd.Position);
+                string alg = MoveUtils.EngineNotationToAlgebraic(engMove, ref pos, out _);
+                if (!string.IsNullOrEmpty(alg) && !alg.StartsWith("?"))
+                {
+                    valid = true;
+                }
+            }
+
+            return valid;
+        }
+
+
+        /// <summary>
         /// Returns the number of Model Games in the Active Chapter.
         /// </summary>
         public static int ActiveChapterGamesCount
