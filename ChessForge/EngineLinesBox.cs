@@ -361,7 +361,6 @@ namespace ChessForge
                             }
                         }
 
-
                         sb.Append(" ");
                         if (workingPosition.ColorToMove == PieceColor.White)
                         {
