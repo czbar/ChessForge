@@ -344,7 +344,12 @@ namespace ChessForge
                         bool isCastle;
                         string strMove = MoveUtils.EngineNotationToAlgebraic(move, ref workingPosition, out isCastle);
                         sb.Append(Languages.MapPieceSymbols(strMove, workingPosition.ColorToMove));
-                        if (PositionUtils.IsKingInCheck(workingPosition, MoveUtils.ReverseColor(workingPosition.ColorToMove)))
+                        workingPosition.InheritedEnPassantSquare = workingPosition.EnPassantSquare;
+
+                        // invert colors
+                        workingPosition.ColorToMove = workingPosition.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
+                        // after inversion
+                        if (PositionUtils.IsKingInCheck(workingPosition, workingPosition.ColorToMove))
                         {
                             if (PositionUtils.IsCheckmate(workingPosition, out _))
                             {
@@ -355,10 +360,8 @@ namespace ChessForge
                                 sb.Append('+');
                             }
                         }
-                        workingPosition.InheritedEnPassantSquare = workingPosition.EnPassantSquare;
 
-                        // invert colors
-                        workingPosition.ColorToMove = workingPosition.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
+
                         sb.Append(" ");
                         if (workingPosition.ColorToMove == PieceColor.White)
                         {
