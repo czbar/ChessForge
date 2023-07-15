@@ -344,6 +344,17 @@ namespace ChessForge
                         bool isCastle;
                         string strMove = MoveUtils.EngineNotationToAlgebraic(move, ref workingPosition, out isCastle);
                         sb.Append(Languages.MapPieceSymbols(strMove, workingPosition.ColorToMove));
+                        if (PositionUtils.IsKingInCheck(workingPosition, MoveUtils.ReverseColor(workingPosition.ColorToMove)))
+                        {
+                            if (PositionUtils.IsCheckmate(workingPosition, out _))
+                            {
+                                sb.Append('#');
+                            }
+                            else
+                            {
+                                sb.Append('+');
+                            }
+                        }
                         workingPosition.InheritedEnPassantSquare = workingPosition.EnPassantSquare;
 
                         // invert colors
