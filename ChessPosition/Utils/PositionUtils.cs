@@ -567,6 +567,38 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Sets check/chackmate and stalemate flags on the passed position.
+        /// </summary>
+        /// <param name="pos"></param>
+        public static void SetCheckStaleMateFlags(ref BoardPosition pos)
+        {
+            if (IsKingInCheck(pos, pos.ColorToMove))
+            {
+                pos.IsCheck = true;
+                pos.IsStalemate = false;
+                if (IsCheckmate(pos, out _))
+                {
+                    pos.IsCheckmate = true;
+                }
+            }
+            else
+            {
+                if (IsStalemate(pos))
+                {
+                    pos.IsStalemate = true;
+                    pos.IsCheck = false;
+                    pos.IsCheckmate = false;
+                }
+                else
+                {
+                    pos.IsStalemate = false;
+                    pos.IsCheck = false;
+                    pos.IsCheckmate = false;
+                }
+            }
+        }
+
+        /// <summary>
         /// For castling to be legal, the king's origin, target, and the square between, cannot be attacked
         /// and all the squares between the king and the rook must be empty.
         /// </summary>
