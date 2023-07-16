@@ -1,0 +1,15 @@
+Redirect:
+
+Budapest Gambit for White=Budapest for White.pgn|Openings
+Stafford Gambit Traps=Stafford Gambit Traps.pgn|Openings
+Tarrasch for Black=Tarrasch for Black.pgn|Openings
+Classical Sicilian for Black=Classical Sicilian for Black.pgn|Openings
+Tarrasch for Black=Tarrasch for Black.pgn|Openings
+French for Black=French for Black.pgn|Openings
+
+Chess Strategy Explained=Chess Strategy Explained.pgn|Strategy and Tactics
+The Complete Chess Swindler=The Complete Chess Swindler.pgn|Strategy and Tactics
+
+Endgames by NoseKnowsAll=Endgames by NoseKnowsAll.pgn|Endgames
+
+Checkmate Patterns=Checkmate Patterns.pgn|Other Material
