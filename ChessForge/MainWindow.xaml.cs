@@ -1177,7 +1177,7 @@ namespace ChessForge
         /// <returns></returns>
         private bool CanMovePiece(SquareCoords sqNorm)
         {
-            if (IsActiveMainBoard() && (ActiveArticle == null || ActiveArticle.Solver == null || ActiveArticle.Solver.IsMovingAllowed()))
+            if (IsActiveMainBoard() && (AppState.ActiveTab != WorkbookManager.TabViewType.EXERCISE || ActiveArticle == null || ActiveArticle.Solver == null || ActiveArticle.Solver.IsMovingAllowed()))
             {
                 PieceColor pieceColor = MainChessBoard.GetPieceColor(sqNorm);
 
