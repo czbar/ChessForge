@@ -148,6 +148,7 @@ namespace ChessForge
                 nd.IsNewTrainingMove = curr.IsNewTrainingMove;
                 nd.Position = pos;
                 nd.Position.ColorToMove = MoveUtils.ReverseColor(pos.ColorToMove);
+                PositionUtils.SetCheckStaleMateFlags(ref nd.Position);
                 nd.MoveNumber = nd.Position.ColorToMove == PieceColor.White ? nd.MoveNumber : nd.MoveNumber += 1;
                 _mainWin.ActiveVariationTree.AddNodeToParent(nd);
                 Line.AddPlyAndMove(nd);
