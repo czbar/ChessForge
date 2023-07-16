@@ -757,15 +757,22 @@ namespace ChessForge
             if (node != null)
             {
                 _position = new BoardPosition(node.Position);
-                if (isActiveBoard && Shapes != null && AppState.IsTabAllowingBoardDraw)
+                if (isActiveBoard && Shapes != null)
                 {
-                    Shapes.Reset(node.Arrows, node.Circles, false);
+                    if (AppState.IsTabAllowingBoardDraw)
+                    {
+                        Shapes.Reset(node.Arrows, node.Circles, false);
+                    }
+                    else
+                    {
+                        Shapes.Reset(false);
+                    }
                 }
             }
             else
             {
                 _position = new BoardPosition(pos);
-                if (isActiveBoard && Shapes != null && AppState.IsTabAllowingBoardDraw)
+                if (isActiveBoard && Shapes != null)
                 {
                     Shapes.Reset(false);
                 }
