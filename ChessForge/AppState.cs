@@ -108,7 +108,7 @@ namespace ChessForge
             get =>
                  ActiveTab == WorkbookManager.TabViewType.STUDY
                 || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
-                || ActiveTab == WorkbookManager.TabViewType.EXERCISE
+                || (ActiveTab == WorkbookManager.TabViewType.EXERCISE && !AppState.IsUserSolving())
                 || ActiveTab == WorkbookManager.TabViewType.INTRO;
         }
 
