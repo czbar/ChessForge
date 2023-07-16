@@ -759,7 +759,14 @@ namespace ChessForge
                 _position = new BoardPosition(node.Position);
                 if (isActiveBoard && Shapes != null)
                 {
-                    Shapes.Reset(node.Arrows, node.Circles, false);
+                    if (AppState.IsTabAllowingBoardDraw)
+                    {
+                        Shapes.Reset(node.Arrows, node.Circles, false);
+                    }
+                    else
+                    {
+                        Shapes.Reset(false);
+                    }
                 }
             }
             else

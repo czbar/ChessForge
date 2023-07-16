@@ -108,7 +108,7 @@ namespace ChessForge
             get =>
                  ActiveTab == WorkbookManager.TabViewType.STUDY
                 || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
-                || ActiveTab == WorkbookManager.TabViewType.EXERCISE
+                || (ActiveTab == WorkbookManager.TabViewType.EXERCISE && !AppState.IsUserSolving())
                 || ActiveTab == WorkbookManager.TabViewType.INTRO;
         }
 
@@ -195,6 +195,51 @@ namespace ChessForge
         {
             get => ActiveVariationTree == null ? -1 : ActiveVariationTree.TreeId;
         }
+
+        /// <summary>
+        /// Returns the currently selected ("active") node.
+        /// </summary>
+        /// <returns></returns>
+        public static TreeNode GetCurrentNode()
+        {
+            TreeNode nd;
+
+            if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+            {
+                nd = MainWin.ActiveLine.GetSelectedTreeNode();
+            }
+            else
+            {
+                nd = EngineGame.GetLastGameNode();
+            }
+
+            return nd;
+        }
+
+        /// <summary>
+        /// Checks if the passed move (in the engine notation) is valid
+        /// in the currently selected position.
+        /// </summary>
+        /// <param name="engMove"></param>
+        /// <returns></returns>
+        public static bool IsMoveValid(string engMove)
+        {
+            bool valid = false;
+
+            TreeNode nd = GetCurrentNode();
+            if (nd != null)
+            {
+                BoardPosition pos = new BoardPosition(nd.Position);
+                string alg = MoveUtils.EngineNotationToAlgebraic(engMove, ref pos, out _);
+                if (!string.IsNullOrEmpty(alg) && !alg.StartsWith("?"))
+                {
+                    valid = true;
+                }
+            }
+
+            return valid;
+        }
+
 
         /// <summary>
         /// Returns the number of Model Games in the Active Chapter.
@@ -681,7 +726,7 @@ namespace ChessForge
         {
             bool validTabActive = ActiveTab == WorkbookManager.TabViewType.STUDY
                 || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
-                || ActiveTab == WorkbookManager.TabViewType.EXERCISE
+                || ActiveTab == WorkbookManager.TabViewType.EXERCISE && (ActiveVariationTree == null || ActiveVariationTree.ShowTreeLines)
                 || ActiveTab == WorkbookManager.TabViewType.INTRO;
 
             if (visible && validTabActive && WorkbookManager.SessionWorkbook != null)

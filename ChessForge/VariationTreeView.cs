@@ -1030,7 +1030,6 @@ namespace ChessForge
                             }
 
                             Run rNewLine = new Run("\n");
-                            rResult.FontWeight = FontWeights.Normal;
                             para.Inlines.Add(rNewLine);
                         }
                         break;
@@ -1312,6 +1311,7 @@ namespace ChessForge
             {
                 _mainVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.NONE;
             }
+            AppState.ShowExplorers(AppState.AreExplorersOn, true);
             BuildFlowDocumentForVariationTree();
             _mainWin.BoardCommentBox.ShowTabHints();
             if (e != null)

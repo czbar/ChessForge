@@ -348,6 +348,19 @@ namespace ChessForge
 
                         // invert colors
                         workingPosition.ColorToMove = workingPosition.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
+                        // after inversion
+                        if (PositionUtils.IsKingInCheck(workingPosition, workingPosition.ColorToMove))
+                        {
+                            if (PositionUtils.IsCheckmate(workingPosition, out _))
+                            {
+                                sb.Append('#');
+                            }
+                            else
+                            {
+                                sb.Append('+');
+                            }
+                        }
+
                         sb.Append(" ");
                         if (workingPosition.ColorToMove == PieceColor.White)
                         {

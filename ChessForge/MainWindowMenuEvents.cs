@@ -2187,7 +2187,7 @@ namespace ChessForge
         {
             try
             {
-                if (AppState.IsUserSolving())
+                if (!AppState.IsUserSolving())
                 {
                     Bookmark bm = BookmarkManager.AddBookmark(AppState.ActiveVariationTree, AppState.ActiveVariationTree.SelectedNodeId, AppState.ActiveArticleIndex);
                     BookmarkManager.SetLastAddedBookmark(bm);

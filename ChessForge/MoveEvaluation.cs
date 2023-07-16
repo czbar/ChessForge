@@ -96,15 +96,22 @@ namespace ChessForge
             {
                 if (mev.IsMateDetected)
                 {
-                    res = this.MovesToMate - mev.MovesToMate;
+                    if (this.MovesToMate >= 0 && mev.MovesToMate >= 0 || this.MovesToMate < 0 && mev.MovesToMate < 0)
+                    {
+                        res = this.MovesToMate - mev.MovesToMate;
+                    }
+                    else
+                    {
+                        res = this.MovesToMate >= 0 ? -1 : 1;
+                    }
                 }
                 else
                 {
                     res = -1;
-                }
-                if (this.MovesToMate < 0)
-                {
-                    res = -1 * res;
+                    if (this.MovesToMate < 0)
+                    {
+                        res = 1;
+                    }
                 }
             }
             else if (mev.IsMateDetected)

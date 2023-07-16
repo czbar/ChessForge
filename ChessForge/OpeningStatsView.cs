@@ -277,7 +277,6 @@ namespace ChessForge
                         {
                             Document.Blocks.Add(_openingNameTable);
                         }
-                        //                        BuildOpeningStatsTable(openingStats);
                         BuildOpeningStatsTableEx(openingStats);
                         Document.Blocks.Add(_openingStatsTable);
                         break;
@@ -291,10 +290,10 @@ namespace ChessForge
                         }
                         else
                         {
-                            InsertTablebaseCategoryTable("win");
+                            InsertTablebaseCategoryTable("loss");
                             InsertTablebaseCategoryTable("unknown");
                             InsertTablebaseCategoryTable("draw");
-                            InsertTablebaseCategoryTable("loss");
+                            InsertTablebaseCategoryTable("win");
                         }
                         break;
                     case DataMode.NO_DATA:
@@ -560,7 +559,8 @@ namespace ChessForge
                 {
                     string moveEngCode = GetMoveCodeFromCellName(rMove.Name);
                     MoveUtils.EngineNotationToCoords(moveEngCode, out _, out SquareCoords destSquare, out PieceType promoteTo);
-                    UserMoveProcessor.ProcessMoveAndReport(moveEngCode, destSquare, promoteTo, out TreeNode node, out bool isCastle, out _);
+                    UserMoveProcessor.ProcessMove(moveEngCode, out TreeNode node, out bool isCastle, out bool reportDupe);
+                    UserMoveProcessor.PostMoveReporting(node, reportDupe);
                     AppState.MainWin.DisplayPosition(node);
                 }
             }
