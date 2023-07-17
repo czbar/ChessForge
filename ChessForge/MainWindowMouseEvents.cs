@@ -1278,9 +1278,13 @@ namespace ChessForge
                     }
 
                     AppState.ConfigureMainBoardContextMenu();
-                    if (chapter != null && chapter.ActiveModelGameIndex < 0)
+                    if (chapter != null && (chapter.ActiveModelGameIndex < 0 || chapter.ActiveModelGameIndex >= chapter.GetModelGameCount()))
                     {
-                        ActiveLine.Clear();
+                        chapter.CorrectActiveModelGameIndex();
+                        if (chapter.ActiveModelGameIndex < 0)
+                        {
+                            ActiveLine.Clear();
+                        }
                     }
                     ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
                 }
@@ -1372,6 +1376,8 @@ namespace ChessForge
                     {
                         MainChessBoard.SetStartingPosition();
                         ClearTreeView(_exerciseTreeView, GameData.ContentType.EXERCISE);
+                        WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.NONE);
+                        ActiveLine.Clear();
                     }
 
                     AppState.ConfigureMainBoardContextMenu();
