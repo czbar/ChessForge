@@ -367,25 +367,29 @@ namespace ChessForge
         /// </summary>
         public static void DeleteBookmark()
         {
-            if (ClickedIndex < 0 || ClickedIndex >= BookmarkGuiList.Count)
+            if (ClickedIndex < 0 || ClickedIndex >= BookmarkList.Count)
             {
                 return;
             }
 
-            BookmarkWrapper bmv = BookmarkGuiList[ClickedIndex].BookmarkWrapper;
-            TreeNode nd = bmv.Bookmark.Node;
-            VariationTree tree = bmv.Tree;
-            if (nd != null)
+            try
             {
-                tree.DeleteBookmark(nd);
-                BookmarkList.Remove(bmv);
-                if (_currentPage > _maxPage)
+                BookmarkWrapper bmv = BookmarkGuiList[ClickedIndex % BOOKMARKS_PER_PAGE].BookmarkWrapper;
+                TreeNode nd = bmv.Bookmark.Node;
+                VariationTree tree = bmv.Tree;
+                if (nd != null)
                 {
-                    _currentPage = _maxPage;
+                    tree.DeleteBookmark(nd);
+                    BookmarkList.Remove(bmv);
+                    if (_currentPage > _maxPage)
+                    {
+                        _currentPage = _maxPage;
+                    }
+                    ResyncBookmarks(_currentPage);
                 }
-                ResyncBookmarks(_currentPage);
+                AppState.IsDirty = true;
             }
-            AppState.IsDirty = true;
+            catch { }
         }
 
         /// <summary>
@@ -543,8 +547,8 @@ namespace ChessForge
                 return;
             }
 
-            // note that manu will not open if there are no bookmarks so we don't have to handle it here
-            if (ClickedIndex < 0)
+            // note that menu will not open if there are no bookmarks so we don't have to handle it here
+            if (ClickedIndex < 0 || ClickedIndex >= BookmarkList.Count)
             {
                 isEnabled = false;
             }
