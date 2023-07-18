@@ -169,7 +169,7 @@ namespace ChessForge
                     AppState.MainWin.UiComboBoxBmChapters.SelectedIndex = 0;
                 }
 
-                _lastAddedBookmark = null;
+                //_lastAddedBookmark = null;
             }
 
             if (_selectedContentType == null || _selectedContentType.ContentType == GameData.ContentType.NONE)
@@ -279,7 +279,7 @@ namespace ChessForge
 
         /// <summary>
         /// Resets or recreates all the bookmarks.
-        /// Called on app initialization..
+        /// Called on app initialization.
         /// </summary>
         public static void InitBookmarksGui(MainWindow mainWin)
         {
