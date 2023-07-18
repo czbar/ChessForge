@@ -1177,7 +1177,7 @@ namespace ChessForge
         /// <returns></returns>
         private bool CanMovePiece(SquareCoords sqNorm)
         {
-            if (IsActiveMainBoard() && (ActiveArticle == null || ActiveArticle.Solver == null || ActiveArticle.Solver.IsMovingAllowed()))
+            if (IsActiveMainBoard() && (AppState.ActiveTab != WorkbookManager.TabViewType.EXERCISE || ActiveArticle == null || ActiveArticle.Solver == null || ActiveArticle.Solver.IsMovingAllowed()))
             {
                 PieceColor pieceColor = MainChessBoard.GetPieceColor(sqNorm);
 
@@ -1737,20 +1737,26 @@ namespace ChessForge
         /// <param name="index"></param>
         public void SelectLineAndMoveInWorkbookViews(VariationTreeView view, string lineId, int index, bool queryExplorer)
         {
-            TreeNode nd = ActiveLine.GetNodeAtIndex(index);
-            if (nd != null)
+            try
             {
-                WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nd.NodeId);
-                view.SelectLineAndMove(lineId, nd.NodeId);
-                if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS && AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
+                TreeNode nd = ActiveLine.GetNodeAtIndex(index);
+                if (nd != null && WorkbookManager.SessionWorkbook.ActiveVariationTree != null)
                 {
-                    EvaluateActiveLineSelectedPosition(nd);
+                    WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nd.NodeId);
+                    view.SelectLineAndMove(lineId, nd.NodeId);
+                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS && AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
+                    {
+                        EvaluateActiveLineSelectedPosition(nd);
+                    }
+                    if (queryExplorer && !GamesEvaluationManager.IsEvaluationInProgress)
+                    {
+                        _openingStatsView.SetOpeningName();
+                        WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
+                    }
                 }
-                if (queryExplorer && !GamesEvaluationManager.IsEvaluationInProgress)
-                {
-                    _openingStatsView.SetOpeningName();
-                    WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
-                }
+            }
+            catch
+            {
             }
         }
 

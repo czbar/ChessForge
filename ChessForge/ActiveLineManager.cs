@@ -667,18 +667,22 @@ namespace ChessForge
                 }
                 else
                 {
-                    // an exercise my start from white or black
-                    if (Line.NodeList[0].ColorToMove == PieceColor.White)
+                    try
                     {
-                        // fake that "0" move for the Black side is currently selected
-                        currRow = -1;
-                        currColumn = _dgActiveLineBlackPlyColumn;
+                        // an exercise may start from white or black
+                        if (Line.NodeList[0].ColorToMove == PieceColor.White)
+                        {
+                            // fake that "0" move for the Black side is currently selected
+                            currRow = -1;
+                            currColumn = _dgActiveLineBlackPlyColumn;
+                        }
+                        else
+                        {
+                            currRow = 0;
+                            currColumn = _dgActiveLineWhitePlyColumn;
+                        }
                     }
-                    else
-                    {
-                        currRow = 0;
-                        currColumn = _dgActiveLineWhitePlyColumn;
-                    }
+                    catch { }
                 }
             }
 

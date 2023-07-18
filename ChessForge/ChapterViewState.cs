@@ -105,13 +105,13 @@ namespace ChessForge
         private WorkbookManager.ItemType _chaptersViewSelectedArticleType;
 
         // index of the active game
-        private int _activeGameIndex;
+        private int _activeGameIndex = -1;
 
         // index of the active exercise
-        private int _activeExerciseIndex;
+        private int _activeExerciseIndex = -1;
 
         // index of the selected article 
-        private int _chaptersViewSelectedArticleIndex;
+        private int _chaptersViewSelectedArticleIndex = -1;
 
         /// <summary>
         /// Process a chapter specific line in the config file
