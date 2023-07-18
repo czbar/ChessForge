@@ -1,15 +1,18 @@
-Redirect:
+{"library":
+{
+	"redirect":"",
+	"workbooks":[
+	  { "title":"Budapest Gambit for White", file:"Budapest for White.pgn", "category":"Openings" },
+	  { "title":"Stafford Gambit Traps", file:"Stafford Gambit Traps.pgn", "category":"Openings" },
+	  { "title":"Tarrasch for Black", file:"Tarrasch for Black.pgn", "category":"Openings" },
+	  { "title":"Classical Sicilian for Black", file:"Classical Sicilian for Black.pgn", "category":"Openings" },
+	  { "title":"French for Black", file:"French for Black.pgn", "category":"Openings" },
+	  
+	  { "title":"Chess Strategy Explained", file:"Chess Strategy Explained.pgn", "category":"Strategy and Tactics" },
+	  { "title":"The Complete Chess Swindler", file:"The Complete Chess Swindler.pgn", "category":"Strategy and Tactics" },
+	  
+	  { "title":"Endgames by NoseKnowsAll", file:"Endgames by NoseKnowsAll.pgn", "category":"Endgames" },
+	  { "title":"Checkmate Patterns", file:"Checkmate Patterns.pgn", "category":"Other Material" }
+	]
+}}
 
-Budapest Gambit for White=Budapest for White.pgn|Openings
-Stafford Gambit Traps=Stafford Gambit Traps.pgn|Openings
-Tarrasch for Black=Tarrasch for Black.pgn|Openings
-Classical Sicilian for Black=Classical Sicilian for Black.pgn|Openings
-Tarrasch for Black=Tarrasch for Black.pgn|Openings
-French for Black=French for Black.pgn|Openings
-
-Chess Strategy Explained=Chess Strategy Explained.pgn|Strategy and Tactics
-The Complete Chess Swindler=The Complete Chess Swindler.pgn|Strategy and Tactics
-
-Endgames by NoseKnowsAll=Endgames by NoseKnowsAll.pgn|Endgames
-
-Checkmate Patterns=Checkmate Patterns.pgn|Other Material
