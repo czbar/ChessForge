@@ -14,6 +14,8 @@
             <RowDefinition Height="400"/>
         </Grid.RowDefinitions>
         <Image x:Name="_imgWhitePromo" Margin="0,0,0,0" Source="Resources/Images/WhitePromo.png" Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="400" Grid.Row="0" Grid.Column="0" Grid.RowSpan="1"/>
+        <Image x:Name="_imgBlackPromoInverted" Margin="0,0,0,0" Source="Resources/Images/BlackPromoInverted.png" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="400" Grid.Row="0"  Grid.Column="0" Grid.RowSpan="1"/>
+        <Image x:Name="_imgWhitePromoInverted" Margin="0,0,0,0" Source="Resources/Images/WhitePromoInverted.png" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="400" Grid.Row="0"  Grid.Column="0" Grid.RowSpan="1"/>
         <Image x:Name="_imgBlackPromo" Margin="0,0,0,0" Source="Resources/Images/BlackPromo.png" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="400" Grid.Row="0"  Grid.Column="0" Grid.RowSpan="1"/>
     </Grid>
 </Window>

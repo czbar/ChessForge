@@ -32,26 +32,58 @@ namespace ChessForge
         private double _pieceSize = 80;
 
         /// <summary>
+        /// Whether White or Black is promoting.
+        /// </summary>
+        private bool _isWhitePromotion = true;
+
+        /// <summary>
+        /// Whether the board is flipped or not.
+        /// This affects how we show the piece images in the promotion dialog.
+        /// </summary>
+        private bool _isBoardFlipped = false;
+
+        /// <summary>
         /// Sets image visibility depending on which side
         /// is promoting.
         /// The window has 2 images, one wiht White pieces and one
         /// with Black ones.
         /// </summary>
         /// <param name="whitePromotion"></param>
-        public PromotionDialog(bool whitePromotion)
+        public PromotionDialog(bool whitePromotion, bool isBoardFlipped)
         {
+            _isWhitePromotion = whitePromotion;
+            _isBoardFlipped = isBoardFlipped;
+
             InitializeComponent();
             AppLog.Message("PromotionDialog initialized");
 
-            if (whitePromotion)
+            _imgWhitePromo.Visibility = Visibility.Hidden;
+            _imgWhitePromoInverted.Visibility = Visibility.Hidden;
+            _imgBlackPromoInverted.Visibility = Visibility.Hidden;
+            _imgBlackPromo.Visibility = Visibility.Hidden;
+
+            if (_isWhitePromotion)
             {
-                _imgWhitePromo.Visibility = Visibility.Visible;
-                _imgBlackPromo.Visibility = Visibility.Hidden;
+
+                if (_isBoardFlipped)
+                {
+                    _imgWhitePromoInverted.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    _imgWhitePromo.Visibility = Visibility.Visible;
+                }
             }
             else
             {
-                _imgWhitePromo.Visibility = Visibility.Hidden;
-                _imgBlackPromo.Visibility = Visibility.Visible;
+                if (_isBoardFlipped)
+                {
+                    _imgBlackPromo.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    _imgBlackPromoInverted.Visibility = Visibility.Visible;
+                }
             }
         }
 
@@ -66,6 +98,13 @@ namespace ChessForge
             AppLog.Message("PromotionDialog: clicked point X=" + p.X.ToString() + " Y=" + p.Y.ToString());
             
             int imgIndex = (int)(p.Y / _pieceSize);
+            
+            if (_isWhitePromotion && _isBoardFlipped || !_isWhitePromotion && !_isBoardFlipped)
+            {
+                // pieces are shown in inverted order
+                imgIndex = 4 - imgIndex;
+            }
+
             AppLog.Message("PromotionDialog: image index = " + imgIndex.ToString());
 
             PieceType pt;
