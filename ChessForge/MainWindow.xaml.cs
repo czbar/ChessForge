@@ -1222,7 +1222,7 @@ namespace ChessForge
         public PieceType GetUserPromoSelection(SquareCoords normTarget)
         {
             bool whitePromotion = normTarget.Ycoord == 7;
-            PromotionDialog dlg = new PromotionDialog(whitePromotion);
+            PromotionDialog dlg = new PromotionDialog(whitePromotion, MainChessBoard.IsFlipped);
 
             Point pos = CalculatePromoDialogLocation(normTarget, whitePromotion);
             dlg.Left = pos.X;
