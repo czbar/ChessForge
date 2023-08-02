@@ -72,8 +72,9 @@ namespace ChessForge
                 bool advantageWhite = true;
                 bool show = true;
 
-                if (nd != null && 
-                      (!string.IsNullOrEmpty(nd.EngineEvaluation) || nd.Position.IsCheckmate || nd.Position.IsStalemate || EvaluationManager.IsRunning)
+                if (nd != null && !AppState.IsUserSolving() 
+                        && (AppState.ActiveVariationTree == null || AppState.ActiveVariationTree.ShowTreeLines) 
+                        && (!string.IsNullOrEmpty(nd.EngineEvaluation) || nd.Position.IsCheckmate || nd.Position.IsStalemate || EvaluationManager.IsRunning)
                    )
                 {
                     bool res = double.TryParse(nd.EngineEvaluation, out double dVal);
