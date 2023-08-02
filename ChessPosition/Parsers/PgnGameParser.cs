@@ -407,14 +407,15 @@ namespace GameTree
             uint moveNo = uint.Parse(num);
             int dotCount = token.Length - dotPos;
 
-            if (parent.ColorToMove == PieceColor.White && dotCount == 1 && moveNo == parent.MoveNumber + 1
-                || parent.ColorToMove == PieceColor.Black && dotCount == 3 && moveNo == parent.MoveNumber)
+            // don't worry about the actual number, PGNs have been known to have them wrong.
+            if (parent.ColorToMove == PieceColor.White && dotCount == 1
+                || parent.ColorToMove == PieceColor.Black && dotCount == 3)
             {
                 return null;
             }
             else
             {
-                // bad wrong number, see we can find the right parent
+                // things seem out of order so try finding a good parent
                 TreeNode nd = FindParentForMove(parent, (int)moveNo, dotCount == 3 ? PieceColor.Black : PieceColor.White);
                 if (nd != null)
                 {
