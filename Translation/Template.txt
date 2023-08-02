@@ -2274,6 +2274,14 @@ ChessEngineLoading=
 #english: ReadingWorkbookFile=Reading workbook file...
 ReadingWorkbookFile=
 
+#description: Processing Study Tree
+#english: ReadingStudyTree=Processing study tree...
+ReadingStudyTree=
+
+#description: Reading items
+#english: ReadingItems=Reading item $0 of $1
+ReadingItems=
+
 ##################################
 #
 # Openings Explore / Tablebase

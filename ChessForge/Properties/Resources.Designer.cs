@@ -3689,6 +3689,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reading item $0 of $1.
+        /// </summary>
+        public static string ReadingItems {
+            get {
+                return ResourceManager.GetString("ReadingItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing study tree....
+        /// </summary>
+        public static string ReadingStudyTree {
+            get {
+                return ResourceManager.GetString("ReadingStudyTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reading workbook file....
         /// </summary>
         public static string ReadingWorkbookFile {

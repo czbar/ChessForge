@@ -1690,6 +1690,12 @@
   <data name="ReadingWorkbookFile" xml:space="preserve">
     <value>Reading workbook file...</value>
   </data>
+  <data name="ReadingStudyTree" xml:space="preserve">
+    <value>Processing study tree...</value>
+  </data>
+  <data name="ReadingItems" xml:space="preserve">
+    <value>Reading item $0 of $1</value>
+  </data>
   <data name="OebCheckmate" xml:space="preserve">
     <value>checkmate</value>
   </data>

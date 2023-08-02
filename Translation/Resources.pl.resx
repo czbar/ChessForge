@@ -1689,6 +1689,12 @@
   <data name="ReadingWorkbookFile" xml:space="preserve">
     <value>Wczytywanie podręcznika...</value>
   </data>
+  <data name="ReadingStudyTree" xml:space="preserve">
+    <value>Przetwarzanie drzewa teorii...</value>
+  </data>
+  <data name="ReadingItems" xml:space="preserve">
+    <value>Wczytywanie elementu $0 z $1</value>
+  </data>
   <data name="OebCheckmate" xml:space="preserve">
     <value>mat</value>
   </data>
