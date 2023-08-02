@@ -33,6 +33,9 @@ namespace ChessForge
         /// </summary>
         private MainWindow _mainWin;
 
+        // Last node of the line being replayed
+        private TreeNode _lastReplayNode;
+        
         /// <summary>
         /// The variation being currently animated.
         /// </summary>
@@ -94,6 +97,7 @@ namespace ChessForge
             StopRequested = false;
             NodeToShowAfterStop = null;
 
+            _lastReplayNode = _mainWin.ActiveLine.GetLastNode();
 
             // check if we are currently replaying some line
             if (!IsReplayActive)
@@ -124,6 +128,12 @@ namespace ChessForge
         {
             if (!IsReplayActive)
                 return;
+
+            if (_lastReplayNode != _mainWin.ActiveLine.Line.GetLastNode())
+            {
+                Stop();
+                return;
+            }
 
             if (StopRequested)
             {
