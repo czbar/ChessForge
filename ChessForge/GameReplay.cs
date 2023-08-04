@@ -26,7 +26,7 @@ namespace ChessForge
         /// Indicates that there is a new line waiting to be shown and the current replay should
         /// be stopped.
         /// </summary>
-        private bool _IsNewTreeLineWaiting = false;
+        private bool _isNewTreeLineWaiting = false;
 
         /// <summary>
         // Application's Main Window
@@ -35,35 +35,41 @@ namespace ChessForge
 
         // Last node of the line being replayed
         private TreeNode _lastReplayNode;
-        
+
+        // Variation tree being replayed
+        private VariationTree _activeVariationTree;
+
+        // active type where the replay occurs
+        private WorkbookManager.TabViewType _viewType;
+
         /// <summary>
         /// The variation being currently animated.
         /// </summary>
-        private ObservableCollection<TreeNode> _TreeLineToAnimate;
+        private ObservableCollection<TreeNode> _treeLineToAnimate;
 
         /// <summary>
         /// The new variation that has been submitted
         /// for animation while the previous one was 
         /// being shown.
         /// </summary>
-        private ObservableCollection<TreeNode> _WaitingTreeLineToAnimate;
+        private ObservableCollection<TreeNode> _waitingTreeLineToAnimate;
 
         /// <summary>
         /// Index in WaitingLineToAnimate indicating the move
         /// from which to start animation.
         /// </summary>
-        private int _WaitingLineFirstMoveIndex = 0;
+        private int _waitingLineFirstMoveIndex = 0;
 
         /// <summary>
         /// Flags if the replay stop was requested while the it
         /// was in progress.
         /// </summary>
-        private bool StopRequested = false;
+        private bool _stopRequested = false;
 
         /// <summary>
         /// Node to display after replay stop was requested
         /// </summary>
-        private TreeNode NodeToShowAfterStop = null;
+        private TreeNode _nodeToShowAfterStop = null;
 
         private ChessBoard _chessBoard;
 
@@ -94,16 +100,18 @@ namespace ChessForge
             // since this method is invoked by a double click, the request to stop
             // would be a side effect of the first mouse-down of the double click
             // Therefore, we will ignore and reset it. 
-            StopRequested = false;
-            NodeToShowAfterStop = null;
+            _stopRequested = false;
+            _nodeToShowAfterStop = null;
 
             _lastReplayNode = _mainWin.ActiveLine.GetLastNode();
+            _activeVariationTree = AppState.ActiveVariationTree;
+            _viewType = AppState.ActiveTab;
 
             // check if we are currently replaying some line
             if (!IsReplayActive)
             {
                 // if GameReplay is not active, we set this up as the active line straight away.
-                _TreeLineToAnimate = line;
+                _treeLineToAnimate = line;
                 // prepare and request animation
                 IsReplayActive = true;
                 PrepareNextMoveForAnimation(moveIndex, false);
@@ -111,9 +119,9 @@ namespace ChessForge
             else
             {
                 // set the passed line as waiting
-                _WaitingTreeLineToAnimate = line;
-                _IsNewTreeLineWaiting = true;
-                _WaitingLineFirstMoveIndex = moveIndex;
+                _waitingTreeLineToAnimate = line;
+                _isNewTreeLineWaiting = true;
+                _waitingLineFirstMoveIndex = moveIndex;
             }
         }
 
@@ -129,32 +137,34 @@ namespace ChessForge
             if (!IsReplayActive)
                 return;
 
-            if (_lastReplayNode != _mainWin.ActiveLine.Line.GetLastNode())
+            if (_lastReplayNode != _mainWin.ActiveLine.Line.GetLastNode() 
+                || _activeVariationTree != AppState.ActiveVariationTree 
+                || _viewType != AppState.ActiveTab)
             {
                 Stop();
                 return;
             }
 
-            if (StopRequested)
+            if (_stopRequested)
             {
                 // we had a key press or a single click indicating user's desire
                 // to switch to manual replay/review
-                _mainWin.DisplayPosition(NodeToShowAfterStop);
-                StopRequested = false;
-                NodeToShowAfterStop = null;
+                _mainWin.DisplayPosition(_nodeToShowAfterStop);
+                _stopRequested = false;
+                _nodeToShowAfterStop = null;
                 Stop();
             }
             else
             {
                 // check if there is a new line waiting,
                 // if so switch to it.
-                if (_IsNewTreeLineWaiting && _WaitingTreeLineToAnimate != null)
+                if (_isNewTreeLineWaiting && _waitingTreeLineToAnimate != null)
                 {
-                    _TreeLineToAnimate = _WaitingTreeLineToAnimate;
+                    _treeLineToAnimate = _waitingTreeLineToAnimate;
 
-                    _IsNewTreeLineWaiting = false;
-                    _WaitingTreeLineToAnimate = null;
-                    index = _WaitingLineFirstMoveIndex;
+                    _isNewTreeLineWaiting = false;
+                    _waitingTreeLineToAnimate = null;
+                    index = _waitingLineFirstMoveIndex;
                 }
                 AnimateMove(index);
             }
@@ -167,22 +177,22 @@ namespace ChessForge
         {
             IsReplayActive = false;
 
-            _IsNewTreeLineWaiting = false;
-            _WaitingLineFirstMoveIndex = 0;
-            _WaitingTreeLineToAnimate = null;
+            _isNewTreeLineWaiting = false;
+            _waitingLineFirstMoveIndex = 0;
+            _waitingTreeLineToAnimate = null;
         }
 
         public void ShowPositionAndStop(TreeNode nd)
         {
-            StopRequested = true;
-            NodeToShowAfterStop = nd;
+            _stopRequested = true;
+            _nodeToShowAfterStop = nd;
         }
 
         public TreeNode GetNodeAt(int index)
         {
-            if (index < _TreeLineToAnimate.Count)
+            if (index < _treeLineToAnimate.Count)
             {
-                return _TreeLineToAnimate[index];
+                return _treeLineToAnimate[index];
             }
             else
             {
@@ -192,7 +202,7 @@ namespace ChessForge
 
         private void AnimateMove(int index)
         {
-            if (index >= _TreeLineToAnimate.Count)
+            if (index >= _treeLineToAnimate.Count)
             {
                 _mainWin.BoardCommentBox.RestoreTitleMessage();
                 return;
@@ -200,22 +210,22 @@ namespace ChessForge
 
             //IsReplayActive = true;
 
-            if (index >= _TreeLineToAnimate.Count - 1)
+            if (index >= _treeLineToAnimate.Count - 1)
             {
                 // if we are at the end of the line display the position
                 // there is nothing to animate
-                _mainWin.DisplayPosition(_TreeLineToAnimate[index]);
+                _mainWin.DisplayPosition(_treeLineToAnimate[index]);
                 // we are finished, clean up
                 FinalizeTreeLineAnimation();
                 return;
             }
 
-            _mainWin.ActiveLine.SelectPly((int)_TreeLineToAnimate[index].Position.MoveNumber, _TreeLineToAnimate[index].ColorToMove);
+            _mainWin.ActiveLine.SelectPly((int)_treeLineToAnimate[index].Position.MoveNumber, _treeLineToAnimate[index].ColorToMove);
 
             LastAnimatedMoveIndex = index + 1;
-            if (LastAnimatedMoveIndex < _TreeLineToAnimate.Count)
+            if (LastAnimatedMoveIndex < _treeLineToAnimate.Count)
             {
-                RequestNodeAnimation(_TreeLineToAnimate[index + 1]);
+                RequestNodeAnimation(_treeLineToAnimate[index + 1]);
             }
             else
             {
