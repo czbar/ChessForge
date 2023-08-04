@@ -182,10 +182,19 @@ namespace ChessForge
             _waitingTreeLineToAnimate = null;
         }
 
+        /// <summary>
+        /// Stops the current animation process.
+        /// Sets the stop request flag and the position to show
+        /// for the Stop() method.
+        /// </summary>
+        /// <param name="nd"></param>
         public void ShowPositionAndStop(TreeNode nd)
         {
             _stopRequested = true;
             _nodeToShowAfterStop = nd;
+
+            _mainWin.StopMoveAnimation();
+            Stop();
         }
 
         public TreeNode GetNodeAt(int index)
@@ -200,6 +209,10 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Sets up animation of a single move.
+        /// </summary>
+        /// <param name="index"></param>
         private void AnimateMove(int index)
         {
             if (index >= _treeLineToAnimate.Count)
@@ -207,8 +220,6 @@ namespace ChessForge
                 _mainWin.BoardCommentBox.RestoreTitleMessage();
                 return;
             }
-
-            //IsReplayActive = true;
 
             if (index >= _treeLineToAnimate.Count - 1)
             {
