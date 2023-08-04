@@ -2252,6 +2252,7 @@ namespace ChessForge
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
             Run r = (Run)e.Source;
+            _mainWin.StopReplayIfActive();
             SelectRun(r, e.ClickCount, e.ChangedButton);
         }
 
