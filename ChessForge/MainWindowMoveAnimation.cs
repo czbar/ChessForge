@@ -150,6 +150,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Stops Game Replay if currently active.
+        /// </summary>
+        /// <returns>True if replay was active</returns>
+        public bool StopReplayIfActive()
+        {
+            if (ActiveLineReplay.IsReplayActive)
+            {
+                ActiveLineReplay.ShowPositionAndStop(null);
+                BoardCommentBox.RestoreTitleMessage();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Called when animation completes.
         /// The coords saved in the MoveAnimation object
         /// are absolute as a possible flipped state of the board was
