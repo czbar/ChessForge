@@ -17,6 +17,14 @@ namespace ChessForge
     public class GuiUtilities
     {
         /// <summary>
+        /// Displays info advising the user to exit Training Mode.
+        /// </summary>
+        public static void ShowExitTrainingInfoMessage()
+        {
+            MessageBox.Show(Properties.Resources.ExitTrainingAdvice, Properties.Resources.Training, MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        /// <summary>
         /// Checks if the KeyEvent in the TextBox indicates the insertion of a figurine symbol
         /// and if so, performs it.
         /// </summary>
