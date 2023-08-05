@@ -2251,7 +2251,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiStripComments_Click(object sender, RoutedEventArgs e)
         {
-            if (ActiveTreeView != null)
+            if (ActiveTreeView != null && AppState.IsTreeViewTabActive())
             {
                 if (MessageBox.Show(Properties.Resources.MsgConfirmStripComments, Properties.Resources.Confirm,
                     MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -2280,7 +2280,14 @@ namespace ChessForge
         {
             e.Handled = true;
 
-            DownloadWebGamesManager.DownloadGames();
+            if (TrainingSession.IsTrainingInProgress)
+            {
+                GuiUtilities.ShowExitTrainingInfoMessage();
+            }
+            else
+            {
+                DownloadWebGamesManager.DownloadGames();
+            }
         }
 
         /// <summary>
@@ -2291,23 +2298,30 @@ namespace ChessForge
         private void UiMnEvaluateGames_Click(object sender, RoutedEventArgs e)
         {
 
-            try
+            if (TrainingSession.IsTrainingInProgress)
             {
-                if (AppState.ActiveChapter != null)
-                {
-                    int chapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(AppState.ActiveChapter);
-                    SelectGamesForEvalDialog dlg = new SelectGamesForEvalDialog(AppState.ActiveChapter, chapterIndex, AppState.ActiveChapter.ModelGames)
-                    {
-                        Left = ChessForgeMain.Left + 100,
-                        Top = ChessForgeMain.Top + 100,
-                        Topmost = false,
-                        Owner = AppState.MainWin
-                    };
-                    dlg.ShowDialog();
-                }
+                GuiUtilities.ShowExitTrainingInfoMessage();
             }
-            catch
-            { 
+            else
+            {
+                try
+                {
+                    if (AppState.ActiveChapter != null)
+                    {
+                        int chapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(AppState.ActiveChapter);
+                        SelectGamesForEvalDialog dlg = new SelectGamesForEvalDialog(AppState.ActiveChapter, chapterIndex, AppState.ActiveChapter.ModelGames)
+                        {
+                            Left = ChessForgeMain.Left + 100,
+                            Top = ChessForgeMain.Top + 100,
+                            Topmost = false,
+                            Owner = AppState.MainWin
+                        };
+                        dlg.ShowDialog();
+                    }
+                }
+                catch
+                {
+                }
             }
 
             e.Handled = true;
