@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using GameTree;
 using ChessPosition;
+using System.Reflection;
 
 namespace ChessForge
 {
@@ -246,16 +247,14 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Tidy up to indicate that we are not active anymore
-        /// and available for the next replay request.
+        /// This is called when the line being replayed ended.
+        /// Selects the last move in the calling view.
         /// </summary>
         private void FinalizeTreeLineAnimation()
         {
-            // tell the GUI to remove the selection from the GridView control
-            _mainWin.ActiveLine.SelectPly(-1, PieceColor.White);
-            // Indicate that we are not replaying anything right now.
             IsReplayActive = false;
             _commentBox.RestoreTitleMessage();
+            _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, _mainWin.ActiveLine.Line.GetLineId(), _treeLineToAnimate.Count - 1, true);
         }
 
         /// <summary>
