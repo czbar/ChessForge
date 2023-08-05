@@ -558,6 +558,10 @@ MergeChapters=
 #english: Undo=Undo
 Undo=
 
+#description: Avice to exit
+#english: ExitTrainingAdvice=Exit the training session to use this function.
+ExitTrainingAdvice=
+
 
 
 #description: TOP LEVEL MENU: View

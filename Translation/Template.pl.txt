@@ -558,6 +558,10 @@ MergeChapters=Połącz Rozdziały
 #english: Undo=Undo
 Undo=Cofnij Operację
 
+#description: Avice to exit
+#english: ExitTrainingAdvice=Exit the training session to use this function.
+ExitTrainingAdvice=Wyjdź z sesji treningowej, aby użyc tej funkcji.
+
 
 
 #description: TOP LEVEL MENU: View

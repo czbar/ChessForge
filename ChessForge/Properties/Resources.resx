@@ -504,6 +504,9 @@
   <data name="Undo" xml:space="preserve">
     <value>Undo</value>
   </data>
+  <data name="ExitTrainingAdvice" xml:space="preserve">
+    <value>Exit the training session to use this function.</value>
+  </data>
   <data name="View" xml:space="preserve">
     <value>View</value>
   </data>

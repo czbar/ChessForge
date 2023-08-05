@@ -1987,6 +1987,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exit the training session to use this function..
+        /// </summary>
+        public static string ExitTrainingAdvice {
+            get {
+                return ResourceManager.GetString("ExitTrainingAdvice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit the training session?.
         /// </summary>
         public static string ExitTrainingSession {
