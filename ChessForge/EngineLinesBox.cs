@@ -338,7 +338,14 @@ namespace ChessForge
                         }
                         if (workingPosition.ColorToMove == PieceColor.White && !firstMove)
                         {
-                            sb.Append(workingPosition.MoveNumber.ToString() + ".");
+                            if (evalNode.Position.ColorToMove == PieceColor.White)
+                            {
+                                sb.Append((workingPosition.MoveNumber + 1).ToString() + ".");
+                            }
+                            else
+                            {
+                                sb.Append(workingPosition.MoveNumber.ToString() + ".");
+                            }
                         }
                         firstMove = false;
                         bool isCastle;
