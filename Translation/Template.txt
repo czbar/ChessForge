@@ -1301,6 +1301,10 @@ EngineNotAvailable=
 #english: ExerciseNoSolution=This exercise has no solution provided.
 ExerciseNoSolution=
 
+#description: Evaluations will be stopped and engine restarted.
+#english: EngineWillRestart=Evaluation will stop and the engine will restart.
+EngineWillRestart=
+
 #description: Error downloading game
 #english: GameDownloadError=Game download error
 GameDownloadError=

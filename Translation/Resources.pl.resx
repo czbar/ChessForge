@@ -990,6 +990,9 @@
   <data name="ExerciseNoSolution" xml:space="preserve">
     <value>Ćwiczenie bez rozwiązania</value>
   </data>
+  <data name="EngineWillRestart" xml:space="preserve">
+    <value>Ocenianie będzie zatrzymane i silnik zrestartowany.</value>
+  </data>
   <data name="GameDownloadError" xml:space="preserve">
     <value>Błąd przy ściąganiu partii</value>
   </data>

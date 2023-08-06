@@ -559,7 +559,7 @@ MergeChapters=Połącz Rozdziały
 Undo=Cofnij Operację
 
 #description: Avice to exit
-#english: ExitTrainingAdvice=Exit the training session to use this function
+#english: ExitTrainingAdvice=Exit the training session to use this function.
 ExitTrainingAdvice=Wyjdź z sesji treningowej, aby użyc tej funkcji.
 
 
@@ -1300,6 +1300,10 @@ EngineNotAvailable=Silnik niedostępny
 #description: Exercise has no solution
 #english: ExerciseNoSolution=This exercise has no solution provided.
 ExerciseNoSolution=Ćwiczenie bez rozwiązania
+
+#description: Evaluations will be stopped and engine restarted.
+#english: EngineWillRestart=Evaluation will stop and the engine will restart.
+EngineWillRestart=Ocenianie zostało zatrzymane i silnik zrestartowany.
 
 #description: Error downloading game
 #english: GameDownloadError=Game download error

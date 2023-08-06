@@ -1010,6 +1010,9 @@ EngineNotAvailable=Chess Engine not available.
 #Exercise has no solution
 ExerciseNoSolution=This exercise has no solution provided.
 
+#Evaluations will be stopped and engine restarted.
+EngineWillRestart=Evaluation has been stopped and the engine restarted.
+
 #Error downloading game
 GameDownloadError=Game download error
 

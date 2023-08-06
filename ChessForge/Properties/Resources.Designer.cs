@@ -1609,6 +1609,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Evaluation will stop and the engine will restart..
+        /// </summary>
+        public static string EngineWillRestart {
+            get {
+                return ResourceManager.GetString("EngineWillRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to En Passant.
         /// </summary>
         public static string EnPassant {

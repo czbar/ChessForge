@@ -1301,6 +1301,10 @@ EngineNotAvailable=Silnik niedostępny
 #english: ExerciseNoSolution=This exercise has no solution provided.
 ExerciseNoSolution=Ćwiczenie bez rozwiązania
 
+#description: Evaluations will be stopped and engine restarted.
+#english: EngineWillRestart=Evaluation will stop and the engine will restart.
+EngineWillRestart=Ocenianie będzie zatrzymane i silnik zrestartowany.
+
 #description: Error downloading game
 #english: GameDownloadError=Game download error
 GameDownloadError=Błąd przy ściąganiu partii

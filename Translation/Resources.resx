@@ -990,6 +990,9 @@
   <data name="ExerciseNoSolution" xml:space="preserve">
     <value>This exercise has no solution provided.</value>
   </data>
+  <data name="EngineWillRestart" xml:space="preserve">
+    <value>Evaluation will stop and the engine will restart.</value>
+  </data>
   <data name="GameDownloadError" xml:space="preserve">
     <value>Game download error</value>
   </data>
