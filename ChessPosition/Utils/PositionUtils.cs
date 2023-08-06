@@ -688,8 +688,8 @@ namespace ChessPosition
         /// If the move is castling, depending on the forSideMove value
         /// the side on the move on the opposite who just moved
         /// loses all castling rights.
-        /// The pgn parser will call it for the move who moved previous
-        /// while the engine line anlyser will call it for the side
+        /// The pgn parser will call it for the side that moved previous
+        /// while the engine line analyser will call it for the side
         /// on move in the current position.
         /// Similarly, if it is a king move.
         /// If it was a rook moving from its initial position
@@ -701,11 +701,9 @@ namespace ChessPosition
         {
             PieceColor colorToProcess = forSideOnMove ? pos.ColorToMove : MoveUtils.ReverseColor(pos.ColorToMove);
 
-            // if there are no castling rights left,
-            // no need to process
+            // if there are no castling rights left, no need to process anything
             if (HasAnyCastlingRights(colorToProcess, ref pos))
             {
-
                 // if king moved, the side loses all castling rights
                 if (move.MovingPiece == PieceType.King || move.CastlingType != 0)
                 {
@@ -717,11 +715,16 @@ namespace ChessPosition
                     // will be lost, depending on which rook moved
                     UpdateCastlingRightsForRook(colorToProcess, move.Origin.Xcoord, move.Origin.Ycoord, ref pos);
                 }
-                else
-                {
-                    // a rook was captured so the side not-on-move is losing the castling right
-                    UpdateCastlingRightsForRook(colorToProcess == PieceColor.White ? PieceColor.Black : PieceColor.White, move.Destination.Xcoord, move.Destination.Ycoord, ref pos);
-                }
+
+                // check if the move was capturing a rook, then the side not-on-move is losing the castling right
+                UpdateCastlingRightsForRook(colorToProcess == PieceColor.White ? PieceColor.Black : PieceColor.White, move.Destination.Xcoord, move.Destination.Ycoord, ref pos);
+            }
+
+            // for the opponent
+            if (HasAnyCastlingRights(MoveUtils.ReverseColor(colorToProcess), ref pos))
+            {
+                // check if the move was capturing a rook, then the side not-on-move is losing the castling right
+                UpdateCastlingRightsForRook(MoveUtils.ReverseColor(colorToProcess), move.Destination.Xcoord, move.Destination.Ycoord, ref pos);
             }
         }
 
@@ -777,7 +780,7 @@ namespace ChessPosition
         /// This method will be called after a rook's move.
         /// If the rook was on its original square, it will
         /// invalidate one of the castling rights.
-        /// If the rool was not on its original square, it means
+        /// If the rook was not on its original square, it means
         /// that the relevant right must have been removed previously.
         /// </summary>
         /// <param name="col"></param>
