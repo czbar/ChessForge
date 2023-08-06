@@ -90,6 +90,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Restarts the engine.
+        /// </summary>
+        public static void RestartEngineService()
+        {
+            ChessEngineService.RestartEngine();
+        }
+
+        /// <summary>
         /// Sends selected setoption commands to the engine. 
         /// </summary>
         public static void SendOptionsCommand()
@@ -279,9 +287,9 @@ namespace ChessForge
         private static void MoveEvaluationFinishedInManualReview(TreeNode nd, int treeId, bool delayed)
         {
             int index = AppState.ActiveLine.GetIndexForNode(nd);
-            if (index >= 0)
+            lock (LearningMode.EvalLock)
             {
-                lock (LearningMode.EvalLock)
+                if (index >= 0)
                 {
                     AppLog.Message("Move evaluation finished for index " + index.ToString());
 
@@ -323,6 +331,30 @@ namespace ChessForge
                     {
                         MoveEvalFinished?.Invoke(null, eventArgs);
                     }
+                }
+                else
+                {
+                    // something went wrong, reset to keep the engine process healthy
+                    if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
+                    {
+                        _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                        _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    }
+
+                    MoveEvalEventArgs eventArgs = null;
+                    if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
+                    {
+                        EvaluationManager.Reset();
+                    }
+
+                    if (GamesEvaluationManager.IsEvaluationInProgress)
+                    {
+                        eventArgs = new MoveEvalEventArgs();
+                        eventArgs.IsLastMove = true;
+                        MoveEvalFinished?.Invoke(null, eventArgs);
+                    }
+
+                    EngineMessageProcessor.RestartEngineService();
                 }
             }
         }
@@ -649,6 +681,12 @@ namespace ChessForge
                         }
                     }
                 }
+                else
+                {
+                    // fake the message to satisfy call to ProcessBestMoveMessage()
+                    message = UciCommands.ENG_BEST_MOVE;
+                    ProcessBestMoveMessage(message, null, 0, GoFenCommand.EvaluationMode.NONE, false);
+                }
             }
             catch (Exception ex)
             {
@@ -946,12 +984,19 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Displays the message in the Lines window when "error" is detected
-        /// in the text.
+        /// Displays the message in the Lines window when "error" is detected in the text.
+        /// Closes the progress dialog if open.
         /// </summary>
         /// <param name="message"></param>
         private static void ProcessErrorMessage(string message)
         {
+            if (ChessEngineService.IsEngineReady)
+            {
+                // advise the user that engine will restart
+                message += "\n" + Properties.Resources.EngineWillRestart;
+                GamesEvaluationManager.CloseDialog();
+            }
+
             EngineLinesBox.ShowEngineLines(Properties.Resources.Error + ": " + message, null, true);
         }
 
