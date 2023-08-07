@@ -335,28 +335,33 @@ namespace ChessForge
                 else
                 {
                     // something went wrong, reset to keep the engine process healthy
-                    if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
-                    {
-                        _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
-                        _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                    }
-
-                    MoveEvalEventArgs eventArgs = null;
-                    if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
-                    {
-                        EvaluationManager.Reset();
-                    }
-
-                    if (GamesEvaluationManager.IsEvaluationInProgress)
-                    {
-                        eventArgs = new MoveEvalEventArgs();
-                        eventArgs.IsLastMove = true;
-                        MoveEvalFinished?.Invoke(null, eventArgs);
-                    }
-
-                    EngineMessageProcessor.RestartEngineService();
+                    RestartEngineOnError();
                 }
             }
+        }
+
+        /// <summary>
+        /// Resets evaluation and restarts the engine after an error was detected.
+        /// </summary>
+        private static void RestartEngineOnError()
+        {
+            _mainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+            _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+
+            MoveEvalEventArgs eventArgs = null;
+            EvaluationManager.Reset();
+
+            if (GamesEvaluationManager.IsEvaluationInProgress)
+            {
+                eventArgs = new MoveEvalEventArgs();
+                eventArgs.IsLastMove = true;
+                MoveEvalFinished?.Invoke(null, eventArgs);
+                GamesEvaluationManager.CloseDialog();
+            }
+
+            RestartEngineService();
+            AppState.SetupGuiForCurrentStates();
+            _mainWin.BoardCommentBox.EngineResetOnError(Properties.Resources.Error + ": " + Properties.Resources.EngineWillRestart);
         }
 
         /// <summary>
@@ -991,16 +996,14 @@ namespace ChessForge
         private static void ProcessErrorMessage(string message)
         {
             // ignore benign errors
-            if (message.StartsWith("Unknown option", StringComparison.OrdinalIgnoreCase))
+            if (message.ToLower().Contains("unknown option"))
             {
                 return;
             }
 
             if (ChessEngineService.IsEngineReady)
             {
-                // advise the user that engine will restart
-                message += "\n" + Properties.Resources.EngineWillRestart;
-                GamesEvaluationManager.CloseDialog();
+                RestartEngineOnError();
             }
 
             EngineLinesBox.ShowEngineLines(Properties.Resources.Error + ": " + message, null, true);
