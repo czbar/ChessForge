@@ -990,6 +990,12 @@ namespace ChessForge
         /// <param name="message"></param>
         private static void ProcessErrorMessage(string message)
         {
+            // ignore benign errors
+            if (message.StartsWith("Unknown option", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
             if (ChessEngineService.IsEngineReady)
             {
                 // advise the user that engine will restart
