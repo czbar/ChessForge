@@ -120,10 +120,33 @@ namespace ChessForge
                         _dlgProgress.ShowDialog();
                     }
 
+                    _dlgProgress = null;
+
                     _isEvaluationInProgress = false;
                     AppState.MainWin.Timers.Stop(AppTimers.TimerId.GAMES_EVALUATION);
                 }
             });
+        }
+
+        /// <summary>
+        /// This will be called from the App when a problem occured
+        /// while evaluating multiple games.
+        /// </summary>
+        public static void CloseDialog()
+        {
+            if (_dlgProgress != null)
+            {
+                try
+                {
+                    AppState.MainWin.Dispatcher.Invoke(() =>
+                    {
+                        _dlgProgress.AbandonEvaluation();
+                    } );
+                }
+                catch
+                {
+                }
+            }
         }
 
         /// <summary>
@@ -159,6 +182,7 @@ namespace ChessForge
                             else
                             {
                                 _dlgProgress.Close();
+                                _dlgProgress = null;
                             }
                         }
                     }

@@ -2242,6 +2242,7 @@ namespace ChessForge
 
             // Set up the training mode
             StopEvaluation(true);
+            StopReplayIfActive();
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             TrainingSession.IsTrainingInProgress = true;

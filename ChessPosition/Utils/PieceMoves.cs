@@ -275,9 +275,10 @@ namespace ChessPosition.Utils
                     }
 
                     // check 2 squares ahead now that we know the square ahead is empty
+                    int startingRow = color == PieceColor.White ? 1 : 6;
                     x = orig.Xcoord;
                     y = orig.Ycoord + 2 * inc;
-                    if (PositionUtils.AreValidCoordinates(x, y))
+                    if (PositionUtils.AreValidCoordinates(x, y) && orig.Ycoord == startingRow)
                     {
                         dest = new SquareCoords(x, y);
                         if (position.Board[x, y] == 0)

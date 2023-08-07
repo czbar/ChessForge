@@ -6,6 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
+        ShowInTaskbar="False"
         Title="{x:Static p:Resources.ImportPgn}" Height="520" Width="800">
 
     <Grid>
@@ -37,7 +38,7 @@
         </ListView>
         <CheckBox x:Name="UiCbSelectAll" IsChecked="True" Grid.Row="1" Content="" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Checked="UiCbSelectAll_Checked" Unchecked="UiCbSelectAll_Unchecked"/>
         <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Left" Margin="580,42,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="False" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="580,77,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="580,77,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
         <Label x:Name="UiLblInstruct" Content="{x:Static p:Resources.SelectItems}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
         
         <RadioButton x:Name="UiRbStudyAndGames" Content="{x:Static p:Resources.MergeGamesAndCopy}" HorizontalAlignment="Left" Margin="30,50,0,0" Grid.Row="2" VerticalAlignment="Top"/>

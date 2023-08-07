@@ -16,11 +16,30 @@ namespace ChessForge
     /// </summary>
     public partial class GamesEvalDialog : Window
     {
+        /// <summary>
+        /// Initializes the dialog
+        /// </summary>
+        /// <param name="plyCountToEvaluate"></param>
+        /// <param name="estEvaluationTime"></param>
         public GamesEvalDialog(int plyCountToEvaluate, long estEvaluationTime)
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// This will be called if there was a fatal error while evalating
+        /// </summary>
+        public void AbandonEvaluation()
+        {
+            GamesEvaluationManager.IsEvaluationInProgress = false;
+            DialogResult = false;
+        }
+
+        /// <summary>
+        /// The user requested that the evaluation be stopped.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
             AppState.MainWin.StopEvaluation(true);

@@ -73,6 +73,9 @@ namespace EngineService
         /// </summary>
         public event Action<string> EngineMessage;
 
+        // path to the engine executable
+        private string _enginePath;
+
         // A lock object to use when reading engine messages
         private static object _lockEngineMessage = new object();
 
@@ -141,6 +144,11 @@ namespace EngineService
         {
             try
             {
+                _isEngineRunning = false;
+                _isEngineReady = false;
+                _isMessageRxLoopRunning = false; 
+                
+                _enginePath = enginePath;
                 _options = options;
 
                 EngineLog.Message("Starting the Engine: " + enginePath);
@@ -221,6 +229,14 @@ namespace EngineService
             }
         }
 
+        /// <summary>
+        /// Stops and restarts the engine
+        /// </summary>
+        public void RestartEngine()
+        {
+            StopEngine();
+            StartEngine(_enginePath, _options);
+        }
 
         //**************************************************
         //
@@ -315,17 +331,17 @@ namespace EngineService
             }
         }
 
-            //**************************************************
-            //
-            // PRIVATE METHODS
-            //
-            //**************************************************
+        //**************************************************
+        //
+        // PRIVATE METHODS
+        //
+        //**************************************************
 
-            /// <summary>
-            /// Writes directly to the engine.
-            /// </summary>
-            /// <param name="command"></param>
-            private void WriteOut(string command)
+        /// <summary>
+        /// Writes directly to the engine.
+        /// </summary>
+        /// <param name="command"></param>
+        private void WriteOut(string command)
         {
             _strmWriter.WriteLine(command);
             EngineLog.Message("Command sent: " + command + " : State=" + _currentState.ToString());
@@ -460,6 +476,7 @@ namespace EngineService
         {
             _isMessageRxLoopRunning = true;
 
+            string message;
             lock (_lockEngineMessage)
             {
                 if (_strmReader == null)
@@ -468,11 +485,11 @@ namespace EngineService
                     return;
                 }
 
-                string message;
                 try
                 {
-                    while (_strmReader != null && (message = _strmReader.ReadLine()) != null)
+                    while (_strmReader != null)
                     {
+                        message = _strmReader.ReadLine();
                         if (message != null && !message.Contains("currmove"))
                         {
                             EngineLog.Message(message);
@@ -499,6 +516,21 @@ namespace EngineService
                                 {
                                     EngineMessage?.Invoke(message);
                                 }
+                            }
+                        }
+
+                        if (message == null)
+                        {
+                            // null message can be received during initialization or when there is an engine error.
+                            // if the former, we need to esixt the loop and allow regular processing,
+                            // if the latter, we need to handle error situation
+                            if (_isEngineReady)
+                            {
+                                EngineMessage?.Invoke(message);
+                            }
+                            else
+                            {
+                                break;
                             }
                         }
                     }

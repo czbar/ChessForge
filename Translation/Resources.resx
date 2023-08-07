@@ -504,6 +504,9 @@
   <data name="Undo" xml:space="preserve">
     <value>Undo</value>
   </data>
+  <data name="ExitTrainingAdvice" xml:space="preserve">
+    <value>Exit the training session to use this function.</value>
+  </data>
   <data name="View" xml:space="preserve">
     <value>View</value>
   </data>
@@ -986,6 +989,9 @@
   </data>
   <data name="ExerciseNoSolution" xml:space="preserve">
     <value>This exercise has no solution provided.</value>
+  </data>
+  <data name="EngineWillRestart" xml:space="preserve">
+    <value>Evaluation has been stopped and the engine restarted.</value>
   </data>
   <data name="GameDownloadError" xml:space="preserve">
     <value>Game download error</value>
@@ -1689,6 +1695,12 @@
   </data>
   <data name="ReadingWorkbookFile" xml:space="preserve">
     <value>Reading workbook file...</value>
+  </data>
+  <data name="ReadingStudyTree" xml:space="preserve">
+    <value>Processing study tree...</value>
+  </data>
+  <data name="ReadingItems" xml:space="preserve">
+    <value>Reading item $0 of $1</value>
   </data>
   <data name="OebCheckmate" xml:space="preserve">
     <value>checkmate</value>

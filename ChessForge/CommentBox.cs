@@ -113,7 +113,7 @@ namespace ChessForge
         /// </summary>
         public void StartingEngine()
         {
-            UserWaitAnnouncement(Resources.ResourceManager.GetString("ChessEngineLoading"), null);
+            UserWaitAnnouncement(Properties.Resources.ChessEngineLoading, null);
         }
 
         /// <summary>
@@ -122,7 +122,20 @@ namespace ChessForge
         /// </summary>
         public void ReadingFile()
         {
-            UserWaitAnnouncement(Resources.ResourceManager.GetString("ReadingWorkbookFile"), Brushes.Blue);
+            UserWaitAnnouncement(Properties.Resources.ReadingWorkbookFile, Brushes.Blue);
+        }
+
+        /// <summary>
+        /// A message to display progress while workbook items are being read and processed.
+        /// </summary>
+        /// <param name="itemNo"></param>
+        /// <param name="itemCount"></param>
+        public void ReadingItems(int itemNo, int itemCount)
+        {
+            string msg = Properties.Resources.ReadingItems;
+            msg = msg.Replace("$0", itemNo.ToString());
+            msg = msg.Replace("$1", itemCount.ToString());
+            UserWaitAnnouncement(msg, Brushes.Blue);
         }
 
         /// <summary>
@@ -372,6 +385,16 @@ namespace ChessForge
                 Document.Blocks.Add(para);
                 para.Foreground = Brushes.Red;
             });
+        }
+
+        /// <summary>
+        /// Notifies the user that the evaluation was stopped and engine reset
+        /// upon error. 
+        /// </summary>
+        /// <param name="txt"></param>
+        public void EngineResetOnError(string txt)
+        {
+            UserWaitAnnouncement(txt, Brushes.Red);
         }
 
         /// <summary>

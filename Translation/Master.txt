@@ -429,6 +429,9 @@ MergeChapters=Merge Chapters...
 #Undoes the previous operation
 Undo=Undo
 
+#Avice to exit
+ExitTrainingAdvice=Exit the training session to use this function.
+
 
 
 #TOP LEVEL MENU: View
@@ -1006,6 +1009,9 @@ EngineNotAvailable=Chess Engine not available.
 
 #Exercise has no solution
 ExerciseNoSolution=This exercise has no solution provided.
+
+#Evaluations will be stopped and engine restarted.
+EngineWillRestart=Evaluation has been stopped and the engine restarted.
 
 #Error downloading game
 GameDownloadError=Game download error
@@ -1749,6 +1755,12 @@ ChessEngineLoading=Chess engine loading...
 
 #Reading workbook
 ReadingWorkbookFile=Reading workbook file...
+
+#Processing Study Tree
+ReadingStudyTree=Processing study tree...
+
+#Reading items
+ReadingItems=Reading item $0 of $1
 
 ##################################
 #

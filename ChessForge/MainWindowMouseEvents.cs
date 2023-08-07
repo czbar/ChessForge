@@ -960,6 +960,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabChapters_GotFocus(object sender, RoutedEventArgs e)
         {
+            StopReplayIfActive();
             EngineMessageProcessor.StopEngineEvaluation();
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
 
@@ -1003,6 +1004,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabIntro_GotFocus(object sender, RoutedEventArgs e)
         {
+            StopReplayIfActive();
             try
             {
                 if (WorkbookManager.SessionWorkbook == null && _introView != null)
@@ -1080,6 +1082,8 @@ namespace ChessForge
                 return;
             }
 
+            StopReplayIfActive();
+
             AppState.ConfigureMenusForManualReview();
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
@@ -1109,11 +1113,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabBookmarks_GotFocus(object sender, RoutedEventArgs e)
         {
+            StopReplayIfActive();
+
             if (AppState.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
             {
                 return;
             }
 
+            DisplayPosition(PositionUtils.SetupStartingPosition());
             AppState.ConfigureMenusForManualReview();
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.BOOKMARKS;
             AppState.ShowExplorers(false, false);
@@ -1218,6 +1225,8 @@ namespace ChessForge
                 return;
             }
 
+            StopReplayIfActive();
+
             AppState.ConfigureMenusForManualReview();
             RefreshGamesView(out Chapter chapter, out int articleIndex);
             WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
@@ -1321,6 +1330,8 @@ namespace ChessForge
             {
                 return;
             }
+
+            StopReplayIfActive();
 
             AppState.ConfigureMenusForManualReview();
             RefreshExercisesView(out Chapter chapter, out int articleIndex);

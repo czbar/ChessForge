@@ -558,6 +558,10 @@ MergeChapters=Połącz Rozdziały
 #english: Undo=Undo
 Undo=Cofnij Operację
 
+#description: Avice to exit
+#english: ExitTrainingAdvice=Exit the training session to use this function.
+ExitTrainingAdvice=Wyjdź z sesji treningowej, aby użyc tej funkcji.
+
 
 
 #description: TOP LEVEL MENU: View
@@ -1296,6 +1300,10 @@ EngineNotAvailable=Silnik niedostępny
 #description: Exercise has no solution
 #english: ExerciseNoSolution=This exercise has no solution provided.
 ExerciseNoSolution=Ćwiczenie bez rozwiązania
+
+#description: Evaluations will be stopped and engine restarted.
+#english: EngineWillRestart=Evaluation has been stopped and the engine restarted.
+EngineWillRestart=Ocenianie zostało zatrzymane i silnik zrestartowany.
 
 #description: Error downloading game
 #english: GameDownloadError=Game download error
@@ -2273,6 +2281,14 @@ ChessEngineLoading=Trwa ładowanie silnika...
 #description: Reading workbook
 #english: ReadingWorkbookFile=Reading workbook file...
 ReadingWorkbookFile=Wczytywanie podręcznika...
+
+#description: Processing Study Tree
+#english: ReadingStudyTree=Processing study tree...
+ReadingStudyTree=Przetwarzanie drzewa teorii...
+
+#description: Reading items
+#english: ReadingItems=Reading item $0 of $1
+ReadingItems=Wczytywanie elementu $0 z $1
 
 ##################################
 #

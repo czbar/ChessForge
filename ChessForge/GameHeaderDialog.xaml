@@ -6,6 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
+        ShowInTaskbar="False"
         Title="PLACEHOLDER" Height="450" Width="690">
     <Grid>
         <GroupBox x:Name="UiGbPlayers" HorizontalAlignment="Left" Height="120" Header="" Margin="12,12,0,0" VerticalAlignment="Top" Width="646">
@@ -50,7 +51,7 @@
             <TextBox x:Name="UiTbPreamble" AcceptsReturn="True" HorizontalAlignment="Left" Margin="7,4,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" Height="182" PreviewKeyDown="UiTbPreamble_PreviewKeyDown"/>
         </GroupBox>
         <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Left" Margin="180,374,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="280,374,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="280,374,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
         <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Left" Margin="410,374,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnHelp_Click"/>
     </Grid>
 </Window>

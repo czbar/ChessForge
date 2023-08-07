@@ -6,6 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
+        ShowInTaskbar="False"
         Title="{x:Static p:Resources.DlgTitleIdenticalPositions}" Height="460" Width="700">
 
     <Grid>
@@ -45,6 +46,7 @@
             </ListView.View>
         </ListView>
         <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Exit}" HorizontalAlignment="Center" Margin="0,30,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancelL" IsCancel="True" Content="" Width="0" Height="0" />
         <Label x:Name="UiLblInstruct" Content="{x:Static p:Resources.DlgLabelIdenticalPositionHint}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
     </Grid>
 </Window>

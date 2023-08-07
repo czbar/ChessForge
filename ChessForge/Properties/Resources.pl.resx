@@ -504,6 +504,9 @@
   <data name="Undo" xml:space="preserve">
     <value>Cofnij Operację</value>
   </data>
+  <data name="ExitTrainingAdvice" xml:space="preserve">
+    <value>Wyjdź z sesji treningowej, aby użyc tej funkcji.</value>
+  </data>
   <data name="View" xml:space="preserve">
     <value>Widok</value>
   </data>
@@ -986,6 +989,9 @@
   </data>
   <data name="ExerciseNoSolution" xml:space="preserve">
     <value>Ćwiczenie bez rozwiązania</value>
+  </data>
+  <data name="EngineWillRestart" xml:space="preserve">
+    <value>Ocenianie zostało zatrzymane i silnik zrestartowany.</value>
   </data>
   <data name="GameDownloadError" xml:space="preserve">
     <value>Błąd przy ściąganiu partii</value>
@@ -1688,6 +1694,12 @@
   </data>
   <data name="ReadingWorkbookFile" xml:space="preserve">
     <value>Wczytywanie podręcznika...</value>
+  </data>
+  <data name="ReadingStudyTree" xml:space="preserve">
+    <value>Przetwarzanie drzewa teorii...</value>
+  </data>
+  <data name="ReadingItems" xml:space="preserve">
+    <value>Wczytywanie elementu $0 z $1</value>
   </data>
   <data name="OebCheckmate" xml:space="preserve">
     <value>mat</value>

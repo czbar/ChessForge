@@ -6,10 +6,11 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
+        ShowInTaskbar="False"
         Title="{x:Static p:Resources.CreateNewChapterFromLine}" Height="232" Width="390">
     <Grid>
         <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-100,146,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="100,146,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="100,146,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
         <Label x:Name="UiLblNewChapterCreated" Content="{x:Static p:Resources.NewChapterToBeCreate}" HorizontalAlignment="Center" Margin="0,11,0,0" VerticalAlignment="Top"/>
 
         <Label x:Name="UiLblTitle" Content="{x:Static p:Resources.Title}" HorizontalAlignment="Left" Margin="30,43,0,0" VerticalAlignment="Top"/>

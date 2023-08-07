@@ -507,7 +507,18 @@ namespace ChessForge
         {
             try
             {
-                TreeNode nd = GetSelectedNode();
+                TreeNode nd = null;
+
+                // special case if we are solving in guess mode, as the "selected node" is not what we want then
+                if (AppState.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
+                {
+                    nd = ShownVariationTree.Nodes[ShownVariationTree.Nodes.Count - 1];
+                }
+                else
+                {
+                    nd = GetSelectedNode();
+                }
+
                 if (nd == null && _mainVariationTree != null)
                 {
                     nd = _mainVariationTree.Nodes[0];
@@ -2241,6 +2252,7 @@ namespace ChessForge
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
             Run r = (Run)e.Source;
+            _mainWin.StopReplayIfActive();
             SelectRun(r, e.ClickCount, e.ChangedButton);
         }
 

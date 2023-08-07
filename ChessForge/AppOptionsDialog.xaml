@@ -6,6 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
+        ShowInTaskbar="False"
         Title="{x:Static p:Resources.DlgTitleApplicationOptions}" Height="390" SizeToContent="Width">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >
         <Label x:Name="UiLblEngineExe" Content="{x:Static p:Resources.EngineExecutable}" HorizontalAlignment="Left" Margin="17,31,0,0" VerticalAlignment="Top"/>

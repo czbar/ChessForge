@@ -558,6 +558,10 @@ MergeChapters=
 #english: Undo=Undo
 Undo=
 
+#description: Avice to exit
+#english: ExitTrainingAdvice=Exit the training session to use this function.
+ExitTrainingAdvice=
+
 
 
 #description: TOP LEVEL MENU: View
@@ -1296,6 +1300,10 @@ EngineNotAvailable=
 #description: Exercise has no solution
 #english: ExerciseNoSolution=This exercise has no solution provided.
 ExerciseNoSolution=
+
+#description: Evaluations will be stopped and engine restarted.
+#english: EngineWillRestart=Evaluation has been stopped and the engine restarted.
+EngineWillRestart=
 
 #description: Error downloading game
 #english: GameDownloadError=Game download error
@@ -2273,6 +2281,14 @@ ChessEngineLoading=
 #description: Reading workbook
 #english: ReadingWorkbookFile=Reading workbook file...
 ReadingWorkbookFile=
+
+#description: Processing Study Tree
+#english: ReadingStudyTree=Processing study tree...
+ReadingStudyTree=
+
+#description: Reading items
+#english: ReadingItems=Reading item $0 of $1
+ReadingItems=
 
 ##################################
 #

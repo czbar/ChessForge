@@ -6,6 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
+        ShowInTaskbar="False"
         Title="{x:Static p:Resources.GamePreview}" Height="440" Width="800" Closing="Window_Closing">
     <Grid>
         <Canvas x:Name="UiCnvOver"  Background="Black" Height="268" Width="268" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,65,0,0" >
@@ -38,7 +39,7 @@
         <Label x:Name="UiLblPrevGame" Cursor="Hand" Content="{x:Static p:Resources.PreviousGame}" HorizontalAlignment="Left" Margin="340,6,0,0" VerticalAlignment="Top" MouseLeftButtonDown="UiPreviousGame_Click"/>
         <Label x:Name="UiLblNextGame" Cursor="Hand" Content="{x:Static p:Resources.NextGame}" HorizontalAlignment="Left" Margin="340,30,0,0" VerticalAlignment="Top" MouseLeftButtonDown="UiNextGame_Click"/>
         <Button x:Name="UiBtnViewGame" Visibility="Collapsed" Content="{x:Static p:Resources.FullView}" HorizontalAlignment="Left" Width="120" Margin="342,125,0,0" VerticalAlignment="Top" Click="UiBtnViewGame_Click"  />
-        <Button x:Name="UiBtnExit" Content="{x:Static p:Resources.Exit}" HorizontalAlignment="Left" Width="120" Margin="342,353,0,0" VerticalAlignment="Top" Click="UiBtnExit_Click" />
+        <Button x:Name="UiBtnExit" IsCancel="True" Content="{x:Static p:Resources.Exit}" HorizontalAlignment="Left" Width="120" Margin="342,353,0,0" VerticalAlignment="Top" Click="UiBtnExit_Click" />
         <Label x:Name="UiLblDownloadError" Visibility="Collapsed" FontSize="14"  FontWeight="Bold" Foreground="red" Content="{x:Static p:Resources.GameDownloadError}" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblLoading" Background="Blue" Foreground="White" FontSize="16" FontWeight="Bold" Content="{x:Static p:Resources.DownloadingGameFromLichess}" HorizontalAlignment="Center" Margin="0,182,0,0" VerticalAlignment="Top" Panel.ZIndex="1"/>
         <TextBox x:Name="UiTbError" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0,191,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="220" Height="64" BorderThickness="0" IsEnabled="False"/>

@@ -190,7 +190,14 @@ namespace GameTree
             sb.Append(pos.HalfMove50Clock.ToString() + " ");
 
             // Field 6: the number of the full move
-            sb.Append(pos.MoveNumber.ToString());
+            if (pos.ColorToMove == PieceColor.White)
+            {
+                sb.Append((pos.MoveNumber+1).ToString());
+            }
+            else
+            {
+                sb.Append(pos.MoveNumber.ToString());
+            }
 
             return sb.ToString();
         }

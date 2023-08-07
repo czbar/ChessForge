@@ -564,7 +564,15 @@ namespace ChessForge
                             menuItem.IsEnabled = isEnabled;
                             break;
                         case "_mnTrainFromBookmark":
-                            menuItem.IsEnabled = isEnabled;
+                            TreeNode nd = GetNodeFromClickedIndex(ClickedIndex);
+                            if (nd != null && !nd.Position.IsCheckmate && !nd.Position.IsStalemate)
+                            {
+                                menuItem.IsEnabled = isEnabled;
+                            }
+                            else
+                            {
+                                menuItem.IsEnabled = false;
+                            }
                             break;
                         case "_mnDeleteBookmark":
                             menuItem.IsEnabled = isEnabled;
@@ -647,6 +655,28 @@ namespace ChessForge
                     bv.Highlight(false);
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns the TreeNode given its index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private static TreeNode GetNodeFromClickedIndex(int index)
+        {
+            TreeNode node = null;
+
+            try
+            {
+                if (index >= 0 && index < BookmarkList.Count)
+                {
+                    BookmarkWrapper bmv = BookmarkGuiList[ClickedIndex % BOOKMARKS_PER_PAGE].BookmarkWrapper;
+                    node = bmv.Bookmark.Node;
+                }
+            }
+            catch { }
+
+            return node;
         }
 
         /// <summary>

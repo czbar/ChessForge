@@ -1609,6 +1609,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Evaluation has been stopped and the engine restarted..
+        /// </summary>
+        public static string EngineWillRestart {
+            get {
+                return ResourceManager.GetString("EngineWillRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to En Passant.
         /// </summary>
         public static string EnPassant {
@@ -1983,6 +1992,15 @@ namespace ChessForge.Properties {
         public static string ExitTraining {
             get {
                 return ResourceManager.GetString("ExitTraining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit the training session to use this function..
+        /// </summary>
+        public static string ExitTrainingAdvice {
+            get {
+                return ResourceManager.GetString("ExitTrainingAdvice", resourceCulture);
             }
         }
         
@@ -3685,6 +3703,24 @@ namespace ChessForge.Properties {
         public static string QuizScore {
             get {
                 return ResourceManager.GetString("QuizScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reading item $0 of $1.
+        /// </summary>
+        public static string ReadingItems {
+            get {
+                return ResourceManager.GetString("ReadingItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing study tree....
+        /// </summary>
+        public static string ReadingStudyTree {
+            get {
+                return ResourceManager.GetString("ReadingStudyTree", resourceCulture);
             }
         }
         
