@@ -388,6 +388,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Notifies the user that the evaluation was stopped and engine reset
+        /// upon error. 
+        /// </summary>
+        /// <param name="txt"></param>
+        public void EngineResetOnError(string txt)
+        {
+            UserWaitAnnouncement(txt, Brushes.Red);
+        }
+
+        /// <summary>
         /// Displays a special message to the user.
         /// Uses the main window's dispatcher context
         /// so can be invoked from a timer thread.
