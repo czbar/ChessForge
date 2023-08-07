@@ -6,6 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
+        ShowInTaskbar="False"
         Title="{x:Static p:Resources.GameExerciseReferences}" Height="290" Width="600">
 
     <Grid>
@@ -31,7 +32,7 @@
             </ListView.View>
         </ListView>
         <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Edit}" HorizontalAlignment="Center" Margin="-110,20,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="False" Content="{x:Static p:Resources.Exit}" HorizontalAlignment="Center" Margin="110,20,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Exit}" HorizontalAlignment="Center" Margin="110,20,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
         <Label x:Name="UiLblInstruct" Content="{x:Static p:Resources.InfoGameExerciseReferences}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" />
     </Grid>
 </Window>

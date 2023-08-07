@@ -6,6 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
+        ShowInTaskbar="False"
         Title="{x:Static p:Resources.GamesEvaluation}" Height="210" Width="400">
     <Grid>
         <Label x:Name="UiLblCurrentGame" Content="-" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top"/>

@@ -6,6 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
+        ShowInTaskbar="False"
         Title="{x:Static p:Resources.SelectChapter}" Height="320" Width="360">
     <Grid>
         <ListBox x:Name="UiLbChapters" ItemsSource="{Binding}" SelectionMode="Single" 

@@ -6,6 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
+        ShowInTaskbar="False"
         Title="{x:Static p:Resources.PositionSetup}" Height="521" Width="815" MouseUp="Window_MouseUp" MouseMove="Window_MouseMove" MouseLeave="Window_MouseLeave" >
     <Grid x:Name="_grdDialog" >
         <Canvas x:Name="UiCnvSetup" Margin="63,41,0,0" Width="268" Height="368" HorizontalAlignment="Left" VerticalAlignment="Top" MouseDown="UiCnvSetup_MouseDown" >
@@ -43,7 +44,7 @@
         <CheckBox x:Name="UiCbBlackCastleLong" Content="" HorizontalAlignment="Left" Margin="682,250,0,0" VerticalAlignment="Top" Checked="UiCastleCheckBoxChanged" Unchecked="UiCastleCheckBoxChanged"/>
         <Label x:Name="UiLblBlackCastleLong" Content="O-O-O" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="631,244,0,0"/>
         <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" Width="80" HorizontalAlignment="Left" Margin="322,431,0,0" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" Width="80"  HorizontalAlignment="Left" Margin="430,431,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" Width="80"  HorizontalAlignment="Left" Margin="430,431,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
         <Button x:Name="UiBtnStartingPos" Content="{x:Static p:Resources.StartingPosition}" Width="160" HorizontalAlignment="Left" Margin="501,310,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="UiBtnStartingPos_Click"/>
         <Button x:Name="UiBtnClear" Content="{x:Static p:Resources.ClearBoard}" Width="160" HorizontalAlignment="Left" Margin="501,343,0,0" VerticalAlignment="Top"  Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="UiBtnClear_Click" />
         <Button x:Name="UiDebug" Content="Debug Position" Visibility="Collapsed" HorizontalAlignment="Left" Margin="501,23,0,0" Width="160" VerticalAlignment="Top" Click="UiDebug_Click"/>

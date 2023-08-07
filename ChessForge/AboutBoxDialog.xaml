@@ -6,6 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
+        ShowInTaskbar="False"
         Title="Chess Forge" Height="300" Width="400" MouseDown="Window_MouseDown">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >
         <RichTextBox x:Name="_rtbAboutBox" Margin="8,8,8,60" BorderThickness="2" >
@@ -13,6 +14,7 @@
             </FlowDocument>
         </RichTextBox>
         <Button x:Name="_btnOK" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="0,242,0,20" VerticalAlignment="Top" Width="74" Click="_btnOK_Click" Height="20"/>
+        <Button x:Name="_btnCancel" IsCancel="True" Content="" Width="0" Height="0"/>
 
     </Grid>
 </Window>

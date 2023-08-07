@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
+        ShowInTaskbar="False"
         mc:Ignorable="d"
         Title="{x:Static p:Resources.Annotations}" Height="320" Width="600">
     <Canvas x:Name="UiCnvButtons" Margin="0,0">
@@ -37,7 +38,7 @@
             <TextBox x:Name="UiTbComment" HorizontalAlignment="Left" Margin="14,10" TextWrapping="Wrap" Text="" Width="330" Height="150" VerticalAlignment="Top" PreviewKeyDown="UiTbComment_PreviewKeyDown" />
         </GroupBox>
             <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" Width="70" HorizontalAlignment="Left" Margin="304,237,0,0" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-            <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" Width="70" HorizontalAlignment="Left" Margin="390,237,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+            <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" Width="70" HorizontalAlignment="Left" Margin="390,237,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
             <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" Width="70" HorizontalAlignment="Left" Margin="495,237,0,0" VerticalAlignment="Top" Click="UiBtnHelp_Click" />
             <GroupBox x:Name="UiGbQuizPoints" Header="{x:Static p:Resources.QuizPoints}" Margin="201,215,0,0" Width="85" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left"   >
             <TextBox x:Name="UiTbQuizPoints" HorizontalAlignment="Left" Margin="18,2,0,0" TextWrapping="Wrap" Text="" Width="40" Height="20"/>
