@@ -131,10 +131,11 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds an Article list for use in the Select Article dialog.
+        /// Builds an Article list (Games and/or Exercises) for use in the Select Articles dialog.
         /// </summary>
+        /// <param name="contentType">Type of articles to return. If GENERIC return both Games and Exercises</param>
         /// <returns></returns>
-        public ObservableCollection<ArticleListItem> GenerateArticleList()
+        public ObservableCollection<ArticleListItem> GenerateArticleList(GameData.ContentType contentType = GameData.ContentType.GENERIC)
         {
             ObservableCollection<ArticleListItem> articleList = new ObservableCollection<ArticleListItem>();
 
@@ -143,15 +144,22 @@ namespace ChessForge
                 // an item for the Chapter itself
                 ArticleListItem chaptItem = new ArticleListItem(chapter);
                 articleList.Add(chaptItem);
-                for (int i = 0; i < chapter.ModelGames.Count; i++)
+                if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.GENERIC)
                 {
-                    ArticleListItem artItem = new ArticleListItem(chapter, -1, chapter.ModelGames[i], i);
-                    articleList.Add(artItem);
+                    for (int i = 0; i < chapter.ModelGames.Count; i++)
+                    {
+                        ArticleListItem artItem = new ArticleListItem(chapter, -1, chapter.ModelGames[i], i);
+                        articleList.Add(artItem);
+                    }
                 }
-                for (int i = 0; i < chapter.Exercises.Count; i++)
+
+                if (contentType == GameData.ContentType.EXERCISE || contentType == GameData.ContentType.GENERIC)
                 {
-                    ArticleListItem artItem = new ArticleListItem(chapter, -1, chapter.Exercises[i], i);
-                    articleList.Add(artItem);
+                    for (int i = 0; i < chapter.Exercises.Count; i++)
+                    {
+                        ArticleListItem artItem = new ArticleListItem(chapter, -1, chapter.Exercises[i], i);
+                        articleList.Add(artItem);
+                    }
                 }
             }
 
