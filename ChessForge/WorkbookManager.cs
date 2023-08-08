@@ -514,6 +514,7 @@ namespace ChessForge
                             menuItem.Visibility = (isGamesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnDeleteGame":
+                        case "UiMnDeleteGames":
                             menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.ActiveChapter.GetModelGameCount() > 0;
                             menuItem.Visibility = (isGamesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
@@ -584,6 +585,7 @@ namespace ChessForge
                             menuItem.Visibility = (isExercisesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnDeleteExercise":
+                        case "UiMnDeleteExercises":
                             menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.ActiveChapter.GetExerciseCount() > 0;
                             menuItem.Visibility = (isExercisesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
