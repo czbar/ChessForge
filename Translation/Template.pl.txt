@@ -1546,7 +1546,8 @@ SelectGamesToImport=Wybierz Partie do Importu:
 #english: SelectExercisesToImport=Select Exercises to Import:
 SelectExercisesToImport=Wybierz Ćwiczenia do Importu:
 
-Sdescription: electExercisesForDeletion=Select Exercises for Deletion
+#description: Select Exercises for deletion
+#english: SelectExercisesForDeletion=Select Exercises for Deletion
 SelectExercisesForDeletion=Wybierz ćwiczenia do usunięcia
 
 #description: Select Items to create a new Chapter from

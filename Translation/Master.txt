@@ -1196,6 +1196,7 @@ SelectGamesToImport=Select Games to Import:
 #Select Exercises to Import
 SelectExercisesToImport=Select Exercises to Import:
 
+#Select Exercises for deletion
 SelectExercisesForDeletion=Select Exercises for Deletion
 
 #Select Items to create a new Chapter from

@@ -1546,7 +1546,8 @@ SelectGamesToImport=
 #english: SelectExercisesToImport=Select Exercises to Import:
 SelectExercisesToImport=
 
-Sdescription: electExercisesForDeletion=Select Exercises for Deletion
+#description: Select Exercises for deletion
+#english: SelectExercisesForDeletion=Select Exercises for Deletion
 SelectExercisesForDeletion=
 
 #description: Select Items to create a new Chapter from
