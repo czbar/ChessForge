@@ -255,19 +255,29 @@ namespace GameTree
         /// <returns></returns>
         public static string FenEnPassantSquare(BoardPosition pos)
         {
+            string dash = "-";
             if (pos.EnPassantSquare == 0)
             {
-                return "-";
+                return dash;
             }
 
-            char columnCharCode = (char)((pos.EnPassantSquare >> 4) + (int)'a');
-            char rowCharCode = (char)((pos.EnPassantSquare & 0x0F) + (int)'1');
+            int x = pos.EnPassantSquare >> 4;
+            int y = pos.EnPassantSquare & 0x0F;
 
-            StringBuilder sb = new StringBuilder();
-            sb.Append(columnCharCode);
-            sb.Append(rowCharCode);
+            if (PositionUtils.IsEnPassantSquareActive(x, y, pos))
+            {
+                char columnCharCode = (char)((pos.EnPassantSquare >> 4) + (int)'a');
+                char rowCharCode = (char)((pos.EnPassantSquare & 0x0F) + (int)'1');
 
-            return sb.ToString();
+                StringBuilder sb = new StringBuilder();
+                sb.Append(columnCharCode);
+                sb.Append(rowCharCode);
+                return sb.ToString();
+            }
+            else
+            {
+                return dash;
+            }
         }
 
         /// <summary>
