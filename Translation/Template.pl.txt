@@ -1530,6 +1530,10 @@ SelectItemsforWorkbook=Wybierz elementy do utworzenia nowego Podręcznika:
 #english: SelectGames=Select Games
 SelectGames=Wybierz Partie
 
+#description: Select Games for deletion
+#english: SelectGamesForDeletion=Select Games for Deletion
+SelectGamesForDeletion=Wybierz partie do usunięcia.
+
 #description: Downloaded Games
 #english: DownloadedGames=Downloaded Games
 DownloadedGames=Pobrane Partie
@@ -1541,6 +1545,9 @@ SelectGamesToImport=Wybierz Partie do Importu:
 #description: Select Exercises to Import
 #english: SelectExercisesToImport=Select Exercises to Import:
 SelectExercisesToImport=Wybierz Ćwiczenia do Importu:
+
+Sdescription: electExercisesForDeletion=Select Exercises for Deletion
+SelectExercisesForDeletion=Wybierz ćwiczenia do usunięcia
 
 #description: Select Items to create a new Chapter from
 #english: SelectItemsForChapter=Select Items to create a new Chapter from:

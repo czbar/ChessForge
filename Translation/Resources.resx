@@ -1156,6 +1156,9 @@
   <data name="SelectGames" xml:space="preserve">
     <value>Select Games</value>
   </data>
+  <data name="SelectGamesForDeletion" xml:space="preserve">
+    <value>Select Games for Deletion</value>
+  </data>
   <data name="DownloadedGames" xml:space="preserve">
     <value>Downloaded Games</value>
   </data>
@@ -1164,6 +1167,9 @@
   </data>
   <data name="SelectExercisesToImport" xml:space="preserve">
     <value>Select Exercises to Import:</value>
+  </data>
+  <data name="SelectExercisesForDeletion" xml:space="preserve">
+    <value>Select Exercises for Deletion</value>
   </data>
   <data name="SelectItemsForChapter" xml:space="preserve">
     <value>Select Items to create a new Chapter from:</value>

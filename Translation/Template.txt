@@ -1530,6 +1530,10 @@ SelectItemsforWorkbook=
 #english: SelectGames=Select Games
 SelectGames=
 
+#description: Select Games for deletion
+#english: SelectGamesForDeletion=Select Games for Deletion
+SelectGamesForDeletion=
+
 #description: Downloaded Games
 #english: DownloadedGames=Downloaded Games
 DownloadedGames=
@@ -1541,6 +1545,9 @@ SelectGamesToImport=
 #description: Select Exercises to Import
 #english: SelectExercisesToImport=Select Exercises to Import:
 SelectExercisesToImport=
+
+Sdescription: electExercisesForDeletion=Select Exercises for Deletion
+SelectExercisesForDeletion=
 
 #description: Select Items to create a new Chapter from
 #english: SelectItemsForChapter=Select Items to create a new Chapter from:

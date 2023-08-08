@@ -1184,6 +1184,9 @@ SelectItemsforWorkbook=Select Items to create a new Workbook from:
 #Select Games
 SelectGames=Select Games
 
+#Select Games for deletion
+SelectGamesForDeletion=Select Games for Deletion
+
 #Downloaded Games
 DownloadedGames=Downloaded Games
 
@@ -1192,6 +1195,8 @@ SelectGamesToImport=Select Games to Import:
 
 #Select Exercises to Import
 SelectExercisesToImport=Select Exercises to Import:
+
+SelectExercisesForDeletion=Select Exercises for Deletion
 
 #Select Items to create a new Chapter from
 SelectItemsForChapter=Select Items to create a new Chapter from:
