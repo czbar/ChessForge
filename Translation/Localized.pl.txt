@@ -885,6 +885,10 @@ DeleteSelectedGame=Usuń Wybraną Partię
 #english: DeleteThisGame=Delete This Game
 DeleteThisGame=Usuń Partię 
 
+#description: Delete multiple games
+#english: DeleteGames=Delete Games...
+DeleteGames=Usuń Partie...
+
 #description: Confirm delete this game. The program will append game title
 #english: ConfirmDeleteGame=Delete Game
 ConfirmDeleteGame=Usuń Partię
@@ -893,6 +897,10 @@ ConfirmDeleteGame=Usuń Partię
 #description: Delete exercise
 #english: DeleteExercise=Delete Exercise
 DeleteExercise=Usuń Ćwiczenie
+
+#description: Delete multiple exercises
+#english: DeleteExercises=Delete Exercises...
+DeleteExercises=Usuń Ćwiczenia...
 
 #description: Delete selected exercise
 #english: DeleteSelectedExercise=Delete Selected Exercise

@@ -681,12 +681,18 @@ DeleteSelectedGame=Delete Selected Game
 #Delete this game
 DeleteThisGame=Delete This Game
 
+#Delete multiple games
+DeleteGames=Delete Games...
+
 #Confirm delete this game. The program will append game title
 ConfirmDeleteGame=Delete Game
 
 
 #Delete exercise
 DeleteExercise=Delete Exercise
+
+#Delete multiple exercises
+DeleteExercises=Delete Exercises...
 
 #Delete selected exercise
 DeleteSelectedExercise=Delete Selected Exercise

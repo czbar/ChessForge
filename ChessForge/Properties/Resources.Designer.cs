@@ -1159,11 +1159,29 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Exercises....
+        /// </summary>
+        public static string DeleteExercises {
+            get {
+                return ResourceManager.GetString("DeleteExercises", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete Game.
         /// </summary>
         public static string DeleteGame {
             get {
                 return ResourceManager.GetString("DeleteGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Games....
+        /// </summary>
+        public static string DeleteGames {
+            get {
+                return ResourceManager.GetString("DeleteGames", resourceCulture);
             }
         }
         

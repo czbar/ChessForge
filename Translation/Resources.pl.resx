@@ -729,11 +729,17 @@
   <data name="DeleteThisGame" xml:space="preserve">
     <value>Usuń Partię </value>
   </data>
+  <data name="DeleteGames" xml:space="preserve">
+    <value>Usuń Partie...</value>
+  </data>
   <data name="ConfirmDeleteGame" xml:space="preserve">
     <value>Usuń Partię</value>
   </data>
   <data name="DeleteExercise" xml:space="preserve">
     <value>Usuń Ćwiczenie</value>
+  </data>
+  <data name="DeleteExercises" xml:space="preserve">
+    <value>Usuń Ćwiczenia...</value>
   </data>
   <data name="DeleteSelectedExercise" xml:space="preserve">
     <value>Usuń Wybrane ćwiczenie</value>
