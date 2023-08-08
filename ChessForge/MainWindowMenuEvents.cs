@@ -292,37 +292,41 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnUndo_Click(object sender, RoutedEventArgs e)
         {
-            if (WorkbookManager.SessionWorkbook == null
-                || AppState.CurrentLearningMode == LearningMode.Mode.TRAINING
-                || AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+            try
             {
-                return;
-            }
+                if (WorkbookManager.SessionWorkbook == null
+                    || AppState.CurrentLearningMode == LearningMode.Mode.TRAINING
+                    || AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                {
+                    return;
+                }
 
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppState.ActiveVariationTree == null)
-            {
-                UndoWorkbookOperation();
-            }
-            else if (AppState.ActiveTab == WorkbookManager.TabViewType.STUDY
-                 || AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
-                 || AppState.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
-            {
-                if (WorkbookManager.SessionWorkbook.OpsManager.Timestamp > AppState.ActiveVariationTree.OpsManager.Timestamp)
+                if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppState.ActiveVariationTree == null)
                 {
                     UndoWorkbookOperation();
                 }
-                else
+                else if (AppState.ActiveTab == WorkbookManager.TabViewType.STUDY
+                     || AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
+                     || AppState.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
                 {
-                    // if no operations for the tree
-                    // try the Workbook level undo
-                    if (!UndoTreeEditOperation())
+                    if (WorkbookManager.SessionWorkbook.OpsManager.Timestamp > AppState.ActiveVariationTree.OpsManager.Timestamp)
                     {
                         UndoWorkbookOperation();
                     }
+                    else
+                    {
+                        // if no operations for the tree
+                        // try the Workbook level undo
+                        if (!UndoTreeEditOperation())
+                        {
+                            UndoWorkbookOperation();
+                        }
+                    }
                 }
-            }
 
-            AppState.IsDirty = true;
+                AppState.IsDirty = true;
+            }
+            catch {}
         }
 
         /// <summary>
@@ -399,10 +403,12 @@ namespace ChessForge
                         _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
                         break;
                     case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAME:
+                    case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAMES:
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         SelectModelGame(selectedArticleIndex, AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
                         break;
                     case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISE:
+                    case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISES:
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         SelectExercise(selectedArticleIndex, AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
                         break;
@@ -922,6 +928,90 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Invokes the dialog to select Games to delete and deletes them. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnDeleteGames_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteArticles(AppState.ActiveChapter, GameData.ContentType.MODEL_GAME);
+        }
+
+        /// <summary>
+        /// Invokes the dialog to select Exercises to delete and deletes them. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnDeleteExercises_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteArticles(AppState.ActiveChapter, GameData.ContentType.EXERCISE);
+        }
+
+        /// <summary>
+        /// Deletes articles passed in the artcole list
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="articleType"></param>
+        private void DeleteArticles(Chapter chapter, GameData.ContentType articleType)
+        {
+            if (chapter == null)
+            {
+                return;
+            }
+
+            try
+            {
+                ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList(AppState.ActiveChapter, articleType);
+                SelectArticlesDialog dlg = new SelectArticlesDialog(null, ref articleList, articleType)
+                {
+                    Left = ChessForgeMain.Left + 100,
+                    Top = ChessForgeMain.Top + 100,
+                    Topmost = false,
+                    Owner = this
+                };
+                if (dlg.ShowDialog() == true)
+                {
+                    List<Article> articlesToDelete = new List<Article>();
+                    List<int> indicesToDelete = new List<int>();
+                    int index = 0;
+                    foreach (ArticleListItem item in articleList)
+                    {
+                        if (item.IsSelected)
+                        {
+                            articlesToDelete.Add(item.Article);
+                            indicesToDelete.Add(index);
+                        }
+                        index++;
+                    }
+
+                    List<Article> deletedArticles = new List<Article>();
+                    List<int> deletedIndices = new List<int>();
+                    for (int i = 0; i < articlesToDelete.Count; i++)
+                    {
+                        bool res = chapter.DeleteArticle(articlesToDelete[i]);
+                        if (res)
+                        {
+                            deletedArticles.Add(articlesToDelete[i]);
+                            deletedIndices.Add(indicesToDelete[i]);
+                        }
+                    }
+
+                    if (deletedArticles.Count > 0)
+                    {
+                        WorkbookOperation.WorkbookOperationType wot = 
+                            articleType == GameData.ContentType.MODEL_GAME ? WorkbookOperationType.DELETE_MODEL_GAMES : WorkbookOperationType.DELETE_EXERCISES;
+                        int activeArticleIndex = articleType == GameData.ContentType.MODEL_GAME ? chapter.ActiveModelGameIndex : chapter.ActiveExerciseIndex;
+                        WorkbookOperation op = new WorkbookOperation(wot, chapter, activeArticleIndex, deletedArticles, deletedIndices);
+                        WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                        AppState.IsDirty = true;
+                        _chaptersView.RebuildChapterParagraph(chapter);
+                    }
+                }
+            }
+            catch { }
+        }
+
         public void FocusOnChapterView()
         {
             UiTabChapters.Focus();
@@ -987,7 +1077,7 @@ namespace ChessForge
         {
             copiedExercises = 0;
 
-            int copiedCount = 0; 
+            int copiedCount = 0;
             error = string.Empty;
             StringBuilder sbErrors = new StringBuilder();
             int gameIndex = 0;
