@@ -1041,12 +1041,14 @@ namespace ChessForge
 
             if (isMateCf)
             {
+                BuildMoveParagraph(nd, false);
                 BuildCheckmateParagraph(nd, false);
                 Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
                 _mainWin.BoardCommentBox.ReportCheckmate(false);
             }
             else if (isStalemate)
             {
+                BuildMoveParagraph(nd, false);
                 BuildStalemateParagraph(nd);
                 Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
                 _mainWin.BoardCommentBox.ReportStalemate();
