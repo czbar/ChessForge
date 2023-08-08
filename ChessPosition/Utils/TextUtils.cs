@@ -53,7 +53,8 @@ namespace ChessPosition
         /// <returns></returns>
         public static string AdjustResourceStringForXml(string s)
         {
-            return s.Replace('/', '_').Replace(' ', '0').Replace('-', '_');
+            int hash = Math.Abs(s.GetHashCode());
+            return s.Replace('/', '_').Replace(' ', '0').Replace('-', '_') + "_" + hash.ToString();
         }
 
         /// <summary>
