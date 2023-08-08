@@ -40,6 +40,11 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Article content type
+        /// </summary>
+        public GameData.ContentType ContentType => Tree.ContentType;
+
+        /// <summary>
         /// Constructs a new object with a Tree of the requested ContentType.
         /// </summary>
         /// <param name="contentType"></param>
