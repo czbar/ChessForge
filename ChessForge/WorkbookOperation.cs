@@ -21,7 +21,9 @@ namespace ChessForge
             CREATE_CHAPTER,
             RENAME_CHAPTER,
             DELETE_MODEL_GAME,
+            DELETE_MODEL_GAMES,
             DELETE_EXERCISE,
+            DELETE_EXERCISES,
             EDIT_MODEL_GAME_HEADER,
             EDIT_EXERCISE_HEADER
         }
@@ -107,6 +109,23 @@ namespace ChessForge
             _chapter = ch;
             _article = article;
             _articleIndex = gameIndex;
+        }
+
+        /// <summary>
+        /// Constructor for multi-article deletions.
+        /// </summary>
+        /// <param name="tp">Operation type</param>
+        /// <param name="ch"></param>
+        /// <param name="articleIndex"></param>
+        /// <param name="data1">List<Articles> list of Articles to undelete</param>
+        /// <param name="data2">List<int> original indices of the deleted articles </param>
+        public WorkbookOperation(WorkbookOperationType tp, Chapter ch, int articleIndex, object data1, object data2) : base()
+        {
+            _opType = tp;
+            _chapter = ch;
+            _articleIndex = articleIndex;
+            _opData_1 = data1;
+            _opData_2 = data2;
         }
     }
 }
