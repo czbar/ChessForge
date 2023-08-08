@@ -335,6 +335,8 @@ namespace ChessForge
                 else
                 {
                     // something went wrong, reset to keep the engine process healthy
+                    AppLog.Message("Restarting the engine due to a null message");
+                    EngineLog.Message("Restarting the engine due to a null message");
                     RestartEngineOnError();
                 }
             }
@@ -1003,6 +1005,8 @@ namespace ChessForge
 
             if (ChessEngineService.IsEngineReady)
             {
+                AppLog.Message("Restarting the engine due to an error message");
+                EngineLog.Message("Restarting the engine due to an error message");
                 RestartEngineOnError();
             }
 

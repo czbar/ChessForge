@@ -140,6 +140,15 @@ namespace ChessForge
                     {
                         _moveNumberString = BuildMoveNumberString(_node);
                         BuildFlowDocument(DataMode.OPENINGS, e.OpeningStats);
+                        if (e.OpeningStats.Opening != null)
+                        {
+                            if (_node.Eco != e.OpeningStats.Opening.Eco || _node.OpeningName != e.OpeningStats.Opening.Name)
+                            {
+                                _node.Eco = e.OpeningStats.Opening.Eco;
+                                _node.OpeningName = e.OpeningStats.Opening.Name;
+                                UpdateOpeningNameTable();
+                            }
+                        }
                     }
                 }
             }
@@ -180,9 +189,7 @@ namespace ChessForge
 
                         if (NodeHasOpeningName(_node))
                         {
-                            Document.Blocks.Remove(_openingNameTable);
-                            BuildOpeningNameTable();
-                            Document.Blocks.InsertBefore(_openingStatsTable, _openingNameTable);
+                            UpdateOpeningNameTable();
                         }
                     }
                 }
@@ -190,6 +197,16 @@ namespace ChessForge
             catch
             {
             }
+        }
+
+        /// <summary>
+        /// The updated OpeningName table will replace the current one/
+        /// </summary>
+        private void UpdateOpeningNameTable()
+        {
+            Document.Blocks.Remove(_openingNameTable);
+            BuildOpeningNameTable();
+            Document.Blocks.InsertBefore(_openingStatsTable, _openingNameTable);
         }
 
         /// <summary>

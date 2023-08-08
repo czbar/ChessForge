@@ -162,6 +162,38 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Deletes an article if found, and returns true.
+        /// Returns false if the article was not found.
+        /// Adjusts the active index for the affected list.
+        /// The caller is responsible for setting up an UNDO operation.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>
+        public bool DeleteArticle(Article article)
+        {
+            bool result = false;
+
+            if (article.ContentType == GameData.ContentType.MODEL_GAME)
+            {
+                result = ModelGames.Remove(article);
+                if (result && _activeModelGameIndex >= ModelGames.Count)
+                {
+                    _activeModelGameIndex = ModelGames.Count - 1;
+                }
+            }
+            else if(article.ContentType == GameData.ContentType.EXERCISE)
+            {
+                result = Exercises.Remove(article);
+                if (result && _activeExerciseIndex >= Exercises.Count)
+                {
+                    _activeExerciseIndex = Exercises.Count - 1;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Returns a Model Game stored at a given index.
         /// Null if invalid index.
         /// </summary>

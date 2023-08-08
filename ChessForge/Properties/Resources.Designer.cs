@@ -1159,11 +1159,29 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Exercises....
+        /// </summary>
+        public static string DeleteExercises {
+            get {
+                return ResourceManager.GetString("DeleteExercises", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete Game.
         /// </summary>
         public static string DeleteGame {
             get {
                 return ResourceManager.GetString("DeleteGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Games....
+        /// </summary>
+        public static string DeleteGames {
+            get {
+                return ResourceManager.GetString("DeleteGames", resourceCulture);
             }
         }
         
@@ -3968,6 +3986,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Exercises for Deletion.
+        /// </summary>
+        public static string SelectExercisesForDeletion {
+            get {
+                return ResourceManager.GetString("SelectExercisesForDeletion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Exercises to Import:.
         /// </summary>
         public static string SelectExercisesToImport {
@@ -3991,6 +4018,15 @@ namespace ChessForge.Properties {
         public static string SelectGames {
             get {
                 return ResourceManager.GetString("SelectGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Games for Deletion.
+        /// </summary>
+        public static string SelectGamesForDeletion {
+            get {
+                return ResourceManager.GetString("SelectGamesForDeletion", resourceCulture);
             }
         }
         

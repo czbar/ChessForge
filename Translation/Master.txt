@@ -681,12 +681,18 @@ DeleteSelectedGame=Delete Selected Game
 #Delete this game
 DeleteThisGame=Delete This Game
 
+#Delete multiple games
+DeleteGames=Delete Games...
+
 #Confirm delete this game. The program will append game title
 ConfirmDeleteGame=Delete Game
 
 
 #Delete exercise
 DeleteExercise=Delete Exercise
+
+#Delete multiple exercises
+DeleteExercises=Delete Exercises...
 
 #Delete selected exercise
 DeleteSelectedExercise=Delete Selected Exercise
@@ -1178,6 +1184,9 @@ SelectItemsforWorkbook=Select Items to create a new Workbook from:
 #Select Games
 SelectGames=Select Games
 
+#Select Games for deletion
+SelectGamesForDeletion=Select Games for Deletion
+
 #Downloaded Games
 DownloadedGames=Downloaded Games
 
@@ -1186,6 +1195,8 @@ SelectGamesToImport=Select Games to Import:
 
 #Select Exercises to Import
 SelectExercisesToImport=Select Exercises to Import:
+
+SelectExercisesForDeletion=Select Exercises for Deletion
 
 #Select Items to create a new Chapter from
 SelectItemsForChapter=Select Items to create a new Chapter from:

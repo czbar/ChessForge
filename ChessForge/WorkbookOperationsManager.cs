@@ -98,8 +98,18 @@ namespace ChessForge
                         selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
+                    case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAMES:
+                        WorkbookManager.SessionWorkbook.UndoDeleteModelGames(op.Chapter, op.ArticleIndex, op.OpData_1, op.OpData_2);
+                        selectedArticleIndex = op.ArticleIndex;
+                        WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
+                        break;
                     case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISE:
                         WorkbookManager.SessionWorkbook.UndoDeleteExercise(op.Chapter, op.Article, op.ArticleIndex);
+                        selectedArticleIndex = op.ArticleIndex;
+                        WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
+                        break;
+                    case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISES:
+                        WorkbookManager.SessionWorkbook.UndoDeleteExercises(op.Chapter, op.ArticleIndex, op.OpData_1, op.OpData_2);
                         selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;

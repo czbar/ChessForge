@@ -131,27 +131,46 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds an Article list for use in the Select Article dialog.
+        /// Builds an Article list (Games and/or Exercises) for use in the Select Articles dialog.
         /// </summary>
+        /// <param name="contentType">Type of articles to return. If GENERIC return both Games and Exercises</param>
         /// <returns></returns>
-        public ObservableCollection<ArticleListItem> GenerateArticleList()
+        public ObservableCollection<ArticleListItem> GenerateArticleList(Chapter selectedChapter = null, GameData.ContentType contentType = GameData.ContentType.GENERIC)
         {
             ObservableCollection<ArticleListItem> articleList = new ObservableCollection<ArticleListItem>();
 
             foreach (Chapter chapter in Chapters)
             {
-                // an item for the Chapter itself
-                ArticleListItem chaptItem = new ArticleListItem(chapter);
-                articleList.Add(chaptItem);
-                for (int i = 0; i < chapter.ModelGames.Count; i++)
+                if (selectedChapter == null)
                 {
-                    ArticleListItem artItem = new ArticleListItem(chapter, -1, chapter.ModelGames[i], i);
-                    articleList.Add(artItem);
+                    // an item for the Chapter itself
+                    ArticleListItem chaptItem = new ArticleListItem(chapter);
+                    articleList.Add(chaptItem);
                 }
-                for (int i = 0; i < chapter.Exercises.Count; i++)
+                else
                 {
-                    ArticleListItem artItem = new ArticleListItem(chapter, -1, chapter.Exercises[i], i);
-                    articleList.Add(artItem);
+                    if (chapter != selectedChapter)
+                    {
+                        continue;
+                    }
+                }
+
+                if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.GENERIC)
+                {
+                    for (int i = 0; i < chapter.ModelGames.Count; i++)
+                    {
+                        ArticleListItem artItem = new ArticleListItem(chapter, -1, chapter.ModelGames[i], i);
+                        articleList.Add(artItem);
+                    }
+                }
+
+                if (contentType == GameData.ContentType.EXERCISE || contentType == GameData.ContentType.GENERIC)
+                {
+                    for (int i = 0; i < chapter.Exercises.Count; i++)
+                    {
+                        ArticleListItem artItem = new ArticleListItem(chapter, -1, chapter.Exercises[i], i);
+                        articleList.Add(artItem);
+                    }
                 }
             }
 
@@ -527,6 +546,29 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Undo deletion of multiple model games
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="index"></param>
+        /// <param name="objArticleList"></param>
+        /// <param name="objIndices"></param>
+        public void UndoDeleteModelGames(Chapter chapter, int index, object objArticleList, object objIndexList)
+        {
+            try
+            {
+                List<Article> articleList = objArticleList as List<Article>;
+                List<int> indexList = objIndexList as List<int>;
+                for (int i = 0; i < articleList.Count; i++)
+                {
+                    chapter.InsertModelGame(articleList[i], indexList[i]);
+                }
+                chapter.ActiveModelGameIndex = index;
+            }
+            catch
+            {
+            }
+        }
 
         /// <summary>
         /// Undo deletion of a Model Game
@@ -539,6 +581,30 @@ namespace ChessForge
             try
             {
                 chapter.InsertExercise(article, index);
+                chapter.ActiveExerciseIndex = index;
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Undo deletion of multiple exercises.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="index"></param>
+        /// <param name="objArticleList"></param>
+        /// <param name="objIndices"></param>
+        public void UndoDeleteExercises(Chapter chapter, int index, object objArticleList, object objIndexList)
+        {
+            try
+            {
+                List<Article> articleList = objArticleList as List<Article>;
+                List<int> indexList = objIndexList as List<int>;
+                for (int i = 0; i < articleList.Count; i++)
+                {
+                    chapter.InsertExercise(articleList[i], indexList[i]);
+                }
                 chapter.ActiveExerciseIndex = index;
             }
             catch

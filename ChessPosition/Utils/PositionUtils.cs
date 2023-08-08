@@ -480,6 +480,17 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Encodes xy coords into a byte.
+        /// </summary>
+        /// <param name="xPos"></param>
+        /// <param name="yPos"></param>
+        /// <returns></returns>
+        public static byte EncodeEnPassantSquare(int xPos, int yPos)
+        {
+            return (byte)((xPos << 4) | yPos);
+        }
+
+        /// <summary>
         /// Converts xy coords encoded into a byte 
         /// to a SquareCoords object.
         /// </summary>
@@ -491,6 +502,98 @@ namespace ChessPosition
             int y = square & 0x000F;
 
             return new SquareCoords(x, y);
+        }
+
+        /// <summary>
+        /// Checks if the passed move (in the engine notation) is valid
+        /// in the passed position.
+        /// </summary>
+        /// <param name="engMove"></param>
+        /// <returns></returns>
+        public static bool IsMoveLegal(MoveData move, BoardPosition position)
+        {
+            bool valid = false;
+
+            try
+            {
+                BoardPosition pos = new BoardPosition(position);
+                // TODO need a simpler function verifying legality of a move
+                MoveUtils.MakeMove(pos, move);
+                valid = true;
+            }
+            catch { }
+
+            return valid;
+        }
+
+        /// <summary>
+        /// Checks if the orig square has a pawn of the right color to effect
+        /// an enpassant capture on the dest square.
+        /// </summary>
+        /// <param name="orig"></param>
+        /// <param name="dest"></param>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public static bool IsEnpassantAvailable(SquareCoords orig, SquareCoords dest, BoardPosition pos)
+        {
+            if (!orig.IsValid() || !dest.IsValid())
+            {
+                return false;
+            }
+
+            MoveData move = new MoveData();
+            move.Origin = orig;
+            move.Color = pos.ColorToMove;
+            move.Destination = dest;
+            move.MovingPiece = PieceType.Pawn;
+
+            byte square = pos.Board[orig.Xcoord, orig.Ycoord];
+            if (GetPieceType(square) == PieceType.Pawn && GetPieceColor(square) == pos.ColorToMove)
+            {
+                if (IsMoveLegal(move, pos))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether the passed enpassant square 
+        /// is "exploitable" i.e. whether the side on the move
+        /// can capture there enpassant.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public static bool IsEnPassantSquareActive(int x, int y, BoardPosition refPos)
+        {
+            bool result = false;
+            SquareCoords dest = new SquareCoords(x, y);
+
+            BoardPosition position = new BoardPosition(refPos);
+            position.InheritedEnPassantSquare = EncodeEnPassantSquare(x, y);
+            // check if the y coordinate is a valid enpassant rank for the color to move
+            if (position.ColorToMove == PieceColor.White && y == 5)
+            {
+                result = IsEnpassantAvailable(new SquareCoords(x - 1, 4), dest, position);
+                if (!result)
+                {
+                    result = IsEnpassantAvailable(new SquareCoords(x + 1, 4), dest, position);
+                }
+            }
+            else if (position.ColorToMove == PieceColor.Black && y == 2)
+            {
+                result = IsEnpassantAvailable(new SquareCoords(x - 1, 3), dest, position);
+                if (!result)
+                {
+                    result = IsEnpassantAvailable(new SquareCoords(x + 1, 3), dest, position);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>

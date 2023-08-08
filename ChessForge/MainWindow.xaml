@@ -319,6 +319,8 @@
                                     <MenuItem x:Name="_mnDeleteChapter" Header="{x:Static p:Resources.DeleteSelectedChapter}" Click="UiMnDeleteChapter_Click" />
                                     <MenuItem x:Name="_mnDeleteGame" Header="{x:Static p:Resources.DeleteThisGame}" Click="UiMnChpt_DeleteGame_Click" />
                                     <MenuItem x:Name="_mnDeleteExercise" Header="{x:Static p:Resources.DeleteThisExercise}" Click="UiMnChpt_DeleteExercise_Click" />
+                                    <MenuItem x:Name="UiMnDeleteGames" Header="{x:Static p:Resources.DeleteGames}" Click="UiMnDeleteGames_Click" />
+                                    <MenuItem x:Name="UiMnDeleteExercises" Header="{x:Static p:Resources.DeleteExercises}" Click="UiMnDeleteExercises_Click"  />
                                     <Separator />
                                     <MenuItem x:Name="UiMnChptExpandChapters" Header="{x:Static p:Resources.ExpandChapters}" Click="UiMnChptExpandChapters_Click" />
                                     <MenuItem x:Name="UiMnChptCollapseChapters" Header="{x:Static p:Resources.CollapseChapters}" Click="UiMnChptCollapseChapters_Click" />

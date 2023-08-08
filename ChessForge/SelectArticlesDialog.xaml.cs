@@ -41,6 +41,9 @@ namespace ChessForge
         /// </summary>
         private ObservableCollection<ArticleListItem> _articleList;
 
+        // type of articles handled
+        private GameData.ContentType _articleType;
+
         // Node for which this dialog was invoked.
         private TreeNode _node;
 
@@ -48,13 +51,20 @@ namespace ChessForge
         /// The dialog for selecting Articles (games or exercises) from multiple chapters.
         /// </summary>
         /// <param name="articleList"></param>
-        public SelectArticlesDialog(TreeNode nd, ref ObservableCollection<ArticleListItem> articleList)
+        public SelectArticlesDialog(TreeNode nd, ref ObservableCollection<ArticleListItem> articleList, GameData.ContentType articleType = GameData.ContentType.GENERIC)
         {
             _node = nd;
             _articleList = articleList;
+            _articleType = articleType;
 
             // if there is any selection outside the active chapter show all chapters (issue #465)
             InitializeComponent();
+            if (_node == null)
+            {
+                Title = articleType == GameData.ContentType.MODEL_GAME ? Properties.Resources.SelectGamesForDeletion : Properties.Resources.SelectExercisesForDeletion;
+                UiCbAllChapters.Visibility = Visibility.Collapsed;
+            }
+
             SelectNodeReferences();
 
             bool allChapters = IsAnySelectionOutsideActiveChapter();
@@ -93,24 +103,33 @@ namespace ChessForge
         /// </summary>
         private void SelectNodeReferences()
         {
-            if (!string.IsNullOrEmpty(_node.ArticleRefs))
+            if (_node == null)
             {
-                string[] refs = _node.ArticleRefs.Split('|');
-                foreach (string guid in refs)
+                return;
+            }
+
+            try
+            {
+                if (!string.IsNullOrEmpty(_node.ArticleRefs))
                 {
-                    foreach (ArticleListItem item in _articleList)
+                    string[] refs = _node.ArticleRefs.Split('|');
+                    foreach (string guid in refs)
                     {
-                        if (item.Article != null)
+                        foreach (ArticleListItem item in _articleList)
                         {
-                            if (item.Article.Tree.Header.GetGuid(out _) == guid)
+                            if (item.Article != null)
                             {
-                                item.IsSelected = true;
-                                break;
+                                if (item.Article.Tree.Header.GetGuid(out _) == guid)
+                                {
+                                    item.IsSelected = true;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
             }
+            catch { }
         }
 
         /// <summary>

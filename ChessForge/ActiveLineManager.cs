@@ -574,9 +574,11 @@ namespace ChessForge
                         {
                             case Key.U:
                                 _mainWin.CustomCommand_MoveItemUp(null, null);
+                                e.Handled = true;
                                 break;
                             case Key.D:
                                 _mainWin.CustomCommand_MoveItemDown(null, null);
+                                e.Handled = true;
                                 break;
                             case Key.T:
                                 _mainWin.CustomCommand_SetThumbnail(null, null);

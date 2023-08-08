@@ -729,11 +729,17 @@
   <data name="DeleteThisGame" xml:space="preserve">
     <value>Usuń Partię </value>
   </data>
+  <data name="DeleteGames" xml:space="preserve">
+    <value>Usuń Partie...</value>
+  </data>
   <data name="ConfirmDeleteGame" xml:space="preserve">
     <value>Usuń Partię</value>
   </data>
   <data name="DeleteExercise" xml:space="preserve">
     <value>Usuń Ćwiczenie</value>
+  </data>
+  <data name="DeleteExercises" xml:space="preserve">
+    <value>Usuń Ćwiczenia...</value>
   </data>
   <data name="DeleteSelectedExercise" xml:space="preserve">
     <value>Usuń Wybrane ćwiczenie</value>
@@ -1149,6 +1155,9 @@
   <data name="SelectGames" xml:space="preserve">
     <value>Wybierz Partie</value>
   </data>
+  <data name="SelectGamesForDeletion" xml:space="preserve">
+    <value>Wybierz partie do usunięcia.</value>
+  </data>
   <data name="DownloadedGames" xml:space="preserve">
     <value>Pobrane Partie</value>
   </data>
@@ -1157,6 +1166,12 @@
   </data>
   <data name="SelectExercisesToImport" xml:space="preserve">
     <value>Wybierz Ćwiczenia do Importu:</value>
+  </data>
+  <data name="Sdescription: electExercisesForDeletion" xml:space="preserve">
+    <value>Select Exercises for Deletion</value>
+  </data>
+  <data name="SelectExercisesForDeletion" xml:space="preserve">
+    <value>Wybierz ćwiczenia do usunięcia</value>
   </data>
   <data name="SelectItemsForChapter" xml:space="preserve">
     <value>Wybierz elementy do utworzenia nowego Rozdziału:</value>
