@@ -148,6 +148,11 @@ namespace ChessForge
         public static bool IsEngineAvailable { get => ChessEngineService.IsEngineReady; }
 
         /// <summary>
+        /// Accessor to the engine health status.
+        /// </summary>
+        public static bool IsEngineHealthy { get => ChessEngineService.IsEngineHealthy(); }
+
+        /// <summary>
         /// Stops engine evaluation. Sends the "stop" command to the Engine.
         /// </summary>
         public static void StopEngineEvaluation(bool ignoreNextBestMove = false)
@@ -334,10 +339,13 @@ namespace ChessForge
                 }
                 else
                 {
-                    // something went wrong, reset to keep the engine process healthy
-                    AppLog.Message("Restarting the engine due to a null message");
-                    EngineLog.Message("Restarting the engine due to a null message");
-                    RestartEngineOnError();
+                    // something may be wrong, check the health of the engine
+                    if (!EngineMessageProcessor.IsEngineHealthy)
+                    {
+                        AppLog.Message("Restarting the engine due to a null message");
+                        EngineLog.Message("Restarting the engine due to a null message");
+                        RestartEngineOnError();
+                    }
                 }
             }
         }
