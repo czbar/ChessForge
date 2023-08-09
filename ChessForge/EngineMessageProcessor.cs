@@ -363,7 +363,7 @@ namespace ChessForge
 
             RestartEngineService();
             AppState.SetupGuiForCurrentStates();
-            _mainWin.BoardCommentBox.EngineResetOnError(Properties.Resources.Error + ": " + Properties.Resources.EngineWillRestart);
+            _mainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.Error + ": " + Properties.Resources.EngineWillRestart, System.Windows.Media.Brushes.Red);
         }
 
         /// <summary>
