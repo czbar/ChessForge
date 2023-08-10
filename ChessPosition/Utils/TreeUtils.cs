@@ -14,6 +14,31 @@ namespace ChessPosition
     public class TreeUtils
     {
         /// <summary>
+        /// Determines if the first passed line id starts with the second passed line id.
+        /// Note that full partial numbers must be checked 
+        /// so that we do not consider that 1.6.11 starts with 1.6.1 
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <param name="subLineId"></param>
+        /// <returns></returns>
+        public static bool LineIdStartsWith(string lineId, string subLineId)
+        {
+            bool res = false;
+
+            if (lineId.StartsWith(subLineId))
+            {
+                // check that it is not subline 1.6.1 "matching" 1.6.11
+                int subLen = subLineId.Length;
+                if (lineId.Length <= subLen || lineId[subLen] == '.')
+                {
+                    res = true; 
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
         /// Puts the subtree starting at the passed node into a list of nodes.
         /// </summary>
         /// <param name="node"></param>
