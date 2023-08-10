@@ -470,8 +470,6 @@ namespace ChessForge
         {
             GuiUtilities.GetDataGridColumnRowFromMouseClick(_dgActiveLine, e, out int row, out int column);
 
-            _mainWin.BoardCommentBox.ShowTabHints();
-
             if (IsSelectableCell(row, column))
             {
                 int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
