@@ -1097,6 +1097,9 @@ namespace GameTree
         {
             var singleLine = new ObservableCollection<TreeNode>();
 
+            // TODO
+            // this seems to be an absurd method??!!
+            // why not just walk the tree?
             foreach (TreeNode nd in Nodes)
             {
                 if (TreeUtils.LineIdStartsWith(lineId, nd.LineId))
