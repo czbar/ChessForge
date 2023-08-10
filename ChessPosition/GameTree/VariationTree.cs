@@ -1099,11 +1099,11 @@ namespace GameTree
 
             foreach (TreeNode nd in Nodes)
             {
-                if (lineId.StartsWith(nd.LineId))
+                if (TreeUtils.LineIdStartsWith(lineId, nd.LineId))
                 {
                     singleLine.Add(nd);
                 }
-                else if (nd.LineId.StartsWith(lineId))
+                else if (TreeUtils.LineIdStartsWith(nd.LineId, lineId))
                 {
                     string rem = nd.LineId.Substring(lineId.Length);
                     bool include = true;
