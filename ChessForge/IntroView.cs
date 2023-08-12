@@ -870,7 +870,7 @@ namespace ChessForge
                 // only now we will build the text so we get the number right
                 if (fromClipboard)
                 {
-                    run.Text = " " + node.LastMoveAlgebraicNotation + " ";
+                    run.Text = RichTextBoxUtilities.GetEmbeddedElementPlainText(node);
                 }
                 else
                 {
