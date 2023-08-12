@@ -2,10 +2,8 @@
 using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 
 namespace ChessForge
@@ -59,6 +57,7 @@ namespace ChessForge
 
         /// <summary>
         /// Pastes stored selection into the view.
+        /// If System Clipboard is not empty, takes text from it and clears Intro clipboard
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -66,6 +65,24 @@ namespace ChessForge
         {
             try
             {
+                if (!SystemClipboard.IsEmpty())
+                {
+                    IntroViewClipboard.Clear();
+                    Run r = new Run(SystemClipboard.GetText());
+
+                    Run currentRun = _rtb.CaretPosition.Parent as Run;
+                    if (currentRun != null)
+                    {
+                        r.FontFamily = currentRun.FontFamily;
+                        r.FontSize = currentRun.FontSize;
+                        r.FontStyle = currentRun.FontStyle;
+                        r.FontWeight = currentRun.FontWeight;
+                    }
+
+                    InsertRunFromClipboard(r, null);
+                    return;
+                }
+
                 if (IntroViewClipboard.Elements.Count == 0)
                 {
                     return;
@@ -216,6 +233,8 @@ namespace ChessForge
             Paragraph currParagraph = null;
             currParagraph = position.Paragraph;
 
+            StringBuilder plainText = new StringBuilder("");
+
             while (position.CompareTo(end) < 0)
             {
                 switch (position.GetPointerContext(LogicalDirection.Forward))
@@ -234,10 +253,12 @@ namespace ChessForge
                                     TreeNode node = GetNodeById(nodeId);
                                     flipped = GetDiagramFlipState(positionParent);
                                     IntroViewClipboard.AddDiagram(node, flipped);
+                                    plainText.Append(RichTextBoxUtilities.GetDiagramPlainText(node));
                                 }
                                 else
                                 {
                                     IntroViewClipboard.AddParagraph(position.Parent as Paragraph);
+                                    plainText.Append(RichTextBoxUtilities.GetParagraphPlainText(position.Parent as Paragraph));
                                 }
                                 currParagraph = position.Parent as Paragraph;
                             }
@@ -252,6 +273,7 @@ namespace ChessForge
                             if (name.StartsWith(_uic_move_))
                             {
                                 IntroViewClipboard.AddMove(node);
+                                plainText.Append(RichTextBoxUtilities.GetEmbeddedElementPlainText(node));
                             }
                         }
                         break;
@@ -269,15 +291,23 @@ namespace ChessForge
                             Run runCopy = RichTextBoxUtilities.CopyRun(r);
                             runCopy.Text = tr.Text;
                             IntroViewClipboard.AddRun(runCopy, margins);
+                            plainText.Append(RichTextBoxUtilities.GetRunPlainText(runCopy));
                         }
                         else
                         {
                             IntroViewClipboard.AddRun(r, margins);
+                            plainText.Append(RichTextBoxUtilities.GetRunPlainText(r));
                         }
                         break;
                 }
 
                 position = position.GetNextContextPosition(LogicalDirection.Forward);
+            }
+            
+            if (plainText.Length > 0)
+            {
+                SystemClipboard.Clear();
+                SystemClipboard.SetText(plainText.ToString());
             }
         }
     }
