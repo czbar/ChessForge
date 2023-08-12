@@ -526,7 +526,7 @@ namespace ChessForge
 
                 if (nd != null)
                 {
-                    Clipboard.SetText(FenParser.GenerateFenFromPosition(nd.Position));
+                    SystemClipboard.SetText(FenParser.GenerateFenFromPosition(nd.Position));
                 }
             }
             catch
