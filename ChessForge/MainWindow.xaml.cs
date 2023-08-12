@@ -2264,6 +2264,7 @@ namespace ChessForge
 
             UiTrainingView = new TrainingView(UiRtbTrainingProgress.Document, this);
             UiTrainingView.Initialize(startNode, ActiveVariationTree.ContentType);
+            UiTrainingView.RemoveTrainingMoves(startNode);
 
             if (LearningMode.TrainingSideCurrent == PieceColor.Black && !MainChessBoard.IsFlipped
                 || LearningMode.TrainingSideCurrent == PieceColor.White && MainChessBoard.IsFlipped)
