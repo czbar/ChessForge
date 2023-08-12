@@ -1525,7 +1525,7 @@
     <value>Silnika</value>
   </data>
   <data name="TrnLineEnded" xml:space="preserve">
-    <value>Koniec wariantu treningowego</value>
+    <value>Koniec wariantu treningowego z podręcznika</value>
   </data>
   <data name="TrnGameInProgress" xml:space="preserve">
     <value>Trwa partia treningowa z silnikiem...</value>

@@ -1562,7 +1562,7 @@ TrnPrefixYour=your
 TrnPrefixEngine=engine's
 
 #End of line
-TrnLineEnded=The training line has ended
+TrnLineEnded=The workbook's training line has ended
 
 #Training Game in progress
 TrnGameInProgress=A training game against the engine is in progress...

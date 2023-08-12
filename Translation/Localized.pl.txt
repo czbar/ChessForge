@@ -2031,8 +2031,8 @@ TrnPrefixYour=Twoim
 TrnPrefixEngine=Silnika
 
 #description: End of line
-#english: TrnLineEnded=The training line has ended
-TrnLineEnded=Koniec wariantu treningowego
+#english: TrnLineEnded=The workbook's training line has ended
+TrnLineEnded=Koniec wariantu treningowego z podręcznika
 
 #description: Training Game in progress
 #english: TrnGameInProgress=A training game against the engine is in progress...

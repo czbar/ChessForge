@@ -2031,7 +2031,7 @@ TrnPrefixYour=
 TrnPrefixEngine=
 
 #description: End of line
-#english: TrnLineEnded=The training line has ended
+#english: TrnLineEnded=The workbook's training line has ended
 TrnLineEnded=
 
 #description: Training Game in progress

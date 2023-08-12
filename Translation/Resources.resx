@@ -1526,7 +1526,7 @@
     <value>engine's</value>
   </data>
   <data name="TrnLineEnded" xml:space="preserve">
-    <value>The training line has ended</value>
+    <value>The workbook's training line has ended</value>
   </data>
   <data name="TrnGameInProgress" xml:space="preserve">
     <value>A training game against the engine is in progress...</value>
