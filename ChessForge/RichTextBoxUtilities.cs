@@ -1,4 +1,6 @@
-﻿using ChessPosition;
+﻿using ChessForge;
+using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -218,5 +220,100 @@ namespace ChessForge
             return res;
         }
 
+        /// <summary>
+        /// Returns text representation of the position in the node.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static string GetDiagramPlainText(TreeNode node)
+        {
+            return "\n" + BuildDiagramString(node.Position) + "\n";
+        }
+
+        /// <summary>
+        /// Returns a string with plain text combined from all Runs in the Paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public static string GetParagraphPlainText(Paragraph para)
+        {
+            StringBuilder plainText = new StringBuilder("");
+
+            foreach (Inline inl in para.Inlines)
+            {
+                if (inl is Run)
+                {
+                    plainText.Append(((Run)inl).Text);
+                }
+            }
+            plainText.Append("\n");
+
+            return plainText.ToString();
+        }
+
+        /// <summary>
+        /// Returns plain text for the embedded move.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static string GetEmbeddedElementPlainText(TreeNode node)
+        {
+            if (node != null)
+            {
+                return " " + node.LastMoveAlgebraicNotation + " ";
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// Returns plain text from a Run
+        /// </summary>
+        /// <param name="run"></param>
+        /// <returns></returns>
+        public static string GetRunPlainText(Run run)
+        {
+            if (run != null && run.Text != null)
+            {
+                return run.Text;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Builds a string representing the current board position
+        /// </summary>
+        /// <param name="board"></param>
+        /// <returns></returns>
+        private static string BuildDiagramString(BoardPosition board)
+        {
+            StringBuilder sb = new StringBuilder();
+            try
+            {
+                for (int row = 7; row >= 0; row--)
+                {
+                    sb.Append("        ");
+                    for (int i = 0; i <= 7; i++)
+                    {
+                        char piece = DebugUtils.FenPieceToChar[Constants.FlagToPiece[(byte)((board.Board[i, row] & ~Constants.Color))]];
+                        if ((board.Board[i, row] & Constants.Color) > 0)
+                        {
+                            piece = char.ToUpper(piece);
+                        }
+
+                        sb.Append(piece);
+                    }
+                    sb.Append("\n");
+                }
+            }
+            catch { }
+
+            return sb.ToString();
+        }
     }
 }

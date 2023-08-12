@@ -47,11 +47,7 @@ namespace ChessForge
             Type = ItemType.NODE_LIST;
             Value = lst;
 
-            try
-            {
-                Clipboard.SetText(TextUtils.BuildLineText(lst));
-            }
-            catch { }
+            SystemClipboard.SetText(TextUtils.BuildLineText(lst));
         }
 
         /// <summary>

@@ -206,6 +206,7 @@
       <DependentUpon>SelectSingleChapterDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SingleGamePreviewDialog.cs" />
+    <Compile Include="SystemClipboard.cs" />
     <Compile Include="TopGamesViewRow.cs" />
     <Compile Include="TrainingViewMoveHandlers.cs" />
     <Compile Include="WorkbookLocation.cs" />
