@@ -4580,7 +4580,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The training line has ended.
+        ///   Looks up a localized string similar to The workbook&apos;s training line has ended.
         /// </summary>
         public static string TrnLineEnded {
             get {

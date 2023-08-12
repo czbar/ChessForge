@@ -340,6 +340,7 @@ namespace ChessForge
                 _currentEngineGameMoveCount = 0;
 
                 TrainingSession.RollbackTrainingLine(_lastClickedNode);
+                RemoveTrainingMoves(_lastClickedNode);
                 EngineGame.RollbackGame(_lastClickedNode);
 
                 SoundPlayer.PlayMoveSound(_lastClickedNode.LastMoveAlgebraicNotation);
@@ -383,6 +384,7 @@ namespace ChessForge
             {
                 TrainingSession.RollbackTrainingLine(ndToRollbackTo);
                 EngineGame.RollbackGame(ndToRollbackTo);
+                RemoveTrainingMoves(ndToRollbackTo);
 
                 SoundPlayer.PlayMoveSound(ndToRollbackTo.LastMoveAlgebraicNotation);
                 TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
@@ -1041,12 +1043,14 @@ namespace ChessForge
 
             if (isMateCf)
             {
+                BuildMoveParagraph(nd, false);
                 BuildCheckmateParagraph(nd, false);
                 Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
                 _mainWin.BoardCommentBox.ReportCheckmate(false);
             }
             else if (isStalemate)
             {
+                BuildMoveParagraph(nd, false);
                 BuildStalemateParagraph(nd);
                 Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
                 _mainWin.BoardCommentBox.ReportStalemate();
@@ -1102,7 +1106,8 @@ namespace ChessForge
                         if (!isWorkbookMove)
                         {
                             // if the parent has only this move as a child, we already announced end-of-training-line on previous move
-                            if (userMove.Parent.Children.Count > 1)
+                            // unless this is the very first training move
+                            if (userMove.Parent.Children.Count > 1 || userMove.Parent == _startingNode)
                             {
                                 sbAlignmentNote.Append(Properties.Resources.TrnLineEnded + ". ");
                                 SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.END_OF_LINE);
@@ -1670,6 +1675,26 @@ namespace ChessForge
                 }
             }
             catch { }
+        }
+
+        /// <summary>
+        /// Removes all training moves below the specified node.
+        /// There should be at most one training node child under the node.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void RemoveTrainingMoves(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                foreach (TreeNode child in nd.Children)
+                {
+                    if (child.IsNewTrainingMove)
+                    {
+                        _mainWin.ActiveVariationTree.DeleteRemainingMoves(child);
+                    }
+                    break;
+                }
+            }
         }
 
         /// <summary>

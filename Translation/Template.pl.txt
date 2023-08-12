@@ -1546,7 +1546,8 @@ SelectGamesToImport=Wybierz Partie do Importu:
 #english: SelectExercisesToImport=Select Exercises to Import:
 SelectExercisesToImport=Wybierz Ćwiczenia do Importu:
 
-Sdescription: electExercisesForDeletion=Select Exercises for Deletion
+#description: Select Exercises for deletion
+#english: SelectExercisesForDeletion=Select Exercises for Deletion
 SelectExercisesForDeletion=Wybierz ćwiczenia do usunięcia
 
 #description: Select Items to create a new Chapter from
@@ -2030,8 +2031,8 @@ TrnPrefixYour=Twoim
 TrnPrefixEngine=Silnika
 
 #description: End of line
-#english: TrnLineEnded=The training line has ended
-TrnLineEnded=Koniec wariantu treningowego
+#english: TrnLineEnded=The workbook's training line has ended
+TrnLineEnded=Koniec wariantu treningowego z podręcznika
 
 #description: Training Game in progress
 #english: TrnGameInProgress=A training game against the engine is in progress...

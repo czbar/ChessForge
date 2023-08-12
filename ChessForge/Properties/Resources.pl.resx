@@ -1167,9 +1167,6 @@
   <data name="SelectExercisesToImport" xml:space="preserve">
     <value>Wybierz Ćwiczenia do Importu:</value>
   </data>
-  <data name="Sdescription: electExercisesForDeletion" xml:space="preserve">
-    <value>Select Exercises for Deletion</value>
-  </data>
   <data name="SelectExercisesForDeletion" xml:space="preserve">
     <value>Wybierz ćwiczenia do usunięcia</value>
   </data>
@@ -1528,7 +1525,7 @@
     <value>Silnika</value>
   </data>
   <data name="TrnLineEnded" xml:space="preserve">
-    <value>Koniec wariantu treningowego</value>
+    <value>Koniec wariantu treningowego z podręcznika</value>
   </data>
   <data name="TrnGameInProgress" xml:space="preserve">
     <value>Trwa partia treningowa z silnikiem...</value>

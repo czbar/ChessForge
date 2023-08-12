@@ -82,6 +82,10 @@ namespace ChessForge
 
             foreach (ArticleListItem game in _games)
             {
+                if (string.IsNullOrEmpty(game.Article.Tree.RootNode.LineId))
+                {
+                    game.Article.Tree.BuildLines();
+                }
                 if (game.IsSelected)
                 {
                     _plyCountToEvaluate += (game.Article.Tree.SelectLine("1").Count - 1);

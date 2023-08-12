@@ -200,13 +200,11 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The updated OpeningName table will replace the current one/
+        /// The updated OpeningName table will replace the current one
         /// </summary>
         private void UpdateOpeningNameTable()
         {
-            Document.Blocks.Remove(_openingNameTable);
             BuildOpeningNameTable();
-            Document.Blocks.InsertBefore(_openingStatsTable, _openingNameTable);
         }
 
         /// <summary>
@@ -314,6 +312,11 @@ namespace ChessForge
                         }
                         break;
                     case DataMode.NO_DATA:
+                        BuildOpeningNameTable();
+                        if (_openingNameTable != null)
+                        {
+                            Document.Blocks.Add(_openingNameTable);
+                        }
                         Document.Blocks.Add(BuildErrorMessagePara(errorMessage));
                         break;
                 }

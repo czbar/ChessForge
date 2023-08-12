@@ -304,7 +304,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ChessPosition, Version=1.2.1.0, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:ChessPosition, Version=1.2.2.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_070F20AEE4156FF8A1EDCB6F32B33AB5"
@@ -437,7 +437,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:EngineService, Version=1.2.1.0, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:EngineService, Version=1.2.2.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_3A481BA820F80DDB75A02811800AC4B3"
@@ -648,7 +648,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebAccess, Version=1.2.1.0, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:WebAccess, Version=1.2.2.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_B31923E79F360E25A9908EEE60355755"
@@ -895,15 +895,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Chess Forge"
-        "ProductCode" = "8:{39283DF1-501D-46B3-A161-595903B6883D}"
-        "PackageCode" = "8:{72DFE0A6-17A8-4666-86B9-67B38B8D4856}"
+        "ProductCode" = "8:{E6AC7FBE-ABEE-4431-83C3-A293E754AE4E}"
+        "PackageCode" = "8:{D37C8C2B-23DA-4006-B08B-FA1E8D79CBF1}"
         "UpgradeCode" = "8:{8FBE368E-7FA2-4112-9D18-7A5CD1CE504C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.2.2"
+        "ProductVersion" = "8:1.2.3"
         "Manufacturer" = "8:Mindrose Pty Ltd"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

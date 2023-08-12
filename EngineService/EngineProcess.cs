@@ -32,6 +32,9 @@ namespace EngineService
         // lock object to prevent commands sent simultaneously and thus corrupting STATE
         private static object _lockSendCommand = new object();
 
+        // number of basd messages seen in a row that may be an indicator of an engine issue
+        private static int _badMessageCount = 0;
+
         /// <summary>
         /// Possible Engine states.
         /// </summary>
@@ -331,6 +334,16 @@ namespace EngineService
             }
         }
 
+        /// <summary>
+        /// More than a few bad messages indicate a problem with the engine.
+        /// The actual definition of "a few" is rather arbitrary.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsEngineHealthy()
+        {
+            return _badMessageCount < 10;
+        }
+
         //**************************************************
         //
         // PRIVATE METHODS
@@ -524,6 +537,7 @@ namespace EngineService
                             // null message can be received during initialization or when there is an engine error.
                             // if the former, we need to esixt the loop and allow regular processing,
                             // if the latter, we need to handle error situation
+                            _badMessageCount++;
                             if (_isEngineReady)
                             {
                                 EngineMessage?.Invoke(message);
@@ -532,6 +546,10 @@ namespace EngineService
                             {
                                 break;
                             }
+                        }
+                        else
+                        {
+                            _badMessageCount = 0;
                         }
                     }
                 }
