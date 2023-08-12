@@ -65,7 +65,7 @@ namespace ChessForge
         {
             try
             {
-                if (!SystemClipboard.IsEmpty())
+                if (!SystemClipboard.IsEmpty() && SystemClipboard.IsUpdated())
                 {
                     IntroViewClipboard.Clear();
                     Run r = new Run(SystemClipboard.GetText());
