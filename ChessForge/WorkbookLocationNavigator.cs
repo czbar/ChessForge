@@ -76,7 +76,7 @@ namespace ChessForge
                         // Intro is a special case where we need to save the current one
                         AppState.MainWin.SaveIntro();
                         contentType = GameData.ContentType.INTRO;
-                        AppState.MainWin.SetupGuiForIntro();
+                        AppState.MainWin.SetupGuiForIntro(true);
                         break;
                     case WorkbookManager.TabViewType.MODEL_GAME:
                         contentType = GameData.ContentType.MODEL_GAME;
@@ -137,7 +137,7 @@ namespace ChessForge
                     }
                     else if (contentType == GameData.ContentType.INTRO)
                     {
-                        AppState.MainWin.SetupGuiForIntro();
+                        AppState.MainWin.SetupGuiForIntro(true);
                     }
                 }
 
