@@ -2943,7 +2943,14 @@ namespace ChessForge
             }
             else
             {
-                ChessForgeMain_PreviewKeyDown(sender, e);
+                if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+                {
+                    _introView.PreviewKeyDown(sender, e);
+                }
+                else
+                {
+                    ChessForgeMain_PreviewKeyDown(sender, e);
+                }
             }
         }
 
