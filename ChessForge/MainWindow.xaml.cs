@@ -1486,14 +1486,20 @@ namespace ChessForge
                     SetupGuiForChapters();
                 }
             }
+
+            // if INTRO is active then make sure it has focus (so editing can start right away)
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+            {
+                UiRtbIntroView.Focus();
+            }
         }
 
         /// <summary>
         /// Rebuilds and shows the Intro view.
         /// </summary>
-        public void SetupGuiForIntro()
+        public void SetupGuiForIntro(bool focusOnIntro)
         {
-            // if we are in the INTRO tab, we need to force a rebuilds
+            // if we are in the INTRO tab, we need to force a rebuild
             if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
             {
                 RebuildIntroView();
