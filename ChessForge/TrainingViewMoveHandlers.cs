@@ -96,6 +96,11 @@ namespace ChessForge
         /// </summary>
         public void ReportLastMoveVsWorkbook()
         {
+            AppLog.Message("ReportLastMoveVsWorkbook()");
+            
+            // if we got here via a rollback, the CHECK_FOR_USER_MOVE may not have been stopped.
+            _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+            
             TrainingSession.IsTakebackAvailable = false;
             RemoveTakebackParagraph();
 
@@ -141,7 +146,6 @@ namespace ChessForge
 
                 if (PositionUtils.IsCheckmate(_userMove.Position, out _))
                 {
-                    _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
                     _userMove.Position.IsCheckmate = true;
                     BuildMoveParagraph(_userMove, true);
                     if (foundMove == null)
@@ -152,7 +156,6 @@ namespace ChessForge
                 }
                 else if (PositionUtils.IsStalemate(_userMove.Position))
                 {
-                    _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
                     BuildMoveParagraph(_userMove, true);
                     if (foundMove == null)
                     {
