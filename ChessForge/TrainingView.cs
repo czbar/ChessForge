@@ -334,6 +334,7 @@ namespace ChessForge
         {
             try
             {
+                AppLog.Message("RollbackToWorkbookMove()");
                 TrainingSession.IsTakebackAvailable = false;
                 RemoveTakebackParagraph();
 
@@ -348,6 +349,7 @@ namespace ChessForge
                 TrainingSession.ChangeCurrentState(TrainingSession.State.USER_MOVE_COMPLETED);
 
                 LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
+
                 AppState.SetupGuiForCurrentStates();
 
                 _mainWin.BoardCommentBox.GameMoveMade(_lastClickedNode, true);
@@ -1557,6 +1559,7 @@ namespace ChessForge
             Run r = (Run)e.Source;
             if (string.IsNullOrEmpty(r.Name))
             {
+                e.Handled = true;
                 return;
             }
 
@@ -1623,6 +1626,8 @@ namespace ChessForge
                     }
                 }
             }
+
+            e.Handled = true;
         }
 
         /// <summary>
