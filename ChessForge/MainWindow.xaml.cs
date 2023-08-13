@@ -1965,6 +1965,8 @@ namespace ChessForge
                 return;
             }
 
+            AppLog.Message("StartEngineGame() at move " + startNode.LastMoveAlgebraicNotation);
+
             UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);

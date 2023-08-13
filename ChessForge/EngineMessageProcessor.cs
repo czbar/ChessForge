@@ -157,6 +157,7 @@ namespace ChessForge
         /// </summary>
         public static void StopEngineEvaluation(bool ignoreNextBestMove = false)
         {
+            AppLog.Message("StopEngineEvaluation() - sending STOP command");
             ChessEngineService.SendStopCommand(ignoreNextBestMove);
         }
 
@@ -599,6 +600,7 @@ namespace ChessForge
         /// <param name="movetime">Time to think per move (milliseconds)</param>
         private static void RequestEngineEvaluation(GoFenCommand.EvaluationMode evalMode, TreeNode nd, int treeId, string fen, int mpv, int movetime)
         {
+            AppLog.Message("RequestEngineEvaluation() move=" + (nd == null ? "null" : nd.LastMoveAlgebraicNotation) + " EvalMode=" + evalMode.ToString());
             GoFenCommand gfc = new GoFenCommand();
             gfc.Fen = fen;
             gfc.Mpv = mpv;
@@ -822,6 +824,8 @@ namespace ChessForge
         {
             try
             {
+                AppLog.Message("ProcessBestMoveMessage() move=" + (nd == null ? "null" : nd.LastMoveAlgebraicNotation) + " GoFenCommandMode=" + mode.ToString());
+
                 // make sure the last lines are shown before we stop the timer.
                 if (message.Contains(UciCommands.ENG_BESTMOVE_NONE) || message.Contains(UciCommands.ENG_BESTMOVE_NONE_LEILA))
                 {
