@@ -28,20 +28,23 @@ namespace ChessForge
         /// </summary>
         public void EngineGameMoveMade()
         {
-            TreeNode nd = EngineGame.GetLastGameNode();
-            nd.IsNewTrainingMove = true;
-            AddMoveToEngineGamePara(nd, false);
-            _mainWin.UiRtbTrainingProgress.ScrollToEnd();
-            if (TrainingSession.IsContinuousEvaluation)
+            if (!(EngineMessageProcessor.ActiveEvaluationMode == EngineService.GoFenCommand.EvaluationMode.GAME))
             {
-                ShowEvaluationResult(nd, false);
-            }
+                TreeNode nd = EngineGame.GetLastGameNode();
+                nd.IsNewTrainingMove = true;
+                AddMoveToEngineGamePara(nd, false);
+                _mainWin.UiRtbTrainingProgress.ScrollToEnd();
+                if (TrainingSession.IsContinuousEvaluation)
+                {
+                    ShowEvaluationResult(nd, false);
+                }
 
-            if (TrainingSession.IsContinuousEvaluation)
-            {
-                _lastClickedNode = nd;
-                // TODO remove after proved unnecessary
-                //StartEvaluationInContinuousMode(true);
+                if (TrainingSession.IsContinuousEvaluation)
+                {
+                    _lastClickedNode = nd;
+                    // TODO remove after proved unnecessary
+                    //StartEvaluationInContinuousMode(true);
+                }
             }
         }
 
@@ -112,8 +115,8 @@ namespace ChessForge
 
                 if (TrainingSession.IsContinuousEvaluation)
                 {
-                    // TODO remove after proved unnecessary
-                    //RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
+                    // TODO strengthen the condition above?  (EngineMode != GAME))
+                    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
                 }
 
                 RemoveIntroParas();
@@ -309,7 +312,11 @@ namespace ChessForge
             }
             else
             {
-                StartEvaluationInContinuousMode(lastMove);
+                // we could be in GAME mod
+                if (EngineMessageProcessor.ActiveEvaluationMode != EngineService.GoFenCommand.EvaluationMode.GAME)
+                {
+                    StartEvaluationInContinuousMode(lastMove);
+                }
             }
         }
 
