@@ -40,7 +40,8 @@ namespace ChessForge
             if (TrainingSession.IsContinuousEvaluation)
             {
                 _lastClickedNode = nd;
-                StartEvaluationInContinuousMode(true);
+                // TODO remove after proved unnecessary
+                //StartEvaluationInContinuousMode(true);
             }
         }
 
@@ -111,7 +112,8 @@ namespace ChessForge
 
                 if (TrainingSession.IsContinuousEvaluation)
                 {
-                    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
+                    // TODO remove after proved unnecessary
+                    //RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
                 }
 
                 RemoveIntroParas();
