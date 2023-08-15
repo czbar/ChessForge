@@ -356,10 +356,12 @@ namespace ChessForge
 
                 RemoveParagraphsFromMove(_lastClickedNode);
                 ReportLastMoveVsWorkbook();
-                if (TrainingSession.IsContinuousEvaluation)
-                {
-                    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
-                }
+
+                // TODO remove when no side effects seen
+                //if (TrainingSession.IsContinuousEvaluation && )
+                //{
+                //    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
+                //}
             }
             catch (Exception ex)
             {
@@ -1654,10 +1656,11 @@ namespace ChessForge
                 }
             }
 
-            if (TrainingSession.IsContinuousEvaluation)
-            {
-                RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
-            }
+            // TODO: remove when no side effects seen
+            //if (TrainingSession.IsContinuousEvaluation)
+            //{
+            //    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
+            //}
         }
 
         /// <summary>
