@@ -88,6 +88,21 @@ namespace ChessForge
         /// <param name="e"></param>
         public static void ShowEngineLinesEx(object source, ElapsedEventArgs e)
         {
+            try
+            {
+                _pbEngineEval.Dispatcher.Invoke(() =>
+                {
+                    if (_pbEngineEval.Visibility == Visibility.Visible)
+                    {
+                        _pbEngineEval.Value = _mainWin.Timers.GetElapsedTime(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    }
+                });
+            }
+            catch
+            {
+            }
+
+
             if (_isShowEngineLinesRunning && (source == null || source is Timer))
             {
                 return;
@@ -164,17 +179,6 @@ namespace ChessForge
                 {
                     AppLog.Message("ShowEngineLines(): " + ex.Message);
                 }
-            }
-
-            try
-            {
-                _pbEngineEval.Dispatcher.Invoke(() =>
-                {
-                    _pbEngineEval.Value = _mainWin.Timers.GetElapsedTime(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                });
-            }
-            catch
-            {
             }
 
             _isShowEngineLinesRunning = false;
