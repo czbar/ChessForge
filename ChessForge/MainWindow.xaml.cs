@@ -2855,34 +2855,34 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabCtrlManualReview_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            bool visible = (bool)e.NewValue;
-            if (visible == true)
-            {
-                switch (AppState.LastActiveManualReviewTab)
-                {
-                    case WorkbookManager.TabViewType.CHAPTERS:
-                        UiTabChapters_GotFocus(null, null);
-                        break;
-                    case WorkbookManager.TabViewType.STUDY:
-                        UiTabStudyTree_GotFocus(null, null);
-                        break;
-                    case WorkbookManager.TabViewType.MODEL_GAME:
-                        UiTabModelGames_GotFocus(null, null);
-                        break;
-                    case WorkbookManager.TabViewType.EXERCISE:
-                        UiTabExercises_GotFocus(null, null);
-                        break;
-                    case WorkbookManager.TabViewType.BOOKMARKS:
-                        UiTabBookmarks_GotFocus(null, null);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                AppState.LastActiveManualReviewTab = WorkbookManager.ActiveTab;
-            }
+            //bool visible = (bool)e.NewValue;
+            //if (visible == true)
+            //{
+            //    switch (AppState.LastActiveManualReviewTab)
+            //    {
+            //        case WorkbookManager.TabViewType.CHAPTERS:
+            //            UiTabChapters_GotFocus(null, null);
+            //            break;
+            //        case WorkbookManager.TabViewType.STUDY:
+            //            UiTabStudyTree_GotFocus(null, null);
+            //            break;
+            //        case WorkbookManager.TabViewType.MODEL_GAME:
+            //            UiTabModelGames_GotFocus(null, null);
+            //            break;
+            //        case WorkbookManager.TabViewType.EXERCISE:
+            //            UiTabExercises_GotFocus(null, null);
+            //            break;
+            //        case WorkbookManager.TabViewType.BOOKMARKS:
+            //            UiTabBookmarks_GotFocus(null, null);
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
+            //else
+            //{
+            //    AppState.LastActiveManualReviewTab = WorkbookManager.ActiveTab;
+            //}
         }
 
         /// <summary>
