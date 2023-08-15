@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using System.Timers;
 using System.Text;
-using System.Threading.Tasks;
 using GameTree;
 using ChessPosition;
 using System.IO;
 using EngineService;
-using System.Windows.Ink;
 using System.Windows;
-using static System.Net.Mime.MediaTypeNames;
 using ChessForge.Properties;
-using WebAccess;
-using System.Diagnostics.Tracing;
 
 namespace ChessForge
 {
@@ -142,6 +137,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the evaluation mode for the currently processed request.
+        /// </summary>
+        public static GoFenCommand.EvaluationMode ActiveEvaluationMode
+        {
+            get
+            {
+                GoFenCommand.EvaluationMode mode = GoFenCommand.EvaluationMode.NONE;
+                try
+                {
+                    mode = ChessEngineService.ActiveEvaluationMode;
+                }
+                catch
+                {
+                    mode = GoFenCommand.EvaluationMode.NONE;
+                }
+                return mode;
+            }
+        }
+
+        /// <summary>
         /// Returns true if the engine service is running.
         /// </summary>
         /// <returns></returns>
@@ -157,6 +172,7 @@ namespace ChessForge
         /// </summary>
         public static void StopEngineEvaluation(bool ignoreNextBestMove = false)
         {
+            AppLog.Message("StopEngineEvaluation() - sending STOP command");
             ChessEngineService.SendStopCommand(ignoreNextBestMove);
         }
 
@@ -206,7 +222,7 @@ namespace ChessForge
             ClearMoveCandidates(false);
             // it could be that we switched to a game mode while awaiting "normal" evaluation,
             // so double check to avoid complications
-            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME && mode == GoFenCommand.EvaluationMode.GAME)
+            if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && mode == GoFenCommand.EvaluationMode.GAME)
             {
                 if (mode == GoFenCommand.EvaluationMode.GAME)
                 {
@@ -236,16 +252,30 @@ namespace ChessForge
         /// </summary>
         private static void MoveEvaluationFinishedInGame(TreeNode nd)
         {
-            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
+            // check if the engine game is in progress and we were awaiting engine's move
+            if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.ENGINE_THINKING)
             {
                 ProcessEngineGameMove(nd);
-                _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                _mainWin.ResetEvaluationProgressBar();
+                if (ActiveEvaluationMode == GoFenCommand.EvaluationMode.GAME)
+                {
+                    // make sure this one is going
+                    _mainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                }
+                else
+                {
+                    _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    _mainWin.ResetEvaluationProgressBar();
+                }
 
                 // if this is Training with Continuous mode, switch to Continuous
                 if (TrainingSession.IsTrainingInProgress && TrainingSession.IsContinuousEvaluation)
                 {
-                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
+                    // if another GAME request is being processed (e.g. because we had a rollback) do not change mode
+                    // as it will change the GUI
+                    if (ActiveEvaluationMode != GoFenCommand.EvaluationMode.GAME)
+                    {
+                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
+                    }
                 }
                 else
                 {
@@ -590,6 +620,8 @@ namespace ChessForge
             RequestEngineEvaluation(GoFenCommand.EvaluationMode.GAME, node, treeId, fen, Configuration.EngineMpv, Configuration.EngineMoveTime);
         }
 
+        private static int _isGameEval = 0;
+
         /// <summary>
         /// Sends a sequence of commands to the engine to request evaluation
         /// of the position.
@@ -599,6 +631,19 @@ namespace ChessForge
         /// <param name="movetime">Time to think per move (milliseconds)</param>
         private static void RequestEngineEvaluation(GoFenCommand.EvaluationMode evalMode, TreeNode nd, int treeId, string fen, int mpv, int movetime)
         {
+            AppLog.Message("RequestEngineEvaluation() move=" + (nd == null ? "null" : nd.LastMoveAlgebraicNotation) + " EvalMode=" + evalMode.ToString());
+
+            if (evalMode != GoFenCommand.EvaluationMode.GAME && _isGameEval > 0)
+            {
+                AppLog.Message("Request REJECTED due to game evaluation in progress");
+                return;
+            }
+
+            if (evalMode == GoFenCommand.EvaluationMode.GAME)
+            {
+                _isGameEval++;
+            }
+
             GoFenCommand gfc = new GoFenCommand();
             gfc.Fen = fen;
             gfc.Mpv = mpv;
@@ -822,9 +867,16 @@ namespace ChessForge
         {
             try
             {
+                AppLog.Message("ProcessBestMoveMessage() move=" + (nd == null ? "null" : nd.LastMoveAlgebraicNotation) + " GoFenCommandMode=" + mode.ToString());
+
                 // make sure the last lines are shown before we stop the timer.
                 if (message.Contains(UciCommands.ENG_BESTMOVE_NONE) || message.Contains(UciCommands.ENG_BESTMOVE_NONE_LEILA))
                 {
+                    if (mode == GoFenCommand.EvaluationMode.GAME)
+                    {
+                        _isGameEval--;
+                    }
+
                     if (nd == null)
                     {
                         EngineLinesBox.ShowEngineLines("---", null);

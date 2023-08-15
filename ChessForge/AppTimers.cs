@@ -279,6 +279,7 @@ namespace ChessForge
         public void Start(StopwatchId sw)
         {
             _dictStopwatches[sw].Start();
+            AppLog.Message("Start Stopwatch:" + sw.ToString());
         }
 
         /// <summary>
@@ -289,6 +290,7 @@ namespace ChessForge
         {
             _dictStopwatches[sw].Stop();
             _dictStopwatches[sw].Reset();
+            AppLog.Message("Stop Stopwatch:" + sw.ToString());
         }
 
         /// <summary>

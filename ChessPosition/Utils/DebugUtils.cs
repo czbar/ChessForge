@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using System.IO;
 using System.Diagnostics;
+using ChessForge;
 
 namespace ChessPosition
 {
@@ -43,6 +44,7 @@ namespace ChessPosition
             if (DebugLevel >= 2)
             {
                 MessageBox.Show(msg, "DEBUG", MessageBoxButton.OK, MessageBoxImage.Error);
+                AppLog.Message("DEBUG MessageBox: " + msg);
             }
         }
 

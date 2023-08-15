@@ -334,6 +334,7 @@ namespace ChessForge
         {
             try
             {
+                AppLog.Message("RollbackToWorkbookMove()");
                 TrainingSession.IsTakebackAvailable = false;
                 RemoveTakebackParagraph();
 
@@ -348,16 +349,19 @@ namespace ChessForge
                 TrainingSession.ChangeCurrentState(TrainingSession.State.USER_MOVE_COMPLETED);
 
                 LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
+
                 AppState.SetupGuiForCurrentStates();
 
                 _mainWin.BoardCommentBox.GameMoveMade(_lastClickedNode, true);
 
                 RemoveParagraphsFromMove(_lastClickedNode);
                 ReportLastMoveVsWorkbook();
-                if (TrainingSession.IsContinuousEvaluation)
-                {
-                    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
-                }
+
+                // TODO remove when no side effects seen
+                //if (TrainingSession.IsContinuousEvaluation && )
+                //{
+                //    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
+                //}
             }
             catch (Exception ex)
             {
@@ -1557,6 +1561,7 @@ namespace ChessForge
             Run r = (Run)e.Source;
             if (string.IsNullOrEmpty(r.Name))
             {
+                e.Handled = true;
                 return;
             }
 
@@ -1623,6 +1628,8 @@ namespace ChessForge
                     }
                 }
             }
+
+            e.Handled = true;
         }
 
         /// <summary>
@@ -1649,10 +1656,11 @@ namespace ChessForge
                 }
             }
 
-            if (TrainingSession.IsContinuousEvaluation)
-            {
-                RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
-            }
+            // TODO: remove when no side effects seen
+            //if (TrainingSession.IsContinuousEvaluation)
+            //{
+            //    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
+            //}
         }
 
         /// <summary>

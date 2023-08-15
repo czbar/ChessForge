@@ -65,6 +65,7 @@ namespace ChessForge
         /// <param name="state"></param>
         public static void ChangeCurrentState(GameState state)
         {
+            AppLog.Message(2, "Game: ChangeCurrentState() to " + state.ToString());
             _gameState = state;
         }
 
@@ -171,6 +172,7 @@ namespace ChessForge
         {
             if (TrainingSession.IsTrainingInProgress && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
             {
+                AppLog.Message(2, "SwitchToAwaitEngineMove() in Training in mode " + LearningMode.CurrentMode.ToString());
                 TrainingSession.ChangeCurrentState(TrainingSession.State.USER_MOVE_COMPLETED);
                 // here we are in the play against Workbook mode so even if endOfGame == true
                 // start the CHECK_FOR_USER_MOVE timer so that we can report the mate properly in response
@@ -180,6 +182,7 @@ namespace ChessForge
             {
                 if (TrainingSession.IsTrainingInProgress)
                 {
+                    AppLog.Message(2, "SwitchToAwaitEngineMove() in Training Game" );
                     // this is a game during Training triggered by the user making a move not in Workbook.
                     // We know, therefore, that this is a new move.
                     nd.IsNewTrainingMove = true;
@@ -342,6 +345,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         private static void SwitchToAwaitUserMove(TreeNode nd)
         {
+            AppLog.Message(2, "SwitchToAwaitUserMove()");
             ChangeCurrentState(GameState.USER_THINKING);
             _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
         }

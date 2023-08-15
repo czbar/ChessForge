@@ -28,19 +28,23 @@ namespace ChessForge
         /// </summary>
         public void EngineGameMoveMade()
         {
-            TreeNode nd = EngineGame.GetLastGameNode();
-            nd.IsNewTrainingMove = true;
-            AddMoveToEngineGamePara(nd, false);
-            _mainWin.UiRtbTrainingProgress.ScrollToEnd();
-            if (TrainingSession.IsContinuousEvaluation)
+            if (!(EngineMessageProcessor.ActiveEvaluationMode == EngineService.GoFenCommand.EvaluationMode.GAME))
             {
-                ShowEvaluationResult(nd, false);
-            }
+                TreeNode nd = EngineGame.GetLastGameNode();
+                nd.IsNewTrainingMove = true;
+                AddMoveToEngineGamePara(nd, false);
+                _mainWin.UiRtbTrainingProgress.ScrollToEnd();
+                if (TrainingSession.IsContinuousEvaluation)
+                {
+                    ShowEvaluationResult(nd, false);
+                }
 
-            if (TrainingSession.IsContinuousEvaluation)
-            {
-                _lastClickedNode = nd;
-                StartEvaluationInContinuousMode(true);
+                if (TrainingSession.IsContinuousEvaluation)
+                {
+                    _lastClickedNode = nd;
+                    // TODO remove after proved unnecessary
+                    //StartEvaluationInContinuousMode(true);
+                }
             }
         }
 
@@ -96,6 +100,11 @@ namespace ChessForge
         /// </summary>
         public void ReportLastMoveVsWorkbook()
         {
+            AppLog.Message("ReportLastMoveVsWorkbook()");
+            
+            // if we got here via a rollback, the CHECK_FOR_USER_MOVE may not have been stopped.
+            _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+            
             TrainingSession.IsTakebackAvailable = false;
             RemoveTakebackParagraph();
 
@@ -106,6 +115,7 @@ namespace ChessForge
 
                 if (TrainingSession.IsContinuousEvaluation)
                 {
+                    // TODO strengthen the condition above?  (EngineMode != GAME))
                     RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
                 }
 
@@ -141,7 +151,6 @@ namespace ChessForge
 
                 if (PositionUtils.IsCheckmate(_userMove.Position, out _))
                 {
-                    _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
                     _userMove.Position.IsCheckmate = true;
                     BuildMoveParagraph(_userMove, true);
                     if (foundMove == null)
@@ -152,7 +161,6 @@ namespace ChessForge
                 }
                 else if (PositionUtils.IsStalemate(_userMove.Position))
                 {
-                    _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
                     BuildMoveParagraph(_userMove, true);
                     if (foundMove == null)
                     {
@@ -304,7 +312,11 @@ namespace ChessForge
             }
             else
             {
-                StartEvaluationInContinuousMode(lastMove);
+                // we could be in GAME mod
+                if (EngineMessageProcessor.ActiveEvaluationMode != EngineService.GoFenCommand.EvaluationMode.GAME)
+                {
+                    StartEvaluationInContinuousMode(lastMove);
+                }
             }
         }
 

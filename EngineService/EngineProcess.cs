@@ -55,6 +55,14 @@ namespace EngineService
         }
 
         /// <summary>
+        /// Evaluation mode for the message currently being processed.
+        /// </summary>
+        public GoFenCommand.EvaluationMode ActiveEvaluationMode
+        {
+            get => _activeEvaluationMode;
+        }
+
+        /// <summary>
         /// The number of alternative lines to analyze
         /// </summary>
         public int Multipv { get => _multipv; set => _multipv = value; }
@@ -122,6 +130,9 @@ namespace EngineService
         // whether to ignore the next bestmove response (because the caller abandoned evaluation mode)
         private bool _ignoreNextBestMove = false;
 
+        // evaluation mode for the message currently processed
+        private GoFenCommand.EvaluationMode _activeEvaluationMode;
+
         /// <summary>
         /// Creates the Engine Service object.
         /// </summary>
@@ -149,8 +160,8 @@ namespace EngineService
             {
                 _isEngineRunning = false;
                 _isEngineReady = false;
-                _isMessageRxLoopRunning = false; 
-                
+                _isMessageRxLoopRunning = false;
+
                 _enginePath = enginePath;
                 _options = options;
 
@@ -189,6 +200,7 @@ namespace EngineService
 
                     _currentState = State.NOT_READY;
 
+                    _activeEvaluationMode = GoFenCommand.EvaluationMode.NONE;
                     EngineLog.Message("Engine running.");
                 }
 
@@ -224,6 +236,7 @@ namespace EngineService
                 _isEngineReady = false;
 
                 _currentState = State.NOT_READY;
+                _activeEvaluationMode = GoFenCommand.EvaluationMode.NONE;
                 EngineLog.Message("Engine stopped.");
             }
             catch (Exception ex)
@@ -266,6 +279,8 @@ namespace EngineService
                         _goFenCurrent = gfc;
                         int mpv = gfc.Mpv <= 0 ? _multipv : gfc.Mpv;
 
+                        _activeEvaluationMode = cmd.EvalMode;
+
                         WriteOut(UciCommands.ENG_SET_MULTIPV + " " + mpv.ToString());
                         WriteOut(UciCommands.ENG_POSITION_FEN + " " + gfc.Fen);
                         WriteOut(gfc.GoCommandString);
@@ -278,6 +293,8 @@ namespace EngineService
                         // new request came in so queue it and stop the previous one
                         _currentState = State.STOPPING;
                         WriteOut(UciCommands.ENG_STOP);
+
+                        _activeEvaluationMode = GoFenCommand.EvaluationMode.NONE;
                         _goFenQueued = cmd;
                         break;
                     case State.STOPPING:
@@ -304,10 +321,12 @@ namespace EngineService
                 {
                     case State.IDLE:
                         WriteOut(UciCommands.ENG_STOP);
+                        _activeEvaluationMode = GoFenCommand.EvaluationMode.NONE;
                         _currentState = State.IDLE;
                         break;
                     case State.CALCULATING:
                         WriteOut(UciCommands.ENG_STOP);
+                        _activeEvaluationMode = GoFenCommand.EvaluationMode.NONE;
                         _currentState = State.STOPPING;
                         break;
                     case State.STOPPING:
@@ -515,6 +534,8 @@ namespace EngineService
                                 message = InsertIdPrefixes(message);
                                 if (message.Contains(UciCommands.ENG_BEST_MOVE))
                                 {
+                                    _activeEvaluationMode = GoFenCommand.EvaluationMode.NONE;
+
                                     if (!HandleBestMove())
                                     {
                                         message = InsertBestMoveDelayedPrefix(message);
