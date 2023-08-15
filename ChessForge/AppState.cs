@@ -1519,7 +1519,8 @@ namespace ChessForge
              {
                  if (eval)
                  {
-                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
+                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS 
+                         && (LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME || EngineGame.CurrentState != EngineGame.GameState.ENGINE_THINKING))
                      {
                          _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;
                          _mainWin.UiImgEngineOff.Visibility = Visibility.Collapsed;
