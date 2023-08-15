@@ -198,6 +198,7 @@ namespace ChessForge
                     break;
             }
 
+            AppLog.Message(2, "EvaluationManager:ChangeCurrentMode() to " + mode.ToString());
             AppState.SetupGuiForCurrentStates();
         }
 
