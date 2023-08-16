@@ -647,7 +647,7 @@ RestoreFontDefaults=Przywróć Domyślne Wartości
 Tools=Narzędzia
 
 #description: Strip all comments
-#english: StripComments=Strip All Comments
+#english: StripComments=Delete All Comments
 StripComments=Usuń wszystkie komentarze
 
 

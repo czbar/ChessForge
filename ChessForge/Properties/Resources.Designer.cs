@@ -4256,7 +4256,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Strip All Comments.
+        ///   Looks up a localized string similar to Delete All Comments.
         /// </summary>
         public static string StripComments {
             get {

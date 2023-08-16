@@ -647,7 +647,7 @@ RestoreFontDefaults=
 Tools=
 
 #description: Strip all comments
-#english: StripComments=Strip All Comments
+#english: StripComments=Delete All Comments
 StripComments=
 
 

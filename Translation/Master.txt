@@ -497,7 +497,7 @@ RestoreFontDefaults=Restore Font Defaults
 Tools=Tools
 
 #Strip all comments
-StripComments=Strip All Comments
+StripComments=Delete All Comments
 
 
 #TOP LEVEL MENU: Help
