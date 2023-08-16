@@ -356,7 +356,12 @@ namespace ChessForge
                 if (!preExist)
                 {
                     ChessForgeEventArgs args = new ChessForgeEventArgs();
-                    reportDupe = FindIdenticalPositions.Search(nd, FindIdenticalPositions.Mode.CHECK_IF_ANY);
+                    // TODO
+                    // commented out for peformance reasons
+                    // needs to be performed in a background task and not in Solving or training modes
+                    //
+                    //reportDupe = FindIdenticalPositions.Search(nd, FindIdenticalPositions.Mode.CHECK_IF_ANY);
+                    reportDupe = false;
                 }
                 return true;
             }
