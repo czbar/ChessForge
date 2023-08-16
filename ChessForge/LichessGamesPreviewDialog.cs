@@ -90,6 +90,7 @@ namespace ChessForge
 
                     PopulateHeaderLine(_tree);
 
+                    _tree.BuildLines();
                     _chessBoard.DisplayStartingPosition();
                     _mainLine = _tree.SelectLine("1");
 
