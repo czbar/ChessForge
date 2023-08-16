@@ -154,7 +154,8 @@ namespace ChessForge
 
             if (mode == VariationTree.SolvingMode.GUESS_MOVE || mode == VariationTree.SolvingMode.ANALYSIS)
             {
-                if (_mainWin.ActiveArticle.Solver.IsSolvingFinished
+                Article article = WorkbookManager.SessionWorkbook.ActiveArticle;
+                if (article.Solver.IsSolvingFinished
                     ||
                     mode == VariationTree.SolvingMode.ANALYSIS && _mainWin.ActiveArticle.Solver.IsAnalysisSubmitted)
                 {
@@ -172,7 +173,7 @@ namespace ChessForge
 
                 if (mode == VariationTree.SolvingMode.ANALYSIS
                     &&
-                    !_mainWin.ActiveArticle.Solver.IsAnalysisSubmitted)
+                    !article.Solver.IsAnalysisSubmitted)
                 {
                     _btnSubmitAnalysis.Visibility = Visibility.Visible;
                     _lblSubmitAnalysis.Visibility = Visibility.Visible;
