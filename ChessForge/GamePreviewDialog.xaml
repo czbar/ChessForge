@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         Title="{x:Static p:Resources.GamePreview}" Height="440" Width="800" Closing="Window_Closing">
     <Grid>
         <Canvas x:Name="UiCnvOver"  Background="Black" Height="268" Width="268" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,65,0,0" >

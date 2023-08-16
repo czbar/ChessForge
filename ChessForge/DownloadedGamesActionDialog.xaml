@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ChessForge"
         xmlns:p="clr-namespace:ChessForge.Properties"
         mc:Ignorable="d"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         Title="{x:Static p:Resources.SaveDownloadedGames}" Height="325" Width="400">
     <Grid>
         <GroupBox x:Name="UiGbOptions" Header="" Margin="15,15,15,0" Height="210" VerticalAlignment="Top">

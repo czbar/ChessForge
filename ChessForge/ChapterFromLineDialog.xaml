@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         Title="{x:Static p:Resources.CreateNewChapterFromLine}" Height="232" Width="390">
     <Grid>
         <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-100,146,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>

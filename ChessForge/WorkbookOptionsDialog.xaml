@@ -8,7 +8,7 @@
         mc:Ignorable="d"
          AllowsTransparency="False"
          Background="Transparent"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         Title="{x:Static p:Resources.DlgTitleWorkbookOptions}" Height="345" Width="400" HorizontalAlignment="Left">
 
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ChessForge"
         xmlns:p="clr-namespace:ChessForge.Properties"
         mc:Ignorable="d"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         Title="{x:Static p:Resources.DlgEditMoveInIntro}" Height="180" Width="400">
     <Grid>
         <Label x:Name="UiLblText" Content="{x:Static p:Resources.TextForDisplay}" HorizontalAlignment="Left" Margin="31,10,0,0" VerticalAlignment="Top"/>

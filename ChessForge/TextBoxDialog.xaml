@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         Title="" Height="400" Width="600">
     <Grid>
         <TextBox x:Name="UiTextBox" IsReadOnly="True" BorderThickness="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Center" Margin="0,23,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="484" Height="246"/>

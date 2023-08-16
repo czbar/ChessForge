@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         Title="{x:Static p:Resources.ChapterTitle}" Height="150" Width="600">
     <Grid>
         <TextBox x:Name="UiTbChapterTitle" HorizontalAlignment="Center" Margin="0,20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="428" PreviewKeyDown="UiTbChapterTitle_PreviewKeyDown"/>
