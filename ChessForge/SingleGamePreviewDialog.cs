@@ -70,6 +70,7 @@ namespace ChessForge
         private void SelectGame()
         {
             _tree = _games[0].Tree;
+            _tree.BuildLines();
             PopulateHeaderLine(_tree);
             _chessBoard.DisplayStartingPosition();
             _mainLine = _tree.SelectLine("1");
