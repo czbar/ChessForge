@@ -268,43 +268,50 @@ namespace ChessForge
         /// <param name="secondaryTree"></param>
         private void HandleCorrectGuess(TreeNode guess, TreeNode inPrimaryTree, VariationTree secondaryTree)
         {
-            // clear previous comments on the non moving side
-            foreach (TreeNode prevNode in secondaryTree.Nodes)
+            try
             {
-                if (prevNode.ColorToMove != guess.ColorToMove)
+                // clear previous comments on the non moving side
+                foreach (TreeNode prevNode in secondaryTree.Nodes)
                 {
-                    prevNode.Comment = "";
+                    if (prevNode.ColorToMove != guess.ColorToMove)
+                    {
+                        prevNode.Comment = "";
+                    }
                 }
-            }
 
-            // report the correct move 
-            guess.Comment = Constants.CharCheckMark.ToString();
+                // report the correct move 
+                guess.Comment = Constants.CharCheckMark.ToString();
 
-            // now make the move for the Workbook
-            if (inPrimaryTree.Children.Count == 0)
-            {
-                _guessingFinished = true;
-                AppState.MainWin.ActiveVariationTree.SelectedNodeId = guess.NodeId;
-            }
-            else
-            {
-                TreeNode response = inPrimaryTree.Children[0].CloneMe(true);
-                SoundPlayer.PlayMoveSound(response.LastMoveAlgebraicNotation);
-                response.Parent = guess;
-                guess.Children.Add(response);
-                secondaryTree.AddNode(response);
-                AppState.MainWin.ActiveLine.Line.AddPlyAndMove(response);
-                AppState.MainWin.Dispatcher.Invoke(() =>
-                {
-                    AppState.MainWin.ActiveLine.SelectPly((int)response.Parent.MoveNumber, response.Parent.ColorToMove);
-                    AppState.MainWin.DisplayPosition(response);
-                });
-                AppState.MainWin.ActiveVariationTree.SelectedNodeId = response.NodeId;
-
-                if (inPrimaryTree.Children[0].Children.Count == 0)
+                // now make the move for the Workbook
+                if (inPrimaryTree.Children.Count == 0)
                 {
                     _guessingFinished = true;
+                    AppState.MainWin.ActiveVariationTree.SelectedNodeId = guess.NodeId;
                 }
+                else
+                {
+                    TreeNode response = inPrimaryTree.Children[0].CloneMe(true);
+                    SoundPlayer.PlayMoveSound(response.LastMoveAlgebraicNotation);
+                    response.Parent = guess;
+                    guess.Children.Add(response);
+                    secondaryTree.AddNode(response);
+                    AppState.MainWin.ActiveLine.Line.AddPlyAndMove(response);
+                    AppState.MainWin.Dispatcher.Invoke(() =>
+                    {
+                        AppState.MainWin.ActiveLine.SelectPly((int)response.Parent.MoveNumber, response.Parent.ColorToMove);
+                        AppState.MainWin.DisplayPosition(response);
+                    });
+                    AppState.MainWin.ActiveVariationTree.SelectedNodeId = response.NodeId;
+
+                    if (inPrimaryTree.Children[0].Children.Count == 0)
+                    {
+                        _guessingFinished = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("HandleCorrectGuess()", ex);
             }
         }
 
