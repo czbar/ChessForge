@@ -647,7 +647,7 @@ RestoreFontDefaults=
 Tools=
 
 #description: Strip all comments
-#english: StripComments=Strip All Comments
+#english: StripComments=Delete All Comments
 StripComments=
 
 
@@ -1245,7 +1245,7 @@ MsgSelectNodeToInserAt=
 MsgConfirmDeleteSubtree=
 
 #description: Confirm stripping comments
-#english: MsgConfirmStripComments=Strip all comments in this view? 
+#english: MsgConfirmStripComments=Delete all comments in this view? 
 MsgConfirmStripComments=
 
 #description: Copy Paste error
@@ -2174,19 +2174,20 @@ cbEditCommands=
 cbClickForContextMenu=
 
 #description: Click thru the moves
-#english: cbClickThruMoves=Click through the moves
+#english: cbClickThruMoves=Keyboard: ←/→ (back/forth); SHIFT←/→ or Home/End (go to start/end); ↑↓ (choose a move at fork)
 cbClickThruMoves=
 
+
 #description: Double click to annotate
-#english: cbDoubleClickToAnnotate=Double click to annotate move
+#english: cbDoubleClickToAnnotate=Click through the moves. Double click to annotate.
 cbDoubleClickToAnnotate=
 
 #description: Right click for context menu
-#english: cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise
+#english: cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise and more.
 cbAdvancedEditig=
 
 #description: Double click to auto replay
-#english: cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay
+#english: cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay.
 cbDoubleClickAutoReplay=
 
 #description: Click bookmark to start training

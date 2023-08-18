@@ -280,16 +280,16 @@
     <value>Nagłówek Ćwiczenia</value>
   </data>
   <data name="EvaluatePosition" xml:space="preserve">
-    <value>Oceń Pozycję</value>
+    <value>Oceń pozycję</value>
   </data>
   <data name="EvaluateMove" xml:space="preserve">
-    <value>Oceń Posunięcie</value>
+    <value>Oceń posunięcie</value>
   </data>
   <data name="EvaluateLine" xml:space="preserve">
-    <value>Oceń Wariant</value>
+    <value>Oceń wariant</value>
   </data>
   <data name="FindIdenticalPosition" xml:space="preserve">
-    <value>Znajdź Identyczne Pozycje</value>
+    <value>Znajdź identyczne pozycje</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>Gotowe</value>
@@ -313,7 +313,7 @@
     <value>pat</value>
   </data>
   <data name="GameExerciseReferences" xml:space="preserve">
-    <value>Odsyłacze do Partii i Ćwiczeń</value>
+    <value>Odsyłacze do partii i ćwiczeń</value>
   </data>
   <data name="OpenView" xml:space="preserve">
     <value>Otwórz widok</value>
@@ -454,7 +454,7 @@
     <value>Zapisz $0 jako ...</value>
   </data>
   <data name="BackUpThisVersion" xml:space="preserve">
-    <value>Zrób Kopię tej Wersji...</value>
+    <value>Zrób kopię tej wersji...</value>
   </data>
   <data name="Print" xml:space="preserve">
     <value>Drukuj</value>
@@ -472,22 +472,22 @@
     <value>Zwiń Wszystko</value>
   </data>
   <data name="ExpandChapters" xml:space="preserve">
-    <value>Rozwiń Rozdziały</value>
+    <value>Rozwiń rozdziały</value>
   </data>
   <data name="CollapseChapters" xml:space="preserve">
-    <value>Zwiń Rozdziały</value>
+    <value>Zwiń rozdziały</value>
   </data>
   <data name="Training" xml:space="preserve">
     <value>Trening</value>
   </data>
   <data name="StartNewSession" xml:space="preserve">
-    <value>Zacznij Nową Sesję</value>
+    <value>Zacznij nową sesję</value>
   </data>
   <data name="RestartTrainingSession" xml:space="preserve">
-    <value>Zacznij Trening od Początku</value>
+    <value>Zacznij trening od początku</value>
   </data>
   <data name="ExitTraining" xml:space="preserve">
-    <value>Zakończ Trening</value>
+    <value>Zakończ trening</value>
   </data>
   <data name="ExitSolvingMode" xml:space="preserve">
     <value>Wyjdź z trybu rozwiązywania</value>
@@ -499,7 +499,7 @@
     <value>Komentarz</value>
   </data>
   <data name="MergeChapters" xml:space="preserve">
-    <value>Połącz Rozdziały</value>
+    <value>Połącz rozdziały</value>
   </data>
   <data name="Undo" xml:space="preserve">
     <value>Cofnij Operację</value>
@@ -616,7 +616,7 @@
     <value>Rozpocznij tu Trening</value>
   </data>
   <data name="StartTrainingFromBookmark" xml:space="preserve">
-    <value>Trening od Zakładki</value>
+    <value>Trening od zakładki</value>
   </data>
   <data name="CreateExerciseFromHere" xml:space="preserve">
     <value>Utwórz tu Ćwiczenie</value>
@@ -625,7 +625,7 @@
     <value>Wpisz Kod FEN do Schowka</value>
   </data>
   <data name="BookmarkThisPosition" xml:space="preserve">
-    <value>Utwórz tu Zakładkę</value>
+    <value>Utwórz tu zakładkę</value>
   </data>
   <data name="Replay" xml:space="preserve">
     <value>Powtórz Wariant</value>
@@ -769,7 +769,7 @@
     <value>Utwórz Nowy Rozdział z Wariantu</value>
   </data>
   <data name="BookmarkAllOptionsHere" xml:space="preserve">
-    <value>Utwórz Zakładki dla Wszystkich Opcji</value>
+    <value>Utwórz zakładki dla wszystkich opcji</value>
   </data>
   <data name="MarkAsThumbnail" xml:space="preserve">
     <value>Zaznacz jako Wizytówkę Rozdziału</value>
@@ -817,13 +817,13 @@
     <value>Idź do Pozycji</value>
   </data>
   <data name="GenerateBookmarks" xml:space="preserve">
-    <value>Generuj Zakładki</value>
+    <value>Generuj zakładki</value>
   </data>
   <data name="DeleteThisBookmark" xml:space="preserve">
-    <value>Usuń Zakładkę</value>
+    <value>Usuń zakładkę</value>
   </data>
   <data name="DeleteAllBookmarks" xml:space="preserve">
-    <value>Usuń Wszystkie Zakładki</value>
+    <value>Usuń wszystkie zakładki</value>
   </data>
   <data name="Page0of0" xml:space="preserve">
     <value>Strona $0 z $1</value>
@@ -967,7 +967,7 @@
     <value>Błąd w dostępie do lichess.org</value>
   </data>
   <data name="BookmarksAlreadyExist" xml:space="preserve">
-    <value>Zakładki już Istnieją</value>
+    <value>Zakładki już istnieją</value>
   </data>
   <data name="FailedToSaveFile" xml:space="preserve">
     <value>Błąd przy zapisie pliku</value>
@@ -1621,19 +1621,19 @@
     <value>Naciśnij prawy przycisk, by wywołać menu</value>
   </data>
   <data name="cbClickThruMoves" xml:space="preserve">
-    <value>Kliknij na dowolne posunięcie</value>
+    <value>Klawiatura: ←/→ (naprzód/wstecz); SHIFT←/→ or Home/End (początek/koniec); ↑↓ (wybierz ruch w rozgałęzieniu)</value>
   </data>
   <data name="cbDoubleClickToAnnotate" xml:space="preserve">
-    <value>Dwukrotnie kliknij, by wprowadzić komentarz</value>
+    <value>Kliknij na dowolne posunięcie. Dwukrotnie kliknij, by wprowadzić komentarz.</value>
   </data>
   <data name="cbAdvancedEditig" xml:space="preserve">
-    <value>Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowania FEN i inne</value>
+    <value>Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowania FEN i inne.</value>
   </data>
   <data name="cbDoubleClickAutoReplay" xml:space="preserve">
     <value>Dwukrotnie kliknij posunięcie w Zapisie, by rozpocząć auto-odtwarzanie</value>
   </data>
   <data name="cbClickBookmarkToTrain" xml:space="preserve">
-    <value>Kliknij zakładkę, aby przejść do zapamiętanej pozycji </value>
+    <value>Kliknij zakładkę, aby przejść do zapamiętanej pozycji. </value>
   </data>
   <data name="cbRightClickBookmarkManager" xml:space="preserve">
     <value>Naciśnij prawy przycisk, by otworzyć menu zakładek</value>

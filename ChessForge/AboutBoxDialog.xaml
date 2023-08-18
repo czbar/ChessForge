@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         Title="Chess Forge" Height="300" Width="400" MouseDown="Window_MouseDown">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >
         <RichTextBox x:Name="_rtbAboutBox" Margin="8,8,8,60" BorderThickness="2" >

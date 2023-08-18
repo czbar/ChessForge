@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         Title="{x:Static p:Resources.UpdateCheck}" Height="180" Width="300">
     <Grid>
         <Label x:Name="UiLblPreamble" Content="New version" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top"/>

@@ -1,4 +1,5 @@
-﻿using GameTree;
+﻿using ChessForge;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,14 +26,21 @@ namespace ChessPosition
         {
             bool res = false;
 
-            if (lineId.StartsWith(subLineId))
+            try
             {
-                // check that it is not subline 1.6.1 "matching" 1.6.11
-                int subLen = subLineId.Length;
-                if (lineId.Length <= subLen || lineId[subLen] == '.')
+                if (lineId.StartsWith(subLineId))
                 {
-                    res = true; 
+                    // check that it is not subline 1.6.1 "matching" 1.6.11
+                    int subLen = subLineId.Length;
+                    if (lineId.Length <= subLen || lineId[subLen] == '.')
+                    {
+                        res = true;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("lineId=" + lineId.ToString() + "subLineId=" + subLineId.ToString(), ex);
             }
 
             return res;

@@ -331,7 +331,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Right click to open menu for advanced editing, FEN, creating exercise.
+        ///   Looks up a localized string similar to Right click to open menu for advanced editing, FEN, creating exercise and more..
         /// </summary>
         public static string cbAdvancedEditig {
             get {
@@ -385,7 +385,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click through the moves.
+        ///   Looks up a localized string similar to Keyboard: ←/→ (back/forth); SHIFT←/→ or Home/End (go to start/end); ↑↓ (choose a move at fork).
         /// </summary>
         public static string cbClickThruMoves {
             get {
@@ -403,7 +403,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Double click in the Scoresheet for auto-replay.
+        ///   Looks up a localized string similar to Double click in the Scoresheet for auto-replay..
         /// </summary>
         public static string cbDoubleClickAutoReplay {
             get {
@@ -412,7 +412,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Double click to annotate move.
+        ///   Looks up a localized string similar to Click through the moves. Double click to annotate..
         /// </summary>
         public static string cbDoubleClickToAnnotate {
             get {
@@ -3049,7 +3049,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Strip all comments in this view? .
+        ///   Looks up a localized string similar to Delete all comments in this view? .
         /// </summary>
         public static string MsgConfirmStripComments {
             get {
@@ -4256,7 +4256,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Strip All Comments.
+        ///   Looks up a localized string similar to Delete All Comments.
         /// </summary>
         public static string StripComments {
             get {

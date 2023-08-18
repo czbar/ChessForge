@@ -142,6 +142,18 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Clears a thumbnail
+        /// </summary>
+        /// <param name="nd"></param>
+        public void ClearThumbnail(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                nd.IsThumbnail = false;
+            }
+        }
+
+        /// <summary>
         /// Returns the Thumbnail node if marked.
         /// </summary>
         /// <returns></returns>
@@ -1097,43 +1109,50 @@ namespace GameTree
         {
             var singleLine = new ObservableCollection<TreeNode>();
 
-            // TODO
-            // this seems to be an absurd method??!!
-            // why not just walk the tree?
-            foreach (TreeNode nd in Nodes)
+            try
             {
-                if (TreeUtils.LineIdStartsWith(lineId, nd.LineId))
+                // TODO
+                // this seems to be an absurd method??!!
+                // why not just walk the tree?
+                foreach (TreeNode nd in Nodes)
                 {
-                    singleLine.Add(nd);
-                }
-                else if (TreeUtils.LineIdStartsWith(nd.LineId, lineId))
-                {
-                    string rem = nd.LineId.Substring(lineId.Length);
-                    bool include = true;
-                    for (int i = 0; i < rem.Length; i++)
-                    {
-                        if (i % 2 == 0)
-                        {
-                            if (rem[i] != '.')
-                            {
-                                include = false;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            if (rem[i] != '1')
-                            {
-                                include = false;
-                                break;
-                            }
-                        }
-                    }
-                    if (include)
+                    if (TreeUtils.LineIdStartsWith(lineId, nd.LineId))
                     {
                         singleLine.Add(nd);
                     }
+                    else if (TreeUtils.LineIdStartsWith(nd.LineId, lineId))
+                    {
+                        string rem = nd.LineId.Substring(lineId.Length);
+                        bool include = true;
+                        for (int i = 0; i < rem.Length; i++)
+                        {
+                            if (i % 2 == 0)
+                            {
+                                if (rem[i] != '.')
+                                {
+                                    include = false;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                if (rem[i] != '1')
+                                {
+                                    include = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (include)
+                        {
+                            singleLine.Add(nd);
+                        }
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("SelectLine()", ex);
             }
 
             return singleLine;

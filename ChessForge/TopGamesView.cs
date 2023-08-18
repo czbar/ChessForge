@@ -157,12 +157,8 @@ namespace ChessForge
             Document.Blocks.Clear();
             Document.PageWidth = 590;
 
-            // do not show Top Games in Exercise view (since we don't have any opening)
-            if (AppState.ActiveTab != WorkbookManager.TabViewType.EXERCISE)
-            {
-                Document.Blocks.Add(BuildHeaderLabel());
-                Document.Blocks.Add(BuildTopGamesTableEx(openingStats));
-            }
+            Document.Blocks.Add(BuildHeaderLabel());
+            Document.Blocks.Add(BuildTopGamesTableEx(openingStats));
         }
 
         /// <summary>
@@ -250,12 +246,12 @@ namespace ChessForge
                     string gameId = row.Name.Substring(_rowNamePrefix.Length);
                     if (gameId == highlightedGameId)
                     {
-                        row.Background= ChessForgeColors.TABLE_HIGHLIGHT_GREEN;
+                        row.Background = ChessForgeColors.TABLE_HIGHLIGHT_GREEN;
                         continue;
                     }
                 }
-                catch 
-                { 
+                catch
+                {
                 }
 
                 if (i % 2 == 0)

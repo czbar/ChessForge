@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         Title="{x:Static p:Resources.PositionSetup}" Height="521" Width="815" MouseUp="Window_MouseUp" MouseMove="Window_MouseMove" MouseLeave="Window_MouseLeave" >
     <Grid x:Name="_grdDialog" >
         <Canvas x:Name="UiCnvSetup" Margin="63,41,0,0" Width="268" Height="368" HorizontalAlignment="Left" VerticalAlignment="Top" MouseDown="UiCnvSetup_MouseDown" >

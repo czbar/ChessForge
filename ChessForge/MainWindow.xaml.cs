@@ -5,7 +5,6 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -15,7 +14,6 @@ using System.Threading;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using WebAccess;
@@ -1395,6 +1393,7 @@ namespace ChessForge
 
                 if (acceptFile)
                 {
+                    SetupGuiForNewSession(AppState.WorkbookFilePath, isChessForgeFile);
                     try
                     {
                         WorkbookViewState wvs = new WorkbookViewState(WorkbookManager.SessionWorkbook);
@@ -1404,8 +1403,6 @@ namespace ChessForge
                     {
                         AppLog.Message("wvs.ReadState()", ex);
                     }
-
-                    SetupGuiForNewSession(AppState.WorkbookFilePath, isChessForgeFile);
                 }
                 else
                 {
@@ -1414,6 +1411,7 @@ namespace ChessForge
             }
             catch (Exception e)
             {
+                AppLog.Message("ReadWorkbookFile()", e);
                 MessageBox.Show(e.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 AppState.RestartInIdleMode();
             }
@@ -1539,8 +1537,8 @@ namespace ChessForge
 
             if (!string.IsNullOrEmpty(studyTree.SelectedLineId) && studyTree.SelectedNodeId >= 0)
             {
-                startLineId = ActiveVariationTree.SelectedLineId;
-                startNodeId = ActiveVariationTree.SelectedNodeId;
+                startLineId = studyTree.SelectedLineId;
+                startNodeId = studyTree.SelectedNodeId;
             }
             else
             {
@@ -1556,7 +1554,7 @@ namespace ChessForge
                 UiRtbStudyTreeView.Focus();
             }
 
-            SetActiveLine(startLineId, startNodeId);
+            SetActiveLine(studyTree, startLineId, startNodeId);
 
             BookmarkManager.IsDirty = true;
 
@@ -1774,8 +1772,27 @@ namespace ChessForge
         /// <param name="displayPosition"></param>
         public void SetActiveLine(string lineId, int selectedNodeId, bool displayPosition = true)
         {
-            ObservableCollection<TreeNode> line = ActiveVariationTree.SelectLine(lineId);
-            SetActiveLine(line, selectedNodeId, displayPosition);
+            if (ActiveVariationTree != null)
+            {
+                ObservableCollection<TreeNode> line = ActiveVariationTree.SelectLine(lineId);
+                SetActiveLine(line, selectedNodeId, displayPosition);
+            }
+        }
+
+        /// <summary>
+        /// Sets active line and node in the passed VariationTree
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="lineId"></param>
+        /// <param name="selectedNodeId"></param>
+        /// <param name="displayPosition"></param>
+        public void SetActiveLine(VariationTree tree, string lineId, int selectedNodeId, bool displayPosition = true)
+        {
+            if (tree != null)
+            {
+                ObservableCollection<TreeNode> line = tree.SelectLine(lineId);
+                SetActiveLine(line, selectedNodeId, displayPosition);
+            }
         }
 
         /// <summary>

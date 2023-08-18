@@ -409,14 +409,14 @@ namespace GameTree
 
             // don't worry about the actual number, PGNs have been known to have them wrong.
             if (parent.ColorToMove == PieceColor.White && dotCount == 1
-                || parent.ColorToMove == PieceColor.Black && dotCount == 3)
+                || parent.ColorToMove == PieceColor.Black && dotCount >= 3)
             {
                 return null;
             }
             else
             {
                 // things seem out of order so try finding a good parent
-                TreeNode nd = FindParentForMove(parent, (int)moveNo, dotCount == 3 ? PieceColor.Black : PieceColor.White);
+                TreeNode nd = FindParentForMove(parent, (int)moveNo, dotCount >= 3 ? PieceColor.Black : PieceColor.White);
                 if (nd != null)
                 {
                     return nd;
@@ -645,7 +645,8 @@ namespace GameTree
                 // if the last was a dot, check if there are more dots
                 if (charPos < _remainingGameText.Length && _remainingGameText[charPos] == '.')
                 {
-                    while (_remainingGameText[charPos] == '.' && charPos < _remainingGameText.Length)
+                    while (_remainingGameText[charPos] == '.' && charPos < _remainingGameText.Length
+                           || charPos + 2 < _remainingGameText.Length && _remainingGameText[charPos + 2] == '.')
                     {
                         charPos++;
                     }

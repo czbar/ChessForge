@@ -281,8 +281,7 @@ namespace ChessForge
             Document.Blocks.Clear();
             Document.PageWidth = 590;
 
-            // makes no sense to show Opening Explorer in Exercise view
-            if (_node != null && (AppState.ActiveTab != WorkbookManager.TabViewType.EXERCISE || mode == DataMode.TABLEBASE))
+            if (_node != null)
             {
                 switch (mode)
                 {

@@ -236,19 +236,19 @@ ExerciseHeader=Nagłówek Ćwiczenia
 
 #description: Request to evaluate a position
 #english: EvaluatePosition=Evaluate Position
-EvaluatePosition=Oceń Pozycję
+EvaluatePosition=Oceń pozycję
 
 #description: Evaluate a move
 #english: EvaluateMove=Evaluate Move
-EvaluateMove=Oceń Posunięcie
+EvaluateMove=Oceń posunięcie
 
 #description: Request to evaluate a line
 #english: EvaluateLine=Evaluate Line
-EvaluateLine=Oceń Wariant
+EvaluateLine=Oceń wariant
 
 #description: Find identical positions
 #english: FindIdenticalPosition=Find Identical Positions
-FindIdenticalPosition=Znajdź Identyczne Pozycje
+FindIdenticalPosition=Znajdź identyczne pozycje
 
 #description: Done
 #english: Done=Done
@@ -280,7 +280,7 @@ Stalemate=pat
 
 #description: Game and Exercise References
 #english: GameExerciseReferences=Game and Exercise References
-GameExerciseReferences=Odsyłacze do Partii i Ćwiczeń
+GameExerciseReferences=Odsyłacze do partii i ćwiczeń
 
 #description: Open a view
 #english: OpenView=Open View
@@ -489,7 +489,7 @@ SaveAs=Zapisz $0 jako ...
 
 #description: Saves a copy of the current Workbook with the current version number, increments the version number
 #english: BackUpThisVersion=Back up this Version ...
-BackUpThisVersion=Zrób Kopię tej Wersji...
+BackUpThisVersion=Zrób kopię tej wersji...
 
 #description: Print
 #english: Print=Print
@@ -513,11 +513,11 @@ CollapseAll=Zwiń Wszystko
 
 #description: Expand chapters
 #english: ExpandChapters=Expand Chapters
-ExpandChapters=Rozwiń Rozdziały
+ExpandChapters=Rozwiń rozdziały
 
 #description: Collapse chapters
 #english: CollapseChapters=Collapse Chapters
-CollapseChapters=Zwiń Rozdziały
+CollapseChapters=Zwiń rozdziały
 
 
 
@@ -528,15 +528,15 @@ Training=Trening
 
 #description: Start a new training session
 #english: StartNewSession=Start New Session
-StartNewSession=Zacznij Nową Sesję
+StartNewSession=Zacznij nową sesję
 
 #description: Restart the Training Session from the beginning
 #english: RestartTrainingSession=Restart Training Session
-RestartTrainingSession=Zacznij Trening od Początku
+RestartTrainingSession=Zacznij trening od początku
 
 #description: Exit the Training Session
 #english: ExitTraining=Exit Training
-ExitTraining=Zakończ Trening
+ExitTraining=Zakończ trening
 
 #description: Exit solving mode
 #english: ExitSolvingMode=Exit Solving Mode
@@ -552,7 +552,7 @@ Annotations=Komentarz
 
 #description: Allows the user to merge multiple chapters into one
 #english: MergeChapters=Merge Chapters...
-MergeChapters=Połącz Rozdziały
+MergeChapters=Połącz rozdziały
 
 #description: Undoes the previous operation
 #english: Undo=Undo
@@ -647,7 +647,7 @@ RestoreFontDefaults=Przywróć Domyślne Wartości
 Tools=Narzędzia
 
 #description: Strip all comments
-#english: StripComments=Strip All Comments
+#english: StripComments=Delete All Comments
 StripComments=Usuń wszystkie komentarze
 
 
@@ -726,7 +726,7 @@ StartTrainingFromHere=Rozpocznij tu Trening
 
 #description: Start training from a bookmark
 #english: StartTrainingFromBookmark=Start Training from a Bookmark
-StartTrainingFromBookmark=Trening od Zakładki
+StartTrainingFromBookmark=Trening od zakładki
 
 #description: Create Exercise starting at the current position
 #english: CreateExerciseFromHere=Create Exercise from Here...
@@ -738,7 +738,7 @@ CopyFENtoClipboard=Wpisz Kod FEN do Schowka
 
 #description: Bookmark the current position
 #english: BookmarkThisPosition=Bookmark This Position
-BookmarkThisPosition=Utwórz tu Zakładkę
+BookmarkThisPosition=Utwórz tu zakładkę
 
 #description: Replay the selected line
 #english: Replay=Replay
@@ -948,7 +948,7 @@ CreateNewChapterFromLine=Utwórz Nowy Rozdział z Wariantu
 
 #description: Bookmark the current position and position for all alternative moves
 #english: BookmarkAllOptionsHere=Bookmark All Options Here
-BookmarkAllOptionsHere=Utwórz Zakładki dla Wszystkich Opcji
+BookmarkAllOptionsHere=Utwórz zakładki dla wszystkich opcji
 
 #description: Mark the current position as a thumbnail
 #english: MarkAsThumbnail=Mark as Thumbnail
@@ -1020,15 +1020,15 @@ GoToPosition= Idź do Pozycji
 
 #description: Generate bookmarks
 #english: GenerateBookmarks=Generate Bookmarks
-GenerateBookmarks=Generuj Zakładki
+GenerateBookmarks=Generuj zakładki
 
 #description: Delete the selected bookmark
 #english: DeleteThisBookmark=Delete This Bookmark
-DeleteThisBookmark=Usuń Zakładkę
+DeleteThisBookmark=Usuń zakładkę
 
 #description: Delete all bookmarks
 #english: DeleteAllBookmarks=Delete All Bookmarks
-DeleteAllBookmarks=Usuń Wszystkie Zakładki
+DeleteAllBookmarks=Usuń wszystkie zakładki
 
 #description: Page counter
 #english: Page0of0=Page $0 of $1
@@ -1245,7 +1245,7 @@ MsgSelectNodeToInserAt=Zaznacz pozycję gdzie wkleić ruchy.
 MsgConfirmDeleteSubtree=Usunąć zaznaczony ruch i wszystkie dalsze posunięcia? 
 
 #description: Confirm stripping comments
-#english: MsgConfirmStripComments=Strip all comments in this view? 
+#english: MsgConfirmStripComments=Delete all comments in this view? 
 MsgConfirmStripComments=Usunąć wszystkie komentarze w tym widoku? 
 
 #description: Copy Paste error
@@ -1271,7 +1271,7 @@ ErrorLichess=Błąd w dostępie do lichess.org
 
 #description: Bookmarks already exist
 #english: BookmarksAlreadyExist=Bookmarks already exist
-BookmarksAlreadyExist=Zakładki już Istnieją
+BookmarksAlreadyExist=Zakładki już istnieją
 
 #description: Error saving file
 #english: FailedToSaveFile=Failed to save file
@@ -2174,24 +2174,25 @@ cbEditCommands=CTRL+B pogrubione, CTRL+I kursywa
 cbClickForContextMenu=Naciśnij prawy przycisk, by wywołać menu
 
 #description: Click thru the moves
-#english: cbClickThruMoves=Click through the moves
-cbClickThruMoves=Kliknij na dowolne posunięcie
+#english: cbClickThruMoves=Keyboard: ←/→ (back/forth); SHIFT←/→ or Home/End (go to start/end); ↑↓ (choose a move at fork)
+cbClickThruMoves=Klawiatura: ←/→ (naprzód/wstecz); SHIFT←/→ or Home/End (początek/koniec); ↑↓ (wybierz ruch w rozgałęzieniu)
+
 
 #description: Double click to annotate
-#english: cbDoubleClickToAnnotate=Double click to annotate move
-cbDoubleClickToAnnotate=Dwukrotnie kliknij, by wprowadzić komentarz
+#english: cbDoubleClickToAnnotate=Click through the moves. Double click to annotate.
+cbDoubleClickToAnnotate=Kliknij na dowolne posunięcie. Dwukrotnie kliknij, by wprowadzić komentarz.
 
 #description: Right click for context menu
-#english: cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise
-cbAdvancedEditig=Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowania FEN i inne
+#english: cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise and more.
+cbAdvancedEditig=Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowania FEN i inne.
 
 #description: Double click to auto replay
-#english: cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay
+#english: cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay.
 cbDoubleClickAutoReplay=Dwukrotnie kliknij posunięcie w Zapisie, by rozpocząć auto-odtwarzanie
 
 #description: Click bookmark to start training
 #english: cbClickBookmarkToTrain=Click a bookmark to navigate to the bookmarked position
-cbClickBookmarkToTrain=Kliknij zakładkę, aby przejść do zapamiętanej pozycji 
+cbClickBookmarkToTrain=Kliknij zakładkę, aby przejść do zapamiętanej pozycji. 
 
 #description: Right click to open bookmarks menu
 #english: cbRightClickBookmarkManager=Right click to open menu for Bookmark management options

@@ -49,6 +49,10 @@ namespace ChessForge
             if (index >= 0)
             {
                 _tree = _games[index].Tree;
+                if (string.IsNullOrEmpty(_tree.RootNode.LineId))
+                {
+                    _tree.BuildLines();
+                }
                 PopulateHeaderLine(_tree);
                 _chessBoard.DisplayStartingPosition();
                 _mainLine = _tree.SelectLine("1");

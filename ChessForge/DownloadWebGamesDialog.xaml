@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ChessForge"
         xmlns:p="clr-namespace:ChessForge.Properties"
         mc:Ignorable="d"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         Title="{x:Static p:Resources.DownloadGamesFromWeb}" Height="330" Width="500" Closing="Window_Closing">
     <Grid>
         <Label x:Name="UiLblLoading" Background="Blue" Foreground="White" FontSize="16" FontWeight="Bold" Content="{x:Static p:Resources.DownloadingFromLichess}" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Panel.ZIndex="1"/>

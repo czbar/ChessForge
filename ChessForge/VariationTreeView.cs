@@ -535,8 +535,8 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Marks the current node as the thumbnail and clears
-        /// previous selection.
+        /// Marks the current node as the thumbnail and clears the previous selection.
+        /// If this is the previously selected thumbnail, it clears it.
         /// </summary>
         public void MarkSelectedNodeAsThumbnail(bool defaultToRootNode = false)
         {
@@ -546,9 +546,17 @@ namespace ChessForge
                 if (nd != null || defaultToRootNode)
                 {
                     TreeNode prevThumbnail = _mainVariationTree.GetThumbnail();
-                    _mainVariationTree.SetThumbnail(nd ?? _mainVariationTree.RootNode);
 
-                    InsertOrUpdateCommentRun(prevThumbnail);
+                    if (prevThumbnail == nd)
+                    {
+                        _mainVariationTree.ClearThumbnail(nd);
+                    }
+                    else
+                    {
+                        _mainVariationTree.SetThumbnail(nd ?? _mainVariationTree.RootNode);
+                        InsertOrUpdateCommentRun(prevThumbnail);
+                    }
+
                     InsertOrUpdateCommentRun(nd);
 
                     AppState.IsDirty = true;

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         mc:Ignorable="d"
         Title="{x:Static p:Resources.Annotations}" Height="320" Width="600">
     <Canvas x:Name="UiCnvButtons" Margin="0,0">
