@@ -2174,7 +2174,7 @@ cbEditCommands=
 cbClickForContextMenu=
 
 #description: Click thru the moves
-#english: cbClickThruMoves=Keyboard: ←/→ (back/forth); SHIFT←/→ or Home/End (go to start/end); ↑↓ (choose a move at fork)
+#english: cbClickThruMoves=Keyboard: ←/→ (back/forth); SHIFT ↑↓ or Home/End (go to start/end); ↑↓ (choose a move at fork)
 cbClickThruMoves=
 
 

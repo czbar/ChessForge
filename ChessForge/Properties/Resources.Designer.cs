@@ -385,7 +385,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Keyboard: ←/→ (back/forth); SHIFT←/→ or Home/End (go to start/end); ↑↓ (choose a move at fork).
+        ///   Looks up a localized string similar to Keyboard: ←/→ (back/forth); SHIFT ↑↓ or Home/End (go to start/end); ↑↓ (choose a move at fork).
         /// </summary>
         public static string cbClickThruMoves {
             get {

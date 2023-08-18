@@ -2174,7 +2174,7 @@ cbEditCommands=CTRL+B pogrubione, CTRL+I kursywa
 cbClickForContextMenu=Naciśnij prawy przycisk, by wywołać menu
 
 #description: Click thru the moves
-#english: cbClickThruMoves=Keyboard: ←/→ (back/forth); SHIFT←/→ or Home/End (go to start/end); ↑↓ (choose a move at fork)
+#english: cbClickThruMoves=Keyboard: ←/→ (back/forth); SHIFT ↑↓ or Home/End (go to start/end); ↑↓ (choose a move at fork)
 cbClickThruMoves=Klawiatura: ←/→ (naprzód/wstecz); SHIFT←/→ or Home/End (początek/koniec); ↑↓ (wybierz ruch w rozgałęzieniu)
 
 
