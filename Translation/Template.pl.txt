@@ -236,19 +236,19 @@ ExerciseHeader=Nagłówek Ćwiczenia
 
 #description: Request to evaluate a position
 #english: EvaluatePosition=Evaluate Position
-EvaluatePosition=Oceń Pozycję
+EvaluatePosition=Oceń pozycję
 
 #description: Evaluate a move
 #english: EvaluateMove=Evaluate Move
-EvaluateMove=Oceń Posunięcie
+EvaluateMove=Oceń posunięcie
 
 #description: Request to evaluate a line
 #english: EvaluateLine=Evaluate Line
-EvaluateLine=Oceń Wariant
+EvaluateLine=Oceń wariant
 
 #description: Find identical positions
 #english: FindIdenticalPosition=Find Identical Positions
-FindIdenticalPosition=Znajdź Identyczne Pozycje
+FindIdenticalPosition=Znajdź identyczne pozycje
 
 #description: Done
 #english: Done=Done
@@ -280,7 +280,7 @@ Stalemate=pat
 
 #description: Game and Exercise References
 #english: GameExerciseReferences=Game and Exercise References
-GameExerciseReferences=Odsyłacze do Partii i Ćwiczeń
+GameExerciseReferences=Odsyłacze do partii i ćwiczeń
 
 #description: Open a view
 #english: OpenView=Open View
@@ -489,7 +489,7 @@ SaveAs=Zapisz $0 jako ...
 
 #description: Saves a copy of the current Workbook with the current version number, increments the version number
 #english: BackUpThisVersion=Back up this Version ...
-BackUpThisVersion=Zrób Kopię tej Wersji...
+BackUpThisVersion=Zrób kopię tej wersji...
 
 #description: Print
 #english: Print=Print
@@ -513,11 +513,11 @@ CollapseAll=Zwiń Wszystko
 
 #description: Expand chapters
 #english: ExpandChapters=Expand Chapters
-ExpandChapters=Rozwiń Rozdziały
+ExpandChapters=Rozwiń rozdziały
 
 #description: Collapse chapters
 #english: CollapseChapters=Collapse Chapters
-CollapseChapters=Zwiń Rozdziały
+CollapseChapters=Zwiń rozdziały
 
 
 
@@ -528,15 +528,15 @@ Training=Trening
 
 #description: Start a new training session
 #english: StartNewSession=Start New Session
-StartNewSession=Zacznij Nową Sesję
+StartNewSession=Zacznij nową sesję
 
 #description: Restart the Training Session from the beginning
 #english: RestartTrainingSession=Restart Training Session
-RestartTrainingSession=Zacznij Trening od Początku
+RestartTrainingSession=Zacznij trening od początku
 
 #description: Exit the Training Session
 #english: ExitTraining=Exit Training
-ExitTraining=Zakończ Trening
+ExitTraining=Zakończ trening
 
 #description: Exit solving mode
 #english: ExitSolvingMode=Exit Solving Mode
@@ -552,7 +552,7 @@ Annotations=Komentarz
 
 #description: Allows the user to merge multiple chapters into one
 #english: MergeChapters=Merge Chapters...
-MergeChapters=Połącz Rozdziały
+MergeChapters=Połącz rozdziały
 
 #description: Undoes the previous operation
 #english: Undo=Undo

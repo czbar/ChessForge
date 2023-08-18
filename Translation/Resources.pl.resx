@@ -280,16 +280,16 @@
     <value>Nagłówek Ćwiczenia</value>
   </data>
   <data name="EvaluatePosition" xml:space="preserve">
-    <value>Oceń Pozycję</value>
+    <value>Oceń pozycję</value>
   </data>
   <data name="EvaluateMove" xml:space="preserve">
-    <value>Oceń Posunięcie</value>
+    <value>Oceń posunięcie</value>
   </data>
   <data name="EvaluateLine" xml:space="preserve">
-    <value>Oceń Wariant</value>
+    <value>Oceń wariant</value>
   </data>
   <data name="FindIdenticalPosition" xml:space="preserve">
-    <value>Znajdź Identyczne Pozycje</value>
+    <value>Znajdź identyczne pozycje</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>Gotowe</value>
@@ -313,7 +313,7 @@
     <value>pat</value>
   </data>
   <data name="GameExerciseReferences" xml:space="preserve">
-    <value>Odsyłacze do Partii i Ćwiczeń</value>
+    <value>Odsyłacze do partii i ćwiczeń</value>
   </data>
   <data name="OpenView" xml:space="preserve">
     <value>Otwórz widok</value>
@@ -454,7 +454,7 @@
     <value>Zapisz $0 jako ...</value>
   </data>
   <data name="BackUpThisVersion" xml:space="preserve">
-    <value>Zrób Kopię tej Wersji...</value>
+    <value>Zrób kopię tej wersji...</value>
   </data>
   <data name="Print" xml:space="preserve">
     <value>Drukuj</value>
@@ -472,22 +472,22 @@
     <value>Zwiń Wszystko</value>
   </data>
   <data name="ExpandChapters" xml:space="preserve">
-    <value>Rozwiń Rozdziały</value>
+    <value>Rozwiń rozdziały</value>
   </data>
   <data name="CollapseChapters" xml:space="preserve">
-    <value>Zwiń Rozdziały</value>
+    <value>Zwiń rozdziały</value>
   </data>
   <data name="Training" xml:space="preserve">
     <value>Trening</value>
   </data>
   <data name="StartNewSession" xml:space="preserve">
-    <value>Zacznij Nową Sesję</value>
+    <value>Zacznij nową sesję</value>
   </data>
   <data name="RestartTrainingSession" xml:space="preserve">
-    <value>Zacznij Trening od Początku</value>
+    <value>Zacznij trening od początku</value>
   </data>
   <data name="ExitTraining" xml:space="preserve">
-    <value>Zakończ Trening</value>
+    <value>Zakończ trening</value>
   </data>
   <data name="ExitSolvingMode" xml:space="preserve">
     <value>Wyjdź z trybu rozwiązywania</value>
@@ -499,7 +499,7 @@
     <value>Komentarz</value>
   </data>
   <data name="MergeChapters" xml:space="preserve">
-    <value>Połącz Rozdziały</value>
+    <value>Połącz rozdziały</value>
   </data>
   <data name="Undo" xml:space="preserve">
     <value>Cofnij Operację</value>

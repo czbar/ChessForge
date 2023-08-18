@@ -142,6 +142,18 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Clears a thumbnail
+        /// </summary>
+        /// <param name="nd"></param>
+        public void ClearThumbnail(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                nd.IsThumbnail = false;
+            }
+        }
+
+        /// <summary>
         /// Returns the Thumbnail node if marked.
         /// </summary>
         /// <returns></returns>
