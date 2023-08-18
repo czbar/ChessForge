@@ -1393,6 +1393,7 @@ namespace ChessForge
 
                 if (acceptFile)
                 {
+                    SetupGuiForNewSession(AppState.WorkbookFilePath, isChessForgeFile);
                     try
                     {
                         WorkbookViewState wvs = new WorkbookViewState(WorkbookManager.SessionWorkbook);
@@ -1402,8 +1403,6 @@ namespace ChessForge
                     {
                         AppLog.Message("wvs.ReadState()", ex);
                     }
-
-                    SetupGuiForNewSession(AppState.WorkbookFilePath, isChessForgeFile);
                 }
                 else
                 {
