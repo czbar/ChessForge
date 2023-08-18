@@ -240,6 +240,13 @@ namespace ChessForge
                 AppState.MainWin.SetActiveLine(lineToSelect, firstNodeId);
                 AppState.MainWin.UiMnEvaluateLine_Click(null, null);
             }
+            else
+            {
+                // send a fake MoveEvalFinished message
+                MoveEvalEventArgs args = new MoveEvalEventArgs();
+                args.IsLastMove = true;
+                MoveEvalFinished(null, args);
+            }
         }
     }
 }
