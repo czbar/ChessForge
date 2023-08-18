@@ -3049,7 +3049,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Strip all comments in this view? .
+        ///   Looks up a localized string similar to Delete all comments in this view? .
         /// </summary>
         public static string MsgConfirmStripComments {
             get {

@@ -1245,7 +1245,7 @@ MsgSelectNodeToInserAt=
 MsgConfirmDeleteSubtree=
 
 #description: Confirm stripping comments
-#english: MsgConfirmStripComments=Strip all comments in this view? 
+#english: MsgConfirmStripComments=Delete all comments in this view? 
 MsgConfirmStripComments=
 
 #description: Copy Paste error

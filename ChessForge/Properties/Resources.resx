@@ -952,7 +952,7 @@
     <value>Delete the selected move and all moves that follow? </value>
   </data>
   <data name="MsgConfirmStripComments" xml:space="preserve">
-    <value>Strip all comments in this view? </value>
+    <value>Delete all comments in this view? </value>
   </data>
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Copy/Paste Error</value>

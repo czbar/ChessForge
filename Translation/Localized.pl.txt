@@ -1245,7 +1245,7 @@ MsgSelectNodeToInserAt=Zaznacz pozycję gdzie wkleić ruchy.
 MsgConfirmDeleteSubtree=Usunąć zaznaczony ruch i wszystkie dalsze posunięcia? 
 
 #description: Confirm stripping comments
-#english: MsgConfirmStripComments=Strip all comments in this view? 
+#english: MsgConfirmStripComments=Delete all comments in this view? 
 MsgConfirmStripComments=Usunąć wszystkie komentarze w tym widoku? 
 
 #description: Copy Paste error
